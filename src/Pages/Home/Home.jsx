@@ -5,6 +5,8 @@ import Benefits from './HomeComponents2/Benefits';
 import HomeAbout from './HomeAbout/HomeAbout';
 import HomeComponents4 from './HomeComponents4/HomeComponents4';
 import HomeComponents5 from './HomeComponents5/HomeComponents5';
+import HomeComponents6 from './HomeComponents6/HomeComponents6';
+import HomeComponents7 from './HomeComponents7/HomeComponents7';
 
 const Home = () => {
     return (
@@ -14,7 +16,10 @@ const Home = () => {
             <Benefits />
             <HomeAbout />
             <HomeComponents4 />
+            <HomeComponents6 />
             <HomeComponents5 />
+            <HomeComponents7 />
+
         </div>
     );
 };
