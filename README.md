@@ -1,4 +1,4 @@
-# Project Name
+# Sale Now
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![GitHub issues](https://img.shields.io/github/issues/your-username/your-repo.svg)](https://github.com/your-username/your-repo/issues)
@@ -11,9 +11,7 @@ Briefly describe your project. What does it do? What problem does it solve?
 
 ## Features
 
-- Feature 1
-- Feature 2
-- ...
+- Landing Page
 
 ## Screenshots
 
@@ -32,9 +30,9 @@ Provide a link to a live demo if applicable.
 
 ### Installation
 
-1. Clone the repository: `git clone https://github.com/your-username/your-repo.git`
+1. Clone the repository: `git clone https://github.com/brightfuturesoft/salenow.git`
 2. Install dependencies: `npm install`
-3. Start the development server: `npm start`
+3. Start the development server: `npm run dev`
 
 ## Usage
 
