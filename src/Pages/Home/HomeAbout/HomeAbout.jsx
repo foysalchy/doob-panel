@@ -49,7 +49,7 @@ const HomeAbout = () => {
                         <img
                             src={Photo1}
                             alt="ecommerce"
-                            className="lg:w-[600px] lg:pl-10 w-full lg:h-[400px] h-auto object-cover object-center rounded"
+                            className="lg:w-[600px] lg:pl-10 mt-8 md:mt-0 w-full lg:h-[400px] h-auto object-cover object-center rounded"
 
                         />
                     </div>
