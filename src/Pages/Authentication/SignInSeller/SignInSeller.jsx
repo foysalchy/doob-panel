@@ -27,7 +27,7 @@ const SignInSeller = () => {
                                 Please Go to create an account
                             </p>
                             <Link
-                                to="sign-up"
+                                to="/sign-up"
                                 aria-label=""
                                 className="inline-flex items-center font-semibold tracking-wider transition-colors duration-200 text-teal-400 hover:text-teal-500"
                             >

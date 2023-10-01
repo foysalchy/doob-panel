@@ -15,7 +15,7 @@ const MainLayout = () => {
     return (
         <div>
             <Header></Header>
-            <div className='relative'>
+            <div className='relative w-[100%] overflow-hidden'>
                 <Outlet ></Outlet>
                 <button className='fixed bottom-11 right-3'>
                     <BiSupport onClick={modalToggol} className='text-5xl bg-gray-100 shadow shadow-slate-500 p-2 text-blue-500 rounded-full'></BiSupport>
