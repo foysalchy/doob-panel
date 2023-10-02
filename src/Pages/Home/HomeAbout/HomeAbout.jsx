@@ -1,8 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Photo1 from './Group 17.png';
 import { MdArrowCircleRight } from 'react-icons/md';
+import YoutubeModal from '../YoutubeModal';
 
 const HomeAbout = () => {
+
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const openModal = () => {
+        setIsModalOpen(true);
+    };
+
+    const closeModal = () => {
+        setIsModalOpen(false);
+    };
+
     return (
         <div>
             <section className="text-gray-600 body-font overflow-hidden">
@@ -47,11 +59,13 @@ const HomeAbout = () => {
 
                         </div>
                         <img
+                            onClick={openModal}
                             src={Photo1}
                             alt="ecommerce"
                             className="lg:w-[600px] lg:pl-10 mt-8 md:mt-0 w-full lg:h-[400px] h-auto object-cover object-center rounded"
 
                         />
+                        <YoutubeModal link={'https://www.youtube.com/embed/rNSIwjmynYQ?si=7YTw727sHfQqEnrC" '} isOpen={isModalOpen} onClose={closeModal} />
                     </div>
                 </div>
             </section>
