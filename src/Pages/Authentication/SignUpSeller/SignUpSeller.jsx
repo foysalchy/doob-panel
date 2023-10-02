@@ -1,14 +1,76 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai'
 import Image from './wallpaperflare.com_wallpaper.jpg'
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../../../AuthProvider/UserProvider';
+import { updateProfile } from 'firebase/auth';
+import Swal from 'sweetalert2';
 
 const SignUpSeller = () => {
     const [showPassword, setShowPassword] = useState(false);
+    const [passError, setPassError] = useState(false)
+    const [loading, setLoading] = useState(false)
+    const { RegistrationInEmail } = useContext(AuthContext)
 
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
     };
+
+    const signUpData = (event) => {
+
+        event.preventDefault();
+        const form = event.target;
+        const name = form.name.value;
+        const email = form.email.value;
+        const password = form.password.value
+        const data = {
+            name,
+            email,
+            password
+        }
+        setLoading(true)
+        if (password.length >= 6) {
+            RegistrationInEmail(email, password)
+                .then((result) => {
+                    const uid = result.user.uid
+                    const user = { uid, name, email, password }
+                    // Update user
+                    updateProfile(result.user, {
+                        displayName: name,
+                    });
+
+                    setPassError('')
+
+                    fetch("http://localhost:5000/signup", {
+                        method: "post",
+                        headers: {
+                            "content-type": "application/json",
+                        },
+                        body: JSON.stringify(user),
+                    })
+                        .then((res) => res.json())
+                        .then((data) => {
+
+                            Swal.fire(
+                                "Your registration is complete",
+                                "success"
+                            );
+                            setLoading(false)
+                        });
+                })
+
+                .catch((error) => {
+                    const message = error.message.split("Error");
+                    setPassError(message.slice(1, 500));
+                    setLoading(false)
+                });
+        } else {
+            setPassError("Please enter six digit password");
+            setLoading(false)
+        }
+    }
+
+
     return (
         <div>
             <div className="relative">
@@ -34,7 +96,7 @@ const SignUpSeller = () => {
                                     aria-label=""
                                     className="inline-flex items-center font-semibold tracking-wider transition-colors duration-200 text-teal-400 hover:text-teal-700"
                                 >
-                                    Sign Up
+                                    Sign In
                                     <svg
                                         className="inline-block w-3 ml-2"
                                         fill="currentColor"
@@ -49,10 +111,11 @@ const SignUpSeller = () => {
                                     <h3 className="mb-4 text-xl font-semibold sm:text-center sm:mb-6 sm:text-2xl">
                                         Sign up for updates
                                     </h3>
-                                    <form>
+                                    <form
+                                        onSubmit={signUpData}>
                                         <div className="mb-1 sm:mb-2">
                                             <label
-                                                htmlFor="firstName"
+                                                htmlFor="name"
                                                 className="inline-block mb-1 font-medium"
                                             >
                                                 Full Name
@@ -62,13 +125,13 @@ const SignUpSeller = () => {
                                                 required
                                                 type="text"
                                                 className="flex-grow w-full h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
-                                                id="firstName"
-                                                name="firstName"
+                                                id="name"
+                                                name="name"
                                             />
                                         </div>
                                         <div className="mb-1 sm:mb-2">
                                             <label
-                                                htmlFor="lastName"
+                                                htmlFor="email"
                                                 className="inline-block mb-1 font-medium"
                                             >
                                                 Email
@@ -78,8 +141,8 @@ const SignUpSeller = () => {
                                                 required
                                                 type="email"
                                                 className="flex-grow w-full h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
-                                                id="lastName"
-                                                name="lastName"
+                                                id="email"
+                                                name="email"
                                             />
                                         </div>
                                         <div className="mb-1 sm:mb-2">
@@ -111,20 +174,28 @@ const SignUpSeller = () => {
                                                 </span>}
                                             </div>
                                         </div>
+                                        <p className='text-sm text-red-500'>{passError}</p>
 
                                         <div className="mt-4 mb-2 sm:mb-4">
-                                            <button
+                                            {!loading ? <button
                                                 type="submit"
                                                 className="inline-flex items-center justify-center w-full h-12 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md hover:bg-black bg-gray-800 focus:shadow-outline focus:outline-none"
                                             >
                                                 Sign Up
                                             </button>
+                                                :
+                                                <button
+                                                    disabled
+                                                    className="inline-flex items-center justify-center w-full h-12 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md hover:bg-black bg-gray-800 focus:shadow-outline focus:outline-none"
+                                                >
+                                                    Loading...
+                                                </button>}
                                         </div>
                                         <p className="text-xs text-gray-600 text-center sm:text-sm">
                                             By clicking "Sign up", you agree to the
                                             <br />
 
-                                            <Link className='underline text-blue-500' to={'/'}>Terms of Use</Link> and <Link className='underline text-blue-500' to={'/'}>Privacy Policy</Link>
+                                            <Link className='underline text-blue-500' to={'/terms'}>Terms of Use</Link> and <Link className='underline text-blue-500' to={'/'}>Privacy Policy</Link>
                                         </p>
                                     </form>
                                 </div>

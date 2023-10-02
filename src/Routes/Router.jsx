@@ -5,6 +5,10 @@ import About from "../Pages/About/About";
 import SignUpSeller from "../Pages/Authentication/SignUpSeller/SignUpSeller";
 import SignInSeller from "../Pages/Authentication/SignInSeller/SignInSeller";
 import Error from "../Pages/Error/Error";
+import ForgetPass from "../Pages/Authentication/ForgetPass/ForgetPass";
+import Trams from "../Pages/Trams & Condition/Trams";
+import AdminLayout from "../Layout/AdminLayout";
+import AdminDashboard from "../Pages/Dashboard/AdminDashboard";
 
 const Router = createBrowserRouter([
     {
@@ -28,10 +32,28 @@ const Router = createBrowserRouter([
                 element: <SignInSeller />,
             },
             {
+                path: "/forget-pass",
+                element: <ForgetPass />,
+            },
+            {
+                path: "/terms",
+                element: <Trams />,
+            },
+            {
                 path: '*',
                 element: <Error />
             }
         ],
     },
+    {
+        path: "/dashboard",
+        element: <AdminLayout />,
+        children: [
+            {
+                path: '/dashboard',
+                element: <AdminDashboard />
+            }
+        ]
+    }
 ]);
 export default Router

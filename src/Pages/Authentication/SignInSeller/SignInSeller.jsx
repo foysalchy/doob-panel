@@ -1,24 +1,83 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
+import Swal from 'sweetalert2';
+import { AuthContext } from '../../../AuthProvider/UserProvider';
+
+
 
 const SignInSeller = () => {
 
     const [showPassword, setShowPassword] = useState(false);
+    const [passError, setPassError] = useState(false)
+    const [showAlert, setShowAlert] = useState(false);
+    const [alertMessage, setAlertMessage] = useState('');
+    const [loading, setLoading] = useState(false)
+
+    const { setUser } = useContext(AuthContext)
+
+
+
 
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
     };
+
+
+    const loginUser = (event) => {
+        event.preventDefault();
+        const form = event.target;
+        const email = form.email.value
+        const password = form.password.value
+        const data = {
+            email,
+            password
+        }
+        setLoading(true)
+        fetch("http://localhost:5000/signin", {
+            method: "post",
+            headers: {
+                "content-type": "application/json",
+            },
+            body: JSON.stringify(data),
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                data.user && setUser(data.user)
+
+                {
+                    data.user &&
+                        Swal.fire(
+                            'Login Successful',
+                            'You are a valid user. Best of luck',
+                            'success'
+                        )
+                        ||
+                        setPassError(data.message)
+                }
+
+                setLoading(false)
+
+            });
+    }
+
+
     return (
+
+
+
         <div className="relative">
+
             <img
                 src="https://images.pexels.com/photos/3747463/pexels-photo-3747463.jpeg?auto=compress&amp;cs=tinysrgb&amp;dpr=2&amp;h=750&amp;w=1260"
                 className="absolute inset-0 object-cover w-full h-full"
                 alt=""
             />
             <div className="relative bg-gray-900 bg-opacity-75">
+                {showAlert && <CustomAlert message={alertMessage} onClose={closeAlert} />}
                 <div className="px-4 py-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-20">
                     <div className="flex flex-col items-center justify-between xl:flex-row">
+
                         <div className="w-full max-w-xl mb-12 xl:mb-0 xl:pr-16 xl:w-7/12">
                             <h2 className="max-w-lg mb-6 font-sans text-3xl font-bold tracking-tight text-white sm:text-4xl sm:leading-none">
                                 Do you have no account?
@@ -46,7 +105,8 @@ const SignInSeller = () => {
                                 <h3 className="mb-4 text-xl font-semibold sm:text-center sm:mb-6 sm:text-2xl">
                                     Sign In with SaleNow account
                                 </h3>
-                                <form>
+                                <form
+                                    onSubmit={loginUser}>
 
                                     <div className="mb-1 sm:mb-2">
                                         <label
@@ -60,8 +120,8 @@ const SignInSeller = () => {
                                             required
                                             type="email"
                                             className="flex-grow w-full h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded "
-                                            id="lastName"
-                                            name="lastName"
+                                            id="email"
+                                            name="email"
                                         />
                                     </div>
                                     <div className="mb-1 sm:mb-2">
@@ -93,18 +153,28 @@ const SignInSeller = () => {
                                             </span>}
                                         </div>
                                     </div>
+                                    <p className='text-sm text-red-500'>{passError}</p>
+
                                     <div className="mt-4 mb-2 sm:mb-4">
-                                        <button
+                                        {!loading ? <button
                                             type="submit"
                                             className="inline-flex items-center justify-center w-full h-12 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md hover:bg-black bg-gray-800 focus:shadow-outline focus:outline-none"
                                         >
-                                            Sign In
+                                            Sign Up
                                         </button>
+                                            :
+                                            <button
+                                                disabled
+                                                className="inline-flex items-center justify-center w-full h-12 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md hover:bg-black bg-gray-800 focus:shadow-outline focus:outline-none"
+                                            >
+                                                Loading...
+                                            </button>}
                                     </div>
                                     <Link to={'/forget-pass'} className="text-xs text-blue-600 sm:text-sm">
                                         Forgot Password ?
                                     </Link>
                                 </form>
+
                             </div>
                         </div>
                     </div>
