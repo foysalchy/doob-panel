@@ -12,7 +12,7 @@ const UserProvider = ({ children }) => {
     const auth = getAuth(app);
     const [user, setUser] = useState();
     const [loading, setLoading] = useState(true);
-    console.log(user);
+
     const RegistrationInEmail = (email, password,) => {
         setLoading(true);
         return createUserWithEmailAndPassword(auth, email, password);
@@ -25,11 +25,15 @@ const UserProvider = ({ children }) => {
     };
 
     const logOut = () => {
+
+        document.cookie = `${'user'}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
         setUser('')
-        setLoading(true);
-        signOut(auth)
+
+
 
     };
+
+
     const forgetPass = (email) => {
         if (email === true) {
             sendPasswordResetEmail(auth, email)
@@ -42,16 +46,45 @@ const UserProvider = ({ children }) => {
         }
     };
 
+    const setCookie = (name, value) => {
+        document.cookie = `${name}=${encodeURIComponent(value)}`;
+    };
+
+    const getCookie = (name) => {
+        const cookies = document.cookie.split(';');
+        for (const cookie of cookies) {
+            const [cookieName, cookieValue] = cookie.trim().split('=');
+            if (cookieName === name) {
+                return decodeURIComponent(cookieValue);
+            }
+        }
+        return null;
+    };
+
+    const checkUserCookie = () => {
+        const userCookie = getCookie('user');
+        if (userCookie) {
+            const userData = JSON.parse(userCookie);
+
+            setUser(userData)
+
+        } else {
+            console.log('User cookie not found');
+        }
+    };
+
+
     useEffect(() => {
         const unsubscribe = (user) => {
             setLoading(false);
-            setUser(user);
+            checkUserCookie()
         };
         return () => {
             setLoading(true);
             unsubscribe();
         };
     }, []);
+
 
     const authInfo = {
         user,
@@ -60,6 +93,7 @@ const UserProvider = ({ children }) => {
         logOut,
         forgetPass,
         loginWithEamil,
+        setCookie,
         loading,
         setLoading
     };

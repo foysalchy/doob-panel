@@ -1,6 +1,6 @@
 import React from 'react';
 
-const HomeComponents7 = () => {
+const HomeNewsletter = () => {
     return (
         <div>
             <div className=" ">
@@ -36,4 +36,4 @@ const HomeComponents7 = () => {
     );
 };
 
-export default HomeComponents7;
+export default HomeNewsletter;

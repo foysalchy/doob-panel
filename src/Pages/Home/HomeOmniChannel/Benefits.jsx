@@ -1,8 +1,4 @@
 import React from 'react';
-import easyToUse from './Benefitsimages/image 2(1).png';
-import Customizable from './Benefitsimages/image 2(2).png';
-import CleanCode from './Benefitsimages/image 2(3).png';
-import BestSupport from './Benefitsimages/image 2(4).png';
 import { MdEnhancedEncryption, MdSupportAgent } from 'react-icons/md';
 import { FaPeopleGroup } from 'react-icons/fa6';
 import { HiComputerDesktop } from 'react-icons/hi2';

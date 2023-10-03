@@ -2,7 +2,7 @@ import React from 'react';
 import Feature from './Group 79.png'
 import { BsWindowDock } from 'react-icons/bs'
 
-const HomeComponents4 = () => {
+const HomePopularFeatures = () => {
     return (
         <div className='bg-gray-200'>
             <div className='px-4 py-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-20'>
@@ -38,7 +38,7 @@ const HomeComponents4 = () => {
                             </p>
 
                             <div className="mt-6">
-                                <div className="translate-y-64  transform opacity-100 transition-all group-hover:translate-y-0 group-hover:opacity-100">
+                                <div className="translate-y-64 duration-500 transform opacity-100 transition-all group-hover:translate-y-0 group-hover:opacity-100">
                                     <p className="text-sm">
                                         Scrape Listings: you can scrape product information from other marketplaces and stores and import them into your store
                                         Copy Listings: you can copy listings in bulk from one marketplace or store to another marketplace or store
@@ -71,12 +71,12 @@ const HomeComponents4 = () => {
 
                             </p>
 
-                            <p className="text-sm opacity-100 mt-6 transition-all group-hover:hidden">
+                            <p className="text-sm opacity-100 mt-6 duration-75 transition-all group-hover:hidden">
                                 Centralize orders across multiple sales channels, streamline order fulfillment process
                             </p>
 
                             <div className="mt-6">
-                                <div className="translate-y-64 transform opacity-100 transition-all group-hover:translate-y-0 group-hover:opacity-100">
+                                <div className="translate-y-64 duration-500  transform opacity-100 transition-all group-hover:translate-y-0 group-hover:opacity-100">
                                     <p className="text-sm">
                                         Support packing orders, printing shipping labels at high speed, managing returned items, and tracking packages
                                     </p>
@@ -114,7 +114,7 @@ const HomeComponents4 = () => {
                             </p>
 
                             <div className="mt-6">
-                                <div className="translate-y-64 transform opacity-100 transition-all group-hover:translate-y-0 group-hover:opacity-100">
+                                <div className="translate-y-64 transform opacity-100 transition-all group-hover:translate-y-0 group-hover:opacity-100 duration-700 duration-700">
                                     <p className="text-sm">
                                         You can customize the template of shipping labels and picking lists according to your need
                                     </p>
@@ -150,7 +150,7 @@ const HomeComponents4 = () => {
                             </p>
 
                             <div className="mt-6">
-                                <div className="translate-y-64 transform opacity-100 transition-all group-hover:translate-y-0 group-hover:opacity-100">
+                                <div className="translate-y-64 transform opacity-100 transition-all group-hover:translate-y-0 group-hover:opacity-100 duration-700">
                                     <p className="text-sm">
                                         Support managing the inventory of multiple warehouses and marketplaces. The system will intelligently deduct the stock when orders are shipped. Sound purchase suggestions are provided to prevent products from overselling
                                     </p>
@@ -187,7 +187,7 @@ const HomeComponents4 = () => {
                             </p>
 
                             <div className="mt-6">
-                                <div className="translate-y-64 transform opacity-100 transition-all group-hover:translate-y-0 group-hover:opacity-100">
+                                <div className="translate-y-64 transform opacity-100 transition-all group-hover:translate-y-0 group-hover:opacity-100 duration-700">
                                     <p className="text-sm">
                                         Auto Reply: after you set up auto-reply rules, the system will automatically reply to the reviews of buyers
                                         Auto Boost: Only Shopee available. The selected products will be auto bumped by the system every four hours
@@ -225,7 +225,7 @@ const HomeComponents4 = () => {
                             </p>
 
                             <div className="mt-6">
-                                <div className="translate-y-64 transform opacity-100 transition-all group-hover:translate-y-0 group-hover:opacity-100">
+                                <div className="translate-y-64 transform opacity-100 transition-all group-hover:translate-y-0 group-hover:opacity-100 duration-700">
                                     <p className="text-sm">
                                         Product Image Watermark: you can save multiple watermark templates and add them to product images in bulk
                                         Marketing Watermark: you can save multiple marketing watermark templates and add them to the promotional products with one click
@@ -262,7 +262,7 @@ const HomeComponents4 = () => {
                             </p>
 
                             <div className="mt-6">
-                                <div className="translate-y-64 transform opacity-100 transition-all group-hover:translate-y-0 group-hover:opacity-100">
+                                <div className="translate-y-64 transform opacity-100 transition-all group-hover:translate-y-0 group-hover:opacity-100 duration-700">
                                     <p className="text-sm">
                                         Advanced Reports: various kinds of data reports, including business reports, invoice reports, and shipping reports, are generated for you to gain insight into your current business performance
                                     </p>
@@ -297,7 +297,7 @@ const HomeComponents4 = () => {
                             </p>
 
                             <div className="mt-6">
-                                <div className="translate-y-64  transform opacity-100 transition-all group-hover:translate-y-0 group-hover:opacity-100">
+                                <div className="translate-y-64  transform opacity-100 transition-all group-hover:translate-y-0 group-hover:opacity-100 duration-500">
                                     <p className="text-sm">
                                         Package Tracking: 17 Track is integrated with BigSeller to track packages and provide you with the latest logistics information
                                     </p>
@@ -312,4 +312,4 @@ const HomeComponents4 = () => {
     );
 };
 
-export default HomeComponents4;
+export default HomePopularFeatures;

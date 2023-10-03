@@ -2,9 +2,9 @@ import React from 'react';
 import banar1 from './ezgif-4-cf6b47b9c2 2.png'
 import banar2 from './Screenshot ss2020-04-09 at 9 1.png'
 
-const HomeComponents5 = () => {
+const HomeHowWeWork = () => {
     return (
-        <div className='bg-gray-100'>
+        <div className='bg-[#F2F3F7]'>
             <div className='px-4 py-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-20'>
                 <h1 className='text-4xl font-extrabold text-center font-inner'>How We Work</h1>
                 <div className='flex justify-center mt-10'>
@@ -36,4 +36,4 @@ const HomeComponents5 = () => {
     );
 };
 
-export default HomeComponents5;
+export default HomeHowWeWork;

@@ -3,7 +3,7 @@ import { MdPlayCircleFilled } from "react-icons/md";
 import Bg from './Group 1000005940.png'
 import YoutubeModal from '../YoutubeModal';
 
-const HomeComponents1 = () => {
+const HomeHero = () => {
 
     const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -64,4 +64,4 @@ const HomeComponents1 = () => {
     );
 };
 
-export default HomeComponents1;
+export default HomeHero;

@@ -80,14 +80,29 @@ const Header = () => {
                         Sign up
                     </Link>
                     :
-                    <Link
-                        to='/dashboard'
-                        className="inline-flex items-center justify-center h-12 px-6  tracking-wide text-white transition duration-200 rounded shadow-md bg-black hover:bg-black focus:shadow-outline focus:outline-none"
-                        aria-label="Sign up"
-                        title="Sign up"
-                    >
-                        Dashboard
-                    </Link>
+                    <>
+                        {
+                            user.role === 'supperadmin' &&
+                            < Link
+                                to='admin/dashboard'
+                                className="inline-flex items-center justify-center h-12 px-6  tracking-wide text-white transition duration-200 rounded shadow-md bg-black hover:bg-black focus:shadow-outline focus:outline-none"
+                                aria- label="Sign up"
+                                title="Sign up"
+                            >
+                                Dashboard
+                            </Link> ||
+                            user.role === 'seller' &&
+                            < Link
+                                to='seller/dashboard'
+                                className="inline-flex items-center justify-center h-12 px-6  tracking-wide text-white transition duration-200 rounded shadow-md bg-black hover:bg-black focus:shadow-outline focus:outline-none"
+                                aria- label="Sign up"
+                                title="Sign up"
+                            >
+                                Dashboard
+                            </Link>
+
+                        }
+                    </>
             }
         </li>
     </>
