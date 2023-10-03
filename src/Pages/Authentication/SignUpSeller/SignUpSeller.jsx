@@ -23,17 +23,18 @@ const SignUpSeller = () => {
         const name = form.name.value;
         const email = form.email.value;
         const password = form.password.value
-        const data = {
-            name,
-            email,
-            password
-        }
+
+        const userId = email.split('@')[0];
+        console.log(userId);
+
+
         setLoading(true)
         if (password.length >= 6) {
             RegistrationInEmail(email, password)
                 .then((result) => {
                     const uid = result.user.uid
-                    const user = { uid, name, email, password }
+                    const role = 'seller'
+                    const user = { uid, name, email, password, userId, role }
                     // Update user
                     updateProfile(result.user, {
                         displayName: name,
@@ -60,8 +61,15 @@ const SignUpSeller = () => {
                 })
 
                 .catch((error) => {
-                    const message = error.message.split("Error");
-                    setPassError(message.slice(1, 500));
+                    const message = error.message;
+                    console.log(message);
+                    if (message == 'Firebase: Error (auth/invalid-email).') {
+                        setPassError('Your email is not correct. Please provide a valid email.')
+                    }
+                    else if (message == 'Firebase: Error (auth/email-already-in-use).') {
+                        setPassError('This mail is already use. Please go to Login')
+                    }
+                    // setPassError(message);
                     setLoading(false)
                 });
         } else {
@@ -156,6 +164,7 @@ const SignUpSeller = () => {
                                                 <input
                                                     placeholder="*******"
                                                     required
+                                                    onChange={() => setPassError('')}
                                                     type={showPassword ? 'text' : 'password'}
                                                     className="flex-grow w-full re h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
                                                     id="password"

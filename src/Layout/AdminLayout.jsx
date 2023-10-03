@@ -1,15 +1,20 @@
 import React from 'react';
-import Header from '../Pages/Components/Header/Header';
 import { Outlet } from 'react-router-dom';
-import SideNav from '../Pages/Dashboard/SideNav/SideNav';
+import SideNavAdmin from '../Pages/Dashboard/SideNavAdmin/SideNavAdmin';
+import MiniSideberAdmin from '../Pages/Dashboard/SideNavAdmin/MiniSideberAdmin';
 
 const AdminLayout = () => {
     return (
         <div>
-            <Header></Header>
-            <div className='flex gap-2 px-4 py-5 mx-auto  sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8'>
-                <SideNav></SideNav>
-                <Outlet />
+
+            <div className='flex gap-8 px-4  mx-auto  sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8'>
+                <SideNavAdmin />
+                <div className='w-full'>
+                    <Outlet />
+                </div>
+                <div className='fixed right-0'>
+                    <MiniSideberAdmin />
+                </div>
             </div>
         </div>
     );

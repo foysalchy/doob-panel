@@ -9,6 +9,12 @@ import ForgetPass from "../Pages/Authentication/ForgetPass/ForgetPass";
 import Trams from "../Pages/Trams & Condition/Trams";
 import AdminLayout from "../Layout/AdminLayout";
 import AdminDashboard from "../Pages/Dashboard/AdminDashboard";
+import UserLayout from "../Layout/UserLayout";
+import HomeSeller from "../Pages/HomeSeller/HomeSeller.jsx/HomeSeller";
+import SellerDashLayout from "../Layout/SellerDashLayout";
+import SellerDashboard from "../Pages/Dashboard/SellerDashboard/SellerDashboard";
+import ShopHome from "../Pages/Shop/ShopHome/ShopHome";
+
 
 const Router = createBrowserRouter([
     {
@@ -46,13 +52,63 @@ const Router = createBrowserRouter([
         ],
     },
     {
-        path: "/dashboard",
+        path: "/shop",
+        element: <MainLayout />,
+        children: [
+            {
+                path: '*',
+                element: <Home></Home>
+            },
+            {
+                path: '/shop/:id',
+                element: <ShopHome />
+            },
+
+
+        ],
+    },
+    {
+        path: "/admin/dashboard",
         element: <AdminLayout />,
         children: [
             {
-                path: '/dashboard',
+                path: '*',
                 element: <AdminDashboard />
-            }
+            },
+
+        ]
+    },
+    {
+        path: "/admin",
+        element: <MainLayout />,
+        children: [
+            {
+                path: '*',
+                element: <Home />
+            },
+
+        ]
+    },
+    {
+        path: "/seller",
+        element: <UserLayout />,
+        children: [
+            {
+                path: '*',
+                element: <HomeSeller />
+            },
+
+        ]
+    },
+    {
+        path: "/seller/dashboard",
+        element: <SellerDashLayout />,
+        children: [
+            {
+                path: '*',
+                element: <SellerDashboard />
+            },
+
         ]
     }
 ]);

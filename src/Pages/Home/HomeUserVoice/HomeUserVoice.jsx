@@ -1,6 +1,6 @@
 import React from 'react';
 
-const HomeComponents6 = () => {
+const HomeUserVoice = () => {
     return (
         <div className='px-4 py-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-20'>
             <div>
@@ -30,7 +30,7 @@ const HomeComponents6 = () => {
                     </div>
                     <div className="flex flex-col items-center justify-center p-8 rounded-b-lg bg-black text-gray-100    ">
                         <img src="https://source.unsplash.com/50x50/?portrait/2023" alt="" className="w-16 h-16 mb-2 -mt-16 bg-center bg-cover rounded-full bg-gray-500 " />
-                        <p className="text-xl font-semibold leadi">– Sudaryanto</p>
+                        <p className="text-xl font-semibold leadi">Sudaryanto</p>
 
                     </div>
                 </div>
@@ -50,8 +50,8 @@ const HomeComponents6 = () => {
                         </p>
                     </div>
                     <div className="flex flex-col items-center justify-center p-8 rounded-b-lg bg-black text-gray-100    ">
-                        <img src="https://source.unsplash.com/50x50/?portrait?2" alt="" className="w-16 h-16 mb-2 -mt-16 bg-center bg-cover rounded-full bg-gray-500 " />
-                        <p className="text-xl font-semibold leadi">Distinctio Animi</p>
+                        <img src="https://source.unsplash.com/50x50/?portrait/522" alt="" className="w-16 h-16 mb-2 -mt-16 bg-center bg-cover rounded-full bg-gray-500 " />
+                        <p className="text-xl font-semibold leadi">Arif Ahamed</p>
 
                     </div>
                 </div>
@@ -72,7 +72,7 @@ const HomeComponents6 = () => {
                     </div>
                     <div className="flex flex-col items-center justify-center p-8 rounded-b-lg bg-black text-gray-100    ">
                         <img src="https://source.unsplash.com/50x50/?portrait?3" alt="" className="w-16 h-16 mb-2 -mt-16 bg-center bg-cover rounded-full bg-gray-500 " />
-                        <p className="text-xl font-semibold leadi">Distinctio Animi</p>
+                        <p className="text-xl font-semibold leadi">Salma Hoq</p>
 
                     </div>
                 </div>
@@ -86,4 +86,4 @@ const HomeComponents6 = () => {
     );
 };
 
-export default HomeComponents6;
+export default HomeUserVoice;

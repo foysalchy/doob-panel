@@ -1,8 +1,9 @@
 import React, { useContext, useState } from 'react';
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
-import { Link } from 'react-router-dom';
+import { Link, unstable_HistoryRouter } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { AuthContext } from '../../../AuthProvider/UserProvider';
+import { useNavigate } from "react-router-dom";
 
 
 
@@ -13,8 +14,10 @@ const SignInSeller = () => {
     const [showAlert, setShowAlert] = useState(false);
     const [alertMessage, setAlertMessage] = useState('');
     const [loading, setLoading] = useState(false)
+    const navigate = useNavigate()
 
-    const { setUser } = useContext(AuthContext)
+
+    const { setCookie, setUser } = useContext(AuthContext)
 
 
 
@@ -43,18 +46,35 @@ const SignInSeller = () => {
         })
             .then((res) => res.json())
             .then((data) => {
-                data.user && setUser(data.user)
+                if (data.user) {
+                    setCookie('user', JSON.stringify(data.user))
+                    setUser(data.user)
+                    setLoading(false)
+                    setPassError('')
+                    console.log(data.user.role);
+                    Swal.fire(
+                        'Login Successful',
+                        'You are a valid user. Best of luck',
+                        'success'
+                    )
+                    if (data.user.role === 'supperadmin') {
+                        navigate('/admin/dashboard');
+                    }
+                    if (data.user.role === 'seller') {
+                        navigate('/seller/dashboard');
+                    }
+                    setLoading(false)
 
-                {
-                    data.user &&
-                        Swal.fire(
-                            'Login Successful',
-                            'You are a valid user. Best of luck',
-                            'success'
-                        )
-                        ||
-                        setPassError(data.message)
                 }
+
+
+
+                setPassError(data.message)
+
+                setLoading(false)
+
+
+
 
                 setLoading(false)
 
@@ -160,7 +180,7 @@ const SignInSeller = () => {
                                             type="submit"
                                             className="inline-flex items-center justify-center w-full h-12 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md hover:bg-black bg-gray-800 focus:shadow-outline focus:outline-none"
                                         >
-                                            Sign Up
+                                            Sign in
                                         </button>
                                             :
                                             <button
