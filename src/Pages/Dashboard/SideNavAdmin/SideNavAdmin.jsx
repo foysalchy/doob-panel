@@ -11,6 +11,7 @@ import { AiOutlineAlert, AiOutlineClose } from 'react-icons/ai';
 import { BsChatLeftQuote, BsTicketDetailed } from 'react-icons/bs';
 import { GiNotebook } from 'react-icons/gi';
 import { IoLogOut, IoSettings, } from 'react-icons/io5';
+import { NavLink } from 'react-router-dom';
 
 const SideNavAdmin = () => {
     const { user, logOut } = useContext(AuthContext)
@@ -87,10 +88,10 @@ const SideNavAdmin = () => {
                                 </a>
                             </li>
                             <li className="rounded-sm hover:bg-gray-800 hover:text-gray-50">
-                                <a rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
+                                <NavLink to='/admin/blog' rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
                                     <FaBlogger className="w-5 h-5 fill-current text-gray-400" />
                                     {menu && <span>Blogs</span>}
-                                </a>
+                                </NavLink>
                             </li>
                             <li>
                                 <details className="group [&_summary::-webkit-details-marker]:hidden">
