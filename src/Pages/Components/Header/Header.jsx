@@ -40,14 +40,14 @@ const Header = () => {
             </a>
         </li>
         <li>
-            <a
-                href="/"
+            <NavLink
+                to="/blogs"
                 aria-label="About us"
                 title="About us"
                 className=" tracking-wide text-gray-700 transition-colors duration-200 font-semibold hover:text-black"
             >
                 Blog
-            </a>
+            </NavLink>
         </li>
         <li>
             <a

@@ -1,11 +1,9 @@
-import React, { useMemo, useRef, useState } from 'react';
-import { useQuill } from 'react-quilljs';
-import 'quill/dist/quill.snow.css';
-
+import React, { useState } from 'react';
+import JoditEditor from 'jodit-react';
 
 const AddBlog = () => {
 
-    const { quill, quillRef } = useQuill();
+
 
 
     const [selectedFile, setSelectedFile] = useState(null);
@@ -34,7 +32,7 @@ const AddBlog = () => {
         const form = event.target
         const title = form.title.value
         const image = form.photo.files[0]
-        const message = quill
+        const message = form.message.value
 
         const formData = new FormData()
         formData.append('image', image)
@@ -138,7 +136,10 @@ const AddBlog = () => {
 
                         <div>
                             <div >
-                                <div ref={quillRef} />
+                                <JoditEditor name='message'
+                                    id="message">
+
+                                </JoditEditor>
                             </div>
 
                         </div>
