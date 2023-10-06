@@ -1,16 +1,19 @@
 import React, { useContext, useState } from 'react';
-import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai'
+import { AiFillCheckSquare, AiFillEye, AiFillEyeInvisible, AiTwotoneCheckSquare } from 'react-icons/ai'
 import Image from './wallpaperflare.com_wallpaper.jpg'
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../../AuthProvider/UserProvider';
 import { updateProfile } from 'firebase/auth';
 import Swal from 'sweetalert2';
+import { BiCheckbox } from "react-icons/bi";
 
 const SignUpSeller = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [passError, setPassError] = useState(false)
     const [loading, setLoading] = useState(false)
     const { RegistrationInEmail } = useContext(AuthContext)
+    const [shop, setShop] = useState(false)
+
 
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
@@ -19,10 +22,13 @@ const SignUpSeller = () => {
     const signUpData = (event) => {
 
         event.preventDefault();
+        let shopName = ''
         const form = event.target;
         const name = form.name.value;
         const email = form.email.value;
         const password = form.password.value
+        shopName = form?.shopName?.value
+        let role = 'user'
 
         const userId = email.split('@')[0];
         console.log(userId);
@@ -30,48 +36,52 @@ const SignUpSeller = () => {
 
         setLoading(true)
         if (password.length >= 6) {
-            RegistrationInEmail(email, password)
-                .then((result) => {
-                    const uid = result.user.uid
-                    const role = 'seller'
-                    const user = { uid, name, email, password, userId, role }
-                    // Update user
-                    updateProfile(result.user, {
-                        displayName: name,
-                    });
 
-                    setPassError('')
 
-                    fetch("http://localhost:5000/signup", {
-                        method: "post",
-                        headers: {
-                            "content-type": "application/json",
-                        },
-                        body: JSON.stringify(user),
-                    })
-                        .then((res) => res.json())
-                        .then((data) => {
 
-                            Swal.fire(
-                                "Your registration is complete",
-                                "success"
-                            );
-                            setLoading(false)
-                        });
-                })
+            if (shop) {
+                role = 'seller'
+            }
+            let user = { name, email, password, userId, role }
+            if (shop) {
+                user = { name, email, password, userId, role, shopName }
+            }
+            // Update user
 
-                .catch((error) => {
-                    const message = error.message;
-                    console.log(message);
-                    if (message == 'Firebase: Error (auth/invalid-email).') {
-                        setPassError('Your email is not correct. Please provide a valid email.')
+
+            setPassError('')
+
+            fetch("http://localhost:5000/signup", {
+                method: "post",
+                headers: {
+                    "content-type": "application/json",
+                },
+                body: JSON.stringify(user),
+            })
+                .then((res) => res.json())
+                .then((data) => {
+                    const result = data.result
+                    if (result) {
+                        Swal.fire(
+                            "Success",
+                            "Your registration is complete",
+                            "success"
+                        );
+                        setLoading(false)
+                        form.reset()
                     }
-                    else if (message == 'Firebase: Error (auth/email-already-in-use).') {
-                        setPassError('This mail is already use. Please go to Login')
+                    else {
+                        setPassError(data.message)
                     }
-                    // setPassError(message);
+
                     setLoading(false)
+                    form.reset()
+
+
                 });
+
+
+
         } else {
             setPassError("Please enter six digit password");
             setLoading(false)
@@ -120,6 +130,7 @@ const SignUpSeller = () => {
                                         Sign up for updates
                                     </h3>
                                     <form
+                                        onChange={() => setPassError('')}
                                         onSubmit={signUpData}>
                                         <div className="mb-1 sm:mb-2">
                                             <label
@@ -153,6 +164,7 @@ const SignUpSeller = () => {
                                                 name="email"
                                             />
                                         </div>
+
                                         <div className="mb-1 sm:mb-2">
                                             <label
                                                 htmlFor="email"
@@ -183,8 +195,35 @@ const SignUpSeller = () => {
                                                 </span>}
                                             </div>
                                         </div>
-                                        <p className='text-sm text-red-500'>{passError}</p>
 
+
+                                        {!shop ? <div className='flex gap-1 cursor-pointer' onClick={() => setShop(true)}>
+                                            <AiTwotoneCheckSquare className='text-2xl ' />
+                                            <p className=''>Are you Seller?</p>
+                                        </div>
+                                            :
+                                            <div className='flex gap-1 cursor-pointer' onClick={() => setShop(false)}>
+                                                <AiFillCheckSquare className='text-2xl ' />
+                                                <p className=''>Yes I'm Seller</p>
+                                            </div>}
+
+                                        {shop && <div className="mb-1 sm:mb-2">
+                                            <label
+                                                htmlFor="email"
+                                                className="inline-block mb-1 font-medium"
+                                            >
+                                                Shop Name
+                                            </label>
+                                            <input
+                                                placeholder="Sell Now"
+                                                required={shop}
+                                                type="text"
+                                                className="flex-grow w-full h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
+                                                id="shopName"
+                                                name="shopName"
+                                            />
+                                        </div>}
+                                        <p className='text-sm text-red-500'>{passError}</p>
                                         <div className="mt-4 mb-2 sm:mb-4">
                                             {!loading ? <button
                                                 type="submit"

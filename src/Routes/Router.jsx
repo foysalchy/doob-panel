@@ -14,6 +14,11 @@ import HomeSeller from "../Pages/HomeSeller/HomeSeller.jsx/HomeSeller";
 import SellerDashLayout from "../Layout/SellerDashLayout";
 import SellerDashboard from "../Pages/Dashboard/SellerDashboard/SellerDashboard";
 import ShopHome from "../Pages/Shop/ShopHome/ShopHome";
+import AdminBlogs from "../Pages/AdminItem/Blogs/AdminBlogs";
+import AdminRoute from "./AdminRouter";
+import AddBlog from "../Pages/AdminItem/Blogs/AddBlog";
+import SupperAdminRouter from "./SupperAdminRouter";
+import Product from "../Pages/Product/Product";
 
 
 const Router = createBrowserRouter([
@@ -21,6 +26,10 @@ const Router = createBrowserRouter([
         path: "/",
         element: <MainLayout />,
         children: [
+            {
+                path: '*',
+                element: <Error />
+            },
             {
                 path: '/',
                 element: <Home></Home>
@@ -46,60 +55,62 @@ const Router = createBrowserRouter([
                 element: <Trams />,
             },
             {
-                path: '*',
-                element: <Error />
-            }
-        ],
-    },
-    {
-        path: "/shop",
-        element: <MainLayout />,
-        children: [
-            {
-                path: '*',
-                element: <Home></Home>
+                path: "/products",
+                element: <Product />,
             },
-            {
-                path: '/shop/:id',
-                element: <ShopHome />
-            },
-
 
         ],
     },
+    // {
+    //     path: "/shop",
+    //     element: <MainLayout />,
+    //     children: [
+    //         {
+    //             path: '*',
+    //             element: <Home></Home>
+    //         },
+    //         {
+    //             path: '/shop/:id',
+    //             element: <ShopHome />
+    //         },
+
+
+    //     ],
+    // },
     {
-        path: "/admin/dashboard",
+        path: '/admin',
         element: <AdminLayout />,
         children: [
+            // {
+            //     path: '*', // Wildcard route for any unknown paths under '/admin'
+            //     element: <AdminRoute><AdminDashboard /> </AdminRoute>
+            // },
             {
-                path: '*',
-                element: <AdminDashboard />
+                path: 'dashboard',
+                element: <SupperAdminRouter> <AdminDashboard /></SupperAdminRouter>
             },
-
+            {
+                path: 'blog',
+                element: <SupperAdminRouter> <AdminBlogs /></SupperAdminRouter>
+            },
+            {
+                path: 'new-blog',
+                element: <SupperAdminRouter> <AddBlog /></SupperAdminRouter>
+            },
+            // Add more child routes as needed
         ]
     },
-    {
-        path: "/admin",
-        element: <MainLayout />,
-        children: [
-            {
-                path: '*',
-                element: <Home />
-            },
+    // {
+    //     path: "/seller",
+    //     element: <UserLayout />,
+    //     children: [
+    //         {
+    //             path: '*',
+    //             element: <HomeSeller />
+    //         },
 
-        ]
-    },
-    {
-        path: "/seller",
-        element: <UserLayout />,
-        children: [
-            {
-                path: '*',
-                element: <HomeSeller />
-            },
-
-        ]
-    },
+    //     ]
+    // },
     {
         path: "/seller/dashboard",
         element: <SellerDashLayout />,
