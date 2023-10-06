@@ -19,6 +19,7 @@ import AdminRoute from "./AdminRouter";
 import AddBlog from "../Pages/AdminItem/Blogs/AddBlog";
 import SupperAdminRouter from "./SupperAdminRouter";
 import Product from "../Pages/Product/Product";
+import AdminBlogPage from "../Pages/AdminItem/AdminBlogPage";
 
 
 const Router = createBrowserRouter([
@@ -57,6 +58,10 @@ const Router = createBrowserRouter([
             {
                 path: "/products",
                 element: <Product />,
+            },
+            {
+                path: "/blogs",
+                element: <AdminBlogPage />,
             },
 
         ],
