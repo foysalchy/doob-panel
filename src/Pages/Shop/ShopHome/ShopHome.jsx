@@ -1,11 +1,11 @@
-import React from 'react';
+import React from "react";
 
 const ShopHome = () => {
-    return (
-        <div>
-            <h1>This is Shop Home</h1>
-        </div>
-    );
+  return (
+    <div className="h">
+      <h1>This is Shop Home</h1>
+    </div>
+  );
 };
 
 export default ShopHome;

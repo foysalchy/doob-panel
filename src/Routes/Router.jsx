@@ -23,123 +23,147 @@ import AdminBlogPage from "../Pages/AdminItem/AdminBlogPage";
 import AddProduct from "../Pages/AdminItem/Products/AddProduct";
 import ManageProduct from "../Pages/AdminItem/Products/ManageProduct/ManageProduct";
 
-
 const Router = createBrowserRouter([
-    {
+  {
+    path: "/",
+    element: <MainLayout />,
+    children: [
+      {
+        path: "*",
+        element: <Error />,
+      },
+      {
         path: "/",
-        element: <MainLayout />,
-        children: [
-            {
-                path: '*',
-                element: <Error />
-            },
-            {
-                path: '/',
-                element: <Home></Home>
-            },
-            {
-                path: "/about",
-                element: <About />,
-            },
-            {
-                path: "/sign-up",
-                element: <SignUpSeller />,
-            },
-            {
-                path: "/sign-in",
-                element: <SignInSeller />,
-            },
-            {
-                path: "/forget-pass",
-                element: <ForgetPass />,
-            },
-            {
-                path: "/terms",
-                element: <Trams />,
-            },
-            {
-                path: "/products",
-                element: <Product />,
-            },
-            {
-                path: "/blogs",
-                element: <AdminBlogPage />,
-            },
+        element: <Home></Home>,
+      },
+      {
+        path: "/about",
+        element: <About />,
+      },
+      {
+        path: "/sign-up",
+        element: <SignUpSeller />,
+      },
+      {
+        path: "/sign-in",
+        element: <SignInSeller />,
+      },
+      {
+        path: "/forget-pass",
+        element: <ForgetPass />,
+      },
+      {
+        path: "/terms",
+        element: <Trams />,
+      },
+      {
+        path: "/products",
+        element: <Product />,
+      },
+      {
+        path: "/blogs",
+        element: <AdminBlogPage />,
+      },
+    ],
+  },
+  // {
+  //     path: "/shop",
+  //     element: <MainLayout />,
+  //     children: [
+  //         {
+  //             path: '*',
+  //             element: <Home></Home>
+  //         },
+  //         {
+  //             path: '/shop/:id',
+  //             element: <ShopHome />
+  //         },
 
-        ],
-    },
-    // {
-    //     path: "/shop",
-    //     element: <MainLayout />,
-    //     children: [
-    //         {
-    //             path: '*',
-    //             element: <Home></Home>
-    //         },
-    //         {
-    //             path: '/shop/:id',
-    //             element: <ShopHome />
-    //         },
+  //     ],
+  // },
+  {
+    path: "/admin",
+    element: <AdminLayout />,
+    children: [
+      // {
+      //     path: '*', // Wildcard route for any unknown paths under '/admin'
+      //     element: <AdminRoute><AdminDashboard /> </AdminRoute>
+      // },
+      {
+        path: "dashboard",
+        element: (
+          <SupperAdminRouter>
+            {" "}
+            <AdminDashboard />
+          </SupperAdminRouter>
+        ),
+      },
+      {
+        path: "blog",
+        element: (
+          <SupperAdminRouter>
+            {" "}
+            <AdminBlogs />
+          </SupperAdminRouter>
+        ),
+      },
+      {
+        path: "blog",
+        element: (
+          <SupperAdminRouter>
+            {" "}
+            <AdminBlogs />
+          </SupperAdminRouter>
+        ),
+      },
+      {
+        path: "new-blog",
+        element: (
+          <SupperAdminRouter>
+            {" "}
+            <AddBlog />
+          </SupperAdminRouter>
+        ),
+      },
+      {
+        path: "addproduct",
+        element: (
+          <SupperAdminRouter>
+            <AddProduct />
+          </SupperAdminRouter>
+        ),
+      },
+      {
+        path: "manageproduct",
+        element: (
+          <SupperAdminRouter>
+            <ManageProduct />
+          </SupperAdminRouter>
+        ),
+      },
+      // Add more child routes as needed
+    ],
+  },
+  // {
+  //     path: "/seller",
+  //     element: <UserLayout />,
+  //     children: [
+  //         {
+  //             path: '*',
+  //             element: <HomeSeller />
+  //         },
 
-
-    //     ],
-    // },
-    {
-        path: '/admin',
-        element: <AdminLayout />,
-        children: [
-            // {
-            //     path: '*', // Wildcard route for any unknown paths under '/admin'
-            //     element: <AdminRoute><AdminDashboard /> </AdminRoute>
-            // },
-            {
-                path: 'dashboard',
-                element: <SupperAdminRouter> <AdminDashboard /></SupperAdminRouter>
-            },
-            {
-                path: 'blog',
-                element: <SupperAdminRouter> <AdminBlogs /></SupperAdminRouter>
-            },
-            {
-                path: 'blog',
-                element: <SupperAdminRouter> <AdminBlogs /></SupperAdminRouter>
-            },
-            {
-                path: 'new-blog',
-                element: <SupperAdminRouter> <AddBlog /></SupperAdminRouter>
-            },
-            {
-                path: 'addproduct',
-                element: <SupperAdminRouter> <AddProduct /></SupperAdminRouter>
-            },
-            {
-                path: 'manageproduct',
-                element: <SupperAdminRouter> <ManageProduct /></SupperAdminRouter>
-            },
-            // Add more child routes as needed
-        ]
-    },
-    // {
-    //     path: "/seller",
-    //     element: <UserLayout />,
-    //     children: [
-    //         {
-    //             path: '*',
-    //             element: <HomeSeller />
-    //         },
-
-    //     ]
-    // },
-    {
-        path: "/seller/dashboard",
-        element: <SellerDashLayout />,
-        children: [
-            {
-                path: '*',
-                element: <SellerDashboard />
-            },
-
-        ]
-    }
+  //     ]
+  // },
+  {
+    path: "/seller/dashboard",
+    element: <SellerDashLayout />,
+    children: [
+      {
+        path: "*",
+        element: <SellerDashboard />,
+      },
+    ],
+  },
 ]);
-export default Router
+export default Router;
