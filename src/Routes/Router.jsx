@@ -20,6 +20,8 @@ import AddBlog from "../Pages/AdminItem/Blogs/AddBlog";
 import SupperAdminRouter from "./SupperAdminRouter";
 import Product from "../Pages/Product/Product";
 import AdminBlogPage from "../Pages/AdminItem/AdminBlogPage";
+import AddProduct from "../Pages/AdminItem/Products/AddProduct";
+import ManageProduct from "../Pages/AdminItem/Products/ManageProduct/ManageProduct";
 
 
 const Router = createBrowserRouter([
@@ -99,8 +101,20 @@ const Router = createBrowserRouter([
                 element: <SupperAdminRouter> <AdminBlogs /></SupperAdminRouter>
             },
             {
+                path: 'blog',
+                element: <SupperAdminRouter> <AdminBlogs /></SupperAdminRouter>
+            },
+            {
                 path: 'new-blog',
                 element: <SupperAdminRouter> <AddBlog /></SupperAdminRouter>
+            },
+            {
+                path: 'addproduct',
+                element: <SupperAdminRouter> <AddProduct /></SupperAdminRouter>
+            },
+            {
+                path: 'manageproduct',
+                element: <SupperAdminRouter> <ManageProduct /></SupperAdminRouter>
             },
             // Add more child routes as needed
         ]
