@@ -17,7 +17,7 @@ const SellerRoute = ({ children }) => {
                 <h1 className="text-center text-2xl py-52">
                     You are not authorized to access this page. Please login as an Seller.
                     <br />
-                    <Link to="/login">
+                    <Link to="/sign-in">
                         <button className="btn btn-primary mt-6">Login</button>
                     </Link>
                 </h1>
@@ -29,7 +29,7 @@ const SellerRoute = ({ children }) => {
         return children
     }
 
-    return <Navigate to="/login" state={{ from: location }} replace></Navigate>
+    return <Navigate to="/sign-in" state={{ from: location }} replace></Navigate>
 };
 
 export default SellerRoute;

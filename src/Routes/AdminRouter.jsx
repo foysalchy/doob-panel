@@ -15,7 +15,7 @@ const AdminRoute = ({ children }) => {
                 <h1 className="text-center text-2xl py-52">
                     You are not authorized to access this page. Please login as an admin.
                     <br />
-                    <Link to="/login">
+                    <Link to="/sign-in">
                         <button className="btn btn-primary mt-6">Login</button>
                     </Link>
                 </h1>
