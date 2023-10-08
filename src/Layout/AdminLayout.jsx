@@ -7,15 +7,18 @@ const AdminLayout = () => {
     return (
         <div>
 
-            <div className='flex gap-8 px-4  mx-auto  sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8'>
+            <div className='flex gap-8 px-4 '>
                 <SideNavAdmin />
-                <div className='w-full'>
-                    <Outlet />
-                </div>
-                <div className='fixed right-0'>
+
+                <Outlet />
+
+                <div className='fixed right-0 w-[5%]'>
                     <MiniSideberAdmin />
                 </div>
             </div>
+
+
+
         </div>
     );
 };

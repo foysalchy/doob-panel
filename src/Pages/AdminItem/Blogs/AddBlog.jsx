@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import JoditEditor from "jodit-react";
+import Swal from "sweetalert2";
 
 const AddBlog = () => {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -60,7 +61,7 @@ const AddBlog = () => {
       .then((res) => res.json())
       .then((data) => {
         setLoading(false);
-        Swal.fire("Your Blog Publish Successfully", " ", "success");
+        Swal.fire("success", "Your Blog Publish Successfully", "success");
 
         form.reset();
         setPreviewUrl("");

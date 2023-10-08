@@ -69,13 +69,13 @@ const SideNavAdmin = () => {
                             </svg>
 
                         </a>}
-                        {menu ? <button className="p-2">
+                        {!menu ? <button className="p-2">
 
-                            <HiOutlineMenu onClick={() => setMenu(false)} className="w-5 h-5 fill-current text-gray-900" />
+                            <HiOutlineMenu onClick={() => setMenu(true)} className="w-5 h-5 fill-current text-gray-900" />
                         </button> :
                             <button className="p-2">
 
-                                <AiOutlineClose onClick={() => setMenu(true)} className="w-5 h-5 fill-current text-gray-900" />
+                                <AiOutlineClose onClick={() => setMenu(false)} className="w-5 h-5 fill-current text-gray-900" />
                             </button>}
                     </div>
 
@@ -238,8 +238,8 @@ const SideNavAdmin = () => {
                         </span>
                     </div>}
                 </div>
-            </div >
-        </div >
+            </div>
+        </div>
     );
 };
 

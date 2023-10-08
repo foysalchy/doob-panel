@@ -2,9 +2,9 @@ import React from 'react';
 
 const AdminDashboard = () => {
     return (
-        <div>
-            <div className='container py-10'>
-                <div className="p-6 rounded py-5 bg-violet-400 text-gray-900">
+        <div className='w-[70%]'>
+            <div className='py-10'>
+                <div className="p-6 rounded py-5 w-full bg-violet-400 text-gray-900">
                     <div className="container mx-auto">
                         <div className="flex flex-col lg:flex-row items-center justify-between">
                             <h2 className="text-center text-6xl tracki font-bold">Up to
