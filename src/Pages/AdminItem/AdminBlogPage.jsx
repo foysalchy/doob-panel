@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 const AdminBlogPage = () => {
     const [blogs, setBlogs] = useState([])
-    
+
     useEffect(() => {
 
         fetch('http://localhost:5000/admin/blogs')
@@ -39,13 +40,13 @@ const AdminBlogPage = () => {
                                     {blog.title}
                                 </a>
                                 <div className="mb-2 text-sm text-gray-700" dangerouslySetInnerHTML={{ __html: blog.message.slice(0, 150) + '...' }} />
-                                <a
-                                    href="/"
+                                <Link
+                                    to={`admin/blogs/${blog._id}`}
                                     aria-label=""
                                     className="inline-flex items-center font-semibold transition-colors duration-200 text-gay-400 hover:text-gray-800"
                                 >
                                     Read more
-                                </a>
+                                </Link>
                             </div>
                         </div>
                     ))}

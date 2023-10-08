@@ -1,19 +1,27 @@
+import { useQuery } from "@tanstack/react-query";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 const AdminBlogs = () => {
-  const [blogs, setBlogs] = useState([]);
 
-  useEffect(() => {
-    fetch("http://localhost:5000/admin/blogs")
-      .then((response) => response.json())
-      .then((data) => {
-        setBlogs(data);
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      });
-  }, []);
+
+
+
+  const {
+    data: blogs = [],
+    refetch,
+
+  } = useQuery({
+    queryKey: ["buyer"],
+    queryFn: async () => {
+      const res = await fetch(
+        "http://localhost:5000/admin/blogs",
+      );
+      const data = await res.json();
+      return data;
+    },
+  });
+
 
   const DeleteBlog = (id) => {
     console.log(id);
@@ -104,9 +112,9 @@ const AdminBlogs = () => {
                       Edit
                     </button>
 
-                    <button className="inline-block px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:relative">
+                    <Link to={`/admin/blogs/${blog._id}`} className="inline-block px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:relative">
                       View
-                    </button>
+                    </Link>
 
                     <button
                       onClick={() => DeleteBlog(blog._id)}
