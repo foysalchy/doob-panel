@@ -7,34 +7,29 @@ const AddProduct = () => {
 
   const handleFileChange = (e) => {
     const files = Array.from(e.target.files);
-    const nonEmptyFiles = files.filter(file => file.size > 0); // Filter out empty files
+    const nonEmptyFiles = files.filter((file) => file.size > 0); // Filter out empty files
     setImages([...images, ...nonEmptyFiles]);
   };
-
-
-
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     const form = event.target;
-    const image = images
+    const image = images;
     // const videoURL = form.videoURL.value
-    const productDescription = form.productDescription.value
-    const categoryName = form.categoryName.value
-    const productPrice = form.productPrice.value
-    const productName = form.productName.value
+    const productDescription = form.productDescription.value;
+    const categoryName = form.categoryName.value;
+    const productPrice = form.productPrice.value;
+    const productName = form.productName.value;
     const data = {
       image,
       // videoURL,
       productName,
       productPrice,
       categoryName,
-      productDescription
-    }
+      productDescription,
+    };
     console.log(data);
   };
-
-
 
   return (
     <div>
@@ -47,7 +42,6 @@ const AddProduct = () => {
             <div className="border border-collapse p-4">
               <h1 className="mb-4">Product Information</h1>
               <div className="grid lg:grid-cols-8 md:grid-cols-6 grid-cols-2 w-full gap-2">
-
                 <input
                   required
                   className="w-full"
@@ -98,7 +92,6 @@ const AddProduct = () => {
                   name="Image3"
                   onChange={handleFileChange}
                 />
-
               </div>
               <div className="mt-4">
                 <label className=" text-black text-sm " htmlFor="title">
@@ -109,7 +102,6 @@ const AddProduct = () => {
                   className="w-full mt-1 rounded-lg border border-gray-900 px-3 py-2 text-sm"
                   placeholder="https://www.youtube.com/watch?v=dQw4w9WgXcQ
                   "
-
                   id="title"
                   name="videoUrl"
                 />
@@ -208,8 +200,8 @@ const AddProduct = () => {
             </div>
           </form>
         </div>
-      </div >
-    </div >
+      </div>
+    </div>
   );
 };
 
