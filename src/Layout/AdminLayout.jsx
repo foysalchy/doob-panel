@@ -9,10 +9,14 @@ const AdminLayout = () => {
 
             <div className='flex gap-8 px-4 '>
                 <SideNavAdmin />
+                <div className='w-[70%]'>
 
-                <Outlet />
+                    <Outlet />
+                </div>
 
-                <div className='fixed right-0 w-[5%]'>
+
+
+                <div className='fixed right-0 '>
                     <MiniSideberAdmin />
                 </div>
             </div>

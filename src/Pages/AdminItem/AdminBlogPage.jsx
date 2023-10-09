@@ -41,7 +41,7 @@ const AdminBlogPage = () => {
                                 </a>
                                 <div className="mb-2 text-sm text-gray-700" dangerouslySetInnerHTML={{ __html: blog.message.slice(0, 150) + '...' }} />
                                 <Link
-                                    to={`admin/blogs/${blog._id}`}
+                                    to={`/blogs/${blog._id}`}
                                     aria-label=""
                                     className="inline-flex items-center font-semibold transition-colors duration-200 text-gay-400 hover:text-gray-800"
                                 >
