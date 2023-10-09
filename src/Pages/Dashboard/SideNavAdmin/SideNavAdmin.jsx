@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import { AuthContext } from '../../../AuthProvider/UserProvider';
 import { BiCategory, BiHomeAlt, BiSolidShoppingBags } from "react-icons/bi";
 import { HiOutlineMenu } from "react-icons/hi";
-import { FaBlogger, FaUsersGear } from 'react-icons/fa6';
+import { FaBlogger, FaStore, FaUsersGear } from 'react-icons/fa6';
 import { MdOutlineRoomPreferences, MdOutlineSubscriptions } from 'react-icons/md';
 import { HiOutlineUserGroup, HiOutlineUsers } from 'react-icons/hi2';
 import { SiGoogledomains } from 'react-icons/si';
@@ -82,10 +82,10 @@ const SideNavAdmin = () => {
                     <div className="flex-1">
                         <ul className="pt-2 pb-4 space-y-1 text-sm">
                             <li className="rounded-sm hover:bg-gray-800 hover:text-gray-50">
-                                <a rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
+                                <NavLink rel="noopener noreferrer" to='/admin/dashboard' className="flex items-center p-2 space-x-3 rounded-md">
                                     <BiHomeAlt className="w-5 h-5 fill-current text-gray-400" />
                                     {menu && <span>Home</span>}
-                                </a>
+                                </NavLink>
                             </li>
                             <li className="rounded-sm hover:bg-gray-800 hover:text-gray-50">
                                 <NavLink to='/admin/blog' rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
@@ -93,51 +93,19 @@ const SideNavAdmin = () => {
                                     {menu && <span>Blogs</span>}
                                 </NavLink>
                             </li>
-                            <li>
-                                <details className="group [&_summary::-webkit-details-marker]:hidden">
-                                    <summary
-                                        className="flex cursor-pointer items-center justify-between rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700"
-                                    >
-                                        <span className="text-sm font-medium"> Product Management </span>
+                            <li className="rounded-sm hover:bg-gray-800 hover:text-gray-50">
+                                <NavLink to='/admin/manageproduct' rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
+                                    <FaStore className="w-5 h-5 fill-current text-gray-400" />
+                                    {menu && <span> Products Management</span>}
+                                </NavLink>
+                            </li>
 
-                                        <span
-                                            className="shrink-0 transition duration-300 group-open:-rotate-180"
-                                        >
-                                            <svg
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                className="h-5 w-5"
-                                                viewBox="0 0 20 20"
-                                                fill="currentColor"
-                                            >
-                                                <path
-                                                    fillRule="evenodd"
-                                                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                                                    clipRule="evenodd"
-                                                />
-                                            </svg>
-                                        </span>
-                                    </summary>
 
-                                    <ul className="mt-2 space-y-1 px-4">
-                                        <li>
-                                            <NavLink
-                                                to="/admin/addproduct"
-                                                className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
-                                            >
-                                                Add Product
-                                            </NavLink>
-                                        </li>
-
-                                        <li>
-                                            <NavLink
-                                                to="/admin/manageproduct"
-                                                className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
-                                            >
-
-                                            </NavLink>
-                                        </li>
-                                    </ul>
-                                </details>
+                            <li className="rounded-sm hover:bg-gray-800 hover:text-gray-50">
+                                <NavLink rel="noopener noreferrer" to='/admin/addcategory' className="flex items-center p-2 space-x-3 rounded-md">
+                                    <FaUsersGear className="w-5 h-5 fill-current text-gray-400" />
+                                    {menu && <span>Category Management</span>}
+                                </NavLink>
                             </li>
                             <li className="rounded-sm hover:bg-gray-800 hover:text-gray-50">
                                 <a rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
@@ -146,10 +114,10 @@ const SideNavAdmin = () => {
                                 </a>
                             </li>
                             <li className="rounded-sm hover:bg-gray-800 hover:text-gray-50">
-                                <a rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
+                                <NavLink rel="noopener noreferrer" to={'/admin/pricemanagement'} className="flex items-center p-2 space-x-3 rounded-md">
                                     <AiOutlineAlert className="w-5 h-5 fill-current text-gray-400" />
-                                    {menu && <span> Dashboard Notice</span>}
-                                </a>
+                                    {menu && <span> Price Management</span>}
+                                </NavLink>
                             </li>
                             <li className="rounded-sm hover:bg-gray-800 hover:text-gray-50">
                                 <a rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
