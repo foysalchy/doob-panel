@@ -24,6 +24,7 @@ import AddProduct from "../Pages/AdminItem/Products/AddProduct";
 import ManageProduct from "../Pages/AdminItem/Products/ManageProduct/ManageProduct";
 import SingleBlog from "../Pages/Blogs/SingleBlog";
 import AdminSingleBlog from "../Pages/AdminItem/Blogs/AdminSingleBlog";
+import ProductDetails from "../Pages/Product/ProductDetails/ProductDetails";
 
 const Router = createBrowserRouter([
   {
@@ -61,6 +62,10 @@ const Router = createBrowserRouter([
       {
         path: "/products",
         element: <Product />,
+      },
+      {
+        path: "/products/:id",
+        element: <ProductDetails />,
       },
       {
         path: "/blogs",
@@ -157,9 +162,9 @@ const Router = createBrowserRouter([
           </SupperAdminRouter>
         ),
         loader: async ({ params }) => {
-          const bId = params.id
-          return fetch(`http://localhost:5000/admin/blogs/${bId}`)
-        }
+          const bId = params.id;
+          return fetch(`http://localhost:5000/admin/blogs/${bId}`);
+        },
       },
       // Add more child routes as needed
     ],
