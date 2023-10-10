@@ -87,7 +87,7 @@ const Router = createBrowserRouter([
       },
     ],
   },
-  // {
+// {
   //     path: "/shop",
   //     element: <MainLayout />,
   //     children: [
@@ -177,9 +177,9 @@ const Router = createBrowserRouter([
           </SupperAdminRouter>
         ),
         loader: async ({ params }) => {
-          const id = params.id;
-          return fetch(`http://localhost:5000/admin/blogs/${id}`);
-        },
+          const id = params.id
+          return fetch(`http://localhost:5000/admin/blogs/${id}`)
+        }
       },
       {
         path: "pricemanagement",
@@ -197,6 +197,7 @@ const Router = createBrowserRouter([
           </SupperAdminRouter>
         ),
       },
+
     ],
   },
   // {
