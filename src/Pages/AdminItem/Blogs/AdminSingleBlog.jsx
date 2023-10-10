@@ -40,8 +40,7 @@ const AdminSingleBlog = () => {
 
                     </div>
                 </div>
-                <div classN
-                    ame="border-l px-2 border-[#8080805f]">
+                <div className="border-l px-2 border-[#8080805f]">
                     <h3 className=" pb-2 border-b border-[#d8d8d85e]">Another blogs</h3>
                     {
                         blogList?.map(blg =>

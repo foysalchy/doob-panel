@@ -29,6 +29,11 @@ import AddCatagorys from "../Pages/AdminItem/Catagorys/AddCatagorys";
 import PriceMangement from "../Pages/AdminItem/PriceMangement/PriceMangement";
 import Price from "../Pages/Price/Price";
 import AddPrice from "../Pages/AdminItem/PriceMangement/AddPrice";
+import AddFaq from "../Pages/AdminItem/Faq/AddFaq";
+import Faq from "../Pages/Faq/Faq";
+import SingleFaq from "../Pages/Faq/SingleFaq";
+import FaqLayout from "../Pages/Faq/FaqLayout";
+import AdminFaq from "../Pages/AdminItem/Faq/AdminFaq";
 
 const Router = createBrowserRouter([
   {
@@ -85,9 +90,27 @@ const Router = createBrowserRouter([
         loader: ({ params }) =>
           fetch(`http://localhost:5000/admin/blogs/${params.id}`),
       },
+      {
+        path: "/faq",
+        element: <FaqLayout></FaqLayout>,
+        children: [
+
+          {
+            path: "/faq",
+            element: <Faq />,
+          },
+          {
+            path: "/faq/:id",
+            element: <SingleFaq />,
+            loader: ({ params }) =>
+              fetch(`http://localhost:5000/admin/faq/${params.id}`),
+          }
+        ]
+      },
+
     ],
   },
-// {
+  // {
   //     path: "/shop",
   //     element: <MainLayout />,
   //     children: [
@@ -194,6 +217,22 @@ const Router = createBrowserRouter([
         element: (
           <SupperAdminRouter>
             <AddPrice />
+          </SupperAdminRouter>
+        ),
+      },
+      {
+        path: "faq",
+        element: (
+          <SupperAdminRouter>
+            <AdminFaq />
+          </SupperAdminRouter>
+        ),
+      },
+      {
+        path: "faq/addfaq",
+        element: (
+          <SupperAdminRouter>
+            <AddFaq />
           </SupperAdminRouter>
         ),
       },

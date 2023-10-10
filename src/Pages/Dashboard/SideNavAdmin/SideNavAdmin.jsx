@@ -108,10 +108,10 @@ const SideNavAdmin = () => {
                                 </NavLink>
                             </li>
                             <li className="rounded-sm hover:bg-gray-800 hover:text-gray-50">
-                                <a rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
+                                <NavLink rel="noopener noreferrer" to={'/admin/faq'} className="flex items-center p-2 space-x-3 rounded-md">
                                     <FaUsersGear className="w-5 h-5 fill-current text-gray-400" />
-                                    {menu && <span>User Management</span>}
-                                </a>
+                                    {menu && <span>FAQ Management</span>}
+                                </NavLink>
                             </li>
                             <li className="rounded-sm hover:bg-gray-800 hover:text-gray-50">
                                 <NavLink rel="noopener noreferrer" to={'/admin/pricemanagement'} className="flex items-center p-2 space-x-3 rounded-md">
