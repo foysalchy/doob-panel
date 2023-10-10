@@ -30,14 +30,14 @@ const Header = () => {
             </NavLink>
         </li>
         <li>
-            <a
-                href="/"
+            <NavLink
+                to="/price"
                 aria-label="Product pricing"
                 title="Product pricing"
                 className=" tracking-wide text-gray-700 transition-colors duration-200 font-semibold hover:text-black"
             >
                 Pricing
-            </a>
+            </NavLink>
         </li>
         <li>
             <NavLink

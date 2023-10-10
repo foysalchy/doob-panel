@@ -25,6 +25,10 @@ import ManageProduct from "../Pages/AdminItem/Products/ManageProduct/ManageProdu
 import SingleBlog from "../Pages/Blogs/SingleBlog";
 import AdminSingleBlog from "../Pages/AdminItem/Blogs/AdminSingleBlog";
 import ProductDetails from "../Pages/Product/ProductDetails/ProductDetails";
+import AddCatagorys from "../Pages/AdminItem/Catagorys/AddCatagorys";
+import PriceMangement from "../Pages/AdminItem/PriceMangement/PriceMangement";
+import Price from "../Pages/Price/Price";
+import AddPrice from "../Pages/AdminItem/PriceMangement/AddPrice";
 
 const Router = createBrowserRouter([
   {
@@ -66,6 +70,10 @@ const Router = createBrowserRouter([
       {
         path: "/products/:id",
         element: <ProductDetails />,
+      },
+      {
+        path: "/price",
+        element: <Price />,
       },
       {
         path: "/blogs",
@@ -124,33 +132,40 @@ const Router = createBrowserRouter([
         path: "blog",
         element: (
           <SupperAdminRouter>
-            {" "}
             <AdminBlogs />
           </SupperAdminRouter>
         ),
       },
       {
-        path: "new-blog",
+        path: "blogs/new-blog",
         element: (
           <SupperAdminRouter>
-            {" "}
             <AddBlog />
           </SupperAdminRouter>
         ),
       },
-      {
-        path: "addproduct",
-        element: (
-          <SupperAdminRouter>
-            <AddProduct />
-          </SupperAdminRouter>
-        ),
-      },
+
       {
         path: "manageproduct",
         element: (
           <SupperAdminRouter>
             <ManageProduct />
+          </SupperAdminRouter>
+        ),
+      },
+      {
+        path: "manageproduct/addProduct",
+        element: (
+          <SupperAdminRouter>
+            <AddProduct></AddProduct>
+          </SupperAdminRouter>
+        ),
+      },
+      {
+        path: "addcategory",
+        element: (
+          <SupperAdminRouter>
+            <AddCatagorys />
           </SupperAdminRouter>
         ),
       },
@@ -162,11 +177,26 @@ const Router = createBrowserRouter([
           </SupperAdminRouter>
         ),
         loader: async ({ params }) => {
-          const bId = params.id;
-          return fetch(`http://localhost:5000/admin/blogs/${bId}`);
+          const id = params.id;
+          return fetch(`http://localhost:5000/admin/blogs/${id}`);
         },
       },
-      // Add more child routes as needed
+      {
+        path: "pricemanagement",
+        element: (
+          <SupperAdminRouter>
+            <PriceMangement />
+          </SupperAdminRouter>
+        ),
+      },
+      {
+        path: "pricemanagement/addpricing",
+        element: (
+          <SupperAdminRouter>
+            <AddPrice />
+          </SupperAdminRouter>
+        ),
+      },
     ],
   },
   // {

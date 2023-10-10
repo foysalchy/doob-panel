@@ -3,19 +3,19 @@ import { FaStar } from "react-icons/fa6";
 
 const ProductReviews = () => {
   const progressBarStyle = {
-    width: "100%", // Adjust the width value as needed
+    width: "100%",
   };
   const progressBarStyle2 = {
-    width: "80%", // Adjust the width value as needed
+    width: "80%",
   };
   const progressBarStyle3 = {
-    width: "60", // Adjust the width value as needed
+    width: "60",
   };
   const progressBarStyle4 = {
-    width: "40%", // Adjust the width value as needed
+    width: "40%",
   };
   const progressBarStyle5 = {
-    width: "20%", // Adjust the width value as needed
+    width: "20%",
   };
 
   return (
