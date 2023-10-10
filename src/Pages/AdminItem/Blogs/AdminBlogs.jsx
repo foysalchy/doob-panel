@@ -119,7 +119,7 @@ const AdminBlogs = () => {
                   <div
                     className="mb-2 text-sm text-gray-700"
                     dangerouslySetInnerHTML={{
-                      __html: blog.message.slice(0, 150) + "...",
+                      __html: blog?.message.slice(0, 150) + "...",
                     }}
                   />
 

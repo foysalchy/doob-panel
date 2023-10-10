@@ -230,31 +230,31 @@ const ProductDetails = () => {
               </div>
 
               <div className="flex py-4 space-x-4">
-                <div className="relative">
-                  <div className="text-center left-0 pt-1 right-0 absolute block text-xs uppercase text-gray-400 tracking-wide font-semibold">
-                    Qty
-                  </div>
-                  <select className="cursor-pointer appearance-none rounded border border-gray-200 pl-4 pr-8 h-10 flex items-end pb-1 mt-1 text-xs">
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
-                  </select>
-                  <svg
-                    className="w-5 h-5 text-gray-400 absolute right-0 bottom-0 mb-1 mt-1 mr-2 text-xs"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M8 9l4-4 4 4m0 6l-4 4-4-4"
+                <div>
+                  <label htmlFor="Quantity" className="sr-only"> Quantity </label>
+
+                  <div className="flex items-center gap-1">
+                    <button
+                      type="button"
+                      className="w-10 h-10 leading-10 text-gray-600 transition hover:opacity-75"
+                    >
+                      -
+                    </button>
+
+                    <input
+                      type="number"
+                      id="Quantity"
+                      defaultValue="1"
+                      className="h-10 w-24 rounded border px-4 border-gray-900 [-moz-appearance:_textfield] sm:text-sm [&::-webkit-outer-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button]:appearance-none"
                     />
-                  </svg>
+
+                    <button
+                      type="button"
+                      className="w-10 h-10 leading-10 text-gray-600 transition hover:opacity-75 "
+                    >
+                      +
+                    </button>
+                  </div>
                 </div>
                 <button
                   type="button"
