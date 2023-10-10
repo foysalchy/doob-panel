@@ -1,7 +1,7 @@
 import React from "react";
 
-const NewProducts = () => {
-  const newProducts = [
+const TrendingProducts = () => {
+  const TrendingProducts = [
     {
       name: "Olevs 9868 Leather",
       image: "https://i.ibb.co/PNBgKv1/watch.png",
@@ -59,39 +59,38 @@ const NewProducts = () => {
       description: "Analog watch for men",
     },
   ];
-
   return (
-    <div className="py-4 bg-black rounded mt-6">
+    <div className=" bg-white rounded ">
       <section className="body-font">
         <div className="px-5">
-          <div className="flex justify-between text-white">
+          <div className="flex justify-between text-black">
             <div className="flex justify-between align-items-center">
               <img
                 className="h-5/6"
-                src="https://i.ibb.co/zfBPGTy/new-product.png"
+                src="https://i.ibb.co/5FhYvk8/upcoming-foru.png"
                 alt="new-product-icon"
               />
 
               <h3 className="whitespace-nowrap ml-2 font-medium">
-                New Product
+                Trending Item
               </h3>
             </div>
             <button
               type="button"
-              className="px-5 py-2 font-semibold rounded bg-gray-500 text-white text-xs "
+              className="px-5 py-2 font-semibold rounded bg-black text-gray-100 text-xs "
             >
               SHOP MORE
             </button>
           </div>
         </div>
-        <div className="border-b border-gray-500 mx-5 mt-2"></div>
+        <div className="border-b border-gray-200 mx-5 mt-2"></div>
         <div className="container px-5 py-8 mx-auto">
-          <div className=" grid grid-cols-2 md:grid-cols-3 lg:grid-cols-7 gap-2 -m-4 text-white">
-            {newProducts.slice(0, 7).map((product, idx) => {
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-7 gap-2 -m-4 text-black">
+            {TrendingProducts.slice(0, 7).map((product, idx) => {
               return (
                 <div
                   key={idx}
-                  className="p-4 w-full md:w-11/12 bg-white lg:mx-2  text-black rounded"
+                  className="p-4 w-full md:w-11/12 lg:mx-2 text-black rounded"
                 >
                   <a className="block relative h-32 rounded overflow-hidden">
                     <img
@@ -112,7 +111,7 @@ const NewProducts = () => {
                     <div className="mt-2">
                       <button
                         type="button"
-                        className="px-5 py-2  font-semibold rounded bg-black text-white text-xs "
+                        className="px-3 py-2  font-semibold rounded bg-black text-white text-xs "
                       >
                         Add My Store
                       </button>
@@ -128,4 +127,4 @@ const NewProducts = () => {
   );
 };
 
-export default NewProducts;
+export default TrendingProducts;

@@ -24,6 +24,7 @@ import AddProduct from "../Pages/AdminItem/Products/AddProduct";
 import ManageProduct from "../Pages/AdminItem/Products/ManageProduct/ManageProduct";
 import SingleBlog from "../Pages/Blogs/SingleBlog";
 import AdminSingleBlog from "../Pages/AdminItem/Blogs/AdminSingleBlog";
+import ProductDetails from "../Pages/Product/ProductDetails/ProductDetails";
 import AddCatagorys from "../Pages/AdminItem/Catagorys/AddCatagorys";
 import PriceMangement from "../Pages/AdminItem/PriceMangement/PriceMangement";
 import Price from "../Pages/Price/Price";
@@ -67,6 +68,10 @@ const Router = createBrowserRouter([
         element: <Product />,
       },
       {
+        path: "/products/:id",
+        element: <ProductDetails />,
+      },
+      {
         path: "/price",
         element: <Price />,
       },
@@ -82,7 +87,7 @@ const Router = createBrowserRouter([
       },
     ],
   },
-  // {
+// {
   //     path: "/shop",
   //     element: <MainLayout />,
   //     children: [

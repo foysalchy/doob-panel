@@ -86,7 +86,7 @@ const UpComingProducts = () => {
         </div>
         <div className="border-b border-gray-200 mx-5 mt-2"></div>
         <div className="container px-5 py-8 mx-auto">
-          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-2 -m-4 text-black">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-7 gap-2 -m-4 text-black">
             {newProducts.slice(0, 7).map((product, idx) => {
               return (
                 <div
