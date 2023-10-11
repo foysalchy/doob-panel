@@ -44,7 +44,7 @@ const SideNavAdmin = () => {
                                 <rect x="14" y="11" width="7" height="12" />
                             </svg>
                             <span className="ml-2 text-xl font-bold tracking-wide text-gray-800 ">
-                                SeleNow
+                                SaleNow
                             </span>
                         </a> : <a
                             href="/"
@@ -120,10 +120,10 @@ const SideNavAdmin = () => {
                                 </NavLink>
                             </li>
                             <li className="rounded-sm hover:bg-gray-800 hover:text-gray-50">
-                                <a rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
+                                <NavLink rel="noopener noreferrer" to={'/admin/pagemanagement'} className="flex items-center p-2 space-x-3 rounded-md">
                                     <MdOutlineSubscriptions className="w-5 h-5 fill-current text-gray-400" />
-                                    {menu && <span>Orders</span>}
-                                </a>
+                                    {menu && <span>Page Management</span>}
+                                </NavLink>
                             </li>
                             <li className="rounded-md hover:bg-gray-800 hover:text-gray-50">
                                 <a rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">

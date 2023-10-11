@@ -35,7 +35,7 @@ const Benefits = () => {
 
                     <p className="mb-2 font-bold text-md">Marketplace Integration</p>
                     <p className="text-gray-700 text-sm">
-                        SeleNow is the third-party e-commerce ERP certified by mainstream marketplaces in Southeast Asia.
+                        SaleNow is the third-party e-commerce ERP certified by mainstream marketplaces in Southeast Asia.
                     </p>
                 </div>
                 <div className="text-center">
