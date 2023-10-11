@@ -10,6 +10,7 @@ const ProductDetails = () => {
   const [selectedImage, setSelectedImage] = useState(
     "https://i.ibb.co/tPt2Ntp/image-34.png"
   );
+  const [quantity, setQuantity] = useState(1);
 
   const imageList = [
     "https://i.ibb.co/tPt2Ntp/image-34.png",
@@ -23,6 +24,27 @@ const ProductDetails = () => {
   const handleImageClick = (imageUrl) => {
     setSelectedImage(imageUrl);
   };
+
+  const handleDecrease = () => {
+    if (quantity > 1) {
+      setQuantity(quantity - 1);
+    }
+  };
+
+  const handleIncrease = () => {
+    setQuantity(quantity + 1);
+  };
+
+  const handleManualInput = (e) => {
+    const inputQuantity = parseInt(e.target.value, 10);
+
+    if (!isNaN(inputQuantity) && inputQuantity > 0) {
+      setQuantity(inputQuantity);
+    }
+  };
+
+  const convertedRating = (2 / 10) * 5;
+
   return (
     <section>
       <div className="py-4">
@@ -95,7 +117,7 @@ const ProductDetails = () => {
                       >
                         <img
                           alt={`ecommerce${index + 1}`}
-                          className="object-cover block w-full h-full p-2 "
+                          className="object-cover cursor-pointer block w-full h-full p-2 "
                           src={imageUrl}
                         />
                       </a>
@@ -117,64 +139,33 @@ const ProductDetails = () => {
               <div>
                 <div className="flex items-center">
                   <div className="flex">
+
                     <span className="flex items-center">
-                      <svg
-                        fill="currentColor"
-                        stroke="currentColor"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        className="w-4 h-4 text-[#FF9017]"
-                        viewBox="0 0 24 24"
-                      >
-                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                      </svg>
-                      <svg
-                        fill="currentColor"
-                        stroke="currentColor"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        className="w-4 h-4 text-[#FF9017]"
-                        viewBox="0 0 24 24"
-                      >
-                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                      </svg>
-                      <svg
-                        fill="currentColor"
-                        stroke="currentColor"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        className="w-4 h-4 text-[#FF9017]"
-                        viewBox="0 0 24 24"
-                      >
-                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                      </svg>
-                      <svg
-                        fill="currentColor"
-                        stroke="currentColor"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        className="w-4 h-4 text-[#FF9017]"
-                        viewBox="0 0 24 24"
-                      >
-                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                      </svg>
-                      <svg
-                        fill="none"
-                        stroke="currentColor"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        className="w-4 h-4 text-[#FF9017]"
-                        viewBox="0 0 24 24"
-                      >
-                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                      </svg>
+                      {[1, 2, 3, 4, 5].map((star) => (
+                        <span
+                          className="w-4 h-4"
+                          key={star}
+                          style={{
+                            color: star <= convertedRating ? 'gold' : 'gray',
+                          }}
+                        >
+                          <svg
+                            fill="currentColor"
+                            stroke="currentColor"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            className="w-4 h-4 "
+                            viewBox="0 0 24 24"
+                          >
+                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                          </svg>
+                        </span>
+                      ))}
                       <span className="text-gray-600 ml-2">9.3</span>
+
                     </span>
+
                   </div>
                   <div>
                     <FaCircle className="text-[#DBDBDB] text-[8px] mx-2 md:mx-4" />
@@ -236,6 +227,7 @@ const ProductDetails = () => {
                   <div className="flex items-center gap-1">
                     <button
                       type="button"
+                      onClick={handleDecrease}
                       className="w-10 h-10 leading-10 text-gray-600 transition hover:opacity-75"
                     >
                       -
@@ -244,12 +236,14 @@ const ProductDetails = () => {
                     <input
                       type="number"
                       id="Quantity"
-                      defaultValue="1"
+                      value={quantity}
+                      onChange={handleManualInput}
                       className="h-10 w-24 rounded border px-4 border-gray-900 [-moz-appearance:_textfield] sm:text-sm [&::-webkit-outer-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button]:appearance-none"
                     />
 
                     <button
                       type="button"
+                      onClick={handleIncrease}
                       className="w-10 h-10 leading-10 text-gray-600 transition hover:opacity-75 "
                     >
                       +
