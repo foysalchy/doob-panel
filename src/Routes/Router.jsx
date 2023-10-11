@@ -34,6 +34,8 @@ import Faq from "../Pages/Faq/Faq";
 import SingleFaq from "../Pages/Faq/SingleFaq";
 import FaqLayout from "../Pages/Faq/FaqLayout";
 import AdminFaq from "../Pages/AdminItem/Faq/AdminFaq";
+import ResetPass from "../Pages/Authentication/ForgetPass/ResetPass";
+import SellerRoute from "./SellerRoute";
 
 const Router = createBrowserRouter([
   {
@@ -75,6 +77,13 @@ const Router = createBrowserRouter([
       {
         path: "/products/:id",
         element: <ProductDetails />,
+
+      },
+      {
+        path: "/reset-password/:id",
+        element: <ResetPass />,
+        loader: ({ params }) =>
+          (`${params.id}`),
       },
       {
         path: "/price",
@@ -251,12 +260,24 @@ const Router = createBrowserRouter([
   //     ]
   // },
   {
-    path: "/seller/dashboard",
+    path: "/seller",
     element: <SellerDashLayout />,
     children: [
       {
         path: "*",
-        element: <SellerDashboard />,
+        element: (
+          <SellerRoute>
+            <SellerDashboard />
+          </SellerRoute>
+        )
+      },
+      {
+        path: "dashboard",
+        element: (
+          <SellerRoute>
+            <SellerDashboard />
+          </SellerRoute>
+        )
       },
     ],
   },

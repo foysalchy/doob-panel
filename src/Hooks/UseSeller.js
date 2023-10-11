@@ -4,7 +4,7 @@ import { AuthContext } from "../AuthProvider/UserProvider"
 const useSeller = () => {
     const [isSeller, setIsSeller] = useState(false)
     const [isSellerLoading, setIsSellerLoading] = useState(true)
-    const { user } = useContext(AuthContext)
+    const { user, loading } = useContext(AuthContext)
     useEffect(() => {
         if (user?.email) {
             fetch(`http://localhost:5000/users/seller/${user?.email}`)
@@ -14,7 +14,7 @@ const useSeller = () => {
                     setIsSellerLoading(false)
                 })
         }
-    }, [user?.email, setIsSeller])
+    }, [user?.email, setIsSeller, loading])
     return [isSeller, isSellerLoading]
 }
 
