@@ -1,6 +1,10 @@
 import React from 'react';
+import { useContext } from 'react';
+import { AuthContext } from '../../../../AuthProvider/UserProvider';
+import { IoLogOut } from 'react-icons/io5';
 
 const SideNavberSeller = () => {
+    const { user, logOut } = useContext(AuthContext)
     return (
         <div>
             <div className="flex h-screen flex-col justify-between border-e bg-white">
@@ -131,14 +135,12 @@ const SideNavberSeller = () => {
                                     </li>
 
                                     <li>
-                                        <form action="/logout">
-                                            <button
-                                                type="submit"
-                                                className="w-full rounded-lg px-4 py-2 text-sm font-medium text-gray-500 [text-align:_inherit] hover:bg-gray-100 hover:text-gray-700"
-                                            >
-                                                Logout
+                                        <li className="rounded-sm hover:bg-gray-800 hover:text-gray-50">
+                                            <button rel="noopener noreferrer" onClick={() => logOut()} className="flex items-center p-2 space-x-3 rounded-md">
+                                                <IoLogOut className="w-5 h-5 fill-current text-gray-400" />
+                                                <span>Logout</span>
                                             </button>
-                                        </form>
+                                        </li>
                                     </li>
                                 </ul>
                             </details>
@@ -156,7 +158,7 @@ const SideNavberSeller = () => {
 
                         <div>
                             <p className="text-xs">
-                                <strong className="block font-medium">Eric Frusciante</strong>
+                                <strong className="block font-medium">{user?.name}</strong>
 
                                 <span> eric@frusciante.com </span>
                             </p>

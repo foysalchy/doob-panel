@@ -1,9 +1,71 @@
 import React from 'react';
 import AddProduct from '../AddProduct';
+import { Link } from 'react-router-dom';
+import { useState } from 'react';
 
 const ManageProduct = () => {
+
+    const [loading, setLoading] = useState(false);
+
+    const handleRefresh = () => {
+        // Set loading to true when the button is clicked
+        setLoading(true);
+
+        // Simulate some asynchronous operation (e.g., fetching data)
+        setTimeout(() => {
+            // After the operation is complete, set loading back to false
+            setLoading(false);
+        }, 2000); // Replace this with your actual async operation
+    };
     return (
         <div className=''>
+
+            <nav aria-label="breadcrumb" className="w-full my-20 p-4 mb-4 rounded dark:bg-gray-800 dark:text-gray-100">
+                <ol className="flex h-8 space-x-2">
+                    <li className="flex items-center">
+                        <Link rel="noopener noreferrer" to={'/admin/dashboard'} title="Back to homepage" className="hover:underline">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5 pr-1 dark:text-gray-400">
+                                <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path>
+                            </svg>
+                        </Link>
+                    </li>
+                    <li className="flex items-center space-x-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" aria-hidden="true" fill="currentColor" className="w-2 h-2 mt-1 transform rotate-90 fill-current dark:text-gray-600">
+                            <path d="M32 30.031h-32l16-28.061z"></path>
+                        </svg>
+                        <Link rel="noopener noreferrer" to={'/admin/manageproduct'} className="flex items-center px-1 capitalize hover:underline"> Product Management</Link>
+                    </li>
+
+
+                </ol>
+            </nav>
+
+            <Link
+                className="group relative inline-flex mb-10 items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
+                to="/admin/manageproduct/addProduct"
+            >
+                <span className="absolute -start-full transition-all group-hover:start-4">
+                    <svg
+                        className="h-5 w-5 rtl:rotate-180"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                    >
+                        <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="2"
+                            d="M17 8l4 4m0 0l-4 4m4-4H3"
+                        />
+                    </svg>
+                </span>
+
+                <span className="text-sm font-medium transition-all group-hover:ms-4">
+                    Add Product
+                </span>
+            </Link>
+
             <section className=" px-4 mx-auto">
                 <div className="flex items-center gap-x-3">
                     <h2 className="text-lg font-medium text-gray-800 ">
@@ -15,9 +77,9 @@ const ManageProduct = () => {
                 </div>
                 <div className="flex flex-col mt-6">
                     <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-                        <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
+                        <div className="inline-block w-full py-2 ml-4">
                             <div className="overflow-hidden border border-gray-200 dark:border-gray-700 md:rounded-lg">
-                                <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                                <table className="w-full divide-y divide-gray-200 dark:divide-gray-700">
                                     <thead className="bg-gray-50 ">
                                         <tr>
                                             <th
@@ -551,20 +613,27 @@ const ManageProduct = () => {
                         </div>
                     </div>
                 </div>
-                <div className="flex justify-center space-x-1 mt-10 text-gray-100">
-                    <button title="previous" type="button" className="inline-flex items-center justify-center w-8 h-8 py-0 border rounded-md shadow-md bg-gray-900 border-gray-800">
-                        <svg viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round" className="w-4">
-                            <polyline points="15 18 9 12 15 6"></polyline>
-                        </svg>
-                    </button>
-                    <button type="button" title="Page 1" className="inline-flex items-center justify-center w-8 h-8 text-sm font-semibold border rounded shadow-md bg-gray-900 text-violet-400 border-violet-400">1</button>
-                    <button type="button" className="inline-flex items-center justify-center w-8 h-8 text-sm border rounded shadow-md bg-gray-900 border-gray-800" title="Page 2">2</button>
-                    <button type="button" className="inline-flex items-center justify-center w-8 h-8 text-sm border rounded shadow-md bg-gray-900 border-gray-800" title="Page 3">3</button>
-                    <button type="button" className="inline-flex items-center justify-center w-8 h-8 text-sm border rounded shadow-md bg-gray-900 border-gray-800" title="Page 4">4</button>
-                    <button title="next" type="button" className="inline-flex items-center justify-center w-8 h-8 py-0 border rounded-md shadow-md bg-gray-900 border-gray-800">
-                        <svg viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round" className="w-4">
-                            <polyline points="9 18 15 12 9 6"></polyline>
-                        </svg>
+                <div className='mt-10 flex justify-center'>
+                    <button
+                        className="flex items-center px-4 py-2 font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-gray-800 rounded-lg hover:bg-gray-900 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80"
+                        onClick={handleRefresh}
+                        disabled={loading} // Disable the button when loading
+                    >
+                        {loading ?
+                            <svg
+                                className="animate-spin w-5 h-5 mx-1 text-white"
+                                xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 20 20"
+                                fill="none"
+                            >
+                                {/* Add your loading spinner SVG here */}
+                                <circle cx="10" cy="10" r="8" stroke="currentColor" strokeWidth="4"></circle>
+                            </svg> :
+                            <svg class="w-5 h-5 mx-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clip-rule="evenodd" />
+                            </svg>
+                        }
+                        <span className="mx-1">{loading ? 'Loading...' : 'Load More'}</span>
                     </button>
                 </div>
             </section>
