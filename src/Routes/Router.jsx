@@ -6,11 +6,8 @@ import SignUpSeller from "../Pages/Authentication/SignUpSeller/SignUpSeller";
 import SignInSeller from "../Pages/Authentication/SignInSeller/SignInSeller";
 import Error from "../Pages/Error/Error";
 import ForgetPass from "../Pages/Authentication/ForgetPass/ForgetPass";
-import Trams from "../Pages/Trams & Condition/Trams";
 import AdminLayout from "../Layout/AdminLayout";
 import AdminDashboard from "../Pages/Dashboard/AdminDashboard";
-import UserLayout from "../Layout/UserLayout";
-import HomeSeller from "../Pages/HomeSeller/HomeSeller.jsx/HomeSeller";
 import SellerDashLayout from "../Layout/SellerDashLayout";
 import SellerDashboard from "../Pages/Dashboard/SellerDashboard/SellerDashboard";
 import ShopHome from "../Pages/Shop/ShopHome/ShopHome";
@@ -36,6 +33,9 @@ import FaqLayout from "../Pages/Faq/FaqLayout";
 import AdminFaq from "../Pages/AdminItem/Faq/AdminFaq";
 import ResetPass from "../Pages/Authentication/ForgetPass/ResetPass";
 import SellerRoute from "./SellerRoute";
+import PageManagement from "../Pages/AdminItem/PageManagement/PageManagement";
+import AddPage from "../Pages/AdminItem/PageManagement/AddPage";
+import Trams from "../Pages/CustomPages/Trams";
 
 const Router = createBrowserRouter([
   {
@@ -65,10 +65,6 @@ const Router = createBrowserRouter([
       {
         path: "/forget-pass",
         element: <ForgetPass />,
-      },
-      {
-        path: "/terms",
-        element: <Trams />,
       },
       {
         path: "/products",
@@ -116,6 +112,12 @@ const Router = createBrowserRouter([
           }
         ]
       },
+      {
+        path: "/pages/:id",
+        element: <Trams />,
+        loader: ({ params }) =>
+          fetch(`http://localhost:5000/admin/page/${params.id}`),
+      }
 
     ],
   },
@@ -242,6 +244,22 @@ const Router = createBrowserRouter([
         element: (
           <SupperAdminRouter>
             <AddFaq />
+          </SupperAdminRouter>
+        ),
+      },
+      {
+        path: "pagemanagement",
+        element: (
+          <SupperAdminRouter>
+            <PageManagement />
+          </SupperAdminRouter>
+        ),
+      },
+      {
+        path: "pagemanagement/addpage",
+        element: (
+          <SupperAdminRouter>
+            <AddPage />
           </SupperAdminRouter>
         ),
       },

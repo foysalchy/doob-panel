@@ -1,7 +1,22 @@
+import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 import { Link } from 'react-router-dom';
 
 const Footer = () => {
+    const {
+        data: pages = [],
+        refetch,
+
+    } = useQuery({
+        queryKey: ["faqs"],
+        queryFn: async () => {
+            const res = await fetch(
+                "http://localhost:5000/admin/pages",
+            );
+            const data = await res.json();
+            return data;
+        },
+    });
     return (
         <div className='bg-gray-900'>
             <div className="px-4 pt-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8">
@@ -131,34 +146,23 @@ const Footer = () => {
                         © Copyright 2020 Lorem Inc. All rights reserved.
                     </p>
                     <ul className="flex flex-col mb-3 space-y-2 lg:mb-0 sm:space-y-0 sm:space-x-5 sm:flex-row">
-                        <li>
-                            <Link
-                                to={'/faq'}
-                                className="text-sm text-gray-600 transition-colors duration-300 hover:text-deep-purple-accent-400"
-                            >
-                                F.A.Q
-                            </Link>
-                        </li>
-                        <li>
-                            <a
-                                href="/"
-                                className="text-sm text-gray-600 transition-colors duration-300 hover:text-deep-purple-accent-400"
-                            >
-                                Privacy Policy
-                            </a>
-                        </li>
-                        <li>
-                            <a
-                                href="/"
-                                className="text-sm text-gray-600 transition-colors duration-300 hover:text-deep-purple-accent-400"
-                            >
-                                Terms &amp; Conditions
-                            </a>
-                        </li>
+
+                        {
+                            pages.map((page, i) => (
+                                <li  >
+                                    {page?.status && <Link
+                                        to={`/pages/${page?._id}`}
+                                        className="text-sm text-gray-600 transition-colors duration-300 hover:text-deep-purple-accent-400"
+                                    >
+                                        {page?.title}
+                                    </Link>}
+                                </li>
+                            ))
+                        }
                     </ul>
                 </div>
             </div>
-        </div>
+        </div >
     );
 };
 

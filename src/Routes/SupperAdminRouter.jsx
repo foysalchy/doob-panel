@@ -13,7 +13,7 @@ const SupperAdminRouter = ({ children }) => {
 
     if (loading || isSupperAdminLoading) {
         return (
-            <div className='w-full'>
+            <div className='w-full '>
                 <h1 className="text-center text-2xl py-52 leading-relaxed">
                     You are not authorized to access this page. <br /> Please login as an admin.
                     <br className='mb-10' />

@@ -5,13 +5,14 @@ const UseSupperAdmin = () => {
     const [isSupperAdmin, setIsSupperAdmin] = useState(false)
     const [isSupperAdminLoading, setIsSupperAdminLoading] = useState(true)
     const { user } = useContext(AuthContext)
+    
     useEffect(() => {
         if (user?.email) {
             fetch(`http://localhost:5000/users/supperadmin/${user?.email}`)
                 .then((res) => res.json())
-                .then((data) => {
-                    setIsSupperAdmin(data?.isAdmin)
-                    setIsSupperAdminLoading(false)
+                .then(async (data) => {
+                    await setIsSupperAdmin(data?.isAdmin)
+                    await setIsSupperAdminLoading(false)
                 })
         }
     }, [user?.email, setIsSupperAdmin])
