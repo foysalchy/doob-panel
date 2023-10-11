@@ -69,6 +69,16 @@ const Header = () => {
                 Support
             </a>
         </li>
+        <li>
+            <NavLink
+                to="/faq"
+                aria-label="About us"
+                title="About us"
+                className=" tracking-wide text-gray-700 transition-colors duration-200 font-semibold hover:text-black"
+            >
+                F.A.Q
+            </NavLink>
+        </li>
 
     </>
 
