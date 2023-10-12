@@ -20,7 +20,7 @@ const MainLayout = () => {
                 <button className='fixed bottom-11 right-3'>
                     <BiSupport onClick={modalToggol} className='text-5xl bg-gray-100 shadow shadow-slate-500 p-2 text-blue-500 rounded-full'></BiSupport>
                 </button>
-                {modal && <div className='fixed bottom-48 right-20'>
+                {modal && <div className='fixed bottom-48 right-20 z-50'>
                     <div
                         className="absolute end-0 z-10 mt-2 w-44 rounded-md border border-gray-100 bg-white shadow-lg"
                         role="menu"

@@ -2,21 +2,27 @@ import React from 'react';
 import AddProduct from '../AddProduct';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
 
 const ManageProduct = () => {
 
-    const [loading, setLoading] = useState(false);
 
-    const handleRefresh = () => {
-        // Set loading to true when the button is clicked
-        setLoading(true);
+    const {
+        data: products = [],
+        refetch,
 
-        // Simulate some asynchronous operation (e.g., fetching data)
-        setTimeout(() => {
-            // After the operation is complete, set loading back to false
-            setLoading(false);
-        }, 2000); // Replace this with your actual async operation
-    };
+    } = useQuery({
+        queryKey: ["products"],
+        queryFn: async () => {
+            const res = await fetch(
+                "http://localhost:5000/admin/products",
+            );
+            const data = await res.json();
+            return data;
+        },
+    });
+    console.log(products[0]);
+
     return (
         <div className=''>
 
@@ -72,14 +78,14 @@ const ManageProduct = () => {
                         All Product
                     </h2>
                     <span className="px-3 py-1 text-xs  bg-blue-100 rounded-full d text-blue-400">
-                        100
+                        {products?.length}
                     </span>
                 </div>
                 <div className="flex flex-col mt-6">
                     <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-                        <div className="inline-block w-full py-2 ml-4">
+                        <div className="inline-block  py-2 ml-4">
                             <div className="overflow-hidden border border-gray-200 dark:border-gray-700 md:rounded-lg">
-                                <table className="w-full divide-y divide-gray-200 dark:divide-gray-700">
+                                <table className=" divide-y divide-gray-200 dark:divide-gray-700">
                                     <thead className="bg-gray-50 ">
                                         <tr>
                                             <th
@@ -166,476 +172,105 @@ const ManageProduct = () => {
                                             </th>
                                         </tr>
                                     </thead>
-                                    <tbody className="bg-white divide-y divide-gray-200 ">
-                                        <tr>
-                                            <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                                                <div className="inline-flex items-center gap-x-3">
-                                                    <input
-                                                        type="checkbox"
-                                                        className="text-blue-500 border-gray-300 rounded dark:bg-gray-900 dark:ring-offset-gray-900 dark:border-gray-700"
-                                                    />
-                                                    <div className="flex items-center gap-x-2">
-                                                        <img
-                                                            className="object-cover w-10 h-10 rounded"
-                                                            src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80"
-                                                            alt=""
-                                                        />
-                                                        <div>
-                                                            <h2 className="font-medium text-gray-800  ">
-                                                                Arthur Melo
-                                                            </h2>
-                                                            <p className="text-sm font-normal text-gray-600 dark:text-gray-400">
-                                                                @authurmelo
-                                                            </p>
+                                    <tbody className="bg-white divide-y  divide-gray-200 ">
+                                        {
+                                            products.map((product) => (
+                                                <tr>
+                                                    <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
+                                                        <div className="inline-flex items-center gap-x-3">
+                                                            <input
+                                                                type="checkbox"
+                                                                className="text-blue-500 border-gray-300 rounded dark:bg-gray-900 dark:ring-offset-gray-900 dark:border-gray-700"
+                                                            />
+                                                            <div className="flex items-center gap-x-2">
+                                                                <img
+                                                                    className="object-cover w-10 h-10 rounded"
+                                                                    src={product?.image[0]['Cover Photo*'][0]}
+                                                                    alt=""
+                                                                />
+                                                                <div>
+                                                                    <h2 className="font-medium text-gray-800  ">
+                                                                        {product?.productName.split(' ').slice(0, 5).join(' ')
+                                                                        }
+                                                                    </h2>
+                                                                    <p className="text-sm font-normal text-gray-600 dark:text-gray-400">
+                                                                        {product._id}
+                                                                    </p>
+                                                                </div>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td className="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                                                <div className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-emerald-100/60 dark:bg-gray-800">
-                                                    <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-                                                    <h2 className="text-sm font-normal text-emerald-500">
-                                                        Active
-                                                    </h2>
-                                                </div>
-                                            </td>
-                                            <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
-                                                Design Director
-                                            </td>
-                                            <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
-                                                authurmelo@example.com
-                                            </td>
-                                            <td className="px-4 py-4 text-sm whitespace-nowrap">
-                                                <div className="flex items-center gap-x-2">
-                                                    <p className="px-3 py-1 text-xs text-indigo-500 rounded-full dark:bg-gray-800 bg-indigo-100/60">
-                                                        Design
-                                                    </p>
-                                                    <p className="px-3 py-1 text-xs text-blue-500 rounded-full dark:bg-gray-800 bg-blue-100/60">
-                                                        Product
-                                                    </p>
-                                                    <p className="px-3 py-1 text-xs text-pink-500 rounded-full dark:bg-gray-800 bg-pink-100/60">
-                                                        Marketing
-                                                    </p>
-                                                </div>
-                                            </td>
-                                            <td className="px-4 py-4 text-sm whitespace-nowrap">
-                                                <div className="flex items-center gap-x-6">
-                                                    <button className=" transition-colors duration-200 text-red-500 hover:text-red-700 focus:outline-none">
-                                                        <svg
-                                                            xmlns="http://www.w3.org/2000/svg"
-                                                            fill="none"
-                                                            viewBox="0 0 24 24"
-                                                            strokeWidth="1.5"
-                                                            stroke="currentColor"
-                                                            className="w-5 h-5"
-                                                        >
-                                                            <path
-                                                                strokeLinecap="round"
-                                                                strokeLinejoin="round"
-                                                                d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
-                                                            />
-                                                        </svg>
-                                                    </button>
-                                                    <button className=" transition-colors duration-200 hover:text-yellow-500  text-yellow-700 focus:outline-none">
-                                                        <svg
-                                                            xmlns="http://www.w3.org/2000/svg"
-                                                            fill="none"
-                                                            viewBox="0 0 24 24"
-                                                            strokeWidth="1.5"
-                                                            stroke="currentColor"
-                                                            className="w-5 h-5"
-                                                        >
-                                                            <path
-                                                                strokeLinecap="round"
-                                                                strokeLinejoin="round"
-                                                                d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
-                                                            />
-                                                        </svg>
-                                                    </button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                                                <div className="inline-flex items-center gap-x-3">
-                                                    <input
-                                                        type="checkbox"
-                                                        className="text-blue-500 border-gray-300 rounded dark:bg-gray-900 dark:ring-offset-gray-900 dark:border-gray-700"
-                                                    />
-                                                    <div className="flex items-center gap-x-2">
-                                                        <img
-                                                            className="object-cover w-10 h-10 rounded"
-                                                            src="https://images.unsplash.com/photo-1531590878845-12627191e687?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=764&q=80"
-                                                            alt=""
-                                                        />
-                                                        <div>
-                                                            <h2 className="font-medium text-gray-800  ">
-                                                                Amelia. Anderson
+                                                    </td>
+                                                    <td className="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
+                                                        <div className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-emerald-100/60 dark:bg-gray-800">
+                                                            <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                                                            <h2 className="text-sm font-normal text-emerald-500">
+                                                                Active
                                                             </h2>
-                                                            <p className="text-sm font-normal text-gray-600 dark:text-gray-400">
-                                                                @ameliaanderson
-                                                            </p>
                                                         </div>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td className="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                                                <div className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-emerald-100/60 dark:bg-gray-800">
-                                                    <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-                                                    <h2 className="text-sm font-normal text-emerald-500">
-                                                        Active
-                                                    </h2>
-                                                </div>
-                                            </td>
-                                            <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
-                                                Lead Developer
-                                            </td>
-                                            <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
-                                                ameliaanderson@example.com
-                                            </td>
-                                            <td className="px-4 py-4 text-sm whitespace-nowrap">
-                                                <div className="flex items-center gap-x-2">
-                                                    <p className="px-3 py-1 text-xs text-indigo-500 rounded-full dark:bg-gray-800 bg-indigo-100/60">
-                                                        Design
-                                                    </p>
-                                                    <p className="px-3 py-1 text-xs text-blue-500 rounded-full dark:bg-gray-800 bg-blue-100/60">
-                                                        Product
-                                                    </p>
-                                                    <p className="px-3 py-1 text-xs text-pink-500 rounded-full dark:bg-gray-800 bg-pink-100/60">
-                                                        Marketing
-                                                    </p>
-                                                </div>
-                                            </td>
-                                            <td className="px-4 py-4 text-sm whitespace-nowrap">
-                                                <div className="flex items-center gap-x-6">
-                                                    <button className=" transition-colors duration-200 text-red-500 hover:text-red-700focus:outline-none">
-                                                        <svg
-                                                            xmlns="http://www.w3.org/2000/svg"
-                                                            fill="none"
-                                                            viewBox="0 0 24 24"
-                                                            strokeWidth="1.5"
-                                                            stroke="currentColor"
-                                                            className="w-5 h-5"
-                                                        >
-                                                            <path
-                                                                strokeLinecap="round"
-                                                                strokeLinejoin="round"
-                                                                d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
-                                                            />
-                                                        </svg>
-                                                    </button>
-                                                    <button className=" transition-colors duration-200 hover:text-yellow-500  text-yellow-700 focus:outline-none">
-                                                        <svg
-                                                            xmlns="http://www.w3.org/2000/svg"
-                                                            fill="none"
-                                                            viewBox="0 0 24 24"
-                                                            strokeWidth="1.5"
-                                                            stroke="currentColor"
-                                                            className="w-5 h-5"
-                                                        >
-                                                            <path
-                                                                strokeLinecap="round"
-                                                                strokeLinejoin="round"
-                                                                d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
-                                                            />
-                                                        </svg>
-                                                    </button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                                                <div className="inline-flex items-center gap-x-3">
-                                                    <input
-                                                        type="checkbox"
-                                                        className="text-blue-500 border-gray-300 rounded dark:bg-gray-900 dark:ring-offset-gray-900 dark:border-gray-700"
-                                                    />
-                                                    <div className="flex items-center gap-x-2">
-                                                        <img
-                                                            className="object-cover w-10 h-10 rounded"
-                                                            src="https://images.unsplash.com/photo-1608174386344-80898cec6beb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80"
-                                                            alt=""
-                                                        />
-                                                        <div>
-                                                            <h2 className="font-medium text-gray-800  ">
-                                                                junior REIS
-                                                            </h2>
-                                                            <p className="text-sm font-normal text-gray-600 dark:text-gray-400">
-                                                                @junior
+                                                    </td>
+                                                    <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
+                                                        Design Director
+                                                    </td>
+                                                    <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
+                                                        authurmelo@example.com
+                                                    </td>
+                                                    <td className="px-4 py-4 text-sm whitespace-nowrap">
+                                                        <div className="flex items-center gap-x-2">
+                                                            <p className="px-3 py-1 text-xs text-indigo-500 rounded-full dark:bg-gray-800 bg-indigo-100/60">
+                                                                Design
                                                             </p>
+
+
                                                         </div>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td className="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                                                <div className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-emerald-100/60 dark:bg-gray-800">
-                                                    <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-                                                    <h2 className="text-sm font-normal text-emerald-500">
-                                                        Active
-                                                    </h2>
-                                                </div>
-                                            </td>
-                                            <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
-                                                Products Managers
-                                            </td>
-                                            <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
-                                                junior@example.com
-                                            </td>
-                                            <td className="px-4 py-4 text-sm whitespace-nowrap">
-                                                <div className="flex items-center gap-x-2">
-                                                    <p className="px-3 py-1 text-xs text-indigo-500 rounded-full dark:bg-gray-800 bg-indigo-100/60">
-                                                        Design
-                                                    </p>
-                                                    <p className="px-3 py-1 text-xs text-blue-500 rounded-full dark:bg-gray-800 bg-blue-100/60">
-                                                        Product
-                                                    </p>
-                                                    <p className="px-3 py-1 text-xs text-pink-500 rounded-full dark:bg-gray-800 bg-pink-100/60">
-                                                        Marketing
-                                                    </p>
-                                                </div>
-                                            </td>
-                                            <td className="px-4 py-4 text-sm whitespace-nowrap">
-                                                <div className="flex items-center gap-x-6">
-                                                    <button className="text-gray-500 transition-colors duration-200 text-red-500 hover:text-red-700focus:outline-none">
-                                                        <svg
-                                                            xmlns="http://www.w3.org/2000/svg"
-                                                            fill="none"
-                                                            viewBox="0 0 24 24"
-                                                            strokeWidth="1.5"
-                                                            stroke="currentColor"
-                                                            className="w-5 h-5"
-                                                        >
-                                                            <path
-                                                                strokeLinecap="round"
-                                                                strokeLinejoin="round"
-                                                                d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
-                                                            />
-                                                        </svg>
-                                                    </button>
-                                                    <button className="text-gray-500 transition-colors duration-200 hover:text-yellow-500  text-yellow-700 focus:outline-none">
-                                                        <svg
-                                                            xmlns="http://www.w3.org/2000/svg"
-                                                            fill="none"
-                                                            viewBox="0 0 24 24"
-                                                            strokeWidth="1.5"
-                                                            stroke="currentColor"
-                                                            className="w-5 h-5"
-                                                        >
-                                                            <path
-                                                                strokeLinecap="round"
-                                                                strokeLinejoin="round"
-                                                                d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
-                                                            />
-                                                        </svg>
-                                                    </button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                                                <div className="inline-flex items-center gap-x-3">
-                                                    <input
-                                                        type="checkbox"
-                                                        className="text-blue-500 border-gray-300 rounded dark:bg-gray-900 dark:ring-offset-gray-900 dark:border-gray-700"
-                                                    />
-                                                    <div className="flex items-center gap-x-2">
-                                                        <img
-                                                            className="object-cover w-10 h-10 rounded"
-                                                            src="https://images.unsplash.com/photo-1488508872907-592763824245?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80"
-                                                            alt=""
-                                                        />
-                                                        <div>
-                                                            <h2 className="font-medium text-gray-800  ">
-                                                                Olivia Wathan
-                                                            </h2>
-                                                            <p className="text-sm font-normal text-gray-600 dark:text-gray-400">
-                                                                @oliviawathan
-                                                            </p>
+                                                    </td>
+                                                    <td className="px-4 py-4 text-sm whitespace-nowrap">
+                                                        <div className="flex items-center gap-x-6">
+                                                            <button className=" transition-colors duration-200 text-red-500 hover:text-red-700 focus:outline-none">
+                                                                <svg
+                                                                    xmlns="http://www.w3.org/2000/svg"
+                                                                    fill="none"
+                                                                    viewBox="0 0 24 24"
+                                                                    strokeWidth="1.5"
+                                                                    stroke="currentColor"
+                                                                    className="w-5 h-5"
+                                                                >
+                                                                    <path
+                                                                        strokeLinecap="round"
+                                                                        strokeLinejoin="round"
+                                                                        d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
+                                                                    />
+                                                                </svg>
+                                                            </button>
+                                                            <button className=" transition-colors duration-200 hover:text-yellow-500  text-yellow-700 focus:outline-none">
+                                                                <svg
+                                                                    xmlns="http://www.w3.org/2000/svg"
+                                                                    fill="none"
+                                                                    viewBox="0 0 24 24"
+                                                                    strokeWidth="1.5"
+                                                                    stroke="currentColor"
+                                                                    className="w-5 h-5"
+                                                                >
+                                                                    <path
+                                                                        strokeLinecap="round"
+                                                                        strokeLinejoin="round"
+                                                                        d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
+                                                                    />
+                                                                </svg>
+                                                            </button>
                                                         </div>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td className="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                                                <div className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-emerald-100/60 dark:bg-gray-800">
-                                                    <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-                                                    <h2 className="text-sm font-normal text-emerald-500">
-                                                        Active
-                                                    </h2>
-                                                </div>
-                                            </td>
-                                            <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
-                                                Lead Designer
-                                            </td>
-                                            <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
-                                                oliviawathan@example.com
-                                            </td>
-                                            <td className="px-4 py-4 text-sm whitespace-nowrap">
-                                                <div className="flex items-center gap-x-2">
-                                                    <p className="px-3 py-1 text-xs text-indigo-500 rounded-full dark:bg-gray-800 bg-indigo-100/60">
-                                                        Design
-                                                    </p>
-                                                    <p className="px-3 py-1 text-xs text-blue-500 rounded-full dark:bg-gray-800 bg-blue-100/60">
-                                                        Product
-                                                    </p>
-                                                    <p className="px-3 py-1 text-xs text-pink-500 rounded-full dark:bg-gray-800 bg-pink-100/60">
-                                                        Marketing
-                                                    </p>
-                                                </div>
-                                            </td>
-                                            <td className="px-4 py-4 text-sm whitespace-nowrap">
-                                                <div className="flex items-center gap-x-6">
-                                                    <button className="text-gray-500 transition-colors duration-200 text-red-500 hover:text-red-700focus:outline-none">
-                                                        <svg
-                                                            xmlns="http://www.w3.org/2000/svg"
-                                                            fill="none"
-                                                            viewBox="0 0 24 24"
-                                                            strokeWidth="1.5"
-                                                            stroke="currentColor"
-                                                            className="w-5 h-5"
-                                                        >
-                                                            <path
-                                                                strokeLinecap="round"
-                                                                strokeLinejoin="round"
-                                                                d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
-                                                            />
-                                                        </svg>
-                                                    </button>
-                                                    <button className="text-gray-500 transition-colors duration-200 hover:text-yellow-500  text-yellow-700 focus:outline-none">
-                                                        <svg
-                                                            xmlns="http://www.w3.org/2000/svg"
-                                                            fill="none"
-                                                            viewBox="0 0 24 24"
-                                                            strokeWidth="1.5"
-                                                            stroke="currentColor"
-                                                            className="w-5 h-5"
-                                                        >
-                                                            <path
-                                                                strokeLinecap="round"
-                                                                strokeLinejoin="round"
-                                                                d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
-                                                            />
-                                                        </svg>
-                                                    </button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                                                <div className="inline-flex items-center gap-x-3">
-                                                    <input
-                                                        type="checkbox"
-                                                        className="text-blue-500 border-gray-300 rounded dark:bg-gray-900 dark:ring-offset-gray-900 dark:border-gray-700"
-                                                    />
-                                                    <div className="flex items-center gap-x-2">
-                                                        <img
-                                                            className="object-cover w-10 h-10 rounded"
-                                                            src="https://images.unsplash.com/photo-1499470932971-a90681ce8530?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80"
-                                                            alt=""
-                                                        />
-                                                        <div>
-                                                            <h2 className="font-medium text-gray-800  ">
-                                                                Mia
-                                                            </h2>
-                                                            <p className="text-sm font-normal text-gray-600 dark:text-gray-400">
-                                                                @mia
-                                                            </p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td className="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                                                <div className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-emerald-100/60 dark:bg-gray-800">
-                                                    <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-                                                    <h2 className="text-sm font-normal text-emerald-500">
-                                                        Active
-                                                    </h2>
-                                                </div>
-                                            </td>
-                                            <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
-                                                Graphic Designer
-                                            </td>
-                                            <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
-                                                mia@example.com
-                                            </td>
-                                            <td className="px-4 py-4 text-sm whitespace-nowrap">
-                                                <div className="flex items-center gap-x-2">
-                                                    <p className="px-3 py-1 text-xs text-indigo-500 rounded-full dark:bg-gray-800 bg-indigo-100/60">
-                                                        Design
-                                                    </p>
-                                                    <p className="px-3 py-1 text-xs text-blue-500 rounded-full dark:bg-gray-800 bg-blue-100/60">
-                                                        Product
-                                                    </p>
-                                                    <p className="px-3 py-1 text-xs text-pink-500 rounded-full dark:bg-gray-800 bg-pink-100/60">
-                                                        Marketing
-                                                    </p>
-                                                </div>
-                                            </td>
-                                            <td className="px-4 py-4 text-sm whitespace-nowrap">
-                                                <div className="flex items-center gap-x-6">
-                                                    <button className="text-gray-500 transition-colors duration-200 text-red-500 hover:text-red-700focus:outline-none">
-                                                        <svg
-                                                            xmlns="http://www.w3.org/2000/svg"
-                                                            fill="none"
-                                                            viewBox="0 0 24 24"
-                                                            strokeWidth="1.5"
-                                                            stroke="currentColor"
-                                                            className="w-5 h-5"
-                                                        >
-                                                            <path
-                                                                strokeLinecap="round"
-                                                                strokeLinejoin="round"
-                                                                d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
-                                                            />
-                                                        </svg>
-                                                    </button>
-                                                    <button className="text-gray-500 transition-colors duration-200 hover:text-yellow-500  text-yellow-700 focus:outline-none">
-                                                        <svg
-                                                            xmlns="http://www.w3.org/2000/svg"
-                                                            fill="none"
-                                                            viewBox="0 0 24 24"
-                                                            strokeWidth="1.5"
-                                                            stroke="currentColor"
-                                                            className="w-5 h-5"
-                                                        >
-                                                            <path
-                                                                strokeLinecap="round"
-                                                                strokeLinejoin="round"
-                                                                d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
-                                                            />
-                                                        </svg>
-                                                    </button>
-                                                </div>
-                                            </td>
-                                        </tr>
+                                                    </td>
+                                                </tr>
+                                            ))
+                                        }
+
+
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div className='mt-10 flex justify-center'>
-                    <button
-                        className="flex items-center px-4 py-2 font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-gray-800 rounded-lg hover:bg-gray-900 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80"
-                        onClick={handleRefresh}
-                        disabled={loading} // Disable the button when loading
-                    >
-                        {loading ?
-                            <svg
-                                className="animate-spin w-5 h-5 mx-1 text-white"
-                                xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 20 20"
-                                fill="none"
-                            >
-                                {/* Add your loading spinner SVG here */}
-                                <circle cx="10" cy="10" r="8" stroke="currentColor" strokeWidth="4"></circle>
-                            </svg> :
-                            <svg class="w-5 h-5 mx-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                                <path fill-rule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clip-rule="evenodd" />
-                            </svg>
-                        }
-                        <span className="mx-1">{loading ? 'Loading...' : 'Load More'}</span>
-                    </button>
-                </div>
+
             </section>
 
         </div>
