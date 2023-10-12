@@ -36,6 +36,7 @@ import SellerRoute from "./SellerRoute";
 import PageManagement from "../Pages/AdminItem/PageManagement/PageManagement";
 import AddPage from "../Pages/AdminItem/PageManagement/AddPage";
 import Trams from "../Pages/CustomPages/Trams";
+import CatagoryManagement from "../Pages/AdminItem/Catagorys/CatagoryManagement";
 
 const Router = createBrowserRouter([
   {
@@ -196,7 +197,15 @@ const Router = createBrowserRouter([
         ),
       },
       {
-        path: "addcategory",
+        path: "managecategory",
+        element: (
+          <SupperAdminRouter>
+            <CatagoryManagement />
+          </SupperAdminRouter>
+        ),
+      },
+      {
+        path: "managecategory/addcategory",
         element: (
           <SupperAdminRouter>
             <AddCatagorys />

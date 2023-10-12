@@ -10,21 +10,29 @@ const Header = () => {
 
     const menuData = <>
         <li>
-            <a
+            <NavLink
                 href="/"
                 aria-label="Our product"
                 title="Our product"
-                className=" tracking-wide text-gray-700 transition-colors duration-200 font-semibold hover:text-black"
+                className={({ isActive }) => {
+                    return isActive
+                        ? "tracking-wide text-gray-800 transition-colors duration-200 font-semibold hover:text-black underline underline-offset-8 text-lg "
+                        : "tracking-wide text-gray-800 transition-colors duration-200 font-semibold hover:text-black hover:underline underline-offset-8 text-lg ";
+                }}
             >
                 Features
-            </a>
+            </NavLink>
         </li>
         <li>
             <NavLink
                 to="/products"
                 aria-label="Our product"
                 title="Our product"
-                className=" tracking-wide text-gray-700 transition-colors duration-200 font-semibold hover:text-black"
+                className={({ isActive }) => {
+                    return isActive
+                        ? "tracking-wide text-gray-800 transition-colors duration-200 font-semibold hover:text-black underline underline-offset-8 text-lg "
+                        : "tracking-wide text-gray-800 transition-colors duration-200 font-semibold hover:text-black hover:underline underline-offset-8 text-lg ";
+                }}
             >
                 Product
             </NavLink>
@@ -34,7 +42,11 @@ const Header = () => {
                 to="/price"
                 aria-label="Product pricing"
                 title="Product pricing"
-                className=" tracking-wide text-gray-700 transition-colors duration-200 font-semibold hover:text-black"
+                className={({ isActive }) => {
+                    return isActive
+                        ? "tracking-wide text-gray-800 transition-colors duration-200 font-semibold hover:text-black underline underline-offset-8 text-lg "
+                        : "tracking-wide text-gray-800 transition-colors duration-200 font-semibold hover:text-black hover:underline underline-offset-8 text-lg ";
+                }}
             >
                 Pricing
             </NavLink>
@@ -44,37 +56,53 @@ const Header = () => {
                 to="/blogs"
                 aria-label="About us"
                 title="About us"
-                className=" tracking-wide text-gray-700 transition-colors duration-200 font-semibold hover:text-black"
+                className={({ isActive }) => {
+                    return isActive
+                        ? "tracking-wide text-gray-800 transition-colors duration-200 font-semibold hover:text-black underline underline-offset-8 text-lg "
+                        : "tracking-wide text-gray-800 transition-colors duration-200 font-semibold hover:text-black hover:underline underline-offset-8 text-lg ";
+                }}
             >
                 Blog
             </NavLink>
         </li>
         <li>
-            <a
-                href="/"
+            <NavLink
+                to="/"
                 aria-label="About us"
                 title="About us"
-                className=" tracking-wide text-gray-700 transition-colors duration-200 font-semibold hover:text-black"
+                className={({ isActive }) => {
+                    return isActive
+                        ? "tracking-wide text-gray-800 transition-colors duration-200 font-semibold hover:text-black underline underline-offset-8 text-lg "
+                        : "tracking-wide text-gray-800 transition-colors duration-200 font-semibold hover:text-black hover:underline underline-offset-8 text-lg ";
+                }}
             >
                 Contact
-            </a>
+            </NavLink>
         </li>
         <li>
-            <a
-                href="/"
+            <NavLink
+                to="/"
                 aria-label="About us"
                 title="About us"
-                className=" tracking-wide text-gray-700 transition-colors duration-200 font-semibold hover:text-black"
+                className={({ isActive }) => {
+                    return isActive
+                        ? "tracking-wide text-gray-800 transition-colors duration-200 font-semibold hover:text-black underline underline-offset-8 text-lg "
+                        : "tracking-wide text-gray-800 transition-colors duration-200 font-semibold hover:text-black hover:underline underline-offset-8 text-lg ";
+                }}
             >
                 Support
-            </a>
+            </NavLink>
         </li>
         <li>
             <NavLink
                 to="/faq"
                 aria-label="About us"
                 title="About us"
-                className=" tracking-wide text-gray-700 transition-colors duration-200 font-semibold hover:text-black"
+                className={({ isActive }) => {
+                    return isActive
+                        ? "tracking-wide text-gray-800 transition-colors duration-200 font-semibold hover:text-black underline underline-offset-8 text-lg "
+                        : "tracking-wide text-gray-800 transition-colors duration-200 font-semibold hover:text-black hover:underline underline-offset-8 text-lg ";
+                }}
             >
                 F.A.Q
             </NavLink>
@@ -86,8 +114,8 @@ const Header = () => {
         <div className='fixed top-0 right-0 left-0 z-50 bg-white'>
             <div className="px-4 py-5 mx-auto  sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8">
                 <div className="relative flex items-center justify-between">
-                    <a
-                        href="/"
+                    <NavLink
+                        to="/"
                         aria-label="Company"
                         title="Company"
                         className="inline-flex items-center"
@@ -110,7 +138,7 @@ const Header = () => {
                         <span className="ml-2 text-xl font-bold tracking-wide text-gray-800 ">
                             SaleNow
                         </span>
-                    </a>
+                    </NavLink>
                     <ul className="flex items-center hidden space-x-8 lg:flex">
 
                         {menuData}
@@ -165,7 +193,7 @@ const Header = () => {
                                                                 </strong>
 
                                                                 <a
-                                                                    href="#"
+                                                                    to="#"
                                                                     className="block rounded-lg px-4 py-2 text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700"
                                                                     role="menuitem"
                                                                 >
@@ -173,7 +201,7 @@ const Header = () => {
                                                                 </a>
 
                                                                 <a
-                                                                    href="#"
+                                                                    to="#"
                                                                     className="block rounded-lg px-4 py-2 text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700"
                                                                     role="menuitem"
                                                                 >
@@ -181,7 +209,7 @@ const Header = () => {
                                                                 </a>
 
                                                                 <a
-                                                                    href="#"
+                                                                    to="#"
                                                                     className="block rounded-lg px-4 py-2 text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700"
                                                                     role="menuitem"
                                                                 >
@@ -189,7 +217,7 @@ const Header = () => {
                                                                 </a>
 
                                                                 <a
-                                                                    href="#"
+                                                                    to="#"
                                                                     className="block rounded-lg px-4 py-2 text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700"
                                                                     role="menuitem"
                                                                 >
@@ -288,7 +316,7 @@ const Header = () => {
                                                         </strong>
 
                                                         <a
-                                                            href="#"
+                                                            to="#"
                                                             className="block rounded-lg px-4 py-2 text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700"
                                                             role="menuitem"
                                                         >
@@ -296,7 +324,7 @@ const Header = () => {
                                                         </a>
 
                                                         <a
-                                                            href="#"
+                                                            to="#"
                                                             className="block rounded-lg px-4 py-2 text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700"
                                                             role="menuitem"
                                                         >
@@ -304,7 +332,7 @@ const Header = () => {
                                                         </a>
 
                                                         <a
-                                                            href="#"
+                                                            to="#"
                                                             className="block rounded-lg px-4 py-2 text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700"
                                                             role="menuitem"
                                                         >
@@ -312,7 +340,7 @@ const Header = () => {
                                                         </a>
 
                                                         <a
-                                                            href="#"
+                                                            to="#"
                                                             className="block rounded-lg px-4 py-2 text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700"
                                                             role="menuitem"
                                                         >
@@ -384,8 +412,8 @@ const Header = () => {
                                 <div className="p-5 bg-white border rounded shadow-sm">
                                     <div className="flex items-center justify-between mb-4">
                                         <div>
-                                            <a
-                                                href="/"
+                                            <NavLink
+                                                to="/"
                                                 aria-label="Company"
                                                 title="Company"
                                                 className="inline-flex items-center"
@@ -408,7 +436,7 @@ const Header = () => {
                                                 <span className="ml-2 text-xl font-bold tracking-wide text-gray-800 ">
                                                     SaleNow
                                                 </span>
-                                            </a>
+                                            </NavLink>
                                         </div>
                                         <div>
 
