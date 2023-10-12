@@ -18,7 +18,7 @@ const SideNavAdmin = () => {
     const [menu, setMenu] = useState(true)
 
     return (
-        <div className='py-6'>
+        <div className='py-6 sticky'>
             <div className={menu ? "flex flex-col h-screen p-3  w-60 text-gray-900" : 'flex flex-col h-screen p-3 w-14 text-gray-900'}>
                 <div className="space-y-3">
                     <div className="flex items-center justify-between">
@@ -81,119 +81,192 @@ const SideNavAdmin = () => {
 
                     <div className="flex-1">
                         <ul className="pt-2 pb-4 space-y-1 text-sm">
-                            <li className="rounded-sm hover:bg-gray-800 hover:text-gray-50">
-                                <NavLink rel="noopener noreferrer" to='/admin/dashboard' className="flex items-center p-2 space-x-3 rounded-md">
-                                    <BiHomeAlt className="w-5 h-5 fill-current text-gray-400" />
-                                    {menu && <span>Home</span>}
-                                </NavLink>
-                            </li>
-                            <li className="rounded-sm hover:bg-gray-800 hover:text-gray-50">
-                                <NavLink to='/admin/blog' rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
-                                    <FaBlogger className="w-5 h-5 fill-current text-gray-400" />
-                                    {menu && <span>Blogs</span>}
-                                </NavLink>
-                            </li>
-                            <li className="rounded-sm hover:bg-gray-800 hover:text-gray-50">
-                                <NavLink to='/admin/manageproduct' rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
-                                    <FaStore className="w-5 h-5 fill-current text-gray-400" />
-                                    {menu && <span> Products Management</span>}
-                                </NavLink>
-                            </li>
+                            {/* " hover:" */}
+                            <NavLink rel="noopener noreferrer" to='/admin/dashboard' className={({ isActive }) => {
+                                return isActive
+                                    ? "flex items-center p-2 space-x-3 rounded-sm bg-gray-800 text-white "
+                                    : "flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
+                            }}>
+
+                                <BiHomeAlt className="w-5 h-5 fill-current text-gray-400" />
+                                {menu && <span>Home</span>}
+                            </NavLink>
 
 
-                            <li className="rounded-sm hover:bg-gray-800 hover:text-gray-50">
-                                <NavLink rel="noopener noreferrer" to='/admin/addcategory' className="flex items-center p-2 space-x-3 rounded-md">
-                                    <FaUsersGear className="w-5 h-5 fill-current text-gray-400" />
-                                    {menu && <span>Category Management</span>}
-                                </NavLink>
-                            </li>
-                            <li className="rounded-sm hover:bg-gray-800 hover:text-gray-50">
-                                <NavLink rel="noopener noreferrer" to={'/admin/faq'} className="flex items-center p-2 space-x-3 rounded-md">
-                                    <FaUsersGear className="w-5 h-5 fill-current text-gray-400" />
-                                    {menu && <span>FAQ Management</span>}
-                                </NavLink>
-                            </li>
-                            <li className="rounded-sm hover:bg-gray-800 hover:text-gray-50">
-                                <NavLink rel="noopener noreferrer" to={'/admin/pricemanagement'} className="flex items-center p-2 space-x-3 rounded-md">
-                                    <AiOutlineAlert className="w-5 h-5 fill-current text-gray-400" />
-                                    {menu && <span> Price Management</span>}
-                                </NavLink>
-                            </li>
-                            <li className="rounded-sm hover:bg-gray-800 hover:text-gray-50">
-                                <NavLink rel="noopener noreferrer" to={'/admin/pagemanagement'} className="flex items-center p-2 space-x-3 rounded-md">
-                                    <MdOutlineSubscriptions className="w-5 h-5 fill-current text-gray-400" />
-                                    {menu && <span>Page Management</span>}
-                                </NavLink>
-                            </li>
-                            <li className="rounded-md hover:bg-gray-800 hover:text-gray-50">
-                                <a rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
-                                    <BsTicketDetailed className="w-5 h-5 fill-current text-gray-400" />
-                                    {menu && <span>Support & Ticket</span>}
-                                </a>
-                            </li>
-                            <li className="rounded-sm hover:bg-gray-800 hover:text-gray-50">
-                                <a rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
-                                    <SiGoogledomains className="w-5 h-5 fill-current text-gray-400" />
-                                    {menu && <span>Domain Management</span>}
-                                </a>
-                            </li>
-                            <li className="rounded-sm hover:bg-gray-800 hover:text-gray-50">
-                                <a rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
-                                    <HiOutlineUsers className="w-5 h-5 fill-current text-gray-400" />
-                                    {menu && <span>Sellers Manage</span>}
-                                </a>
-                            </li>
-                            <li className="rounded-sm hover:bg-gray-800 hover:text-gray-50">
-                                <a rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
-                                    <BiSolidShoppingBags className="w-5 h-5 fill-current text-gray-400" />
-                                    {menu && <span>Product Managment</span>}
-                                </a>
-                            </li>
-                            <li className="rounded-sm hover:bg-gray-800 hover:text-gray-50">
-                                <a rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
-                                    <BiCategory className="w-5 h-5 fill-current text-gray-400" />
-                                    {menu && <span>Daraz Category</span>}
-                                </a>
-                            </li>
-                            <li className="rounded-sm hover:bg-gray-800 hover:text-gray-50">
-                                <a rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
-                                    <GiNotebook className="w-5 h-5 fill-current text-gray-400" />
-                                    {menu && <span>Report manage</span>}
-                                </a>
-                            </li>
-                            <li className="rounded-sm hover:bg-gray-800 hover:text-gray-50">
-                                <a rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
-                                    <BsChatLeftQuote className="w-5 h-5 fill-current text-gray-400" />
-                                    {menu && <span>Omni Chat</span>}
-                                </a>
-                            </li>
-                            <li className="rounded-sm hover:bg-gray-800 hover:text-gray-50">
-                                <a rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
-                                    <MdOutlineRoomPreferences className="w-5 h-5 fill-current text-gray-400" />
-                                    {menu && <span>Referral program</span>}
-                                </a>
-                            </li>
-                            <li className="rounded-sm hover:bg-gray-800 hover:text-gray-50">
-                                <a rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
-                                    <HiOutlineUserGroup className="w-5 h-5 fill-current text-gray-400" />
-                                    {menu && <span>Customer manage
-                                    </span>}
-                                </a>
-                            </li>
-                            <li className="rounded-sm hover:bg-gray-800 hover:text-gray-50">
-                                <a rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
-                                    <IoSettings className="w-5 h-5 fill-current text-gray-400" />
-                                    {menu && <span>
-                                        Settings
-                                    </span>}
-                                </a>
-                            </li>
-                            <li className="rounded-sm hover:bg-gray-800 hover:text-gray-50">
-                                <button rel="noopener noreferrer" onClick={() => logOut()} className="flex items-center p-2 space-x-3 rounded-md">
-                                    <IoLogOut className="w-5 h-5 fill-current text-gray-400" />
-                                    {menu && <span>Logout</span>}
-                                </button>
-                            </li>
+                            <NavLink to='/admin/blog' rel="noopener noreferrer" href="#" className={({ isActive }) => {
+                                return isActive
+                                    ? "flex items-center p-2 space-x-3 rounded-sm bg-gray-800 text-white "
+                                    : "flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
+                            }}>
+                                <FaBlogger className="w-5 h-5 fill-current text-gray-400" />
+                                {menu && <span>Blogs</span>}
+                            </NavLink>
+
+
+                            <NavLink to='/admin/manageproduct' rel="noopener noreferrer" href="#" className={({ isActive }) => {
+                                return isActive
+                                    ? "flex items-center p-2 space-x-3 rounded-sm bg-gray-800 text-white "
+                                    : "flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
+                            }}>
+                                <FaStore className="w-5 h-5 fill-current text-gray-400" />
+                                {menu && <span> Products Management</span>}
+                            </NavLink>
+
+
+
+
+                            <NavLink rel="noopener noreferrer" to='/admin/managecategory' className={({ isActive }) => {
+                                return isActive
+                                    ? "flex items-center p-2 space-x-3 rounded-sm bg-gray-800 text-white "
+                                    : "flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
+                            }}>
+                                <FaUsersGear className="w-5 h-5 fill-current text-gray-400" />
+                                {menu && <span>Category Management</span>}
+                            </NavLink>
+
+
+
+                            {/* Todo: Working here  */}
+
+                            <NavLink rel="noopener noreferrer" to={'/admin/faq'} className={({ isActive }) => {
+                                return isActive
+                                    ? "flex items-center p-2 space-x-3 rounded-sm bg-gray-800 text-white "
+                                    : "flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
+                            }}>
+                                <FaUsersGear className="w-5 h-5 fill-current text-gray-400" />
+                                {menu && <span>FAQ Management</span>}
+                            </NavLink>
+
+
+                            <NavLink rel="noopener noreferrer" to={'/admin/pricemanagement'} className={({ isActive }) => {
+                                return isActive
+                                    ? "flex items-center p-2 space-x-3 rounded-sm bg-gray-800 text-white "
+                                    : "flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
+                            }}>
+                                <AiOutlineAlert className="w-5 h-5 fill-current text-gray-400" />
+                                {menu && <span> Price Management</span>}
+                            </NavLink>
+
+
+                            <NavLink rel="noopener noreferrer" to={'/admin/pagemanagement'} className={({ isActive }) => {
+                                return isActive
+                                    ? "flex items-center p-2 space-x-3 rounded-sm bg-gray-800 text-white "
+                                    : "flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
+                            }}>
+                                <MdOutlineSubscriptions className="w-5 h-5 fill-current text-gray-400" />
+                                {menu && <span>Page Management</span>}
+                            </NavLink>
+
+
+                            <NavLink rel="noopener noreferrer" href="#" className={({ isActive }) => {
+                                return isActive
+                                    ? "flex items-center p-2 space-x-3 rounded-sm bg-gray-800 text-white "
+                                    : "flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
+                            }}>
+                                <BsTicketDetailed className="w-5 h-5 fill-current text-gray-400" />
+                                {menu && <span>Support & Ticket</span>}
+                            </NavLink>
+
+
+                            <NavLink rel="noopener noreferrer" href="#" className={({ isActive }) => {
+                                return isActive
+                                    ? "flex items-center p-2 space-x-3 rounded-sm bg-gray-800 text-white "
+                                    : "flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
+                            }}>
+                                <SiGoogledomains className="w-5 h-5 fill-current text-gray-400" />
+                                {menu && <span>Domain Management</span>}
+                            </NavLink>
+
+
+                            <NavLink rel="noopener noreferrer" href="#" className={({ isActive }) => {
+                                return isActive
+                                    ? "flex items-center p-2 space-x-3 rounded-sm bg-gray-800 text-white "
+                                    : "flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
+                            }}>
+                                <HiOutlineUsers className="w-5 h-5 fill-current text-gray-400" />
+                                {menu && <span>Sellers Manage</span>}
+                            </NavLink>
+
+
+                            <NavLink rel="noopener noreferrer" href="#" className={({ isActive }) => {
+                                return isActive
+                                    ? "flex items-center p-2 space-x-3 rounded-sm bg-gray-800 text-white "
+                                    : "flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
+                            }}>
+                                <BiSolidShoppingBags className="w-5 h-5 fill-current text-gray-400" />
+                                {menu && <span>Product Managment</span>}
+                            </NavLink>
+
+
+                            <NavLink rel="noopener noreferrer" href="#" className={({ isActive }) => {
+                                return isActive
+                                    ? "flex items-center p-2 space-x-3 rounded-sm bg-gray-800 text-white "
+                                    : "flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
+                            }}>
+                                <BiCategory className="w-5 h-5 fill-current text-gray-400" />
+                                {menu && <span>Daraz Category</span>}
+                            </NavLink>
+
+
+                            <NavLink rel="noopener noreferrer" href="#" className={({ isActive }) => {
+                                return isActive
+                                    ? "flex items-center p-2 space-x-3 rounded-sm bg-gray-800 text-white "
+                                    : "flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
+                            }}>
+                                <GiNotebook className="w-5 h-5 fill-current text-gray-400" />
+                                {menu && <span>Report manage</span>}
+                            </NavLink>
+
+
+                            <NavLink rel="noopener noreferrer" href="#" className={({ isActive }) => {
+                                return isActive
+                                    ? "flex items-center p-2 space-x-3 rounded-sm bg-gray-800 text-white "
+                                    : "flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
+                            }}>
+                                <BsChatLeftQuote className="w-5 h-5 fill-current text-gray-400" />
+                                {menu && <span>Omni Chat</span>}
+                            </NavLink>
+
+
+                            <NavLink rel="noopener noreferrer" href="#" className={({ isActive }) => {
+                                return isActive
+                                    ? "flex items-center p-2 space-x-3 rounded-sm bg-gray-800 text-white "
+                                    : "flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
+                            }}>
+                                <MdOutlineRoomPreferences className="w-5 h-5 fill-current text-gray-400" />
+                                {menu && <span>Referral program</span>}
+                            </NavLink>
+
+
+                            <NavLink rel="noopener noreferrer" href="#" className={({ isActive }) => {
+                                return isActive
+                                    ? "flex items-center p-2 space-x-3 rounded-sm bg-gray-800 text-white "
+                                    : "flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
+                            }}>
+                                <HiOutlineUserGroup className="w-5 h-5 fill-current text-gray-400" />
+                                {menu && <span>Customer manage
+                                </span>}
+                            </NavLink>
+
+
+                            <NavLink rel="noopener noreferrer" href="#" className={({ isActive }) => {
+                                return isActive
+                                    ? "flex items-center p-2 space-x-3 rounded-sm bg-gray-800 text-white "
+                                    : "flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
+                            }}>
+                                <IoSettings className="w-5 h-5 fill-current text-gray-400" />
+                                {menu && <span>
+                                    Settings
+                                </span>}
+                            </NavLink>
+
+
+                            <button rel="noopener noreferrer" onClick={() => logOut()} className="flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white w-full"
+                            >
+                                <IoLogOut className="w-5 h-5 fill-current text-gray-400" />
+                                {menu && <span>Logout</span>}
+                            </button>
+
                         </ul>
                     </div>
                 </div>
@@ -202,7 +275,7 @@ const SideNavAdmin = () => {
                     {menu && <div>
                         <h2 className="text-lg font-semibold">{user?.name}</h2>
                         <span className="flex items-center space-x-1">
-                            <a rel="noopener noreferrer" href="#" className="text-xs hover:underline text-gray-400">View profile</a>
+                            <NavLink rel="noopener noreferrer" href="#" className="text-xs hover:underline text-gray-400">View profile</NavLink>
                         </span>
                     </div>}
                 </div>
