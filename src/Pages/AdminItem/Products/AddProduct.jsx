@@ -1,36 +1,144 @@
 import JoditEditor from "jodit-react";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../../AuthProvider/UserProvider";
+import Swal from "sweetalert2";
+import { useQuery } from "@tanstack/react-query";
 
 const AddProduct = () => {
-  const [loading, setLoading] = useState(false);
-  const [images, setImages] = useState([]);
+  const { user } = useContext(AuthContext)
+  const [loading, setLoading] = useState(false)
 
-  const handleFileChange = (e) => {
+  const {
+    data: categories = [],
+    refetch,
+
+  } = useQuery({
+    queryKey: ["category"],
+    queryFn: async () => {
+      const res = await fetch(
+        "http://localhost:5000/admin/category",
+      );
+      const data = await res.json();
+      return data;
+    },
+  });
+
+  const [imageSets, setImageSets] = useState([
+    { id: 'Cover Photo*', images: [] },
+    { id: "Image 1*", images: [] },
+    { id: "Image 2*", images: [] },
+    { id: "Image 3*", images: [] },
+    { id: "Image 4", images: [] },
+    { id: "Image 5", images: [] },
+    { id: "Image 6", images: [] },
+    { id: "Image 7", images: [] },
+    // Add more sets as needed
+  ]);
+  let image = []
+  const handleImageChange = (e, setId) => {
     const files = Array.from(e.target.files);
-    const nonEmptyFiles = files.filter((file) => file.size > 0); // Filter out empty files
-    setImages([...images, ...nonEmptyFiles]);
+    setImageSets((prevSets) =>
+      prevSets.map((set) =>
+        set.id === setId ? { ...set, images: files } : set
+      )
+    );
   };
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    const form = event.target;
-    const image = images;
-    // const videoURL = form.videoURL.value
-    const productDescription = form.productDescription.value;
-    const categoryName = form.categoryName.value;
-    const productPrice = form.productPrice.value;
-    const productName = form.productName.value;
-    const data = {
-      image,
-      // videoURL,
-      productName,
-      productPrice,
-      categoryName,
-      productDescription,
-    };
-    console.log(data);
+  const handleUpload = async (event) => {
+
+    event.preventDefault()
+    for (const set of imageSets) {
+      if (set.images.length > 0) {
+        await handleUploadSet(set);
+      }
+    }
+
+    if (image.length > 2) {
+      const form = event.target
+      const productDescription = form.productDescription.value
+      const categoryName = form.categoryName.value
+      const productPrice = form.productPrice.value
+      const productName = form.productName.value
+      const videoUrl = form.videoUrl.value
+      const productInfo = {
+        image,
+        videoUrl,
+        productName,
+        productPrice,
+        categoryName,
+        productDescription,
+        author: user.userId
+      }
+
+      console.log(productInfo);
+
+      fetch(`http://localhost:5000/addproduct`, {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(productInfo),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          setLoading(false);
+          Swal.fire("success", "Your Category Publish Successfully", "success");
+          form.reset()
+        });
+    }
+    else (
+      Swal.fire(
+        'Minimum Image Field  Is Three',
+        'Please Add More Image',
+        'info'
+      )
+    )
+
+
+
+
   };
+
+  const handleUploadSet = async (set) => {
+    const uploadedUrls = await Promise.all(
+      set.images.map(uploadImageToImgBB)
+    );
+
+    image.push({ [set.id]: uploadedUrls });
+
+    // Handle the uploaded URLs for the set as needed
+  };
+
+
+
+  async function uploadImageToImgBB(imageFile) {
+
+    setLoading(true)
+    const formData = new FormData();
+    formData.append('image', imageFile);
+
+    try {
+      const response = await fetch(`https://api.imgbb.com/1/upload?key=2b8c7f515b1f628299764a2ce4c4cb0e`, {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        return data.data.url; // Return the URL of the uploaded image
+      } else {
+        console.error('Image upload failed:', await response.text());
+        return null; // Return null to indicate upload failure
+      }
+    } catch (error) {
+      console.error('Error during image upload:', error);
+      return null; // Return null to indicate upload failure
+    }
+  }
+
+
+
 
   return (
     <div>
@@ -65,67 +173,26 @@ const AddProduct = () => {
           Publish your product image and information
         </h1>
         <div className="p-10 border-2 rounded m-10">
-          <form onSubmit={handleSubmit} className="space-y-4  ">
+          <form onSubmit={handleUpload} className="space-y-4  ">
             <div className="border border-collapse p-4">
               <h1 className="mb-4">Product Information</h1>
-              <div className="grid lg:grid-cols-8 md:grid-cols-6 grid-cols-2 w-full gap-2">
-                <input
-                  required
-                  className="w-full"
-                  type="file"
-                  name="coverImage"
-                  onChange={handleFileChange}
-                />
-                <input
-                  className="w-full"
-                  type="file"
-                  name="Image1"
-                  onChange={handleFileChange}
-                />
-                <input
-                  className="w-full"
-                  type="file"
-                  name="Image2"
-                  onChange={handleFileChange}
-                />
-                <input
-                  className="w-full"
-                  type="file"
-                  name="Image3"
-                  onChange={handleFileChange}
-                />
-                <input
-                  required
-                  className="w-full"
-                  type="file"
-                  name="coverImage"
-                  onChange={handleFileChange}
-                />
-                <input
-                  className="w-full"
-                  type="file"
-                  name="Image1"
-                  onChange={handleFileChange}
-                />
-                <input
-                  className="w-full"
-                  type="file"
-                  name="Image2"
-                  onChange={handleFileChange}
-                />
-                <input
-                  className="w-full"
-                  type="file"
-                  name="Image3"
-                  onChange={handleFileChange}
-                />
+              <div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 w-full gap-2">
+                {imageSets.map((set) => (
+                  <div key={set.id} >
+                    <label for="image" class="block text-sm text-gray-900 ">{set.id}</label>
+
+                    <input
+                      onChange={(e) => handleImageChange(e, set.id)}
+                      type="file" class="block w-full px-3 py-2 mt-2 text-sm text-gray-600 bg-white border border-gray-200 rounded-lg file:bg-gray-200 file:text-gray-700 file:text-sm file:px-4 file:py-1 file:border-none file:rounded-full dark:file:bg-gray-800 dark:file:text-gray-200 dark:text-gray-300 placeholder-gray-400/70 dark:placeholder-gray-500 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:focus:border-blue-300" />
+                  </div>
+                ))}
               </div>
               <div className="mt-4">
                 <label className=" text-black text-sm " htmlFor="title">
                   Video URL
                 </label>
                 <input
-                  required
+
                   className="w-full mt-1 rounded-lg border border-gray-900 px-3 py-2 text-sm"
                   placeholder="https://www.youtube.com/watch?v=dQw4w9WgXcQ
                   "
@@ -168,42 +235,24 @@ const AddProduct = () => {
                 </label>
 
                 <div className="relative mt-1.5">
-                  <input
+                  <select
                     type="text"
                     list="productCategoryList"
                     id="productCategory"
                     name="categoryName"
-                    className="w-full mt-1 rounded-lg border border-gray-900 px-3 py-2 text-sm [&::-webkit-calendar-picker-indicator]:opacity-0"
+                    className="w-full mt-1 rounded-lg border border-gray-900 px-3 py-2 text-sm"
                     placeholder="Select a category"
-                  />
+                  >
 
-                  <span className="absolute inset-y-0 end-0 flex w-8 items-center">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      strokeWidth="1.5"
-                      stroke="currentColor"
-                      className="h-5 w-5 text-gray-500"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9"
-                      />
-                    </svg>
-                  </span>
+                    {
+                      categories?.map((category, i) => (
+                        <option value={category?.title}>{category?.title}</option>
+                      ))
+                    }
+                  </select>
                 </div>
 
-                <datalist name="productCategory" id="productCategoryList">
-                  <option value="formal">Formal</option>
-                  <option value="casual">Casual</option>
-                  <option value="t-Shirt">T-Shirt</option>
-                  <option value="Electronics">Electronics</option>
-                  <option value="AK">Albert King</option>
-                  <option value="BG">Buddy Guy</option>
-                  <option value="EC">Eric Clapton</option>
-                </datalist>
+
               </div>
 
               <div className="mt-4">
