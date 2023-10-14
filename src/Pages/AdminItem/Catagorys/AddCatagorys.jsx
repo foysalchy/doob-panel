@@ -1,188 +1,213 @@
-import { useQuery } from '@tanstack/react-query';
-import React from 'react';
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import Swal from 'sweetalert2';
+import { useQuery } from "@tanstack/react-query";
+import React from "react";
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const AddCatagorys = () => {
-    const [selectedFile, setSelectedFile] = useState(null);
-    const [preDeleteUrl, setPreDeleteUrl] = useState(null);
-    const [fileName, setFileName] = useState("");
-    const [loading, setLoading] = useState(false);
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [preDeleteUrl, setPreDeleteUrl] = useState(null);
+  const [fileName, setFileName] = useState("");
+  const [loading, setLoading] = useState(false);
 
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    setSelectedFile(file);
 
-    const handleFileChange = (event) => {
-        const file = event.target.files[0];
-        setSelectedFile(file);
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setPreDeleteUrl(reader.result);
+      };
+      reader.readAsDataURL(file);
+      setFileName(file.name);
+    }
+  };
 
-        if (file) {
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                setPreDeleteUrl(reader.result);
-            };
-            reader.readAsDataURL(file);
-            setFileName(file.name);
-        }
-    };
+  const dataSubmit = (event) => {
+    setLoading(true);
+    event.preventDefault();
+    const form = event.target;
+    const title = form.categoryName.value;
+    const image = form.photo.files[0];
 
-    const dataSubmit = (event) => {
-        setLoading(true);
-        event.preventDefault();
-        const form = event.target;
-        const title = form.categoryName.value;
-        const image = form.photo.files[0];
+    const formData = new FormData();
+    formData.append("image", image);
+    const url = `https://api.imgbb.com/1/upload?key=2b8c7f515b1f628299764a2ce4c4cb0e`;
+    fetch(url, {
+      method: "POST",
+      body: formData,
+    })
+      .then((res) => res.json())
+      .then((imageData) => {
+        const image = imageData.data.url;
+        const category = {
+          title,
+          img: image,
+        };
+        PostCategory(category, form);
+      });
+  };
 
+  const PostCategory = (category, form) => {
+    fetch(`http://localhost:5000/admin/category`, {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(category),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setLoading(false);
+        Swal.fire("success", "Your Category Publish Successfully", "success");
 
-        const formData = new FormData();
-        formData.append("image", image);
-        const url = `https://api.imgbb.com/1/upload?key=2b8c7f515b1f628299764a2ce4c4cb0e`;
-        fetch(url, {
-            method: "POST",
-            body: formData,
-        })
-            .then((res) => res.json())
-            .then((imageData) => {
-                const image = imageData.data.url;
-                const category = {
-                    title,
-                    img: image,
-                };
-                PostCategory(category, form);
-            });
-    };
+        form.reset();
+        setPreDeleteUrl("");
+        setFileName("");
+        refetch();
+      });
+  };
 
-    const PostCategory = (category, form) => {
+  return (
+    <div className="w-full">
+      <nav
+        aria-label="breadcrumb"
+        className="w-full my-20 p-4 mb-4 rounded dark:bg-gray-800 dark:text-gray-100"
+      >
+        <ol className="flex h-8 space-x-2">
+          <li className="flex items-center">
+            <Link
+              rel="noopener noreferrer"
+              to={"/admin/dashboard"}
+              title="Back to homepage"
+              className="hover:underline"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+                className="w-5 h-5 pr-1 dark:text-gray-400"
+              >
+                <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path>
+              </svg>
+            </Link>
+          </li>
+          <li className="flex items-center space-x-2">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 32 32"
+              aria-hidden="true"
+              fill="currentColor"
+              className="w-2 h-2 mt-1 transform rotate-90 fill-current dark:text-gray-600"
+            >
+              <path d="M32 30.031h-32l16-28.061z"></path>
+            </svg>
+            <Link
+              rel="noopener noreferrer"
+              to={"/admin/managecategory"}
+              className="flex items-center px-1 capitalize hover:underline"
+            >
+              Category Management
+            </Link>
+          </li>
+          <li className="flex items-center space-x-2">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 32 32"
+              aria-hidden="true"
+              fill="currentColor"
+              className="w-2 h-2 mt-1 transform rotate-90 fill-current dark:text-gray-600"
+            >
+              <path d="M32 30.031h-32l16-28.061z"></path>
+            </svg>
+            <Link
+              rel="noopener noreferrer"
+              to={"/admin/managecategory/addcategory"}
+              className="flex items-center px-1 capitalize hover:underline"
+            >
+              Add Category
+            </Link>
+          </li>
+        </ol>
+      </nav>
 
-        fetch(`https://salenow-kmg7yawl2-salenow-backend.vercel.app/admin/category`, {
-            method: "POST",
-            headers: {
-                "content-type": "application/json",
-            },
-            body: JSON.stringify(category),
-        })
-            .then((res) => res.json())
-            .then((data) => {
-                setLoading(false);
-                Swal.fire("success", "Your Category Publish Successfully", "success");
-
-                form.reset();
-                setPreDeleteUrl("");
-                setFileName("");
-                refetch()
-            });
-    };
-
-
-
-
-    return (
-        <div className='w-full'>
-            <nav aria-label="breadcrumb" className="w-full my-20 p-4 mb-4 rounded dark:bg-gray-800 dark:text-gray-100">
-                <ol className="flex h-8 space-x-2">
-                    <li className="flex items-center">
-                        <Link rel="noopener noreferrer" to={'/admin/dashboard'} title="Back to homepage" className="hover:underline">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5 pr-1 dark:text-gray-400">
-                                <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path>
-                            </svg>
-                        </Link>
-                    </li>
-                    <li className="flex items-center space-x-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" aria-hidden="true" fill="currentColor" className="w-2 h-2 mt-1 transform rotate-90 fill-current dark:text-gray-600">
-                            <path d="M32 30.031h-32l16-28.061z"></path>
-                        </svg>
-                        <Link rel="noopener noreferrer" to={'/admin/managecategory'} className="flex items-center px-1 capitalize hover:underline">Category Management</Link>
-                    </li>
-                    <li className="flex items-center space-x-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" aria-hidden="true" fill="currentColor" className="w-2 h-2 mt-1 transform rotate-90 fill-current dark:text-gray-600">
-                            <path d="M32 30.031h-32l16-28.061z"></path>
-                        </svg>
-                        <Link rel="noopener noreferrer" to={'/admin/managecategory/addcategory'} className="flex items-center px-1 capitalize hover:underline">Add Category</Link>
-                    </li>
-
-
-                </ol>
-            </nav>
-
-
-            <div className="my-10">
-                <h1 className="text-2xl font-bold text-center">
-                    Publish a Category for you and next
-                </h1>
-                <div className="p-10 border-2  rounded m-10">
-                    <form onSubmit={dataSubmit} className="w-full ">
-                        <div>
-                            <label className="sr-only text-black" htmlFor="title">
-                                Category Name
-                            </label>
-                            <input
-                                required
-                                className="w-full rounded-lg border border-gray-900 p-3 text-sm"
-                                placeholder="Category Name"
-                                type="text"
-                                id="title"
-                                name="categoryName"
-                            />
-                        </div>
-                        <div>
-                            <label
-                                htmlFor="dropzone-file"
-                                className="flex flex-col items-center w-full  p-5 mx-auto mt-2 text-center bg-white border-2 border-gray-300 border-dashed cursor-pointer  rounded-xl"
-                            >
-                                {preDeleteUrl ? (
-                                    <img
-                                        src={preDeleteUrl}
-                                        alt="File PreDelete"
-                                        className="mt-2 w-8 h-8"
-                                    />
-                                ) : (
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        fill="none"
-                                        DeleteBox="0 0 24 24"
-                                        strokeWidth="1.5"
-                                        stroke="currentColor"
-                                        className="w-8 h-8 text-gray-500 "
-                                    >
-                                        <path
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            d="M12 16.5V9.75m0 0l3 3m-3-3l-3 3M6.75 19.5a4.5 4.5 0 01-1.41-8.775 5.25 5.25 0 0110.233-2.33 3 3 0 013.758 3.848A3.752 3.752 0 0118 19.5H6.75z"
-                                        />
-                                    </svg>
-                                )}
-                                <h2 className="mt-1 font-medium tracking-wide text-gray-700 ">
-                                    {fileName ? fileName : " Upload Picture"}
-                                </h2>
-                                <p className="mt-2 text-xs tracking-wide text-gray-500 ">
-                                    Upload Your Photo Only.
-                                </p>
-                                <input
-                                    required
-                                    id="dropzone-file"
-                                    type="file"
-                                    name="photo"
-                                    className="hidden"
-                                    onChange={handleFileChange}
-                                />
-                            </label>
-                        </div>
-
-
-                        <div className="mt-4">
-                            <button
-                                type="submit"
-                                className="inline-block w-full rounded-lg bg-black px-5 py-3 font-medium text-white sm:w-auto"
-                            >
-                                {loading ? "Loading.." : "Publish Category"}
-                            </button>
-                        </div>
-                    </form>
-                </div>
-
+      <div className="my-10">
+        <h1 className="text-2xl font-bold text-center">
+          Publish a Category for you and next
+        </h1>
+        <div className="p-10 border-2  rounded m-10">
+          <form onSubmit={dataSubmit} className="w-full ">
+            <div>
+              <label className="sr-only text-black" htmlFor="title">
+                Category Name
+              </label>
+              <input
+                required
+                className="w-full rounded-lg border border-gray-900 p-3 text-sm"
+                placeholder="Category Name"
+                type="text"
+                id="title"
+                name="categoryName"
+              />
             </div>
-        </div>
-    );
-};
+            <div>
+              <label
+                htmlFor="dropzone-file"
+                className="flex flex-col items-center w-full  p-5 mx-auto mt-2 text-center bg-white border-2 border-gray-300 border-dashed cursor-pointer  rounded-xl"
+              >
+                {preDeleteUrl ? (
+                  <img
+                    src={preDeleteUrl}
+                    alt="File PreDelete"
+                    className="mt-2 w-8 h-8"
+                  />
+                ) : (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    DeleteBox="0 0 24 24"
+                    strokeWidth="1.5"
+                    stroke="currentColor"
+                    className="w-8 h-8 text-gray-500 "
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M12 16.5V9.75m0 0l3 3m-3-3l-3 3M6.75 19.5a4.5 4.5 0 01-1.41-8.775 5.25 5.25 0 0110.233-2.33 3 3 0 013.758 3.848A3.752 3.752 0 0118 19.5H6.75z"
+                    />
+                  </svg>
+                )}
+                <h2 className="mt-1 font-medium tracking-wide text-gray-700 ">
+                  {fileName ? fileName : " Upload Picture"}
+                </h2>
+                <p className="mt-2 text-xs tracking-wide text-gray-500 ">
+                  Upload Your Photo Only.
+                </p>
+                <input
+                  required
+                  id="dropzone-file"
+                  type="file"
+                  name="photo"
+                  className="hidden"
+                  onChange={handleFileChange}
+                />
+              </label>
+            </div>
 
+            <div className="mt-4">
+              <button
+                type="submit"
+                className="inline-block w-full rounded-lg bg-black px-5 py-3 font-medium text-white sm:w-auto"
+              >
+                {loading ? "Loading.." : "Publish Category"}
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 export default AddCatagorys;
