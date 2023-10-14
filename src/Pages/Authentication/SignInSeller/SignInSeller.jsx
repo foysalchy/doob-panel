@@ -37,7 +37,7 @@ const SignInSeller = () => {
             password
         }
         setLoading(true)
-        fetch("http://localhost:5000/signin", {
+        fetch("https://salenow-kmg7yawl2-salenow-backend.vercel.app/signin", {
             method: "post",
             headers: {
                 "content-type": "application/json",

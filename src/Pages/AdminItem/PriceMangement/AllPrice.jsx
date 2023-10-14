@@ -13,7 +13,7 @@ const AllPrice = () => {
         queryKey: ["prices"],
         queryFn: async () => {
             const res = await fetch(
-                "http://localhost:5000/admin/pricing",
+                "https://salenow-kmg7yawl2-salenow-backend.vercel.app/admin/pricing",
             );
             const data = await res.json();
             return data;
@@ -24,7 +24,7 @@ const AllPrice = () => {
     const publishHandle = (id) => {
         setLoading(true)
         console.log(id);
-        fetch(`http://localhost:5000/admin/pricing/status/${id}`, {
+        fetch(`https://salenow-kmg7yawl2-salenow-backend.vercel.app/admin/pricing/status/${id}`, {
             method: "PUT",
             headers: {
                 "content-type": "application/json",
@@ -41,7 +41,7 @@ const AllPrice = () => {
     const unpublishHandle = (id) => {
 
         console.log(id);
-        fetch(`http://localhost:5000/admin/pricing/unstatus/${id}`, {
+        fetch(`https://salenow-kmg7yawl2-salenow-backend.vercel.app/admin/pricing/unstatus/${id}`, {
             method: "PUT",
             headers: {
                 "content-type": "application/json",
@@ -57,7 +57,7 @@ const AllPrice = () => {
     const DeletePrice = (id) => {
 
         console.log(id);
-        fetch(`http://localhost:5000/admin/pricing/delete/${id}`, {
+        fetch(`https://salenow-kmg7yawl2-salenow-backend.vercel.app/admin/pricing/delete/${id}`, {
             method: "Delete",
             headers: {
                 "content-type": "application/json",

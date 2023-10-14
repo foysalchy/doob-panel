@@ -15,7 +15,7 @@ const AdminBlogs = () => {
     queryKey: ["buyer"],
     queryFn: async () => {
       const res = await fetch(
-        "http://localhost:5000/admin/blogs",
+        "https://salenow-kmg7yawl2-salenow-backend.vercel.app/admin/blogs",
       );
       const data = await res.json();
       return data;
@@ -25,7 +25,7 @@ const AdminBlogs = () => {
 
   const DeleteBlog = (id) => {
     console.log(id);
-    fetch(`http://localhost:5000/admin/blog`, {
+    fetch(`https://salenow-kmg7yawl2-salenow-backend.vercel.app/admin/blog`, {
       method: "DELETE",
       headers: {
         "content-type": "application/json",

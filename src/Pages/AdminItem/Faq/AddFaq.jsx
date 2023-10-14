@@ -18,7 +18,7 @@ const AddFaq = () => {
         }
 
 
-        fetch(`http://localhost:5000/admin/newfaq`, {
+        fetch(`https://salenow-kmg7yawl2-salenow-backend.vercel.app/admin/newfaq`, {
             method: "POST",
             headers: {
                 "content-type": "application/json",

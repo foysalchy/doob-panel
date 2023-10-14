@@ -6,7 +6,7 @@ const AdminBlogPage = () => {
 
     useEffect(() => {
 
-        fetch('http://localhost:5000/admin/blogs')
+        fetch('https://salenow-kmg7yawl2-salenow-backend.vercel.app/admin/blogs')
             .then(response => response.json())
             .then(data => {
 

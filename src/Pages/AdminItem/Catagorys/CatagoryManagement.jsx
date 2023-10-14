@@ -12,7 +12,7 @@ const CatagoryManagement = () => {
         queryKey: ["category"],
         queryFn: async () => {
             const res = await fetch(
-                "http://localhost:5000/admin/category",
+                "https://salenow-kmg7yawl2-salenow-backend.vercel.app/admin/category",
             );
             const data = await res.json();
             return data;
@@ -22,7 +22,7 @@ const CatagoryManagement = () => {
 
     const DeleteCategory = (id) => {
         console.log(id);
-        fetch(`http://localhost:5000/admin/category`, {
+        fetch(`https://salenow-kmg7yawl2-salenow-backend.vercel.app/admin/category`, {
             method: "DELETE",
             headers: {
                 "content-type": "application/json",
