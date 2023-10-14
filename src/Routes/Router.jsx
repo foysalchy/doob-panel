@@ -74,13 +74,11 @@ const Router = createBrowserRouter([
       {
         path: "/products/:id",
         element: <ProductDetails />,
-
       },
       {
         path: "/reset-password/:id",
         element: <ResetPass />,
-        loader: ({ params }) =>
-          (`${params.id}`),
+        loader: ({ params }) => `${params.id}`,
       },
       {
         path: "/price",
@@ -94,13 +92,12 @@ const Router = createBrowserRouter([
         path: "/blogs/:id",
         element: <SingleBlog />,
         loader: ({ params }) =>
-          fetch(`https://salenow-kmg7yawl2-salenow-backend.vercel.app/admin/blogs/${params.id}`),
+          fetch(`http://localhost:5000/admin/blogs/${params.id}`),
       },
       {
         path: "/faq",
         element: <FaqLayout></FaqLayout>,
         children: [
-
           {
             path: "/faq",
             element: <Faq />,
@@ -109,17 +106,16 @@ const Router = createBrowserRouter([
             path: "/faq/:id",
             element: <SingleFaq />,
             loader: ({ params }) =>
-              fetch(`https://salenow-kmg7yawl2-salenow-backend.vercel.app/admin/faq/${params.id}`),
-          }
-        ]
+              fetch(`http://localhost:5000/admin/faq/${params.id}`),
+          },
+        ],
       },
       {
         path: "/pages/:id",
         element: <Trams />,
         loader: ({ params }) =>
-          fetch(`https://salenow-kmg7yawl2-salenow-backend.vercel.app/admin/page/${params.id}`),
-      }
-
+          fetch(`http://localhost:5000/admin/page/${params.id}`),
+      },
     ],
   },
   // {
@@ -220,9 +216,9 @@ const Router = createBrowserRouter([
           </SupperAdminRouter>
         ),
         loader: async ({ params }) => {
-          const id = params.id
-          return fetch(`https://salenow-kmg7yawl2-salenow-backend.vercel.app/admin/blogs/${id}`)
-        }
+          const id = params.id;
+          return fetch(`http://localhost:5000/admin/blogs/${id}`);
+        },
       },
       {
         path: "pricemanagement",
@@ -272,7 +268,6 @@ const Router = createBrowserRouter([
           </SupperAdminRouter>
         ),
       },
-
     ],
   },
   // {
@@ -296,7 +291,7 @@ const Router = createBrowserRouter([
           <SellerRoute>
             <SellerDashboard />
           </SellerRoute>
-        )
+        ),
       },
       {
         path: "dashboard",
@@ -304,7 +299,7 @@ const Router = createBrowserRouter([
           <SellerRoute>
             <SellerDashboard />
           </SellerRoute>
-        )
+        ),
       },
     ],
   },
