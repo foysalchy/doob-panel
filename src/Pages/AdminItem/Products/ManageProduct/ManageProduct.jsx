@@ -15,7 +15,7 @@ const ManageProduct = () => {
         queryKey: ["products"],
         queryFn: async () => {
             const res = await fetch(
-                "http://localhost:5000/admin/products",
+                "https://salenow-kmg7yawl2-salenow-backend.vercel.app/admin/products",
             );
             const data = await res.json();
             return data;
@@ -161,7 +161,7 @@ const ManageProduct = () => {
                                             >
                                                 <button className="flex items-center gap-x-2">
                                                     <span>Category</span>
-                                                
+
                                                 </button>
                                             </th>
                                             <th

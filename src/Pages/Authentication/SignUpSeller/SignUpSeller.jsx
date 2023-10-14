@@ -51,7 +51,7 @@ const SignUpSeller = () => {
 
             setPassError('')
 
-            fetch("http://localhost:5000/signup", {
+            fetch("https://salenow-kmg7yawl2-salenow-backend.vercel.app/signup", {
                 method: "post",
                 headers: {
                     "content-type": "application/json",

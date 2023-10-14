@@ -6,7 +6,7 @@ import { Link, useLoaderData } from 'react-router-dom';
 const AdminSingleBlog = () => {
     const [blogList, setBlogList] = useState([])
     useEffect(() => {
-        fetch('http://localhost:5000/admin/blogs')
+        fetch('https://salenow-kmg7yawl2-salenow-backend.vercel.app/admin/blogs')
             .then(res => res.json())
             .then(data => setBlogList(data))
     }, [])

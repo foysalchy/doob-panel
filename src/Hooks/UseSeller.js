@@ -7,7 +7,7 @@ const useSeller = () => {
     const { user, loading } = useContext(AuthContext)
     useEffect(() => {
         if (user?.email) {
-            fetch(`http://localhost:5000/users/seller/${user?.email}`)
+            fetch(`https://salenow-kmg7yawl2-salenow-backend.vercel.app/users/seller/${user?.email}`)
                 .then((res) => res.json())
                 .then((data) => {
                     setIsSeller(data?.isSeller)

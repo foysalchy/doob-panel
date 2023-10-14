@@ -15,7 +15,7 @@ const AdminFaq = () => {
         queryKey: ["faqs"],
         queryFn: async () => {
             const res = await fetch(
-                "http://localhost:5000/admin/faq",
+                "https://salenow-kmg7yawl2-salenow-backend.vercel.app/admin/faq",
             );
             const data = await res.json();
             return data;
@@ -26,7 +26,7 @@ const AdminFaq = () => {
     const ActiveHandle = (id) => {
         setLoading(true)
         console.log(id);
-        fetch(`http://localhost:5000/admin/faq/status/${id}`, {
+        fetch(`https://salenow-kmg7yawl2-salenow-backend.vercel.app/admin/faq/status/${id}`, {
             method: "PUT",
             headers: {
                 "content-type": "application/json",
@@ -43,7 +43,7 @@ const AdminFaq = () => {
     const DativeHandle = (id) => {
 
         console.log(id);
-        fetch(`http://localhost:5000/admin/faq/unstatus/${id}`, {
+        fetch(`https://salenow-kmg7yawl2-salenow-backend.vercel.app/admin/faq/unstatus/${id}`, {
             method: "PUT",
             headers: {
                 "content-type": "application/json",
@@ -59,7 +59,7 @@ const AdminFaq = () => {
     const DeleteHandle = (id) => {
 
         console.log(id);
-        fetch(`http://localhost:5000/admin/faq/delete/${id}`, {
+        fetch(`https://salenow-kmg7yawl2-salenow-backend.vercel.app/admin/faq/delete/${id}`, {
             method: "Delete",
             headers: {
                 "content-type": "application/json",

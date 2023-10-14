@@ -94,7 +94,7 @@ const Router = createBrowserRouter([
         path: "/blogs/:id",
         element: <SingleBlog />,
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/admin/blogs/${params.id}`),
+          fetch(`https://salenow-kmg7yawl2-salenow-backend.vercel.app/admin/blogs/${params.id}`),
       },
       {
         path: "/faq",
@@ -109,7 +109,7 @@ const Router = createBrowserRouter([
             path: "/faq/:id",
             element: <SingleFaq />,
             loader: ({ params }) =>
-              fetch(`http://localhost:5000/admin/faq/${params.id}`),
+              fetch(`https://salenow-kmg7yawl2-salenow-backend.vercel.app/admin/faq/${params.id}`),
           }
         ]
       },
@@ -117,7 +117,7 @@ const Router = createBrowserRouter([
         path: "/pages/:id",
         element: <Trams />,
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/admin/page/${params.id}`),
+          fetch(`https://salenow-kmg7yawl2-salenow-backend.vercel.app/admin/page/${params.id}`),
       }
 
     ],
@@ -221,7 +221,7 @@ const Router = createBrowserRouter([
         ),
         loader: async ({ params }) => {
           const id = params.id
-          return fetch(`http://localhost:5000/admin/blogs/${id}`)
+          return fetch(`https://salenow-kmg7yawl2-salenow-backend.vercel.app/admin/blogs/${id}`)
         }
       },
       {

@@ -10,7 +10,7 @@ const Price = () => {
         queryKey: ["prices"],
         queryFn: async () => {
             const res = await fetch(
-                "http://localhost:5000/admin/pricing",
+                "https://salenow-kmg7yawl2-salenow-backend.vercel.app/admin/pricing",
             );
             const data = await res.json();
             return data;
