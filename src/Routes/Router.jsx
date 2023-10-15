@@ -37,6 +37,7 @@ import PageManagement from "../Pages/AdminItem/PageManagement/PageManagement";
 import AddPage from "../Pages/AdminItem/PageManagement/AddPage";
 import Trams from "../Pages/CustomPages/Trams";
 import CatagoryManagement from "../Pages/AdminItem/Catagorys/CatagoryManagement";
+import SellerShopInfoHome from "../Pages/SellerShopInfo/SellerShopInfoHome";
 
 const Router = createBrowserRouter([
   {
@@ -299,6 +300,14 @@ const Router = createBrowserRouter([
           <SellerRoute>
             <SellerDashboard />
           </SellerRoute>
+        ),
+      },
+      {
+        path: "shop-info-home",
+        element: (
+          // <SellerRoute>
+          <SellerShopInfoHome />
+          // </SellerRoute>
         ),
       },
     ],
