@@ -38,6 +38,9 @@ import AddPage from "../Pages/AdminItem/PageManagement/AddPage";
 import Trams from "../Pages/CustomPages/Trams";
 import CatagoryManagement from "../Pages/AdminItem/Catagorys/CatagoryManagement";
 import SellerShopInfoHome from "../Pages/SellerShopInfo/SellerShopInfoHome";
+import ManageService from "../Pages/AdminItem/Services/ManageService";
+import AddService from "../Pages/AdminItem/Services/AddService";
+import MainService from "../Pages/Service/MainService";
 
 const Router = createBrowserRouter([
   {
@@ -84,6 +87,10 @@ const Router = createBrowserRouter([
       {
         path: "/price",
         element: <Price />,
+      },
+      {
+        path: "/services",
+        element: <MainService />,
       },
       {
         path: "/blogs",
@@ -269,6 +276,22 @@ const Router = createBrowserRouter([
           </SupperAdminRouter>
         ),
       },
+      {
+        path: "services",
+        element: (
+          <SupperAdminRouter>
+            <ManageService />
+          </SupperAdminRouter>
+        ),
+      },
+      {
+        path: "services/addservice",
+        element: (
+          <SupperAdminRouter>
+            <AddService />
+          </SupperAdminRouter>
+        ),
+      },
     ],
   },
   // {
@@ -305,9 +328,9 @@ const Router = createBrowserRouter([
       {
         path: "shop-info-home",
         element: (
-          // <SellerRoute>
-          <SellerShopInfoHome />
-          // </SellerRoute>
+          <SellerRoute>
+            <SellerShopInfoHome />
+          </SellerRoute>
         ),
       },
     ],

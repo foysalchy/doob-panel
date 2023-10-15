@@ -124,10 +124,6 @@ const SideNavAdmin = () => {
                                 {menu && <span>Category Management</span>}
                             </NavLink>
 
-
-
-                            {/* Todo: Working here  */}
-
                             <NavLink rel="noopener noreferrer" to={'/admin/faq'} className={({ isActive }) => {
                                 return isActive
                                     ? "flex items-center p-2 space-x-3 rounded-sm bg-gray-800 text-white "
@@ -158,13 +154,13 @@ const SideNavAdmin = () => {
                             </NavLink>
 
 
-                            <NavLink rel="noopener noreferrer" href="#" className={({ isActive }) => {
+                            <NavLink rel="noopener noreferrer" to={'/admin/services'} className={({ isActive }) => {
                                 return isActive
                                     ? "flex items-center p-2 space-x-3 rounded-sm bg-gray-800 text-white "
                                     : "flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
                             }}>
                                 <BsTicketDetailed className="w-5 h-5 fill-current text-gray-400" />
-                                {menu && <span>Support & Ticket</span>}
+                                {menu && <span>Service Management</span>}
                             </NavLink>
 
 
