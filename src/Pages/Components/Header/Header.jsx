@@ -67,16 +67,16 @@ const Header = () => {
       </li>
       <li>
         <NavLink
-          to="/"
+          to="/services"
           aria-label="About us"
-          title="About us"
+          title="Services"
           className={({ isActive }) => {
             return isActive
               ? "tracking-wide text-gray-800 transition-colors duration-200 font-semibold hover:text-black underline underline-offset-8 text-lg "
               : "tracking-wide text-gray-800 transition-colors duration-200 font-semibold hover:text-black hover:underline underline-offset-8 text-lg ";
           }}
         >
-          Contact
+          Services
         </NavLink>
       </li>
       <li>
