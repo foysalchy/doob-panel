@@ -125,6 +125,7 @@ const SignUpSeller = () => {
                         Full Name
                       </label>
                       <input
+                      
                         placeholder="John Doe"
                         required
                         type="text"
@@ -141,6 +142,7 @@ const SignUpSeller = () => {
                         Email
                       </label>
                       <input
+                       
                         placeholder="xyz@email.com"
                         required
                         type="email"
@@ -159,9 +161,10 @@ const SignUpSeller = () => {
                       </label>
                       <div className="relative">
                         <input
+
                           placeholder="*******"
                           required
-                          onChange={() => setPassError("")}
+                        
                           type={showPassword ? "text" : "password"}
                           className="flex-grow w-full re h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
                           id="password"

@@ -106,7 +106,7 @@ const SignInSeller = () => {
                 <h3 className="mb-4 text-xl font-semibold sm:text-center sm:mb-6 sm:text-2xl">
                   Sign In with SaleNow account
                 </h3>
-                <form onSubmit={loginUser}>
+                <form onChange={() => setPassError('')} onSubmit={loginUser}>
                   <div className="mb-1 sm:mb-2">
                     <label
                       htmlFor="Email"
@@ -115,6 +115,7 @@ const SignInSeller = () => {
                       Email
                     </label>
                     <input
+
                       placeholder="john.doe@example.org"
                       required
                       type="email"
@@ -132,6 +133,7 @@ const SignInSeller = () => {
                     </label>
                     <div className="relative">
                       <input
+
                         placeholder="*******"
                         required
                         type={showPassword ? "text" : "password"}
