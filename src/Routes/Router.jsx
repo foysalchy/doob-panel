@@ -41,6 +41,10 @@ import SellerShopInfoHome from "../Pages/SellerShopInfo/SellerShopInfoHome";
 import ManageService from "../Pages/AdminItem/Services/ManageService";
 import AddService from "../Pages/AdminItem/Services/AddService";
 import MainService from "../Pages/Service/MainService";
+import Contract from "../Pages/AdminItem/Contract/Contract";
+import ContactManagement from "../Pages/AdminItem/Contract/ContactManagement";
+import AddContact from "../Pages/AdminItem/Contract/AddContact";
+import Settings from "../Pages/AdminItem/Settings/Settings";
 
 const Router = createBrowserRouter([
   {
@@ -91,6 +95,10 @@ const Router = createBrowserRouter([
       {
         path: "/services",
         element: <MainService />,
+      },
+      {
+        path: "/contact",
+        element: <Contract />,
       },
       {
         path: "/blogs",
@@ -289,6 +297,30 @@ const Router = createBrowserRouter([
         element: (
           <SupperAdminRouter>
             <AddService />
+          </SupperAdminRouter>
+        ),
+      },
+      {
+        path: "contact",
+        element: (
+          <SupperAdminRouter>
+            <ContactManagement />
+          </SupperAdminRouter>
+        ),
+      },
+      {
+        path: "contact/addcontact",
+        element: (
+          <SupperAdminRouter>
+            <AddContact />
+          </SupperAdminRouter>
+        ),
+      },
+      {
+        path: "settings",
+        element: (
+          <SupperAdminRouter>
+            <Settings />
           </SupperAdminRouter>
         ),
       },

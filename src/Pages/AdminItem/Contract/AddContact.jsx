@@ -1,0 +1,229 @@
+import React from 'react';
+import { useState } from 'react';
+import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
+import { Link } from 'react-router-dom';
+import Swal from 'sweetalert2';
+
+const AddContact = () => {
+
+    const [loading, setLoading] = useState(false);
+
+
+
+    const dataSubmit = (event) => {
+        setLoading(true)
+        event.preventDefault();
+        const media = selectedMedia
+        const URL = event.target.url.value
+        const password = event.target?.password?.value
+        let formData = {}
+        if (password) {
+            formData = {
+                media,
+                URL,
+                password
+            }
+        }
+        else {
+            formData = {
+                media,
+                URL
+            }
+        }
+
+        fetch(`http://localhost:5000/admin/contact`, {
+            method: "POST",
+            headers: {
+                "content-type": "application/json",
+            },
+            body: JSON.stringify(formData),
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                setLoading(false);
+                Swal.fire("success", "Your Category Publish Successfully", "success");
+
+                form.reset();
+                setPreDeleteUrl("");
+                setFileName("");
+                refetch();
+            });
+
+        event.target.reset();
+    }
+
+    const [selectedMedia, setSelectedMedia] = useState('Choose a Social Media');
+
+    const isEmailCheck = (event) => {
+        const selectedValue = event.target.value;
+        setSelectedMedia(selectedValue);
+    };
+
+    const [showPassword, setShowPassword] = useState(false);
+
+    const togglePasswordVisibility = () => {
+        setShowPassword(!showPassword);
+    };
+
+    return (
+        <div className="w-full">
+            <nav
+                aria-label="breadcrumb"
+                className="w-full my-20 p-4 mb-4 rounded dark:bg-gray-800 dark:text-gray-100"
+            >
+                <ol className="flex h-8 space-x-2">
+                    <li className="flex items-center">
+                        <Link
+                            rel="noopener noreferrer"
+                            to={"/admin/dashboard"}
+                            title="Back to homepage"
+                            className="hover:underline"
+                        >
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 20 20"
+                                fill="currentColor"
+                                className="w-5 h-5 pr-1 dark:text-gray-400"
+                            >
+                                <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path>
+                            </svg>
+                        </Link>
+                    </li>
+                    <li className="flex items-center space-x-2">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 32 32"
+                            aria-hidden="true"
+                            fill="currentColor"
+                            className="w-2 h-2 mt-1 transform rotate-90 fill-current dark:text-gray-600"
+                        >
+                            <path d="M32 30.031h-32l16-28.061z"></path>
+                        </svg>
+                        <Link
+                            rel="noopener noreferrer"
+                            to={"/admin/contact"}
+                            className="flex items-center px-1 ctalize hover:underline"
+                        >
+                            Contact Management
+                        </Link>
+                    </li>
+                    <li className="flex items-center space-x-2">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 32 32"
+                            aria-hidden="true"
+                            fill="currentColor"
+                            className="w-2 h-2 mt-1 transform rotate-90 fill-current dark:text-gray-600"
+                        >
+                            <path d="M32 30.031h-32l16-28.061z"></path>
+                        </svg>
+                        <Link
+                            rel="noopener noreferrer"
+                            to={"/admin/contact/addcontact"}
+                            className="flex items-center px-1 ctalize hover:underline"
+                        >
+                            Add Contact
+                        </Link>
+                    </li>
+                </ol>
+            </nav>
+
+            <div className="my-10">
+                <h1 className="text-2xl font-bold text-center">
+                    Publish a Category for you and next
+                </h1>
+                <div className="p-10 border-2  rounded m-10">
+                    <form onSubmit={dataSubmit} className="w-full ">
+
+                        <div className='my-4'>
+                            <label className="sr-only text-black" htmlFor="title">Select an option</label>
+                            <select name='Media' onChange={isEmailCheck}
+                                value={selectedMedia} id="countries" className="flex-grow w-full re h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline">
+                                <option disabled>Choose a Social Media</option>
+                                <option value="Phone Number">Phone Number</option>
+                                <option value="Email">Email</option>
+                                <option value="Facebook">Facebook </option>
+                                <option value="Messenger">Messenger</option>
+                                <option value="Instagram">Instagram </option>
+                                <option value="Whatsapp">Whatsapp </option>
+                                <option value="Linkedin">Linkedin </option>
+                                <option value="Telegram">Telegram </option>
+                                <option value="Viber">Viber </option>
+                                <option value="Tumblr">Tumblr </option>
+                                <option value="Pinterest">Pinterest </option>
+                                <option value="Snapchat">Snapchat </option>
+                                <option value="Reddit">Reddit </option>
+                                <option value="LINE">LINE </option>
+                                <option value="YouTube">YouTube </option>
+                                <option value="Twitter">Twitter </option>
+                                <option value="Skype">Skype </option>
+                            </select>
+                        </div>
+                        <div>
+                            <label className="sr-only text-black" htmlFor="title">
+                                Provide URL
+                            </label>
+                            <input
+                                required
+                                className="flex-grow w-full re h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
+                                placeholder={'Provide Your ' + selectedMedia + ' user name only'}
+                                type="text"
+                                id="title"
+                                name="url"
+                            />
+                        </div>
+                        {selectedMedia === 'Email' && <div className="mb-1 sm:mb-2">
+                            <label className="sr-only text-black" htmlFor="title">
+                                Provide Email Password
+                            </label>
+                            <div className="relative my-4">
+                                <input
+                                    placeholder="Provide Your Email Password"
+                                    required
+
+                                    type={showPassword ? "text" : "password"}
+                                    className="flex-grow w-full re h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
+                                    id="password"
+                                    name="password"
+                                />
+                                {showPassword ? (
+                                    <span
+                                        className="absolute inset-y-0 end-0 grid place-content-center px-4 cursor-pointer"
+                                        onClick={togglePasswordVisibility}
+                                    >
+                                        <AiFillEyeInvisible />
+                                    </span>
+                                ) : (
+                                    <span
+                                        className="absolute inset-y-0 end-0 grid place-content-center px-4 cursor-pointer"
+                                        onClick={togglePasswordVisibility}
+                                    >
+                                        <AiFillEye />
+                                    </span>
+                                )}
+                            </div>
+                        </div>}
+
+                        <div className="mt-4">
+                            {loading ? <button type="button" className="bg-gray-800  py-2.5 px-7 rounded-lg text-white font-bold hover:bg-gray-900 hover:cursor-pointer" disabled>
+                                <div className="flex items-center justify-center m-[10px]">
+                                    <div className="h-5 w-5 animate-spin rounded-full border-white border-4"></div>
+                                    <div className="ml-2"> Processing... </div>
+                                </div>
+                            </button>
+                                :
+                                <button
+                                    type="submit"
+                                    className="bg-gray-800  py-2.5 px-7 rounded-lg text-white font-bold hover:bg-gray-900 hover:cursor-pointer ">
+                                    Submit
+                                </button>}
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    );
+};
+
+export default AddContact;

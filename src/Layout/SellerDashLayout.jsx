@@ -6,7 +6,9 @@ const SellerDashLayout = () => {
     return (
         <div className='flex gap-4'>
             <SideNavberSeller />
-            <Outlet />
+            <div className='w-full'>
+                <Outlet />
+            </div>
 
         </div>
     );
