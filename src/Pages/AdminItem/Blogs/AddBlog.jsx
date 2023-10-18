@@ -51,7 +51,7 @@ const AddBlog = () => {
   };
 
   const postBlog = (blog, form) => {
-    console.log(blog);
+   
     fetch(`http://localhost:5000/admin/newblog`, {
       method: "POST",
       headers: {
@@ -71,7 +71,7 @@ const AddBlog = () => {
   };
 
   return (
-    <div className="px-4 py-8 sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-10">
+    <div className="px-4 w-full py-8 sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-10">
       <nav
         aria-label="breadcrumb"
         className="w-full rounded p-4 mb-4 dark:bg-gray-800 dark:text-gray-100"

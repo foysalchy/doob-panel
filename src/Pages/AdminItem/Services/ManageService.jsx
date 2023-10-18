@@ -14,7 +14,7 @@ const ManageService = () => {
             return data;
         },
     });
-    console.log(services[0]);
+
 
     const [searchQuery, setSearchQuery] = useState("");
 
@@ -31,7 +31,7 @@ const ManageService = () => {
 
 
     const ActiveHandle = (id) => {
-        console.log(id);
+
         fetch(`http://localhost:5000/admin/service/status/${id}`, {
             method: "PUT",
             headers: {
@@ -46,7 +46,7 @@ const ManageService = () => {
     };
 
     const DativeHandle = (id) => {
-        console.log(id);
+
         fetch(`http://localhost:5000/admin/service/unstatus/${id}`, {
             method: "PUT",
             headers: {
@@ -62,7 +62,7 @@ const ManageService = () => {
 
 
     const DeleteHandle = (id) => {
-        console.log(id);
+
         fetch(`http://localhost:5000/admin/service/delete/${id}`, {
             method: "Delete",
             headers: {

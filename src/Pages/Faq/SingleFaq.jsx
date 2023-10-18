@@ -3,7 +3,6 @@ import { useLoaderData } from 'react-router-dom';
 
 const SingleFaq = () => {
     const description = useLoaderData()
-    console.log(description);
     return (
         <div>
             <div className="mx-auto ">

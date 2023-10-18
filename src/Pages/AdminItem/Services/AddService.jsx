@@ -54,7 +54,7 @@ const AddService = () => {
     };
 
     const postService = (service, form) => {
-        console.log(service);
+
         fetch(`http://localhost:5000/admin/addservice`, {
             method: "POST",
             headers: {

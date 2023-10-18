@@ -13,7 +13,7 @@ const AdminBlogs = () => {
   });
 
   const DeleteBlog = (id) => {
-    console.log(id);
+  
     fetch(`http://localhost:5000/admin/blog`, {
       method: "DELETE",
       headers: {
@@ -24,13 +24,13 @@ const AdminBlogs = () => {
       .then((res) => res.json())
       .then((data) => {
         alert("delete successful");
-        console.log(data);
+  
       });
   };
 
   return (
     <div>
-      <div className="px-4 py-8  sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-10">
+      <div className="px-4 py-8 w-full  sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-10">
         <div>
           <nav
             aria-label="breadcrumb"

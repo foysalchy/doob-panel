@@ -33,8 +33,8 @@ const SignUpSeller = () => {
     shopName = form?.shopName?.value;
     let role = "user";
 
-    const userId = email.split("@")[0];
-    console.log(userId);
+    const userId = email.replace(/[@.]/g, '')
+
 
     setLoading(true);
     if (password.length >= 6) {
@@ -125,7 +125,7 @@ const SignUpSeller = () => {
                         Full Name
                       </label>
                       <input
-                      
+
                         placeholder="John Doe"
                         required
                         type="text"
@@ -142,7 +142,7 @@ const SignUpSeller = () => {
                         Email
                       </label>
                       <input
-                       
+
                         placeholder="xyz@email.com"
                         required
                         type="email"
@@ -164,7 +164,7 @@ const SignUpSeller = () => {
 
                           placeholder="*******"
                           required
-                        
+
                           type={showPassword ? "text" : "password"}
                           className="flex-grow w-full re h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
                           id="password"

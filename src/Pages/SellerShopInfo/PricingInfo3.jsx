@@ -15,7 +15,7 @@ const PricingInfo3 = ({ handlePrevButton, handleFinalSubmit }) => {
     },
   });
 
-  console.log(sellerShopInfo);
+
   //   const handleChange = (event) => {
   //     const { name, value } = event.target;
   //     setUserData({ ...sellerShopInfo, [name]: value });

@@ -16,7 +16,7 @@ const ContactManagement = () => {
     });
 
     const DeleteCategory = (id) => {
-        console.log(id);
+  
         fetch(`http://localhost:5000/admin/contact/${id}`, {
             method: "DELETE",
             headers: {
@@ -27,7 +27,7 @@ const ContactManagement = () => {
             .then((res) => res.json())
             .then((data) => {
                 alert("delete successful");
-                console.log(data);
+         
                 refetch();
             });
     };
@@ -42,7 +42,7 @@ const ContactManagement = () => {
         item.media.toLowerCase().includes(searchQuery.toLowerCase())
     );
     return (
-        <div>
+        <div className='w-full'>
             <nav
                 aria-label="breadcrumb"
                 className="w-full my-20 p-4 mb-4 rounded dark:bg-gray-800 dark:text-gray-100"

@@ -11,7 +11,7 @@ import { AiOutlineAlert, AiOutlineClose } from 'react-icons/ai';
 import { BsChatLeftQuote, BsTicketDetailed } from 'react-icons/bs';
 import { GiNotebook } from 'react-icons/gi';
 import { IoLogOut, IoSettings, } from 'react-icons/io5';
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 
 const SideNavAdmin = () => {
     const { user, logOut } = useContext(AuthContext)
@@ -22,8 +22,8 @@ const SideNavAdmin = () => {
             <div className={menu ? "flex flex-col h-screen p-3  w-60 text-gray-900" : 'flex flex-col h-screen p-3 w-14 text-gray-900'}>
                 <div className="space-y-3">
                     <div className="flex items-center justify-between">
-                        {menu ? <a
-                            href="/"
+                        {menu ? <Link
+                            to="/"
                             aria-label="Company"
                             title="Company"
                             className="inline-flex items-center"
@@ -46,8 +46,8 @@ const SideNavAdmin = () => {
                             <span className="ml-2 text-xl font-bold tracking-wide text-gray-800 ">
                                 SaleNow
                             </span>
-                        </a> : <a
-                            href="/"
+                        </Link> : <Link
+                            to="/"
                             aria-label="Company"
                             title="Company"
                             className="inline-flex items-center"
@@ -68,7 +68,7 @@ const SideNavAdmin = () => {
                                 <rect x="14" y="11" width="7" height="12" />
                             </svg>
 
-                        </a>}
+                        </Link>}
                         {!menu ? <button className="p-2">
 
                             <HiOutlineMenu onClick={() => setMenu(true)} className="w-5 h-5 fill-current text-gray-900" />
@@ -174,13 +174,13 @@ const SideNavAdmin = () => {
                             </NavLink>
 
 
-                            <NavLink rel="noopener noreferrer" href="#" className={({ isActive }) => {
+                            <NavLink rel="noopener noreferrer" to={'/admin/settings'} className={({ isActive }) => {
                                 return isActive
                                     ? "flex items-center p-2 space-x-3 rounded-sm bg-gray-800 text-white "
                                     : "flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
                             }}>
-                                <HiOutlineUsers className="w-5 h-5 fill-current text-gray-400" />
-                                {menu && <span>Sellers Manage</span>}
+                                <IoSettings className="w-5 h-5 fill-current text-gray-400" />
+                                {menu && <span>Settings</span>}
                             </NavLink>
 
 
@@ -245,16 +245,6 @@ const SideNavAdmin = () => {
                             </NavLink>
 
 
-                            <NavLink rel="noopener noreferrer" href="#" className={({ isActive }) => {
-                                return isActive
-                                    ? "flex items-center p-2 space-x-3 rounded-sm bg-gray-800 text-white "
-                                    : "flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
-                            }}>
-                                <IoSettings className="w-5 h-5 fill-current text-gray-400" />
-                                {menu && <span>
-                                    Settings
-                                </span>}
-                            </NavLink>
 
 
                             <button rel="noopener noreferrer" onClick={() => logOut()} className="flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white w-full"

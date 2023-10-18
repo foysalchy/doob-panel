@@ -11,7 +11,6 @@ const AdminSingleBlog = () => {
       .then((data) => setBlogList(data));
   }, []);
   const blogInfo = useLoaderData();
-  console.log(blogInfo);
 
   const extractInnerText = (html) => {
     const parser = new DOMParser();

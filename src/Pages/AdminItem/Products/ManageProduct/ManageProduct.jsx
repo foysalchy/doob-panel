@@ -13,7 +13,7 @@ const ManageProduct = () => {
       return data;
     },
   });
-  console.log(products[0]);
+
 
   const [searchQuery, setSearchQuery] = useState("");
 
