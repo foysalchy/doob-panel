@@ -63,7 +63,7 @@ const UserProvider = ({ children }) => {
     };
 
     const checkUserCookie = () => {
-        const userCookie = getCookie('user');
+        const userCookie = getCookie('SaleNowUser');
         if (userCookie) {
             const userData = JSON.parse(userCookie);
 

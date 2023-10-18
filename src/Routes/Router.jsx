@@ -45,6 +45,9 @@ import Contract from "../Pages/AdminItem/Contract/Contract";
 import ContactManagement from "../Pages/AdminItem/Contract/ContactManagement";
 import AddContact from "../Pages/AdminItem/Contract/AddContact";
 import Settings from "../Pages/AdminItem/Settings/Settings";
+import SellerDomainManagement from "../Pages/AdminItem/Settings/SellerDomainManagement/SellerDomainManagement";
+import PaymentGetWay from "../Pages/AdminItem/Settings/PaymentGetWay/PaymentGetWay";
+
 
 const Router = createBrowserRouter([
   {
@@ -321,6 +324,22 @@ const Router = createBrowserRouter([
         element: (
           <SupperAdminRouter>
             <Settings />
+          </SupperAdminRouter>
+        ),
+      },
+      {
+        path: "settings/seller-domain",
+        element: (
+          <SupperAdminRouter>
+            <SellerDomainManagement />
+          </SupperAdminRouter>
+        ),
+      },
+      {
+        path: "settings/payment-management",
+        element: (
+          <SupperAdminRouter>
+            <PaymentGetWay />
           </SupperAdminRouter>
         ),
       },

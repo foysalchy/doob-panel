@@ -5,7 +5,7 @@ const ShopInfo1 = ({ handleNextButton }) => {
   const { sellerShopInfo, setSellerShopInfo } = useContext(
     SellerShopInfoContext
   );
-  console.log(sellerShopInfo);
+
 
   const handleChange = (event) => {
     const { name, value } = event.target;

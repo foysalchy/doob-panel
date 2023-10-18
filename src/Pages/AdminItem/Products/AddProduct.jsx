@@ -64,7 +64,7 @@ const AddProduct = () => {
         author: user.userId,
       };
 
-      console.log(productInfo);
+  
 
       fetch(`http://localhost:5000/addproduct`, {
         method: "POST",

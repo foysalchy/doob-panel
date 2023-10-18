@@ -16,7 +16,7 @@ const AllPrice = () => {
 
   const publishHandle = (id) => {
     setLoading(true);
-    console.log(id);
+
     fetch(`http://localhost:5000/admin/pricing/status/${id}`, {
       method: "PUT",
       headers: {
@@ -31,7 +31,7 @@ const AllPrice = () => {
   };
 
   const unpublishHandle = (id) => {
-    console.log(id);
+
     fetch(`http://localhost:5000/admin/pricing/unstatus/${id}`, {
       method: "PUT",
       headers: {
@@ -45,7 +45,7 @@ const AllPrice = () => {
       });
   };
   const DeletePrice = (id) => {
-    console.log(id);
+
     fetch(`http://localhost:5000/admin/pricing/delete/${id}`, {
       method: "Delete",
       headers: {

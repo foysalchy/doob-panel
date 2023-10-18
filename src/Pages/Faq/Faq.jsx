@@ -16,7 +16,6 @@ const Faq = () => {
         console.error("Error fetching data:", error);
       });
   }, []);
-  console.log();
 
   return (
     <div>

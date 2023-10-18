@@ -7,7 +7,6 @@ const AffiliatedCompany2 = ({ handleNextButton, handlePrevButton }) => {
   const { sellerShopInfo, setSellerShopInfo } = useContext(
     SellerShopInfoContext
   );
-  console.log(sellerShopInfo);
   const [selectedOptions, setSelectedOptions] = useState([]);
 
   const handleButtonClick = (platform) => {

@@ -39,11 +39,11 @@ const SignInSeller = () => {
       .then((res) => res.json())
       .then((data) => {
         if (data.user) {
-          setCookie("user", JSON.stringify(data.user));
+          setCookie("SaleNowUser", JSON.stringify(data.user));
           setUser(data.user);
           setLoading(false);
           setPassError("");
-          console.log(data.user.role);
+
           Swal.fire(
             "Login Successful",
             "You are a valid user. Best of luck",

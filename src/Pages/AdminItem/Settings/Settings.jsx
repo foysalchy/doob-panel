@@ -1,9 +1,89 @@
 import React from 'react';
+import { BiArrowToRight } from 'react-icons/bi';
+import { FaLongArrowAltRight } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 const Settings = () => {
     return (
-        <div>
+        <div className='px-4 w-full py-8 sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-10'>
+            <h1 className='text-xl  text-center'>This is settings</h1>
 
+            <div className='grid grid-cols-3 gap-4 py-10'>
+                <Link
+                    className="group relative inline-flex items-center justify-center overflow-hidden rounded bg-gray-900 px-8 py-6 text-white focus:outline-none focus:ring active:bg-gray-500"
+                    to="/admin/blogs/new-blog"
+                >
+                    <span className="absolute -start-full transition-all group-hover:start-10">
+                        <FaLongArrowAltRight />
+                    </span>
+
+                    <span className="text-sm font-medium transition-all group-hover:ms-4">
+                        SetUp Site Content
+                    </span>
+                </Link>
+                <Link
+                    className="group relative inline-flex items-center justify-center overflow-hidden rounded bg-gray-900 px-8 py-6 text-white focus:outline-none focus:ring active:bg-gray-500"
+                    to="/admin/settings/payment-management"
+                >
+                    <span className="absolute -start-full transition-all group-hover:start-10">
+                        <FaLongArrowAltRight />
+                    </span>
+
+                    <span className="text-sm font-medium transition-all group-hover:ms-4">
+                        Payment GetWay
+                    </span>
+                </Link>
+                <Link
+                    className="group relative inline-flex items-center justify-center overflow-hidden rounded bg-gray-900 px-8 py-6 text-white focus:outline-none focus:ring active:bg-gray-500"
+                    to="/admin/settings/seller-domain"
+                >
+                    <span className="absolute -start-full transition-all group-hover:start-10">
+                        <FaLongArrowAltRight />
+                    </span>
+
+                    <span className="text-sm font-medium transition-all group-hover:ms-4">
+                        Manage Seller Domain
+                    </span>
+                </Link>
+                <Link
+                    className="group relative inline-flex items-center justify-center overflow-hidden rounded bg-gray-900 px-8 py-6 text-white focus:outline-none focus:ring active:bg-gray-500"
+                    to="/admin/blogs/new-blog"
+                >
+                    <span className="absolute -start-full transition-all group-hover:start-10">
+                        <FaLongArrowAltRight />
+                    </span>
+
+                    <span className="text-sm font-medium transition-all group-hover:ms-4">
+                        Send Email
+                    </span>
+                </Link>
+                <Link
+                    className="group relative inline-flex items-center justify-center overflow-hidden rounded bg-gray-900 px-8 py-6 text-white focus:outline-none focus:ring active:bg-gray-500"
+                    to="/admin/blogs/new-blog"
+                >
+                    <span className="absolute -start-full transition-all group-hover:start-10">
+                        <FaLongArrowAltRight />
+                    </span>
+
+                    <span className="text-sm font-medium transition-all group-hover:ms-4">
+                        Shipping
+                    </span>
+                </Link>
+                <Link
+                    className="group relative inline-flex items-center justify-center overflow-hidden rounded bg-gray-900 px-8 py-6 text-white focus:outline-none focus:ring active:bg-gray-500"
+                    to="/admin/blogs/new-blog"
+                >
+                    <span className="absolute -start-full transition-all group-hover:start-10">
+                        <FaLongArrowAltRight />
+                    </span>
+
+                    <span className="text-sm font-medium transition-all group-hover:ms-4">
+                        Email Setup
+                    </span>
+                </Link>
+
+
+            </div>
         </div>
     );
 };

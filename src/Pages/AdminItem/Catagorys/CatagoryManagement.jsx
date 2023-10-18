@@ -14,7 +14,7 @@ const CatagoryManagement = () => {
   });
 
   const DeleteCategory = (id) => {
-    console.log(id);
+
     fetch(`http://localhost:5000/admin/category`, {
       method: "DELETE",
       headers: {
@@ -25,7 +25,6 @@ const CatagoryManagement = () => {
       .then((res) => res.json())
       .then((data) => {
         alert("delete successful");
-        console.log(data);
         refetch();
       });
   };

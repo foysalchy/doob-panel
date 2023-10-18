@@ -17,7 +17,7 @@ const AdminFaq = () => {
 
   const ActiveHandle = (id) => {
     setLoading(true);
-    console.log(id);
+
     fetch(`http://localhost:5000/admin/faq/status/${id}`, {
       method: "PUT",
       headers: {
@@ -32,7 +32,7 @@ const AdminFaq = () => {
   };
 
   const DativeHandle = (id) => {
-    console.log(id);
+
     fetch(`http://localhost:5000/admin/faq/unstatus/${id}`, {
       method: "PUT",
       headers: {
@@ -46,7 +46,7 @@ const AdminFaq = () => {
       });
   };
   const DeleteHandle = (id) => {
-    console.log(id);
+
     fetch(`http://localhost:5000/admin/faq/delete/${id}`, {
       method: "Delete",
       headers: {
