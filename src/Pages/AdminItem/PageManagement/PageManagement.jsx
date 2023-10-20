@@ -96,7 +96,7 @@ const PageManagement = () => {
             </svg>
             <Link
               rel="noopener noreferrer"
-              to={"/admin/pagemanagement"}
+              to={"/admin/page-management"}
               className="flex items-center px-1 capitalize hover:underline"
             >
               Page Management
@@ -107,7 +107,7 @@ const PageManagement = () => {
 
       <Link
         className="group relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
-        to="/admin/pagemanagement/addpage"
+        to="/admin/page-management/add-page"
       >
         <span className="absolute -start-full transition-all group-hover:start-4">
           <svg

@@ -1,5 +1,6 @@
 import React from "react";
 import { useState } from "react";
+import { BsArrowRight } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 
@@ -103,7 +104,7 @@ const AddPrice = () => {
             </svg>
             <Link
               rel="noopener noreferrer"
-              to={"/admin/pricemanagement"}
+              to={"/admin/price-management"}
               className="flex items-center px-1 capitalize hover:underline"
             >
               Price Management
@@ -121,7 +122,7 @@ const AddPrice = () => {
             </svg>
             <Link
               rel="noopener noreferrer"
-              to={"/admin/pricemanagement/addpricing"}
+              to={"/admin/price-management/add-pricing"}
               className="flex items-center px-1 capitalize hover:underline"
             >
               Add Pricing
@@ -249,7 +250,7 @@ const AddPrice = () => {
                 ))}
               </label>
             </div>
-            <div className="flex gap-5 items-center mt-10">
+            <div className="flex gap-5 items-start mt-10">
               <button
                 type="button"
                 className="bg-green-500 p-2 px-5 rounded inline-block"
@@ -258,21 +259,32 @@ const AddPrice = () => {
                 Add New Benefit Option
               </button>
 
-              {!loading ? (
-                <button
-                  type="submit"
-                  className="inline-flex items-center justify-center w-full  py-2 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md md:w-auto bg-purple-400 hover:bg-purple-700 focus:shadow-outline focus:outline-none"
-                >
-                  Upload Price
-                </button>
-              ) : (
-                <button
-                  disabled
-                  className="inline-flex items-center justify-center w-full  py-2 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md md:w-auto bg-purple-400 hover:bg-purple-700 focus:shadow-outline focus:outline-none"
-                >
-                  Uploading...
-                </button>
-              )}
+              {
+                loading ?
+                  <button disabled className="group relative cursor-not-allowed inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none ">
+                    <span className="text-sm font-medium">
+                      Loading...
+                    </span>
+                    <svg className="animate-spin h-4 w-4 ml-3 text-white" viewBox="0 0 24 24">
+
+                      <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                    </svg>
+                  </button>
+
+                  :
+                  <button type='submit'
+                    className="group relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none "
+
+                  >
+                    <span className="absolute -end-full transition-all group-hover:end-4">
+                      <BsArrowRight />
+                    </span>
+
+                    <span className="text-sm font-medium transition-all group-hover:me-4">
+                      Upload Price
+                    </span>
+                  </button>
+              }
             </div>
           </form>
         </div>

@@ -86,7 +86,7 @@ const CatagoryManagement = () => {
 
       <Link
         className="group relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
-        to="/admin/managecategory/addcategory"
+        to="/admin/manage-category/add-category"
       >
         <span className="absolute -start-full transition-all group-hover:start-4">
           <svg

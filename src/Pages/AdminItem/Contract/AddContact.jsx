@@ -1,6 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
+import { BsArrowRight } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
@@ -119,7 +120,7 @@ const AddContact = () => {
                         </svg>
                         <Link
                             rel="noopener noreferrer"
-                            to={"/admin/contact/addcontact"}
+                            to={"/admin/contact/add-contact"}
                             className="flex items-center px-1 ctalize hover:underline"
                         >
                             Add Contact
@@ -205,18 +206,32 @@ const AddContact = () => {
                         </div>}
 
                         <div className="mt-4">
-                            {loading ? <button type="button" className="bg-gray-800  py-2.5 px-7 rounded-lg text-white font-bold hover:bg-gray-900 hover:cursor-pointer" disabled>
-                                <div className="flex items-center justify-center m-[10px]">
-                                    <div className="h-5 w-5 animate-spin rounded-full border-white border-4"></div>
-                                    <div className="ml-2"> Processing... </div>
-                                </div>
-                            </button>
-                                :
-                                <button
-                                    type="submit"
-                                    className="bg-gray-800  py-2.5 px-7 rounded-lg text-white font-bold hover:bg-gray-900 hover:cursor-pointer ">
-                                    Submit
-                                </button>}
+                            {
+                                loading ?
+                                    <button disabled className="group relative cursor-not-allowed inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none mt-4">
+                                        <span className="text-sm font-medium">
+                                            Loading...
+                                        </span>
+                                        <svg className="animate-spin h-4 w-4 ml-3 text-white" viewBox="0 0 24 24">
+
+                                            <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                                        </svg>
+                                    </button>
+
+                                    :
+                                    <button type='submit'
+                                        className="group relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none mt-4 "
+
+                                    >
+                                        <span className="absolute -end-full transition-all group-hover:end-4">
+                                            <BsArrowRight />
+                                        </span>
+
+                                        <span className="text-sm font-medium transition-all group-hover:me-4">
+                                            Add Contact
+                                        </span>
+                                    </button>
+                            }
 
                         </div>
                     </form>
