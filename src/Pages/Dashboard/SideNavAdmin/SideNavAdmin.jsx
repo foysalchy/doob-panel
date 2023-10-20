@@ -103,7 +103,7 @@ const SideNavAdmin = () => {
                             </NavLink>
 
 
-                            <NavLink to='/admin/manageproduct' rel="noopener noreferrer" href="#" className={({ isActive }) => {
+                            <NavLink to='/admin/manage-product' rel="noopener noreferrer" href="#" className={({ isActive }) => {
                                 return isActive
                                     ? "flex items-center p-2 space-x-3 rounded-sm bg-gray-800 text-white "
                                     : "flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
@@ -115,7 +115,7 @@ const SideNavAdmin = () => {
 
 
 
-                            <NavLink rel="noopener noreferrer" to='/admin/managecategory' className={({ isActive }) => {
+                            <NavLink rel="noopener noreferrer" to='/admin/manage-category' className={({ isActive }) => {
                                 return isActive
                                     ? "flex items-center p-2 space-x-3 rounded-sm bg-gray-800 text-white "
                                     : "flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
@@ -134,7 +134,7 @@ const SideNavAdmin = () => {
                             </NavLink>
 
 
-                            <NavLink rel="noopener noreferrer" to={'/admin/pricemanagement'} className={({ isActive }) => {
+                            <NavLink rel="noopener noreferrer" to={'/admin/price-management'} className={({ isActive }) => {
                                 return isActive
                                     ? "flex items-center p-2 space-x-3 rounded-sm bg-gray-800 text-white "
                                     : "flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
@@ -144,7 +144,7 @@ const SideNavAdmin = () => {
                             </NavLink>
 
 
-                            <NavLink rel="noopener noreferrer" to={'/admin/pagemanagement'} className={({ isActive }) => {
+                            <NavLink rel="noopener noreferrer" to={'/admin/page-management'} className={({ isActive }) => {
                                 return isActive
                                     ? "flex items-center p-2 space-x-3 rounded-sm bg-gray-800 text-white "
                                     : "flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";

@@ -37,7 +37,6 @@ import PageManagement from "../Pages/AdminItem/PageManagement/PageManagement";
 import AddPage from "../Pages/AdminItem/PageManagement/AddPage";
 import Trams from "../Pages/CustomPages/Trams";
 import CatagoryManagement from "../Pages/AdminItem/Catagorys/CatagoryManagement";
-import SellerShopInfoHome from "../Pages/SellerShopInfo/SellerShopInfoHome";
 import ManageService from "../Pages/AdminItem/Services/ManageService";
 import AddService from "../Pages/AdminItem/Services/AddService";
 import MainService from "../Pages/Service/MainService";
@@ -47,9 +46,17 @@ import AddContact from "../Pages/AdminItem/Contract/AddContact";
 import Settings from "../Pages/AdminItem/Settings/Settings";
 import SellerDomainManagement from "../Pages/AdminItem/Settings/SellerDomainManagement/SellerDomainManagement";
 import PaymentGetWay from "../Pages/AdminItem/Settings/PaymentGetWay/PaymentGetWay";
+import SendEmail from "../Pages/AdminItem/Settings/SendEmail/SendEmail";
+import Profile from "../Pages/Profile/Profile";
+import ShopLayout from "../Layout/Shop/ShopLayout";
+import SellerShopInfo from "../Pages/SellerItem/SellerShopInfo/SellerShopInfo";
+import IsSelllerRegistration from "./IsSelllerRegistration";
+
 
 
 const Router = createBrowserRouter([
+
+  // Main Layout 
   {
     path: "/",
     element: <MainLayout />,
@@ -135,23 +142,46 @@ const Router = createBrowserRouter([
         loader: ({ params }) =>
           fetch(`http://localhost:5000/admin/page/${params.id}`),
       },
+      {
+        path: "/profile",
+        element: <Profile />,
+      },
+      {
+        path: "/seller/shop-register",
+        element: (
+          <SellerRoute>
+            <SellerShopInfo />
+          </SellerRoute>
+        ),
+      },
     ],
   },
-  // {
-  //     path: "/shop",
-  //     element: <MainLayout />,
-  //     children: [
-  //         {
-  //             path: '*',
-  //             element: <Home></Home>
-  //         },
-  //         {
-  //             path: '/shop/:id',
-  //             element: <ShopHome />
-  //         },
 
-  //     ],
-  // },
+  // Shop Layout 
+  {
+    path: "/shop",
+    element: <ShopLayout />,
+    children: [
+      {
+        path: ':id',  // Use a dynamic route parameter for the product ID
+        element: <Product />,
+        loader: async ({ params }) => {
+          const id = params.id;
+          return fetch(`http://localhost:5000/shop/${id}`);
+        },
+      },
+      {
+        path: ':id/:id',  // Use a dynamic route parameter for the product ID
+        element: <ProductDetails />
+      },
+      {
+        path: '*',
+        element: <Error />
+      },
+    ],
+  },
+  // Admin Layout 
+
   {
     path: "/admin",
     element: <AdminLayout />,
@@ -196,7 +226,7 @@ const Router = createBrowserRouter([
       },
 
       {
-        path: "manageproduct",
+        path: "manage-product",
         element: (
           <SupperAdminRouter>
             <ManageProduct />
@@ -204,7 +234,7 @@ const Router = createBrowserRouter([
         ),
       },
       {
-        path: "manageproduct/addProduct",
+        path: "manage-product/add-Product",
         element: (
           <SupperAdminRouter>
             <AddProduct></AddProduct>
@@ -212,7 +242,7 @@ const Router = createBrowserRouter([
         ),
       },
       {
-        path: "managecategory",
+        path: "manage-category",
         element: (
           <SupperAdminRouter>
             <CatagoryManagement />
@@ -220,7 +250,7 @@ const Router = createBrowserRouter([
         ),
       },
       {
-        path: "managecategory/addcategory",
+        path: "manage-category/add-category",
         element: (
           <SupperAdminRouter>
             <AddCatagorys />
@@ -240,7 +270,7 @@ const Router = createBrowserRouter([
         },
       },
       {
-        path: "pricemanagement",
+        path: "price-management",
         element: (
           <SupperAdminRouter>
             <PriceMangement />
@@ -248,7 +278,7 @@ const Router = createBrowserRouter([
         ),
       },
       {
-        path: "pricemanagement/addpricing",
+        path: "price-management/add-pricing",
         element: (
           <SupperAdminRouter>
             <AddPrice />
@@ -264,7 +294,7 @@ const Router = createBrowserRouter([
         ),
       },
       {
-        path: "faq/addfaq",
+        path: "faq/add-faq",
         element: (
           <SupperAdminRouter>
             <AddFaq />
@@ -272,7 +302,7 @@ const Router = createBrowserRouter([
         ),
       },
       {
-        path: "pagemanagement",
+        path: "page-management",
         element: (
           <SupperAdminRouter>
             <PageManagement />
@@ -280,7 +310,7 @@ const Router = createBrowserRouter([
         ),
       },
       {
-        path: "pagemanagement/addpage",
+        path: "page-management/add-page",
         element: (
           <SupperAdminRouter>
             <AddPage />
@@ -296,7 +326,7 @@ const Router = createBrowserRouter([
         ),
       },
       {
-        path: "services/addservice",
+        path: "services/add-service",
         element: (
           <SupperAdminRouter>
             <AddService />
@@ -312,7 +342,7 @@ const Router = createBrowserRouter([
         ),
       },
       {
-        path: "contact/addcontact",
+        path: "contact/add-contact",
         element: (
           <SupperAdminRouter>
             <AddContact />
@@ -343,47 +373,43 @@ const Router = createBrowserRouter([
           </SupperAdminRouter>
         ),
       },
+      {
+        path: "settings/send-email",
+        element: (
+          <SupperAdminRouter>
+            <SendEmail />
+          </SupperAdminRouter>
+        ),
+      },
     ],
   },
-  // {
-  //     path: "/seller",
-  //     element: <UserLayout />,
-  //     children: [
-  //         {
-  //             path: '*',
-  //             element: <HomeSeller />
-  //         },
 
-  //     ]
-  // },
   {
     path: "/seller",
-    element: <SellerDashLayout />,
+    element: (
+      <IsSelllerRegistration>
+        <SellerDashLayout />
+      </IsSelllerRegistration>
+    ),
     children: [
       {
         path: "*",
         element: (
-          <SellerRoute>
-            <SellerDashboard />
-          </SellerRoute>
+
+          <SellerDashboard />
+
+
         ),
       },
       {
         path: "dashboard",
         element: (
-          <SellerRoute>
-            <SellerDashboard />
-          </SellerRoute>
+
+          <SellerDashboard />
+
         ),
       },
-      {
-        path: "shop-info-home",
-        element: (
-          <SellerRoute>
-            <SellerShopInfoHome />
-          </SellerRoute>
-        ),
-      },
+
     ],
   },
 ]);

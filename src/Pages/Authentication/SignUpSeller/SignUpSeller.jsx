@@ -32,6 +32,7 @@ const SignUpSeller = () => {
     const password = form.password.value;
     shopName = form?.shopName?.value;
     let role = "user";
+    const createdAt = new Date()
 
     const userId = email.replace(/[@.]/g, '')
 
@@ -41,9 +42,9 @@ const SignUpSeller = () => {
       if (shop) {
         role = "seller";
       }
-      let user = { name, email, password, userId, role };
+      let user = { name, email, password, userId, role, createdAt };
       if (shop) {
-        user = { name, email, password, userId, role, shopName };
+        user = { name, email, password, userId, role, shopName, createdAt };
       }
       // Update user
 

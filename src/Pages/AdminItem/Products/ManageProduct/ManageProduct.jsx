@@ -63,7 +63,7 @@ const ManageProduct = () => {
             </svg>
             <Link
               rel="noopener noreferrer"
-              to={"/admin/manageproduct"}
+              to={"/admin/manage-product"}
               className="flex items-center px-1 capitalize hover:underline"
             >
               {" "}
@@ -75,7 +75,7 @@ const ManageProduct = () => {
 
       <Link
         className="group relative inline-flex mb-10 items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
-        to="/admin/manageproduct/addProduct"
+        to="/admin/manage-product/add-product"
       >
         <span className="absolute -start-full transition-all group-hover:start-4">
           <svg

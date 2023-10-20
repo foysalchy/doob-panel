@@ -19,14 +19,14 @@ const PriceMangement = () => {
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" aria-hidden="true" fill="currentColor" className="w-2 h-2 mt-1 transform rotate-90 fill-current dark:text-gray-600">
                             <path d="M32 30.031h-32l16-28.061z"></path>
                         </svg>
-                        <Link rel="noopener noreferrer" to={'/admin/pricemanagement'} className="flex items-center px-1 capitalize hover:underline">Price Management</Link>
+                        <Link rel="noopener noreferrer" to={'/admin/price-management'} className="flex items-center px-1 capitalize hover:underline">Price Management</Link>
                     </li>
 
                 </ol>
             </nav>
             <Link
                 className="group relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-900"
-                to='/admin/pricemanagement/addpricing'
+                to='/admin/price-management/add-pricing'
             >
                 <span className="absolute -start-full transition-all group-hover:start-4">
                     <svg

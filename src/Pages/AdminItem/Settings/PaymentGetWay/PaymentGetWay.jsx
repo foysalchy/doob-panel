@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { MdDelete } from "react-icons/md";
+import { BsArrowRight } from 'react-icons/bs';
 
 const PaymentGetWay = () => {
 
@@ -379,18 +380,32 @@ const PaymentGetWay = () => {
 
 
                             <div className="mt-4">
-                                {isLoading ? <button type="button" className="bg-gray-800  py-2.5 px-7 rounded-lg text-white font-bold hover:bg-gray-900 hover:cursor-pointer" disabled>
-                                    <div className="flex items-center justify-center m-[10px]">
-                                        <div className="h-5 w-5 animate-spin rounded-full border-white border-4"></div>
-                                        <div className="ml-2"> Processing... </div>
-                                    </div>
-                                </button>
-                                    :
-                                    <button
-                                        type="submit"
-                                        className="bg-gray-800  py-2.5 px-7 rounded-lg text-white font-bold hover:bg-gray-900 hover:cursor-pointer ">
-                                        Submit
-                                    </button>}
+                                {
+                                    isLoading ?
+                                        <button disabled className="group relative cursor-not-allowed inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none mt-4">
+                                            <span className="text-sm font-medium">
+                                                Loading...
+                                            </span>
+                                            <svg className="animate-spin h-4 w-4 ml-3 text-white" viewBox="0 0 24 24">
+
+                                                <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                                            </svg>
+                                        </button>
+
+                                        :
+                                        <button type='submit'
+                                            className="group relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none mt-4 "
+
+                                        >
+                                            <span className="absolute -end-full transition-all group-hover:end-4">
+                                                <BsArrowRight />
+                                            </span>
+
+                                            <span className="text-sm font-medium transition-all group-hover:me-4">
+                                                Upload Getaway
+                                            </span>
+                                        </button>
+                                }
 
                             </div>
                         </form>

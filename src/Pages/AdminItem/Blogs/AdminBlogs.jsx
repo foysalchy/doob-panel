@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 const AdminBlogs = () => {
   const { data: blogs = [], refetch } = useQuery({
-    queryKey: ["buyer"],
+    queryKey: ["blogs"],
     queryFn: async () => {
       const res = await fetch("http://localhost:5000/admin/blogs");
       const data = await res.json();
@@ -13,7 +13,7 @@ const AdminBlogs = () => {
   });
 
   const DeleteBlog = (id) => {
-  
+
     fetch(`http://localhost:5000/admin/blog`, {
       method: "DELETE",
       headers: {
@@ -24,7 +24,7 @@ const AdminBlogs = () => {
       .then((res) => res.json())
       .then((data) => {
         alert("delete successful");
-  
+
       });
   };
 

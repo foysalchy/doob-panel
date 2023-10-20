@@ -1,8 +1,21 @@
+import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 import { BiSolidTraffic, BiSolidUser } from 'react-icons/bi';
 import { FaPersonArrowUpFromLine, FaSalesforce } from 'react-icons/fa6';
 
 const Starts = () => {
+
+    const { data: newUsers = [], refetch } = useQuery({
+        queryKey: ["newUser"],
+        queryFn: async () => {
+            const res = await fetch("http://localhost:5000/admin/previous-week-users");
+            const data = await res.json();
+            return data;
+        },
+    });
+
+    console.log(newUsers);
+
     return (
         <div>
             <div className="">
@@ -46,7 +59,7 @@ const Starts = () => {
                                                 <h5 className="text-blueGray-400 uppercase font-bold text-xs">
                                                     NEW USERS
                                                 </h5>
-                                                <span className="font-bold text-xl">2,356</span>
+                                                <span className="font-bold text-xl">{newUsers?.newUsersCount}</span>
                                             </div>
                                             <div className="relative w-auto pl-4 flex-initial">
                                                 <div className="text-white p-3 text-center inline-flex items-center justify-center w-12 h-12 shadow-lg rounded-full bg-orange-500">
@@ -55,8 +68,8 @@ const Starts = () => {
                                             </div>
                                         </div>
                                         <p className="text-sm text-blueGray-500 mt-4">
-                                            <span className="text-red-500 mr-2">
-                                                <i className="fas fa-arrow-down" /> 3.48%
+                                            <span className={!newUsers?.percentageChange > 0 ? "text-red-500 mr-2" : "text-green-500 mr-2"}>
+                                                <i className="fas fa-arrow-down" /> {newUsers?.percentageChange}%
                                             </span>
                                             <span className="whitespace-nowrap">Since last week</span>
                                         </p>

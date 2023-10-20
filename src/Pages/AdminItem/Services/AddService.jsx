@@ -1,6 +1,7 @@
 import JoditEditor from 'jodit-react';
 import React from 'react';
 import { useState } from 'react';
+import { BsArrowRight } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
@@ -217,12 +218,32 @@ const AddService = () => {
                             </div>
                         </div>
                         <div className="mt-4">
-                            <button
-                                type="submit"
-                                className="inline-block w-full rounded-lg bg-black px-5 py-3 font-medium text-white sm:w-auto"
-                            >
-                                {loading ? "Loading.." : "Publish service"}
-                            </button>
+                            {
+                                loading ?
+                                    <button disabled className="group relative cursor-not-allowed inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none mt-4">
+                                        <span className="text-sm font-medium">
+                                            Loading...
+                                        </span>
+                                        <svg className="animate-spin h-4 w-4 ml-3 text-white" viewBox="0 0 24 24">
+
+                                            <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                                        </svg>
+                                    </button>
+
+                                    :
+                                    <button type='submit'
+                                        className="group relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none mt-4 "
+
+                                    >
+                                        <span className="absolute -end-full transition-all group-hover:end-4">
+                                            <BsArrowRight />
+                                        </span>
+
+                                        <span className="text-sm font-medium transition-all group-hover:me-4">
+                                            Add Service
+                                        </span>
+                                    </button>
+                            }
                         </div>
                     </form>
                 </div>

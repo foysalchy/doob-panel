@@ -2,19 +2,39 @@ import React from 'react';
 import { useContext } from 'react';
 import { AuthContext } from '../../../../AuthProvider/UserProvider';
 import { IoLogOut } from 'react-icons/io5';
+import { Link } from 'react-router-dom';
 
 const SideNavberSeller = () => {
     const { user, logOut } = useContext(AuthContext)
     return (
         <div>
-            <div className="flex h-screen flex-col justify-between border-e bg-white">
+            <div className="flex h-screen w-56 flex-col justify-between border-e bg-white">
                 <div className="px-4 py-6">
-                    <span
-                        className="grid h-10 w-32 place-content-center rounded-lg bg-gray-100 text-xs text-gray-600"
+                    <Link
+                        to="/"
+                        aria-label="Company"
+                        title="Company"
+                        className="inline-flex items-center"
                     >
-                        Logo
-                    </span>
-
+                        <svg
+                            className="w-8 text-black"
+                            viewBox="0 0 24 24"
+                            strokeLinejoin="round"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeMiterlimit="10"
+                            stroke="currentColor"
+                            fill="none"
+                        >
+                            <rect x="3" y="1" width="7" height="12" />
+                            <rect x="3" y="17" width="7" height="6" />
+                            <rect x="14" y="1" width="7" height="6" />
+                            <rect x="14" y="11" width="7" height="12" />
+                        </svg>
+                        <span className="ml-2 text-xl font-bold tracking-wide text-gray-800 ">
+                            SaleNow
+                        </span>
+                    </Link>
                     <ul className="mt-6 space-y-1">
                         <li>
                             <a
