@@ -1,6 +1,26 @@
+import { useQuery } from '@tanstack/react-query';
 import React from 'react';
+import { Link, useParams } from 'react-router-dom';
 
 const ShopFooter = () => {
+
+    const params = useParams();
+    const shopId = params.id;
+
+    const { data: pages = [], refetch, isLoading } = useQuery({
+        queryKey: ["sellerPages"],
+        queryFn: async () => {
+            const res = await fetch(`http://localhost:5000/seller/pages/${shopId}`);
+            const data = await res.json();
+            return data;
+        },
+    });
+
+
+    console.log(pages, shopId);
+
+
+
     return (
         <div className="bg-gray-900">
             <div className="px-4 pt-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8">
@@ -12,12 +32,12 @@ const ShopFooter = () => {
                             </p>
                             <ul className="mt-2 space-y-2">
                                 <li>
-                                    <a
-                                        href="/"
+                                    <Link
+                                        to={`/shop/${shopId}/blog`}
                                         className="text-gray-500 transition-colors duration-300 hover:text-deep-purple-accent-200"
                                     >
-                                        News
-                                    </a>
+                                        Blog
+                                    </Link>
                                 </li>
                                 <li>
                                     <a
@@ -199,10 +219,8 @@ const ShopFooter = () => {
                         </p>
                     </div>
                 </div>
-                <div className="flex flex-col justify-between pt-5 pb-10 border-t border-gray-800 sm:flex-row">
-                    <p className="text-sm text-gray-500">
-                        © Copyright 2020 Lorem Inc. All rights reserved.
-                    </p>
+                <div className="flex flex-col pb-20 justify-between pt-5 border-t border-gray-800 sm:flex-row">
+
                     <div className="flex items-center mt-4 space-x-4 sm:mt-0">
                         <a
                             href="/"
@@ -230,6 +248,22 @@ const ShopFooter = () => {
                             </svg>
                         </a>
                     </div>
+                    <div>
+                        <ul className="flex flex-col mb-3 space-y-2 lg:mb-0 sm:space-y-0 sm:space-x-5 sm:flex-row">
+                            {pages.map((page, i) => (
+                                <li>
+                                    {page?.status && (
+                                        <Link
+                                            to={`/shop/${shopId}/pages/${page._id}`}
+                                            className="text-sm text-gray-600 transition-colors duration-300 hover:text-deep-purple-accent-400"
+                                        >
+                                            {page?.title}
+                                        </Link>
+                                    )}
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
@@ -237,3 +271,4 @@ const ShopFooter = () => {
 };
 
 export default ShopFooter;
+

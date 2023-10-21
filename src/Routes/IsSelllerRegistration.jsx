@@ -8,20 +8,20 @@ import groovyWalkAnimation from "./Loading.json";
 
 
 const IsSelllerRegistration = ({ children }) => {
-    const { user } = useContext(AuthContext)
+    const { user, loading } = useContext(AuthContext)
     const [shopInfo, isShopInfoLoading] = UseShop(user?.email)
 
     const location = useLocation()
 
-    if (isShopInfoLoading) {
+    if (isShopInfoLoading || loading) {
         return (
             <>
-                <h1 className='text-2xl h-full flex justify-center items-center'> <Lottie animationData={groovyWalkAnimation} loop={true} /> </h1>
+                <h1 className='text-2xl h-full flex justify-center items-center'> <Lottie animationData={groovyWalkAnimation} loop={true} /></h1>
             </>
         )
     }
 
-    if (shopInfo) {
+    if (shopInfo && user) {
         return children
     }
 

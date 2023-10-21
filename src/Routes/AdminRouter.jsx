@@ -2,6 +2,8 @@ import { useContext } from "react"
 import { AuthContext } from "../AuthProvider/UserProvider"
 import useAdmin from "../Hooks/UseAdmin"
 import { Link, useLocation } from "react-router-dom"
+import Lottie from "lottie-react";
+import groovyWalkAnimation from "./Loading.json";
 
 const AdminRoute = ({ children }) => {
     const { user, loading } = useContext(AuthContext)
@@ -9,17 +11,17 @@ const AdminRoute = ({ children }) => {
 
     const location = useLocation()
 
-    if (loading || isAdminLoading) {
+    if (isAdminLoading) {
         return (
             <>
 
-                <h1 className='text-2xl h-full flex justify-center items-center'>Loading For Admin ....</h1>
+                <h1 className='text-2xl h-full flex justify-center items-center'> <Lottie animationData={groovyWalkAnimation} loop={true} /></h1>
 
             </>
         )
     }
 
-    if (user && isAdmin) {
+    if (isAdmin && user) {
         return children
     }
 

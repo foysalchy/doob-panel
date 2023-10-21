@@ -1,63 +1,47 @@
-import { useEffect } from "react";
-import { useState } from "react";
-import { BsArrowLeft, BsArrowRight } from "react-icons/bs";
+import { useQuery } from '@tanstack/react-query';
+import React from 'react';
+import { useEffect } from 'react';
+import { useState } from 'react';
+import { BsArrowLeft, BsArrowRight } from 'react-icons/bs';
 
-const Step2 = ({ nextStep, prevStep, handleChange, values }) => {
-    const [daraz, setDaraz] = useState(false)
-    const [woocommerce, setWoocommerce] = useState(false)
-    const [noStore, setNoStore] = useState(false)
+const Step3 = ({ prevStep, submitForm, handleChange, values }) => {
 
+    const { data: prices = [], refetch } = useQuery({
+        queryKey: ["prices"],
+        queryFn: async () => {
+            const res = await fetch("http://localhost:5000/admin/pricing");
+            const data = await res.json();
+            return data;
+        },
+    });
 
-    const handleDarazClick = (e) => {
-        e.preventDefault();
-        setDaraz(!daraz);
-        setNoStore(false);
+    const [selectedPriceId, setSelectedPriceId] = useState(null);
 
+    const handlePriceClick = (priceId) => {
+        setSelectedPriceId(priceId);
+        handleChange("priceId");
+        values.priceId = priceId;
     };
 
-    const handleWoocommerceClick = (e) => {
-        e.preventDefault();
-        setWoocommerce(!woocommerce);
-        setNoStore(false);
-
-    };
-
-    const handleNoStoreClick = (e) => {
-        e.preventDefault();
-        setNoStore(!noStore);
-        setDaraz(false);
-        setWoocommerce(false);
-
-    };
 
     const [error, setError] = useState(true)
 
     useEffect(() => {
-        if (daraz || woocommerce || noStore) {
+        if (!selectedPriceId) {
 
-            values.daraz = daraz;
-            values.woocommerce = woocommerce;
-            values.noStore = noStore;
-
-            console.log(daraz, 'Daraz', woocommerce, 'woocommerce', noStore, 'noStore');
-            setError(false);
+            setError(true);
         }
         else {
-            console.log('work');
-            setError(true)
+
+            setError(false)
         }
-    }, [daraz, woocommerce, noStore]);
-
-
-    console.log(error);
+    }, [selectedPriceId]);
 
     return (
         <div>
-
-
             <div>
                 <div className="overflow-hidden rounded-full bg-gray-200">
-                    <div className="h-2 w-[52%] rounded-full bg-blue-500"></div>
+                    <div className="h-2 w-[100%] rounded-full bg-blue-500"></div>
                 </div>
 
                 <ol className="mt-4 grid grid-cols-3 text-sm font-medium text-gray-500">
@@ -104,7 +88,7 @@ const Step2 = ({ nextStep, prevStep, handleChange, values }) => {
                         </svg>
                     </li>
 
-                    <li className="flex items-center justify-end sm:gap-1.5">
+                    <li className="flex items-center justify-end text-blue-600 sm:gap-1.5">
                         <span className="hidden sm:inline"> Payment </span>
 
                         <svg
@@ -125,39 +109,34 @@ const Step2 = ({ nextStep, prevStep, handleChange, values }) => {
                 </ol>
             </div>
 
-            <div className='my-10'>
+            <div className="grid max-w-md gap-10 row-gap-5 lg:max-w-screen-lg sm:row-gap-10 lg:grid-cols-3 xl:max-w-screen-lg sm:mx-auto my-10">
+                {prices.map((price, index) => (
+                    <div key={index}>
+                        {price.status && (
+                            <div
 
-
-                <div className='flex gap-20 justify-center'>
-                    <button
-                        onChange={handleChange('daraz')} value={values.daraz}
-                        onClick={handleDarazClick}
-                        className={`${daraz
-                            ? "bg-slate-400  bg-opacity-100"
-                            : "bg-white hover:bg-slate-200"
-                            } rounded-lg duration-300 transition-colors border px-8 py-2.5`}
-                    >
-                        <img className={daraz ? "blur-sm w-20 h-10" : "w-20 h-10 "} src='https://logos-world.net/wp-content/uploads/2022/05/Daraz-Logo.png' alt="daraz" />
-                    </button>
-                    <button
-                        onChange={handleChange('woocommerce')} value={values.woocommerce}
-                        onClick={handleWoocommerceClick}
-                        className={`${woocommerce ? 'bg-slate-400' : 'bg-white hover:bg-slate-200'
-                            } rounded-lg duration-300 transition-colors border px-8 py-2.5`}
-                    >
-                        <img className={woocommerce ? "blur-sm w-20 h-10" : "w-20 h-10 "} src='https://1000logos.net/wp-content/uploads/2020/08/WooCommerce-Logo.png' alt="daraz" />
-                    </button>
-                    <button
-                        onChange={handleChange('noStore')} value={noStore}
-                        onClick={handleNoStoreClick}
-                        className={`${noStore ? 'bg-slate-400' : 'bg-white hover:bg-slate-200'
-                            } rounded-lg duration-300 transition-colors border px-8  py-2.5`}
-                    >
-                        <p className={noStore && "blur-sm"}>  I have no store</p>
-                    </button>
-                </div>
+                                className={`flex cursor-pointer flex-col justify-between p-8 transition-shadow duration-300  border rounded  shadow-sm sm:items-center hover:shadow ${values.priceId === price._id ? 'border-blue-500 bg-gray-300' : '' // Add a border if the price is selected
+                                    }`}
+                                onClick={() => handlePriceClick(price._id)}
+                            >
+                                <div className="text-center">
+                                    <div className="text-lg font-semibold">{price.name}</div>
+                                    <div className=" mt-2">
+                                        <div className="mr-1 text-3xl font-bold  flex justify-center items-baseline gap-1">
+                                            <span>{price.price}</span>
+                                            <span className="text-sm flex items-center">/ {price.timeDuration}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+                    </div>
+                ))}
             </div>
 
+
+
+            <br />
             <div className="mt-4 gap-3 flex justify-center items-center">
                 <button onClick={prevStep}
                     className="group relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none mt-4 "
@@ -172,7 +151,7 @@ const Step2 = ({ nextStep, prevStep, handleChange, values }) => {
                     </span>
                 </button>
 
-                <button onClick={nextStep}
+                <button onClick={submitForm}
                     disabled={error}
                     className="group relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none mt-4 disabled:cursor-not-allowed disabled:bg-gray-700"
 
@@ -182,14 +161,14 @@ const Step2 = ({ nextStep, prevStep, handleChange, values }) => {
                     </span>
 
                     <span className="text-sm font-medium transition-all group-hover:me-4">
-                        Next Step
+                        Submit Form
                     </span>
                 </button>
 
 
             </div>
         </div>
-    );
+    )
 };
 
-export default Step2
+export default Step3;

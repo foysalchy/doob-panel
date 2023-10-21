@@ -15,6 +15,9 @@ const UseSupperAdmin = () => {
           await setIsSupperAdminLoading(false);
         });
     }
+    else {
+      setIsSupperAdminLoading(false)
+    }
   }, [user?.email, setIsSupperAdmin]);
   return [isSupperAdmin, isSupperAdminLoading];
 };

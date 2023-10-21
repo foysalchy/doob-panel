@@ -49,14 +49,33 @@ const SignInSeller = () => {
             "You are a valid user. Best of luck",
             "success"
           );
+
+          if (data.user.role === 'seller') {
+            fetch(`http://localhost:5000/shop/checkshop/${data?.user?.email}`)
+              .then((response) => response.json())
+              .then((result) => {
+
+                if (result.seller) {
+
+                  setCookie("SellerShop", JSON.stringify(result.information[0]));
+                  navigate("/seller/dashboard");
+                }
+                else {
+                  navigate("/seller/shop-register");
+                }
+
+              });
+          }
+
           if (data.user.role === "supperadmin") {
             navigate("/admin/dashboard");
           }
-          if (data.user.role === "seller") {
-            navigate("/seller/dashboard");
+          if (data.user.role === "user") {
+            navigate('/')
           }
           setLoading(false);
         }
+
 
         setPassError(data.message);
 

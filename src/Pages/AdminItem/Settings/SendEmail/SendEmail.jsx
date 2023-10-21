@@ -95,7 +95,6 @@ const SendEmail = () => {
             )
         })
             .then(response => response.json())
-            .catch(error => console.log("Error", error))
             .finally(() => {
                 setLoading(false)
                 alert(data.message)

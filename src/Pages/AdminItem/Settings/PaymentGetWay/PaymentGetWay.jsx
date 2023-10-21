@@ -52,7 +52,6 @@ const PaymentGetWay = () => {
         };
 
 
-        console.log('Form Data:', formData);
 
         fetch(`http://localhost:5000/admin/getaway`, {
             method: "POST",

@@ -4,9 +4,9 @@ import { Outlet } from 'react-router-dom';
 
 const SellerDashLayout = () => {
     return (
-        <div className='flex gap-4'>
+        <div className='flex  h-screen'>
             <SideNavberSeller />
-            <div className='w-full'>
+            <div className='flex-1 overflow-y-auto p-4 sm:p-0'>
                 <Outlet />
             </div>
 

@@ -21,7 +21,7 @@ const ShopLayout = () => {
         },
     });
 
-    console.log(Object.keys(shop).length);
+
 
     return (
         <div >

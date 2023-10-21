@@ -49,8 +49,19 @@ import PaymentGetWay from "../Pages/AdminItem/Settings/PaymentGetWay/PaymentGetW
 import SendEmail from "../Pages/AdminItem/Settings/SendEmail/SendEmail";
 import Profile from "../Pages/Profile/Profile";
 import ShopLayout from "../Layout/Shop/ShopLayout";
-import SellerShopInfo from "../Pages/SellerItem/SellerShopInfo/SellerShopInfo";
+
 import IsSelllerRegistration from "./IsSelllerRegistration";
+import AddSellerBlog from "../Pages/SellerItems/SellersBlog/AddBlog/AddSellerBlog";
+import SellerManageBlog from "../Pages/SellerItems/SellersBlog/ManageBlogs/SellerManageBlog";
+import SellerShopInfo from "../Pages/SellerItems/SellerShopInfo/SellerShopInfo";
+import ShopBlog from "../Pages/Shop/ShopBlog/ShopSingleBlog";
+import ShopAllBlog from "../Pages/Shop/ShopBlog/ShopAllBlog";
+import ShopSingleBlog from "../Pages/Shop/ShopBlog/ShopSingleBlog";
+import SellerAddContactPage from "../Pages/SellerItems/ContactPages/SellerAddContactPage";
+import SellerManageContact from "../Pages/SellerItems/ContactPages/SellerManageContact";
+import AddSellerPage from "../Pages/SellerItems/PageManagement/AddSellerPage";
+import SellerPageManagement from "../Pages/SellerItems/PageManagement/SellerPageManagement";
+import ShopPage from "../Pages/Shop/ShopPage/ShopPage";
 
 
 
@@ -157,6 +168,45 @@ const Router = createBrowserRouter([
     ],
   },
 
+  {
+    path: "/seller",
+    element: (
+      <IsSelllerRegistration>
+        <SellerDashLayout />
+      </IsSelllerRegistration>
+    ),
+    children: [
+      {
+        path: "dashboard",
+        element: <SellerDashboard />
+      },
+      {
+        path: "add-blog",
+        element: <AddSellerBlog />
+      },
+      {
+        path: "manage-blogs",
+        element: <SellerManageBlog />
+      },
+      {
+        path: "add-contact",
+        element: <SellerAddContactPage />
+      },
+      {
+        path: "manage-contact",
+        element: <SellerManageContact />
+      },
+      {
+        path: "add-page",
+        element: <AddSellerPage />
+      },
+      {
+        path: "manage-pages",
+        element: <SellerPageManagement />
+      },
+    ],
+  },
+
   // Shop Layout 
   {
     path: "/shop",
@@ -175,6 +225,36 @@ const Router = createBrowserRouter([
         element: <ProductDetails />
       },
       {
+        path: ':id/blog',  // Use a dynamic route parameter for the product ID
+        element: <ShopAllBlog />,
+        loader: async ({ params }) => {
+          const id = params.id;
+          return fetch(`http://localhost:5000/seller/blog/${id}`);
+        },
+      },
+      {
+        path: ':id/blog/:blogId',
+        element: <ShopSingleBlog />,
+        loader: async ({ params }) => {
+          const id = params.id;
+          const blogId = params.blogId;
+          const response = await fetch(`http://localhost:5000/seller/blog/${id}/${blogId}`);
+          const data = await response.json();
+          return data;
+        },
+      },
+      {
+        path: ':id/pages/:pageId',
+        element: <ShopPage />,
+        loader: async ({ params }) => {
+          const pageId = params.pageId
+          const shopId = params.id
+          const response = await fetch(`http://localhost:5000/seller/page/${shopId}/${pageId}`);
+          const data = await response.json();
+          return data;
+        },
+      },
+      {
         path: '*',
         element: <Error />
       },
@@ -184,7 +264,10 @@ const Router = createBrowserRouter([
 
   {
     path: "/admin",
-    element: <AdminLayout />,
+    element:
+      (<SupperAdminRouter>
+        <AdminLayout />
+      </SupperAdminRouter>),
     children: [
       // {
       //     path: '*', // Wildcard route for any unknown paths under '/admin'
@@ -193,77 +276,45 @@ const Router = createBrowserRouter([
       {
         path: "dashboard",
         element: (
-          <SupperAdminRouter>
-            {" "}
-            <AdminDashboard />
-          </SupperAdminRouter>
+          < AdminDashboard />
         ),
       },
       {
         path: "blog",
         element: (
-          <SupperAdminRouter>
-            {" "}
-            <AdminBlogs />
-          </SupperAdminRouter>
+          <AdminBlogs />
         ),
       },
       {
         path: "blog",
         element: (
-          <SupperAdminRouter>
-            <AdminBlogs />
-          </SupperAdminRouter>
+          <AdminBlogs />
         ),
       },
       {
         path: "blogs/new-blog",
-        element: (
-          <SupperAdminRouter>
-            <AddBlog />
-          </SupperAdminRouter>
-        ),
+        element: <AddBlog />
       },
 
       {
         path: "manage-product",
-        element: (
-          <SupperAdminRouter>
-            <ManageProduct />
-          </SupperAdminRouter>
-        ),
+        element: <ManageProduct />
       },
       {
         path: "manage-product/add-Product",
-        element: (
-          <SupperAdminRouter>
-            <AddProduct></AddProduct>
-          </SupperAdminRouter>
-        ),
+        element: <AddProduct></AddProduct>
       },
       {
         path: "manage-category",
-        element: (
-          <SupperAdminRouter>
-            <CatagoryManagement />
-          </SupperAdminRouter>
-        ),
+        element: <CatagoryManagement />
       },
       {
         path: "manage-category/add-category",
-        element: (
-          <SupperAdminRouter>
-            <AddCatagorys />
-          </SupperAdminRouter>
-        ),
+        element: <AddCatagorys />
       },
       {
         path: "blogs/:id",
-        element: (
-          <SupperAdminRouter>
-            <AdminSingleBlog />
-          </SupperAdminRouter>
-        ),
+        element: <AdminSingleBlog />,
         loader: async ({ params }) => {
           const id = params.id;
           return fetch(`http://localhost:5000/admin/blogs/${id}`);
@@ -271,146 +322,62 @@ const Router = createBrowserRouter([
       },
       {
         path: "price-management",
-        element: (
-          <SupperAdminRouter>
-            <PriceMangement />
-          </SupperAdminRouter>
-        ),
+        element: <PriceMangement />
       },
       {
         path: "price-management/add-pricing",
-        element: (
-          <SupperAdminRouter>
-            <AddPrice />
-          </SupperAdminRouter>
-        ),
+        element: <AddPrice />
       },
       {
         path: "faq",
-        element: (
-          <SupperAdminRouter>
-            <AdminFaq />
-          </SupperAdminRouter>
-        ),
+        element: <AdminFaq />
       },
       {
         path: "faq/add-faq",
-        element: (
-          <SupperAdminRouter>
-            <AddFaq />
-          </SupperAdminRouter>
-        ),
+        element: <AddFaq />
       },
       {
         path: "page-management",
-        element: (
-          <SupperAdminRouter>
-            <PageManagement />
-          </SupperAdminRouter>
-        ),
+        element: <PageManagement />
       },
       {
         path: "page-management/add-page",
-        element: (
-          <SupperAdminRouter>
-            <AddPage />
-          </SupperAdminRouter>
-        ),
+        element: <AddPage />
       },
       {
         path: "services",
-        element: (
-          <SupperAdminRouter>
-            <ManageService />
-          </SupperAdminRouter>
-        ),
+        element: <ManageService />
       },
       {
         path: "services/add-service",
-        element: (
-          <SupperAdminRouter>
-            <AddService />
-          </SupperAdminRouter>
-        ),
+        element: <AddService />
       },
       {
         path: "contact",
-        element: (
-          <SupperAdminRouter>
-            <ContactManagement />
-          </SupperAdminRouter>
-        ),
+        element: <ContactManagement />
       },
       {
         path: "contact/add-contact",
-        element: (
-          <SupperAdminRouter>
-            <AddContact />
-          </SupperAdminRouter>
-        ),
+        element: <AddContact />
       },
       {
         path: "settings",
-        element: (
-          <SupperAdminRouter>
-            <Settings />
-          </SupperAdminRouter>
-        ),
+        element: <Settings />
       },
       {
         path: "settings/seller-domain",
-        element: (
-          <SupperAdminRouter>
-            <SellerDomainManagement />
-          </SupperAdminRouter>
-        ),
+        element: <SellerDomainManagement />
       },
       {
         path: "settings/payment-management",
-        element: (
-          <SupperAdminRouter>
-            <PaymentGetWay />
-          </SupperAdminRouter>
-        ),
+        element: <PaymentGetWay />
       },
       {
         path: "settings/send-email",
-        element: (
-          <SupperAdminRouter>
-            <SendEmail />
-          </SupperAdminRouter>
-        ),
+        element: <SendEmail />
       },
     ],
-  },
+  }
 
-  {
-    path: "/seller",
-    element: (
-      <IsSelllerRegistration>
-        <SellerDashLayout />
-      </IsSelllerRegistration>
-    ),
-    children: [
-      {
-        path: "*",
-        element: (
-
-          <SellerDashboard />
-
-
-        ),
-      },
-      {
-        path: "dashboard",
-        element: (
-
-          <SellerDashboard />
-
-        ),
-      },
-
-    ],
-  },
 ]);
 export default Router;

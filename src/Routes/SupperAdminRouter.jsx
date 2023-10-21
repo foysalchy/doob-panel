@@ -3,7 +3,8 @@ import { useContext } from 'react';
 import { AuthContext } from '../AuthProvider/UserProvider';
 import UseSupperAdmin from '../Hooks/UseSupperAdmin';
 import { Link, Navigate, useLocation } from 'react-router-dom';
-import { BiLogIn } from 'react-icons/bi';
+import Lottie from "lottie-react";
+import groovyWalkAnimation from "./Loading.json";
 
 const SupperAdminRouter = ({ children }) => {
     const { user, loading } = useContext(AuthContext)
@@ -11,21 +12,14 @@ const SupperAdminRouter = ({ children }) => {
 
     const location = useLocation()
 
-    if (loading || isSupperAdminLoading) {
+    if (isSupperAdminLoading) {
         return (
-            <div className='w-full '>
-                <h1 className="text-center text-2xl py-52 leading-relaxed">
-                    You are not authorized to access this page. <br /> Please login as an admin.
-                    <br className='mb-10' />
-                    <Link to="/sign-in">
-                        <button
-                            className="inline-flex gap-4 items-center justify-center h-12 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-gray-900 hover:bg-black focus:shadow-outline focus:outline-none"
-                        >
-                            <BiLogIn></BiLogIn> Login
-                        </button>
-                    </Link>
-                </h1>
-            </div>
+            <>
+                <>
+                    <h1 className='text-2xl h-full flex justify-center items-center'>
+                        <Lottie animationData={groovyWalkAnimation} loop={true} />Supper Admin</h1>
+                </>
+            </>
         )
     }
 

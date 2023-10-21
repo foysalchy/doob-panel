@@ -28,7 +28,6 @@ const Step1 = ({ nextStep, handleChange, values }) => {
         const selectedFile = e.target.files[0];
         const formData = new FormData();
         formData.append("image", selectedFile);
-        console.log(formData);
         const url = `https://api.imgbb.com/1/upload?key=2b8c7f515b1f628299764a2ce4c4cb0e`;
         fetch(url, {
             method: "POST",
@@ -39,12 +38,9 @@ const Step1 = ({ nextStep, handleChange, values }) => {
 
                 if (imageData.data.url) {
 
-                    console.log(imageData);
                     const image = imageData.data.url;
-                    console.log(image);
                     setUpload(true)
                     values.logo = image
-                    console.log(values.logo);
                 }
                 else {
                     setUpload(false)
@@ -73,9 +69,9 @@ const Step1 = ({ nextStep, handleChange, values }) => {
                 if (data) {
                     setUniq(true)
                     setErrorName('')
-                    console.log(data);
+                   
                     values.shopId = name
-                    console.log(values.shopId, 'shopid');
+
                 } else {
                     setErrorName('This is not uniq name')
                     setUniq(false)// Set the shop name in the state

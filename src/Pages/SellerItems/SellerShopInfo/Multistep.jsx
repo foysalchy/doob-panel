@@ -18,7 +18,6 @@ const MultiStepForm = () => {
     const [loading, setLoading] = useState(false)
     const navigate = useNavigate()
     const { user } = useContext(AuthContext)
-    console.log(user);
 
     const [formValues, setFormValues] = useState({
         seller: user.email,
@@ -44,7 +43,6 @@ const MultiStepForm = () => {
 
     const submitForm = (e) => {
         e.preventDefault()
-        console.log(formValues);
         fetch(`http://localhost:5000/shop/info`, {
             method: "POST",
             headers: {

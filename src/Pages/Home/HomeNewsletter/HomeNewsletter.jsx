@@ -18,13 +18,13 @@ const HomeNewsletter = () => {
         })
             .then((res) => res.json())
             .then((data) => {
-                console.log(data);
+
                 if (data.message) {
                     Swal.fire(`${data.message}`, "", "success");
                     event.target.reset();
                     setEmail('');
                 } else if (data.errorMessage) {
-                    console.log('checkin');
+
                     setError(data.errorMessage);
                 } else {
                     setError('Something went wrong');
