@@ -13,7 +13,7 @@ const SignInSeller = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const { setCookie, setUser } = useContext(AuthContext);
+  const { setCookie, setUser, setShopInfo } = useContext(AuthContext);
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -56,7 +56,7 @@ const SignInSeller = () => {
               .then((result) => {
 
                 if (result.seller) {
-
+                  setShopInfo(result.information[0])
                   setCookie("SellerShop", JSON.stringify(result.information[0]));
                   navigate("/seller/dashboard");
                 }
@@ -88,7 +88,7 @@ const SignInSeller = () => {
   return (
     <div className="relative">
       <img
-        src="https://images.pexels.com/photos/3747463/pexels-photo-3747463.jpeg?auto=compress&amp;cs=tinysrgb&amp;dpr=2&amp;h=750&amp;w=1260"
+        src="https://c0.wallpaperflare.com/preview/263/921/102/business-communication-computer-concept.jpg"
         className="absolute inset-0 object-cover w-full h-full"
         alt=""
       />

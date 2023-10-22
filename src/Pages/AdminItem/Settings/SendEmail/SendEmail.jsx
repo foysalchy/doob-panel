@@ -10,7 +10,7 @@ const SendEmail = () => {
 
 
     const { data: options = [], refetch } = useQuery({
-        queryKey: ["faqs"],
+        queryKey: ["options"],
         queryFn: async () => {
             const res = await fetch("http://localhost:5000/user");
             const data = await res.json();
@@ -18,9 +18,12 @@ const SendEmail = () => {
         },
     });
 
+    console.log(options);
+
 
     const filteredOptions = options?.filter((option) =>
         option?.email.toLowerCase().includes(searchTerm.toLowerCase())
+
     ).slice(0, 4);
 
     const handleInputChange = (e) => {
@@ -184,7 +187,7 @@ const SendEmail = () => {
 
                         </div>
                         <div className="mt-2 flex gap-5 flex-wrap">
-                            {filteredOptions.map((option) => (
+                            {filteredOptions?.map((option) => (
                                 <label key={option?.email} className="block cursor-pointer">
                                     <input
                                         type="checkbox"
@@ -200,7 +203,7 @@ const SendEmail = () => {
                         <div className="mt-4">
                             <p className="text-lg font-bold text-gray-700">Selected Options:</p>
                             <ul className="flex items-start flex-wrap gap-2 mt-2">
-                                {selectedOptions.map((selected) => (
+                                {selectedOptions?.map((selected) => (
                                     <li key={selected} className="flex items-center bg-gray-200 px-2 py-0.5 rounded mb-2">
                                         <span className="mr-2 text-sm text-gray-800">
                                             {options?.find((option) => option?.email == selected)?.email}

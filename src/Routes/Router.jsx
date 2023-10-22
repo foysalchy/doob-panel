@@ -1,4 +1,4 @@
-import { createBrowserRouter } from "react-router-dom";
+import { Navigate, createBrowserRouter } from "react-router-dom";
 import MainLayout from "../Layout/MainLayout";
 import Home from "../Pages/Home/Home";
 import About from "../Pages/About/About";
@@ -62,6 +62,8 @@ import SellerManageContact from "../Pages/SellerItems/ContactPages/SellerManageC
 import AddSellerPage from "../Pages/SellerItems/PageManagement/AddSellerPage";
 import SellerPageManagement from "../Pages/SellerItems/PageManagement/SellerPageManagement";
 import ShopPage from "../Pages/Shop/ShopPage/ShopPage";
+import SupportTicketManagement from "../Pages/AdminItem/SupportTicket/AllsuportTicket/SupportTicketManagement";
+import AuthError from "./AuthError";
 
 
 
@@ -86,11 +88,11 @@ const Router = createBrowserRouter([
       },
       {
         path: "/sign-up",
-        element: <SignUpSeller />,
+        element: <AuthError><SignUpSeller /></AuthError>,
       },
       {
         path: "/sign-in",
-        element: <SignInSeller />,
+        element: <AuthError> <SignInSeller /></AuthError>,
       },
       {
         path: "/forget-pass",
@@ -375,6 +377,10 @@ const Router = createBrowserRouter([
       {
         path: "settings/send-email",
         element: <SendEmail />
+      },
+      {
+        path: "support-ticket",
+        element: <SupportTicketManagement />
       },
     ],
   }

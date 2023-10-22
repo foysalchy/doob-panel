@@ -11,19 +11,20 @@ const SupperAdminRouter = ({ children }) => {
     const [isSupperAdmin, isSupperAdminLoading] = UseSupperAdmin(user?.email)
 
     const location = useLocation()
+    console.log(loading, isSupperAdminLoading, new Date());
 
-    if (isSupperAdminLoading) {
+    if (loading || isSupperAdminLoading) {
         return (
             <>
                 <>
                     <h1 className='text-2xl h-full flex justify-center items-center'>
-                        <Lottie animationData={groovyWalkAnimation} loop={true} />Supper Admin</h1>
+                        <Lottie animationData={groovyWalkAnimation} loop={true} /></h1>
                 </>
             </>
         )
     }
 
-    if (user && isSupperAdmin) {
+    if (isSupperAdmin && user) {
         return children
     }
 

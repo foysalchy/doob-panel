@@ -11,6 +11,7 @@ import { AuthContext } from "../../../AuthProvider/UserProvider";
 import { updateProfile } from "firebase/auth";
 import Swal from "sweetalert2";
 import { BiCheckbox } from "react-icons/bi";
+import Modal from "./Modal";
 
 const SignUpSeller = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -18,6 +19,7 @@ const SignUpSeller = () => {
   const [loading, setLoading] = useState(false);
   const { RegistrationInEmail } = useContext(AuthContext);
   const [shop, setShop] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -61,8 +63,9 @@ const SignUpSeller = () => {
         .then((data) => {
           const result = data.result;
           if (result) {
-            Swal.fire("Success", "Your registration is complete", "success");
+
             setLoading(false);
+            setModalOpen(true)
             form.reset();
           } else {
             setPassError(data.message);
@@ -81,7 +84,7 @@ const SignUpSeller = () => {
     <div>
       <div className="relative">
         <img
-          src={Image}
+          src='https://c0.wallpaperflare.com/preview/781/693/128/abstract-business-communication-computer.jpg'
           className="absolute inset-0 object-cover w-full h-full"
           alt=""
         />
@@ -189,23 +192,24 @@ const SignUpSeller = () => {
                       </div>
                     </div>
 
-                    {!shop ? (
+                    <div className="text-xs text-gray-600 text-center sm:text-sm"> {!shop ? (
                       <div
                         className="flex gap-1 cursor-pointer"
-                        onClick={() => setShop(true)}
+
+                        onClick={() => { setShop(true); setPassError(''); }}
                       >
                         <AiTwotoneCheckSquare className="text-2xl " />
-                        <p className="">Are you Seller?</p>
+                        <p className="">Are you try to create as a seller?</p>
                       </div>
                     ) : (
                       <div
                         className="flex gap-1 cursor-pointer"
-                        onClick={() => setShop(false)}
+                        onClick={() => { setShop(false); setPassError(''); }}
                       >
                         <AiFillCheckSquare className="text-2xl " />
-                        <p className="">Yes I'm Seller</p>
+                        <p className="">No i try to create as a user</p>
                       </div>
-                    )}
+                    )}</div>
 
                     {shop && (
                       <div className="mb-1 sm:mb-2">
@@ -243,7 +247,10 @@ const SignUpSeller = () => {
                         </button>
                       )}
                     </div>
+
+
                     <p className="text-xs text-gray-600 text-center sm:text-sm">
+
                       By clicking "Sign up", you agree to the
                       <br />
                       <Link className="underline text-blue-500" to={"/terms"}>
@@ -255,13 +262,19 @@ const SignUpSeller = () => {
                       </Link>
                     </p>
                   </form>
+
+
                 </div>
               </div>
             </div>
           </div>
         </div>
+      </div >
+      <div className="h-0 w-0">
+
+        <Modal setModalOpen={setModalOpen} modalOpen={modalOpen} />
       </div>
-    </div>
+    </div >
   );
 };
 
