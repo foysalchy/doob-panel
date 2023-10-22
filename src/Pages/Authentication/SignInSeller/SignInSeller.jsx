@@ -13,7 +13,7 @@ const SignInSeller = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const { setCookie, setUser } = useContext(AuthContext);
+  const { setCookie, setUser, setShopInfo } = useContext(AuthContext);
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -49,14 +49,33 @@ const SignInSeller = () => {
             "You are a valid user. Best of luck",
             "success"
           );
+
+          if (data.user.role === 'seller') {
+            fetch(`http://localhost:5000/shop/checkshop/${data?.user?.email}`)
+              .then((response) => response.json())
+              .then((result) => {
+
+                if (result.seller) {
+                  setShopInfo(result.information[0])
+                  setCookie("SellerShop", JSON.stringify(result.information[0]));
+                  navigate("/seller/dashboard");
+                }
+                else {
+                  navigate("/seller/shop-register");
+                }
+
+              });
+          }
+
           if (data.user.role === "supperadmin") {
             navigate("/admin/dashboard");
           }
-          if (data.user.role === "seller") {
-            navigate("/seller/dashboard");
+          if (data.user.role === "user") {
+            navigate('/')
           }
           setLoading(false);
         }
+
 
         setPassError(data.message);
 
@@ -69,7 +88,7 @@ const SignInSeller = () => {
   return (
     <div className="relative">
       <img
-        src="https://images.pexels.com/photos/3747463/pexels-photo-3747463.jpeg?auto=compress&amp;cs=tinysrgb&amp;dpr=2&amp;h=750&amp;w=1260"
+        src="https://c0.wallpaperflare.com/preview/263/921/102/business-communication-computer-concept.jpg"
         className="absolute inset-0 object-cover w-full h-full"
         alt=""
       />

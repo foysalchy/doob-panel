@@ -1,6 +1,11 @@
 import React from "react";
+import { useContext } from "react";
+import { AuthContext } from "../../../AuthProvider/UserProvider";
 
 const TrendingProducts = () => {
+
+  const { user } = useContext(AuthContext)
+
   const TrendingProducts = [
     {
       name: "Olevs 9868 Leather",
@@ -113,7 +118,7 @@ const TrendingProducts = () => {
                         type="button"
                         className="px-3 py-2  font-semibold rounded bg-black text-white text-xs "
                       >
-                        Add My Store
+                        {user.role === 'seller' ? 'Add My Store' : "Add to card"}
                       </button>
                     </div>
                   </div>

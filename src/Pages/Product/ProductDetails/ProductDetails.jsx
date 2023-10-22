@@ -5,8 +5,13 @@ import { MdDone } from "react-icons/md";
 import ProductDescription from "./ProductDescription";
 import ProductReviews from "./ProductReviews";
 import TrendingProducts from "./TrendingProducts";
+import { AuthContext } from "../../../AuthProvider/UserProvider";
+import { useContext } from "react";
 
 const ProductDetails = () => {
+
+  const { user } = useContext(AuthContext)
+
   const [selectedImage, setSelectedImage] = useState(
     "https://i.ibb.co/tPt2Ntp/image-34.png"
   );
@@ -254,7 +259,7 @@ const ProductDetails = () => {
                   type="button"
                   className="h-10 px-6 py-2 font-semibold rounded bg-gray-950 hover:bg-gray-800 text-white"
                 >
-                  Add My Store
+                  {user.role === 'seller' ? 'Add My Store' : "Add to card"}
                 </button>
                 <button
                   type="button"

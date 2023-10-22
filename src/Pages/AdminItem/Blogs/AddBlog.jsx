@@ -46,6 +46,7 @@ const AddBlog = () => {
           title,
           message,
           img: image,
+          date: new Date()
         };
         postBlog(blog, form);
       });

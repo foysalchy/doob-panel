@@ -22,7 +22,6 @@ const SellerDomainManagement = () => {
                 return response.json();
             })
             .then(data => {
-                console.log(data);
                 Swal.fire({
                     title: `${data.password}`,
                     width: 600,
@@ -75,20 +74,18 @@ const SellerDomainManagement = () => {
     };
 
     const handleSaveClick = (sellerId) => {
-        // Perform URL validation
+       
         const domainRegex = /^[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
         const isValid = domainRegex.test(editedDomain);
 
         if (isValid) {
-            // Perform save logic here
-            console.log(`New domain for seller ${sellerId}: ${editedDomain}`);
+
             setIsValidUrl(true);
         } else {
             setIsValidUrl(false);
-            return; // Do not proceed with save if the URL is not valid
+            return; 
         }
 
-        // Reset editing state
         setEditingSellerId(null);
         setEditedDomain('');
     };

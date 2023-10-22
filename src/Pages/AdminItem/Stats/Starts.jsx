@@ -14,7 +14,7 @@ const Starts = () => {
         },
     });
 
-    console.log(newUsers);
+
 
     return (
         <div>

@@ -131,7 +131,7 @@ const AddContact = () => {
 
             <div className="my-10">
                 <h1 className="text-2xl font-bold text-center">
-                    Publish a Category for you and next
+                    Publish Your Shop Contact Information only username
                 </h1>
                 <div className="p-10 border-2  rounded m-10">
                     <form onSubmit={dataSubmit} className="w-full ">

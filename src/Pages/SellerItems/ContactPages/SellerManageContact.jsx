@@ -1,0 +1,171 @@
+import { useQuery } from '@tanstack/react-query';
+import React from 'react';
+import { useContext } from 'react';
+import { AuthContext } from '../../../AuthProvider/UserProvider';
+import { useState } from 'react';
+import Swal from 'sweetalert2';
+import { Link } from 'react-router-dom';
+
+const SellerManageContact = () => {
+    const { shopInfo } = useContext(AuthContext)
+
+    const { data: contact = [], refetch } = useQuery({
+        queryKey: ["contact"],
+        queryFn: async () => {
+            const res = await fetch(`http://localhost:5000/shop/contact/${shopInfo?.shopId}`);
+            const data = await res.json();
+            return data;
+        },
+    });
+
+    const DeleteCategory = (id) => {
+        fetch(`http://localhost:5000/shop/contact/${shopInfo.shopId}?id=${id}`, {
+            method: "DELETE",
+            headers: {
+                "content-type": "application/json",
+            },
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                Swal.fire("Contact Information Deleted Successfully", "", "success");
+                refetch();
+            });
+    };
+
+    const [searchQuery, setSearchQuery] = useState("");
+
+    const handleSearch = (event) => {
+        setSearchQuery(event.target.value);
+    };
+
+    const filteredData = contact.filter((item) =>
+        item.media.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
+
+    console.log(contact);
+
+    return (
+        <div className="py-8 w-full overflow-x-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-10 whitespace-nowrap">
+            <div>
+                <nav
+
+                    className="rounded p-4 mb-4 bg-gray-800 dark:text-gray-100"
+                >
+                    <ol className="flex h-8 space-x-2">
+                        <li className="flex items-center">
+                            <Link
+                                rel="noopener noreferrer"
+                                to="/admin/dashboard"
+                                title="Back to homepage"
+                                className="hover:underline"
+                            >
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 20 20"
+                                    fill="currentColor"
+                                    className="w-5 h-5 pr-1 dark:text-gray-400"
+                                >
+                                    <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path>
+                                </svg>
+                            </Link>
+                        </li>
+                        <li className="flex items-center space-x-2">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 32 32"
+                                aria-hidden="true"
+                                fill="currentColor"
+                                className="w-2 h-2 mt-1 transform rotate-90 fill-current dark:text-gray-600"
+                            >
+                                <path d="M32 30.031h-32l16-28.061z"></path>
+                            </svg>
+                            <Link
+                                rel="noopener noreferrer"
+                                to="/seller/manage-blogs"
+                                className="flex items-center px-1 capitalize hover:underline"
+                            >
+                                Blog
+                            </Link>
+                        </li>
+                    </ol>
+                </nav>
+            </div>
+            <div className="relative w-3/5 my-6">
+                <input
+                    type="text"
+                    id="Search"
+                    value={searchQuery}
+                    onChange={handleSearch}
+                    placeholder="Search for..."
+                    className="w-full px-5 rounded-md border border-gray-900 py-2.5 pe-10 shadow-sm sm:text-sm"
+                />
+
+                <span className="absolute inset-y-0 end-0 grid w-10 place-content-center">
+                    <button type="button" className="text-gray-600 hover:text-gray-700">
+                        <span className="sr-only">Search</span>
+
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            strokeWidth="1.5"
+                            stroke="currentColor"
+                            className="h-4 w-4 text-black"
+                        >
+                            <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
+                            />
+                        </svg>
+                    </button>
+                </span>
+            </div>
+            <div className="overflow-x-auto mt-4">
+                {filteredData.length ? (
+                    <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
+                        <thead className="text-left">
+                            <tr>
+                                <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
+                                    Media Name
+                                </th>
+
+                                <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
+                                    Media URL
+                                </th>
+                                <th className="px-4 py-2"></th>
+                            </tr>
+                        </thead>
+
+                        <tbody className="divide-y divide-gray-200">
+                            {filteredData.map((media, index) => (
+                                <tr>
+                                    <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
+                                        {media.media}
+                                    </td>
+
+                                    <td className="whitespace-nowrap px-4 py-2 text-gray-700">
+                                        {media.URL}
+                                    </td>
+                                    <td className="whitespace-nowrap px-4 py-2">
+                                        <button
+                                            onClick={() => DeleteCategory(media._id)}
+                                            className="inline-block rounded  bg-red-600 px-4 py-2 text-xs font-medium text-white hover:bg-red-700"
+                                        >
+                                            Delete
+                                        </button>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                ) : (
+                    <h1>No Data Found</h1>
+                )}
+            </div>
+        </div>
+    );
+};
+
+export default SellerManageContact;

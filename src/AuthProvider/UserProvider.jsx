@@ -3,6 +3,7 @@ import { createUserWithEmailAndPassword, getAuth, onAuthStateChanged, sendPasswo
 
 import Swal from "sweetalert2";
 import app from '../Firebase/firebase';
+import Cookies from 'js-cookie';
 
 
 export const AuthContext = createContext();
@@ -10,7 +11,8 @@ export const AuthContext = createContext();
 const UserProvider = ({ children }) => {
 
     const auth = getAuth(app);
-    const [user, setUser] = useState();
+    const [user, setUser] = useState('');
+    const [shopInfo, setShopInfo] = useState('')
     const [loading, setLoading] = useState(true);
 
     const RegistrationInEmail = (email, password,) => {
@@ -25,14 +27,18 @@ const UserProvider = ({ children }) => {
     };
 
     const logOut = () => {
-
-        document.cookie = `${'user'}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
-        setUser('')
-
-
-
+        const cookies = Cookies.get();
+        for (const cookieName in cookies) {
+            const decodedValue = decodeURIComponent(cookies[cookieName]);
+            Cookies.remove(cookieName, { path: '/' });
+            Cookies.remove(cookieName, { path: '/seller' });
+            Cookies.remove(cookieName, { path: '/admin' });
+        }
+        setUser('');
+        setShopInfo('');
 
     };
+
 
 
     const forgetPass = (email) => {
@@ -63,22 +69,44 @@ const UserProvider = ({ children }) => {
     };
 
     const checkUserCookie = () => {
+        setLoading(false)
         const userCookie = getCookie('SaleNowUser');
+
         if (userCookie) {
             const userData = JSON.parse(userCookie);
 
             setUser(userData)
+            setLoading(false)
 
         } else {
-            console.log('User cookie not found');
+            setLoading(true)
+        }
+    };
+
+
+    const checkShopCookie = () => {
+        setLoading(true)
+        const userCookie = getCookie('SellerShop');
+
+
+        if (userCookie) {
+            const userData = JSON.parse(userCookie);
+
+            setShopInfo(userData)
+            setLoading(false)
+
+        } else {
+
+            setLoading(false)
         }
     };
 
 
     useEffect(() => {
-        const unsubscribe = (user) => {
+        const unsubscribe = () => {
             setLoading(false);
             checkUserCookie()
+            checkShopCookie()
         };
         return () => {
             setLoading(true);
@@ -96,7 +124,9 @@ const UserProvider = ({ children }) => {
         loginWithEamil,
         setCookie,
         loading,
-        setLoading
+        setLoading,
+        shopInfo,
+        setShopInfo
     };
     return (
         <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>

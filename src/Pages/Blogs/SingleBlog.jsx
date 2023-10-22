@@ -1,6 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
+import { FaRegCalendarAlt } from "react-icons/fa";
 import { useLoaderData } from "react-router";
 import { Link } from "react-router-dom";
 
@@ -20,9 +21,36 @@ const SingleBlog = () => {
     return doc.body.textContent || "";
   };
 
+
+  const formattedDate = new Date(blogInfo.date).toLocaleString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+
   return (
     <div className=" ">
-      <div className="px-1 md:py-28 py-20 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-20 lg:px-8 md:w-[80%] w-[95%] grid md:grid-cols-3 gap-3 ">
+      <div className="relative">
+        <img
+          src={blogInfo?.img}
+          className="absolute inset-0 object-cover w-full h-full"
+          alt=""
+        />
+        <div className="relative bg-gray-900 bg-opacity-90">
+          <div className="px-4 py-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-20">
+            <div >
+              <h2 className=" mb-6 text-center font-sans text-3xl font-bold tracking-tight text-white sm:text-4xl sm:leading-none">
+                {blogInfo?.title}
+              </h2>
+              <div className='text-xl gap-3 text-white flex justify-center items-center'>
+                <FaRegCalendarAlt className='' />Updated On {formattedDate}
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="px-1 py-10 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-20 lg:px-8 md:w-[80%] w-[95%] grid md:grid-cols-3 gap-3 ">
         <div className="md:col-span-2">
           <img
             loading="lazy"
