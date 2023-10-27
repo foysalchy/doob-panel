@@ -54,7 +54,7 @@ const AddBlog = () => {
 
   const postBlog = (blog, form) => {
 
-    fetch(`http://localhost:5000/admin/newblog`, {
+    fetch(`https://salenow-v2-backend.vercel.app/admin/newblog`, {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -189,7 +189,7 @@ const AddBlog = () => {
                 <input
                   required
                   id="dropzone-file"
-                  type="file"
+                  type="file" accept="application/pdf,image/webp,image/tiff,image/heic,image/gif,image/bmp,image/png,image/jpeg"
                   name="photo"
                   className="hidden"
                   onChange={handleFileChange}

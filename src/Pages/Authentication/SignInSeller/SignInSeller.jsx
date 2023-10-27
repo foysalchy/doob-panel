@@ -29,7 +29,7 @@ const SignInSeller = () => {
       password,
     };
     setLoading(true);
-    fetch("http://localhost:5000/signin", {
+    fetch("https://salenow-v2-backend.vercel.app/signin", {
       method: "post",
       headers: {
         "content-type": "application/json",
@@ -39,8 +39,9 @@ const SignInSeller = () => {
       .then((res) => res.json())
       .then((data) => {
         if (data.user) {
-          setCookie("SaleNowUser", JSON.stringify(data.user));
+          console.log(data.user);
           setUser(data.user);
+          setCookie("SaleNowUser", JSON.stringify(data.user));
           setLoading(false);
           setPassError("");
 
@@ -50,8 +51,10 @@ const SignInSeller = () => {
             "success"
           );
 
+          
+
           if (data.user.role === 'seller') {
-            fetch(`http://localhost:5000/shop/checkshop/${data?.user?.email}`)
+            fetch(`https://salenow-v2-backend.vercel.app/shop/checkshop/${data?.user?.email}`)
               .then((response) => response.json())
               .then((result) => {
 

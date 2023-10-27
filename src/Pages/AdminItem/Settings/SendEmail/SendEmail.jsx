@@ -12,7 +12,7 @@ const SendEmail = () => {
     const { data: options = [], refetch } = useQuery({
         queryKey: ["options"],
         queryFn: async () => {
-            const res = await fetch("http://localhost:5000/user");
+            const res = await fetch("https://salenow-v2-backend.vercel.app/user");
             const data = await res.json();
             return data;
         },
@@ -88,7 +88,7 @@ const SendEmail = () => {
 
             }
         }
-        fetch('http://localhost:5000/admin/send-email', {
+        fetch('https://salenow-v2-backend.vercel.app/admin/send-email', {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"

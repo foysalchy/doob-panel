@@ -9,7 +9,7 @@ const ContactManagement = () => {
     const { data: contact = [], refetch } = useQuery({
         queryKey: ["contact"],
         queryFn: async () => {
-            const res = await fetch("http://localhost:5000/admin/contact");
+            const res = await fetch("https://salenow-v2-backend.vercel.app/admin/contact");
             const data = await res.json();
             return data;
         },
@@ -17,7 +17,7 @@ const ContactManagement = () => {
 
     const DeleteCategory = (id) => {
 
-        fetch(`http://localhost:5000/admin/contact/${id}`, {
+        fetch(`https://salenow-v2-backend.vercel.app/admin/contact/${id}`, {
             method: "DELETE",
             headers: {
                 "content-type": "application/json",
@@ -39,7 +39,7 @@ const ContactManagement = () => {
     };
 
     const filteredData = contact.filter((item) =>
-        item.media.toLowerCase().includes(searchQuery.toLowerCase())
+        item?.media.toLowerCase().includes(searchQuery.toLowerCase())
     );
     return (
         <div className='w-full'>

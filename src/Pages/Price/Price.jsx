@@ -5,7 +5,7 @@ const Price = () => {
   const { data: prices = [], refetch } = useQuery({
     queryKey: ["prices"],
     queryFn: async () => {
-      const res = await fetch("http://localhost:5000/admin/pricing");
+      const res = await fetch("https://salenow-v2-backend.vercel.app/admin/pricing");
       const data = await res.json();
       return data;
     },

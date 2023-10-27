@@ -5,7 +5,7 @@ const AdminBlogPage = () => {
   const [blogs, setBlogs] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:5000/admin/blogs")
+    fetch("https://salenow-v2-backend.vercel.app/admin/blogs")
       .then((response) => response.json())
       .then((data) => {
         setBlogs(data);
@@ -18,7 +18,7 @@ const AdminBlogPage = () => {
   return (
     <div>
       <div className="px-4 py-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-20">
-        
+
         <div className="grid gap-8 lg:grid-cols-3 sm:max-w-sm sm:mx-auto lg:max-w-full">
           {blogs.map((blog, index) => (
             <div

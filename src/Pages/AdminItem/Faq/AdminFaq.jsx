@@ -9,7 +9,7 @@ const AdminFaq = () => {
   const { data: faqs = [], refetch } = useQuery({
     queryKey: ["faqs"],
     queryFn: async () => {
-      const res = await fetch("http://localhost:5000/admin/faq");
+      const res = await fetch("https://salenow-v2-backend.vercel.app/admin/faq");
       const data = await res.json();
       return data;
     },
@@ -18,7 +18,7 @@ const AdminFaq = () => {
   const ActiveHandle = (id) => {
     setLoading(true);
 
-    fetch(`http://localhost:5000/admin/faq/status/${id}`, {
+    fetch(`https://salenow-v2-backend.vercel.app/admin/faq/status/${id}`, {
       method: "PUT",
       headers: {
         "content-type": "application/json",
@@ -33,7 +33,7 @@ const AdminFaq = () => {
 
   const DativeHandle = (id) => {
 
-    fetch(`http://localhost:5000/admin/faq/unstatus/${id}`, {
+    fetch(`https://salenow-v2-backend.vercel.app/admin/faq/unstatus/${id}`, {
       method: "PUT",
       headers: {
         "content-type": "application/json",
@@ -47,7 +47,7 @@ const AdminFaq = () => {
   };
   const DeleteHandle = (id) => {
 
-    fetch(`http://localhost:5000/admin/faq/delete/${id}`, {
+    fetch(`https://salenow-v2-backend.vercel.app/admin/faq/delete/${id}`, {
       method: "Delete",
       headers: {
         "content-type": "application/json",

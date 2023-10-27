@@ -9,7 +9,7 @@ const UseShop = () => {
     const [isShopInfoLoading, setIsShopInfoLoading] = useState(true);
     const { user, loading } = useContext(AuthContext);
 
-   
+
     useEffect(() => {
 
         if (loading) {
@@ -17,7 +17,7 @@ const UseShop = () => {
         }
         else {
             if (user?.email) {
-                fetch(`http://localhost:5000/shop/checkshop/${user?.email}`)
+                fetch(`https://salenow-v2-backend.vercel.app/shop/checkshop/${user?.email}`)
                     .then((res) => res.json())
                     .then((data) => {
                         setShopInfo(data.seller);

@@ -10,7 +10,7 @@ const HomeNewsletter = () => {
 
     const fromNewsLetter = (event) => {
         event.preventDefault();
-        fetch(`http://localhost:5000/admin/subscriber/${email}`, {
+        fetch(`https://salenow-v2-backend.vercel.app/admin/subscriber/${email}`, {
             method: "POST",
             headers: {
                 "content-type": "application/json",

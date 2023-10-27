@@ -6,7 +6,7 @@ const AdminBlogs = () => {
   const { data: blogs = [], refetch } = useQuery({
     queryKey: ["blogs"],
     queryFn: async () => {
-      const res = await fetch("http://localhost:5000/admin/blogs");
+      const res = await fetch("https://salenow-v2-backend.vercel.app/admin/blogs");
       const data = await res.json();
       return data;
     },
@@ -14,7 +14,7 @@ const AdminBlogs = () => {
 
   const DeleteBlog = (id) => {
 
-    fetch(`http://localhost:5000/admin/blog`, {
+    fetch(`https://salenow-v2-backend.vercel.app/admin/blog`, {
       method: "DELETE",
       headers: {
         "content-type": "application/json",

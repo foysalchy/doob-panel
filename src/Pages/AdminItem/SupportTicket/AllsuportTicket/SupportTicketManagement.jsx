@@ -1,16 +1,186 @@
 import React from 'react';
 import { useState } from 'react';
 
-import { BsArrowRight } from 'react-icons/bs';
+import { BsArrowLeft, BsArrowRight } from 'react-icons/bs';
 import ManageDepartment from '../Department/ManageDepartment';
 import AddDepartment from '../Department/AddDepartment';
+import { useQuery } from '@tanstack/react-query';
+import { BiLeftArrow, BiRightArrow } from 'react-icons/bi';
+import ViewTicket from './ViewTicket';
+import Swal from 'sweetalert2';
 
 const SupportTicketManagement = () => {
 
     const [ModalOpen, setModalOpen] = useState(false)
     const [ManageDepartments, setManageDepartments] = useState(false)
 
-    console.log(ManageDepartments, ModalOpen);
+
+    const maxLength = 30;
+    function truncateSubject(subject) {
+        return subject.length > maxLength ? subject.substring(0, maxLength) + ' [marge]' : subject;
+    }
+    const [OpenSupport, setOpenSupport] = useState(false)
+
+    const formatDateTime = (date) => {
+        return new Date(date).toLocaleString('en-US', {
+            // weekday: 'short',
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric',
+            hour: 'numeric',
+            minute: 'numeric',
+            second: 'numeric',
+
+        });
+    };
+
+
+
+    const { data: tickets = [], refetch } = useQuery({
+        queryKey: ["contact"],
+        queryFn: async () => {
+            const res = await fetch(`https://salenow-v2-backend.vercel.app/admin/supportTicketRequest`);
+            const data = await res.json();
+            return data;
+        },
+    });
+
+
+    const [searchQuery, setSearchQuery] = useState("");
+
+    const handleSearch = (event) => {
+        setSearchQuery(event.target.value);
+    };
+
+
+    const [currentPage, setCurrentPage] = useState(1);
+
+
+    // Your filtering logic
+    const filteredData = tickets.filter((item) =>
+        item?.subject.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        item?.userInfo.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        item?.userInfo.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        item?._id.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        item?.time.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        String(`#${item.ticketId}`).toLowerCase().includes(String(`${searchQuery}`).toLowerCase())
+    );
+
+
+    const pageSize = 5;
+    const startIndex = (currentPage - 1) * pageSize;
+    const endIndex = startIndex + pageSize;
+    const totalPages = Math.ceil(filteredData.length / pageSize);
+
+    const currentData = filteredData.slice(startIndex, endIndex);
+
+    const handleChangePage = (newPage) => {
+
+        setCurrentPage(newPage);
+    };
+
+
+
+    const renderPageNumbers = () => {
+        const startPage = Math.max(1, currentPage - Math.floor(pageSize / 2));
+        const endPage = Math.min(totalPages, startPage + pageSize - 1);
+
+        return (
+            <React.Fragment>
+                {/* First Page */}
+                {startPage > 1 && (
+                    <li>
+                        <button
+                            className={`block h-8 w-8 rounded border border-gray-100 bg-white text-center leading-8 text-gray-900`}
+                            onClick={() => handleChangePage(1)}
+                        >
+                            1
+                        </button>
+                    </li>
+                )}
+
+                {/* Previous Page */}
+                {currentPage > 1 && (
+                    <li>
+                        <button
+                            className={`block h-8 w-8 rounded border border-gray-100 bg-white text-center leading-8 text-gray-900`}
+                            onClick={() => handleChangePage(currentPage - 1)}
+                        >
+                            {currentPage - 1}
+                        </button>
+                    </li>
+                )}
+
+                {/* Current Page */}
+                {Array.from({ length: endPage - startPage + 1 }).map((_, index) => {
+                    const pageNumber = startPage + index;
+                    return (
+                        <li key={pageNumber}>
+                            <button
+                                className={`block h-8 w-8 rounded border ${pageNumber === currentPage
+                                    ? 'border-blue-600 bg-blue-600 text-white'
+                                    : 'border-gray-100 bg-white text-center leading-8 text-gray-900'
+                                    }`}
+                                onClick={() => handleChangePage(pageNumber)}
+                            >
+                                {pageNumber}
+                            </button>
+                        </li>
+                    );
+                })}
+
+                {/* Next Page */}
+                {currentPage < totalPages && (
+                    <li>
+                        <button
+                            className={`block h-8 w-8 rounded border border-gray-100 bg-white text-center leading-8 text-gray-900`}
+                            onClick={() => handleChangePage(currentPage + 1)}
+                        >
+                            {currentPage + 1}
+                        </button>
+                    </li>
+                )}
+
+                {/* Last Page */}
+                {endPage < totalPages && (
+                    <li>
+                        <button
+                            className={`block h-8 w-8 rounded border border-gray-100 bg-white text-center leading-8 text-gray-900`}
+                            onClick={() => handleChangePage(totalPages)}
+                        >
+                            {totalPages}
+                        </button>
+                    </li>
+                )}
+            </React.Fragment>
+        );
+    };
+
+
+
+
+    const [viewTicket, setViewTicket] = useState(false)
+
+
+
+    const handleViewDetails = (ticketId) => {
+        setViewTicket(ticketId);
+    };
+
+
+
+    const noStatusTickets = tickets.filter(ticket => !ticket.status);
+    const noStatusLength = noStatusTickets.length;
+
+    const openTicket = tickets.filter(ticket => ticket.status === "Open")
+    const openLength = openTicket.length;
+
+    const closedTicket = tickets.filter((ticket) => ticket.status === "Closed");
+    const closedLength = closedTicket.length;
+
+
+
+
 
     return (
         <div className='bg-gray-200 w-full h-full p-4'>
@@ -26,8 +196,8 @@ const SupportTicketManagement = () => {
                                 </svg>
                             </div>
                             <div className="flex flex-col justify-center align-middle text-black">
-                                <p className="text-3xl font-semibold leadi">200</p>
-                                <p className="capitalize">Orders</p>
+                                <p className="text-3xl font-semibold leadi">{openLength}</p>
+                                <p className="capitalize">Open Ticket</p>
                             </div>
                         </div>
                         <div className="flex p-4 space-x-4 rounded-lg md:space-x-6 bg-gray-100 text-gray-100">
@@ -40,8 +210,8 @@ const SupportTicketManagement = () => {
                                 </svg>
                             </div>
                             <div className="flex flex-col justify-center align-middle text-black">
-                                <p className="text-3xl font-semibold leadi">7500</p>
-                                <p className="capitalize">New customers</p>
+                                <p className="text-3xl font-semibold leadi">{noStatusLength}</p>
+                                <p className="capitalize">New Ticket</p>
                             </div>
                         </div>
                         <div className="flex p-4 space-x-4 rounded-lg md:space-x-6 bg-gray-100 text-gray-100">
@@ -56,8 +226,8 @@ const SupportTicketManagement = () => {
                                 </svg>
                             </div>
                             <div className="flex flex-col justify-center align-middle text-black">
-                                <p className="text-3xl font-semibold leadi">172%</p>
-                                <p className="capitalize">Growth</p>
+                                <p className="text-3xl font-semibold leadi">{closedLength}</p>
+                                <p className="capitalize">Closed Ticket</p>
                             </div>
                         </div>
                         <div className="flex p-4 space-x-4 rounded-lg md:space-x-6 bg-gray-100 text-gray-100">
@@ -67,8 +237,8 @@ const SupportTicketManagement = () => {
                                 </svg>
                             </div>
                             <div className="flex flex-col justify-center align-middle text-black">
-                                <p className="text-3xl font-semibold leadi">17%</p>
-                                <p className="capitalize">Bounce rate</p>
+                                <p className="text-3xl font-semibold leadi">{tickets.length}</p>
+                                <p className="capitalize">All Tickets</p>
                             </div>
                         </div>
                     </div>
@@ -128,7 +298,7 @@ const SupportTicketManagement = () => {
 
 
             <>
-                {/* component */}
+
                 <div className=" py-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 pr-10 lg:px-8">
                     <div className="align-middle rounded-tl-lg rounded-tr-lg inline-block w-full py-4 overflow-hidden bg-white shadow-lg px-12">
                         <div className="flex justify-between">
@@ -160,6 +330,7 @@ const SupportTicketManagement = () => {
                                         </span>
                                     </div>
                                     <input
+                                        onChange={handleSearch}
                                         type="text"
                                         className="flex-shrink flex-grow flex-auto leading-normal tracking-wide w-px flex-1 border border-none border-l-0 rounded rounded-l-none px-3 relative focus:outline-none text-xxs lg:text-xs lg:text-base text-gray-500 font-thin"
                                         placeholder="Search"
@@ -179,11 +350,9 @@ const SupportTicketManagement = () => {
                                         Fullname
                                     </th>
                                     <th className="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-blue-500 tracking-wider">
-                                        Email
+                                        Subject
                                     </th>
-                                    <th className="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-blue-500 tracking-wider">
-                                        Phone
-                                    </th>
+
                                     <th className="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-blue-500 tracking-wider">
                                         Status
                                     </th>
@@ -194,199 +363,150 @@ const SupportTicketManagement = () => {
                                 </tr>
                             </thead>
                             <tbody className="bg-white">
-                                <tr>
-                                    <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-500">
-                                        <div className="flex items-center">
-                                            <div>
-                                                <div className="text-sm leading-5 text-gray-800">#1</div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-500">
-                                        <div className="text-sm leading-5 text-blue-900">
-                                            Damilare Anjorin
-                                        </div>
-                                    </td>
-                                    <td className="px-6 py-4 whitespace-no-wrap border-b text-blue-900 border-gray-500 text-sm leading-5">
-                                        damilareanjorin1@gmail.com
-                                    </td>
-                                    <td className="px-6 py-4 whitespace-no-wrap border-b text-blue-900 border-gray-500 text-sm leading-5">
-                                        +2348106420637
-                                    </td>
-                                    <td className="px-6 py-4 whitespace-no-wrap border-b text-blue-900 border-gray-500 text-sm leading-5">
-                                        <span className="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
-                                            <span
-                                                aria-hidden=""
-                                                className="absolute inset-0 bg-green-200 opacity-50 rounded-full"
-                                            />
-                                            <span className="relative text-xs">active</span>
-                                        </span>
-                                    </td>
-                                    <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-500 text-blue-900 text-sm leading-5">
-                                        September 12
-                                    </td>
-                                    <td className="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-500 text-sm leading-5">
-                                        <button className="px-5 py-2 border-blue-500 border text-blue-500 rounded transition duration-300 hover:bg-blue-700 hover:text-white focus:outline-none">
-                                            View Details
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-500">
-                                        <div className="flex items-center">
-                                            <div>
-                                                <div className="text-sm leading-5 text-gray-800">#1</div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-500">
-                                        <div className="text-sm leading-5 text-blue-900">
-                                            Damilare Anjorin
-                                        </div>
-                                    </td>
-                                    <td className="px-6 py-4 whitespace-no-wrap border-b text-blue-900 border-gray-500 text-sm leading-5">
-                                        damilareanjorin1@gmail.com
-                                    </td>
-                                    <td className="px-6 py-4 whitespace-no-wrap border-b text-blue-900 border-gray-500 text-sm leading-5">
-                                        +2348106420637
-                                    </td>
-                                    <td className="px-6 py-4 whitespace-no-wrap border-b text-blue-900 border-gray-500 text-sm leading-5">
-                                        <span className="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
-                                            <span
-                                                aria-hidden=""
-                                                className="absolute inset-0 bg-green-200 opacity-50 rounded-full"
-                                            />
-                                            <span className="relative text-xs">active</span>
-                                        </span>
-                                    </td>
-                                    <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-500 text-blue-900 text-sm leading-5">
-                                        September 12
-                                    </td>
-                                    <td className="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-500 text-sm leading-5">
-                                        <button className="px-5 py-2 border-blue-500 border text-blue-500 rounded transition duration-300 hover:bg-blue-700 hover:text-white focus:outline-none">
-                                            View Details
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-500">
-                                        <div className="flex items-center">
-                                            <div>
-                                                <div className="text-sm leading-5 text-gray-800">#1</div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-500">
-                                        <div className="text-sm leading-5 text-blue-900">
-                                            Damilare Anjorin
-                                        </div>
-                                    </td>
-                                    <td className="px-6 py-4 whitespace-no-wrap border-b text-blue-900 border-gray-500 text-sm leading-5">
-                                        damilareanjorin1@gmail.com
-                                    </td>
-                                    <td className="px-6 py-4 whitespace-no-wrap border-b text-blue-900 border-gray-500 text-sm leading-5">
-                                        +2348106420637
-                                    </td>
-                                    <td className="px-6 py-4 whitespace-no-wrap border-b text-blue-900 border-gray-500 text-sm leading-5">
-                                        <span className="relative inline-block px-3 py-1 font-semibold text-red-900 leading-tight">
-                                            <span
-                                                aria-hidden=""
-                                                className="absolute inset-0 bg-red-200 opacity-50 rounded-full"
-                                            />
-                                            <span className="relative text-xs">not active</span>
-                                        </span>
-                                    </td>
-                                    <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-500 text-blue-900 text-sm leading-5">
-                                        September 12
-                                    </td>
-                                    <td className="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-500 text-sm leading-5">
-                                        <button className="px-5 py-2 border-blue-500 border text-blue-500 rounded transition duration-300 hover:bg-blue-700 hover:text-white focus:outline-none">
-                                            View Details
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-500">
-                                        <div className="flex items-center">
-                                            <div>
-                                                <div className="text-sm leading-5 text-gray-800">#1</div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-500">
-                                        <div className="text-sm leading-5 text-blue-900">
-                                            Damilare Anjorin
-                                        </div>
-                                    </td>
-                                    <td className="px-6 py-4 whitespace-no-wrap border-b text-blue-900 border-gray-500 text-sm leading-5">
-                                        damilareanjorin1@gmail.com
-                                    </td>
-                                    <td className="px-6 py-4 whitespace-no-wrap border-b text-blue-900 border-gray-500 text-sm leading-5">
-                                        +2348106420637
-                                    </td>
-                                    <td className="px-6 py-4 whitespace-no-wrap border-b text-blue-900 border-gray-500 text-sm leading-5">
-                                        <span className="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
-                                            <span
-                                                aria-hidden=""
-                                                className="absolute inset-0 bg-green-200 opacity-50 rounded-full"
-                                            />
-                                            <span className="relative text-xs">active</span>
-                                        </span>
-                                    </td>
-                                    <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-500 text-blue-900 text-sm leading-5">
-                                        September 12
-                                    </td>
-                                    <td className="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-500 text-sm leading-5">
-                                        <button className="px-5 py-2 border-blue-500 border text-blue-500 rounded transition duration-300 hover:bg-blue-700 hover:text-white focus:outline-none">
-                                            View Details
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-500">
-                                        <div className="flex items-center">
-                                            <div>
-                                                <div className="text-sm leading-5 text-gray-800">#1</div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-500">
-                                        <div className="text-sm leading-5 text-blue-900">
-                                            Damilare Anjorin
-                                        </div>
-                                    </td>
-                                    <td className="px-6 py-4 whitespace-no-wrap border-b text-blue-900 border-gray-500 text-sm leading-5">
-                                        damilareanjorin1@gmail.com
-                                    </td>
-                                    <td className="px-6 py-4 whitespace-no-wrap border-b text-blue-900 border-gray-500 text-sm leading-5">
-                                        +2348106420637
-                                    </td>
-                                    <td className="px-6 py-4 whitespace-no-wrap border-b text-blue-900 border-gray-500 text-sm leading-5">
-                                        <span className="relative inline-block px-3 py-1 font-semibold text-orange-900 leading-tight">
-                                            <span
-                                                aria-hidden=""
-                                                className="absolute inset-0 bg-orange-200 opacity-50 rounded-full"
-                                            />
-                                            <span className="relative text-xs">disabled</span>
-                                        </span>
-                                    </td>
-                                    <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-500 text-blue-900 text-sm leading-5">
-                                        September 12
-                                    </td>
-                                    <td className="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-500 text-sm leading-5">
-                                        <button className="px-5 py-2 border-blue-500 border text-blue-500 rounded transition duration-300 hover:bg-blue-700 hover:text-white focus:outline-none">
-                                            View Details
-                                        </button>
-                                    </td>
-                                </tr>
+                                {
+                                    currentData.map((ticket,) => (
+                                        <tr key={ticket._id}>
+                                            <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-500">
+                                                <div className="flex items-center">
+                                                    <div>
+                                                        <div className="text-sm leading-5 text-gray-800">#{ticket?.ticketId}</div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-500">
+                                                <div className="text-sm leading-5 text-blue-900">
+                                                    {ticket.userInfo.name}
+                                                </div>
+                                            </td>
+                                            <td className="px-6 py-4 whitespace-no-wrap border-b text-blue-900 border-gray-500 text-sm leading-5">
+                                                {truncateSubject(ticket.subject)}
+                                            </td>
+
+                                            <td className="px-6 py-4 whitespace-no-wrap border-b text-blue-900 border-gray-500 text-sm leading-5">
+                                                {!ticket.status && <span className="relative inline-block px-3 py-1 font-semibold text-yellow-900 leading-tight">
+                                                    <span
+                                                        aria-hidden=""
+                                                        className="absolute inset-0 bg-yellow-200 opacity-50 rounded-full"
+                                                    />
+                                                    <span className="relative text-xs">New Ticket</span>
+                                                </span>
+                                                    || ticket.status === 'Open' &&
+                                                    <button onClick={() => fetch(`https://salenow-v2-backend.vercel.app/support-ticket/status/${ticket.ticketId}`, {
+                                                        method: 'PUT',
+                                                        headers: { 'Content-Type': 'application/json' },
+                                                        body: JSON.stringify({ status: 'Closed' }),
+                                                    }).then((res) => res.json()).then((data) => {
+                                                        Swal.fire("Status Closed", "", "success");
+                                                        refetch()
+                                                    })
+
+
+                                                    } className="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
+                                                        <span
+                                                            aria-hidden=""
+                                                            className="absolute inset-0 bg-green-200 opacity-50 rounded-full"
+                                                        />
+                                                        <span className="relative text-xs">Open</span>
+                                                    </button>
+                                                    || ticket.status === 'Closed' &&
+                                                    <button onClick={() => fetch(`https://salenow-v2-backend.vercel.app/support-ticket/status/${ticket.ticketId}`, {
+                                                        method: 'PUT',
+                                                        headers: { 'Content-Type': 'application/json' },
+                                                        body: JSON.stringify({ status: 'Open' }),
+                                                    }).then((res) => res.json()).then((data) => {
+                                                        Swal.fire("Status Open", "", "success");
+                                                        refetch()
+                                                    })} className="relative inline-block px-3 py-1 font-semibold text-red-900 leading-tight">
+                                                        <span
+                                                            aria-hidden=""
+                                                            className="absolute inset-0 bg-red-200 opacity-50 rounded-full"
+                                                        />
+                                                        <span className="relative text-xs">Closed</span>
+                                                    </button>
+                                                }
+                                            </td>
+                                            <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-500 text-blue-900 text-sm leading-5">
+                                                {formatDateTime(ticket.time)}
+                                            </td>
+                                            <td className="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-500 text-sm leading-5">
+                                                <button
+                                                    onClick={() => handleViewDetails(ticket._id)}
+                                                    className="px-5 py-2 border-blue-500 border text-blue-500 rounded transition duration-300 hover:bg-blue-700 hover:text-white focus:outline-none"
+                                                >
+                                                    View Details
+                                                </button>
+                                            </td>
+
+                                            {viewTicket === ticket._id && (
+                                                <td colSpan="6">
+                                                    <div>
+                                                        <ViewTicket
+                                                            refetch={refetch}
+                                                            viewTicket={true} // You might want to adjust this condition based on your requirements
+                                                            setViewTicket={setViewTicket}
+                                                            ticketDetails={ticket}
+                                                        />
+                                                    </div>
+                                                </td>
+                                            )}
+                                        </tr>
+                                    ))
+                                }
+
+
                             </tbody>
+
                         </table>
 
+
+
                     </div>
+
+                </div>
+                <div className='flex justify-center mt-4'>
+                    <ol className="flex justify-center gap-1 text-xs font-medium">
+                        <li>
+                            <button
+                                className="inline-flex h-8 w-8 items-center justify-center rounded border border-gray-100 bg-white text-gray-900 rtl:rotate-180"
+                                onClick={() => handleChangePage(Math.max(1, currentPage - 1))}
+                                disabled={currentPage === 1}
+                            >
+                                <span className="sr-only">Prev Page</span>
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    className="h-3 w-3"
+                                    viewBox="0 0 20 20"
+                                    fill="currentColor"
+                                >
+                                    <BiLeftArrow className='text-xl' />
+                                </svg>
+                            </button>
+                        </li>
+
+                        {renderPageNumbers()}
+
+                        <li>
+                            <button
+                                className="inline-flex h-8 w-8 items-center justify-center rounded border border-gray-100 disabled:cursor-not-allowed bg-white text-gray-900 rtl:rotate-180"
+                                onClick={() => handleChangePage(Math.min(totalPages, currentPage + 1))}
+                                disabled={currentPage === totalPages}
+                            >
+                                <span className="sr-only">Next Page</span>
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    className="h-3 w-3"
+                                    viewBox="0 0 20 20"
+                                    fill="currentColor"
+                                >
+                                    <BiRightArrow className='text-xl' />
+                                </svg>
+                            </button>
+                        </li>
+                    </ol>
                 </div>
             </>
 
-        </div>
+        </div >
     );
 };
 

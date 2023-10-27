@@ -51,7 +51,7 @@ const AddCatagorys = () => {
   };
 
   const PostCategory = (category, form) => {
-    fetch(`http://localhost:5000/admin/category`, {
+    fetch(`https://salenow-v2-backend.vercel.app/admin/category`, {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -188,7 +188,7 @@ const AddCatagorys = () => {
                 <input
                   required
                   id="dropzone-file"
-                  type="file"
+                  type="file" accept="application/pdf,image/webp,image/tiff,image/heic,image/gif,image/bmp,image/png,image/jpeg"
                   name="photo"
                   className="hidden"
                   onChange={handleFileChange}

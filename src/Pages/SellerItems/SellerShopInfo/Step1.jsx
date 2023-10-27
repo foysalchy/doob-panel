@@ -63,13 +63,13 @@ const Step1 = ({ nextStep, handleChange, values }) => {
 
         if (name.length > 2) {
             try {
-                const response = await fetch(`http://localhost:5000/shop/info/${name}`);
+                const response = await fetch(`https://salenow-v2-backend.vercel.app/shop/info/${name}`);
                 const data = await response.json();
 
                 if (data) {
                     setUniq(true)
                     setErrorName('')
-                   
+
                     values.shopId = name
 
                 } else {
@@ -243,7 +243,7 @@ const Step1 = ({ nextStep, handleChange, values }) => {
 
                         <div className="relative">
 
-                            <input type="file"
+                            <input type="file" accept="application/pdf,image/webp,image/tiff,image/heic,image/gif,image/bmp,image/png,image/jpeg"
                                 required
                                 onChange={imageUploading}
                                 className="block py-2 mt-2 text-sm text-gray-600  file:bg-gray-500 file:text-gray-700 file:text-sm file:px-4 file:py-1 file:border-none file:rounded  placeholder-gray-900  focus:border-blue-400  focus:ring focus:ring-blue-300 focus:ring-opacity-40   flex-grow  w-full h-12 px-4 mb-3 transition duration-200 bg-white border border-gray-900 rounded shadow-sm appearance-none md:mr-2 md:mb-0 placeholder:text-gray-700 focus:outline-none focus:shadow-outline" />

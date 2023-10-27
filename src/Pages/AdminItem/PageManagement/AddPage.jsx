@@ -17,7 +17,7 @@ const AddPage = () => {
       description,
     };
 
-    fetch(`http://localhost:5000/admin/addpage`, {
+    fetch(`https://salenow-v2-backend.vercel.app/admin/addpage`, {
       method: "POST",
       headers: {
         "content-type": "application/json",

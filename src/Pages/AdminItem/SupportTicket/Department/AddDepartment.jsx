@@ -10,7 +10,7 @@ const AddDepartment = ({ ModalOpen, setModalOpen }) => {
     const handleUpload = () => {
         setLoading(true)
 
-        fetch('http://localhost:5000/admin/department', {
+        fetch('https://salenow-v2-backend.vercel.app/admin/department', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

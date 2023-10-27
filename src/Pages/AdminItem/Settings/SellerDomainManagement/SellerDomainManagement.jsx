@@ -10,42 +10,10 @@ import Swal from 'sweetalert2';
 const SellerDomainManagement = () => {
 
 
-
-
-
-    const openModal = (id) => {
-        fetch(`http://localhost:5000/admin/seller/pass/${id}`)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
-                }
-                return response.json();
-            })
-            .then(data => {
-                Swal.fire({
-                    title: `${data.password}`,
-                    width: 600,
-                    padding: '3em',
-                    color: '#716add',
-                    background: '#fff url(/images/trees.png)',
-                    backdrop: `rgba(0,0,123,0.4)url("https://dai.ly/kdsm8Mf1dO7owozzml8")
-    left top
-    no-repeat
-  `
-                })
-            })
-            .catch(error => {
-                // Handle errors, e.g., show an error message
-                console.error('Fetch error:', error);
-            });
-    };
-
-
-
-    const { data: seller = [], refetch, isLoading } = useQuery({
-        queryKey: ["seller"],
+    const { data: shops = [], refetch, isLoading } = useQuery({
+        queryKey: ["shops"],
         queryFn: async () => {
-            const res = await fetch("http://localhost:5000/admin/seller");
+            const res = await fetch("https://salenow-v2-backend.vercel.app/shop");
             const data = await res.json();
             return data;
         },
@@ -57,42 +25,33 @@ const SellerDomainManagement = () => {
         setSearchQuery(event.target.value);
     };
 
-    const filteredData = seller.filter(
+    const filteredData = shops.filter(
         (item) =>
-            item?.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            item.shopId.toString().includes(searchQuery) || item?.shopName.toLowerCase().includes(searchQuery.toLowerCase()) ||
             item._id.toString().includes(searchQuery) || item?.domain?.toString().includes(searchQuery)
     );
 
 
-    const [editingSellerId, setEditingSellerId] = useState(null);
-    const [editedDomain, setEditedDomain] = useState('');
-    const [isValidUrl, setIsValidUrl] = useState(true);
+    const UpdateStatus = (id, status) => {
+        console.log(status);
+        fetch(`https://salenow-v2-backend.vercel.app/shop/domainstatus/${id}?status=${status}`,
+            {
+                method: "Put",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+            })
+            .then((res) => res.json())
+            .then((data) => {
+                alert('status update')
+                console.log(data);
+                refetch()
+            })
 
-    const handleEditClick = (sellerId, defaultDomain) => {
-        setEditingSellerId(sellerId);
-        setEditedDomain(defaultDomain);
-    };
-
-    const handleSaveClick = (sellerId) => {
-       
-        const domainRegex = /^[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-        const isValid = domainRegex.test(editedDomain);
-
-        if (isValid) {
-
-            setIsValidUrl(true);
-        } else {
-            setIsValidUrl(false);
-            return; 
-        }
-
-        setEditingSellerId(null);
-        setEditedDomain('');
-    };
-    const handleCross = (sellerId) => {
-        setEditingSellerId(null);
-        setEditedDomain('');
     }
+
+
+
 
     return (
         <div className="">
@@ -140,44 +99,44 @@ const SellerDomainManagement = () => {
                 </ol>
             </nav>
 
+            {!isLoading &&
+                <div className="relative w-3/5 my-6">
+                    <input
+                        type="text"
+                        id="Search"
+                        value={searchQuery}
+                        onChange={handleSearch}
+                        placeholder="Search for..."
+                        className="w-full px-5 rounded-md border border-gray-900 py-2.5 pe-10 shadow-sm sm:text-sm"
+                    />
 
-            <div className="relative w-3/5 my-6">
-                <input
-                    type="text"
-                    id="Search"
-                    value={searchQuery}
-                    onChange={handleSearch}
-                    placeholder="Search for..."
-                    className="w-full px-5 rounded-md border border-gray-900 py-2.5 pe-10 shadow-sm sm:text-sm"
-                />
+                    <span className="absolute inset-y-0 end-0 grid w-10 place-content-center">
+                        <button type="button" className="text-gray-600 hover:text-gray-700">
+                            <span className="sr-only">Search</span>
 
-                <span className="absolute inset-y-0 end-0 grid w-10 place-content-center">
-                    <button type="button" className="text-gray-600 hover:text-gray-700">
-                        <span className="sr-only">Search</span>
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                strokeWidth="1.5"
+                                stroke="currentColor"
+                                className="h-4 w-4 text-black"
+                            >
+                                <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
+                                />
+                            </svg>
+                        </button>
+                    </span>
+                </div>}
 
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            strokeWidth="1.5"
-                            stroke="currentColor"
-                            className="h-4 w-4 text-black"
-                        >
-                            <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
-                            />
-                        </svg>
-                    </button>
-                </span>
-            </div>
-
-            <section className=" px-4 mx-auto">
+            {!isLoading && <section className=" px-4 mx-auto">
                 <div className="flex items-center gap-x-3">
-                    <h2 className="text-lg font-medium text-gray-800 ">All seller</h2>
+                    <h2 className="text-lg font-medium text-gray-800 ">All Shops</h2>
                     <span className="px-3 py-1 text-xs  bg-blue-100 rounded-full d text-blue-400">
-                        {seller?.length}
+                        {shops?.length}
                     </span>
                 </div>
                 <div className="flex flex-col mt-6">
@@ -221,19 +180,14 @@ const SellerDomainManagement = () => {
                                             >
                                                 Email address
                                             </th>
-                                            <th
-                                                scope="col"
-                                                className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
-                                            >
-                                                Password
-                                            </th>
+
                                             <th scope="col" className="relative py-3.5 px-4">
                                                 <span className="sr-only">Edit</span>
                                             </th>
                                         </tr>
                                     </thead>
                                     <tbody className="bg-white divide-y  divide-gray-200 ">
-                                        {filteredData.map((seller) => (
+                                        {filteredData.map((shop) => (
                                             <tr>
                                                 <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                                                     <div className="inline-flex items-center gap-x-3">
@@ -243,88 +197,56 @@ const SellerDomainManagement = () => {
                                                             className="text-blue-500 border-gray-300 rounded dark:bg-gray-900 dark:ring-offset-gray-900 dark:border-gray-700"
                                                         />
                                                         <div className="flex items-center gap-x-2">
+                                                            <img className='w-8 h-8 object-cover' src={shop?.logo} alt="" />
                                                             <div>
                                                                 <h2 className="font-medium text-gray-800  ">
-                                                                    {seller?.name}
+                                                                    {shop?.shopName}
                                                                 </h2>
                                                                 <p className="text-sm font-normal text-gray-600 dark:text-gray-400">
-                                                                    {seller?.userId}
+                                                                    {shop?.shopId}
                                                                 </p>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </td>
-                                                <td className="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                                                    <div className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-emerald-100/60 dark:bg-gray-800">
-                                                        <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-                                                        <h2 className="text-sm font-normal text-emerald-500">
-                                                            Active
-                                                        </h2>
-                                                    </div>
-                                                </td>
-                                                <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
-                                                    {seller?.domain && <div>
-                                                        {editingSellerId === seller.userId ? (
-                                                            <div className='flex gap-2 items-center'>
-                                                                <input
-                                                                    type="text"
-                                                                    value={editedDomain}
-                                                                    onChange={(e) => {
-                                                                        setEditedDomain(e.target.value);
-                                                                        setIsValidUrl(true); // Reset validation on input change
-                                                                    }}
-                                                                    className={`border px-2 py-1 ${isValidUrl ? '' : 'border-red-500'}`}
-                                                                />
-                                                                <div className="flex items-center gap-x-2">
-                                                                    <button
-                                                                        onClick={() => handleSaveClick(seller.userId)}
-                                                                        className="transition-colors duration-200 text-green-500 hover:text-green-700 focus:outline-none text-xl"
-                                                                    >
-                                                                        <GiSaveArrow />
+                                                {
+                                                    <td className="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
+                                                        {shop?.domain && <div >
+                                                            {
+                                                                shop.domain_status === 'true' ?
+                                                                    <button onClick={() => UpdateStatus(shop.shopId, false)} className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-emerald-100/60 dark:bg-gray-800">
+                                                                        <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                                                                        <h2 className="text-sm font-normal text-emerald-500">
+                                                                            Active
+                                                                        </h2>
                                                                     </button>
-                                                                    <button
-                                                                        onClick={() => handleCross(seller.userId)}
-                                                                        className="transition-colors duration-200 text-red-500 hover:text-red-700 focus:outline-none text-xl"
-                                                                    >
-                                                                        <RxCrossCircled />
+                                                                    :
+                                                                    <button onClick={() => UpdateStatus(shop.shopId, true)} className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-emerald-100/60 dark:bg-gray-800">
+                                                                        <span className="h-1.5 w-1.5 rounded-full bg-red-500" />
+                                                                        <h2 className="text-sm font-normal text-red-500">
+                                                                            Not  Active
+                                                                        </h2>
                                                                     </button>
-                                                                </div>
-                                                            </div>
-                                                        ) : (
-                                                            <div className='flex gap-2 items-center'>
-                                                                {seller?.domain}
-                                                                <div className="flex items-center gap-x-2">
-                                                                    <button
-                                                                        onClick={() => handleEditClick(seller.userId, seller.domain)}
-                                                                        className="transition-colors duration-200 hover:text-yellow-500 text-yellow-700 focus:outline-none"
-                                                                    >
-                                                                        <BiEditAlt className='text-xl' />
-                                                                    </button>
-                                                                </div>
-                                                            </div>
-                                                        )}
-                                                        {editingSellerId === seller.userId && <div>
-
-                                                            {!isValidUrl && (
-                                                                <p className="text-red-500 text-xs mt-1">Please enter a valid domain.</p>
-                                                            )}
+                                                            }
                                                         </div>}
+                                                    </td>
+                                                }
 
+                                                <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
+                                                    {shop?.domain &&
 
-                                                    </div>}
+                                                        <div className='flex gap-2 items-center'>
+                                                            {shop?.domain}
+
+                                                        </div>
+                                                    }
+
                                                 </td>
                                                 <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
-                                                    {seller?.email}
+                                                    {shop?.shopEmail}
+                                                    <p>{shop.shopNumber}</p>
                                                 </td>
-                                                <td className="px-4 py-4 text-sm whitespace-nowrap">
-                                                    <div className="flex items-center gap-x-2">
-                                                        <button title={seller.userId} onClick={() => openModal(seller.userId)} className="px-3 py-1 text-xs text-indigo-500 rounded-full dark:bg-gray-800 bg-indigo-100/60">
 
-                                                            ******
-                                                        </button>
-                                                    </div>
-
-                                                </td>
                                                 <td className="px-4 py-4 text-sm whitespace-nowrap">
 
                                                 </td>
@@ -337,8 +259,8 @@ const SellerDomainManagement = () => {
                     </div>
                 </div>
             </section>
-
-        </div>
+            }
+        </div >
     );
 };
 
