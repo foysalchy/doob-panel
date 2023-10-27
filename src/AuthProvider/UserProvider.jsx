@@ -1,32 +1,16 @@
 import React, { createContext, useEffect, useState } from 'react';
-import { createUserWithEmailAndPassword, getAuth, onAuthStateChanged, sendPasswordResetEmail, signInWithEmailAndPassword, signOut, updateProfile } from "firebase/auth";
-
 import Swal from "sweetalert2";
-import app from '../Firebase/firebase';
 import Cookies from 'js-cookie';
-
 
 export const AuthContext = createContext();
 
 const UserProvider = ({ children }) => {
-
-    const auth = getAuth(app);
     const [user, setUser] = useState('');
-    const [shopInfo, setShopInfo] = useState('')
+    const [shopInfo, setShopInfo] = useState('');
     const [loading, setLoading] = useState(true);
 
-    const RegistrationInEmail = (email, password,) => {
-        setLoading(true);
-        return createUserWithEmailAndPassword(auth, email, password);
-
-    };
-
-    const loginWithEamil = (email, password) => {
-        setLoading(true);
-        return signInWithEmailAndPassword(auth, email, password);
-    };
-
     const logOut = () => {
+        setLoading(true);
         const cookies = Cookies.get();
         for (const cookieName in cookies) {
             const decodedValue = decodeURIComponent(cookies[cookieName]);
@@ -34,23 +18,10 @@ const UserProvider = ({ children }) => {
             Cookies.remove(cookieName, { path: '/seller' });
             Cookies.remove(cookieName, { path: '/admin' });
         }
+
         setUser('');
         setShopInfo('');
-
-    };
-
-
-
-    const forgetPass = (email) => {
-        if (email === true) {
-            sendPasswordResetEmail(auth, email)
-                .then(() => {
-                    Swal.fire("We are sent a mail", "Please Check Your Mail", "success");
-                })
-                .catch((error) => { });
-        } else {
-            Swal.fire("Sorry Sir", "Please input your email", "info");
-        }
+        setLoading(false);
     };
 
     const setCookie = (name, value) => {
@@ -69,68 +40,48 @@ const UserProvider = ({ children }) => {
     };
 
     const checkUserCookie = () => {
-        setLoading(false)
         const userCookie = getCookie('SaleNowUser');
-
         if (userCookie) {
             const userData = JSON.parse(userCookie);
-
-            setUser(userData)
-            setLoading(false)
-
-        } else {
-            setLoading(true)
+            setUser(userData);
         }
+        setLoading(false);
     };
-
 
     const checkShopCookie = () => {
-        setLoading(true)
         const userCookie = getCookie('SellerShop');
-
-
         if (userCookie) {
             const userData = JSON.parse(userCookie);
-
-            setShopInfo(userData)
-            setLoading(false)
-
-        } else {
-
-            setLoading(false)
+            setShopInfo(userData);
         }
+        setLoading(false);
     };
-
 
     useEffect(() => {
         const unsubscribe = () => {
-            setLoading(false);
-            checkUserCookie()
-            checkShopCookie()
+            checkUserCookie();
+            checkShopCookie();
         };
-        return () => {
-            setLoading(true);
-            unsubscribe();
-        };
-    }, []);
 
+        unsubscribe();
+
+        return () => {
+            // Optional cleanup if needed
+        };
+    }, []); // Empty dependency array ensures that this effect runs only once
 
     const authInfo = {
         user,
         setUser,
-        RegistrationInEmail,
         logOut,
-        forgetPass,
-        loginWithEamil,
         setCookie,
         loading,
         setLoading,
         shopInfo,
-        setShopInfo
+        setShopInfo,
     };
-    return (
-        <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>
-    );
+
+    return <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>;
 };
 
 export default UserProvider;

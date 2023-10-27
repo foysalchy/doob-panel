@@ -80,7 +80,7 @@ const Modal = ({ modalOpen, setModalOpen }) => {
                                 <button
                                     className={`block w-full p-3 text-base font-medium text-center text-white transition border rounded-lg border-primary bg-green-900 hover:bg-opacity-90`}
                                 >
-                                    <a href={`/#`}> View Details </a>
+                                    <Link to={'/sign-in'}> Accept Cookie</Link>
                                 </button>
                             </div>
                         </div>

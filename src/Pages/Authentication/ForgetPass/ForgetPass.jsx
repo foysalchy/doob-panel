@@ -11,7 +11,7 @@ const ForgetPass = () => {
     const form = event.target;
     const email = form.email.value;
 
-    fetch("http://localhost:5000/reset-pass", {
+    fetch("https://salenow-v2-backend.vercel.app/reset-pass", {
       method: "post",
       headers: {
         "content-type": "application/json",

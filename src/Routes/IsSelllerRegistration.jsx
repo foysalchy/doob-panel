@@ -13,7 +13,7 @@ const IsSelllerRegistration = ({ children }) => {
 
     const location = useLocation()
 
-    if (isShopInfoLoading || loading) {
+    if (isShopInfoLoading ) {
         return (
             <>
                 <h1 className='text-2xl h-full flex justify-center items-center'> <Lottie animationData={groovyWalkAnimation} loop={true} /></h1>

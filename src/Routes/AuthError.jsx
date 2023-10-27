@@ -7,11 +7,13 @@ import groovyWalkAnimation from './Loading.json';
 
 const AuthError = ({ children }) => {
     const { user, loading } = useContext(AuthContext)
+    console.log("🚀 ~ file: AuthError.jsx:10 ~ AuthError ~ user, loading:", !user, loading)
+
     const location = useLocation()
     if (loading) {
         return (
             <>
-                <h1 className='text-2xl h-full flex justify-center items-center'> <Lottie animationData={groovyWalkAnimation} loop={true} /></h1>
+                <h1 className='text-2xl h-full flex justify-center items-center'> <Lottie animationData={groovyWalkAnimation} loop={true} /> Check User</h1>
             </>
         )
     }

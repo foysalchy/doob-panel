@@ -9,7 +9,7 @@ const ManageDepartment = ({ ManageDepartment, setManageDepartment }) => {
     const { data: departments = [], refetch, isLoading } = useQuery({
         queryKey: ["departments"],
         queryFn: async () => {
-            const res = await fetch("http://localhost:5000/admin/departments");
+            const res = await fetch("https://salenow-v2-backend.vercel.app/admin/departments");
             const data = await res.json();
             return data;
         },
@@ -18,7 +18,7 @@ const ManageDepartment = ({ ManageDepartment, setManageDepartment }) => {
 
     const DeleteHandle = (id) => {
 
-        fetch(`http://localhost:5000/admin/delete_department/${id}`, {
+        fetch(`https://salenow-v2-backend.vercel.app/admin/delete_department/${id}`, {
             method: "DELETE"
         }).then(() => {
             refetch()
@@ -110,7 +110,7 @@ const ManageDepartment = ({ ManageDepartment, setManageDepartment }) => {
                             </button>
                         </div>
 
-                        <table className='scroll-m-96  py-4'>
+                        <table className='overflow-scroll py-4'>
                             <thead className='text-center '>
                                 <tr>
                                     <th className="w-1/6 bg-gray-900 border-l border-transparent py-4 px-3 text-lg font-semibold text-white  lg:px-4"> Name of Department </th>

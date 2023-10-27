@@ -56,7 +56,7 @@ const AddService = () => {
 
     const postService = (service, form) => {
 
-        fetch(`http://localhost:5000/admin/addservice`, {
+        fetch(`https://salenow-v2-backend.vercel.app/admin/addservice`, {
             method: "POST",
             headers: {
                 "content-type": "application/json",
@@ -204,7 +204,7 @@ const AddService = () => {
                                 <input
                                     required
                                     id="dropzone-file"
-                                    type="file"
+                                    type="file" accept="application/pdf,image/webp,image/tiff,image/heic,image/gif,image/bmp,image/png,image/jpeg"
                                     name="photo"
                                     className="hidden"
                                     onChange={handleFileChange}

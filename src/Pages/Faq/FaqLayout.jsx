@@ -7,7 +7,7 @@ const FaqLayout = () => {
   const [faqs, setFaq] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:5000/admin/faq")
+    fetch("https://salenow-v2-backend.vercel.app/admin/faq")
       .then((response) => response.json())
       .then((data) => {
         setFaq(data);

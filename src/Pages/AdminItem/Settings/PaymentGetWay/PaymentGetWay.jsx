@@ -13,7 +13,7 @@ const PaymentGetWay = () => {
     const { data: getaway = [], refetch, isLoading } = useQuery({
         queryKey: ["getaway"],
         queryFn: async () => {
-            const res = await fetch("http://localhost:5000/admin/getaway");
+            const res = await fetch("https://salenow-v2-backend.vercel.app/admin/getaway");
             const data = await res.json();
             return data;
         },
@@ -53,7 +53,7 @@ const PaymentGetWay = () => {
 
 
 
-        fetch(`http://localhost:5000/admin/getaway`, {
+        fetch(`https://salenow-v2-backend.vercel.app/admin/getaway`, {
             method: "POST",
             headers: {
                 "content-type": "application/json",
@@ -75,15 +75,25 @@ const PaymentGetWay = () => {
     };
 
     const [selectedMedia, setSelectedMedia] = useState('Choose your getaway');
+    const [disabled, setDisable] = useState(true)
 
     const handleGetaway = (event) => {
         const selectedValue = event.target.value;
-        setSelectedMedia(selectedValue);
+        console.log(selectedValue);
+        if (selectedValue == 'Choose your getaway') {
+            setDisable(true)
+        }
+        else {
+            setDisable(false);
+            setSelectedMedia(selectedValue);
+        }
     };
+
+    console.log(disabled);
 
 
     const deleteHandel = (id) => {
-        fetch(`http://localhost:5000/admin/getaway/${id}`, {
+        fetch(`https://salenow-v2-backend.vercel.app/admin/getaway/${id}`, {
             method: "Delete",
             headers: {
                 "content-type": "application/json",
@@ -392,7 +402,7 @@ const PaymentGetWay = () => {
                                         </button>
 
                                         :
-                                        <button type='submit'
+                                        <button disabled={disabled} type='submit'
                                             className="group relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none mt-4 "
 
                                         >

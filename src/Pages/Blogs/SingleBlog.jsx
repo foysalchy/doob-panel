@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 const SingleBlog = () => {
   const [blogList, setBlogList] = useState([]);
   useEffect(() => {
-    fetch("http://localhost:5000/admin/blogs")
+    fetch("https://salenow-v2-backend.vercel.app/admin/blogs")
       .then((res) => res.json())
       .then((data) => setBlogList(data));
   }, []);

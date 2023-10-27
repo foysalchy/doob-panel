@@ -46,7 +46,7 @@ const AddPrice = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    fetch(`http://localhost:5000/admin/pricing`, {
+    fetch(`https://salenow-v2-backend.vercel.app/admin/pricing`, {
       method: "POST",
       headers: {
         "content-type": "application/json",
