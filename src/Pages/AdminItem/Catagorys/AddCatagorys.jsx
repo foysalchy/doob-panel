@@ -51,7 +51,7 @@ const AddCatagorys = () => {
   };
 
   const PostCategory = (category, form) => {
-    fetch(`https://salenow-v2-backend.vercel.app/admin/category`, {
+    fetch(`http://localhost:5000/admin/category`, {
       method: "POST",
       headers: {
         "content-type": "application/json",

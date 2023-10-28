@@ -9,11 +9,12 @@ const ManageService = () => {
     const { data: services = [], refetch, isLoading } = useQuery({
         queryKey: ["services"],
         queryFn: async () => {
-            const res = await fetch("https://salenow-v2-backend.vercel.app/admin/services");
+            const res = await fetch("http://localhost:5000/admin/services");
             const data = await res.json();
             return data;
         },
     });
+
 
 
     const [searchQuery, setSearchQuery] = useState("");
@@ -32,7 +33,7 @@ const ManageService = () => {
 
     const ActiveHandle = (id) => {
 
-        fetch(`https://salenow-v2-backend.vercel.app/admin/service/status/${id}`, {
+        fetch(`http://localhost:5000/admin/service/status/${id}`, {
             method: "PUT",
             headers: {
                 "content-type": "application/json",
@@ -40,14 +41,14 @@ const ManageService = () => {
         })
             .then((res) => res.json())
             .then((data) => {
-                Swal.fire("success", "Your Service Publish Successfully", "success");
                 refetch();
+                Swal.fire("success", "Your Service Publish Successfully", "success");
             });
     };
 
     const DativeHandle = (id) => {
 
-        fetch(`https://salenow-v2-backend.vercel.app/admin/service/unstatus/${id}`, {
+        fetch(`http://localhost:5000/admin/service/unstatus/${id}`, {
             method: "PUT",
             headers: {
                 "content-type": "application/json",
@@ -55,15 +56,15 @@ const ManageService = () => {
         })
             .then((res) => res.json())
             .then((data) => {
-                Swal.fire("success", "Your Service Unpublish Successfully", "success");
                 refetch();
+                Swal.fire("success", "Your Service Unpublish Successfully", "success");
             });
     };
 
 
     const DeleteHandle = (id) => {
 
-        fetch(`https://salenow-v2-backend.vercel.app/admin/service/delete/${id}`, {
+        fetch(`http://localhost:5000/admin/service/delete/${id}`, {
             method: "Delete",
             headers: {
                 "content-type": "application/json",
@@ -71,57 +72,18 @@ const ManageService = () => {
         })
             .then((res) => res.json())
             .then((data) => {
-                Swal.fire("success", "Your Service Delete Successfully", "success");
                 refetch();
+                Swal.fire("success", "Your Service Delete Successfully", "success");
             });
     };
 
 
+
+    
+
     return (
         <div className="">
-            <nav
-                aria-label="breadcrumb"
-                className="w-full my-20 p-4 mb-4 rounded dark:bg-gray-800 dark:text-gray-100"
-            >
-                <ol className="flex h-8 space-x-2">
-                    <li className="flex items-center">
-                        <Link
-                            rel="noopener noreferrer"
-                            to={"/admin/dashboard"}
-                            title="Back to homepage"
-                            className="hover:underline"
-                        >
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 20 20"
-                                fill="currentColor"
-                                className="w-5 h-5 pr-1 dark:text-gray-400"
-                            >
-                                <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path>
-                            </svg>
-                        </Link>
-                    </li>
-                    <li className="flex items-center space-x-2">
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 32 32"
-                            aria-hidden="true"
-                            fill="currentColor"
-                            className="w-2 h-2 mt-1 transform rotate-90 fill-current dark:text-gray-600"
-                        >
-                            <path d="M32 30.031h-32l16-28.061z"></path>
-                        </svg>
-                        <Link
-                            rel="noopener noreferrer"
-                            to={"/admin/services"}
-                            className="flex items-center px-1 capitalize hover:underline"
-                        >
-                            {" "}
-                            Service Management
-                        </Link>
-                    </li>
-                </ol>
-            </nav>
+
 
             <Link
                 className="group relative inline-flex mb-10 items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
@@ -181,7 +143,7 @@ const ManageService = () => {
                 </span>
             </div>
 
-            <section className=" px-4 mx-auto">
+            <section className=" px-4 ">
                 <div className="flex items-center gap-x-3">
                     <h2 className="text-lg font-medium text-gray-800 ">All Services</h2>
                     <span className="px-3 py-1 text-xs  bg-blue-100 rounded-full d text-blue-400">
@@ -189,7 +151,7 @@ const ManageService = () => {
                     </span>
                 </div>
                 {filteredData.length ?
-                    <div className="flex flex-col mt-6">
+                    <div className="flex flex-col mt-6 w-full">
                         <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                             <div className="inline-block  py-2 ml-4">
                                 <div className="overflow-hidden border border-gray-200 dark:border-gray-700 md:rounded-lg">
@@ -336,6 +298,10 @@ const ManageService = () => {
                     </h1>
                 }
             </section>
+
+            <div>
+                Domain Url : 
+            </div>
         </div>
     );
 };

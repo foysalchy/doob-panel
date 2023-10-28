@@ -6,7 +6,7 @@ import { AuthContext } from '../../../AuthProvider/UserProvider';
 import Swal from 'sweetalert2';
 import { RxCross2 } from 'react-icons/rx';
 import { BiCopy } from 'react-icons/bi';
-import { isError } from '@tanstack/react-query';
+import { isError, useQuery } from '@tanstack/react-query';
 
 const AddDomain = () => {
 
@@ -107,12 +107,34 @@ const AddDomain = () => {
     }
 
 
+    const { data: domainVideo, refetch, isLoading } = useQuery({
+        queryKey: ["category"],
+        queryFn: async () => {
+            const res = await fetch("http://localhost:5000/admin/domain-video");
+            const data = await res.json();
+            return data;
+        },
+    });
+
+
 
     return (
         <div className=' font-poppins'>
             <div className="my-10">
-                <img className='' src="https://i.ibb.co/QdY21y7/Untitled.png" alt="" />
-                <h1 className="text-2xl font-bold text-center">
+                {
+                    !isLoading && domainVideo &&
+
+
+                    <div
+                        className="flex items-center justify-center "
+                        dangerouslySetInnerHTML={{ __html: domainVideo.DomainUrl }}
+                    />
+
+
+
+
+                }
+                <h1 className="text-2xl font-bold mt-10 text-center">
                     Upload Your Domain
                 </h1>
                 <div class="text-center my-4">
