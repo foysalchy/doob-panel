@@ -29,7 +29,7 @@ const SignInSeller = () => {
       password,
     };
     setLoading(true);
-    fetch("https://salenow-v2-backend.vercel.app/signin", {
+    fetch("http://localhost:5000/auth/sign-in", {
       method: "post",
       headers: {
         "content-type": "application/json",
@@ -51,7 +51,7 @@ const SignInSeller = () => {
             "success"
           );
 
-          
+
 
           if (data.user.role === 'seller') {
             fetch(`https://salenow-v2-backend.vercel.app/shop/checkshop/${data?.user?.email}`)

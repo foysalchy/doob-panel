@@ -1,3 +1,4 @@
+import { useQuery } from '@tanstack/react-query';
 import JoditEditor from 'jodit-react';
 import React from 'react';
 import { useState } from 'react';
@@ -10,6 +11,51 @@ const AddService = () => {
     const [previewUrl, setPreviewUrl] = useState(null);
     const [fileName, setFileName] = useState("");
     const [loading, setLoading] = useState(false);
+
+
+
+    const { data: categories = [], refetch } = useQuery({
+        queryKey: ["category"],
+        queryFn: async () => {
+            const res = await fetch("http://localhost:5000/admin/category");
+            const data = await res.json();
+            return data;
+        },
+    });
+
+
+
+    const [upload, setUpload] = useState('')
+    const [uplodOk, setUploadOk] = useState(false)
+
+    const imageUploading = (e) => {
+        e.preventDefault();
+        const selectedFile = e.target.files[0];
+        const formData = new FormData();
+        formData.append("image", selectedFile);
+        const url = `https://api.imgbb.com/1/upload?key=2b8c7f515b1f628299764a2ce4c4cb0e`;
+        fetch(url, {
+            method: "POST",
+            body: formData,
+        })
+            .then((res) => res.json())
+            .then((imageData) => {
+
+                if (imageData.data.url) {
+                    setUpload(imageData.data.url)
+                    setUploadOk(true)
+                }
+                else {
+                    setUpload('')
+                }
+
+            });
+    }
+
+
+
+
+
 
     const handleFileChange = (event) => {
         const file = event.target.files[0];
@@ -33,7 +79,11 @@ const AddService = () => {
         const price = form.price.value;
         const image = form.photo.files[0];
         const message = form.message.value;
-
+        const category = form.category.value;
+        const subscriptionPeriod = form.subscriptionPeriod.value;
+        const MetaImage = upload
+        const MetaTag = form.MetaTag.value
+        const MetaDescription = form.MetaDescription.value
         const formData = new FormData();
         formData.append("image", image);
         const url = `https://api.imgbb.com/1/upload?key=2b8c7f515b1f628299764a2ce4c4cb0e`;
@@ -49,6 +99,11 @@ const AddService = () => {
                     price,
                     message,
                     img: image,
+                    category,
+                    subscriptionPeriod,
+                    MetaTag,
+                    MetaDescription,
+                    MetaImage
                 };
                 postService(service, form);
             });
@@ -56,7 +111,7 @@ const AddService = () => {
 
     const postService = (service, form) => {
 
-        fetch(`https://salenow-v2-backend.vercel.app/admin/addservice`, {
+        fetch(`http://localhost:5000/admin/addservice`, {
             method: "POST",
             headers: {
                 "content-type": "application/json",
@@ -71,71 +126,26 @@ const AddService = () => {
                 form.reset();
                 setPreviewUrl("");
                 setFileName("");
+                setUpload('')
             });
     };
 
+
+
+
+
+
+
+
+
+
+
+
+
+
     return (
-        <div className="px-4 py-8 sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-10">
-            <nav
-                aria-label="breadcrumb"
-                className="w-full rounded p-4 mb-4 bg-gray-800 text-gray-100"
-            >
-                <ol className="flex h-8 space-x-2">
-                    <li className="flex items-center">
-                        <Link
-                            rel="noopener noreferrer"
-                            to={'/admin'}
-                            title="Back to homepage"
-                            className="hover:underline"
-                        >
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 20 20"
-                                fill="currentColor"
-                                className="w-5 h-5 pr-1 text-gray-400"
-                            >
-                                <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path>
-                            </svg>
-                        </Link>
-                    </li>
-                    <li className="flex items-center space-x-2">
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 32 32"
-                            aria-hidden="true"
-                            fill="currentColor"
-                            className="w-2 h-2 mt-1 transform rotate-90 fill-current text-gray-600"
-                        >
-                            <path d="M32 30.031h-32l16-28.061z"></path>
-                        </svg>
-                        <Link
-                            rel="noopener noreferrer"
-                            to="/admin/servicemanagement"
-                            className="flex items-center px-1 capitalize hover:underline"
-                        >
-                            services
-                        </Link>
-                    </li>
-                    <li className="flex items-center space-x-2">
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 32 32"
-                            aria-hidden="true"
-                            fill="currentColor"
-                            className="w-2 h-2 mt-1 transform rotate-90 fill-current text-gray-600"
-                        >
-                            <path d="M32 30.031h-32l16-28.061z"></path>
-                        </svg>
-                        <Link
-                            rel="noopener noreferrer"
-                            to="/admin/services/new-service"
-                            className="flex items-center px-1 capitalize hover:underline"
-                        >
-                            New service
-                        </Link>
-                    </li>
-                </ol>
-            </nav>
+        <div>
+        
             <div className=" mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8">
                 <h1 className="text-2xl font-bold text-center">
                     Publish a service for you and next
@@ -168,6 +178,37 @@ const AddService = () => {
                                 name="price"
                             />
                         </div>
+                        <div className="relative mt-1.5">
+                            <select
+                                type="text"
+                                id="Category"
+                                name="category"
+                                className="w-full mt-1 rounded-lg border border-gray-900 px-3 py-2 text-sm"
+                                placeholder="Select a category"
+                            >
+                                <option selected disabled value="Select Service Category">Select Service Category</option>
+                                {categories?.map((category, i) => (
+                                    <option value={category?.title}>{category?.title}</option>
+                                ))}
+                            </select>
+                        </div>
+
+                        <div className="relative mt-1.5">
+                            <select
+                                type="text"
+                                list="subscriptionPeriod"
+                                id="subscriptionPeriod"
+                                name="subscriptionPeriod"
+                                className="w-full mt-1 rounded-lg border border-gray-900 px-3 py-2 text-sm"
+                                placeholder="Select Subscription Period"
+                            >
+                                <option disabled selected className="" value="">Select Service Parched Time</option>
+                                <option value="One Time">One Time</option>
+                                <option value="Monthly">Monthly</option>
+                                <option value="Yearly">Yearly</option>
+                            </select>
+                        </div>
+
                         <div>
                             <label
                                 htmlFor="dropzone-file"
@@ -217,6 +258,51 @@ const AddService = () => {
                                 <JoditEditor name="message" id="message"></JoditEditor>
                             </div>
                         </div>
+
+
+                        <div>
+                            <label className="sr-only text-black" htmlFor="title">
+                                Meta Tag
+                            </label>
+                            <input
+                                required
+                                className="w-full rounded-lg border border-gray-900 p-3 text-sm"
+                                placeholder="Meta Tag"
+                                type="text"
+                                id="MetaTag"
+                                name="MetaTag"
+                            />
+                        </div>
+
+                        <div>
+                            <label className="sr-only text-black" htmlFor="title">
+                                Meta Description
+                            </label>
+                            <textarea
+                                required
+                                className="w-full rounded-lg border border-gray-900 p-3 text-sm"
+                                placeholder="Meta Description"
+                                type="text"
+                                id="MetaDescription"
+                                name="MetaDescription"
+                            />
+                        </div>
+                        <div>
+                            <label className="sr-only text-black" htmlFor="title">
+                                Meta Image'
+                            </label>
+                            <input
+                                onChange={imageUploading}
+                                required
+                                className="w-full rounded-lg border border-gray-900 p-3 text-sm"
+                                placeholder="Meta Description"
+                                type="file"
+                                id="MetaImage'"
+                                name="MetaImage'"
+                            />
+                            {uplodOk && 'done'}
+                        </div>
+
                         <div className="mt-4">
                             {
                                 loading ?

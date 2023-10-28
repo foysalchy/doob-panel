@@ -69,6 +69,9 @@ import AddSupportTicket from "../Pages/SellerItems/SupportTicket/AddSupportTicke
 import UpdateShopProfile from "../Pages/SellerItems/UpdateShopProfile/UpdateShopProfile";
 import AddDomain from "../Pages/SellerItems/DomainManagement/AddDomain";
 import ShippingManagement from "../Pages/AdminItem/Settings/ShipingIntigration/ShippingManagement";
+import SingleService from "../Pages/Service/SingleService";
+import SiteContent from "../Pages/AdminItem/Settings/SiteContent/SiteContent";
+import SellerSittingsPage from "../Pages/SellerItems/Sittings/SellerSittingsPage";
 
 
 
@@ -125,6 +128,12 @@ const Router = createBrowserRouter([
         element: <MainService />,
       },
       {
+        path: "/service/:id",
+        element: <SingleService />,
+        loader: ({ params }) =>
+          fetch(`http://localhost:5000/admin/service/${params.id}`)
+      },
+      {
         path: "/contact",
         element: <Contract />,
       },
@@ -136,7 +145,7 @@ const Router = createBrowserRouter([
         path: "/blogs/:id",
         element: <SingleBlog />,
         loader: ({ params }) =>
-          fetch(`https://salenow-v2-backend.vercel.app/admin/blogs/${params.id}`),
+          fetch(`http://localhost:5000/admin/all-blogs/${params.id}`),
       },
       {
         path: "/faq",
@@ -223,6 +232,10 @@ const Router = createBrowserRouter([
       {
         path: "domain-management",
         element: <AddDomain />
+      },
+      {
+        path: "settings",
+        element: <SellerSittingsPage />
       },
 
     ],
@@ -313,7 +326,7 @@ const Router = createBrowserRouter([
         ),
       },
       {
-        path: "blogs/new-blog",
+        path: "blog/new-blog",
         element: <AddBlog />
       },
 
@@ -338,7 +351,7 @@ const Router = createBrowserRouter([
         element: <AdminSingleBlog />,
         loader: async ({ params }) => {
           const id = params.id;
-          return fetch(`https://salenow-v2-backend.vercel.app/admin/blogs/${id}`);
+          return fetch(`http://localhost:5000/admin/all-blogs/${id}`);
         },
       },
       {
@@ -404,6 +417,10 @@ const Router = createBrowserRouter([
       {
         path: "support-ticket",
         element: <SupportTicketManagement />
+      },
+      {
+        path: "settings/site-content",
+        element: <SiteContent />
       },
     ],
   }

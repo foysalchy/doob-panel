@@ -6,7 +6,7 @@ import { Link, useLoaderData } from "react-router-dom";
 const AdminSingleBlog = () => {
   const [blogList, setBlogList] = useState([]);
   useEffect(() => {
-    fetch("https://salenow-v2-backend.vercel.app/admin/blogs")
+    fetch("http://localhost:5000/admin/all-blogs")
       .then((res) => res.json())
       .then((data) => setBlogList(data));
   }, []);
@@ -19,7 +19,7 @@ const AdminSingleBlog = () => {
   };
 
   return (
-    <div className="">
+    <div>
       <div className="px-1 md:py-28 py-20 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-20 lg:px-8 md:w-[80%] w-[95%] grid md:grid-cols-3 gap-3 ">
         <div className="md:col-span-2">
           <img

@@ -4,11 +4,12 @@ import { useEffect } from "react";
 import { FaRegCalendarAlt } from "react-icons/fa";
 import { useLoaderData } from "react-router";
 import { Link } from "react-router-dom";
+import MetaHelmet from "../../Helmate/Helmate";
 
 const SingleBlog = () => {
   const [blogList, setBlogList] = useState([]);
   useEffect(() => {
-    fetch("https://salenow-v2-backend.vercel.app/admin/blogs")
+    fetch("http://localhost:5000/admin/all-blogs")
       .then((res) => res.json())
       .then((data) => setBlogList(data));
   }, []);
@@ -30,6 +31,7 @@ const SingleBlog = () => {
 
   return (
     <div className=" ">
+      <MetaHelmet title={blogInfo?.MetaTag} description={blogInfo?.MetaDescription} image={blogInfo?.MetaImage} />
       <div className="relative">
         <img
           src={blogInfo?.img}

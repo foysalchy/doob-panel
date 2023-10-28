@@ -10,6 +10,37 @@ const AddBlog = () => {
   const [fileName, setFileName] = useState("");
   const [loading, setLoading] = useState(false);
 
+
+  const [upload, setUpload] = useState('')
+  const [uplodOk, setUploadOk] = useState(false)
+
+  const imageUploading = (e) => {
+    e.preventDefault();
+    const selectedFile = e.target.files[0];
+    const formData = new FormData();
+    formData.append("image", selectedFile);
+    const url = `https://api.imgbb.com/1/upload?key=2b8c7f515b1f628299764a2ce4c4cb0e`;
+    fetch(url, {
+      method: "POST",
+      body: formData,
+    })
+      .then((res) => res.json())
+      .then((imageData) => {
+
+        if (imageData.data.url) {
+          setUpload(imageData.data.url)
+          setUploadOk(true)
+        }
+        else {
+          setUpload('')
+        }
+
+      });
+  }
+
+
+
+
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     setSelectedFile(file);
@@ -24,6 +55,9 @@ const AddBlog = () => {
     }
   };
 
+
+
+
   const dataSubmit = (event) => {
     setLoading(true);
     event.preventDefault();
@@ -31,6 +65,9 @@ const AddBlog = () => {
     const title = form.title.value;
     const image = form.photo.files[0];
     const message = form.message.value;
+    const MetaImage = upload
+    const MetaTag = form.MetaTag.value
+    const MetaDescription = form.MetaDescription.value
 
     const formData = new FormData();
     formData.append("image", image);
@@ -46,15 +83,19 @@ const AddBlog = () => {
           title,
           message,
           img: image,
-          date: new Date()
+          date: new Date(),
+          MetaImage,
+          MetaDescription,
+          MetaTag
         };
+        console.log(blog);
         postBlog(blog, form);
       });
   };
 
   const postBlog = (blog, form) => {
 
-    fetch(`https://salenow-v2-backend.vercel.app/admin/newblog`, {
+    fetch(`http://localhost:5000/admin/new-blog`, {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -64,7 +105,7 @@ const AddBlog = () => {
       .then((res) => res.json())
       .then((data) => {
         setLoading(false);
-        Swal.fire("success", "Your Blog Publish Successfully", "success");
+        Swal.fire("Your Blog Publish Successfully", "", "success");
 
         form.reset();
         setPreviewUrl("");
@@ -73,67 +114,8 @@ const AddBlog = () => {
   };
 
   return (
-    <div className="px-4 w-full py-8 sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-10">
-      <nav
-        aria-label="breadcrumb"
-        className="w-full rounded p-4 mb-4 dark:bg-gray-800 dark:text-gray-100"
-      >
-        <ol className="flex h-8 space-x-2">
-          <li className="flex items-center">
-            <a
-              rel="noopener noreferrer"
-              href="#"
-              title="Back to homepage"
-              className="hover:underline"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-                className="w-5 h-5 pr-1 dark:text-gray-400"
-              >
-                <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path>
-              </svg>
-            </a>
-          </li>
-          <li className="flex items-center space-x-2">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 32 32"
-              aria-hidden="true"
-              fill="currentColor"
-              className="w-2 h-2 mt-1 transform rotate-90 fill-current dark:text-gray-600"
-            >
-              <path d="M32 30.031h-32l16-28.061z"></path>
-            </svg>
-            <Link
-              rel="noopener noreferrer"
-              to="/admin/blog"
-              className="flex items-center px-1 capitalize hover:underline"
-            >
-              Blogs
-            </Link>
-          </li>
-          <li className="flex items-center space-x-2">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 32 32"
-              aria-hidden="true"
-              fill="currentColor"
-              className="w-2 h-2 mt-1 transform rotate-90 fill-current dark:text-gray-600"
-            >
-              <path d="M32 30.031h-32l16-28.061z"></path>
-            </svg>
-            <Link
-              rel="noopener noreferrer"
-              to="/admin/blogs/new-blog"
-              className="flex items-center px-1 capitalize hover:underline"
-            >
-              New Blog
-            </Link>
-          </li>
-        </ol>
-      </nav>
+    <div >
+
       <div className=" mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8">
         <h1 className="text-2xl font-bold text-center">
           Publish a blog for you and next
@@ -202,6 +184,51 @@ const AddBlog = () => {
                 <JoditEditor name="message" id="message"></JoditEditor>
               </div>
             </div>
+
+            <div>
+              <label className="sr-only text-black" htmlFor="title">
+                Meta Tag
+              </label>
+              <input
+                required
+                className="w-full rounded-lg border border-gray-900 p-3 text-sm"
+                placeholder="Meta Tag"
+                type="text"
+                id="MetaTag"
+                name="MetaTag"
+              />
+            </div>
+
+            <div>
+              <label className="sr-only text-black" htmlFor="title">
+                Meta Description
+              </label>
+              <textarea
+                required
+                className="w-full rounded-lg border border-gray-900 p-3 text-sm"
+                placeholder="Meta Description"
+                type="text"
+                id="MetaDescription"
+                name="MetaDescription"
+              />
+            </div>
+            <div>
+              <label className="sr-only text-black" htmlFor="title">
+                Meta Image'
+              </label>
+              <input
+                onChange={imageUploading}
+                required
+                className="w-full rounded-lg border border-gray-900 p-3 text-sm"
+                placeholder="Meta Description"
+                type="file"
+                id="MetaImage'"
+                name="MetaImage'"
+              />
+              {uplodOk && 'done'}
+            </div>
+
+
             <div className="mt-4">
               {
                 loading ?

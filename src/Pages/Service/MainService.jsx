@@ -1,84 +1,90 @@
 import { useQuery } from '@tanstack/react-query';
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const MainService = () => {
 
     const { data: services = [], refetch, isLoading } = useQuery({
         queryKey: ["services"],
         queryFn: async () => {
-            const res = await fetch("https://salenow-v2-backend.vercel.app/admin/services");
+            const res = await fetch("http://localhost:5000/admin/services");
             const data = await res.json();
             return data;
         },
     });
+
+    const blnkData = [{}, {}, {}]
     return (
-        <div className='px-4 py-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-20'>
-            <div className='grid grid-cols-3 gap-4'>
+
+        <section>
+            <div className="max-w-screen-xl px-4 py-8 mx-auto sm:px-6 sm:py-12 lg:px-8">
+                <header className="text-center">
+                    <h2 className="text-xl font-bold text-gray-900 sm:text-3xl">
+                        Our Service
+                    </h2>
+
+                    <p className="max-w-md mx-auto mt-4 text-gray-500">
+                        Empower Your Sales with Sale Now: Your Ultimate SAS-Based Web App, Providing Sellers a Robust Platform and Exceptional Services for Unmatched Success!
+                    </p>
+                </header>
                 {
-                    services?.map(service => (
-                        <div>
+                    !isLoading ? <div>
+                        <ul className="grid grid-cols-1 gap-4 mt-8 lg:grid-cols-3">
 
                             {
-                                service?.status &&
-                                <a href="#" className="group relative block overflow-hidden">
-                                    <button
-                                        className="absolute end-4 top-4 z-10 rounded-full bg-white p-1.5 text-gray-900 transition hover:text-gray-900/75"
-                                    >
-                                        <span className="sr-only">Wishlist</span>
+                                services?.map(service => (
+                                    <div className={!service.status && 'hidden'}>
 
-                                        <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            fill="none"
-                                            viewBox="0 0 24 24"
-                                            strokeWidth="1.5"
-                                            stroke="currentColor"
-                                            className="h-4 w-4"
-                                        >
-                                            <path
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                                d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
-                                            />
-                                        </svg>
-                                    </button>
+                                        {
+                                            service?.status &&
+                                            <li >
+                                                <a href="#" className="relative block group   ">
+                                                    <img
+                                                        src={service?.img}
+                                                        alt=""
+                                                        className="object-cover border border-black rounded-md w-full transition duration-500 aspect-square  "
+                                                    />
 
-                                    <img
-                                        src={service?.img}
-                                        alt=""
-                                        className="h-64 w-full object-cover transition duration-500 group-hover:scale-105 sm:h-72"
-                                    />
+                                                    <div
+                                                        className="absolute  group-hover:bg-gray-900 group-hover:bg-opacity-90 bg-gray-900 bg-opacity-50  inset-0 flex flex-col items-start justify-end p-6"
+                                                    >
+                                                        <h3 className="text-xl font-semibold text-white ">{service?.title}</h3>
 
-                                    <div className="relative border border-gray-500 bg-white p-6">
-                                        <span
-                                            className="whitespace-nowrap bg-black px-3 py-1.5 text-white text-xs font-medium"
-                                        >
-                                            New
-                                        </span>
+                                                        <Link to={`/service/${service._id}`}
+                                                            className="mt-1.5 inline-block bg-black px-5 py-3 text-xs font-medium uppercase tracking-wide text-white"
+                                                        >
+                                                            Show Details
+                                                        </Link>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                        }
+                                    </div>)
+                                )}
 
-                                        <h3 className="mt-4 text-lg font-medium text-gray-900">{service?.title}</h3>
-
-                                        <p className="mt-1.5 text-sm text-gray-700">${service.price}</p>
-
-                                        <form className="mt-4">
-                                            <button
-                                                className="block w-full rounded bg-black text-white p-4 text-sm font-medium transition hover:scale-105"
-                                            >
-                                                Add to Cart
-                                            </button>
-                                        </form>
+                        </ul>
+                    </div> :
+                        <div className='grid grid-cols-1 gap-4 mt-8 lg:grid-cols-3'>
+                            {blnkData.map((data, i) => (
+                                <div key={i} className="flex flex-col m-8 rounded shadow-md w-full animate-pulse h-96">
+                                    <div className="h-48 rounded-t dark:bg-gray-500"></div>
+                                    <div className="flex-1 px-4 py-8 space-y-4 sm:p-8 dark:bg-gray-900">
+                                        <div className="w-full h-6 rounded dark:bg-gray-500"></div>
+                                        <div className="w-full h-6 rounded dark:bg-gray-500"></div>
+                                        <div className="w-3/4 h-6 rounded dark:bg-gray-500"></div>
                                     </div>
-                                </a>
-                            }
+                                </div>
+                            ))}
                         </div>
 
-                    ))
                 }
 
-
             </div>
+        </section>
 
-        </div>
+
     );
 };
 
 export default MainService;
+
