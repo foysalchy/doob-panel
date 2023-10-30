@@ -18,7 +18,7 @@ const SupperAdminRouter = ({ children }) => {
             <>
                 <>
                     <h1 className='text-2xl h-full flex justify-center items-center'>
-                        <Lottie animationData={groovyWalkAnimation} loop={true} /> Supper Admin Check</h1>
+                        <Lottie animationData={groovyWalkAnimation} loop={true} /> </h1>
                 </>
             </>
         )

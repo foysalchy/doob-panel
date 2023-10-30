@@ -32,7 +32,9 @@ const PriceMangement = () => {
                     Add Pricing
                 </span>
             </Link>
-            <AllPrice />
+            <div className='w-full'>
+                <AllPrice />
+            </div>
         </div>
     );
 };

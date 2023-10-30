@@ -9,7 +9,7 @@ import MetaHelmet from "../../Helmate/Helmate";
 const SingleBlog = () => {
   const [blogList, setBlogList] = useState([]);
   useEffect(() => {
-    fetch("http://localhost:5000/admin/all-blogs")
+    fetch("https://salenow-v2-backend.vercel.app/admin/all-blogs")
       .then((res) => res.json())
       .then((data) => setBlogList(data));
   }, []);

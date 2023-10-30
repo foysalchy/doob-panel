@@ -4,7 +4,7 @@ import { RxCross2 } from 'react-icons/rx';
 import Swal from 'sweetalert2';
 
 
-const EditBlog = ({ OpenModal, setOpenModal, BlogInfo, refetch }) => {
+const EditSellerBlog = ({ OpenModal, setOpenModal, BlogInfo, refetch }) => {
     const [previewUrl, setPreviewUrl] = useState(BlogInfo.img);
 
     const handleFileChange = async (event) => {
@@ -37,7 +37,7 @@ const EditBlog = ({ OpenModal, setOpenModal, BlogInfo, refetch }) => {
         const data = { img, title, message, MetaTag, MetaDescription };
 
         try {
-            const response = await fetch(`https://salenow-v2-backend.vercel.app/admin/blog/update-blog/${BlogInfo._id}`, {
+            const response = await fetch(`https://salenow-v2-backend.vercel.app/seller/blog/update-blog/${BlogInfo._id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -101,4 +101,4 @@ const EditBlog = ({ OpenModal, setOpenModal, BlogInfo, refetch }) => {
     );
 };
 
-export default EditBlog;
+export default EditSellerBlog;

@@ -6,6 +6,8 @@ import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { AuthContext } from '../../../AuthProvider/UserProvider';
 import { FaArrowRightLong } from 'react-icons/fa6';
+import { BiEdit } from 'react-icons/bi';
+import SellerUpdatePage from './SellerUpdatePage';
 
 const SellerPageManagement = () => {
     const [loading, setLoading] = useState(false);
@@ -64,6 +66,14 @@ const SellerPageManagement = () => {
                 Swal.fire("Your Page Delete Successfully", "", "success");
                 refetch();
             });
+    };
+
+
+
+    const [OpenModal, setOpenModal] = useState(false)
+
+    const handleViewDetails = (ticketId) => {
+        setOpenModal(ticketId);
     };
 
     return (
@@ -176,8 +186,15 @@ const SellerPageManagement = () => {
                                                                 />
                                                             </svg>
                                                         </button>
+
+                                                        <button onClick={() => handleViewDetails(faq?._id)}>
+                                                            <BiEdit className=" transition-colors text-xl duration-200 text-yellow-500 hover:text-yellow-700 focus:outline-none" />
+                                                        </button>
                                                     </div>
                                                 </td>
+                                                {OpenModal === faq?._id && <div className="h-0 w-0">
+                                                    <SellerUpdatePage OpenModal={OpenModal} refetch={refetch} setOpenModal={setOpenModal} FAQInfo={faq} />
+                                                </div>}
                                             </tr>
                                         ))}
                                     </tbody>

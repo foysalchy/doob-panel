@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import EditService from './EditService';
 
 const ManageService = () => {
 
@@ -9,7 +10,7 @@ const ManageService = () => {
     const { data: services = [], refetch, isLoading } = useQuery({
         queryKey: ["services"],
         queryFn: async () => {
-            const res = await fetch("http://localhost:5000/admin/services");
+            const res = await fetch("https://salenow-v2-backend.vercel.app/admin/services");
             const data = await res.json();
             return data;
         },
@@ -33,7 +34,7 @@ const ManageService = () => {
 
     const ActiveHandle = (id) => {
 
-        fetch(`http://localhost:5000/admin/service/status/${id}`, {
+        fetch(`https://salenow-v2-backend.vercel.app/admin/service/status/${id}`, {
             method: "PUT",
             headers: {
                 "content-type": "application/json",
@@ -48,7 +49,7 @@ const ManageService = () => {
 
     const DativeHandle = (id) => {
 
-        fetch(`http://localhost:5000/admin/service/unstatus/${id}`, {
+        fetch(`https://salenow-v2-backend.vercel.app/admin/service/unstatus/${id}`, {
             method: "PUT",
             headers: {
                 "content-type": "application/json",
@@ -64,7 +65,7 @@ const ManageService = () => {
 
     const DeleteHandle = (id) => {
 
-        fetch(`http://localhost:5000/admin/service/delete/${id}`, {
+        fetch(`https://salenow-v2-backend.vercel.app/admin/service/delete/${id}`, {
             method: "Delete",
             headers: {
                 "content-type": "application/json",
@@ -79,7 +80,15 @@ const ManageService = () => {
 
 
 
-    
+
+    const [OpenModal, setOpenModal] = useState(false)
+
+    const handleViewDetails = (ticketId) => {
+        setOpenModal(ticketId);
+    };
+
+
+
 
     return (
         <div className="">
@@ -163,10 +172,7 @@ const ManageService = () => {
                                                     className="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
                                                 >
                                                     <div className="flex items-center gap-x-3">
-                                                        <input
-                                                            type="checkbox"
-                                                            className="text-blue-500 border-gray-300 rounded dark:bg-gray-900 dark:ring-offset-gray-900 dark:border-gray-700"
-                                                        />
+
                                                         <span>Name</span>
                                                     </div>
                                                 </th>
@@ -205,10 +211,7 @@ const ManageService = () => {
                                                 <tr>
                                                     <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                                                         <div className="inline-flex items-center gap-x-3">
-                                                            <input
-                                                                type="checkbox"
-                                                                className="text-blue-500 border-gray-300 rounded dark:bg-gray-900 dark:ring-offset-gray-900 dark:border-gray-700"
-                                                            />
+
                                                             <div className="flex items-center gap-x-2">
                                                                 <img
                                                                     className="object-cover w-10 h-10 rounded"
@@ -266,7 +269,7 @@ const ManageService = () => {
                                                                     />
                                                                 </svg>
                                                             </button>
-                                                            <button className=" transition-colors duration-200 hover:text-yellow-500  text-yellow-700 focus:outline-none">
+                                                            <button onClick={() => handleViewDetails(service._id)} className=" transition-colors duration-200 hover:text-yellow-500  text-yellow-700 focus:outline-none">
                                                                 <svg
                                                                     xmlns="http://www.w3.org/2000/svg"
                                                                     fill="none"
@@ -284,6 +287,10 @@ const ManageService = () => {
                                                             </button>
                                                         </div>
                                                     </td>
+
+                                                    {OpenModal === service._id && <div className="h-0 w-0">
+                                                        <EditService OpenModal={OpenModal} refetch={refetch} setOpenModal={setOpenModal} BlogInfo={service} />
+                                                    </div>}
                                                 </tr>
                                             ))}
                                         </tbody>
@@ -299,9 +306,7 @@ const ManageService = () => {
                 }
             </section>
 
-            <div>
-                Domain Url : 
-            </div>
+
         </div>
     );
 };

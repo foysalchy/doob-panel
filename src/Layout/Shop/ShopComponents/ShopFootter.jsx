@@ -24,9 +24,9 @@ const ShopFooter = () => {
     return (
         <div className="bg-gray-900">
             <div className="px-4 pt-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8">
-                <div className="grid row-gap-10 mb-8 lg:grid-cols-6">
+                <div >
 
-                    <div className="md:max-w-md lg:col-span-2">
+                    <div className="md:max-w-md w-full">
                         <span className="text-base font-medium tracking-wide text-gray-300">
                             Subscribe for updates
                         </span>
@@ -35,11 +35,11 @@ const ShopFooter = () => {
                                 placeholder="Email"
                                 required
                                 type="text"
-                                className="flex-grow w-full h-12 px-4 mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-deep-purple-accent-400 focus:outline-none focus:shadow-outline"
+                                className="flex-grow w-full h-12 px-4 mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-purple-400 focus:outline-none focus:shadow-outline"
                             />
                             <button
                                 type="submit"
-                                className="inline-flex items-center justify-center h-12 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-deep-purple-accent-400 hover:bg-deep-purple-accent-700 focus:shadow-outline focus:outline-none"
+                                className="inline-flex items-center justify-center h-12 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-purple-400 hover:bg-purple-700 focus:shadow-outline focus:outline-none"
                             >
                                 Subscribe
                             </button>
@@ -49,13 +49,28 @@ const ShopFooter = () => {
                             spare ribs salami.
                         </p>
                     </div>
+                    <div className='flex gap-10 my-10 :justify-center'>     <div className='text-white'>
+                        <Link to={`/shop/${shopId}/blog`}> Blog</Link>
+                    </div>
+                        {pages?.map((page, i) => (
+                            <div>
+                                {page?.status && (
+                                    <Link
+                                        to={`/shop/${shopId}/pages/${page._id}`}
+                                        className="text-sm text-white transition-colors duration-300 hover:text-purple-400"
+                                    >
+                                        {page?.title}
+                                    </Link>
+                                )}
+                            </div>
+                        ))}</div>
                 </div>
                 <div className="flex items-center pb-20 justify-between pt-5 border-t border-gray-800 sm:flex-row">
 
                     <div className="flex items-center mt-4 space-x-4 sm:mt-0">
                         <a
                             href="/"
-                            className="text-gray-500 transition-colors duration-300 hover:text-teal-accent-400"
+                            className="text-gray-500 transition-colors duration-300 hover:text-teal-400"
                         >
                             <svg viewBox="0 0 24 24" fill="currentColor" className="h-5">
                                 <path d="M24,4.6c-0.9,0.4-1.8,0.7-2.8,0.8c1-0.6,1.8-1.6,2.2-2.7c-1,0.6-2,1-3.1,1.2c-0.9-1-2.2-1.6-3.6-1.6 c-2.7,0-4.9,2.2-4.9,4.9c0,0.4,0,0.8,0.1,1.1C7.7,8.1,4.1,6.1,1.7,3.1C1.2,3.9,1,4.7,1,5.6c0,1.7,0.9,3.2,2.2,4.1 C2.4,9.7,1.6,9.5,1,9.1c0,0,0,0,0,0.1c0,2.4,1.7,4.4,3.9,4.8c-0.4,0.1-0.8,0.2-1.3,0.2c-0.3,0-0.6,0-0.9-0.1c0.6,2,2.4,3.4,4.6,3.4 c-1.7,1.3-3.8,2.1-6.1,2.1c-0.4,0-0.8,0-1.2-0.1c2.2,1.4,4.8,2.2,7.5,2.2c9.1,0,14-7.5,14-14c0-0.2,0-0.4,0-0.6 C22.5,6.4,23.3,5.5,24,4.6z" />
@@ -63,7 +78,7 @@ const ShopFooter = () => {
                         </a>
                         <a
                             href="/"
-                            className="text-gray-500 transition-colors duration-300 hover:text-teal-accent-400"
+                            className="text-gray-500 transition-colors duration-300 hover:text-teal-400"
                         >
                             <svg viewBox="0 0 30 30" fill="currentColor" className="h-6">
                                 <circle cx="15" cy="15" r="4" />
@@ -72,7 +87,7 @@ const ShopFooter = () => {
                         </a>
                         <a
                             href="/"
-                            className="text-gray-500 transition-colors duration-300 hover:text-teal-accent-400"
+                            className="text-gray-500 transition-colors duration-300 hover:text-teal-400"
                         >
                             <svg viewBox="0 0 24 24" fill="currentColor" className="h-5">
                                 <path d="M22,0H2C0.895,0,0,0.895,0,2v20c0,1.105,0.895,2,2,2h11v-9h-3v-4h3V8.413c0-3.1,1.893-4.788,4.659-4.788 c1.325,0,2.463,0.099,2.795,0.143v3.24l-1.918,0.001c-1.504,0-1.795,0.715-1.795,1.763V11h4.44l-1,4h-3.44v9H22c1.105,0,2-0.895,2-2 V2C24,0.895,23.105,0,22,0z" />
@@ -81,18 +96,7 @@ const ShopFooter = () => {
                     </div>
                     <div>
                         <ul className="flex mb-3 space-y-2 lg:mb-0 sm:space-y-0 sm:space-x-5 sm:flex-row">
-                            {pages.map((page, i) => (
-                                <li>
-                                    {page?.status && (
-                                        <Link
-                                            to={`/shop/${shopId}/pages/${page._id}`}
-                                            className="text-sm text-gray-600 transition-colors duration-300 hover:text-deep-purple-accent-400"
-                                        >
-                                            {page?.title}
-                                        </Link>
-                                    )}
-                                </li>
-                            ))}
+
                         </ul>
                     </div>
                 </div>

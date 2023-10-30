@@ -17,7 +17,7 @@ const SupportTicketManagement = () => {
 
     const maxLength = 30;
     function truncateSubject(subject) {
-        return subject.length > maxLength ? subject.substring(0, maxLength) + ' [marge]' : subject;
+        return subject?.length > maxLength ? subject?.substring(0, maxLength) + ' [marge]' : subject;
     }
     const [OpenSupport, setOpenSupport] = useState(false)
 
@@ -36,7 +36,7 @@ const SupportTicketManagement = () => {
 
 
 
-    const { data: tickets = [], refetch } = useQuery({
+    const { data: tickets = [], refetch, isLoading } = useQuery({
         queryKey: ["contact"],
         queryFn: async () => {
             const res = await fetch(`https://salenow-v2-backend.vercel.app/admin/supportTicketRequest`);
@@ -57,12 +57,13 @@ const SupportTicketManagement = () => {
 
 
     // Your filtering logic
-    const filteredData = tickets.filter((item) =>
-        item?.subject.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        item?.userInfo.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        item?.userInfo.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    const filteredData = tickets?.filter((item) =>
+
         item?._id.toLowerCase().includes(searchQuery.toLowerCase()) ||
         item?.time.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        item?.subject?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        item?.userInfo?.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        item?.userInfo?.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
         String(`#${item.ticketId}`).toLowerCase().includes(String(`${searchQuery}`).toLowerCase())
     );
 
@@ -70,7 +71,7 @@ const SupportTicketManagement = () => {
     const pageSize = 5;
     const startIndex = (currentPage - 1) * pageSize;
     const endIndex = startIndex + pageSize;
-    const totalPages = Math.ceil(filteredData.length / pageSize);
+    const totalPages = Math.ceil(filteredData?.length / pageSize);
 
     const currentData = filteredData.slice(startIndex, endIndex);
 
@@ -169,13 +170,13 @@ const SupportTicketManagement = () => {
 
 
 
-    const noStatusTickets = tickets.filter(ticket => !ticket.status);
-    const noStatusLength = noStatusTickets.length;
+    const noStatusTickets = tickets?.filter(ticket => !ticket.status);
+    const noStatusLength = noStatusTickets?.length;
 
-    const openTicket = tickets.filter(ticket => ticket.status === "Open")
-    const openLength = openTicket.length;
+    const openTicket = tickets?.filter(ticket => ticket.status === "Open")
+    const openLength = openTicket?.length;
 
-    const closedTicket = tickets.filter((ticket) => ticket.status === "Closed");
+    const closedTicket = tickets?.filter((ticket) => ticket.status === "Closed");
     const closedLength = closedTicket.length;
 
 
@@ -329,17 +330,17 @@ const SupportTicketManagement = () => {
                                             </svg>
                                         </span>
                                     </div>
-                                    <input
+                                    {!isLoading && <input
                                         onChange={handleSearch}
                                         type="text"
                                         className="flex-shrink flex-grow flex-auto leading-normal tracking-wide w-px flex-1 border border-none border-l-0 rounded rounded-l-none px-3 relative focus:outline-none text-xxs lg:text-xs lg:text-base text-gray-500 font-thin"
                                         placeholder="Search"
-                                    />
+                                    />}
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div className="align-middle inline-block min-w-full shadow overflow-hidden bg-white shadow-dashboard px-8 pt-3 rounded-bl-lg rounded-br-lg">
+                    {!isLoading && <div className="align-middle inline-block min-w-full shadow overflow-hidden bg-white shadow-dashboard px-8 pt-3 rounded-bl-lg rounded-br-lg">
                         <table className="min-w-full">
                             <thead>
                                 <tr>
@@ -365,7 +366,7 @@ const SupportTicketManagement = () => {
                             <tbody className="bg-white">
                                 {
                                     currentData.map((ticket,) => (
-                                        <tr key={ticket._id}>
+                                        <tr key={ticket?._id}>
                                             <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-500">
                                                 <div className="flex items-center">
                                                     <div>
@@ -375,11 +376,11 @@ const SupportTicketManagement = () => {
                                             </td>
                                             <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-500">
                                                 <div className="text-sm leading-5 text-blue-900">
-                                                    {ticket.userInfo.name}
+                                                    {ticket?.userInfo?.name}
                                                 </div>
                                             </td>
                                             <td className="px-6 py-4 whitespace-no-wrap border-b text-blue-900 border-gray-500 text-sm leading-5">
-                                                {truncateSubject(ticket.subject)}
+                                                {truncateSubject(ticket?.subject)}
                                             </td>
 
                                             <td className="px-6 py-4 whitespace-no-wrap border-b text-blue-900 border-gray-500 text-sm leading-5">
@@ -390,8 +391,8 @@ const SupportTicketManagement = () => {
                                                     />
                                                     <span className="relative text-xs">New Ticket</span>
                                                 </span>
-                                                    || ticket.status === 'Open' &&
-                                                    <button onClick={() => fetch(`https://salenow-v2-backend.vercel.app/support-ticket/status/${ticket.ticketId}`, {
+                                                    || ticket?.status === 'Open' &&
+                                                    <button onClick={() => fetch(`https://salenow-v2-backend.vercel.app/support/support-ticket/status/${ticket.ticketId}`, {
                                                         method: 'PUT',
                                                         headers: { 'Content-Type': 'application/json' },
                                                         body: JSON.stringify({ status: 'Closed' }),
@@ -409,7 +410,7 @@ const SupportTicketManagement = () => {
                                                         <span className="relative text-xs">Open</span>
                                                     </button>
                                                     || ticket.status === 'Closed' &&
-                                                    <button onClick={() => fetch(`https://salenow-v2-backend.vercel.app/support-ticket/status/${ticket.ticketId}`, {
+                                                    <button onClick={() => fetch(`https://salenow-v2-backend.vercel.app/support/support-ticket/status/${ticket.ticketId}`, {
                                                         method: 'PUT',
                                                         headers: { 'Content-Type': 'application/json' },
                                                         body: JSON.stringify({ status: 'Open' }),
@@ -460,7 +461,7 @@ const SupportTicketManagement = () => {
 
 
 
-                    </div>
+                    </div>}
 
                 </div>
                 <div className='flex justify-center mt-4'>

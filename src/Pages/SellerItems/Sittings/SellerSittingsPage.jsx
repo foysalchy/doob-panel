@@ -6,9 +6,9 @@ const SellerSittingsPage = () => {
     return (
         <div>
             <div className='grid grid-cols-3 gap-4 py-10'>
-                <Link
+                {/* <Link
                     className="group relative inline-flex items-center justify-center overflow-hidden rounded bg-gray-900 px-8 py-6 text-white focus:outline-none focus:ring active:bg-gray-500"
-                    to="/admin/settings/site-content"
+                    to="/seller/settings/site-content"
                 >
                     <span className="absolute -start-full transition-all group-hover:start-10">
                         <FaLongArrowAltRight />
@@ -17,10 +17,10 @@ const SellerSittingsPage = () => {
                     <span className="text-sm font-medium transition-all group-hover:ms-4">
                         SetUp Site Content
                     </span>
-                </Link>
+                </Link> */}
                 <Link
                     className="group relative inline-flex items-center justify-center overflow-hidden rounded bg-gray-900 px-8 py-6 text-white focus:outline-none focus:ring active:bg-gray-500"
-                    to="/admin/settings/payment-management"
+                    to="/seller/settings/payment-management"
                 >
                     <span className="absolute -start-full transition-all group-hover:start-10">
                         <FaLongArrowAltRight />
@@ -30,21 +30,10 @@ const SellerSittingsPage = () => {
                         Payment GetWay
                     </span>
                 </Link>
+               
                 <Link
                     className="group relative inline-flex items-center justify-center overflow-hidden rounded bg-gray-900 px-8 py-6 text-white focus:outline-none focus:ring active:bg-gray-500"
-                    to="/admin/settings/seller-domain"
-                >
-                    <span className="absolute -start-full transition-all group-hover:start-10">
-                        <FaLongArrowAltRight />
-                    </span>
-
-                    <span className="text-sm font-medium transition-all group-hover:ms-4">
-                        Manage Seller Domain
-                    </span>
-                </Link>
-                <Link
-                    className="group relative inline-flex items-center justify-center overflow-hidden rounded bg-gray-900 px-8 py-6 text-white focus:outline-none focus:ring active:bg-gray-500"
-                    to="/admin/settings/send-email"
+                    to="/seller/settings/send-email"
                 >
                     <span className="absolute -start-full transition-all group-hover:start-10">
                         <FaLongArrowAltRight />
@@ -56,7 +45,7 @@ const SellerSittingsPage = () => {
                 </Link>
                 <Link
                     className="group relative inline-flex items-center justify-center overflow-hidden rounded bg-gray-900 px-8 py-6 text-white focus:outline-none focus:ring active:bg-gray-500"
-                    to="/admin/settings/shipping"
+                    to="/seller/settings/shipping"
                 >
                     <span className="absolute -start-full transition-all group-hover:start-10">
                         <FaLongArrowAltRight />

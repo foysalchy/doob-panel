@@ -5,6 +5,7 @@ import { useLoaderData, useParams } from 'react-router';
 import { Link } from 'react-router-dom';
 import { BsCalendarDate } from 'react-icons/bs';
 import { FaRegCalendarAlt } from 'react-icons/fa';
+import MetaHelmet from '../../../Helmate/Helmate';
 
 
 const ShopSingleBlog = () => {
@@ -63,6 +64,7 @@ const ShopSingleBlog = () => {
 
 
             <div className="px-1 py-10  mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-20 lg:px-8  grid md:grid-cols-12 gap-3 ">
+                <MetaHelmet title={blogInfo?.MetaTag} description={blogInfo?.MetaDescription} image={blogInfo?.MetaImage} />
                 <div className="md:col-span-8 ">
                     <img
                         loading="eager"

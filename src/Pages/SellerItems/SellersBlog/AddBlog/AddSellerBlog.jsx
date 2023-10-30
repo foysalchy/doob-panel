@@ -15,6 +15,36 @@ const AddSellerBlog = () => {
     const { shopInfo, user } = useContext(AuthContext)
 
 
+    const [upload, setUpload] = useState('')
+    const [uplodOk, setUploadOk] = useState(false)
+
+    const imageUploading = (e) => {
+        e.preventDefault();
+        const selectedFile = e.target.files[0];
+        const formData = new FormData();
+        formData.append("image", selectedFile);
+        const url = `https://api.imgbb.com/1/upload?key=2b8c7f515b1f628299764a2ce4c4cb0e`;
+        fetch(url, {
+            method: "POST",
+            body: formData,
+        })
+            .then((res) => res.json())
+            .then((imageData) => {
+
+                if (imageData.data.url) {
+                    setUpload(imageData.data.url)
+                    setUploadOk(true)
+                }
+                else {
+                    setUpload('')
+                }
+
+            });
+    }
+
+
+
+
 
     const handleFileChange = (event) => {
         const file = event.target.files[0];
@@ -38,6 +68,9 @@ const AddSellerBlog = () => {
         const image = form.photo.files[0];
         const message = form.message.value;
         const shop = shopInfo?.shopId
+        const MetaImage = upload
+        const MetaTag = form.MetaTag.value
+        const MetaDescription = form.MetaDescription.value
 
         const formData = new FormData();
         formData.append("image", image);
@@ -55,7 +88,11 @@ const AddSellerBlog = () => {
                     img: image,
                     shop,
                     author: user,
-                    date: new Date()
+                    date: new Date(),
+                    MetaImage,
+                    MetaTag,
+                    MetaDescription,
+
                 };
                 postBlog(blog, form);
             });
@@ -151,6 +188,50 @@ const AddSellerBlog = () => {
                             <JoditEditor name="message" id="message"></JoditEditor>
                         </div>
                     </div>
+
+                    <div>
+                        <label className="sr-only text-black" htmlFor="title">
+                            Meta Tag
+                        </label>
+                        <input
+                            required
+                            className="w-full rounded-lg border border-gray-900 p-3 text-sm"
+                            placeholder="Meta Tag"
+                            type="text"
+                            id="MetaTag"
+                            name="MetaTag"
+                        />
+                    </div>
+
+                    <div>
+                        <label className="sr-only text-black" htmlFor="title">
+                            Meta Description
+                        </label>
+                        <textarea
+                            required
+                            className="w-full rounded-lg border border-gray-900 p-3 text-sm"
+                            placeholder="Meta Description"
+                            type="text"
+                            id="MetaDescription"
+                            name="MetaDescription"
+                        />
+                    </div>
+                    <div>
+                        <label className="sr-only text-black" htmlFor="title">
+                            Meta Image'
+                        </label>
+                        <input
+                            onChange={imageUploading}
+                            required
+                            className="w-full rounded-lg border border-gray-900 p-3 text-sm"
+                            placeholder="Meta Description"
+                            type="file"
+                            id="MetaImage'"
+                            name="MetaImage'"
+                        />
+                        {uplodOk && 'done'}
+                    </div>
+
                     <div className="mt-4">
                         {
                             loading ?
