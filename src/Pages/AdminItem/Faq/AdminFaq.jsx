@@ -1,8 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import { useState } from "react";
+import { BiEdit } from "react-icons/bi";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
+import UpdateFAQ from "./UpdateFAQ";
 
 const AdminFaq = () => {
   const [loading, setLoading] = useState(false);
@@ -69,6 +71,15 @@ const AdminFaq = () => {
   const filteredData = faqs.filter((item) =>
     item.title.toLowerCase().includes(searchQuery.toLowerCase())
   );
+
+
+  const [OpenModal, setOpenModal] = useState(false)
+
+  const handleViewDetails = (ticketId) => {
+    setOpenModal(ticketId);
+  };
+
+
 
   return (
     <div>
@@ -175,7 +186,7 @@ const AdminFaq = () => {
                           <div className="inline-flex items-center gap-x-3">
                             <div className="w-5/12">
                               <h2 className="font-medium text-gray-800  ">
-                                {faq?.title}
+                                {faq?.title.split(' ').slice(0, 5).join(' ')}
                               </h2>
                             </div>
                           </div>
@@ -225,8 +236,14 @@ const AdminFaq = () => {
                                 />
                               </svg>
                             </button>
+                            <button onClick={() => handleViewDetails(faq?._id)}>
+                              <BiEdit className="text-xl transition-colors duration-200 text-yellow-500 hover:text-yellow-700 focus:outline-none" />
+                            </button>
                           </div>
                         </td>
+                        {OpenModal === faq?._id && <div className="h-0 w-0">
+                          <UpdateFAQ OpenModal={OpenModal} refetch={refetch} setOpenModal={setOpenModal} FAQInfo={faq} />
+                        </div>}
                       </tr>
                     ))}
                   </tbody>

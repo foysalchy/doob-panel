@@ -13,7 +13,7 @@ const AddProduct = () => {
   const { data: categories = [], refetch } = useQuery({
     queryKey: ["category"],
     queryFn: async () => {
-      const res = await fetch("http://localhost:5000/admin/category");
+      const res = await fetch("https://salenow-v2-backend.vercel.app/admin/category");
       const data = await res.json();
       return data;
     },

@@ -19,7 +19,7 @@ const Faq = () => {
 
   return (
     <div>
-      This is Work
+
       <div
         className="mb-2  "
         dangerouslySetInnerHTML={{

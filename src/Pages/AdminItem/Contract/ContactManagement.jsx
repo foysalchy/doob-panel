@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 
 const ContactManagement = () => {
 
-    const { data: contact = [], refetch } = useQuery({
+    const { data: contact = [], refetch, isLoading } = useQuery({
         queryKey: ["contact"],
         queryFn: async () => {
             const res = await fetch("https://salenow-v2-backend.vercel.app/admin/contact");
@@ -39,7 +39,7 @@ const ContactManagement = () => {
     };
 
     const filteredData = contact.filter((item) =>
-        item?.media.toLowerCase().includes(searchQuery.toLowerCase())
+        item?.media?.toLowerCase().includes(searchQuery.toLowerCase())
     );
     return (
         <div className='w-full'>
@@ -57,14 +57,14 @@ const ContactManagement = () => {
                 </span>
             </Link>
             <div className="relative w-3/5 my-6">
-                <input
+                {!isLoading && <input
                     type="text"
                     id="Search"
                     value={searchQuery}
                     onChange={handleSearch}
                     placeholder="Search for..."
                     className="w-full px-5 rounded-md border border-gray-900 py-2.5 pe-10 shadow-sm sm:text-sm"
-                />
+                />}
 
                 <span className="absolute inset-y-0 end-0 grid w-10 place-content-center">
                     <button type="button" className="text-gray-600 hover:text-gray-700">
@@ -88,7 +88,7 @@ const ContactManagement = () => {
                 </span>
             </div>
 
-            <div className="overflow-x-auto mt-4">
+            {!isLoading && <div className="overflow-x-auto mt-4">
                 {filteredData.length ? (
                     <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
                         <thead className="text-left">
@@ -130,7 +130,7 @@ const ContactManagement = () => {
                     <h1>No Data Found</h1>
                 )}
             </div>
-
+            }
         </div>
     );
 };

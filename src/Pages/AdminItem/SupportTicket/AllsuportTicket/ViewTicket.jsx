@@ -21,7 +21,7 @@ const ViewTicket = ({ viewTicket, setViewTicket, ticketDetails, refetch }) => {
 
         }
         // / support - ticket /: id
-        fetch(`https://salenow-v2-backend.vercel.app/support-ticket/${id}`, {
+        fetch(`https://salenow-v2-backend.vercel.app/support/support-ticket/${id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'

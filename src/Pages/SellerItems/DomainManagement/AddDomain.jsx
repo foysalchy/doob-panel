@@ -110,7 +110,7 @@ const AddDomain = () => {
     const { data: domainVideo, refetch, isLoading } = useQuery({
         queryKey: ["category"],
         queryFn: async () => {
-            const res = await fetch("http://localhost:5000/admin/domain-video");
+            const res = await fetch("https://salenow-v2-backend.vercel.app/admin/domain-video");
             const data = await res.json();
             return data;
         },

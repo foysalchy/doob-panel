@@ -99,7 +99,7 @@ const AddSupportTicket = ({ OpenSupport, setOpenSupport, refetch }) => {
                 comments: []
             }
             fetch(
-                `https://salenow-v2-backend.vercel.app/supportTicketRequest`,
+                `https://salenow-v2-backend.vercel.app/support/supportTicketRequest`,
                 {
                     method: "POST",
                     headers: {

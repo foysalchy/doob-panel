@@ -17,7 +17,7 @@ const AddService = () => {
     const { data: categories = [], refetch } = useQuery({
         queryKey: ["category"],
         queryFn: async () => {
-            const res = await fetch("http://localhost:5000/admin/category");
+            const res = await fetch("https://salenow-v2-backend.vercel.app/admin/category");
             const data = await res.json();
             return data;
         },
@@ -111,7 +111,7 @@ const AddService = () => {
 
     const postService = (service, form) => {
 
-        fetch(`http://localhost:5000/admin/addservice`, {
+        fetch(`https://salenow-v2-backend.vercel.app/admin/addservice`, {
             method: "POST",
             headers: {
                 "content-type": "application/json",
@@ -145,7 +145,7 @@ const AddService = () => {
 
     return (
         <div>
-        
+
             <div className=" mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8">
                 <h1 className="text-2xl font-bold text-center">
                     Publish a service for you and next

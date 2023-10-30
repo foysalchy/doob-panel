@@ -72,6 +72,9 @@ import ShippingManagement from "../Pages/AdminItem/Settings/ShipingIntigration/S
 import SingleService from "../Pages/Service/SingleService";
 import SiteContent from "../Pages/AdminItem/Settings/SiteContent/SiteContent";
 import SellerSittingsPage from "../Pages/SellerItems/Sittings/SellerSittingsPage";
+import SellerPaymentGetaway from "../Pages/SellerItems/Sittings/SellerPaymentGetway/SellerPaymentGetway";
+import SellerEmail from "../Pages/SellerItems/Sittings/SellerEmail/SellerEmail";
+import SellerShipping from "../Pages/SellerItems/Sittings/Shiping/SellerShiping";
 
 
 
@@ -131,7 +134,7 @@ const Router = createBrowserRouter([
         path: "/service/:id",
         element: <SingleService />,
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/admin/service/${params.id}`)
+          fetch(`https://salenow-v2-backend.vercel.app/admin/service/${params.id}`)
       },
       {
         path: "/contact",
@@ -145,7 +148,7 @@ const Router = createBrowserRouter([
         path: "/blogs/:id",
         element: <SingleBlog />,
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/admin/all-blogs/${params.id}`),
+          fetch(`https://salenow-v2-backend.vercel.app/admin/all-blogs/${params.id}`),
       },
       {
         path: "/faq",
@@ -237,6 +240,18 @@ const Router = createBrowserRouter([
         path: "settings",
         element: <SellerSittingsPage />
       },
+      {
+        path: "settings/payment-management",
+        element: <SellerPaymentGetaway />
+      },
+      {
+        path: "settings/send-email",
+        element: <SellerEmail />
+      },
+      {
+        path: "settings/shipping",
+        element: <SellerShipping />
+      }
 
     ],
   },
@@ -351,7 +366,7 @@ const Router = createBrowserRouter([
         element: <AdminSingleBlog />,
         loader: async ({ params }) => {
           const id = params.id;
-          return fetch(`http://localhost:5000/admin/all-blogs/${id}`);
+          return fetch(`https://salenow-v2-backend.vercel.app/admin/all-blogs/${id}`);
         },
       },
       {

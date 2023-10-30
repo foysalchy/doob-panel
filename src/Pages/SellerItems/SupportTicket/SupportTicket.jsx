@@ -20,7 +20,7 @@ const SellerSupportTicket = () => {
     const pageSize = 5
 
     function truncateSubject(subject) {
-        return subject.length > maxLength ? subject.substring(0, maxLength) + ' [marge]' : subject;
+        return subject?.length > maxLength ? subject?.substring(0, maxLength) + ' [marge]' : subject;
     }
     const [OpenSupport, setOpenSupport] = useState(false)
 
@@ -43,7 +43,7 @@ const SellerSupportTicket = () => {
     const { data: contact = [], refetch } = useQuery({
         queryKey: ["contact"],
         queryFn: async () => {
-            const res = await fetch(`https://salenow-v2-backend.vercel.app/supportTicketRequest/${user._id}`);
+            const res = await fetch(`https://salenow-v2-backend.vercel.app/support/supportTicketRequest/${user._id}`);
             const data = await res.json();
             return data;
         },
@@ -252,8 +252,8 @@ const SellerSupportTicket = () => {
                         <li>
                             <button
                                 className="inline-flex h-8 w-8 items-center justify-center rounded border border-gray-400 bg-white text-gray-900 rtl:rotate-180"
-                                onClick={() => setCurrentPage((prevPage) => Math.min(prevPage + 1, Math.ceil(filteredData.length / pageSize)))}
-                                disabled={currentPage === Math.ceil(filteredData.length / pageSize)}
+                                onClick={() => setCurrentPage((prevPage) => Math.min(prevPage + 1, Math.ceil(filteredData?.length / pageSize)))}
+                                disabled={currentPage === Math.ceil(filteredData?.length / pageSize)}
                             >
                                 <span className="sr-only">Next Page</span>
                                 <svg

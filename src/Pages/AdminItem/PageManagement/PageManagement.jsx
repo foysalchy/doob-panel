@@ -1,11 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import { useState } from "react";
+import { BiEdit } from "react-icons/bi";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
+import UpdatePage from "./UpdatePage";
 
 const PageManagement = () => {
-  const [loading, setLoading] = useState(false);
+
   const { data: faqs = [], refetch } = useQuery({
     queryKey: ["faqs"],
     queryFn: async () => {
@@ -16,7 +18,7 @@ const PageManagement = () => {
   });
 
   const ActiveHandle = (id) => {
-    setLoading(true);
+
 
     fetch(`https://salenow-v2-backend.vercel.app/admin/page/status/${id}`, {
       method: "PUT",
@@ -59,6 +61,17 @@ const PageManagement = () => {
         refetch();
       });
   };
+
+
+
+
+  const [OpenModal, setOpenModal] = useState(false)
+
+  const handleViewDetails = (ticketId) => {
+    setOpenModal(ticketId);
+  };
+
+
 
   return (
     <div>
@@ -183,8 +196,14 @@ const PageManagement = () => {
                                 />
                               </svg>
                             </button>
+                            <button onClick={() => handleViewDetails(faq?._id)}>
+                              <BiEdit className=" transition-colors text-xl duration-200 text-yellow-500 hover:text-yellow-700 focus:outline-none" />
+                            </button>
                           </div>
                         </td>
+                        {OpenModal === faq?._id && <div className="h-0 w-0">
+                          <UpdatePage OpenModal={OpenModal} refetch={refetch} setOpenModal={setOpenModal} FAQInfo={faq} />
+                        </div>}
                       </tr>
                     ))}
                   </tbody>

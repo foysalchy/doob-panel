@@ -10,3 +10,17 @@
     font-family: 'Poppins', sans-serif;
 }
 
+
+
+body {
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent; /* For Firefox */
+}
+
+body::-webkit-scrollbar {
+  width: 12px;
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: transparent;
+}

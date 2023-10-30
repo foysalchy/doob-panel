@@ -9,7 +9,7 @@ const SiteContent = () => {
     const { data: domainVideo, refetch, isLoading } = useQuery({
         queryKey: ["category"],
         queryFn: async () => {
-            const res = await fetch("http://localhost:5000/admin/domain-video");
+            const res = await fetch("https://salenow-v2-backend.vercel.app/admin/domain-video");
             const data = await res.json();
             return data;
         },
@@ -21,7 +21,7 @@ const SiteContent = () => {
         const url = e.target.url.value
         console.log(url);
 
-        fetch('http://localhost:5000/admin/add-domain-url', {
+        fetch('https://salenow-v2-backend.vercel.app/admin/add-domain-url', {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'
@@ -47,7 +47,7 @@ const SiteContent = () => {
 
 
     const deleteVideo = (id) => {
-        fetch('http://localhost:5000/admin/delete-domain-url', {
+        fetch('https://salenow-v2-backend.vercel.app/admin/delete-domain-url', {
             method: "delete",
             headers: {
                 'Content-Type': 'application/json'

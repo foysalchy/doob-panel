@@ -55,17 +55,17 @@ const SellerDashLayout = () => {
                                         className="flex items-center px-1 capitalize hover:underline"
                                     >
                                         {path}
-                                    </Link >
-                                </li >
+                                    </Link>
+                                </li>
                             ))}
-                        </ol >
-                    </nav >
-                </div >
-                <div className='flex-1 overflow-y-auto p-4 sm:p-0'>
+                        </ol>
+                    </nav>
+                </div>
+                <div className='flex-1  p-4 sm:p-0'>
                     <Outlet />
                 </div>
-            </div >
-        </div >
+            </div>
+        </div>
     );
 };
 

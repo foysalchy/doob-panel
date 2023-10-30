@@ -1,13 +1,15 @@
 import { useQuery } from "@tanstack/react-query";
 import React, { useEffect, useState } from "react";
+import { BiEdit } from "react-icons/bi";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
+import EditBlog from "./EditBlog";
 
 const AdminBlogs = () => {
   const { data: blogs = [], refetch } = useQuery({
     queryKey: ["blogs"],
     queryFn: async () => {
-      const res = await fetch("http://localhost:5000/admin/all-blogs");
+      const res = await fetch("https://salenow-v2-backend.vercel.app/admin/all-blogs");
       const data = await res.json();
       return data;
     },
@@ -15,7 +17,7 @@ const AdminBlogs = () => {
 
   const DeleteBlog = (id) => {
 
-    fetch(`http://localhost:5000/admin/blog`, {
+    fetch(`https://salenow-v2-backend.vercel.app/admin/blog`, {
       method: "DELETE",
       headers: {
         "content-type": "application/json",
@@ -44,7 +46,7 @@ const AdminBlogs = () => {
   );
 
   const statusUpdate = (id, status) => {
-    fetch(`http://localhost:5000/admin/blog`, {
+    fetch(`https://salenow-v2-backend.vercel.app/admin/blog`, {
       method: "PUT",
       headers: {
         "content-type": "application/json",
@@ -57,6 +59,14 @@ const AdminBlogs = () => {
         refetch()
       });
   }
+
+
+  const [OpenModal, setOpenModal] = useState(false)
+
+  const handleViewDetails = (ticketId) => {
+    setOpenModal(ticketId);
+  };
+
 
 
   return (
@@ -208,7 +218,7 @@ const AdminBlogs = () => {
 
 
                         <td className="px-4 py-4 text-sm whitespace-nowrap">
-                          <div className="flex  justify-center">
+                          <div className="flex  justify-center items-center gap-2">
                             <button onClick={() => DeleteBlog(blog._id)} className=" transition-colors duration-200 text-red-500 hover:text-red-700 focus:outline-none">
                               <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -225,9 +235,13 @@ const AdminBlogs = () => {
                                 />
                               </svg>
                             </button>
-
+                            <BiEdit onClick={() => handleViewDetails(blog._id)} className="transition-colors text-xl duration-200 cursor-pointer text-yellow-500 hover:text-yellow-700 focus:outline-none" />
                           </div>
+
                         </td>
+                        {OpenModal === blog._id && <div className="h-0 w-0">
+                          <EditBlog OpenModal={OpenModal} refetch={refetch} setOpenModal={setOpenModal} BlogInfo={blog} />
+                        </div>}
                       </tr>
                     ))}
                   </tbody>

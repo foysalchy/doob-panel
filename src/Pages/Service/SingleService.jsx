@@ -13,7 +13,7 @@ const SingleService = () => {
     const { data: services = [], refetch, isLoading } = useQuery({
         queryKey: ["services"],
         queryFn: async () => {
-            const res = await fetch("http://localhost:5000/admin/services");
+            const res = await fetch("https://salenow-v2-backend.vercel.app/admin/services");
             const data = await res.json();
             return data;
         },
@@ -27,10 +27,10 @@ const SingleService = () => {
                     <div className="lg:w-4/5 mx-auto flex flex-wrap">
                         <img
                             alt="ecommerce"
-                            className="lg:w-1/2 w-full lg:h-auto h-64 object-cover object-center rounded"
+                            className="lg:w-2/3 w-full lg:min-h-[400px] lg:min-w-[400px]  h-64 object-cover object-center rounded"
                             src={service.img}
                         />
-                        <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
+                        <div className="lg:w-1/3 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
                             <h2 className="text-sm title-font text-gray-500 tracking-widest">
                                 {service.category}
                             </h2>
@@ -38,14 +38,7 @@ const SingleService = () => {
                                 {service.title}
                             </h1>
 
-                            <p className="overflow-scroll h-52">
-                                <div
-                                    className=" "
-                                    dangerouslySetInnerHTML={{
-                                        __html: service.message,
-                                    }}
-                                />
-                            </p>
+
                             <div className="flex mt-6 items-center pb-5 border-b-2 border-gray-100 mb-5">
                                 <div className="flex">
                                     <span className="mr-3">Subscription Model</span> : {service.subscriptionPeriod}
@@ -74,6 +67,15 @@ const SingleService = () => {
                                 </button>
                             </div>
                         </div>
+                    </div>
+                    <div className="lg:w-4/5 mx-auto flex flex-wrap mt-4">
+                        <p className='text-xl font-semibold underline underline-offset-4'>Description:</p>
+                        <div
+                            className=" "
+                            dangerouslySetInnerHTML={{
+                                __html: service.message,
+                            }}
+                        />
                     </div>
                 </div>
                 <div className="max-w-screen-xl px-4 py-8 mx-auto sm:px-6 sm:py-12 lg:px-8">
