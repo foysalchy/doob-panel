@@ -9,7 +9,7 @@ const ManageDepartment = ({ ManageDepartment, setManageDepartment }) => {
     const { data: departments = [], refetch, isLoading } = useQuery({
         queryKey: ["departments"],
         queryFn: async () => {
-            const res = await fetch("https://salenow-v2-backend.vercel.app/admin/departments");
+            const res = await fetch("http://localhost:5000/api/v1/admin/departments");
             const data = await res.json();
             return data;
         },
@@ -18,7 +18,7 @@ const ManageDepartment = ({ ManageDepartment, setManageDepartment }) => {
 
     const DeleteHandle = (id) => {
 
-        fetch(`https://salenow-v2-backend.vercel.app/admin/delete_department/${id}`, {
+        fetch(`http://localhost:5000/api/v1/admin/delete_department/${id}`, {
             method: "DELETE"
         }).then(() => {
             refetch()

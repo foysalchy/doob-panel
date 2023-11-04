@@ -21,14 +21,13 @@ const ViewTicket = ({ viewTicket, setViewTicket, ticketDetails, refetch }) => {
 
         }
         // / support - ticket /: id
-        fetch(`https://salenow-v2-backend.vercel.app/support/support-ticket/${id}`, {
+        fetch(`http://localhost:5000/api/v1/support/support-ticket/${id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(data),
         }).then((res) => res.json())
-            .catch((err) => console.log('Error: ', err))
             .finally(() => {
                 event.target.reset()
                 setLoading(false)
@@ -37,8 +36,6 @@ const ViewTicket = ({ viewTicket, setViewTicket, ticketDetails, refetch }) => {
             }
             );
 
-
-        console.log(data);
     }
 
     function formatDateTime(timestamp) {

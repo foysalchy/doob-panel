@@ -18,7 +18,7 @@ const AddFaq = () => {
       description,
     };
 
-    fetch(`https://salenow-v2-backend.vercel.app/admin/newfaq`, {
+    fetch(`http://localhost:5000/api/v1/admin/newfaq`, {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -35,7 +35,7 @@ const AddFaq = () => {
   };
   return (
     <div>
-    
+
       <div className=" mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8">
         <h1 className="text-2xl font-bold text-center">
           Publish a blog for you and next

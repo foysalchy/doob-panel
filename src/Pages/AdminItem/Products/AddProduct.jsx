@@ -13,7 +13,7 @@ const AddProduct = () => {
   const { data: categories = [], refetch } = useQuery({
     queryKey: ["category"],
     queryFn: async () => {
-      const res = await fetch("https://salenow-v2-backend.vercel.app/admin/category");
+      const res = await fetch("http://localhost:5000/api/v1/admin/category");
       const data = await res.json();
       return data;
     },
@@ -67,7 +67,7 @@ const AddProduct = () => {
 
 
 
-      fetch(`https://salenow-v2-backend.vercel.app/addproduct`, {
+      fetch(`http://localhost:5000/api/v1/admin/addproduct`, {
         method: "POST",
         headers: {
           "content-type": "application/json",
@@ -103,7 +103,7 @@ const AddProduct = () => {
 
     try {
       const response = await fetch(
-        `https://api.imgbb.com/1/upload?key=2b8c7f515b1f628299764a2ce4c4cb0e`,
+        `http://localhost:5000/api/v1/image/upload-image`,
         {
           method: "POST",
           body: formData,
@@ -112,7 +112,7 @@ const AddProduct = () => {
 
       if (response.ok) {
         const data = await response.json();
-        return data.data.url; // Return the URL of the uploaded image
+        return data.imageUrl; // Return the URL of the uploaded image
       } else {
         console.error("Image upload failed:", await response.text());
         return null; // Return null to indicate upload failure

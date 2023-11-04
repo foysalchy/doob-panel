@@ -9,7 +9,7 @@ const AdminBlogs = () => {
   const { data: blogs = [], refetch } = useQuery({
     queryKey: ["blogs"],
     queryFn: async () => {
-      const res = await fetch("https://salenow-v2-backend.vercel.app/admin/all-blogs");
+      const res = await fetch("http://localhost:5000/api/v1/admin/all-blogs");
       const data = await res.json();
       return data;
     },
@@ -17,7 +17,7 @@ const AdminBlogs = () => {
 
   const DeleteBlog = (id) => {
 
-    fetch(`https://salenow-v2-backend.vercel.app/admin/blog`, {
+    fetch(`http://localhost:5000/api/v1/admin/blog`, {
       method: "DELETE",
       headers: {
         "content-type": "application/json",
@@ -46,7 +46,7 @@ const AdminBlogs = () => {
   );
 
   const statusUpdate = (id, status) => {
-    fetch(`https://salenow-v2-backend.vercel.app/admin/blog`, {
+    fetch(`http://localhost:5000/api/v1/admin/blog`, {
       method: "PUT",
       headers: {
         "content-type": "application/json",
@@ -139,11 +139,11 @@ const AdminBlogs = () => {
             {blogs?.length}
           </span>
         </div>
-        <div className="flex flex-col mt-6">
-          <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-            <div className="inline-block  py-2 ml-4">
+        <div className="mt-6">
+          <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
+            <div className="  py-2 pr-10">
               <div className="overflow-hidden border border-gray-200 dark:border-gray-700 md:rounded-lg">
-                <table className=" divide-y divide-gray-200 dark:divide-gray-700">
+                <table className=" w-full divide-y divide-gray-200 dark:divide-gray-700">
                   <thead className="bg-gray-50 ">
                     <tr>
                       <th
@@ -218,7 +218,7 @@ const AdminBlogs = () => {
 
 
                         <td className="px-4 py-4 text-sm whitespace-nowrap">
-                          <div className="flex  justify-center items-center gap-2">
+                          <div className="flex px-8  items-center gap-2">
                             <button onClick={() => DeleteBlog(blog._id)} className=" transition-colors duration-200 text-red-500 hover:text-red-700 focus:outline-none">
                               <svg
                                 xmlns="http://www.w3.org/2000/svg"

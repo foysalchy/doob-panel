@@ -7,13 +7,13 @@ const AdminLayout = () => {
 
     const location = useLocation();
     const paths = location.pathname.split('/').filter((path) => path !== '')
-    console.log(paths);
+
     return (
         <div>
 
             <div className='flex gap-8 px-4 '>
                 <SideNavAdmin />
-                <div className="px-4 py-8 w-full  sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-10">
+                <div className="px-4 py-8 w-full   sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-10">
                     <div>
                         <nav
                             aria-label="breadcrumb"
@@ -60,7 +60,7 @@ const AdminLayout = () => {
                             </ol>
                         </nav>
                     </div>
-                    <div className='flex-1  p-4 sm:p-0'>
+                    <div className='flex-1   p-4 sm:p-0'>
                         <Outlet />
                     </div>
                 </div>

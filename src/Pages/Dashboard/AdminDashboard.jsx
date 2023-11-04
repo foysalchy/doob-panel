@@ -6,11 +6,11 @@ const AdminDashboard = () => {
 
     return (
 
-        <div>
+        <div className='pr-10'>
 
 
 
-            <div className="p-6 rounded my-12 bg-violet-400 text-gray-900">
+            <div className=" p-6 rounded my-12 bg-violet-400 text-gray-900">
                 <div className="container mx-auto">
                     <div className="flex flex-col lg:flex-row items-center justify-between">
                         <h2 className="text-center text-6xl tracki font-bold">Up to

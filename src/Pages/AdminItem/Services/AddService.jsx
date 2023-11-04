@@ -17,7 +17,7 @@ const AddService = () => {
     const { data: categories = [], refetch } = useQuery({
         queryKey: ["category"],
         queryFn: async () => {
-            const res = await fetch("https://salenow-v2-backend.vercel.app/admin/category");
+            const res = await fetch("http://localhost:5000/api/v1/admin/category");
             const data = await res.json();
             return data;
         },
@@ -33,7 +33,7 @@ const AddService = () => {
         const selectedFile = e.target.files[0];
         const formData = new FormData();
         formData.append("image", selectedFile);
-        const url = `https://api.imgbb.com/1/upload?key=2b8c7f515b1f628299764a2ce4c4cb0e`;
+        const url = `http://localhost:5000/api/v1/image/upload-image`;
         fetch(url, {
             method: "POST",
             body: formData,
@@ -41,8 +41,8 @@ const AddService = () => {
             .then((res) => res.json())
             .then((imageData) => {
 
-                if (imageData.data.url) {
-                    setUpload(imageData.data.url)
+                if (imageData.imageUrl) {
+                    setUpload(imageData.imageUrl)
                     setUploadOk(true)
                 }
                 else {
@@ -86,14 +86,14 @@ const AddService = () => {
         const MetaDescription = form.MetaDescription.value
         const formData = new FormData();
         formData.append("image", image);
-        const url = `https://api.imgbb.com/1/upload?key=2b8c7f515b1f628299764a2ce4c4cb0e`;
+        const url = `http://localhost:5000/api/v1/image/upload-image`;
         fetch(url, {
             method: "POST",
             body: formData,
         })
             .then((res) => res.json())
             .then((imageData) => {
-                const image = imageData.data.url;
+                const image = imageData.imageUrl;
                 const service = {
                     title,
                     price,
@@ -111,7 +111,7 @@ const AddService = () => {
 
     const postService = (service, form) => {
 
-        fetch(`https://salenow-v2-backend.vercel.app/admin/addservice`, {
+        fetch(`http://localhost:5000/api/v1/admin/addservice`, {
             method: "POST",
             headers: {
                 "content-type": "application/json",

@@ -7,7 +7,7 @@ const MainService = () => {
     const { data: services = [], refetch, isLoading } = useQuery({
         queryKey: ["services"],
         queryFn: async () => {
-            const res = await fetch("https://salenow-v2-backend.vercel.app/admin/services");
+            const res = await fetch("http://localhost:5000/api/v1/admin/services");
             const data = await res.json();
             return data;
         },
@@ -23,7 +23,7 @@ const MainService = () => {
                         Our Service
                     </h2>
 
-                    <p className="max-w-md mx-auto mt-4 text-gray-500">
+                    <p className="max-w-2xl mx-auto mt-4 text-gray-500">
                         Empower Your Sales with Sale Now: Your Ultimate SAS-Based Web App, Providing Sellers a Robust Platform and Exceptional Services for Unmatched Success!
                     </p>
                 </header>

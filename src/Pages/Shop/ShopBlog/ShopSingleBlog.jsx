@@ -16,13 +16,12 @@ const ShopSingleBlog = () => {
 
     const [blogList, setBlogList] = useState([]);
     useEffect(() => {
-        fetch(`https://salenow-v2-backend.vercel.app/seller/blog/${shopId}`)
+        fetch(`http://localhost:5000/api/v1/seller/blog/${shopId}`)
             .then((res) => res.json())
             .then((data) => setBlogList(data));
     }, []);
 
     const blogInfo = useLoaderData();
-    console.log(blogInfo, 'blogInfo');
 
 
     const extractInnerText = (html) => {
@@ -36,7 +35,6 @@ const ShopSingleBlog = () => {
         month: 'long',
         day: 'numeric',
     });
-    console.log(blogInfo.img);
     return (
         <div className=" ">
 

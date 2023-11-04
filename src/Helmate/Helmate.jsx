@@ -2,7 +2,7 @@ import React from 'react';
 import { Helmet } from 'react-helmet';
 
 const MetaHelmet = ({ title, description, image }) => {
-    console.log(title);
+
     return (
         <Helmet>
             <title>{`${title} - SaleNow`}</title>

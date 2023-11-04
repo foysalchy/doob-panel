@@ -39,7 +39,7 @@ const SupportTicketManagement = () => {
     const { data: tickets = [], refetch, isLoading } = useQuery({
         queryKey: ["contact"],
         queryFn: async () => {
-            const res = await fetch(`https://salenow-v2-backend.vercel.app/admin/supportTicketRequest`);
+            const res = await fetch(`http://localhost:5000/api/v1/admin/supportTicketRequest`);
             const data = await res.json();
             return data;
         },
@@ -68,7 +68,7 @@ const SupportTicketManagement = () => {
     );
 
 
-    const pageSize = 5;
+    const pageSize = 10;
     const startIndex = (currentPage - 1) * pageSize;
     const endIndex = startIndex + pageSize;
     const totalPages = Math.ceil(filteredData?.length / pageSize);
@@ -100,17 +100,7 @@ const SupportTicketManagement = () => {
                     </li>
                 )}
 
-                {/* Previous Page */}
-                {currentPage > 1 && (
-                    <li>
-                        <button
-                            className={`block h-8 w-8 rounded border border-gray-100 bg-white text-center leading-8 text-gray-900`}
-                            onClick={() => handleChangePage(currentPage - 1)}
-                        >
-                            {currentPage - 1}
-                        </button>
-                    </li>
-                )}
+
 
                 {/* Current Page */}
                 {Array.from({ length: endPage - startPage + 1 }).map((_, index) => {
@@ -130,19 +120,7 @@ const SupportTicketManagement = () => {
                     );
                 })}
 
-                {/* Next Page */}
-                {currentPage < totalPages && (
-                    <li>
-                        <button
-                            className={`block h-8 w-8 rounded border border-gray-100 bg-white text-center leading-8 text-gray-900`}
-                            onClick={() => handleChangePage(currentPage + 1)}
-                        >
-                            {currentPage + 1}
-                        </button>
-                    </li>
-                )}
 
-                {/* Last Page */}
                 {endPage < totalPages && (
                     <li>
                         <button
@@ -184,7 +162,7 @@ const SupportTicketManagement = () => {
 
 
     return (
-        <div className='bg-gray-200 w-full h-full p-4'>
+        <div className='bg-gray-200 w-full h-full p-10'>
             <div>
                 <section className="my-6  text-gray-100">
                     <div className="container grid grid-cols-1 gap-6 mx-auto sm:grid-cols-2 xl:grid-cols-4">
@@ -392,7 +370,7 @@ const SupportTicketManagement = () => {
                                                     <span className="relative text-xs">New Ticket</span>
                                                 </span>
                                                     || ticket?.status === 'Open' &&
-                                                    <button onClick={() => fetch(`https://salenow-v2-backend.vercel.app/support/support-ticket/status/${ticket.ticketId}`, {
+                                                    <button onClick={() => fetch(`http://localhost:5000/api/v1/support/support-ticket/status/${ticket.ticketId}`, {
                                                         method: 'PUT',
                                                         headers: { 'Content-Type': 'application/json' },
                                                         body: JSON.stringify({ status: 'Closed' }),
@@ -410,7 +388,7 @@ const SupportTicketManagement = () => {
                                                         <span className="relative text-xs">Open</span>
                                                     </button>
                                                     || ticket.status === 'Closed' &&
-                                                    <button onClick={() => fetch(`https://salenow-v2-backend.vercel.app/support/support-ticket/status/${ticket.ticketId}`, {
+                                                    <button onClick={() => fetch(`http://localhost:5000/api/v1/support/support-ticket/status/${ticket.ticketId}`, {
                                                         method: 'PUT',
                                                         headers: { 'Content-Type': 'application/json' },
                                                         body: JSON.stringify({ status: 'Open' }),

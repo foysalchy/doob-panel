@@ -75,6 +75,8 @@ import SellerSittingsPage from "../Pages/SellerItems/Sittings/SellerSittingsPage
 import SellerPaymentGetaway from "../Pages/SellerItems/Sittings/SellerPaymentGetway/SellerPaymentGetway";
 import SellerEmail from "../Pages/SellerItems/Sittings/SellerEmail/SellerEmail";
 import SellerShipping from "../Pages/SellerItems/Sittings/Shiping/SellerShiping";
+import SellerManagement from "../Pages/AdminItem/SellerManagement/SellerManagement";
+import WareHouseManagement from "../Pages/AdminItem/WareHouseManagement/WareHouseManagement";
 
 
 
@@ -134,7 +136,7 @@ const Router = createBrowserRouter([
         path: "/service/:id",
         element: <SingleService />,
         loader: ({ params }) =>
-          fetch(`https://salenow-v2-backend.vercel.app/admin/service/${params.id}`)
+          fetch(`http://localhost:5000/api/v1/admin/service/${params.id}`)
       },
       {
         path: "/contact",
@@ -148,7 +150,7 @@ const Router = createBrowserRouter([
         path: "/blogs/:id",
         element: <SingleBlog />,
         loader: ({ params }) =>
-          fetch(`https://salenow-v2-backend.vercel.app/admin/all-blogs/${params.id}`),
+          fetch(`http://localhost:5000/api/v1/admin/all-blogs/${params.id}`),
       },
       {
         path: "/faq",
@@ -162,7 +164,7 @@ const Router = createBrowserRouter([
             path: "/faq/:id",
             element: <SingleFaq />,
             loader: ({ params }) =>
-              fetch(`https://salenow-v2-backend.vercel.app/admin/faq/${params.id}`),
+              fetch(`http://localhost:5000/api/v1/admin/faq/${params.id}`),
           },
         ],
       },
@@ -170,7 +172,7 @@ const Router = createBrowserRouter([
         path: "/pages/:id",
         element: <Trams />,
         loader: ({ params }) =>
-          fetch(`https://salenow-v2-backend.vercel.app/admin/page/${params.id}`),
+          fetch(`http://localhost:5000/api/v1/admin/page/${params.id}`),
       },
       {
         path: "/profile",
@@ -266,7 +268,7 @@ const Router = createBrowserRouter([
         element: <Product />,
         loader: async ({ params }) => {
           const id = params.id;
-          return fetch(`https://salenow-v2-backend.vercel.app/shop/${id}`);
+          return fetch(`http://localhost:5000/api/v1/shop/${id}`);
         },
       },
       {
@@ -278,7 +280,7 @@ const Router = createBrowserRouter([
         element: <ShopAllBlog />,
         loader: async ({ params }) => {
           const id = params.id;
-          return fetch(`https://salenow-v2-backend.vercel.app/seller/blog/${id}`);
+          return fetch(`http://localhost:5000/api/v1/seller/blog/${id}`);
         },
       },
       {
@@ -287,7 +289,7 @@ const Router = createBrowserRouter([
         loader: async ({ params }) => {
           const id = params.id;
           const blogId = params.blogId;
-          const response = await fetch(`https://salenow-v2-backend.vercel.app/seller/blog/${id}/${blogId}`);
+          const response = await fetch(`http://localhost:5000/api/v1/seller/blog/${id}/${blogId}`);
           const data = await response.json();
           return data;
         },
@@ -298,7 +300,7 @@ const Router = createBrowserRouter([
         loader: async ({ params }) => {
           const pageId = params.pageId
           const shopId = params.id
-          const response = await fetch(`https://salenow-v2-backend.vercel.app/seller/page/${shopId}/${pageId}`);
+          const response = await fetch(`http://localhost:5000/api/v1/seller/page/${shopId}/${pageId}`);
           const data = await response.json();
           return data;
         },
@@ -366,7 +368,7 @@ const Router = createBrowserRouter([
         element: <AdminSingleBlog />,
         loader: async ({ params }) => {
           const id = params.id;
-          return fetch(`https://salenow-v2-backend.vercel.app/admin/all-blogs/${id}`);
+          return fetch(`http://localhost:5000/api/v1/admin/all-blogs/${id}`);
         },
       },
       {
@@ -437,6 +439,14 @@ const Router = createBrowserRouter([
         path: "settings/site-content",
         element: <SiteContent />
       },
+      {
+        path: "seller-management",
+        element: <SellerManagement />
+      },
+      {
+        path: "warehouse",
+        element: <WareHouseManagement />
+      }
     ],
   }
 

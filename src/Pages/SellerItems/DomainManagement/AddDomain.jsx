@@ -15,23 +15,18 @@ const AddDomain = () => {
     const txtValue = shopInfo.shopId
     const [edit, setEdit] = useState(false)
     const [error, setError] = useState(false)
-    console.log("🚀 ~ file: AddDomain.jsx:18 ~ AddDomain ~ error:", error)
 
     const dataSubmit = (event) => {
         event.preventDefault();
         const domain = event.target.domain.value;
-        console.log(domain);
-
         shopInfo.domain = domain
-        console.log(shopInfo);
 
-        fetch(`https://salenow-v2-backend.vercel.app/api/dns?domain=${domain}&txtValue=salenow.com/shop/${txtValue}`)
+        fetch(`http://localhost:5000/api/v1/api/dns?domain=${domain}&txtValue=salenow.com/shop/${txtValue}`)
             .then((res) => res.json())
             .then((data) => {
-                console.log(data);
-                console.log(data.isValuePresent);
+              
                 if (data.isValuePresent === true) {
-                    fetch('https://salenow-v2-backend.vercel.app/seller/addDomain',
+                    fetch('http://localhost:5000/api/v1/seller/addDomain',
                         {
                             method: "POST",
                             headers: {
@@ -52,7 +47,7 @@ const AddDomain = () => {
 
                             )
                             const jsonData = JSON.stringify(data);
-                            console.log(shopInfo);
+                         
 
                             document.cookie = `SellerShop=${encodeURIComponent(jsonData)}; expires=Thu, 01 Jan 2030 00:00:00 UTC; path=/seller`;
 
@@ -94,7 +89,7 @@ const AddDomain = () => {
 
     const isItDomain = (e) => {
         const domain = e.target.value
-        console.log(domain);
+       
         const domainNameRegex = new RegExp(/^((?!-))(xn--)?[a-z0-9][a-z0-9-_]{0,61}[a-z0-9]{0,1}\.(xn--)?([a-z0-9\-]{1,61}|[a-z0-9-]{1,30}\.[a-z]{2,})$/);
         const isValid = domainNameRegex.test(domain)
         if (isValid) {
@@ -110,7 +105,7 @@ const AddDomain = () => {
     const { data: domainVideo, refetch, isLoading } = useQuery({
         queryKey: ["category"],
         queryFn: async () => {
-            const res = await fetch("https://salenow-v2-backend.vercel.app/admin/domain-video");
+            const res = await fetch("http://localhost:5000/api/v1/admin/domain-video");
             const data = await res.json();
             return data;
         },

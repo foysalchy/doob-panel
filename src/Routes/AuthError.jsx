@@ -7,7 +7,6 @@ import groovyWalkAnimation from './Loading.json';
 
 const AuthError = ({ children }) => {
     const { user, loading } = useContext(AuthContext)
-    console.log("🚀 ~ file: AuthError.jsx:10 ~ AuthError ~ user, loading:", !user, loading)
 
     const location = useLocation()
     if (loading) {

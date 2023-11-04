@@ -13,14 +13,14 @@ const SellerManageContact = () => {
     const { data: contact = [], refetch } = useQuery({
         queryKey: ["contact"],
         queryFn: async () => {
-            const res = await fetch(`https://salenow-v2-backend.vercel.app/shop/contact/${shopInfo?.shopId}`);
+            const res = await fetch(`http://localhost:5000/api/v1/shop/contact/${shopInfo?.shopId}`);
             const data = await res.json();
             return data;
         },
     });
 
     const DeleteCategory = (id) => {
-        fetch(`https://salenow-v2-backend.vercel.app/shop/contact/${shopInfo.shopId}?id=${id}`, {
+        fetch(`http://localhost:5000/api/v1/shop/contact/${shopInfo.shopId}?id=${id}`, {
             method: "DELETE",
             headers: {
                 "content-type": "application/json",
@@ -44,7 +44,6 @@ const SellerManageContact = () => {
     );
 
 
-    console.log(contact);
 
     return (
         <div>
@@ -92,26 +91,28 @@ const SellerManageContact = () => {
                     </button>
                 </span>
             </div>
-            <div className="overflow-x-auto mt-4">
+            <div className="overflow-x-auto mt-4 pr-10">
                 {filteredData.length ? (
                     <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
-                        <thead className="text-left">
+                        <thead className="text-left bg-gray-800 rounded-xl">
                             <tr>
-                                <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
+                                <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-100">
                                     Media Name
                                 </th>
 
-                                <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
+                                <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-100">
                                     Media URL
                                 </th>
-                                <th className="px-4 py-2"></th>
+                                <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-100">
+                                    Action
+                                </th>
                             </tr>
                         </thead>
 
-                        <tbody className="divide-y divide-gray-200">
+                        <tbody className="divide-y  divide-gray-200">
                             {filteredData.map((media, index) => (
                                 <tr>
-                                    <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
+                                    <td className="whitespace-nowrap  px-4 py-2 font-medium text-gray-900">
                                         {media.media}
                                     </td>
 

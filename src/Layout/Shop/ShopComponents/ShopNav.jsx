@@ -16,11 +16,12 @@ const ShopNav = () => {
     const { data: shop = {}, isLoading, refetch } = useQuery({
         queryKey: ["shop"],
         queryFn: async () => {
-            const res = await fetch(`https://salenow-v2-backend.vercel.app/shop/${shopId}`);
+            const res = await fetch(`http://localhost:5000/api/v1/shop/${shopId}`);
             const data = await res.json();
             return data;
         },
     });
+
     return (
 
         <div>

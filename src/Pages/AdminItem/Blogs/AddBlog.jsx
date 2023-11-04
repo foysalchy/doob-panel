@@ -19,7 +19,7 @@ const AddBlog = () => {
     const selectedFile = e.target.files[0];
     const formData = new FormData();
     formData.append("image", selectedFile);
-    const url = `https://api.imgbb.com/1/upload?key=2b8c7f515b1f628299764a2ce4c4cb0e`;
+    const url = `http://localhost:5000/api/v1/image/upload-image`;
     fetch(url, {
       method: "POST",
       body: formData,
@@ -27,8 +27,8 @@ const AddBlog = () => {
       .then((res) => res.json())
       .then((imageData) => {
 
-        if (imageData.data.url) {
-          setUpload(imageData.data.url)
+        if (imageData.imageUrl) {
+          setUpload(imageData.imageUrl)
           setUploadOk(true)
         }
         else {
@@ -71,14 +71,14 @@ const AddBlog = () => {
 
     const formData = new FormData();
     formData.append("image", image);
-    const url = `https://api.imgbb.com/1/upload?key=2b8c7f515b1f628299764a2ce4c4cb0e`;
+    const url = `http://localhost:5000/api/v1/image/upload-image`;
     fetch(url, {
       method: "POST",
       body: formData,
     })
       .then((res) => res.json())
       .then((imageData) => {
-        const image = imageData.data.url;
+        const image = imageData.imageUrl;
         const blog = {
           title,
           message,
@@ -88,14 +88,13 @@ const AddBlog = () => {
           MetaDescription,
           MetaTag
         };
-        console.log(blog);
         postBlog(blog, form);
       });
   };
 
   const postBlog = (blog, form) => {
 
-    fetch(`https://salenow-v2-backend.vercel.app/admin/new-blog`, {
+    fetch(`http://localhost:5000/api/v1/admin/new-blog`, {
       method: "POST",
       headers: {
         "content-type": "application/json",

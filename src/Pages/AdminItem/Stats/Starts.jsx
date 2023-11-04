@@ -8,7 +8,7 @@ const Starts = () => {
     const { data: newUsers = [], refetch } = useQuery({
         queryKey: ["newUser"],
         queryFn: async () => {
-            const res = await fetch("https://salenow-v2-backend.vercel.app/admin/previous-week-users");
+            const res = await fetch("http://localhost:5000/api/v1/admin/previous-week-users");
             const data = await res.json();
             return data;
         },
@@ -21,7 +21,7 @@ const Starts = () => {
             <div className="">
 
 
-                <div className="px-6 pt-6 2xl:container">
+                <div className=" pt-6 2xl:container">
 
 
                     <div>

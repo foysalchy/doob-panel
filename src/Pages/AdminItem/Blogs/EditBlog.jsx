@@ -13,13 +13,13 @@ const EditBlog = ({ OpenModal, setOpenModal, BlogInfo, refetch }) => {
         formData.append("image", image);
 
         try {
-            const response = await fetch("https://api.imgbb.com/1/upload?key=2b8c7f515b1f628299764a2ce4c4cb0e", {
+            const response = await fetch("http://localhost:5000/api/v1/image/upload-image", {
                 method: "POST",
                 body: formData,
             });
 
             const imageData = await response.json();
-            setPreviewUrl(imageData.data.url);
+            setPreviewUrl(imageData.imageUrl);
         } catch (error) {
             console.error("Error uploading image:", error);
         }
@@ -37,7 +37,7 @@ const EditBlog = ({ OpenModal, setOpenModal, BlogInfo, refetch }) => {
         const data = { img, title, message, MetaTag, MetaDescription };
 
         try {
-            const response = await fetch(`https://salenow-v2-backend.vercel.app/admin/blog/update-blog/${BlogInfo._id}`, {
+            const response = await fetch(`http://localhost:5000/api/v1/admin/blog/update-blog/${BlogInfo._id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -57,7 +57,7 @@ const EditBlog = ({ OpenModal, setOpenModal, BlogInfo, refetch }) => {
 
     return (
         <div className={`fixed z-50 top-0 left-0 flex h-full min-h-screen w-full items-center justify-center bg-black bg-opacity-90 px-4 py-5 ${OpenModal ? "block" : "hidden"}`}>
-            <div className="w-full max-w-[800px] h-[90%] rounded-[20px] bg-white pb-10 px-8 text-center md:px-[30px] overflow-scroll">
+            <div className="w-full max-w-[800px]  rounded-[20px] bg-white pb-10 px-8 text-center md:px-[30px]">
                 <div className='flex justify-between z-50 pt-4 items-start w-full sticky top-0 bg-white border-b'>
                     <div className='pb-2 text-xl font-bold text-dark text-center sm:text-2xl'>Edit Blog</div>
                     <div onClick={() => setOpenModal(!OpenModal)} className='cursor-pointer bg-gray-500 rounded-full px-2.5 mb-2 p-1 text-2xl hover:text-red-500'>
@@ -65,7 +65,7 @@ const EditBlog = ({ OpenModal, setOpenModal, BlogInfo, refetch }) => {
                     </div>
                 </div>
 
-                <form onSubmit={handleBlogUpdate}>
+                <form className='h-[500px]  overflow-scroll' onSubmit={handleBlogUpdate}>
                     <input name='title' className='w-full p-2 my-4 border' defaultValue={BlogInfo.title} />
 
                     <div className='mb-4'>

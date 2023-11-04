@@ -28,7 +28,7 @@ const Step1 = ({ nextStep, handleChange, values }) => {
         const selectedFile = e.target.files[0];
         const formData = new FormData();
         formData.append("image", selectedFile);
-        const url = `https://api.imgbb.com/1/upload?key=2b8c7f515b1f628299764a2ce4c4cb0e`;
+        const url = `http://localhost:5000/api/v1/image/upload-image`;
         fetch(url, {
             method: "POST",
             body: formData,
@@ -36,9 +36,9 @@ const Step1 = ({ nextStep, handleChange, values }) => {
             .then((res) => res.json())
             .then((imageData) => {
 
-                if (imageData.data.url) {
+                if (imageData.imageUrl) {
 
-                    const image = imageData.data.url;
+                    const image = imageData.imageUrl;
                     setUpload(true)
                     values.logo = image
                 }
@@ -63,7 +63,7 @@ const Step1 = ({ nextStep, handleChange, values }) => {
 
         if (name.length > 2) {
             try {
-                const response = await fetch(`https://salenow-v2-backend.vercel.app/shop/info/${name}`);
+                const response = await fetch(`http://localhost:5000/api/v1/shop/info/${name}`);
                 const data = await response.json();
 
                 if (data) {

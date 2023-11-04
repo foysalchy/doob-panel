@@ -13,7 +13,7 @@ const ShippingManagement = () => {
     const { data: ships = [], refetch, isLoading } = useQuery({
         queryKey: ["getaway"],
         queryFn: async () => {
-            const res = await fetch("https://salenow-v2-backend.vercel.app/admin/allShippings");
+            const res = await fetch("http://localhost:5000/api/v1/admin/allShippings");
             const data = await res.json();
             return data;
         },
@@ -25,7 +25,6 @@ const ShippingManagement = () => {
 
     const handleGetaway = (event) => {
         const selectedValue = event.target.value;
-        console.log(selectedValue);
         if (selectedValue == 'Choose your getaway') {
             setDisable(true)
 
@@ -54,9 +53,8 @@ const ShippingManagement = () => {
             key,
             secretKey
         }
-        console.log(data);
 
-        fetch('https://salenow-v2-backend.vercel.app/admin/shipping-interrogation', {
+        fetch('http://localhost:5000/api/v1/admin/shipping-interrogation', {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'
@@ -88,7 +86,7 @@ const ShippingManagement = () => {
 
 
     const deleteHandel = (id) => {
-        fetch(`https://salenow-v2-backend.vercel.app/admin/removeShipping/${id}`, {
+        fetch(`http://localhost:5000/api/v1/admin/removeShipping/${id}`, {
             method: "Delete",
             headers: {
                 "content-type": "application/json",

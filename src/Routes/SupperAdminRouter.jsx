@@ -11,7 +11,6 @@ const SupperAdminRouter = ({ children }) => {
     const [isSupperAdmin, isSupperAdminLoading] = UseSupperAdmin(user?.email)
 
     const location = useLocation()
-    console.log(loading, isSupperAdminLoading, user, new Date());
 
     if (loading || isSupperAdminLoading) {
         return (

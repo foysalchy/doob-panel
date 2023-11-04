@@ -10,7 +10,7 @@ const AddDepartment = ({ ModalOpen, setModalOpen }) => {
     const handleUpload = () => {
         setLoading(true)
 
-        fetch('https://salenow-v2-backend.vercel.app/admin/department', {
+        fetch('http://localhost:5000/api/v1/admin/department', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -21,7 +21,6 @@ const AddDepartment = ({ ModalOpen, setModalOpen }) => {
             .then(res => res.json())
             // do not need catch 
             .then((data) => {
-                console.log(data);
                 if (data === true) {
                     setDepartmentName('')
                     setLoading(false)
@@ -45,8 +44,6 @@ const AddDepartment = ({ ModalOpen, setModalOpen }) => {
 
 
     }
-
-    console.log(departmentName);
 
     return (
         <div className={ModalOpen ? 'flex' : 'hidden'}>

@@ -194,23 +194,23 @@ const SideNavAdmin = () => {
                             </NavLink>
 
 
-                            <NavLink rel="noopener noreferrer" href="#" className={({ isActive }) => {
+                            <NavLink rel="noopener noreferrer" to={'/admin/seller-management'} className={({ isActive }) => {
                                 return isActive
                                     ? "flex items-center p-2 space-x-3 rounded-sm bg-gray-800 text-white "
                                     : "flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
                             }}>
                                 <BiCategory className="w-5 h-5 fill-current text-gray-400" />
-                                {menu && <span>Daraz Category</span>}
+                                {menu && <span>Seller Management</span>}
                             </NavLink>
 
 
-                            <NavLink rel="noopener noreferrer" href="#" className={({ isActive }) => {
+                            <NavLink rel="noopener noreferrer" to={'/admin/warehouse'} className={({ isActive }) => {
                                 return isActive
                                     ? "flex items-center p-2 space-x-3 rounded-sm bg-gray-800 text-white "
                                     : "flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
                             }}>
                                 <GiNotebook className="w-5 h-5 fill-current text-gray-400" />
-                                {menu && <span>Report manage</span>}
+                                {menu && <span>Warehouse Management</span>}
                             </NavLink>
 
 

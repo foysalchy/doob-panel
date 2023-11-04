@@ -12,7 +12,7 @@ const AllPrice = () => {
   const { data: prices = [], refetch } = useQuery({
     queryKey: ["prices"],
     queryFn: async () => {
-      const res = await fetch("https://salenow-v2-backend.vercel.app/admin/pricing");
+      const res = await fetch("http://localhost:5000/api/v1/admin/pricing");
       const data = await res.json();
       return data;
     },
@@ -21,7 +21,7 @@ const AllPrice = () => {
   const publishHandle = (id) => {
     setLoading(true);
 
-    fetch(`https://salenow-v2-backend.vercel.app/admin/pricing/status/${id}`, {
+    fetch(`http://localhost:5000/api/v1/admin/pricing/status/${id}`, {
       method: "PUT",
       headers: {
         "content-type": "application/json",
@@ -36,7 +36,7 @@ const AllPrice = () => {
 
   const unpublishHandle = (id) => {
 
-    fetch(`https://salenow-v2-backend.vercel.app/admin/pricing/unstatus/${id}`, {
+    fetch(`http://localhost:5000/api/v1/admin/pricing/unstatus/${id}`, {
       method: "PUT",
       headers: {
         "content-type": "application/json",
@@ -50,7 +50,7 @@ const AllPrice = () => {
   };
   const DeletePrice = (id) => {
 
-    fetch(`https://salenow-v2-backend.vercel.app/admin/pricing/delete/${id}`, {
+    fetch(`http://localhost:5000/api/v1/admin/pricing/delete/${id}`, {
       method: "Delete",
       headers: {
         "content-type": "application/json",
@@ -77,20 +77,20 @@ const AllPrice = () => {
     <div >
 
       <>
-        <div className="mt-4 lg:pr-10 w-full mx-auto overflow-auto">
-          <table className="table-auto w-full text-left whitespace-no-wrap">
+        <div className="mt-4 lg:pr-10 ">
+          <table className="w-full overflow-x-scroll text-left whitespace-no-wrap">
             <thead>
-              <tr>
-                <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tl rounded-bl">
+              <tr className="bg-gray-800 rounded-t">
+                <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm  rounded-tl rounded-bl">
                   Plan
                 </th>
-                <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
+                <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm ">
                   Price
                 </th>
-                <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
+                <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm ">
                   Status
                 </th>
-                <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
+                <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm ">
                   Action
                 </th>
 
@@ -100,7 +100,7 @@ const AllPrice = () => {
               {
                 prices.map((price, index) => (
 
-                  <tr>
+                  <tr >
                     <td className="px-4 py-3">{price?.name}</td>
                     <td className="px-4 py-3">{price?.price}</td>
                     <td className="px-4 py-3">{!price.status ? (

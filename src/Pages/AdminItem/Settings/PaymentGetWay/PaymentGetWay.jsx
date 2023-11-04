@@ -13,7 +13,7 @@ const PaymentGetWay = () => {
     const { data: getaway = [], refetch, isLoading } = useQuery({
         queryKey: ["getaway"],
         queryFn: async () => {
-            const res = await fetch("https://salenow-v2-backend.vercel.app/admin/getaway");
+            const res = await fetch("http://localhost:5000/api/v1/admin/getaway");
             const data = await res.json();
             return data;
         },
@@ -53,7 +53,7 @@ const PaymentGetWay = () => {
 
 
 
-        fetch(`https://salenow-v2-backend.vercel.app/admin/getaway`, {
+        fetch(`http://localhost:5000/api/v1/admin/getaway`, {
             method: "POST",
             headers: {
                 "content-type": "application/json",
@@ -79,7 +79,7 @@ const PaymentGetWay = () => {
 
     const handleGetaway = (event) => {
         const selectedValue = event.target.value;
-        console.log(selectedValue);
+     
         if (selectedValue == 'Choose your getaway') {
             setDisable(true)
         }
@@ -89,11 +89,11 @@ const PaymentGetWay = () => {
         }
     };
 
-    console.log(disabled);
+    
 
 
     const deleteHandel = (id) => {
-        fetch(`https://salenow-v2-backend.vercel.app/admin/getaway/${id}`, {
+        fetch(`http://localhost:5000/api/v1/admin/getaway/${id}`, {
             method: "Delete",
             headers: {
                 "content-type": "application/json",
@@ -112,7 +112,7 @@ const PaymentGetWay = () => {
     return (
         <div>
             <div className="">
-               
+
 
 
 
