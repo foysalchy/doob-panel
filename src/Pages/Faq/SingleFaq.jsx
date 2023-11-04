@@ -4,12 +4,11 @@ import MetaHelmet from '../../Helmate/Helmate';
 
 const SingleFaq = () => {
     const description = useLoaderData()
-    console.log(description);
     return (
         <div>
             <MetaHelmet title={description?.MetaTag} description={description?.MetaDescription} image={description?.MetaImage} />
 
-            <div className="mx-auto ">
+            <div className="mx-auto mt-4 ">
                 <div
                     className="mb-2  "
                     dangerouslySetInnerHTML={{

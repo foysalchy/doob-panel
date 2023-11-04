@@ -21,7 +21,7 @@ const EditPrice = ({ OpenModal, setOpenModal, FAQInfo, refetch }) => {
     };
 
 
-    console.log(benefits);
+    
 
     const handleFAQUpdate = async (e) => {
         e.preventDefault();
@@ -41,11 +41,11 @@ const EditPrice = ({ OpenModal, setOpenModal, FAQInfo, refetch }) => {
             MetaTag,
             MetaDescription
         }
-        console.log(data);
+  
 
 
         try {
-            fetch(`https://salenow-v2-backend.vercel.app/admin/price/update-price/${FAQInfo._id}`, {
+            fetch(`http://localhost:5000/api/v1/admin/price/update-price/${FAQInfo._id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -81,7 +81,7 @@ const EditPrice = ({ OpenModal, setOpenModal, FAQInfo, refetch }) => {
 
     return (
         <div className={`fixed z-50 top-0 left-0 flex h-full min-h-screen w-full items-center justify-center bg-black bg-opacity-90  px-4 text-start py-5 ${OpenModal ? "block" : "hidden"}`}>
-            <div className="w-full max-w-[800px] h-[90%] rounded-[20px] bg-white pb-10 px-8 text-center md:px-[30px] overflow-scroll">
+            <div className="w-full max-w-[800px]  rounded-[20px] bg-white pb-10 px-8 text-center md:px-[30px] ">
                 <div className='flex justify-between z-50 pt-4 items-start w-full sticky top-0 bg-white border border-black-b'>
                     <div className='pb-2 text-xl font-bold text-dark text-center sm:text-2xl'>Update FAQ</div>
                     <div onClick={() => setOpenModal(!OpenModal)} className='cursor-pointer bg-gray-500 rounded-full px-2.5 mb-2 p-1 text-2xl hover:text-red-500'>
@@ -89,7 +89,7 @@ const EditPrice = ({ OpenModal, setOpenModal, FAQInfo, refetch }) => {
                     </div>
                 </div>
 
-                <form onSubmit={handleFAQUpdate}>
+                <form className='h-[500px] overflow-y-scroll' onSubmit={handleFAQUpdate}>
                     <p className='text-start'>Name</p>
                     <input name='name' className='w-full p-2 my-4 border border-black' defaultValue={FAQInfo.name} />
                     <p className='text-start'>Price</p>

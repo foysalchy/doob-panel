@@ -35,7 +35,7 @@ const AddSupportTicket = ({ OpenSupport, setOpenSupport, refetch }) => {
             .then((res) => res.json())
             .then((imageData) => {
                 if (imageData?.data?.url) {
-                    const image = imageData.data.url;
+                    const image = imageData.imageUrl;
                     const pathname = image;
                     setFile(pathname);
                     setFileLoad(false);
@@ -66,7 +66,7 @@ const AddSupportTicket = ({ OpenSupport, setOpenSupport, refetch }) => {
     const { data: departments = [] } = useQuery({
         queryKey: ["departments"],
         queryFn: async () => {
-            const res = await fetch("https://salenow-v2-backend.vercel.app/admin/departments");
+            const res = await fetch("http://localhost:5000/api/v1/admin/departments");
             const data = await res.json();
             return data;
         },
@@ -99,7 +99,7 @@ const AddSupportTicket = ({ OpenSupport, setOpenSupport, refetch }) => {
                 comments: []
             }
             fetch(
-                `https://salenow-v2-backend.vercel.app/support/supportTicketRequest`,
+                `http://localhost:5000/api/v1/support/supportTicketRequest`,
                 {
                     method: "POST",
                     headers: {
@@ -109,8 +109,6 @@ const AddSupportTicket = ({ OpenSupport, setOpenSupport, refetch }) => {
                 }
             )
                 .then((res) => res.json())
-
-                .catch((err) => console.log(err))
                 .finally(() => {
                     Swal.fire({
                         icon: 'success',
@@ -137,7 +135,6 @@ const AddSupportTicket = ({ OpenSupport, setOpenSupport, refetch }) => {
         setDescription(value);
     };
 
-    console.log(description);
 
 
     return (

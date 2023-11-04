@@ -17,7 +17,7 @@ const AddPage = () => {
       description,
     };
 
-    fetch(`https://salenow-v2-backend.vercel.app/admin/addpage`, {
+    fetch(`http://localhost:5000/api/v1/admin/addpage`, {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -34,7 +34,7 @@ const AddPage = () => {
   };
   return (
     <div>
-     
+
       <div className=" mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8">
         <h1 className="text-2xl font-bold text-center">
           Publish a Page for you

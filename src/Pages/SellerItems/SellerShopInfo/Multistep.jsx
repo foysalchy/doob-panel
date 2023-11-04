@@ -17,7 +17,7 @@ const MultiStepForm = () => {
     const [step, setStep] = useState(1);
     const [loading, setLoading] = useState(false)
     const navigate = useNavigate()
-    const { user } = useContext(AuthContext)
+    const { user, setShopInfo } = useContext(AuthContext)
 
     const [formValues, setFormValues] = useState({
         seller: user.email,
@@ -43,7 +43,7 @@ const MultiStepForm = () => {
 
     const submitForm = (e) => {
         e.preventDefault()
-        fetch(`https://salenow-v2-backend.vercel.app/shop/info`, {
+        fetch(`http://localhost:5000/api/v1/shop/info`, {
             method: "POST",
             headers: {
                 "content-type": "application/json",
@@ -53,6 +53,7 @@ const MultiStepForm = () => {
             .then((res) => res.json())
             .then((data) => {
                 setLoading(false);
+                setShopInfo(formValues)
                 Swal.fire("Welcome as a new seller", "", "success");
                 navigate('/seller/dashboard')
             });

@@ -14,7 +14,7 @@ const Contract = () => {
     const { data: contact = [], refetch } = useQuery({
         queryKey: ["contact"],
         queryFn: async () => {
-            const res = await fetch("https://salenow-v2-backend.vercel.app/admin/contact");
+            const res = await fetch("http://localhost:5000/api/v1/admin/contact");
             const data = await res.json();
             return data;
         },
@@ -169,21 +169,25 @@ const Contract = () => {
                 <form ref={form} onSubmit={ContractFrom} className="space-y-6">
                     <div>
                         <label htmlFor="name" className="text-sm">Full name</label>
-                        <input id="name" required type="text" placeholder="" name='name' className="w-full p-3 rounded " />
+                        <input id="name" required type="text" placeholder="" name='name' className="w-full p-3 py-2 rounded " />
                     </div>
                     <div>
                         <label htmlFor="email" className="text-sm">Email</label>
-                        <input id="email" name='email' required type="email" className="w-full p-3 rounded " />
+                        <input id="email" name='email' required type="email" className="w-full p-3 py-2 rounded " />
+                    </div>
+                    <div>
+                        <label htmlFor="email" className="text-sm">Phone Number</label>
+                        <input id="email" name='phone' required type="number" className="w-full p-3 py-2 rounded " />
                     </div>
                     <div>
                         <label htmlFor="subject" className="text-sm">Subject</label>
-                        <input id="subject" required name='subject' type="text" className="w-full p-3 rounded " />
+                        <input id="subject" required name='subject' type="text" className="w-full p-3 py-2 rounded " />
                     </div>
                     <div>
                         <label htmlFor="Description" className="text-sm">Description</label>
-                        <textarea name='message' required id="message" rows="3" className="w-full p-3 rounded "></textarea>
+                        <textarea name='message' required id="message" rows="3" className="w-full p-3 py-2 rounded "></textarea>
                     </div>
-                    {!loading ? <button type="submit" required className="w-full p-3 text-sm font-bold tracki uppercase rounded bg-black hover:bg-gray-900  text-white">Send Message</button> : <button disabled required className="w-full p-3 text-sm font-bold tracki uppercase rounded bg-black hover:bg-gray-900  text-white">Loading ... </button>}
+                    {!loading ? <button type="submit" required className="w-full p-3 py-2 text-sm font-bold tracki uppercase rounded bg-black hover:bg-gray-900  text-white">Send Message</button> : <button disabled required className="w-full p-3 py-2 text-sm font-bold tracki uppercase rounded bg-black hover:bg-gray-900  text-white">Loading ... </button>}
                 </form>
             </div>
         </div>

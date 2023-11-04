@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom';
 const ShopAllBlog = () => {
 
     const blogs = useLoaderData()
-    console.log(blogs);
     const params = useParams();
     const shopId = params.id;
 

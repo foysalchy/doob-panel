@@ -13,8 +13,7 @@ const UpdateShopProfile = () => {
     const [copy, setCopy] = useState(false)
 
     const handleCopyLink = (link) => {
-        console.log(link);
-        const linkToCopy = `https://salenow-project.web.app/shop/${link}`; // Replace with your actual link
+        const linkToCopy = `https://salenow-project.web.app/shop/${link}`; 
         navigator.clipboard.writeText(linkToCopy)
             .then(() => {
                 setCopy(true);
@@ -27,10 +26,9 @@ const UpdateShopProfile = () => {
             });
     };
 
-    const [coerLoad, setCoverLoad] = useState(false)
+    const [coverLoad, setCoverLoad] = useState(false)
 
     const { shopInfo, setShopInfo } = useContext(AuthContext)
-
 
 
     const CoverPhotoUpload = (e) => {
@@ -38,7 +36,7 @@ const UpdateShopProfile = () => {
         const selectedFile = e.target.files[0];
         const formData = new FormData();
         formData.append("image", selectedFile);
-        const url = `https://api.imgbb.com/1/upload?key=2b8c7f515b1f628299764a2ce4c4cb0e`;
+        const url = `http://localhost:5000/api/v1/image/upload-image`;
         fetch(url, {
             method: "POST",
             body: formData,
@@ -46,12 +44,13 @@ const UpdateShopProfile = () => {
             .then((res) => res.json())
             .then((imageData) => {
 
-                if (imageData.data.url) {
-                    const image = imageData.data.url;
-                    console.log(image);
+                if (imageData.imageUrl) {
+                    const image = imageData.imageUrl;
+                  
 
-                    fetch(`https://salenow-v2-backend.vercel.app/update-cover/${shopInfo._id}`, {
+                    fetch(`http://localhost:5000/api/v1/shop/update-cover/${shopInfo._id}`, {
                         method: "PUt",
+
                         headers: {
                             "Content-Type": "application/json"
                         },
@@ -60,7 +59,7 @@ const UpdateShopProfile = () => {
                         .then((data) => {
                             setShopInfo(data)
                             const jsonData = JSON.stringify(data);
-                            console.log(shopInfo);
+                           
 
                             document.cookie = `SellerShop=${encodeURIComponent(jsonData)}; expires=Thu, 01 Jan 2030 00:00:00 UTC; path=/seller`;
 
@@ -79,7 +78,7 @@ const UpdateShopProfile = () => {
         const selectedFile = e.target.files[0];
         const formData = new FormData();
         formData.append("image", selectedFile);
-        const url = `https://api.imgbb.com/1/upload?key=2b8c7f515b1f628299764a2ce4c4cb0e`;
+        const url = `http://localhost:5000/api/v1/image/upload-image`;
         fetch(url, {
             method: "POST",
             body: formData,
@@ -87,11 +86,10 @@ const UpdateShopProfile = () => {
             .then((res) => res.json())
             .then((imageData) => {
 
-                if (imageData.data.url) {
-                    const image = imageData.data.url;
-                    console.log(image);
-
-                    fetch(`https://salenow-v2-backend.vercel.app/update-logo/${shopInfo._id}`, {
+                if (imageData.imageUrl) {
+                    const image = imageData.imageUrl;
+                  
+                    fetch(`http://localhost:5000/api/v1/shop/update-logo/${shopInfo._id}`, {
                         method: "PUt",
                         headers: {
                             "Content-Type": "application/json"
@@ -101,8 +99,7 @@ const UpdateShopProfile = () => {
                         .then((data) => {
                             setShopInfo(data)
                             const jsonData = JSON.stringify(data);
-                            console.log(shopInfo);
-
+                         
                             document.cookie = `SellerShop=${encodeURIComponent(jsonData)}; expires=Thu, 01 Jan 2030 00:00:00 UTC; path=/seller`;
 
                         })

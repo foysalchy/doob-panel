@@ -10,7 +10,7 @@ const ManageService = () => {
     const { data: services = [], refetch, isLoading } = useQuery({
         queryKey: ["services"],
         queryFn: async () => {
-            const res = await fetch("https://salenow-v2-backend.vercel.app/admin/services");
+            const res = await fetch("http://localhost:5000/api/v1/admin/services");
             const data = await res.json();
             return data;
         },
@@ -34,7 +34,7 @@ const ManageService = () => {
 
     const ActiveHandle = (id) => {
 
-        fetch(`https://salenow-v2-backend.vercel.app/admin/service/status/${id}`, {
+        fetch(`http://localhost:5000/api/v1/admin/service/status/${id}`, {
             method: "PUT",
             headers: {
                 "content-type": "application/json",
@@ -49,7 +49,7 @@ const ManageService = () => {
 
     const DativeHandle = (id) => {
 
-        fetch(`https://salenow-v2-backend.vercel.app/admin/service/unstatus/${id}`, {
+        fetch(`http://localhost:5000/api/v1/admin/service/unstatus/${id}`, {
             method: "PUT",
             headers: {
                 "content-type": "application/json",
@@ -65,7 +65,7 @@ const ManageService = () => {
 
     const DeleteHandle = (id) => {
 
-        fetch(`https://salenow-v2-backend.vercel.app/admin/service/delete/${id}`, {
+        fetch(`http://localhost:5000/api/v1/admin/service/delete/${id}`, {
             method: "Delete",
             headers: {
                 "content-type": "application/json",
@@ -161,10 +161,10 @@ const ManageService = () => {
                 </div>
                 {filteredData.length ?
                     <div className="flex flex-col mt-6 w-full">
-                        <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-                            <div className="inline-block  py-2 ml-4">
+                        <div className="overflow-x-auto ">
+                            <div className="  py-2 pr-10">
                                 <div className="overflow-hidden border border-gray-200 dark:border-gray-700 md:rounded-lg">
-                                    <table className=" divide-y divide-gray-200 dark:divide-gray-700">
+                                    <table className=" w-full divide-y divide-gray-200 dark:divide-gray-700">
                                         <thead className="bg-gray-50 ">
                                             <tr>
                                                 <th

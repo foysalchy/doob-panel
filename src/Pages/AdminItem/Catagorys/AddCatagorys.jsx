@@ -34,14 +34,14 @@ const AddCatagorys = () => {
 
     const formData = new FormData();
     formData.append("image", image);
-    const url = `https://api.imgbb.com/1/upload?key=2b8c7f515b1f628299764a2ce4c4cb0e`;
+    const url = `http://localhost:5000/api/v1/image/upload-image`;
     fetch(url, {
       method: "POST",
       body: formData,
     })
       .then((res) => res.json())
       .then((imageData) => {
-        const image = imageData.data.url;
+        const image = imageData.imageUrl;
         const category = {
           title,
           img: image,
@@ -51,7 +51,7 @@ const AddCatagorys = () => {
   };
 
   const PostCategory = (category, form) => {
-    fetch(`https://salenow-v2-backend.vercel.app/admin/category`, {
+    fetch(`http://localhost:5000/api/v1/admin/category`, {
       method: "POST",
       headers: {
         "content-type": "application/json",

@@ -13,7 +13,7 @@ const SellerDomainManagement = () => {
     const { data: shops = [], refetch, isLoading } = useQuery({
         queryKey: ["shops"],
         queryFn: async () => {
-            const res = await fetch("https://salenow-v2-backend.vercel.app/shop");
+            const res = await fetch("http://localhost:5000/api/v1/shop");
             const data = await res.json();
             return data;
         },
@@ -33,8 +33,8 @@ const SellerDomainManagement = () => {
 
 
     const UpdateStatus = (id, status) => {
-        console.log(status);
-        fetch(`https://salenow-v2-backend.vercel.app/shop/domainstatus/${id}?status=${status}`,
+
+        fetch(`http://localhost:5000/api/v1/shop/domainstatus/${id}?status=${status}`,
             {
                 method: "Put",
                 headers: {
@@ -43,8 +43,8 @@ const SellerDomainManagement = () => {
             })
             .then((res) => res.json())
             .then((data) => {
-                alert('status update')
-                console.log(data);
+
+                Swal.fire('status update', '', 'success')
                 refetch()
             })
 
@@ -55,7 +55,7 @@ const SellerDomainManagement = () => {
 
     return (
         <div className="">
-         
+
 
             {!isLoading &&
                 <div className="relative w-3/5 my-6">

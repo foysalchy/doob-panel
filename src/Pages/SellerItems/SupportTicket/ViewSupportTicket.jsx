@@ -5,7 +5,7 @@ import { AuthContext } from '../../../AuthProvider/UserProvider';
 import Swal from 'sweetalert2';
 
 const ViewSupportTicket = ({ viewComment, setViewComment, ticketDetails, refetch }) => {
-    console.log(ticketDetails.status == "Open")
+   
 
 
     const { user } = useContext(AuthContext)
@@ -24,14 +24,13 @@ const ViewSupportTicket = ({ viewComment, setViewComment, ticketDetails, refetch
             'user': user?.name
         }
         // / support - ticket /: id
-        fetch(`https://salenow-v2-backend.vercel.app/seller-comment/${id}`, {
+        fetch(`http://localhost:5000/api/v1/seller-comment/${id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(data),
         }).then((res) => res.json())
-            .catch((err) => console.log('Error: ', err))
             .finally(() => {
                 event.target.reset()
                 setLoading(false)
@@ -41,7 +40,7 @@ const ViewSupportTicket = ({ viewComment, setViewComment, ticketDetails, refetch
             );
 
 
-        console.log(data);
+       
     }
 
     function formatDateTime(timestamp) {

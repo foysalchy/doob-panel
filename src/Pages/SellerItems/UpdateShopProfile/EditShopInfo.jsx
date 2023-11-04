@@ -29,7 +29,7 @@ const EditShopInfo = ({ Edit, setEdit, }) => {
 
         if (name.length > 2) {
             try {
-                const response = await fetch(`https://salenow-v2-backend.vercel.app/shop/info/${name}`);
+                const response = await fetch(`http://localhost:5000/api/v1/shop/info/${name}`);
                 const data = await response.json();
 
                 if (data) {
@@ -53,7 +53,7 @@ const EditShopInfo = ({ Edit, setEdit, }) => {
     };
 
 
-    console.log(shopUnicName);
+
 
 
     const [shopID, setShopID] = useState(false)
@@ -62,7 +62,7 @@ const EditShopInfo = ({ Edit, setEdit, }) => {
     const updateShopHandler = async (event) => {
 
         event.preventDefault();
-        //console.log(values);
+
         const updatedShopInfo = {
             shopName: event.target.shopName.value,
             shopNumber: event.target.shopNumber.value,
@@ -79,7 +79,7 @@ const EditShopInfo = ({ Edit, setEdit, }) => {
         try {
             if (shopID) {
                 shopInfo.shopId = shopUnicName;
-                fetch(`https://salenow-v2-backend.vercel.app/shop/updateInfo`, {
+                fetch(`http://localhost:5000/api/v1/shop/updateInfo`, {
                     method: 'PUT',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(shopInfo)
@@ -89,7 +89,7 @@ const EditShopInfo = ({ Edit, setEdit, }) => {
 
                         setShopInfo(data)
                         const jsonData = JSON.stringify(data);
-                        console.log();
+
 
                         document.cookie = `SellerShop=${encodeURIComponent(jsonData)}; expires=Thu, 01 Jan 2030 00:00:00 UTC; path=/seller`;
                         Swal.fire(
@@ -103,16 +103,15 @@ const EditShopInfo = ({ Edit, setEdit, }) => {
             }
 
             else {
-                fetch(`https://salenow-v2-backend.vercel.app/shop/updateInfo`, {
+                fetch(`http://localhost:5000/api/v1/shop/updateInfo`, {
                     method: 'PUT',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(shopInfo)
                 })
                     .then((res) => res.json())
                     .then((data) => {
-                        console.log(data);
+
                         const jsonData = JSON.stringify(data);
-                        console.log(shopInfo);
 
                         document.cookie = `SellerShop=${encodeURIComponent(jsonData)}; expires=Thu, 01 Jan 2030 00:00:00 UTC; path=/seller`;
 
@@ -134,33 +133,32 @@ const EditShopInfo = ({ Edit, setEdit, }) => {
 
 
 
-    const fetchUpdatedShopInfo = async (updatedShopInfo) => {
-        // Make a POST request to update shopInfo on the server
-        try {
-            // const response = await axios.post('/api/shops/update', updatedShopInfo);
+    // const fetchUpdatedShopInfo = async (updatedShopInfo) => {
+    //     // Make a POST request to update shopInfo on the server
+    //     try {
+    //         // const response = await axios.post('/api/shops/update', updatedShopInfo);
 
-            console.log("Updated Shop Info on the server:", response.data);
-        } catch (error) {
-            console.error("Error updating shopInfo on the server:", error);
-        }
-    };
+    //     } catch (error) {
+    //         console.error("Error updating shopInfo on the server:", error);
+    //     }
+    // };
 
-    const createNewShopInfo = async (updatedShopInfo) => {
-        // Make a POST request to create new shopInfo on the server
-        try {
-            fetch(`https://salenow-v2-backend.vercel.app/shop/updateInfo`, {
-                method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(updatedShopInfo)
-            })
-                .then((res) => res.json())
-                .then((data) => {
-                    console.log(data);
-                })
-        } catch (error) {
-            console.error("Error creating shopInfo on the server:", error);
-        }
-    };
+    // const createNewShopInfo = async (updatedShopInfo) => {
+    //     // Make a POST request to create new shopInfo on the server
+    //     try {
+    //         fetch(`http://localhost:5000/api/v1/shop/updateInfo`, {
+    //             method: 'PUT',
+    //             headers: { 'Content-Type': 'application/json' },
+    //             body: JSON.stringify(updatedShopInfo)
+    //         })
+    //             .then((res) => res.json())
+    //             .then((data) => {
+    //                Swal
+    //             })
+    //     } catch (error) {
+    //         console.error("Error creating shopInfo on the server:", error);
+    //     }
+    // };
 
 
 

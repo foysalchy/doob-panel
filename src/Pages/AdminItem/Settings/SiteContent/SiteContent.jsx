@@ -9,7 +9,7 @@ const SiteContent = () => {
     const { data: domainVideo, refetch, isLoading } = useQuery({
         queryKey: ["category"],
         queryFn: async () => {
-            const res = await fetch("https://salenow-v2-backend.vercel.app/admin/domain-video");
+            const res = await fetch("http://localhost:5000/api/v1/admin/domain-video");
             const data = await res.json();
             return data;
         },
@@ -19,9 +19,8 @@ const SiteContent = () => {
     const UploadForDomain = (e) => {
         e.preventDefault();
         const url = e.target.url.value
-        console.log(url);
 
-        fetch('https://salenow-v2-backend.vercel.app/admin/add-domain-url', {
+        fetch('http://localhost:5000/api/v1/admin/add-domain-url', {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'
@@ -35,7 +34,6 @@ const SiteContent = () => {
                     'success'
                 )
                 refetch()
-                console.log(data);
             })
 
 
@@ -47,7 +45,7 @@ const SiteContent = () => {
 
 
     const deleteVideo = (id) => {
-        fetch('https://salenow-v2-backend.vercel.app/admin/delete-domain-url', {
+        fetch('http://localhost:5000/api/v1/admin/delete-domain-url', {
             method: "delete",
             headers: {
                 'Content-Type': 'application/json'
@@ -61,8 +59,6 @@ const SiteContent = () => {
                     '',
                     'success'
                 )
-
-                console.log(data);
             })
     }
 
@@ -75,7 +71,7 @@ const SiteContent = () => {
                 <form onSubmit={UploadForDomain} className=" flex gap-4 w-full justify-around ">
                     <div className=" flex w-full">
                         <span className="flex items-center px-3 pointer-events-none sm:text-sm rounded-l-md bg-gray-700">Provide  iframe </span>
-                        <input type="text" name="url" id="url" placeholder="https://brightfuturesoft.com" className="flex flex-1  sm:text-sm rounded-r-md focus:ri border-gray-700 text-gray-900  focus:ri flex-grow w-full h-12 px-4 mb-3 transition duration-200 bg-white border shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-gray-400 focus:outline-none focus:shadow-outline" />
+                        <input type="text" name="url" id="url" placeholder="<iframe> Your Url</iframe> " className="flex flex-1  sm:text-sm rounded-r-md focus:ri border-gray-700 text-gray-900  focus:ri flex-grow w-full h-12 px-4 mb-3 transition duration-200 bg-white border shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-gray-400 focus:outline-none focus:shadow-outline" />
                     </div>
                     <button
 

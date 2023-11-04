@@ -6,7 +6,7 @@ import Swal from 'sweetalert2';
 
 const SellerUpdatePage = ({ OpenModal, setOpenModal, FAQInfo, refetch }) => {
 
-    console.log(FAQInfo);
+   
 
     const handleFAQUpdate = async (e) => {
         e.preventDefault();
@@ -22,11 +22,11 @@ const SellerUpdatePage = ({ OpenModal, setOpenModal, FAQInfo, refetch }) => {
             MetaTag,
             MetaDescription
         }
-        console.log(data);
+     
 
 
         try {
-            fetch(`https://salenow-v2-backend.vercel.app/seller/page/update-page/${FAQInfo._id}`, {
+            fetch(`http://localhost:5000/api/v1/seller/page/update-page/${FAQInfo._id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -45,7 +45,7 @@ const SellerUpdatePage = ({ OpenModal, setOpenModal, FAQInfo, refetch }) => {
 
     return (
         <div className={`fixed z-50 top-0 left-0 flex h-full min-h-screen w-full items-center justify-center bg-black bg-opacity-90 px-4 py-5 ${OpenModal ? "block" : "hidden"}`}>
-            <div className="w-full max-w-[800px] h-[90%] rounded-[20px] bg-white pb-10 px-8 text-center md:px-[30px] overflow-scroll">
+            <div className="w-full max-w-[800px] rounded-[20px] bg-white pb-10 px-8 text-center md:px-[30px] ">
                 <div className='flex justify-between z-50 pt-4 items-start w-full sticky top-0 bg-white border-b'>
                     <div className='pb-2 text-xl font-bold text-dark text-center sm:text-2xl'>Update FAQ</div>
                     <div onClick={() => setOpenModal(!OpenModal)} className='cursor-pointer bg-gray-500 rounded-full px-2.5 mb-2 p-1 text-2xl hover:text-red-500'>
@@ -53,7 +53,7 @@ const SellerUpdatePage = ({ OpenModal, setOpenModal, FAQInfo, refetch }) => {
                     </div>
                 </div>
 
-                <form onSubmit={handleFAQUpdate}>
+                <form className='h-[500px] overflow-y-scroll' onSubmit={handleFAQUpdate}>
                     <input name='title' className='w-full p-2 my-4 border' defaultValue={FAQInfo.title} />
 
                     <div>

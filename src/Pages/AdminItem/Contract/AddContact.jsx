@@ -32,7 +32,7 @@ const AddContact = () => {
             }
         }
 
-        fetch(`https://salenow-v2-backend.vercel.app/admin/contact`, {
+        fetch(`http://localhost:5000/api/v1/admin/contact`, {
             method: "POST",
             headers: {
                 "content-type": "application/json",
@@ -68,7 +68,7 @@ const AddContact = () => {
 
     return (
         <div className="w-full">
-        
+
             <div className="my-10">
                 <h1 className="text-2xl font-bold text-center">
                     Publish Your Shop Contact Information only username

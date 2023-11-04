@@ -46,7 +46,7 @@ const AddPrice = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    fetch(`https://salenow-v2-backend.vercel.app/admin/pricing`, {
+    fetch(`http://localhost:5000/api/v1/admin/pricing`, {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -70,7 +70,7 @@ const AddPrice = () => {
 
   return (
     <div>
-     
+
       <div className="border border-collapse flex justify-center py-20 rounded">
         <div className="w-3/5">
           <form onSubmit={handleSubmit}>

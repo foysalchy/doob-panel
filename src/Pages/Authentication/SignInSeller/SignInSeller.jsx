@@ -29,7 +29,7 @@ const SignInSeller = () => {
       password,
     };
     setLoading(true);
-    fetch("https://salenow-v2-backend.vercel.app/auth/sign-in", {
+    fetch("http://localhost:5000/api/v1/auth/sign-in", {
       method: "post",
       headers: {
         "content-type": "application/json",
@@ -39,22 +39,12 @@ const SignInSeller = () => {
       .then((res) => res.json())
       .then((data) => {
         if (data.user) {
-          console.log(data.user);
           setUser(data.user);
           setCookie("SaleNowUser", JSON.stringify(data.user));
           setLoading(false);
           setPassError("");
-
-          Swal.fire(
-            "Login Successful",
-            "You are a valid user. Best of luck",
-            "success"
-          );
-
-
-
           if (data.user.role === 'seller') {
-            fetch(`https://salenow-v2-backend.vercel.app/shop/checkshop/${data?.user?.email}`)
+            fetch(`http://localhost:5000/api/v1/shop/checkshop/${data?.user?.email}`)
               .then((response) => response.json())
               .then((result) => {
 

@@ -6,7 +6,7 @@ const SellerDashLayout = () => {
 
     const location = useLocation();
     const paths = location.pathname.split('/').filter((path) => path !== '')
-    console.log(paths);
+
 
     return (
         <div className='flex '>
