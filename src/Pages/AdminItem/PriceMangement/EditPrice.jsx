@@ -21,7 +21,7 @@ const EditPrice = ({ OpenModal, setOpenModal, FAQInfo, refetch }) => {
     };
 
 
-    
+
 
     const handleFAQUpdate = async (e) => {
         e.preventDefault();
@@ -41,7 +41,7 @@ const EditPrice = ({ OpenModal, setOpenModal, FAQInfo, refetch }) => {
             MetaTag,
             MetaDescription
         }
-  
+
 
 
         try {

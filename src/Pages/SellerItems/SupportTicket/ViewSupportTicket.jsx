@@ -5,7 +5,7 @@ import { AuthContext } from '../../../AuthProvider/UserProvider';
 import Swal from 'sweetalert2';
 
 const ViewSupportTicket = ({ viewComment, setViewComment, ticketDetails, refetch }) => {
-   
+
 
 
     const { user } = useContext(AuthContext)
@@ -40,7 +40,7 @@ const ViewSupportTicket = ({ viewComment, setViewComment, ticketDetails, refetch
             );
 
 
-       
+
     }
 
     function formatDateTime(timestamp) {

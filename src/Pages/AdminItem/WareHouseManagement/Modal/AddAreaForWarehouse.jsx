@@ -19,9 +19,9 @@ const AddAreaForWarehouse = ({ recall, setOpenModal }) => {
     });
 
     const filteredWarehouses = warehouses.filter(warehouse => warehouse.status === true);
-    const sortedWarehouses = filteredWarehouses.sort((a, b) => a.name.localeCompare(b.name));
+    const sortedWarehouses = filteredWarehouses.filter(warehouse => warehouse.status).sort((a, b) => a?.name?.localeCompare(b.name));
 
-    const warehouseOptions = sortedWarehouses.slice(0, 5).map((warehouse) => ({
+    const warehouseOptions = sortedWarehouses.map((warehouse) => ({
         value: warehouse.name,
         label: warehouse.name,
     }));

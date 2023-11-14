@@ -1,19 +1,30 @@
 import React from 'react';
 import { RxCross2 } from 'react-icons/rx';
+import AddNewWarehouse from './AddNewWarehouse';
+import AddAreaForWarehouse from './AddAreaForWarehouse';
+import AddRackModal from './AddRackModal';
+import AddSelfModal from './AddSelfModal';
+import AddCellModal from './AddCellModal';
 
-const ModalForWarehouse = ({ setOpenModal, OpenModal, data }) => {
+const ModalForWarehouse = ({ setOpenModal, OpenModal, data, refetch }) => {
     return (
         <div className={`fixed z-50 top-0 left-0 flex h-full min-h-screen w-full items-center justify-center bg-black bg-opacity-90 px-4 py-5 ${OpenModal ? "block" : "hidden"}`}>
-            <div className="w-full max-w-[800px]  rounded-[20px] bg-white pb-10 px-8 text-center md:px-[30px]">
-                <div className='flex justify-between z-50 pt-4 items-start w-full sticky top-0 bg-white border-b'>
-                    <div className='pb-2 text-xl font-bold text-dark text-center sm:text-2xl'>Edit {data}</div>
-                    <div onClick={() => setOpenModal(!OpenModal)} className='cursor-pointer bg-gray-500 rounded-full px-2.5 mb-2 p-1 text-2xl hover:text-red-500'>
+            <div className="w-full max-w-[800px]  rounded-[20px] bg-white pb-10 text-center ">
+                <div className='flex justify-between z-50 pt-4 items-start w-full sticky top-0 bg-gray-800 border-b border-gray-300 rounded-t-[18px] px-10'>
+                    <div className='pb-2 text-xl font-bold text-white text-center sm:text-2xl'>{data}</div>
+                    <div onClick={() => setOpenModal(!OpenModal)} className='cursor-pointer bg-gray-300 rounded-full  mb-2 p-2 text-2xl hover:bg-gray-400'>
                         <RxCross2 className='text-xl' />
                     </div>
                 </div>
 
-                <div className='h-[500px] overflow-y-scroll' >
-
+                <div className='max-h-[500px] px-10 text-start overflow-y-scroll' >
+                    {
+                        (data == 'Add New Warehouse' && <AddNewWarehouse setOpenModal={setOpenModal} refetch={refetch} />) ||
+                        (data == 'Add Area' && <AddAreaForWarehouse setOpenModal={setOpenModal} recall={refetch} />) ||
+                        (data == 'Add Rack' && <AddRackModal setOpenModal={setOpenModal} recall={refetch} />) ||
+                        (data == 'Add Self' && <AddSelfModal setOpenModal={setOpenModal} recall={refetch} />) ||
+                        (data == 'Add Cell' && <AddCellModal setOpenModal={setOpenModal} recall={refetch} />)
+                    }
 
                 </div>
             </div>

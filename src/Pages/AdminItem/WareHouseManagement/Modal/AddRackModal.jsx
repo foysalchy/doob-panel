@@ -18,9 +18,9 @@ const AddRackModal = ({ recall, setOpenModal }) => {
     });
 
     const filteredWarehouses = warehouses.filter(warehouse => warehouse.status === true);
-    const sortedWarehouses = filteredWarehouses.sort((a, b) => a.name.localeCompare(b.name));
+    const sortedWarehouses = filteredWarehouses.sort((a, b) => a?.name?.localeCompare(b.name));
 
-    const warehouseOptions = sortedWarehouses.slice(0, 5).map((warehouse) => ({
+    const warehouseOptions = sortedWarehouses.filter((rack) => rack.status).slice(0, 5).map((warehouse) => ({
         value: warehouse.name,
         label: warehouse.name,
     }));
@@ -107,7 +107,7 @@ const AddRackModal = ({ recall, setOpenModal }) => {
                         }}
                         name='area'
                         required
-                        options={areas.map((area) => ({
+                        options={areas.filter((rack) => rack.status).map((area) => ({
                             value: area.area,
                             label: area.area,
                         }))}

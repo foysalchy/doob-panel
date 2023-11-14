@@ -144,7 +144,7 @@ const AreaListForWarehouse = () => {
             }
         }).then((result) => {
             if (result.dismiss === Swal.DismissReason.timer) {
-                // Timer completed, initiate the fetch for deletion
+
                 fetch(`http://localhost:5000/api/v1/admin/warehouse/area/delete/${id}`, {
                     method: "DELETE",
                     headers: {
@@ -243,7 +243,7 @@ const AreaListForWarehouse = () => {
                 </div>
 
 
-                <table className="table-auto w-full text-left whitespace-no-wrap">
+                <table className="table-auto w-full text-left  whitespace-no-wrap">
                     <thead>
                         <tr>
 

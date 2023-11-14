@@ -11,11 +11,12 @@ const WareHouseManagement = () => {
         setOpenModal(data);
     };
 
-    const buttons = ['Add New Warehouse', 'Add Area', 'Add Reck', 'Add Self', 'Add Cell']
+    const buttons = ['Add Area', 'Add ', 'Add ', 'Add Cell']
     return (
         <div>
             <div className='grid grid-cols-3 gap-4 py-10 pr-10'>
                 <Link
+                    to={'/admin/warehouse/warehouse-management'}
                     className="group relative inline-flex items-center justify-center overflow-hidden rounded bg-gray-900 px-8 py-6 text-white focus:outline-none focus:ring active:bg-gray-500"
 
                 >
@@ -24,29 +25,62 @@ const WareHouseManagement = () => {
                     </span>
 
                     <span className="text-sm font-medium transition-all group-hover:ms-4">
-                        Manage Warehouse
+                        Warehouse Management
                     </span>
                 </Link>
-                {buttons.map((data, i) => (
-                    <>
+                <Link
+                    to={'/admin/warehouse/area-management'}
+                    className="group relative inline-flex items-center justify-center overflow-hidden rounded bg-gray-900 px-8 py-6 text-white focus:outline-none focus:ring active:bg-gray-500"
 
-                        <button
-                            key={i}
-                            onClick={() => handleViewDetails(data)}
-                            className="group relative inline-flex items-center justify-center overflow-hidden rounded bg-gray-900 px-8 py-6 text-white focus:outline-none focus:ring active:bg-gray-500"
-                        >
-                            <span className="absolute -start-full transition-all group-hover:start-10">
-                                <FaLongArrowAltRight />
-                            </span>
-                            <span className="text-sm font-medium transition-all group-hover:ms-4">
-                                {data}
-                            </span>
-                        </button>
+                >
+                    <span className="absolute -start-full transition-all group-hover:start-10">
+                        <FaLongArrowAltRight />
+                    </span>
 
-                        {OpenModal === data && <ModalForWarehouse OpenModal={OpenModal} setOpenModal={setOpenModal} data={data} />}
+                    <span className="text-sm font-medium transition-all group-hover:ms-4">
+                        Area Management
+                    </span>
+                </Link>
+                <Link
+                    to={'/admin/warehouse/rack-management'}
+                    className="group relative inline-flex items-center justify-center overflow-hidden rounded bg-gray-900 px-8 py-6 text-white focus:outline-none focus:ring active:bg-gray-500"
 
-                    </>
-                ))}
+                >
+                    <span className="absolute -start-full transition-all group-hover:start-10">
+                        <FaLongArrowAltRight />
+                    </span>
+
+                    <span className="text-sm font-medium transition-all group-hover:ms-4">
+                        Rack Management
+                    </span>
+                </Link>
+                <Link
+                    to={'/admin/warehouse/self-management'}
+                    className="group relative inline-flex items-center justify-center overflow-hidden rounded bg-gray-900 px-8 py-6 text-white focus:outline-none focus:ring active:bg-gray-500"
+
+                >
+                    <span className="absolute -start-full transition-all group-hover:start-10">
+                        <FaLongArrowAltRight />
+                    </span>
+
+                    <span className="text-sm font-medium transition-all group-hover:ms-4">
+                        Self Management
+                    </span>
+                </Link>
+                <Link
+                    to={'/admin/warehouse/cell-management'}
+                    className="group relative inline-flex items-center justify-center overflow-hidden rounded bg-gray-900 px-8 py-6 text-white focus:outline-none focus:ring active:bg-gray-500"
+
+                >
+                    <span className="absolute -start-full transition-all group-hover:start-10">
+                        <FaLongArrowAltRight />
+                    </span>
+
+                    <span className="text-sm font-medium transition-all group-hover:ms-4">
+                        Cell Management
+                    </span>
+                </Link>
+
 
 
 

@@ -18,7 +18,7 @@ const SendEmail = () => {
         },
     });
 
-  
+
 
 
     const filteredOptions = options?.filter((option) =>
@@ -134,7 +134,7 @@ const SendEmail = () => {
                     <div>
 
                         <div>
-                            <label for="email" class="block text-sm text-gray-900 ">Search Email Address </label>
+                            <label for="email" className="block text-sm text-gray-900 ">Search Email Address </label>
 
                             <input type="email"
                                 id="multiSelect"

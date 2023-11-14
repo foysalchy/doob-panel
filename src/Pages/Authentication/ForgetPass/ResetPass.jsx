@@ -17,7 +17,7 @@ const ResetPass = () => {
     const pass1 = form.password1.value;
     const pass2 = form.password2.value;
     if (pass1 === pass2) {
-      fetch(`http://localhost:5000/api/v1/reset-pass/${id}`, {
+      fetch(`http://localhost:5000/api/v1/auth/reset-pass/${id}`, {
         method: "put",
         headers: {
           "content-type": "application/json",
@@ -90,7 +90,7 @@ const ResetPass = () => {
                   htmlFor="password"
                   className="inline-block mb-1 font-medium"
                 >
-                  Password
+                  Re Password
                 </label>
                 <div className="relative">
                   <input

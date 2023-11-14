@@ -6,7 +6,7 @@ import Swal from 'sweetalert2';
 
 const SellerUpdatePage = ({ OpenModal, setOpenModal, FAQInfo, refetch }) => {
 
-   
+
 
     const handleFAQUpdate = async (e) => {
         e.preventDefault();
@@ -22,7 +22,7 @@ const SellerUpdatePage = ({ OpenModal, setOpenModal, FAQInfo, refetch }) => {
             MetaTag,
             MetaDescription
         }
-     
+
 
 
         try {

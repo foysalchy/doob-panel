@@ -97,27 +97,24 @@ const ManageProduct = () => {
           </span>
         </div>
         <div className="flex flex-col mt-6">
-          <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-            <div className="inline-block  py-2 ml-4">
-              <div className="overflow-hidden border border-gray-200 dark:border-gray-700 md:rounded-lg">
-                <table className=" divide-y divide-gray-200 dark:divide-gray-700">
-                  <thead className="bg-gray-50 ">
+          <div className="overflow-x-auto">
+            <div className="  py-2 ml-4">
+              <div className="overflow-hidden border border-gray-200 border-gray-700 md:rounded-lg">
+                <table className=" divide-y w-full divide-gray-700">
+                  <thead className="bg-gray-900 text-white ">
                     <tr>
                       <th
                         scope="col"
-                        className="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                        className="py-3.5 px-4 text-sm font-normal text-left rtl:text-right "
                       >
                         <div className="flex items-center gap-x-3">
-                          <input
-                            type="checkbox"
-                            className="text-blue-500 border-gray-300 rounded dark:bg-gray-900 dark:ring-offset-gray-900 dark:border-gray-700"
-                          />
+
                           <span>Name</span>
                         </div>
                       </th>
                       <th
                         scope="col"
-                        className="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                        className="px-12 py-3.5 text-sm font-normal text-left rtl:text-right "
                       >
                         <button className="flex items-center gap-x-2">
                           <span>Status</span>
@@ -125,7 +122,7 @@ const ManageProduct = () => {
                       </th>
                       <th
                         scope="col"
-                        className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                        className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right "
                       >
                         <button className="flex items-center gap-x-2">
                           <span>Category</span>
@@ -133,18 +130,18 @@ const ManageProduct = () => {
                       </th>
                       <th
                         scope="col"
-                        className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                        className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right "
                       >
                         Email address
                       </th>
                       <th
                         scope="col"
-                        className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                        className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right "
                       >
                         Teams
                       </th>
-                      <th scope="col" className="relative py-3.5 px-4">
-                        <span className="sr-only">Edit</span>
+                      <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left  ">
+                        <span >Action</span>
                       </th>
                     </tr>
                   </thead>
@@ -155,7 +152,7 @@ const ManageProduct = () => {
                           <div className="inline-flex items-center gap-x-3">
                             <input
                               type="checkbox"
-                              className="text-blue-500 border-gray-300 rounded dark:bg-gray-900 dark:ring-offset-gray-900 dark:border-gray-700"
+                              className="text-blue-500 border-gray-300 rounded bg-gray-900 ring-offset-gray-900 border-gray-700"
                             />
                             <div className="flex items-center gap-x-2">
                               <img
@@ -170,7 +167,7 @@ const ManageProduct = () => {
                                     .slice(0, 5)
                                     .join(" ")}
                                 </h2>
-                                <p className="text-sm font-normal text-gray-600 dark:text-gray-400">
+                                <p className="text-sm font-normal text-gray-600 text-gray-400">
                                   {product._id}
                                 </p>
                               </div>
@@ -178,7 +175,7 @@ const ManageProduct = () => {
                           </div>
                         </td>
                         <td className="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                          <div className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-emerald-100/60 dark:bg-gray-800">
+                          <div className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-emerald-100/60 bg-gray-800">
                             <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
                             <h2 className="text-sm font-normal text-emerald-500">
                               Active
@@ -193,7 +190,7 @@ const ManageProduct = () => {
                         </td>
                         <td className="px-4 py-4 text-sm whitespace-nowrap">
                           <div className="flex items-center gap-x-2">
-                            <p className="px-3 py-1 text-xs text-indigo-500 rounded-full dark:bg-gray-800 bg-indigo-100/60">
+                            <p className="px-3 py-1 text-xs text-indigo-500 rounded-full bg-gray-800 bg-indigo-100/60">
                               Design
                             </p>
                           </div>

@@ -187,39 +187,39 @@ const ProductDetails = () => {
                     <p>154 Sold</p>
                   </div>
                 </div>
-                <div class="my-3">
-                  <div class="grid grid-cols-2 md:grid-cols-4 bg-red-100 py-3">
-                    <div class="text-center md:border-r-2 border-gray-400">
-                      <h6 class="font-bold text-xl text-red-400">$80</h6>
-                      <p class="text-sm text-[#606060]">Product Costing</p>
+                <div className="my-3">
+                  <div className="grid grid-cols-2 md:grid-cols-4 bg-red-100 py-3">
+                    <div className="text-center md:border-r-2 border-gray-400">
+                      <h6 className="font-bold text-xl text-red-400">$80</h6>
+                      <p className="text-sm text-[#606060]">Product Costing</p>
                     </div>
-                    <div class="text-center md:border-r-2 border-gray-400">
-                      <h6 class="font-bold text-xl">$90</h6>
-                      <p class="text-sm text-[#606060]">Selling Price</p>
+                    <div className="text-center md:border-r-2 border-gray-400">
+                      <h6 className="font-bold text-xl">$90</h6>
+                      <p className="text-sm text-[#606060]">Selling Price</p>
                     </div>
-                    <div class="text-center md:border-r-2 border-gray-400">
-                      <h6 class="font-bold text-xl">$18</h6>
-                      <p class="text-sm text-[#606060]">Your Profit</p>
+                    <div className="text-center md:border-r-2 border-gray-400">
+                      <h6 className="font-bold text-xl">$18</h6>
+                      <p className="text-sm text-[#606060]">Your Profit</p>
                     </div>
-                    <div class="text-center">
-                      <h6 class="font-bold text-xl">10%</h6>
-                      <p class="text-sm text-[#606060]">Your Profit</p>
+                    <div className="text-center">
+                      <h6 className="font-bold text-xl">10%</h6>
+                      <p className="text-sm text-[#606060]">Your Profit</p>
                     </div>
                   </div>
                 </div>
-                <div class="my-3">
-                  <div class="grid grid-cols-2 md:grid-cols-3 bg-red-100 py-3">
-                    <div class="text-center md:border-r-2 border-gray-400">
-                      <h6 class="font-bold text-xl text-red-400">$80</h6>
-                      <p class="text-sm text-[#606060]">10 Qty</p>
+                <div className="my-3">
+                  <div className="grid grid-cols-2 md:grid-cols-3 bg-red-100 py-3">
+                    <div className="text-center md:border-r-2 border-gray-400">
+                      <h6 className="font-bold text-xl text-red-400">$80</h6>
+                      <p className="text-sm text-[#606060]">10 Qty</p>
                     </div>
-                    <div class="text-center md:border-r-2 border-gray-400">
-                      <h6 class="font-bold text-xl">$90</h6>
-                      <p class="text-sm text-[#606060]">50 Quantity</p>
+                    <div className="text-center md:border-r-2 border-gray-400">
+                      <h6 className="font-bold text-xl">$90</h6>
+                      <p className="text-sm text-[#606060]">50 Quantity</p>
                     </div>
-                    <div class="text-center">
-                      <h6 class="font-bold text-xl">$18</h6>
-                      <p class="text-sm text-[#606060]">99 Quantity</p>
+                    <div className="text-center">
+                      <h6 className="font-bold text-xl">$18</h6>
+                      <p className="text-sm text-[#606060]">99 Quantity</p>
                     </div>
                   </div>
                 </div>

@@ -79,7 +79,7 @@ const PaymentGetWay = () => {
 
     const handleGetaway = (event) => {
         const selectedValue = event.target.value;
-     
+
         if (selectedValue == 'Choose your getaway') {
             setDisable(true)
         }
@@ -89,7 +89,7 @@ const PaymentGetWay = () => {
         }
     };
 
-    
+
 
 
     const deleteHandel = (id) => {

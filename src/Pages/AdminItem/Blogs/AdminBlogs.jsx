@@ -142,13 +142,13 @@ const AdminBlogs = () => {
         <div className="mt-6">
           <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
             <div className="  py-2 pr-10">
-              <div className="overflow-hidden border border-gray-200 dark:border-gray-700 md:rounded-lg">
-                <table className=" w-full divide-y divide-gray-200 dark:divide-gray-700">
+              <div className="overflow-hidden border border-gray-200 border-gray-700 md:rounded-lg">
+                <table className=" w-full divide-y divide-gray-200 divide-gray-700">
                   <thead className="bg-gray-50 ">
                     <tr>
                       <th
                         scope="col"
-                        className="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                        className="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500 text-gray-400"
                       >
                         <div className="flex items-center gap-x-3">
 
@@ -157,7 +157,7 @@ const AdminBlogs = () => {
                       </th>
                       <th
                         scope="col"
-                        className="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                        className="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 text-gray-400"
                       >
                         <button className="flex items-center gap-x-2">
                           <span>Status</span>
@@ -166,7 +166,7 @@ const AdminBlogs = () => {
 
 
                       <th scope="col"
-                        className="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                        className="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 text-gray-400">
                         <span className="flex items-center gap-x-2">Action</span>
                       </th>
                     </tr>
@@ -191,7 +191,7 @@ const AdminBlogs = () => {
                                     .join(" ")}
                                 </h2>
                                 <p
-                                  className="text-sm font-normal text-gray-600 dark:text-gray-400">
+                                  className="text-sm font-normal text-gray-600 text-gray-400">
                                   {new DOMParser().parseFromString(blog.message, 'text/html').body.textContent.split(" ")
                                     .slice(0, 5)
                                     .join(" ")}
@@ -201,13 +201,13 @@ const AdminBlogs = () => {
                           </div>
                         </td>
                         <td className="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                          {blog.status ? <button onClick={() => statusUpdate(blog._id, false)} className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-emerald-100/60 dark:bg-gray-800">
+                          {blog.status ? <button onClick={() => statusUpdate(blog._id, false)} className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-emerald-100/60 bg-gray-800">
                             <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
                             <h2 className="text-sm font-normal text-emerald-500">
                               Active
                             </h2>
                           </button> :
-                            <button onClick={() => statusUpdate(blog._id, true)} className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-emerald-100/60 dark:bg-gray-800">
+                            <button onClick={() => statusUpdate(blog._id, true)} className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-emerald-100/60 bg-gray-800">
                               <span className="h-1.5 w-1.5 rounded-full bg-red-500" />
                               <h2 className="text-sm font-normal text-red-500">
                                 Un Active
