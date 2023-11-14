@@ -207,7 +207,7 @@ const AddSupportTicket = ({ OpenSupport, setOpenSupport, refetch }) => {
                             {Sccenshort && (
                                 <label className="flex mb-4 items-center px-3 py-3 mx-auto mt-6 text-center bg-white border-2 border-dashed rounded-lg cursor-pointer">
                                     {!file ? (
-                                        <FaCloudUploadAlt className="w-6 h-6 text-gray-300 dark:text-gray-500" />
+                                        <FaCloudUploadAlt className="w-6 h-6 text-gray-300 text-gray-500" />
                                     ) : fileLoad ? (
                                         <Lottie className="w-6 h-6" animationData={done} loop={false} />
                                     ) : (

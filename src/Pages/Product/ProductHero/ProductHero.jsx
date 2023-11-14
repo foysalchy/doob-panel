@@ -13,7 +13,7 @@ const ProductHero = () => {
         <div className='flex gap-4 '>
             <div className='hidden  bg-white w-[20%] h-[350px] overflow-hidden overflow-y-scroll rounded-xl lg:flex flex-col gap-2 p-4 text-sm'>
                 {category.map((item, index) => (
-                    <Link to={`products/catagory/${item.name}`}><p key={index}>{item.name}</p></Link>
+                    <Link to={`products/catagory/${item?.name}`}><p key={index}>{item?.name}</p></Link>
                 ))}
             </div>
             <div className='lg:w-[80%] w-[100%]'>

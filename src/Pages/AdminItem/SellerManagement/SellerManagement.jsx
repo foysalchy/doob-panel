@@ -34,9 +34,9 @@ const SellerManagement = () => {
         const lowercaseSearchQuery = searchQuery.toLowerCase();
 
         return (
-            item.name.toLowerCase().includes(lowercaseSearchQuery) ||
-            item.userId.toLowerCase().includes(lowercaseSearchQuery) ||
-            item?.email?.toLowerCase().includes(lowercaseSearchQuery)
+            item?.name?.toLowerCase()?.includes(lowercaseSearchQuery) ||
+            item?.userId?.toLowerCase()?.includes(lowercaseSearchQuery) ||
+            item?.email?.toLowerCase()?.includes(lowercaseSearchQuery)
         );
     });
 
@@ -122,7 +122,7 @@ const SellerManagement = () => {
         Swal.fire({
             title: 'Deleting Seller',
             html: 'Please wait... <br> <b></b> milliseconds remaining.',
-            timer: 2000,
+            timer: 1000,
             timerProgressBar: true,
             showConfirmButton: false,
             didOpen: () => {
@@ -175,8 +175,8 @@ const SellerManagement = () => {
 
     const directLogin = async (email, userId) => {
 
-        logOut()
 
+        logOut()
         let password = ''
         await fetch(`http://localhost:5000/api/v1/admin/seller/pass/${userId}`).then((res) => res.json()).then((data) => {
             password = data.password
@@ -186,6 +186,7 @@ const SellerManagement = () => {
             email,
             password,
         };
+        console.log(data);
 
         await fetch("http://localhost:5000/api/v1/auth/sign-in", {
             method: "post",
@@ -197,13 +198,14 @@ const SellerManagement = () => {
             .then((res) => res.json())
             .then((data) => {
 
+                console.log(data);
 
                 if (data.user) {
                     if (data.user.role === 'seller') {
                         fetch(`http://localhost:5000/api/v1/shop/checkshop/${data?.user?.email}`)
                             .then((response) => response.json())
                             .then((result) => {
-
+                                console.log(result);
                                 if (result.seller) {
 
                                     setUser(data.user);
@@ -308,7 +310,7 @@ const SellerManagement = () => {
                                             {seller.name}
                                         </h2>
                                         <p
-                                            className="text-sm font-normal text-gray-600 dark:text-gray-400">
+                                            className="text-sm font-normal text-gray-600 text-gray-400">
                                             {seller.userId}
                                         </p>
                                     </td>

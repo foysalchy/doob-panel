@@ -8,8 +8,7 @@ import Swal from 'sweetalert2';
 import EditWareHouse from './EditWareHouse';
 import ModalForWarehouse from './Modal/ModalForWarehouse';
 
-const ListOfWarehouse = () =>
-{
+const ListOfWarehouse = () => {
 
 
     const { data: warehouses = [], refetch } = useQuery({
@@ -31,8 +30,8 @@ const ListOfWarehouse = () =>
         const lowercaseSearchQuery = searchQuery.toLowerCase();
 
         return (
-            item.name.toLowerCase().includes(lowercaseSearchQuery) ||
-            item.slag.toLowerCase().includes(lowercaseSearchQuery)
+            item?.name?.toLowerCase()?.includes(lowercaseSearchQuery) ||
+            item?.slag?.toLowerCase()?.includes(lowercaseSearchQuery)
         );
     });
 
@@ -125,51 +124,26 @@ const ListOfWarehouse = () =>
     }
 
 
-    const DeleteWarehouse = (id) => {
+    const DeleteWarehouse = async (id) => {
 
 
-        let timerInterval;
-
-        Swal.fire({
-            title: 'Deleting Seller',
-            html: 'Please wait... <br> <b></b> milliseconds remaining.',
-            timer: 2000,
-            timerProgressBar: true,
-            showConfirmButton: false,
-            didOpen: () => {
-                Swal.showLoading();
-                const b = Swal.getHtmlContainer().querySelector('b');
-                timerInterval = setInterval(() => {
-                    b.textContent = Swal.getTimerLeft();
-                }, 100);
+        const response = await fetch(`http://localhost:5000/api/v1/admin/warehouse/delete/${id}`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
             },
-            willClose: () => {
-                clearInterval(timerInterval);
-            }
-        }).then((result) => {
-            if (result.dismiss === Swal.DismissReason.timer) {
-                // Timer completed, initiate the fetch for deletion
-                fetch(`http://localhost:5000/api/v1/admin/warehouse/delete/${id}`, {
-                    method: "DELETE",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                })
-                    .then((res) => res.json())
-                    .then((data) => {
-
-                        Swal.fire('Seller Deleted', '', 'success');
-                        refetch();
-
-                    })
-                    .catch((error) => {
-                        console.error('Error deleting seller:', error);
-                        Swal.fire('Error Deleting Seller', 'An error occurred', 'error');
-                    });
-            }
         });
-    };
 
+        if (response.ok) {
+            Swal.fire('Seller Deleted', '', 'success');
+            refetch();
+        } else {
+            console.error('Error deleting seller:', response.statusText);
+            Swal.fire('Error Deleting Seller', 'An error occurred', 'error');
+        }
+
+
+    };
 
     const [OpenModal, setOpenModal] = useState(false)
 
@@ -207,9 +181,11 @@ const ListOfWarehouse = () =>
                     </span>
 
                     <span className="text-sm font-medium transition-all group-hover:ms-4">
-                        Add New Blog
+                        Add New Warehouse
                     </span>
                 </button>
+
+                {OpenModal === 'Add New Warehouse' && <ModalForWarehouse OpenModal={OpenModal} setOpenModal={setOpenModal} data={'Add New Warehouse'} refetch={refetch} />}
 
                 <div className="relative w-3/5 my-6">
                     <input
@@ -275,7 +251,7 @@ const ListOfWarehouse = () =>
                                                     {warehouse.name}
                                                 </h2>
                                                 <p
-                                                    className="text-sm font-normal text-gray-600 dark:text-gray-400">
+                                                    className="text-sm font-normal text-gray-600 text-gray-400">
                                                     {warehouse.slag}
                                                 </p>
                                             </div>
@@ -314,7 +290,7 @@ const ListOfWarehouse = () =>
                                         <EditWareHouse OpenModal={OpenModal} refetch={refetch} setOpenModal={setOpenModal} data={warehouse} />
                                     </div>}
 
-                                    {OpenModal === 'Add New Warehouse' && <ModalForWarehouse OpenModal={OpenModal} setOpenModal={setOpenModal} data={'Add New Warehouse'} refetch={refetch} />}
+
 
                                 </tr>
                             ))

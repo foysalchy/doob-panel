@@ -36,7 +36,7 @@ const FaqLayout = () => {
                           to={`/faq/${faq._id}`}
                           aria-label="Category"
                           title="Visit the East"
-                          className="block text-blue-500 dark:text-blue-400 hover:underline"
+                          className="block text-blue-500 text-blue-400 hover:underline"
                         >
                           {faq.title}
                         </Link>

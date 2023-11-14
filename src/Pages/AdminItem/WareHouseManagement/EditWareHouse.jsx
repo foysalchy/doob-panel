@@ -92,9 +92,9 @@ const EditWareHouse = ({ setOpenModal, OpenModal, data, refetch }) => {
                             <label className="flex flex-col rounded-lg border-4 border-dashed w-full group text-center">
                                 <div className="flex justify-center items-center max-h-48 w-2/5 mx-auto">
                                     {uploadFile ? <div className="flex py-6 items-center justify-center space-x-2">
-                                        <div className="w-4 h-4 rounded-full animate-pulse dark:bg-violet-400"></div>
-                                        <div className="w-4 h-4 rounded-full animate-pulse dark:bg-violet-400"></div>
-                                        <div className="w-4 h-4 rounded-full animate-pulse dark:bg-violet-400"></div>
+                                        <div className="w-4 h-4 rounded-full animate-pulse bg-violet-400"></div>
+                                        <div className="w-4 h-4 rounded-full animate-pulse bg-violet-400"></div>
+                                        <div className="w-4 h-4 rounded-full animate-pulse bg-violet-400"></div>
                                     </div> : <img className="h-36 py-4 object-center" src={image} alt="Current Warehouse Image" />}
                                 </div>
 

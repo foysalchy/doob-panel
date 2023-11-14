@@ -22,7 +22,7 @@ const UpdatePage = ({ OpenModal, setOpenModal, FAQInfo, refetch }) => {
             MetaTag,
             MetaDescription
         }
-      
+
 
 
         try {

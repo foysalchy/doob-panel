@@ -19,7 +19,7 @@ const SideNavAdmin = () => {
 
     return (
         <div className='py-6 sticky'>
-            <div className={menu ? "flex flex-col h-screen p-3  w-60 text-gray-900" : 'flex flex-col h-screen p-3 w-14 text-gray-900'}>
+            <div className={menu ? "flex flex-col h-screen p-2  w-60 text-gray-900 overflow-y-auto" : 'flex flex-col h-screen p-3 w-14 text-gray-900 overflow-y-auto'}>
                 <div className="space-y-3">
                     <div className="flex items-center justify-between">
                         {menu ? <Link
@@ -121,7 +121,7 @@ const SideNavAdmin = () => {
                                     : "flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
                             }}>
                                 <FaUsersGear className="w-5 h-5 fill-current text-gray-400" />
-                                {menu && <span>Category Management</span>}
+                                {menu && <span>Sevice Category </span>}
                             </NavLink>
 
                             <NavLink rel="noopener noreferrer" to={'/admin/faq'} className={({ isActive }) => {

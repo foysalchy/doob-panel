@@ -27,8 +27,8 @@ const SellerDomainManagement = () => {
 
     const filteredData = shops.filter(
         (item) =>
-            item.shopId.toString().includes(searchQuery) || item?.shopName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            item._id.toString().includes(searchQuery) || item?.domain?.toString().includes(searchQuery)
+            item?.shopId?.toString().includes(searchQuery) || item?.shopName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            item?._id?.toString().includes(searchQuery) || item?.domain?.toString().includes(searchQuery)
     );
 
 
@@ -90,7 +90,7 @@ const SellerDomainManagement = () => {
                     </span>
                 </div>}
 
-            {!isLoading && <section className=" px-4 mx-auto">
+            {!isLoading && <section className=" mr-10 mx-auto">
                 <div className="flex items-center gap-x-3">
                     <h2 className="text-lg font-medium text-gray-800 ">All Shops</h2>
                     <span className="px-3 py-1 text-xs  bg-blue-100 rounded-full d text-blue-400">
@@ -98,27 +98,27 @@ const SellerDomainManagement = () => {
                     </span>
                 </div>
                 <div className="flex flex-col mt-6">
-                    <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-                        <div className="inline-block  py-2 ml-4">
-                            <div className="overflow-hidden border border-gray-200 dark:border-gray-700 md:rounded-lg">
-                                <table className=" divide-y divide-gray-200 dark:divide-gray-700">
+                    <div className=" overflow-x-auto ">
+                        <div className="  py-2 ml-4">
+                            <div className="overflow-hidden  border border-gray-200 border-gray-700 md:rounded-lg">
+                                <table className="w-full divide-y divide-gray-200 divide-gray-700">
                                     <thead className="bg-gray-50 ">
                                         <tr>
                                             <th
                                                 scope="col"
-                                                className="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                                                className="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500 text-gray-400"
                                             >
                                                 <div className="flex items-center gap-x-3">
                                                     <input
                                                         type="checkbox"
-                                                        className="text-blue-500 border-gray-300 rounded dark:bg-gray-900 dark:ring-offset-gray-900 dark:border-gray-700"
+                                                        className="text-blue-500 border-gray-300 rounded bg-gray-900 ring-offset-gray-900 border-gray-700"
                                                     />
                                                     <span>Name</span>
                                                 </div>
                                             </th>
                                             <th
                                                 scope="col"
-                                                className="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                                                className="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 text-gray-400"
                                             >
                                                 <button className="flex items-center gap-x-2">
                                                     <span>Status</span>
@@ -126,7 +126,7 @@ const SellerDomainManagement = () => {
                                             </th>
                                             <th
                                                 scope="col"
-                                                className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                                                className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 text-gray-400"
                                             >
                                                 <button className="flex items-center gap-x-2">
                                                     <span>Domain Name</span>
@@ -134,7 +134,7 @@ const SellerDomainManagement = () => {
                                             </th>
                                             <th
                                                 scope="col"
-                                                className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                                                className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 text-gray-400"
                                             >
                                                 Email address
                                             </th>
@@ -152,7 +152,7 @@ const SellerDomainManagement = () => {
                                                         <input
 
                                                             type="checkbox"
-                                                            className="text-blue-500 border-gray-300 rounded dark:bg-gray-900 dark:ring-offset-gray-900 dark:border-gray-700"
+                                                            className="text-blue-500 border-gray-300 rounded bg-gray-900 ring-offset-gray-900 border-gray-700"
                                                         />
                                                         <div className="flex items-center gap-x-2">
                                                             <img className='w-8 h-8 object-cover' src={shop?.logo} alt="" />
@@ -160,7 +160,7 @@ const SellerDomainManagement = () => {
                                                                 <h2 className="font-medium text-gray-800  ">
                                                                     {shop?.shopName}
                                                                 </h2>
-                                                                <p className="text-sm font-normal text-gray-600 dark:text-gray-400">
+                                                                <p className="text-sm font-normal text-gray-600 text-gray-400">
                                                                     {shop?.shopId}
                                                                 </p>
                                                             </div>
@@ -172,14 +172,14 @@ const SellerDomainManagement = () => {
                                                         {shop?.domain && <div >
                                                             {
                                                                 shop.domain_status === 'true' ?
-                                                                    <button onClick={() => UpdateStatus(shop.shopId, false)} className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-emerald-100/60 dark:bg-gray-800">
+                                                                    <button onClick={() => UpdateStatus(shop.shopId, false)} className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-emerald-100/60 bg-gray-800">
                                                                         <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
                                                                         <h2 className="text-sm font-normal text-emerald-500">
                                                                             Active
                                                                         </h2>
                                                                     </button>
                                                                     :
-                                                                    <button onClick={() => UpdateStatus(shop.shopId, true)} className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-emerald-100/60 dark:bg-gray-800">
+                                                                    <button onClick={() => UpdateStatus(shop.shopId, true)} className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-emerald-100/60 bg-gray-800">
                                                                         <span className="h-1.5 w-1.5 rounded-full bg-red-500" />
                                                                         <h2 className="text-sm font-normal text-red-500">
                                                                             Not  Active

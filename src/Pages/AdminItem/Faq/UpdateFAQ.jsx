@@ -6,7 +6,7 @@ import Swal from 'sweetalert2';
 
 const UpdateFAQ = ({ OpenModal, setOpenModal, FAQInfo, refetch }) => {
 
-    
+
     const handleFAQUpdate = async (e) => {
         e.preventDefault();
 

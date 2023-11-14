@@ -69,6 +69,18 @@ const Settings = () => {
                         Shipping
                     </span>
                 </Link>
+                <Link
+                    className="group relative inline-flex items-center justify-center overflow-hidden rounded bg-gray-900 px-8 py-6 text-white focus:outline-none focus:ring active:bg-gray-500"
+                    to="/admin/settings/daraz-setup"
+                >
+                    <span className="absolute -start-full transition-all group-hover:start-10">
+                        <FaLongArrowAltRight />
+                    </span>
+
+                    <span className="text-sm font-medium transition-all group-hover:ms-4">
+                        Daraz Setup
+                    </span>
+                </Link>
 
 
 

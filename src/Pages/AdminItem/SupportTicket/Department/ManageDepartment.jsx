@@ -40,7 +40,7 @@ const ManageDepartment = ({ ManageDepartment, setManageDepartment }) => {
 
     const filteredData = departments.filter(
         (item) =>
-            item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            item?.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
             item._id.toString().includes(searchQuery)
     );
 

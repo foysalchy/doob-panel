@@ -1,15 +1,19 @@
 import { RouterProvider } from "react-router-dom";
 import "./App.css";
 import Router from "./Routes/Router";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useEffect } from "react";
+import { AuthContext } from "./AuthProvider/UserProvider";
 
 
 function App() {
 
   const [isOnline, setIsOnline] = useState(navigator.onLine);
+  const { user } = useContext(AuthContext)
 
   useEffect(() => {
+
+
     const handleOnlineStatus = () => {
       setIsOnline(navigator.onLine);
     };
@@ -24,6 +28,7 @@ function App() {
       window.removeEventListener('offline', handleOnlineStatus);
     };
   }, []);
+
 
 
 

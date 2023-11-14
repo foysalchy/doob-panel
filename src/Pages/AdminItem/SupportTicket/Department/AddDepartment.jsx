@@ -69,7 +69,7 @@ const AddDepartment = ({ ModalOpen, setModalOpen }) => {
                         ></span>
                         <div>
 
-                            <input id="name" value={departmentName} onChange={(e) => setDepartmentName(e.target.value)} class="mb-5 mt-2 text-gray-600 focus:outline-none focus:border focus:border-indigo-700 font-normal w-full h-10 flex items-center pl-3 text-sm border-gray-300 rounded border" placeholder="Provide a departmentName name" />
+                            <input id="name" value={departmentName} onChange={(e) => setDepartmentName(e.target.value)} className="mb-5 mt-2 text-gray-600 focus:outline-none focus:border focus:border-indigo-700 font-normal w-full h-10 flex items-center pl-3 text-sm border-gray-300 rounded border" placeholder="Provide a departmentName name" />
                         </div>
 
 

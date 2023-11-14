@@ -16,6 +16,7 @@ const UserProvider = ({ children }) => {
             Cookies.remove(cookieName, { path: '/' });
             Cookies.remove(cookieName, { path: '/seller' });
             Cookies.remove(cookieName, { path: '/admin' });
+            Cookies.remove(cookieName, { path: '/admin/warehouse' });
         }
 
         setUser('');

@@ -24,7 +24,7 @@ const AddDomain = () => {
         fetch(`http://localhost:5000/api/v1/api/dns?domain=${domain}&txtValue=salenow.com/shop/${txtValue}`)
             .then((res) => res.json())
             .then((data) => {
-              
+
                 if (data.isValuePresent === true) {
                     fetch('http://localhost:5000/api/v1/seller/addDomain',
                         {
@@ -47,7 +47,7 @@ const AddDomain = () => {
 
                             )
                             const jsonData = JSON.stringify(data);
-                         
+
 
                             document.cookie = `SellerShop=${encodeURIComponent(jsonData)}; expires=Thu, 01 Jan 2030 00:00:00 UTC; path=/seller`;
 
@@ -89,7 +89,7 @@ const AddDomain = () => {
 
     const isItDomain = (e) => {
         const domain = e.target.value
-       
+
         const domainNameRegex = new RegExp(/^((?!-))(xn--)?[a-z0-9][a-z0-9-_]{0,61}[a-z0-9]{0,1}\.(xn--)?([a-z0-9\-]{1,61}|[a-z0-9-]{1,30}\.[a-z]{2,})$/);
         const isValid = domainNameRegex.test(domain)
         if (isValid) {
@@ -132,7 +132,7 @@ const AddDomain = () => {
                 <h1 className="text-2xl font-bold mt-10 text-center">
                     Upload Your Domain
                 </h1>
-                <div class="text-center my-4">
+                <div className="text-center my-4">
 
                     Your Local Domain: <a href={`http://salenow.com/shop/${shopInfo.shopId}`} target="_blank" rel="noopener noreferrer"> <code> salenow.com/shop/{shopInfo.shopId}</code> </a>
                     {shopInfo.domain && <p> Your Custom domain: <a href={`http://${shopInfo.domain}`} target="_blank" rel="noopener noreferrer"> <code>{shopInfo.domain}</code></a></p>}

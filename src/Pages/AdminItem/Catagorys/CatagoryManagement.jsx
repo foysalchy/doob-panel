@@ -32,10 +32,10 @@ const CatagoryManagement = () => {
   const [searchQuery, setSearchQuery] = useState("");
 
   const handleSearch = (event) => {
-    setSearchQuery(event.target.value);
+    setSearchQuery(event?.target?.value || "");
   };
   const filteredData = category?.filter((item) =>
-    item?.title.toLowerCase().includes(searchQuery.toLowerCase())
+    item?.title?.toLowerCase().includes(searchQuery?.toLowerCase())
   );
 
   return (

@@ -208,6 +208,7 @@ const SupportTicketManagement = () => {
                                 <p className="text-3xl font-semibold leadi">{closedLength}</p>
                                 <p className="capitalize">Closed Ticket</p>
                             </div>
+
                         </div>
                         <div className="flex p-4 space-x-4 rounded-lg md:space-x-6 bg-gray-100 text-gray-100">
                             <div className="flex justify-center p-2 align-middle rounded-lg sm:p-4 bg-blue-400">
@@ -339,6 +340,7 @@ const SupportTicketManagement = () => {
                                         Created At
                                     </th>
                                     <th className="px-6 py-3 border-b-2 border-gray-300" />
+                                    <th className="px-6 py-3 border-b-2 border-gray-300" />
                                 </tr>
                             </thead>
                             <tbody className="bg-white">
@@ -403,6 +405,7 @@ const SupportTicketManagement = () => {
                                                         <span className="relative text-xs">Closed</span>
                                                     </button>
                                                 }
+
                                             </td>
                                             <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-500 text-blue-900 text-sm leading-5">
                                                 {formatDateTime(ticket.time)}
@@ -428,6 +431,23 @@ const SupportTicketManagement = () => {
                                                     </div>
                                                 </td>
                                             )}
+
+                                            <td className="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-500 text-sm leading-5">
+                                                <button onClick={() => fetch(`http://localhost:5000/api/v1/admin/support-ticket/${ticket._id}`, {
+                                                    method: 'delete',
+                                                    headers: { 'Content-Type': 'application/json' },
+                                                    body: JSON.stringify({ status: 'Open' }),
+                                                }).then((res) => res.json()).then((data) => {
+                                                    Swal.fire("Delete Successful", "", "success");
+                                                    refetch()
+                                                })} className="relative inline-block ml-4 px-3 py-1 font-semibold text-red-900 leading-tight">
+                                                    <span
+                                                        aria-hidden=""
+                                                        className="absolute inset-0 bg-red-200 opacity-50 rounded-full"
+                                                    />
+                                                    <span className="relative text-xs">Delete</span>
+                                                </button>
+                                            </td>
                                         </tr>
                                     ))
                                 }
@@ -485,7 +505,7 @@ const SupportTicketManagement = () => {
                 </div>
             </>
 
-        </div >
+        </div>
     );
 };
 

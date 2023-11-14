@@ -59,6 +59,8 @@ const AddCellModal = ({ recall, setOpenModal }) => {
         setSelfs(selfData);
         refetch();
     };
+
+
     const UploadArea = (e) => {
         e.preventDefault();
         const warehouse = e.target.warehouse.value;
@@ -107,10 +109,13 @@ const AddCellModal = ({ recall, setOpenModal }) => {
                         onChange={handleWarehouseChange}
                         name='warehouse'
                         required
-                        options={warehouses.map((warehouse) => ({
-                            value: warehouse.name,
-                            label: warehouse.name,
-                        }))}
+                        options={warehouses
+                            .filter((warehouse) => warehouse.status) // Filter based on status
+                            .map((warehouse) => ({
+                                value: warehouse.name,
+                                label: warehouse.name,
+                            }))
+                        }
                         placeholder="Please select"
                     />
                 </div>
@@ -130,10 +135,13 @@ const AddCellModal = ({ recall, setOpenModal }) => {
                         onChange={handleAreaChange}
                         name='area'
                         required
-                        options={areas.map((area) => ({
-                            value: area.area,
-                            label: area.area,
-                        }))}
+                        options={areas
+                            .filter((area) => area.status) // Filter based on status
+                            .map((area) => ({
+                                value: area.area,
+                                label: area.area,
+                            }))
+                        }
                         placeholder="Please select"
                     />
                 </div>
@@ -153,10 +161,13 @@ const AddCellModal = ({ recall, setOpenModal }) => {
                         name='rack'
                         required
                         onChange={handleReckChange}
-                        options={racks?.map((rack) => ({
-                            value: rack.rack,
-                            label: rack.rack,
-                        }))}
+                        options={racks
+                            ?.filter((rack) => rack.status)
+                            .map((rack) => ({
+                                value: rack.rack,
+                                label: rack.rack,
+                            }))
+                        }
                         placeholder="Please select"
                     />
                 </div>
@@ -175,7 +186,7 @@ const AddCellModal = ({ recall, setOpenModal }) => {
                         }}
                         name='self'
                         required
-                        options={selfs?.map((self) => ({
+                        options={selfs?.filter((selfs) => selfs.status).map((self) => ({
                             value: self.self,
                             label: self.self,
                         }))}

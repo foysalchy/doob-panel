@@ -90,7 +90,7 @@ const AddSelfModal = ({ recall, setOpenModal }) => {
                         onChange={handleWarehouseChange}
                         name='warehouse'
                         required
-                        options={warehouses.map((warehouse) => ({
+                        options={warehouses.filter((rack) => rack.status).map((warehouse) => ({
                             value: warehouse.name,
                             label: warehouse.name,
                         }))}
@@ -113,7 +113,7 @@ const AddSelfModal = ({ recall, setOpenModal }) => {
                         onChange={handleAreaChange}
                         name='area'
                         required
-                        options={areas.map((area) => ({
+                        options={areas.filter((rack) => rack.status).map((area) => ({
                             value: area.area,
                             label: area.area,
                         }))}
@@ -135,7 +135,7 @@ const AddSelfModal = ({ recall, setOpenModal }) => {
                         }}
                         name='rack'
                         required
-                        options={racks?.map((rack) => ({
+                        options={racks?.filter((rack) => rack.status).map((rack) => ({
                             value: rack.rack,
                             label: rack.rack,
                         }))}

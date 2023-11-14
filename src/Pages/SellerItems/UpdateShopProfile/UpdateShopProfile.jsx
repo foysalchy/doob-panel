@@ -13,7 +13,7 @@ const UpdateShopProfile = () => {
     const [copy, setCopy] = useState(false)
 
     const handleCopyLink = (link) => {
-        const linkToCopy = `https://salenow-project.web.app/shop/${link}`; 
+        const linkToCopy = `https://salenow-project.web.app/shop/${link}`;
         navigator.clipboard.writeText(linkToCopy)
             .then(() => {
                 setCopy(true);
@@ -46,7 +46,7 @@ const UpdateShopProfile = () => {
 
                 if (imageData.imageUrl) {
                     const image = imageData.imageUrl;
-                  
+
 
                     fetch(`http://localhost:5000/api/v1/shop/update-cover/${shopInfo._id}`, {
                         method: "PUt",
@@ -59,7 +59,7 @@ const UpdateShopProfile = () => {
                         .then((data) => {
                             setShopInfo(data)
                             const jsonData = JSON.stringify(data);
-                           
+
 
                             document.cookie = `SellerShop=${encodeURIComponent(jsonData)}; expires=Thu, 01 Jan 2030 00:00:00 UTC; path=/seller`;
 
@@ -88,7 +88,7 @@ const UpdateShopProfile = () => {
 
                 if (imageData.imageUrl) {
                     const image = imageData.imageUrl;
-                  
+
                     fetch(`http://localhost:5000/api/v1/shop/update-logo/${shopInfo._id}`, {
                         method: "PUt",
                         headers: {
@@ -99,7 +99,7 @@ const UpdateShopProfile = () => {
                         .then((data) => {
                             setShopInfo(data)
                             const jsonData = JSON.stringify(data);
-                         
+
                             document.cookie = `SellerShop=${encodeURIComponent(jsonData)}; expires=Thu, 01 Jan 2030 00:00:00 UTC; path=/seller`;
 
                         })

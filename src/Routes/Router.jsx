@@ -77,6 +77,22 @@ import SellerEmail from "../Pages/SellerItems/Sittings/SellerEmail/SellerEmail";
 import SellerShipping from "../Pages/SellerItems/Sittings/Shiping/SellerShiping";
 import SellerManagement from "../Pages/AdminItem/SellerManagement/SellerManagement";
 import WareHouseManagement from "../Pages/AdminItem/WareHouseManagement/WareHouseManagement";
+import AreaListForWarehouse from "../Pages/AdminItem/WareHouseManagement/List/AreaListForWarehouse";
+import ManageRack from "../Pages/AdminItem/WareHouseManagement/List/ManageRack";
+import ManageSelf from "../Pages/AdminItem/WareHouseManagement/List/ManageSelf";
+import ManageCell from "../Pages/AdminItem/WareHouseManagement/List/ManageCell";
+import DarazIntrigration from "../Pages/AdminItem/IntrigrationDaraz/DarazIntrigration";
+import DarazIntegration from "../Pages/AdminItem/IntrigrationDaraz/DarazIntrigration";
+import Daraz from "../Pages/AdminItem/Settings/Daraz/Daraz";
+import CategoriesManagement from "../Pages/SellerItems/SellerCatagory/CategoriesManagement/CategoriesManagement";
+import MageCategoriesManagement from "../Pages/SellerItems/SellerCatagory/MegaCategory/MageCategoriesManagement";
+import SubCategoriesManagement from "../Pages/SellerItems/SellerCatagory/SubCategory/SubCategoriesManagement";
+import MiniCategoriesManagement from "../Pages/SellerItems/SellerCatagory/MiniCategory/MiniCategoriesManagement";
+import ExtraCategoriesManagement from "../Pages/SellerItems/SellerCatagory/ExtraCategory/ExtraCategoriesManagement";
+import AddMagaCategory from "../Pages/SellerItems/SellerCatagory/ModalForCategory/AddMagaCategory";
+import AddSubCategory from "../Pages/SellerItems/SellerCatagory/ModalForCategory/AddSubCategory";
+import ListOfWarehouse from "../Pages/AdminItem/WareHouseManagement/ListOfWarehouse";
+import { SellerPath } from "./SellerPath";
 
 
 
@@ -197,65 +213,7 @@ const Router = createBrowserRouter([
         <SellerDashLayout />
       </IsSelllerRegistration>
     ),
-    children: [
-      {
-        path: "dashboard",
-        element: <SellerDashboard />
-      },
-      {
-        path: "manage-blogs",
-        element: <SellerManageBlog />
-      },
-      {
-        path: "manage-blogs/add-blog",
-        element: <AddSellerBlog />
-      },
-      {
-        path: "manage-contact",
-        element: <SellerManageContact />
-      },
-      {
-        path: "manage-contact/add-contact",
-        element: <SellerAddContactPage />
-      },
-      {
-        path: "manage-pages",
-        element: <SellerPageManagement />
-      },
-      {
-        path: "manage-pages/add-page",
-        element: <AddSellerPage />
-      },
-      {
-        path: "support-tickets",
-        element: <SellerSupportTicket />
-      },
-      {
-        path: "shop-profile",
-        element: <UpdateShopProfile />
-      },
-      {
-        path: "domain-management",
-        element: <AddDomain />
-      },
-      {
-        path: "settings",
-        element: <SellerSittingsPage />
-      },
-      {
-        path: "settings/payment-management",
-        element: <SellerPaymentGetaway />
-      },
-      {
-        path: "settings/send-email",
-        element: <SellerEmail />
-      },
-      {
-        path: "settings/shipping",
-        element: <SellerShipping />
-      }
-
-    ],
+    children: SellerPath
   },
 
   // Shop Layout 
@@ -264,7 +222,7 @@ const Router = createBrowserRouter([
     element: <ShopLayout />,
     children: [
       {
-        path: ':id',  // Use a dynamic route parameter for the product ID
+        path: ':id',
         element: <Product />,
         loader: async ({ params }) => {
           const id = params.id;
@@ -432,6 +390,10 @@ const Router = createBrowserRouter([
         element: <ShippingManagement />
       },
       {
+        path: "settings/daraz-setup",
+        element: <Daraz />
+      },
+      {
         path: "support-ticket",
         element: <SupportTicketManagement />
       },
@@ -446,6 +408,30 @@ const Router = createBrowserRouter([
       {
         path: "warehouse",
         element: <WareHouseManagement />
+      },
+      {
+        path: "warehouse/warehouse-management",
+        element: <ListOfWarehouse />
+      },
+      {
+        path: "warehouse/area-management",
+        element: <AreaListForWarehouse />
+      },
+      {
+        path: "warehouse/rack-management",
+        element: <ManageRack />
+      },
+      {
+        path: "warehouse/self-management",
+        element: <ManageSelf />
+      },
+      {
+        path: "warehouse/cell-management",
+        element: <ManageCell />
+      },
+      {
+        path: "add-daraz",
+        element: <DarazIntrigration />
       }
     ],
   }

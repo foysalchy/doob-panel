@@ -163,13 +163,13 @@ const ManageService = () => {
                     <div className="flex flex-col mt-6 w-full">
                         <div className="overflow-x-auto ">
                             <div className="  py-2 pr-10">
-                                <div className="overflow-hidden border border-gray-200 dark:border-gray-700 md:rounded-lg">
-                                    <table className=" w-full divide-y divide-gray-200 dark:divide-gray-700">
+                                <div className="overflow-hidden border border-gray-200 border-gray-700 md:rounded-lg">
+                                    <table className=" w-full divide-y divide-gray-200 divide-gray-700">
                                         <thead className="bg-gray-50 ">
                                             <tr>
                                                 <th
                                                     scope="col"
-                                                    className="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                                                    className="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500 text-gray-400"
                                                 >
                                                     <div className="flex items-center gap-x-3">
 
@@ -179,7 +179,7 @@ const ManageService = () => {
 
                                                 <th
                                                     scope="col"
-                                                    className="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                                                    className="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 text-gray-400"
                                                 >
                                                     <button className="flex items-center gap-x-2">
                                                         <span>Price</span>
@@ -188,7 +188,7 @@ const ManageService = () => {
 
                                                 <th
                                                     scope="col"
-                                                    className="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                                                    className="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 text-gray-400"
                                                 >
                                                     <button className="flex items-center gap-x-2">
                                                         <span>Status</span>
@@ -197,7 +197,7 @@ const ManageService = () => {
 
                                                 <th
                                                     scope="col"
-                                                    className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                                                    className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 text-gray-400"
                                                 >
                                                     Action
                                                 </th>
@@ -222,7 +222,7 @@ const ManageService = () => {
                                                                     <h2 className="font-medium text-gray-800  ">
                                                                         {service?.title}
                                                                     </h2>
-                                                                    <p className="text-sm font-normal text-gray-600 dark:text-gray-400">
+                                                                    <p className="text-sm font-normal text-gray-600 text-gray-400">
                                                                         {service._id}
                                                                     </p>
                                                                 </div>
@@ -230,12 +230,12 @@ const ManageService = () => {
                                                         </div>
                                                     </td>
 
-                                                    <td className="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                                    <td className="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 text-gray-400">
                                                         {service?.price}
                                                     </td>
                                                     {service.status ?
                                                         <td className="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                                                            <button onClick={() => DativeHandle(service?._id)} className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-emerald-100/60 dark:bg-gray-800">
+                                                            <button onClick={() => DativeHandle(service?._id)} className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-emerald-100/60 bg-gray-800">
                                                                 <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
                                                                 <h2 className="text-sm font-normal text-emerald-500">
                                                                     Active
@@ -243,7 +243,7 @@ const ManageService = () => {
                                                             </button>
                                                         </td> :
                                                         <td className="px-12 py-4 text-sm font-medium text-red-700 whitespace-nowrap">
-                                                            <button onClick={() => ActiveHandle(service._id)} className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-emerald-100/60 dark:bg-gray-800">
+                                                            <button onClick={() => ActiveHandle(service._id)} className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-emerald-100/60 bg-gray-800">
                                                                 <span className="h-1.5 w-1.5 rounded-full bg-red-500" />
                                                                 <h2 className="text-sm font-normal text-red-500">
                                                                     Dative
