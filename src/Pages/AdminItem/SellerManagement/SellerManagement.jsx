@@ -309,7 +309,7 @@ const SellerManagement = () => {
                                             {seller.name}
                                         </h2>
                                         <p
-                                            className="text-sm font-normal text-gray-600 text-gray-400">
+                                            className="text-sm font-normal text-gray-600 ">
                                             {seller.shopName}
                                         </p>
                                     </td>
