@@ -31,7 +31,7 @@ const SellerManagement = () => {
     };
 
     const filteredData = sellers.filter((item) => {
-        const lowercaseSearchQuery = searchQuery.toLowerCase();
+        const lowercaseSearchQuery = searchQuery?.toLowerCase();
 
         return (
             item?.name?.toLowerCase()?.includes(lowercaseSearchQuery) ||
@@ -176,7 +176,7 @@ const SellerManagement = () => {
     const directLogin = async (email, userId) => {
 
 
-        logOut()
+
         let password = ''
         await fetch(`http://localhost:5000/api/v1/admin/seller/pass/${userId}`).then((res) => res.json()).then((data) => {
             password = data.password
@@ -199,22 +199,21 @@ const SellerManagement = () => {
             .then((data) => {
 
                 console.log(data);
+                setUser(data.user);
 
                 if (data.user) {
                     if (data.user.role === 'seller') {
                         fetch(`http://localhost:5000/api/v1/shop/checkshop/${data?.user?.email}`)
                             .then((response) => response.json())
                             .then((result) => {
-                                console.log(result);
-                                if (result.seller) {
-
+                                console.log(result, '208');
+                                if (result) {
                                     setUser(data.user);
-                                    setCookie("SaleNowUser", JSON.stringify(data.user));
                                     setShopInfo(result.information[0])
-                                    setCookie("SellerShop", JSON.stringify(result.information[0]));
                                     navigate("/seller/dashboard");
                                 }
                                 else {
+
                                     navigate("/seller/shop-register");
                                 }
 
@@ -311,7 +310,7 @@ const SellerManagement = () => {
                                         </h2>
                                         <p
                                             className="text-sm font-normal text-gray-600 text-gray-400">
-                                            {seller.userId}
+                                            {seller.shopName}
                                         </p>
                                     </td>
                                     <td className="px-4 py-3">{seller.email}</td>

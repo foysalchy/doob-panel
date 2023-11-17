@@ -25,32 +25,6 @@ const AddService = () => {
 
 
 
-    const [upload, setUpload] = useState('')
-    const [uplodOk, setUploadOk] = useState(false)
-
-    const imageUploading = (e) => {
-        e.preventDefault();
-        const selectedFile = e.target.files[0];
-        const formData = new FormData();
-        formData.append("image", selectedFile);
-        const url = `http://localhost:5000/api/v1/image/upload-image`;
-        fetch(url, {
-            method: "POST",
-            body: formData,
-        })
-            .then((res) => res.json())
-            .then((imageData) => {
-
-                if (imageData.imageUrl) {
-                    setUpload(imageData.imageUrl)
-                    setUploadOk(true)
-                }
-                else {
-                    setUpload('')
-                }
-
-            });
-    }
 
 
 
@@ -71,7 +45,7 @@ const AddService = () => {
         }
     };
 
-    const dataSubmit = (event) => {
+    const dataSubmit = async (event) => {
         setLoading(true);
         event.preventDefault();
         const form = event.target;
@@ -81,33 +55,49 @@ const AddService = () => {
         const message = form.message.value;
         const category = form.category.value;
         const subscriptionPeriod = form.subscriptionPeriod.value;
-        const MetaImage = upload
+        const MetaImage = form.MetaImage.files[0]
         const MetaTag = form.MetaTag.value
         const MetaDescription = form.MetaDescription.value
-        const formData = new FormData();
-        formData.append("image", image);
-        const url = `http://localhost:5000/api/v1/image/upload-image`;
-        fetch(url, {
+
+
+        const imageFormData = new FormData();
+        imageFormData.append("image", image);
+        const imageUrl = await uploadImage(imageFormData);
+
+        const metaImageFormData = new FormData();
+        metaImageFormData.append("image", MetaImage);
+        console.log(metaImageFormData, imageFormData);
+
+        const metaImageUrl = await uploadImage(metaImageFormData);
+
+        const service = {
+            title,
+            price,
+            message,
+            img: imageUrl,
+            category,
+            subscriptionPeriod,
+            MetaTag,
+            MetaDescription,
+            MetaImage: metaImageUrl,
+        };
+
+        console.log(metaImageUrl);
+
+        postService(service, form);
+
+    };
+
+
+    async function uploadImage(formData) {
+        const url = "http://localhost:5000/api/v1/image/upload-image";
+        const response = await fetch(url, {
             method: "POST",
             body: formData,
-        })
-            .then((res) => res.json())
-            .then((imageData) => {
-                const image = imageData.imageUrl;
-                const service = {
-                    title,
-                    price,
-                    message,
-                    img: image,
-                    category,
-                    subscriptionPeriod,
-                    MetaTag,
-                    MetaDescription,
-                    MetaImage
-                };
-                postService(service, form);
-            });
-    };
+        });
+        const imageData = await response.json();
+        return imageData.imageUrl;
+    }
 
     const postService = (service, form) => {
 
@@ -126,7 +116,7 @@ const AddService = () => {
                 form.reset();
                 setPreviewUrl("");
                 setFileName("");
-                setUpload('')
+
             });
     };
 
@@ -292,15 +282,14 @@ const AddService = () => {
                                 Meta Image'
                             </label>
                             <input
-                                onChange={imageUploading}
                                 required
                                 className="w-full rounded-lg border border-gray-900 p-3 text-sm"
                                 placeholder="Meta Description"
                                 type="file"
-                                id="MetaImage'"
-                                name="MetaImage'"
+                                id="MetaImage"
+                                name="MetaImage"
                             />
-                            {uplodOk && 'done'}
+
                         </div>
 
                         <div className="mt-4">

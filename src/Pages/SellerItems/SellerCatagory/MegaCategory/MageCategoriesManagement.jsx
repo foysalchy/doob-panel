@@ -49,11 +49,11 @@ const MageCategoriesManagement = () => {
         };
     })
         .filter((item) => {
-            const lowercaseSearchQuery = searchQuery.toLowerCase();
+            const lowercaseSearchQuery = searchQuery?.toLowerCase();
             return (
-                item?.name.toLowerCase().includes(lowercaseSearchQuery) ||
-                (item.darazCategory?.name && item.darazCategory.name.toLowerCase().includes(lowercaseSearchQuery)) ||
-                item.slag.toLowerCase().includes(lowercaseSearchQuery)
+                item?.name?.toLowerCase().includes(lowercaseSearchQuery) ||
+                (item.darazCategory?.name && item.darazCategory.name?.toLowerCase().includes(lowercaseSearchQuery)) ||
+                item.slag?.toLowerCase().includes(lowercaseSearchQuery)
             );
         });
 

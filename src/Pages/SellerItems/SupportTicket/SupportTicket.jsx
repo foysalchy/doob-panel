@@ -60,10 +60,10 @@ const SellerSupportTicket = () => {
 
 
     const filteredData = contact.filter((item) =>
-        item?._id.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        item?.subject.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        item?.time.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        String(`#${item.ticketId}`).toLowerCase().includes(String(`${searchQuery}`).toLowerCase())
+        item?._id?.toLowerCase().includes(searchQuery?.toLowerCase()) ||
+        item?.subject?.toLowerCase().includes(searchQuery?.toLowerCase()) ||
+        item?.time?.toLowerCase().includes(searchQuery?.toLowerCase()) ||
+        String(`#${item.ticketId}`)?.toLowerCase().includes(String(`${searchQuery}`)?.toLowerCase())
     );
 
 

@@ -269,12 +269,12 @@ const SignUpSeller = () => {
             </div>
           </div>
         </div>
-      </div >
+      </div>
       <div className="h-0 w-0">
 
         <Modal setModalOpen={setModalOpen} modalOpen={modalOpen} />
       </div>
-    </div >
+    </div>
   );
 };
 

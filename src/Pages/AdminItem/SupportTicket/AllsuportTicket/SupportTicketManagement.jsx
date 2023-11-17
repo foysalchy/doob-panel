@@ -59,12 +59,12 @@ const SupportTicketManagement = () => {
     // Your filtering logic
     const filteredData = tickets?.filter((item) =>
 
-        item?._id.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        item?.time.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        item?.subject?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        item?.userInfo?.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        item?.userInfo?.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        String(`#${item.ticketId}`).toLowerCase().includes(String(`${searchQuery}`).toLowerCase())
+        item?._id?.toLowerCase().includes(searchQuery?.toLowerCase()) ||
+        item?.time?.toLowerCase().includes(searchQuery?.toLowerCase()) ||
+        item?.subject?.toLowerCase().includes(searchQuery?.toLowerCase()) ||
+        item?.userInfo?.email?.toLowerCase().includes(searchQuery?.toLowerCase()) ||
+        item?.userInfo?.name?.toLowerCase().includes(searchQuery?.toLowerCase()) ||
+        String(`#${item.ticketId}`)?.toLowerCase().includes(String(`${searchQuery}`)?.toLowerCase())
     );
 
 

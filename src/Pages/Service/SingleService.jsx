@@ -19,6 +19,8 @@ const SingleService = () => {
         },
     });
 
+    console.log(services[2]);
+
 
     return (
         <div>

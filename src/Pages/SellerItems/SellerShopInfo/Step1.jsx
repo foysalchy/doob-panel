@@ -58,7 +58,7 @@ const Step1 = ({ nextStep, handleChange, values }) => {
         setErrorName()
 
         let name = e.target.value;
-        name = name.toLowerCase().replace(/\s+/g, '-');
+        name = name?.toLowerCase().replace(/\s+/g, '-');
         setShopName(name);
 
         if (name.length > 2) {

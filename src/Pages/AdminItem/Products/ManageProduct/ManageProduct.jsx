@@ -23,7 +23,7 @@ const ManageProduct = () => {
 
   const filteredData = products.filter(
     (item) =>
-      item.productName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      item.productName?.toLowerCase().includes(searchQuery?.toLowerCase()) ||
       item._id.toString().includes(searchQuery)
   );
 

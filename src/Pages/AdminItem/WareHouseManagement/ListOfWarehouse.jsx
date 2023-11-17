@@ -27,7 +27,7 @@ const ListOfWarehouse = () => {
     };
 
     const filteredData = warehouses.filter((item) => {
-        const lowercaseSearchQuery = searchQuery.toLowerCase();
+        const lowercaseSearchQuery = searchQuery?.toLowerCase();
 
         return (
             item?.name?.toLowerCase()?.includes(lowercaseSearchQuery) ||
@@ -73,7 +73,7 @@ const ListOfWarehouse = () => {
 
 
 
-                {/* Current Page */}
+
                 {Array.from({ length: endPage - startPage + 1 }).map((_, index) => {
                     const pageNumber = startPage + index;
                     return (
