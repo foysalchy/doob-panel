@@ -12,6 +12,26 @@ Briefly describe your project. What does it do? What problem does it solve?
 ## Features
 
 - Landing Page
+- Blogs dynamic Page
+- dynamic Contact
+- Digital service, on time,subscription base
+- Settings
+        Setup Site Content
+        Payment Gateway Setup
+        Create Sellers Package
+        Manage sellers domain
+        Email and Notification
+        Shipping Integration
+
+- Register, Login
+- Step by Step Content Upload
+- Create Custom Domain
+- Pages
+- Support Ticket
+- Warehouse & Manage
+- Seller Management
+- Product Management
+- Category Mapping from Daraz
 
 ## Screenshots
 
