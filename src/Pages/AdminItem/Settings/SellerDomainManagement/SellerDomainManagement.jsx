@@ -204,25 +204,25 @@ const SellerDomainManagement = () => {
                 <div className="flex flex-col mt-6">
                     <div className=" overflow-x-auto ">
                         <div className="  py-2 ml-4">
-                            <div className="overflow-hidden  border border-gray-200 border-gray-700 md:rounded-lg">
-                                <table className="w-full divide-y divide-gray-200 divide-gray-700">
+                            <div className="overflow-hidden  border  border-gray-700 md:rounded-lg">
+                                <table className="w-full divide-y  divide-gray-700">
                                     <thead className="bg-gray-50 ">
                                         <tr>
                                             <th
                                                 scope="col"
-                                                className="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500 text-gray-400"
+                                                className="py-3.5 px-4 text-sm font-normal text-left rtl:text-right  text-gray-400"
                                             >
                                                 <div className="flex items-center gap-x-3">
                                                     <input
                                                         type="checkbox"
-                                                        className="text-blue-500 border-gray-300 rounded bg-gray-900 ring-offset-gray-900 border-gray-700"
+                                                        className="text-blue-500  rounded bg-gray-900 ring-offset-gray-900 border-gray-700"
                                                     />
                                                     <span>Name</span>
                                                 </div>
                                             </th>
                                             <th
                                                 scope="col"
-                                                className="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 text-gray-400"
+                                                className="px-12 py-3.5 text-sm font-normal text-left rtl:text-right  text-gray-400"
                                             >
                                                 <button className="flex items-center gap-x-2">
                                                     <span>Status</span>
@@ -230,7 +230,7 @@ const SellerDomainManagement = () => {
                                             </th>
                                             <th
                                                 scope="col"
-                                                className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 text-gray-400"
+                                                className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right  text-gray-400"
                                             >
                                                 <button className="flex items-center gap-x-2">
                                                     <span>Domain Name</span>
@@ -238,7 +238,7 @@ const SellerDomainManagement = () => {
                                             </th>
                                             <th
                                                 scope="col"
-                                                className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 text-gray-400"
+                                                className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right  text-gray-400"
                                             >
                                                 Email address
                                             </th>
@@ -250,13 +250,13 @@ const SellerDomainManagement = () => {
                                     </thead>
                                     <tbody className="bg-white divide-y  divide-gray-200 ">
                                         {filteredData.map((shop) => (
-                                            <tr>
+                                            <tr className='divide-gray-700'>
                                                 <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                                                     <div className="inline-flex items-center gap-x-3">
                                                         <input
 
                                                             type="checkbox"
-                                                            className="text-blue-500 border-gray-300 rounded bg-gray-900 ring-offset-gray-900 border-gray-700"
+                                                            className="text-blue-500  rounded bg-gray-900 ring-offset-gray-900 border-gray-700"
                                                         />
                                                         <div className="flex items-center gap-x-2">
                                                             <img className='w-8 h-8 object-cover' src={shop?.logo} alt="" />
@@ -264,7 +264,7 @@ const SellerDomainManagement = () => {
                                                                 <h2 className="font-medium text-gray-800  ">
                                                                     {shop?.shopName}
                                                                 </h2>
-                                                                <p className="text-sm font-normal text-gray-600 text-gray-400">
+                                                                <p className="text-sm font-normal text-gray-600 ">
                                                                     {shop?.shopId}
                                                                 </p>
                                                             </div>
@@ -294,7 +294,7 @@ const SellerDomainManagement = () => {
                                                     </td>
                                                 }
 
-                                                <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
+                                                <td className="px-4 py-4 text-sm   whitespace-nowrap">
                                                     {shop?.domain &&
 
                                                         <div className='flex gap-2 items-center'>
@@ -304,7 +304,7 @@ const SellerDomainManagement = () => {
                                                     }
 
                                                 </td>
-                                                <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
+                                                <td className="px-4 py-4 text-sm   whitespace-nowrap">
                                                     {shop?.shopEmail}
                                                     <p>{shop.shopNumber}</p>
                                                 </td>
