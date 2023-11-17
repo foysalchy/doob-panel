@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { FaMapLocationDot } from 'react-icons/fa6';
 import { PiShoppingCartSimpleBold } from "react-icons/pi";
 import { Link, useParams } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { Helmet } from 'react-helmet';
 
 const ShopNav = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -16,16 +16,29 @@ const ShopNav = () => {
     const { data: shop = {}, isLoading, refetch } = useQuery({
         queryKey: ["shop"],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/api/v1/shop/${shopId}`);
+            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/${shopId}`);
             const data = await res.json();
             return data;
         },
     });
 
+
+
     return (
 
         <div>
-
+            <Helmet >
+                <title>{shop?.shopName}</title>
+                {/* <meta name="description" content={description} /> */}
+                <meta name="keywords" content={shop?.shopName} />
+                <meta property="og:title" content={shop?.shopName} />
+                {/* <meta property="og:description" content={description} /> */}
+                <meta property="og:image" content={shop?.logo} />
+                <meta property="twitter:card" content={shop?.logo} />
+                <meta property="twitter:title" content={shop?.shopName} />
+                {/* <meta property="twitter:description" content={description} /> */}
+                <meta property="twitter:image" content={shop?.logo} />
+            </Helmet>
             <div className="px-4 py-5 hidden lg:block mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8">
                 <div className="relative flex items-center justify-between">
                     <div
@@ -38,7 +51,7 @@ const ShopNav = () => {
                             title="Company"
                             className="inline-flex items-center"
                         >
-                            <img className='w-10' src={shop?.logo} alt="" />
+                            <img srcSet={shop?.logo} className='w-10' src={shop?.logo} alt="" />
                             <span className="ml-2 md:text-xl font-bold tracking-wide text-gray-800 ">
                                 {shop?.shopName}
                             </span>

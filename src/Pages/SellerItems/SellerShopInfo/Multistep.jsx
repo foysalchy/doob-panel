@@ -43,7 +43,7 @@ const MultiStepForm = () => {
 
     const submitForm = (e) => {
         e.preventDefault()
-        fetch(`http://localhost:5000/api/v1/shop/info`, {
+        fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/info`, {
             method: "POST",
             headers: {
                 "content-type": "application/json",

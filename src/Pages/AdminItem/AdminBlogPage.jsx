@@ -5,7 +5,7 @@ const AdminBlogPage = () => {
   const [blogs, setBlogs] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/v1/admin/all-blogs")
+    fetch("https://salenow-v2-backend.vercel.app/api/v1/admin/all-blogs")
       .then((response) => response.json())
       .then((data) => {
         setBlogs(data);
@@ -29,6 +29,7 @@ const AdminBlogPage = () => {
             >
               <img
                 src={blog?.img}
+                srcSet={blog?.img}
                 className="object-cover w-full h-64"
                 alt=""
               />

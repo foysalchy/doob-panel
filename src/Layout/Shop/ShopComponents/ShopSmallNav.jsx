@@ -3,7 +3,6 @@ import React from 'react';
 import { IoCall } from 'react-icons/io5';
 import { MdEmail } from 'react-icons/md';
 import { Link, useLoaderData, useParams } from 'react-router-dom';
-import { motion } from 'framer-motion';
 import { useContext } from 'react';
 import { AuthContext } from '../../../AuthProvider/UserProvider';
 
@@ -19,7 +18,7 @@ const ShopSmallNav = () => {
     const { data: shop = {}, refetch, isLoading } = useQuery({
         queryKey: ["buyer"],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/api/v1/shop/${shopId}`);
+            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/${shopId}`);
             const data = await res.json();
             return data;
         },

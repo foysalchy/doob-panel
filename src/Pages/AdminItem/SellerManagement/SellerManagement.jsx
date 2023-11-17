@@ -8,6 +8,7 @@ import Swal from 'sweetalert2';
 import { AuthContext } from '../../../AuthProvider/UserProvider';
 import { useNavigate } from 'react-router-dom';
 import EditSellerInfo from './EditSellerInfo';
+import DeleteModal from '../../../Common/DeleteModal';
 
 const SellerManagement = () => {
 
@@ -18,7 +19,7 @@ const SellerManagement = () => {
     const { data: sellers = [], refetch } = useQuery({
         queryKey: ["sellers"],
         queryFn: async () => {
-            const res = await fetch("http://localhost:5000/api/v1/admin/seller");
+            const res = await fetch("https://salenow-v2-backend.vercel.app/api/v1/admin/seller");
             const data = await res.json();
             return data;
         },
@@ -114,54 +115,10 @@ const SellerManagement = () => {
     };
 
 
-    const DeleteSeller = (id) => {
-
-
-        let timerInterval;
-
-        Swal.fire({
-            title: 'Deleting Seller',
-            html: 'Please wait... <br> <b></b> milliseconds remaining.',
-            timer: 1000,
-            timerProgressBar: true,
-            showConfirmButton: false,
-            didOpen: () => {
-                Swal.showLoading();
-                const b = Swal.getHtmlContainer().querySelector('b');
-                timerInterval = setInterval(() => {
-                    b.textContent = Swal.getTimerLeft();
-                }, 100);
-            },
-            willClose: () => {
-                clearInterval(timerInterval);
-            }
-        }).then((result) => {
-            if (result.dismiss === Swal.DismissReason.timer) {
-                // Timer completed, initiate the fetch for deletion
-                fetch(`http://localhost:5000/api/v1/admin/seller/delete/${id}`, {
-                    method: "DELETE",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                })
-                    .then((res) => res.json())
-                    .then((data) => {
-
-                        Swal.fire('Seller Deleted', '', 'success');
-                        refetch();
-
-                    })
-                    .catch((error) => {
-                        console.error('Error deleting seller:', error);
-                        Swal.fire('Error Deleting Seller', 'An error occurred', 'error');
-                    });
-            }
-        });
-    };
 
 
     const updateStatus = (id, status) => {
-        fetch(`http://localhost:5000/api/v1/admin/seller/status/${id}`, {
+        fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/seller/status/${id}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
@@ -178,7 +135,7 @@ const SellerManagement = () => {
 
 
         let password = ''
-        await fetch(`http://localhost:5000/api/v1/admin/seller/pass/${userId}`).then((res) => res.json()).then((data) => {
+        await fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/seller/pass/${userId}`).then((res) => res.json()).then((data) => {
             password = data.password
 
         })
@@ -188,7 +145,7 @@ const SellerManagement = () => {
         };
         console.log(data);
 
-        await fetch("http://localhost:5000/api/v1/auth/sign-in", {
+        await fetch("https://salenow-v2-backend.vercel.app/api/v1/auth/sign-in", {
             method: "post",
             headers: {
                 "content-type": "application/json",
@@ -203,7 +160,7 @@ const SellerManagement = () => {
 
                 if (data.user) {
                     if (data.user.role === 'seller') {
-                        fetch(`http://localhost:5000/api/v1/shop/checkshop/${data?.user?.email}`)
+                        fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/checkshop/${data?.user?.email}`)
                             .then((response) => response.json())
                             .then((result) => {
                                 console.log(result, '208');
@@ -243,11 +200,42 @@ const SellerManagement = () => {
 
 
 
+    const [deleteId, setDeletId] = useState('')
+    const [deletePopUp, setDeletePopUp] = useState(false)
+    const [isDelete, setIsDelete] = useState(false)
+
+    const DeleteSeller = (id) => {
+
+        setDeletePopUp(true)
+        setDeletId(id)
+    };
+
+
+
+    if (isDelete) {
+
+        fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/seller/delete/${deleteId}`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        }).then((res) => res.json()).then((data) => {
+            setIsDelete(false)
+            setDeletId('')
+            Swal.fire('Shop is Deleted', '', 'success')
+            refetch('')
+            console.log(data);
+        })
+
+        console.log(deleteId, isDelete);
+    }
+
+
 
     return (
         <div>
             <div className="mt-4 lg:pr-10 w-full mx-auto overflow-auto">
-
+                <div className='h-0 w-0'>   <DeleteModal setOpenModal={setDeletePopUp} OpenModal={deletePopUp} setIsDelete={setIsDelete} /></div>
                 <div className="relative w-3/5 my-6">
                     <input
                         type="text"

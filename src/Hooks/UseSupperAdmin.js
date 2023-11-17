@@ -10,7 +10,7 @@ const UseSupperAdmin = () => {
   useEffect(() => {
     if (!loading) {
       if (user?.email) {
-        fetch(`http://localhost:5000/api/v1/users/supper-admin/${user?.email}`)
+        fetch(`https://salenow-v2-backend.vercel.app/api/v1/users/supper-admin/${user?.email}`)
           .then((res) => res.json())
           .then(async (data) => {
             setIsSupperAdmin(data?.isAdmin);

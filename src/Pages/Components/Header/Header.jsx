@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { AuthContext } from "../../../AuthProvider/UserProvider";
 import { MdDashboard } from "react-icons/md";
+import Logo from "../../../../Logo.png";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -122,7 +123,7 @@ const Header = () => {
             title="Company"
             className="inline-flex items-center"
           >
-            <img className="w-32 text-black" src="../../../../Logo.png" alt="" />
+            <img className="w-32 text-black" src={Logo} alt="" />
             {/* <svg
               className="w-8 text-black"
               viewBox="0 0 24 24"
@@ -389,7 +390,7 @@ const Header = () => {
                         title="Company"
                         className="inline-flex items-center"
                       >
-                        <img className="w-32" src="../../../../Logo.png" alt="" />
+                        <img className="w-32" src={Logo} alt="" />
                       </NavLink>
                     </div>
                     <div>

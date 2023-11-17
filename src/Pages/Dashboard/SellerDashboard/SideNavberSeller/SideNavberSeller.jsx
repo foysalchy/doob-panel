@@ -12,8 +12,9 @@ import { AiFillFileAdd, AiOutlineHome } from 'react-icons/ai';
 import { FiSettings } from 'react-icons/fi';
 import { BsTicket } from 'react-icons/bs';
 import { SiCloudflarepages, SiPagekit } from 'react-icons/si';
-import { BiCategoryAlt } from 'react-icons/bi';
+import { BiBookContent, BiCategoryAlt } from 'react-icons/bi';
 import Daraz from './Daraz.png';
+import Logo from "../../../../../Logo.png";
 
 const SideNavberSeller = () => {
     const { user, logOut, shopInfo } = useContext(AuthContext)
@@ -32,7 +33,7 @@ const SideNavberSeller = () => {
                             title="Company"
                             className="inline-flex items-center"
                         >
-                            <img className="w-32" src="../../../../Logo.png" alt="" />
+                            <img className="w-32" src={Logo} alt="" />
                         </Link>}
                         {responsive ?
 
@@ -249,6 +250,12 @@ const SideNavberSeller = () => {
                                     <Link to={'/seller/categories-management'} rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
                                         <BiCategoryAlt className="w-5 h-5 text-gray-400" />
                                         <span>Category</span>
+                                    </Link>
+                                </li>
+                                <li className="rounded-sm hover:bg-gray-800">
+                                    <Link to={'/seller/content-management'} rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
+                                        <BiBookContent className="w-5 h-5 text-gray-400" />
+                                        <span>Content Management</span>
                                     </Link>
                                 </li>
 

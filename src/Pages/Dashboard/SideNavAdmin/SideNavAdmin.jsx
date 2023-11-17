@@ -12,6 +12,7 @@ import { BsChatLeftQuote, BsTicketDetailed } from 'react-icons/bs';
 import { GiNotebook } from 'react-icons/gi';
 import { IoLogOut, IoSettings, } from 'react-icons/io5';
 import { Link, NavLink } from 'react-router-dom';
+import Logo from "../../../../Logo.png";
 
 const SideNavAdmin = () => {
     const { user, logOut } = useContext(AuthContext)
@@ -28,7 +29,7 @@ const SideNavAdmin = () => {
                             title="Company"
                             className="inline-flex items-center"
                         >
-                            <img className="w-32" src="../../../../Logo.png" alt="" />
+                            <img className="w-32" src={Logo} alt="" />
                         </Link> : <Link
                             to="/"
                             aria-label="Company"

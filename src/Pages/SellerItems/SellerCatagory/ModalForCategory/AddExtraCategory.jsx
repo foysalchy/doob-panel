@@ -24,7 +24,7 @@ const AddExtraCategory = () => {
         queryKey: ["category"],
         queryFn: async () => {
             if (shopInfo.darazLogin) {
-                const res = await fetch(`http://localhost:5000/api/v1/category/seller/${shopInfo._id}`);
+                const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/category/seller/${shopInfo._id}`);
                 const data = await res.json();
                 return data;
             }
@@ -79,7 +79,7 @@ const AddExtraCategory = () => {
         }
         console.log(data);
 
-        const url = `http://localhost:5000/api/v1/category/seller/extra/add`;
+        const url = `https://salenow-v2-backend.vercel.app/api/v1/category/seller/extra/add`;
 
         fetch(url, {
             method: "POST",
@@ -116,7 +116,7 @@ const AddExtraCategory = () => {
             megaCategory: selectedOption.value,
         };
 
-        fetch(`http://localhost:5000/api/v1/category/seller/sub`, {
+        fetch(`https://salenow-v2-backend.vercel.app/api/v1/category/seller/sub`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -152,7 +152,7 @@ const AddExtraCategory = () => {
             subCategoryName: value.value,
             megaCategory,
         }
-        fetch(`http://localhost:5000/api/v1/category/seller/mini`, {
+        fetch(`https://salenow-v2-backend.vercel.app/api/v1/category/seller/mini`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -172,10 +172,7 @@ const AddExtraCategory = () => {
 
     const [darazOption, setDarazOption] = useState(false)
 
-    let arryData = { children: [{ "var": true, "name": "Messenger Bags", "leaf": true, "category_id": 10001945 }, { "var": true, "name": "Business Bags", "leaf": true, "category_id": 10001946 }, { "children": [{ "var": true, "name": "Fashion backpacks", "leaf": true, "category_id": 10001990 }], "var": false, "name": "Backpacks", "leaf": false, "category_id": 10001947 }, { "var": true, "name": "Crossbody Bags", "leaf": true, "category_id": 10001948 }, { "var": true, "name": "Tote Bags", "leaf": true, "category_id": 10001949 }, { "children": [{ "var": true, "name": "Coin Holders & Pouches", "leaf": true, "category_id": 10001992 }, { "var": true, "name": "Card Holders", "leaf": true, "category_id": 10001993 }, { "var": true, "name": "Key Holders", "leaf": true, "category_id": 10001994 }, { "var": true, "name": "Money Clips", "leaf": true, "category_id": 10001995 }, { "children": [{ "var": true, "name": "Fashion Wallets", "leaf": true, "category_id": 10002040 }], "var": false, "name": "Wallets", "leaf": false, "category_id": 10001991 }], "var": false, "name": "Wallets & Accessories", "leaf": false, "category_id": 10001950 }], "var": false, "name": "Men Bags", "leaf": false, "category_id": 10001928 }
 
-    let stringData = '';
-    console.log(stringData);
 
 
 
@@ -218,7 +215,8 @@ const AddExtraCategory = () => {
         try {
 
             console.log(value);
-            console.log(JSON.parse(JSON.parse(value.value).darazMiniCategory));
+            console.log();
+            const arryData = JSON.parse(JSON.parse(value.value).darazMiniCategory)
 
             if (arryData.children) {
                 setDarazOption(arryData.children);
@@ -226,8 +224,7 @@ const AddExtraCategory = () => {
                 setDarazOption(false);
             }
 
-            console.log(stringData);
-            console.log('click');
+
         } catch (error) {
             console.error('Error parsing JSON:', error);
         }

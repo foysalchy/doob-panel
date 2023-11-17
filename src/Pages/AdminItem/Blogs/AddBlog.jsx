@@ -19,7 +19,7 @@ const AddBlog = () => {
     const selectedFile = e.target.files[0];
     const formData = new FormData();
     formData.append("image", selectedFile);
-    const url = `http://localhost:5000/api/v1/image/upload-image`;
+    const url = `https://salenow-v2-backend.vercel.app/api/v1/image/upload-image`;
     fetch(url, {
       method: "POST",
       body: formData,
@@ -71,7 +71,7 @@ const AddBlog = () => {
 
     const formData = new FormData();
     formData.append("image", image);
-    const url = `http://localhost:5000/api/v1/image/upload-image`;
+    const url = `https://salenow-v2-backend.vercel.app/api/v1/image/upload-image`;
     fetch(url, {
       method: "POST",
       body: formData,
@@ -94,7 +94,7 @@ const AddBlog = () => {
 
   const postBlog = (blog, form) => {
 
-    fetch(`http://localhost:5000/api/v1/admin/new-blog`, {
+    fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/new-blog`, {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -142,6 +142,7 @@ const AddBlog = () => {
                 {previewUrl ? (
                   <img
                     src={previewUrl}
+                    srcSet={previewUrl}
                     alt="File Preview"
                     className="mt-2 w-8 h-8"
                   />
@@ -170,7 +171,7 @@ const AddBlog = () => {
                 <input
                   required
                   id="dropzone-file"
-                  type="file" accept="application/pdf,image/webp,image/tiff,image/heic,image/gif,image/bmp,image/png,image/jpeg"
+                  type="file" accept="image/jpeg, image/png, image/gif, image/bmp, image/webp, image/heic"
                   name="photo"
                   className="hidden"
                   onChange={handleFileChange}

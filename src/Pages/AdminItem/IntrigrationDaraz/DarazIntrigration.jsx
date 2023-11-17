@@ -34,7 +34,7 @@ const DarazIntegration = () => {
     useEffect(() => {
         if (code) {
 
-            fetch('http://localhost:5000/api/v1/daraz/get-key').then((res) => res.json()).then((data) => {
+            fetch('https://salenow-v2-backend.vercel.app/api/v1/daraz/get-key').then((res) => res.json()).then((data) => {
                 const { appkey, secretkey } = data[0]
 
                 const appKey = appkey
@@ -58,7 +58,7 @@ const DarazIntegration = () => {
                 };
 
 
-                fetch(`http://localhost:5000/api/v1/daraz/addCode/${shopInfo._id}`, {
+                fetch(`https://salenow-v2-backend.vercel.app/api/v1/daraz/addCode/${shopInfo._id}`, {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json',
@@ -86,7 +86,7 @@ const DarazIntegration = () => {
 
 
             {!shopInfo.darazLogin && <a
-                href='https://api.daraz.com.bd/oauth/authorize?response_type=code&force_auth=true&redirect_uri=https://relative-sunfish-remotely.ngrok-free.app/seller/add-daraz/&client_id=501436'
+                href='https://api.daraz.com.bd/oauth/authorize?response_type=code&force_auth=true&redirect_uri=https://evidently-active-magpie.ngrok-free.app/seller/add-daraz/&client_id=501436'
                 className="text-blue-500 hover:underline mb-4 inline-block"
             >
                 Login Daraz

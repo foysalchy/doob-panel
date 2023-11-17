@@ -10,7 +10,7 @@ const ShopFooter = () => {
     const { data: pages = [], refetch, isLoading } = useQuery({
         queryKey: ["sellerPages"],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/api/v1/seller/pages/${shopId}`);
+            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/pages/${shopId}`);
             const data = await res.json();
             return data;
         },

@@ -26,7 +26,7 @@ const UpdatePage = ({ OpenModal, setOpenModal, FAQInfo, refetch }) => {
 
 
         try {
-            fetch(`http://localhost:5000/api/v1/admin/page/update-page/${FAQInfo._id}`, {
+            fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/page/update-page/${FAQInfo._id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',

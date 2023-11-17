@@ -66,7 +66,7 @@ const AddSupportTicket = ({ OpenSupport, setOpenSupport, refetch }) => {
     const { data: departments = [] } = useQuery({
         queryKey: ["departments"],
         queryFn: async () => {
-            const res = await fetch("http://localhost:5000/api/v1/admin/departments");
+            const res = await fetch("https://salenow-v2-backend.vercel.app/api/v1/admin/departments");
             const data = await res.json();
             return data;
         },
@@ -99,7 +99,7 @@ const AddSupportTicket = ({ OpenSupport, setOpenSupport, refetch }) => {
                 comments: []
             }
             fetch(
-                `http://localhost:5000/api/v1/support/supportTicketRequest`,
+                `https://salenow-v2-backend.vercel.app/api/v1/support/supportTicketRequest`,
                 {
                     method: "POST",
                     headers: {
@@ -217,7 +217,7 @@ const AddSupportTicket = ({ OpenSupport, setOpenSupport, refetch }) => {
                                     <input
                                         id="dropzone-file"
                                         onChange={handleInputChange}
-                                        type="file" accept="application/pdf,image/webp,image/tiff,image/heic,image/gif,image/bmp,image/png,image/jpeg"
+                                        type="file" accept="image/jpeg, image/png, image/gif, image/bmp, image/webp, image/heic"
                                         name="photo"
                                         className="hidden"
                                     />

@@ -10,7 +10,7 @@ const ManageService = () => {
     const { data: services = [], refetch, isLoading } = useQuery({
         queryKey: ["services"],
         queryFn: async () => {
-            const res = await fetch("http://localhost:5000/api/v1/admin/services");
+            const res = await fetch("https://salenow-v2-backend.vercel.app/api/v1/admin/services");
             const data = await res.json();
             return data;
         },
@@ -34,7 +34,7 @@ const ManageService = () => {
 
     const ActiveHandle = (id) => {
 
-        fetch(`http://localhost:5000/api/v1/admin/service/status/${id}`, {
+        fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/service/status/${id}`, {
             method: "PUT",
             headers: {
                 "content-type": "application/json",
@@ -47,9 +47,9 @@ const ManageService = () => {
             });
     };
 
-    const DativeHandle = (id) => {
+    const DeactiveHandle = (id) => {
 
-        fetch(`http://localhost:5000/api/v1/admin/service/unstatus/${id}`, {
+        fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/service/unstatus/${id}`, {
             method: "PUT",
             headers: {
                 "content-type": "application/json",
@@ -65,7 +65,7 @@ const ManageService = () => {
 
     const DeleteHandle = (id) => {
 
-        fetch(`http://localhost:5000/api/v1/admin/service/delete/${id}`, {
+        fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/service/delete/${id}`, {
             method: "Delete",
             headers: {
                 "content-type": "application/json",
@@ -235,7 +235,7 @@ const ManageService = () => {
                                                     </td>
                                                     {service.status ?
                                                         <td className="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                                                            <button onClick={() => DativeHandle(service?._id)} className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-emerald-100/60 bg-gray-800">
+                                                            <button onClick={() => DeactiveHandle(service?._id)} className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-emerald-100/60 bg-gray-800">
                                                                 <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
                                                                 <h2 className="text-sm font-normal text-emerald-500">
                                                                     Active
@@ -246,7 +246,7 @@ const ManageService = () => {
                                                             <button onClick={() => ActiveHandle(service._id)} className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-emerald-100/60 bg-gray-800">
                                                                 <span className="h-1.5 w-1.5 rounded-full bg-red-500" />
                                                                 <h2 className="text-sm font-normal text-red-500">
-                                                                    Dative
+                                                                    Deactive
                                                                 </h2>
                                                             </button>
                                                         </td>

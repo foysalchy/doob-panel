@@ -22,32 +22,33 @@ const DeleteModal = ({ OpenModal, setOpenModal, setIsDelete }) => {
                         className="w-full max-w-[570px] rounded-[20px] bg-white py-12 px-8 text-center md:py-[60px] md:px-[70px]"
                     >
                         <h3 className="pb-2 text-xl font-bold text-dark sm:text-2xl">
-                            Are You Sure for delete
+                            Are You Sure for delete ?
                         </h3>
 
                         <span
                             className={`mx-auto mb-6 inline-block h-1 w-[90px] rounded bg-primary`}
                         ></span>
                         <p className="mb-10 text-base leading-relaxed text-body-color">
-                            Lorem Ipsum is simply dummy text of the printing and typesetting
-                            industry. Lorem Ipsum has been the industry's standard dummy text
-                            ever since
+
+                            <span>  "Are you sure you want to permanently delete this item? This action cannot be undone. Proceed with caution."</span>
+                            <br />
+
                         </p>
                         <div className="flex flex-wrap -mx-3">
                             <div className="w-1/2 px-3">
                                 <button
                                     onClick={() => SubmitData(false)}
-                                    className="block w-full rounded-lg border border-[#E9EDF9] p-3 text-center text-base font-medium text-dark transition hover:border-red-600 hover:bg-red-600 hover:text-white"
+                                    className="block w-full rounded-lg border  p-3 text-center text-base font-medium text-dark transition border-green-600 hover:bg-green-600 hover:text-white"
                                 >
-                                    Cancel
+                                    No
                                 </button>
                             </div>
                             <div className="w-1/2 px-3">
                                 <button
                                     onClick={() => SubmitData(true)}
-                                    className={`block w-full p-3 text-base font-medium text-center text-white transition border rounded-lg border-primary bg-red-900 hover:bg-red-900`}
+                                    className={`block w-full p-3 text-base font-medium text-center text-white transition border rounded-lg border-primary bg-red-600 hover:bg-red-700`}
                                 >
-                                    Delete
+                                    Yes
                                 </button>
                             </div>
                         </div>

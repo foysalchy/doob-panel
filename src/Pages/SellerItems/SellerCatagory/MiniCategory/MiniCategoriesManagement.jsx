@@ -18,7 +18,7 @@ const MiniCategoriesManagement = () => {
     const { data: categories = [], refetch } = useQuery({
         queryKey: ["categories"],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/api/v1/category/seller/mini/${shopInfo._id}`);
+            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/category/seller/mini/${shopInfo._id}`);
             const data = await res.json();
             return data;
         },
@@ -36,8 +36,7 @@ const MiniCategoriesManagement = () => {
         try {
             parsedDarazCategory = JSON.parse(filteredItem?.darazCategory);
         } catch (error) {
-            console.error('Error parsing JSON:', error);
-            console.log('Problematic string:', filteredItem?.darazCategory);
+
         }
 
         return {
@@ -130,7 +129,7 @@ const MiniCategoriesManagement = () => {
 
 
     const updateStatus = (id, status) => {
-        fetch(`http://localhost:5000/api/v1/category/seller/mini/status/${id}`, {
+        fetch(`https://salenow-v2-backend.vercel.app/api/v1/category/seller/mini/status/${id}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
@@ -167,7 +166,7 @@ const MiniCategoriesManagement = () => {
         }).then((result) => {
             if (result.dismiss === Swal.DismissReason.timer) {
                 // Timer completed, initiate the fetch for deletion
-                fetch(`http://localhost:5000/api/v1/category/seller/mini/delete/${id}`, {
+                fetch(`https://salenow-v2-backend.vercel.app/api/v1/category/seller/mini/delete/${id}`, {
                     method: "DELETE",
                     headers: {
                         "Content-Type": "application/json",

@@ -16,6 +16,9 @@ import AddSubCategory from "../Pages/SellerItems/SellerCatagory/ModalForCategory
 import SubCategoriesManagement from "../Pages/SellerItems/SellerCatagory/SubCategory/SubCategoriesManagement";
 import AddSellerBlog from "../Pages/SellerItems/SellersBlog/AddBlog/AddSellerBlog";
 import SellerManageBlog from "../Pages/SellerItems/SellersBlog/ManageBlogs/SellerManageBlog";
+import SiteContentSeller from "../Pages/SellerItems/SiteContent/SiteContentSeller";
+import AddSlider from "../Pages/SellerItems/SiteContent/Slider/AddSlider";
+import SliderManagement from "../Pages/SellerItems/SiteContent/Slider/SliderManagement";
 import SellerEmail from "../Pages/SellerItems/Sittings/SellerEmail/SellerEmail";
 import SellerPaymentGetaway from "../Pages/SellerItems/Sittings/SellerPaymentGetway/SellerPaymentGetway";
 import SellerSittingsPage from "../Pages/SellerItems/Sittings/SellerSittingsPage";
@@ -120,6 +123,44 @@ const SellerPath = [
         path: "categories-management/extra-categories-management/add",
         element: <AddExtraCategory />
     },
+    {
+        path: "content-management",
+        element: <SiteContentSeller />
+    },
+    {
+        path: "content-management/slider-management",
+        element: <SliderManagement />
+    },
+    {
+        path: "content-management/slider-management/add",
+        element: <AddSlider />
+    },
+    {
+        path: "content-management/popup-management",
+        element: <SliderManagement />
+    },
+    {
+        path: "content-management/popup-management/add",
+        element: <AddSlider />
+    },
+    {
+        path: "content-management/promo-code-management",
+        element: <SliderManagement />
+    },
+    {
+        path: "content-management/promo-code-management/add",
+        element: <AddSlider />
+    },
+    {
+        path: "content-management/brand-management",
+        element: <SliderManagement />
+    },
+    {
+        path: "content-management/brand-management/add",
+        element: <AddSlider />
+    },
+
+
 
 ]
 

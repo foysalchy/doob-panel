@@ -13,7 +13,7 @@ const EditSellerBlog = ({ OpenModal, setOpenModal, BlogInfo, refetch }) => {
         formData.append("image", image);
 
         try {
-            const response = await fetch("http://localhost:5000/api/v1/image/upload-image", {
+            const response = await fetch("https://salenow-v2-backend.vercel.app/api/v1/image/upload-image", {
                 method: "POST",
                 body: formData,
             });
@@ -37,7 +37,7 @@ const EditSellerBlog = ({ OpenModal, setOpenModal, BlogInfo, refetch }) => {
         const data = { img, title, message, MetaTag, MetaDescription };
 
         try {
-            const response = await fetch(`http://localhost:5000/api/v1/seller/blog/update-blog/${BlogInfo._id}`, {
+            const response = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/blog/update-blog/${BlogInfo._id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -72,7 +72,7 @@ const EditSellerBlog = ({ OpenModal, setOpenModal, BlogInfo, refetch }) => {
                         <label htmlFor="dropzone-file" className="flex flex-col items-center w-full p-5 mx-auto mt-2 text-center bg-white border-2 border-gray-300 border-dashed cursor-pointer rounded-xl">
                             <img src={previewUrl || BlogInfo.img} alt="File Preview" className="mt-2 w-8 h-8" />
                             <h2 className="mt-1 font-medium tracking-wide text-gray-700 ">{previewUrl.slice(25)}</h2>
-                            <input id="dropzone-file" type="file" accept="application/pdf,image/webp,image/tiff,image/heic,image/gif,image/bmp,image/png,image/jpeg" name="photo" className="hidden" onChange={handleFileChange} />
+                            <input id="dropzone-file" type="file" accept="image/jpeg, image/png, image/gif, image/bmp, image/webp, image/heic" name="photo" className="hidden" onChange={handleFileChange} />
                         </label>
                     </div>
 

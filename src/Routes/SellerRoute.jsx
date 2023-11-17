@@ -18,7 +18,7 @@ const SellerRoute = ({ children }) => {
             <>
                 <>
                     <h1 className='text-2xl h-full flex justify-center items-center'>
-                        <Lottie animationData={groovyWalkAnimation} loop={true} /> Seller check</h1>
+                        <Lottie animationData={groovyWalkAnimation} loop={true} /></h1>
                 </>
             </>
         )

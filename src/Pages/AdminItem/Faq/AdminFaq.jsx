@@ -11,7 +11,7 @@ const AdminFaq = () => {
   const { data: faqs = [], refetch } = useQuery({
     queryKey: ["faqs"],
     queryFn: async () => {
-      const res = await fetch("http://localhost:5000/api/v1/admin/faq");
+      const res = await fetch("https://salenow-v2-backend.vercel.app/api/v1/admin/faq");
       const data = await res.json();
       return data;
     },
@@ -20,7 +20,7 @@ const AdminFaq = () => {
   const ActiveHandle = (id) => {
     setLoading(true);
 
-    fetch(`http://localhost:5000/api/v1/admin/faq/status/${id}`, {
+    fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/faq/status/${id}`, {
       method: "PUT",
       headers: {
         "content-type": "application/json",
@@ -33,9 +33,9 @@ const AdminFaq = () => {
       });
   };
 
-  const DativeHandle = (id) => {
+  const DeactiveHandle = (id) => {
 
-    fetch(`http://localhost:5000/api/v1/admin/faq/unstatus/${id}`, {
+    fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/faq/unstatus/${id}`, {
       method: "PUT",
       headers: {
         "content-type": "application/json",
@@ -49,7 +49,7 @@ const AdminFaq = () => {
   };
   const DeleteHandle = (id) => {
 
-    fetch(`http://localhost:5000/api/v1/admin/faq/delete/${id}`, {
+    fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/faq/delete/${id}`, {
       method: "Delete",
       headers: {
         "content-type": "application/json",
@@ -194,7 +194,7 @@ const AdminFaq = () => {
                         <td className="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                           {faq.status ? (
                             <button
-                              onClick={() => DativeHandle(faq?._id)}
+                              onClick={() => DeactiveHandle(faq?._id)}
                               className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-emerald-100/60 bg-gray-800"
                             >
                               <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
@@ -209,7 +209,7 @@ const AdminFaq = () => {
                             >
                               <span className="h-1.5 w-1.5 rounded-full bg-red-500" />
                               <h2 className="text-sm font-normal text-red-500">
-                                Dative
+                                Deactive
                               </h2>
                             </button>
                           )}

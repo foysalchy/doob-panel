@@ -17,7 +17,7 @@ const SellerPageManagement = () => {
     const { data: faqs = [], refetch } = useQuery({
         queryKey: ["faqs"],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/api/v1/seller/pages/${shopInfo.shopId}`);
+            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/pages/${shopInfo.shopId}`);
             const data = await res.json();
             return data;
         },
@@ -26,7 +26,7 @@ const SellerPageManagement = () => {
     const ActiveHandle = (id) => {
         setLoading(true);
 
-        fetch(`http://localhost:5000/api/v1/seller/page/status/${id}`, {
+        fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/page/status/${id}`, {
             method: "PUT",
             headers: {
                 "content-type": "application/json",
@@ -39,9 +39,9 @@ const SellerPageManagement = () => {
             });
     };
 
-    const DativeHandle = (id) => {
+    const DeactiveHandle = (id) => {
 
-        fetch(`http://localhost:5000/api/v1/seller/page/falseStatus/${id}`, {
+        fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/page/falseStatus/${id}`, {
             method: "PUT",
             headers: {
                 "content-type": "application/json",
@@ -55,7 +55,7 @@ const SellerPageManagement = () => {
     };
     const DeleteHandle = (id) => {
 
-        fetch(`http://localhost:5000/api/v1/seller/page/delete/${id}`, {
+        fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/page/delete/${id}`, {
             method: "Delete",
             headers: {
                 "content-type": "application/json",
@@ -144,7 +144,7 @@ const SellerPageManagement = () => {
                                                 <td className="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                                                     {faq.status ? (
                                                         <button
-                                                            onClick={() => DativeHandle(faq?._id)}
+                                                            onClick={() => DeactiveHandle(faq?._id)}
                                                             className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-emerald-100/60 bg-gray-800"
                                                         >
                                                             <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
@@ -159,7 +159,7 @@ const SellerPageManagement = () => {
                                                         >
                                                             <span className="h-1.5 w-1.5 rounded-full bg-red-500" />
                                                             <h2 className="text-sm font-normal text-red-500">
-                                                                Dative
+                                                                Deactive
                                                             </h2>
                                                         </button>
                                                     )}

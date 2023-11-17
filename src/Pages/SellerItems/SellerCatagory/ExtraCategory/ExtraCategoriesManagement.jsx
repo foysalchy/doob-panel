@@ -17,7 +17,7 @@ const ExtraCategoriesManagement = () => {
     const { data: categories = [], refetch } = useQuery({
         queryKey: ["categories"],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/api/v1/category/seller/extra/${shopInfo._id}`);
+            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/category/seller/extra/${shopInfo._id}`);
             const data = await res.json();
             return data;
         },
@@ -128,7 +128,7 @@ const ExtraCategoriesManagement = () => {
 
 
     const updateStatus = (id, status) => {
-        fetch(`http://localhost:5000/api/v1/category/seller/extra/status/${id}`, {
+        fetch(`https://salenow-v2-backend.vercel.app/api/v1/category/seller/extra/status/${id}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
@@ -165,7 +165,7 @@ const ExtraCategoriesManagement = () => {
         }).then((result) => {
             if (result.dismiss === Swal.DismissReason.timer) {
                 // Timer completed, initiate the fetch for deletion
-                fetch(`http://localhost:5000/api/v1/category/seller/extra/delete/${id}`, {
+                fetch(`https://salenow-v2-backend.vercel.app/api/v1/category/seller/extra/delete/${id}`, {
                     method: "DELETE",
                     headers: {
                         "Content-Type": "application/json",
@@ -289,10 +289,25 @@ const ExtraCategoriesManagement = () => {
                     <tbody>
                         {
                             currentData?.map((warehouse, index) => {
-                                const category = JSON?.parse(warehouse?.miniCategoryName)
-                                const darazExtraCategoryOption = JSON?.parse(warehouse?.darazExtraCategory)
-                                console.log(darazExtraCategoryOption)
+                                const miniCategoryName = warehouse?.miniCategoryName;
 
+                                let category;
+                                try {
+                                    category = miniCategoryName ? JSON.parse(miniCategoryName) : null;
+                                } catch (error) {
+                                    console.error('Error parsing JSON:', error);
+                                }
+                                const parsedData = warehouse?.darazExtraCategory;
+
+                                let darazExtraCategoryOption;
+                                try {
+                                    darazExtraCategoryOption = parsedData ? JSON.parse(parsedData) : '';
+                                } catch (error) {
+                                    console.error('Error parsing JSON:', error);
+                                }
+
+
+                                console.log(darazExtraCategoryOption.data)
 
                                 return (
 
@@ -346,8 +361,8 @@ const ExtraCategoriesManagement = () => {
                                                     </p>
                                                     {darazExtraCategoryOption.darazMiniCategoryName && <span>&gt;</span>}
                                                     <p>{darazExtraCategoryOption.darazMiniCategoryName}</p>
-                                                    {darazExtraCategoryOption.data.name && <span>&gt;</span>}
-                                                    <p>{darazExtraCategoryOption.data.name}</p>
+                                                    {darazExtraCategoryOption?.data?.name && <span>&gt;</span>}
+                                                    <p>{darazExtraCategoryOption?.data?.name}</p>
                                                 </div>
 
                                             </td>
