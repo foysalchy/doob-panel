@@ -86,7 +86,7 @@ const DarazIntegration = () => {
 
 
             {!shopInfo.darazLogin && <a
-                href='https://api.daraz.com.bd/oauth/authorize?response_type=code&force_auth=true&redirect_uri=https://87bf-103-167-18-21.ngrok-free.app/seller/add-daraz/&client_id=501436'
+                href='https://api.daraz.com.bd/oauth/authorize?response_type=code&force_auth=true&redirect_uri=https://relative-sunfish-remotely.ngrok-free.app/seller/add-daraz/&client_id=501436'
                 className="text-blue-500 hover:underline mb-4 inline-block"
             >
                 Login Daraz

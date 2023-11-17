@@ -24,18 +24,16 @@ const AddSubCategory = () => {
     const { data: darazData = [], refetch } = useQuery({
         queryKey: ["category"],
         queryFn: async () => {
-            if (shopInfo.darazLogin) {
-                const res = await fetch(`http://localhost:5000/api/v1/category/seller/${shopInfo._id}`);
-                const data = await res.json();
-                return data;
-            }
 
-            return [];
+            const res = await fetch(`http://localhost:5000/api/v1/category/seller/${shopInfo._id}`);
+            const data = await res.json();
+            return data;
         },
     });
 
-    const option = darazData?.filter((warehouse) => warehouse.status).map((warehouse) => ({
+    console.log(`http://localhost:5000/api/v1/category/seller/${shopInfo._id}`);
 
+    const option = darazData?.filter((warehouse) => warehouse.status).map((warehouse) => ({
         value: JSON.stringify(warehouse),
         label: warehouse.name,
     }))
@@ -64,7 +62,7 @@ const AddSubCategory = () => {
         e.preventDefault();
 
         const megaCategory = e.target.megaCategory.value || '';
-        const darazSubCategory = e.target.darazSubCategory?.value || '';
+        const darazSubCategory = e.target?.darazSubCategory?.value || '';
         const wooSubCategory = e.target.wooSubCategory?.value || '';
         const subCategoryName = e.target.subcategoryName.value
         const data = {

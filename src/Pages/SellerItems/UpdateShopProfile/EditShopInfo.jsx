@@ -24,7 +24,7 @@ const EditShopInfo = ({ Edit, setEdit, }) => {
         setErrorName()
 
         let name = e.target.value;
-        name = name.toLowerCase().replace(/\s+/g, '-');
+        name = name?.toLowerCase().replace(/\s+/g, '-');
         setshopUnicName(name);
 
         if (name.length > 2) {

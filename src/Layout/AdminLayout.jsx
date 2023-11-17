@@ -38,7 +38,7 @@ const AdminLayout = () => {
                                     </Link>
                                 </li>
                                 {paths.slice(1).map((path, index) => (
-                                    <li className="flex items-center space-x-2" key={index}>
+                                    <li className="flex items-center space-x-2" key={index + path}>
                                         <svg
                                             xmlns="http://www.w3.org/2000/svg"
                                             viewBox="0 0 32 32"

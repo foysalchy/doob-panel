@@ -1,14 +1,19 @@
 import { useQuery } from '@tanstack/react-query';
 import React from 'react';
+import { useContext } from 'react';
 import { useState } from 'react';
 import { BiEditAlt } from 'react-icons/bi';
 import { GiSaveArrow } from 'react-icons/gi';
 import { RxCrossCircled } from 'react-icons/rx';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import { AuthContext } from '../../../../AuthProvider/UserProvider';
+import DeleteModal from '../../../../Common/DeleteModal';
 
 const SellerDomainManagement = () => {
 
+    const { logOut, setUser, setShopInfo, setCookie } = useContext(AuthContext)
+    const navigate = useNavigate();
 
     const { data: shops = [], refetch, isLoading } = useQuery({
         queryKey: ["shops"],
@@ -27,7 +32,7 @@ const SellerDomainManagement = () => {
 
     const filteredData = shops.filter(
         (item) =>
-            item?.shopId?.toString().includes(searchQuery) || item?.shopName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            item?.shopId?.toString().includes(searchQuery) || item?.shopName?.toLowerCase().includes(searchQuery?.toLowerCase()) ||
             item?._id?.toString().includes(searchQuery) || item?.domain?.toString().includes(searchQuery)
     );
 
@@ -51,11 +56,110 @@ const SellerDomainManagement = () => {
     }
 
 
+    const directLogin = async (email, userId) => {
+
+
+        logOut()
+        let password = ''
+        await fetch(`http://localhost:5000/api/v1/admin/seller/pass/${userId}`).then((res) => res.json()).then((data) => {
+            password = data.password
+
+        })
+        const data = {
+            email,
+            password,
+        };
+        console.log(data);
+
+        await fetch("http://localhost:5000/api/v1/auth/sign-in", {
+            method: "post",
+            headers: {
+                "content-type": "application/json",
+            },
+            body: JSON.stringify(data),
+        })
+            .then((res) => res.json())
+            .then((data) => {
+
+                console.log(data);
+
+                if (data.user) {
+                    if (data.user.role === 'seller') {
+                        fetch(`http://localhost:5000/api/v1/shop/checkshop/${data?.user?.email}`)
+                            .then((response) => response.json())
+                            .then((result) => {
+                                console.log(result);
+                                if (result.seller) {
+
+                                    setUser(data.user);
+                                    setCookie("SaleNowUser", JSON.stringify(data.user));
+                                    setShopInfo(result.information[0])
+                                    setCookie("SellerShop", JSON.stringify(result.information[0]));
+                                    navigate("/seller/dashboard");
+                                }
+                                else {
+                                    navigate("/seller/shop-register");
+                                }
+
+                            });
+                    }
+
+                    if (data.user.role === "supperadmin") {
+                        navigate("/admin/dashboard");
+                    }
+                    if (data.user.role === "user") {
+                        navigate('/')
+                    }
+
+                }
+
+
+
+            });
+    };
+
+
+    const Login = (id) => {
+        console.log(id);
+        const email = id.seller
+        const userId = email.replace(/[@.]/g, '')
+        console.log(userId);
+        directLogin(email, userId)
+    }
+
+    const [deleteId, setDeletId] = useState('')
+    const [OpenModal, setOpenModal] = useState(false)
+    const [isDelete, setIsDelete] = useState(false)
+    const Delete = (id) => {
+        setOpenModal(true)
+        setDeletId(id)
+    }
+
+
+    if (isDelete) {
+
+        fetch(`http://localhost:5000/api/v1/shop/delete/${deleteId}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+
+        }).then((res) => res.json()).then((data) => {
+            setIsDelete(false)
+            setDeletId('')
+            Swal.fire('Shop is Deleted', '', 'success')
+            refetch('')
+            console.log(data);
+        })
+
+        console.log(deleteId, isDelete);
+    }
 
 
     return (
         <div className="">
 
+            <div className='h-0 w-0'>   <DeleteModal setOpenModal={setOpenModal} OpenModal={OpenModal} setIsDelete={setIsDelete} /></div>
 
             {!isLoading &&
                 <div className="relative w-3/5 my-6">
@@ -205,8 +309,9 @@ const SellerDomainManagement = () => {
                                                     <p>{shop.shopNumber}</p>
                                                 </td>
 
-                                                <td className="px-4 py-4 text-sm whitespace-nowrap">
-
+                                                <td className="px-4 py-4 text-sm flex gap-3 items-center whitespace-nowrap">
+                                                    <button className='text-green-500' onClick={() => Login(shop)}>Login</button>
+                                                    <button className='text-red-500' onClick={() => Delete(shop._id)}>Delete</button>
                                                 </td>
                                             </tr>
                                         ))}
@@ -218,7 +323,7 @@ const SellerDomainManagement = () => {
                 </div>
             </section>
             }
-        </div >
+        </div>
     );
 };
 

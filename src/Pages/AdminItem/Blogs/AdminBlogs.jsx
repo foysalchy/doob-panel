@@ -41,7 +41,7 @@ const AdminBlogs = () => {
 
   const filteredData = blogs.filter(
     (item) =>
-      item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      item.title?.toLowerCase().includes(searchQuery?.toLowerCase()) ||
       item._id.toString().includes(searchQuery)
   );
 

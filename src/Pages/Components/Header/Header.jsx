@@ -122,7 +122,8 @@ const Header = () => {
             title="Company"
             className="inline-flex items-center"
           >
-            <svg
+            <img className="w-32 text-black" src="../../../../Logo.png" alt="" />
+            {/* <svg
               className="w-8 text-black"
               viewBox="0 0 24 24"
               strokeLinejoin="round"
@@ -139,7 +140,7 @@ const Header = () => {
             </svg>
             <span className="ml-2 text-xl font-bold tracking-wide text-gray-800 ">
               SaleNow
-            </span>
+            </span> */}
           </NavLink>
           <ul className="flex items-center hidden space-x-8 lg:flex">
             {menuData}
@@ -360,6 +361,7 @@ const Header = () => {
               className="p-2 -mr-1 transition duration-200 rounded focus:outline-none focus:shadow-outline hover:bg-deep-purple-50 focus:bg-deep-purple-50"
               onClick={() => setIsMenuOpen(true)}
             >
+
               <svg className="w-5 text-gray-600" viewBox="0 0 24 24">
                 <path
                   fill="currentColor"
@@ -378,7 +380,7 @@ const Header = () => {
 
             {isMenuOpen && (
               <div className="absolute top-0 z-10 left-0 w-full">
-                <div className="p-5 bg-white border rounded shadow-sm">
+                <div className="p-6 bg-white border rounded shadow">
                   <div className="flex items-center justify-between mb-4">
                     <div>
                       <NavLink
@@ -387,24 +389,7 @@ const Header = () => {
                         title="Company"
                         className="inline-flex items-center"
                       >
-                        <svg
-                          className="w-8 text-black"
-                          viewBox="0 0 24 24"
-                          strokeLinejoin="round"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeMiterlimit="10"
-                          stroke="currentColor"
-                          fill="none"
-                        >
-                          <rect x="3" y="1" width="7" height="12" />
-                          <rect x="3" y="17" width="7" height="6" />
-                          <rect x="14" y="1" width="7" height="6" />
-                          <rect x="14" y="11" width="7" height="12" />
-                        </svg>
-                        <span className="ml-2 text-xl font-bold tracking-wide text-gray-800 ">
-                          SaleNow
-                        </span>
+                        <img className="w-32" src="../../../../Logo.png" alt="" />
                       </NavLink>
                     </div>
                     <div>
@@ -432,7 +417,7 @@ const Header = () => {
           </div>
         </div>
       </div>
-    </div >
+    </div>
   );
 };
 

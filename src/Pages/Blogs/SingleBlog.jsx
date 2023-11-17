@@ -58,7 +58,7 @@ const SingleBlog = () => {
             loading="lazy"
             src={blogInfo?.img}
             alt=""
-            className="w-full h-[400px] object-contain"
+            className="w-full h-[400px] object-cover"
           />
 
           <h1 className=" mt-4 md:text-4xl text-2xl">{blogInfo?.title}</h1>
@@ -83,7 +83,7 @@ const SingleBlog = () => {
                 loading="lazy"
                 src={blg.img}
                 alt=""
-                className="md:w-[110px] w-[110px]"
+                className="md:w-[110px] h-16 object-cover w-[110px]"
               />
               <div className="">
                 <h4 className=" text-sm ">{blg.title}</h4>

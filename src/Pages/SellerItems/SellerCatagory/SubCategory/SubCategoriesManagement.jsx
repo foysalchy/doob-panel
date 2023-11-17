@@ -30,11 +30,18 @@ const SubCategoriesManagement = () => {
     const handleSearch = (event) => {
         setSearchQuery(event.target.value);
     };
+
+    console.log(categories);
+
     const filteredData = categories?.map((filteredItem) => {
+        console.log(filteredItem);
         let parsedDarazCategory = filteredItem?.darazCategory;
 
         try {
-            parsedDarazCategory = JSON.parse(filteredItem?.darazCategory);
+            // Check if the string is not empty before parsing
+            if (parsedDarazCategory) {
+                parsedDarazCategory = JSON.parse(parsedDarazCategory);
+            }
         } catch (error) {
             console.error('Error parsing JSON:', error);
             // Handle invalid JSON by leaving it unchanged or handle it accordingly.
@@ -42,16 +49,15 @@ const SubCategoriesManagement = () => {
 
         return {
             ...filteredItem,
-            darazCategory: parsedDarazCategory
+            darazCategory: parsedDarazCategory,
         };
     })
         .filter((item) => {
-            const lowercaseSearchQuery = searchQuery.toLowerCase();
+            const lowercaseSearchQuery = searchQuery?.toLowerCase();
             return (
-                item?.subCategoryName.toLowerCase().includes(lowercaseSearchQuery)
+                item?.subCategoryName?.toLowerCase().includes(lowercaseSearchQuery)
             );
         });
-
 
 
     const [currentPage, setCurrentPage] = useState(1);
@@ -69,8 +75,6 @@ const SubCategoriesManagement = () => {
     };
 
 
-
-    console.log(filteredData[0].darazSubCategory);
 
 
 
@@ -274,11 +278,9 @@ const SubCategoriesManagement = () => {
                     <thead>
                         <tr>
                             <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-800  rounded-tl ">
-                                Sub Category Name
+                                Category Name
                             </th>
-                            <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-800 ">
-                                Mega Category
-                            </th>
+
                             {shopInfo.darazLogin && <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-800 ">
                                 Daraz Category
                             </th>}
@@ -304,15 +306,50 @@ const SubCategoriesManagement = () => {
 
                                             <div>
                                                 <h2 className="font-medium text-gray-800  ">
-                                                    {warehouse?.subCategoryName}
+                                                    {warehouse?.megaCategory && JSON.parse(warehouse.megaCategory).name}  <span>&gt;</span>   {warehouse?.subCategoryName}
                                                 </h2>
 
                                             </div>
                                         </div>
                                     </td>
-                                    <td className="px-4 py-3">{warehouse?.megaCategory && JSON.parse(warehouse.megaCategory).name}</td>
-                                    {shopInfo.darazLogin && <td className="px-4 py-3">{warehouse?.darazSubCategory && JSON.parse(warehouse.darazSubCategory).name}</td>}
-                                    {shopInfo.wooLogin && <td className="px-4 py-3">{warehouse?.wooSubCategory && JSON.parse(warehouse?.wooSubCategory)?.name}</td>}
+
+
+
+
+                                    {shopInfo.darazLogin && (
+                                        <td className="px-4 py-3 ">
+
+                                            <div className='flex gap-1 items-center'>
+                                                <p>
+                                                    {warehouse?.megaCategory &&
+                                                        (() => {
+                                                            try {
+                                                                const parsedMegaCategory = JSON.parse(warehouse?.megaCategory);
+                                                                const darazCategoryName =
+                                                                    parsedMegaCategory && parsedMegaCategory.darazCategory
+                                                                        ? JSON.parse(parsedMegaCategory.darazCategory).name
+                                                                        : null;
+
+                                                                return darazCategoryName;
+                                                            } catch (error) {
+                                                                console.error("Error parsing JSON:", error);
+                                                                return null;
+                                                            }
+                                                        })()}
+                                                </p>
+
+                                                <p>
+                                                    {warehouse?.darazSubCategory && (
+                                                        <span>&gt; {JSON.parse(warehouse?.darazSubCategory).name}</span>
+                                                    )}
+
+                                                </p>
+                                            </div>
+
+                                        </td>
+                                    )}
+
+                                    {shopInfo.wooLogin && <td className="px-4 py-3"> {warehouse?.wooSubCategory && JSON.parse(warehouse?.wooSubCategory)?.name}</td>}
 
                                     <td className="px-4 py-3">{!warehouse?.status ? (
                                         <button

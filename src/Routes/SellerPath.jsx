@@ -9,6 +9,7 @@ import CategoriesManagement from "../Pages/SellerItems/SellerCatagory/Categories
 import ExtraCategoriesManagement from "../Pages/SellerItems/SellerCatagory/ExtraCategory/ExtraCategoriesManagement";
 import MageCategoriesManagement from "../Pages/SellerItems/SellerCatagory/MegaCategory/MageCategoriesManagement";
 import MiniCategoriesManagement from "../Pages/SellerItems/SellerCatagory/MiniCategory/MiniCategoriesManagement";
+import AddExtraCategory from "../Pages/SellerItems/SellerCatagory/ModalForCategory/AddExtraCategory";
 import AddMagaCategory from "../Pages/SellerItems/SellerCatagory/ModalForCategory/AddMagaCategory";
 import AddMiniCategory from "../Pages/SellerItems/SellerCatagory/ModalForCategory/AddMiniCategory";
 import AddSubCategory from "../Pages/SellerItems/SellerCatagory/ModalForCategory/AddSubCategory";
@@ -114,6 +115,10 @@ const SellerPath = [
     {
         path: "categories-management/extra-categories-management",
         element: <ExtraCategoriesManagement />
+    },
+    {
+        path: "categories-management/extra-categories-management/add",
+        element: <AddExtraCategory />
     },
 
 ]

@@ -12,7 +12,7 @@ const SendEmail = () => {
     const { data: options = [], refetch } = useQuery({
         queryKey: ["options"],
         queryFn: async () => {
-            const res = await fetch("http://localhost:5000/api/v1/user");
+            const res = await fetch("http://localhost:5000/api/v1/users");
             const data = await res.json();
             return data;
         },
@@ -22,7 +22,7 @@ const SendEmail = () => {
 
 
     const filteredOptions = options?.filter((option) =>
-        option?.email.toLowerCase().includes(searchTerm.toLowerCase())
+        option?.email?.toLowerCase().includes(searchTerm?.toLowerCase())
 
     ).slice(0, 4);
 

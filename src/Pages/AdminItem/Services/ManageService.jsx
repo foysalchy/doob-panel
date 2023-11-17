@@ -26,7 +26,7 @@ const ManageService = () => {
 
     const filteredData = services.filter(
         (item) =>
-            item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            item.title?.toLowerCase().includes(searchQuery?.toLowerCase()) ||
             item._id.toString().includes(searchQuery)
     );
 

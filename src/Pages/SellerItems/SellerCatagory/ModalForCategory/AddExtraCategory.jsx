@@ -5,34 +5,33 @@ import { useState } from 'react';
 import { FaLongArrowAltLeft, FaLongArrowAltRight } from 'react-icons/fa';
 import Select from 'react-select';
 import { AuthContext } from '../../../../AuthProvider/UserProvider';
-import CryptoJS from 'crypto-js';
+
 import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
 
-const AddMiniCategory = () => {
+const AddExtraCategory = () => {
     const { shopInfo } = useContext(AuthContext)
 
     const navigate = useNavigate();
 
     const handleGoBack = () => {
-        navigate(-1); // This will go back to the previous page
+        navigate(-1);
     };
 
-console.log(`http://localhost:5000/api/v1/category/seller/${shopInfo._id}`);
+
 
     const { data: darazData = [], refetch } = useQuery({
         queryKey: ["category"],
         queryFn: async () => {
-           
+            if (shopInfo.darazLogin) {
                 const res = await fetch(`http://localhost:5000/api/v1/category/seller/${shopInfo._id}`);
                 const data = await res.json();
                 return data;
+            }
 
             return [];
         },
     });
-
-    console.log(darazData);
 
     const option = darazData?.filter((warehouse) => warehouse.status).map((warehouse) => ({
 
@@ -64,21 +63,23 @@ console.log(`http://localhost:5000/api/v1/category/seller/${shopInfo._id}`);
         e.preventDefault();
 
         const megaCategory = e.target.megaCategory.value || '';
-        const darazMiniCategory = e.target.darazMiniCategory?.value || '';
+        const darazExtraCategory = e.target.darazExtraCategory?.value || '';
         const wooMiniCategory = e.target.wooMiniCategory?.value || '';
-        const subCategoryName = e.target.subCategoryName.value
-        const miniCategoryName = e.target.miniCategoryName.value
+        const subCategoryName = e.target.subCategoryName.value || ''
+        const miniCategoryName = e.target.miniCategoryName.value || ''
+        const extraCategoryName = e.target.extraCategoryName.value
         const data = {
             megaCategory,
-            darazMiniCategory,
+            darazExtraCategory,
             wooMiniCategory,
             subCategoryName,
             miniCategoryName,
-            shopId: shopInfo._id
+            shopId: shopInfo._id,
+            extraCategoryName
         }
         console.log(data);
 
-        const url = `http://localhost:5000/api/v1/category/seller/mini/add`;
+        const url = `http://localhost:5000/api/v1/category/seller/extra/add`;
 
         fetch(url, {
             method: "POST",
@@ -100,19 +101,19 @@ console.log(`http://localhost:5000/api/v1/category/seller/${shopInfo._id}`);
 
     const [subCategorys, setSubCategorys] = useState([])
 
+    const [megaCategory, setMegaCategory] = useState('')
 
 
 
     const handleSelectChange = (selectedOption) => {
 
-        setSubCategorys([])
         const darazCategoryObject = JSON.parse(selectedOption.value);
-        const darazCategoryString = darazCategoryObject.name;
+        setMegaCategory(selectedOption.value)
+
 
         const requestBody = {
             shopId: shopInfo._id,
             megaCategory: selectedOption.value,
-            subCategoryName: darazCategoryString,
         };
 
         fetch(`http://localhost:5000/api/v1/category/seller/sub`, {
@@ -141,16 +142,97 @@ console.log(`http://localhost:5000/api/v1/category/seller/${shopInfo._id}`);
         label: warehouse.subCategoryName,
     }));
 
-    const darazOption = sortedWarehouses?.map((warehouse) => {
-        const darazSubCategory = warehouse.darazSubCategory;
-        const parsedDarazSubCategory = darazSubCategory ? JSON.parse(darazSubCategory) : null;
-        return parsedDarazSubCategory;
-    }).map((parsedDarazSubCategory) =>
-        parsedDarazSubCategory?.children?.map((child) => ({
-            value: JSON.stringify({ child, name: parsedDarazSubCategory.name }),
-            label: child.name,
-        })) || []
-    ).flat();
+    const [miniCategories, setMiniCategories] = useState([])
+
+
+    const handleChangeSub = (value) => {
+
+        const requestBody = {
+            shopId: shopInfo._id,
+            subCategoryName: value.value,
+            megaCategory,
+        }
+        fetch(`http://localhost:5000/api/v1/category/seller/mini`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(requestBody),
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                setMiniCategories(data);
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+    }
+
+
+
+    const [darazOption, setDarazOption] = useState(false)
+
+    let arryData = { children: [{ "var": true, "name": "Messenger Bags", "leaf": true, "category_id": 10001945 }, { "var": true, "name": "Business Bags", "leaf": true, "category_id": 10001946 }, { "children": [{ "var": true, "name": "Fashion backpacks", "leaf": true, "category_id": 10001990 }], "var": false, "name": "Backpacks", "leaf": false, "category_id": 10001947 }, { "var": true, "name": "Crossbody Bags", "leaf": true, "category_id": 10001948 }, { "var": true, "name": "Tote Bags", "leaf": true, "category_id": 10001949 }, { "children": [{ "var": true, "name": "Coin Holders & Pouches", "leaf": true, "category_id": 10001992 }, { "var": true, "name": "Card Holders", "leaf": true, "category_id": 10001993 }, { "var": true, "name": "Key Holders", "leaf": true, "category_id": 10001994 }, { "var": true, "name": "Money Clips", "leaf": true, "category_id": 10001995 }, { "children": [{ "var": true, "name": "Fashion Wallets", "leaf": true, "category_id": 10002040 }], "var": false, "name": "Wallets", "leaf": false, "category_id": 10001991 }], "var": false, "name": "Wallets & Accessories", "leaf": false, "category_id": 10001950 }], "var": false, "name": "Men Bags", "leaf": false, "category_id": 10001928 }
+
+    let stringData = '';
+    console.log(stringData);
+
+
+
+    let darazMiniCategoryName = ''
+    let darazSubCategoryName = ''
+
+    const miniCategoriesOption = miniCategories?.map((warehouse) => {
+        // const daraz = warehouse.darazMiniCategory && JSON?.parse(warehouse?.darazMiniCategory);
+        const data = JSON.parse(warehouse.darazMiniCategory)
+        darazMiniCategoryName = data.child.name
+        darazSubCategoryName = data.name
+
+        delete warehouse.megaCategory;
+
+        const option = {
+            value: JSON.stringify(warehouse),
+            label: warehouse.miniCategoryName,
+        };
+
+        return option;
+    });
+
+
+
+
+    const darazOptionData = darazOption && darazOption?.map((data) => {
+
+        const option = {
+            value: JSON.stringify({ data, darazMiniCategoryName: darazMiniCategoryName, darazSubCategoryName: darazSubCategoryName }),
+            label: data.name,
+        };
+
+        return option;
+    });
+
+
+    const darazCategoryHandle = (value) => {
+
+
+        try {
+
+            console.log(value);
+            console.log(JSON.parse(JSON.parse(value.value).darazMiniCategory));
+
+            if (arryData.children) {
+                setDarazOption(arryData.children);
+            } else {
+                setDarazOption(false);
+            }
+
+            console.log(stringData);
+            console.log('click');
+        } catch (error) {
+            console.error('Error parsing JSON:', error);
+        }
+    };
+
 
 
 
@@ -207,14 +289,15 @@ console.log(`http://localhost:5000/api/v1/category/seller/${shopInfo._id}`);
                             }}
                             name='subCategoryName'
                             required
+                            onChange={handleChangeSub}
                             options={subcategoryOption}
                             placeholder="Select Daraz Category"
                         />
                     </div>
                 </div>
-                {shopInfo.darazLogin && darazOption?.length > 0 && <div className=" mt-4">
+                <div className=" mt-4">
                     <div className='mt-4' >
-                        <label className="text-sm">Select Daraz Category</label>
+                        <label className="text-sm">Select Mini Category</label>
                         <Select
                             menuPortalTarget={document.body}
                             styles={{
@@ -227,9 +310,33 @@ console.log(`http://localhost:5000/api/v1/category/seller/${shopInfo._id}`);
                                     cursor: 'pointer',
                                 }),
                             }}
-                            name='darazMiniCategory'
+                            name='miniCategoryName'
                             required
-                            options={darazOption}
+                            onChange={darazCategoryHandle}
+                            options={miniCategoriesOption}
+                            placeholder="Select Mini Category"
+                        />
+                    </div>
+                </div>
+                {shopInfo.darazLogin && darazOption && <div className=" mt-4">
+                    <div className='mt-4' >
+                        <label className="text-sm">Select Your Daraz Category</label>
+                        <Select
+                            menuPortalTarget={document.body}
+                            styles={{
+                                control: (provided) => ({
+                                    ...provided,
+                                    cursor: 'pointer',
+                                }),
+                                option: (provided) => ({
+                                    ...provided,
+                                    cursor: 'pointer',
+                                }),
+                            }}
+                            name='darazExtraCategory'
+
+                            required
+                            options={darazOptionData}
                             placeholder="Select Daraz Category"
                         />
                     </div>
@@ -256,16 +363,13 @@ console.log(`http://localhost:5000/api/v1/category/seller/${shopInfo._id}`);
                         />
                     </div>
                 </div>}
-                {/* <div className=" mt-4">
-                    <label className="text-sm">Provide name of Sub category</label>
-                    <input required name='image' placeholder="Provide name of Sub category" className="w-full p-2 border border-black rounded-md  text-gray-900" />
-                </div> */}
+
 
                 <div className="mt-4">
-                    <label className="block text-sm font-medium text-gray-700">Enter Mini Category Name</label>
+                    <label className="block text-sm font-medium text-gray-700">Enter Extra Category Name</label>
                     <input
                         required
-                        name='miniCategoryName'
+                        name='extraCategoryName'
                         placeholder="E.g., Trendy Fashion Accessories"
                         className="mt-1 p-2 border border-gray-300 rounded-md w-full text-gray-900 focus:outline-none focus:border-blue-500"
                     />
@@ -286,4 +390,4 @@ console.log(`http://localhost:5000/api/v1/category/seller/${shopInfo._id}`);
     );
 };
 
-export default AddMiniCategory;
+export default AddExtraCategory;

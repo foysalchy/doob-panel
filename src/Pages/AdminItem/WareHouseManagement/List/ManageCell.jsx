@@ -25,14 +25,14 @@ const ManageCell = () => {
     };
 
     const filteredData = cells.filter((item) => {
-        const lowercaseSearchQuery = searchQuery.toLowerCase();
+        const lowercaseSearchQuery = searchQuery?.toLowerCase();
 
         return (
-            item.warehouse.toLowerCase().includes(lowercaseSearchQuery) ||
-            item.area.toLowerCase().includes(lowercaseSearchQuery) ||
-            item.rack.toLowerCase().includes(lowercaseSearchQuery) ||
-            item.self.toLowerCase().includes(lowercaseSearchQuery) ||
-            item.cell.toLowerCase().includes(lowercaseSearchQuery)
+            item.warehouse?.toLowerCase().includes(lowercaseSearchQuery) ||
+            item.area?.toLowerCase().includes(lowercaseSearchQuery) ||
+            item.rack?.toLowerCase().includes(lowercaseSearchQuery) ||
+            item.self?.toLowerCase().includes(lowercaseSearchQuery) ||
+            item.cell?.toLowerCase().includes(lowercaseSearchQuery)
         );
     });
 

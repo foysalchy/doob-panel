@@ -24,11 +24,11 @@ const AreaListForWarehouse = () => {
     };
 
     const filteredData = areas.filter((item) => {
-        const lowercaseSearchQuery = searchQuery.toLowerCase();
+        const lowercaseSearchQuery = searchQuery?.toLowerCase();
 
         return (
-            item.warehouse.toLowerCase().includes(lowercaseSearchQuery) ||
-            item.area.toLowerCase().includes(lowercaseSearchQuery)
+            item.warehouse?.toLowerCase().includes(lowercaseSearchQuery) ||
+            item.area?.toLowerCase().includes(lowercaseSearchQuery)
         );
     });
 

@@ -40,7 +40,7 @@ const SellerManageContact = () => {
     };
 
     const filteredData = contact.filter((item) =>
-        item?.media.toLowerCase().includes(searchQuery.toLowerCase())
+        item?.media?.toLowerCase().includes(searchQuery?.toLowerCase())
     );
 
 
