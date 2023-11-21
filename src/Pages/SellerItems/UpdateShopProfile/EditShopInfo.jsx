@@ -175,7 +175,7 @@ const EditShopInfo = ({ Edit, setEdit, }) => {
                     >
 
 
-                        <div className="w-full max-w-[600px]   rounded-[20px]  bg-white  pb-10 px-8 text-center md:px-[30px] overflow-scroll">
+                        <div className="w-full max-w-[600px]   rounded-[20px]  bg-white  pb-10 px-8 text-center md:px-[30px]">
                             <div className='flex justify-between  pt-4 items-start w-full sticky top-0 bg-white border-b'>
                                 <div className='pb-2 text-xl font-bold text-dark text-center sm:text-2xl'>Update Shop Info</div>
                                 <div onClick={() => setEdit(!Edit)} className='cursor-pointer bg-gray-500 rounded-full px-2.5 mb-2 p-1 text-2xl hover:text-red-500'>
@@ -184,7 +184,7 @@ const EditShopInfo = ({ Edit, setEdit, }) => {
                             </div>
                             <div>
 
-                                <div className='my-4'>
+                                <div className='my-4  overflow-y-scroll'>
                                     <form onSubmit={updateShopHandler} className='border-2 border-gray-500 p-4 rounded-xl' action=" ">
                                         <div className="mb-4">
                                             <input

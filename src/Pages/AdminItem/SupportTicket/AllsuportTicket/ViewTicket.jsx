@@ -95,10 +95,10 @@ const ViewTicket = ({ viewTicket, setViewTicket, ticketDetails, refetch }) => {
                                             onMouseEnter={handleHover}
                                             onMouseLeave={handleHoverLeave}>
 
-                                            <img className="w-20 h-auto" src={ticketDetails?.file} alt="Image" />
+                                            <img className="w-20 h-auto" src={ticketDetails?.file} srcSet={ticketDetails?.file} alt="Image" />
                                             {(isHovered || isFullscreen) && (
                                                 <div className={`absolute top-40 left-0 h-full bg-black bg-blur-sm w-full flex items-center justify-center ${isFullscreen ? 'z-50' : ''}`}>
-                                                    <img className={`w-full h-auto bg-black rounded ${isFullscreen ? 'cursor-pointer' : ''}`} src={ticketDetails?.file} alt="Image" />
+                                                    <img className={`w-full h-auto bg-black rounded ${isFullscreen ? 'cursor-pointer' : ''}`} src={ticketDetails?.file} srcSet={ticketDetails?.file} alt="Image" />
                                                 </div>
                                             )}
                                         </div>

@@ -2,15 +2,18 @@ import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 import { IoCall } from 'react-icons/io5';
 import { MdEmail } from 'react-icons/md';
-import { Link, useLoaderData, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useContext } from 'react';
 import { AuthContext } from '../../../AuthProvider/UserProvider';
 
 const ShopSmallNav = () => {
 
-    const params = useParams();
-    const shopId = params.id;
+    const pathname = window.location.pathname;
+    const idMatch = pathname.match(/\/shop\/([^/]+)/);
 
+    const shopId = idMatch ? idMatch[1] : null;
+
+    console.log('Shop ID:', shopId);
     const { shopInfo } = useContext(AuthContext)
 
 

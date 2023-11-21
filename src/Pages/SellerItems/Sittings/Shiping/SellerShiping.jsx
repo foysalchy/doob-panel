@@ -220,6 +220,7 @@ const SellerShipping = () => {
                                             <img
                                                 alt="Developer"
                                                 src="https://logowik.com/content/uploads/images/redx2046.jpg"
+                                                srcSet="https://logowik.com/content/uploads/images/redx2046.jpg"
                                                 className="absolute inset-0 py-3 object-cover opacity-75 flex justify-center items-center transition-opacity group-hover:opacity-20"
                                             />
 
@@ -241,6 +242,7 @@ const SellerShipping = () => {
                                             <img
                                                 alt="Developer"
                                                 src="https://play-lh.googleusercontent.com/9OYsIvc-iKHte4jqVe-c4sA0vNL-tljBDVPguou6B-qdxQgSKpj8pZ7ZYh6MYEbawbo"
+                                                srcSet="https://play-lh.googleusercontent.com/9OYsIvc-iKHte4jqVe-c4sA0vNL-tljBDVPguou6B-qdxQgSKpj8pZ7ZYh6MYEbawbo"
                                                 className="absolute inset-0 p-2 object-cover opacity-75 flex justify-center items-center transition-opacity group-hover:opacity-20"
                                             />
 

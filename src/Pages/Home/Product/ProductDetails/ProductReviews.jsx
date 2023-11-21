@@ -143,21 +143,25 @@ const ProductReviews = () => {
                   <img
                     className="w-[100px] h-[100px]"
                     src="https://img.freepik.com/free-psd/mens-tri-blend-crew-tee-mockup_126278-130.jpg?w=740&t=st=1696792919~exp=1696793519~hmac=2120615b267f5ab7879436d3ac193cf6c02d0b0196dbc7329132e70c0061cd9eg"
+                    srcSet="https://img.freepik.com/free-psd/mens-tri-blend-crew-tee-mockup_126278-130.jpg?w=740&t=st=1696792919~exp=1696793519~hmac=2120615b267f5ab7879436d3ac193cf6c02d0b0196dbc7329132e70c0061cd9eg"
                     alt="product"
                   />
                   <img
                     className="w-[100px] h-[100px]"
                     src="https://img.freepik.com/free-psd/mens-tri-blend-crew-tee-mockup_126278-130.jpg?w=740&t=st=1696792919~exp=1696793519~hmac=2120615b267f5ab7879436d3ac193cf6c02d0b0196dbc7329132e70c0061cd9e"
+                    srcSet="https://img.freepik.com/free-psd/mens-tri-blend-crew-tee-mockup_126278-130.jpg?w=740&t=st=1696792919~exp=1696793519~hmac=2120615b267f5ab7879436d3ac193cf6c02d0b0196dbc7329132e70c0061cd9e"
                     alt="product"
                   />
                   <img
                     className="w-[100px] h-[100px]"
                     src="https://i.ibb.co/mzCpLH6/attractive-woman-wearing-hat-posing-black-background-1.png"
+                    srcSet="https://i.ibb.co/mzCpLH6/attractive-woman-wearing-hat-posing-black-background-1.png"
                     alt="product"
                   />
                   <img
                     className="w-[100px] h-[100px]"
                     src="https://img.freepik.com/free-psd/mens-tri-blend-crew-tee-mockup_126278-130.jpg?w=740&t=st=1696792919~exp=1696793519~hmac=2120615b267f5ab7879436d3ac193cf6c02d0b0196dbc7329132e70c0061cd9e"
+                    srcSet="https://img.freepik.com/free-psd/mens-tri-blend-crew-tee-mockup_126278-130.jpg?w=740&t=st=1696792919~exp=1696793519~hmac=2120615b267f5ab7879436d3ac193cf6c02d0b0196dbc7329132e70c0061cd9e"
                     alt="product"
                   />
                 </div>

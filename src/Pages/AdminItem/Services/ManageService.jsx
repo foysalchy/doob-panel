@@ -215,7 +215,7 @@ const ManageService = () => {
                                                             <div className="flex items-center gap-x-2">
                                                                 <img
                                                                     className="object-cover w-10 h-10 rounded"
-                                                                    src={service?.img}
+                                                                    srcSet={service?.img}
                                                                     alt=""
                                                                 />
                                                                 <div>

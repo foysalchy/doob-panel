@@ -98,7 +98,7 @@ const Router = createBrowserRouter([
     element: <ShopLayout />,
     children: [
       {
-        path: ':id',
+        path: ':id/',
         element: <Home />,
         loader: async ({ params }) => {
           const id = params.id;

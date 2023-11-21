@@ -1,12 +1,16 @@
 import React from 'react';
-import { useLoaderData, useParams } from 'react-router';
+import { useLoaderData } from 'react-router';
 import { Link } from 'react-router-dom';
 
 const ShopAllBlog = () => {
 
     const blogs = useLoaderData()
-    const params = useParams();
-    const shopId = params.id;
+    const pathname = window.location.pathname;
+    const idMatch = pathname.match(/\/shop\/([^/]+)/);
+
+    const shopId = idMatch ? idMatch[1] : null;
+
+    console.log('Shop ID:', shopId);
 
     const extractInnerText = (html) => {
         const parser = new DOMParser();
@@ -25,6 +29,7 @@ const ShopAllBlog = () => {
                             className="overflow-hidden transition-shadow duration-300 bg-white rounded shadow-sm"
                         >
                             <img
+                                srcSet={blog?.img}
                                 src={blog?.img}
                                 className="object-cover w-full h-64"
                                 alt=""

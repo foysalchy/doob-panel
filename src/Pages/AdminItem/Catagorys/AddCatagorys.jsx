@@ -99,7 +99,7 @@ const AddCatagorys = () => {
               >
                 {preDeleteUrl ? (
                   <img
-                    src={preDeleteUrl}
+                    srcSet={preDeleteUrl}
                     alt="File PreDelete"
                     className="mt-2 w-8 h-8"
                   />

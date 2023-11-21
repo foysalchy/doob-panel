@@ -5,6 +5,7 @@ import Swal from 'sweetalert2';
 import { BiEdit, BiLeftArrow, BiRightArrow } from 'react-icons/bi';
 import { MdDelete } from 'react-icons/md';
 import ModalForWarehouse from '../Modal/ModalForWarehouse';
+
 const AreaListForWarehouse = () => {
 
 

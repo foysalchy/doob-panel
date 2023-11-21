@@ -18,6 +18,7 @@ const YoutubeModal = ({ isOpen, onClose, link }) => {
                         <iframe
                             className="md:w-[700px] w-[300px]  md:h-[350px]"
                             src={link}
+                            srcSet={link}
                             title="YouTube Video"
                             frameBorder="0"
                             allowFullScreen

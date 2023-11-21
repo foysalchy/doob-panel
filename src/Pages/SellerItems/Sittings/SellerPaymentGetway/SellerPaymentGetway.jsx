@@ -406,6 +406,7 @@ const SellerPaymentGetaway = () => {
                                         <img
                                             alt="Developer"
                                             src="https://logos-download.com/wp-content/uploads/2022/01/BKash_Logo_icon-1536x1452.png"
+                                            srcSet="https://logos-download.com/wp-content/uploads/2022/01/BKash_Logo_icon-1536x1452.png"
                                             className="absolute inset-0 p-4 object-cover opacity-75 transition-opacity group-hover:opacity-20"
                                         />
 
@@ -428,6 +429,7 @@ const SellerPaymentGetaway = () => {
                                             <img
                                                 alt="Developer"
                                                 src="https://download.logo.wine/logo/Nagad/Nagad-Vertical-Logo.wine.png"
+                                                srcSet="https://download.logo.wine/logo/Nagad/Nagad-Vertical-Logo.wine.png"
                                                 className="absolute inset-0 w-full mt-4 opacity-75 transition-opacity group-hover:opacity-20"
                                             />
 
@@ -449,6 +451,7 @@ const SellerPaymentGetaway = () => {
                                         <img
                                             alt="Developer"
                                             src="https://play-lh.googleusercontent.com/xA5zXoyQrqDjgz8bef64gAvnBpofTELWWWXYkuF3t5WnPADHv5Y91A8x51Z0RHJnLzM"
+                                            srcSet="https://play-lh.googleusercontent.com/xA5zXoyQrqDjgz8bef64gAvnBpofTELWWWXYkuF3t5WnPADHv5Y91A8x51Z0RHJnLzM"
                                             className="absolute inset-0 p-4 w-full  opacity-75 transition-opacity group-hover:opacity-20"
                                         />
 

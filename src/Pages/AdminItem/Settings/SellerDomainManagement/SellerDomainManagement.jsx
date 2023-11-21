@@ -213,10 +213,6 @@ const SellerDomainManagement = () => {
                                                 className="py-3.5 px-4 text-sm font-normal text-left rtl:text-right  text-gray-400"
                                             >
                                                 <div className="flex items-center gap-x-3">
-                                                    <input
-                                                        type="checkbox"
-                                                        className="text-blue-500  rounded bg-gray-900 ring-offset-gray-900 border-gray-700"
-                                                    />
                                                     <span>Name</span>
                                                 </div>
                                             </th>
@@ -253,21 +249,25 @@ const SellerDomainManagement = () => {
                                             <tr className='divide-gray-700'>
                                                 <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                                                     <div className="inline-flex items-center gap-x-3">
-                                                        <input
-
-                                                            type="checkbox"
-                                                            className="text-blue-500  rounded bg-gray-900 ring-offset-gray-900 border-gray-700"
-                                                        />
-                                                        <div className="flex items-center gap-x-2">
-                                                            <img className='w-8 h-8 object-cover' src={shop?.logo} alt="" />
-                                                            <div>
-                                                                <h2 className="font-medium text-gray-800  ">
-                                                                    {shop?.shopName}
-                                                                </h2>
-                                                                <p className="text-sm font-normal text-gray-600 ">
-                                                                    {shop?.shopId}
-                                                                </p>
-                                                            </div>
+                                                        <div className="flex items-center gap-x-2 relative group">
+                                                            <img
+                                                                className="w-8 h-8 object-cover"
+                                                                src={shop?.logo}
+                                                                srcSet={shop?.logo}
+                                                                alt=""
+                                                            />
+                                                            {/* Tooltip */}
+                                                            {/* <div className="absolute top-0 z-50 left-0 hidden group-hover:block p-2">
+                                                                <img
+                                                                    className="w-40 h-20 object-cover"
+                                                                    src={shop?.logo}
+                                                                    alt="Tooltip Image"
+                                                                />
+                                                            </div> */}
+                                                        </div>
+                                                        <div>
+                                                            <h2 className="font-medium text-gray-800">{shop?.shopName}</h2>
+                                                            <p className="text-sm font-normal text-gray-600">{shop?.shopId}</p>
                                                         </div>
                                                     </div>
                                                 </td>

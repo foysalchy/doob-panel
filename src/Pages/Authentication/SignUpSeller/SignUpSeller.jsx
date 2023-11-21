@@ -84,6 +84,7 @@ const SignUpSeller = () => {
     <div>
       <div className="relative">
         <img
+          srcSet='https://c0.wallpaperflare.com/preview/781/693/128/abstract-business-communication-computer.jpg'
           src='https://c0.wallpaperflare.com/preview/781/693/128/abstract-business-communication-computer.jpg'
           className="absolute inset-0 object-cover w-full h-full"
           alt=""

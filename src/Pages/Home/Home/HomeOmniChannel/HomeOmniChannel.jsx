@@ -15,7 +15,7 @@ const HomeOmniChannel = () => {
                 </span>
             </h2>
 
-            <img src={GroupImage} alt="" />
+            <img src={GroupImage} srcSet={GroupImage} alt="" />
         </div>
     );
 };

@@ -3,7 +3,7 @@ import { useContext } from 'react';
 import { AuthContext } from '../../../../AuthProvider/UserProvider';
 import { IoLogOut, IoSettings, IoShareSocialSharp, IoStorefront } from 'react-icons/io5';
 import { Link } from 'react-router-dom';
-import { MdContactSupport, MdContacts, MdDomain, MdOutlineAddCircleOutline, MdOutlineManageSearch } from 'react-icons/md';
+import { MdContactSupport, MdContacts, MdDomain, MdOutlineAddCircleOutline, MdOutlineIntegrationInstructions, MdOutlineManageSearch } from 'react-icons/md';
 import { IoIosArrowDown } from 'react-icons/io';
 import { ImBlog } from 'react-icons/im';
 import { useState } from 'react';
@@ -12,7 +12,7 @@ import { AiFillFileAdd, AiOutlineHome } from 'react-icons/ai';
 import { FiSettings } from 'react-icons/fi';
 import { BsTicket } from 'react-icons/bs';
 import { SiCloudflarepages, SiPagekit } from 'react-icons/si';
-import { BiBookContent, BiCategoryAlt } from 'react-icons/bi';
+import { BiArchive, BiBookContent, BiCategoryAlt } from 'react-icons/bi';
 import Daraz from './Daraz.png';
 import Logo from "../../../../../Logo.png";
 
@@ -33,7 +33,7 @@ const SideNavberSeller = () => {
                             title="Company"
                             className="inline-flex items-center"
                         >
-                            <img className="w-32" src={Logo} alt="" />
+                            <img className="w-32" src={Logo} srcSet={Logo} alt="" />
                         </Link>}
                         {responsive ?
 
@@ -240,9 +240,9 @@ const SideNavberSeller = () => {
                                     </Link>
                                 </li>
                                 <li className="rounded-sm hover:bg-gray-800">
-                                    <Link to={'/seller/add-daraz'} rel="noopener noreferrer" href="#" className="flex items-center px-3 p-2 space-x-4 rounded-md">
-                                        <img className="w-3 h-5 text-gray-400 filter grayscale brightness-200" src={Daraz} alt="" />
-                                        <span>Daraz Login</span>
+                                    <Link to={'/seller/channel-integration'} rel="noopener noreferrer" className="flex items-center p-2 space-x-3 rounded-md">
+                                        <MdOutlineIntegrationInstructions className="w-5 h-5 text-gray-400" />
+                                        <span>Channel Integration</span>
                                     </Link>
                                 </li>
 
@@ -256,6 +256,19 @@ const SideNavberSeller = () => {
                                     <Link to={'/seller/content-management'} rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
                                         <BiBookContent className="w-5 h-5 text-gray-400" />
                                         <span>Content Management</span>
+                                    </Link>
+                                </li>
+
+                                <li className="rounded-sm hover:bg-gray-800">
+                                    <Link to={'/seller/product-management'} rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
+                                        <BiArchive className="w-5 h-5 text-gray-400" />
+                                        <span>Product Management</span>
+                                    </Link>
+                                </li>
+                                <li className="rounded-sm hover:bg-gray-800">
+                                    <Link to={'/seller/warehouse'} rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
+                                        <BiArchive className="w-5 h-5 text-gray-400" />
+                                        <span>Warehouse Management (Working)</span>
                                     </Link>
                                 </li>
 
@@ -302,7 +315,7 @@ const SideNavberSeller = () => {
                     !responsive && (
                         <div className=' bottom-5'>
                             <div className="flex items-center sticky bottom-5 p-2 mt-12 space-x-4 justify-self-end">
-                                <img loading='eager' src={shopInfo.logo} alt="" className="w-12 h-12 rounded-lg bg-gray-500" />
+                                <img loading='eager' src={shopInfo.logo} srcSet={shopInfo.logo} alt="" className="w-12 h-12 rounded-lg bg-gray-500" />
                                 <div className='relative'>
                                     <div className=''>
                                         <h2 className="text-lg font-semibold">{user?.name}</h2>

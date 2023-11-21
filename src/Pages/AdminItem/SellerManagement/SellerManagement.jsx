@@ -7,8 +7,8 @@ import { MdDelete } from 'react-icons/md';
 import Swal from 'sweetalert2';
 import { AuthContext } from '../../../AuthProvider/UserProvider';
 import { useNavigate } from 'react-router-dom';
-import EditSellerInfo from './EditSellerInfo';
 import DeleteModal from '../../../Common/DeleteModal';
+import EditSellerInfo from './EditSellerInfo';
 
 const SellerManagement = () => {
 

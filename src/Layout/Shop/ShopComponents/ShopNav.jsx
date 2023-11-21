@@ -3,13 +3,17 @@ import React from 'react';
 import { useState } from 'react';
 import { FaMapLocationDot } from 'react-icons/fa6';
 import { PiShoppingCartSimpleBold } from "react-icons/pi";
-import { Link, useParams } from 'react-router-dom';
+import { Link, } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 
 const ShopNav = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const params = useParams();
-    const shopId = params.id;
+    const pathname = window.location.pathname;
+    const idMatch = pathname.match(/\/shop\/([^/]+)/);
+
+    const shopId = idMatch ? idMatch[1] : null;
+
+    console.log('Shop ID:', shopId);
 
 
 
@@ -165,7 +169,7 @@ const ShopNav = () => {
                                                 title="Company"
                                                 className="inline-flex items-center"
                                             >
-                                                <img className='w-10' src={shop?.logo} alt="" />
+                                                <img className='w-10' srcSet={shop?.logo} alt="" />
                                                 <span className="ml-2 text-xl font-bold tracking-wide text-gray-800 ">
                                                     {shop?.shopName}
                                                 </span>

@@ -8,6 +8,7 @@ import Swal from 'sweetalert2';
 import EditWareHouse from './EditWareHouse';
 import ModalForWarehouse from './Modal/ModalForWarehouse';
 
+
 const ListOfWarehouse = () => {
 
 
@@ -245,7 +246,10 @@ const ListOfWarehouse = () => {
                                 <tr key={index + warehouse._id} className=''>
                                     <td className="px-4 py-3">
                                         <div className='flex gap-2 items-center'>
-                                            <img className='h-10 w-10 object-fill' src={warehouse.img} alt="" />
+                                            <img className='h-10 w-10 object-fill'
+                                                src={warehouse.img}
+                                                srcSet={warehouse.img}
+                                                alt="" />
                                             <div>
                                                 <h2 className="font-medium text-gray-800  ">
                                                     {warehouse.name}

@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import { Link } from "react-router-dom";
+import Logo from "../../../../Logo.png";
 
 const Footer = () => {
   const { data: pages = [], refetch } = useQuery({
@@ -16,31 +17,13 @@ const Footer = () => {
       <div className="px-4 pt-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8">
         <div className="grid gap-10 row-gap-6 mb-8 sm:grid-cols-2 lg:grid-cols-4">
           <div className="sm:col-span-2">
-            <a
-              href="/"
+            <Link to={'/'}
               aria-label="Go home"
               title="Company"
               className="inline-flex items-center"
             >
-              <svg
-                className="w-8 text-white"
-                viewBox="0 0 24 24"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeMiterlimit="10"
-                stroke="currentColor"
-                fill="none"
-              >
-                <rect x="3" y="1" width="7" height="12" />
-                <rect x="3" y="17" width="7" height="6" />
-                <rect x="14" y="1" width="7" height="6" />
-                <rect x="14" y="11" width="7" height="12" />
-              </svg>
-              <span className="ml-2 text-xl font-bold tracking-wide text-white ">
-                SaleNow
-              </span>
-            </a>
+              <img className="w-32 text-black" src={Logo} srcSet={Logo} alt="" />
+            </Link>
             <div className="mt-6 lg:max-w-sm text-sm text-white">
               BigSeller is a SaaS platform that automates & simplifies
               multichannel e-commerce selling processes. <br /> With BigSeller,
@@ -126,6 +109,7 @@ const Footer = () => {
               >
                 <img
                   src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Download_on_the_App_Store_Badge.svg/1000px-Download_on_the_App_Store_Badge.svg.png"
+                  srcSet="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Download_on_the_App_Store_Badge.svg/1000px-Download_on_the_App_Store_Badge.svg.png"
                   className="object-cover object-top w-32 mx-auto"
                   alt=""
                 />
@@ -133,6 +117,7 @@ const Footer = () => {
               <a href="/" className="transition duration-300 hover:shadow-lg">
                 <img
                   src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/Google_Play_Store_badge_EN.svg/1000px-Google_Play_Store_badge_EN.svg.png"
+                  srcSet="https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/Google_Play_Store_badge_EN.svg/1000px-Google_Play_Store_badge_EN.svg.png"
                   className="object-cover object-top w-32 mx-auto"
                   alt=""
                 />
@@ -145,7 +130,7 @@ const Footer = () => {
             © Copyright 2020 Lorem Inc. All rights reserved.
           </p>
           <ul className="flex flex-col mb-3 space-y-2 lg:mb-0 sm:space-y-0 sm:space-x-5 sm:flex-row">
-            {pages?.map((page, i) => (
+            {pages.length && pages?.map((page, i) => (
               <li>
                 {page?.status && (
                   <Link

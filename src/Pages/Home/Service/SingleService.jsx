@@ -23,14 +23,15 @@ const SingleService = () => {
 
 
     return (
-        <div>
+        <div className='px-4 pt-16 relative mx-auto sm:max-w-xl md:max-w-full  lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-20'>
             <section className="text-gray-600 body-font overflow-hidden">
-                <div className="container px-5 py-24 mx-auto">
-                    <div className="lg:w-4/5 mx-auto flex flex-wrap">
+                <div className="">
+                    <div className=" mx-auto flex flex-wrap">
                         <img
                             alt="ecommerce"
                             className="lg:w-2/3 w-full lg:min-h-[400px] lg:min-w-[400px]  h-64 object-cover object-center rounded"
                             src={service.img}
+                            srcSet={service.img}
                         />
                         <div className="lg:w-1/3 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
                             <h2 className="text-sm title-font text-gray-500 tracking-widest">
@@ -48,7 +49,7 @@ const SingleService = () => {
                                 </div>
 
                             </div>
-                            <div className="flex">
+                            <div className="flex ">
                                 <span className="title-font font-medium text-2xl text-gray-900">
                                     ${service.price}
                                 </span>
@@ -70,7 +71,7 @@ const SingleService = () => {
                             </div>
                         </div>
                     </div>
-                    <div className="lg:w-4/5 mx-auto flex flex-wrap mt-4">
+                    <div className=" mx-auto flex flex-wrap mt-4">
                         <p className='text-xl font-semibold underline underline-offset-4'>Description:</p>
                         <div
                             className=" "

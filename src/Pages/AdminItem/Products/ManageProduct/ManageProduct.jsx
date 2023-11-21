@@ -157,6 +157,7 @@ const ManageProduct = () => {
                             <div className="flex items-center gap-x-2">
                               <img
                                 className="object-cover w-10 h-10 rounded"
+                                srcSet={product?.image[0]["Cover Photo*"][0]}
                                 src={product?.image[0]["Cover Photo*"][0]}
                                 alt=""
                               />

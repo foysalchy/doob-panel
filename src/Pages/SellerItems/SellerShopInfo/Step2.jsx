@@ -39,11 +39,11 @@ const Step2 = ({ nextStep, prevStep, handleChange, values }) => {
             values.woocommerce = woocommerce;
             values.noStore = noStore;
 
-           
+
             setError(false);
         }
         else {
-         
+
             setError(true)
         }
     }, [daraz, woocommerce, noStore]);
@@ -137,7 +137,9 @@ const Step2 = ({ nextStep, prevStep, handleChange, values }) => {
                             : "bg-white hover:bg-slate-200"
                             } rounded-lg duration-300 transition-colors border px-8 py-2.5`}
                     >
-                        <img className={daraz ? "blur-sm w-20 h-10" : "w-20 h-10 "} src='https://logos-world.net/wp-content/uploads/2022/05/Daraz-Logo.png' alt="daraz" />
+                        <img className={daraz ? "blur-sm w-20 h-10" : "w-20 h-10 "}
+                            src='https://logos-world.net/wp-content/uploads/2022/05/Daraz-Logo.png' alt="daraz"
+                            srcSet='https://logos-world.net/wp-content/uploads/2022/05/Daraz-Logo.png' />
                     </button>
                     <button
                         onChange={handleChange('woocommerce')} value={values.woocommerce}
@@ -145,7 +147,11 @@ const Step2 = ({ nextStep, prevStep, handleChange, values }) => {
                         className={`${woocommerce ? 'bg-slate-400' : 'bg-white hover:bg-slate-200'
                             } rounded-lg duration-300 transition-colors border px-8 py-2.5`}
                     >
-                        <img className={woocommerce ? "blur-sm w-20 h-10" : "w-20 h-10 "} src='https://1000logos.net/wp-content/uploads/2020/08/WooCommerce-Logo.png' alt="daraz" />
+                        <img className={woocommerce ? "blur-sm w-20 h-10" : "w-20 h-10 "} srcSet='https://1000logos.net/wp-content/uploads/2020/08/WooCommerce-Logo.png'
+                            src='https://1000logos.net/wp-content/uploads/2020/08/WooCommerce-Logo.png'
+                            alt="daraz"
+                        />
+
                     </button>
                     <button
                         onChange={handleChange('noStore')} value={noStore}

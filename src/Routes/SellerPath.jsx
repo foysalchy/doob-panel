@@ -5,6 +5,8 @@ import SellerManageContact from "../Pages/SellerItems/ContactPages/SellerManageC
 import AddDomain from "../Pages/SellerItems/DomainManagement/AddDomain";
 import AddSellerPage from "../Pages/SellerItems/PageManagement/AddSellerPage";
 import SellerPageManagement from "../Pages/SellerItems/PageManagement/SellerPageManagement";
+import SellerAddProduct from "../Pages/SellerItems/ProductManagement/SellerAddProduct/SellerAddProduct";
+import SellerProductManagement from "../Pages/SellerItems/ProductManagement/SellerProductManagement/SellerProductManagement";
 import CategoriesManagement from "../Pages/SellerItems/SellerCatagory/CategoriesManagement/CategoriesManagement";
 import ExtraCategoriesManagement from "../Pages/SellerItems/SellerCatagory/ExtraCategory/ExtraCategoriesManagement";
 import MageCategoriesManagement from "../Pages/SellerItems/SellerCatagory/MegaCategory/MageCategoriesManagement";
@@ -16,6 +18,12 @@ import AddSubCategory from "../Pages/SellerItems/SellerCatagory/ModalForCategory
 import SubCategoriesManagement from "../Pages/SellerItems/SellerCatagory/SubCategory/SubCategoriesManagement";
 import AddSellerBlog from "../Pages/SellerItems/SellersBlog/AddBlog/AddSellerBlog";
 import SellerManageBlog from "../Pages/SellerItems/SellersBlog/ManageBlogs/SellerManageBlog";
+import AddBrand from "../Pages/SellerItems/SiteContent/Brand/AddBrand";
+import BrandMangement from "../Pages/SellerItems/SiteContent/Brand/BrandMangement";
+import AddCopon from "../Pages/SellerItems/SiteContent/Copon/AddCopon";
+import CoponManagement from "../Pages/SellerItems/SiteContent/Copon/CoponManagement";
+import AddPopUp from "../Pages/SellerItems/SiteContent/PopUp/AddPopUp";
+import PopupManagement from "../Pages/SellerItems/SiteContent/PopUp/PopupManagement";
 import SiteContentSeller from "../Pages/SellerItems/SiteContent/SiteContentSeller";
 import AddSlider from "../Pages/SellerItems/SiteContent/Slider/AddSlider";
 import SliderManagement from "../Pages/SellerItems/SiteContent/Slider/SliderManagement";
@@ -25,6 +33,14 @@ import SellerSittingsPage from "../Pages/SellerItems/Sittings/SellerSittingsPage
 import SellerShipping from "../Pages/SellerItems/Sittings/Shiping/SellerShiping";
 import SellerSupportTicket from "../Pages/SellerItems/SupportTicket/SupportTicket";
 import UpdateShopProfile from "../Pages/SellerItems/UpdateShopProfile/UpdateShopProfile";
+import SellerAreaListForWarehouse from "../Pages/SellerItems/Warehouse/List/SellerAreaListForWarehouse";
+import SellerManageCell from "../Pages/SellerItems/Warehouse/List/SellerManageCell";
+import SellerManageRack from "../Pages/SellerItems/Warehouse/List/SellerManageRack";
+import SellerManageSelf from "../Pages/SellerItems/Warehouse/List/SellerManageSelf";
+import SellerListOfWarehouse from "../Pages/SellerItems/Warehouse/SellerListOfWarehouse";
+import SellerWareHouseManagement from "../Pages/SellerItems/Warehouse/SellerWareHouseManagement";
+
+
 
 const SellerPath = [
     {
@@ -84,7 +100,7 @@ const SellerPath = [
         element: <SellerShipping />
     },
     {
-        path: "add-daraz",
+        path: "channel-integration",
         element: <DarazIntegration />
     },
     {
@@ -137,27 +153,59 @@ const SellerPath = [
     },
     {
         path: "content-management/popup-management",
-        element: <SliderManagement />
+        element: <PopupManagement />
     },
     {
         path: "content-management/popup-management/add",
-        element: <AddSlider />
+        element: <AddPopUp />
     },
     {
         path: "content-management/promo-code-management",
-        element: <SliderManagement />
+        element: <CoponManagement />
     },
     {
         path: "content-management/promo-code-management/add",
-        element: <AddSlider />
+        element: <AddCopon />
     },
     {
         path: "content-management/brand-management",
-        element: <SliderManagement />
+        element: <BrandMangement />
     },
     {
         path: "content-management/brand-management/add",
-        element: <AddSlider />
+        element: <AddBrand />
+    },
+    {
+        path: "product-management",
+        element: <SellerProductManagement />
+    },
+    {
+        path: "product-management/add-product",
+        element: <SellerAddProduct />
+    },
+    {
+        path: "warehouse",
+        element: <SellerWareHouseManagement />
+    },
+    {
+        path: "warehouse/warehouse-management",
+        element: <SellerListOfWarehouse />
+    },
+    {
+        path: "warehouse/area-management",
+        element: <SellerAreaListForWarehouse />
+    },
+    {
+        path: "warehouse/rack-management",
+        element: <SellerManageRack />
+    },
+    {
+        path: "warehouse/self-management",
+        element: <SellerManageSelf />
+    },
+    {
+        path: "warehouse/cell-management",
+        element: <SellerManageCell />
     },
 
 

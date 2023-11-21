@@ -121,6 +121,7 @@ const UpdateShopProfile = () => {
             <div className="bg-white rounded-lg shadow-xl pb-8 relative overflow-hidden">
                 <div className="relative w-full group">
                     <img
+                        srcSet={shopInfo.cover ? shopInfo?.cover : "https://vojislavd.com/ta-template-demo/assets/img/profile-background.jpg"}
                         src={shopInfo.cover ? shopInfo?.cover : "https://vojislavd.com/ta-template-demo/assets/img/profile-background.jpg"}
                         className="w-full h-[250px] object-cover rounded-tl-lg rounded-tr-lg border group-hover:blur"
                         alt="Cover Photo"
@@ -138,6 +139,7 @@ const UpdateShopProfile = () => {
                             <label className="cursor-pointer text-white">
                                 <input type="file" accept=".jpg, .png," onChange={ProfilePhotoUpload} className="hidden" />
                                 <img
+                                    srcSet={shopInfo.logo}
                                     src={shopInfo.logo}
                                     className="w-40 border-4 bg-white border-black rounded-full"
                                 />

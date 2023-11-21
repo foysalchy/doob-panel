@@ -234,28 +234,7 @@ const AddMiniCategory = () => {
                         />
                     </div>
                 </div>}
-                {shopInfo.wooLogin && darazOption?.length > 0 && <div className=" mt-4">
-                    <div className='mt-4' >
-                        <label className="text-sm">Select Daraz Category</label>
-                        <Select
-                            menuPortalTarget={document.body}
-                            styles={{
-                                control: (provided) => ({
-                                    ...provided,
-                                    cursor: 'pointer',
-                                }),
-                                option: (provided) => ({
-                                    ...provided,
-                                    cursor: 'pointer',
-                                }),
-                            }}
-                            name='wooMiniCategory'
-                            required
-                            options={darazOption}
-                            placeholder="Select Daraz Category"
-                        />
-                    </div>
-                </div>}
+
                 {/* <div className=" mt-4">
                     <label className="text-sm">Provide name of Sub category</label>
                     <input required name='image' placeholder="Provide name of Sub category" className="w-full p-2 border border-black rounded-md  text-gray-900" />

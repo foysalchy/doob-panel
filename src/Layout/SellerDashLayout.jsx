@@ -6,7 +6,14 @@ const SellerDashLayout = () => {
 
     const location = useLocation();
     const paths = location.pathname.split('/').filter((path) => path !== '')
+   
 
+    function convertToTitleCase(str) {
+        return str
+            .split('-')
+            .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+            .join(' ');
+    }
 
     return (
         <div className='flex '>
@@ -54,7 +61,7 @@ const SellerDashLayout = () => {
                                         to={`/${paths.slice(0, index + 2).join('/')}`}
                                         className="flex items-center px-1 capitalize hover:underline"
                                     >
-                                        {path}
+                                        {convertToTitleCase(path)}
                                     </Link>
                                 </li>
                             ))}

@@ -33,6 +33,20 @@ const AddMagaCategory = () => {
         },
     });
 
+    const { data: wooCategory = [] } = useQuery({
+        queryKey: ["wooCategory"],
+        queryFn: async () => {
+            if (shopInfo.wooLogin) {
+                const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/woo/category?shopId=${shopInfo._id}`);
+                const data = await res.json();
+                return data;
+            }
+
+            return [];
+        },
+    });
+
+    console.log(wooCategory);
 
 
     const [daraz, setDaraz] = useState(false);
@@ -60,6 +74,7 @@ const AddMagaCategory = () => {
             const darazCategory = daraz ? e.target.darazCategory.value : '';
             console.log(darazCategory);
             const wocomarceCategory = wocomarce ? e.target.wocomarceCategory.value : '';
+            console.log(wocomarceCategory);
 
             const imageFormData = new FormData();
             imageFormData.append("image", image.files[0]);
@@ -115,7 +130,7 @@ const AddMagaCategory = () => {
 
 
 
-    const option = darazData?.map((warehouse) => ({
+    const option = darazData.length && darazData?.map((warehouse) => ({
 
         value: JSON.stringify(warehouse),
         label: warehouse.name,
@@ -153,7 +168,7 @@ const AddMagaCategory = () => {
                 }
                 {daraz && shopInfo.darazLogin && (
                     <div className='mt-4' >
-                        {/* <label className="text-sm">Select Daraz Category</label> */}
+                        <label className="text-sm">Select Daraz Category</label>
                         <Select
                             menuPortalTarget={document.body}
                             styles={{
@@ -175,11 +190,11 @@ const AddMagaCategory = () => {
                 )}
                 <br />
 
-                {shopInfo.wocomarceLogin && <button type='button' className={shopInfo.wocomarceLogin && 'bg-gray-500 w-full hover:bg-gray-700 text-white font-bold py-2 px-4 rounded mt-4'} onClick={() => handleButtonClick('wocomarce')}>Synchronize With Wocomarce</button>}
+                {shopInfo.wooLogin && <button type='button' className={shopInfo.wooLogin && 'bg-gray-500 w-full hover:bg-gray-700 text-white font-bold py-2 px-4 rounded mt-4'} onClick={() => handleButtonClick('wocomarce')}>Synchronize With Wocomarce</button>}
 
-                {wocomarce && shopInfo.wocomarceLogin && (
+                {wocomarce && shopInfo.wooLogin && (
                     <div className={!wocomarce && 'hidden'}>
-                        <label className="text-sm">Select Wocomarce Category</label>
+                        <label className="text-sm">Select Woocommerce Category</label>
                         <Select
                             styles={{
                                 control: (provided) => ({
@@ -193,8 +208,8 @@ const AddMagaCategory = () => {
                             }}
                             name='wocomarceCategory'
                             required
-                            options={sortedWarehouses?.slice(0, 5)?.map((warehouse) => ({
-                                value: warehouse,
+                            options={wooCategory.categories?.map((warehouse) => ({
+                                value: JSON.stringify(warehouse),
                                 label: warehouse.name,
                             }))}
                             placeholder="Please select"
