@@ -202,14 +202,14 @@ const AddDomain = () => {
                         >
 
 
-                            <div className="w-full max-w-[800px] h-[90%]  rounded-[20px]  bg-white  pb-10 px-8 text-center md:px-[30px] overflow-scroll">
+                            <div className="w-full max-w-[800px] h-[90%]  rounded-[20px]  bg-white  pb-10 px-8 text-center md:px-[30px]">
                                 <div className='flex justify-between  pt-4 items-start w-full sticky top-0 bg-white border-b'>
                                     <div className='pb-2 text-xl font-bold text-dark text-red-500 text-center sm:text-2xl'>Domain Setup Error</div>
                                     <div onClick={() => setEdit(!edit)} className='cursor-pointer bg-gray-500 rounded-full px-2.5 mb-2 p-1 text-2xl hover:text-red-500'>
                                         <button> <RxCross2 className='text-xl' /></button>
                                     </div>
                                 </div>
-                                <div>
+                                <div className=' overflow-y-scroll'>
                                     <h1 className='text-xl my-4 font-poppins'>We are do not find a txt file on your domain</h1>
                                     <p>Set Your DNS: <code>salenow.com/shop/{shopInfo.shopId}</code></p>
                                     <button

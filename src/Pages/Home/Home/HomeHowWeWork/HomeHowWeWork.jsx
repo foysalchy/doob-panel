@@ -9,7 +9,7 @@ const HomeHowWeWork = () => {
                 <h1 className='text-4xl font-extrabold text-center font-inner'>How We Work</h1>
                 <div className='flex justify-center mt-10'>
                     <div>
-                        <img className='rounded-xl' src={banar1} alt="" />
+                        <img className='rounded-xl' src={banar1} srcSet={banar1} alt="" />
                         <ol className='mt-6 font-poppins flex flex-col gap-2'>
                             <li>
                                 1.  Upload your product details such as photos, description, price etc on to Kumoten
@@ -28,7 +28,7 @@ const HomeHowWeWork = () => {
                 </div>
                 <div className='flex justify-center mt-10'>
 
-                    <img className='rounded-xl' src={banar2} alt="" />
+                    <img className='rounded-xl' srcSet={banar2} alt="" />
                 </div>
             </div>
 

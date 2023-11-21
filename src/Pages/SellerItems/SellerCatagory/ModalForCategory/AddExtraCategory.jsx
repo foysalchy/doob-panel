@@ -107,7 +107,7 @@ const AddExtraCategory = () => {
 
     const handleSelectChange = (selectedOption) => {
 
-        const darazCategoryObject = JSON.parse(selectedOption.value);
+        const darazCategoryObject = JSON.parse(selectedOption?.value);
         setMegaCategory(selectedOption.value)
 
 
@@ -138,8 +138,8 @@ const AddExtraCategory = () => {
     const sortedWarehouses = filteredWarehouses?.filter(warehouse => warehouse.status).sort((a, b) => a?.subCategoryName?.localeCompare(b.subCategoryName));
 
     const subcategoryOption = sortedWarehouses?.map((warehouse) => ({
-        value: warehouse.subCategoryName,
-        label: warehouse.subCategoryName,
+        value: warehouse?.subCategoryName,
+        label: warehouse?.subCategoryName,
     }));
 
     const [miniCategories, setMiniCategories] = useState([])
@@ -179,21 +179,27 @@ const AddExtraCategory = () => {
     let darazMiniCategoryName = ''
     let darazSubCategoryName = ''
 
-    const miniCategoriesOption = miniCategories?.map((warehouse) => {
-        // const daraz = warehouse.darazMiniCategory && JSON?.parse(warehouse?.darazMiniCategory);
-        const data = JSON.parse(warehouse.darazMiniCategory)
-        darazMiniCategoryName = data.child.name
-        darazSubCategoryName = data.name
+    const miniCategoriesOption = miniCategories && miniCategories.map((warehouse) => {
+        try {
+            // const data = JSON.parse(warehouse?.darazMiniCategory);
+            const miniCategory = warehouse.miniCategoryName;
+            console.log(miniCategory);
+            // darazSubCategoryName = data.name;
 
-        delete warehouse.megaCategory;
+            // delete warehouse.megaCategory;
 
-        const option = {
-            value: JSON.stringify(warehouse),
-            label: warehouse.miniCategoryName,
-        };
+            const option = {
+                value: miniCategory,
+                label: miniCategory,
+            };
 
-        return option;
-    });
+            return option;
+        } catch (error) {
+            console.error('Error parsing JSON data:', error);
+
+            return null; // or handle the error in a way that fits your application
+        }
+    })
 
 
 
@@ -216,7 +222,7 @@ const AddExtraCategory = () => {
 
             console.log(value);
             console.log();
-            const arryData = JSON.parse(JSON.parse(value.value).darazMiniCategory)
+            const arryData = JSON.parse(JSON.parse(value?.value)?.darazMiniCategory)
 
             if (arryData.children) {
                 setDarazOption(arryData.children);

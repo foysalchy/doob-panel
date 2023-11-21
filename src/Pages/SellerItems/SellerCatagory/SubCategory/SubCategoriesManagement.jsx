@@ -339,9 +339,10 @@ const SubCategoriesManagement = () => {
                                                 </p>
 
                                                 <p>
-                                                    {warehouse?.darazSubCategory && (
+                                                    {warehouse?.darazSubCategory ? (
                                                         <span>&gt; {JSON.parse(warehouse?.darazSubCategory).name}</span>
-                                                    )}
+                                                    )
+                                                        : "Invalidate"}
 
                                                 </p>
                                             </div>
@@ -349,7 +350,21 @@ const SubCategoriesManagement = () => {
                                         </td>
                                     )}
 
-                                    {shopInfo.wooLogin && <td className="px-4 py-3"> {warehouse?.wooSubCategory && JSON.parse(warehouse?.wooSubCategory)?.name}</td>}
+                                    {shopInfo?.wooLogin && <td className="px-4 py-3"> {warehouse?.megaCategory &&
+                                        (() => {
+                                            try {
+                                                const parsedMegaCategory = JSON.parse(warehouse?.megaCategory);
+                                                const darazCategoryName =
+                                                    parsedMegaCategory && parsedMegaCategory.wocomarceCategory
+                                                        ? JSON.parse(parsedMegaCategory.wocomarceCategory).name
+                                                        : "Invalidate";
+
+                                                return darazCategoryName;
+                                            } catch (error) {
+                                                console.error("Error parsing JSON:", error);
+                                                return null;
+                                            }
+                                        })()} </td>}
 
                                     <td className="px-4 py-3">{!warehouse?.status ? (
                                         <button

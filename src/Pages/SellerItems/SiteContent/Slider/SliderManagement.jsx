@@ -103,6 +103,7 @@ const SliderManagement = () => {
                             <img
                                 className="max-w-full rounded max-h-full"
                                 src={selectedImage}
+                                srcSet={selectedImage}
                                 alt="Preview"
                             />
                         </div>
@@ -171,6 +172,7 @@ const SliderManagement = () => {
                                                                     onClick={() => handleImageClick(faq?.image)}
                                                                     className="object-cover cursor-pointer w-10 h-10 rounded"
                                                                     src={faq?.image}
+                                                                    srcSet={faq?.image}
                                                                     alt=""
                                                                 />
                                                                 <div className="font-medium text-gray-800 w-80 whitespace-pre-wrap ">

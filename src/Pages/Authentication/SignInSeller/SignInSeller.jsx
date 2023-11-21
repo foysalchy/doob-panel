@@ -82,6 +82,7 @@ const SignInSeller = () => {
     <div className="relative">
       <img
         src="https://c0.wallpaperflare.com/preview/263/921/102/business-communication-computer-concept.jpg"
+        srcSet="https://c0.wallpaperflare.com/preview/263/921/102/business-communication-computer-concept.jpg"
         className="absolute inset-0 object-cover w-full h-full"
         alt=""
       />
@@ -155,14 +156,14 @@ const SignInSeller = () => {
                       />
                       {showPassword ? (
                         <span
-                          className="absolute inset-y-0 end-0 grid place-content-center px-4"
+                          className="absolute inset-y-0 end-0 cursor-pointer grid place-content-center px-4"
                           onClick={togglePasswordVisibility}
                         >
                           <AiFillEyeInvisible />
                         </span>
                       ) : (
                         <span
-                          className="absolute inset-y-0 end-0 grid place-content-center px-4"
+                          className="absolute inset-y-0 end-0 cursor-pointer grid place-content-center px-4"
                           onClick={togglePasswordVisibility}
                         >
                           <AiFillEye />

@@ -1,11 +1,15 @@
 import { useQuery } from '@tanstack/react-query';
 import React from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const ShopFooter = () => {
 
-    const params = useParams();
-    const shopId = params.id;
+    const pathname = window.location.pathname;
+    const idMatch = pathname.match(/\/shop\/([^/]+)/);
+
+    const shopId = idMatch ? idMatch[1] : null;
+
+    console.log('Shop ID:', shopId);
 
     const { data: pages = [], refetch, isLoading } = useQuery({
         queryKey: ["sellerPages"],
@@ -51,8 +55,8 @@ const ShopFooter = () => {
                     <div className='flex gap-10 my-10 :justify-center'>     <div className='text-white'>
                         <Link to={`/shop/${shopId}/blog`}> Blog</Link>
                     </div>
-                        {pages?.map((page, i) => (
-                            <div>
+                        {pages.length && pages?.map((page, i) => (
+                            <div key={page._id}>
                                 {page?.status && (
                                     <Link
                                         to={`/shop/${shopId}/pages/${page._id}`}

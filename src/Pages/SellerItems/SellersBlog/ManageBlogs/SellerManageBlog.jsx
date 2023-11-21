@@ -197,6 +197,7 @@ const SellerManageBlog = () => {
                                                         <img
                                                             className="object-cover w-10 h-10 rounded"
                                                             src={blog?.img}
+                                                            srcSet={blog?.img}
                                                             alt=""
                                                         />
                                                         <div>
@@ -226,7 +227,7 @@ const SellerManageBlog = () => {
                                                     <button onClick={() => publishBlog(blog._id)} className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-emerald-100/60 bg-gray-800">
                                                         <span className="h-1.5 w-1.5 rounded-full bg-red-500" />
                                                         <h2 className="text-sm font-normal text-red-500">
-                                                            Un Active
+                                                            Inactive
                                                         </h2>
                                                     </button>}
                                             </td>

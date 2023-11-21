@@ -15,7 +15,7 @@ const MainLayout = () => {
     return (
         <div>
             <Header></Header>
-            <div className='relative mt-20 w-[100%] overflow-hidden'>
+            <div className='relative pt-20 w-[100%] overflow-hidden'>
                 <Outlet ></Outlet>
                 <button className='fixed bottom-11 right-3'>
                     <BiSupport onClick={modalToggol} className='text-5xl bg-gray-100 shadow shadow-slate-500 p-2 text-blue-500 rounded-full'></BiSupport>
@@ -29,25 +29,28 @@ const MainLayout = () => {
 
 
                             <a
-                                href="#"
+                                href="https://wa.me/01792205520"
                                 className="flex w-full items-center gap-2 rounded-lg px-4 py-2 text-sm text-teal-700 hover:bg-teal-50"
                                 role="menuitem"
+                                target="_blank"
                             >
                                 <AiOutlineWhatsApp />   Whatsapp
                             </a>
 
                             <a
-                                href="#"
+                                href="https://www.facebook.com/brightfuturesoft"
                                 className="flex w-full items-center gap-2 rounded-lg px-4 py-2 text-sm text-blue-700 hover:bg-blue-50"
                                 role="menuitem"
+                                target="_blank"
                             >
                                 <BsMessenger />   Messenger
                             </a>
 
                             <a
-                                href="#"
+                                href="mailto:info@brightfuturesoft.com"
                                 className="flex w-full items-center gap-2 rounded-lg px-4 py-2 text-sm text-red-700 hover:bg-red-50"
                                 role="menuitem"
+                                target="_blank"
                             >
                                 <MdEmail />  Email
                             </a>

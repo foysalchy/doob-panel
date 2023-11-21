@@ -141,8 +141,8 @@ const AddBlog = () => {
               >
                 {previewUrl ? (
                   <img
-                    src={previewUrl}
                     srcSet={previewUrl}
+                    src={previewUrl}
                     alt="File Preview"
                     className="mt-2 w-8 h-8"
                   />

@@ -18,6 +18,7 @@ const HomeHero = () => {
 
         <div className="relative">
             <img
+                srcSet={Bg}
                 src={Bg}
                 className="absolute inset-0 object-cover w-full h-full"
                 alt=""

@@ -78,38 +78,7 @@ const MainService = () => {
                 {
                     !isLoading ? <div>
                         <ul className="grid grid-cols-1 gap-4 mt-8 lg:grid-cols-3">
-                            {/* 
-                            {{
-                                services?.filter((service) => selectedCategory === null || service.category === selectedCategory)
-                                .map((service) => (
-                                    <div key={service._id} className={!service.status && 'hidden'}>
-                                        {service?.status &&
-                                            <li >
-                                                <a href="#" className="relative block group   ">
-                                                    <img
-                                                        src={service?.img}
-                                                        alt=""
-                                                        className="object-cover border border-black rounded-md w-full transition duration-500 aspect-square  "
-                                                    />
 
-                                                    <div
-                                                        className="absolute  group-hover:bg-gray-900 group-hover:bg-opacity-90 bg-gray-900 bg-opacity-50  inset-0 flex flex-col items-start justify-end p-6"
-                                                    >
-                                                        <h3 className="text-xl font-semibold text-white ">{service?.title}</h3>
-
-                                                        <Link to={`/service/${service._id}`}
-                                                            className="mt-1.5 inline-block bg-black px-5 py-3 text-xs font-medium uppercase tracking-wide text-white"
-                                                        >
-                                                            Show Details
-                                                        </Link>
-                                                    </div>
-                                                </a>
-                                            </li>
-                                        }
-                                    </div>)
-                                )
-                            }
-                            } */}
                             {services
                                 ?.filter((service) => selectedCategory === null || service.category === selectedCategory)
                                 .map((service) => (
@@ -119,6 +88,7 @@ const MainService = () => {
                                                 <a href="#" className="relative block group">
                                                     <img
                                                         src={service?.img}
+                                                        srcSet={service?.img}
                                                         alt=""
                                                         className="object-cover border border-black rounded-md w-full transition duration-500 aspect-square"
                                                     />
@@ -143,7 +113,7 @@ const MainService = () => {
                     </div> :
                         <div className='grid grid-cols-1 gap-4 mt-8 lg:grid-cols-3'>
                             {blnkData.map((data, i) => (
-                                <div key={i} className="flex flex-col m-8 rounded shadow-md w-full animate-pulse h-96">
+                                <div key={i} className="flex flex-col rounded shadow-md w-full animate-pulse h-96">
                                     <div className="h-48 rounded-t bg-gray-500"></div>
                                     <div className="flex-1 px-4 py-8 space-y-4 sm:p-8 bg-gray-900">
                                         <div className="w-full h-6 rounded bg-gray-500"></div>

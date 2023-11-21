@@ -24,6 +24,7 @@ const AdminSingleBlog = () => {
         <div className="md:col-span-2">
           <img
             loading="lazy"
+            srcSet={blogInfo?.img}
             src={blogInfo?.img}
             alt=""
             className="w-full h-[400px] object-contain"
@@ -49,6 +50,7 @@ const AdminSingleBlog = () => {
             >
               <img
                 loading="lazy"
+                srcSet={blg.img}
                 src={blg.img}
                 alt=""
                 className="md:w-[110px] w-[110px]"

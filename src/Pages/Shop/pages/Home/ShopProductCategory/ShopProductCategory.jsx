@@ -1,14 +1,16 @@
 import React from 'react';
 import "swiper/css";
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 const ShopProductCategory = () => {
 
-    const params = useParams();
-    const shopId = params.id;
-    console.log(shopId);
+    const pathname = window.location.pathname;
+    const idMatch = pathname.match(/\/shop\/([^/]+)/);
 
+    const shopId = idMatch ? idMatch[1] : null;
+
+    console.log('Shop ID:', shopId);
     const { data: categories = [], isLoading, refetch } = useQuery({
         queryKey: ["categories"],
         queryFn: async () => {
@@ -32,7 +34,7 @@ const ShopProductCategory = () => {
                     {categories.map((i, index) => (
                         <SwiperSlide key={index}>
 
-                            <Link to={`/products/catagory/${i.name}`} className=' flex flex-col items-center justify-center w-full'>
+                            <Link to={`category/${i._id}`} className=' flex flex-col items-center justify-center w-full'>
                                 <img className='w-16 h-16 rounded-2xl object-cover shadow shadow-gray-700' srcSet={i?.img} src={i.img} alt="" />
                                 <p className='text-sm text-center'>{i.name}</p>
                             </Link>

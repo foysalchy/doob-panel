@@ -110,6 +110,7 @@ const ProductDetails = () => {
                     <img
                       className="w-94 h-full"
                       src={selectedImage}
+                      srcSet={selectedImage}
                       alt="Selected Image"
                     />
                   </div>
@@ -125,6 +126,7 @@ const ProductDetails = () => {
                           alt={`ecommerce${index + 1}`}
                           className="object-cover cursor-pointer block w-full h-full p-2 "
                           src={imageUrl}
+                          srcSet={imageUrl}
                         />
                       </a>
                     </div>

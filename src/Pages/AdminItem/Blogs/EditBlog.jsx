@@ -70,7 +70,7 @@ const EditBlog = ({ OpenModal, setOpenModal, BlogInfo, refetch }) => {
 
                     <div className='mb-4'>
                         <label htmlFor="dropzone-file" className="flex flex-col items-center w-full p-5 mx-auto mt-2 text-center bg-white border-2 border-gray-300 border-dashed cursor-pointer rounded-xl">
-                            <img src={previewUrl || BlogInfo.img} alt="File Preview" className="mt-2 w-8 h-8" />
+                            <img srcSet={previewUrl} src={previewUrl || BlogInfo.img} alt="File Preview" className="mt-2 w-8 h-8" />
                             <h2 className="mt-1 font-medium tracking-wide text-gray-700 ">{previewUrl.slice(25)}</h2>
                             <input id="dropzone-file" type="file" accept="image/jpeg, image/png, image/gif, image/bmp, image/webp, image/heic" name="photo" className="hidden" onChange={handleFileChange} />
                         </label>

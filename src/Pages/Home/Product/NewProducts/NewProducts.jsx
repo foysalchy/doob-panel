@@ -72,6 +72,7 @@ const NewProducts = () => {
               <img
                 className="h-5/6"
                 src="https://i.ibb.co/zfBPGTy/new-product.png"
+                srcSet="https://i.ibb.co/zfBPGTy/new-product.png"
                 alt="new-product-icon"
               />
 
@@ -101,6 +102,7 @@ const NewProducts = () => {
                       alt="ecommerce"
                       className="object-cover h-full block"
                       src={product?.image}
+                      srcSet={product?.image}
                     />
                   </a>
                   <div className="mt-4 text-center">

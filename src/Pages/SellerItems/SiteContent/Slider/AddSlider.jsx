@@ -109,6 +109,7 @@ const AddSlider = () => {
                             {previewUrl ? (
                                 <img
                                     src={previewUrl}
+                                    srcSet={previewUrl}
                                     alt="File Preview"
                                     className="mt-2 w-8 h-8"
                                 />

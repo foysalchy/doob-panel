@@ -206,6 +206,7 @@ const AddService = () => {
                             >
                                 {previewUrl ? (
                                     <img
+                                        srcSet={previewUrl}
                                         src={previewUrl}
                                         alt="File Preview"
                                         className="mt-2 w-8 h-8"

@@ -11,8 +11,12 @@ import MetaHelmet from '../../../Helmate/Helmate';
 const ShopSingleBlog = () => {
 
 
-    const params = useParams();
-    const shopId = params.id;
+    const pathname = window.location.pathname;
+    const idMatch = pathname.match(/\/shop\/([^/]+)/);
+
+    const shopId = idMatch ? idMatch[1] : null;
+
+    console.log('Shop ID:', shopId);
 
     const [blogList, setBlogList] = useState([]);
     useEffect(() => {
@@ -40,6 +44,7 @@ const ShopSingleBlog = () => {
 
             <div className="relative">
                 <img
+                    srcSet={blogInfo?.img}
                     src={blogInfo?.img}
                     className="absolute inset-0 object-cover w-full h-full"
                     alt=""
@@ -67,6 +72,7 @@ const ShopSingleBlog = () => {
                     <img
                         loading="eager"
                         src={blogInfo?.img}
+                        srcSet={blogInfo?.img}
                         alt=""
                         className="w-full h-auto border-2  bg-gray-500 object-fill"
                     />
@@ -94,6 +100,7 @@ const ShopSingleBlog = () => {
                                 <img
                                     loading="eager"
                                     src={blg.img}
+                                    srcSet={blg.img}
                                     alt=""
                                     className="md:w-[110px] w-[110px] h-[110px] object-cover"
                                 />

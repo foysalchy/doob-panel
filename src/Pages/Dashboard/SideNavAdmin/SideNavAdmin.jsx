@@ -3,7 +3,7 @@ import { AuthContext } from '../../../AuthProvider/UserProvider';
 import { BiCategory, BiHomeAlt, BiSolidShoppingBags } from "react-icons/bi";
 import { HiOutlineMenu } from "react-icons/hi";
 import { FaBlogger, FaStore, FaUsersGear } from 'react-icons/fa6';
-import { MdOutlineRoomPreferences, MdOutlineSubscriptions } from 'react-icons/md';
+import { MdOutlineAdminPanelSettings, MdOutlineRoomPreferences, MdOutlineSubscriptions } from 'react-icons/md';
 import { HiOutlineUserGroup, HiOutlineUsers } from 'react-icons/hi2';
 import { SiGoogledomains } from 'react-icons/si';
 import { FaRegUserCircle } from 'react-icons/fa';
@@ -29,7 +29,7 @@ const SideNavAdmin = () => {
                             title="Company"
                             className="inline-flex items-center"
                         >
-                            <img className="w-32" src={Logo} alt="" />
+                            <img className="w-32" src={Logo} srcSet={Logo} alt="" />
                         </Link> : <Link
                             to="/"
                             aria-label="Company"
@@ -241,7 +241,7 @@ const SideNavAdmin = () => {
                     </div>
                 </div>
                 <div className="flex items-center p-2 mt-12 space-x-4 justify-self-end">
-                    {user?.image ? <img src={user.image} alt="" className="w-12 h-12 rounded-lg bg-gray-500" /> : <FaRegUserCircle className="w-12 h-12 rounded-lg " />}
+                    {user?.image ? <img src={user.image} srcSet={user.image} alt="" className="w-12 h-12 rounded-lg bg-gray-500" /> : <MdOutlineAdminPanelSettings className="w-12 h-12 rounded-lg " />}
                     {menu && <div>
                         <h2 className="text-lg font-semibold">{user?.name}</h2>
                         <span className="flex items-center space-x-1">

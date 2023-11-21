@@ -19,7 +19,6 @@ const Product = () => {
         <ProductGallery />
         <ForYouProducts />
         <Services />
-        <Home />
       </div>
     </div>
   );

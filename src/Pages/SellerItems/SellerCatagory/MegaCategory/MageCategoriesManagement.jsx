@@ -280,8 +280,8 @@ const MageCategoriesManagement = () => {
                             {shopInfo.darazLogin && <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-800 ">
                                 Daraz Category
                             </th>}
-                            {shopInfo.woocomarceLogin && <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-800 ">
-                                Woocomarce Category
+                            {shopInfo.wooLogin && <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-800 ">
+                                Woocommerce Category
                             </th>}
                             <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-800 ">
                                 Status
@@ -299,7 +299,10 @@ const MageCategoriesManagement = () => {
                                 <tr key={index + warehouse?._id + 1} className=''>
                                     <td className="px-4 py-3">
                                         <div className='flex gap-2 items-center'>
-                                            <img className='h-10 w-10 object-contain' src={warehouse?.img} alt="" />
+                                            <img className='h-10 w-10 object-contain'
+                                                src={warehouse?.img}
+                                                srcSet={warehouse?.img}
+                                                alt="" />
                                             <div>
                                                 <h2 className="font-medium text-gray-800  ">
                                                     {warehouse?.name}
@@ -311,8 +314,8 @@ const MageCategoriesManagement = () => {
                                             </div>
                                         </div>
                                     </td>
-                                    {shopInfo.darazLogin && <td className="px-4 py-3">{warehouse?.darazCategory?.name} </td>}
-                                    {shopInfo?.woocomarceLogin && <td className="px-4 py-3">{warehouse?.darazCategory?.name} </td>}
+                                    {shopInfo.darazLogin && <td className="px-4 py-3">{warehouse?.darazCategory?.name ? warehouse?.darazCategory?.name : 'Invalidate'} </td>}
+                                    {shopInfo?.wooLogin && <td className="px-4 py-3">{warehouse?.wocomarceCategory ? JSON.parse(warehouse.wocomarceCategory).name : "Invalidate"} </td>}
                                     <td className="px-4 py-3">{!warehouse?.status ? (
                                         <button
                                             onClick={() => updateStatus(warehouse?._id, true)}

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { FaLongArrowAltRight } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
-import ModalForWarehouse from './Modal/ModalForWarehouse';
+
 
 const WareHouseManagement = () => {
 

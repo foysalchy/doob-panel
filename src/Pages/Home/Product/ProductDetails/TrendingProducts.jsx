@@ -73,6 +73,7 @@ const TrendingProducts = () => {
             <div className="flex justify-between align-items-center">
               <img
                 className="h-5/6"
+                srcSet="https://i.ibb.co/5FhYvk8/upcoming-foru.png"
                 src="https://i.ibb.co/5FhYvk8/upcoming-foru.png"
                 alt="new-product-icon"
               />
@@ -102,6 +103,7 @@ const TrendingProducts = () => {
                     <img
                       alt="ecommerce"
                       className="object-cover h-full block"
+                      srcSet={product?.image}
                       src={product?.image}
                     />
                   </a>

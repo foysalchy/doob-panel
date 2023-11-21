@@ -21,6 +21,7 @@ const HomeAbout = () => {
                 <div className="px-4 py-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-20">
                     <div className=" mx-auto flex flex-wrap">
                         <img
+                            srcSet={Photo1}
                             src={Photo1}
                             alt="ecommerce"
                             className="lg:w-[600px] w-full lg:h-[400px] h-auto object-cover object-center rounded"
@@ -60,6 +61,7 @@ const HomeAbout = () => {
                         </div>
                         <img
                             onClick={openModal}
+                            srcSet={Photo1}
                             src={Photo1}
                             alt="ecommerce"
                             className="lg:w-[600px] lg:pl-10 mt-8 md:mt-0 w-full lg:h-[400px] h-auto object-cover object-center rounded"

@@ -123,7 +123,7 @@ const Header = () => {
             title="Company"
             className="inline-flex items-center"
           >
-            <img className="w-32 text-black" src={Logo} alt="" />
+            <img className="w-32 text-black" src={Logo} srcSet={Logo} alt="" />
             {/* <svg
               className="w-8 text-black"
               viewBox="0 0 24 24"
@@ -390,7 +390,7 @@ const Header = () => {
                         title="Company"
                         className="inline-flex items-center"
                       >
-                        <img className="w-32" src={Logo} alt="" />
+                        <img className="w-32" src={Logo} srcSet={Logo} alt="" />
                       </NavLink>
                     </div>
                     <div>

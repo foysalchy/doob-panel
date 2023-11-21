@@ -6,11 +6,18 @@ import ShopSmallNav from './ShopComponents/ShopSmallNav';
 import { useQuery } from '@tanstack/react-query';
 import Lottie from "lottie-react";
 import groovyWalkAnimation from "./Loading.json";
+import { useState } from 'react';
+import { useEffect } from 'react';
 
 
 const ShopLayout = () => {
-    const params = useParams();
-    const shopId = params.id;
+
+    const pathname = window.location.pathname;
+    const idMatch = pathname.match(/\/shop\/([^/]+)/);
+
+    const shopId = idMatch ? idMatch[1] : null;
+
+    console.log('Shop ID:', shopId);
 
     const { data: shop = {}, isLoading, refetch } = useQuery({
         queryKey: ["shop"],
@@ -20,7 +27,6 @@ const ShopLayout = () => {
             return data;
         },
     });
-
 
 
     return (

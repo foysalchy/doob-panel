@@ -72,6 +72,7 @@ const UpComingProducts = () => {
               <img
                 className="h-5/6"
                 src="https://i.ibb.co/5FhYvk8/upcoming-foru.png"
+                srcSet="https://i.ibb.co/5FhYvk8/upcoming-foru.png"
                 alt="new-product-icon"
               />
 
@@ -101,6 +102,7 @@ const UpComingProducts = () => {
                       alt="ecommerce"
                       className="object-cover h-full block"
                       src={product?.image}
+                      srcSet={product?.image}
                     />
                   </a>
                   <div className="mt-4 text-center">

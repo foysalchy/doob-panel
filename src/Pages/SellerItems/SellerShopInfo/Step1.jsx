@@ -12,6 +12,8 @@ const Step1 = ({ nextStep, handleChange, values }) => {
     const Email = values.shopEmail
     const Number = values.shopNumber
 
+    console.log(Logo);
+
 
     const [error, setError] = useState()
 
@@ -245,6 +247,7 @@ const Step1 = ({ nextStep, handleChange, values }) => {
 
                             <input type="file" accept="image/jpeg, image/png, image/gif, image/bmp, image/webp, image/heic"
                                 required
+
                                 onChange={imageUploading}
                                 className="block py-2 mt-2 text-sm text-gray-600  file:bg-gray-500 file:text-gray-700 file:text-sm file:px-4 file:py-1 file:border-none file:rounded  placeholder-gray-900  focus:border-blue-400  focus:ring focus:ring-blue-300 focus:ring-opacity-40   flex-grow  w-full h-12 px-4 mb-3 transition duration-200 bg-white border border-gray-900 rounded shadow-sm appearance-none md:mr-2 md:mb-0 placeholder:text-gray-700 focus:outline-none focus:shadow-outline" />
 

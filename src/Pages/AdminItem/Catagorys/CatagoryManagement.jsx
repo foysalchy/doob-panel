@@ -34,7 +34,7 @@ const CatagoryManagement = () => {
   const handleSearch = (event) => {
     setSearchQuery(event?.target?.value || "");
   };
-  const filteredData = category?.filter((item) =>
+  const filteredData = category && category?.filter((item) =>
     item?.title?.toLowerCase().includes(searchQuery?.toLowerCase())
   );
 
@@ -122,6 +122,7 @@ const CatagoryManagement = () => {
                   <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
                     <img
                       className="w-10 h-10 rounded object-fill"
+                      srcSet={cate.img}
                       src={cate.img}
                       alt=""
                     />

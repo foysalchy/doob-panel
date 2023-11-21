@@ -27,40 +27,21 @@ const AddSupportTicket = ({ OpenSupport, setOpenSupport, refetch }) => {
         const formData = new FormData();
         let selected = event.target.files[0];
         formData.append("image", selected);
-        const url = `https://api.imgbb.com/1/upload?key=${apiKey}`;
-        fetch(url, {
+        const image = uploadImage(formData)
+
+    };
+
+    const uploadImage = async (formData) => {
+        const url = `https://salenow-v2-backend.vercel.app/api/v1/image/upload-image`;
+        const response = await fetch(url, {
             method: "POST",
             body: formData,
-        })
-            .then((res) => res.json())
-            .then((imageData) => {
-                if (imageData?.data?.url) {
-                    const image = imageData.imageUrl;
-                    const pathname = image;
-                    setFile(pathname);
-                    setFileLoad(false);
-                    const parts = pathname.split("/");
-                    const lastPart = parts[parts.length - 1];
-                    const fileNameWithoutExtension = lastPart.split(".")[0];
-                    const shortenedText = fileNameWithoutExtension.slice(0, 10);
-                    const result = `${shortenedText}.${lastPart.split(".")[1]}`;
-                    setFileName(result);
-                } else {
-                    setFile(false);
-                    // Swal.fire alart
-                    // Swal.fire("success", "Your Faq Publish Successfully", "success"); type of this 
+        });
 
-
-                    Swal.fire(
-                        'Provide only Image And PDF file',
-                        '',
-                        'error'
-                    )
-
-
-
-                }
-            });
+        const imageData = await response.json();
+        setFileName(imageData.imageUrl);
+        setFile(imageData.imageUrl);
+        return imageData.imageUrl;
     };
 
     const { data: departments = [] } = useQuery({
@@ -138,103 +119,106 @@ const AddSupportTicket = ({ OpenSupport, setOpenSupport, refetch }) => {
 
 
     return (
-        <div>
-            {OpenSupport && (
-                <div className='fixed  z-50 top-0 left-0 flex h-full min-h-screen w-full items-center justify-center bg-black bg-opacity-90 px-4 py-5 '>
-                    <div className="w-full max-w-[570px] m-8 p-6 h-[80%]  overflow-scroll bg-white rounded-md shadow-md border border-black">
-                        <div onClick={() => setOpenSupport(!OpenSupport)} className='flex cursor-pointer justify-end text-2xl hover:text-red-500'>
-                            <button> <RxCross2 /></button>
-                        </div>
-                        <h2 className="text-2xl font-bold mb-4">Request a Support Ticket</h2>
-                        <form onSubmit={handleSubmit}>
-                            <div className=" w-full">
-                                <label className="block text-gray-700 text-sm font-bold mb-2">
-                                    Select Department:
-                                </label>
-                                <select
-                                    name="department"
-                                    className="p-2 border rounded w-full"
-                                >
-                                    <option disabled selected value={''}>Select a Department</option>
-                                    {departments.map((department) => (
-                                        <option key={department.id} value={department.id}>
-                                            {department.name}
-                                        </option>
-                                    ))}
-                                </select>
-                            </div>
-                            {select && <small className='text-red-500'>Select Department</small>}
-                            <div className="my-4">
-                                <label className="block text-gray-700 text-sm font-bold mb-2">
-                                    Subject:
-                                </label>
-                                <input
-                                    type="text"
-                                    name="subject"
-                                    className="w-full p-2 border rounded"
-                                    required
-                                />
-                            </div>
-                            <div className="mb-4">
-                                <label className="block text-gray-700 text-sm font-bold mb-2">
-                                    Describe the issue:
-                                </label>
-                                <ReactQuill
-                                    value={description}
-                                    onChange={handleDescriptionChange}
-                                    className="border rounded"
-                                />
-                            </div>
-                            <div>
-                                {!Sccenshort ? (
-                                    <button
-                                        type="button"
-                                        className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-700"
-                                        onClick={() => setSccenshort(!Sccenshort)}
-                                    >
-                                        Add Screenshot
-                                    </button>
-                                ) : (
-                                    <button
-                                        type="button"
-                                        className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-700"
-                                        onClick={() => { setSccenshort(!Sccenshort), setFile('') }}
-                                    >
-                                        No Screenshot
-                                    </button>
-                                )}
-                            </div>
-                            {Sccenshort && (
-                                <label className="flex mb-4 items-center px-3 py-3 mx-auto mt-6 text-center bg-white border-2 border-dashed rounded-lg cursor-pointer">
-                                    {!file ? (
-                                        <FaCloudUploadAlt className="w-6 h-6 text-gray-300 text-gray-500" />
-                                    ) : fileLoad ? (
-                                        <Lottie className="w-6 h-6" animationData={done} loop={false} />
-                                    ) : (
-                                        <Lottie className="w-6 h-6" animationData={done} loop={false} />
-                                    )}
-                                    <h2 className="mx-3 text-gray-400">{fileName}</h2>
-                                    <input
-                                        id="dropzone-file"
-                                        onChange={handleInputChange}
-                                        type="file" accept="image/jpeg, image/png, image/gif, image/bmp, image/webp, image/heic"
-                                        name="photo"
-                                        className="hidden"
-                                    />
-                                </label>
-                            )}
+        <div className={`fixed z-50 top-0 left-0 flex h-full min-h-screen w-full items-center justify-center bg-black bg-opacity-90 px-4 py-5 ${OpenSupport ? "block" : "hidden"}`}>
+            <div className="w-full max-w-[800px]  rounded-[20px] bg-white pb-10 text-center ">
 
-                            <button
-                                type="submit"
-                                className="bg-blue-500 block text-white px-4 mt-4 py-2 rounded hover:bg-blue-700"
-                            >
-                                Submit Request
-                            </button>
-                        </form>
+                <div className='flex justify-between z-50 pt-4 items-start w-full sticky top-0 bg-gray-800 border-b border-gray-300 rounded-t-[18px] px-10'>
+                    <div className='pb-2 text-xl font-bold text-white text-center sm:text-2xl'>Request a Support Ticket</div>
+                    <div onClick={() => setOpenSupport(!OpenSupport)} className='cursor-pointer bg-gray-300 rounded-full  mb-2 p-2 text-2xl hover:bg-gray-400'>
+                        <RxCross2 className='text-xl' />
                     </div>
                 </div>
-            )}
+                <div className='max-h-[500px] px-10 text-start overflow-y-scroll' >
+                    <form onSubmit={handleSubmit}>
+                        <div className=" mt-6 w-full">
+                            <label className="block text-gray-700 text-sm font-bold mb-2">
+                                Select Department:
+                            </label>
+                            <select
+                                name="department"
+                                className="p-2 border rounded w-full"
+                            >
+                                <option disabled selected value={''}>Select a Department</option>
+                                {departments.map((department) => (
+                                    <option key={department.id} value={department.id}>
+                                        {department.name}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
+                        {select && <small className='text-red-500'>Select Department</small>}
+                        <div className="my-4">
+                            <label className="block text-gray-700 text-sm font-bold mb-2">
+                                Subject:
+                            </label>
+                            <input
+                                type="text"
+                                name="subject"
+                                className="w-full p-2 border rounded"
+                                required
+                            />
+                        </div>
+                        <div className="mb-4">
+                            <label className="block text-gray-700 text-sm font-bold mb-2">
+                                Describe the issue:
+                            </label>
+                            <ReactQuill
+                                value={description}
+                                onChange={handleDescriptionChange}
+                                className="border rounded"
+                            />
+                        </div>
+                        <div>
+                            {!Sccenshort ? (
+                                <button
+                                    type="button"
+                                    className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-700"
+                                    onClick={() => setSccenshort(!Sccenshort)}
+                                >
+                                    Add Screenshot
+                                </button>
+                            ) : (
+                                <button
+                                    type="button"
+                                    className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-700"
+                                    onClick={() => { setSccenshort(!Sccenshort), setFile('') }}
+                                >
+                                    No Screenshot
+                                </button>
+                            )}
+                        </div>
+                        {Sccenshort && (
+                            <label className="flex mb-4 items-center px-3 py-3 mx-auto mt-6 text-center bg-white border-2 border-dashed rounded-lg cursor-pointer">
+                                {!file ? (
+                                    <FaCloudUploadAlt className="w-6 h-6 text-gray-300 text-gray-500" />
+                                ) : fileLoad ? (
+                                    <Lottie className="w-6 h-6" animationData={done} loop={false} />
+                                ) : (
+                                    <Lottie className="w-6 h-6" animationData={done} loop={false} />
+                                )}
+                                <h2 className="mx-3 text-gray-400">{fileName}</h2>
+                                <input
+                                    id="dropzone-file"
+                                    onChange={handleInputChange}
+                                    type="file" accept="image/jpeg, image/png, image/gif, image/bmp, image/webp, image/heic"
+                                    name="photo"
+                                    className="hidden"
+                                />
+                            </label>
+                        )}
+
+                        <button
+                            type="submit"
+                            className="bg-blue-500 block text-white px-4 mt-4 py-2 rounded hover:bg-blue-700"
+                        >
+                            Submit Request
+                        </button>
+                    </form>
+                </div>
+
+            </div>
         </div>
+
     );
 };
 

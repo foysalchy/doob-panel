@@ -19,7 +19,7 @@ const ProductHero = () => {
             <div className='lg:w-[80%] w-[100%]'>
                 <Swiper className="mySwiper rounded-md">
                     {Banar.map((i, index) => (
-                        <SwiperSlide key={index}><img className=' w-full lg:h-[350px] h-[150px] object-cover object-center rounded' src={i?.image} alt="" /></SwiperSlide>
+                        <SwiperSlide key={index}><img className=' w-full lg:h-[350px] h-[150px] object-cover object-center rounded' src={i?.image} srcSet={i?.image} alt="" /></SwiperSlide>
                     ))}
 
 

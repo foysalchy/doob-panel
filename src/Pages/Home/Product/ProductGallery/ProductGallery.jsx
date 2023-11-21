@@ -11,6 +11,7 @@ const ProductGallery = () => {
                 alt="gallery"
                 className="w-full h-full object-cover object-center block bg-black"
                 src="https://i.ibb.co/cYYfYTh/Frame-706.png"
+                srcSet="https://i.ibb.co/cYYfYTh/Frame-706.png"
               />
             </div>
           </div>
@@ -20,6 +21,7 @@ const ProductGallery = () => {
                 alt="gallery"
                 className="w-full h-80 object-cover object-center block bg-black"
                 src="https://i.ibb.co/mzCpLH6/attractive-woman-wearing-hat-posing-black-background-1.png"
+                srcSet="https://i.ibb.co/mzCpLH6/attractive-woman-wearing-hat-posing-black-background-1.png"
               />
             </div>
             <div className="md:p-2 p-1 w-1/2 ">
@@ -27,6 +29,7 @@ const ProductGallery = () => {
                 alt="gallery"
                 className="w-full h-80 object-cover object-center block bg-black"
                 src="https://i.ibb.co/nnQd6zJ/Frame-707.png"
+                srcSet="https://i.ibb.co/nnQd6zJ/Frame-707.png"
               />
             </div>
             <div className="md:p-2 p-1 w-1/2 ">
@@ -34,6 +37,7 @@ const ProductGallery = () => {
                 alt="gallery"
                 className="w-full h-80 object-cover object-center block bg-black"
                 src="https://i.ibb.co/rZMTqhX/ps5-slim-goedkope-playstation-large-1.png"
+                srcSet="https://i.ibb.co/rZMTqhX/ps5-slim-goedkope-playstation-large-1.png"
               />
             </div>
           </div>

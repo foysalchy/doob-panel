@@ -173,7 +173,7 @@ const AdminBlogs = () => {
                   </thead>
                   <tbody className="bg-white divide-y  divide-gray-200 ">
                     {filteredData.map((blog) => (
-                      <tr>
+                      <tr key={blog._id + 1}>
                         <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                           <div className="inline-flex items-center gap-x-3">
 
@@ -211,7 +211,7 @@ const AdminBlogs = () => {
                             <button onClick={() => statusUpdate(blog._id, true)} className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-emerald-100/60 bg-gray-800">
                               <span className="h-1.5 w-1.5 rounded-full bg-red-500" />
                               <h2 className="text-sm font-normal text-red-500">
-                                Un Active
+                                Inactive
                               </h2>
                             </button>}
                         </td>

@@ -95,7 +95,11 @@ const EditWareHouse = ({ setOpenModal, OpenModal, data, refetch }) => {
                                         <div className="w-4 h-4 rounded-full animate-pulse bg-violet-400"></div>
                                         <div className="w-4 h-4 rounded-full animate-pulse bg-violet-400"></div>
                                         <div className="w-4 h-4 rounded-full animate-pulse bg-violet-400"></div>
-                                    </div> : <img className="h-36 py-4 object-center" src={image} alt="Current Warehouse Image" />}
+                                    </div> :
+                                        <img className="h-36 py-4 object-center"
+                                            src={image}
+                                            srcSet={image}
+                                            alt="Current Warehouse Image" />}
                                 </div>
 
                                 <input

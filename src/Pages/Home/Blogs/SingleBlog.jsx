@@ -35,6 +35,7 @@ const SingleBlog = () => {
       <div className="relative">
         <img
           src={blogInfo?.img}
+          srcSet={blogInfo?.img}
           className="absolute inset-0 object-cover w-full h-full"
           alt=""
         />
@@ -57,6 +58,7 @@ const SingleBlog = () => {
           <img
             loading="lazy"
             src={blogInfo?.img}
+            srcSet={blogInfo?.img}
             alt=""
             className="w-full h-[400px] object-cover"
           />
@@ -82,6 +84,7 @@ const SingleBlog = () => {
               <img
                 loading="lazy"
                 src={blg.img}
+                srcSet={blg.img}
                 alt=""
                 className="md:w-[110px] h-16 object-cover w-[110px]"
               />

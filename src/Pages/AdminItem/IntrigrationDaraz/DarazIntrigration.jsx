@@ -6,12 +6,13 @@ import CryptoJS from 'crypto-js';
 import { useQuery } from '@tanstack/react-query';
 import { data } from 'autoprefixer';
 import Swal from 'sweetalert2';
+import ModalForWoo from './ModalForWoo';
 
 const DarazIntegration = () => {
 
 
     const { shopInfo, setShopInfo } = useContext(AuthContext)
-    const [darazToken, setDarazToken] = useState(null);
+    const [wooModal, setWoModal] = useState(false);
 
     const [code, setCode] = useState(null)
     console.log(code);
@@ -82,21 +83,51 @@ const DarazIntegration = () => {
 
 
     return (
-        <div className="bg-gray-100 p-6 max-w-md mx-auto rounded-md shadow-md">
+
+        <div className='grid grid-cols-2 justify-between gap-10 mt-10'>
+
+            <div className={!shopInfo.darazLogin && "bg-gray-300  py-6 text-center  rounded-md "}>
 
 
-            {!shopInfo.darazLogin && <a
-                href='https://api.daraz.com.bd/oauth/authorize?response_type=code&force_auth=true&redirect_uri=https://evidently-active-magpie.ngrok-free.app/seller/add-daraz/&client_id=501436'
-                className="text-blue-500 hover:underline mb-4 inline-block"
-            >
-                Login Daraz
-            </a>}
+                {!shopInfo.darazLogin && <a
+                    href='https://api.daraz.com.bd/oauth/authorize?response_type=code&force_auth=true&redirect_uri=https://evidently-active-magpie.ngrok-free.app/seller/channel-integration/&client_id=501436'
+                    className="text-blue-500 hover:underline mb-4 inline-block"
+                >
+                    Login Daraz
+                </a>}
 
-            {shopInfo.darazLogin && (
-                <div className="bg-green-100 border-l-4 border-green-500 p-4 mt-4">
-                    <h1 className="text-green-700 font-bold">You have already have an account</h1>
-                </div>
-            )}
+                {shopInfo.darazLogin && (
+                    <div className="bg-green-100 border-l-4 border-green-500  py-6 text-center  rounded-md">
+                        <h1 className="text-green-700 font-bold">Your daraz account is connected</h1>
+                    </div>
+                )}
+
+
+            </div>
+            <div className={!shopInfo.wooLogin && "bg-gray-300  flex items-center justify-center text-center rounded-md "}>
+
+
+                {!shopInfo.wooLogin &&
+                    <button
+                        onClick={() => setWoModal(true)}
+                        className="text-blue-500 hover:underline mb-4 inline-block"
+                    >
+                        Woo comarce Loin
+                    </button>
+                }
+
+                {shopInfo.wooLogin && (
+                    <div className="bg-green-100 border-l-4 border-green-500  py-6 text-center  rounded-md">
+                        <h1 className="text-green-700 font-bold">Your woo Commerce account is connected</h1>
+                    </div>
+                )}
+
+
+            </div>
+
+            <div className='h-0 w-0'>
+                <ModalForWoo setOpenModal={setWoModal} OpenModal={wooModal} shopId={shopInfo._id} setShopInfo={setShopInfo} />
+            </div>
         </div>
     );
 };

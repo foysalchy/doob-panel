@@ -23,13 +23,12 @@ const AdminBlogPage = () => {
 
         <div className="grid gap-8 lg:grid-cols-3 sm:max-w-sm sm:mx-auto lg:max-w-full">
           {blogs.map((blog, index) => (
-            <Link to={`/blogs/${blog._id}`}
-              key={index}
+            <Link key={blog._id} to={`/blogs/${blog._id}`}
               className={!blog.status ? "hidden" : "overflow-hidden transition-shadow duration-300 bg-white rounded shadow-sm"}
             >
               <img
-                src={blog?.img}
                 srcSet={blog?.img}
+                src={blog?.img}
                 className="object-cover w-full h-64"
                 alt=""
               />
