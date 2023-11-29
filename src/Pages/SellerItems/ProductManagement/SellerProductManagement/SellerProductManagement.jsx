@@ -20,7 +20,7 @@ const SellerProductManagement = () => {
 
             <Link
                 className="group relative inline-flex items-center justify-center overflow-hidden rounded bg-gray-900 px-8 py-6 text-white focus:outline-none focus:ring active:bg-gray-500"
-                to="/seller/product-management/add-product"
+                to="/seller/product-management/manage"
             >
                 <span className="absolute -start-full transition-all group-hover:start-10">
                     <FaLongArrowAltRight />
@@ -32,26 +32,26 @@ const SellerProductManagement = () => {
             </Link>
             <Link
                 className="group relative inline-flex items-center justify-center overflow-hidden rounded bg-gray-900 px-8 py-6 text-white focus:outline-none focus:ring active:bg-gray-500"
-                to="/seller/content-management/popup-management"
+                to="/seller/product-management/add-daraz-product"
             >
                 <span className="absolute -start-full transition-all group-hover:start-10">
                     <FaLongArrowAltRight />
                 </span>
 
                 <span className="text-sm font-medium transition-all group-hover:ms-4">
-                    Pop Up
+                    Add Daraz Product
                 </span>
             </Link>
             <Link
                 className="group relative inline-flex items-center justify-center overflow-hidden rounded bg-gray-900 px-8 py-6 text-white focus:outline-none focus:ring active:bg-gray-500"
-                to="/seller/content-management/slider-management"
+                to="/seller/product-management/add-woo-product"
             >
                 <span className="absolute -start-full transition-all group-hover:start-10">
                     <FaLongArrowAltRight />
                 </span>
 
                 <span className="text-sm font-medium transition-all group-hover:ms-4">
-                    Slider
+                    Add Woo Product
                 </span>
             </Link>
         </div>

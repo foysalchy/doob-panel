@@ -12,7 +12,7 @@ const ManageCell = () => {
     const { data: cells = [], refetch } = useQuery({
         queryKey: ["cells"],
         queryFn: async () => {
-            const res = await fetch("https://salenow-v2-backend.vercel.app/api/v1/admin/warehouse/cell");
+            const res = await fetch("http://localhost:5000/api/v1/admin/warehouse/cell");
             const data = await res.json();
             return data;
         },
@@ -112,7 +112,7 @@ const ManageCell = () => {
 
 
     const updateStatus = (id, status) => {
-        fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/warehouse/cell/status/${id}`, {
+        fetch(`http://localhost:5000/api/v1/admin/warehouse/cell/status/${id}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
@@ -149,7 +149,7 @@ const ManageCell = () => {
         }).then((result) => {
             if (result.dismiss === Swal.DismissReason.timer) {
                 // Timer completed, initiate the fetch for deletion
-                fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/warehouse/cell/delete/${id}`, {
+                fetch(`http://localhost:5000/api/v1/admin/warehouse/cell/delete/${id}`, {
                     method: "DELETE",
                     headers: {
                         "Content-Type": "application/json",

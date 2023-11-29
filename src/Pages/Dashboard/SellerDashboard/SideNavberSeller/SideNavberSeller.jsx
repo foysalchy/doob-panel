@@ -22,9 +22,9 @@ const SideNavberSeller = () => {
 
     return (
 
-        <div className='py-6 sticky'>
+        <div className='py-2 sticky'>
 
-            <div className={responsive ? "flex  h-screen  overflow-y-auto  flex-col  p-3 w-30  border-r-2  " : "flex flex-col  p-6 w-60  h-screen  overflow-y-auto  "}>
+            <div className={responsive ? "flex  h-screen  overflow-y-auto  flex-col  p-3 w-30  border-r-2  " : "flex flex-col  p-6 w-64  h-screen  overflow-y-auto  "}>
                 <div className="space-y-3">
                     <div className="flex items-center justify-between">
                         {!responsive && <Link
@@ -268,7 +268,7 @@ const SideNavberSeller = () => {
                                 <li className="rounded-sm hover:bg-gray-800">
                                     <Link to={'/seller/warehouse'} rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
                                         <BiArchive className="w-5 h-5 text-gray-400" />
-                                        <span>Warehouse Management (Working)</span>
+                                        <span>Warehouse Management</span>
                                     </Link>
                                 </li>
 

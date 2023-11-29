@@ -14,7 +14,7 @@ const Contract = () => {
     const { data: contact = [], refetch } = useQuery({
         queryKey: ["contact"],
         queryFn: async () => {
-            const res = await fetch("https://salenow-v2-backend.vercel.app/api/v1/admin/contact");
+            const res = await fetch("http://localhost:5000/api/v1/admin/contact");
             const data = await res.json();
             return data;
         },
@@ -26,8 +26,8 @@ const Contract = () => {
         e.preventDefault();
         emailjs
             .sendForm(
-                "salenow",
-                "salenow",
+                "Doob",
+                "Doob",
                 form.current,
                 "xE3XosZ4990JJ_5ZI"
             )

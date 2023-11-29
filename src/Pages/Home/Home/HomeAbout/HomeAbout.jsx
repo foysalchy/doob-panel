@@ -50,7 +50,7 @@ const HomeAbout = () => {
                         <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
 
                             <h1 className="text-gray-900 text-4xl title-font font-bold mb-1">
-                                Why SaleNow
+                                Why Doob
                             </h1>
 
                             <p className="leading-relaxed mt-2">

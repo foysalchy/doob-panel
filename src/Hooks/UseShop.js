@@ -17,7 +17,7 @@ const UseShop = () => {
         }
         else {
             if (user?.email) {
-                fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/checkshop/${user?.email}`)
+                fetch(`http://localhost:5000/api/v1/shop/checkshop/${user?.email}`)
                     .then((res) => res.json())
                     .then((data) => {
                         setShopInfo(data.seller);

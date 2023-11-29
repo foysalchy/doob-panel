@@ -40,7 +40,7 @@ const UserProvider = ({ children }) => {
     };
 
     const checkUserCookie = () => {
-        const userCookie = getCookie('SaleNowUser');
+        const userCookie = getCookie('DoobUser');
         if (userCookie) {
             const userData = JSON.parse(userCookie);
             setUser(userData);

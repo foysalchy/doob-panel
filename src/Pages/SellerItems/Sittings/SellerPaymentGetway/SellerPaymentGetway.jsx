@@ -13,7 +13,7 @@ const SellerPaymentGetaway = () => {
     const { data: getaway = [], refetch, isLoading } = useQuery({
         queryKey: ["getaway"],
         queryFn: async () => {
-            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/payment-getaway/${shopInfo._id}`);
+            const res = await fetch(`http://localhost:5000/api/v1/seller/payment-getaway/${shopInfo._id}`);
             const data = await res.json();
             return data;
         },
@@ -55,7 +55,7 @@ const SellerPaymentGetaway = () => {
 
 
 
-        fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/payment-getaway`, {
+        fetch(`http://localhost:5000/api/v1/seller/payment-getaway`, {
             method: "POST",
             headers: {
                 "content-type": "application/json",
@@ -109,7 +109,7 @@ const SellerPaymentGetaway = () => {
 
 
     const deleteHandel = (id) => {
-        fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/payment-getaway/${id}`, {
+        fetch(`http://localhost:5000/api/v1/seller/payment-getaway/${id}`, {
             method: "Delete",
             headers: {
                 "content-type": "application/json",

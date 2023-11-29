@@ -45,7 +45,7 @@ const EditPrice = ({ OpenModal, setOpenModal, FAQInfo, refetch }) => {
 
 
         try {
-            fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/price/update-price/${FAQInfo._id}`, {
+            fetch(`http://localhost:5000/api/v1/admin/price/update-price/${FAQInfo._id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',

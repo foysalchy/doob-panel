@@ -17,7 +17,7 @@ const ExtraCategoriesManagement = () => {
     const { data: categories = [], refetch } = useQuery({
         queryKey: ["categories"],
         queryFn: async () => {
-            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/category/seller/extra/${shopInfo._id}`);
+            const res = await fetch(`http://localhost:5000/api/v1/category/seller/extra/${shopInfo._id}`);
             const data = await res.json();
             return data;
         },
@@ -128,7 +128,7 @@ const ExtraCategoriesManagement = () => {
 
 
     const updateStatus = (id, status) => {
-        fetch(`https://salenow-v2-backend.vercel.app/api/v1/category/seller/extra/status/${id}`, {
+        fetch(`http://localhost:5000/api/v1/category/seller/extra/status/${id}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
@@ -165,7 +165,7 @@ const ExtraCategoriesManagement = () => {
         }).then((result) => {
             if (result.dismiss === Swal.DismissReason.timer) {
                 // Timer completed, initiate the fetch for deletion
-                fetch(`https://salenow-v2-backend.vercel.app/api/v1/category/seller/extra/delete/${id}`, {
+                fetch(`http://localhost:5000/api/v1/category/seller/extra/delete/${id}`, {
                     method: "DELETE",
                     headers: {
                         "Content-Type": "application/json",

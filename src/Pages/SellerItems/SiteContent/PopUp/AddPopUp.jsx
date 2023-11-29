@@ -55,7 +55,7 @@ const AddPopUp = () => {
 
 
     async function uploadImage(formData) {
-        const url = "https://salenow-v2-backend.vercel.app/api/v1/image/upload-image";
+        const url = "http://localhost:5000/api/v1/image/upload-image";
         const response = await fetch(url, {
             method: "POST",
             body: formData,
@@ -66,7 +66,7 @@ const AddPopUp = () => {
 
     const postSlider = (Slider) => {
 
-        fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/popup/add`, {
+        fetch(`http://localhost:5000/api/v1/seller/popup/add`, {
             method: "PUT",
             headers: {
                 "content-type": "application/json",
@@ -151,7 +151,7 @@ const AddPopUp = () => {
                             <input
                                 required
                                 name='url'
-                                placeholder="www.salenow.com/"
+                                placeholder="www.Doob.com/"
                                 className="mt-1 p-2 border border-gray-300 rounded-md w-full text-gray-900 focus:outline-none focus:border-blue-500"
                             />
                         </div>

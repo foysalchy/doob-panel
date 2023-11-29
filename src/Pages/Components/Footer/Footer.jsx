@@ -7,7 +7,7 @@ const Footer = () => {
   const { data: pages = [], refetch } = useQuery({
     queryKey: ["faqs"],
     queryFn: async () => {
-      const res = await fetch("https://salenow-v2-backend.vercel.app/api/v1/admin/pages");
+      const res = await fetch("http://localhost:5000/api/v1/admin/pages");
       const data = await res.json();
       return data;
     },

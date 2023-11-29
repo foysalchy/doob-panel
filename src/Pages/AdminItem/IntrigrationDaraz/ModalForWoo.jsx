@@ -21,7 +21,7 @@ const ModalForWoo = ({ setOpenModal, OpenModal, shopId, setShopInfo }) => {
             shopId
         }
         fetch(
-            `https://salenow-v2-backend.vercel.app/api/v1/woo/login`,
+            `http://localhost:5000/api/v1/woo/login`,
             {
                 method: "POST",
                 headers: {

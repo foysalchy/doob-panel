@@ -50,7 +50,7 @@ Provide a link to a live demo if applicable.
 
 ### Installation
 
-1. Clone the repository: `git clone https://github.com/brightfuturesoft/SaleNow-Frontend.git`
+1. Clone the repository: `git clone https://github.com/brightfuturesoft/Doob-Frontend.git`
 2. Install dependencies: `npm install`
 3. Start the development server: `npm run dev`
 

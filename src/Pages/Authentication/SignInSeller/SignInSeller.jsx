@@ -29,7 +29,7 @@ const SignInSeller = () => {
       password,
     };
     setLoading(true);
-    fetch("https://salenow-v2-backend.vercel.app/api/v1/auth/sign-in", {
+    fetch("http://localhost:5000/api/v1/auth/sign-in", {
       method: "post",
       headers: {
         "content-type": "application/json",
@@ -40,11 +40,11 @@ const SignInSeller = () => {
       .then((data) => {
         if (data.user) {
           setUser(data.user);
-          setCookie("SaleNowUser", JSON.stringify(data.user));
+          setCookie("DoobUser", JSON.stringify(data.user));
           setLoading(false);
           setPassError("");
           if (data.user.role === 'seller') {
-            fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/checkshop/${data?.user?.email}`)
+            fetch(`http://localhost:5000/api/v1/shop/checkshop/${data?.user?.email}`)
               .then((response) => response.json())
               .then((result) => {
 
@@ -117,7 +117,7 @@ const SignInSeller = () => {
             <div className="w-full max-w-xl xl:px-8 xl:w-5/12">
               <div className="bg-white rounded shadow-2xl p-7 sm:p-10">
                 <h3 className="mb-4 text-xl font-semibold sm:text-center sm:mb-6 sm:text-2xl">
-                  Sign In with SaleNow account
+                  Sign In with Doob account
                 </h3>
                 <form onChange={() => setPassError('')} onSubmit={loginUser}>
                   <div className="mb-1 sm:mb-2">
