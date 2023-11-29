@@ -15,7 +15,7 @@ const AddSelfModal = ({ recall, setOpenModal }) => {
     const { data: warehouses = [], refetch } = useQuery({
         queryKey: ["warehouses"],
         queryFn: async () => {
-            const res = await fetch("https://salenow-v2-backend.vercel.app/api/v1/admin/warehouse/");
+            const res = await fetch("http://localhost:5000/api/v1/admin/warehouse/");
             const data = await res.json();
             return data;
         },
@@ -25,7 +25,7 @@ const AddSelfModal = ({ recall, setOpenModal }) => {
         const selectedWarehouse = selectedOption.value;
         setSelectedWarehouse(selectedWarehouse);
 
-        const areaRes = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/warehouse/area/${selectedWarehouse}`);
+        const areaRes = await fetch(`http://localhost:5000/api/v1/admin/warehouse/area/${selectedWarehouse}`);
         const areaData = await areaRes.json();
         setAreas(areaData);
         setSelectedArea('');
@@ -38,7 +38,7 @@ const AddSelfModal = ({ recall, setOpenModal }) => {
         setSelectedArea(selectedArea);
 
 
-        const rackRes = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/warehouse/rack/${selectedWarehouse}/${selectedArea}`);
+        const rackRes = await fetch(`http://localhost:5000/api/v1/admin/warehouse/rack/${selectedWarehouse}/${selectedArea}`);
         const rackData = await rackRes.json();
         setRacks(rackData);
         refetch();
@@ -57,7 +57,7 @@ const AddSelfModal = ({ recall, setOpenModal }) => {
             self
         };
 
-        fetch('https://salenow-v2-backend.vercel.app/api/v1/admin/warehouse/self', {
+        fetch('http://localhost:5000/api/v1/admin/warehouse/self', {
             method: 'post',
             headers: {
                 'Content-Type': 'application/json',

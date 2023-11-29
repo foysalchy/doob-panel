@@ -15,7 +15,7 @@ const SellerAddRackModal = ({ recall, setOpenModal }) => {
     const { data: warehouses = [], refetch } = useQuery({
         queryKey: ["warehouses"],
         queryFn: async () => {
-            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/warehouse/get/${shopInfo._id}`);
+            const res = await fetch(`http://localhost:5000/api/v1/seller/warehouse/get/${shopInfo._id}`);
             const data = await res.json();
             return data;
         },
@@ -38,7 +38,7 @@ const SellerAddRackModal = ({ recall, setOpenModal }) => {
     const handleWarehouseChange = async (selectedOption) => {
         const selectedWarehouse = selectedOption.value;
         console.log(selectedWarehouse);
-        const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/warehouse/area/${selectedWarehouse}/${shopInfo._id}`);
+        const res = await fetch(`http://localhost:5000/api/v1/seller/warehouse/area/${selectedWarehouse}/${shopInfo._id}`);
         const data = await res.json();
         setAreas(data);
     };
@@ -55,7 +55,7 @@ const SellerAddRackModal = ({ recall, setOpenModal }) => {
             rack,
             shopId: shopInfo._id
         }
-        fetch('https://salenow-v2-backend.vercel.app/api/v1/seller/warehouse/rack', {
+        fetch('http://localhost:5000/api/v1/seller/warehouse/rack', {
             method: 'post',
             headers: {
                 'Content-Type': 'application/json'

@@ -5,7 +5,10 @@ import SellerManageContact from "../Pages/SellerItems/ContactPages/SellerManageC
 import AddDomain from "../Pages/SellerItems/DomainManagement/AddDomain";
 import AddSellerPage from "../Pages/SellerItems/PageManagement/AddSellerPage";
 import SellerPageManagement from "../Pages/SellerItems/PageManagement/SellerPageManagement";
+import AddDarazProduct from "../Pages/SellerItems/ProductManagement/AddDarazProduct/AddDarazProduct";
+import AddWooProduct from "../Pages/SellerItems/ProductManagement/AddWooProduct/AddWooProduct";
 import SellerAddProduct from "../Pages/SellerItems/ProductManagement/SellerAddProduct/SellerAddProduct";
+import SellerAllProducts from "../Pages/SellerItems/ProductManagement/SellerProductManagement/SellerAllProduct/SellerAllProducts";
 import SellerProductManagement from "../Pages/SellerItems/ProductManagement/SellerProductManagement/SellerProductManagement";
 import CategoriesManagement from "../Pages/SellerItems/SellerCatagory/CategoriesManagement/CategoriesManagement";
 import ExtraCategoriesManagement from "../Pages/SellerItems/SellerCatagory/ExtraCategory/ExtraCategoriesManagement";
@@ -180,6 +183,18 @@ const SellerPath = [
         element: <SellerProductManagement />
     },
     {
+        path: "product-management/manage",
+        element: <SellerAllProducts />
+    },
+    {
+        path: "product-management/add-daraz-product",
+        element: <AddDarazProduct />
+    },
+    {
+        path: "product-management/add-woo-product",
+        element: <AddWooProduct />
+    },
+    {
         path: "product-management/add-product",
         element: <SellerAddProduct />
     },
@@ -207,6 +222,7 @@ const SellerPath = [
         path: "warehouse/cell-management",
         element: <SellerManageCell />
     },
+
 
 
 

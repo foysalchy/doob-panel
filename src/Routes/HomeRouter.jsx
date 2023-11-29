@@ -72,7 +72,7 @@ const homePath = [
         path: "/service/:id",
         element: <SingleService />,
         loader: ({ params }) =>
-            fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/service/${params.id}`)
+            fetch(`http://localhost:5000/api/v1/admin/service/${params.id}`)
     },
     {
         path: "/contact",
@@ -86,7 +86,7 @@ const homePath = [
         path: "/blogs/:id",
         element: <SingleBlog />,
         loader: ({ params }) =>
-            fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/all-blogs/${params.id}`),
+            fetch(`http://localhost:5000/api/v1/admin/all-blogs/${params.id}`),
     },
     {
         path: "/faq",
@@ -100,7 +100,7 @@ const homePath = [
                 path: "/faq/:id",
                 element: <SingleFaq />,
                 loader: ({ params }) =>
-                    fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/faq/${params.id}`),
+                    fetch(`http://localhost:5000/api/v1/admin/faq/${params.id}`),
             },
         ],
     },
@@ -108,7 +108,7 @@ const homePath = [
         path: "/pages/:id",
         element: <Trams />,
         loader: ({ params }) =>
-            fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/page/${params.id}`),
+            fetch(`http://localhost:5000/api/v1/admin/page/${params.id}`),
     },
     {
         path: "/profile",

@@ -6,7 +6,7 @@ const HomeUserVoice = () => {
             <div>
 
                 <h1 className='text-4xl font-extrabold text-center font-inner'>User Voice</h1>
-                <h1 className='md:text-2xl text-center mt-2 text-sm'>Inspiring stories of how our merchants successfully built and grew their business with SaleNOw</h1>
+                <h1 className='md:text-2xl text-center mt-2 text-sm'>Inspiring stories of how our merchants successfully built and grew their business with Doob</h1>
             </div>
 
 

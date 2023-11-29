@@ -24,7 +24,7 @@ const AddMagaCategory = () => {
         queryKey: ["category"],
         queryFn: async () => {
             if (shopInfo.darazLogin) {
-                const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/daraz/category/${shopInfo._id}`);
+                const res = await fetch(`http://localhost:5000/api/v1/daraz/category/${shopInfo._id}`);
                 const data = await res.json();
                 return data;
             }
@@ -37,7 +37,7 @@ const AddMagaCategory = () => {
         queryKey: ["wooCategory"],
         queryFn: async () => {
             if (shopInfo.wooLogin) {
-                const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/woo/category?shopId=${shopInfo._id}`);
+                const res = await fetch(`http://localhost:5000/api/v1/woo/category?shopId=${shopInfo._id}`);
                 const data = await res.json();
                 return data;
             }
@@ -46,7 +46,7 @@ const AddMagaCategory = () => {
         },
     });
 
-    console.log(wooCategory);
+
 
 
     const [daraz, setDaraz] = useState(false);
@@ -103,7 +103,7 @@ const AddMagaCategory = () => {
     };
 
     const uploadImage = async (formData) => {
-        const url = `https://salenow-v2-backend.vercel.app/api/v1/image/upload-image`;
+        const url = `http://localhost:5000/api/v1/image/upload-image`;
         const response = await fetch(url, {
             method: "POST",
             body: formData,
@@ -114,7 +114,7 @@ const AddMagaCategory = () => {
     };
 
     const postCategory = async (data) => {
-        const url = `https://salenow-v2-backend.vercel.app/api/v1/category/seller/add`;
+        const url = `http://localhost:5000/api/v1/category/seller/add`;
 
         const response = await fetch(url, {
             method: "POST",

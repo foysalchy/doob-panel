@@ -7,6 +7,15 @@ import Select from 'react-select';
 import { useQuery } from '@tanstack/react-query';
 import UploadImage from './Components/UploadImage';
 import InputProductName from './Components/InputProductName';
+import SincronusCategory from './Components/SincronusCategory';
+import Description from './Components/Description';
+import Stock from './Components/Stock';
+import ServiceWarranty from './Components/ServiceWarranty';
+import Delivery from './Components/Delivery';
+import WareHouse from './Components/WareHouse';
+import Meta from './Components/Meta';
+import Swal from 'sweetalert2';
+
 
 
 
@@ -18,8 +27,13 @@ const SellerAddProduct = () => {
     const [loading, setLoading] = useState(false)
     const [daraz, setDaraz] = useState(false)
     const [woo, setWoo] = useState(false)
-    const [adminWare, setAdminWare] = useState(false)
+    const [adminWare, setAdminWare] = useState(true)
     const [coverPhoto, setCoverPhoto] = useState('');
+    const [description, setDescription] = useState('')
+
+
+    const [brandName, setBrandName] = useState()
+
 
 
 
@@ -28,7 +42,7 @@ const SellerAddProduct = () => {
         const formData = new FormData();
         formData.append("image", image);
 
-        const url = `https://salenow-v2-backend.vercel.app/api/v1/image/upload-image`;
+        const url = `http://localhost:5000/api/v1/image/upload-image`;
 
         return fetch(url, {
             method: "POST",
@@ -41,14 +55,61 @@ const SellerAddProduct = () => {
             });
     };
 
+
     const formSubmit = async (e) => {
+        setLoading(true)
         e.preventDefault();
         const form = e.target;
+        const BnName = form.productNameBn.value
+        const EnName = form.productNameEn.value
+        const videoUrl = form.videoUrl.value
+        const megaCategory = form.megaCategory.value
+        const Subcategory = form.subCategory.value
+        const miniCategory = form.miniCategory.value
+        const extraCategory = form?.extraCategory?.value
+
+        const categories = [{ name: megaCategory }, { name: Subcategory }, { name: miniCategory }, { name: extraCategory }]
+
+        const warehouse = form.warehouse.value
+        const area = form.area.value
+        const rack = form.rack.value
+        const self = form.self.value
+        const cell = form.cell.value
+
+        const warehouseValue = [{ name: warehouse }, { name: area }, { name: rack }, { name: self }, { name: cell }]
+
+        const quantity = form?.quantity?.value
+        const SKU = form?.SKU?.value
+        const price = form?.price?.value
+        const offerPrice = form?.offerPrice?.value
+        const ability = form?.ability?.value
+        const vendor = form?.vendor?.value
+
+        const warrantyTypes = form?.warrantyTypes?.value
+
+        const packageWidth = form?.packageWidth?.value
+        const productLength = form?.productLength?.value
+        const productWidth = form?.productWidth?.value
+        const productHight = form?.productHight?.value
+
+
+
+        const MetaTag = form?.MetaTag?.value
+        const MetaTagMetaDescription = form?.MetaDescription?.value
+        const MetaImageFile = form?.MetaImage?.files[0]
+        const MetaImage = await imageUpload(MetaImageFile)
+
+
+
+
+
+
         const formData = new FormData();
 
-        let coverPhoto = form.coverPhoto.files[0];
+
 
         const additionalPhotos = [
+            form.coverPhoto,
             form.photo1,
             form.photo2,
             form.photo3,
@@ -58,11 +119,6 @@ const SellerAddProduct = () => {
             form.photo7,
         ];
 
-        if (coverPhoto) {
-            formData.append("coverPhoto", coverPhoto);
-            coverPhoto = await imageUpload(coverPhoto)
-
-        }
 
         const uploadedImageUrls = await Promise.all(
             additionalPhotos.map(async (fileInput, index) => {
@@ -70,31 +126,98 @@ const SellerAddProduct = () => {
                 if (file) {
                     const imageUrl = await imageUpload(file);
                     formData.append(`photo${index + 2}`, imageUrl);
-                    return imageUrl;
+                    return {
+                        name: `photo ${index}`,
+                        src: imageUrl,
+                    };
                 }
                 return null;
             })
         );
-        console.log("Uploaded Image URLs:", coverPhoto, uploadedImageUrls);
+
+
+        const data = {
+
+            videoUrl,
+            brandName,
+            BnName,
+            name: EnName,
+            daraz,
+            woo,
+            categories,
+            warehouse: warehouseValue,
+            description,
+            stock_quantity: quantity,
+            regular_price: price,
+            price: offerPrice,
+            sale_price: offerPrice,
+            purchasable: true,
+            vendor,
+            total_sales: 0,
+            // productType,
+            weight: packageWidth,
+            length: productLength,
+            width: productWidth,
+            height: productHight,
+            // color,
+            // size,
+            // material,
+            // warrantyTime,
+            // warrantyDescription,
+            // shippingCost,
+            // isFreeShipping,
+            // isReturnable,
+            // returnDays,
+            // returnPolicy,
+            // refundPolicy,
+            // otherDetails,
+            metaTitle: MetaTag,
+            // metaKeywords,
+            metaDescription: MetaTagMetaDescription,
+            MetaImage,
+            sku: SKU,
+            // barcode,
+            // taxClassId,
+            stockStatus: ability,
+            // shortDescription,
+            // longDescription,
+            status: false,
+            createdAt: Date.now(),
+            // updatedAt,
+            featuredImage: uploadedImageUrls[0],
+            images: uploadedImageUrls,
+            videos: videoUrl,
+            // attributes,
+            // variations,
+            warrantyTypes,
+            rating_count: 0,
+            shopId: shopInfo._id,
+            adminWare,
+
+        }
+
+        fetch('http://localhost:5000/api/v1/seller/normal-product/', {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json'
+            }
+            , body: JSON.stringify({ data })
+        }).then((res) => res.json()).then((data) => {
+            console.log(data);
+            if (
+                data.message
+            ) {
+                Swal.fire(`${data.message}`, '', 'warning')
+                setLoading(false)
+            }
+            else {
+                Swal.fire('success', '', 'success')
+                setLoading(false)
+            }
+
+        })
     };
 
-
-    const { data: category = [], refetch } = useQuery({
-        queryKey: ["category"],
-        queryFn: async () => {
-
-            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/category/seller/${shopInfo._id}`);
-            const data = await res.json();
-            return data;
-
-        },
-    });
-
-    const option = category && category?.filter((warehouse) => warehouse.status).map((warehouse) => ({
-
-        value: JSON.stringify(warehouse),
-        label: warehouse.name,
-    }))
 
 
 
@@ -106,191 +229,27 @@ const SellerAddProduct = () => {
 
                 <UploadImage coverPhoto={coverPhoto} setCoverPhoto={setCoverPhoto} />
 
-                <div className='border mt-4 border-gray-400 px-10 py-5 w-full bg-gray-100 rounded'>
-                    <label className='text-sm ' htmlFor="Video url "> Video Url</label>
-                    <input className="flex-grow w-full h-10 px-4 mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-purple-400 focus:outline-none focus:shadow-outline" placeholder="Input youtube video link here" type="text" name="" id="" />
+
+
+                <InputProductName brandName={brandName} setBrandName={setBrandName} />
+
+                <SincronusCategory daraz={daraz} setDaraz={setDaraz} woo={woo} setWoo={setWoo} />
+
+                <WareHouse shopInfo={shopInfo} adminWare={adminWare} setAdminWare={setAdminWare} />
+
+
+
+                <Description description={description} setDescription={setDescription} />
+                <div className='my-4 mt-10'>
+                    <Stock />
                 </div>
-
-                <InputProductName />
-
-
-                <div className='border mt-4 border-gray-400 px-10 py-5 w-full bg-gray-100 rounded'>
-
-                    <div className='flex justify-start gap-10'>
-                        {(shopInfo.darazLogin) && <div className='flex flex-col justify-start'>
-                            <span className='font-bold'>Are you want Sinuous with Daraz </span>
-
-                            <button className='flex justify-start mt-2' >
-                                <span onClick={() => setDaraz(false)} className={daraz ? "px-4 py-2 bg-gray-600 text-white " : "px-4 py-2 bg-violet-400"}>NO</span>
-                                <span onClick={() => setDaraz(true)} className={!daraz ? "px-4 py-2 bg-gray-600 text-white " : "px-4 py-2 bg-violet-400"}>YES</span>
-                            </button>
-
-                        </div>}
-                        {(shopInfo.wooLogin) && <div className='flex flex-col justify-start'>
-                            <span className='font-bold'>Are you want Sinuous with WooCommerce </span>
-
-                            <button className='flex justify-start mt-2' >
-                                <span onClick={() => setWoo(false)} className={woo ? "px-4 py-2 bg-gray-600 text-white " : "px-4 py-2 bg-violet-400"}>NO</span>
-                                <span onClick={() => setWoo(true)} className={!woo ? "px-4 py-2 bg-gray-600 text-white " : "px-4 py-2 bg-violet-400"}>YES</span>
-                            </button>
-
-                        </div>}
-
-                    </div>
-
-
-                    <div className='flex flex-col mt-3'>
-                        <span>Category Information <span className='text-red-500'> *</span></span>
-
-                        <div className='mt-4 w-1/3' >
-                            <label className="text-sm">Select Mega Category</label>
-                            <Select
-                                menuPortalTarget={document.body}
-                                styles={{
-                                    control: (provided) => ({
-                                        ...provided,
-                                        cursor: 'pointer',
-                                    }),
-                                    option: (provided) => ({
-                                        ...provided,
-                                        cursor: 'pointer',
-                                    }),
-                                }}
-                                name='megaCategory'
-                                required
-                                // onChange={handleSelectChange}
-                                options={option}
-                                placeholder="Select Mega Category"
-                            />
-                        </div>
-
-                        <div className='mt-4 w-1/3' >
-                            <label className="text-sm">Select Mega Category</label>
-                            <Select
-                                menuPortalTarget={document.body}
-                                styles={{
-                                    control: (provided) => ({
-                                        ...provided,
-                                        cursor: 'pointer',
-                                    }),
-                                    option: (provided) => ({
-                                        ...provided,
-                                        cursor: 'pointer',
-                                    }),
-                                }}
-                                name='megaCategory'
-                                required
-                                // onChange={handleSelectChange}
-                                options={option}
-                                placeholder="Select Mega Category"
-                            />
-                        </div>
-
-                        <div className='mt-4 w-1/3' >
-                            <label className="text-sm">Select Mega Category</label>
-                            <Select
-                                menuPortalTarget={document.body}
-                                styles={{
-                                    control: (provided) => ({
-                                        ...provided,
-                                        cursor: 'pointer',
-                                    }),
-                                    option: (provided) => ({
-                                        ...provided,
-                                        cursor: 'pointer',
-                                    }),
-                                }}
-                                name='megaCategory'
-                                required
-                                // onChange={handleSelectChange}
-                                options={option}
-                                placeholder="Select Mega Category"
-                            />
-                        </div>
-
-                        <div className='mt-4 w-1/3' >
-                            <label className="text-sm">Select Mega Category</label>
-                            <Select
-                                menuPortalTarget={document.body}
-                                styles={{
-                                    control: (provided) => ({
-                                        ...provided,
-                                        cursor: 'pointer',
-                                    }),
-                                    option: (provided) => ({
-                                        ...provided,
-                                        cursor: 'pointer',
-                                    }),
-                                }}
-                                name='megaCategory'
-                                required
-                                // onChange={handleSelectChange}
-                                options={option}
-                                placeholder="Select Mega Category"
-                            />
-                        </div>
-
-                    </div>
-
-
-
-                </div>
-
-
-                <div className='border mt-4 border-gray-400 px-10 py-5 w-full bg-gray-100 rounded'>
-
-                    <div className=' gap-10'>
-
-
-                        <span className='font-bold'>Are you want Sinuous with WooCommerce </span>
-
-                        <button className='flex justify-start mt-2' >
-                            <span onClick={() => setAdminWare(false)} className={adminWare ? "px-4 py-2 bg-gray-600 text-white " : "px-4 py-2 bg-violet-400"}>Salenow</span>
-                            <span onClick={() => setAdminWare(true)} className={!adminWare ? "px-4 py-2 bg-gray-600 text-white  " : "px-4 py-2 bg-violet-400"}>{shopInfo.shopName}</span>
-                        </button>
-
-
-
-                    </div>
-
-
-                    <div className='flex flex-col mt-3'>
-                        <span>Warehouse Information <span className='text-red-500'> *</span></span>
-
-                        <div className='mt-4 w-1/3' >
-                            <label className="text-sm">Select Warehouse</label>
-                            <Select
-                                menuPortalTarget={document.body}
-                                // styles={{
-                                //     control: (provided) => ({
-                                //         ...provided,
-                                //         cursor: 'pointer',
-                                //     }),
-                                //     option: (provided) => ({
-                                //         ...provided,
-                                //         cursor: 'pointer',
-                                //     }),
-                                // }}
-                                name='megaCategory'
-                                required
-                                // onChange={handleSelectChange}
-                                // options={option}
-                                placeholder="Select Warehouse"
-                            />
-                        </div>
-
-
-
-                    </div>
-
-
-
-                </div>
-
+                <ServiceWarranty />
+                <Delivery />
+                <Meta />
                 <div className="mt-4">
                     {
                         loading ?
-                            <button disabled={loading || coverPhoto} className="group relative cursor-not-allowed inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none mt-4">
+                            <button type='button' className="group relative cursor-not-allowed inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none mt-4">
                                 <span className="text-sm font-medium">
                                     Loading...
                                 </span>

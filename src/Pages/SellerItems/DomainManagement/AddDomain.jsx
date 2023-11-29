@@ -21,12 +21,12 @@ const AddDomain = () => {
         const domain = event.target.domain.value;
         shopInfo.domain = domain
 
-        fetch(`https://salenow-v2-backend.vercel.app/api/v1/api/dns?domain=${domain}&txtValue=salenow.com/shop/${txtValue}`)
+        fetch(`http://localhost:5000/api/v1/api/dns?domain=${domain}&txtValue=Doob.com/shop/${txtValue}`)
             .then((res) => res.json())
             .then((data) => {
 
                 if (data.isValuePresent === true) {
-                    fetch('https://salenow-v2-backend.vercel.app/api/v1/seller/addDomain',
+                    fetch('http://localhost:5000/api/v1/seller/addDomain',
                         {
                             method: "POST",
                             headers: {
@@ -105,7 +105,7 @@ const AddDomain = () => {
     const { data: domainVideo, refetch, isLoading } = useQuery({
         queryKey: ["category"],
         queryFn: async () => {
-            const res = await fetch("https://salenow-v2-backend.vercel.app/api/v1/admin/domain-video");
+            const res = await fetch("http://localhost:5000/api/v1/admin/domain-video");
             const data = await res.json();
             return data;
         },
@@ -134,7 +134,7 @@ const AddDomain = () => {
                 </h1>
                 <div className="text-center my-4">
 
-                    Your Local Domain: <a href={`http://salenow.com/shop/${shopInfo.shopId}`} target="_blank" rel="noopener noreferrer"> <code> salenow.com/shop/{shopInfo.shopId}</code> </a>
+                    Your Local Domain: <a href={`http://Doob.com/shop/${shopInfo.shopId}`} target="_blank" rel="noopener noreferrer"> <code> Doob.com/shop/{shopInfo.shopId}</code> </a>
                     {shopInfo.domain && <p> Your Custom domain: <a href={`http://${shopInfo.domain}`} target="_blank" rel="noopener noreferrer"> <code>{shopInfo.domain}</code></a></p>}
 
                 </div>
@@ -211,10 +211,10 @@ const AddDomain = () => {
                                 </div>
                                 <div className=' overflow-y-scroll'>
                                     <h1 className='text-xl my-4 font-poppins'>We are do not find a txt file on your domain</h1>
-                                    <p>Set Your DNS: <code>salenow.com/shop/{shopInfo.shopId}</code></p>
+                                    <p>Set Your DNS: <code>Doob.com/shop/{shopInfo.shopId}</code></p>
                                     <button
                                         className="flex items-center mx-auto my-4 bg-blue-600 hover:bg-blue-700 text-gray-100 px-4 py-2 rounded text-sm space-x-2 transition duration-100"
-                                        onClick={() => handleCopyLink(`salenow.com/shop/${shopInfo.shopId}`)}
+                                        onClick={() => handleCopyLink(`Doob.com/shop/${shopInfo.shopId}`)}
                                     >
                                         <BiCopy />
                                         {copy ? <p className="text-green-500">Link copied!</p> : <span>Share Your Site</span>}

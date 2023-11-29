@@ -33,7 +33,7 @@ const HomeHero = () => {
                             </h1>
 
                             <h1 className='text-4xl mt-2 '>
-                                <span className='font-extrabold'>SaleNow -</span> <span className='font-bold'> The Choice of</span>
+                                <span className='font-extrabold'>Doob -</span> <span className='font-bold'> The Choice of</span>
                                 <br />
                                 <span className='text-3xl font-semibold '>
                                     580,000+ Southeast Asia Sellers

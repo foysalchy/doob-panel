@@ -1,6 +1,31 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useContext } from 'react';
+import Select from 'react-select';
+import { AuthContext } from '../../../../../AuthProvider/UserProvider';
+import { useQuery } from '@tanstack/react-query';
 
-const InputProductName = () => {
+const InputProductName = ({ brandName, setBrandName }) => {
+
+
+    const { shopInfo } = useContext(AuthContext)
+    const { data: AllBrand = [], refetch } = useQuery({
+        queryKey: ["allBrand"],
+        queryFn: async () => {
+            const res = await fetch(`http://localhost:5000/api/v1/seller/brand/${shopInfo._id}`);
+            const data = await res.json();
+            return data;
+        },
+    });
+
+
+    const handleBrand = (value) => {
+        console.log(value);
+        setBrandName(value)
+    }
+
+
+
+
     return (
         <div>
             <div className='border mt-4 border-gray-400 px-10 py-5 w-full bg-gray-100 rounded'>
@@ -18,16 +43,36 @@ const InputProductName = () => {
                     <label for="url" className="block text-sm font-medium">Website</label>
                     <div className="flex">
                         <span className="flex items-center px-3 pointer-events-none sm:text-sm rounded-l-md dark:bg-gray-700">English</span>
-                        <input type="text" name="url" id="url" placeholder="Ex. Nikon Coolpix A300 Digital Camera" className="flex-grow w-full h-10 px-4 mb-3 transition duration-200 bg-white text-black border border-gray-300 rounded-r shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-purple-400 focus:outline-none focus:shadow-outline" />
+                        <input
+                            // value={banglaText}
+                            // onChange={(e) => handleBanglaChange(e.target.value)}
+                            type="text" name="productNameEn" placeholder="Ex. Nikon Coolpix A300 Digital Camera" className="flex-grow w-full h-10 px-4 mb-3 transition duration-200 bg-white text-black border border-gray-300 rounded-r shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-purple-400 focus:outline-none focus:shadow-outline" />
                     </div>
                 </fieldset>
                 <fieldset className="w-full  dark:text-gray-100">
                     <label for="url" className="block text-sm font-medium">Website</label>
                     <div className="flex">
                         <span className="flex items-center px-3 pointer-events-none sm:text-sm rounded-l-md dark:bg-gray-700">Bengali</span>
-                        <input type="text" name="url" id="url" placeholder="Ex. Nikon Coolpix A300 Digital Camera" className="flex-grow w-full h-10 px-4 mb-3 transition duration-200 bg-white text-black border border-gray-300 rounded-r shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-purple-400 focus:outline-none focus:shadow-outline" />
+                        <input
+                            // value={englishText}
+                            // onChange={(e) => handleEnglishChange(e.target.value)}
+
+                            type="text" name="productNameBn" placeholder="Ex. Nikon Coolpix A300 Digital Camera" className="flex-grow w-full h-10 px-4 mb-3 transition duration-200 bg-white text-black border border-gray-300 rounded-r shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-purple-400 focus:outline-none focus:shadow-outline" />
                     </div>
                 </fieldset>
+
+
+                <label htmlFor="megaCategory">Select Your Brand</label>
+                <Select
+                    id="megaCategory"
+                    placeholder='Select your Brand'
+                    onChange={(selectedOption) => handleBrand(selectedOption.value)}
+                    options={AllBrand?.map((warehouse) => ({
+                        value: warehouse.name,
+                        label: warehouse.name
+                    }))}
+                />
+
             </div>
         </div>
     );

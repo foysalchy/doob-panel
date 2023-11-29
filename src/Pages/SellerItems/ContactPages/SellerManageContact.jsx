@@ -13,14 +13,14 @@ const SellerManageContact = () => {
     const { data: contact = [], refetch } = useQuery({
         queryKey: ["contact"],
         queryFn: async () => {
-            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/contact/${shopInfo?.shopId}`);
+            const res = await fetch(`http://localhost:5000/api/v1/shop/contact/${shopInfo?.shopId}`);
             const data = await res.json();
             return data;
         },
     });
 
     const DeleteCategory = (id) => {
-        fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/contact/${shopInfo.shopId}?id=${id}`, {
+        fetch(`http://localhost:5000/api/v1/shop/contact/${shopInfo.shopId}?id=${id}`, {
             method: "DELETE",
             headers: {
                 "content-type": "application/json",
