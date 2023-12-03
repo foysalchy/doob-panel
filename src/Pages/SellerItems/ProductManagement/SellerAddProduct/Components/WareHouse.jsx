@@ -17,10 +17,10 @@ const WareHouse = ({ adminWare, setAdminWare, shopInfo }) => {
 
 
 
-    const { data: warehouses = [], refetch } = useQuery({
+    const { data: warehouses = [], refetch, isRefetching } = useQuery({
         queryKey: ["warehouses"],
         queryFn: async () => {
-            const getWarehouseApiUrl = adminWare ? "http://localhost:5000/api/v1/admin/warehouse" : `http://localhost:5000/api/v1/seller/warehouse/get/${shopInfo._id}`;
+            const getWarehouseApiUrl = adminWare ? "https://salenow-v2-backend.vercel.app/api/v1/admin/warehouse" : `https://salenow-v2-backend.vercel.app/api/v1/seller/warehouse/get/${shopInfo._id}`;
 
             const res = await fetch(getWarehouseApiUrl);
             if (!res.ok) {
@@ -39,7 +39,7 @@ const WareHouse = ({ adminWare, setAdminWare, shopInfo }) => {
         setCells([]);
         console.log(selectedWarehouse, adminWare);
 
-        const getAreaApiUrl = adminWare ? `http://localhost:5000/api/v1/admin/warehouse/area/${selectedWarehouse}` : `http://localhost:5000/api/v1/seller/warehouse/area/${selectedWarehouse}/${shopInfo._id}`;
+        const getAreaApiUrl = `https://salenow-v2-backend.vercel.app/api/v1/seller/warehouse/area/${selectedWarehouse}/${shopInfo._id}`;
 
         console.log(getAreaApiUrl);
 
@@ -58,7 +58,7 @@ const WareHouse = ({ adminWare, setAdminWare, shopInfo }) => {
         setSelfs([]);
         setCells([]);
 
-        const getRackApiUrl = adminWare ? `http://localhost:5000/api/v1/admin/warehouse/rack/${selectedWarehouse}/${selectedArea}` : `http://localhost:5000/api/v1/seller/warehouse/rack/${selectedWarehouse}/${selectedArea}/${shopInfo._id}`;
+        const getRackApiUrl = `https://salenow-v2-backend.vercel.app/api/v1/seller/warehouse/rack/${selectedWarehouse}/${selectedArea}/${shopInfo._id}`;
 
         const rackRes = await fetch(getRackApiUrl);
         const rackData = await rackRes.json();
@@ -73,7 +73,7 @@ const WareHouse = ({ adminWare, setAdminWare, shopInfo }) => {
         setSelectedRack(selectedRack);
         setCells([]);
 
-        const getSelfApiUrl = adminWare ? `http://localhost:5000/api/v1/admin/warehouse/self/${selectedWarehouse}/${selectedArea}/${selectedRack}` : `http://localhost:5000/api/v1/seller/warehouse/self/${selectedWarehouse}/${selectedArea}/${selectedRack}/${shopInfo._id}`;
+        const getSelfApiUrl = `https://salenow-v2-backend.vercel.app/api/v1/seller/warehouse/self/${selectedWarehouse}/${selectedArea}/${selectedRack}/${shopInfo._id}`;
 
         const selfRes = await fetch(getSelfApiUrl);
         const selfData = await selfRes.json();
@@ -87,7 +87,7 @@ const WareHouse = ({ adminWare, setAdminWare, shopInfo }) => {
         console.log(selectedSelfs);
         setSelectedSelf(selectedSelfs);
 
-        const getCellApiUrl = adminWare ? `http://localhost:5000/api/v1/admin/warehouse/cell/${selectedWarehouse}/${selectedArea}/${selectedRack}/${selectedSelf}` : `http://localhost:5000/api/v1/seller/warehouse/cell/${selectedWarehouse}/${selectedArea}/${selectedRack}/${selectedSelf}/${shopInfo._id}`;
+        const getCellApiUrl = `https://salenow-v2-backend.vercel.app/api/v1/seller/warehouse/cell/${selectedWarehouse}/${selectedArea}/${selectedRack}/${selectedSelf}/${shopInfo._id}`;
 
         const cellsRes = await fetch(getCellApiUrl);
         const cellData = await cellsRes.json();
@@ -101,7 +101,6 @@ const WareHouse = ({ adminWare, setAdminWare, shopInfo }) => {
         setSelectedCell(cell)
     }
 
-    console.log(adminWare, 'admin');
 
     return (
         <div>
@@ -136,7 +135,7 @@ const WareHouse = ({ adminWare, setAdminWare, shopInfo }) => {
                                 onChange={handleWarehouseChange}
                                 name='warehouse'
                                 required
-                                options={warehouses
+                                options={isRefetching ? [{ label: 'Loading...', value: null }] : warehouses
                                     .filter((warehouse) => warehouse.status) // Filter based on status
                                     .map((warehouse) => ({
                                         value: warehouse.name,
@@ -146,7 +145,7 @@ const WareHouse = ({ adminWare, setAdminWare, shopInfo }) => {
                                 placeholder="Please select"
                             />
                         </div>
-                        {selectedWarehouse && <div className="">
+                        {selectedWarehouse && !adminWare && <div className="">
                             <label className="text-sm">Select Area</label>
                             <Select
                                 styles={{
@@ -173,7 +172,7 @@ const WareHouse = ({ adminWare, setAdminWare, shopInfo }) => {
                             />
                         </div>}
 
-                        {selectedArea && <div className="">
+                        {selectedArea && !adminWare && <div className="">
                             <label className="text-sm">Select Rack</label>
                             <Select
                                 styles={{
@@ -200,7 +199,7 @@ const WareHouse = ({ adminWare, setAdminWare, shopInfo }) => {
                             />
                         </div>}
 
-                        {selectedRack && <div className="">
+                        {selectedRack && !adminWare && <div className="">
                             <label className="text-sm">Select Self</label>
                             <Select
                                 styles={{
@@ -224,7 +223,7 @@ const WareHouse = ({ adminWare, setAdminWare, shopInfo }) => {
                             />
                         </div>}
 
-                        {selectedSelf && <div className="">
+                        {selectedSelf && !adminWare && <div className="">
                             <label className="text-sm">Select Cell</label>
                             <Select
                                 styles={{

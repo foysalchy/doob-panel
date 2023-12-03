@@ -23,6 +23,8 @@ import AddSellerBlog from "../Pages/SellerItems/SellersBlog/AddBlog/AddSellerBlo
 import SellerManageBlog from "../Pages/SellerItems/SellersBlog/ManageBlogs/SellerManageBlog";
 import AddBrand from "../Pages/SellerItems/SiteContent/Brand/AddBrand";
 import BrandMangement from "../Pages/SellerItems/SiteContent/Brand/BrandMangement";
+import AddCampaign from "../Pages/SellerItems/SiteContent/Campain/AddCampain";
+import CampaignManagement from "../Pages/SellerItems/SiteContent/Campain/CampaignManagement";
 import AddCopon from "../Pages/SellerItems/SiteContent/Copon/AddCopon";
 import CoponManagement from "../Pages/SellerItems/SiteContent/Copon/CoponManagement";
 import AddPopUp from "../Pages/SellerItems/SiteContent/PopUp/AddPopUp";
@@ -43,6 +45,7 @@ import SellerManageSelf from "../Pages/SellerItems/Warehouse/List/SellerManageSe
 import SellerListOfWarehouse from "../Pages/SellerItems/Warehouse/SellerListOfWarehouse";
 import SellerWareHouseManagement from "../Pages/SellerItems/Warehouse/SellerWareHouseManagement";
 
+// `https://salenow-v2-backend.vercel.app/api/v1/seller/daraz-product/${shopInfo._id}
 
 
 const SellerPath = [
@@ -179,6 +182,14 @@ const SellerPath = [
         element: <AddBrand />
     },
     {
+        path: "content-management/campaign-management",
+        element: <CampaignManagement />
+    },
+    {
+        path: "content-management/campaign-management/add",
+        element: <AddCampaign />
+    },
+    {
         path: "product-management",
         element: <SellerProductManagement />
     },
@@ -188,7 +199,9 @@ const SellerPath = [
     },
     {
         path: "product-management/add-daraz-product",
-        element: <AddDarazProduct />
+        element: <AddDarazProduct />,
+
+
     },
     {
         path: "product-management/add-woo-product",

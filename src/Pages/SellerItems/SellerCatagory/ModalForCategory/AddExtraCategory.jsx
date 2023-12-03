@@ -24,7 +24,7 @@ const AddExtraCategory = () => {
         queryKey: ["category"],
         queryFn: async () => {
             if (shopInfo.darazLogin) {
-                const res = await fetch(`http://localhost:5000/api/v1/category/seller/${shopInfo._id}`);
+                const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/category/seller/${shopInfo._id}`);
                 const data = await res.json();
                 return data;
             }
@@ -56,6 +56,7 @@ const AddExtraCategory = () => {
     };
 
 
+    const [miniCategoryName, setMiniCategoryName] = useState('')
 
 
 
@@ -66,20 +67,25 @@ const AddExtraCategory = () => {
         const darazExtraCategory = e.target.darazExtraCategory?.value || '';
         const wooMiniCategory = e.target.wooMiniCategory?.value || '';
         const subCategoryName = e.target.subCategoryName.value || ''
-        const miniCategoryName = e.target.miniCategoryName.value || ''
         const extraCategoryName = e.target.extraCategoryName.value
+        let darazCategory_id = ''
+        if (darazExtraCategory) {
+            darazCategory_id = JSON.parse(darazExtraCategory).data.category_id
+        }
         const data = {
             megaCategory,
             darazExtraCategory,
             wooMiniCategory,
             subCategoryName,
-            miniCategoryName,
+            miniCategoryName: miniCategoryName,
             shopId: shopInfo._id,
-            extraCategoryName
+            extraCategoryName,
+            darazCategory_id,
+            status: true
         }
         console.log(data);
 
-        const url = `http://localhost:5000/api/v1/category/seller/extra/add`;
+        const url = `https://salenow-v2-backend.vercel.app/api/v1/category/seller/extra/add`;
 
         fetch(url, {
             method: "POST",
@@ -116,7 +122,7 @@ const AddExtraCategory = () => {
             megaCategory: selectedOption.value,
         };
 
-        fetch(`http://localhost:5000/api/v1/category/seller/sub`, {
+        fetch(`https://salenow-v2-backend.vercel.app/api/v1/category/seller/sub`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -152,7 +158,7 @@ const AddExtraCategory = () => {
             subCategoryName: value.value,
             megaCategory,
         }
-        fetch(`http://localhost:5000/api/v1/category/seller/mini`, {
+        fetch(`https://salenow-v2-backend.vercel.app/api/v1/category/seller/mini`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -181,16 +187,17 @@ const AddExtraCategory = () => {
 
     const miniCategoriesOption = miniCategories && miniCategories.map((warehouse) => {
         try {
-            // const data = JSON.parse(warehouse?.darazMiniCategory);
-            const miniCategory = warehouse.miniCategoryName;
+            const miniCategory = warehouse;
             console.log(miniCategory);
-            // darazSubCategoryName = data.name;
+            const data = warehouse.darazMiniCategory && JSON.parse(warehouse?.darazMiniCategory);
+
+            darazSubCategoryName = data.name;
 
             // delete warehouse.megaCategory;
 
             const option = {
                 value: miniCategory,
-                label: miniCategory,
+                label: miniCategory.miniCategoryName,
             };
 
             return option;
@@ -202,7 +209,7 @@ const AddExtraCategory = () => {
     })
 
 
-
+    console.log(miniCategories, 'mini Category');
 
     const darazOptionData = darazOption && darazOption?.map((data) => {
 
@@ -220,10 +227,11 @@ const AddExtraCategory = () => {
 
         try {
 
-            console.log(value);
-            console.log();
-            const arryData = JSON.parse(JSON.parse(value?.value)?.darazMiniCategory)
-
+            // console.log(value.value, 'value');
+            // console.log();
+            const arryData = JSON.parse(value?.value.darazMiniCategory).child
+            setMiniCategoryName(value?.value.miniCategoryName)
+            console.log(value.value.miniCategoryName);
             if (arryData.children) {
                 setDarazOption(arryData.children);
             } else {
@@ -344,7 +352,7 @@ const AddExtraCategory = () => {
                         />
                     </div>
                 </div>}
-                {shopInfo.wooLogin && darazOption?.length > 0 && <div className=" mt-4">
+                {/* {shopInfo.wooLogin && darazOption?.length > 0 && <div className=" mt-4">
                     <div className='mt-4' >
                         <label className="text-sm">Select Daraz Category</label>
                         <Select
@@ -365,7 +373,7 @@ const AddExtraCategory = () => {
                             placeholder="Select Daraz Category"
                         />
                     </div>
-                </div>}
+                </div>} */}
 
 
                 <div className="mt-4">

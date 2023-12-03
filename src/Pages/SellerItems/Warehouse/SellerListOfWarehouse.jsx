@@ -18,13 +18,13 @@ const SellerListOfWarehouse = () => {
     const { data: warehouses = [], refetch } = useQuery({
         queryKey: ["warehouses"],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/api/v1/seller/warehouse/get/${shopInfo._id}`);
+            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/warehouse/get/${shopInfo._id}`);
             const data = await res.json();
             return data;
         },
     });
 
-    console.log(`http://localhost:5000/api/v1/seller/warehouse/get/${shopInfo._id}`);
+    console.log(`https://salenow-v2-backend.vercel.app/api/v1/seller/warehouse/get/${shopInfo._id}`);
     const [searchQuery, setSearchQuery] = useState("");
 
     const handleSearch = (event) => {
@@ -116,7 +116,7 @@ const SellerListOfWarehouse = () => {
 
 
     const updateStatus = (id, status) => {
-        fetch(`http://localhost:5000/api/v1/seller/warehouse/status/${id}`, {
+        fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/warehouse/status/${id}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
@@ -132,7 +132,7 @@ const SellerListOfWarehouse = () => {
     const DeleteWarehouse = async (id) => {
 
 
-        const response = await fetch(`http://localhost:5000/api/v1/seller/warehouse/delete/${id}`, {
+        const response = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/warehouse/delete/${id}`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",

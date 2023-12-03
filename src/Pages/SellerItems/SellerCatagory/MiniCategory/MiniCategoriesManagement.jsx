@@ -18,7 +18,7 @@ const MiniCategoriesManagement = () => {
     const { data: categories = [], refetch } = useQuery({
         queryKey: ["categories"],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/api/v1/category/seller/mini/${shopInfo._id}`);
+            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/category/seller/mini/${shopInfo._id}`);
             const data = await res.json();
             return data;
         },
@@ -129,7 +129,7 @@ const MiniCategoriesManagement = () => {
 
 
     const updateStatus = (id, status) => {
-        fetch(`http://localhost:5000/api/v1/category/seller/mini/status/${id}`, {
+        fetch(`https://salenow-v2-backend.vercel.app/api/v1/category/seller/mini/status/${id}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
@@ -166,7 +166,7 @@ const MiniCategoriesManagement = () => {
         }).then((result) => {
             if (result.dismiss === Swal.DismissReason.timer) {
                 // Timer completed, initiate the fetch for deletion
-                fetch(`http://localhost:5000/api/v1/category/seller/mini/delete/${id}`, {
+                fetch(`https://salenow-v2-backend.vercel.app/api/v1/category/seller/mini/delete/${id}`, {
                     method: "DELETE",
                     headers: {
                         "Content-Type": "application/json",
@@ -264,143 +264,156 @@ const MiniCategoriesManagement = () => {
                 </div>
 
 
-                <table className="table-auto w-full text-left whitespace-no-wrap">
-                    <thead>
-                        <tr>
-                            <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-800  rounded-tl ">
-                                Category Name
-                            </th>
+                <div className="flex flex-col mt-6">
+                    <div style={{
+                        overflowY: 'scroll', // Always show the scrollbar
+                        scrollbarWidth: 'thin', // For Firefox
+                        scrollbarColor: 'gray transparent', // Set scrollbar color (gray) for Firefox
+                        msOverflowStyle: 'scrollbar', // For Internet Explorer and Edge
+                    }} className="overflow-x-scroll  ">
+                        <div className=" w-[1500px]">
+                            <div className="overflow-hidden border  border-gray-700 md:rounded-lg">   <table className=" w-full ">
+                                <thead>
+                                    <tr>
+                                        <th className="px-4 py-3 title-font text-start font-medium text-gray-100 text-sm bg-gray-800  rounded-tl ">
+                                            Category Name
+                                        </th>
 
 
-                            {shopInfo.darazLogin && <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-800 ">
-                                Daraz Category
-                            </th>}
-                            {shopInfo.wooLogin && <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-800 ">
-                                Woocomarce Category
-                            </th>}
-                            <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-800 ">
-                                Status
-                            </th>
-                            <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-800  rounded-tr ">
-                                Action
-                            </th>
+                                        {shopInfo.darazLogin && <th className="px-4 py-3 title-font text-start font-medium text-gray-100 text-sm bg-gray-800 ">
+                                            Daraz Category
+                                        </th>}
+                                        {shopInfo.wooLogin && <th className="px-4 py-3 title-font text-start font-medium text-gray-100 text-sm bg-gray-800 ">
+                                            Woocomarce Category
+                                        </th>}
+                                        <th className="px-4 py-3 title-font text-start font-medium text-gray-100 text-sm bg-gray-800 ">
+                                            Status
+                                        </th>
+                                        <th className="px-4 py-3 title-font text-start font-medium text-gray-100 text-sm bg-gray-800  rounded-tr ">
+                                            Action
+                                        </th>
 
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {
-                            currentData.map((warehouse, index) => {
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {
+                                        currentData.map((warehouse, index) => {
 
-                                return (
+                                            return (
 
-                                    <tr key={index + warehouse?._id + 1} className=''>
-                                        <td className="px-4 py-3">
-                                            <div className='flex gap-2 items-center'>
+                                                <tr key={index + warehouse?._id + 1} className=''>
+                                                    <td className="px-4 py-3">
+                                                        <div className='flex gap-2 items-center'>
 
-                                                <div>
-                                                    <h2 className="font-medium text-gray-800  ">
-                                                        {warehouse?.megaCategory && JSON.parse(warehouse.megaCategory).name}   <span>&gt;</span>{warehouse?.subCategoryName} <span>&gt;</span>  {warehouse?.miniCategoryName}
+                                                            <div>
+                                                                <h2 className="font-medium text-gray-800  ">
+                                                                    {warehouse?.megaCategory && JSON.parse(warehouse.megaCategory).name}   <span>&gt;</span>{warehouse?.subCategoryName} <span>&gt;</span>  {warehouse?.miniCategoryName}
 
-                                                    </h2>
+                                                                </h2>
 
-                                                </div>
-                                            </div>
-                                        </td>
-
-
-                                        {shopInfo.darazLogin &&
-                                            <td className="px-4 py-3">
-
-                                                <div className='flex gap-1 items-center'>
-                                                    <p>
-                                                        {warehouse?.megaCategory &&
-                                                            (() => {
-                                                                try {
-                                                                    const parsedMegaCategory = JSON.parse(warehouse?.megaCategory);
-                                                                    const darazCategoryName =
-                                                                        parsedMegaCategory && parsedMegaCategory.darazCategory
-                                                                            ? JSON.parse(parsedMegaCategory.darazCategory).name
-                                                                            : "Invalidate";
-
-                                                                    return darazCategoryName;
-                                                                } catch (error) {
-                                                                    console.error("Error parsing JSON:", error);
-                                                                    return null;
-                                                                }
-                                                            })()}
-                                                    </p>
-                                                    <p>{warehouse?.darazMiniCategory && (
-                                                        <span>&gt; {JSON.parse(warehouse?.darazMiniCategory).name}</span>
-                                                    )}</p>
-
-                                                    <p>{warehouse?.darazMiniCategory && (
-                                                        <span>&gt; {JSON.parse(warehouse?.darazMiniCategory)?.child?.name}</span>
-                                                    )}</p>
+                                                            </div>
+                                                        </div>
+                                                    </td>
 
 
-                                                </div>
-                                            </td>
-                                        }
+                                                    {shopInfo.darazLogin &&
+                                                        <td className="px-4 py-3">
 
-                                        {shopInfo?.wooLogin && <td className="px-4 py-3"> {warehouse?.megaCategory &&
-                                            (() => {
-                                                try {
-                                                    const parsedMegaCategory = JSON.parse(warehouse?.megaCategory);
-                                                    const darazCategoryName =
-                                                        parsedMegaCategory && parsedMegaCategory.wocomarceCategory
-                                                            ? JSON.parse(parsedMegaCategory.wocomarceCategory).name
-                                                            : "Invalidate";
+                                                            <div className='flex gap-1 items-center'>
+                                                                <p>
+                                                                    {warehouse?.megaCategory &&
+                                                                        (() => {
+                                                                            try {
+                                                                                const parsedMegaCategory = JSON.parse(warehouse?.megaCategory);
+                                                                                const darazCategoryName =
+                                                                                    parsedMegaCategory && parsedMegaCategory.darazCategory
+                                                                                        ? JSON.parse(parsedMegaCategory.darazCategory).name
+                                                                                        : "Invalidate";
 
-                                                    return darazCategoryName;
-                                                } catch (error) {
-                                                    console.error("Error parsing JSON:", error);
-                                                    return null;
-                                                }
-                                            })()} </td>}
+                                                                                return darazCategoryName;
+                                                                            } catch (error) {
+                                                                                console.error("Error parsing JSON:", error);
+                                                                                return null;
+                                                                            }
+                                                                        })()}
+                                                                </p>
+                                                                <p>{warehouse?.darazMiniCategory && (
+                                                                    <span>&gt; {JSON.parse(warehouse?.darazMiniCategory).name}</span>
+                                                                )}</p>
 
-                                        <td className="px-4 py-3">{!warehouse?.status ? (
-                                            <button
-                                                onClick={() => updateStatus(warehouse?._id, true)}
-                                                className="inline-flex items-center justify-center py-1 px-4 bg-red-500 rounded shadow-md hover:bg-red-700 focus:shadow-outline focus:outline-none"
-                                            >
-                                                Disable
-                                            </button>
-                                        ) : (
-                                            <button
-                                                onClick={() => updateStatus(warehouse?._id, false)}
-                                                className="inline-flex items-center justify-center py-1 px-4 bg-green-500 rounded shadow-md hover:bg-green-700 focus:shadow-outline focus:outline-none"
-                                            >
-                                                Enable
-                                            </button>
-                                        )} </td>
-                                        <td className="px-4  text-2xl flex gap-2 py-6 items-center text-gray-100">
-                                            <MdDelete
-                                                className="text-red-500 cursor-pointer"
-                                                onClick={() => DeleteWarehouse(warehouse?._id)}
-                                            />
-                                            <BiEdit className="text-yellow-500 cursor-pointer"
-                                                onClick={() => handleViewDetails(warehouse?._id)}
-
-                                            />
-
-                                        </td>
+                                                                <p>{warehouse?.darazMiniCategory && (
+                                                                    <span>&gt; {JSON.parse(warehouse?.darazMiniCategory)?.child?.name}</span>
+                                                                )}</p>
 
 
-                                        {/* {OpenModal === warehouse?._id && <div className="h-0 w-0">
+                                                            </div>
+                                                        </td>
+                                                    }
+
+                                                    {shopInfo?.wooLogin && <td className="px-4 py-3"> {warehouse?.megaCategory &&
+                                                        (() => {
+                                                            try {
+                                                                const parsedMegaCategory = JSON.parse(warehouse?.megaCategory);
+                                                                const darazCategoryName =
+                                                                    parsedMegaCategory && parsedMegaCategory.wocomarceCategory
+                                                                        ? JSON.parse(parsedMegaCategory.wocomarceCategory).name
+                                                                        : "Invalidate";
+
+                                                                return darazCategoryName;
+                                                            } catch (error) {
+                                                                console.error("Error parsing JSON:", error);
+                                                                return null;
+                                                            }
+                                                        })()} </td>}
+
+                                                    <td className="px-4 py-3">{!warehouse?.status ? (
+                                                        <button
+                                                            onClick={() => updateStatus(warehouse?._id, true)}
+                                                            className="inline-flex items-center justify-center py-1 px-4 bg-red-500 rounded shadow-md hover:bg-red-700 focus:shadow-outline focus:outline-none"
+                                                        >
+                                                            Disable
+                                                        </button>
+                                                    ) : (
+                                                        <button
+                                                            onClick={() => updateStatus(warehouse?._id, false)}
+                                                            className="inline-flex items-center justify-center py-1 px-4 bg-green-500 rounded shadow-md hover:bg-green-700 focus:shadow-outline focus:outline-none"
+                                                        >
+                                                            Enable
+                                                        </button>
+                                                    )} </td>
+                                                    <td className="px-4  text-2xl flex gap-2 py-6 items-center text-gray-100">
+                                                        <MdDelete
+                                                            className="text-red-500 cursor-pointer"
+                                                            onClick={() => DeleteWarehouse(warehouse?._id)}
+                                                        />
+                                                        <BiEdit className="text-yellow-500 cursor-pointer"
+                                                            onClick={() => handleViewDetails(warehouse?._id)}
+
+                                                        />
+
+                                                    </td>
+
+
+                                                    {/* {OpenModal === warehouse?._id && <div className="h-0 w-0">
                                         <EditWareHouse OpenModal={OpenModal} refetch={refetch} setOpenModal={setOpenModal} data={warehouse} />
                                     </div>} */}
 
 
 
-                                    </tr>
-                                )
-                            }
-                            )
-                        }
+                                                </tr>
+                                            )
+                                        }
+                                        )
+                                    }
 
-                    </tbody>
-                </table>
+                                </tbody>
+                            </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
+
 
             <div className='flex justify-center mt-4'>
                 <ol className="flex justify-center gap-1 text-xs font-medium">

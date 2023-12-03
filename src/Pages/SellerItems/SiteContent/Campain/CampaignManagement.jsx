@@ -1,16 +1,13 @@
-import { useQuery } from '@tanstack/react-query';
-import React from 'react';
-import { useContext } from 'react';
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { AuthContext } from '../../../../AuthProvider/UserProvider';
-import { FaArrowRightLong } from 'react-icons/fa6';
-import { BiEdit } from 'react-icons/bi';
-import { RxCross2 } from 'react-icons/rx';
-import Swal from 'sweetalert2';
+import React, { useContext, useState } from 'react';
 import DeleteModal from '../../../../Common/DeleteModal';
+import { FaArrowRightLong } from 'react-icons/fa6';
+import { AuthContext } from '../../../../AuthProvider/UserProvider';
+import { useQuery } from '@tanstack/react-query';
+import { Link } from 'react-router-dom';
+import Swal from 'sweetalert2';
+import { RxCross2 } from 'react-icons/rx';
 
-const BrandMangement = () => {
+const CampaignManagement = () => {
     const [loading, setLoading] = useState(false);
 
     const { shopInfo } = useContext(AuthContext)
@@ -18,24 +15,31 @@ const BrandMangement = () => {
     const { data: faqs = [], refetch } = useQuery({
         queryKey: ["faqs"],
         queryFn: async () => {
-            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/brand/${shopInfo._id}`);
+            const res = await fetch(`http://localhost:5000/api/v1/seller/get-campaign/${shopInfo._id}`);
             const data = await res.json();
             return data;
         },
     });
 
+    console.log(faqs[0]);
 
 
     const updateStatus = (id, status) => {
-        fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/brand/status/${id}`, {
+        const data = {
+            id,
+            status
+        }
+        fetch(`http://localhost:5000/api/v1/seller/update-status-campaign`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({ status }),
+            body: JSON.stringify(data),
         }).then((res) => res.json()).then((data) => {
-            Swal.fire(`Seller disable ${status} `, '', 'success');
+            console.log(data);
+            Swal.fire(`Status Update  `, '', 'success');
             refetch()
+
         })
     }
 
@@ -54,7 +58,7 @@ const BrandMangement = () => {
 
     if (isDelete) {
 
-        fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/brand/delete/${deleteId}`, {
+        fetch(`http://localhost:5000/api/v1/seller/delete-campaign/${deleteId}`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
@@ -62,7 +66,7 @@ const BrandMangement = () => {
         }).then((res) => res.json()).then((data) => {
             setIsDelete(false)
             setDeletId('')
-            Swal.fire('Shop is Deleted', '', 'success')
+            Swal.fire('Delete Successful', '', 'success')
             refetch('')
             console.log(data);
         })
@@ -85,7 +89,22 @@ const BrandMangement = () => {
     };
 
 
+    // const formattedEndTime = new Date(faq?.endTime).toLocaleString();
 
+    const formateTime = (time) => {
+        const date = new Date(time);
+        const hours = date.getHours();
+        const minutes = date.getMinutes().toString().padStart(2, '0');
+        const ampm = hours >= 12 ? 'PM' : 'AM';
+        const formattedHours = hours % 12 === 0 ? 12 : hours % 12;
+        const monthNames = [
+            'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+        ];
+        const monthName = monthNames[date.getMonth()];
+        const day = date.getDate().toString().padStart(2, '0');
+
+        return `${monthName}-${day} ${formattedHours}:${minutes} ${ampm}`;
+    }
 
 
 
@@ -120,13 +139,13 @@ const BrandMangement = () => {
                 </span>
 
                 <span className="text-sm font-medium transition-all group-hover:ms-4">
-                    Add New Brand
+                    Add New Campaign
                 </span>
             </Link>
 
             <section className=" px-4 mx-auto">
                 <h1 className="text-center my-10 font-bold text-2xl">
-                    This is Brand List
+                    Here is your All Campaign List
                 </h1>
                 <div className="flex flex-col mt-6">
                     <div className="overflow-x-auto ">
@@ -135,17 +154,34 @@ const BrandMangement = () => {
                                 <table className="min-w-full divide-y  divide-gray-700">
                                     <thead className="bg-gray-900 ">
                                         <tr>
+
                                             <th
                                                 scope="col"
-                                                className="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500 "
+                                                className=" text-gray-500 pl-4 "
                                             >
-                                                <div className="flex items-center gap-x-3">
-                                                    <span>Brand Name</span>
-                                                </div>
+                                                <button className="flex items-center gap-x-2">
+                                                    <span>Campaign Name</span>
+                                                </button>
                                             </th>
                                             <th
                                                 scope="col"
-                                                className="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 "
+                                                className=" text-gray-500 "
+                                            >
+                                                <button className="flex items-center gap-x-2">
+                                                    <span>Campaign Time</span>
+                                                </button>
+                                            </th>
+                                            <th
+                                                scope="col"
+                                                className=" text-gray-500 "
+                                            >
+                                                <button className="flex items-center gap-x-2">
+                                                    <span>Campaign as a Flash</span>
+                                                </button>
+                                            </th>
+                                            <th
+                                                scope="col"
+                                                className="text-gray-500 "
                                             >
                                                 <button className="flex items-center gap-x-2">
                                                     <span>Status</span>
@@ -167,7 +203,7 @@ const BrandMangement = () => {
                                                     <div className="inline-flex items-center gap-x-3">
                                                         <div className="inline-flex items-center gap-x-3">
 
-                                                            <div className="flex   items-center gap-x-2">
+                                                            <div >
                                                                 <img
                                                                     onClick={() => handleImageClick(faq?.image)}
                                                                     className="object-cover cursor-pointer w-10 h-10 rounded"
@@ -175,16 +211,30 @@ const BrandMangement = () => {
                                                                     srcSet={faq?.image}
                                                                     alt=""
                                                                 />
-                                                                <div className="font-medium text-gray-800 w-80 whitespace-pre-wrap ">
-                                                                    {faq?.name}
 
-
-                                                                </div>
                                                             </div>
+                                                            {faq?.name}
                                                         </div>
                                                     </div>
                                                 </td>
-                                                <td className="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
+
+                                                <td className="text-start">
+
+                                                    {faq?.isFlash && <div className="font-medium text-gray-800  whitespace-pre-wrap ">
+                                                        {formateTime(faq?.startTime)} - {formateTime(faq?.endTime)}
+                                                    </div>}
+
+
+                                                </td>
+                                                <td className="text-start">
+
+                                                    <div className="font-medium text-gray-800  whitespace-pre-wrap ">
+                                                        {faq?.isFlash ? 'Yes' : 'No'}
+                                                    </div>
+
+
+                                                </td>
+                                                <td className=" py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                                                     {faq.status ? (
                                                         <button
                                                             onClick={() => updateStatus(faq?._id, false)}
@@ -244,9 +294,9 @@ const BrandMangement = () => {
                         </div>
                     </div>
                 </div>
-            </section>
-        </div>
+            </section >
+        </div >
     );
 };
 
-export default BrandMangement;
+export default CampaignManagement;
