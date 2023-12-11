@@ -52,7 +52,7 @@ const ShopAuth = ({ children }) => {
             auth = getAuth(app);
             // Do other Firebase-related setup or actions here
         }
-    }, [shopCredential, isLoading, isError]);
+    }, [shopCredential, isLoading, isError, shopId]);
 
     const [loading, setLoading] = useState(true);
     const googleProvider = new GoogleAuthProvider();
