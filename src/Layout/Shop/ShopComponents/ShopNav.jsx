@@ -1,10 +1,11 @@
 import { useQuery } from '@tanstack/react-query';
-import React from 'react';
+import React, { useContext } from 'react';
 import { useState } from 'react';
 import { FaMapLocationDot } from 'react-icons/fa6';
 import { PiShoppingCartSimpleBold } from "react-icons/pi";
 import { Link, } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
+import { ShopAuthProvider } from '../../../AuthProvider/ShopAuthProvide';
 
 const ShopNav = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -20,11 +21,15 @@ const ShopNav = () => {
     const { data: shop = {}, isLoading, refetch } = useQuery({
         queryKey: ["shop"],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/api/v1/shop/${shopId}`);
+            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/${shopId}`);
             const data = await res.json();
             return data;
         },
     });
+
+
+    const { shopUser } = useContext(ShopAuthProvider)
+
 
 
 
@@ -121,14 +126,14 @@ const ShopNav = () => {
                             </a>
                         </li>
                         <li>
-                            <a
-                                href="/"
+                            {!shopUser ? <Link
+                                to={`/shop/${shopId}/sign-in`}
                                 className="inline-flex items-center justify-center h-12 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-black hover:bg-gray-900 focus:shadow-outline focus:outline-none"
                                 aria-label="Sign up"
                                 title="Sign up"
                             >
                                 Login
-                            </a>
+                            </Link> : <p>{shopUser.name}</p>}
                         </li>
                     </ul>
                     {/* <div className="lg:hidden">

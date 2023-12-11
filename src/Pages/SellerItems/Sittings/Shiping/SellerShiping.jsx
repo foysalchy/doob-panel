@@ -15,7 +15,7 @@ const SellerShipping = () => {
     const { data: ships = [], refetch, isLoading } = useQuery({
         queryKey: ["getaway"],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/api/v1/seller/shipping-interrogation/${shopInfo._id}`);
+            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/shipping-interrogation/${shopInfo._id}`);
             const data = await res.json();
             return data;
         },
@@ -58,7 +58,7 @@ const SellerShipping = () => {
             shopId: shopInfo.shopId
         }
 
-        fetch('http://localhost:5000/api/v1/seller/shipping-interrogation', {
+        fetch('https://salenow-v2-backend.vercel.app/api/v1/seller/shipping-interrogation', {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'
@@ -91,7 +91,7 @@ const SellerShipping = () => {
 
 
     const deleteHandel = (id) => {
-        fetch(`http://localhost:5000/api/v1/seller/shipping-interrogation/${id}`, {
+        fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/shipping-interrogation/${id}`, {
             method: "Delete",
             headers: {
                 "content-type": "application/json",
@@ -210,7 +210,7 @@ const SellerShipping = () => {
 
                     <div className='border my-10 p-10'>
 
-                        {ships.length && <div className='flex items-center justify-center gap-4 my-4 '>
+                        {ships.length ? <div className='flex items-center justify-center gap-4 my-4 '>
 
                             {
                                 ships?.map(get => (
@@ -264,7 +264,7 @@ const SellerShipping = () => {
                                     </div>
                                 ))
                             }
-                        </div>}
+                        </div> : ''}
                     </div>
                 </div>
 

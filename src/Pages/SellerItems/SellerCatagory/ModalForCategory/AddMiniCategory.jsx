@@ -18,13 +18,13 @@ const AddMiniCategory = () => {
         navigate(-1); // This will go back to the previous page
     };
 
-    console.log(`http://localhost:5000/api/v1/category/seller/${shopInfo._id}`);
+    console.log(`https://salenow-v2-backend.vercel.app/api/v1/category/seller/${shopInfo._id}`);
 
     const { data: darazData = [], refetch } = useQuery({
         queryKey: ["category"],
         queryFn: async () => {
 
-            const res = await fetch(`http://localhost:5000/api/v1/category/seller/${shopInfo._id}`);
+            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/category/seller/${shopInfo._id}`);
             const data = await res.json();
             return data;
 
@@ -68,17 +68,27 @@ const AddMiniCategory = () => {
         const wooMiniCategory = e.target.wooMiniCategory?.value || '';
         const subCategoryName = e.target.subCategoryName.value
         const miniCategoryName = e.target.miniCategoryName.value
+
+        let darazCategory_id = ''
+        if (darazMiniCategory) {
+            darazCategory_id = JSON.parse(darazMiniCategory).child.category_id
+        }
+
         const data = {
             megaCategory,
             darazMiniCategory,
             wooMiniCategory,
             subCategoryName,
             miniCategoryName,
-            shopId: shopInfo._id
+            shopId: shopInfo._id,
+            darazCategory_id,
+            status: true
         }
 
+        console.log(data);
 
-        const url = `http://localhost:5000/api/v1/category/seller/mini/add`;
+
+        const url = `https://salenow-v2-backend.vercel.app/api/v1/category/seller/mini/add`;
 
         fetch(url, {
             method: "POST",
@@ -115,7 +125,7 @@ const AddMiniCategory = () => {
             subCategoryName: darazCategoryString,
         };
 
-        fetch(`http://localhost:5000/api/v1/category/seller/sub`, {
+        fetch(`https://salenow-v2-backend.vercel.app/api/v1/category/seller/sub`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -143,6 +153,7 @@ const AddMiniCategory = () => {
 
     const darazOption = sortedWarehouses?.map((warehouse) => {
         const darazSubCategory = warehouse.darazSubCategory;
+        console.log(darazSubCategory);
         const parsedDarazSubCategory = darazSubCategory ? JSON.parse(darazSubCategory) : null;
         return parsedDarazSubCategory;
     }).map((parsedDarazSubCategory) =>

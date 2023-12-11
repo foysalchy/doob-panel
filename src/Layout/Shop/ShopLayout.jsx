@@ -8,6 +8,7 @@ import Lottie from "lottie-react";
 import groovyWalkAnimation from "./Loading.json";
 import { useState } from 'react';
 import { useEffect } from 'react';
+import ShopAuth from '../../AuthProvider/ShopAuthProvide';
 
 
 const ShopLayout = () => {
@@ -22,7 +23,7 @@ const ShopLayout = () => {
     const { data: shop = {}, isLoading, refetch } = useQuery({
         queryKey: ["shop"],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/api/v1/shop/${shopId}`);
+            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/${shopId}`);
             const data = await res.json();
             return data;
         },
@@ -39,12 +40,14 @@ const ShopLayout = () => {
                 <div>
 
                     {Object.keys(shop).length !== 0 ?
-                        <div >
-                            <ShopSmallNav />
-                            <ShopNav />
-                            <Outlet />
-                            <ShopFooter />
-                        </div>
+                        <ShopAuth>
+                            <div >
+                                <ShopSmallNav />
+                                <ShopNav />
+                                <Outlet />
+                                <ShopFooter />
+                            </div>
+                        </ShopAuth>
                         :
                         <div className="grid h-screen px-4 bg-white place-content-center">
                             <div className="tracking-widest text-xl text-gray-500 uppercase"><span className='text-red-500'>404 </span>| Sorry We can't find this shop</div>

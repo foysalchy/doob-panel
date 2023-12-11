@@ -7,7 +7,7 @@ const Footer = () => {
   const { data: pages = [], refetch } = useQuery({
     queryKey: ["faqs"],
     queryFn: async () => {
-      const res = await fetch("http://localhost:5000/api/v1/admin/pages");
+      const res = await fetch("https://salenow-v2-backend.vercel.app/api/v1/admin/pages");
       const data = await res.json();
       return data;
     },
@@ -130,7 +130,7 @@ const Footer = () => {
             © Copyright 2020 Lorem Inc. All rights reserved.
           </p>
           <ul className="flex flex-col mb-3 space-y-2 lg:mb-0 sm:space-y-0 sm:space-x-5 sm:flex-row">
-            {pages.length && pages?.map((page, i) => (
+            {pages.length ? pages?.map((page, i) => (
               <li>
                 {page?.status && (
                   <Link
@@ -141,7 +141,7 @@ const Footer = () => {
                   </Link>
                 )}
               </li>
-            ))}
+            )) : ''}
           </ul>
         </div>
       </div>

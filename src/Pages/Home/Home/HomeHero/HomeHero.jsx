@@ -2,6 +2,10 @@ import React, { useState } from 'react';
 import { MdPlayCircleFilled } from "react-icons/md";
 import Bg from './Group 1000005940.png'
 import YoutubeModal from '../YoutubeModal';
+import BrightAlert from 'bright-alert';
+
+
+
 
 const HomeHero = () => {
 
@@ -16,14 +20,9 @@ const HomeHero = () => {
     };
     return (
 
-        <div className="relative">
-            <img
-                srcSet={Bg}
-                src={Bg}
-                className="absolute inset-0 object-cover w-full h-full"
-                alt=""
-            />
-            <div className="px-4 pt-16 relative mx-auto sm:max-w-xl md:max-w-full  lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-20">
+        <section className="relative overflow-hidden py-32 px-4 bg-gray-100 md:px-8">
+            <div className="w-full h-full rounded-full bg-gradient-to-r from-[#58AEF1] to-pink-500 absolute -top-12 -right-14 blur-2xl opacity-10"></div>
+            <div className="max-w-xl mx-auto text-center relative">
                 <div className="max-w-xl sm:mx-auto lg:max-w-2xl ">
                     <div className="flex flex-col mb-16 sm:text-center sm:mb-0">
 
@@ -44,12 +43,11 @@ const HomeHero = () => {
                             </p>
                         </div>
                         <div className='flex gap-4 md:justify-center'>
-                            <a
-                                href="/"
+                            <button onClick={() => BrightAlert({ title: 'I love my wife', icon: 'error' })}
                                 className="inline-flex items-center justify-center h-12 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-gray-900 hover:bg-black focus:shadow-outline focus:outline-none"
                             >
                                 Get started
-                            </a>
+                            </button>
                             <button
                                 onClick={openModal}
                                 className="inline-flex gap-1 items-center justify-center h-12 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-gray-900 hover:bg-black focus:shadow-outline focus:outline-none"
@@ -61,7 +59,7 @@ const HomeHero = () => {
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
     );
 };
 

@@ -11,15 +11,29 @@ const AddWooProduct = () => {
     const { shopInfo } = useContext(AuthContext)
     const [adminWare, setAdminWare] = useState(true)
     const [loading, setLoading] = useState(false)
+    const [selectedOption, setSelectedOption] = useState(null);
+    const [searchTerm, setSearchTerm] = useState('');
 
     const { data: allProduct = [], refetch } = useQuery({
         queryKey: ["woo-product"],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/api/v1/seller/woo-product/${shopInfo._id}`);
+            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/woo-product/${shopInfo._id}`);
             const data = await res.json();
             return data;
         },
     });
+
+    console.log(selectedOption);
+
+    const handleSelectChange = (product) => {
+        setSelectedOption(product);
+        // Perform any other actions based on the selected product
+    };
+
+    const filteredProducts = allProduct.length && allProduct.filter((product) =>
+        product.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
 
 
 
@@ -27,7 +41,7 @@ const AddWooProduct = () => {
         const formData = new FormData();
         formData.append("image", image);
 
-        const url = `http://localhost:5000/api/v1/image/upload-image`;
+        const url = `https://salenow-v2-backend.vercel.app/api/v1/image/upload-image`;
 
         return fetch(url, {
             method: "POST",
@@ -42,8 +56,9 @@ const AddWooProduct = () => {
 
 
     const dataSubmit = async (e) => {
+        setLoading(true)
         e.preventDefault()
-        const product = e.target.wooProduct.value
+        const product = selectedOption
         const form = e.target
         const MetaTag = form?.MetaTag?.value
         const MetaTagMetaDescription = form?.MetaDescription?.value
@@ -51,31 +66,39 @@ const AddWooProduct = () => {
         const MetaImage = await imageUpload(MetaImageFile)
 
         const warehouse = form.warehouse.value
-        const area = form.area.value
-        const rack = form.rack.value
-        const self = form.self.value
-        const cell = form.cell.value
+        const area = form?.area?.value || null
+        const rack = form?.rack?.value || null
+        const self = form?.self?.value || null
+        const cell = form?.cell?.value || null
 
         const warehouseValue = [{ name: warehouse }, { name: area }, { name: rack }, { name: self }, { name: cell }]
 
-        const data = JSON.parse(product)
+        const data = product
         data.shopId = shopInfo._id
         data.metaTitle = MetaTag
         data.metaDescription = MetaTagMetaDescription
         data.MetaImage = MetaImage
         data.warehouseValue = warehouseValue
         data.adminWare = adminWare
-        console.log(data);
+        data.woo = true
+        data.daraz = false
 
-        fetch('http://localhost:5000/api/v1/seller/woo-product/', {
+        console.log(data);
+        fetch('https://salenow-v2-backend.vercel.app/api/v1/seller/woo-product/', {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'
             }
             , body: JSON.stringify({ data })
         }).then((res) => res.json()).then((data) => {
+            setLoading(false)
             console.log(data);
-            Swal.fire('success', '', 'success')
+            if (data.error) {
+                Swal.fire(`${data.message}`, '', 'warning')
+            }
+            else {
+                Swal.fire('success', '', 'success')
+            }
         })
 
     }
@@ -85,13 +108,70 @@ const AddWooProduct = () => {
         <div>
             <h1 className="text-center">Add Woo Product</h1>
             <form onSubmit={dataSubmit} className='mt-4' action="">
-                <Select
-                    name='wooProduct'
-                    placeholder='select woo product'
-                    options={allProduct.length && allProduct.map((data) => (
-                        { value: JSON.stringify(data), label: data.name }
-                    ))}
-                />
+                <div className="relative inline-block w-full">
+                    <button
+                        className='w-full'
+                        type="button"
+                        onClick={() => handleSelectChange(false)}
+                    >
+                        {selectedOption ? (
+                            <span className='border w-full p-2 px-4 rounded-md bg-white flex items-center space-x-2'>
+                                <img
+                                    src={selectedOption.images[0].src}
+                                    alt={`Selected Product`}
+                                    className="border border-black rounded-sm"
+                                    style={{ height: '24px', width: '24px' }}
+                                />
+                                <span className='capitalize'>{selectedOption.name}</span>
+                            </span>
+                        ) : (
+                            <>
+                                {allProduct?.length ? (
+                                    <>
+                                        <input
+                                            type="text"
+                                            className="border w-full p-2 rounded-md bg-white flex items-center space-x-2"
+                                            placeholder="Search products"
+                                            value={searchTerm}
+                                            onChange={(e) => setSearchTerm(e.target.value)}
+                                        />
+                                    </>
+                                ) : (
+                                    <span className="border w-full p-2 rounded-md bg-white flex items-center space-x-2">
+                                        <span>Your Products are loading, so please wait...</span>
+                                    </span>
+                                )}
+                            </>
+                        )}
+                    </button>
+
+                    {/* Dropdown with Search */}
+                    {!selectedOption && allProduct.length ? (
+                        <div className="mt-1 p-2 max-h-40 overflow-y-scroll bg-white border rounded-md">
+                            {filteredProducts.length ? (
+                                <span>
+                                    {filteredProducts.map((product, i) => (
+                                        <div
+                                            key={i}
+                                            onClick={() => handleSelectChange(product)}
+                                            className="cursor-pointer hover:bg-gray-100 p-2 flex items-center space-x-2"
+                                        >
+                                            <div className='w-6'> <span>{i + 1}</span></div>
+                                            <img
+                                                src={product.images[0].src}
+                                                alt={`Product ${i + 1}`}
+                                                className="border border-black rounded-sm"
+                                                style={{ height: '24px', width: '24px' }}
+                                            />
+                                            <span className='capitalize'>{`   ${product.name}`}</span>
+                                        </div>
+                                    ))}
+                                </span>
+                            ) : "No product found"}
+                        </div>
+                    ) : ''}
+                </div>
+
 
                 <WareHouse shopInfo={shopInfo} adminWare={adminWare} setAdminWare={setAdminWare} />
                 <Meta />

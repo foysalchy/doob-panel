@@ -37,7 +37,7 @@ const AddCopon = () => {
         const updatedValue = name === 'code' ? value.replace(/\s+/g, '').toUpperCase() : value;
 
         if (updatedValue.length > 3) {
-            fetch(`http://localhost:5000/api/v1/seller/uniq-promo/${shopInfo._id}/${updatedValue}`).then((res) => res.json()).then((data) => setUniq(data))
+            fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/uniq-promo/${shopInfo._id}/${updatedValue}`).then((res) => res.json()).then((data) => setUniq(data))
         }
         else {
             setUniq(false)
@@ -50,7 +50,7 @@ const AddCopon = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        fetch(`http://localhost:5000/api/v1/seller/promo-code/add`, {
+        fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/promo-code/add`, {
             method: "POST",
             headers: {
                 "content-type": "application/json",

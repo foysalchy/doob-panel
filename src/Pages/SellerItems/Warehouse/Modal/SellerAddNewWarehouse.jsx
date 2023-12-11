@@ -19,7 +19,7 @@ const SellerAddNewWarehouse = ({ refetch, setOpenModal }) => {
 
         const formData = new FormData();
         formData.append("image", image);
-        const url = `http://localhost:5000/api/v1/image/upload-image`;
+        const url = `https://salenow-v2-backend.vercel.app/api/v1/image/upload-image`;
         fetch(url, {
             method: "POST",
             body: formData,
@@ -42,7 +42,7 @@ const SellerAddNewWarehouse = ({ refetch, setOpenModal }) => {
 
     const postWareHouse = (data) => {
 
-        fetch(`http://localhost:5000/api/v1/seller/warehouse/post`, {
+        fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/warehouse/post`, {
             method: "POST",
             headers: {
                 "content-type": "application/json",

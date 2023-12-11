@@ -14,7 +14,7 @@ const SellerAddAreaForWarehouse = ({ recall, setOpenModal }) => {
     const { data: warehouses = [], refetch } = useQuery({
         queryKey: ["warehouses"],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/api/v1/seller/warehouse/get/${shopInfo._id}`);
+            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/warehouse/get/${shopInfo._id}`);
             const data = await res.json();
             return data;
         },
@@ -38,7 +38,7 @@ const SellerAddAreaForWarehouse = ({ recall, setOpenModal }) => {
             area,
             shopId: shopInfo._id
         }
-        fetch(`http://localhost:5000/api/v1/seller/warehouse/area/`, {
+        fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/warehouse/area/`, {
             method: 'post',
             headers: {
                 'Content-Type': 'application/json'

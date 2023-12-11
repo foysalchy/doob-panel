@@ -21,7 +21,7 @@ const ShopSmallNav = () => {
     const { data: shop = {}, refetch, isLoading } = useQuery({
         queryKey: ["buyer"],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/api/v1/shop/${shopId}`);
+            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/${shopId}`);
             const data = await res.json();
             return data;
         },
@@ -33,7 +33,7 @@ const ShopSmallNav = () => {
     return (
         <div className='bg-black'>
 
-            <div className=' mx-auto py-3 sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8'>
+            <div className=' mx-auto py-3 px-4 sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8'>
                 <div className='flex justify-between'>
 
                     <div className='flex gap-4 md:gap-10'>

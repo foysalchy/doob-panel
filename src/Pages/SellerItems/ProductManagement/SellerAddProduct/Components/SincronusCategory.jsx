@@ -4,8 +4,9 @@ import { AuthContext } from '../../../../../AuthProvider/UserProvider';
 import { useState } from 'react';
 import Select from 'react-select';
 import { useEffect } from 'react';
+import DarazOption from './DarazOption';
 
-const SincronusCategory = ({ daraz, setDaraz, woo, setWoo }) => {
+const SincronusCategory = ({ daraz, setDaraz, woo, setWoo, setInputFields, setDarazOption, datazCategory }) => {
 
     const { shopInfo } = useContext(AuthContext)
 
@@ -18,9 +19,16 @@ const SincronusCategory = ({ daraz, setDaraz, woo, setWoo }) => {
     const { data: megaCategories = [], refetch } = useQuery({
         queryKey: ["megaCategory"],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/api/v1/category/seller/mega-category/get/${shopInfo._id}`);
+            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/category/seller/mega-category/get/${shopInfo._id}`);
             const data = await res.json();
-            return data;
+            if (data) {
+
+                return data;
+            } else {
+                // If data is undefined or falsy, return an empty array or handle it as per your requirements
+                return [];
+            }
+
         },
     });
 
@@ -28,7 +36,7 @@ const SincronusCategory = ({ daraz, setDaraz, woo, setWoo }) => {
 
         value: megaCategory.name,
         label: megaCategory.name,
-    }))
+    })) || []
 
 
 
@@ -36,9 +44,17 @@ const SincronusCategory = ({ daraz, setDaraz, woo, setWoo }) => {
         queryKey: ["subCategories"],
         queryFn: async () => {
             if (selectedCategory) {
-                const res = await fetch(`http://localhost:5000/api/v1/category/seller/sub-category/get/${shopInfo._id}/${selectedCategory}`);
+                const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/category/seller/sub-category/get/${shopInfo._id}/${selectedCategory}`);
                 const data = await res.json();
-                return data;
+                if (data) {
+                    console.log(data);
+                    setDarazOption(data.daraz)
+                    return data.data;
+                } else {
+                    // If data is undefined or falsy, return an empty array or handle it as per your requirements
+                    return [];
+                }
+
             }
         },
     });
@@ -47,15 +63,21 @@ const SincronusCategory = ({ daraz, setDaraz, woo, setWoo }) => {
 
         value: subCategory.subCategoryName,
         label: subCategory.subCategoryName,
-    }))
+    })) || []
 
     const { data: miniCategories = [], refetch: reMini } = useQuery({
         queryKey: ["miniCategories"],
         queryFn: async () => {
             if (selectedSubcategory) {
-                const res = await fetch(`http://localhost:5000/api/v1/category/seller/mini-category/get/${shopInfo._id}/${selectedSubcategory}`);
+                const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/category/seller/mini-category/get/${shopInfo._id}/${selectedSubcategory}`);
                 const data = await res.json();
-                return data;
+                if (data) {
+                    setDarazOption(data)
+                    return data;
+                } else {
+                    // If data is undefined or falsy, return an empty array or handle it as per your requirements
+                    return [];
+                }
             }
         },
     });
@@ -63,19 +85,25 @@ const SincronusCategory = ({ daraz, setDaraz, woo, setWoo }) => {
 
 
     let MiniOption = subCategories && miniCategories?.filter((miniCategory) => miniCategory.status).map((miniCategory) => ({
-
         value: miniCategory.miniCategoryName,
         label: miniCategory.miniCategoryName,
-    }))
+    })) || []
 
 
     const { data: extraCategories = [], refetch: reExtra } = useQuery({
         queryKey: ["extraCategories"],
         queryFn: async () => {
             if (selectedMinicategory) {
-                const res = await fetch(`http://localhost:5000/api/v1/category/seller/extra-category/get/${shopInfo._id}/${selectedMinicategory}`);
+                const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/category/seller/extra-category/get/${shopInfo._id}/${selectedMinicategory}`);
                 const data = await res.json();
-                return data;
+                if (data) {
+                    setDarazOption(data)
+                    return data;
+                    setDarazOption(data || []);
+                } else {
+                    // If data is undefined or falsy, return an empty array or handle it as per your requirements
+                    return [];
+                }
             }
         },
     });
@@ -83,22 +111,21 @@ const SincronusCategory = ({ daraz, setDaraz, woo, setWoo }) => {
 
 
     let ExtraOption = extraCategories?.filter((extraCategory) => extraCategory.status).map((extraCategory) => ({
-
         value: extraCategory.extraCategoryName,
         label: extraCategory.extraCategoryName,
-    }))
+    })) || []
 
 
 
     const handleCategoryChange = (category) => {
         setSelectedCategory(category);
-        setSelectedSubcategory('');
-        setSelectedMinicategory('');
-        setSelectedExtracategory('');
+        setSelectedSubcategory(null);
+        setSelectedMinicategory(null);
+        setSelectedExtracategory(null);
         reload()
-        ExtraOption = ''
-        SubOption = ''
-        MiniOption = ''
+        ExtraOption = null
+        SubOption = null
+        MiniOption = null
     };
 
     const handleSubcategoryChange = (subcategory) => {
@@ -107,15 +134,15 @@ const SincronusCategory = ({ daraz, setDaraz, woo, setWoo }) => {
         setSelectedExtracategory(null);
         reMini()
         reExtra()
-        ExtraOption = ''
-        MiniOption = ''
+        ExtraOption = null
+        MiniOption = null
     };
 
     const handleMinicategoryChange = (minicategory) => {
         setSelectedMinicategory(minicategory);
         setSelectedExtracategory(null);
         reExtra()
-        ExtraOption = ''
+        ExtraOption = null
     };
 
     const handleExtracategoryChange = (extracategory) => {
@@ -146,8 +173,17 @@ const SincronusCategory = ({ daraz, setDaraz, woo, setWoo }) => {
                         <span className='font-bold'>Are you want Sinuous with Daraz </span>
 
                         <button type='button' className='flex justify-start mt-2' >
-                            <span onClick={() => setDaraz(false)} className={daraz ? "px-4 py-2 bg-gray-600 text-white " : "px-4 py-2 bg-violet-400"}>NO</span>
-                            <span onClick={() => setDaraz(true)} className={!daraz ? "px-4 py-2 bg-gray-600 text-white " : "px-4 py-2 bg-violet-400"}>YES</span>
+                            <span onClick={() => {
+                                setDaraz(false); setInputFields([
+                                    { name: null, image: null, quantity: "", SKU: "", price: null, offerPrice: null, ability: false, vendor: false },
+                                ])
+                            }}
+                                className={daraz ? "px-4 py-2 bg-gray-600 text-white " : "px-4 py-2 bg-violet-400"}>NO</span>
+                            <span onClick={() => {
+                                setDaraz(true); setInputFields([
+                                    { name: null, image: null, quantity: "", SKU: "", price: null, offerPrice: null, ability: false, vendor: false },
+                                ])
+                            }} className={!daraz ? "px-4 py-2 bg-gray-600 text-white " : "px-4 py-2 bg-violet-400"}>YES</span>
                         </button>
 
                     </div>}
@@ -172,8 +208,16 @@ const SincronusCategory = ({ daraz, setDaraz, woo, setWoo }) => {
                     <span>Category Information <span className='text-red-500'> *</span></span>
 
                     <div className='grid grid-cols-4 gap-4'>
+                        {/* <select
+                            onChange={(e) => handleCategoryChange(e.label)}
+                            name="megaCategory" id="">
+                            {option.map((op) => (
+                                <option key={op.value} value={op.value}>
+                                    {op.label}
+                                </option>
+                            ))}
+                        </select> */}
                         <Select
-
                             name='megaCategory'
                             onChange={(e) => handleCategoryChange(e.label)}
                             placeholder='Select Category'
@@ -207,6 +251,8 @@ const SincronusCategory = ({ daraz, setDaraz, woo, setWoo }) => {
                             {selectedExtracategory && ` > ${selectedExtracategory}`}</span>
                     </div>
                 </div>
+
+                <DarazOption datazCategory={datazCategory} />
 
             </div>
 

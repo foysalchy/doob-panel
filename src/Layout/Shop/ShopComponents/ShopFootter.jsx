@@ -14,7 +14,7 @@ const ShopFooter = () => {
     const { data: pages = [], refetch, isLoading } = useQuery({
         queryKey: ["sellerPages"],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/api/v1/seller/pages/${shopId}`);
+            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/pages/${shopId}`);
             const data = await res.json();
             return data;
         },
@@ -55,7 +55,7 @@ const ShopFooter = () => {
                     <div className='flex gap-10 my-10 :justify-center'>     <div className='text-white'>
                         <Link to={`/shop/${shopId}/blog`}> Blog</Link>
                     </div>
-                        {pages.length && pages?.map((page, i) => (
+                        {pages.length ? pages?.map((page, i) => (
                             <div key={page._id}>
                                 {page?.status && (
                                     <Link
@@ -66,7 +66,7 @@ const ShopFooter = () => {
                                     </Link>
                                 )}
                             </div>
-                        ))}</div>
+                        )) : ""}</div>
                 </div>
                 <div className="flex items-center pb-20 justify-between pt-5 border-t border-gray-800 sm:flex-row">
 

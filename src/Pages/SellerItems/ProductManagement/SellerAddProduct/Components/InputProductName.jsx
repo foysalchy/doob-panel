@@ -11,7 +11,7 @@ const InputProductName = ({ brandName, setBrandName }) => {
     const { data: AllBrand = [], refetch } = useQuery({
         queryKey: ["allBrand"],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/api/v1/seller/brand/${shopInfo._id}`);
+            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/brand/${shopInfo._id}`);
             const data = await res.json();
             return data;
         },
@@ -39,7 +39,7 @@ const InputProductName = ({ brandName, setBrandName }) => {
 
                 </div>
 
-                <fieldset className="w-full  dark:text-gray-100">
+                <fieldset className="w-full  text-gray-100">
                     <label for="url" className="block text-sm font-medium">Website</label>
                     <div className="flex">
                         <span className="flex items-center px-3 pointer-events-none sm:text-sm rounded-l-md dark:bg-gray-700">English</span>
@@ -62,16 +62,23 @@ const InputProductName = ({ brandName, setBrandName }) => {
                 </fieldset>
 
 
-                <label htmlFor="megaCategory">Select Your Brand</label>
-                <Select
-                    id="megaCategory"
-                    placeholder='Select your Brand'
-                    onChange={(selectedOption) => handleBrand(selectedOption.value)}
-                    options={AllBrand?.map((warehouse) => ({
-                        value: warehouse.name,
-                        label: warehouse.name
-                    }))}
-                />
+                <div className='mt-2'>
+                    <label htmlFor="megaCategory">Select Your Brand</label>
+                    <Select
+                        id="megaCategory"
+                        placeholder='Select your Brand'
+                        onChange={(selectedOption) => handleBrand(selectedOption.value)}
+                        options={AllBrand?.map((warehouse) => ({
+                            value: warehouse.name,
+                            label: warehouse.name
+                        }))}
+                    />
+                </div>
+
+                <div className='mt-2'>
+                    <label htmlFor="megaCategory">Provide SKU</label>
+                    <input className="flex-grow w-full h-10 px-4 mb-3 transition duration-200 bg-white text-black border border-gray-300 rounded-r shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-purple-400 focus:outline-none focus:shadow-outline" type="text" required name="ProductSKU" id="" />
+                </div>
 
             </div>
         </div>

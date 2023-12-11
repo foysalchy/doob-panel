@@ -17,7 +17,7 @@ const ExtraCategoriesManagement = () => {
     const { data: categories = [], refetch } = useQuery({
         queryKey: ["categories"],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/api/v1/category/seller/extra/${shopInfo._id}`);
+            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/category/seller/extra/${shopInfo._id}`);
             const data = await res.json();
             return data;
         },
@@ -128,7 +128,7 @@ const ExtraCategoriesManagement = () => {
 
 
     const updateStatus = (id, status) => {
-        fetch(`http://localhost:5000/api/v1/category/seller/extra/status/${id}`, {
+        fetch(`https://salenow-v2-backend.vercel.app/api/v1/category/seller/extra/status/${id}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
@@ -165,7 +165,7 @@ const ExtraCategoriesManagement = () => {
         }).then((result) => {
             if (result.dismiss === Swal.DismissReason.timer) {
                 // Timer completed, initiate the fetch for deletion
-                fetch(`http://localhost:5000/api/v1/category/seller/extra/delete/${id}`, {
+                fetch(`https://salenow-v2-backend.vercel.app/api/v1/category/seller/extra/delete/${id}`, {
                     method: "DELETE",
                     headers: {
                         "Content-Type": "application/json",
@@ -263,111 +263,119 @@ const ExtraCategoriesManagement = () => {
                 </div>
 
 
-                <table className="table-auto w-full text-left whitespace-no-wrap">
-                    <thead>
-                        <tr>
-                            <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-800  rounded-tl ">
-                                Mini Category Name
-                            </th>
+                <div className="flex flex-col mt-6">
+                    <div style={{
+                        overflowY: 'scroll', // Always show the scrollbar
+                        scrollbarWidth: 'thin', // For Firefox
+                        scrollbarColor: 'gray transparent', // Set scrollbar color (gray) for Firefox
+                        msOverflowStyle: 'scrollbar', // For Internet Explorer and Edge
+                    }} className="overflow-x-scroll  ">
+                        <div className=" w-[1500px]">
+                            <div className="overflow-hidden border  border-gray-700 md:rounded-lg">  <table className="w-full">
+                                <thead className='w-full'>
+                                    <tr>
+                                        <th className="px-4 py-3 title-font text-start font-medium text-gray-100 text-sm bg-gray-800  rounded-tl ">
+                                            Mini Category Name
+                                        </th>
 
 
-                            {shopInfo.darazLogin && <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-800 ">
-                                Daraz Category
-                            </th>}
-                            {shopInfo.wooLogin && <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-800 ">
-                                Woocomarce Category
-                            </th>}
-                            <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-800 ">
-                                Status
-                            </th>
-                            <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-800  rounded-tr ">
-                                Action
-                            </th>
+                                        {shopInfo.darazLogin && <th className="px-4 py-3 title-font text-start font-medium text-gray-100 text-sm bg-gray-800 ">
+                                            Daraz Category
+                                        </th>}
+                                        {shopInfo.wooLogin && <th className="px-4 py-3 title-font text-start font-medium text-gray-100 text-sm bg-gray-800 ">
+                                            Woocomarce Category
+                                        </th>}
+                                        <th className="px-4 py-3 title-font text-start font-medium text-gray-100 text-sm bg-gray-800 ">
+                                            Status
+                                        </th>
+                                        <th className="px-4 py-3 title-font text-start font-medium text-gray-100 text-sm bg-gray-800  rounded-tr ">
+                                            Action
+                                        </th>
 
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {
-                            currentData?.map((warehouse, index) => {
-                                const miniCategoryName = warehouse?.miniCategoryName;
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {
+                                        currentData?.map((warehouse, index) => {
+                                            const miniCategoryName = warehouse?.miniCategoryName;
 
-                                let category;
-                                try {
-                                    category = miniCategoryName ? JSON.parse(miniCategoryName) : null;
-                                } catch (error) {
-                                    console.error('Error parsing JSON:', error);
-                                }
-                                const parsedData = warehouse?.darazExtraCategory;
+                                            let category;
+                                            try {
+                                                category = miniCategoryName ? JSON.parse(miniCategoryName) : null;
+                                            } catch (error) {
+                                                console.error('Error parsing JSON:', error);
+                                            }
+                                            const parsedData = warehouse?.darazExtraCategory;
 
-                                let darazExtraCategoryOption;
-                                try {
-                                    darazExtraCategoryOption = parsedData ? JSON.parse(parsedData) : '';
-                                } catch (error) {
-                                    console.error('Error parsing JSON:', error);
-                                }
-
-
-                                console.log(darazExtraCategoryOption.data)
-
-                                return (
-
-                                    <tr key={index + warehouse?._id + 1} className=''>
-                                        <td className="px-4 py-3">
-                                            <div className='flex gap-2 items-center'>
-
-                                                <div>
-                                                    <h2 className="font-medium text-gray-800  ">
-                                                        {warehouse?.megaCategory && JSON.parse(warehouse.megaCategory).name}
-                                                        <span>&gt;</span>
-                                                        {warehouse?.subCategoryName}
-                                                        <span>&gt;</span>
-                                                        {category?.miniCategoryName}
-                                                        <span>&gt;</span>
-                                                        {warehouse?.extraCategoryName}
-                                                    </h2>
-
-                                                </div>
-                                            </div>
-                                        </td>
+                                            let darazExtraCategoryOption;
+                                            try {
+                                                darazExtraCategoryOption = parsedData ? JSON.parse(parsedData) : '';
+                                            } catch (error) {
+                                                console.error('Error parsing JSON:', error);
+                                            }
 
 
-                                        {shopInfo.darazLogin &&
-                                            <td className="px-4 py-3">
+                                            console.log(darazExtraCategoryOption.data)
 
-                                                <div className='flex gap-1 items-center'>
-                                                    <p>
-                                                        {warehouse?.megaCategory &&
-                                                            (() => {
-                                                                try {
-                                                                    const parsedMegaCategory = JSON.parse(warehouse?.megaCategory);
-                                                                    const darazCategoryName =
-                                                                        parsedMegaCategory && parsedMegaCategory.darazCategory
-                                                                            ? JSON.parse(parsedMegaCategory.darazCategory).name
-                                                                            : "Invalidate";
+                                            return (
 
-                                                                    return darazCategoryName;
-                                                                } catch (error) {
-                                                                    console.error("Error parsing JSON:", error);
-                                                                    return null;
+                                                <tr key={index + warehouse?._id + 1} className=''>
+                                                    <td className="px-4 py-3">
+                                                        <div className='flex gap-2 items-center'>
+
+                                                            <div>
+                                                                <h2 className="font-medium text-gray-800  ">
+                                                                    {warehouse?.megaCategory && JSON.parse(warehouse.megaCategory).name}
+                                                                    <span>&gt;</span>
+                                                                    {warehouse?.subCategoryName}
+                                                                    <span>&gt;</span>
+                                                                    {category?.miniCategoryName}
+                                                                    <span>&gt;</span>
+                                                                    {warehouse?.extraCategoryName}
+                                                                </h2>
+
+                                                            </div>
+                                                        </div>
+                                                    </td>
+
+
+                                                    {shopInfo.darazLogin &&
+                                                        <td className="px-4 py-3">
+
+                                                            <div className='flex gap-1 items-center text-sm'>
+                                                                <p>
+                                                                    {warehouse?.megaCategory &&
+                                                                        (() => {
+                                                                            try {
+                                                                                const parsedMegaCategory = JSON.parse(warehouse?.megaCategory);
+                                                                                const darazCategoryName =
+                                                                                    parsedMegaCategory && parsedMegaCategory.darazCategory
+                                                                                        ? JSON.parse(parsedMegaCategory.darazCategory).name
+                                                                                        : "Invalidate";
+
+                                                                                return darazCategoryName;
+                                                                            } catch (error) {
+                                                                                console.error("Error parsing JSON:", error);
+                                                                                return null;
+                                                                            }
+                                                                        })()}
+                                                                </p>
+                                                                {
+                                                                    (darazExtraCategoryOption.darazSubCategoryName)
+                                                                    && (<span>&gt;</span>)
                                                                 }
-                                                            })()}
-                                                    </p>
-                                                    {
-                                                        (darazExtraCategoryOption.darazSubCategoryName)
-                                                        && (<span>&gt;</span>)
-                                                    }
-                                                    <p>
-                                                        {darazExtraCategoryOption.darazSubCategoryName}
-                                                    </p>
-                                                    {darazExtraCategoryOption.darazMiniCategoryName && <span>&gt;</span>}
-                                                    <p>{darazExtraCategoryOption.darazMiniCategoryName}</p>
-                                                    {darazExtraCategoryOption?.data?.name && <span>&gt;</span>}
-                                                    <p>{darazExtraCategoryOption?.data?.name}</p>
-                                                </div>
+                                                                <p>
+                                                                    {darazExtraCategoryOption.darazSubCategoryName}
+                                                                </p>
+                                                                {darazExtraCategoryOption.darazMiniCategoryName && <span>&gt;</span>}
+                                                                <p>{darazExtraCategoryOption.darazMiniCategoryName}</p>
+                                                                {darazExtraCategoryOption?.data?.name && <span>&gt;</span>}
+                                                                <p>{darazExtraCategoryOption?.data?.name}</p>
+                                                            </div>
 
-                                            </td>
-                                        }
-                                        {/* {shopInfo.darazLogin &&
+                                                        </td>
+                                                    }
+                                                    {/* {shopInfo.darazLogin &&
                                             <td className="px-4 py-3">
                                                 {warehouse?.darazMiniCategory && (
                                                     <div className='flex gap-1 items-center'>
@@ -381,65 +389,70 @@ const ExtraCategoriesManagement = () => {
                                             </td>
                                         } */}
 
-                                        {shopInfo?.wooLogin && <td className="px-4 py-3"> {warehouse?.megaCategory &&
-                                            (() => {
-                                                try {
-                                                    const parsedMegaCategory = JSON.parse(warehouse?.megaCategory);
-                                                    const darazCategoryName =
-                                                        parsedMegaCategory && parsedMegaCategory.wocomarceCategory
-                                                            ? JSON.parse(parsedMegaCategory.wocomarceCategory).name
-                                                            : "Invalidate";
+                                                    {shopInfo?.wooLogin && <td className="px-4 py-3"> {warehouse?.megaCategory &&
+                                                        (() => {
+                                                            try {
+                                                                const parsedMegaCategory = JSON.parse(warehouse?.megaCategory);
+                                                                const darazCategoryName =
+                                                                    parsedMegaCategory && parsedMegaCategory.wocomarceCategory
+                                                                        ? JSON.parse(parsedMegaCategory.wocomarceCategory).name
+                                                                        : "Invalidate";
 
-                                                    return darazCategoryName;
-                                                } catch (error) {
-                                                    console.error("Error parsing JSON:", error);
-                                                    return null;
-                                                }
-                                            })()} </td>}
+                                                                return darazCategoryName;
+                                                            } catch (error) {
+                                                                console.error("Error parsing JSON:", error);
+                                                                return null;
+                                                            }
+                                                        })()} </td>}
 
-                                        <td className="px-4 py-3">{!warehouse?.status ? (
-                                            <button
-                                                onClick={() => updateStatus(warehouse?._id, true)}
-                                                className="inline-flex items-center justify-center py-1 px-4 bg-red-500 rounded shadow-md hover:bg-red-700 focus:shadow-outline focus:outline-none"
-                                            >
-                                                Disable
-                                            </button>
-                                        ) : (
-                                            <button
-                                                onClick={() => updateStatus(warehouse?._id, false)}
-                                                className="inline-flex items-center justify-center py-1 px-4 bg-green-500 rounded shadow-md hover:bg-green-700 focus:shadow-outline focus:outline-none"
-                                            >
-                                                Enable
-                                            </button>
-                                        )} </td>
-                                        <td className="px-4  text-2xl flex gap-2 py-6 items-center text-gray-100">
-                                            <MdDelete
-                                                className="text-red-500 cursor-pointer"
-                                                onClick={() => DeleteWarehouse(warehouse?._id)}
-                                            />
-                                            <BiEdit className="text-yellow-500 cursor-pointer"
-                                                onClick={() => handleViewDetails(warehouse?._id)}
+                                                    <td className="px-4 py-3">{!warehouse?.status ? (
+                                                        <button
+                                                            onClick={() => updateStatus(warehouse?._id, true)}
+                                                            className="inline-flex items-center justify-center py-1 px-4 bg-red-500 rounded shadow-md hover:bg-red-700 focus:shadow-outline focus:outline-none"
+                                                        >
+                                                            Disable
+                                                        </button>
+                                                    ) : (
+                                                        <button
+                                                            onClick={() => updateStatus(warehouse?._id, false)}
+                                                            className="inline-flex items-center justify-center py-1 px-4 bg-green-500 rounded shadow-md hover:bg-green-700 focus:shadow-outline focus:outline-none"
+                                                        >
+                                                            Enable
+                                                        </button>
+                                                    )} </td>
+                                                    <td className="px-4  text-2xl flex gap-2 py-6 items-center text-gray-100">
+                                                        <MdDelete
+                                                            className="text-red-500 cursor-pointer"
+                                                            onClick={() => DeleteWarehouse(warehouse?._id)}
+                                                        />
+                                                        <BiEdit className="text-yellow-500 cursor-pointer"
+                                                            onClick={() => handleViewDetails(warehouse?._id)}
 
-                                            />
+                                                        />
 
-                                        </td>
+                                                    </td>
 
 
-                                        {/* {OpenModal === warehouse?._id && <div className="h-0 w-0">
+                                                    {/* {OpenModal === warehouse?._id && <div className="h-0 w-0">
                                         <EditWareHouse OpenModal={OpenModal} refetch={refetch} setOpenModal={setOpenModal} data={warehouse} />
                                     </div>} */}
 
 
 
-                                    </tr>
-                                )
-                            }
-                            )
-                        }
+                                                </tr>
+                                            )
+                                        }
+                                        )
+                                    }
 
-                    </tbody>
-                </table>
+                                </tbody>
+                            </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
+
 
             <div className='flex justify-center mt-4'>
                 <ol className="flex justify-center gap-1 text-xs font-medium">

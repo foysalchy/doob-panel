@@ -1,7 +1,11 @@
 import React from 'react';
 import { useState } from 'react';
+import { DndProvider, useDrag, useDrop } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 
-const UploadImage = ({ coverPhoto, setCoverPhoto }) => {
+
+
+const UploadImage = ({ coverPhoto, setCoverPhoto, youtube, setYoutube }) => {
 
     const [photo1, setPhoto1] = useState('');
     const [photo2, setPhoto2] = useState('');
@@ -11,6 +15,24 @@ const UploadImage = ({ coverPhoto, setCoverPhoto }) => {
     const [photo6, setPhoto6] = useState('');
     const [photo7, setPhoto7] = useState('');
 
+    const [youtubeError, setYoutubeError] = useState(false)
+
+
+    const handleCheck = (value) => {
+        console.log(value);
+        const youtubeRegex = /^(https?:\/\/)?(www\.)?(youtube\.com\/(v\/|watch\?v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
+
+
+        const isYoutube = youtubeRegex.test(value);
+        console.log(isYoutube);
+        if (isYoutube) {
+            setYoutube(value)
+            setYoutubeError('')
+        }
+        else {
+            setYoutubeError('Provide Youtube Video URl')
+        }
+    }
 
     const handleImageChange = (setter, event) => {
         const file = event.target.files[0];
@@ -187,11 +209,17 @@ const UploadImage = ({ coverPhoto, setCoverPhoto }) => {
                 </div>
                 <div className='mt-4'>
                     <label className='text-sm ' htmlFor="Video url "> Video Url</label>
-                    <input className="flex-grow w-full h-10 px-4 mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-purple-400 focus:outline-none focus:shadow-outline" placeholder="Input youtube video link here" type="text" name="videoUrl" id="" />
+                    <input
+                        onChange={(e) => handleCheck(e.target.value)}
+                        className="flex-grow w-full h-10 px-4 mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-purple-400 focus:outline-none focus:shadow-outline" placeholder="Input youtube video link here" type="text" name="videoUrl" id="" />
+                    {youtubeError && <span className='text-sm text-red-500'>{youtubeError}</span>}
                 </div>
             </div>
         </div>
     );
+
 };
 
 export default UploadImage;
+
+

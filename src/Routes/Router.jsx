@@ -69,6 +69,9 @@ import Product from "../Pages/Home/Product/Product";
 import PriceMangement from "../Pages/AdminItem/PriceMangement/PriceMangement";
 import ProductDetails from "../Pages/Home/Product/ProductDetails/ProductDetails";
 import Home from "../Pages/Shop/pages/Home/Home";
+import ScrollToTop from "../SrollTop";
+import ShopSignIn from "../Pages/Shop/pages/Home/Auth/ShopSignIn";
+import ShopSignUp from "../Pages/Shop/pages/Home/Auth/ShopSignUp";
 
 
 
@@ -77,7 +80,10 @@ const Router = createBrowserRouter([
   // Main Layout 
   {
     path: "/",
-    element: <MainLayout />,
+    element: <>
+      <ScrollToTop />
+      <MainLayout />
+    </>,
     children: homePath
   },
 
@@ -85,9 +91,12 @@ const Router = createBrowserRouter([
   {
     path: "/seller",
     element: (
-      <IsSelllerRegistration>
-        <SellerDashLayout />
-      </IsSelllerRegistration>
+      <>
+        <ScrollToTop />
+        <IsSelllerRegistration>
+          <SellerDashLayout />
+        </IsSelllerRegistration>
+      </>
     ),
     children: SellerPath
   },
@@ -95,14 +104,33 @@ const Router = createBrowserRouter([
   // Shop Layout 
   {
     path: "/shop",
-    element: <ShopLayout />,
+    element: <>
+      <ScrollToTop />
+      <ShopLayout />
+    </>,
     children: [
       {
         path: ':id/',
         element: <Home />,
         loader: async ({ params }) => {
           const id = params.id;
-          return fetch(`http://localhost:5000/api/v1/shop/${id}`);
+          return fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/${id}`);
+        },
+      },
+      {
+        path: ':id/sign-in',
+        element: <ShopSignIn />,
+        loader: async ({ params }) => {
+          const id = params.id;
+          return fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/${id}`);
+        },
+      },
+      {
+        path: ':id/sign-up',
+        element: <ShopSignUp />,
+        loader: async ({ params }) => {
+          const id = params.id;
+          return fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/${id}`);
         },
       },
       {
@@ -114,7 +142,7 @@ const Router = createBrowserRouter([
         element: <ShopAllBlog />,
         loader: async ({ params }) => {
           const id = params.id;
-          return fetch(`http://localhost:5000/api/v1/seller/blog/${id}`);
+          return fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/blog/${id}`);
         },
       },
       {
@@ -123,7 +151,7 @@ const Router = createBrowserRouter([
         loader: async ({ params }) => {
           const id = params.id;
           const blogId = params.blogId;
-          const response = await fetch(`http://localhost:5000/api/v1/seller/blog/${id}/${blogId}`);
+          const response = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/blog/${id}/${blogId}`);
           const data = await response.json();
           return data;
         },
@@ -134,7 +162,7 @@ const Router = createBrowserRouter([
         loader: async ({ params }) => {
           const pageId = params.pageId
           const shopId = params.id
-          const response = await fetch(`http://localhost:5000/api/v1/seller/page/${shopId}/${pageId}`);
+          const response = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/page/${shopId}/${pageId}`);
           const data = await response.json();
           return data;
         },
@@ -150,9 +178,12 @@ const Router = createBrowserRouter([
   {
     path: "/admin",
     element:
-      (<SupperAdminRouter>
-        <AdminLayout />
-      </SupperAdminRouter>),
+      (<>
+        <ScrollToTop />
+        <SupperAdminRouter>
+          <AdminLayout />
+        </SupperAdminRouter>
+      </>),
     children: [
       // {
       //     path: '*', // Wildcard route for any unknown paths under '/admin'
@@ -202,7 +233,7 @@ const Router = createBrowserRouter([
         element: <AdminSingleBlog />,
         loader: async ({ params }) => {
           const id = params.id;
-          return fetch(`http://localhost:5000/api/v1/admin/all-blogs/${id}`);
+          return fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/all-blogs/${id}`);
         },
       },
       {
@@ -314,3 +345,5 @@ const Router = createBrowserRouter([
 
 ]);
 export default Router;
+
+

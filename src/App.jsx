@@ -4,6 +4,7 @@ import Router from "./Routes/Router";
 import { useContext, useState } from "react";
 import { useEffect } from "react";
 import { AuthContext } from "./AuthProvider/UserProvider";
+import ScrollToTop from "./SrollTop";
 
 
 function App() {
@@ -35,9 +36,9 @@ function App() {
 
 
 
-
   return (
     <div >
+
       {isOnline ? <RouterProvider router={Router} /> : <div className="grid h-screen px-4 bg-white place-content-center">
         <h1 className="tracking-widest text-gray-500 uppercase text-2xl"><span className="text-red-500 ">503</span> | You are currently offline </h1>
       </div>

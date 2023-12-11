@@ -24,7 +24,7 @@ const AddMagaCategory = () => {
         queryKey: ["category"],
         queryFn: async () => {
             if (shopInfo.darazLogin) {
-                const res = await fetch(`http://localhost:5000/api/v1/daraz/category/${shopInfo._id}`);
+                const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/daraz/category/${shopInfo._id}`);
                 const data = await res.json();
                 return data;
             }
@@ -37,7 +37,7 @@ const AddMagaCategory = () => {
         queryKey: ["wooCategory"],
         queryFn: async () => {
             if (shopInfo.wooLogin) {
-                const res = await fetch(`http://localhost:5000/api/v1/woo/category?shopId=${shopInfo._id}`);
+                const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/woo/category?shopId=${shopInfo._id}`);
                 const data = await res.json();
                 return data;
             }
@@ -72,9 +72,15 @@ const AddMagaCategory = () => {
         try {
             const { name, slag, image } = e.target;
             const darazCategory = daraz ? e.target.darazCategory.value : '';
-            console.log(darazCategory);
+
+
+            let darazCategory_id = ''
+            if (darazCategory) {
+                darazCategory_id = JSON.parse(darazCategory).category_id
+            }
+
             const wocomarceCategory = wocomarce ? e.target.wocomarceCategory.value : '';
-            console.log(wocomarceCategory);
+
 
             const imageFormData = new FormData();
             imageFormData.append("image", image.files[0]);
@@ -89,8 +95,11 @@ const AddMagaCategory = () => {
                 wocomarceCategory,
                 shopName: shopInfo.name,
                 shopId: shopInfo._id,
+                darazCategory_id,
+                status: true
             };
 
+            console.log(categoryData);
             await postCategory(categoryData);
 
             Swal.fire("Warehouse Upload Successfully", "", "success");
@@ -103,7 +112,7 @@ const AddMagaCategory = () => {
     };
 
     const uploadImage = async (formData) => {
-        const url = `http://localhost:5000/api/v1/image/upload-image`;
+        const url = `https://salenow-v2-backend.vercel.app/api/v1/image/upload-image`;
         const response = await fetch(url, {
             method: "POST",
             body: formData,
@@ -114,7 +123,7 @@ const AddMagaCategory = () => {
     };
 
     const postCategory = async (data) => {
-        const url = `http://localhost:5000/api/v1/category/seller/add`;
+        const url = `https://salenow-v2-backend.vercel.app/api/v1/category/seller/add`;
 
         const response = await fetch(url, {
             method: "POST",

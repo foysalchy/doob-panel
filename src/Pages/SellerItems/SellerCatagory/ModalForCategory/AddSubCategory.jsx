@@ -25,13 +25,13 @@ const AddSubCategory = () => {
         queryKey: ["category"],
         queryFn: async () => {
 
-            const res = await fetch(`http://localhost:5000/api/v1/category/seller/${shopInfo._id}`);
+            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/category/seller/${shopInfo._id}`);
             const data = await res.json();
             return data;
         },
     });
 
-    console.log(`http://localhost:5000/api/v1/category/seller/${shopInfo._id}`);
+    console.log(`https://salenow-v2-backend.vercel.app/api/v1/category/seller/${shopInfo._id}`);
 
     const option = darazData?.filter((warehouse) => warehouse.status).map((warehouse) => ({
         value: JSON.stringify(warehouse),
@@ -65,16 +65,21 @@ const AddSubCategory = () => {
         const darazSubCategory = e.target?.darazSubCategory?.value || '';
         const wooSubCategory = e.target.wooSubCategory?.value || '';
         const subCategoryName = e.target.subcategoryName.value
+        let darazCategory_id = ''
+        if (darazSubCategory) {
+            darazCategory_id = JSON.parse(darazSubCategory).category_id
+        }
         const data = {
             megaCategory,
             darazSubCategory,
             wooSubCategory,
             subCategoryName,
-            shopId: shopInfo._id
+            shopId: shopInfo._id,
+            darazCategory_id,
+            status: true
         }
 
-
-        const url = `http://localhost:5000/api/v1/category/seller/sub/add`;
+        const url = `https://salenow-v2-backend.vercel.app/api/v1/category/seller/sub/add`;
 
         const response = await fetch(url, {
             method: "POST",

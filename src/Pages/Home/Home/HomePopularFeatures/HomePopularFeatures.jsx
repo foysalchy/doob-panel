@@ -332,7 +332,7 @@ const HomePopularFeatures = () => {
                     </div>
                 </div>
             </div>
-        </div >
+        </div>
     );
 };
 

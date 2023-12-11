@@ -54,6 +54,30 @@ const SiteContentSeller = () => {
                     Slider
                 </span>
             </Link>
+            <Link
+                className="group relative inline-flex items-center justify-center overflow-hidden rounded bg-gray-900 px-8 py-6 text-white focus:outline-none focus:ring active:bg-gray-500"
+                to="/seller/content-management/campaign-management"
+            >
+                <span className="absolute -start-full transition-all group-hover:start-10">
+                    <FaLongArrowAltRight />
+                </span>
+
+                <span className="text-sm font-medium transition-all group-hover:ms-4">
+                    Campaign
+                </span>
+            </Link>
+            <Link
+                className="group relative inline-flex items-center justify-center overflow-hidden rounded bg-gray-900 px-8 py-6 text-white focus:outline-none focus:ring active:bg-gray-500"
+                to="/seller/content-management/feature-management"
+            >
+                <span className="absolute -start-full transition-all group-hover:start-10">
+                    <FaLongArrowAltRight />
+                </span>
+
+                <span className="text-sm font-medium transition-all group-hover:ms-4">
+                    Feature Image
+                </span>
+            </Link>
         </div>
     );
 };

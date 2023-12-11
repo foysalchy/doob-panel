@@ -18,7 +18,7 @@ const SellerDomainManagement = () => {
     const { data: shops = [], refetch, isLoading } = useQuery({
         queryKey: ["shops"],
         queryFn: async () => {
-            const res = await fetch("http://localhost:5000/api/v1/shop");
+            const res = await fetch("https://salenow-v2-backend.vercel.app/api/v1/shop");
             const data = await res.json();
             return data;
         },
@@ -39,7 +39,7 @@ const SellerDomainManagement = () => {
 
     const UpdateStatus = (id, status) => {
 
-        fetch(`http://localhost:5000/api/v1/shop/domainstatus/${id}?status=${status}`,
+        fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/domainstatus/${id}?status=${status}`,
             {
                 method: "Put",
                 headers: {
@@ -61,7 +61,7 @@ const SellerDomainManagement = () => {
 
         logOut()
         let password = ''
-        await fetch(`http://localhost:5000/api/v1/admin/seller/pass/${userId}`).then((res) => res.json()).then((data) => {
+        await fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/seller/pass/${userId}`).then((res) => res.json()).then((data) => {
             password = data.password
 
         })
@@ -71,7 +71,7 @@ const SellerDomainManagement = () => {
         };
         console.log(data);
 
-        await fetch("http://localhost:5000/api/v1/auth/sign-in", {
+        await fetch("https://salenow-v2-backend.vercel.app/api/v1/auth/sign-in", {
             method: "post",
             headers: {
                 "content-type": "application/json",
@@ -85,7 +85,7 @@ const SellerDomainManagement = () => {
 
                 if (data.user) {
                     if (data.user.role === 'seller') {
-                        fetch(`http://localhost:5000/api/v1/shop/checkshop/${data?.user?.email}`)
+                        fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/checkshop/${data?.user?.email}`)
                             .then((response) => response.json())
                             .then((result) => {
                                 console.log(result);
@@ -138,7 +138,7 @@ const SellerDomainManagement = () => {
 
     if (isDelete) {
 
-        fetch(`http://localhost:5000/api/v1/shop/delete/${deleteId}`, {
+        fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/delete/${deleteId}`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json'
