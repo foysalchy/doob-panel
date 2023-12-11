@@ -210,7 +210,7 @@ const SellerShipping = () => {
 
                     <div className='border my-10 p-10'>
 
-                        {ships.length && <div className='flex items-center justify-center gap-4 my-4 '>
+                        {ships.length ? <div className='flex items-center justify-center gap-4 my-4 '>
 
                             {
                                 ships?.map(get => (
@@ -264,7 +264,7 @@ const SellerShipping = () => {
                                     </div>
                                 ))
                             }
-                        </div>}
+                        </div> : ''}
                     </div>
                 </div>
 

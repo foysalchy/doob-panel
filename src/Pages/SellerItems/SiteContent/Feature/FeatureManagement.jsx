@@ -1,13 +1,16 @@
-import React, { useContext, useState } from 'react';
-import DeleteModal from '../../../../Common/DeleteModal';
-import { FaArrowRightLong } from 'react-icons/fa6';
-import { AuthContext } from '../../../../AuthProvider/UserProvider';
 import { useQuery } from '@tanstack/react-query';
+import React from 'react';
+import { useContext } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import Swal from 'sweetalert2';
+import { AuthContext } from '../../../../AuthProvider/UserProvider';
+import { FaArrowRightLong } from 'react-icons/fa6';
+import { BiEdit } from 'react-icons/bi';
 import { RxCross2 } from 'react-icons/rx';
+import Swal from 'sweetalert2';
+import DeleteModal from '../../../../Common/DeleteModal';
 
-const CampaignManagement = () => {
+const FeatureManagement = () => {
     const [loading, setLoading] = useState(false);
 
     const { shopInfo } = useContext(AuthContext)
@@ -15,31 +18,24 @@ const CampaignManagement = () => {
     const { data: faqs = [], refetch } = useQuery({
         queryKey: ["faqs"],
         queryFn: async () => {
-            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/get-campaign/${shopInfo._id}`);
+            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/feature/${shopInfo._id}`);
             const data = await res.json();
             return data;
         },
     });
 
-    console.log(faqs[0]);
 
 
     const updateStatus = (id, status) => {
-        const data = {
-            id,
-            status
-        }
-        fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/update-status-campaign`, {
+        fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/feature/status/${id}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify(data),
+            body: JSON.stringify({ status }),
         }).then((res) => res.json()).then((data) => {
-            console.log(data);
-            Swal.fire(`Status Update  `, '', 'success');
+            Swal.fire(`Seller disable ${status} `, '', 'success');
             refetch()
-
         })
     }
 
@@ -58,7 +54,7 @@ const CampaignManagement = () => {
 
     if (isDelete) {
 
-        fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/delete-campaign/${deleteId}`, {
+        fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/feature/delete/${deleteId}`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
@@ -66,7 +62,7 @@ const CampaignManagement = () => {
         }).then((res) => res.json()).then((data) => {
             setIsDelete(false)
             setDeletId('')
-            Swal.fire('Delete Successful', '', 'success')
+            Swal.fire('Shop is Deleted', '', 'success')
             refetch('')
             console.log(data);
         })
@@ -89,22 +85,7 @@ const CampaignManagement = () => {
     };
 
 
-    // const formattedEndTime = new Date(faq?.endTime).toLocaleString();
 
-    const formateTime = (time) => {
-        const date = new Date(time);
-        const hours = date.getHours();
-        const minutes = date.getMinutes().toString().padStart(2, '0');
-        const ampm = hours >= 12 ? 'PM' : 'AM';
-        const formattedHours = hours % 12 === 0 ? 12 : hours % 12;
-        const monthNames = [
-            'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
-        ];
-        const monthName = monthNames[date.getMonth()];
-        const day = date.getDate().toString().padStart(2, '0');
-
-        return `${monthName}-${day} ${formattedHours}:${minutes} ${ampm}`;
-    }
 
 
 
@@ -114,7 +95,7 @@ const CampaignManagement = () => {
             <div className=''>
                 {selectedImage && (
                     <div className="fixed top-0 left-0 flex items-center justify-center w-full h-full bg-black bg-opacity-90 z-50">
-                        <div className="relative max-w-screen-md max-h-[80%] mx-auto">
+                        <div className="relative max-w-screen-lg mx-auto">
                             <div onClick={() => handleImageClick(false)} className='cursor-pointer bg-gray-300 rounded-full absolute top-4 right-4  mb-2 p-2 text-2xl hover:bg-gray-400'>
                                 <RxCross2 className='text-xl' />
                             </div>
@@ -139,49 +120,32 @@ const CampaignManagement = () => {
                 </span>
 
                 <span className="text-sm font-medium transition-all group-hover:ms-4">
-                    Add New Campaign
+                    Add New feature
                 </span>
             </Link>
 
             <section className=" px-4 mx-auto">
                 <h1 className="text-center my-10 font-bold text-2xl">
-                    Here is your All Campaign List
+                    Feature Management
                 </h1>
                 <div className="flex flex-col mt-6">
-                    <div className="overflow-x-auto ">
-                        <div className="">
+                    <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+                        <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
                             <div className="overflow-hidden border  border-gray-700 md:rounded-lg">
                                 <table className="min-w-full divide-y  divide-gray-700">
                                     <thead className="bg-gray-900 ">
                                         <tr>
-
                                             <th
                                                 scope="col"
-                                                className=" text-gray-500 pl-4 "
+                                                className="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500 "
                                             >
-                                                <button className="flex items-center gap-x-2">
-                                                    <span>Campaign Name</span>
-                                                </button>
+                                                <div className="flex items-center gap-x-3">
+                                                    <span>Page Name</span>
+                                                </div>
                                             </th>
                                             <th
                                                 scope="col"
-                                                className=" text-gray-500 "
-                                            >
-                                                <button className="flex items-center gap-x-2">
-                                                    <span>Campaign Time</span>
-                                                </button>
-                                            </th>
-                                            <th
-                                                scope="col"
-                                                className=" text-gray-500 "
-                                            >
-                                                <button className="flex items-center gap-x-2">
-                                                    <span>Campaign as a Flash</span>
-                                                </button>
-                                            </th>
-                                            <th
-                                                scope="col"
-                                                className="text-gray-500 "
+                                                className="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 "
                                             >
                                                 <button className="flex items-center gap-x-2">
                                                     <span>Status</span>
@@ -203,7 +167,7 @@ const CampaignManagement = () => {
                                                     <div className="inline-flex items-center gap-x-3">
                                                         <div className="inline-flex items-center gap-x-3">
 
-                                                            <div >
+                                                            <div className="flex   items-center gap-x-2">
                                                                 <img
                                                                     onClick={() => handleImageClick(faq?.image)}
                                                                     className="object-cover cursor-pointer w-10 h-10 rounded"
@@ -211,30 +175,16 @@ const CampaignManagement = () => {
                                                                     srcSet={faq?.image}
                                                                     alt=""
                                                                 />
+                                                                <div className="font-medium text-gray-800 w-80 whitespace-pre-wrap ">
+                                                                    {faq?.link}
 
+
+                                                                </div>
                                                             </div>
-                                                            {faq?.name}
                                                         </div>
                                                     </div>
                                                 </td>
-
-                                                <td className="text-start">
-
-                                                    {faq?.isFlash && <div className="font-medium text-gray-800  whitespace-pre-wrap ">
-                                                        {formateTime(faq?.startTime)} - {formateTime(faq?.endTime)}
-                                                    </div>}
-
-
-                                                </td>
-                                                <td className="text-start">
-
-                                                    <div className="font-medium text-gray-800  whitespace-pre-wrap ">
-                                                        {faq?.isFlash ? 'Yes' : 'No'}
-                                                    </div>
-
-
-                                                </td>
-                                                <td className=" py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
+                                                <td className="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                                                     {faq.status ? (
                                                         <button
                                                             onClick={() => updateStatus(faq?._id, false)}
@@ -294,9 +244,10 @@ const CampaignManagement = () => {
                         </div>
                     </div>
                 </div>
-            </section >
-        </div >
+            </section>
+        </div>
     );
 };
 
-export default CampaignManagement;
+
+export default FeatureManagement;

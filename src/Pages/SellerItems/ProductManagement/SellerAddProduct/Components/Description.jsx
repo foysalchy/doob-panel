@@ -3,7 +3,9 @@ import { useState } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
-const Description = ({ description, setDescription, shortDescription, setShortDescription }) => {
+const Description = ({ description, setDescription, shortDescription, setShortDescription, categories }) => {
+
+
 
 
     const handleDescriptionChange = (value) => {

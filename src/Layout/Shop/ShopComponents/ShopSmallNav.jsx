@@ -33,7 +33,7 @@ const ShopSmallNav = () => {
     return (
         <div className='bg-black'>
 
-            <div className=' mx-auto py-3 sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8'>
+            <div className=' mx-auto py-3 px-4 sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8'>
                 <div className='flex justify-between'>
 
                     <div className='flex gap-4 md:gap-10'>

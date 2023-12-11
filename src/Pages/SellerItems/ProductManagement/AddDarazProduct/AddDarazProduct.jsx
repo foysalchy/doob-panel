@@ -56,6 +56,17 @@ const AddDarazProduct = () => {
         const warehouseValue = [{ name: warehouse }, { name: area }, { name: rack }, { name: self }, { name: cell }]
         setLoading(true)
         const originalData = selectedOption
+        const renamedData = originalData.skus.map((item) => ({
+            name: '',
+            image: item.Images || null,
+            quantity: item.quantity || '',
+            SKU: item.SellerSku || '',
+            price: item.price || '',
+            offerPrice: item.special_price || '',
+            ability: false,
+            vendor: false,
+        }));
+
 
         const Images = originalData.images.map(url => ({ src: url }));
 
@@ -91,12 +102,14 @@ const AddDarazProduct = () => {
             MetaImage: Images[0],
             warrantyTypes: originalData.skus[0].warrantyTypes,
             rating_count: 0,
+            variations: renamedData,
             shopId: shopInfo._id, // You need to define shopInfo
             adminWare: adminWare,
+            item_id: originalData.item_id,
             // Add other fields as needed
         };
 
-        console.log(transformedData.sku);
+        console.log(renamedData);
         fetch('https://salenow-v2-backend.vercel.app/api/v1/seller/daraz-product/', {
             method: "POST",
             headers: {

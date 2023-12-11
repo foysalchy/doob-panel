@@ -27,12 +27,15 @@ import AddCampaign from "../Pages/SellerItems/SiteContent/Campain/AddCampain";
 import CampaignManagement from "../Pages/SellerItems/SiteContent/Campain/CampaignManagement";
 import AddCopon from "../Pages/SellerItems/SiteContent/Copon/AddCopon";
 import CoponManagement from "../Pages/SellerItems/SiteContent/Copon/CoponManagement";
+import AddFeature from "../Pages/SellerItems/SiteContent/Feature/AddFeature";
+import FeatureManagement from "../Pages/SellerItems/SiteContent/Feature/FeatureManagement";
 import AddPopUp from "../Pages/SellerItems/SiteContent/PopUp/AddPopUp";
 import PopupManagement from "../Pages/SellerItems/SiteContent/PopUp/PopupManagement";
 import SiteContentSeller from "../Pages/SellerItems/SiteContent/SiteContentSeller";
 import AddSlider from "../Pages/SellerItems/SiteContent/Slider/AddSlider";
 import SliderManagement from "../Pages/SellerItems/SiteContent/Slider/SliderManagement";
 import SellerEmail from "../Pages/SellerItems/Sittings/SellerEmail/SellerEmail";
+import SellerLoginCredintiial from "../Pages/SellerItems/Sittings/SellerLoaginCredintial/SellerLoginCredintiial";
 import SellerPaymentGetaway from "../Pages/SellerItems/Sittings/SellerPaymentGetway/SellerPaymentGetway";
 import SellerSittingsPage from "../Pages/SellerItems/Sittings/SellerSittingsPage";
 import SellerShipping from "../Pages/SellerItems/Sittings/Shiping/SellerShiping";
@@ -92,6 +95,10 @@ const SellerPath = [
     {
         path: "settings",
         element: <SellerSittingsPage />
+    },
+    {
+        path: "settings/auth-credential",
+        element: <SellerLoginCredintiial />
     },
     {
         path: "settings/payment-management",
@@ -156,6 +163,14 @@ const SellerPath = [
     {
         path: "content-management/slider-management/add",
         element: <AddSlider />
+    },
+    {
+        path: "content-management/feature-management",
+        element: <FeatureManagement />
+    },
+    {
+        path: "content-management/feature-management/add",
+        element: <AddFeature />
     },
     {
         path: "content-management/popup-management",

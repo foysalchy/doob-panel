@@ -43,7 +43,7 @@ const Variants = ({ inputFields, setInputFields, daraz }) => {
         const formData = new FormData();
         formData.append('image', imageBlob);
 
-        const url = `http://localhost:5000/api/v1/daraz/daraz-image/${shopInfo._id}`;
+        const url = `https://salenow-v2-backend.vercel.app/api/v1/daraz/daraz-image/${shopInfo._id}`;
 
         try {
             const response = await fetch(url, {

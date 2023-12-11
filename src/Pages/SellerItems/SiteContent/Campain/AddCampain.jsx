@@ -128,7 +128,7 @@ const AddCampaign = () => {
     const postSlider = (data, form) => {
         console.log(data);
 
-        fetch(`http://localhost:5000/api/v1/seller/add-campaign`, {
+        fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/add-campaign`, {
             method: "PATCH",
             headers: {
                 "content-type": "application/json",

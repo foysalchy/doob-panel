@@ -6,7 +6,7 @@ const SellerDashLayout = () => {
 
     const location = useLocation();
     const paths = location.pathname.split('/').filter((path) => path !== '')
-   
+
 
     function convertToTitleCase(str) {
         return str
@@ -16,9 +16,9 @@ const SellerDashLayout = () => {
     }
 
     return (
-        <div className='flex '>
+        <div className='flex  '>
 
-            <div className="sticky top-0 h-full min-h-screen  bg-gray-900 text-white">
+            <div className="sticky z-50 top-0 h-full min-h-screen  bg-gray-900 text-white">
                 <SideNavberSeller />
             </div>
             <div className="px-4 py-8 w-full   sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-10">
@@ -68,7 +68,7 @@ const SellerDashLayout = () => {
                         </ol>
                     </nav>
                 </div>
-                <div className='flex-1    p-4 sm:p-0'>
+                <div className='flex-1  p-4 sm:p-0'>
                     <Outlet />
                 </div>
             </div>

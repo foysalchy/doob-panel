@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useContext } from 'react';
 import { useState } from 'react';
 import { BsArrowRight } from 'react-icons/bs';
@@ -16,6 +16,7 @@ import WareHouse from './Components/WareHouse';
 import Meta from './Components/Meta';
 import Swal from 'sweetalert2';
 import Variants from './Components/Variants';
+import DarazOption from './Components/DarazOption';
 
 
 
@@ -24,6 +25,9 @@ import Variants from './Components/Variants';
 const SellerAddProduct = () => {
 
     const { shopInfo } = useContext(AuthContext)
+
+    const [datazCategory, setDarazOption] = useState([])
+
 
     const [loading, setLoading] = useState(false)
     const [daraz, setDaraz] = useState(false)
@@ -39,8 +43,6 @@ const SellerAddProduct = () => {
 
 
     const [brandName, setBrandName] = useState()
-
-
 
 
 
@@ -67,7 +69,7 @@ const SellerAddProduct = () => {
         const formData = new FormData();
         formData.append('image', imageBlob);
 
-        const url = `http://localhost:5000/api/v1/daraz/daraz-image/${shopInfo._id}`;
+        const url = `https://salenow-v2-backend.vercel.app/api/v1/daraz/daraz-image/${shopInfo._id}`;
 
         try {
             const response = await fetch(url, {
@@ -93,7 +95,7 @@ const SellerAddProduct = () => {
 
 
     const formSubmit = async (e) => {
-        // setLoading(true)
+        setLoading(true)
         e.preventDefault();
         const form = e.target;
         const BnName = form.productNameBn.value
@@ -105,7 +107,7 @@ const SellerAddProduct = () => {
         const extraCategory = form?.extraCategory?.value || null
 
 
-        const categories = [{ name: megaCategory }, { name: Subcategory }, { name: miniCategory }, { name: extraCategory }]
+        const categories = [{ name: megaCategory }, Subcategory && { name: Subcategory }, miniCategory && { name: miniCategory }, extraCategory && { name: extraCategory }]
 
         const warehouse = form.warehouse.value
         const area = form.area && form.area.value || null
@@ -242,14 +244,14 @@ const SellerAddProduct = () => {
         }
 
 
-        fetch('http://localhost:5000/api/v1/seller/normal-product/', {
+        fetch('https://salenow-v2-backend.vercel.app/api/v1/seller/normal-product/', {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'
             }
             , body: JSON.stringify({ data })
         }).then((res) => res.json()).then((data) => {
-            console.log(data);
+
             if (
                 data.error
             ) {
@@ -268,7 +270,6 @@ const SellerAddProduct = () => {
 
 
 
-
     return (
         <div>
 
@@ -280,16 +281,19 @@ const SellerAddProduct = () => {
 
                 <InputProductName brandName={brandName} setBrandName={setBrandName} />
 
-                <SincronusCategory setInputFields={setInputFields} daraz={daraz} setDaraz={setDaraz} woo={woo} setWoo={setWoo} />
+                <SincronusCategory datazCategory={datazCategory} setDarazOption={setDarazOption} setInputFields={setInputFields} daraz={daraz} setDaraz={setDaraz} woo={woo} setWoo={setWoo} />
 
                 <WareHouse shopInfo={shopInfo} adminWare={adminWare} setAdminWare={setAdminWare} />
 
 
 
-                <Description shortDescription={shortDescription} setShortDescription={setShortDescription} description={description} setDescription={setDescription} />
+                <div id='description'>
+                    <Description shortDescription={shortDescription} setShortDescription={setShortDescription} description={description} setDescription={setDescription} />
+                </div>
                 <div className='my-4 mt-10'>
                     <Variants daraz={daraz} inputFields={inputFields} setInputFields={setInputFields} />
                 </div>
+
                 <ServiceWarranty />
                 <Delivery />
                 <Meta />

@@ -3,7 +3,7 @@ import { AuthContext } from '../../../../../AuthProvider/UserProvider';
 import { useQuery } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
 import { BsViewList } from 'react-icons/bs';
-import { MdOutlineViewInAr } from 'react-icons/md';
+import { MdDelete, MdOutlineViewInAr } from 'react-icons/md';
 import EditProductForm from './EditProduct';
 import DemoImage from './woocommerce-placeholder-600x600.png';
 import Swal from 'sweetalert2';
@@ -13,6 +13,7 @@ import { BiLeftArrow, BiRightArrow } from 'react-icons/bi';
 
 const SellerAllProducts = () => {
     const { shopInfo } = useContext(AuthContext)
+    const [loadingStates, setLoadingStates] = useState({});
     const { data: products = [], refetch } = useQuery({
         queryKey: ["products"],
         queryFn: async () => {
@@ -52,7 +53,7 @@ const SellerAllProducts = () => {
     const currentData = filteredData.slice(startIndex, endIndex);
 
 
-    console.log(products);
+
 
 
     const updateProductStatus = (id, status) => {
@@ -101,6 +102,41 @@ const SellerAllProducts = () => {
         })
 
         console.log(deleteId, isDelete);
+    }
+
+
+    const updateProduct = (id, sku, item_id, category) => {
+
+        setLoadingStates(prevLoadingStates => ({
+            ...prevLoadingStates,
+            [id]: true,
+        }));
+        const data = { category, item_id, sku, id, shopId: shopInfo._id }
+        fetch("https://salenow-v2-backend.vercel.app/api/v1/seller/update-product", {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data),
+        })
+            .then(response => response.json())
+            .then((data) => {
+                console.log(data);
+                setLoadingStates(prevLoadingStates => ({
+                    ...prevLoadingStates,
+                    [id]: false,
+                }));
+                if (data.error) {
+                    Swal.fire(`${data.message}`, '', 'warning')
+                }
+                else {
+                    Swal.fire(`${data.message}`, '', 'success')
+                    refetch()
+                }
+
+
+            });
+
     }
 
     return (
@@ -179,13 +215,13 @@ const SellerAllProducts = () => {
                         scrollbarColor: 'gray transparent', // Set scrollbar color (gray) for Firefox
                         msOverflowStyle: 'scrollbar', // For Internet Explorer and Edge
                     }} className="overflow-x-scroll  ">
-                        <div className=" w-[1500px]">
+                        <div className=" w-[1700px]">
                             <div className="overflow-hidden border  border-gray-700 md:rounded-lg">  <table className="w-full">
                                 <thead className="bg-gray-900 text-white ">
                                     <tr>
                                         <th
                                             scope="col"
-                                            className="py-3.5 px-4 text-sm font-normal text-left rtl:text-right "
+                                            className="py-3.5 px-4 text-sm border font-normal text-left rtl:text-right "
                                         >
                                             <div className="flex items-center gap-x-3">
 
@@ -194,7 +230,7 @@ const SellerAllProducts = () => {
                                         </th>
                                         <th
                                             scope="col"
-                                            className="px-12 py-3.5 text-sm font-normal text-left rtl:text-right "
+                                            className="px-12 py-3.5 border text-sm font-normal text-left rtl:text-right "
                                         >
                                             <button className="flex items-center gap-x-2">
                                                 <span>Status</span>
@@ -202,7 +238,7 @@ const SellerAllProducts = () => {
                                         </th>
                                         <th
                                             scope="col"
-                                            className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right "
+                                            className="px-4 py-3.5 text-sm border font-normal text-left rtl:text-right "
                                         >
                                             <button className="flex items-center gap-x-2">
                                                 <span>Categories</span>
@@ -210,23 +246,23 @@ const SellerAllProducts = () => {
                                         </th>
                                         <th
                                             scope="col"
-                                            className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right "
+                                            className="px-4 py-3.5 text-sm border font-normal text-left rtl:text-right "
                                         >
                                             Regular Price
                                         </th>
                                         <th
                                             scope="col"
-                                            className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right "
+                                            className="px-4 py-3.5 border text-sm font-normal text-left rtl:text-right "
                                         >
                                             Price
                                         </th>
                                         <th
                                             scope="col"
-                                            className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right "
+                                            className="px-4 py-3.5 border text-sm font-normal text-left rtl:text-right "
                                         >
                                             Stock Quantity
                                         </th>
-                                        <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left  ">
+                                        <th scope="col" className="px-4 border py-3.5 text-sm font-normal text-center  ">
                                             <span >Action</span>
                                         </th>
                                     </tr>
@@ -234,7 +270,7 @@ const SellerAllProducts = () => {
                                 <tbody className="bg-white divide-y  divide-gray-200 ">
                                     {currentData.map((product) => (
                                         <tr>
-                                            <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
+                                            <td className="px-4 py-4 text-sm border-2 font-medium text-gray-700 whitespace-nowrap">
                                                 <div className="inline-flex items-center gap-x-3">
 
                                                     <div className="flex items-center gap-x-2">
@@ -255,7 +291,7 @@ const SellerAllProducts = () => {
                                                             <h2 className="font-medium text-gray-800  ">
                                                                 {product?.name.split(' ').slice(0, 5).join(' ')}
                                                             </h2>
-                                                            <p className="text-sm font-normal text-gray-600 text-gray-400">
+                                                            <p className="text-sm font-normal text-gray-600 ">
                                                                 {product?.sku}
                                                             </p>
                                                         </div>
@@ -263,68 +299,80 @@ const SellerAllProducts = () => {
                                                 </div>
                                             </td>
                                             <td className="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                                                {product.status === true ? <div
-                                                    onClick={() => updateProductStatus(product._id, false)}
-                                                    className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 cursor-pointer bg-emerald-100/60 bg-gray-800">
-                                                    <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-                                                    <h2 className="text-sm font-normal text-emerald-500">
-                                                        Active
-                                                    </h2>
-                                                </div> :
-                                                    <div
-                                                        onClick={() => updateProductStatus(product?._id, true)}
-                                                        className="inline-flex items-center px-3 py-1 rounded-full  cursor-pointer gap-x-2 bg-emerald-100/60 bg-gray-800">
-                                                        <span className="h-1.5 w-1.5 rounded-full bg-red-500" />
-                                                        <h2 className="text-sm font-normal text-red-500">
-                                                            Inactive
+                                                {!product.adminWare ? <div>
+                                                    {product.status === true ? <div
+                                                        onClick={() => updateProductStatus(product._id, false)}
+                                                        className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 cursor-pointer bg-emerald-100/60 bg-gray-800">
+                                                        <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                                                        <h2 className="text-sm font-normal text-emerald-500">
+                                                            Active
                                                         </h2>
-                                                    </div>}
+                                                    </div> :
+                                                        <div
+                                                            onClick={() => updateProductStatus(product?._id, true)}
+                                                            className="inline-flex items-center px-3 py-1 rounded-full  cursor-pointer gap-x-2 bg-emerald-100/60 bg-gray-800">
+                                                            <span className="h-1.5 w-1.5 rounded-full bg-red-500" />
+                                                            <h2 className="text-sm font-normal text-red-500">
+                                                                Inactive
+                                                            </h2>
+                                                        </div>}
+                                                </div>
+                                                    : <div
+
+                                                        className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 cursor-pointer bg-emerald-100/60 bg-gray-800">
+                                                        <span className="h-1.5 w-1.5 rounded-full bg-yellow-500" />
+                                                        <h2 className="text-sm font-normal text-yellow-500">
+                                                            Pending
+                                                        </h2>
+                                                    </div>
+                                                }
                                             </td>
-                                            <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
-                                                {product?.categories.map((category) => (
-                                                    <span>{category?.name}, </span>
-                                                ))}
+                                            <td className="px-4 py-4 text-sm border-2 text-gray-500  whitespace-nowrap">
+                                                {product?.categories
+                                                    .filter((category) => category !== null && category !== '')
+                                                    .map((category) => (
+                                                        <span key={category?.id}>{category?.name}, </span>
+                                                    ))}
                                             </td>
-                                            <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
+                                            <td className="px-4 py-4 text-sm border-2 text-gray-500  whitespace-nowrap">
                                                 {product.regular_price}
                                             </td>
-                                            <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
+                                            <td className="px-4 py-4 text-sm border-2 text-gray-500  whitespace-nowrap">
                                                 {product.price}
                                             </td>
-                                            <td className="px-4 py-4 text-sm whitespace-nowrap">
+                                            <td className="px-4 py-4 text-sm border-2 whitespace-nowrap">
                                                 <div className="flex items-center gap-x-2">
                                                     <p className="px-3 py-1 text-xs text-indigo-500 rounded-full bg-gray-800 bg-indigo-100/60">
                                                         {product?.stock_quantity}
                                                     </p>
                                                 </div>
                                             </td>
-                                            <td className="px-4 py-4 text-sm whitespace-nowrap">
+                                            <td className="px-4 py-4 text-sm border-2 whitespace-nowrap">
                                                 <div className="flex items-center gap-x-6">
                                                     <button
                                                         onClick={() => DeleteSeller(product._id)}
                                                         className=" transition-colors duration-200 text-red-500 hover:text-red-700 focus:outline-none">
-                                                        <svg
-                                                            xmlns="http://www.w3.org/2000/svg"
-                                                            fill="none"
-                                                            viewBox="0 0 24 24"
-                                                            strokeWidth="1.5"
-                                                            stroke="currentColor"
-                                                            className="w-5 h-5"
-                                                        >
-                                                            <path
-                                                                strokeLinecap="round"
-                                                                strokeLinejoin="round"
-                                                                d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
-                                                            />
-                                                        </svg>
+                                                        <MdDelete className="w-5 h-5" />
+
                                                     </button>
 
                                                     <button onClick={() => setOpenModal(true)} className=" transition-colors duration-200 hover:text-yellow-500  text-yellow-700 focus:outline-none mr-4">
                                                         <MdOutlineViewInAr className="w-5 h-5" />
                                                     </button>
+                                                    {
+                                                        product.woo && <button onClick={() => updateProduct(product._id, product.sku, product.item_id, 'woo')} className=" transition-colors duration-200 hover:text-yellow-500  text-yellow-700 focus:outline-none mr-4">
+                                                            {loadingStates[product._id] ? 'Updating...' : 'Update on woo'}
+                                                        </button>
+                                                    }
+                                                    {product.daraz && <button onClick={() => updateProduct(product._id, product.variations[0].SKU, product.item_id, 'daraz')} className=" transition-colors duration-200 hover:text-yellow-500  text-yellow-700 focus:outline-none mr-4">
+                                                        {loadingStates[product._id] ? 'Updating...' : 'Update on Daraz'}
+                                                    </button>}
                                                     {/* <div className='h-0 w-0'>
                                                             <EditProductForm OpenModal={OpenModal} setOpenModal={setOpenModal} product={product} />
                                                         </div> */}
+                                                </div>
+                                                <div>
+
                                                 </div>
                                             </td>
                                         </tr>
@@ -396,8 +444,8 @@ const SellerAllProducts = () => {
                     </div>
 
                 </div>
-            </section>
-        </div>
+            </section >
+        </div >
     );
 };
 export default SellerAllProducts;
