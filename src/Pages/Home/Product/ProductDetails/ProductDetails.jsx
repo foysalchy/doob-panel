@@ -11,6 +11,8 @@ import { AuthContext } from "../../../../AuthProvider/UserProvider";
 
 const ProductDetails = () => {
 
+  
+
   const { user } = useContext(AuthContext)
 
   const [selectedImage, setSelectedImage] = useState(

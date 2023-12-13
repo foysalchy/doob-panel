@@ -4,9 +4,9 @@ import { AuthContext } from '../../../../../AuthProvider/UserProvider';
 import { useState } from 'react';
 import Select from 'react-select';
 import { useEffect } from 'react';
-import DarazOption from './DarazOption';
 
-const SincronusCategory = ({ daraz, setDaraz, woo, setWoo, setInputFields, setDarazOption, datazCategory }) => {
+
+const SincronusCategory = ({ daraz, setDaraz, woo, setWoo, setInputFields, setDarazOption }) => {
 
     const { shopInfo } = useContext(AuthContext)
 
@@ -22,7 +22,6 @@ const SincronusCategory = ({ daraz, setDaraz, woo, setWoo, setInputFields, setDa
             const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/category/seller/mega-category/get/${shopInfo._id}`);
             const data = await res.json();
             if (data) {
-
                 return data;
             } else {
                 // If data is undefined or falsy, return an empty array or handle it as per your requirements
@@ -47,7 +46,6 @@ const SincronusCategory = ({ daraz, setDaraz, woo, setWoo, setInputFields, setDa
                 const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/category/seller/sub-category/get/${shopInfo._id}/${selectedCategory}`);
                 const data = await res.json();
                 if (data) {
-                    console.log(data);
                     setDarazOption(data.daraz)
                     return data.data;
                 } else {
@@ -72,8 +70,8 @@ const SincronusCategory = ({ daraz, setDaraz, woo, setWoo, setInputFields, setDa
                 const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/category/seller/mini-category/get/${shopInfo._id}/${selectedSubcategory}`);
                 const data = await res.json();
                 if (data) {
-                    setDarazOption(data)
-                    return data;
+                    setDarazOption(data.daraz)
+                    return data.data;
                 } else {
                     // If data is undefined or falsy, return an empty array or handle it as per your requirements
                     return [];
@@ -97,8 +95,8 @@ const SincronusCategory = ({ daraz, setDaraz, woo, setWoo, setInputFields, setDa
                 const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/category/seller/extra-category/get/${shopInfo._id}/${selectedMinicategory}`);
                 const data = await res.json();
                 if (data) {
-                    setDarazOption(data)
-                    return data;
+                    setDarazOption(data.daraz)
+                    return data.data;
                     setDarazOption(data || []);
                 } else {
                     // If data is undefined or falsy, return an empty array or handle it as per your requirements
@@ -252,7 +250,7 @@ const SincronusCategory = ({ daraz, setDaraz, woo, setWoo, setInputFields, setDa
                     </div>
                 </div>
 
-                <DarazOption datazCategory={datazCategory} />
+
 
             </div>
 

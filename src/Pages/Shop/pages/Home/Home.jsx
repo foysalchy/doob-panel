@@ -8,6 +8,8 @@ import Services from '../../../Home/Product/Services/Services';
 import ShopProductCategory from './ShopProductCategory/ShopProductCategory';
 import ShopNewProduct from './NewProduct/ShopNewProduct';
 import ShopFeature from './Feature/ShopFeature';
+import ShopUpcoming from './ShopUpComming/ShopUpcomming';
+import AllProduct from './AllProduct/AllProduct';
 
 const Home = () => {
     return (
@@ -16,9 +18,9 @@ const Home = () => {
                 <ShopProductHero />
                 <ShopProductCategory />
                 <ShopNewProduct />
-                <UpComingProducts />
+                <ShopUpcoming />
                 <ShopFeature />
-                <ForYouProducts />
+                <AllProduct />
                 <Services />
             </div>
         </div>

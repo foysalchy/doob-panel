@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { createUserWithEmailAndPassword, getAuth, GithubAuthProvider, GoogleAuthProvider, onAuthStateChanged, sendPasswordResetEmail, signInWithEmailAndPassword, signInWithPopup, signOut } from "firebase/auth";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { createContext } from "react";
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
@@ -14,6 +14,9 @@ const ShopAuth = ({ children }) => {
     const idMatch = pathname.match(/\/shop\/([^/]+)/);
 
     const shopId = idMatch ? idMatch[1] : null;
+
+
+
     const { data: shopCredential = {}, isLoading, isError, refetch } = useQuery({
         queryKey: ["firebase"],
         queryFn: async () => {
@@ -27,13 +30,34 @@ const ShopAuth = ({ children }) => {
             }
         },
     });
-    console.log(shopCredential);
+    const { data: shop_id = {}, isLoading: load, refetch: reload } = useQuery({
+        queryKey: ["shop_id"],
+        queryFn: async () => {
+            try {
+                const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/shopId/${shopId}`);
+                const data = await res.json();
+                return data;
+            } catch (error) {
+                console.error("Error fetching shop data:", error);
+                throw error; // Rethrow the error to mark the query as failed
+            }
+        },
+        enabled: !!shopId
+    });
+
+
+
     const [shopUser, setShopUser] = useState('');
     let auth;
 
 
     useEffect(() => {
-        // Initialize Firebase only if shopCredential is available
+
+        if (shopId !== null && reload) {
+            reload();
+            refetch()
+        }
+
         if (!isLoading && !isError && Object.keys(shopCredential).length > 0) {
             const firebaseConfig = {
                 apiKey: shopCredential.apiKey,
@@ -45,21 +69,21 @@ const ShopAuth = ({ children }) => {
                 measurementId: shopCredential.measurementId,
             };
 
-            // Initialize Firebase
+
             const app = initializeApp(firebaseConfig);
             const analytics = getAnalytics(app);
 
             auth = getAuth(app);
-            // Do other Firebase-related setup or actions here
+
         }
-    }, [shopCredential, isLoading, isError]);
+    }, [shopCredential, isLoading, isError, shopId, shop_id, load, refetch]);
 
     const [loading, setLoading] = useState(true);
     const googleProvider = new GoogleAuthProvider();
     // const githubProvider = new GithubAuthProvider();
 
     const Google = () => {
-        console.log('click');
+
         setLoading(true);
         return signInWithPopup(auth, googleProvider);
     };
@@ -111,6 +135,7 @@ const ShopAuth = ({ children }) => {
         shopUser,
         shopCredential,
         Google,
+        shop_id,
         // Github,
         // RegistrationInEmail,
         // logOut,

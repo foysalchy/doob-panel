@@ -25,6 +25,7 @@ import DarazOption from './Components/DarazOption';
 const SellerAddProduct = () => {
 
     const { shopInfo } = useContext(AuthContext)
+    const [isChecked, setIsChecked] = useState(true);
 
     const [datazCategory, setDarazOption] = useState([])
 
@@ -93,6 +94,33 @@ const SellerAddProduct = () => {
         }
     };
 
+    const ourData = [
+        "Product Description",
+        "Video URL",
+        "Name",
+        "Price",
+        "Color Family",
+        "Images",
+        "Warranty Type",
+        "SellerSKU",
+        "Quantity",
+        "Special Price",
+        "Package Weight(kg)",
+        "Package Weight (kg)",
+        "Option",
+        "adminWare",
+        "Package Length (cm)",
+        "English description",
+        "Package Width (cm)",
+        "Package Height (cm)",
+        "Name in English language",
+        "Short Description En",
+        "Brand"
+
+    ]
+
+    const filteredData = datazCategory.filter(item => !ourData.includes(item.label))
+
 
     const formSubmit = async (e) => {
         setLoading(true)
@@ -130,6 +158,12 @@ const SellerAddProduct = () => {
         const MetaTagMetaDescription = form?.MetaDescription?.value
         const MetaImageFile = form?.MetaImage?.files[0]
         const MetaImage = await imageUpload(MetaImageFile)
+
+        const darazOptionData = filteredData.map((item) => {
+            const fieldName = item.name;
+            const fieldValue = form?.[fieldName]?.value;
+            return { [fieldName]: fieldValue };
+        });
 
 
 
@@ -239,9 +273,13 @@ const SellerAddProduct = () => {
             rating_count: 0,
             shopId: shopInfo._id,
             adminWare,
+            darazOptionData,
+            upcoming: isChecked
 
 
         }
+
+        console.log(data);
 
 
         fetch('https://salenow-v2-backend.vercel.app/api/v1/seller/normal-product/', {
@@ -259,7 +297,7 @@ const SellerAddProduct = () => {
                 setLoading(false)
             }
             else {
-                Swal.fire('success', '', 'success')
+                Swal.fire('', '', 'success')
                 setLoading(false)
             }
 
@@ -275,7 +313,9 @@ const SellerAddProduct = () => {
 
             <form className='border p-10' onSubmit={formSubmit} action="">
 
-                <UploadImage youtube={youtube} setYoutube={setYoutube} coverPhoto={coverPhoto} setCoverPhoto={setCoverPhoto} />
+                <div className='mt-10'>
+                    <UploadImage youtube={youtube} setYoutube={setYoutube} coverPhoto={coverPhoto} setCoverPhoto={setCoverPhoto} />
+                </div>
 
 
 
@@ -285,6 +325,31 @@ const SellerAddProduct = () => {
 
                 <WareHouse shopInfo={shopInfo} adminWare={adminWare} setAdminWare={setAdminWare} />
 
+                <label
+                    htmlFor="Toggle3"
+                    className={`inline-flex items-center py-4 rounded-md cursor-pointer ${isChecked ? 'text-gray-800' : ''
+                        }`}
+                >
+                    <input
+                        id="Toggle3"
+                        type="checkbox"
+                        className="hidden peer"
+                        checked={isChecked}
+                        onClick={() => setIsChecked(!isChecked)}
+                    />
+                    <span
+                        className={`px-4 py-2 rounded-l-md ${isChecked ? ' bg-gray-300' : 'bg-violet-400'
+                            }`}
+                    >
+                        Upcoming Product
+                    </span>
+                    <span
+                        className={`px-4 py-2 rounded-r-md ${isChecked ? ' bg-violet-400' : 'bg-gray-300'
+                            }`}
+                    >
+                        For You Product
+                    </span>
+                </label>
 
 
                 <div id='description'>
@@ -293,9 +358,13 @@ const SellerAddProduct = () => {
                 <div className='my-4 mt-10'>
                     <Variants daraz={daraz} inputFields={inputFields} setInputFields={setInputFields} />
                 </div>
+                {daraz && <DarazOption datazCategory={datazCategory} />}
 
                 <ServiceWarranty />
                 <Delivery />
+                <div>
+
+                </div>
                 <Meta />
                 <div className="mt-4">
                     {
