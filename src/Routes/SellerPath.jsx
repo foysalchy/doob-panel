@@ -34,6 +34,7 @@ import PopupManagement from "../Pages/SellerItems/SiteContent/PopUp/PopupManagem
 import SiteContentSeller from "../Pages/SellerItems/SiteContent/SiteContentSeller";
 import AddSlider from "../Pages/SellerItems/SiteContent/Slider/AddSlider";
 import SliderManagement from "../Pages/SellerItems/SiteContent/Slider/SliderManagement";
+import AddPriceRole from "../Pages/SellerItems/Sittings/AddPriceRole/AddPriceRole";
 import SellerEmail from "../Pages/SellerItems/Sittings/SellerEmail/SellerEmail";
 import SellerLoginCredintiial from "../Pages/SellerItems/Sittings/SellerLoaginCredintial/SellerLoginCredintiial";
 import SellerPaymentGetaway from "../Pages/SellerItems/Sittings/SellerPaymentGetway/SellerPaymentGetway";
@@ -95,6 +96,10 @@ const SellerPath = [
     {
         path: "settings",
         element: <SellerSittingsPage />
+    },
+    {
+        path: "settings/price-role",
+        element: <AddPriceRole />
     },
     {
         path: "settings/auth-credential",

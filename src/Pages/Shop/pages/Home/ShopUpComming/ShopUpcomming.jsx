@@ -1,21 +1,19 @@
-import React from 'react';
-import { useContext } from 'react';
-import { AuthContext } from '../../../../../AuthProvider/UserProvider';
-import { useQuery } from '@tanstack/react-query';
+import React, { useContext } from 'react';
 import { ShopAuthProvider } from '../../../../../AuthProvider/ShopAuthProvide';
+import { useQuery } from '@tanstack/react-query';
+import { SwiperSlide, Swiper } from 'swiper/react';
 import { Link } from 'react-router-dom';
 
-import { SwiperSlide, Swiper } from 'swiper/react';
+const ShopUpcoming = () => {
 
 
-const ShopNewProduct = () => {
     const { shop_id } = useContext(ShopAuthProvider)
 
-    console.log(`https://salenow-v2-backend.vercel.app/api/v1/shop/product/${shop_id.shop_id}/new-product`);
+    console.log(`https://salenow-v2-backend.vercel.app/api/v1/shop/product/${shop_id.shop_id}/upcoming-product`);
     const { data: products = [], refetch } = useQuery({
-        queryKey: ["products"],
+        queryKey: ["upcoming"],
         queryFn: async () => {
-            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/product/${shop_id.shop_id}/new-product`);
+            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/product/${shop_id.shop_id}/upcoming-product`);
             const data = await res.json();
             return data;
         },
@@ -24,31 +22,31 @@ const ShopNewProduct = () => {
 
 
     return (
-        <div className="py-4 bg-black rounded mt-6">
+        <div className="py-4 bg-white rounded mt-6">
             <section className="body-font">
                 <div className="px-5">
-                    <div className="flex justify-between text-white">
+                    <div className="flex justify-between text-black">
                         <div className="flex justify-between align-items-center">
                             <img
                                 className="h-5/6"
-                                src="https://i.ibb.co/zfBPGTy/new-product?.png"
-                                srcSet="https://i.ibb.co/zfBPGTy/new-product?.png"
+                                src="https://i.ibb.co/5FhYvk8/upcoming-foru.png"
+                                srcSet="https://i.ibb.co/5FhYvk8/upcoming-foru.png"
                                 alt="new-product-icon"
                             />
 
                             <h3 className="whitespace-nowrap ml-2 font-medium">
-                                New Product
+                                Upcoming Product
                             </h3>
                         </div>
                         <button
                             type="button"
-                            className="px-5 py-2 font-semibold rounded bg-gray-500 text-white text-xs "
+                            className="px-5 py-2 font-semibold rounded bg-black text-gray-100 text-xs "
                         >
                             SHOP MORE
                         </button>
                     </div>
                 </div>
-                <div className="border-b border-gray-500 mx-5 mt-2"></div>
+                <div className="border-b border-gray-200 mx-5 mt-2"></div>
                 <div className=" px-5 my-4 mx-auto">
                     <Swiper
                         spaceBetween={10}
@@ -77,10 +75,10 @@ const ShopNewProduct = () => {
                                         />
                                     </a>
                                     <div className="mt-4">
-                                        <h2 className="text-gray-200 title-font text-lg font-medium">
+                                        <h2 className="text-gray-900 title-font text-lg font-medium">
                                             {product?.name.slice(0, 20)}..
                                         </h2>
-                                        <div className="flex items-center gap-10 text-gray-300">
+                                        <div className="flex items-center gap-10 text-gray-800">
                                             <del>
                                                 <span className="kalpurush">৳ </span>
                                                 {product?.regular_price}
@@ -99,6 +97,6 @@ const ShopNewProduct = () => {
             </section>
         </div>
     );
-}
+};
 
-export default ShopNewProduct;
+export default ShopUpcoming;

@@ -34,7 +34,7 @@ const ShopProductCategory = () => {
                     {categories.map((i, index) => (
                         <SwiperSlide key={index}>
 
-                            <Link to={`category/${i._id}`} className=' flex flex-col items-center justify-center w-full'>
+                            <Link to={`category/${i.name}`} className=' flex flex-col items-center justify-center w-full'>
                                 <img className='w-16 h-16 rounded-2xl object-cover shadow shadow-gray-700' srcSet={i?.img} src={i.img} alt="" />
                                 <p className='text-sm text-center'>{i.name}</p>
                             </Link>

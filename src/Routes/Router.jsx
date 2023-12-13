@@ -72,6 +72,9 @@ import Home from "../Pages/Shop/pages/Home/Home";
 import ScrollToTop from "../SrollTop";
 import ShopSignIn from "../Pages/Shop/pages/Home/Auth/ShopSignIn";
 import ShopSignUp from "../Pages/Shop/pages/Home/Auth/ShopSignUp";
+import ProductDescription from "../Pages/Home/Product/ProductDetails/ProductDescription";
+import ProductInformation from "../Pages/Shop/pages/Product/OneProduct/ProductInformation";
+import CategoryByProduct from "../Pages/Shop/pages/Product/OneProduct/CategoryByProduct/CategoryByProduct";
 
 
 
@@ -134,8 +137,38 @@ const Router = createBrowserRouter([
         },
       },
       {
-        path: ':id/:id',  // Use a dynamic route parameter for the product ID
-        element: <ProductDetails />
+        path: ':id/product/:productID',  // Use a dynamic route parameter for the product ID
+        element: <ProductInformation />,
+        loader: async ({ params }) => {
+          const id = params.id;
+          const productID = params.productID;
+          return fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/product/${id}/product/${productID}`);
+        },
+      },
+      {
+        path: ':id/categories/:shopId/:categoryId',
+        element: <CategoryByProduct />,
+        loader: async ({ params }) => {
+          console.log('params:', params); // Log params to the console
+
+          const shopId = params.shopId;
+          const categoryName = params.categoryId
+
+          if (categoryName !== null) {
+            console.log('Fetching data for categoryName:', categoryName);
+
+            const response = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/product/${shopId}/categories?category=${encodeURIComponent(categoryName)}`);
+            const data = await response.json();
+
+            console.log('Fetched data:', data);
+
+            return data;
+          } else {
+            // Handle the case when categoryName is not present
+            console.error('categoryName is not defined in the query parameters');
+            return null; // or handle it appropriately
+          }
+        },
       },
       {
         path: ':id/blog',  // Use a dynamic route parameter for the product ID

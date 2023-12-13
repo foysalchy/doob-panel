@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { Swiper, SwiperSlide } from "swiper/react";
 import 'swiper/css';
@@ -9,6 +9,7 @@ import { Pagination } from 'swiper/modules';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import { RxCross2 } from 'react-icons/rx';
+import { ShopAuthProvider } from '../../../../../AuthProvider/ShopAuthProvide';
 
 
 
@@ -29,6 +30,7 @@ const ShopProductHero = () => {
         },
     });
 
+    const { shop_id } = useContext(ShopAuthProvider)
 
     const { data: Banar = [] } = useQuery({
         queryKey: ["banar"],
@@ -101,7 +103,7 @@ const ShopProductHero = () => {
                             ?.filter((item) => item.status)
                             ?.map((item, index) => (
                                 <div className='mt-2' key={index + 1}>
-                                    <Link className='flex items-center gap-2' to={`category/${item?._id}`}>
+                                    <Link className='flex items-center gap-2' to={`categories/${shop_id.shop_id}/${item?.name}`}>
                                         <img
                                             className="h-4 w-4 rounded text-gray-400 filter grayscale brightness-90 object-cover"
                                             src={item?.img}
