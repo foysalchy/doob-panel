@@ -1,14 +1,16 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import "swiper/css";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Link, } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
+import { ShopAuthProvider } from '../../../../../AuthProvider/ShopAuthProvide';
 const ShopProductCategory = () => {
 
     const pathname = window.location.pathname;
     const idMatch = pathname.match(/\/shop\/([^/]+)/);
 
     const shopId = idMatch ? idMatch[1] : null;
+    const { shop_id } = useContext(ShopAuthProvider)
 
     console.log('Shop ID:', shopId);
     const { data: categories = [], isLoading, refetch } = useQuery({
@@ -34,7 +36,7 @@ const ShopProductCategory = () => {
                     {categories.map((i, index) => (
                         <SwiperSlide key={index}>
 
-                            <Link to={`category/${i.name}`} className=' flex flex-col items-center justify-center w-full'>
+                            <Link to={`categories/${shop_id.shop_id}/${i?.name}`} className=' flex flex-col items-center justify-center w-full'>
                                 <img className='w-16 h-16 rounded-2xl object-cover shadow shadow-gray-700' srcSet={i?.img} src={i.img} alt="" />
                                 <p className='text-sm text-center'>{i.name}</p>
                             </Link>

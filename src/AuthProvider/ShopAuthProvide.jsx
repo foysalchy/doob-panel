@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { createUserWithEmailAndPassword, getAuth, GithubAuthProvider, GoogleAuthProvider, onAuthStateChanged, sendPasswordResetEmail, signInWithEmailAndPassword, signInWithPopup, signOut } from "firebase/auth";
+import { createUserWithEmailAndPassword, getAuth, GoogleAuthProvider, onAuthStateChanged, sendPasswordResetEmail, signInWithEmailAndPassword, signInWithPopup, signOut } from "firebase/auth";
 import React, { useEffect, useRef, useState } from "react";
 import { createContext } from "react";
 import { initializeApp } from "firebase/app";
@@ -79,73 +79,188 @@ const ShopAuth = ({ children }) => {
     }, [shopCredential, isLoading, isError, shopId, shop_id, load, refetch]);
 
     const [loading, setLoading] = useState(true);
+
+    const [side, setSide] = useState(true)
+    const [token, setToken] = useState(false)
+
+
+
+
+
     const googleProvider = new GoogleAuthProvider();
-    // const githubProvider = new GithubAuthProvider();
 
-    const Google = () => {
 
+    const createUser = (email, password, name) => {
         setLoading(true);
-        return signInWithPopup(auth, googleProvider);
+
+        createUserWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+                saveUser(name, email);
+                alert('Registration Successful');
+                updateProfile(auth.currentUser, {
+                    displayName: name,
+                });
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                console.log(errorMessage);
+                setLoading(false);
+                // Handle specific error codes and show appropriate messages
+                switch (errorCode) {
+                    case 'auth/email-already-in-use':
+                        alert('Email is already in use.');
+                        break;
+                    case 'auth/invalid-email':
+                        alert('Invalid email address.');
+                        break;
+                    case 'auth/weak-password':
+                        alert('Password is too weak. Choose a stronger password.');
+                        break;
+                    default:
+                        alert(`Error: ${errorMessage}`);
+                }
+            })
+            .finally(() => {
+                setLoading(false);
+            });
     };
 
-    // const Github = () => {
-    //     setLoading(true);
-    //     return signInWithPopup(auth, githubProvider);
-    // };
+    const saveUser = (name, email) => {
+        const user = { name, email }
+        fetch("http://localhost:10000/api/v1/user/auth", {
+            method: 'post',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(user)
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                const token = data.token
+                localStorage.setItem('token', token)
+                setToken(token)
+            })
 
-    // const RegistrationInEmail = (email, password) => {
-    //     setLoading(true);
-    //     return createUserWithEmailAndPassword(auth, email, password);
-    // };
+    }
 
-    // const loginWithEamil = (email, password) => {
-    //     setLoading(true);
-    //     return signInWithEmailAndPassword(auth, email, password);
-    // };
 
-    // const logOut = () => {
-    //     setLoading(true);
-    //     signOut(auth)
 
-    // };
-    // const forgetPass = (email) => {
-    //     if (email === true) {
-    //         sendPasswordResetEmail(auth, email)
-    //             .then(() => {
-    //                 Swal.fire("We are sent a mail", "Please Check Your Mail", "success");
-    //             })
-    //             .catch((error) => { });
-    //     } else {
-    //         Swal.fire("Sorry Sir", "Please input your email", "info");
-    //     }
-    // };
+
+    const loginWithEmail = (email, password) => {
+        console.log(email, password);
+        setLoading(true)
+        signInWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+                const user = userCredential.user;
+                const email = user?.email
+                const name = user?.displayName
+                saveUser(email, name)
+                console.log(user);
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                switch (errorCode) {
+                    case 'auth/user-not-found':
+                        alert('User not found. Check your email address.');
+                        break;
+                    case 'auth/invalid-email':
+                        alert('Invalid email address.');
+                        break;
+                    case 'auth/wrong-password':
+                        alert('Invalid password. Check your password.');
+                        break;
+                    default:
+                        alert(`Error: ${errorCode}`);
+                }
+            });
+    }
+
+
+    const Google = () => {
+        setLoading(true)
+        signInWithPopup(auth, googleProvider)
+
+            .then(async (result) => {
+                const user = result.user
+                const name = user?.displayName
+                const email = user?.email
+                if (
+                    user
+                ) {
+                    saveUser(name, email)
+                }
+
+            })
+            .catch((error) => {
+                const errorMessage = error.message;
+
+            });
+    }
+
+    const logOut = () => {
+        setLoading(true)
+        signOut(auth)
+            .then(() => {
+
+                localStorage.removeItem('token')
+
+            })
+            .catch((error) => {
+                // An error happened.
+            });
+    }
+
+
+
+
+
+
+
+
+
 
     // useEffect(() => {
-    //     const unsubscribe = onAuthStateChanged(auth, (user) => {
+    //     const tokenData = localStorage.getItem('token');
+    //     setToken(tokenData)
+    //     let unsubscribe;
+
+    //     if (tokenData || token || auth !== undefined) {
+    //         unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+    //             setLoading(false);
+    //             setShopUser(currentUser);
+    //         });
+    //     } else {
     //         setLoading(false);
-    //         setUser(user);
-    //     });
+    //         setShopUser(null);
+    //     }
+
     //     return () => {
-    //         setLoading(true);
-    //         unsubscribe();
+    //         if (unsubscribe) {
+    //             unsubscribe();
+    //         }
     //     };
-    // }, []);
+    // }, [token])
+
+    console.log(auth === undefined, 'auth');
 
     const authInfo = {
         shopUser,
         shopCredential,
         Google,
         shop_id,
-        // Github,
-        // RegistrationInEmail,
-        // logOut,
-        // forgetPass,
-        // loginWithEamil,
-        // loading,
-        // setLoading
+        createUser,
+        loginWithEmail,
+        logOut,
+        setLoading,
+        loading,
+        side,
+        setSide,
+        token
     };
+
     return (
-        // Use ShopAuthProvider.Provider here instead of AuthContext.Provider
         <ShopAuthProvider.Provider value={authInfo}>{children}</ShopAuthProvider.Provider>
     );
 };

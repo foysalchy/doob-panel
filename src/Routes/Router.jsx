@@ -75,6 +75,7 @@ import ShopSignUp from "../Pages/Shop/pages/Home/Auth/ShopSignUp";
 import ProductDescription from "../Pages/Home/Product/ProductDetails/ProductDescription";
 import ProductInformation from "../Pages/Shop/pages/Product/OneProduct/ProductInformation";
 import CategoryByProduct from "../Pages/Shop/pages/Product/OneProduct/CategoryByProduct/CategoryByProduct";
+import UserProfile from "../Pages/Shop/pages/Home/UserProfile/UserProfile";
 
 
 
@@ -135,6 +136,10 @@ const Router = createBrowserRouter([
           const id = params.id;
           return fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/${id}`);
         },
+      },
+      {
+        path: ':id/user-profile',
+        element: <UserProfile />,
       },
       {
         path: ':id/product/:productID',  // Use a dynamic route parameter for the product ID

@@ -23,7 +23,7 @@ const ShopUpcoming = () => {
 
     return (
         <div className="py-4 bg-white rounded mt-6">
-            <section className="body-font">
+            {products?.data?.length ? <section className="body-font">
                 <div className="px-5">
                     <div className="flex justify-between text-black">
                         <div className="flex justify-between align-items-center">
@@ -94,7 +94,7 @@ const ShopUpcoming = () => {
                         ))}
                     </Swiper>
                 </div>
-            </section>
+            </section> : ""}
         </div>
     );
 };

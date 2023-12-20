@@ -1,15 +1,33 @@
 import { useQuery } from '@tanstack/react-query';
 import React, { useContext } from 'react';
-import { Link, useLoaderData } from 'react-router-dom';
+import { Link, useLoaderData, useNavigate } from 'react-router-dom';
 import Facebook from './facebook-round-color-icon.svg';
 import { ShopAuthProvider } from '../../../../../AuthProvider/ShopAuthProvide';
 
 const ShopSignIn = () => {
 
     const page = useLoaderData()
+    const navigate = useNavigate()
+
+    const pathname = window.location.pathname;
+    const idMatch = pathname.match(/\/shop\/([^/]+)/);
+
+    const shopId = idMatch ? idMatch[1] : null;
+
 
     const { Google, shopCredential } = useContext(ShopAuthProvider)
     console.log(shopCredential);
+
+    const userData = (e) => {
+        e.preventDefault();
+        const email = e.target.email.value
+        const password = e.target.password.value
+        console.log(email, password, shopId);
+        if (email === "regita@gmail.com" && password === '1122334' && shopId === 'salenow') {
+            console.log(`/${shopId}/user-profile`);
+            navigate(`/shop/${shopId}/user-profile`)
+        }
+    }
 
     return (
         <div className='py-8 w-full   sm:max-w-xl md:max-w-full lg:max-w-screen-md md:px-24 lg:px-8 lg:py-10 mx-auto'>
@@ -21,7 +39,7 @@ const ShopSignIn = () => {
                     </div>
                 </div>
                 <form
-                    onSubmit={(e) => e.preventDefault()}
+                    onSubmit={userData}
                     className="space-y-5"
                 >
                     <div>
@@ -30,6 +48,7 @@ const ShopSignIn = () => {
                         </label>
                         <input
                             type="email"
+                            name='email'
                             required
                             className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
                         />
@@ -40,6 +59,7 @@ const ShopSignIn = () => {
                         </label>
                         <input
                             type="password"
+                            name='password'
                             required
                             className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
                         />
@@ -78,10 +98,10 @@ const ShopSignIn = () => {
                     </svg>
                     Continue with Google
                 </button>}
-                <button className="w-full flex items-center justify-center gap-x-3 py-2.5 border rounded-lg text-sm font-medium hover:bg-gray-300 duration-150 active:bg-gray-100">
+                {shopCredential?.service?.facebook && <button className="w-full flex items-center justify-center gap-x-3 py-2.5 border rounded-lg text-sm font-medium hover:bg-gray-300 duration-150 active:bg-gray-100">
                     <img className='w-5 h-5' src={Facebook} alt="" />
                     Continue with Facebook
-                </button>
+                </button>}
                 <p className="text-center">Don't have an account? <Link to={`/shop/${page.shopId}/sign-up`} className="font-medium text-indigo-600 hover:text-indigo-500">Sign up</Link></p>
             </div>
         </div>

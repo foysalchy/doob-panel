@@ -15,7 +15,7 @@ const ShopNewProduct = () => {
     const { data: products = [], refetch } = useQuery({
         queryKey: ["products"],
         queryFn: async () => {
-            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/product/${shop_id.shop_id}/new-product`);
+            const res = await fetch(`http://localhost:5000/api/v1/shop/product/${shop_id.shop_id}/new-product`);
             const data = await res.json();
             return data;
         },
@@ -24,79 +24,81 @@ const ShopNewProduct = () => {
 
 
     return (
-        <div className="py-4 bg-black rounded mt-6">
-            <section className="body-font">
-                <div className="px-5">
-                    <div className="flex justify-between text-white">
-                        <div className="flex justify-between align-items-center">
-                            <img
-                                className="h-5/6"
-                                src="https://i.ibb.co/zfBPGTy/new-product?.png"
-                                srcSet="https://i.ibb.co/zfBPGTy/new-product?.png"
-                                alt="new-product-icon"
-                            />
+        <div>
+            {products?.data?.length ? <div className="py-4 bg-black rounded mt-6">
+                <section className="body-font">
+                    <div className="px-5">
+                        <div className="flex justify-between text-white">
+                            <div className="flex justify-between align-items-center">
+                                <img
+                                    className="h-5/6"
+                                    src="https://i.ibb.co/zfBPGTy/new-product?.png"
+                                    srcSet="https://i.ibb.co/zfBPGTy/new-product?.png"
+                                    alt="new-product-icon"
+                                />
 
-                            <h3 className="whitespace-nowrap ml-2 font-medium">
-                                New Product
-                            </h3>
+                                <h3 className="whitespace-nowrap ml-2 font-medium">
+                                    New Product
+                                </h3>
+                            </div>
+                            <button
+                                type="button"
+                                className="px-5 py-2 font-semibold rounded bg-gray-500 text-white text-xs "
+                            >
+                                SHOP MORE
+                            </button>
                         </div>
-                        <button
-                            type="button"
-                            className="px-5 py-2 font-semibold rounded bg-gray-500 text-white text-xs "
-                        >
-                            SHOP MORE
-                        </button>
                     </div>
-                </div>
-                <div className="border-b border-gray-500 mx-5 mt-2"></div>
-                <div className=" px-5 my-4 mx-auto">
-                    <Swiper
-                        spaceBetween={10}
-                        slidesPerView={3}
-                        navigation
-                        breakpoints={{
-                            640: {
-                                slidesPerView: 2,
-                            },
-                            768: {
-                                slidesPerView: 3,
-                            },
-                            1024: {
-                                slidesPerView: 5,
-                            },
-                        }}
-                    >
-                        {products?.data?.map((product, idx) => (
-                            <SwiperSlide key={idx} className="border border-gray-500 border-opacity-90 p-3 rounded">
-                                <Link to={`product/${product?._id}`} >
-                                    <a className="block relative h-48 rounded overflow-hidden">
-                                        <img
-                                            alt="ecommerce"
-                                            className="object-cover object-center w-full h-full block"
-                                            src={product?.featuredImage?.src}
-                                        />
-                                    </a>
-                                    <div className="mt-4">
-                                        <h2 className="text-gray-200 title-font text-lg font-medium">
-                                            {product?.name.slice(0, 20)}..
-                                        </h2>
-                                        <div className="flex items-center gap-10 text-gray-300">
-                                            <del>
-                                                <span className="kalpurush">৳ </span>
-                                                {product?.regular_price}
-                                            </del>
-                                            <p className="">
-                                                <span className="kalpurush">৳</span>
-                                                {product?.price}
-                                            </p>
+                    <div className="border-b border-gray-500 mx-5 mt-2"></div>
+                    <div className=" px-5 my-4 mx-auto">
+                        <Swiper
+                            spaceBetween={10}
+                            slidesPerView={3}
+                            navigation
+                            breakpoints={{
+                                640: {
+                                    slidesPerView: 2,
+                                },
+                                768: {
+                                    slidesPerView: 3,
+                                },
+                                1024: {
+                                    slidesPerView: 5,
+                                },
+                            }}
+                        >
+                            {products?.data?.map((product, idx) => (
+                                <SwiperSlide key={idx} className="border border-gray-500 border-opacity-90 p-3 rounded">
+                                    <Link to={`product/${product?._id}`} >
+                                        <a className="block relative h-48 rounded overflow-hidden">
+                                            <img
+                                                alt="ecommerce"
+                                                className="object-cover object-center w-full h-full block"
+                                                src={product?.featuredImage?.src}
+                                            />
+                                        </a>
+                                        <div className="mt-4">
+                                            <h2 className="text-gray-200 title-font text-lg font-medium">
+                                                {product?.name.slice(0, 20)}..
+                                            </h2>
+                                            <div className="flex items-center gap-10 text-gray-300">
+                                                <del>
+                                                    <span className="kalpurush">৳ </span>
+                                                    {product?.regular_price}
+                                                </del>
+                                                <p className="">
+                                                    <span className="kalpurush">৳</span>
+                                                    {product?.price}
+                                                </p>
+                                            </div>
                                         </div>
-                                    </div>
-                                </Link>
-                            </SwiperSlide>
-                        ))}
-                    </Swiper>
-                </div>
-            </section>
+                                    </Link>
+                                </SwiperSlide>
+                            ))}
+                        </Swiper>
+                    </div>
+                </section>
+            </div> : ''}
         </div>
     );
 }
