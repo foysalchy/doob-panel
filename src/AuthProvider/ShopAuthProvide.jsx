@@ -21,7 +21,7 @@ const ShopAuth = ({ children }) => {
         queryKey: ["firebase"],
         queryFn: async () => {
             try {
-                const res = await fetch(`http://localhost:5000/api/v1/shop/firebase/${shopId}`);
+                const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/firebase/${shopId}`);
                 const data = await res.json();
                 return data;
             } catch (error) {
@@ -129,7 +129,7 @@ const ShopAuth = ({ children }) => {
 
     const saveUser = (name, email) => {
         const user = { name, email }
-        fetch("http://localhost:5000/api/v1/shop/auth", {
+        fetch("https://salenow-v2-backend.vercel.app/api/v1/shop/auth", {
             method: 'post',
             headers: {
                 'content-type': 'application/json'
@@ -198,6 +198,27 @@ const ShopAuth = ({ children }) => {
     const Google = () => {
         setLoading(true)
         signInWithPopup(auth, googleProvider)
+
+            .then(async (result) => {
+                const user = result.user
+                const name = user?.displayName
+                const email = user?.email
+                if (
+                    user
+                ) {
+                    saveUser(name, email)
+                }
+
+            })
+            .catch((error) => {
+                const errorMessage = error.message;
+
+            });
+    }
+
+    const Facebook = () => {
+        setLoading(true)
+        signInWithPopup(auth, FacebookAuthProvider)
 
             .then(async (result) => {
                 const user = result.user
