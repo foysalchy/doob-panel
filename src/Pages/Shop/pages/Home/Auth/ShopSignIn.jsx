@@ -16,7 +16,6 @@ const ShopSignIn = () => {
 
 
     const { Google, shopCredential } = useContext(ShopAuthProvider)
-    console.log(shopCredential);
 
     const userData = (e) => {
         e.preventDefault();

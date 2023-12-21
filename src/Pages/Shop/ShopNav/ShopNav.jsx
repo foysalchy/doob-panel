@@ -1,7 +1,10 @@
 import React from 'react';
+import { useContext } from 'react';
+import { AuthContext } from '../../../AuthProvider/UserProvider';
 
 const ShopNav = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const { shopUser } = useContext(AuthContext)
     return (
         <div className="bg-gray-900">
             <div className="px-4 py-5 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8">
@@ -67,7 +70,7 @@ const ShopNav = () => {
 
                     </ul>
                     <ul className="flex items-center hidden space-x-8 lg:flex">
-                        <li>
+                        {!shopUser ? <li>
                             <a
                                 href="/"
                                 className="inline-flex items-center justify-center h-12 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-deep-purple-accent-400 hover:bg-deep-purple-accent-700 focus:shadow-outline focus:outline-none"
@@ -76,7 +79,16 @@ const ShopNav = () => {
                             >
                                 Sign up
                             </a>
-                        </li>
+                        </li> : <li>
+                            <a
+                                href="/"
+                                className="inline-flex items-center justify-center h-12 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-deep-purple-accent-400 hover:bg-deep-purple-accent-700 focus:shadow-outline focus:outline-none"
+                                aria-label="Sign up"
+                                title="Sign up"
+                            >
+                                Sign up
+                            </a>
+                        </li>}
                     </ul>
                     <div className="lg:hidden">
                         <button
