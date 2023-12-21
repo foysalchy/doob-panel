@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { createUserWithEmailAndPassword, getAuth, GoogleAuthProvider, onAuthStateChanged, sendPasswordResetEmail, signInWithEmailAndPassword, signInWithPopup, signOut } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, updateProfile, signInWithEmailAndPassword, signOut, onAuthStateChanged, FacebookAuthProvider } from 'firebase/auth'
 import React, { useEffect, useRef, useState } from "react";
 import { createContext } from "react";
 import { initializeApp } from "firebase/app";
@@ -21,7 +21,7 @@ const ShopAuth = ({ children }) => {
         queryKey: ["firebase"],
         queryFn: async () => {
             try {
-                const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/firebase/${shopId}`);
+                const res = await fetch(`http://localhost:5000/api/v1/shop/firebase/${shopId}`);
                 const data = await res.json();
                 return data;
             } catch (error) {
@@ -48,7 +48,7 @@ const ShopAuth = ({ children }) => {
 
 
     const [shopUser, setShopUser] = useState('');
-    let auth;
+    const [auth, setAuth] = useState()
 
 
     useEffect(() => {
@@ -73,7 +73,7 @@ const ShopAuth = ({ children }) => {
             const app = initializeApp(firebaseConfig);
             const analytics = getAnalytics(app);
 
-            auth = getAuth(app);
+            setAuth(getAuth(app))
 
         }
     }, [shopCredential, isLoading, isError, shopId, shop_id, load, refetch]);
@@ -88,6 +88,7 @@ const ShopAuth = ({ children }) => {
 
 
     const googleProvider = new GoogleAuthProvider();
+    const provider = new FacebookAuthProvider();
 
 
     const createUser = (email, password, name) => {
@@ -128,7 +129,7 @@ const ShopAuth = ({ children }) => {
 
     const saveUser = (name, email) => {
         const user = { name, email }
-        fetch("http://localhost:10000/api/v1/user/auth", {
+        fetch("http://localhost:5000/api/v1/shop/auth", {
             method: 'post',
             headers: {
                 'content-type': 'application/json'
@@ -143,6 +144,22 @@ const ShopAuth = ({ children }) => {
                 setToken(token)
             })
 
+    }
+
+
+    const updateProfile = (name) => {
+        console.log(name);
+        (auth.currentUser, {
+            displayName: name,
+            // photoURL: "https://example.com/jane-q-user/profile.jpg"
+        }).then(() => {
+            alert("profile Updated")
+
+            // ...
+        }).catch((error) => {
+            // An error occurred
+            // ...
+        });
     }
 
 
@@ -212,36 +229,30 @@ const ShopAuth = ({ children }) => {
             });
     }
 
+    console.log(auth !== undefined, 'auth');
 
+    useEffect(() => {
+        const tokenData = localStorage.getItem('token');
+        setToken(tokenData)
+        let unsubscribe;
 
+        if (tokenData && token && auth !== undefined && auth !== "") {
+            console.log(auth, "count");
+            unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+                setLoading(false);
+                setShopUser(currentUser);
+            });
+        } else {
+            setLoading(false);
+            setShopUser(null);
+        }
 
-
-
-
-
-
-
-    // useEffect(() => {
-    //     const tokenData = localStorage.getItem('token');
-    //     setToken(tokenData)
-    //     let unsubscribe;
-
-    //     if (tokenData || token || auth !== undefined) {
-    //         unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-    //             setLoading(false);
-    //             setShopUser(currentUser);
-    //         });
-    //     } else {
-    //         setLoading(false);
-    //         setShopUser(null);
-    //     }
-
-    //     return () => {
-    //         if (unsubscribe) {
-    //             unsubscribe();
-    //         }
-    //     };
-    // }, [token])
+        return () => {
+            if (unsubscribe) {
+                unsubscribe();
+            }
+        };
+    }, [token])
 
     console.log(auth === undefined, 'auth');
 
@@ -257,6 +268,7 @@ const ShopAuth = ({ children }) => {
         loading,
         side,
         setSide,
+        updateProfile,
         token
     };
 

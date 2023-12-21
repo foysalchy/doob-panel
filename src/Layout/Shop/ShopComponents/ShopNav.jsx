@@ -133,7 +133,14 @@ const ShopNav = () => {
                                 title="Sign up"
                             >
                                 Login
-                            </Link> : <p>{shopUser.name}</p>}
+                            </Link> : <Link
+                                to={`/shop/${shopId}/user-profile`}
+                                className="inline-flex items-center justify-center h-12 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-black hover:bg-gray-900 focus:shadow-outline focus:outline-none"
+                                aria-label="Sign up"
+                                title="Sign up"
+                            >
+                                User Profile
+                            </Link>}
                         </li>
                     </ul>
                     {/* <div className="lg:hidden">
