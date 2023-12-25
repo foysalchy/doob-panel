@@ -2,10 +2,10 @@ import { useState } from 'react';
 import { useContext } from 'react';
 import { MdDelete } from 'react-icons/md';
 import { ShopAuthProvider } from '../../../../../AuthProvider/ShopAuthProvide';
- import { useLoaderData } from 'react-router-dom';
+ import { Link, useLoaderData } from 'react-router-dom';
 
 const AddToCard = () => {
-    const { shopUser, shop_id } = useContext(ShopAuthProvider);
+    const { shopUser, shop_id, shopId, selectProductData, setSelectProductData } = useContext(ShopAuthProvider);
 
     const productData = useLoaderData()
     const [cartProducts, setCartProducts] = useState(productData.data);
@@ -141,7 +141,9 @@ const AddToCard = () => {
 
     }
 
-    console.log(allProducts);
+   
+
+    console.log();
     return (
         <div className='px-4 py-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-10'>
             <div className='md:flex gap-4 w-full justify-between'>
@@ -225,8 +227,9 @@ const AddToCard = () => {
                         </ul>
                     </div>
                 </div>
-                <div className='bg-gray-200 lg:w-96 mt-8 lg:mt-0 min-h-[350px] max-h-[380px] rounded p-8'>
-                    <div className="space-y-1 my-4">
+                <div className='bg-gray-200 flex flex-col flex-grow lg:w-96 mt-8 lg:mt-0 h-[330px] rounded p-8'>
+                    <div className="">
+                         <div className="space-y-1 my-4">
                         <h2 className="text-xl font-semibold ">Order Summary</h2>
                         <div className='flex justify-between '>
                             <p className="text-gray-700">Subtotal ({allProducts.length} products) </p>
@@ -240,29 +243,20 @@ const AddToCard = () => {
                             <p className="text-gray-700 ">Shipping Fee Discount </p>
                             <p className='kalpurush'>৳ <span className='font-sans'>0</span></p>
                         </div>
-                        {promoDiscount && <div className='flex justify-between '>
-                            <p className="text-gray-700 ">Promo Discount </p>
-                            <p className='kalpurush'>৳ <span className='font-sans'>{promoDiscount}</span></p>
-                        </div>}
+                       
                     </div>
-                    {!promoDiscount && <form onSubmit={checkPromoCode} className="products-center space-y-3 sm:justify-center sm:space-x-3 sm:space-y-0 sm:flex lg:justify-start">
-                        <input
-                            name='promoCode'
-                            type="text"
-                            placeholder="Enter your promo code"
-                            className="text-gray-500 border outline-none px-4 py-2 rounded w-full sm:w-72"
-                        />
-                        <button type='submit' className="px-4 py-2 bg-gray-800 rounded text-white">
-                            {process ? "Processing.." : "Apply"}
-                        </button>
-                    </form>}
+                
                     <div className='flex justify-between py-2'>
                         <p className="text-gray-700 ">Total </p>
-                        <p className='kalpurush'>৳ <span className='font-sans'>{promoPrice ? promoPrice : calculateTotal()}</span></p>
+                        <p className='kalpurush'>৳ <span className='font-sans'>{calculateTotal()}</span></p>
                     </div>
+                   </div>
                     <div className=" w-full">
-                        <button type="button" className="px-6 py-2 rounded w-full bg-gray-800 text-white">Process Checkout ({allProducts.length})
+                        <Link  to={`/shop/${shopId}/user/order?shop_id=${shop_id.shop_id}&userId=${shopUser._id}`}>
+                           <button onClick={()=> setSelectProductData(allProducts)} type="button" className="px-6 py-2 rounded w-full bg-gray-800 text-white">Process Checkout ({allProducts.length})
                         </button>
+                        </Link>
+                        
                     </div>
                 </div>
             </div>

@@ -8,7 +8,7 @@ import { ShopAuthProvider } from '../../../../../../AuthProvider/ShopAuthProvide
 
 
 const AddressBook = () => {
-    const { shopUser, shopId } = useContext(ShopAuthProvider)
+    const { shopUser, shopId, shop_id } = useContext(ShopAuthProvider)
     const [open, setOpen] = useState(false)
 
 
@@ -16,7 +16,7 @@ const AddressBook = () => {
         queryKey: ["address"],
         queryFn: async () => {
             try {
-                const res = await fetch(`https://evidently-active-magpie.ngrok-free.app/api/v1/shop/user-address?userId=${shopUser?._id}&shopId=${shopId}`, {
+                const res = await fetch(`https://evidently-active-magpie.ngrok-free.app/api/v1/shop/user-address?userId=${shopUser?._id}&shopId=${shop_id?.shop_id}`, {
                     headers: {
                         "ngrok-skip-browser-warning": "69420",
                     }
@@ -32,7 +32,7 @@ const AddressBook = () => {
         },
     });
 
-    console.log(address);
+    console.log(`https://evidently-active-magpie.ngrok-free.app/api/v1/shop/user-address?userId=${shopUser?._id}&shopId=${shop_id?.shop_id}`);
 
     return (
         <div>

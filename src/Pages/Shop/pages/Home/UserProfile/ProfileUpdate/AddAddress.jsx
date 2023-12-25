@@ -5,7 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 import BrightAlert from 'bright-alert'
 
 const AddAddress = ({ open, setOpen }) => {
-    const { shopUser, shopId } = useContext(ShopAuthProvider);
+    const { shopUser, shopId, shop_id } = useContext(ShopAuthProvider);
 
     const [division, setDivision] = useState('');
     const [district, setDistrict] = useState('');
@@ -69,7 +69,7 @@ const AddAddress = ({ open, setOpen }) => {
             deliveryLabel,
             defaultAddress,
             defaultBillingAddress,
-            shopId: shopId,
+            shopId: shop_id?.shop_id,
             userId: shopUser?._id
         };
         console.log(data);
