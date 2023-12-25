@@ -13,7 +13,6 @@ const ShopSmallNav = () => {
 
     const shopId = idMatch ? idMatch[1] : null;
 
-    console.log('Shop ID:', shopId);
     const { shopInfo } = useContext(AuthContext)
 
 

@@ -10,7 +10,7 @@ import { ShopAuthProvider } from "../AuthProvider/ShopAuthProvide";
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const { shopCredential } = useContext(ShopAuthProvider);
-console.log(shopCredential);
+
 
 // Ensure shopCredential is available
 if (!shopCredential) {
@@ -23,8 +23,7 @@ if (!shopCredential) {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-console.log(app);
 const analytics = getAnalytics(app);
-console.log(analytics);
+
 
 export default app

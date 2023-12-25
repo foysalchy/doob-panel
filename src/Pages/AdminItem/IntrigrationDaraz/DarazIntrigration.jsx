@@ -15,7 +15,6 @@ const DarazIntegration = () => {
     const [wooModal, setWoModal] = useState(false);
 
     const [code, setCode] = useState(null)
-    console.log(code);
 
     const currentTimeInMilliseconds = new Date().getTime();
 
@@ -46,7 +45,6 @@ const DarazIntegration = () => {
                 const patch = `/auth/token/createapp_key${appKey}code${code}sign_methodsha256timestamp${timestamp}`;
                 const sign = CryptoJS.HmacSHA256(patch, secretKey).toString(CryptoJS.enc.Hex).toUpperCase();
 
-                console.log(sign);
 
 
                 const body = {
@@ -69,12 +67,10 @@ const DarazIntegration = () => {
                     )
                 }).then((res) => res.json())
                     .then((data) => {
-                        console.log(data);
                         setShopInfo(data)
                         const jsonData = JSON.stringify(data);
                         document.cookie = `SellerShop=${encodeURIComponent(jsonData)}; expires=Thu, 01 Jan 2030 00:00:00 UTC; path=/seller`;
                         Swal.fire('Daraz Login Successful', '', 'success')
-                        console.log(data);
                     })
             })
         }

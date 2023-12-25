@@ -1,11 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
-import { getAuth, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, updateProfile, signInWithEmailAndPassword, signOut, onAuthStateChanged, FacebookAuthProvider } from 'firebase/auth'
+import { getAuth, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, updateProfile, signInWithEmailAndPassword, signOut, onAuthStateChanged, FacebookAuthProvider, sendPasswordResetEmail, updatePassword } from 'firebase/auth'
 import React, { useEffect, useRef, useState } from "react";
 import { createContext } from "react";
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-
-
 
 export const ShopAuthProvider = createContext();
 
@@ -15,13 +13,11 @@ const ShopAuth = ({ children }) => {
 
     const shopId = idMatch ? idMatch[1] : null;
 
-
-
     const { data: shopCredential = {}, isLoading, isError, refetch } = useQuery({
         queryKey: ["firebase"],
         queryFn: async () => {
             try {
-                const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/firebase/${shopId}`);
+                const res = await fetch(`http://localhost:5000/api/v1/shop/firebase/${shopId}`);
                 const data = await res.json();
                 return data;
             } catch (error) {
@@ -30,11 +26,12 @@ const ShopAuth = ({ children }) => {
             }
         },
     });
+
     const { data: shop_id = {}, isLoading: load, refetch: reload } = useQuery({
         queryKey: ["shop_id"],
         queryFn: async () => {
             try {
-                const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/shopId/${shopId}`);
+                const res = await fetch(`http://localhost:5000/api/v1/shop/shopId/${shopId}`);
                 const data = await res.json();
                 return data;
             } catch (error) {
@@ -45,17 +42,13 @@ const ShopAuth = ({ children }) => {
         enabled: !!shopId
     });
 
-
-
     const [shopUser, setShopUser] = useState('');
-    const [auth, setAuth] = useState()
-
+    const [auth, setAuth] = useState();
 
     useEffect(() => {
-
         if (shopId !== null && reload) {
             reload();
-            refetch()
+            refetch();
         }
 
         if (!isLoading && !isError && Object.keys(shopCredential).length > 0) {
@@ -69,27 +62,19 @@ const ShopAuth = ({ children }) => {
                 measurementId: shopCredential.measurementId,
             };
 
-
             const app = initializeApp(firebaseConfig);
             const analytics = getAnalytics(app);
 
-            setAuth(getAuth(app))
-
+            setAuth(getAuth(app));
         }
     }, [shopCredential, isLoading, isError, shopId, shop_id, load, refetch]);
 
     const [loading, setLoading] = useState(true);
-
-    const [side, setSide] = useState(true)
-    const [token, setToken] = useState(false)
-
-
-
-
+    const [side, setSide] = useState(true);
+    const [token, setToken] = useState(false);
 
     const googleProvider = new GoogleAuthProvider();
-    const provider = new FacebookAuthProvider();
-
+    const facebookProvider = new FacebookAuthProvider();
 
     const createUser = (email, password, name) => {
         setLoading(true);
@@ -105,7 +90,6 @@ const ShopAuth = ({ children }) => {
             .catch((error) => {
                 const errorCode = error.code;
                 const errorMessage = error.message;
-                console.log(errorMessage);
                 setLoading(false);
                 // Handle specific error codes and show appropriate messages
                 switch (errorCode) {
@@ -127,9 +111,10 @@ const ShopAuth = ({ children }) => {
             });
     };
 
-    const saveUser = (name, email) => {
-        const user = { name, email }
-        fetch("https://salenow-v2-backend.vercel.app/api/v1/shop/auth", {
+    const saveUser = (name, email, provider) => {
+        const user = { name, email, provider, shopId };
+        console.log(user, 'users');
+        fetch("http://localhost:5000/api/v1/shop/auth", {
             method: 'post',
             headers: {
                 'content-type': 'application/json'
@@ -138,46 +123,35 @@ const ShopAuth = ({ children }) => {
         })
             .then(res => res.json())
             .then(data => {
-                console.log(data);
-                const token = data.token
-                localStorage.setItem('token', token)
-                setToken(token)
-            })
+                const user = data.user;
+                if (user) {
+                    const userJSON = JSON.stringify(user);
 
-    }
+                    localStorage.setItem(`${shopId}`, userJSON);
 
+                    setToken(user);
+                    setShopUser(user)
+                }
 
-    const updateProfile = (name) => {
-        console.log(name);
-        (auth.currentUser, {
-            displayName: name,
-            // photoURL: "https://example.com/jane-q-user/profile.jpg"
-        }).then(() => {
-            alert("profile Updated")
-
-            // ...
-        }).catch((error) => {
-            // An error occurred
-            // ...
-        });
-    }
-
-
-
+            });
+    };
 
     const loginWithEmail = (email, password) => {
-        console.log(email, password);
-        setLoading(true)
+
+        setLoading(true);
         signInWithEmailAndPassword(auth, email, password)
-            .then((userCredential) => {
+            .then(async (userCredential) => {
                 const user = userCredential.user;
-                const email = user?.email
-                const name = user?.displayName
-                saveUser(email, name)
-                console.log(user);
+
+                const email = user?.email;
+                const name = user?.displayName;
+                console.log(name, email);
+                const provider = 'Email'
+                saveUser(name, email, provider);
             })
             .catch((error) => {
                 const errorCode = error.code;
+                console.log(error);
                 switch (errorCode) {
                     case 'auth/user-not-found':
                         alert('User not found. Check your email address.');
@@ -192,77 +166,98 @@ const ShopAuth = ({ children }) => {
                         alert(`Error: ${errorCode}`);
                 }
             });
-    }
-
+    };
 
     const Google = () => {
-        setLoading(true)
+        setLoading(true);
         signInWithPopup(auth, googleProvider)
-
             .then(async (result) => {
-                const user = result.user
-                const name = user?.displayName
-                const email = user?.email
-                if (
-                    user
-                ) {
-                    saveUser(name, email)
+                const user = result.user;
+                const name = user?.displayName;
+                const email = user?.email;
+                const provider = 'Google';
+                if (user) {
+                    saveUser(name, email, provider);
                 }
-
             })
             .catch((error) => {
                 const errorMessage = error.message;
-
             });
-    }
+    };
 
     const Facebook = () => {
-        setLoading(true)
-        signInWithPopup(auth, FacebookAuthProvider)
-
+        setLoading(true);
+        signInWithPopup(auth, facebookProvider)
             .then(async (result) => {
-                const user = result.user
-                const name = user?.displayName
-                const email = user?.email
-                if (
-                    user
-                ) {
-                    saveUser(name, email)
+                const user = result.user;
+                const name = user?.displayName;
+                const email = user?.email;
+                if (user) {
+                    saveUser(name, email, provider = "Facebook");
                 }
-
             })
             .catch((error) => {
                 const errorMessage = error.message;
-
             });
-    }
+    };
 
     const logOut = () => {
-        setLoading(true)
+        setLoading(true);
         signOut(auth)
             .then(() => {
-
-                localStorage.removeItem('token')
-
+                localStorage.removeItem(`${shopId}`);
+                setShopUser('')
+                setToken(false);
+                setLoading(false);
             })
             .catch((error) => {
-                // An error happened.
+                console.error("Error signing out:", error);
+            });
+    };
+
+
+    const ForgetPass = (email) => {
+        const Auth = getAuth();
+        console.log(email);
+        sendPasswordResetEmail(Auth, email)
+            .then(() => {
+                console.log('Password reset email sent!');
+                // Password reset email sent!
+                // ..
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                // ..
             });
     }
 
-    console.log(auth !== undefined, 'auth');
+
+    const ChangePass = (newPassword) => {
+        console.log(newPassword);
+        const auth = getAuth();
+        const user = auth.currentUser;
+        console.log(user);
+
+        updatePassword(user, newPassword).then(() => {
+            alert('Password Updated')
+        }).catch((error) => {
+            console.log(error);
+            // An error ocurred
+            // ...
+        });
+    }
+
 
     useEffect(() => {
-        const tokenData = localStorage.getItem('token');
-        setToken(tokenData)
         let unsubscribe;
 
-        if (tokenData && token && auth !== undefined && auth !== "") {
-            console.log(auth, "count");
-            unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-                setLoading(false);
-                setShopUser(currentUser);
-            });
+        const tokenData = localStorage.getItem(`${shopId}`);
+        const user = JSON.parse(tokenData);
+
+        if (user?.shopId === shopId) {
+            setToken(user);
+            setShopUser(user);
         } else {
             setLoading(false);
             setShopUser(null);
@@ -273,9 +268,7 @@ const ShopAuth = ({ children }) => {
                 unsubscribe();
             }
         };
-    }, [token])
-
-    console.log(auth === undefined, 'auth');
+    }, []);
 
     const authInfo = {
         shopUser,
@@ -289,8 +282,13 @@ const ShopAuth = ({ children }) => {
         loading,
         side,
         setSide,
-        updateProfile,
-        token
+        token,
+        shopId,
+        Facebook,
+        setShopUser,
+        setToken,
+        ForgetPass,
+        ChangePass
     };
 
     return (
@@ -299,3 +297,4 @@ const ShopAuth = ({ children }) => {
 };
 
 export default ShopAuth;
+

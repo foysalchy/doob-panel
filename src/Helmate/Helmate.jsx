@@ -2,7 +2,6 @@ import React from 'react';
 import { Helmet } from 'react-helmet';
 
 const MetaHelmet = ({ title, description, image }) => {
-    console.log(image);
 
     return (
         <Helmet>

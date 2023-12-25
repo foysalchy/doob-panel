@@ -66,9 +66,9 @@ const UserProvider = ({ children }) => {
         unsubscribe();
 
         return () => {
-            // Optional cleanup if needed
+
         };
-    }, []); // Empty dependency array ensures that this effect runs only once
+    }, []);
 
     const authInfo = {
         user,
