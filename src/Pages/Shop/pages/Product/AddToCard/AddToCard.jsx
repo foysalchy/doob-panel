@@ -1,10 +1,8 @@
-import { useQuery } from '@tanstack/react-query';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useContext } from 'react';
 import { MdDelete } from 'react-icons/md';
 import { ShopAuthProvider } from '../../../../../AuthProvider/ShopAuthProvide';
-import { useEffect } from 'react';
-import { useLoaderData } from 'react-router-dom';
+ import { useLoaderData } from 'react-router-dom';
 
 const AddToCard = () => {
     const { shopUser, shop_id } = useContext(ShopAuthProvider);
@@ -13,7 +11,7 @@ const AddToCard = () => {
     const [cartProducts, setCartProducts] = useState(productData.data);
 
 
-
+  
 
 
     const [selectAll, setSelectAll] = useState(false);
@@ -143,7 +141,7 @@ const AddToCard = () => {
 
     }
 
-
+    console.log(allProducts);
     return (
         <div className='px-4 py-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-10'>
             <div className='md:flex gap-4 w-full justify-between'>
@@ -160,6 +158,7 @@ const AddToCard = () => {
                         </div>
                         <ul className="flex flex-col divide-y dark:divide-gray-700">
                             {cartProducts.map((product) => (
+                                // eslint-disable-next-line react/jsx-key
                                 <li className="flex gap-4 flex-col py-6 sm:flex-row sm:justify-between">
                                     <input
                                         type="checkbox"
