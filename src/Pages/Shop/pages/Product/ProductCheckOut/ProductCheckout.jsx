@@ -1,80 +1,117 @@
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import { ShopAuthProvider } from '../../../../../AuthProvider/ShopAuthProvide';
+import { Link, useLoaderData, useLocation } from 'react-router-dom';
 
 const ProductCheckout = () => {
+    const { selectProductData, shopUser, shop_id, shopId, orderStage, setOrderStage } = useContext(ShopAuthProvider)
+    const addresses = useLoaderData();
+
+
+    const calculateSubtotal = () => {
+        return selectProductData.reduce((total, product) => total + (product.price * product.quantity), 0);
+    };
+
+    const calculateTotal = () => {
+        const subtotal = calculateSubtotal();
+        const shippingFee = 300;
+        const shippingFeeDiscount = 0;
+        return subtotal + shippingFee - shippingFeeDiscount;
+    };
+    //? promo code
+    const [promoPrice, setPromoPrice] = useState(false)
+    const [promoDiscount, setPromoDiscount] = useState(false)
+    const [process, setProcess] = useState(false)
+    const [promoValue, setPromoValue] = useState('')
+
+    const checkPromoCode = (e) => {
+        setProcess(true)
+        e.preventDefault();
+        const price = calculateTotal()
+        const code = e.target.promoCode.value;
+        const shopId = shop_id.shop_id
+        console.log(price);
+        fetch(`https://evidently-active-magpie.ngrok-free.app/api/v1/shop/user/promocode?shopId=${shopId}&code=${code}&token=${shopUser._id}&price=${price}`, {
+            headers: {
+                "ngrok-skip-browser-warning": "69420",
+            }
+        }).then((res) => res.json()).then((data) => {
+            console.log(data);
+            setProcess(false)
+            if (data.status) {
+                setPromoValue(code)
+                setPromoPrice(data.promoPrice)
+                setPromoDiscount(data.promoDiscount)
+            }
+        })
+
+    }
+
+    // ? go to back if product is empty
+
+    useEffect(() => {
+        if (selectProductData.length < 1) { window.history.back(); }
+    }, [selectProductData]);
+
+    // ? send data in contest
+    const sendPlaceOrderData = (data) => {
+        let promoHistory;
+        if (promoValue) {
+            promoHistory = {
+                promoCode: promoValue,
+                promoDiscount: promoDiscount,
+                promoPrice : promoPrice
+            }
+        } else {
+            promoHistory = {status : false, normalPrice : calculateTotal()}
+        }
+        const newData = {
+            productList: selectProductData,
+            promoHistory: promoHistory
+        }
+        setOrderStage(newData);
+    }
+
+    console.log(addresses);
     return (
+
         <div>
             <div className='px-4 py-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-10'>
                 <div className='md:flex gap-4 w-full justify-between'>
-                    <div className=" rounded max-w-4xl p-6  sm:p-10 bg-gray-200 text-gray-900 w-full">
+                    <div className="w-full">
+                        {
+                            addresses?.data?.length < 1 ? <>form</> : <div className="rounded max-w-4xl p-6  sm:p-10 bg-gray-200 text-gray-900 w-full">
+                            address
+                        </div>
+                        }
+                    
+                        <div className=" mt-4 rounded max-w-4xl p-6  sm:p-10 bg-gray-200 text-gray-900 w-full">
                         <div className='flex flex-col space-y-4'>
                             <h2 className="text-xl font-semibold">Your cart</h2>
-                            <div className='flex gap-4 items-center'>
-                                <input
-                                    type="checkbox"
-                                    checked={selectAll}
-                                    onChange={handleSelectAllChange}
-                                />
-                                <span>Select All </span>
-                            </div>
                             <ul className="flex flex-col divide-y dark:divide-gray-700">
-                                {cartProducts.map((product) => (
+                                {selectProductData.map((product) => (
                                     <li className="flex gap-4 flex-col py-6 sm:flex-row sm:justify-between">
-                                        <input
-                                            type="checkbox"
-                                            checked={selectAll || allProducts.some((p) => p._id === product._id)}
-                                            onChange={() => selectOne(product)}
-                                        />
-                                        <div className="flex w-full space-x-2 sm:space-x-4">
-                                            <img className="flex-shrink-0 object-cover w-20 h-20 dark:border-transparent rounded outline-none sm:w-32 sm:h-32 dark:bg-gray-500" src={product.img} alt="Polaroid camera" />
+
+                                        <div className="flex items-start w-full space-x-2 sm:space-x-4">
+                                            <img className="flex-shrink-0 object-cover w-10 h-10 dark:border-transparent rounded outline-none sm:w-[90px] sm:h-[90px] dark:bg-gray-500" src={product.img} alt="Polaroid camera" />
                                             <div className="flex flex-col justify-between w-full pb-4">
                                                 <div className="flex justify-between w-full pb-2 space-x-2">
                                                     <div className="space-y-1">
                                                         <h3 className="text-lg font-semibold leadi sm:pr-8">{product.name}</h3>
-                                                        <div>
-                                                            <label htmlFor={`Quantity-${product._id}`} className="sr-only">
-                                                                Quantity
-                                                            </label>
-                                                            <div className="flex products-center gap-1">
-                                                                <button
-                                                                    type="button"
-                                                                    onClick={() => handleDecrease(product._id)}
-                                                                    className="w-10 h-10 leading-10 text-gray-600 transition hover:opacity-75"
-                                                                >
-                                                                    -
-                                                                </button>
-                                                                <input
-                                                                    type="number"
-                                                                    id={`Quantity-${product._id}`}
-                                                                    value={product.quantity}
-                                                                    onChange={(e) => handleManualInput(product._id, parseInt(e.target.value, 10))}
-                                                                    className="py-1 w-16 rounded border px-4 border-gray-900 [-moz-appearance:_textfield] sm:text-sm [&::-webkit-outer-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button]:appearance-none"
-                                                                />
-                                                                <button
-                                                                    type="button"
-                                                                    onClick={() => handleIncrease(product._id)}
-                                                                    className="w-10 h-10 leading-10 text-gray-600 transition hover:opacity-75 "
-                                                                >
-                                                                    +
-                                                                </button>
-                                                            </div>
+                                                        <div className='flex flex-col  justify-between gap-4'>
+                                                            <h3 className="md:w-[500px]">
+                                                                {product?.productName}
+                                                            </h3>
+
+                                                            <h3 htmlFor={`Quantity-${product._id}`} className=" ">
+                                                                Quantity:  {product.quantity}
+                                                            </h3>
+
                                                         </div>
                                                     </div>
                                                     <div className="text-right">
                                                         <p className="text-lg font-semibold"><span className='kalpurush' >৳</span>{product.price}</p>
                                                         <p className="text-sm line-through dark:text-gray-600"><span className='kalpurush' >৳</span>{product.regular_price}</p>
                                                     </div>
-                                                </div>
-                                                <div className="flex text-sm divide-x">
-                                                    <button type="button" className="flex items-center px-2 py-1 space-x-1" onClick={() => handleRemove(product._id)}>
-                                                        <MdDelete className="w-5 h-5 " />
-                                                        <span>Remove</span>
-                                                    </button>
-                                                    <button type="button" className="flex items-center px-2 py-1 space-x-1">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" className="w-4 h-4 fill-current">
-                                                            <path d="M453.122,79.012a128,128,0,0,0-181.087.068l-15.511,15.7L241.142,79.114l-.1-.1a128,128,0,0,0-181.02,0l-6.91,6.91a128,128,0,0,0,0,181.019L235.485,449.314l20.595,21.578.491-.492.533.533L276.4,450.574,460.032,266.94a128.147,128.147,0,0,0,0-181.019ZM437.4,244.313,256.571,425.146,75.738,244.313a96,96,0,0,1,0-135.764l6.911-6.91a96,96,0,0,1,135.713-.051l38.093,38.787,38.274-38.736a96,96,0,0,1,135.765,0l6.91,6.909A96.11,96.11,0,0,1,437.4,244.313Z"></path>
-                                                        </svg>
-                                                        <span>Add to favorites</span>
-                                                    </button>
                                                 </div>
                                             </div>
                                         </div>
@@ -84,11 +121,13 @@ const ProductCheckout = () => {
                             </ul>
                         </div>
                     </div>
+                   </div>
+                  
                     <div className='bg-gray-200 lg:w-96 mt-8 lg:mt-0 min-h-[350px] max-h-[380px] rounded p-8'>
                         <div className="space-y-1 my-4">
                             <h2 className="text-xl font-semibold ">Order Summary</h2>
                             <div className='flex justify-between '>
-                                <p className="text-gray-700">Subtotal ({allProducts.length} products) </p>
+                                <p className="text-gray-700">Subtotal ({selectProductData.length} products) </p>
                                 <p className='kalpurush'>৳ <span className='font-sans'>{calculateSubtotal()}</span></p>
                             </div>
                             <div className='flex justify-between '>
@@ -119,9 +158,12 @@ const ProductCheckout = () => {
                             <p className="text-gray-700 ">Total </p>
                             <p className='kalpurush'>৳ <span className='font-sans'>{promoPrice ? promoPrice : calculateTotal()}</span></p>
                         </div>
-                        <div className=" w-full">
-                            <button type="button" className="px-6 py-2 rounded w-full bg-gray-800 text-white">Process Checkout ({allProducts.length})
-                            </button>
+                        <div className={`${!promoDiscount ? '' : 'mt-6'}`}>
+                            <Link to={`/shop/${shopId}/user/payment?shop_id=${shop_id?.shop_id}`} type="button">
+                                <button onClick={() => sendPlaceOrderData()} className="px-6 py-2 rounded w-full bg-gray-800 text-white" type='button'>
+                                    Place Order
+                                </button>
+                            </Link>
                         </div>
                     </div>
                 </div>

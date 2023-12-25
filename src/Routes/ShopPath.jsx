@@ -11,6 +11,9 @@ import UserProfile from "../Pages/Shop/pages/Home/UserProfile/UserProfile";
 import AddToCard from "../Pages/Shop/pages/Product/AddToCard/AddToCard";
 import CategoryByProduct from "../Pages/Shop/pages/Product/OneProduct/CategoryByProduct/CategoryByProduct";
 import ProductInformation from "../Pages/Shop/pages/Product/OneProduct/ProductInformation";
+import Payment from "../Pages/Shop/pages/Product/ProductCheckOut/Payment";
+import ProductCheckout from "../Pages/Shop/pages/Product/ProductCheckOut/ProductCheckout";
+import Product from './../Pages/Home/Product/Product';
 
 const ShopPath = [
     {
@@ -138,6 +141,74 @@ const ShopPath = [
                 const userId = userIdMatch[1];
                 try {
                     const response = await fetch(`https://evidently-active-magpie.ngrok-free.app/api/v1/shop/user/add-to-cart?userId=${userId}&shopId=${shopId}&token=${userId}`, {
+                        headers: {
+                            "ngrok-skip-browser-warning": "69420",
+                        }
+                    });
+                    const data = await response.json();
+                    return data;
+                } catch (error) {
+                    console.error("Error fetching data:", error);
+
+                    return null;
+                }
+
+            } else {
+                console.log("shop_id or userId not found in the URL");
+            }
+
+
+        }
+    },
+    {
+        path: ":id/user/payment",
+        element: <Payment />,
+          loader: async (params) => {
+            const urlObj = new URL(params.request.url)
+            const url = urlObj.href
+            const shopIdRegex = /shop_id=([^&]+)/;
+
+            const shopIdMatch = url.match(shopIdRegex);
+
+            if (shopIdMatch) {
+                const shopId = shopIdMatch[1];
+               
+                try {
+                    const response = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/payment-getaway/${shopId}`);
+                    const data = await response.json();
+                    return data;
+                } catch (error) {
+                    console.error("Error fetching data:", error);
+
+                    return null;
+                }
+
+            } else {
+                console.log("shop_id or userId not found in the URL");
+            }
+
+
+        }
+    },
+    {
+        path: ":id/user/order",
+        element: <ProductCheckout />,
+          loader: async (params) => {
+            const urlObj = new URL(params.request.url)
+
+            
+            const url = urlObj.href
+            const shopIdRegex = /shop_id=([^&]+)/;
+            const userIdRegex = /userId=([^&]+)/;
+
+            const shopIdMatch = url.match(shopIdRegex);
+            const userIdMatch = url.match(userIdRegex);
+
+            if (shopIdMatch && userIdMatch) {
+                const shopId = shopIdMatch[1];
+                const userId = userIdMatch[1];
+                try {
+                    const response = await fetch(`https://evidently-active-magpie.ngrok-free.app/api/v1/shop/user-address?userId=${userId}&shopId=${shopId}&token=${userId}`, {
                         headers: {
                             "ngrok-skip-browser-warning": "69420",
                         }

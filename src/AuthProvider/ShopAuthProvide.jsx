@@ -12,7 +12,7 @@ const ShopAuth = ({ children }) => {
     const idMatch = pathname.match(/\/shop\/([^/]+)/);
 
     const shopId = idMatch ? idMatch[1] : null;
-
+    const [selectProductData, setSelectProductData] = useState([])
     const { data: shopCredential = {}, isLoading, isError, refetch } = useQuery({
         queryKey: ["firebase"],
         queryFn: async () => {
@@ -30,6 +30,7 @@ const ShopAuth = ({ children }) => {
             }
         },
     });
+    const [orderStage, setOrderStage] = useState([]);
 
     const { data: shop_id = {}, isLoading: load, refetch: reload } = useQuery({
         queryKey: ["shop_id"],
@@ -297,7 +298,11 @@ const ShopAuth = ({ children }) => {
         setShopUser,
         setToken,
         ForgetPass,
-        ChangePass
+        ChangePass,
+        selectProductData,
+        setSelectProductData,
+        orderStage,
+        setOrderStage
     };
 
     return (
