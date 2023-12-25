@@ -1,15 +1,13 @@
-import React from 'react';
-import { useContext } from 'react';
-import { AuthContext } from '../AuthProvider/UserProvider';
-import UseShop from '../Hooks/UseShop';
+import { useContext } from "react";
+import { ShopAuthProvider } from "../AuthProvider/ShopAuthProvide";
+import { useLocation } from "react-router-dom";
 import { Navigate, useLocation } from 'react-router-dom';
 import Lottie from "lottie-react";
-import groovyWalkAnimation from "./Loading.json";
+import groovyWalkAnimation from "./Loading.json"
 
+const IsUserRegistration = ({ children }) => {
+    const { shopUser, loading } = useContext(ShopAuthProvider)
 
-const IsSelllerRegistration = ({ children }) => {
-    const { user, loading } = useContext(AuthContext)
-    const [shopInfo, isShopInfoLoading] = UseShop(user?.email)
 
     const location = useLocation()
 
@@ -28,4 +26,4 @@ const IsSelllerRegistration = ({ children }) => {
     return <Navigate to="/seller/shop-register" state={{ from: location }} replace></Navigate>
 };
 
-export default IsSelllerRegistration;
+export default IsUserRegistration;

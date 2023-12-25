@@ -9,7 +9,6 @@ const ShopFooter = () => {
 
     const shopId = idMatch ? idMatch[1] : null;
 
-    console.log('Shop ID:', shopId);
 
     const { data: pages = [], refetch, isLoading } = useQuery({
         queryKey: ["sellerPages"],
