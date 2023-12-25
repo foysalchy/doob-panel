@@ -74,11 +74,11 @@ const AddAddress = ({ open, setOpen }) => {
         };
         console.log(data);
 
-        fetch('http://localhost:5000/api/v1/shop/upload-Address', {
+        fetch('https://evidently-active-magpie.ngrok-free.app/api/v1/shop/upload-Address', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
-
+                'Content-Type': 'application/json',
+                "ngrok-skip-browser-warning": "69420",
             },
             body: JSON.stringify(data)
         })

@@ -137,7 +137,11 @@ const ShopPath = [
                 const shopId = shopIdMatch[1];
                 const userId = userIdMatch[1];
                 try {
-                    const response = await fetch(`http://localhost:5000/api/v1/shop/user/add-to-cart?userId=${userId}&shopId=${shopId}&token=${userId}`);
+                    const response = await fetch(`https://evidently-active-magpie.ngrok-free.app/api/v1/shop/user/add-to-cart?userId=${userId}&shopId=${shopId}&token=${userId}`, {
+                        headers: {
+                            "ngrok-skip-browser-warning": "69420",
+                        }
+                    });
                     const data = await response.json();
                     return data;
                 } catch (error) {
