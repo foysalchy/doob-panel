@@ -24,10 +24,11 @@ const ProfileUpdate = () => {
         };
         console.log(data);
 
-        fetch(`http://localhost:5000/api/v1/shop/update/userInfo?token=${shopUser._id}`, {
+        fetch(`https://evidently-active-magpie.ngrok-free.app/api/v1/shop/update/userInfo?token=${shopUser._id}`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
+                "ngrok-skip-browser-warning": "69420",
             },
             body: JSON.stringify(data)
         })

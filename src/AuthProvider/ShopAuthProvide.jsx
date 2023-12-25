@@ -17,7 +17,11 @@ const ShopAuth = ({ children }) => {
         queryKey: ["firebase"],
         queryFn: async () => {
             try {
-                const res = await fetch(`http://localhost:5000/api/v1/shop/firebase/${shopId}`);
+                const res = await fetch(`https://evidently-active-magpie.ngrok-free.app/api/v1/shop/firebase/${shopId}`, {
+                    headers: {
+                        "ngrok-skip-browser-warning": "69420",
+                    }
+                });
                 const data = await res.json();
                 return data;
             } catch (error) {
@@ -31,7 +35,11 @@ const ShopAuth = ({ children }) => {
         queryKey: ["shop_id"],
         queryFn: async () => {
             try {
-                const res = await fetch(`http://localhost:5000/api/v1/shop/shopId/${shopId}`);
+                const res = await fetch(`https://evidently-active-magpie.ngrok-free.app/api/v1/shop/shopId/${shopId}`, {
+                    headers: {
+                        "ngrok-skip-browser-warning": "69420",
+                    }
+                });
                 const data = await res.json();
                 return data;
             } catch (error) {
@@ -114,10 +122,11 @@ const ShopAuth = ({ children }) => {
     const saveUser = (name, email, provider) => {
         const user = { name, email, provider, shopId };
         console.log(user, 'users');
-        fetch("http://localhost:5000/api/v1/shop/auth", {
+        fetch("https://evidently-active-magpie.ngrok-free.app/api/v1/shop/auth", {
             method: 'post',
             headers: {
-                'content-type': 'application/json'
+                'content-type': 'application/json',
+                "ngrok-skip-browser-warning": "69420",
             },
             body: JSON.stringify(user)
         })

@@ -16,7 +16,11 @@ const AddressBook = () => {
         queryKey: ["address"],
         queryFn: async () => {
             try {
-                const res = await fetch(`http://localhost:5000/api/v1/shop/user-address?userId=${shopUser?._id}&shopId=${shopId}`);
+                const res = await fetch(`https://evidently-active-magpie.ngrok-free.app/api/v1/shop/user-address?userId=${shopUser?._id}&shopId=${shopId}`, {
+                    headers: {
+                        "ngrok-skip-browser-warning": "69420",
+                    }
+                });
 
                 const data = await res.json();
                 const divisions = data.data;

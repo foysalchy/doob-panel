@@ -107,9 +107,9 @@ const AddToCard = () => {
         setAllProducts((prevProducts) =>
             prevProducts.filter((product) => product._id !== productId)
         );
-        fetch(`http://localhost:5000/api/v1/shop/user/add-to-cart?productId=${productId}&token=${shopUser._id}`, {
+        fetch(`https://evidently-active-magpie.ngrok-free.app/api/v1/shop/user/add-to-cart?productId=${productId}&token=${shopUser._id}`, {
             method: "DELETE",
-            headers: { "Content-Type": "application/json" }
+            headers: { "Content-Type": "application/json", "ngrok-skip-browser-warning": "69420", }
 
         }).then((res) => res.json()).then((data) => {
             console.log(data);
@@ -128,7 +128,11 @@ const AddToCard = () => {
         const code = e.target.promoCode.value
         const shopId = shop_id.shop_id
         console.log(price);
-        fetch(`http://localhost:5000/api/v1/shop/user/promocode?shopId=${shopId}&code=${code}&token=${shopUser._id}&price=${price}`).then((res) => res.json()).then((data) => {
+        fetch(`https://evidently-active-magpie.ngrok-free.app/api/v1/shop/user/promocode?shopId=${shopId}&code=${code}&token=${shopUser._id}&price=${price}`, {
+            headers: {
+                "ngrok-skip-browser-warning": "69420",
+            }
+        }).then((res) => res.json()).then((data) => {
             console.log(data);
             setProcess(false)
             if (data.status) {
