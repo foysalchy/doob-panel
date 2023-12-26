@@ -13,8 +13,6 @@ const AddNewWarehouse = ({ refetch, setOpenModal }) => {
         const image = e.target.image.files[0]
 
 
-
-
         const formData = new FormData();
         formData.append("image", image);
         const url = `https://salenow-v2-backend.vercel.app/api/v1/image/upload-image`;
@@ -31,7 +29,6 @@ const AddNewWarehouse = ({ refetch, setOpenModal }) => {
                     slag,
                     address,
                     description,
-
                 };
                 postWareHouse(data);
             });
@@ -84,12 +81,11 @@ const AddNewWarehouse = ({ refetch, setOpenModal }) => {
 
                 <button type='submit' className="group mt-10 relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500">
                     <span className="absolute -start-full transition-all group-hover:start-4">
-
                         <FaLongArrowAltRight />
-
                     </span>
                     <span className="text-sm font-medium transition-all group-hover:ms-4">Upload Warehouse</span>
                 </button>
+                <button  className="bg-gray-900 text-white px-8 py-2">Next</button>
             </form>
         </div>
     );
