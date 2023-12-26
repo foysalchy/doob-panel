@@ -83,7 +83,6 @@ const CategoryByProduct = () => {
                                     </details>
                                 </div>
                                 <div className="space-y-2">
-
                                     <details
                                         className="overflow-hidden rounded border border-gray-300 [&_summary::-webkit-details-marker]:hidden"
                                     >

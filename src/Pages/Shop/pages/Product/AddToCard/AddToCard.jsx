@@ -252,10 +252,14 @@ const AddToCard = () => {
                     </div>
                    </div>
                     <div className=" w-full">
-                        <Link  to={`/shop/${shopId}/user/order?shop_id=${shop_id.shop_id}&userId=${shopUser._id}`}>
+                           {
+                                allProducts.length  ?  <Link  to={`/shop/${shopId}/user/order?shop_id=${shop_id.shop_id}&userId=${shopUser._id}`}>
                            <button onClick={()=> setSelectProductData(allProducts)} type="button" className="px-6 py-2 rounded w-full bg-gray-800 text-white">Process Checkout ({allProducts.length})
                         </button>
-                        </Link>
+                        </Link> :   <button disabled type="button" className="px-6 py-2 rounded w-full bg-gray-600 text-white">Process Checkout ({allProducts.length})
+                        </button>
+                          }
+                        
                         
                     </div>
                 </div>
