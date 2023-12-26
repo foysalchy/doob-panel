@@ -1,18 +1,70 @@
-import React, { useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link, useLoaderData } from 'react-router-dom';
+import { ShopAuthProvider } from '../../../../../../AuthProvider/ShopAuthProvide';
 
 const CategoryByProduct = () => {
-    const products = useLoaderData()
-
+     const products = useLoaderData();
+    const { shop_id } = useContext(ShopAuthProvider);
     const pathname = window.location.pathname;
     const idMatch = pathname.match(/\/shop\/([^/]+)/);
-
+    const [filteredData, setFilteredData] = useState(products?.data);
     const shopId = idMatch ? idMatch[1] : null;
+    const [minPrice, setMinPrice] = useState(false);
+    const [maxPrice, setMaxPrice] = useState(false);
+    const [checkedBrands, setCheckedBrands] = useState([]);
+    const [brands, setBrands] = useState([])
+    // Fetch brands data
+    useEffect(() => {
+        const fetchBrands = async () => {
+            try {
+                const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/brand/${shop_id?.shop_id}`);
+                const data = await res.json();
+                // Update brands state
+                setBrands(data);
+            } catch (error) {
+                console.error('Failed to fetch brands:', error);
+            }
+        };
 
+        fetchBrands();
+    }, [shop_id]);
 
+    // Handle checkbox change
+    const handleCheckboxChange = (brandId) => {
+        if (checkedBrands.includes(brandId)) {
+            setCheckedBrands(checkedBrands.filter(id => id !== brandId));
+        } else {
+            setCheckedBrands([...checkedBrands, brandId]);
+        }
+    };
 
+    // Apply filters
+    useEffect(() => {
+        const applyFilters = () => {
+            let filteredProducts = products?.data || [];
 
-    return (
+            if (checkedBrands.length > 0) {
+                filteredProducts = filteredProducts.filter(product => checkedBrands.includes(product.brandName));
+            }
+
+            if (minPrice && !maxPrice) {
+                filteredProducts = filteredProducts.filter(product => parseInt(product.price) >= minPrice);
+            } else if (!minPrice && maxPrice) {
+                filteredProducts = filteredProducts.filter(product => parseInt(product.price) <= maxPrice);
+            } else if (minPrice && maxPrice) {
+                filteredProducts = filteredProducts.filter(product => {
+                    const productPrice = parseInt(product.price);
+                    return productPrice >= minPrice && productPrice <= maxPrice;
+                });
+            }
+
+            setFilteredData(filteredProducts);
+        };
+
+        applyFilters();
+    }, [products, checkedBrands, minPrice, maxPrice]);
+     return (
         <div>
             <section className="text-gray-600 body-font">
                 <div className="px-4 py-4 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8">
@@ -115,29 +167,19 @@ const CategoryByProduct = () => {
                                             </header>
 
                                             <ul className="space-y-1 border-t border-gray-200 p-4">
-                                                <li>
-                                                    <label htmlFor="FilterInStock" className="inline-flex items-center gap-2">
-                                                        <input type="checkbox" id="FilterInStock" className="h-5 w-5 rounded border-gray-300" />
+                                              
 
-                                                        <span className="text-sm font-medium text-gray-700"> In Stock (5+) </span>
-                                                    </label>
-                                                </li>
-
-                                                <li>
-                                                    <label htmlFor="FilterPreOrder" className="inline-flex items-center gap-2">
-                                                        <input type="checkbox" id="FilterPreOrder" className="h-5 w-5 rounded border-gray-300" />
-
-                                                        <span className="text-sm font-medium text-gray-700"> Pre Order (3+) </span>
-                                                    </label>
-                                                </li>
-
-                                                <li>
-                                                    <label htmlFor="FilterOutOfStock" className="inline-flex items-center gap-2">
-                                                        <input type="checkbox" id="FilterOutOfStock" className="h-5 w-5 rounded border-gray-300" />
-
-                                                        <span className="text-sm font-medium text-gray-700"> Out of Stock (10+) </span>
-                                                    </label>
-                                                </li>
+                                                {brands?.map(brand =>   <li key={brand._id}>
+                                                            <label htmlFor={`brandCheckbox-${brand._id}`} className="inline-flex items-center gap-2">
+                                                                <input
+                                                                type="checkbox"
+                                                                id={`brandCheckbox-${brand._id}`}
+                                                                className="h-5 w-5 rounded border-gray-300"
+                                                                onChange={() => handleCheckboxChange(brand.name)}
+                                                                checked={checkedBrands.includes(brand?.name)}/>
+                                                                <span className="text-sm font-medium text-gray-700">{brand?.name}</span>
+                                                            </label>
+                                                         </li>)}
                                             </ul>
                                         </div>
                                     </details>
@@ -227,37 +269,40 @@ const CategoryByProduct = () => {
                                         </summary>
 
                                         <div className="border-t border-gray-200 bg-white">
-                                            <header className="flex items-center justify-between p-4">
-                                                <span className="text-sm text-gray-700"> The highest price is $600 </span>
-
-                                                <button type="button" className="text-sm text-gray-900 underline underline-offset-4">
-                                                    Reset
-                                                </button>
-                                            </header>
+                                            
 
                                             <div className="border-t border-gray-200 p-4">
                                                 <div className="flex justify-between gap-4">
-                                                    <label htmlFor="FilterPriceFrom" className="flex items-center gap-2">
-                                                        <span className="text-sm text-gray-600">$</span>
-
+                                                    <label htmlFor="FilterPriceFrom" className="flex items-center gap-2  ring-1 ring-gray-500 rounded px-2 py-1">
+                                                        <span className="text-xl font-semibold text-gray-600">৳</span>
                                                         <input
+                                                            onChange={(e) => setMinPrice(e.target.value)}
+                                                            value={minPrice}
                                                             type="number"
                                                             id="FilterPriceFrom"
                                                             placeholder="From"
-                                                            className="w-full rounded-md border-gray-200 shadow-sm sm:text-sm"
+                                                            className="w-full"
                                                         />
                                                     </label>
 
-                                                    <label htmlFor="FilterPriceTo" className="flex items-center gap-2">
-                                                        <span className="text-sm text-gray-600">$</span>
-
+                                                    <label htmlFor="FilterPriceTo" className="flex items-center gap-2  ring-1 ring-gray-500 rounded px-2 py-1">
+                                                        <span className="text-xl font-semibold text-gray-600">৳</span>
                                                         <input
+                                                            onChange={(e) => setMaxPrice(e.target.value)}
+                                                            value={maxPrice}
                                                             type="number"
                                                             id="FilterPriceTo"
                                                             placeholder="To"
                                                             className="w-full rounded-md border-gray-200 shadow-sm sm:text-sm"
                                                         />
                                                     </label>
+
+                                                    <button onClick={() => {
+                                                        setMaxPrice(false);
+                                                        setMinPrice(false)
+                                                        }} type="button" className="text-sm text-gray-900 underline underline-offset-4">
+                                                    Reset
+                                                </button>
                                                 </div>
                                             </div>
                                         </div>
@@ -450,7 +495,7 @@ const CategoryByProduct = () => {
                             </div>
                             <div className="grid grid-cols-3 gap-4 w-full ">
                                 {
-                                    products?.data?.map((product) => (
+                                    filteredData?.map((product) => (
                                         <Link to={`/shop/${shopId}/product/${product?._id}`} className=" border p-4 w-full">
                                             <a className="block relative h-48 rounded overflow-hidden">
                                                 <img
