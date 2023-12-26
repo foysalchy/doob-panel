@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useContext } from 'react';
 import { MdDelete } from 'react-icons/md';
 import { ShopAuthProvider } from '../../../../../AuthProvider/ShopAuthProvide';
- import { Link, useLoaderData } from 'react-router-dom';
+import { Link, useLoaderData } from 'react-router-dom';
 
 const AddToCard = () => {
     const { shopUser, shop_id, shopId, selectProductData, setSelectProductData } = useContext(ShopAuthProvider);
@@ -11,7 +11,7 @@ const AddToCard = () => {
     const [cartProducts, setCartProducts] = useState(productData.data);
 
 
-  
+
 
 
     const [selectAll, setSelectAll] = useState(false);
@@ -105,7 +105,7 @@ const AddToCard = () => {
         setAllProducts((prevProducts) =>
             prevProducts.filter((product) => product._id !== productId)
         );
-        fetch(`https://evidently-active-magpie.ngrok-free.app/api/v1/shop/user/add-to-cart?productId=${productId}&token=${shopUser._id}`, {
+        fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/user/add-to-cart?productId=${productId}&token=${shopUser._id}`, {
             method: "DELETE",
             headers: { "Content-Type": "application/json", "ngrok-skip-browser-warning": "69420", }
 
@@ -126,7 +126,7 @@ const AddToCard = () => {
         const code = e.target.promoCode.value
         const shopId = shop_id.shop_id
         console.log(price);
-        fetch(`https://evidently-active-magpie.ngrok-free.app/api/v1/shop/user/promocode?shopId=${shopId}&code=${code}&token=${shopUser._id}&price=${price}`, {
+        fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/user/promocode?shopId=${shopId}&code=${code}&token=${shopUser._id}&price=${price}`, {
             headers: {
                 "ngrok-skip-browser-warning": "69420",
             }
@@ -141,7 +141,7 @@ const AddToCard = () => {
 
     }
 
-   
+
 
     console.log();
     return (
@@ -229,38 +229,38 @@ const AddToCard = () => {
                 </div>
                 <div className='bg-gray-200 flex flex-col flex-grow lg:w-96 mt-8 lg:mt-0 h-[330px] rounded p-8'>
                     <div className="">
-                         <div className="space-y-1 my-4">
-                        <h2 className="text-xl font-semibold ">Order Summary</h2>
-                        <div className='flex justify-between '>
-                            <p className="text-gray-700">Subtotal ({allProducts.length} products) </p>
-                            <p className='kalpurush'>৳ <span className='font-sans'>{calculateSubtotal()}</span></p>
+                        <div className="space-y-1 my-4">
+                            <h2 className="text-xl font-semibold ">Order Summary</h2>
+                            <div className='flex justify-between '>
+                                <p className="text-gray-700">Subtotal ({allProducts.length} products) </p>
+                                <p className='kalpurush'>৳ <span className='font-sans'>{calculateSubtotal()}</span></p>
+                            </div>
+                            <div className='flex justify-between '>
+                                <p className="text-gray-700">Shipping Fee </p>
+                                <p className='kalpurush'>৳ <span className='font-sans'>300</span></p>
+                            </div>
+                            <div className='flex justify-between '>
+                                <p className="text-gray-700 ">Shipping Fee Discount </p>
+                                <p className='kalpurush'>৳ <span className='font-sans'>0</span></p>
+                            </div>
+
                         </div>
-                        <div className='flex justify-between '>
-                            <p className="text-gray-700">Shipping Fee </p>
-                            <p className='kalpurush'>৳ <span className='font-sans'>300</span></p>
+
+                        <div className='flex justify-between py-2'>
+                            <p className="text-gray-700 ">Total </p>
+                            <p className='kalpurush'>৳ <span className='font-sans'>{calculateTotal()}</span></p>
                         </div>
-                        <div className='flex justify-between '>
-                            <p className="text-gray-700 ">Shipping Fee Discount </p>
-                            <p className='kalpurush'>৳ <span className='font-sans'>0</span></p>
-                        </div>
-                       
                     </div>
-                
-                    <div className='flex justify-between py-2'>
-                        <p className="text-gray-700 ">Total </p>
-                        <p className='kalpurush'>৳ <span className='font-sans'>{calculateTotal()}</span></p>
-                    </div>
-                   </div>
                     <div className=" w-full">
-                           {
-                                allProducts.length  ?  <Link  to={`/shop/${shopId}/user/order?shop_id=${shop_id.shop_id}&userId=${shopUser._id}`}>
-                           <button onClick={()=> setSelectProductData(allProducts)} type="button" className="px-6 py-2 rounded w-full bg-gray-800 text-white">Process Checkout ({allProducts.length})
-                        </button>
-                        </Link> :   <button disabled type="button" className="px-6 py-2 rounded w-full bg-gray-600 text-white">Process Checkout ({allProducts.length})
-                        </button>
-                          }
-                        
-                        
+                        {
+                            allProducts.length ? <Link to={`/shop/${shopId}/user/order?shop_id=${shop_id.shop_id}&userId=${shopUser._id}`}>
+                                <button onClick={() => setSelectProductData(allProducts)} type="button" className="px-6 py-2 rounded w-full bg-gray-800 text-white">Process Checkout ({allProducts.length})
+                                </button>
+                            </Link> : <button disabled type="button" className="px-6 py-2 rounded w-full bg-gray-600 text-white">Process Checkout ({allProducts.length})
+                            </button>
+                        }
+
+
                     </div>
                 </div>
             </div>

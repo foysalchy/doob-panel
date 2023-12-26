@@ -140,7 +140,7 @@ const ShopPath = [
                 const shopId = shopIdMatch[1];
                 const userId = userIdMatch[1];
                 try {
-                    const response = await fetch(`https://evidently-active-magpie.ngrok-free.app/api/v1/shop/user/add-to-cart?userId=${userId}&shopId=${shopId}&token=${userId}`, {
+                    const response = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/user/add-to-cart?userId=${userId}&shopId=${shopId}&token=${userId}`, {
                         headers: {
                             "ngrok-skip-browser-warning": "69420",
                         }
@@ -163,7 +163,7 @@ const ShopPath = [
     {
         path: ":id/user/payment",
         element: <Payment />,
-          loader: async (params) => {
+        loader: async (params) => {
             const urlObj = new URL(params.request.url)
             const url = urlObj.href
             const shopIdRegex = /shop_id=([^&]+)/;
@@ -172,7 +172,7 @@ const ShopPath = [
 
             if (shopIdMatch) {
                 const shopId = shopIdMatch[1];
-               
+
                 try {
                     const response = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/payment-getaway/${shopId}`);
                     const data = await response.json();
@@ -193,10 +193,10 @@ const ShopPath = [
     {
         path: ":id/user/order",
         element: <ProductCheckout />,
-          loader: async (params) => {
+        loader: async (params) => {
             const urlObj = new URL(params.request.url)
 
-            
+
             const url = urlObj.href
             const shopIdRegex = /shop_id=([^&]+)/;
             const userIdRegex = /userId=([^&]+)/;
@@ -208,7 +208,7 @@ const ShopPath = [
                 const shopId = shopIdMatch[1];
                 const userId = userIdMatch[1];
                 try {
-                    const response = await fetch(`https://evidently-active-magpie.ngrok-free.app/api/v1/shop/user-address?userId=${userId}&shopId=${shopId}&token=${userId}`, {
+                    const response = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/user-address?userId=${userId}&shopId=${shopId}&token=${userId}`, {
                         headers: {
                             "ngrok-skip-browser-warning": "69420",
                         }

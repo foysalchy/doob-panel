@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { RxCross2 } from 'react-icons/rx';
- import { useQuery } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import BrightAlert from 'bright-alert'
 import { ShopAuthProvider } from '../../../../../AuthProvider/ShopAuthProvide';
 
@@ -74,7 +74,7 @@ const CheckoutModal = ({ modalOpen, setModalOpen, defaultAddress }) => {
         };
         console.log(data);
 
-        fetch('https://evidently-active-magpie.ngrok-free.app/api/v1/shop/upload-Address', {
+        fetch('https://salenow-v2-backend.vercel.app/api/v1/shop/upload-Address', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -95,7 +95,7 @@ const CheckoutModal = ({ modalOpen, setModalOpen, defaultAddress }) => {
 
 
     const upazilla = district && JSON?.parse(district).upazilla
-   console.log(defaultAddress);
+    console.log(defaultAddress);
     return (
         <div>
             <div className={modalOpen ? 'flex' : 'hidden'}>
@@ -125,13 +125,13 @@ const CheckoutModal = ({ modalOpen, setModalOpen, defaultAddress }) => {
 
                                     <label htmlFor="city" className="mt-4 text-sm font-medium text-gray-700">City</label>
                                     <select id="city" onClick={(e) => setDistrict(e.target.value)} name="city" className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                                         <option selected value={defaultAddress?.city}>{defaultAddress?.city}</option>
+                                        <option selected value={defaultAddress?.city}>{defaultAddress?.city}</option>
                                         {districts && districts?.map((district) => <option label={district.district} key={district.district} value={JSON.stringify(district)}>{district.district}</option>)}
                                     </select>
 
                                     <label htmlFor="area" className="mt-4 text-sm font-medium text-gray-700">Area</label>
                                     <select id="area" name="area" className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                                         <option selected value={defaultAddress?.area}>{defaultAddress?.area}</option>
+                                        <option selected value={defaultAddress?.area}>{defaultAddress?.area}</option>
                                         {
                                             upazilla && upazilla.map((up) => <option value={up}>{up}</option>)
                                         }
@@ -145,7 +145,7 @@ const CheckoutModal = ({ modalOpen, setModalOpen, defaultAddress }) => {
 
                                     <label htmlFor="deliveryLabel" className="mt-4 text-sm font-medium text-gray-700">Select a label for effective delivery:</label>
                                     <select id="deliveryLabel" name="deliveryLabel" className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block py-2 px-3 w-full shadow-sm sm:text-sm border-gray-300 rounded-md border">
-                                         <option value="Home">Home</option>
+                                        <option value="Home">Home</option>
                                         <option value="Office">Office</option>
                                     </select>
 

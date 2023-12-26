@@ -72,8 +72,8 @@ const EditAddress = ({ data, refetch }) => {
             shopId: shop_id?.shop_id,
             userId: shopUser?._id
         };
-        console.log(data == true ? "https://evidently-active-magpie.ngrok-free.app/api/v1/shop/upload-Address" : `https://evidently-active-magpie.ngrok-free.app/api/v1/shop/upload-Address?addressId=${data._id}`);
-        const url = data == true ? "https://evidently-active-magpie.ngrok-free.app/api/v1/shop/upload-Address" : `https://evidently-active-magpie.ngrok-free.app/api/v1/shop/upload-Address?addressId=${data._id}`
+        console.log(data == true ? "https://salenow-v2-backend.vercel.app/api/v1/shop/upload-Address" : `https://salenow-v2-backend.vercel.app/api/v1/shop/upload-Address?addressId=${data._id}`);
+        const url = data == true ? "https://salenow-v2-backend.vercel.app/api/v1/shop/upload-Address" : `https://salenow-v2-backend.vercel.app/api/v1/shop/upload-Address?addressId=${data._id}`
 
         fetch(url, {
             method: 'PATCH',

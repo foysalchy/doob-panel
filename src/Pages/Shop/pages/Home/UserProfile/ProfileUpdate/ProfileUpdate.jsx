@@ -24,7 +24,7 @@ const ProfileUpdate = () => {
         };
         console.log(data);
 
-        fetch(`https://evidently-active-magpie.ngrok-free.app/api/v1/shop/update/userInfo?token=${shopUser._id}`, {
+        fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/update/userInfo?token=${shopUser._id}`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',

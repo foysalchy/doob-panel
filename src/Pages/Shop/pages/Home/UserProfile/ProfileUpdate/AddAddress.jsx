@@ -80,7 +80,7 @@ const AddAddress = ({ open, setOpen, address, refetch }) => {
     //     };
     //     console.log(data);
 
-    //     fetch('https://evidently-active-magpie.ngrok-free.app/api/v1/shop/upload-Address', {
+    //     fetch('https://salenow-v2-backend.vercel.app/api/v1/shop/upload-Address', {
     //         method: 'POST',
     //         headers: {
     //             'Content-Type': 'application/json',

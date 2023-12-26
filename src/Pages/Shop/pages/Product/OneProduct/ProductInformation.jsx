@@ -64,7 +64,7 @@ const ProductInformation = () => {
             productId: product._id,
             shopId: shop_id.shop_id
         }
-        fetch(`https://evidently-active-magpie.ngrok-free.app/api/v1/shop/user/add-to-cart?token=${shopUser._id}`, {
+        fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/user/add-to-cart?token=${shopUser._id}`, {
             method: "POST",
             headers: { 'Content-Type': 'application/json', "ngrok-skip-browser-warning": "69420", },
             body: JSON.stringify(addToCard)

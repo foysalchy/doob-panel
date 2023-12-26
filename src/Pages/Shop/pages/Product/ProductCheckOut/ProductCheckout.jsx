@@ -34,7 +34,7 @@ const ProductCheckout = () => {
         const code = e.target.promoCode.value;
         const shopId = shop_id.shop_id
         console.log(price);
-        fetch(`https://evidently-active-magpie.ngrok-free.app/api/v1/shop/user/promocode?shopId=${shopId}&code=${code}&token=${shopUser._id}&price=${price}`, {
+        fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/user/promocode?shopId=${shopId}&code=${code}&token=${shopUser._id}&price=${price}`, {
             headers: {
                 "ngrok-skip-browser-warning": "69420",
             }
@@ -63,10 +63,10 @@ const ProductCheckout = () => {
             promoHistory = {
                 promoCode: promoValue,
                 promoDiscount: promoDiscount,
-                promoPrice : promoPrice
+                promoPrice: promoPrice
             }
         } else {
-            promoHistory = {status : false, normalPrice : calculateTotal()}
+            promoHistory = { status: false, normalPrice: calculateTotal() }
         }
         const newData = {
             productList: selectProductData,
@@ -82,86 +82,86 @@ const ProductCheckout = () => {
             <div className='px-4 py-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-10'>
                 <div className='md:flex gap-4 w-full justify-between'>
                     <div className="w-full">
-                        { 
+                        {
                             addresses?.data?.length < 1 ? <>form</> : <div className="rounded max-w-4xl p-6  sm:p-10 bg-gray-200 text-gray-900 w-full">
-                            <div className='' >
-                              <div className="">
-                            {
+                                <div className='' >
+                                    <div className="">
+                                        {
                                             defaultAddress && <div>
-                                            <div className='bg-gray-100 capitalize p-4 rounded hover:shadow-xl border'>
-                                                <h1 >{defaultAddress?.fullName}</h1>
-                                                <h1>{defaultAddress?.mobileNumber}</h1>
-                                                <small><span>{defaultAddress?.address},</span> <span>{defaultAddress?.province} - </span> <span>{defaultAddress?.city}</span> <span>{defaultAddress?.area}</span></small>
-                                                <br />
-                                                <small className='flex gap-4 items-center mt-2'>
-                                                    <span className='bg-green-200 p-0.5 px-1 rounded text-xs text-black '> {defaultAddress.deliveryLabel}</span>
-                                                    <span className='bg-gray-200 rounded text-xs px-1'>{defaultAddress?.defaultAddress && "DEFAULT DELIVERY ADDRESS"}</span>
+                                                <div className='bg-gray-100 capitalize p-4 rounded hover:shadow-xl border'>
+                                                    <h1 >{defaultAddress?.fullName}</h1>
+                                                    <h1>{defaultAddress?.mobileNumber}</h1>
+                                                    <small><span>{defaultAddress?.address},</span> <span>{defaultAddress?.province} - </span> <span>{defaultAddress?.city}</span> <span>{defaultAddress?.area}</span></small>
+                                                    <br />
+                                                    <small className='flex gap-4 items-center mt-2'>
+                                                        <span className='bg-green-200 p-0.5 px-1 rounded text-xs text-black '> {defaultAddress.deliveryLabel}</span>
+                                                        <span className='bg-gray-200 rounded text-xs px-1'>{defaultAddress?.defaultAddress && "DEFAULT DELIVERY ADDRESS"}</span>
                                                         <span className='bg-gray-200 rounded text-xs px-1'>{defaultAddress?.defaultBillingAddress && "DEFAULT BILLING ADDRESS"}</span>
-                                                        <button onClick={()=> setModalOpen(!modalOpen)} className='bg-gray-200 px-2'>Edit</button>
+                                                        <button onClick={() => setModalOpen(!modalOpen)} className='bg-gray-200 px-2'>Edit</button>
                                                         <CheckoutModal defaultAddress={defaultAddress} modalOpen={modalOpen} setModalOpen={setModalOpen} />
-                                                </small>
+                                                    </small>
+                                                </div>
                                             </div>
+                                        }
+                                    </div>
+                                    {!defaultAddress && <button
+                                        onClick={() => setOpen(true)}
+                                        className="flex gap-4 items-center justify-center"
+                                        style={{
+                                            padding: '10px',
+                                            backgroundColor: '#f0f0f0',
+                                            border: 'none',
+                                            borderRadius: '5px',
+                                            cursor: 'pointer',
+                                        }}
+                                    >
+                                        <PiPlus />  Add New Delivery Address
+                                    </button>
+                                    }
                                 </div>
-                            }
-                        </div>
-                           {!defaultAddress && <button
-                                onClick={() => setOpen(true)}
-                                className="flex gap-4 items-center justify-center"
-                                style={{
-                                    padding: '10px',
-                                    backgroundColor: '#f0f0f0',
-                                    border: 'none',
-                                    borderRadius: '5px',
-                                    cursor: 'pointer',
-                                }}
-                            >
-                                <PiPlus />  Add New Delivery Address
-                            </button>
-}
-                        </div>
-                        <div >{open && <AddAddress setOpen={setOpen} open={open} />}</div>
-                        </div>
+                                <div >{open && <AddAddress setOpen={setOpen} open={open} />}</div>
+                            </div>
                         }
-                    
+
                         <div className=" mt-4 rounded max-w-4xl p-6  sm:p-10 bg-gray-200 text-gray-900 w-full">
-                        <div className='flex flex-col space-y-4'>
-                            <h2 className="text-xl font-semibold">Your cart</h2>
-                            <ul className="flex flex-col divide-y dark:divide-gray-700">
-                                {selectProductData.map((product) => (
-                                    <li className="flex gap-4 flex-col py-6 sm:flex-row sm:justify-between">
+                            <div className='flex flex-col space-y-4'>
+                                <h2 className="text-xl font-semibold">Your cart</h2>
+                                <ul className="flex flex-col divide-y dark:divide-gray-700">
+                                    {selectProductData.map((product) => (
+                                        <li className="flex gap-4 flex-col py-6 sm:flex-row sm:justify-between">
 
-                                        <div className="flex items-start w-full space-x-2 sm:space-x-4">
-                                            <img className="flex-shrink-0 object-cover w-10 h-10 dark:border-transparent rounded outline-none sm:w-[90px] sm:h-[90px] dark:bg-gray-500" src={product.img} alt="Polaroid camera" />
-                                            <div className="flex flex-col justify-between w-full pb-4">
-                                                <div className="flex justify-between w-full pb-2 space-x-2">
-                                                    <div className="space-y-1">
-                                                        <h3 className="text-lg font-semibold leadi sm:pr-8">{product.name}</h3>
-                                                        <div className='flex flex-col  justify-between gap-4'>
-                                                            <h3 className="md:w-[500px]">
-                                                                {product?.productName}
-                                                            </h3>
+                                            <div className="flex items-start w-full space-x-2 sm:space-x-4">
+                                                <img className="flex-shrink-0 object-cover w-10 h-10 dark:border-transparent rounded outline-none sm:w-[90px] sm:h-[90px] dark:bg-gray-500" src={product.img} alt="Polaroid camera" />
+                                                <div className="flex flex-col justify-between w-full pb-4">
+                                                    <div className="flex justify-between w-full pb-2 space-x-2">
+                                                        <div className="space-y-1">
+                                                            <h3 className="text-lg font-semibold leadi sm:pr-8">{product.name}</h3>
+                                                            <div className='flex flex-col  justify-between gap-4'>
+                                                                <h3 className="md:w-[500px]">
+                                                                    {product?.productName}
+                                                                </h3>
 
-                                                            <h3 htmlFor={`Quantity-${product._id}`} className=" ">
-                                                                Quantity:  {product.quantity}
-                                                            </h3>
+                                                                <h3 htmlFor={`Quantity-${product._id}`} className=" ">
+                                                                    Quantity:  {product.quantity}
+                                                                </h3>
 
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    <div className="text-right">
-                                                        <p className="text-lg font-semibold"><span className='kalpurush' >৳</span>{product.price}</p>
-                                                        <p className="text-sm line-through dark:text-gray-600"><span className='kalpurush' >৳</span>{product.regular_price}</p>
+                                                        <div className="text-right">
+                                                            <p className="text-lg font-semibold"><span className='kalpurush' >৳</span>{product.price}</p>
+                                                            <p className="text-sm line-through dark:text-gray-600"><span className='kalpurush' >৳</span>{product.regular_price}</p>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </li>
+                                        </li>
 
-                                ))}
-                            </ul>
+                                    ))}
+                                </ul>
+                            </div>
                         </div>
                     </div>
-                   </div>
-                  
+
                     <div className='bg-gray-200 lg:w-96 mt-8 lg:mt-0 min-h-[350px] max-h-[380px] rounded p-8'>
                         <div className="space-y-1 my-4">
                             <h2 className="text-xl font-semibold ">Order Summary</h2>
