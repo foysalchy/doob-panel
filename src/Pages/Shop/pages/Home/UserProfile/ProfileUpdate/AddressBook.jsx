@@ -32,7 +32,7 @@ const AddressBook = () => {
         },
     });
 
-    console.log(`https://evidently-active-magpie.ngrok-free.app/api/v1/shop/user-address?userId=${shopUser?._id}&shopId=${shop_id?.shop_id}`);
+
 
     return (
         <div>
@@ -51,6 +51,7 @@ const AddressBook = () => {
                     </div>
                 ))}
             </div>
+
             <div className='mt-10' style={{ marginBottom: '10px' }}>
 
                 <button
@@ -68,9 +69,9 @@ const AddressBook = () => {
                 </button>
 
             </div>
-            <div >{open && <AddAddress setOpen={setOpen} open={open} />}</div>
+            <div className='h-0 w-0' >{open && <AddAddress refetch={addressReload} address={address} setOpen={setOpen} open={open} />}</div>
 
-        </div >
+        </div>
     );
 };
 
