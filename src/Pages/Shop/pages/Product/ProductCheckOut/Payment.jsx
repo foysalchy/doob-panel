@@ -1,18 +1,36 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { useLoaderData } from 'react-router-dom';
 import { ShopAuthProvider } from '../../../../../AuthProvider/ShopAuthProvide';
-import Delivery from './../../../../SellerItems/ProductManagement/SellerAddProduct/Components/Delivery';
 
 const Payment = () => {
     const paymentGetWays = useLoaderData();
-    const { selectProductData, orderStage } = useContext(ShopAuthProvider);
-    const [myTabs, setMyTabs] = useState(false)
-    const paynow = useRef()
+    const { selectProductData, orderStage, shopUser } = useContext(ShopAuthProvider);
+    const [payment, setPayment] = useState(false)
+
+    const message = ["Exercise caution when making payments, ensuring that you only transact with reputable and secure platforms to safeguard your financial information.", "Always verify the legitimacy of the payment process, double-checking the recipient details and website security features before proceeding with any transactions.", "After completing a payment, retain a screenshot or confirmation email as proof of the transaction, serving as documentation in case of any discrepancies or disputes in the future.", "Regularly monitor your bank statements and financial accounts to promptly detect and address any unauthorized or suspicious activities, ensuring the security of your financial assets."]
 
 
-   useEffect(() => {
-        if (!selectProductData.length ) { window.history.back(); }
+
+    useEffect(() => {
+
+        if (!selectProductData.length) { window.history.back(); }
     }, [selectProductData]);
+
+
+    const orderSubmit = () => {
+        console.log(orderStage);
+        // fetch(`http://localhost:5000/api/v1/shop/user/order?token=${shopUser._id}`, {
+        //     method: "POST",
+        //     headers: { "Content-Type": "application/json" },
+        //     body: JSON.stringify({
+        //         stage: orderStage,
+        //         payment: payment
+        //     })
+        // }).then((res) => res.json()).then((data) => {
+        //     console.log(data);
+        // })
+    }
+
 
     return (
         <div className='px-4 py-5 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8'>
@@ -23,7 +41,7 @@ const Payment = () => {
                             <div>
                                 {get.Getaway === 'Bkash' &&
                                     <a href="#scrollDestination">
-                                        <div onClick={() => setMyTabs(get)} className={`${myTabs?.Getaway === 'Bkash' && 'shadow-lg shadow-gray-700'}  border border-gray-600 flex items-center justify-center flex-col rounded p-4 w-[200px] h-[220px]`}>
+                                        <div onClick={() => setPayment(get)} className={`${payment?.Getaway === 'Bkash' && 'shadow-lg shadow-gray-700'}  border border-gray-600 flex items-center justify-center flex-col rounded p-4 w-[200px] h-[220px]`}>
                                             <img
                                                 alt="Developer"
                                                 src="https://logos-download.com/wp-content/uploads/2022/01/BKash_Logo_icon-1536x1452.png"
@@ -37,7 +55,7 @@ const Payment = () => {
                                 }
                                 {get.Getaway === 'Nogod' &&
                                     <a href="#scrollDestination">
-                                        <div onClick={() => setMyTabs(get)} className={`${myTabs?.Getaway === 'Nogod' && 'shadow-lg shadow-gray-700'}  border border-gray-600 flex items-center justify-center flex-col rounded p-4 w-[200px] h-[220px]`}>
+                                        <div onClick={() => setPayment(get)} className={`${payment?.Getaway === 'Nogod' && 'shadow-lg shadow-gray-700'}  border border-gray-600 flex items-center justify-center flex-col rounded p-4 w-[200px] h-[220px]`}>
                                             <img
                                                 alt="Developer"
                                                 src="https://download.logo.wine/logo/Nagad/Nagad-Vertical-Logo.wine.png"
@@ -51,7 +69,7 @@ const Payment = () => {
                                 }
                                 {get.Getaway === 'AmarPay' &&
                                     <a href="#scrollDestination">
-                                        <div onClick={() => setMyTabs(get)} className={`${myTabs?.Getaway === 'AmarPay' && 'shadow-lg shadow-gray-700'}  border border-gray-600 flex items-center justify-center flex-col rounded p-4 w-[200px] h-[220px]`}>
+                                        <div onClick={() => setPayment(get)} className={`${payment?.Getaway === 'AmarPay' && 'shadow-lg shadow-gray-700'}  border border-gray-600 flex items-center justify-center flex-col rounded p-4 w-[200px] h-[220px]`}>
                                             <img
                                                 alt="Developer"
                                                 src="https://play-lh.googleusercontent.com/xA5zXoyQrqDjgz8bef64gAvnBpofTELWWWXYkuF3t5WnPADHv5Y91A8x51Z0RHJnLzM"
@@ -67,7 +85,7 @@ const Payment = () => {
                     }
 
                     <a href="#scrollDestination">
-                        <div onClick={() => setMyTabs({ Getaway: "CashOnDelivery" })} className={`${myTabs?.Getaway === 'CashOnDelivery' && 'shadow-lg shadow-gray-700'}  border border-gray-600 flex items-center justify-center flex-col rounded p-4 w-[200px] h-[220px]`}>
+                        <div onClick={() => setPayment({ Getaway: "CashOnDelivery" })} className={`${payment?.Getaway === 'CashOnDelivery' && 'shadow-lg shadow-gray-700'}  border border-gray-600 flex items-center justify-center flex-col rounded p-4 w-[200px] h-[220px]`}>
                             <img
                                 alt="Developer"
                                 src="https://salenow-v2-backend.vercel.app/api/v1/image/65899d8a90705ef9459e30e6.jpg"
@@ -96,96 +114,60 @@ const Payment = () => {
                 </div>
             </div>
 
-            {myTabs && <div id='scrollDestination' className="border-2 border-gray-700 mt-8 w-full border-dashed p-4">
-                <div
-                    className="mb-3 inline-flex w-full bg-yellow-50 border text-gray-800 items-center rounded-lg px-6 py-5  "
-                    role="alert">
-
-                    <ol>
-                        <li className="">Exercise caution when making payments, ensuring that you only transact with reputable and secure platforms to safeguard your financial information.</li>
-                    </ol>
-                </div>
-                <div
-                    className="mb-3 inline-flex w-full bg-yellow-50 border text-gray-800 items-center rounded-lg px-6 py-5  "
-                    role="alert">
-
-                    <ol>
-                        <li className="">Always verify the legitimacy of the payment process, double-checking the recipient details and website security features before proceeding with any transactions.
-
-                        </li>
-                    </ol>
-                </div>
-                <div
-                    className="mb-3 inline-flex w-full bg-yellow-50 border text-gray-800 items-center rounded-lg px-6 py-5  "
-                    role="alert">
-
-                    <ol>
-                        <li className="">After completing a payment, retain a screenshot or confirmation email as proof of the transaction, serving as documentation in case of any discrepancies or disputes in the future.
-
-
-                        </li>
-                    </ol>
-                </div>
-                <div
-                    className="mb-3 inline-flex w-full bg-yellow-50 border text-gray-800 items-center rounded-lg px-6 py-5  "
-                    role="alert">
-
-                    <ol>
-                        <li className="">Regularly monitor your bank statements and financial accounts to promptly detect and address any unauthorized or suspicious activities, ensuring the security of your financial assets.
-
-
-                        </li>
-                    </ol>
+            {payment && <div id='scrollDestination' className="border-2 border-gray-700 mt-8 w-full border-dashed p-4">
+                <div className='flex flex-col gap-2 text-xs'>
+                    {message.map((mess, i) => <div className='py-2 bg-yellow-200 px-10' key={i}>{mess}</div>)}
                 </div>
 
                 <div id='scrollDestination' className="flex items-center justify-center my-6">
-                    {myTabs.Getaway==='CashOnDelivery' ? <button
-                        onClick={() => scrollDown()}
-                        class="group relative inline-flex m-auto items-center overflow-hidden rounded bg-gray-900 px-20 py-5 text-white focus:outline-none focus:ring active:bg-gray-900"
+                    {payment.Getaway === 'CashOnDelivery' ?
+                        <button
+                            onClick={() => orderSubmit()}
+                            className="group relative inline-flex m-auto items-center overflow-hidden rounded bg-gray-900 px-10 py-2 text-white focus:outline-none focus:ring active:bg-gray-900"
 
-                    >
-                        <span class="absolute -start-full transition-all group-hover:start-4">
-                            <svg
-                                class="h-5 w-5 rtl:rotate-180"
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                            >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M17 8l4 4m0 0l-4 4m4-4H3"
-                                />
-                            </svg>
-                        </span>
+                        >
+                            <span className="absolute -start-full transition-all group-hover:start-4">
+                                <svg
+                                    className="h-5 w-5 rtl:rotate-180"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M17 8l4 4m0 0l-4 4m4-4H3"
+                                    />
+                                </svg>
+                            </span>
 
-                        <span class="text-lg font-medium transition-all group-hover:ms-4"> Order Now </span>
-                    </button> : <button
-                        onClick={() => scrollDown()}
-                        class="group relative inline-flex m-auto items-center overflow-hidden rounded bg-gray-900 px-20 py-5 text-white focus:outline-none focus:ring active:bg-gray-900"
+                            <span className="text-lg font-medium transition-all group-hover:ms-4"> Order Now </span>
+                        </button> : <button
 
-                    >
-                        <span class="absolute -start-full transition-all group-hover:start-4">
-                            <svg
-                                class="h-5 w-5 rtl:rotate-180"
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                            >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M17 8l4 4m0 0l-4 4m4-4H3"
-                                />
-                            </svg>
-                        </span>
+                            className="group relative inline-flex m-auto items-center overflow-hidden rounded bg-gray-900  px-10 py-2 text-white focus:outline-none focus:ring active:bg-gray-900"
 
-                        <span class="text-lg font-medium transition-all group-hover:ms-4"> Pay Now </span>
-                    </button>}
+                        >
+                            <span className="absolute -start-full transition-all group-hover:start-4">
+                                <svg
+                                    className="h-5 w-5 rtl:rotate-180"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M17 8l4 4m0 0l-4 4m4-4H3"
+                                    />
+                                </svg>
+                            </span>
+
+                            <span className="text-lg font-medium transition-all group-hover:ms-4"> Pay Now </span>
+                        </button>}
                 </div>
             </div>}
         </div>

@@ -6,7 +6,7 @@ import { PiPlus } from 'react-icons/pi';
 import CheckoutModal from './CheckoutModal';
 
 const ProductCheckout = () => {
-    const { selectProductData, shopUser, shop_id, shopId, orderStage, setOrderStage, clickAddress, setClickAddress } = useContext(ShopAuthProvider)
+    const { selectProductData, shopUser, shop_id, shopId, orderStage, setOrderStage, defaultAddress } = useContext(ShopAuthProvider)
 
     const addresses = useLoaderData();
     const [open, setOpen] = useState(false)
@@ -58,6 +58,11 @@ const ProductCheckout = () => {
     }, [selectProductData]);
 
     // ? send data in contest
+
+
+
+    let userAddress = addresses?.data?.filter(itm => itm?.defaultAddress)[0];
+
     const sendPlaceOrderData = (data) => {
         let promoHistory;
         if (promoValue) {
@@ -71,17 +76,12 @@ const ProductCheckout = () => {
         }
         const newData = {
             productList: selectProductData,
-            promoHistory: promoHistory
+            promoHistory: promoHistory,
+            addresses: defaultAddress ? defaultAddress : userAddress
         }
         setOrderStage(newData);
     }
 
-
-    let defaultAddress = addresses?.data?.filter(itm => itm?.defaultAddress)[0];
-
-    if (clickAddress?.defaultBillingAddress) {
-        defaultAddress = clickAddress;
-    }
 
 
     console.log(defaultAddress, "this is default address!! :::");
@@ -108,32 +108,51 @@ const ProductCheckout = () => {
                                     </button>
                                 </div>
                                 <div className='h-0 w-0' >{open && <AddAddress refetch={setHandleReload} address={addresses?.data} setOpen={setOpen} open={open} />}</div>
-                            </div> : <div className="rounded max-w-4xl p-6  sm:p-10 bg-gray-200 text-gray-900 w-full">
+                            </div> : <div className="rounded max-w-4xl p-6 bg-gray-200 text-gray-900 w-full">
                                 <div className='' >
-                                    <div className="">
+                                    <div className=" ">
                                         {
-                                            defaultAddress && <div>
-                                                <div className='bg-gray-100 capitalize p-4 rounded hover:shadow-xl border'>
-                                                    <h1 >{defaultAddress?.fullName}</h1>
-                                                    <h1>{defaultAddress?.mobileNumber}</h1>
-                                                    <small><span>{defaultAddress?.address},</span> <span>{defaultAddress?.province} - </span> <span>{defaultAddress?.city}</span> <span>{defaultAddress?.area}</span></small>
-                                                    <br />
-                                                    <small className='flex gap-4 items-center mt-2'>
-                                                        <span className='bg-green-200 p-0.5 px-1 rounded text-xs text-black '> {defaultAddress.deliveryLabel}</span>
-                                                        <span className='bg-gray-200 rounded text-xs px-1'>{defaultAddress?.defaultAddress && "DEFAULT DELIVERY ADDRESS"}</span>
-                                                        <span className='bg-gray-200 rounded text-xs px-1'>{defaultAddress?.defaultBillingAddress && "DEFAULT BILLING ADDRESS"}</span>
-                                                        <button onClick={() => setEdit(!edit)} className='bg-gray-200 px-2'>Edit</button>
-                                                        <div className='h-0 w-0' >{edit && <AddAddress refetch={setHandleReload} address={addresses?.data} setOpen={setEdit} open={edit} />}</div>
-                                                    </small>
-                                                </div>
-                                            </div>
+                                            defaultAddress ?
+                                                <div>
+                                                    <div className='bg-gray-100 capitalize p-4 rounded hover:shadow-xl border'>
+                                                        <h1 >{defaultAddress?.fullName}</h1>
+                                                        <h1>{defaultAddress?.mobileNumber}</h1>
+                                                        <small><span>{defaultAddress?.address},</span> <span>{defaultAddress?.province} - </span> <span>{defaultAddress?.city}</span> <span>{defaultAddress?.area}</span></small>
+                                                        <br />
+                                                        <small className='flex gap-4 items-center mt-2'>
+                                                            <span className='bg-green-200 p-0.5 px-1 rounded text-xs text-black '> {defaultAddress.deliveryLabel}</span>
+                                                            <span className='bg-gray-200 rounded text-xs px-1'>{defaultAddress?.defaultAddress && "DEFAULT DELIVERY ADDRESS"}</span>
+                                                            <span className='bg-gray-200 rounded text-xs px-1'>{defaultAddress?.defaultBillingAddress && "DEFAULT BILLING ADDRESS"}</span>
+                                                            <button onClick={() => setEdit(!edit)} className='bg-gray-200 px-2'>Edit</button>
+                                                            <div className='h-0 w-0' >{edit && <AddAddress refetch={setHandleReload} address={addresses?.data} setOpen={setEdit} open={edit} />}</div>
+                                                        </small>
+                                                    </div>
 
+                                                </div>
+
+                                                :
+
+                                                <div>
+                                                    <div className='bg-gray-100 capitalize p-4 rounded hover:shadow-xl border'>
+                                                        <h1 >{userAddress?.fullName}</h1>
+                                                        <h1>{userAddress?.mobileNumber}</h1>
+                                                        <small><span>{userAddress?.address},</span> <span>{userAddress?.province} - </span> <span>{userAddress?.city}</span> <span>{userAddress?.area}</span></small>
+                                                        <br />
+                                                        <small className='flex gap-4 items-center mt-2'>
+                                                            <span className='bg-green-200 p-0.5 px-1 rounded text-xs text-black '> {userAddress.deliveryLabel}</span>
+                                                            <span className='bg-gray-200 rounded text-xs px-1'>{userAddress?.defaultAddress && "DEFAULT DELIVERY ADDRESS"}</span>
+                                                            <span className='bg-gray-200 rounded text-xs px-1'>{userAddress?.defaultBillingAddress && "DEFAULT BILLING ADDRESS"}</span>
+                                                            <button onClick={() => setEdit(!edit)} className='bg-gray-200 px-2'>Edit</button>
+                                                            <div className='h-0 w-0' >{edit && <AddAddress refetch={setHandleReload} address={addresses?.data} setOpen={setEdit} open={edit} />}</div>
+                                                        </small>
+                                                    </div>
+                                                </div>
 
                                         }
                                     </div>
                                     {!defaultAddress && <button
                                         onClick={() => setOpen(true)}
-                                        className="flex gap-4 items-center justify-center"
+                                        className="flex gap-4 items-center justify-center mt-4"
                                         style={{
                                             padding: '10px',
                                             backgroundColor: '#f0f0f0',
@@ -146,7 +165,7 @@ const ProductCheckout = () => {
                                     </button>
                                     }
                                 </div>
-                                    <div >{open && <AddAddress refetch={setHandleReload} setOpen={setOpen} open={open} />}</div>
+                                <div >{open && <AddAddress address={addresses?.data} refetch={setHandleReload} setOpen={setOpen} open={open} />}</div>
                             </div>
                         }
                         <div className=" mt-4 rounded max-w-4xl p-6  sm:p-10 bg-gray-200 text-gray-900 w-full">

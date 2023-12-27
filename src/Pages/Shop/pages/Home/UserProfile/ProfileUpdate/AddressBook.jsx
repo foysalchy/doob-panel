@@ -12,7 +12,7 @@ const AddressBook = () => {
     const [open, setOpen] = useState(false)
 
 
-    const { data: address = [], refetch: addressReload} = useQuery({
+    const { data: address = [], refetch: addressReload } = useQuery({
         queryKey: ["address"],
         queryFn: async () => {
             try {
@@ -69,7 +69,7 @@ const AddressBook = () => {
                 </button>
 
             </div>
-            <div className='h-0 w-0' >{open && <AddAddress refetch={addressReload} address={address} setOpen={setOpen} open={open} />}</div>
+            <div className='h-0 w-0' >{open && <AddAddress  refetch={addressReload} address={address} setOpen={setOpen} open={open} />}</div>
 
         </div>
     );
