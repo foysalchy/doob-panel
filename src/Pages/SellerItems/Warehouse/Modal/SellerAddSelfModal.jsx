@@ -8,7 +8,8 @@ import Select from 'react-select';
 import Swal from 'sweetalert2';
 import { AuthContext } from '../../../../AuthProvider/UserProvider';
 
-const SellerAddSelfModal = ({ recall, setOpenModal }) => {
+const SellerAddSelfModal = ({ setNewData, recall, setOpenModal }) => {
+    const [nextStae, setNextState] = useState(false);
     const { shopInfo } = useContext(AuthContext)
     const [areas, setAreas] = useState([]);
     const [racks, setRacks] = useState([]);
@@ -34,6 +35,7 @@ const SellerAddSelfModal = ({ recall, setOpenModal }) => {
         setSelectedArea('');
         setRacks([]);
         refetch();
+
     };
 
     const handleAreaChange = async (selectedOption) => {
@@ -58,7 +60,8 @@ const SellerAddSelfModal = ({ recall, setOpenModal }) => {
             area,
             rack,
             self,
-            shopId: shopInfo._id
+            shopId: shopInfo._id,
+            status: nextStae
         };
 
         fetch('https://salenow-v2-backend.vercel.app/api/v1/seller/warehouse/self', {
@@ -69,9 +72,13 @@ const SellerAddSelfModal = ({ recall, setOpenModal }) => {
             body: JSON.stringify(data),
         }).then((res) => res.json()).then((data) => {
             Swal.fire('Upload Successful', '', 'success');
-            setOpenModal(false);
             recall();
             refetch();
+            if (nextStae) {
+                setNewData('Add Cell')
+            } else {
+                setOpenModal(false)
+            }
         });
     };
 
@@ -153,14 +160,15 @@ const SellerAddSelfModal = ({ recall, setOpenModal }) => {
                 </div>
 
 
-                <button type='submit' className="group mt-10 relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500">
-                    <span className="absolute -start-full transition-all group-hover:start-4">
-
-                        <FaLongArrowAltRight />
-
-                    </span>
-                    <span className="text-sm font-medium transition-all group-hover:ms-4">Add Area</span>
-                </button>
+                <div className="flex items-center w-full justify-between mt-10">
+                    <button type='submit' className="group   relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500">
+                        <span className="absolute -start-full transition-all group-hover:start-4">
+                            <FaLongArrowAltRight />
+                        </span>
+                        <span className="text-sm font-medium transition-all group-hover:ms-4">Upload Warehouse</span>
+                    </button>
+                    <button type='submit' onClick={() => setNextState(true)} className="group text-sm relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500">Next</button>
+                </div>
             </form>
         </div>
     );

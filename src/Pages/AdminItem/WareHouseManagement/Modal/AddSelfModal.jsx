@@ -5,8 +5,8 @@ import { useState } from 'react';
 import { FaLongArrowAltRight } from 'react-icons/fa';
 import Select from 'react-select';
 import Swal from 'sweetalert2';
-const AddSelfModal = ({ recall, setOpenModal }) => {
-
+const AddSelfModal = ({setNewData, recall, setOpenModal }) => {
+      const [nextStae, setNextState] = useState(false);
     const [areas, setAreas] = useState([]);
     const [racks, setRacks] = useState([]);
     const [selectedWarehouse, setSelectedWarehouse] = useState('');
@@ -54,7 +54,8 @@ const AddSelfModal = ({ recall, setOpenModal }) => {
             warehouse,
             area,
             rack,
-            self
+            self,
+            status : nextStae
         };
 
         fetch('https://salenow-v2-backend.vercel.app/api/v1/admin/warehouse/self', {
@@ -63,11 +64,16 @@ const AddSelfModal = ({ recall, setOpenModal }) => {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(data),
-        }).then((res) => res.json()).then((data) => {
+        }).then((res) => res.json())
+        .then((data) => {
             Swal.fire('Upload Successful', '', 'success');
-            setOpenModal(false);
             recall();
             refetch();
+            if (nextStae) {
+                        setNewData('Add Cell')
+                  } else {
+                      setOpenModal(false)
+                    }
         });
     };
 
@@ -147,9 +153,8 @@ const AddSelfModal = ({ recall, setOpenModal }) => {
                     <label className="text-sm">Add Self</label>
                     <input required name='self' type="text" placeholder="Description" className="w-full p-2 border border-black rounded-md  text-gray-900" />
                 </div>
-
-
-                <button type='submit' className="group mt-10 relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500">
+                <div className="flex mt-10 items-center justify-between">
+                    <button type='submit' className="group  relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500">
                     <span className="absolute -start-full transition-all group-hover:start-4">
 
                         <FaLongArrowAltRight />
@@ -157,6 +162,8 @@ const AddSelfModal = ({ recall, setOpenModal }) => {
                     </span>
                     <span className="text-sm font-medium transition-all group-hover:ms-4">Add Area</span>
                 </button>
+                <button type='submit' onClick={()=> setNextState(true)} className="group text-sm relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500">Next</button>
+                </div>
             </form>
         </div>
     );

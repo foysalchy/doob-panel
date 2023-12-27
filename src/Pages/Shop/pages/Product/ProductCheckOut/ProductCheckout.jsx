@@ -6,11 +6,12 @@ import { PiPlus } from 'react-icons/pi';
 import CheckoutModal from './CheckoutModal';
 
 const ProductCheckout = () => {
-    const { selectProductData, shopUser, shop_id, shopId, orderStage, setOrderStage } = useContext(ShopAuthProvider)
+    const { selectProductData, shopUser, shop_id, shopId, orderStage, setOrderStage, clickAddress, setClickAddress } = useContext(ShopAuthProvider)
+
     const addresses = useLoaderData();
     const [open, setOpen] = useState(false)
-    const [modalOpen, setModalOpen] = useState(false)
-
+    const [handleReload, setHandleReload] = useState(false)
+    const [edit, setEdit] = useState(false)
     const calculateSubtotal = () => {
         return selectProductData.reduce((total, product) => total + (product.price * product.quantity), 0);
     };
@@ -74,16 +75,40 @@ const ProductCheckout = () => {
         }
         setOrderStage(newData);
     }
-    const defaultAddress = addresses?.data?.filter(itm => itm?.defaultAddress)[0]
-    console.log(addresses?.data);
-    return (
 
+
+    let defaultAddress = addresses?.data?.filter(itm => itm?.defaultAddress)[0];
+
+    if (clickAddress?.defaultBillingAddress) {
+        defaultAddress = clickAddress;
+    }
+
+
+    console.log(defaultAddress, "this is default address!! :::");
+    return (
         <div>
             <div className='px-4 py-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-10'>
                 <div className='md:flex gap-4 w-full justify-between'>
                     <div className="w-full">
                         {
-                            addresses?.data?.length < 1 ? <>form</> : <div className="rounded max-w-4xl p-6  sm:p-10 bg-gray-200 text-gray-900 w-full">
+                            addresses?.data?.length < 1 ? <div>
+                                <div className='mt-10' style={{ marginBottom: '10px' }}>
+                                    <button
+                                        onClick={() => setOpen(true)}
+                                        className="flex gap-4 items-center justify-center"
+                                        style={{
+                                            padding: '10px',
+                                            backgroundColor: '#f0f0f0',
+                                            border: 'none',
+                                            borderRadius: '5px',
+                                            cursor: 'pointer',
+                                        }}
+                                    >
+                                        <PiPlus />  Add New Delivery Address
+                                    </button>
+                                </div>
+                                <div className='h-0 w-0' >{open && <AddAddress refetch={setHandleReload} address={addresses?.data} setOpen={setOpen} open={open} />}</div>
+                            </div> : <div className="rounded max-w-4xl p-6  sm:p-10 bg-gray-200 text-gray-900 w-full">
                                 <div className='' >
                                     <div className="">
                                         {
@@ -97,11 +122,13 @@ const ProductCheckout = () => {
                                                         <span className='bg-green-200 p-0.5 px-1 rounded text-xs text-black '> {defaultAddress.deliveryLabel}</span>
                                                         <span className='bg-gray-200 rounded text-xs px-1'>{defaultAddress?.defaultAddress && "DEFAULT DELIVERY ADDRESS"}</span>
                                                         <span className='bg-gray-200 rounded text-xs px-1'>{defaultAddress?.defaultBillingAddress && "DEFAULT BILLING ADDRESS"}</span>
-                                                        <button onClick={() => setModalOpen(!modalOpen)} className='bg-gray-200 px-2'>Edit</button>
-                                                        <CheckoutModal defaultAddress={defaultAddress} modalOpen={modalOpen} setModalOpen={setModalOpen} />
+                                                        <button onClick={() => setEdit(!edit)} className='bg-gray-200 px-2'>Edit</button>
+                                                        <div className='h-0 w-0' >{edit && <AddAddress refetch={setHandleReload} address={addresses?.data} setOpen={setEdit} open={edit} />}</div>
                                                     </small>
                                                 </div>
                                             </div>
+
+
                                         }
                                     </div>
                                     {!defaultAddress && <button
@@ -119,10 +146,9 @@ const ProductCheckout = () => {
                                     </button>
                                     }
                                 </div>
-                                <div >{open && <AddAddress setOpen={setOpen} open={open} />}</div>
+                                    <div >{open && <AddAddress refetch={setHandleReload} setOpen={setOpen} open={open} />}</div>
                             </div>
                         }
-
                         <div className=" mt-4 rounded max-w-4xl p-6  sm:p-10 bg-gray-200 text-gray-900 w-full">
                             <div className='flex flex-col space-y-4'>
                                 <h2 className="text-xl font-semibold">Your cart</h2>

@@ -4,10 +4,8 @@ import { useState } from 'react';
 import { FaLongArrowAltRight } from 'react-icons/fa';
 import Select from 'react-select';
 import Swal from 'sweetalert2';
-const AddRackModal = ({ recall, setOpenModal }) => {
-
-
-
+const AddRackModal = ({ setNewData, recall, setOpenModal }) => {
+    const [nextStae, setNextState] = useState(false);
     const { data: warehouses = [], refetch } = useQuery({
         queryKey: ["warehouses"],
         queryFn: async () => {
@@ -48,7 +46,8 @@ const AddRackModal = ({ recall, setOpenModal }) => {
         const data = {
             warehouse,
             area,
-            rack
+            rack,
+            status : nextStae
         }
         fetch('https://salenow-v2-backend.vercel.app/api/v1/admin/warehouse/rack', {
             method: 'post',
@@ -60,15 +59,16 @@ const AddRackModal = ({ recall, setOpenModal }) => {
             )
         }).then((res) => res.json()).then((data) => {
             Swal.fire('Upload Successful', '', 'success')
-            setOpenModal(false)
-            recall()
+             recall()
             refetch()
-        })
-
+             if (nextStae) {
+                      setNewData('Add Self')
+                } else {
+                    setOpenModal(false)
+                  }
+        });
     }
-
-
-
+ 
     return (
         <div>
             <form onSubmit={UploadArea} action="">
@@ -93,7 +93,7 @@ const AddRackModal = ({ recall, setOpenModal }) => {
                     />
                 </div>
                 <div className="mt-4">
-                    <label className="text-sm">Select WareHouse</label>
+                    <label className="text-sm">Select Area</label>
                     <Select
                         styles={{
                             control: (provided) => ({
@@ -119,9 +119,8 @@ const AddRackModal = ({ recall, setOpenModal }) => {
                     <label className="text-sm">Add Rack</label>
                     <input required name='rack' type="text" placeholder="Description" className="w-full p-2 border border-black rounded-md  text-gray-900" />
                 </div>
-
-
-                <button type='submit' className="group mt-10 relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500">
+                <div className="flex items-center mt-10 justify-between">
+                      <button type='submit' className="group  relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500">
                     <span className="absolute -start-full transition-all group-hover:start-4">
 
                         <FaLongArrowAltRight />
@@ -129,6 +128,8 @@ const AddRackModal = ({ recall, setOpenModal }) => {
                     </span>
                     <span className="text-sm font-medium transition-all group-hover:ms-4">Add Area</span>
                 </button>
+                 <button type='submit' onClick={()=> setNextState(true)} className="group relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500">Next</button>
+               </div>
             </form>
         </div>
     );

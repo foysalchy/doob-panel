@@ -20,7 +20,7 @@ const SideNavAdmin = () => {
 
     return (
         <div className='py-6 sticky'>
-            <div className={menu ? "flex flex-col h-screen p-2  w-60 text-gray-900 overflow-y-auto" : 'flex flex-col h-screen p-3 w-14 text-gray-900 overflow-y-auto'}>
+            <div className={menu ? "flex flex-col h-screen p-2  w-60 text-gray-900 overflow-y-auto transparent-scroll" : 'flex flex-col h-screen p-3 w-14 text-gray-900 overflow-y-auto transparent-scroll'}>
                 <div className="space-y-3">
                     <div className="flex items-center justify-between">
                         {menu ? <Link
