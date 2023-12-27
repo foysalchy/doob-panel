@@ -10,7 +10,8 @@ export const ShopAuthProvider = createContext();
 const ShopAuth = ({ children }) => {
     const pathname = window.location.pathname;
     const idMatch = pathname.match(/\/shop\/([^/]+)/);
-
+    const [clickAddress, setClickAddress] = useState(false)
+    const [defaultAddress, setDefaultAddress] = useState([])
     const shopId = idMatch ? idMatch[1] : null;
     const [selectProductData, setSelectProductData] = useState([])
     const { data: shopCredential = {}, isLoading, isError, refetch } = useQuery({
@@ -302,7 +303,11 @@ const ShopAuth = ({ children }) => {
         selectProductData,
         setSelectProductData,
         orderStage,
-        setOrderStage
+        setOrderStage,
+        clickAddress,
+        setClickAddress,
+        defaultAddress,
+        setDefaultAddress
     };
 
     return (

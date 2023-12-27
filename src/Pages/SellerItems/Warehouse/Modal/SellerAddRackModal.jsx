@@ -7,13 +7,11 @@ import Swal from 'sweetalert2';
 import { AuthContext } from '../../../../AuthProvider/UserProvider';
 import { useContext } from 'react';
 
-
-const SellerAddRackModal = ({ recall, setOpenModal }) => {
-
-
+const SellerAddRackModal = ({ setNewData, recall, setOpenModal }) => {
+    const [nextStae, setNextState] = useState(false)
     const { shopInfo } = useContext(AuthContext)
     const { data: warehouses = [], refetch } = useQuery({
-        queryKey: ["warehouses"],
+        queryKey: ["salerWarehouse"],
         queryFn: async () => {
             const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/warehouse/get/${shopInfo._id}`);
             const data = await res.json();
@@ -23,15 +21,11 @@ const SellerAddRackModal = ({ recall, setOpenModal }) => {
 
     const filteredWarehouses = warehouses.length && warehouses.filter(warehouse => warehouse.status === true);
     const sortedWarehouses = filteredWarehouses && filteredWarehouses.sort((a, b) => a?.name?.localeCompare(b.name));
-
-    const warehouseOptions = sortedWarehouses && sortedWarehouses.filter((rack) => rack.status).slice(0, 5).map((warehouse) => ({
+    console.log(sortedWarehouses, 'riks');
+    const warehouseOptions = sortedWarehouses && sortedWarehouses.filter((rack) => rack.status).map((warehouse) => ({
         value: warehouse.name,
         label: warehouse.name,
     }));
-
-
-
-
 
     const [areas, setAreas] = useState([]);
 
@@ -53,7 +47,8 @@ const SellerAddRackModal = ({ recall, setOpenModal }) => {
             warehouse,
             area,
             rack,
-            shopId: shopInfo._id
+            shopId: shopInfo._id,
+            status: nextStae
         }
         fetch('https://salenow-v2-backend.vercel.app/api/v1/seller/warehouse/rack', {
             method: 'post',
@@ -65,9 +60,13 @@ const SellerAddRackModal = ({ recall, setOpenModal }) => {
             )
         }).then((res) => res.json()).then((data) => {
             Swal.fire('Upload Successful', '', 'success')
-            setOpenModal(false)
             recall()
             refetch()
+            if (nextStae) {
+                setNewData('Add Self')
+            } else {
+                setOpenModal(false)
+            }
         })
 
     }
@@ -98,7 +97,7 @@ const SellerAddRackModal = ({ recall, setOpenModal }) => {
                     />
                 </div>
                 <div className="mt-4">
-                    <label className="text-sm">Select WareHouse</label>
+                    <label className="text-sm">Select Area</label>
                     <Select
                         styles={{
                             control: (provided) => ({
@@ -125,15 +124,15 @@ const SellerAddRackModal = ({ recall, setOpenModal }) => {
                     <input required name='rack' type="text" placeholder="Description" className="w-full p-2 border border-black rounded-md  text-gray-900" />
                 </div>
 
-
-                <button type='submit' className="group mt-10 relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500">
-                    <span className="absolute -start-full transition-all group-hover:start-4">
-
-                        <FaLongArrowAltRight />
-
-                    </span>
-                    <span className="text-sm font-medium transition-all group-hover:ms-4">Add Area</span>
-                </button>
+                <div className="flex items-center w-full justify-between mt-10">
+                    <button type='submit' className="group   relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500">
+                        <span className="absolute -start-full transition-all group-hover:start-4">
+                            <FaLongArrowAltRight />
+                        </span>
+                        <span className="text-sm font-medium transition-all group-hover:ms-4">Upload Warehouse</span>
+                    </button>
+                    <button type='submit' onClick={() => setNextState(true)} className="group text-sm relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500">Next</button>
+                </div>
             </form>
         </div>
     );

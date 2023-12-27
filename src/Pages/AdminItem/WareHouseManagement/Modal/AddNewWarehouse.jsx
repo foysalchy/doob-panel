@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FaLongArrowAltRight } from 'react-icons/fa';
 import Swal from 'sweetalert2';
 
-const AddNewWarehouse = ({ refetch, setOpenModal }) => {
-
+const AddNewWarehouse = ({ setNewData, refetch, setOpenModal }) => {
+    const [nextStae, setNextState] = useState(false)
     const UploadArea = (e) => {
         e.preventDefault()
         const name = e.target.name.value
@@ -29,6 +29,7 @@ const AddNewWarehouse = ({ refetch, setOpenModal }) => {
                     slag,
                     address,
                     description,
+                    status: nextStae
                 };
                 postWareHouse(data);
             });
@@ -48,14 +49,19 @@ const AddNewWarehouse = ({ refetch, setOpenModal }) => {
 
                 Swal.fire("Warehouse Upload Successfully", "", "success");
                 refetch()
-                setOpenModal(false)
+                // setOpenModal(false)
+                if (nextStae) {
+                    setNewData('Add Area')
+                } else {
+                    setOpenModal(false)
+                }
             });
     };
+
 
     return (
         <div>
             <form onSubmit={UploadArea} action="">
-
 
                 <div className=" mt-4">
                     <label className="text-sm">Name</label>
@@ -78,14 +84,16 @@ const AddNewWarehouse = ({ refetch, setOpenModal }) => {
                     <input required name='image' type="file" placeholder="Description" className="w-full p-2 border border-black rounded-md  text-gray-900" />
                 </div>
 
+                <div className="flex items-center justify-between mt-10">
 
-                <button type='submit' className="group mt-10 relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500">
-                    <span className="absolute -start-full transition-all group-hover:start-4">
-                        <FaLongArrowAltRight />
-                    </span>
-                    <span className="text-sm font-medium transition-all group-hover:ms-4">Upload Warehouse</span>
-                </button>
-                <button  className="bg-gray-900 text-white px-8 py-2">Next</button>
+                    <button type='submit' className="group  relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500">
+                        <span className="absolute -start-full transition-all group-hover:start-4">
+                            <FaLongArrowAltRight />
+                        </span>
+                        <span className="text-sm font-medium transition-all group-hover:ms-4">Upload Warehouse</span>
+                    </button>
+                    <button type='submit' onClick={() => setNextState(true)} className="group text-sm relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500">Next</button>
+                </div>
             </form>
         </div>
     );

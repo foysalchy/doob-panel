@@ -12,7 +12,7 @@ const AddressBook = () => {
     const [open, setOpen] = useState(false)
 
 
-    const { data: address = [], refetch: addressReload } = useQuery({
+    const { data: address = [], refetch: addressReload} = useQuery({
         queryKey: ["address"],
         queryFn: async () => {
             try {

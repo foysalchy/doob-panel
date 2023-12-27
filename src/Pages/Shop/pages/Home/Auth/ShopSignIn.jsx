@@ -17,7 +17,7 @@ const ShopSignIn = () => {
     const shopId = idMatch ? idMatch[1] : null;
 
 
-    const { Google, shopCredential, loginWithEmail } = useContext(ShopAuthProvider)
+    const { Google, shopCredential, loginWithEmail, shopUser } = useContext(ShopAuthProvider)
 
     const userData = (e) => {
         e.preventDefault();
@@ -35,6 +35,9 @@ const ShopSignIn = () => {
         setChecked(!isChecked);
     };
 
+    if (shopUser) {
+        navigate(`/shop/${shopId}`)
+    }
 
     return (
         <div className='bg-gray-100'>

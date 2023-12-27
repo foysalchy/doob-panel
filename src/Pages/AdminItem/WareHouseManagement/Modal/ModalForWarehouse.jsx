@@ -21,10 +21,10 @@ const ModalForWarehouse = ({ setOpenModal, OpenModal, data, refetch }) => {
 
                 <div className='max-h-[500px] px-10 text-start overflow-y-scroll' >
                     {
-                        (newData == 'Add New Warehouse' && <AddNewWarehouse setOpenModal={setOpenModal} refetch={refetch} />) ||
-                        (newData == 'Add Area' && <AddAreaForWarehouse setOpenModal={setOpenModal} recall={refetch} />) ||
-                        (newData == 'Add Rack' && <AddRackModal setOpenModal={setOpenModal} recall={refetch} />) ||
-                        (newData == 'Add Self' && <AddSelfModal setOpenModal={setOpenModal} recall={refetch} />) ||
+                        (newData == 'Add New Warehouse' && <AddNewWarehouse setNewData={setNewData} setOpenModal={setOpenModal} refetch={refetch} />) ||
+                        (newData == 'Add Area' && <AddAreaForWarehouse setNewData={setNewData} setOpenModal={setOpenModal} recall={refetch} />) ||
+                        (newData == 'Add Rack' && <AddRackModal setNewData={setNewData} setOpenModal={setOpenModal} recall={refetch} />) ||
+                        (newData == 'Add Self' && <AddSelfModal setNewData={setNewData} setOpenModal={setOpenModal} recall={refetch} />) ||
                         (newData == 'Add Cell' && <AddCellModal setOpenModal={setOpenModal} recall={refetch} />)
                     }
                   
