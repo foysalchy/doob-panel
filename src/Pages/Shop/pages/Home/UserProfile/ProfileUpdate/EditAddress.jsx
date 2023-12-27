@@ -3,14 +3,14 @@ import { ShopAuthProvider } from '../../../../../../AuthProvider/ShopAuthProvide
 import { useQuery } from '@tanstack/react-query';
 import BrightAlert from 'bright-alert';
 
-const EditAddress = ({ data, refetch }) => {
-    console.log(data);
+const EditAddress = ({ data, refetch, setEditAddress, setNewAddress }) => {
+    console.log(data, "data");
     const { shopUser, shopId, shop_id } = useContext(ShopAuthProvider);
 
     const [division, setDivision] = useState(data === true ? '' : data.province);
     const [district, setDistrict] = useState('');
 
-    const { data: divisions = [], refetch: refetchDivisions } = useQuery({
+    const { data: divisions = [], } = useQuery({
         queryKey: ["divisions"],
         queryFn: async () => {
             try {
@@ -86,8 +86,9 @@ const EditAddress = ({ data, refetch }) => {
             .then(response => response.json())
             .then(result => {
                 refetch()
-                // console.log(result);
-                BrightAlert()
+                setEditAddress(false)
+                setNewAddress(false)
+
             })
             .catch(error => {
                 console.error('Error:', error);
@@ -100,8 +101,8 @@ const EditAddress = ({ data, refetch }) => {
 
     return (
         <div>
-            <form onSubmit={submitData} className='text-start z-50'>
-                <div className="mt-4">
+            <form onSubmit={submitData} className='text-start w-full z-50'>
+                <div className="mt-4 w-full">
                     <label htmlFor="fullName" className="text-sm font-medium text-gray-700">Full Name</label>
                     <input type="text" defaultValue={data === true ? shopUser?.name : data.fullName} id="fullName" name="fullName" className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block py-2 px-3 w-full shadow-sm sm:text-sm border-gray-300 rounded-md border" />
 
