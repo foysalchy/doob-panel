@@ -12,7 +12,9 @@ import ScrollToTop from "../SrollTop";
 
 import { ShopPath } from "./ShopPath";
 import { SupperAdminPath } from "./SupperAdminPath";
-
+import OrderReviewLayout from "../Layout/OrderReviewLayout";
+import ManageReviews from "../Pages/SellerItems/OrderManagment/ManageReviews/ManageReviews";
+  
 
 
 const Router = createBrowserRouter([
@@ -50,6 +52,7 @@ const Router = createBrowserRouter([
     </>,
     children: ShopPath
   },
+  // order and review Route  ,
 
   // Admin Route
 
@@ -63,7 +66,7 @@ const Router = createBrowserRouter([
         </SupperAdminRouter>
       </>),
     children: SupperAdminPath
-  }
+  },
 
 ]);
 export default Router;

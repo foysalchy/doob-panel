@@ -3,6 +3,8 @@ import SellerDashboard from "../Pages/Dashboard/SellerDashboard/SellerDashboard"
 import SellerAddContactPage from "../Pages/SellerItems/ContactPages/SellerAddContactPage";
 import SellerManageContact from "../Pages/SellerItems/ContactPages/SellerManageContact";
 import AddDomain from "../Pages/SellerItems/DomainManagement/AddDomain";
+import OrderManagement from "../Pages/SellerItems/OrderManagment/OrderManagement";
+import ManageOrder from "../Pages/SellerItems/OrderManagment/ManageOrder/ManageOrder";
 import AddSellerPage from "../Pages/SellerItems/PageManagement/AddSellerPage";
 import SellerPageManagement from "../Pages/SellerItems/PageManagement/SellerPageManagement";
 import AddDarazProduct from "../Pages/SellerItems/ProductManagement/AddDarazProduct/AddDarazProduct";
@@ -48,6 +50,7 @@ import SellerManageRack from "../Pages/SellerItems/Warehouse/List/SellerManageRa
 import SellerManageSelf from "../Pages/SellerItems/Warehouse/List/SellerManageSelf";
 import SellerListOfWarehouse from "../Pages/SellerItems/Warehouse/SellerListOfWarehouse";
 import SellerWareHouseManagement from "../Pages/SellerItems/Warehouse/SellerWareHouseManagement";
+import ManageReviews from "../Pages/SellerItems/OrderManagment/ManageReviews/ManageReviews";
 
 // `https://salenow-v2-backend.vercel.app/api/v1/seller/daraz-product/${shopInfo._id}
 
@@ -255,6 +258,26 @@ const SellerPath = [
         path: "warehouse/cell-management",
         element: <SellerManageCell />
     },
+    {
+        path: "orders",
+        element: <OrderManagement />
+    },
+    {
+        path: "orders/manage-order",
+        element: <ManageOrder />
+    },
+    {
+        path: "orders/manage-review",
+        element: <ManageReviews />
+    },
+    {
+        path: "schedule-drop-offs",
+        element: "schedule_drop-offs"
+    },
+    {
+        path: "customer-return",
+        element: "customer_return"
+    }
 
 
 
