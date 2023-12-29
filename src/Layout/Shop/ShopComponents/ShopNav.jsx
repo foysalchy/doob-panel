@@ -1,12 +1,15 @@
 import { useQuery } from '@tanstack/react-query';
 import React, { useContext } from 'react';
 import { useState } from 'react';
-import { FaMapLocationDot } from 'react-icons/fa6';
+import { FaJediOrder, FaMapLocationDot } from 'react-icons/fa6';
 import { PiShoppingCartSimpleBold } from "react-icons/pi";
 import { Link, } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { ShopAuthProvider } from '../../../AuthProvider/ShopAuthProvide';
 import { CgLogOut, CgProfile } from "react-icons/cg";
+import { MdFavoriteBorder, MdOutlineFavoriteBorder } from 'react-icons/md';
+import { IoSettings } from "react-icons/io5";
+import { FaSignOutAlt } from 'react-icons/fa';
 
 const ShopNav = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -156,15 +159,18 @@ const ShopNav = () => {
                                             <CgProfile className="w-5 h-5 mx-1" />
                                             <span className="mx-1">View Profile</span>
                                         </Link>
+                                        <Link to={`/shop/${shopId}/user/my-orders`} className="flex mx-auto items-center px-10 py-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
 
-                                        <a href="#" className="flex items-center p-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
-                                            <svg className="w-5 h-5 mx-1" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                {/* SVG path for the second menu item */}
-                                            </svg>
+                                            <MdOutlineFavoriteBorder className="w-5  h-5 mx-1" />
+                                            <span className="mx-1">My Orders</span>
+                                        </Link>
+
+                                        <a href="#" className="flex mx-auto items-center px-10 py-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
+                                            <IoSettings className="w-5 h-5 mx-1" />
                                             <span className="mx-1">Settings</span>
                                         </a>
 
-                                        {/* Add more dropdown items as needed */}
+
 
                                         <hr className="border-gray-200 dark:border-gray-700" />
 
@@ -179,7 +185,7 @@ const ShopNav = () => {
 
                                         <button onClick={() => logOut()} className="flex justify-center w-full items-center p-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
 
-                                            <CgLogOut className="w-5 h-5 mx-1" />
+                                                <FaSignOutAlt className="w-5 h-5 mx-1" />
                                             <span className="mx-1">Sign Out</span>
                                         </button>
                                     </div>

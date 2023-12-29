@@ -19,18 +19,29 @@ const Payment = () => {
 
     const orderSubmit = () => {
         console.log(orderStage);
-        // fetch(`http://localhost:5000/api/v1/shop/user/order?token=${shopUser._id}`, {
-        //     method: "POST",
-        //     headers: { "Content-Type": "application/json" },
-        //     body: JSON.stringify({
-        //         stage: orderStage,
-        //         payment: payment
-        //     })
-        // }).then((res) => res.json()).then((data) => {
-        //     console.log(data);
-        // })
-    }
+        const updatedProducts = orderStage.productList.map(product => {
+            const { _id, ...rest } = product;
+            return {
+                ...rest,
+                timestamp: new Date().getTime(), // Use the current timestamp
+                address: orderStage.addresses,
+                promoCode: orderStage.promoHistory.status === false ? false : orderStage.promoHistory.promoCode
+            };
+        });
+        console.log(updatedProducts);
 
+        fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/user/order?token=${shopUser._id}`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                productList: updatedProducts,
+                payment: payment,
+                promoHistory: orderStage.promoHistory
+            })
+        }).then((res) => res.json()).then((data) => {
+            console.log(data);
+        });
+    }
 
     return (
         <div className='px-4 py-5 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8'>
@@ -48,7 +59,7 @@ const Payment = () => {
                                                 srcSet="https://logos-download.com/wp-content/uploads/2022/01/BKash_Logo_icon-1536x1452.png"
                                                 className="h-[120px] w-[120px]"
                                             />
-                                            <h4 className="mt-2 text-lg">{get?.Getaway}</h4>
+                                            <h4 className="mt-2 font-inner text-lg">{get?.Getaway}</h4>
                                         </div>
                                     </a>
 
@@ -62,7 +73,7 @@ const Payment = () => {
                                                 srcSet="https://download.logo.wine/logo/Nagad/Nagad-Vertical-Logo.wine.png"
                                                 className="h-[120px] w-[120px] object-cover"
                                             />
-                                            <h4 className="mt-2 text-lg">{get?.Getaway}</h4>
+                                            <h4 className="mt-2 font-inner text-lg">{get?.Getaway}</h4>
                                         </div>
                                     </a>
 
@@ -76,7 +87,7 @@ const Payment = () => {
                                                 srcSet="https://play-lh.googleusercontent.com/xA5zXoyQrqDjgz8bef64gAvnBpofTELWWWXYkuF3t5WnPADHv5Y91A8x51Z0RHJnLzM"
                                                 className="h-[120px] w-[120px]"
                                             />
-                                            <h4 className="mt-2 text-lg">{get?.Getaway}</h4>
+                                            <h4 className="mt-2 font-inner text-lg">{get?.Getaway}</h4>
                                         </div>
                                     </a>
                                 }
@@ -88,25 +99,26 @@ const Payment = () => {
                         <div onClick={() => setPayment({ Getaway: "CashOnDelivery" })} className={`${payment?.Getaway === 'CashOnDelivery' && 'shadow-lg shadow-gray-700'}  border border-gray-600 flex items-center justify-center flex-col rounded p-4 w-[200px] h-[220px]`}>
                             <img
                                 alt="Developer"
-                                src="https://salenow-v2-backend.vercel.app/api/v1/image/65899d8a90705ef9459e30e6.jpg"
-                                srcSet="https://salenow-v2-backend.vercel.app/api/v1/image/65899d8a90705ef9459e30e6.jpg"
+                                src="https://salenow-v2-backend.vercel.app/api/v1/image/658ec416b689ffabf15d9fb6.jpg"
+                                srcSet="https://salenow-v2-backend.vercel.app/api/v1/image/658ec416b689ffabf15d9fb6.jpg"
                                 className="h-[120px] w-[120px]"
                             />
-                            <h4 className="mt-2 text-lg">Cash On Delivery</h4>
+                            <h4 className="mt-2  font-bold text-lg">Cash On Delivery</h4>
                         </div>
                     </a>
 
                 </div>
 
                 <div className="">
-                    <div className="bg-gray-200 w-full p-3">
+                    <div className="bg-gray-200 font-sans w-full p-3">
                         <h1 className="text-2xl font-semibold">Order Summary</h1>
                         <p className="text-gray-400 mt-2">Subtotal( {orderStage?.productList?.length} Items and shipping fee included)</p>
                         <br />
                         <div className="flex items-center justify-between">
-                            <h1 className="text-lg">Total Amount:</h1>
-                            <h1 className='flex items-center '>
-                                {!orderStage?.promoHistory?.status && <div className=''><span className="kalpurush text-xl">৳</span>{orderStage?.promoHistory?.normalPrice}</div>}
+                            <h1 className="text-xl">Total Amount:</h1>
+                            <h1 className='flex items-center gap-1  font-bold '>
+                                {!orderStage?.promoHistory?.status && <div className=''>
+                                    <span className="kalpurush text-2xl">৳</span>{orderStage?.promoHistory?.normalPrice}</div>}
                                 {orderStage?.promoHistory?.promoPrice && <span>{orderStage?.promoHistory?.promoPrice}</span>}
                             </h1>
                         </div>
