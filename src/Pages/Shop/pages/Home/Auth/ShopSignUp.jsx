@@ -1,14 +1,15 @@
-import React from 'react';
-import { Link, useLoaderData } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Link, useLoaderData, useNavigate } from 'react-router-dom';
 import FacebookLogo from './facebook-round-color-icon.svg';
 import { useContext } from 'react';
 import { ShopAuthProvider } from '../../../../../AuthProvider/ShopAuthProvide';
 
 const ShopSignUp = () => {
     const page = useLoaderData()
+    const navigate = useNavigate()
     console.log(page, 'page');
 
-    const { createUser, Google, shopCredential, Facebook } = useContext(ShopAuthProvider)
+    const { createUser, Google, shopCredential, Facebook, shopUser, shopId } = useContext(ShopAuthProvider)
 
     const SubmitData = (e) => {
         e.preventDefault();
@@ -20,6 +21,12 @@ const ShopSignUp = () => {
         createUser(email, password, name)
 
     }
+
+    useEffect(() => {
+        if (shopUser) {
+            navigate(`/shop/${shopId}`)
+        }
+    }, [shopUser])
 
     return (
 

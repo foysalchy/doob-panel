@@ -261,13 +261,14 @@ const ShopAuth = ({ children }) => {
 
     useEffect(() => {
         let unsubscribe;
-
+        setLoading(true)
         const tokenData = localStorage.getItem(`${shopId}`);
         const user = JSON.parse(tokenData);
 
         if (user?.shopId === shopId) {
             setToken(user);
             setShopUser(user);
+            setLoading(false);
         } else {
             setLoading(false);
             setShopUser(null);

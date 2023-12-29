@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Link, useLoaderData, useNavigate } from 'react-router-dom';
 import Facebook from './facebook-round-color-icon.svg';
 import { ShopAuthProvider } from '../../../../../AuthProvider/ShopAuthProvide';
@@ -35,9 +35,11 @@ const ShopSignIn = () => {
         setChecked(!isChecked);
     };
 
-    if (shopUser) {
-        navigate(`/shop/${shopId}`)
-    }
+    useEffect(() => {
+        if (shopUser) {
+            navigate(`/shop/${shopId}`)
+        }
+    }, [shopUser])
 
     return (
         <div className='bg-gray-100'>

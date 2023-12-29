@@ -14,6 +14,7 @@ import ProductInformation from "../Pages/Shop/pages/Product/OneProduct/ProductIn
 import Payment from "../Pages/Shop/pages/Product/ProductCheckOut/Payment";
 import ProductCheckout from "../Pages/Shop/pages/Product/ProductCheckOut/ProductCheckout";
 import Product from './../Pages/Home/Product/Product';
+import IsUserRegistration from "./isUserRegistration";
 
 const ShopPath = [
     {
@@ -42,7 +43,7 @@ const ShopPath = [
     },
     {
         path: ':id/user',
-        element: <UserProfile />,
+        element: <IsUserRegistration><UserProfile /></IsUserRegistration>,
         children: [
             {
                 path: 'my-profile',
@@ -54,10 +55,7 @@ const ShopPath = [
             }
         ]
     },
-    {
-        path: ':id/user-profile/address',
-        element: <AddressBook />,
-    },
+
     {
         path: ':id/product/:productID',  // Use a dynamic route parameter for the product ID
         element: <ProductInformation />,
@@ -124,7 +122,7 @@ const ShopPath = [
     },
     {
         path: ":id/user/cart",
-        element: <AddToCard />,
+        element: <IsUserRegistration> <AddToCard /></IsUserRegistration>,
         loader: async (params) => {
             const urlObj = new URL(params.request.url)
 
@@ -162,7 +160,7 @@ const ShopPath = [
     },
     {
         path: ":id/user/payment",
-        element: <Payment />,
+        element: <IsUserRegistration> <Payment /></IsUserRegistration>,
         loader: async (params) => {
             const urlObj = new URL(params.request.url)
             const url = urlObj.href
@@ -192,7 +190,7 @@ const ShopPath = [
     },
     {
         path: ":id/user/order",
-        element: <ProductCheckout />,
+        element: <IsUserRegistration><ProductCheckout /></IsUserRegistration>,
         loader: async (params) => {
             const urlObj = new URL(params.request.url)
 
