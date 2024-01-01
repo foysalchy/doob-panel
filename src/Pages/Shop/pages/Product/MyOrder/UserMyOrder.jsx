@@ -31,6 +31,7 @@ const UserMyOrder = () => {
         return formattedDate;
     }
 
+    console.log(myOrders);
 
 
     return (
@@ -58,34 +59,38 @@ const UserMyOrder = () => {
                                         <button className='text-blue-500'>View invoice →</button>
                                     </div>
                                 </div>
-                                <div className='flex justify-between gap-4 w-full'>
+                                <div className='flex flex-col gap-3'>
+                                    {
+                                        order.productList.map((list) => (
+                                            <div className='flex border p-4  justify-between gap-4 w-full'>
 
-                                    <div className='w-[50%]'> <img className='w-32 h-32 border border-opacity-40 rounded object-cover' src={order.img} alt="" /></div>
+                                                <div className='w-[50%]'> <img className='w-32 h-32 border border-opacity-40 rounded object-cover' src={list.img} alt="" /></div>
 
-                                    <div className='flex flex-col w-full  gap-1 '>  <h1 className='font-semibold text-lg '>{order.productName}</h1>
-                                        <p className='font-semibold'> Price: ${order.price}</p>
-                                        <p className='text-gray-500 text-clip'>Regular Price:  {order.regular_price} </p>
-                                    </div>
-                                    <div className='flex flex-col gap-1 w-full'>
-                                        <h1 className='font-semibold text-lg '>Delivery</h1>
-                                        <p className='text-gray-500'><span>
-                                            {order.address.province}, {order.address.city}
-                                        </span>
-                                            <br />
-                                            <span>{order.address.area}</span>
-                                            <br />
-                                            <span> {order.address.address}</span></p>
-                                    </div>
-                                    <div className='flex flex-col gap-1 w-full'>
-                                        <h1 className='font-semibold text-lg '>Shipping updates</h1>
-                                        <p className='text-gray-500'><span>
-                                            {order.address.fullName}
+                                                <div className='flex flex-col w-full  gap-1 '>  <h1 className='font-semibold text-lg '>{list.productName}</h1>
+                                                    <p className='font-semibold'> Price: ${list.price}</p>
+                                                    <p className='text-gray-500 text-clip'>Regular Price:  {list.regular_price} </p>
+                                                </div>
+                                                <div className='flex flex-col gap-1 w-full text-center'>
+                                                    <h1 className='font-semibold text-lg '>Quantity</h1>
+                                                    <p className='text-gray-500 text-center '>
+                                                        {list.quantity}
+                                                    </p>
+                                                </div>
+                                                <div className='flex flex-col gap-1 w-full'>
+                                                    <h1 className='font-semibold text-lg '>Shipping updates</h1>
+                                                    <p className='text-gray-500'>
+                                                        {order.status ? order.status : "Progress"}
 
-                                        </span>
-                                            <br />
-                                            <span>     {order.address.mobileNumber}</span></p>
-                                    </div>
+                                                    </p>
+                                                </div>
 
+                                                <div>
+                                                    <button className='text-red-500'>Cancel</button>
+                                                </div>
+
+                                            </div>
+                                        ))
+                                    }
                                 </div>
 
                                 <div className="mt-4 mx-auto px-4 md:px-0">

@@ -1,11 +1,14 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { useLoaderData } from 'react-router-dom';
 import { ShopAuthProvider } from '../../../../../AuthProvider/ShopAuthProvide';
+import BrightAlert from 'bright-alert';
 
 const Payment = () => {
     const paymentGetWays = useLoaderData();
-    const { selectProductData, orderStage, shopUser } = useContext(ShopAuthProvider);
+    const { selectProductData, orderStage, shopUser, shop_id } = useContext(ShopAuthProvider);
     const [payment, setPayment] = useState(false)
+
+    console.log(orderStage);
 
     const message = ["Exercise caution when making payments, ensuring that you only transact with reputable and secure platforms to safeguard your financial information.", "Always verify the legitimacy of the payment process, double-checking the recipient details and website security features before proceeding with any transactions.", "After completing a payment, retain a screenshot or confirmation email as proof of the transaction, serving as documentation in case of any discrepancies or disputes in the future.", "Regularly monitor your bank statements and financial accounts to promptly detect and address any unauthorized or suspicious activities, ensuring the security of your financial assets."]
 
@@ -18,29 +21,20 @@ const Payment = () => {
 
 
     const orderSubmit = () => {
-        console.log(orderStage);
-        const updatedProducts = orderStage.productList.map(product => {
-            const { _id, ...rest } = product;
-            return {
-                ...rest,
-                timestamp: new Date().getTime(), // Use the current timestamp
-                address: orderStage.addresses,
-                promoCode: orderStage.promoHistory.status === false ? false : orderStage.promoHistory.promoCode,
-                method: payment
 
-            };
-        });
-        console.log(updatedProducts);
-
-        fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/user/order?token=${shopUser._id}`, {
+        const data = orderStage
+        data.method = payment
+        data.timestamp = new Date().getTime()
+        data.userId = shopUser._id
+        data.shopId = shop_id.shop_id
+        console.log(data);
+        fetch(`http://localhost:5000/api/v1/shop/user/order?token=${shopUser._id}`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                productList: updatedProducts,
-                promoHistory: orderStage.promoHistory
-            })
+            body: JSON.stringify(data)
         }).then((res) => res.json()).then((data) => {
             console.log(data);
+            BrightAlert()
         });
     }
 

@@ -6,62 +6,6 @@ import { AuthContext } from '../../../../AuthProvider/UserProvider';
 import { useQuery } from '@tanstack/react-query';
 
 const OrderTable = () => {
-    // const tData = [
-    //     {
-    //         order_id: 'a1',
-    //         product_id: 'p_1',
-    //         document: 'invoice',
-    //         documentLink: 'www.google.com',
-    //         orderNumber: '0172937463653',
-    //         orderDate: '12/28/2023 16:40',
-    //         pendingSince: '1hour',
-    //         PaymentMethod: 'COD',
-    //         RetailPrice: '2719.00',
-    //         Status: 'aproved',
-    //         ShipOnTimeSLA: '01 Jan 2024 23:59',
-    //         ReadytoShip: 'www.google.com',
-    //         sendTo: 'Mohammed Sharif Muhuripara, GULBAG, Shima Tower5d, Agrabad, Chittagong Bangladesh Invoice Number: SS652637200152965',
-    //         sellerSku: "CD-10N",
-    //         product: 'CB Beginner Choise New Accoustic Guitar Natural-কালার_ফ্যামিলি:বাদামী',
-    //         img: '',
-
-    //     },
-    //     {
-    //         document: 'invoice',
-    //         documentLink: 'www.google.com',
-    //         orderNumber: '0172937463653',
-    //         orderDate: '12/28/2023 16:40',
-    //         pendingSince: '1hour',
-    //         PaymentMethod: 'COD',
-    //         RetailPrice: '2719.00',
-    //         Status: 'pending',
-    //         ShipOnTimeSLA: '01 Jan 2024 23:59',
-    //         ReadytoShip: 'www.google.com',
-    //         sendTo: 'Mohammed Sharif Muhuripara, GULBAG, Shima Tower5d, Agrabad, Chittagong Bangladesh Invoice Number: SS652637200152965',
-    //         sellerSku: "CD-10N",
-    //         product: 'CB Beginner Choise New Accoustic Guitar Natural-কালার_ফ্যামিলি:বাদামী',
-    //         img: '',
-    //         status: 'pending',
-    //     },
-    //     {
-    //         document: 'invoice',
-    //         documentLink: 'www.google.com',
-    //         orderNumber: '0172937463653',
-    //         orderDate: '12/28/2023 16:40',
-    //         pendingSince: '1hour',
-    //         PaymentMethod: 'COD',
-    //         RetailPrice: '2719.00',
-    //         Status: 'pending',
-    //         ShipOnTimeSLA: '01 Jan 2024 23:59',
-    //         ReadytoShip: 'www.google.com',
-    //         sendTo: 'Mohammed Sharif Muhuripara, GULBAG, Shima Tower5d, Agrabad, Chittagong Bangladesh Invoice Number: SS652637200152965',
-    //         sellerSku: "CD-10N",
-    //         product: 'CB Beginner Choise New Accoustic Guitar Natural-কালার_ফ্যামিলি:বাদামী',
-    //         img: '',
-    //         status: 'pending',
-
-    //     },
-    // ]
 
     const { shopInfo } = useContext(AuthContext)
 
