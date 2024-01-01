@@ -14,7 +14,7 @@ const UserMyOrder = () => {
 
     const { shop_id, shopUser } = useContext(ShopAuthProvider)
 
-    const { data: myOrders = [], refetch } = useQuery({
+    const { data: myOrders = [], refetch, isLoading } = useQuery({
         queryKey: ["my-order"],
         queryFn: async () => {
             const res = await fetch(`http://localhost:5000/api/v1/shop/user/order?shopId=${shop_id.shop_id}&&token=${shopUser._id}`);
@@ -36,7 +36,7 @@ const UserMyOrder = () => {
 
     return (
         <div className='px-4 py-5 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 font-google'>
-            <div className='flex flex-col gap-4'>
+            {!isLoading ? <div className='flex flex-col gap-4'>
                 {
                     myOrders?.data?.map((order) => {
                         // Determine the current step based on order status
@@ -125,7 +125,7 @@ const UserMyOrder = () => {
                             </div>
                         )
                     })}
-            </div>
+            </div> : <div className='text-3xl py-40'> Loading....</div>}
 
         </div>
     );
