@@ -1,66 +1,79 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { BiCheck } from 'react-icons/bi';
 import { Link } from 'react-router-dom';
 import TableRow from './TableRow';
+import { AuthContext } from '../../../../AuthProvider/UserProvider';
+import { useQuery } from '@tanstack/react-query';
 
 const OrderTable = () => {
-    const tData = [
-        {
-            order_id : 'a1',
-            product_id : 'p_1',
-            document: 'invoice',
-            documentLink: 'www.google.com',
-            orderNumber: '0172937463653',
-            orderDate: '12/28/2023 16:40',
-            pendingSince: '1hour',
-            PaymentMethod: 'COD',
-            RetailPrice: '2719.00',
-            Status: 'aproved',
-            ShipOnTimeSLA: '01 Jan 2024 23:59',
-            ReadytoShip: 'www.google.com',
-            sendTo: 'Mohammed Sharif Muhuripara, GULBAG, Shima Tower5d, Agrabad, Chittagong Bangladesh Invoice Number: SS652637200152965',
-            sellerSku: "CD-10N",
-            product: 'CB Beginner Choise New Accoustic Guitar Natural-কালার_ফ্যামিলি:বাদামী',
-            img: '',
-            printed: true,
+    // const tData = [
+    //     {
+    //         order_id: 'a1',
+    //         product_id: 'p_1',
+    //         document: 'invoice',
+    //         documentLink: 'www.google.com',
+    //         orderNumber: '0172937463653',
+    //         orderDate: '12/28/2023 16:40',
+    //         pendingSince: '1hour',
+    //         PaymentMethod: 'COD',
+    //         RetailPrice: '2719.00',
+    //         Status: 'aproved',
+    //         ShipOnTimeSLA: '01 Jan 2024 23:59',
+    //         ReadytoShip: 'www.google.com',
+    //         sendTo: 'Mohammed Sharif Muhuripara, GULBAG, Shima Tower5d, Agrabad, Chittagong Bangladesh Invoice Number: SS652637200152965',
+    //         sellerSku: "CD-10N",
+    //         product: 'CB Beginner Choise New Accoustic Guitar Natural-কালার_ফ্যামিলি:বাদামী',
+    //         img: '',
+
+    //     },
+    //     {
+    //         document: 'invoice',
+    //         documentLink: 'www.google.com',
+    //         orderNumber: '0172937463653',
+    //         orderDate: '12/28/2023 16:40',
+    //         pendingSince: '1hour',
+    //         PaymentMethod: 'COD',
+    //         RetailPrice: '2719.00',
+    //         Status: 'pending',
+    //         ShipOnTimeSLA: '01 Jan 2024 23:59',
+    //         ReadytoShip: 'www.google.com',
+    //         sendTo: 'Mohammed Sharif Muhuripara, GULBAG, Shima Tower5d, Agrabad, Chittagong Bangladesh Invoice Number: SS652637200152965',
+    //         sellerSku: "CD-10N",
+    //         product: 'CB Beginner Choise New Accoustic Guitar Natural-কালার_ফ্যামিলি:বাদামী',
+    //         img: '',
+    //         status: 'pending',
+    //     },
+    //     {
+    //         document: 'invoice',
+    //         documentLink: 'www.google.com',
+    //         orderNumber: '0172937463653',
+    //         orderDate: '12/28/2023 16:40',
+    //         pendingSince: '1hour',
+    //         PaymentMethod: 'COD',
+    //         RetailPrice: '2719.00',
+    //         Status: 'pending',
+    //         ShipOnTimeSLA: '01 Jan 2024 23:59',
+    //         ReadytoShip: 'www.google.com',
+    //         sendTo: 'Mohammed Sharif Muhuripara, GULBAG, Shima Tower5d, Agrabad, Chittagong Bangladesh Invoice Number: SS652637200152965',
+    //         sellerSku: "CD-10N",
+    //         product: 'CB Beginner Choise New Accoustic Guitar Natural-কালার_ফ্যামিলি:বাদামী',
+    //         img: '',
+    //         status: 'pending',
+
+    //     },
+    // ]
+
+    const { shopInfo } = useContext(AuthContext)
+
+    const { data: tData = [], refetch } = useQuery({
+        queryKey: ["sellerOrder"],
+        queryFn: async () => {
+            const res = await fetch(`http://localhost:5000/api/v1/seller/order?shopId=${shopInfo._id}`);
+            const data = await res.json();
+            return data.data;
         },
-        {
-            document: 'invoice',
-            documentLink: 'www.google.com',
-            orderNumber: '0172937463653',
-            orderDate: '12/28/2023 16:40',
-            pendingSince: '1hour',
-            PaymentMethod: 'COD',
-            RetailPrice: '2719.00',
-            Status: 'pending',
-            ShipOnTimeSLA: '01 Jan 2024 23:59',
-            ReadytoShip: 'www.google.com',
-            sendTo: 'Mohammed Sharif Muhuripara, GULBAG, Shima Tower5d, Agrabad, Chittagong Bangladesh Invoice Number: SS652637200152965',
-            sellerSku: "CD-10N",
-            product: 'CB Beginner Choise New Accoustic Guitar Natural-কালার_ফ্যামিলি:বাদামী',
-            img: '',
-            status: 'pending',
-            printed: false,
-        },
-        {
-            document: 'invoice',
-            documentLink: 'www.google.com',
-            orderNumber: '0172937463653',
-            orderDate: '12/28/2023 16:40',
-            pendingSince: '1hour',
-            PaymentMethod: 'COD',
-            RetailPrice: '2719.00',
-            Status: 'pending',
-            ShipOnTimeSLA: '01 Jan 2024 23:59',
-            ReadytoShip: 'www.google.com',
-            sendTo: 'Mohammed Sharif Muhuripara, GULBAG, Shima Tower5d, Agrabad, Chittagong Bangladesh Invoice Number: SS652637200152965',
-            sellerSku: "CD-10N",
-            product: 'CB Beginner Choise New Accoustic Guitar Natural-কালার_ফ্যামিলি:বাদামী',
-            img: '',
-            status: 'pending',
-            printed: true,
-        },
-    ]
+    });
+
     return (
         <div className="flex flex-col overflow-hidden mt-4">
             <div className="overflow-x-auto transparent-scroll sm:-mx-6 lg:-mx-8">
@@ -109,7 +122,7 @@ const OrderTable = () => {
                             </thead>
                             <tbody>
                                 {
-                                    tData?.map((itm, index) => <TableRow data={itm} key={index} />)
+                                    tData?.map((itm, index) => <TableRow data={itm} index={index} key={index} />)
                                 }
                             </tbody>
                         </table>
