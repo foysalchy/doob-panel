@@ -51,6 +51,7 @@ import SellerManageSelf from "../Pages/SellerItems/Warehouse/List/SellerManageSe
 import SellerListOfWarehouse from "../Pages/SellerItems/Warehouse/SellerListOfWarehouse";
 import SellerWareHouseManagement from "../Pages/SellerItems/Warehouse/SellerWareHouseManagement";
 import ManageReviews from "../Pages/SellerItems/OrderManagment/ManageReviews/ManageReviews";
+import OrderCheckup from "../Pages/SellerItems/OrderManagment/OrderCkeckup/OrderCheckup";
 
 // `https://salenow-v2-backend.vercel.app/api/v1/seller/daraz-product/${shopInfo._id}
 
@@ -265,6 +266,10 @@ const SellerPath = [
     {
         path: "orders/manage-order",
         element: <ManageOrder />
+    },
+    {
+        path: "orders/manage-order/order-checkup",
+        element: <OrderCheckup />
     },
     {
         path: "orders/manage-review",

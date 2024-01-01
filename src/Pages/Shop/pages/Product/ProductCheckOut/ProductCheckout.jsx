@@ -243,11 +243,16 @@ const ProductCheckout = () => {
                             <p className='kalpurush'>৳ <span className='font-sans'>{promoPrice ? promoPrice : calculateTotal()}</span></p>
                         </div>
                         <div className={`${!promoDiscount ? '' : 'mt-6'}`}>
-                            <Link to={`/shop/${shopId}/user/payment?shop_id=${shop_id?.shop_id}`} type="button">
-                                <button onClick={() => sendPlaceOrderData()} className="px-6 py-2 rounded w-full bg-gray-800 text-white" type='button'>
+                            {
+                                addresses?.data ? <Link to={`/shop/${shopId}/user/payment?shop_id=${shop_id?.shop_id}`} type="button">
+                                    <button onClick={() => sendPlaceOrderData()} className="px-6 py-2 rounded w-full bg-gray-800 text-white" type='button'>
+                                        Place Order
+                                    </button>
+                                </Link> : <button disabled className="px-6 py-2 rounded w-full bg-gray-600 text-white" type='button'>
                                     Place Order
                                 </button>
-                            </Link>
+                            }
+
                         </div>
                     </div>
                 </div>

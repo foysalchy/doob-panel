@@ -30,6 +30,7 @@
     "react-quill": "^2.0.0",
     "react-router-dom": "^6.16.0",
     "react-select": "^5.8.0",
+    "react-to-print": "^2.14.15",
     "react-window": "^1.8.10",
     "sweetalert2": "^11.7.31",
     "swiper": "^10.3.1",

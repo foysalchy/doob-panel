@@ -12,7 +12,7 @@ const OrderTable = () => {
     const { data: tData = [], refetch } = useQuery({
         queryKey: ["sellerOrder"],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/api/v1/seller/order?shopId=${shopInfo._id}`);
+            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/order?shopId=${shopInfo._id}`);
             const data = await res.json();
             return data.data;
         },
@@ -52,12 +52,6 @@ const OrderTable = () => {
                                     </th>
                                     <th scope="col" className="border-r px-2 py-4 text-sm font-[500]">
                                         Status
-                                    </th>
-                                    <th scope="col" className="border-r px-2 py-4 text-sm font-[500]">
-                                        Ship-on-Time SLA
-                                    </th>
-                                    <th scope="col" className="border-r px-2 py-4 text-sm font-[500]">
-                                        Printed
                                     </th>
                                     <th scope="col" className="border-r px-2 py-4 text-sm font-[500]">
                                         Actions
