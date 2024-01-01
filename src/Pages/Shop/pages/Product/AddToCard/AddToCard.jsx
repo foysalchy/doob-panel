@@ -114,32 +114,32 @@ const AddToCard = () => {
         })
     };
 
-    const [promoPrice, setPromoPrice] = useState(false)
-    const [promoDiscount, setPromoDiscount] = useState(false)
-    const [process, setProcess] = useState(false)
+    // const [promoPrice, setPromoPrice] = useState(false)
+    // const [promoDiscount, setPromoDiscount] = useState(false)
+    // const [process, setProcess] = useState(false)
 
 
-    const checkPromoCode = (e) => {
-        setProcess(true)
-        e.preventDefault();
-        const price = calculateTotal()
-        const code = e.target.promoCode.value
-        const shopId = shop_id.shop_id
-        console.log(price);
-        fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/user/promocode?shopId=${shopId}&code=${code}&token=${shopUser._id}&price=${price}`, {
-            headers: {
-                "ngrok-skip-browser-warning": "69420",
-            }
-        }).then((res) => res.json()).then((data) => {
-            console.log(data);
-            setProcess(false)
-            if (data.status) {
-                setPromoPrice(data.promoPrice)
-                setPromoDiscount(data.promoDiscount)
-            }
-        })
+    // const checkPromoCode = (e) => {
+    //     setProcess(true)
+    //     e.preventDefault();
+    //     const price = calculateTotal()
+    //     const code = e.target.promoCode.value
+    //     const shopId = shop_id.shop_id
+    //     console.log(price);
+    //     fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/user/promocode?shopId=${shopId}&code=${code}&token=${shopUser._id}&price=${price}`, {
+    //         headers: {
+    //             "ngrok-skip-browser-warning": "69420",
+    //         }
+    //     }).then((res) => res.json()).then((data) => {
+    //         console.log(data);
+    //         setProcess(false)
+    //         if (data.status) {
+    //             setPromoPrice(data.promoPrice)
+    //             setPromoDiscount(data.promoDiscount)
+    //         }
+    //     })
 
-    }
+    // }
 
 
 
@@ -172,8 +172,9 @@ const AddToCard = () => {
                                         <div className="flex flex-col justify-between w-full pb-4">
                                             <div className="flex justify-between w-full pb-2 space-x-2">
                                                 <div className="space-y-1">
-                                                    <h3 className="text-lg font-semibold leadi sm:pr-8">{product.name}</h3>
+                                                    <h3 className="text-lg font-semibold leadi sm:pr-8">{product.productName}</h3>
                                                     <div>
+
                                                         <label htmlFor={`Quantity-${product._id}`} className="sr-only">
                                                             Quantity
                                                         </label>
