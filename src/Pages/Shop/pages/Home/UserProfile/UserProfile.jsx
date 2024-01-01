@@ -13,20 +13,23 @@ const UserProfile = () => {
     const { shopUser } = useContext(ShopAuthProvider)
 
     return (
-        <div className='px-4 py-4 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8'>
-            <div className='flex gap-8'>
-                <div>
-                    <small>Hello, {shopUser?.name}</small>
-                    <div className='mt-4 w-64'>
-                        <h1 className='text-xl font-semibold'>Manage Your Account</h1>
-                        <div className='ml-4 flex flex-col'>
-                            <Link to={`/shop/${shopId}/user/my-profile`} className='text-blue-500'>My Profile</Link>
-                            <Link to={`/shop/${shopId}/user/my-address`} className='text-blue-500'>Address Book</Link>
+        <div className='bg-[#f5f5f5]'>
+            <div className='px-4 py-4 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8'>
+                <div className='flex gap-8  '>
+                    <div className='bg-white p-4 h-[200px]'>
+                        <small>Hello, {shopUser?.name}</small>
+                        <div className='mt-4 w-64'>
+                            <h1 className='text-xl font-semibold'>Manage Your Account</h1>
+                            <div className='ml-4 flex flex-col'>
+                                <Link to={`/shop/${shopId}/user/my-profile`} className='text-blue-500'>My Profile</Link>
+                                <Link to={`/shop/${shopId}/user/my-address`} className='text-blue-500'>Address Book</Link>
+                                <Link to={`/shop/${shopId}/user/my-order`} className='text-blue-500'>My Order</Link>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div className='w-full'>
-                    <Outlet />
+                    <div className='w-full'>
+                        <Outlet />
+                    </div>
                 </div>
             </div>
         </div>

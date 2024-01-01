@@ -53,6 +53,10 @@ const ShopPath = [
             {
                 path: 'my-address',
                 element: <AddressBook />,
+            },
+            {
+                path: 'my-orders',
+                element: <UserMyOrder />,
             }
         ]
     },
@@ -227,11 +231,11 @@ const ShopPath = [
 
         }
     },
-    {
-        path: ":id/user/my-orders",
-        element: <IsUserRegistration><UserMyOrder /></IsUserRegistration>,
+    // {
+    //     path: ":id/user/my-orders",
+    //     element: <IsUserRegistration><UserMyOrder /></IsUserRegistration>,
 
-    },
+    // },
 
     {
         path: '*',
