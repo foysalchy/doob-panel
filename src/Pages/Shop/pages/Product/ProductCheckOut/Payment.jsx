@@ -25,7 +25,9 @@ const Payment = () => {
                 ...rest,
                 timestamp: new Date().getTime(), // Use the current timestamp
                 address: orderStage.addresses,
-                promoCode: orderStage.promoHistory.status === false ? false : orderStage.promoHistory.promoCode
+                promoCode: orderStage.promoHistory.status === false ? false : orderStage.promoHistory.promoCode,
+                method: payment
+
             };
         });
         console.log(updatedProducts);
@@ -35,7 +37,6 @@ const Payment = () => {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
                 productList: updatedProducts,
-                payment: payment,
                 promoHistory: orderStage.promoHistory
             })
         }).then((res) => res.json()).then((data) => {

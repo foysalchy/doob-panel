@@ -4,7 +4,23 @@ import { CgClose } from 'react-icons/cg';
 import { Link } from 'react-router-dom';
 
 const TableRow = ({ data }) => {
-    const { PaymentMethod, ReadytoShip, RetailPrice, ShipOnTimeSLA, Status, document, documentLink, orderDate, orderNumber, pendingSince, printed, product, sellerSku, sendTo } = data;
+    console.log(data);
+    const { method, ReadytoShip, price, ShipOnTimeSLA, Status, document, documentLink, orderDate, orderNumber, pendingSince, quantity, product, sellerSku, sendTo, timestamp } = data;
+
+
+    function getTimeAgo(timestamp) {
+        const currentTime = new Date().getTime();
+        const timeDifference = currentTime - timestamp;
+
+        const hours = Math.floor(timeDifference / (1000 * 60 * 60));
+        const days = Math.floor(hours / 24);
+
+        if (hours < 24) {
+            return `${hours} hour${hours !== 1 ? 's' : ''} ago`;
+        } else {
+            return `${days} day${days !== 1 ? 's' : ''} ago`;
+        }
+    }
 
     return (
         <tr className="border-b ">
@@ -24,16 +40,16 @@ const TableRow = ({ data }) => {
                 <Link className='text-[16px] font-[400] text-blue-700' to={orderNumber}>{orderNumber}</Link>
             </td>
             <td className="whitespace-nowrap border-r px-6 py-4 text-[16px] font-[400]">
-                {orderDate}
+                {getTimeAgo(timestamp)}
             </td>
             <td className="whitespace-nowrap border-r px-6 py-4 text-[16px] font-[400]">
                 {pendingSince}
             </td>
             <td className="whitespace-nowrap border-r px-6 py-4 text-[16px] font-[400]">
-                {PaymentMethod}
+                {method.Getaway}
             </td>
             <td className="whitespace-nowrap border-r px-6 py-4 text-[16px] font-[400]">
-                {RetailPrice}
+                {price}
             </td>
             <td className="whitespace-nowrap border-r px-6 py-4 text-[16px] font-[400]">
                 {Status}
@@ -43,7 +59,7 @@ const TableRow = ({ data }) => {
             </td>
             <td className="whitespace-nowrap border-r px-4 py-4 text-[16px] font-[400]">
                 {
-                    printed ? <BiCheck className='text-3xl text-green-600' /> : <CgClose className='text-2xl text-red-600' />
+                    quantity
                 }
 
             </td>

@@ -9,6 +9,7 @@ import AddressBook from "../Pages/Shop/pages/Home/UserProfile/ProfileUpdate/Addr
 import ProfileUpdate from "../Pages/Shop/pages/Home/UserProfile/ProfileUpdate/ProfileUpdate";
 import UserProfile from "../Pages/Shop/pages/Home/UserProfile/UserProfile";
 import AddToCard from "../Pages/Shop/pages/Product/AddToCard/AddToCard";
+import UserMyOrder from "../Pages/Shop/pages/Product/MyOrder/UserMyOrder";
 import CategoryByProduct from "../Pages/Shop/pages/Product/OneProduct/CategoryByProduct/CategoryByProduct";
 import ProductInformation from "../Pages/Shop/pages/Product/OneProduct/ProductInformation";
 import Payment from "../Pages/Shop/pages/Product/ProductCheckOut/Payment";
@@ -226,6 +227,12 @@ const ShopPath = [
 
         }
     },
+    {
+        path: ":id/user/my-orders",
+        element: <IsUserRegistration><UserMyOrder /></IsUserRegistration>,
+
+    },
+
     {
         path: '*',
         element: <Error />
