@@ -1,13 +1,14 @@
 import React, { useContext, useState } from 'react';
 import { BiCheck } from 'react-icons/bi';
 import { Link } from 'react-router-dom';
-import TableRow from './TableRow';
+import TableRow from './WooCommerceTableRow';
 import { AuthContext } from '../../../../AuthProvider/UserProvider';
 import { useQuery } from '@tanstack/react-query';
-import AddAddress from './../../../Shop/pages/Home/UserProfile/ProfileUpdate/AddAddress';
+import AddAddress from '../../../Shop/pages/Home/UserProfile/ProfileUpdate/AddAddress';
+import WooCommerceTableRow from './WooCommerceTableRow';
 
 
-const OrderTable = ({ searchValue }) => {
+const WooCommerceOrderTable = ({ searchValue }) => {
 
     const { shopInfo } = useContext(AuthContext);
 
@@ -75,8 +76,8 @@ const OrderTable = ({ searchValue }) => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {currentItems?.map((itm, index) => (
-                                    <TableRow data={itm} index={index + startIndex} key={index} />
+                                {currentItems?.map((data, index) => (
+                                    <WooCommerceTableRow data={data} index={index + startIndex} key={index} />
                                 ))}
                             </tbody>
                         </table>
@@ -107,4 +108,4 @@ const OrderTable = ({ searchValue }) => {
     );
 };
 
-export default OrderTable;
+export default WooCommerceOrderTable;

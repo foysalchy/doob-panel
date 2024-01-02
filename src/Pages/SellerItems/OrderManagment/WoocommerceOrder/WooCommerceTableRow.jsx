@@ -3,12 +3,17 @@ import { BiCheck } from 'react-icons/bi';
 import { CgClose } from 'react-icons/cg';
 import { Link } from 'react-router-dom';
 import { useReactToPrint } from 'react-to-print';
-import OrderAllinfoModal from './OrderAllinfoModal';
+import OrderAllinfoModal from './WooCommerceOrderAllinfoModal';
 import { AuthContext } from '../../../../AuthProvider/UserProvider';
+import WooCommerceOrderAllinfoModal from './WooCommerceOrderAllinfoModal';
 
-const TableRow = ({ data }) => {
-    console.log(data);
+const WooCommerceTableRow = ({ data }) => {
+
+    if (!data) {
+        return null
+    }
     const { _id, method, ReadytoShip, price, ShipOnTimeSLA, Status, document, documentLink, orderDate, orderNumber, pendingSince, quantity, product, sellerSku, sendTo, timestamp, productList } = data;
+
     const [formattedDate, setFormattedDate] = useState('');
     const [emptyAction, setEmptyAction] = useState(true);
     const { checkUpData, setCheckUpData } = useContext(AuthContext);
@@ -64,13 +69,13 @@ const TableRow = ({ data }) => {
             </td>
             <td className="whitespace-nowrap border-r text-2xl">
                 <button onClick={() => setModalOn(!modalOn)} className=' px-4 py-4'>+</button>
-                <OrderAllinfoModal status={Status ? Status : 'Process'} setModalOn={setModalOn} modalOn={modalOn} productList={productList} />
+                <WooCommerceOrderAllinfoModal status={Status ? Status : 'Process'} setModalOn={setModalOn} modalOn={modalOn} productList={productList} />
             </td>
             <td className="whitespace-nowrap border-r px-6 py-4 ">
                 <Link to={`/invoice/${data?._id}`} onClick={handlePrint} className='text-blue-600 font-[500] text-[16px]'>Invoice</Link>
             </td>
             <td className="whitespace-nowrap border-r px-6 py-4 text-[16px] font-[400]">
-                <Link onClick={() => setCheckUpData(data)} to="order-checkup" className='text-blue-500 font-[400]'>{_id}</Link>
+                <Link onClick={() => setCheckUpData(data)} to="woocommerce-order-checkup" className='text-blue-500 font-[400]'>{_id}</Link>
             </td>
             <td className="whitespace-nowrap border-r px-6 py-4 text-[16px] font-[400]">
                 {formattedDate}
@@ -95,4 +100,4 @@ const TableRow = ({ data }) => {
     );
 };
 
-export default TableRow;
+export default WooCommerceTableRow;

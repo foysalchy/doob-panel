@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import ModalTableRow from './ModalTableRow';
+import ModalTableRow from './WooCommerceModalTableRow';
+import WooCommerceTableRow from './WooCommerceTableRow';
 
-const OrderAllinfoModal = ({ status, productList, setModalOn, modalOn }) => {
+const WooCommerceOrderAllinfoModal = ({ status, productList, setModalOn, modalOn }) => {
     // const {img, productName, productId, quantity, price, shopId, userId } = productList
     return (
         <>
@@ -40,7 +41,7 @@ const OrderAllinfoModal = ({ status, productList, setModalOn, modalOn }) => {
                             </thead>
                             <tbody>
                                 {
-                                    productList?.map(itm => <ModalTableRow key={itm?._id} status={status} itm={itm} />)
+                                    productList?.map(itm => <WooCommerceTableRow key={itm?._id} status={status} itm={itm} />)
                                 }
 
                             </tbody>
@@ -52,4 +53,4 @@ const OrderAllinfoModal = ({ status, productList, setModalOn, modalOn }) => {
     );
 };
 
-export default OrderAllinfoModal;
+export default WooCommerceOrderAllinfoModal;

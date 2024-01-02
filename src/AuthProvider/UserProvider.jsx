@@ -7,7 +7,9 @@ const UserProvider = ({ children }) => {
     const [user, setUser] = useState('');
     const [shopInfo, setShopInfo] = useState('');
     const [loading, setLoading] = useState(true);
-
+    const [checkUpData, setCheckUpData] = useState({})
+    const [reviewCheckUpData, setReviewCheckUpData] = useState({})
+    const [invoiceData, setInvoiceData] = useState({})
     const logOut = () => {
         setLoading(true);
         const cookies = Cookies.get();
@@ -79,6 +81,12 @@ const UserProvider = ({ children }) => {
         setLoading,
         shopInfo,
         setShopInfo,
+        checkUpData,
+        setCheckUpData,
+        invoiceData,
+        setInvoiceData,
+        reviewCheckUpData,
+        setReviewCheckUpData
     };
 
     return <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>;

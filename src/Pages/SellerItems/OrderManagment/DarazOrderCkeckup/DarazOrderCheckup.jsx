@@ -1,9 +1,9 @@
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../../../AuthProvider/UserProvider";
-import OrderCkeckupRow from "./OrderCkeckupRow";
+import DarazOrderCkeckupRow from "./DarazOrderCkeckupRow";
 
 
-const OrderCheckup = () => {
+const DarazOrderCheckup = () => {
     const { checkUpData, setCheckUpData } = useContext(AuthContext);
     const [originalValue] = useState(checkUpData?.timestamp);
     const [formattedDate, setFormattedDate] = useState('');
@@ -15,8 +15,7 @@ const OrderCheckup = () => {
 
         setFormattedDate(formattedDate);
     }, [originalValue]);
-    console.log(checkUpData, '+++++');
-    return (
+     return (
         <div className="bg-gray-100">
             <div className=' p-2 grid grid-cols-2 gap-6'>
                 <div className="">
@@ -92,7 +91,7 @@ const OrderCheckup = () => {
                     </thead>
                     <tbody>
                         {
-                            checkUpData?.productList?.slice(0, 4)?.map(itm => <OrderCkeckupRow key={itm?._id} itm={itm} />)
+                            checkUpData?.productList?.slice(0, 4)?.map(itm => <DarazOrderCkeckupRow key={itm?._id} itm={itm} />)
                         }
 
                     </tbody>
@@ -138,4 +137,4 @@ const OrderCheckup = () => {
     );
 };
 
-export default OrderCheckup;
+export default DarazOrderCheckup;

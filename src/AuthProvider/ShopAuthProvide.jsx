@@ -281,7 +281,6 @@ const ShopAuth = ({ children }) => {
         };
     }, []);
 
-    const [checkUpData, setCheckUpData] = useState('hello')
  
     const authInfo = {
         shopUser,
@@ -308,8 +307,7 @@ const ShopAuth = ({ children }) => {
         setOrderStage,
         defaultAddress,
         setDefaultAddress,
-        checkUpData, setCheckUpData
-     };
+      };
 
     return (
         <ShopAuthProvider.Provider value={authInfo}>{children}</ShopAuthProvider.Provider>

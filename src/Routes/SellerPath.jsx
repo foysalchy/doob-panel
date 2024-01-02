@@ -52,6 +52,10 @@ import SellerListOfWarehouse from "../Pages/SellerItems/Warehouse/SellerListOfWa
 import SellerWareHouseManagement from "../Pages/SellerItems/Warehouse/SellerWareHouseManagement";
 import ManageReviews from "../Pages/SellerItems/OrderManagment/ManageReviews/ManageReviews";
 import OrderCheckup from "../Pages/SellerItems/OrderManagment/OrderCkeckup/OrderCheckup";
+import ManageDarazOrder from "../Pages/SellerItems/OrderManagment/DarazOrder/ManageDarazOrder";
+import DarazOrderCheckup from "../Pages/SellerItems/OrderManagment/DarazOrderCkeckup/DarazOrderCheckup";
+import WooCommerceOrderCheckup from "../Pages/SellerItems/OrderManagment/WooCommerceOrderCkeckup/WooCommerceOrderCheckup";
+import ManageWooCommerceOrder from "../Pages/SellerItems/OrderManagment/WoocommerceOrder/ManageWooCommerceOrder";
 
 // `https://salenow-v2-backend.vercel.app/api/v1/seller/daraz-product/${shopInfo._id}
 
@@ -272,6 +276,14 @@ const SellerPath = [
         element: <OrderCheckup />
     },
     {
+        path: "orders/daraz-order/daraz-order-checkup",
+        element: <DarazOrderCheckup />
+    },
+    {
+        path: "orders/woo-commerce-order/woocommerce-order-checkup",
+        element: <WooCommerceOrderCheckup />
+    },
+    {
         path: "orders/manage-review",
         element: <ManageReviews />
     },
@@ -282,7 +294,15 @@ const SellerPath = [
     {
         path: "customer-return",
         element: "customer_return"
-    }
+    },
+    {
+        path: "orders/daraz-order",
+        element: <ManageDarazOrder />
+    },
+    {
+        path: "orders/woo-commerce-order",
+        element: <ManageWooCommerceOrder />
+    },
 
 
 

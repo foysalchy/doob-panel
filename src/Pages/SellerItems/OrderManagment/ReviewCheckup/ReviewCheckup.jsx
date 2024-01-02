@@ -1,11 +1,12 @@
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../../../AuthProvider/UserProvider";
-import OrderCkeckupRow from "./OrderCkeckupRow";
+import OrderCkeckupRow from "./ReviewCkeckupRow";
+import ReviewCkeckupRow from "./ReviewCkeckupRow";
 
 
-const OrderCheckup = () => {
-    const { checkUpData, setCheckUpData } = useContext(AuthContext);
-    const [originalValue] = useState(checkUpData?.timestamp);
+const ReviewCheckup = () => {
+    const { reviewCheckUpData, setReviewCheckUpData } = useContext(AuthContext);
+    const [originalValue] = useState(reviewCheckUpData?.timestamp);
     const [formattedDate, setFormattedDate] = useState('');
 
     useEffect(() => {
@@ -15,7 +16,7 @@ const OrderCheckup = () => {
 
         setFormattedDate(formattedDate);
     }, [originalValue]);
-    console.log(checkUpData, '+++++');
+    console.log(reviewCheckUpData, '+++++');
     return (
         <div className="bg-gray-100">
             <div className=' p-2 grid grid-cols-2 gap-6'>
@@ -24,16 +25,16 @@ const OrderCheckup = () => {
                         <h3 className="font-bold text-black">Customer Information</h3>
                         <ul className="text-gray-600 mt-3">
                             <li>
-                                <span className="font-semibold">Name :</span> {checkUpData?.addresses?.fullName}
+                                <span className="font-semibold">Name :</span> {reviewCheckUpData?.addresses?.fullName}
                             </li>
                             <li>
-                                <span className="font-semibold">Phone :</span> {checkUpData?.addresses?.mobileNumber}
+                                <span className="font-semibold">Phone :</span> {reviewCheckUpData?.addresses?.mobileNumber}
                             </li>
                             <li>
                                 <span className="font-semibold">Date :</span> {formattedDate}
                             </li>
                             <li>
-                                <span className="font-semibold">Payment Method :</span> {checkUpData?.method?.Getaway}
+                                <span className="font-semibold">Payment Method :</span> {reviewCheckUpData?.method?.Getaway}
                             </li>
                         </ul>
                     </div>
@@ -43,16 +44,16 @@ const OrderCheckup = () => {
                         <h3 className="font-semibold text-black">Billing Address</h3>
                         <ul className="text-gray-600 mt-3">
                             <li>
-                                {checkUpData?.addresses?.address}
+                                {reviewCheckUpData?.addresses?.address}
                             </li>
                             <li>
-                                {checkUpData?.addresses?.area}
+                                {reviewCheckUpData?.addresses?.area}
                             </li>
                             <li>
-                                {checkUpData?.addresses?.city}
+                                {reviewCheckUpData?.addresses?.city}
                             </li>
                             <li>
-                                {checkUpData?.addresses?.province}
+                                {reviewCheckUpData?.addresses?.province}
                             </li>
                         </ul>
                     </div>
@@ -92,7 +93,7 @@ const OrderCheckup = () => {
                     </thead>
                     <tbody>
                         {
-                            checkUpData?.productList?.slice(0, 4)?.map(itm => <OrderCkeckupRow key={itm?._id} itm={itm} />)
+                            reviewCheckUpData?.productList?.slice(0, 4)?.map(itm => <ReviewCkeckupRow key={itm?._id} itm={itm} />)
                         }
 
                     </tbody>
@@ -138,4 +139,4 @@ const OrderCheckup = () => {
     );
 };
 
-export default OrderCheckup;
+export default ReviewCheckup;

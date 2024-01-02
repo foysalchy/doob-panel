@@ -1,9 +1,9 @@
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../../../AuthProvider/UserProvider";
-import OrderCkeckupRow from "./OrderCkeckupRow";
+ import WooCommerceOrderCkeckupRow from "./WooCommerceOrderCkeckupRow";
 
 
-const OrderCheckup = () => {
+const WooCommerceOrderCheckup = () => {
     const { checkUpData, setCheckUpData } = useContext(AuthContext);
     const [originalValue] = useState(checkUpData?.timestamp);
     const [formattedDate, setFormattedDate] = useState('');
@@ -92,7 +92,7 @@ const OrderCheckup = () => {
                     </thead>
                     <tbody>
                         {
-                            checkUpData?.productList?.slice(0, 4)?.map(itm => <OrderCkeckupRow key={itm?._id} itm={itm} />)
+                            checkUpData?.productList?.slice(0, 4)?.map(itm => <WooCommerceOrderCkeckupRow key={itm?._id} itm={itm} />)
                         }
 
                     </tbody>
@@ -138,4 +138,4 @@ const OrderCheckup = () => {
     );
 };
 
-export default OrderCheckup;
+export default WooCommerceOrderCheckup;
