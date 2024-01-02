@@ -17,7 +17,7 @@ const UserMyOrder = () => {
     const { data: myOrders = [], refetch, isLoading } = useQuery({
         queryKey: ["my-order"],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/api/v1/shop/user/order?shopId=${shop_id.shop_id}&&token=${shopUser._id}`);
+            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/user/order?shopId=${shop_id.shop_id}&&token=${shopUser._id}`);
             const data = await res.json();
             return data;
         },
@@ -62,7 +62,7 @@ const UserMyOrder = () => {
                                     </div>
                                     <div className='flex flex-col gap-3'>
                                         {
-                                            order.productList.map((list) => (
+                                            order?.productList?.map((list) => (
                                                 <div className='flex border p-4  justify-between gap-4 w-full'>
 
                                                     <div className='w-[50%]'> <img className='w-32 h-32 border border-opacity-40 rounded object-cover' src={list.img} alt="" /></div>

@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { ordersNav } from './ManageOrderNavData';
-import OrderTable from './OrderTable';
+import { ManageWooCommerceNav } from './ManageWooCommerceOrderNavData';
 import ExportModal from './ExportModal';
+import WooCommerceOrderTable from './WooCommerceOrderTable';
 
 // import OrderTable from './OrderTable';
 
-const ManageOrder = () => {
+const ManageWooCommerceOrder = () => {
     const [selectedValue, setSelectedValue] = useState('Pending');
     const [openModal, setOpenModal] = useState(false);
     const [searchValue, setSearchValue] = useState('');
@@ -18,7 +18,7 @@ const ManageOrder = () => {
             <ExportModal openModal={openModal} setOpenModal={setOpenModal} />
             <h3 className="font-bold text-xl">Orders Overview</h3>
             <nav className='flex gap-4 flex-wrap mt-6'>
-                {ordersNav?.map((itm) =>
+                {ManageWooCommerceNav?.map((itm) =>
                     itm?.status === 'dropdown' ? (
                         <select
                             key={itm.name}
@@ -63,10 +63,10 @@ const ManageOrder = () => {
             {/* table area */}
             <div className='mt-12'>
                 {/* table */}
-                <OrderTable searchValue={searchValue} />
+                <WooCommerceOrderTable searchValue={searchValue} />
             </div>
         </div>
     );
 };
 
-export default ManageOrder;
+export default ManageWooCommerceOrder;

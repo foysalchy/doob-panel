@@ -14,6 +14,7 @@ import { ShopPath } from "./ShopPath";
 import { SupperAdminPath } from "./SupperAdminPath";
 import OrderReviewLayout from "../Layout/OrderReviewLayout";
 import ManageReviews from "../Pages/SellerItems/OrderManagment/ManageReviews/ManageReviews";
+import Invoice from "../Pages/Invoice/Invoice";
   
 
 
@@ -29,6 +30,10 @@ const Router = createBrowserRouter([
     children: homePath
   },
 
+  {
+    path: "/invoice/:id",
+    element: <Invoice />
+  },
   // Seller Route 
   {
     path: "/seller",
@@ -42,6 +47,7 @@ const Router = createBrowserRouter([
     ),
     children: SellerPath
   },
+  
 
   // Shop Route 
   {

@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { getAuth, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, updateProfile, signInWithEmailAndPassword, signOut, onAuthStateChanged, FacebookAuthProvider, sendPasswordResetEmail, updatePassword } from 'firebase/auth'
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { createContext } from "react";
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
@@ -281,6 +281,7 @@ const ShopAuth = ({ children }) => {
         };
     }, []);
 
+ 
     const authInfo = {
         shopUser,
         shopCredential,
@@ -305,8 +306,8 @@ const ShopAuth = ({ children }) => {
         orderStage,
         setOrderStage,
         defaultAddress,
-        setDefaultAddress
-    };
+        setDefaultAddress,
+      };
 
     return (
         <ShopAuthProvider.Provider value={authInfo}>{children}</ShopAuthProvider.Provider>
