@@ -28,7 +28,7 @@ const Payment = () => {
         data.userId = shopUser._id
         data.shopId = shop_id.shop_id
         console.log(data);
-        fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/user/order?token=${shopUser._id}`, {
+        fetch(`http://localhost:5000/api/v1/shop/user/order?token=${shopUser._id}`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(data)

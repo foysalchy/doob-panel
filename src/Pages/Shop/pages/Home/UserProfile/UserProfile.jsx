@@ -23,7 +23,7 @@ const UserProfile = () => {
                             <div className='ml-4 flex flex-col'>
                                 <Link to={`/shop/${shopId}/user/my-profile`} className='text-blue-500'>My Profile</Link>
                                 <Link to={`/shop/${shopId}/user/my-address`} className='text-blue-500'>Address Book</Link>
-                                <Link to={`/shop/${shopId}/user/my-order`} className='text-blue-500'>My Order</Link>
+                                <Link to={`/shop/${shopId}/user/my-orders`} className='text-blue-500'>My Order</Link>
                             </div>
                         </div>
                     </div>
