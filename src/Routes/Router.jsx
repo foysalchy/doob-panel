@@ -15,6 +15,7 @@ import { SupperAdminPath } from "./SupperAdminPath";
 import OrderReviewLayout from "../Layout/OrderReviewLayout";
 import ManageReviews from "../Pages/SellerItems/OrderManagment/ManageReviews/ManageReviews";
 import Invoice from "../Pages/Invoice/Invoice";
+import DarazInvoice from "../Pages/Invoice/DarazInvoice";
   
 
 
@@ -30,6 +31,10 @@ const Router = createBrowserRouter([
     children: homePath
   },
 
+  {
+    path: "/darazinvoice/:id",
+    element: <DarazInvoice />
+  },
   {
     path: "/invoice/:id",
     element: <Invoice />

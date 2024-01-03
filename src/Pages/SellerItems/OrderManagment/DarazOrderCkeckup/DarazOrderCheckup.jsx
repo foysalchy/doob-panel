@@ -1,31 +1,44 @@
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../../../AuthProvider/UserProvider";
 import { useParams } from "react-router";
+import { useQuery } from "@tanstack/react-query";
+import DarazOrderCkeckupRow from "./DarazOrderCkeckupRow";
 
 
 const DarazOrderCheckup = () => {
     const { id } = useParams();
     const { shopInfo } = useContext(AuthContext);
-    const [darazData, setDarazData] = useState([])
+    // const [darazData, setDarazData] = useState([])
     const [darazProduct, setDarazProduct] = useState([])
 
-    useEffect(() => {
-        fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/daraz-order?id=${shopInfo._id}`)
-            .then(res => res.json())
-            .then(data => setDarazData(data?.data?.orders))
-    }, [])
+    const { data: darazData = [], refetch: reload } = useQuery({
+        queryKey: ["darazData"],
+        queryFn: async () => {
+            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/daraz-order?id=${shopInfo._id}`);
+            const data = await res.json();
+            return data.data;
+        },
+    });
 
-    const findData = darazData?.find(itm => itm?.order_number == id);
+    const findData = darazData?.orders?.find(itm => itm?.order_number == id);
     const billingAddress = findData?.address_billing;
     const shippingAddress = findData?.address_shipping;
 
-    useEffect(() => {
-        fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/daraz-single-order?id=${shopInfo._id}&orderId=${findData?.order_number}`)
-            .then(res => res.json())
-            .then(data => console.log(data, 'productssssssssssssssssss'))
-    }, []);
+    // useEffect(() => {
+    //     fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/daraz-single-order?id=${shopInfo._id}&orderId=${findData?.order_number}`)
+    //         .then(res => res.json())
+    //         .then(data => console.log(data, 'productssssssssssssssssss'))
+    // }, []);
 
-    console.log(darazData);
+    const { data: darazSingleOrderProduct = [], refetch } = useQuery({
+        queryKey: ["darazSingleOrderProduct"],
+        queryFn: async () => {
+            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/daraz-single-order?id=${shopInfo._id}&orderId=${findData?.order_number}`);
+            const data = await res.json();
+            return data.data;
+        },
+    });
+
     return (
         <div className="bg-gray-50">
             <div className=' p-2 grid grid-cols-3'>
@@ -135,7 +148,7 @@ const DarazOrderCheckup = () => {
                                 Price
                             </th>
                             <th scope="col" className="border-r px-2 py-4 font-[500]">
-                                Product Id
+                                SKU
                             </th>
                             <th scope="col" className="border-r px-2 py-4 font-[500]">
                                 quantity
@@ -150,9 +163,9 @@ const DarazOrderCheckup = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {/* {
-                            checkUpData?.productList?.slice(0, 4)?.map(itm => <DarazOrderCkeckupRow key={itm?._id} itm={itm} />)
-                        } */}
+                        {
+                            darazSingleOrderProduct?.map(itm => <DarazOrderCkeckupRow key={itm?._id} itm={itm} />)
+                        }
 
                     </tbody>
                 </table>
