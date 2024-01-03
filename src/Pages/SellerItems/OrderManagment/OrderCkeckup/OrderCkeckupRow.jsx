@@ -1,3 +1,4 @@
+import { useQuery } from '@tanstack/react-query';
 import React, { useState } from 'react';
 
 const OrderCkeckupRow = ({ itm, orderId }) => {
@@ -5,6 +6,7 @@ const OrderCkeckupRow = ({ itm, orderId }) => {
 
     const statusUpdate = (orderId, productId, status) => {
         console.log(orderId, productId, status);
+       
         fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/order-single-product-status-update?orderId=${orderId}&productId=${productId}&status=${status}`, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
@@ -20,6 +22,16 @@ const OrderCkeckupRow = ({ itm, orderId }) => {
         });
 
     }
+
+    const { data: Data = [], refetch } = useQuery({
+        queryKey: ["sellerOrder"],
+        queryFn: async () => {
+            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/order?shopId=${shopInfo._id}`);
+            const data = await res.json();
+            return data.data;
+        },
+    });
+
     return (
         <tr key={itm?._id} className="border-b">
             <td className="whitespace-nowrap flex items-center justify-center border-r text-2xl p-2">

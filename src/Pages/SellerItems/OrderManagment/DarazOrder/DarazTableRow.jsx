@@ -62,10 +62,10 @@ const DarazTableRow = ({ data }) => {
                 {/* <DarazOrderAllinfoModal status={Status ? Status : 'Process'} setModalOn={setModalOn} modalOn={modalOn} productList={productList} /> */}
             </td>
             <td className="whitespace-nowrap border-r px-6 py-4 ">
-                <Link to={`/invoice/`} onClick="" className='text-blue-600 font-[500] text-[16px]'>Invoice</Link>
+                <Link to={`/darazinvoice/${order_number}`} onClick="" className='text-blue-600 font-[500] text-[16px]'>Invoice</Link>
             </td>
             <td className="whitespace-nowrap border-r px-6 py-4 text-[16px] font-[400]">
-                <Link onClick={() => setCheckUpDarazData(data)} to={`${order_number}`} className='text-blue-500 font-[400]'>{order_number}</Link>
+                <Link to={`${order_number}`} className='text-blue-500 font-[400]'>{order_number}</Link>
             </td>
             <td className="whitespace-nowrap border-r px-6 py-4 text-[16px] font-[400]">
                 {/* {formattedDate} */}{created_at}
@@ -77,7 +77,7 @@ const DarazTableRow = ({ data }) => {
                 {payment_method}
             </td>
             <td className="whitespace-nowrap border-r px-6 py-4 text-[16px] font-[400]">
-                {price }
+                {price}
             </td>
             <td className="whitespace-nowrap border-r px-6 py-4 text-[16px] font-[400]">
                 {statuses ? <>{statuses[0]}</> : <>Process</>}

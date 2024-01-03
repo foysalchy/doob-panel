@@ -6,10 +6,10 @@ import ExportModal from './ExportModal';
 // import OrderTable from './OrderTable';
 
 const ManageOrder = () => {
-    const [selectedValue, setSelectedValue] = useState('Pending');
+    const [selectedValue, setSelectedValue] = useState('All');
     const [openModal, setOpenModal] = useState(false);
     const [searchValue, setSearchValue] = useState('');
-    const handleSelectChange = (event) => {
+     const handleSelectChange = (event) => {
         setSelectedValue(event.target.value);
     };
 
@@ -34,10 +34,10 @@ const ManageOrder = () => {
                         </select>
                     ) : (
                         <button
-                            className={`px-4 border-r border-gray-300 ${selectedValue === itm.name ? 'text-red-500' : '' // Change to your desired color
+                            className={`px-4 border-r border-gray-300 ${selectedValue === itm.value ? 'text-red-500' : '' // Change to your desired color
                                 }`}
                             key={itm.name}
-                            onClick={() => setSelectedValue(itm.name)}
+                            onClick={() => setSelectedValue(itm.value)}
                         >
                             {itm.name}
                         </button>
@@ -63,7 +63,7 @@ const ManageOrder = () => {
             {/* table area */}
             <div className='mt-12'>
                 {/* table */}
-                <OrderTable searchValue={searchValue} />
+                <OrderTable selectedValue={selectedValue} searchValue={searchValue} />
             </div>
         </div>
     );
