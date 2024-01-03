@@ -34,6 +34,24 @@ const UserMyOrder = () => {
     console.log(myOrders);
 
 
+    const userProductCancel = (orderId, productId, status) => {
+        console.log(orderId, productId, status);
+        fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/user/order-product-status-update?orderId=${orderId}&productId=${productId}&status=${status}&token=${shopUser._id}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+        }).then((res) => res.json()).then((data) => {
+            console.log(data);
+            if (!data.error) {
+                alert("Successfully Updated");
+                refetch()
+            } else {
+                alert("Failed to Update")
+            }
+
+        });
+
+    }
+
     return (
         <div className=''>
             <div className='px-4  py-5 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 font-google'>
@@ -45,6 +63,10 @@ const UserMyOrder = () => {
                             if (!order.status) {
                                 currentStep = 2;
                             } else if (order.status === 'delivery') {
+                                currentStep = 5;
+                            } else if (order.status === 'ReadyToShip') {
+                                currentStep = 3;
+                            } else if (order.status === 'Cancel') {
                                 currentStep = 5;
                             } else {
                                 // Default to 1 or any other appropriate value
@@ -80,13 +102,15 @@ const UserMyOrder = () => {
                                                     <div className='flex flex-col gap-1 w-full'>
                                                         <h1 className='font-semibold text-lg '>Shipping updates</h1>
                                                         <p className='text-gray-500'>
-                                                            {order.status ? order.status : "Progress"}
+                                                            {order.status ? order.status : (list.status ? list.status : "Progress")}
 
                                                         </p>
                                                     </div>
 
                                                     <div>
-                                                        <button className='text-red-500'>Cancel</button>
+                                                        {!order.status && <div >
+                                                            {!list.status ? <button onClick={() => userProductCancel(order._id, list._id, "Cancel")} className='text-red-500'>  Cancel</button> : <button className=''>{list.status}ed</button>}
+                                                        </div>}
                                                     </div>
 
                                                 </div>
@@ -94,42 +118,44 @@ const UserMyOrder = () => {
                                         }
                                     </div>
 
-                                    <div className="mt-4 mx-auto px-4 md:px-0">
-                                        <ul aria-label="Steps" className="items-center text-gray-600 font-medium md:flex">
-                                            {steps.stepsItems.map((item, idx) => (
-                                                <li aria-current={currentStep == idx + 1 ? "step" : false} className="flex-1 last:flex-none flex gap-x-2 md:items-center">
-                                                    <div className="flex items-center flex-col gap-x-2">
-                                                        <div className={`w-8 h-8 rounded-full border-2 flex-none flex items-center justify-center ${currentStep > idx + 1 ? "bg-indigo-600 border-indigo-600" : "" || currentStep == idx + 1 ? "border-indigo-600" : ""}`}>
-                                                            <span className={` ${currentStep > idx + 1 ? "hidden" : "" || currentStep == idx + 1 ? "text-indigo-600" : ""}`}>
-                                                                {idx + 1}
-                                                            </span>
-                                                            {
-                                                                currentStep > idx + 1 ? (
-                                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5 text-white">
-                                                                        <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
-                                                                    </svg>
-                                                                ) : ""
-                                                            }
+                                    {
+                                        order.status !== 'Cancel' && <div className="mt-4 mx-auto px-4 md:px-0">
+                                            <ul aria-label="Steps" className="items-center text-gray-600 font-medium md:flex">
+                                                {steps.stepsItems.map((item, idx) => (
+                                                    <li aria-current={currentStep == idx + 1 ? "step" : false} className="flex-1 last:flex-none flex gap-x-2 md:items-center">
+                                                        <div className="flex items-center flex-col gap-x-2">
+                                                            <div className={`w-8 h-8 rounded-full border-2 flex-none flex items-center justify-center ${currentStep > idx + 1 ? "bg-indigo-600 border-indigo-600" : "" || currentStep == idx + 1 ? "border-indigo-600" : ""}`}>
+                                                                <span className={` ${currentStep > idx + 1 ? "hidden" : "" || currentStep == idx + 1 ? "text-indigo-600" : ""}`}>
+                                                                    {idx + 1}
+                                                                </span>
+                                                                {
+                                                                    currentStep > idx + 1 ? (
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5 text-white">
+                                                                            <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                                                                        </svg>
+                                                                    ) : ""
+                                                                }
+                                                            </div>
+                                                            <hr className={`h-12 border md:hidden ${idx + 1 == steps.stepsItems.length ? "hidden" : "" || currentStep > idx + 1 ? "border-indigo-600" : ""}`} />
                                                         </div>
-                                                        <hr className={`h-12 border md:hidden ${idx + 1 == steps.stepsItems.length ? "hidden" : "" || currentStep > idx + 1 ? "border-indigo-600" : ""}`} />
-                                                    </div>
-                                                    <div className="h-8 flex items-center md:h-auto">
-                                                        <h3 className={`text-sm ${currentStep === idx + 1 ? "text-indigo-600" : ""}`}>
-                                                            {item}
-                                                        </h3>
-                                                    </div>
-                                                    <hr className={`hidden mr-2 w-full border md:block ${idx + 1 == steps.stepsItems.length ? "hidden" : "" || currentStep > idx + 1 ? "border-indigo-600" : ""}`} />
-                                                </li>
-                                            ))}
-                                        </ul>
-                                    </div>
+                                                        <div className="h-8 flex items-center md:h-auto">
+                                                            <h3 className={`text-sm ${currentStep === idx + 1 ? "text-indigo-600" : ""}`}>
+                                                                {item}
+                                                            </h3>
+                                                        </div>
+                                                        <hr className={`hidden mr-2 w-full border md:block ${idx + 1 == steps.stepsItems.length ? "hidden" : "" || currentStep > idx + 1 ? "border-indigo-600" : ""}`} />
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        </div>
+                                    }
                                 </div>
                             )
                         })}
                 </div> : <div className='text-3xl py-40'> Loading....</div>}
 
             </div>
-        </div>
+        </div >
     );
 };
 

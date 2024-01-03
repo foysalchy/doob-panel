@@ -6,11 +6,11 @@ import { useReactToPrint } from 'react-to-print';
 import OrderAllinfoModal from './OrderAllinfoModal';
 import { AuthContext } from '../../../../AuthProvider/UserProvider';
 
-const TableRow = ({ data }) => {
+const TableRow = ({ data, refetch }) => {
     console.log(data);
-    const { _id, method, ReadytoShip, price, ShipOnTimeSLA, Status, document, documentLink, orderDate, orderNumber, pendingSince, quantity, product, sellerSku, sendTo, timestamp, productList } = data;
+    const { _id, method, ReadytoShip, price, ShipOnTimeSLA, status, document, documentLink, orderDate, orderNumber, pendingSince, quantity, product, sellerSku, sendTo, timestamp, productList, action } = data;
     const [formattedDate, setFormattedDate] = useState('');
-    const [emptyAction, setEmptyAction] = useState(true);
+    // const [emptyAction, setEmptyAction] = useState(true);
     const { checkUpData, setCheckUpData } = useContext(AuthContext);
     const [modalOn, setModalOn] = useState(false);
     useEffect(() => {
@@ -23,6 +23,27 @@ const TableRow = ({ data }) => {
 
         setFormattedDate(formatted);
     }, []);
+
+    const productStatusUpdate = (status, orderId) => {
+
+        // need a post mathod here bosy have id and status 
+        fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/order-status-update?orderId=${orderId}&status=${status}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ status, orderId })
+        }).then((res) => res.json()).then((data) => {
+            console.log(data);
+            if (!data.error) {
+                alert("Successfully Updated");
+                refetch()
+            } else {
+                alert("Failed to Update")
+            }
+
+        });
+        // console.log("console log data");
+        console.log(status, orderId, "whare is this");
+    }
 
 
     //? summation productList product total price
@@ -64,7 +85,7 @@ const TableRow = ({ data }) => {
             </td>
             <td className="whitespace-nowrap border-r text-2xl">
                 <button onClick={() => setModalOn(!modalOn)} className=' px-4 py-4'>+</button>
-                <OrderAllinfoModal status={Status ? Status : 'Process'} setModalOn={setModalOn} modalOn={modalOn} productList={productList} />
+                <OrderAllinfoModal status={status ? status : 'Pending'} setModalOn={setModalOn} modalOn={modalOn} productList={productList} />
             </td>
             <td className="whitespace-nowrap border-r px-6 py-4 ">
                 <Link to={`/invoice/${data?._id}`} onClick={handlePrint} className='text-blue-600 font-[500] text-[16px]'>Invoice</Link>
@@ -85,11 +106,12 @@ const TableRow = ({ data }) => {
                 {ratial_price}
             </td>
             <td className="whitespace-nowrap border-r px-6 py-4 text-[16px] font-[400]">
-                {Status ? <>{status}</> : <>Process</>}
+                {status ? <>{status}</> : <>Pending</>}
             </td>
             <td className="whitespace-nowrap border-r px-6 py-4 text-[16px] font-[400] flex flex-col gap-2">
-                {emptyAction && <> <button onClick={() => setEmptyAction(!emptyAction)} className='text-[16px] font-[400] text-blue-700' >Ready to Ship</button>
-                    <button onClick={() => setEmptyAction(!emptyAction)} className='text-[16px] font-[400] text-blue-700' >Cancel</button> </>}
+                {!status &&
+                    <> <button onClick={() => productStatusUpdate("ReadyToShip", _id)} className='text-[16px] font-[400] text-blue-700' >Ready to Ship</button>
+                        <button onClick={() => productStatusUpdate("Cancel", _id)} className='text-[16px] font-[400] text-blue-700' >Cancel</button> </>}
             </td>
         </tr>
     );

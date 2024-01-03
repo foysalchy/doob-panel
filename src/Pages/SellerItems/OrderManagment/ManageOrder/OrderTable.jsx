@@ -20,7 +20,7 @@ const OrderTable = ({ searchValue }) => {
         },
     });
 
-    const itemsPerPage = 4; // Number of items to display per page
+    const itemsPerPage = 10; // Number of items to display per page
     const [currentPage, setCurrentPage] = useState(1);
 
     const filteredData = searchValue
@@ -76,7 +76,7 @@ const OrderTable = ({ searchValue }) => {
                             </thead>
                             <tbody>
                                 {currentItems?.map((itm, index) => (
-                                    <TableRow data={itm} index={index + startIndex} key={index} />
+                                    <TableRow data={itm} refetch={refetch} index={index + startIndex} key={index} />
                                 ))}
                             </tbody>
                         </table>
