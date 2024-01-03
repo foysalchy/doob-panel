@@ -11,8 +11,7 @@ export  const ordersNav =[
              value : 'Panding',
             dropdownLink : [
                 "all",
-                "standard"
-            ],
+             ],
         },
         {
             name : 'Ready to ship',
