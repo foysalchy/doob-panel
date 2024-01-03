@@ -11,11 +11,12 @@ import DarazTableRow from './DarazTableRow';
 const DarazOrderTable = ({ searchValue }) => {
 
     const { shopInfo } = useContext(AuthContext);
-
+    console.log(`https://salenow-v2-backend.vercel.app/api/v1/seller/daraz-order?id=${shopInfo._id}`);
     const { data: tData = [], refetch } = useQuery({
-        queryKey: ["sellerOrder"],
+        queryKey: ["sellerDarazOrder"],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/api/v1/seller/daraz-order?id=${shopInfo._id}`);
+            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/daraz-order?id=${shopInfo._id}`);
+
             const data = await res.json();
             return data.data;
         },
@@ -24,17 +25,17 @@ const DarazOrderTable = ({ searchValue }) => {
     const itemsPerPage = 4; // Number of items to display per page
     const [currentPage, setCurrentPage] = useState(1);
 
-    const filteredData = searchValue
-        ? tData?.filter((itm) => itm?.addresses?.fullName.toLowerCase().includes(searchValue.toLowerCase()))
-        : tData;
+    // const filteredData = searchValue
+    //     ? tData?.filter((itm) => itm?.addresses?.fullName.toLowerCase().includes(searchValue.toLowerCase()))
+    //     : tData;
 
-    // Calculate the range of items to display based on pagination
-    const startIndex = (currentPage - 1) * itemsPerPage;
-    const endIndex = startIndex + itemsPerPage;
-    const currentItems = filteredData?.slice(startIndex, endIndex);
+    // // Calculate the range of items to display based on pagination
+    // const startIndex = (currentPage - 1) * itemsPerPage;
+    // const endIndex = startIndex + itemsPerPage;
+    // const currentItems = filteredData?.slice(startIndex, endIndex);
 
 
-    console.log(filteredData);
+    console.log(tData?.orders);
     return (
         <div className="flex flex-col overflow-hidden mt-4">
             <div className="overflow-x-auto transparent-scroll sm:-mx-6 lg:-mx-8">
@@ -76,8 +77,8 @@ const DarazOrderTable = ({ searchValue }) => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {currentItems?.map((itm, index) => (
-                                    <DarazTableRow data={itm} index={index + startIndex} key={index} />
+                                {tData?.orders?.map((itm, index) => (
+                                    <DarazTableRow data={itm} index={index} key={index} />
                                 ))}
                             </tbody>
                         </table>
@@ -85,7 +86,7 @@ const DarazOrderTable = ({ searchValue }) => {
                 </div>
             </div>
             <div className="max-w-2xl mx-auto mt-8 pb-8">
-                <nav aria-label="Page navigation example">
+                {/* <nav aria-label="Page navigation example">
                     <ul className="inline-flex -space-x-px">
                         {Array.from({ length: Math.ceil(filteredData.length / itemsPerPage) }, (_, i) => (
                             <li key={i}>
@@ -102,7 +103,7 @@ const DarazOrderTable = ({ searchValue }) => {
                             </li>
                         ))}
                     </ul>
-                </nav>
+                </nav> */}
             </div>
         </div>
     );

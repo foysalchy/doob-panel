@@ -1,58 +1,118 @@
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../../../AuthProvider/UserProvider";
-import DarazOrderCkeckupRow from "./DarazOrderCkeckupRow";
+import { useParams } from "react-router";
 
 
 const DarazOrderCheckup = () => {
-    const { checkUpData, setCheckUpData } = useContext(AuthContext);
-    const [originalValue] = useState(checkUpData?.timestamp);
-    const [formattedDate, setFormattedDate] = useState('');
+    const { id } = useParams();
+    const { shopInfo } = useContext(AuthContext);
+    const [darazData, setDarazData] = useState([])
+    const [darazProduct, setDarazProduct] = useState([])
 
     useEffect(() => {
-        const timestamp = parseInt(originalValue);
-        const date = new Date(timestamp);
-        const formattedDate = date.toLocaleString(); // You can customize the format using toLocaleDateString and toLocaleTimeString
+        fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/daraz-order?id=${shopInfo._id}`)
+            .then(res => res.json())
+            .then(data => setDarazData(data?.data?.orders))
+    }, [])
 
-        setFormattedDate(formattedDate);
-    }, [originalValue]);
+    const findData = darazData?.find(itm => itm?.order_number == id);
+    const billingAddress = findData?.address_billing;
+    const shippingAddress = findData?.address_shipping;
+
+    useEffect(() => {
+        fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/daraz-single-order?id=${shopInfo._id}&orderId=${findData?.order_number}`)
+            .then(res => res.json())
+            .then(data => console.log(data, 'productssssssssssssssssss'))
+    }, []);
+
+    console.log(darazData);
     return (
-        <div className="bg-gray-100">
-            <div className=' p-2 grid grid-cols-2 gap-6'>
+        <div className="bg-gray-50">
+            <div className=' p-2 grid grid-cols-3'>
                 <div className="">
-                    <div className="bg-white p-3 rounded-lg">
-                        <h3 className="font-bold text-black">Customer Information</h3>
+                    <div className=" p-3 rounded-lg">
+                        <h3 className="font-bold text-black pb-2">Customer Information</h3> <hr />
                         <ul className="text-gray-600 mt-3">
                             <li>
-                                <span className="font-semibold">Name :</span> {checkUpData?.addresses?.fullName}
+                                <span className="font-semibold flex items-center gap-2">Name : <div className="font-[400]">{findData?.customer_first_name} {findData?.customer_last_name}</div></span>
+                            </li>
+                            {/* <li>
+                                <span className="font-semibold flex items-center gap-2">Phone : </span>
+                            </li> */}
+                            <li>
+                                <span className="font-semibold flex items-center gap-2">Date :<div className="font-[400]">{findData?.created_at}</div></span>
                             </li>
                             <li>
-                                <span className="font-semibold">Phone :</span> {checkUpData?.addresses?.mobileNumber}
-                            </li>
-                            <li>
-                                <span className="font-semibold">Date :</span> {formattedDate}
-                            </li>
-                            <li>
-                                <span className="font-semibold">Payment Method :</span> {checkUpData?.method?.Getaway}
+                                <span className="font-semibold flex items-center gap-2">Payment Method :<div className="font-[400]">{findData?.payment_method}</div></span>
                             </li>
                         </ul>
                     </div>
                 </div>
                 <div className="">
-                    <div className="bg-white p-3 rounded-lg">
-                        <h3 className="font-semibold text-black">Billing Address</h3>
+                    <div className=" p-3 rounded-lg">
+                        <h3 className="font-semibold text-black pb-2">Billing Address</h3> <hr />
                         <ul className="text-gray-600 mt-3">
                             <li>
-                                {checkUpData?.addresses?.address}
+                                <div className="font-[400]">{billingAddress?.first_name} {billingAddress?.last_name}</div>
                             </li>
                             <li>
-                                {checkUpData?.addresses?.area}
+                                <div className="font-[400]">{billingAddress?.phone}</div>
                             </li>
                             <li>
-                                {checkUpData?.addresses?.city}
+                                <div className="font-[500] text-black mt-2 border-b pb-3">Address</div>
                             </li>
                             <li>
-                                {checkUpData?.addresses?.province}
+                                <div className="font-[400]">{billingAddress?.address1}</div>
                             </li>
+                            <li>
+                                <div className="font-[400]">{billingAddress?.address2}</div>
+                            </li>
+                            <li>
+                                <div className="font-[400]">{billingAddress?.address3}</div>
+                            </li>
+                            <li>
+                                <div className="font-[400]">{billingAddress?.address4address4}</div>
+                            </li>
+                            <li>
+                                <div className="font-[400]">{billingAddress?.address5}</div>
+                            </li> <li>
+                                <div className="font-[400]">{billingAddress?.country}</div>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+                <div className="">
+                    <div className=" p-3 rounded-lg">
+                        <h3 className="font-semibold text-black pb-2">Shipping Address</h3> <hr />
+                        <ul className="text-gray-600 mt-3">
+                            <li>
+                                <div className="font-[400]">{shippingAddress?.first_name} {shippingAddress?.last_name}</div>
+                            </li>
+                            <li>
+                                <div className="font-[400]">{shippingAddress?.phone}</div>
+                            </li>
+                            <li>
+                                <div className="font-[500] text-black mt-2 border-b pb-3">Address</div>
+                            </li>
+                            <li>
+                                <div className="font-[400]">{shippingAddress?.address1}</div>
+                            </li>
+                            <li>
+                                <div className="font-[400]">{shippingAddress?.address2}</div>
+                            </li>
+                            <li>
+                                <div className="font-[400]">{shippingAddress?.address3}</div>
+                            </li>
+                            <li>
+                                <div className="font-[400]">{shippingAddress?.address4address4}</div>
+                            </li>
+                            <li>
+                                <div className="font-[400]">{shippingAddress?.address5}</div>
+                            </li> <li>
+                                <div className="font-[400]">{shippingAddress?.country}</div>
+                            </li>
+
                         </ul>
                     </div>
                 </div>
@@ -90,9 +150,9 @@ const DarazOrderCheckup = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {
+                        {/* {
                             checkUpData?.productList?.slice(0, 4)?.map(itm => <DarazOrderCkeckupRow key={itm?._id} itm={itm} />)
-                        }
+                        } */}
 
                     </tbody>
                 </table>

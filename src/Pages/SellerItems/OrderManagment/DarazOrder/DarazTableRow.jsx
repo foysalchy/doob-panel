@@ -9,10 +9,10 @@ import DarazOrderAllinfoModal from './DarazOrderAllinfoModal';
 
 const DarazTableRow = ({ data }) => {
     console.log(data);
-    const { _id, method, ReadytoShip, price, ShipOnTimeSLA, Status, document, documentLink, orderDate, orderNumber, pendingSince, quantity, product, sellerSku, sendTo, timestamp, productList } = data;
+    const { _id, order_number, created_at, payment_method, method, ReadytoShip, price, ShipOnTimeSLA, statuses, document, documentLink, orderDate, orderNumber, pendingSince, quantity, product, sellerSku, sendTo, timestamp, productList } = data;
     const [formattedDate, setFormattedDate] = useState('');
     const [emptyAction, setEmptyAction] = useState(true);
-    const { checkUpData, setCheckUpData } = useContext(AuthContext);
+    const { checkUpDarazData, setCheckUpDarazData } = useContext(AuthContext);
     const [modalOn, setModalOn] = useState(false);
     useEffect(() => {
         const Timestamp = timestamp;
@@ -28,33 +28,27 @@ const DarazTableRow = ({ data }) => {
 
     //? summation productList product total price
     let ratial_price = 0;
-    for (let i = 0; i < productList.length; i++) {
-        const price = parseFloat(productList[i]?.price);
-        ratial_price += price
+    // for (let i = 0; i < productList.length; i++) {
+    //     const price = parseFloat(productList[i]?.price);
+    //     ratial_price += price
 
-    }
+    // }
 
+    console.log(data, '++++++++++++++++++++');
 
-    function getTimeAgo(timestamp) {
-        const currentTime = new Date().getTime();
-        const timeDifference = currentTime - timestamp;
-
-        const hours = Math.floor(timeDifference / (1000 * 60 * 60));
-        const days = Math.floor(hours / 24);
-
-        if (hours < 24) {
-            return `${hours} hour${hours !== 1 ? 's' : ''} ago`;
-        } else {
-            return `${days} day${days !== 1 ? 's' : ''} ago`;
-        }
-    }
+    const getTimeAgo = (createdAt) => {
+        const currentDate = new Date();
+        const createdDate = new Date(createdAt);
+        const timeDifference = currentDate - createdDate;
+        const daysAgo = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+        return `${daysAgo} day${daysAgo !== 1 ? 's' : ''} ago`;
+    };
 
     // ? download invoice
-    const componentRef = useRef();
-    const handlePrint = useReactToPrint({
-        content: () => componentRef.current,
-    });
-
+    // const componentRef = useRef();
+    // const handlePrint = useReactToPrint({
+    //     content: () => componentRef.current,
+    // });
     return (
         <tr className="border-b ">
             <td className="whitespace-nowrap border-r px-6 py-4 font-medium ">
@@ -65,28 +59,28 @@ const DarazTableRow = ({ data }) => {
             </td>
             <td className="whitespace-nowrap border-r text-2xl">
                 <button onClick={() => setModalOn(!modalOn)} className=' px-4 py-4'>+</button>
-                <DarazOrderAllinfoModal status={Status ? Status : 'Process'} setModalOn={setModalOn} modalOn={modalOn} productList={productList} />
+                {/* <DarazOrderAllinfoModal status={Status ? Status : 'Process'} setModalOn={setModalOn} modalOn={modalOn} productList={productList} /> */}
             </td>
             <td className="whitespace-nowrap border-r px-6 py-4 ">
-                <Link to={`/invoice/${data?._id}`} onClick={handlePrint} className='text-blue-600 font-[500] text-[16px]'>Invoice</Link>
+                <Link to={`/invoice/`} onClick="" className='text-blue-600 font-[500] text-[16px]'>Invoice</Link>
             </td>
             <td className="whitespace-nowrap border-r px-6 py-4 text-[16px] font-[400]">
-                <Link onClick={() => setCheckUpData(data)} to="daraz-order-checkup" className='text-blue-500 font-[400]'>{_id}</Link>
+                <Link onClick={() => setCheckUpDarazData(data)} to={`${order_number}`} className='text-blue-500 font-[400]'>{order_number}</Link>
             </td>
             <td className="whitespace-nowrap border-r px-6 py-4 text-[16px] font-[400]">
-                {formattedDate}
+                {/* {formattedDate} */}{created_at}
             </td>
             <td className="whitespace-nowrap border-r px-6 py-4 text-[16px] font-[400]">
-                {getTimeAgo(timestamp)}
+                {getTimeAgo(created_at)}
             </td>
             <td className="whitespace-nowrap border-r px-6 py-4 text-[16px] font-[400]">
-                {method.Getaway}
+                {payment_method}
             </td>
             <td className="whitespace-nowrap border-r px-6 py-4 text-[16px] font-[400]">
-                {ratial_price}
+                {price }
             </td>
             <td className="whitespace-nowrap border-r px-6 py-4 text-[16px] font-[400]">
-                {Status ? <>{status}</> : <>Process</>}
+                {statuses ? <>{statuses[0]}</> : <>Process</>}
             </td>
             <td className="whitespace-nowrap border-r px-6 py-4 text-[16px] font-[400] flex flex-col gap-2">
                 {emptyAction && <> <button onClick={() => setEmptyAction(!emptyAction)} className='text-[16px] font-[400] text-blue-700' >Ready to Ship</button>

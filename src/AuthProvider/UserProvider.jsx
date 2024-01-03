@@ -8,6 +8,8 @@ const UserProvider = ({ children }) => {
     const [shopInfo, setShopInfo] = useState('');
     const [loading, setLoading] = useState(true);
     const [checkUpData, setCheckUpData] = useState({})
+    const [checkUpDarazData, setCheckUpDarazData] = useState({})
+    const [checkUpWoocommerceData, setCheckUpWoocommerceData] = useState({})
     const [reviewCheckUpData, setReviewCheckUpData] = useState({})
     const [invoiceData, setInvoiceData] = useState({})
     const logOut = () => {
@@ -86,7 +88,8 @@ const UserProvider = ({ children }) => {
         invoiceData,
         setInvoiceData,
         reviewCheckUpData,
-        setReviewCheckUpData
+        setReviewCheckUpData,
+        checkUpWoocommerceData, setCheckUpWoocommerceData
     };
 
     return <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>;
