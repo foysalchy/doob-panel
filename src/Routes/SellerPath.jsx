@@ -276,7 +276,7 @@ const SellerPath = [
         element: <OrderCheckup />
     },
     {
-        path: "orders/daraz-order/daraz-order-checkup",
+        path: "orders/daraz-order/:id",
         element: <DarazOrderCheckup />
     },
     {

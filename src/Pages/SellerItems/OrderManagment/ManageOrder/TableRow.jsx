@@ -8,7 +8,7 @@ import { AuthContext } from '../../../../AuthProvider/UserProvider';
 
 const TableRow = ({ data, refetch }) => {
     console.log(data);
-    const { _id, method, ReadytoShip, price, ShipOnTimeSLA, status, document, documentLink, orderDate, orderNumber, pendingSince, quantity, product, sellerSku, sendTo, timestamp, productList, action } = data;
+    const { _id, method, order_number, ReadytoShip, price, ShipOnTimeSLA, status, document, documentLink, orderDate, orderNumber, pendingSince, quantity, product, sellerSku, sendTo, timestamp, productList, action } = data;
     const [formattedDate, setFormattedDate] = useState('');
     // const [emptyAction, setEmptyAction] = useState(true);
     const { checkUpData, setCheckUpData } = useContext(AuthContext);
