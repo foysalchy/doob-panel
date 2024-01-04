@@ -7,17 +7,25 @@ import { Link, } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { ShopAuthProvider } from '../../../AuthProvider/ShopAuthProvide';
 import { CgLogOut, CgProfile } from "react-icons/cg";
-import { MdFavoriteBorder, MdOutlineFavoriteBorder } from 'react-icons/md';
-import { IoSettings } from "react-icons/io5";
+import { MdFavoriteBorder, MdMenu, MdOutlineFavoriteBorder } from 'react-icons/md';
+import { IoLogIn, IoSettings } from "react-icons/io5";
 import { FaSignOutAlt } from 'react-icons/fa';
+import { BsFillPinMapFill } from "react-icons/bs";
 
 const ShopNav = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const pathname = window.location.pathname;
     const idMatch = pathname.match(/\/shop\/([^/]+)/);
-
     const shopId = idMatch ? idMatch[1] : null;
 
+    const { data: categories = [], refetch: reload } = useQuery({
+        queryKey: ["categories"],
+        queryFn: async () => {
+            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/category/get/${shopId}`);
+            const data = await res.json();
+            return data;
+        },
+    });
 
 
 
@@ -35,7 +43,7 @@ const ShopNav = () => {
 
 
     const [isOpen, setIsOpen] = useState(false);
-
+    console.log(categories);
     return (
 
         <div className='shadow-xl'>
@@ -61,22 +69,63 @@ const ShopNav = () => {
 
                             aria-label="Company"
                             title="Company"
-                            className="inline-flex items-center"
                         >
-                            <img srcSet={shop?.logo} className='w-10' src={shop?.logo} alt="" />
-                            <span className="ml-2 md:text-xl font-bold tracking-wide text-gray-800 ">
+                            <img srcSet={shop?.logo} className='w-[110px] h-[50px] object-cover' src={shop?.logo} alt="" />
+                            {/* <span className="ml-2 md:text-xl font-bold tracking-wide text-gray-800 ">
                                 {shop?.shopName}
-                            </span>
+                            </span> */}
                         </Link>
+                        {/* <div className="relative group">
+                            <div className="bg-gray-100 px-4 font-[400] flex items-center gap-2 py-2 rounded-md">
+                                <MdMenu /> All Category
+                            </div>
+                            <div className="group-focus-within::block hidden">
+                                <ul className="absolute top-[43px] left-0 bg-white px-4 py-2 rounded-lg border z-30 shadow w-[260px] flex items-start flex-col gap-3">
+                                    {
+                                        categories?.map((i, index) => <li key={index} className=''>
+                                            <Link className='flex items-center gap-2 break-words' to={`categories/${shop_id.shop_id}/${i?.name}`}>
+                                                <img
+                                                    className="h-4 w-4 rounded text-gray-400 filter grayscale brightness-90 object-cover"
+                                                    src={i?.img}
+                                                    srcSet={i?.img}
+                                                    alt=""
+                                                />
+                                                <p className='font-[400]  capitalize text-md whitespace-no-wrap'>{i?.name}</p>
+
+                                            </Link>
+                                        </li>)
+                                    }
+                                </ul>
+                            </div>
+                        </div> */}
+
+                        <div className="relative group">
+                            <div className="bg-gray-100 px-4 font-[400] flex items-center gap-2 py-2 rounded-md cursor-pointer">
+                                <MdMenu /> All Category
+                            </div>
+                            <div className="group-hover:block hidden absolute top-full left-0 bg-white px-4 py-2 rounded-lg border z-30 shadow w-[240px]">
+                                <ul className="flex items-start flex-col gap-3">
+                                    {categories?.map((i, index) => (
+                                        <li key={index} className="">
+                                            <Link className="flex items-center gap-2 break-words" to={`/shop/${shopId}/categories/${shop_id.shop_id}/${i?.name}`}>
+                                                <img
+                                                    className="h-4 w-4 rounded text-gray-400 filter grayscale brightness-90 object-cover"
+                                                    src={i?.img}
+                                                    srcSet={i?.img}
+                                                    alt=""
+                                                />
+                                                <p className="font-[400] break-words capitalize text-md whitespace-no-wrap">{i?.name}</p>
+                                            </Link>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+                        </div>
+
+
                     </div>
                     <ul className='w-2/4'>
-
-
-
-
                         <div className="relative ">
-
-
                             <input
                                 type="text"
                                 id="Search"
@@ -107,35 +156,41 @@ const ShopNav = () => {
                         </div>
 
                     </ul>
-                    <ul className="flex items-center hidden space-x-8 lg:flex">
+                    <ul className="flex items-center  space-x-8 lg:flex">
                         <li>
                             <a
                                 href="/"
-                                className="inline-flex items-center bg-gray-900 p-2 rounded-full justify-center "
                                 aria-label="Sign up"
                                 title="Sign up"
+                                className='flex items-center gap-2'
                             >
-                                <FaMapLocationDot className='text-3xl  text-white' />
+                                <div className="inline-flex items-center bg-gray-900 w-[30px] h-[30px] p-2 rounded-full justify-center ">
+                                    <BsFillPinMapFill className='text-white ' />
+                                </div>
+                                Track Order
                             </a>
                         </li>
                         {shopUser && <li>
                             <Link
                                 to={`/shop/${shopId}/user/cart?shop_id=${shop_id.shop_id}&userId=${shopUser._id}`}
-                                className="inline-flex items-center bg-gray-900 p-2 rounded-full justify-center "
                                 aria-label="Sign up"
+                                className='flex items-center gap-2'
                                 title="Sign up"
                             >
-                                <PiShoppingCartSimpleBold className='text-3xl  text-white' />
+                                <div className="inline-flex items-center bg-gray-900 w-[30px] h-[30px] p-2 rounded-full justify-center ">
+                                    <PiShoppingCartSimpleBold className=' text-white' />
+                                </div>
+                                My Order
                             </Link>
                         </li>}
                         <li>
                             {!shopUser ? <Link
                                 to={`/shop/${shopId}/sign-in`}
-                                className="inline-flex items-center justify-center h-12 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-black hover:bg-gray-900 focus:shadow-outline focus:outline-none"
+                                className="px-6 py-1 rounded duration-200 hover:bg-[black] flex items-center gap-2 hover:text-white text-black"
                                 aria-label="Sign up"
                                 title="Sign up"
                             >
-                                Login
+                                <IoLogIn className='text-xl' /> Login
                             </Link> : <div
 
                             >
@@ -144,7 +199,7 @@ const ShopNav = () => {
                                     {/* Dropdown toggle button */}
                                     <button
                                         onClick={() => setIsOpen(!isOpen)}
-                                        className="relative z-10 block p-2 text-gray-700 bg-white border border-transparent text-2xl rounded-full dark:text-white focus:border-blue-500 focus:ring-opacity-40  h-12 w-12 dark:focus:ring-opacity-40 focus:ring-blue-300 dark:focus:ring-blue-400 focus:ring dark:bg-gray-800 focus:outline-none"
+                                        className="relative z-10 block text-gray-700 bg-white border border-transparent rounded-full dark:text-white focus:border-blue-500 focus:ring-opacity-40  h-[30px] w-[30px] dark:focus:ring-opacity-40 focus:ring-blue-300 dark:focus:ring-blue-400 focus:ring dark:bg-gray-800 focus:outline-none"
                                     >
                                         {shopUser?.name.slice(0, 1)}
                                     </button>
@@ -185,7 +240,7 @@ const ShopNav = () => {
 
                                         <button onClick={() => logOut()} className="flex justify-center w-full items-center p-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
 
-                                                <FaSignOutAlt className="w-5 h-5 mx-1" />
+                                            <FaSignOutAlt className="w-5 h-5 mx-1" />
                                             <span className="mx-1">Sign Out</span>
                                         </button>
                                     </div>

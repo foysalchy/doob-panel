@@ -54,6 +54,11 @@ html{
   background: rgba(0, 0, 0, 0)!important;
 }
 
+
+.transparent-scroll::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0)!important;
+}
+
 /* Handle */
 .transparent-scroll::-webkit-scrollbar-thumb {
   width: 4px;

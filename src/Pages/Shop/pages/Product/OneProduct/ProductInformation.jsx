@@ -4,7 +4,7 @@ import { MdDone } from 'react-icons/md';
 import ProductDescription from '../../../../Home/Product/ProductDetails/ProductDescription';
 import ProductReviews from '../../../../Home/Product/ProductDetails/ProductReviews';
 import TrendingProducts from '../../../../Home/Product/ProductDetails/TrendingProducts';
-import { Link, useLoaderData } from 'react-router-dom';
+import { Link, useLoaderData, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import MetaHelmet from '../../../../../Helmate/Helmate';
 import { ShopAuthProvider } from '../../../../../AuthProvider/ShopAuthProvide';
@@ -17,7 +17,7 @@ const ProductInformation = () => {
     const [selectedImage, setSelectedImage] = useState(product.data.featuredImage.src);
     const [quantity, setQuantity] = useState(1);
 
-    const { shop_id, shopUser } = useContext(ShopAuthProvider)
+    const { shop_id, shopUser, setSelectProductData } = useContext(ShopAuthProvider)
 
     const handleImageClick = (imageUrl) => {
         setSelectedImage(imageUrl);
@@ -79,8 +79,23 @@ const ProductInformation = () => {
 
     };
 
+    const navigate = useNavigate()
+    const buyNowHandler = (data) => {
+        const product = data.data;
 
-
+        const buyNowInfo = [{
+            userId: shopUser._id,
+            quantity: quantity,
+            img: product.featuredImage.src,
+            productName: product.name,
+            price: product.price,
+            regular_price: product.regular_price,
+            productId: product._id,
+            shopId: shop_id.shop_id
+        }];
+        setSelectProductData(buyNowInfo);
+        navigate(`/shop/${shopId}/user/order?shop_id=${shop_id.shop_id}&userId=${shopUser._id}`)
+    }
 
 
     return (
@@ -297,12 +312,15 @@ const ProductInformation = () => {
                                     >
                                         {loading ? "Loading.." : "Add to card"}
                                     </button>
+
                                     <button
+                                        onClick={() => buyNowHandler(product)}
                                         type="button"
                                         className="h-10 px-6 py-2 font-semibold rounded bg-indigo-600 hover:bg-indigo-500 text-white"
                                     >
                                         By Now
                                     </button>
+
                                 </div>
                             </div>
                         </div>

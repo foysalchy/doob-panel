@@ -16,7 +16,8 @@ import OrderReviewLayout from "../Layout/OrderReviewLayout";
 import ManageReviews from "../Pages/SellerItems/OrderManagment/ManageReviews/ManageReviews";
 import Invoice from "../Pages/Invoice/Invoice";
 import DarazInvoice from "../Pages/Invoice/DarazInvoice";
-  
+import UserInvoice from "../Pages/Invoice/UserInvoice";
+
 
 
 const Router = createBrowserRouter([
@@ -30,7 +31,11 @@ const Router = createBrowserRouter([
     </>,
     children: homePath
   },
-
+  // Invoice Routes
+  {
+    path: "/userinvoice/:id",
+    element: <UserInvoice />
+  },
   {
     path: "/darazinvoice/:id",
     element: <DarazInvoice />
@@ -52,7 +57,7 @@ const Router = createBrowserRouter([
     ),
     children: SellerPath
   },
-  
+
 
   // Shop Route 
   {

@@ -1,41 +1,48 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
-import { useLoaderData } from 'react-router-dom';
+import { useLoaderData, useNavigate } from 'react-router-dom';
 import { ShopAuthProvider } from '../../../../../AuthProvider/ShopAuthProvide';
 import BrightAlert from 'bright-alert';
+import { data } from 'autoprefixer';
+import PaymentAlert from './PaymentAlert';
 
 const Payment = () => {
     const paymentGetWays = useLoaderData();
+    const [open, setOpen] = useState(false);
     const { selectProductData, orderStage, shopUser, shop_id } = useContext(ShopAuthProvider);
-    const [payment, setPayment] = useState(false)
+    const [payment, setPayment] = useState(false);
+    const [passData, setPassData] = useState([]);
+    const pathname = window.location.pathname;
+    const idMatch = pathname.match(/\/shop\/([^/]+)/);
+    const shopId = idMatch ? idMatch[1] : null;
+    const navigate = useNavigate();
 
-    console.log(orderStage);
 
     const message = ["Exercise caution when making payments, ensuring that you only transact with reputable and secure platforms to safeguard your financial information.", "Always verify the legitimacy of the payment process, double-checking the recipient details and website security features before proceeding with any transactions.", "After completing a payment, retain a screenshot or confirmation email as proof of the transaction, serving as documentation in case of any discrepancies or disputes in the future.", "Regularly monitor your bank statements and financial accounts to promptly detect and address any unauthorized or suspicious activities, ensuring the security of your financial assets."]
 
 
 
     useEffect(() => {
-
         if (!selectProductData.length) { window.history.back(); }
     }, [selectProductData]);
 
-
     const orderSubmit = () => {
-
         const data = orderStage
         data.method = payment
         data.timestamp = new Date().getTime()
         data.userId = shopUser._id
         data.shopId = shop_id.shop_id
-        console.log(data);
+        setPassData(data);
         fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/user/order?token=${shopUser._id}`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(data)
         }).then((res) => res.json()).then((data) => {
-            console.log(data);
-            BrightAlert()
+            BrightAlert({ icon: 'success' })
+            navigate(`/shop/${shopId}/user/my-orders`)
         });
+
+        console.log(data, '------------');
+
     }
 
     return (
@@ -127,6 +134,8 @@ const Payment = () => {
                 </div>
 
                 <div id='scrollDestination' className="flex items-center justify-center my-6">
+                    {open && <PaymentAlert open={open} />}
+
                     {payment.Getaway === 'CashOnDelivery' ?
                         <button
                             onClick={() => orderSubmit()}
@@ -175,6 +184,7 @@ const Payment = () => {
 
                             <span className="text-lg font-medium transition-all group-hover:ms-4"> Pay Now </span>
                         </button>}
+
                 </div>
             </div>}
         </div>

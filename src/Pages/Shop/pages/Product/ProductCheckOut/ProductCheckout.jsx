@@ -174,7 +174,6 @@ const ProductCheckout = () => {
                                 <ul className="flex flex-col divide-y dark:divide-gray-700">
                                     {selectProductData.map((product) => (
                                         <li className="flex gap-4 flex-col py-6 sm:flex-row sm:justify-between">
-
                                             <div className="flex items-start w-full space-x-2 sm:space-x-4">
                                                 <img className="flex-shrink-0 object-cover w-10 h-10 dark:border-transparent rounded outline-none sm:w-[90px] sm:h-[90px] dark:bg-gray-500" src={product.img} alt="Polaroid camera" />
                                                 <div className="flex flex-col justify-between w-full pb-4">
@@ -185,7 +184,6 @@ const ProductCheckout = () => {
                                                                 <h3 className="md:w-[500px]">
                                                                     {product?.productName}
                                                                 </h3>
-
                                                                 <h3 htmlFor={`Quantity-${product._id}`} className=" ">
                                                                     Quantity:  {product.quantity}
                                                                 </h3>

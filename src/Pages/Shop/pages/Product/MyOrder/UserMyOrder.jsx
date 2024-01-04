@@ -3,14 +3,15 @@ import { useContext } from 'react';
 import { useState } from 'react';
 import { ShopAuthProvider } from '../../../../../AuthProvider/ShopAuthProvide';
 import { useQuery } from '@tanstack/react-query';
+import { Link } from 'react-router-dom';
+import UserOrderInvoice from './UserOrderInvoice';
 
 const UserMyOrder = () => {
 
-    const [steps, setStep] = useState({
+    const [steps, setSteps] = useState({
         stepsItems: ["Order", "Processing", "Shipped", "Delivered"],
         // currentStep: 5
-    })
-
+    });
 
     const { shop_id, shopUser } = useContext(ShopAuthProvider)
 
@@ -31,9 +32,6 @@ const UserMyOrder = () => {
         return formattedDate;
     }
 
-    console.log(myOrders);
-
-
     const userProductCancel = (orderId, productId, status) => {
         console.log(orderId, productId, status);
         fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/user/order-product-status-update?orderId=${orderId}&productId=${productId}&status=${status}&token=${shopUser._id}`, {
@@ -51,6 +49,11 @@ const UserMyOrder = () => {
         });
 
     }
+
+    const [modalOpen, setModalOpen] = useState(false);
+    const handleViewDetails = (orderId) => {
+        setModalOpen(orderId);
+    };
 
     return (
         <div className=''>
@@ -74,14 +77,25 @@ const UserMyOrder = () => {
                                 // Default to 1 or any other appropriate value
                                 currentStep = 1;
                             }
-
                             return (
                                 <div className=' p-4 rounded border-[0.5px] border-opacity-40 gap-4 border-gray-500 bg-white'>
                                     <div className='pb-4 flex items-center justify-between'>
                                         <h1 className="text-xl font-bold ">Order Id : {order._id}</h1>
                                         <div className='flex items-center gap-4'>
+                                            {/* <UserOrderInvoice order={order} modalOpen={modalOpen} setModalOpen={setModalOpen} /> */}
                                             <p>Order placed {formatTimestamp(order.timestamp)}</p>
-                                            <button className='text-blue-500'>View invoice →</button>
+                                            <button onClick={() => handleViewDetails(order._id)} className='text-blue-500'>View invoice →</button>
+                                           
+                                            {modalOpen && (
+                                                <div>
+                                                    <UserOrderInvoice
+                                                        modalOpen={true}
+                                                        setModalOpen={setModalOpen}
+                                                        order={myOrders?.data?.find(order => order._id === modalOpen)}
+                                                    />
+                                                </div>
+                                            )}
+
                                         </div>
                                     </div>
                                     <div className='flex flex-col gap-3'>
@@ -119,7 +133,6 @@ const UserMyOrder = () => {
                                             ))
                                         }
                                     </div>
-
                                     {
                                         (order.status !== 'Cancel' && order.status !== 'Failed' && order.status !== 'Returned') && <div className="mt-4 mx-auto px-4 md:px-0">
                                             <ul aria-label="Steps" className="items-center text-gray-600 font-medium md:flex">
