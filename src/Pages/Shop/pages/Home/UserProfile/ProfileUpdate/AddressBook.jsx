@@ -38,7 +38,7 @@ const AddressBook = () => {
         <div>
             <div className='grid grid-cols-2 gap-8 '>
                 {address.map((add) => (
-                    <div className='bg-gray-100 capitalize p-4 rounded hover:shadow-xl border'>
+                    <div className='bg-white capitalize p-4 rounded hover:shadow-xl border'>
                         <h1 >{add?.fullName}</h1>
                         <h1>{add?.mobileNumber}</h1>
                         <small><span>{add?.address},</span> <span>{add?.province} - </span> <span>{add?.city}</span> <span>{add?.area}</span></small>
@@ -69,7 +69,7 @@ const AddressBook = () => {
                 </button>
 
             </div>
-            <div className='h-0 w-0' >{open && <AddAddress  refetch={addressReload} address={address} setOpen={setOpen} open={open} />}</div>
+            <div className='h-0 w-0' >{open && <AddAddress refetch={addressReload} address={address} setOpen={setOpen} open={open} />}</div>
 
         </div>
     );

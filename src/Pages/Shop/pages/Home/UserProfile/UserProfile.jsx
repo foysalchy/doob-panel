@@ -24,6 +24,7 @@ const UserProfile = () => {
                                 <Link to={`/shop/${shopId}/user/my-profile`} className='text-blue-500'>My Profile</Link>
                                 <Link to={`/shop/${shopId}/user/my-address`} className='text-blue-500'>Address Book</Link>
                                 <Link to={`/shop/${shopId}/user/my-orders`} className='text-blue-500'>My Order</Link>
+                                <Link to={`/shop/${shopId}/user/my-support`} className='text-blue-500'>Support Ticket</Link>
                             </div>
                         </div>
                     </div>

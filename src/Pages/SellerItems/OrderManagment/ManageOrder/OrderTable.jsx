@@ -9,7 +9,7 @@ import OrderAllinfoModal from './OrderAllinfoModal';
 
 const OrderTable = ({ searchValue, selectedValue }) => {
     const [modalOn, setModalOn] = useState(false)
-    const { shopInfo } = useContext(AuthContext);
+    const { shopInfo, setCheckUpData } = useContext(AuthContext);
 
     const { data: tData = [], refetch } = useQuery({
         queryKey: ["sellerOrder"],
@@ -20,26 +20,24 @@ const OrderTable = ({ searchValue, selectedValue }) => {
         },
     });
 
-    const itemsPerPage = 10; // Number of items to display per page
+    const itemsPerPage = 10;
     const [currentPage, setCurrentPage] = useState(1);
 
-    // const filteredData = searchValue
-    //     ? tData?.filter((itm) =>  itm?.addresses?._id.toLowerCase().includes(searchValue.toLowerCase()))
-    //     : tData || tData.filter(itm => itm?.status === searchValue);
 
-    const filteredData = tData?.filter((itm) => {
-        if (searchValue) {
-            return itm?._id.toLowerCase().includes(searchValue.toLowerCase());
+    const filteredData = tData?.filter((item) => {
+        if (searchValue === '' && selectedValue === "All") {
+            return true; // Include all items when searchValue is empty and selectedValue is "All"
+        } else if (selectedValue === "Pending") {
+            return !item?.status;
+        } else if (searchValue) {
+            return item?._id?.toLowerCase().includes(searchValue.toLowerCase()); // Filter by _id
+        } else if (selectedValue) {
+            return item?.status === selectedValue; // Filter by status
         }
 
-        if (selectedValue) {
-            return itm?.status && itm?.status.toLowerCase().includes(selectedValue.toLowerCase());
-        } else {
-            return tData;
-        }
-
-    })
-    console.log(selectedValue);
+        return false; // Exclude items that don't meet any condition
+    });
+    console.log(filteredData);
     // Calculate the range of items to display based on pagination
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
@@ -67,8 +65,6 @@ const OrderTable = ({ searchValue, selectedValue }) => {
 
 
     const productStatusUpdate = (status, orderId) => {
-
-        // need a post mathod here bosy have id and itm?.status 
         fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/order-status-update?orderId=${orderId}&status=${status}`, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
@@ -83,12 +79,8 @@ const OrderTable = ({ searchValue, selectedValue }) => {
             }
 
         });
-        // console.log("console log data");
-        console.log(status, orderId, "whare is this");
     }
 
-
-    //? summation productList product total price
 
     const ratial_price = (productList) => {
         let ratial_price = 0;
@@ -174,7 +166,7 @@ const OrderTable = ({ searchValue, selectedValue }) => {
                                             <Link to={`/invoice/${itm?._id}`} onClick={handlePrint} className='text-blue-600 font-[500] text-[16px]'>Invoice</Link>
                                         </td>
                                         <td className="whitespace-nowrap border-r px-6 py-4 text-[16px] font-[400]">
-                                            <Link to="order-checkup" className='text-blue-500 font-[400]'>{itm?._id}</Link>
+                                            <Link to="order-checkup" onClick={() => setCheckUpData(itm)} className='text-blue-500 font-[400]'>{itm?._id}</Link>
                                         </td>
                                         <td className="whitespace-nowrap border-r px-6 py-4 text-[16px] font-[400]">
                                             {formattedDate(itm?.timestamp)}
@@ -210,7 +202,7 @@ const OrderTable = ({ searchValue, selectedValue }) => {
                     </div>
                 </div>
             </div>
-            {/* <div className="max-w-2xl mx-auto mt-8 pb-8">
+            <div className="max-w-2xl mx-auto mt-8 pb-8">
                 <nav aria-label="Page navigation example">
                     <ul className="inline-flex -space-x-px">
                         {Array.from({ length: Math.ceil(filteredData.length / itemsPerPage) }, (_, i) => (
@@ -229,7 +221,7 @@ const OrderTable = ({ searchValue, selectedValue }) => {
                         ))}
                     </ul>
                 </nav>
-            </div> */}
+            </div>
         </div>
     );
 };

@@ -55,7 +55,7 @@ const ProfileUpdate = () => {
     const [open, setOpen] = useState(false)
 
     return (
-        <div className='bg-gray-200 rounded w-full py-10 px-8'>
+        <div className='bg-white rounded w-full py-10 px-8'>
             <form onSubmit={submit}>
                 <div className='grid grid-cols-3 gap-7'>
                     <div>

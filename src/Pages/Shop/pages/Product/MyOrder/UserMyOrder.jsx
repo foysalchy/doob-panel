@@ -54,7 +54,7 @@ const UserMyOrder = () => {
 
     return (
         <div className=''>
-            <div className='px-4  py-5 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 font-google'>
+            <div className=' font-google'>
                 {!isLoading ? <div className='flex flex-col gap-4'>
                     {
                         myOrders?.data?.map((order) => {
@@ -62,11 +62,13 @@ const UserMyOrder = () => {
                             let currentStep;
                             if (!order.status) {
                                 currentStep = 2;
-                            } else if (order.status === 'delivery') {
+                            } else if (order.status === 'Delivered') {
                                 currentStep = 5;
                             } else if (order.status === 'ReadyToShip') {
                                 currentStep = 3;
-                            } else if (order.status === 'Cancel') {
+                            } else if (order.status === 'Shipped') {
+                                currentStep = 4;
+                            } else if (order.status === 'Cancel' || "Failed" || 'Returned') {
                                 currentStep = 5;
                             } else {
                                 // Default to 1 or any other appropriate value
@@ -74,7 +76,7 @@ const UserMyOrder = () => {
                             }
 
                             return (
-                                <div className=' p-4 rounded border-[0.5px] border-opacity-40 gap-4 border-gray-500 bg-gray-100'>
+                                <div className=' p-4 rounded border-[0.5px] border-opacity-40 gap-4 border-gray-500 bg-white'>
                                     <div className='pb-4 flex items-center justify-between'>
                                         <h1 className="text-xl font-bold ">Order Id : {order._id}</h1>
                                         <div className='flex items-center gap-4'>
@@ -119,7 +121,7 @@ const UserMyOrder = () => {
                                     </div>
 
                                     {
-                                        order.status !== 'Cancel' && <div className="mt-4 mx-auto px-4 md:px-0">
+                                        (order.status !== 'Cancel' && order.status !== 'Failed' && order.status !== 'Returned') && <div className="mt-4 mx-auto px-4 md:px-0">
                                             <ul aria-label="Steps" className="items-center text-gray-600 font-medium md:flex">
                                                 {steps.stepsItems.map((item, idx) => (
                                                     <li aria-current={currentStep == idx + 1 ? "step" : false} className="flex-1 last:flex-none flex gap-x-2 md:items-center">
@@ -152,10 +154,11 @@ const UserMyOrder = () => {
                                 </div>
                             )
                         })}
-                </div> : <div className='text-3xl py-40'> Loading....</div>}
+                </div>
+                    : <div className='text-3xl py-40'> Loading....</div>}
 
             </div>
-        </div >
+        </div>
     );
 };
 

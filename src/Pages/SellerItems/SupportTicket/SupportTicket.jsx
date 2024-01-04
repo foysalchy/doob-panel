@@ -240,20 +240,7 @@ const SellerSupportTicket = () => {
                                 </button>
                             </li>
 
-                            {/* Render your page number buttons dynamically */}
-                            {/* {Array.from({ length: totalPages }).map((_, index) => (
-                            <li key={index}>
-                                <button
-                                    className={`block h-8 w-8 rounded border ${index + 1 === currentPage
-                                        ? '' // Current page styling
-                                        : 'border-gray-100 bg-white text-center leading-8 text-gray-900'
-                                        }`}
-                                    onClick={() => handleChangePage(index + 1)}
-                                >
-                                    {index + 1}
-                                </button>
-                            </li>
-                        ))} */}
+                         
                             <div className='border-blue-600 bg-blue-600 text-white p-2 px-3 rounded'>
 
                                 <span> {currentPage}</span>

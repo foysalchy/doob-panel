@@ -57,6 +57,10 @@ const ShopPath = [
             {
                 path: 'my-orders',
                 element: <UserMyOrder />,
+            },
+            {
+                path: 'my-support',
+                element: <UserMyOrder />,
             }
         ]
     },
