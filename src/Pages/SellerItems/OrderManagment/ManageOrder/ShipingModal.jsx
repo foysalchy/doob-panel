@@ -27,18 +27,19 @@ const ShippingModal = ({ readyToShip, setReadyToShip, orderInfo, refetch, ships 
             recipient_name,
             recipient_phone,
             recipient_address,
-            note
+            note,
+            ApiKey: shipInfo.key,
+            SecretKey: shipInfo.secretKey,
+            BaseUrl: shipInfo.api
         }
         console.log(shipInfo);
         const api = `${shipInfo.api}/${shipInfo.key}/${shipInfo.secretKey}`
         console.log(uploadData);
 
         try {
-            const res = await fetch(`${shipInfo.api}/create_order/bulk-order`, {
+            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/order-submit-steadfast`, {
                 method: 'POST',
                 headers: {
-                    'Api-Key': shipInfo.key,
-                    'Secret-Key': shipInfo.secretKey,
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(uploadData),
@@ -104,7 +105,7 @@ const ShippingModal = ({ readyToShip, setReadyToShip, orderInfo, refetch, ships 
 
                                 <div>
                                     Product List :
-                                    {orderInfo.productList.map((product) => (
+                                    <div className='flex flex-col gap-2'> {orderInfo.productList.map((product) => (
                                         <div className='flex gap-4 items-center'>
                                             <img className='h-10, w-10 border' src={product.img} alt="" />
                                             <div >
@@ -112,7 +113,7 @@ const ShippingModal = ({ readyToShip, setReadyToShip, orderInfo, refetch, ships 
                                                 <p>{product.quantity}</p>
                                             </div>
                                         </div>
-                                    ))}
+                                    ))}</div>
                                 </div>
                                 <div className='mt-2'>
                                     <label className=" text-black" htmlFor="title">

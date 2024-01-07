@@ -51,7 +51,7 @@ export const ordersNav = [
     },
     {
         name: 'refund only',
-        value: 'RefundOnly',
+        value: 'Refund',
         status: '',
         dropdownLink: [""],
     },
