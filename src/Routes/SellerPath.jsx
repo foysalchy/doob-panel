@@ -56,6 +56,7 @@ import ManageDarazOrder from "../Pages/SellerItems/OrderManagment/DarazOrder/Man
 import DarazOrderCheckup from "../Pages/SellerItems/OrderManagment/DarazOrderCkeckup/DarazOrderCheckup";
 import WooCommerceOrderCheckup from "../Pages/SellerItems/OrderManagment/WooCommerceOrderCkeckup/WooCommerceOrderCheckup";
 import ManageWooCommerceOrder from "../Pages/SellerItems/OrderManagment/WoocommerceOrder/ManageWooCommerceOrder";
+import UserSupportTicketForShop from "../Pages/SellerItems/SupportTicket/UserSupportTicket";
 
 // `https://salenow-v2-backend.vercel.app/api/v1/seller/daraz-product/${shopInfo._id}
 
@@ -92,6 +93,10 @@ const SellerPath = [
     {
         path: "support-tickets",
         element: <SellerSupportTicket />
+    },
+    {
+        path: "user-tickets",
+        element: <UserSupportTicketForShop />
     },
     {
         path: "shop-profile",
@@ -228,8 +233,6 @@ const SellerPath = [
     {
         path: "product-management/add-daraz-product",
         element: <AddDarazProduct />,
-
-
     },
     {
         path: "product-management/add-woo-product",

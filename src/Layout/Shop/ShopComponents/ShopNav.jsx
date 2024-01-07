@@ -180,7 +180,7 @@ const ShopNav = () => {
                                 <div className="inline-flex items-center bg-gray-900 w-[30px] h-[30px] p-2 rounded-full justify-center ">
                                     <PiShoppingCartSimpleBold className=' text-white' />
                                 </div>
-                                My Order
+                                My Cart
                             </Link>
                         </li>}
                         <li>

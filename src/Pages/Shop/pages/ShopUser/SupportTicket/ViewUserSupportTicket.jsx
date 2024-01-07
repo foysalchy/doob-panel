@@ -1,14 +1,17 @@
 import React, { useContext } from 'react';
 import { useState } from 'react';
 import { RxCross2 } from 'react-icons/rx';
-import { AuthContext } from '../../../AuthProvider/UserProvider';
+
 import Swal from 'sweetalert2';
+import { ShopAuthProvider } from '../../../../../AuthProvider/ShopAuthProvide';
 
-const ViewSupportTicket = ({ viewComment, setViewComment, ticketDetails, refetch }) => {
+const ViewUserSupportTicket = ({ viewComment, setViewComment, ticketDetails, refetch }) => {
+
+    const { shopUser } = useContext(ShopAuthProvider)
 
 
 
-    const { user } = useContext(AuthContext)
+    // const { user } = useContext(AuthContext)
     const [loading, setLoading] = useState(false)
 
     const commentSubmit = (event) => {
@@ -16,15 +19,14 @@ const ViewSupportTicket = ({ viewComment, setViewComment, ticketDetails, refetch
         event.preventDefault();
         const time = new Date()
         const comment = event.target.comment.value
-        const id = ticketDetails.ticketId
+        const id = ticketDetails._id
         const data = {
-            "id": id,
             "time": `${time}`,
             "content": comment,
-            'user': user?.name
+            'name': shopUser?.name
         }
         // / support - ticket /: id
-        fetch(`https://salenow-v2-backend.vercel.app/api/v1/support/seller-comment/${id}`, {
+        fetch(`http://localhost:5000/api/v1/seller/user-support-comment/${id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -81,7 +83,7 @@ const ViewSupportTicket = ({ viewComment, setViewComment, ticketDetails, refetch
 
                         <div className="w-full max-w-[800px] h-[90%]  rounded-[20px]  bg-white  pb-10 px-8 text-center md:px-[30px] overflow-scroll">
                             <div className='flex justify-between  pt-4 items-start w-full sticky top-0 bg-white border-b'>
-                                <div className='pb-2 text-xl font-bold text-dark text-center sm:text-2xl'>{ticketDetails.userInfo.name}'s Message</div>
+                                <div className='pb-2 text-xl font-bold text-dark text-center sm:text-2xl'>{ticketDetails.name}'s Message</div>
                                 <div onClick={() => setViewComment(!setViewComment)} className='cursor-pointer bg-gray-500 rounded-full px-2.5 mb-2 p-1 text-2xl hover:text-red-500'>
                                     <button> <RxCross2 className='text-xl' /></button>
                                 </div>
@@ -178,4 +180,4 @@ const ViewSupportTicket = ({ viewComment, setViewComment, ticketDetails, refetch
     );
 };
 
-export default ViewSupportTicket;
+export default ViewUserSupportTicket;

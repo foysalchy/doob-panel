@@ -6,13 +6,34 @@ import groovyWalkAnimation from "./Loading.json"
 
 
 
+// const IsUserRegistration = ({ children }) => {
+//     const { shopUser, shopId, loading } = useContext(ShopAuthProvider);
+//     const location = useLocation();
+//     const navigate = useNavigate();
+
+//     useEffect(() => {
+//         if (!shopUser) {
+//             navigate(`/shop/${shopId}`);
+//         }
+
+//         // Cleanup function
+//         return () => {
+//             // Perform cleanup if needed
+//         };
+//     }, [shopUser, navigate, shopId]);
+
+//     // Render children or null
+//     return shopUser ? children : null;
+// };
+
 const IsUserRegistration = ({ children }) => {
     const { shopUser, shopId, loading } = useContext(ShopAuthProvider);
     const location = useLocation();
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (!shopUser) {
+        // Check if the user is not logged in and not loading
+        if (!shopUser && !loading) {
             navigate(`/shop/${shopId}`);
         }
 
@@ -20,10 +41,14 @@ const IsUserRegistration = ({ children }) => {
         return () => {
             // Perform cleanup if needed
         };
-    }, [shopUser, navigate, shopId]);
+    }, [shopUser, loading, navigate, shopId]);
+
+    // Show loading message if loading is true
+    if (loading) {
+        return <p>Loading...</p>;
+    }
 
     // Render children or null
     return shopUser ? children : null;
 };
-
 export default IsUserRegistration;

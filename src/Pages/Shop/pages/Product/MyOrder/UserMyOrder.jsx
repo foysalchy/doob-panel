@@ -58,7 +58,7 @@ const UserMyOrder = () => {
     return (
         <div className=''>
             <div className=' font-google'>
-                {!isLoading ? <div className='flex flex-col gap-4'>
+                <div className='flex flex-col gap-4'>
                     {
                         myOrders?.data?.map((order) => {
                             // Determine the current step based on order status
@@ -85,7 +85,7 @@ const UserMyOrder = () => {
                                             {/* <UserOrderInvoice order={order} modalOpen={modalOpen} setModalOpen={setModalOpen} /> */}
                                             <p>Order placed {formatTimestamp(order.timestamp)}</p>
                                             <button onClick={() => handleViewDetails(order._id)} className='text-blue-500'>View invoice →</button>
-                                           
+
                                             {modalOpen && (
                                                 <div>
                                                     <UserOrderInvoice
@@ -168,7 +168,6 @@ const UserMyOrder = () => {
                             )
                         })}
                 </div>
-                    : <div className='text-3xl py-40'> Loading....</div>}
 
             </div>
         </div>

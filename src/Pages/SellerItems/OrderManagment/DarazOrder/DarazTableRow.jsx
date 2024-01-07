@@ -83,7 +83,7 @@ const DarazTableRow = ({ data }) => {
                 {statuses ? <>{statuses[0]}</> : <>Process</>}
             </td>
             <td className="whitespace-nowrap border-r px-6 py-4 text-[16px] font-[400] flex flex-col gap-2">
-                {emptyAction && <> <button onClick={() => setEmptyAction(!emptyAction)} className='text-[16px] font-[400] text-blue-700' >Ready to Ship</button>
+                {emptyAction && statuses[0] == "pending" && <> <button onClick={() => setEmptyAction(!emptyAction)} className='text-[16px] font-[400] text-blue-700' >Ready to Ship</button>
                     <button onClick={() => setEmptyAction(!emptyAction)} className='text-[16px] font-[400] text-blue-700' >Cancel</button> </>}
             </td>
         </tr>

@@ -5,6 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 import AddAddress from './../../../Shop/pages/Home/UserProfile/ProfileUpdate/AddAddress';
 import { useReactToPrint } from 'react-to-print';
 import OrderAllinfoModal from './OrderAllinfoModal';
+import ShippingModal from './ShipingModal';
 
 
 const OrderTable = ({ searchValue, selectedValue }) => {
@@ -81,6 +82,15 @@ const OrderTable = ({ searchValue, selectedValue }) => {
         });
     }
 
+    const { data: ships = [] } = useQuery({
+        queryKey: ["getaway"],
+        queryFn: async () => {
+            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/shipping-interrogation/${shopInfo._id}`);
+            const data = await res.json();
+            return data;
+        },
+    });
+
 
     const ratial_price = (productList) => {
         let ratial_price = 0;
@@ -112,6 +122,8 @@ const OrderTable = ({ searchValue, selectedValue }) => {
     });
 
     console.log(filteredData);
+
+    const [readyToShip, setReadyToShip] = useState(false)
     return (
         <div className="flex flex-col overflow-hidden mt-4">
             <div className="overflow-x-auto transparent-scroll sm:-mx-6 lg:-mx-8">
@@ -185,7 +197,7 @@ const OrderTable = ({ searchValue, selectedValue }) => {
                                         </td>
                                         <td className="whitespace-nowrap border-r px-6 py-4 text-[16px] font-[400] flex flex-col gap-2">
                                             {!itm?.status &&
-                                                <> <button onClick={() => productStatusUpdate("ReadyToShip", itm?._id)} className='text-[16px] font-[400] text-blue-700' >Ready to Ship</button>
+                                                <> <button onClick={() => setReadyToShip(itm)} className='text-[16px] font-[400] text-blue-700' >Ready to Ship</button>
                                                     <button onClick={() => productStatusUpdate("Cancel", itm?._id)} className='text-[16px] font-[400] text-blue-700' >Cancel</button> </>
                                                 || itm?.status == 'ReadyToShip' && <button onClick={() => productStatusUpdate("Shipped", itm?._id)} className='text-[16px] font-[400] text-blue-700' >Shipped</button>
                                                 || itm?.status == 'Shipped' && <div className='flex flex-col gap-2'>
@@ -195,6 +207,9 @@ const OrderTable = ({ searchValue, selectedValue }) => {
                                                 || itm?.status == 'Delivered' && <button onClick={() => productStatusUpdate("Returned", itm?._id)} className='text-[16px] font-[400] text-blue-700' >Returned</button>
                                                 || itm?.status == 'Returned' && <button onClick={() => productStatusUpdate("FoundOnly", itm?._id)} className='text-[16px] font-[400] text-blue-700' >Found only</button>}
                                         </td>
+                                        {
+                                            itm._id === readyToShip._id && <ShippingModal readyToShip={readyToShip} setReadyToShip={setReadyToShip} orderInfo={itm} refetch={refetch} ships={ships} />
+                                        }
                                     </tr>
                                 ))}
                             </tbody>

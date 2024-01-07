@@ -41,10 +41,10 @@ const Payment = () => {
             navigate(`/shop/${shopId}/user/my-orders`)
         });
 
-        console.log(data, '------------');
 
     }
 
+    console.log(paymentGetWays);
     return (
         <div className='px-4 py-5 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8'>
             <div className='grid grid-cols-4  gap-4 my-4 '>

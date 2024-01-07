@@ -218,6 +218,13 @@ const SideNavberSeller = () => {
                                     </Link>
                                 </li>
                                 <li className="rounded-sm  hover:bg-gray-800">
+                                    <Link to={'/seller/user-tickets'} rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
+                                        <BsTicket className="w-5 h-5 fill-current text-gray-400" />
+
+                                        <span> User Support Ticket</span>
+                                    </Link>
+                                </li>
+                                <li className="rounded-sm  hover:bg-gray-800">
                                     <Link to={'/seller/shop-profile'} rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
 
                                         <IoStorefront className="w-5 h-5 fill-current text-gray-400" />

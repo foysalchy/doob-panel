@@ -14,6 +14,7 @@ import CategoryByProduct from "../Pages/Shop/pages/Product/OneProduct/CategoryBy
 import ProductInformation from "../Pages/Shop/pages/Product/OneProduct/ProductInformation";
 import Payment from "../Pages/Shop/pages/Product/ProductCheckOut/Payment";
 import ProductCheckout from "../Pages/Shop/pages/Product/ProductCheckOut/ProductCheckout";
+import UserSupportTicket from "../Pages/Shop/pages/ShopUser/SupportTicket/SupportTicket";
 import Product from './../Pages/Home/Product/Product';
 import IsUserRegistration from "./isUserRegistration";
 
@@ -60,7 +61,7 @@ const ShopPath = [
             },
             {
                 path: 'my-support',
-                element: <UserMyOrder />,
+                element: <UserSupportTicket />,
             }
         ]
     },
