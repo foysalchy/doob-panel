@@ -65,7 +65,7 @@ const UserSupportTicket = () => {
     };
 
 
-    console.log(supportTickets, `https://salenow-v2-backend.vercel.app/api/v1/shop/support?shopId=${shop_id.shop_id}&token=${shopUser._id}`);
+
 
     return (
         <section className=''>
