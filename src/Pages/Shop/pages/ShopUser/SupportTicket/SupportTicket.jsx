@@ -65,7 +65,7 @@ const UserSupportTicket = () => {
     };
 
 
-    console.log(supportTickets, `http://localhost:5000/api/v1/shop/support?shopId=${shop_id.shop_id}&token=${shopUser._id}`);
+    // console.log(supportTickets, `http://localhost:5000/api/v1/shop/support?shopId=${shop_id.shop_id}&token=${shopUser._id}`);
 
     return (
         <section className=''>
