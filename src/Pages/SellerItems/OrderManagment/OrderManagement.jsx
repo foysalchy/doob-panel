@@ -3,6 +3,7 @@ import { FaLongArrowAltRight } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
 const OrderManagement = () => {
+    
     return (
         <div>
             <div className='grid grid-cols-3 gap-4 py-10 pr-10'>
@@ -40,7 +41,7 @@ const OrderManagement = () => {
                         <FaLongArrowAltRight />
                     </span>
                     <span className="text-sm font-medium transition-all group-hover:ms-4">
-                        Schedule Drop-offs
+                        Refund
                     </span>
                 </Link>
                 <Link

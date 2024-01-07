@@ -44,7 +44,40 @@ const Payment = () => {
 
     }
 
-    console.log(paymentGetWays);
+    console.log(payment);
+
+    const paymentHandler = async () => {
+        try {
+            // const result = await Axios.post(c + "api/bkash/create");
+            // console.log(
+            //     "🚀 ~ file: page.tsx:8 ~ bkashPaymentHandler ~ result:",
+            //     result
+            // );
+
+            // if (result?.data?.status) {
+            //     window.location.href = result?.data?.data?.data?.bkashURL;
+            // } else {
+            //     toast.error("Something went wrong");
+            // }
+
+            fetch(`${payment?.BaseURL}"api/bkash/create"`,
+                {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    // body: JSON.stringify()
+                })
+                .then((res) => res.json())
+                .then((result) => {
+                    if (result?.data?.status) {
+                        window.location.href = result?.data?.data?.data?.bkashURL;
+                    } else {
+                        toast.error("Something went wrong");
+                    }
+                })
+        } catch (error) {
+            console.log(error);
+        }
+    }
     return (
         <div className='px-4 py-5 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8'>
             <div className='grid grid-cols-4  gap-4 my-4 '>
@@ -160,30 +193,34 @@ const Payment = () => {
                             </span>
 
                             <span className="text-lg font-medium transition-all group-hover:ms-4"> Order Now </span>
-                        </button> : <button
+                        </button> : <div>
+                            <button
+                                onClick={paymentHandler}
+                                className="group relative inline-flex m-auto items-center overflow-hidden rounded bg-gray-900  px-10 py-2 text-white focus:outline-none focus:ring active:bg-gray-900"
 
-                            className="group relative inline-flex m-auto items-center overflow-hidden rounded bg-gray-900  px-10 py-2 text-white focus:outline-none focus:ring active:bg-gray-900"
+                            >
+                                <span className="absolute -start-full transition-all group-hover:start-4">
+                                    <svg
+                                        className="h-5 w-5 rtl:rotate-180"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        stroke="currentColor"
+                                    >
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M17 8l4 4m0 0l-4 4m4-4H3"
+                                        />
+                                    </svg>
+                                </span>
 
-                        >
-                            <span className="absolute -start-full transition-all group-hover:start-4">
-                                <svg
-                                    className="h-5 w-5 rtl:rotate-180"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    stroke="currentColor"
-                                >
-                                    <path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="2"
-                                        d="M17 8l4 4m0 0l-4 4m4-4H3"
-                                    />
-                                </svg>
-                            </span>
+                                <span className="text-lg font-medium transition-all group-hover:ms-4"> Pay Now {payment.Getaway}</span>
+                            </button>
+                        </div>
 
-                            <span className="text-lg font-medium transition-all group-hover:ms-4"> Pay Now </span>
-                        </button>}
+                    }
 
                 </div>
             </div>}
