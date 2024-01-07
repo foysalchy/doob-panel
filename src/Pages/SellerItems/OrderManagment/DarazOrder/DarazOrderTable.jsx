@@ -18,7 +18,7 @@ const DarazOrderTable = ({ searchValue }) => {
     const { data: tData = [], refetch } = useQuery({
         queryKey: ["sellerDarazOrder"],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/api/v1/seller/daraz-order?id=${shopInfo._id}&status=${status}`);
+            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/daraz-order?id=${shopInfo._id}&status=${status}`);
 
             const data = await res.json();
             return data.data;

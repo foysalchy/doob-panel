@@ -6,13 +6,13 @@ import { useReactToPrint } from 'react-to-print';
 import OrderAllinfoModal from './DarazOrderAllinfoModal';
 import { AuthContext } from '../../../../AuthProvider/UserProvider';
 import DarazOrderAllinfoModal from './DarazOrderAllinfoModal';
+import { useQuery } from '@tanstack/react-query';
 
 const DarazTableRow = ({ data }) => {
-    console.log(data);
+
     const { _id, order_number, created_at, payment_method, method, ReadytoShip, price, ShipOnTimeSLA, statuses, document, documentLink, orderDate, orderNumber, pendingSince, quantity, product, sellerSku, sendTo, timestamp, productList } = data;
     const [formattedDate, setFormattedDate] = useState('');
     const [emptyAction, setEmptyAction] = useState(true);
-    const { checkUpDarazData, setCheckUpDarazData } = useContext(AuthContext);
     const [modalOn, setModalOn] = useState(false);
     useEffect(() => {
         const Timestamp = timestamp;
@@ -26,15 +26,9 @@ const DarazTableRow = ({ data }) => {
     }, []);
 
 
-    //? summation productList product total price
-    let ratial_price = 0;
-    // for (let i = 0; i < productList.length; i++) {
-    //     const price = parseFloat(productList[i]?.price);
-    //     ratial_price += price
+    const { shopInfo } = useContext(AuthContext)
 
-    // }
 
-    console.log(data, '++++++++++++++++++++');
 
     const getTimeAgo = (createdAt) => {
         const currentDate = new Date();
@@ -49,6 +43,42 @@ const DarazTableRow = ({ data }) => {
     // const handlePrint = useReactToPrint({
     //     content: () => componentRef.current,
     // });
+
+    const [orderCancel, setOrderCancel] = useState(false)
+
+    const orderCancelFunction = (e) => {
+        e.preventDefault()
+        const cancel = e.target.cancel.value
+        const orderNumber = orderCancel
+        const id = shopInfo._id
+        const data = {
+            id,
+            orderNumber,
+            cancellation_reason: cancel
+        }
+        console.log(cancel);
+        fetch("https://salenow-v2-backend.vercel.app/api/v1/seller/darazOrderCancel", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data)
+        }).then((res) => res.json()).then((data) => console.log(data))
+
+
+        console.log('success');
+
+    };
+    const { data: issues = [], refetch } = useQuery({
+        queryKey: ["sellerDarazCancelIssue"],
+        queryFn: async () => {
+            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/daraz-cancel-reason?id=${shopInfo._id}`);
+
+            const data = await res.json();
+            return data.data;
+        },
+    });
+
     return (
         <tr className="border-b ">
             <td className="whitespace-nowrap border-r px-6 py-4 font-medium ">
@@ -84,8 +114,46 @@ const DarazTableRow = ({ data }) => {
             </td>
             <td className="whitespace-nowrap border-r px-6 py-4 text-[16px] font-[400] flex flex-col gap-2">
                 {emptyAction && statuses[0] == "pending" && <> <button onClick={() => setEmptyAction(!emptyAction)} className='text-[16px] font-[400] text-blue-700' >Ready to Ship</button>
-                    <button onClick={() => setEmptyAction(!emptyAction)} className='text-[16px] font-[400] text-blue-700' >Cancel</button> </>}
+                    <button onClick={() => setOrderCancel(order_number)} className='text-[16px] font-[400] text-blue-700' >Cancel</button> </>}
             </td>
+
+            {orderCancel && <div >
+                <div className="fixed inset-0 z-10 overflow-y-auto" role="dialog" aria-modal="true">
+                    <div className="flex items-end justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
+                        <span className="hidden sm:inline-block sm:h-screen sm:align-middle" aria-hidden="true">&#8203;</span>
+
+                        <div className="relative inline-block px-4 pt-5 pb-4 overflow-hidden text-left align-bottom transition-all transform bg-white rounded-lg shadow-xl dark:bg-gray-900 sm:my-8 sm:w-full sm:max-w-sm sm:p-6 sm:align-middle">
+                            <h3 className="text-lg font-medium leading-6 text-gray-800 capitalize dark:text-white">
+                                Cancel Order
+                            </h3>
+
+
+                            <form className="mt-4" onSubmit={orderCancelFunction}>
+
+                                <select className='w-full p-2' name="cancel" id="">{issues.map((issue) => <option value={JSON.stringify(issue)}>{issue.name}</option>)}</select>
+
+
+                                <div className="mt-4 sm:flex sm:items-center sm:-mx-2">
+                                    <button
+                                        type="button"
+                                        onClick={() => setOrderCancel(false)}
+                                        className="w-full px-4 py-2 text-sm font-medium tracking-wide text-gray-700 capitalize transition-colors duration-300 transform border border-gray-200 rounded-md sm:w-1/2 sm:mx-2 dark:text-gray-200 dark:border-gray-700 dark:hover:bg-gray-800 hover:bg-gray-100 focus:outline-none focus:ring focus:ring-gray-300 focus:ring-opacity-40"
+                                    >
+                                        Close
+                                    </button>
+
+                                    <button
+                                        type="submit"
+                                        className="w-full px-4 py-2 mt-3 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-600 rounded-md sm:mt-0 sm:w-1/2 sm:mx-2 hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40"
+                                    >
+                                        Cancel Order
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>}
         </tr>
     );
 };

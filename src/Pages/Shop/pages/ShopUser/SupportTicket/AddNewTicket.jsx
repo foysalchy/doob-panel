@@ -58,7 +58,7 @@ const AddNewTicket = ({ OpenSupport, setOpenSupport, refetch }) => {
         }
 
         fetch(
-            `http://localhost:5000/api/v1/shop/support?token=${shopUser._id}`,
+            `https://salenow-v2-backend.vercel.app/api/v1/shop/support?token=${shopUser._id}`,
             {
                 method: "POST",
                 headers: {

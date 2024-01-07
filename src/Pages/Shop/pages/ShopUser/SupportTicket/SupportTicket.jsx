@@ -41,7 +41,7 @@ const UserSupportTicket = () => {
     const { data: supportTickets = [], refetch } = useQuery({
         queryKey: ["supportTickets"],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/api/v1/shop/support?shopId=${shop_id.shop_id}&token=${shopUser._id}`);
+            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/support?shopId=${shop_id.shop_id}&token=${shopUser._id}`);
             const data = await res.json();
             return data;
         },
@@ -65,7 +65,7 @@ const UserSupportTicket = () => {
     };
 
 
-    // console.log(supportTickets, `http://localhost:5000/api/v1/shop/support?shopId=${shop_id.shop_id}&token=${shopUser._id}`);
+
 
     return (
         <section className=''>
@@ -181,7 +181,7 @@ const UserSupportTicket = () => {
             </div> : <div>
                 <h1>No Data Found</h1>
             </div>}
-        </section >
+        </section>
     );
 
 };
