@@ -48,6 +48,10 @@ const TrackOrder = () => {
         return formattedDate;
     }
 
+      const totalPrice = order?.productList?.reduce((total, item) => {
+        return total + item?.price * item?.quantity;
+    }, 0);
+
     return (
         <div className='px-4 py-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-10'>
             <div className={!order ? "py-28" : 'py-0'} >
@@ -67,60 +71,69 @@ const TrackOrder = () => {
                     </div>
                     <button type='submit' className='bg-gray-900 py-3 text-white px-7'>{loading ? "Searching" : "Search"}</button>
                 </form>}
-
-                {order && <div className=' p-4 rounded border-[0.5px] border-opacity-40 gap-4 border-gray-500 bg-white'>
-                    <div className='pb-4 flex items-center justify-between'>
-                        <h1 className="text-xl font-bold ">Order Id : {order._id}</h1>
-                        <div className='flex items-center gap-4'>
-                            {/* <UserOrderInvoice order={order} modalOpen={modalOpen} setModalOpen={setModalOpen} /> */}
-                            <p>Order placed {formatTimestamp(order.timestamp)}</p>
-
-                            {/* <button onClick={() => handleViewDetails(order._id)} className='text-blue-500'>View invoice →</button>
-
-                        {modalOpen && (
-                            <div>
-                                <UserOrderInvoice
-                                    modalOpen={true}
-                                    setModalOpen={setModalOpen}
-                                    order={myOrders?.data?.find(order => order._id === modalOpen)}
-                                />
+                {
+                    order &&  <>
+   <main className='main'>
+  <div id="details" className="clearfix">
+                        <div id="client">
+                            {/* <img src={shopInfo?.logo} alt="" className="" /> */}
+                            <div className="to">INVOICE TO: {order?._id}</div>
+                            <h2 className="name">{order?.addresses?.fullName}</h2>
+                            <div className="address">{order?.addresses?.address} {order?.addresses?.area} {order?.addresses?.city} {order?.addresses?.province}</div>
+                            <div className="email">
+                                <a href="mailto:john@example.com">{order?.addresses?.mobileNumber}</a>
                             </div>
-                        )} */}
-
                         </div>
-
+                        <div id="invoice">
+                            <h1>INVOICE</h1>
+                            <div className="date">Date of Invoice: {formatTimestamp(order?.timestamp)}</div>
+                        </div>
                     </div>
-                    <div className='flex flex-col gap-3'>
-                        {
-                            order?.productList?.map((list) => (
-                                <div className='flex border p-4  justify-between gap-4 w-full'>
-
-                                    <div className='w-[50%]'> <img className='w-32 h-32 border border-opacity-40 rounded object-cover' src={list.img} alt="" /></div>
-
-                                    <div className='flex flex-col w-full  gap-1 '>  <h1 className='font-semibold text-lg '>{list.productName}</h1>
-                                        <p className='font-semibold'> Price: <span className='kalpurush'>৳</span>{list.price}</p>
-                                        <p className='text-gray-500 text-clip'>Regular Price: <span className='kalpurush'>৳</span> {list.regular_price} </p>
-                                    </div>
-                                    <div className='flex flex-col gap-1 w-full text-center'>
-                                        <h1 className='font-semibold text-lg '>Quantity</h1>
-                                        <p className='text-gray-500 text-center '>
-                                            {list.quantity}
-                                        </p>
-                                    </div>
-                                    <div className='flex flex-col gap-1 w-full'>
-                                        <h1 className='font-semibold text-lg '>Shipping updates</h1>
-                                        <p className='text-gray-500'>
-                                            {order.status ? order.status : (list.status ? list.status : "Progress")}
-
-                                        </p>
-                                    </div>
-
-
-                                </div>
-                            ))
-                        }
-                    </div>
-                    {
+    <table className='table' border={0} cellSpacing={0} cellPadding={0}>
+      <thead className='thead'>
+        <tr>
+          <th className="no text-center">#</th>
+          <th className=" text-center">Product photo</th>
+          <th className=" text-center">Product Name</th>
+          <th className=" text-center bg-gray-400">UNIT PRICE</th>
+          <th className="text-center">QUANTITY</th>
+          <th className=" text-center no">TOTAL</th>
+        </tr>
+      </thead>
+      <tbody className='tbody'>
+       {
+        order?.productList?.map((list, index) =>  <tr key={index} className='text-center'>
+          <td className="no">{index + 1}</td>
+          <td className=""><img className='w-20 h-20 border border-opacity-40 rounded object-cover' src={list.img} alt="" /></td>
+          <td className="">
+            <h3>{list.productName?.split(' ').slice(0, 5).join(" ")}</h3>
+          </td>
+          <td className=" ">{list?.price}</td>
+          <td className=" ">{list.quantity}</td>
+          <td className="no ">{parseInt(list?.price) * parseInt(list?.quantity)}</td>
+        </tr>)
+       }
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colSpan={3} />
+          <td colSpan={2}>SUBTOTAL</td>
+          <td>{totalPrice}</td>
+        </tr>
+        <tr>
+          <td colSpan={3} />
+          <td colSpan={2}>TAX 25%</td>
+          <td>300</td>
+        </tr>
+        <tr>
+          <td colSpan={3} />
+          <td colSpan={2}>GRAND TOTAL</td>
+          <td>{totalPrice + 300} </td>
+        </tr>
+      </tfoot>
+    </table>
+    <div id="thanks">
+            {
                         (order.status !== 'Cancel' && order.status !== 'Failed' && order.status !== 'Returned') && <div className="mt-4 mx-auto px-4 md:px-0">
                             <ul aria-label="Steps" className="items-center text-gray-600 font-medium md:flex">
                                 {steps.stepsItems.map((item, idx) => (
@@ -151,10 +164,89 @@ const TrackOrder = () => {
                             </ul>
                         </div>
                     }
-                </div>}
+    </div>
+  </main>
+    </>
+    }
             </div>
         </div>
     );
 };
 
 export default TrackOrder;
+
+
+
+
+                // {order && <div className=' p-4 rounded border-[0.5px] border-opacity-40 gap-4 border-gray-500 bg-white'>
+                //     <div className='pb-4 flex items-center justify-between'>
+                //         <h1 className="text-xl font-bold ">Order Id : {order._id}</h1>
+                //         <div className='flex items-center gap-4'>
+                //             <p>Order placed {formatTimestamp(order.timestamp)}</p>
+
+                        
+                //         </div>
+
+                //     </div>
+                //     <div className='flex flex-col gap-3'>
+                //         {
+                //             order?.productList?.map((list) => (
+                //                 <div className='flex border p-4  justify-between gap-4 w-full'>
+
+                //                     <div className='w-[50%]'> <img className='w-32 h-32 border border-opacity-40 rounded object-cover' src={list.img} alt="" /></div>
+
+                //                     <div className='flex flex-col w-full  gap-1 '>  <h1 className='font-semibold text-lg '>{list.productName}</h1>
+                //                         <p className='font-semibold'> Price: <span className='kalpurush'>৳</span>{list.price}</p>
+                //                         <p className='text-gray-500 text-clip'>Regular Price: <span className='kalpurush'>৳</span> {list.regular_price} </p>
+                //                     </div>
+                //                     <div className='flex flex-col gap-1 w-full text-center'>
+                //                         <h1 className='font-semibold text-lg '>Quantity</h1>
+                //                         <p className='text-gray-500 text-center '>
+                //                             {list.quantity}
+                //                         </p>
+                //                     </div>
+                //                     <div className='flex flex-col gap-1 w-full'>
+                //                         <h1 className='font-semibold text-lg '>Shipping updates</h1>
+                //                         <p className='text-gray-500'>
+                //                             {order.status ? order.status : (list.status ? list.status : "Progress")}
+
+                //                         </p>
+                //                     </div>
+
+
+                //                 </div>
+                //             ))
+                //         }
+                //     </div>
+                    // {
+                    //     (order.status !== 'Cancel' && order.status !== 'Failed' && order.status !== 'Returned') && <div className="mt-4 mx-auto px-4 md:px-0">
+                    //         <ul aria-label="Steps" className="items-center text-gray-600 font-medium md:flex">
+                    //             {steps.stepsItems.map((item, idx) => (
+                    //                 <li aria-current={currentStep == idx + 1 ? "step" : false} className="flex-1 last:flex-none flex gap-x-2 md:items-center">
+                    //                     <div className="flex items-center flex-col gap-x-2">
+                    //                         <div className={`w-8 h-8 rounded-full border-2 flex-none flex items-center justify-center ${currentStep > idx + 1 ? "bg-indigo-600 border-indigo-600" : "" || currentStep == idx + 1 ? "border-indigo-600" : ""}`}>
+                    //                             <span className={` ${currentStep > idx + 1 ? "hidden" : "" || currentStep == idx + 1 ? "text-indigo-600" : ""}`}>
+                    //                                 {idx + 1}
+                    //                             </span>
+                    //                             {
+                    //                                 currentStep > idx + 1 ? (
+                    //                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5 text-white">
+                    //                                         <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                    //                                     </svg>
+                    //                                 ) : ""
+                    //                             }
+                    //                         </div>
+                    //                         <hr className={`h-12 border md:hidden ${idx + 1 == steps.stepsItems.length ? "hidden" : "" || currentStep > idx + 1 ? "border-indigo-600" : ""}`} />
+                    //                     </div>
+                    //                     <div className="h-8 flex items-center md:h-auto">
+                    //                         <h3 className={`text-sm ${currentStep === idx + 1 ? "text-indigo-600" : ""}`}>
+                    //                             {item}
+                    //                         </h3>
+                    //                     </div>
+                    //                     <hr className={`hidden mr-2 w-full border md:block ${idx + 1 == steps.stepsItems.length ? "hidden" : "" || currentStep > idx + 1 ? "border-indigo-600" : ""}`} />
+                    //                 </li>
+                    //             ))}
+                    //         </ul>
+                    //     </div>
+                    // }
+                // </div>}
