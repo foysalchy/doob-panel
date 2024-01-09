@@ -55,7 +55,7 @@ const ProductInformation = () => {
         setLoading(true)
         const product = data.data
         const addToCard = {
-            userId: shopUser._id,
+            userId: shopUser?._id,
             quantity: quantity,
             img: product.featuredImage.src,
             productName: product.name,
@@ -64,18 +64,26 @@ const ProductInformation = () => {
             productId: product._id,
             shopId: shop_id.shop_id
         }
-        fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/user/add-to-cart?token=${shopUser._id}`, {
-            method: "POST",
-            headers: { 'Content-Type': 'application/json', "ngrok-skip-browser-warning": "69420", },
-            body: JSON.stringify(addToCard)
-        }).then((res) => res.json()).then((data) => {
-            setLoading(false)
-            alert(data.message)
-            console.log(data);
-        })
-        console.log(addToCard);
 
-
+        if (!shopUser) {
+            const getData = localStorage.getItem('addToCart');
+            // localStorage.setItem('addToCart', JSON.stringify([addToCard]));
+            const cartProduct = JSON.parse(getData);
+            const n = cartProduct ? [...cartProduct, addToCard] : [addToCard];
+            localStorage.setItem('addToCart', JSON.stringify(n));
+            alert('Product added to cart')
+            setLoading(false);
+        } else {
+            fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/user/add-to-cart?token=${shopUser._id}`, {
+                method: "POST",
+                headers: { 'Content-Type': 'application/json', "ngrok-skip-browser-warning": "69420", },
+                body: JSON.stringify(addToCard)
+            }).then((res) => res.json()).then((data) => {
+                setLoading(false)
+                alert(data.message)
+                console.log(data);
+            })
+        }
 
     };
 

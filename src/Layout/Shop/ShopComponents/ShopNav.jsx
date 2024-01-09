@@ -121,10 +121,8 @@ const ShopNav = () => {
                                 </ul>
                             </div>
                         </div>
-
-
                     </div>
-                    <ul className='w-2/4'>
+                    <ul className='w-[320px]'>
                         <div className="relative ">
                             <input
                                 type="text"
@@ -170,9 +168,9 @@ const ShopNav = () => {
                                 Track Order
                             </Link>
                         </li>
-                        {shopUser && <li>
+                        <li>
                             <Link
-                                to={`/shop/${shopId}/user/cart?shop_id=${shop_id.shop_id}&userId=${shopUser._id}`}
+                                to={`/shop/${shopId}/user/cart`}
                                 aria-label="Sign up"
                                 className='flex items-center gap-2'
                                 title="Sign up"
@@ -182,7 +180,7 @@ const ShopNav = () => {
                                 </div>
                                 My Cart
                             </Link>
-                        </li>}
+                        </li>
                         <li>
                             {!shopUser ? <Link
                                 to={`/shop/${shopId}/sign-in`}
