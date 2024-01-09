@@ -34,7 +34,7 @@ const DarazIntegration = () => {
     useEffect(() => {
         if (code) {
 
-            fetch('http://localhost:5000/api/v1/daraz/get-key').then((res) => res.json()).then((data) => {
+            fetch('https://salenow-v2-backend.vercel.app/api/v1/daraz/get-key').then((res) => res.json()).then((data) => {
                 const { appkey, secretkey } = data[0]
 
                 const appKey = appkey
@@ -57,7 +57,7 @@ const DarazIntegration = () => {
                 };
 
 
-                fetch(`http://localhost:5000/api/v1/daraz/addCode/${shopInfo._id}`, {
+                fetch(`https://salenow-v2-backend.vercel.app/api/v1/daraz/addCode/${shopInfo._id}`, {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json',

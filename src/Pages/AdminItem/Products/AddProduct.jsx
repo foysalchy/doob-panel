@@ -13,7 +13,7 @@ const AddProduct = () => {
   const { data: categories = [], refetch } = useQuery({
     queryKey: ["category"],
     queryFn: async () => {
-      const res = await fetch("http://localhost:5000/api/v1/admin/category");
+      const res = await fetch("https://salenow-v2-backend.vercel.app/api/v1/admin/category");
       const data = await res.json();
       return data;
     },
@@ -67,7 +67,7 @@ const AddProduct = () => {
 
 
 
-      fetch(`http://localhost:5000/api/v1/admin/addproduct`, {
+      fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/addproduct`, {
         method: "POST",
         headers: {
           "content-type": "application/json",
@@ -103,7 +103,7 @@ const AddProduct = () => {
 
     try {
       const response = await fetch(
-        `http://localhost:5000/api/v1/image/upload-image`,
+        `https://salenow-v2-backend.vercel.app/api/v1/image/upload-image`,
         {
           method: "POST",
           body: formData,

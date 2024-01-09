@@ -72,7 +72,7 @@ const SupperAdminPath = [
         element: <AdminSingleBlog />,
         loader: async ({ params }) => {
             const id = params.id;
-            return fetch(`http://localhost:5000/api/v1/admin/all-blogs/${id}`);
+            return fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/all-blogs/${id}`);
         },
     },
     {

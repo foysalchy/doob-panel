@@ -19,7 +19,7 @@ const ShopFeature = () => {
         queryKey: ["features"],
         queryFn: async () => {
             try {
-                const res = await fetch(`http://localhost:5000/api/v1/shop/feature/get/${shopId}`);
+                const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/feature/get/${shopId}`);
                 const data = await res.json();
                 return data;
             } catch (error) {

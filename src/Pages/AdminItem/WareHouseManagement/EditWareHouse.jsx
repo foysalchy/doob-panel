@@ -14,7 +14,7 @@ const EditWareHouse = ({ setOpenModal, OpenModal, data, refetch }) => {
         const selectedImage = e.target.files[0];
         const formData = new FormData();
         formData.append("image", selectedImage);
-        const url = `http://localhost:5000/api/v1/image/upload-image`;
+        const url = `https://salenow-v2-backend.vercel.app/api/v1/image/upload-image`;
         fetch(url, {
             method: "POST",
             body: formData,
@@ -42,7 +42,7 @@ const EditWareHouse = ({ setOpenModal, OpenModal, data, refetch }) => {
             img
         }
 
-        fetch(`http://localhost:5000/api/v1/admin/warehouse/${data._id}`, {
+        fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/warehouse/${data._id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'

@@ -497,4 +497,7 @@ const ExtraCategoriesManagement = () => {
             </div>
         </div>
     );
-
+
+};
+
+export default ExtraCategoriesManagement;
