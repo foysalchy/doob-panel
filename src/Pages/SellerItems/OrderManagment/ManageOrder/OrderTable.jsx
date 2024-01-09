@@ -153,8 +153,7 @@ const OrderTable = ({ searchValue, selectedValue }) => {
 
             });
         } else {
-            // Handle the case when the user clicks "No" in the confirmation dialog
-            // You can add specific behavior or leave it empty based on your requirements
+            productStatusUpdate('Returned', order._id)
         }
     };
     return (
@@ -276,7 +275,7 @@ const OrderTable = ({ searchValue, selectedValue }) => {
                                                 || itm?.status === 'Return' && (
                                                     <div className='flex flex-col justify-center'>
                                                         <button onClick={() => handleProductStatusUpdate("Returned", itm, true)} className='text-[16px] font-[400] text-blue-700'>Quantity Update</button>
-                                                        <button onClick={() => handleProductStatusUpdate("Returned", itm, true)} className='text-[16px] font-[400] text-blue-700'>Reject</button>
+                                                        <button onClick={() => productStatusUpdate("Failed", itm?._id)} className='text-[16px] font-[400] text-blue-700'>Reject</button>
 
                                                     </div>
                                                 )
