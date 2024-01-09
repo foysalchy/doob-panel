@@ -32,14 +32,16 @@ const DarazOrderTable = ({ searchValue }) => {
         ? tData?.orders?.filter((itm) => {
             console.log(itm);
             const order_id = itm?.order_id;
-            const order_idString = order_id.toString(); // Convert to string
-            const isMatch = order_idString.includes(searchValue);
+            const order_idString = order_id?.toString(); // Convert to string
+            const isMatch = order_idString?.includes(searchValue);
             if (isMatch) {
                 console.log('Filtered Item:', itm);
             }
             return isMatch;
         })
         : tData?.orders;
+
+    console.log(filteredData);
     // Calculate the range of items to display based on pagination
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
@@ -88,7 +90,7 @@ const DarazOrderTable = ({ searchValue }) => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {filteredData.map((itm, index) => (
+                                {filteredData?.map((itm, index) => (
                                     <DarazTableRow data={itm} index={index} key={index} />
                                 ))}
                             </tbody>
@@ -99,7 +101,7 @@ const DarazOrderTable = ({ searchValue }) => {
             <div className="max-w-2xl mx-auto mt-8 pb-8">
                 <nav aria-label="Page navigation example">
                     <ul className="inline-flex -space-x-px">
-                        {Array.from({ length: Math.ceil(filteredData.length / itemsPerPage) }, (_, i) => (
+                        {Array.from({ length: Math.ceil(filteredData?.length / itemsPerPage) }, (_, i) => (
                             <li key={i}>
                                 <button
                                     onClick={() => setCurrentPage(i + 1)}
@@ -107,7 +109,7 @@ const DarazOrderTable = ({ searchValue }) => {
                                         ? 'text-blue-600'
                                         : 'text-gray-500 hover:bg-gray-100 hover:text-gray-700'
                                         } border-gray-300 leading-tight py-2 px-3 rounded ${i === 0 ? 'rounded-l-lg' : ''
-                                        } ${i === Math.ceil(filteredData.length / itemsPerPage) - 1 ? 'rounded-r-lg' : ''}`}
+                                        } ${i === Math.ceil(filteredData?.length / itemsPerPage) - 1 ? 'rounded-r-lg' : ''}`}
                                 >
                                     {i + 1}
                                 </button>
