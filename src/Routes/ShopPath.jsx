@@ -15,6 +15,7 @@ import ProductInformation from "../Pages/Shop/pages/Product/OneProduct/ProductIn
 import Payment from "../Pages/Shop/pages/Product/ProductCheckOut/Payment";
 import ProductCheckout from "../Pages/Shop/pages/Product/ProductCheckOut/ProductCheckout";
 import UserSupportTicket from "../Pages/Shop/pages/ShopUser/SupportTicket/SupportTicket";
+import TrackOrder from "../Pages/Shop/pages/ShopUser/TrackOrder/TrackOrder";
 import Product from './../Pages/Home/Product/Product';
 import IsUserRegistration from "./isUserRegistration";
 
@@ -42,6 +43,11 @@ const ShopPath = [
             const id = params.id;
             return fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/${id}`);
         },
+    },
+    {
+        path: ':id/track-order',
+        element: <TrackOrder />,
+
     },
     {
         path: ':id/user',

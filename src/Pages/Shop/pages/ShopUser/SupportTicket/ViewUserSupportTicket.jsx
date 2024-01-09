@@ -26,7 +26,7 @@ const ViewUserSupportTicket = ({ viewComment, setViewComment, ticketDetails, ref
             'name': shopUser?.name
         }
         // / support - ticket /: id
-        fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/user-support-comment/${id}`, {
+        fetch(`http://localhost:5000/api/v1/seller/user-support-comment/${id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'

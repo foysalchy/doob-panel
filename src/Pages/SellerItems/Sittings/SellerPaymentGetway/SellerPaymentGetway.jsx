@@ -49,6 +49,11 @@ const SellerPaymentGetaway = () => {
                 StoreID: event.target.StoreID.value,
                 SignatureKey: event.target.SignatureKey.value,
             }),
+            ...(selectedMedia === 'Bank' && {
+                bankName: event.target.bankName.value,
+                accountNumber: event.target.accountNumber.value,
+
+            }),
             shop_id: shopInfo._id,
             shopId: shopInfo.shopId
         };
@@ -147,6 +152,7 @@ const SellerPaymentGetaway = () => {
                                     <option value="Bkash">Bkash</option>
                                     <option value="AmarPay">AmarPay</option>
                                     <option value="Nogod">Nogod </option>
+                                    <option value="Bank">Bank </option>
 
                                 </select>
                             </div>
@@ -360,6 +366,38 @@ const SellerPaymentGetaway = () => {
                                     </div>
                                 </div>
                             }
+                            {
+                                selectedMedia === 'Bank' &&
+                                <div>
+                                    <div className=''>
+                                        <label className="sr-only text-black" htmlFor="title">
+                                            Bank Name
+                                        </label>
+                                        <input
+                                            required
+                                            className="flex-grow w-full re h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
+                                            placeholder={selectedMedia + ' Name*'}
+                                            type="text"
+                                            id="title"
+                                            name="bankName"
+                                        />
+                                    </div>
+                                    <div className='mt-4'>
+                                        <label className="sr-only text-black" htmlFor="title">
+                                            Account Number
+                                        </label>
+                                        <input
+                                            required
+                                            className="flex-grow w-full re h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
+                                            placeholder={selectedMedia + ' Account Number*'}
+                                            type="text"
+                                            id="title"
+                                            name="accountNumber"
+                                        />
+                                    </div>
+
+                                </div>
+                            }
 
 
                             <div className="mt-4">
@@ -454,6 +492,27 @@ const SellerPaymentGetaway = () => {
                                             srcSet="https://play-lh.googleusercontent.com/xA5zXoyQrqDjgz8bef64gAvnBpofTELWWWXYkuF3t5WnPADHv5Y91A8x51Z0RHJnLzM"
                                             className="absolute inset-0 p-4 w-full  opacity-75 transition-opacity group-hover:opacity-20"
                                         />
+
+                                        <div className="relative p-4 sm:p-6 lg:p-8">
+
+
+                                            <div className="">
+                                                <button
+                                                    onClick={() => deleteHandel(get._id)}
+                                                    className="translate-y-8 transform opacity-0 transition-all bg-red-500 p-2 text-white group-hover:translate-y-0 group-hover:opacity-100"
+                                                >
+                                                    <MdDelete />
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>}
+                                    {get.Getaway === 'Bank' && <div className="group relative block border  bg-white">
+                                        <div
+
+                                            className="absolute inset-0 flex justify-center items-center p-4 w-full  opacity-75 transition-opacity group-hover:opacity-20"
+                                        >
+                                            Bank
+                                        </div>
 
                                         <div className="relative p-4 sm:p-6 lg:p-8">
 

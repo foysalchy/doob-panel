@@ -38,6 +38,12 @@ export const ordersNav = [
         dropdownLink: [""],
     },
     {
+        name: 'return request',
+        status: '',
+        value: 'Return',
+        dropdownLink: [""],
+    },
+    {
         name: 'returned',
         status: '',
         value: 'Returned',

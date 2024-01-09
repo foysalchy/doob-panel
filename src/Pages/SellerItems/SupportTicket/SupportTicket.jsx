@@ -240,7 +240,7 @@ const SellerSupportTicket = () => {
                                 </button>
                             </li>
 
-                         
+
                             <div className='border-blue-600 bg-blue-600 text-white p-2 px-3 rounded'>
 
                                 <span> {currentPage}</span>

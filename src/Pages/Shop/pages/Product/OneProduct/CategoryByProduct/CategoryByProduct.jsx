@@ -4,7 +4,7 @@ import { Link, useLoaderData } from 'react-router-dom';
 import { ShopAuthProvider } from '../../../../../../AuthProvider/ShopAuthProvide';
 
 const CategoryByProduct = () => {
-     const products = useLoaderData();
+    const products = useLoaderData();
     const { shop_id } = useContext(ShopAuthProvider);
     const pathname = window.location.pathname;
     const idMatch = pathname.match(/\/shop\/([^/]+)/);
@@ -18,7 +18,7 @@ const CategoryByProduct = () => {
     useEffect(() => {
         const fetchBrands = async () => {
             try {
-                const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/brand/${shop_id?.shop_id}`);
+                const res = await fetch(`http://localhost:5000/api/v1/seller/brand/${shop_id?.shop_id}`);
                 const data = await res.json();
                 // Update brands state
                 setBrands(data);
@@ -64,7 +64,7 @@ const CategoryByProduct = () => {
 
         applyFilters();
     }, [products, checkedBrands, minPrice, maxPrice]);
-     return (
+    return (
         <div>
             <section className="text-gray-600 body-font">
                 <div className="px-4 py-4 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8">
@@ -167,19 +167,19 @@ const CategoryByProduct = () => {
                                             </header>
 
                                             <ul className="space-y-1 border-t border-gray-200 p-4">
-                                              
 
-                                                {brands?.map(brand =>   <li key={brand._id}>
-                                                            <label htmlFor={`brandCheckbox-${brand._id}`} className="inline-flex items-center gap-2">
-                                                                <input
-                                                                type="checkbox"
-                                                                id={`brandCheckbox-${brand._id}`}
-                                                                className="h-5 w-5 rounded border-gray-300"
-                                                                onChange={() => handleCheckboxChange(brand.name)}
-                                                                checked={checkedBrands.includes(brand?.name)}/>
-                                                                <span className="text-sm font-medium text-gray-700">{brand?.name}</span>
-                                                            </label>
-                                                         </li>)}
+
+                                                {brands?.map(brand => <li key={brand._id}>
+                                                    <label htmlFor={`brandCheckbox-${brand._id}`} className="inline-flex items-center gap-2">
+                                                        <input
+                                                            type="checkbox"
+                                                            id={`brandCheckbox-${brand._id}`}
+                                                            className="h-5 w-5 rounded border-gray-300"
+                                                            onChange={() => handleCheckboxChange(brand.name)}
+                                                            checked={checkedBrands.includes(brand?.name)} />
+                                                        <span className="text-sm font-medium text-gray-700">{brand?.name}</span>
+                                                    </label>
+                                                </li>)}
                                             </ul>
                                         </div>
                                     </details>
@@ -269,7 +269,7 @@ const CategoryByProduct = () => {
                                         </summary>
 
                                         <div className="border-t border-gray-200 bg-white">
-                                            
+
 
                                             <div className="border-t border-gray-200 p-4">
                                                 <div className="flex justify-between gap-4">
@@ -300,9 +300,9 @@ const CategoryByProduct = () => {
                                                     <button onClick={() => {
                                                         setMaxPrice(false);
                                                         setMinPrice(false)
-                                                        }} type="button" className="text-sm text-gray-900 underline underline-offset-4">
-                                                    Reset
-                                                </button>
+                                                    }} type="button" className="text-sm text-gray-900 underline underline-offset-4">
+                                                        Reset
+                                                    </button>
                                                 </div>
                                             </div>
                                         </div>

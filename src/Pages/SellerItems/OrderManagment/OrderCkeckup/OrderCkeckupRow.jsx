@@ -6,7 +6,7 @@ const OrderCkeckupRow = ({ itm, orderId }) => {
 
     const statusUpdate = (orderId, productId, status) => {
         console.log(orderId, productId, status);
-       
+
         fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/order-single-product-status-update?orderId=${orderId}&productId=${productId}&status=${status}`, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },

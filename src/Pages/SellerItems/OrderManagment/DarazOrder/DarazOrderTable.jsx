@@ -28,17 +28,25 @@ const DarazOrderTable = ({ searchValue }) => {
     const itemsPerPage = 4; // Number of items to display per page
     const [currentPage, setCurrentPage] = useState(1);
 
-    // const filteredData = searchValue
-    //     ? tData?.filter((itm) => itm?.addresses?.fullName.toLowerCase().includes(searchValue.toLowerCase()))
-    //     : tData;
-
-    // // Calculate the range of items to display based on pagination
-    // const startIndex = (currentPage - 1) * itemsPerPage;
-    // const endIndex = startIndex + itemsPerPage;
+    const filteredData = searchValue
+        ? tData?.orders?.filter((itm) => {
+            console.log(itm);
+            const order_id = itm?.order_id;
+            const order_idString = order_id.toString(); // Convert to string
+            const isMatch = order_idString.includes(searchValue);
+            if (isMatch) {
+                console.log('Filtered Item:', itm);
+            }
+            return isMatch;
+        })
+        : tData?.orders;
+    // Calculate the range of items to display based on pagination
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
     // const currentItems = filteredData?.slice(startIndex, endIndex);
 
+    console.log(tData);
 
-    console.log(tData?.orders);
     return (
         <div className="flex flex-col overflow-hidden mt-4">
             <div className="overflow-x-auto transparent-scroll sm:-mx-6 lg:-mx-8">
@@ -80,7 +88,7 @@ const DarazOrderTable = ({ searchValue }) => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {tData?.orders?.map((itm, index) => (
+                                {filteredData.map((itm, index) => (
                                     <DarazTableRow data={itm} index={index} key={index} />
                                 ))}
                             </tbody>
@@ -89,7 +97,7 @@ const DarazOrderTable = ({ searchValue }) => {
                 </div>
             </div>
             <div className="max-w-2xl mx-auto mt-8 pb-8">
-                {/* <nav aria-label="Page navigation example">
+                <nav aria-label="Page navigation example">
                     <ul className="inline-flex -space-x-px">
                         {Array.from({ length: Math.ceil(filteredData.length / itemsPerPage) }, (_, i) => (
                             <li key={i}>
@@ -106,7 +114,7 @@ const DarazOrderTable = ({ searchValue }) => {
                             </li>
                         ))}
                     </ul>
-                </nav> */}
+                </nav>
             </div>
         </div>
     );

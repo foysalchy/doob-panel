@@ -105,7 +105,7 @@ const AddToCard = () => {
         setAllProducts((prevProducts) =>
             prevProducts.filter((product) => product._id !== productId)
         );
-        fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/user/add-to-cart?productId=${productId}&token=${shopUser._id}`, {
+        fetch(`http://localhost:5000/api/v1/shop/user/add-to-cart?productId=${productId}&token=${shopUser._id}`, {
             method: "DELETE",
             headers: { "Content-Type": "application/json", "ngrok-skip-browser-warning": "69420", }
 
@@ -126,7 +126,7 @@ const AddToCard = () => {
     //     const code = e.target.promoCode.value
     //     const shopId = shop_id.shop_id
     //     console.log(price);
-    //     fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/user/promocode?shopId=${shopId}&code=${code}&token=${shopUser._id}&price=${price}`, {
+    //     fetch(`http://localhost:5000/api/v1/shop/user/promocode?shopId=${shopId}&code=${code}&token=${shopUser._id}&price=${price}`, {
     //         headers: {
     //             "ngrok-skip-browser-warning": "69420",
     //         }

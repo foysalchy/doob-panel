@@ -9,7 +9,7 @@ const AddRackModal = ({ setNewData, recall, setOpenModal }) => {
     const { data: warehouses = [], refetch } = useQuery({
         queryKey: ["warehouses"],
         queryFn: async () => {
-            const res = await fetch("https://salenow-v2-backend.vercel.app/api/v1/admin/warehouse");
+            const res = await fetch("http://localhost:5000/api/v1/admin/warehouse");
             const data = await res.json();
             return data;
         },
@@ -32,7 +32,7 @@ const AddRackModal = ({ setNewData, recall, setOpenModal }) => {
     const handleWarehouseChange = async (selectedOption) => {
         const selectedWarehouse = selectedOption.value;
         console.log(selectedWarehouse);
-        const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/warehouse/area/${selectedWarehouse}`);
+        const res = await fetch(`http://localhost:5000/api/v1/admin/warehouse/area/${selectedWarehouse}`);
         const data = await res.json();
         setAreas(data);
     };
@@ -47,9 +47,9 @@ const AddRackModal = ({ setNewData, recall, setOpenModal }) => {
             warehouse,
             area,
             rack,
-            status : nextStae
+            status: nextStae
         }
-        fetch('https://salenow-v2-backend.vercel.app/api/v1/admin/warehouse/rack', {
+        fetch('http://localhost:5000/api/v1/admin/warehouse/rack', {
             method: 'post',
             headers: {
                 'Content-Type': 'application/json'
@@ -59,16 +59,16 @@ const AddRackModal = ({ setNewData, recall, setOpenModal }) => {
             )
         }).then((res) => res.json()).then((data) => {
             Swal.fire('Upload Successful', '', 'success')
-             recall()
+            recall()
             refetch()
-             if (nextStae) {
-                      setNewData('Add Self')
-                } else {
-                    setOpenModal(false)
-                  }
+            if (nextStae) {
+                setNewData('Add Self')
+            } else {
+                setOpenModal(false)
+            }
         });
     }
- 
+
     return (
         <div>
             <form onSubmit={UploadArea} action="">
@@ -120,16 +120,16 @@ const AddRackModal = ({ setNewData, recall, setOpenModal }) => {
                     <input required name='rack' type="text" placeholder="Description" className="w-full p-2 border border-black rounded-md  text-gray-900" />
                 </div>
                 <div className="flex items-center mt-10 justify-between">
-                      <button type='submit' className="group  relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500">
-                    <span className="absolute -start-full transition-all group-hover:start-4">
+                    <button type='submit' className="group  relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500">
+                        <span className="absolute -start-full transition-all group-hover:start-4">
 
-                        <FaLongArrowAltRight />
+                            <FaLongArrowAltRight />
 
-                    </span>
-                    <span className="text-sm font-medium transition-all group-hover:ms-4">Add Area</span>
-                </button>
-                 <button type='submit' onClick={()=> setNextState(true)} className="group relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500">Next</button>
-               </div>
+                        </span>
+                        <span className="text-sm font-medium transition-all group-hover:ms-4">Add Area</span>
+                    </button>
+                    <button type='submit' onClick={() => setNextState(true)} className="group relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500">Next</button>
+                </div>
             </form>
         </div>
     );

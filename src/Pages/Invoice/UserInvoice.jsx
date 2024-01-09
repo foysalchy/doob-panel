@@ -8,7 +8,7 @@ const UserInvoice = () => {
         stepsItems: ["Order", "Processing", "Delivered"],
     })
     let currentStep = 2
-       // const componentRef = useRef();
+    // const componentRef = useRef();
     // const handlePrint = useReactToPrint({
     //     content: () => componentRef.current,
     // });
@@ -17,14 +17,14 @@ const UserInvoice = () => {
     // const { data: userInvoiceData = [], refetch } = useQuery({
     //     queryKey: ["userInvoiceData"],
     //     queryFn: async () => {
-    //         const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/order?shopId=${shopInfo._id}`);
+    //         const res = await fetch(`http://localhost:5000/api/v1/seller/order?shopId=${shopInfo._id}`);
     //         const data = await res.json();
     //         return data.data;
     //     },
     // });
 
 
- 
+
     return (
         <div className="bg-gray-100 p-12">
             {/* <button onClick={handlePrint} className='bg-blue-500 px-6 py-2 rounded-2 text-white rounded-md'>Print</button> */}

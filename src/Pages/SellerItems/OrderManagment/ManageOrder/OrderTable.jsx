@@ -124,6 +124,39 @@ const OrderTable = ({ searchValue, selectedValue }) => {
     console.log(filteredData);
 
     const [readyToShip, setReadyToShip] = useState(false)
+
+
+    const [showImage, setShowImage] = useState(false);
+    const [selectedImage, setSelectedImage] = useState('');
+
+    const handleImageClick = (image) => {
+        setSelectedImage(image);
+        setShowImage(true);
+    };
+
+
+    const handleProductStatusUpdate = (status, order, isAccepted) => {
+        const confirmation = window.confirm(`Do you want to quantity update ?`);
+
+        if (confirmation) {
+            fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/order-quantity-update`, {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(order)
+            }).then((res) => res.json()).then((data) => {
+                console.log(data);
+                if (data.success) {
+                    productStatusUpdate('Returned', order._id)
+                } else {
+                    alert("Failed to Update")
+                }
+
+            });
+        } else {
+            // Handle the case when the user clicks "No" in the confirmation dialog
+            // You can add specific behavior or leave it empty based on your requirements
+        }
+    };
     return (
         <div className="flex flex-col overflow-hidden mt-4">
             <div className="overflow-x-auto transparent-scroll sm:-mx-6 lg:-mx-8">
@@ -186,8 +219,40 @@ const OrderTable = ({ searchValue, selectedValue }) => {
                                         <td className="whitespace-nowrap border-r px-6 py-4 text-[16px] font-[400]">
                                             {getTimeAgo(itm?.timestamp)}
                                         </td>
-                                        <td className="whitespace-nowrap border-r px-6 py-4 text-[16px] font-[400]">
+                                        <td className="whitespace-nowrap border-r  px-6 py-4 text-[16px] font-[400]">
                                             {itm?.method.Getaway}
+                                            {itm?.method.Getaway === 'Bank' && (
+                                                <div className='flex justify-center'>
+                                                    <img
+                                                        src={itm.file}
+                                                        className='h-10 '
+
+                                                        alt=""
+                                                        onClick={() => handleImageClick(itm.file)}
+                                                    />
+                                                </div>
+                                            )}
+                                            {/* END: ed8c6549bwf9 */}
+
+
+                                            {showImage && (
+                                                <div className="fixed inset-0 z-50 bg-black bg-opacity-20 flex items-center justify-center">
+                                                    <div className="relative max-w-full max-h-full">
+                                                        <span
+                                                            className="absolute top-4 right-4 text-white bg-black w-10 h-10 rounded-full flex justify-center items-center cursor-pointer text-2xl"
+                                                            onClick={() => setShowImage(false)}
+                                                        >
+                                                            X
+                                                        </span>
+                                                        <img
+                                                            src={selectedImage}
+                                                            alt=""
+                                                            className="max-w-full max-h-full object-contain"
+                                                            style={{ boxShadow: '0 0 10px rgba(0, 0, 0, 0.5)' }}
+                                                        />
+                                                    </div>
+                                                </div>
+                                            )}
                                         </td>
                                         <td className="whitespace-nowrap border-r px-6 py-4 text-[16px] font-[400]">
                                             {ratial_price(itm?.productList)}
@@ -197,7 +262,10 @@ const OrderTable = ({ searchValue, selectedValue }) => {
                                         </td>
                                         <td className="whitespace-nowrap border-r px-6 py-4 text-[16px] font-[400] flex flex-col gap-2">
                                             {!itm?.status &&
-                                                <> <button onClick={() => setReadyToShip(itm)} className='text-[16px] font-[400] text-blue-700' >Ready to Ship</button>
+                                                <> <button
+                                                    // onClick={() => productStatusUpdate("ReadyToShip", itm?._id)}
+                                                    onClick={() => setReadyToShip(itm)}
+                                                    className='text-[16px] font-[400] text-blue-700' >Ready to Ship</button>
                                                     <button onClick={() => productStatusUpdate("Cancel", itm?._id)} className='text-[16px] font-[400] text-blue-700' >Cancel</button> </>
                                                 || itm?.status == 'ReadyToShip' && <button onClick={() => productStatusUpdate("Shipped", itm?._id)} className='text-[16px] font-[400] text-blue-700' >Shipped</button>
                                                 || itm?.status == 'Shipped' && <div className='flex flex-col gap-2'>
@@ -205,10 +273,19 @@ const OrderTable = ({ searchValue, selectedValue }) => {
                                                     <button onClick={() => productStatusUpdate("Failed", itm?._id)} className='text-[16px] font-[400] text-blue-700' >Failed Delivery</button>
                                                 </div>
                                                 || itm?.status == 'Delivered' && <button onClick={() => productStatusUpdate("Returned", itm?._id)} className='text-[16px] font-[400] text-blue-700' >Returned</button>
-                                                || itm?.status == 'Returned' && <button onClick={() => productStatusUpdate("FoundOnly", itm?._id)} className='text-[16px] font-[400] text-blue-700' >Found only</button>}
+                                                || itm?.status === 'Return' && (
+                                                    <div className='flex flex-col justify-center'>
+                                                        <button onClick={() => handleProductStatusUpdate("Returned", itm, true)} className='text-[16px] font-[400] text-blue-700'>Quantity Update</button>
+                                                        <button onClick={() => handleProductStatusUpdate("Returned", itm, true)} className='text-[16px] font-[400] text-blue-700'>Reject</button>
+
+                                                    </div>
+                                                )
+                                                || itm?.status == 'Returned' && <button onClick={() => productStatusUpdate("RefoundOnly", itm?._id)} className='text-[16px] font-[400] text-blue-700' >Refund only</button>
+                                                || itm?.status == 'Refund' && <button onClick={() => productStatusUpdate("Refund", itm?._id)} className='text-[16px] font-[400] text-blue-700' >View Details</button>
+                                            }
                                         </td>
                                         {
-                                            itm._id === readyToShip._id && <ShippingModal readyToShip={readyToShip} setReadyToShip={setReadyToShip} orderInfo={itm} refetch={refetch} ships={ships} />
+                                            itm._id === readyToShip._id && <ShippingModal readyToShip={readyToShip} setReadyToShip={setReadyToShip} productStatusUpdate={productStatusUpdate} orderInfo={itm} refetch={refetch} ships={ships} />
                                         }
                                     </tr>
                                 ))}

@@ -60,7 +60,7 @@ import UserSupportTicketForShop from "../Pages/SellerItems/SupportTicket/UserSup
 import CustomerReturn from "../Pages/SellerItems/OrderManagment/CustomerReturn/CustomerReturn";
 import ScheduleDropOffs from "../Pages/SellerItems/OrderManagment/ScheduleDropOffs/ScheduleDropOffs";
 
-// `https://salenow-v2-backend.vercel.app/api/v1/seller/daraz-product/${shopInfo._id}
+// `http://localhost:5000/api/v1/seller/daraz-product/${shopInfo._id}
 
 
 const SellerPath = [
@@ -280,7 +280,7 @@ const SellerPath = [
         path: "orders/customer-return",
         element: <CustomerReturn />
     }, {
-        path: "orders/schedule-drop-offs",
+        path: "orders/refand-order",
         element: <ScheduleDropOffs />
     },
     {
@@ -300,7 +300,7 @@ const SellerPath = [
         element: <ManageReviews />
     },
     {
-        path: "schedule-drop-offs",
+        path: "refand-order",
         element: "schedule_drop-offs"
     },
     {

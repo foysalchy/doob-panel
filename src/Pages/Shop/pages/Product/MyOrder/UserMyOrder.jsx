@@ -129,21 +129,24 @@ const UserMyOrder = () => {
             }
         )
             .then((res) => res.json())
-            .finally(() => {
-                updateStatus('Refund', orderId)
+            .then((data) => {
+                console.log(data);
+                if (data.success) {
+                    updateStatus('Refund', orderId)
 
 
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Add Successfully!',
-                    showConfirmButton: false,
-                    timer: 1000
-                })
-                form.reset()
-                setFile()
-                setFileName('Provide a Image or PDF')
-                setDescription('')
-                refetch()
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Add Successfully!',
+                        showConfirmButton: false,
+                        timer: 1000
+                    })
+                    form.reset()
+                    setFile()
+                    setFileName('Provide a Image or PDF')
+                    setDescription('')
+                    refetch()
+                }
             })
     }
 
@@ -157,12 +160,63 @@ const UserMyOrder = () => {
     };
 
     const PaymentGetWay = ["Bekash", "Nogod", "AmarPay"]
+
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 5;
+
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    const currentOrders = myOrders?.data?.slice(startIndex, endIndex);
+
+    const totalPages = Math.ceil(myOrders?.data?.length / itemsPerPage);
+
+    const handlePageChange = (newPage) => {
+        setCurrentPage(newPage);
+    };
+
+    const renderPaginationControls = () => {
+        const pages = Array.from({ length: totalPages }, (_, index) => index + 1);
+
+        return (
+            <div className="flex items-center justify-center gap-2 mt-4">
+                <button
+                    onClick={() => handlePageChange(currentPage - 1)}
+                    className={`flex items-center justify-center px-4 py-2 mx-1 text-gray-500 capitalize  bg-white rounded-md  rtl:-scale-x-100 dark:bg-gray-800 dark:text-gray-600 ${currentPage === 1 ? 'cursor-not-allowed opacity-50' : ''}`}
+                    disabled={currentPage === 1}
+                >
+                    <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 text-white" viewBox="0 0 20 20" fill="currentColor">
+                        <path fillRule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clipRule="evenodd" />
+                    </svg>
+                </button>
+
+                {pages.map((page) => (
+                    <button
+                        key={page}
+                        onClick={() => handlePageChange(page)}
+                        className={`px-3 py-1 rounded ${currentPage === page ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'}`}
+                    >
+                        {page}
+                    </button>
+                ))}
+
+                <button
+                    onClick={() => handlePageChange(currentPage + 1)}
+                    className={`flex items-center justify-center px-4 py-2 mx-1 text-gray-700 transition-colors duration-300 transform bg-white rounded-md rtl:-scale-x-100 dark:bg-gray-800 dark:text-gray-200 hover:bg-blue-500 dark:hover:bg-blue-500 hover:text-white dark:hover:text-gray-200`}
+                >
+                    <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
+                    </svg>
+                </button>
+            </div>
+
+        );
+    };
     return (
         <div className=''>
             <div className=' font-google'>
                 <div className='flex flex-col gap-4'>
                     {
-                        myOrders?.data?.map((order) => {
+                        currentOrders?.map((order) => {
                             // Determine the current step based on order status
                             let currentStep;
                             if (!order.status) {
@@ -205,114 +259,129 @@ const UserMyOrder = () => {
                                                 {!order.status ? <button onClick={() => userProductCancel(order._id, order._id, "Cancel")} className='text-red-500'>  Cancel</button> : <button className=''>{order.status}ed</button>}
                                             </div>}
                                             {
-                                                order?.status === 'Delivered' && <div className='flex items-center gap-2'>
-                                                    <button onClick={() => updateStatus('Return', order?._id)} className="text-red-500 px-4 py-1 bg-red-100 rounded">Return</button>
-                                                    <button onClick={() => {
-                                                        setOpen(!open)
-                                                        setOrderId(order?._id)
-                                                    }} className="text-blue-500 px-4 py-1 bg-gray-100 rounded">Refund</button>
-                                                    {/* refund modal */}
-                                                    {open && <div className="modal h-screen w-screen fixed bg-[#0000008e] flex items-center justify-center top-0 left-0 z-[1000]">
-                                                        <div className="bg-white  md:w-[500px] text-black p-6 rounded-lg">
-                                                            <button onClick={() => setOpen(!open)} className='p-2 float-right text-xl'>
-                                                                x
-                                                            </button> <br />
-                                                            <form onSubmit={handleSubmit} className="">
-                                                                { }
-                                                                <div className="">
-                                                                    <label className="block text-sm font-medium text-gray-700" htmlFor="paymentMethod">
-                                                                        Payment Method
-                                                                    </label>
-                                                                    <select
-                                                                        id="paymentMethod"
-                                                                        name="paymentMethod"
-                                                                        value={selectedPaymentMethod}
-                                                                        onChange={handlePaymentMethodChange}
-                                                                        className="mt-1 block w-full md:w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                                                                    >
-                                                                        <option value="mobile-bank">Mobile Banking</option>
-                                                                        <option value="bank">Bank</option>
-                                                                    </select>
-                                                                    <div className="">
-                                                                        <label className="block text-sm font-medium text-gray-700 mt-2" htmlFor="name">
-                                                                            Name
-                                                                        </label>
-                                                                        <input name='name' id='name' className="mt-1 block w-full md:w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder='type your name' type="text" />
-                                                                    </div>
-                                                                    {selectedPaymentMethod === ""}
-                                                                    {showPaymentGetwaySelect && (
+                                                (order?.status === 'Delivered' || order?.status === 'Returned') && (
+                                                    <>
+                                                        {order?.status === 'Returned' && <button
+                                                            onClick={() => {
+                                                                setOpen(!open);
+                                                                setOrderId(order?._id);
+                                                            }}
+                                                            className="text-blue-500 px-4 py-1 bg-red-100 rounded"
+                                                        >
+                                                            Refund
+                                                        </button>
+                                                        }
+                                                        <div className='flex items-center gap-2'>
+                                                            {order?.status !== 'Returned' && <button
+                                                                onClick={() => updateStatus('Return', order?._id)}
+                                                                className="text-red-500 px-4 py-1 bg-red-100 rounded"
+                                                            >
+                                                                Return
+                                                            </button>}
+                                                            {open && <div className="modal h-screen w-screen fixed bg-[#0000008e] flex items-center justify-center top-0 left-0 z-[1000]">
+                                                                <div className="bg-white  md:w-[500px] text-black p-6 rounded-lg">
+                                                                    <button onClick={() => setOpen(!open)} className='p-2 float-right text-xl'>
+                                                                        x
+                                                                    </button> <br />
+                                                                    <form onSubmit={handleSubmit} className="">
+                                                                        { }
                                                                         <div className="">
+                                                                            <label className="block text-sm font-medium text-gray-700" htmlFor="paymentMethod">
+                                                                                Payment Method
+                                                                            </label>
+                                                                            <select
+                                                                                id="paymentMethod"
+                                                                                name="paymentMethod"
+                                                                                value={selectedPaymentMethod}
+                                                                                onChange={handlePaymentMethodChange}
+                                                                                className="mt-1 block w-full md:w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                                                            >
+                                                                                <option value="mobile-bank">Mobile Banking</option>
+                                                                                <option value="bank">Bank</option>
+                                                                            </select>
                                                                             <div className="">
-                                                                                <label
-                                                                                    className="block text-sm font-medium text-gray-700 pb-1 mt-2"
-                                                                                    htmlFor="paymentGetway"
-                                                                                >
-                                                                                    Payment Getway
+                                                                                <label className="block text-sm font-medium text-gray-700 mt-2" htmlFor="name">
+                                                                                    Name
                                                                                 </label>
-                                                                                <select
-                                                                                    id="paymentGetway"
-                                                                                    name="paymentGetway"
-                                                                                    onChange={(e) => setGetway(e?.target?.value)}
-                                                                                    className="mt-1 block w-full md:w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                                                                                >
-                                                                                    {PaymentGetWay?.map((itm) => (
-                                                                                        <option key={itm} value={itm}>
-                                                                                            {itm}
-                                                                                        </option>
-                                                                                    ))}
-                                                                                </select>
+                                                                                <input name='name' id='name' className="mt-1 block w-full md:w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder='type your name' type="text" />
                                                                             </div>
-                                                                            <div className="">
-                                                                                <label
-                                                                                    className="block text-sm font-medium text-gray-700 pb-1 mt-2"
-                                                                                    htmlFor="account"
-                                                                                >
-                                                                                    Account Number
-                                                                                </label>
-                                                                                <input
-                                                                                    id="account"
-                                                                                    name="account_number"
-                                                                                    type='tel'
-                                                                                    placeholder='type your account number'
-                                                                                    className="mt-1 block w-full md:w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                                                                                />
-                                                                            </div>
+                                                                            {selectedPaymentMethod === ""}
+                                                                            {showPaymentGetwaySelect && (
+                                                                                <div className="">
+                                                                                    <div className="">
+                                                                                        <label
+                                                                                            className="block text-sm font-medium text-gray-700 pb-1 mt-2"
+                                                                                            htmlFor="paymentGetway"
+                                                                                        >
+                                                                                            Payment Getway
+                                                                                        </label>
+                                                                                        <select
+                                                                                            id="paymentGetway"
+                                                                                            name="paymentGetway"
+                                                                                            onChange={(e) => setGetway(e?.target?.value)}
+                                                                                            className="mt-1 block w-full md:w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                                                                        >
+                                                                                            {PaymentGetWay?.map((itm) => (
+                                                                                                <option key={itm} value={itm}>
+                                                                                                    {itm}
+                                                                                                </option>
+                                                                                            ))}
+                                                                                        </select>
+                                                                                    </div>
+                                                                                    <div className="">
+                                                                                        <label
+                                                                                            className="block text-sm font-medium text-gray-700 pb-1 mt-2"
+                                                                                            htmlFor="account"
+                                                                                        >
+                                                                                            Account Number
+                                                                                        </label>
+                                                                                        <input
+                                                                                            id="account"
+                                                                                            name="account_number"
+                                                                                            type='tel'
+                                                                                            placeholder='type your account number'
+                                                                                            className="mt-1 block w-full md:w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                                                                        />
+                                                                                    </div>
+                                                                                </div>
+
+
+                                                                            )}
+
+                                                                            {/* bank inputs */}
+                                                                            {!showPaymentGetwaySelect && (
+                                                                                <div className=''>
+                                                                                    <div className="">
+                                                                                        <label className="block text-sm font-medium text-gray-700 mt-2" htmlFor="bank_name">
+                                                                                            Bank Name
+                                                                                        </label>
+                                                                                        <input name='bank_name' id='bank_name' className="mt-1 block w-full md:w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder='type your name' type="text" />
+                                                                                    </div>
+                                                                                    <div className="">
+                                                                                        <label className="block text-sm font-medium text-gray-700 mt-2" htmlFor="ac">
+                                                                                            AC
+                                                                                        </label>
+                                                                                        <input name='ac' id='ac' className="mt-1 block w-full md:w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder='type your AC number' type="text" />
+                                                                                    </div>
+                                                                                    <div className="">
+                                                                                        <label className="block text-sm font-medium text-gray-700 mt-2" htmlFor="holder">
+                                                                                            Holder
+                                                                                        </label>
+                                                                                        <input name='holder' id='holder' className="mt-1 block w-full md:w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder='type Holder' type="text" />
+                                                                                    </div>
+                                                                                </div>
+                                                                            )}
+
+                                                                            <button className='bg-blue-500 text-white px-8 py-2 mt-3 ml-auto rounded' type='submit'>Pay</button>
                                                                         </div>
+                                                                    </form>
 
-
-                                                                    )}
-
-                                                                    {/* bank inputs */}
-                                                                    {!showPaymentGetwaySelect && (
-                                                                        <div className=''>
-                                                                            <div className="">
-                                                                                <label className="block text-sm font-medium text-gray-700 mt-2" htmlFor="bank_name">
-                                                                                    Bank Name
-                                                                                </label>
-                                                                                <input name='bank_name' id='bank_name' className="mt-1 block w-full md:w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder='type your name' type="text" />
-                                                                            </div>
-                                                                            <div className="">
-                                                                                <label className="block text-sm font-medium text-gray-700 mt-2" htmlFor="ac">
-                                                                                    AC
-                                                                                </label>
-                                                                                <input name='ac' id='ac' className="mt-1 block w-full md:w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder='type your AC number' type="text" />
-                                                                            </div>
-                                                                            <div className="">
-                                                                                <label className="block text-sm font-medium text-gray-700 mt-2" htmlFor="holder">
-                                                                                    Holder
-                                                                                </label>
-                                                                                <input name='holder' id='holder' className="mt-1 block w-full md:w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder='type Holder' type="text" />
-                                                                            </div>
-                                                                        </div>
-                                                                    )}
-
-                                                                    <button className='bg-blue-500 text-white px-8 py-2 mt-3 ml-auto rounded' type='submit'>Pay</button>
                                                                 </div>
-                                                            </form>
-
+                                                            </div>}
                                                         </div>
-                                                    </div>}
-                                                </div>}
+                                                    </>
+                                                )
+                                            }
                                         </div>
                                     </div>
                                     <div className='flex flex-col gap-3'>
@@ -345,7 +414,7 @@ const UserMyOrder = () => {
                                             ))
                                         }
                                     </div>
-                                    {
+                                    {/* {
                                         (order.status !== 'Cancel' && order.status !== 'Failed' && order.status !== 'Returned') && <div className="mt-4 mx-auto px-4 md:px-0">
                                             <ul aria-label="Steps" className="items-center text-gray-600 font-medium md:flex">
                                                 {steps.stepsItems.map((item, idx) => (
@@ -375,15 +444,18 @@ const UserMyOrder = () => {
                                                 ))}
                                             </ul>
                                         </div>
-                                    }
+                                    } */}
                                 </div>
                             )
                         })}
                 </div>
-
+                {renderPaginationControls()}
             </div>
-        </div>
+        </div >
     );
 };
+
+
+
 
 export default UserMyOrder;

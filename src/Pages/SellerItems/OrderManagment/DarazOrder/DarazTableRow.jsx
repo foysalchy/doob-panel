@@ -66,7 +66,7 @@ const DarazTableRow = ({ data }) => {
         }).then((res) => res.json()).then((data) => console.log(data))
 
 
-        console.log('success');
+
 
     };
     const { data: issues = [], refetch } = useQuery({
@@ -78,6 +78,24 @@ const DarazTableRow = ({ data }) => {
             return data.data;
         },
     });
+
+
+
+    const darazOrderReady = (order) => {
+        const id = shopInfo._id
+        const data = {
+            id,
+            orderNumber: order
+        }
+        fetch("https://salenow-v2-backend.vercel.app/api/v1/seller/daraz-ready-to-ship", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data)
+        }).then((res) => res.json()).then((data) => console.log(data))
+    }
+
 
     return (
         <tr className="border-b ">
@@ -113,7 +131,7 @@ const DarazTableRow = ({ data }) => {
                 {statuses ? <>{statuses[0]}</> : <>Process</>}
             </td>
             <td className="whitespace-nowrap border-r px-6 py-4 text-[16px] font-[400] flex flex-col gap-2">
-                {emptyAction && statuses[0] == "pending" && <> <button onClick={() => setEmptyAction(!emptyAction)} className='text-[16px] font-[400] text-blue-700' >Ready to Ship</button>
+                {emptyAction && statuses[0] == "pending" && <> <button onClick={() => darazOrderReady(order_number)} className='text-[16px] font-[400] text-blue-700' >Ready to Ship</button>
                     <button onClick={() => setOrderCancel(order_number)} className='text-[16px] font-[400] text-blue-700' >Cancel</button> </>}
             </td>
 

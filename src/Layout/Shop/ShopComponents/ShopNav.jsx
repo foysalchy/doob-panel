@@ -158,8 +158,8 @@ const ShopNav = () => {
                     </ul>
                     <ul className="flex items-center  space-x-8 lg:flex">
                         <li>
-                            <a
-                                href="/"
+                            <Link
+                                to={`/shop/${shopId}/track-order`}
                                 aria-label="Sign up"
                                 title="Sign up"
                                 className='flex items-center gap-2'
@@ -168,7 +168,7 @@ const ShopNav = () => {
                                     <BsFillPinMapFill className='text-white ' />
                                 </div>
                                 Track Order
-                            </a>
+                            </Link>
                         </li>
                         {shopUser && <li>
                             <Link

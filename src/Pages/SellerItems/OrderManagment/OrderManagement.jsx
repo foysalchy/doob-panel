@@ -3,7 +3,7 @@ import { FaLongArrowAltRight } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
 const OrderManagement = () => {
-    
+
     return (
         <div>
             <div className='grid grid-cols-3 gap-4 py-10 pr-10'>
@@ -33,8 +33,8 @@ const OrderManagement = () => {
                     </span>
                 </Link>
 
-                <Link
-                    to={'schedule-drop-offs'}
+                {/* <Link
+                    to={'refand-order'}
                     className="group relative inline-flex items-center justify-center overflow-hidden rounded bg-gray-900 px-8 py-6 text-white focus:outline-none focus:ring active:bg-gray-500">
 
                     <span className="absolute -start-full transition-all group-hover:start-10">
@@ -79,9 +79,9 @@ const OrderManagement = () => {
                     <span className="text-sm font-medium transition-all group-hover:ms-4">
                         Woo-commerce Order
                     </span>
-                </Link>
+                </Link> */}
             </div>
-                
+
         </div>
     );
 };

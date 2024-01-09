@@ -2,14 +2,16 @@ import React, { useState } from 'react';
 import { ordersNav } from './ManageOrderNavData';
 import OrderTable from './OrderTable';
 import ExportModal from './ExportModal';
+import DarazOrderTable from '../DarazOrder/DarazOrderTable';
 
 // import OrderTable from './OrderTable';
 
 const ManageOrder = () => {
     const [selectedValue, setSelectedValue] = useState('All');
     const [openModal, setOpenModal] = useState(false);
+    const [daraz, setDaraz] = useState(false);
     const [searchValue, setSearchValue] = useState('');
-     const handleSelectChange = (event) => {
+    const handleSelectChange = (event) => {
         setSelectedValue(event.target.value);
     };
 
@@ -52,6 +54,15 @@ const ManageOrder = () => {
                     <button onClick={() => setOpenModal(!openModal)} className='px-4 py-1 bg-transparent border'>
                         Export orders
                     </button>
+                    <button onClick={() => setDaraz(false)} className='px-4 py-1 bg-transparent border'>
+                        Web Order
+                    </button>
+                    <button onClick={() => setDaraz(true)} className='px-4 py-1 bg-transparent border'>
+                        Daraz Order
+                    </button>
+                    <button onClick={() => setOpenModal(!openModal)} className='px-4 py-1 bg-transparent border'>
+                        Woo Commerce Order
+                    </button>
                 </div>
                 <div className="flex items-center gap-4">
                     <div className='flex items-center bg-white '>
@@ -63,7 +74,13 @@ const ManageOrder = () => {
             {/* table area */}
             <div className='mt-12'>
                 {/* table */}
-                <OrderTable selectedValue={selectedValue} searchValue={searchValue} />
+                {
+                    !daraz ?
+                        <OrderTable selectedValue={selectedValue} searchValue={searchValue} />
+                        :
+                        <DarazOrderTable searchValue={searchValue} />
+
+                }
             </div>
         </div>
     );

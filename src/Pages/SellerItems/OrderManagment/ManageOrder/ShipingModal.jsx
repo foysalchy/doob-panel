@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { RxCross2 } from 'react-icons/rx';
 
-const ShippingModal = ({ readyToShip, setReadyToShip, orderInfo, refetch, ships }) => {
+const ShippingModal = ({ readyToShip, setReadyToShip, orderInfo, refetch, ships, productStatusUpdate }) => {
     console.log(orderInfo);
 
     // const { shopInfo } = useContext(AuthContext)
@@ -9,6 +9,12 @@ const ShippingModal = ({ readyToShip, setReadyToShip, orderInfo, refetch, ships 
 
 
     const [loading, setLoading] = useState(false)
+
+    const [selectedDelivery, setSelectedDelivery] = useState('Other');
+    const handleDeliveryChange = (event) => {
+        setSelectedDelivery(event.target.value);
+    };
+
     const commentSubmit = async (event) => {
         // setLoading(true)
         event.preventDefault();
@@ -32,34 +38,38 @@ const ShippingModal = ({ readyToShip, setReadyToShip, orderInfo, refetch, ships 
             SecretKey: shipInfo.secretKey,
             BaseUrl: shipInfo.api
         }
-        console.log(shipInfo);
-        const api = `${shipInfo.api}/${shipInfo.key}/${shipInfo.secretKey}`
-        console.log(uploadData);
+        if (selectedDelivery === "Other") {
+            productStatusUpdate("ReadyToShip", orderInfo._id)
+            setReadyToShip(false)
+        } else {
+            console.log(shipInfo);
+            const api = `${shipInfo.api}/${shipInfo.key}/${shipInfo.secretKey}`
+            console.log(uploadData);
 
-        try {
-            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/order-submit-steadfast`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(uploadData),
-            });
+            try {
+                const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/order-submit-steadfast`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(uploadData),
+                });
 
-            if (!res.ok) {
-                throw new Error(`HTTP error! Status: ${res.status}`);
+                if (!res.ok) {
+                    throw new Error(`HTTP error! Status: ${res.status}`);
+                }
+
+                const data = await res.json();
+                console.log(data);
+                event.target.reset();
+                setLoading(false);
+                Swal.fire("Comment Uploaded", "", "success");
+                refetch();
+            } catch (error) {
+                console.error('Error:', error.message);
+                // Handle the error, e.g., show an error message to the user
             }
-
-            const data = await res.json();
-            console.log(data);
-            event.target.reset();
-            setLoading(false);
-            Swal.fire("Comment Uploaded", "", "success");
-            refetch();
-        } catch (error) {
-            console.error('Error:', error.message);
-            // Handle the error, e.g., show an error message to the user
         }
-
     }
 
 
@@ -91,14 +101,17 @@ const ShippingModal = ({ readyToShip, setReadyToShip, orderInfo, refetch, ships 
                                         Select Your Delivery
                                     </label>
                                     <select
+                                        value={selectedDelivery}
+                                        onChange={handleDeliveryChange}
                                         name="HeadlineAct"
                                         id="HeadlineAct"
                                         className="flex-grow w-full re h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
                                     >
-
+                                        <option value="Other">Other</option>
                                         {ships?.map((ship) => (
                                             <option value={ship}>{ship.name}</option>
                                         ))}
+
 
                                     </select>
                                 </div>
@@ -190,8 +203,6 @@ const ShippingModal = ({ readyToShip, setReadyToShip, orderInfo, refetch, ships 
                                         Note
                                     </label>
                                     <textarea
-                                        required
-
                                         className="flex-grow w-full re h-12 p-2 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
 
                                         type="text"
@@ -201,7 +212,18 @@ const ShippingModal = ({ readyToShip, setReadyToShip, orderInfo, refetch, ships 
                                 </div>
 
                                 <div className="flex justify-end px-4">
-                                    <input type="submit" disabled={loading} className="px-2.5 py-1.5 rounded-md text-white cursor-pointer text-sm bg-indigo-500" value={loading ? "Uploading.." : "Comment"} />
+                                    <input
+                                        type="submit"
+                                        disabled={loading}
+                                        className="px-2.5 py-1.5 rounded-md text-white cursor-pointer text-sm bg-indigo-500"
+                                        value={
+                                            loading
+                                                ? "Uploading.."
+                                                : selectedDelivery === "Other"
+                                                    ? "Ready to ship"
+                                                    : `Ready for ${selectedDelivery}`
+                                        }
+                                    />
                                 </div>
                             </form>
 
