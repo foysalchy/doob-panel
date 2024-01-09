@@ -36,7 +36,7 @@ const SellerAddContactPage = () => {
             }
         }
 
-        fetch(`http://localhost:5000/api/v1/shop/contactInfo`, {
+        fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/contactInfo`, {
             method: "POST",
             headers: {
                 "content-type": "application/json",

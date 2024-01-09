@@ -32,7 +32,7 @@ const AddContact = () => {
             }
         }
 
-        fetch(`http://localhost:5000/api/v1/admin/contact`, {
+        fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/contact`, {
             method: "POST",
             headers: {
                 "content-type": "application/json",

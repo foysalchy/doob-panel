@@ -20,7 +20,7 @@ const WareHouse = ({ adminWare, setAdminWare, shopInfo }) => {
     const { data: warehouses = [], refetch, isRefetching } = useQuery({
         queryKey: ["warehouses"],
         queryFn: async () => {
-            const getWarehouseApiUrl = adminWare ? "http://localhost:5000/api/v1/admin/warehouse" : `http://localhost:5000/api/v1/seller/warehouse/get/${shopInfo._id}`;
+            const getWarehouseApiUrl = adminWare ? "https://salenow-v2-backend.vercel.app/api/v1/admin/warehouse" : `https://salenow-v2-backend.vercel.app/api/v1/seller/warehouse/get/${shopInfo._id}`;
 
             const res = await fetch(getWarehouseApiUrl);
             if (!res.ok) {
@@ -39,7 +39,7 @@ const WareHouse = ({ adminWare, setAdminWare, shopInfo }) => {
         setCells([]);
         console.log(selectedWarehouse, adminWare);
 
-        const getAreaApiUrl = `http://localhost:5000/api/v1/seller/warehouse/area/${selectedWarehouse}/${shopInfo._id}`;
+        const getAreaApiUrl = `https://salenow-v2-backend.vercel.app/api/v1/seller/warehouse/area/${selectedWarehouse}/${shopInfo._id}`;
 
         console.log(getAreaApiUrl);
 
@@ -58,7 +58,7 @@ const WareHouse = ({ adminWare, setAdminWare, shopInfo }) => {
         setSelfs([]);
         setCells([]);
 
-        const getRackApiUrl = `http://localhost:5000/api/v1/seller/warehouse/rack/${selectedWarehouse}/${selectedArea}/${shopInfo._id}`;
+        const getRackApiUrl = `https://salenow-v2-backend.vercel.app/api/v1/seller/warehouse/rack/${selectedWarehouse}/${selectedArea}/${shopInfo._id}`;
 
         const rackRes = await fetch(getRackApiUrl);
         const rackData = await rackRes.json();
@@ -73,7 +73,7 @@ const WareHouse = ({ adminWare, setAdminWare, shopInfo }) => {
         setSelectedRack(selectedRack);
         setCells([]);
 
-        const getSelfApiUrl = `http://localhost:5000/api/v1/seller/warehouse/self/${selectedWarehouse}/${selectedArea}/${selectedRack}/${shopInfo._id}`;
+        const getSelfApiUrl = `https://salenow-v2-backend.vercel.app/api/v1/seller/warehouse/self/${selectedWarehouse}/${selectedArea}/${selectedRack}/${shopInfo._id}`;
 
         const selfRes = await fetch(getSelfApiUrl);
         const selfData = await selfRes.json();
@@ -87,7 +87,7 @@ const WareHouse = ({ adminWare, setAdminWare, shopInfo }) => {
         console.log(selectedSelfs);
         setSelectedSelf(selectedSelfs);
 
-        const getCellApiUrl = `http://localhost:5000/api/v1/seller/warehouse/cell/${selectedWarehouse}/${selectedArea}/${selectedRack}/${selectedSelf}/${shopInfo._id}`;
+        const getCellApiUrl = `https://salenow-v2-backend.vercel.app/api/v1/seller/warehouse/cell/${selectedWarehouse}/${selectedArea}/${selectedRack}/${selectedSelf}/${shopInfo._id}`;
 
         const cellsRes = await fetch(getCellApiUrl);
         const cellData = await cellsRes.json();

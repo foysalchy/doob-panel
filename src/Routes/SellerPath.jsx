@@ -60,7 +60,7 @@ import UserSupportTicketForShop from "../Pages/SellerItems/SupportTicket/UserSup
 import CustomerReturn from "../Pages/SellerItems/OrderManagment/CustomerReturn/CustomerReturn";
 import ScheduleDropOffs from "../Pages/SellerItems/OrderManagment/ScheduleDropOffs/ScheduleDropOffs";
 
-// `http://localhost:5000/api/v1/seller/daraz-product/${shopInfo._id}
+// `https://salenow-v2-backend.vercel.app/api/v1/seller/daraz-product/${shopInfo._id}
 
 
 const SellerPath = [

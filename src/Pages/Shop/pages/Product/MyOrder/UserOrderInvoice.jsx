@@ -63,7 +63,7 @@ const UserOrderInvoice = ({ order, modalOpen, setModalOpen }) => {
                             </div>
                         </div>
                         {/* status steps */}
-                        <p className="text-gray-600 mt-2 pb-2">Express Delivery</p>
+                        <p className="text-gray-600 mt-2 pb-2"> Delivery</p>
                         <ul aria-label="Steps">
                             {
                                 (order.status !== 'Cancel' && order.status !== 'Failed' && order.status !== 'Returned') && <div className="mt-4 px-4 md:px-0 w-full">

@@ -46,4 +46,4 @@ const ModalForCategory = ({ setOpenModal, OpenModal, data, refetch }) => {
     );
 };
 
-export default M
+export default ModalForCategory;
