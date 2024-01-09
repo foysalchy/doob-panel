@@ -9,6 +9,7 @@ const AddToCard = () => {
 
     const productData = useLoaderData()
     const [cartProducts, setCartProducts] = useState(productData.data);
+    const [invoiceData, setInvoiceData] = useState({})
 
 
 
@@ -114,6 +115,17 @@ const AddToCard = () => {
         })
     };
 
+    if (shopUser) {
+        document.cookie = "allProducts=" + JSON.stringify(allProducts) + "; expires=Thu, 01 Jan 2025 00:00:00 UTC; path=/";
+        const cookieValue = document.cookie
+            .split('; ')
+            .find(row => row.startsWith('allProducts='))
+            .split('=')[1];
+
+        const retrievedArray = JSON.parse(cookieValue);
+
+        console.log(retrievedArray, 'cookies>>>>>>>>>>');
+    }
     // const [promoPrice, setPromoPrice] = useState(false)
     // const [promoDiscount, setPromoDiscount] = useState(false)
     // const [process, setProcess] = useState(false)
@@ -143,7 +155,7 @@ const AddToCard = () => {
 
 
 
-    console.log();
+    console.log(allProducts, 'checked......');
     return (
         <div className='px-4 py-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-10'>
             <div className='md:flex gap-4 w-full justify-between'>
