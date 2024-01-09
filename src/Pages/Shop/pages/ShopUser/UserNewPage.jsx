@@ -1,6 +1,6 @@
 import React from 'react';
 
-const NewPage = () => {
+const UserNewPage = () => {
     return (
         <div>
             
@@ -8,4 +8,4 @@ const NewPage = () => {
     );
 };
 
-export default NewPage;
+export default UserNewPage;
