@@ -50,7 +50,7 @@ const Invoice = () => {
     console.log(info, 'info');
     console.log(shopInfo, 'shop info');
     return (
-        <div className="bg-gray-100 p-12">
+        <div className="bg-gray-100 p-12 ">
             <button onClick={handlePrint} className='bg-blue-500 px-6 py-2 rounded-2 text-white rounded-md'>Print</button>
             <div ref={componentRef} className="w-full h-full p-8 m-auto bg-white" style={{ width: '210mm', height: '297mm' }}>
                 <header className="clearfix">
@@ -128,17 +128,17 @@ const Invoice = () => {
                     <div id="thanks">Thank you!</div>
                     <div id="notices">
                         <div>NOTICE:</div>
-                         
+
                     </div>
                     <footer>
                         Invoice was created on a computer and is valid without the signature and
                         seal.
                     </footer>
-                    <div id="thanks">
+                    {/* <div id="thanks">
                         {
-                            (order.status !== 'Cancel' && order.status !== 'Failed' && order.status !== 'Returned') && <div className="mt-4 mx-auto px-4 md:px-0">
+                            (info.status !== 'Cancel' && info.status !== 'Failed' && info.status !== 'Returned') && <div className="mt-4 mx-auto px-4 md:px-0">
                                 <ul aria-label="Steps" className="items-center text-gray-600 font-medium md:flex">
-                                    {steps.stepsItems.map((item, idx) => (
+                                    {info?.stepsItems.map((item, idx) => (
                                         <li aria-current={currentStep == idx + 1 ? "step" : false} className="flex-1 last:flex-none flex gap-x-2 md:items-center">
                                             <div className="flex items-center flex-col gap-x-2">
                                                 <div className={`w-8 h-8 rounded-full border-2 flex-none flex items-center justify-center ${currentStep > idx + 1 ? "bg-indigo-600 border-indigo-600" : "" || currentStep == idx + 1 ? "border-indigo-600" : ""}`}>
@@ -166,7 +166,7 @@ const Invoice = () => {
                                 </ul>
                             </div>
                         }
-                    </div>
+                    </div> */}
                 </main>
             </div>
         </div>

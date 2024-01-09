@@ -141,41 +141,35 @@ const ShopPath = [
     },
     {
         path: ":id/user/cart",
-        element: <IsUserRegistration> <AddToCard /></IsUserRegistration>,
-        loader: async (params) => {
-            const urlObj = new URL(params.request.url)
+        element: <AddToCard />,
+        // loader: async (params) => {
+        //     const urlObj = new URL(params.request.url)
 
-            console.log(urlObj);
-            const url = urlObj.href
-            const shopIdRegex = /shop_id=([^&]+)/;
-            const userIdRegex = /userId=([^&]+)/;
+        //     console.log(urlObj);
+        //     const url = urlObj.href
+        //     const shopIdRegex = /shop_id=([^&]+)/;
+        //     const userIdRegex = /userId=([^&]+)/;
 
-            const shopIdMatch = url.match(shopIdRegex);
-            const userIdMatch = url.match(userIdRegex);
+        //     const shopIdMatch = url.match(shopIdRegex);
+        //     const userIdMatch = url.match(userIdRegex);
 
-            if (shopIdMatch && userIdMatch) {
-                const shopId = shopIdMatch[1];
-                const userId = userIdMatch[1];
-                try {
-                    const response = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/user/add-to-cart?userId=${userId}&shopId=${shopId}&token=${userId}`, {
-                        headers: {
-                            "ngrok-skip-browser-warning": "69420",
-                        }
-                    });
-                    const data = await response.json();
-                    return data;
-                } catch (error) {
-                    console.error("Error fetching data:", error);
+        //     if (shopIdMatch && userIdMatch) {
+        //         const shopId = shopIdMatch[1];
+        //         const userId = userIdMatch[1];
+        //         try {
 
-                    return null;
-                }
+        //         } catch (error) {
+        //             console.error("Error fetching data:", error);
 
-            } else {
-                console.log("shop_id or userId not found in the URL");
-            }
+        //             return null;
+        //         }
+
+        //     } else {
+        //         console.log("shop_id or userId not found in the URL");
+        //     }
 
 
-        }
+        // }
     },
     {
         path: ":id/user/payment",

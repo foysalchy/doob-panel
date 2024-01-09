@@ -33,26 +33,46 @@ const UserOrderInvoice = ({ order, modalOpen, setModalOpen }) => {
         // Default to 1 or any other appropriate value
         currentStep = 1;
     }
-
-
-    function formatTimestamp(timestamp) {
+    function formatDate(timestamp) {
+        // Check if the timestamp is in seconds, and convert it to milliseconds if needed
+        if (timestamp.toString().length === 10) {
+            timestamp *= 1000;
+        }
+        console.log(timestamp);
         const date = new Date(timestamp);
-        const options = { year: 'numeric', month: 'long', day: 'numeric' };
-        const formattedDate = date.toLocaleDateString('en-US', options);
-        return formattedDate;
-    }
 
+        const options = { day: 'numeric', month: 'long', year: 'numeric' };
+        const formattedDate = date.toLocaleDateString('en-US', options);
+
+        const formattedTime = date.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
+
+        return `${formattedDate} `;
+    }
+    
     return (
         <>
             {order &&
                 <div className='bg-[#000000e1] w-[100%] h-[100%] p-2 fixed transparent-scroll overflow-x-hidden overflow-y-auto top-0 left-0 z-[2000]'>
                     <button onClick={() => setModalOpen(!modalOpen)} className='bg-white m-6 text-black px-8 py-2 float-right'>close</button>
-                    <div className="w-full mt-12 h-full p-8 m-auto bg-white" style={{ width: '270mm', height: '297mm' }}>
-                        <main className='main'>
+                    <div className="w-full mt-12 h-full p-8 m-auto bg-white" style={{ width: '210mm', height: '297mm' }}>
+                        <header className="clearfix">
+                            <div id="logo">
+                                <img src={order?.logo} />
+                            </div>
+                            <div id="company">
+                                <h2 className="name">{order?.shopName}</h2>
+                                {/* <div>455 Foggy Heights, AZ 85004, US</div> */}
+                                <div>{order?.shopNumber}</div>
+                                <div>
+                                    <a href="mailto:company@example.com">{order?.shopEmail}</a>
+                                </div>
+                            </div>
+                        </header>
+                        <main className='main mt-4'>
                             <div id="details" className="clearfix">
                                 <div id="client">
-                                    {/* <img src={shopInfo?.logo} alt="" className="" /> */}
-                                    <div className="to">INVOICE TO: {order?._id}</div>
+                                    {/* <img src={shoporder?.logo} alt="" className="" /> */}
+                                    <div className="to">INVOICE TO:</div>
                                     <h2 className="name">{order?.addresses?.fullName}</h2>
                                     <div className="address">{order?.addresses?.address} {order?.addresses?.area} {order?.addresses?.city} {order?.addresses?.province}</div>
                                     <div className="email">
@@ -61,7 +81,7 @@ const UserOrderInvoice = ({ order, modalOpen, setModalOpen }) => {
                                 </div>
                                 <div id="invoice">
                                     <h1>INVOICE</h1>
-                                    <div className="date">Date of Invoice: {formatTimestamp(order?.timestamp)}</div>
+                                    <div className="date">Date of Invoice: {formatDate(order?.timestamp)}</div>
                                 </div>
                             </div>
                             <table className='table' border={0} cellSpacing={0} cellPadding={0}>
@@ -116,41 +136,39 @@ const UserOrderInvoice = ({ order, modalOpen, setModalOpen }) => {
                                 Invoice was created on a computer and is valid without the signature and
                                 seal.
                             </footer>
-
-
                             {/* <div id="thanks">
-                                {
-                                    (order.status !== 'Cancel' && order.status !== 'Failed' && order.status !== 'Returned') && <div className="mt-4 mx-auto px-4 md:px-0">
-                                        <ul aria-label="Steps" className="items-center text-gray-600 font-medium md:flex">
-                                            {steps.stepsItems.map((item, idx) => (
-                                                <li aria-current={currentStep == idx + 1 ? "step" : false} className="flex-1 last:flex-none flex gap-x-2 md:items-center">
-                                                    <div className="flex items-center flex-col gap-x-2">
-                                                        <div className={`w-8 h-8 rounded-full border-2 flex-none flex items-center justify-center ${currentStep > idx + 1 ? "bg-indigo-600 border-indigo-600" : "" || currentStep == idx + 1 ? "border-indigo-600" : ""}`}>
-                                                            <span className={` ${currentStep > idx + 1 ? "hidden" : "" || currentStep == idx + 1 ? "text-indigo-600" : ""}`}>
-                                                                {idx + 1}
-                                                            </span>
-                                                            {
-                                                                currentStep > idx + 1 ? (
-                                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5 text-white">
-                                                                        <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
-                                                                    </svg>
-                                                                ) : ""
-                                                            }
-                                                        </div>
-                                                        <hr className={`h-12 border md:hidden ${idx + 1 == steps.stepsItems.length ? "hidden" : "" || currentStep > idx + 1 ? "border-indigo-600" : ""}`} />
-                                                    </div>
-                                                    <div className="h-8 flex items-center md:h-auto">
-                                                        <h3 className={`text-sm ${currentStep === idx + 1 ? "text-indigo-600" : ""}`}>
-                                                            {item}
-                                                        </h3>
-                                                    </div>
-                                                    <hr className={`hidden mr-2 w-full border md:block ${idx + 1 == steps.stepsItems.length ? "hidden" : "" || currentStep > idx + 1 ? "border-indigo-600" : ""}`} />
-                                                </li>
-                                            ))}
-                                        </ul>
-                                    </div>
-                                }
-                            </div> */}
+                        {
+                            (info.status !== 'Cancel' && info.status !== 'Failed' && info.status !== 'Returned') && <div className="mt-4 mx-auto px-4 md:px-0">
+                                <ul aria-label="Steps" className="items-center text-gray-600 font-medium md:flex">
+                                    {order?.stepsItems.map((item, idx) => (
+                                        <li aria-current={currentStep == idx + 1 ? "step" : false} className="flex-1 last:flex-none flex gap-x-2 md:items-center">
+                                            <div className="flex items-center flex-col gap-x-2">
+                                                <div className={`w-8 h-8 rounded-full border-2 flex-none flex items-center justify-center ${currentStep > idx + 1 ? "bg-indigo-600 border-indigo-600" : "" || currentStep == idx + 1 ? "border-indigo-600" : ""}`}>
+                                                    <span className={` ${currentStep > idx + 1 ? "hidden" : "" || currentStep == idx + 1 ? "text-indigo-600" : ""}`}>
+                                                        {idx + 1}
+                                                    </span>
+                                                    {
+                                                        currentStep > idx + 1 ? (
+                                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5 text-white">
+                                                                <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                                                            </svg>
+                                                        ) : ""
+                                                    }
+                                                </div>
+                                                <hr className={`h-12 border md:hidden ${idx + 1 == steps.stepsItems.length ? "hidden" : "" || currentStep > idx + 1 ? "border-indigo-600" : ""}`} />
+                                            </div>
+                                            <div className="h-8 flex items-center md:h-auto">
+                                                <h3 className={`text-sm ${currentStep === idx + 1 ? "text-indigo-600" : ""}`}>
+                                                    {item}
+                                                </h3>
+                                            </div>
+                                            <hr className={`hidden mr-2 w-full border md:block ${idx + 1 == steps.stepsItems.length ? "hidden" : "" || currentStep > idx + 1 ? "border-indigo-600" : ""}`} />
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+                        }
+                    </div> */}
                         </main>
                     </div>
                 </div>
