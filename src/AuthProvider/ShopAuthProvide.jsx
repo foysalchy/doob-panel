@@ -120,6 +120,7 @@ const ShopAuth = ({ children }) => {
             });
     };
 
+    
     const saveUser = (name, email, provider) => {
         const user = { name, email, provider, shopId };
         console.log(user, 'users');
@@ -141,6 +142,7 @@ const ShopAuth = ({ children }) => {
 
                     setToken(user);
                     setShopUser(user)
+
                 }
 
             });
@@ -152,7 +154,6 @@ const ShopAuth = ({ children }) => {
         signInWithEmailAndPassword(auth, email, password)
             .then(async (userCredential) => {
                 const user = userCredential.user;
-
                 const email = user?.email;
                 const name = user?.displayName;
                 console.log(name, email);

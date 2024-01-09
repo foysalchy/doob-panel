@@ -29,7 +29,6 @@ const Payment = () => {
 
     const orderSubmit = () => {
         const data = orderStage
-
         data.method = payment
         data.timestamp = new Date().getTime()
         data.userId = shopUser._id
@@ -43,6 +42,7 @@ const Payment = () => {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(data)
         }).then((res) => res.json()).then((data) => {
+            console.log("data payment", data);
             BrightAlert({ icon: 'success' })
             navigate(`/shop/${shopId}/user/my-orders`)
         });
@@ -50,29 +50,12 @@ const Payment = () => {
 
     }
 
-
     const paymentHandler = async () => {
-        try {
+        console.log(payment);
+
+    };
 
 
-            // fetch(`${payment?.BaseURL}"api/bkash/create"`,
-            //     {
-            //         method: "POST",
-            //         headers: { "Content-Type": "application/json" },
-            //         // body: JSON.stringify()
-            //     })
-            //     .then((res) => res.json())
-            //     .then((result) => {
-            //         if (result?.data?.status) {
-            //             window.location.href = result?.data?.data?.data?.bkashURL;
-            //         } else {
-            //             toast.error("Something went wrong");
-            //         }
-            //     })
-        } catch (error) {
-            console.log(error);
-        }
-    }
 
 
 
@@ -204,10 +187,20 @@ const Payment = () => {
                     {message.map((mess, i) => <div className='py-2 bg-yellow-200 px-10' key={i}>{mess}</div>)}
                     {
                         payment.Getaway === "Bank" && <div className='flex flex-col gap-2 text-xs'>
-                            <div className='py-2 bg-yellow-200 px-10'>
+                            <div className='py-2 bg-yellow-200 px-10 flex gap-2 item-center'>
+                                <div>
+                                Bank Name: {payment?.bankName}
+                                </div>
+                                <div>
                                 Account Number: {payment.accountNumber}
+                                </div>
+                                <div>
+                                Branch Name: {payment?.branchName}
+                                </div>
+                                <div>
+                                Holder Name: {payment?.holderName}
+                                </div>
                             </div>
-
 
 
                             {<label htmlFor="fileInput" className="relative cursor-pointer  px-10 py-2 rounded-md text-black border">

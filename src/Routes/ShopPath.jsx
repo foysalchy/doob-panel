@@ -17,6 +17,7 @@ import ProductCheckout from "../Pages/Shop/pages/Product/ProductCheckOut/Product
 import UserSupportTicket from "../Pages/Shop/pages/ShopUser/SupportTicket/SupportTicket";
 import TrackOrder from "../Pages/Shop/pages/ShopUser/TrackOrder/TrackOrder";
 import Product from './../Pages/Home/Product/Product';
+import NavigateToLogin from "./NavigateToLogin";
 import IsUserRegistration from "./isUserRegistration";
 
 const ShopPath = [
@@ -46,7 +47,9 @@ const ShopPath = [
     },
     {
         path: ':id/track-order',
-        element: <TrackOrder />,
+        element: <NavigateToLogin>
+            <TrackOrder />
+        </NavigateToLogin>,
 
     },
     {
@@ -206,7 +209,7 @@ const ShopPath = [
     },
     {
         path: ":id/user/order",
-        element: <IsUserRegistration><ProductCheckout /></IsUserRegistration>,
+        element: <NavigateToLogin><ProductCheckout /></NavigateToLogin>,
         loader: async (params) => {
             const urlObj = new URL(params.request.url)
 
