@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import React, { useContext, useEffect } from 'react';
-import { Link, useLoaderData, useNavigate } from 'react-router-dom';
+import { Link, useLoaderData, useLocation, useNavigate } from 'react-router-dom';
 import Facebook from './facebook-round-color-icon.svg';
 import { ShopAuthProvider } from '../../../../../AuthProvider/ShopAuthProvide';
 import { useState } from 'react';
@@ -10,6 +10,7 @@ const ShopSignIn = () => {
 
     const page = useLoaderData()
     const navigate = useNavigate()
+    const location = useLocation()
 
     const pathname = window.location.pathname;
     const idMatch = pathname.match(/\/shop\/([^/]+)/);
@@ -38,9 +39,9 @@ const ShopSignIn = () => {
     useEffect(() => {
         if (shopUser) {
             navigate(`/shop/${shopId}`)
-        }
+         }
     }, [shopUser])
-
+    console.log(location)
     return (
         <div className='bg-gray-100'>
             <div className='py-8 w-full   sm:max-w-xl md:max-w-full lg:max-w-screen-lg md:px-24 lg:px-8 lg:py-10 mx-auto'>

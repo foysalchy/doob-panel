@@ -1,10 +1,10 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { FaBasketShopping, FaCircle, FaFacebook, FaInstagram, FaMessage, FaXTwitter } from 'react-icons/fa6';
 import { MdDone } from 'react-icons/md';
 import ProductDescription from '../../../../Home/Product/ProductDetails/ProductDescription';
 import ProductReviews from '../../../../Home/Product/ProductDetails/ProductReviews';
 import TrendingProducts from '../../../../Home/Product/ProductDetails/TrendingProducts';
-import { Link, useLoaderData, useNavigate } from 'react-router-dom';
+import { Link, useLoaderData, useLocation, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import MetaHelmet from '../../../../../Helmate/Helmate';
 import { ShopAuthProvider } from '../../../../../AuthProvider/ShopAuthProvide';
@@ -16,7 +16,7 @@ const ProductInformation = () => {
     console.log(product.data, 'productInfo');
     const [selectedImage, setSelectedImage] = useState(product.data.featuredImage.src);
     const [quantity, setQuantity] = useState(1);
-
+    const location = useLocation();
     const { shop_id, shopUser, setSelectProductData } = useContext(ShopAuthProvider)
 
     const handleImageClick = (imageUrl) => {
@@ -44,6 +44,7 @@ const ProductInformation = () => {
     const convertedRating = (10 / 10) * 5;
 
     const pathname = window.location.pathname;
+
     const idMatch = pathname.match(/\/shop\/([^/]+)/);
 
     const shopId = idMatch ? idMatch[1] : null;
@@ -90,21 +91,24 @@ const ProductInformation = () => {
     const navigate = useNavigate()
     const buyNowHandler = (data) => {
         const product = data.data;
-
-        const buyNowInfo = [{
-            userId: shopUser._id,
-            quantity: quantity,
-            img: product.featuredImage.src,
-            productName: product.name,
-            price: product.price,
-            regular_price: product.regular_price,
-            productId: product._id,
-            shopId: shop_id.shop_id
-        }];
-        setSelectProductData(buyNowInfo);
-        navigate(`/shop/${shopId}/user/order?shop_id=${shop_id.shop_id}&userId=${shopUser._id}`)
+        if (!shopUser) {
+            console.log(location, "shop");
+            navigate('/shop/${shopId}/sign-in', { replace: true, state: { from: location?.pathname } });
+        } else {
+            const buyNowInfo = [{
+                userId: shopUser?._id,
+                quantity: quantity,
+                img: product.featuredImage.src,
+                productName: product.name,
+                price: product.price,
+                regular_price: product.regular_price,
+                productId: product._id,
+                shopId: shop_id.shop_id
+            }];
+            setSelectProductData(buyNowInfo);
+            navigate(`/shop/${shopId}/user/order?shop_id=${shop_id.shop_id}&userId=${shopUser._id}`)
+        }
     }
-
 
     return (
         <section>
