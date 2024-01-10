@@ -187,18 +187,21 @@ const Payment = () => {
                     {message.map((mess, i) => <div className='py-2 bg-yellow-200 px-10' key={i}>{mess}</div>)}
                     {
                         payment.Getaway === "Bank" && <div className='flex flex-col gap-2 text-xs'>
-                            <div className='py-2 bg-yellow-200 px-10 flex gap-2 item-center'>
+                            <div className='py-2 bg-red-200 px-10 text-xl flex gap-4 item-center'>
                                 <div>
-                                Bank Name: {payment?.bankName}
+                                    Bank Name: {payment?.bankName}
                                 </div>
+                                <span>||</span>
                                 <div>
-                                Account Number: {payment.accountNumber}
+                                    Account Number: {payment.accountNumber}
                                 </div>
+                                <span>||</span>
                                 <div>
-                                Branch Name: {payment?.branchName}
+                                    Branch Name: {payment?.branchName}
                                 </div>
+                                <span>||</span>
                                 <div>
-                                Holder Name: {payment?.holderName}
+                                    Holder Name: {payment?.holderName}
                                 </div>
                             </div>
 

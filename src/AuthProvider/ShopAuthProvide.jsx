@@ -11,6 +11,7 @@ const ShopAuth = ({ children }) => {
     const pathname = window.location.pathname;
     const idMatch = pathname.match(/\/shop\/([^/]+)/);
     const [defaultAddress, setDefaultAddress] = useState()
+    console.log(defaultAddress), 'default Address';
     const shopId = idMatch ? idMatch[1] : null;
     const [selectProductData, setSelectProductData] = useState([])
     const { data: shopCredential = {}, isLoading, isError, refetch } = useQuery({
@@ -120,7 +121,7 @@ const ShopAuth = ({ children }) => {
             });
     };
 
-    
+
     const saveUser = (name, email, provider) => {
         const user = { name, email, provider, shopId };
         console.log(user, 'users');

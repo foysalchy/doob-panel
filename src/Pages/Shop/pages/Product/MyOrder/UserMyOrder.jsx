@@ -10,7 +10,7 @@ import Swal from 'sweetalert2';
 
 const UserMyOrder = () => {
     const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('mobile-bank');
-    const [getway, setGetway] = useState('Bekash');
+    const [getway, setGetway] = useState('Bkash');
     const [orderId, setOrderId] = useState('');
     const [showPaymentGetwaySelect, setShowPaymentGetwaySelect] = useState(true);
 
@@ -132,7 +132,7 @@ const UserMyOrder = () => {
             .then((data) => {
                 console.log(data);
                 if (data.success) {
-                    updateStatus('Refund', orderId)
+                    updateStatus('Return', orderId)
 
 
                     Swal.fire({
@@ -145,6 +145,7 @@ const UserMyOrder = () => {
                     setFile()
                     setFileName('Provide a Image or PDF')
                     setDescription('')
+                    setOpen(!open)
                     refetch()
                 }
             })
@@ -159,7 +160,7 @@ const UserMyOrder = () => {
         setShowPaymentGetwaySelect(selectedMethod === 'mobile-bank');
     };
 
-    const PaymentGetWay = ["Bekash", "Nogod", "AmarPay"]
+    const PaymentGetWay = ["Bkash", "Nogod", "AmarPay"]
 
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 5;
@@ -211,6 +212,29 @@ const UserMyOrder = () => {
 
         );
     };
+
+    const [showAlert, setShowAlert] = useState(false);
+    const [note, setNote] = useState('')
+
+
+    const cancelNoteSubmit = () => {
+        fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/user/order-cancel-reason?token=${shopUser._id}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ note, orderId: showAlert })
+        }).then((res) => res.json()).then((data) => {
+            console.log(data);
+            if (!data.error) {
+                alert("Successfully Updated");
+                refetch()
+            } else {
+                alert("Failed to Update")
+            }
+
+        });
+    }
+
+
     return (
         <div className=''>
             <div className=' font-google'>
@@ -256,31 +280,72 @@ const UserMyOrder = () => {
                                         </div>
                                         <div className='flex items-center'>
                                             {!order.status && <div >
-                                                {!order.status ? <button onClick={() => userProductCancel(order._id, order._id, "Cancel")} className='text-red-500'>  Cancel</button> : <button className=''>{order.status}ed</button>}
+                                                {!order.status ? <button onClick={() => setShowAlert(order._id)} className='text-red-500'>  Cancel</button> : <button className=''>{order.status}ed</button>}
+
+                                                {showAlert && (
+                                                    <div className="fixed inset-0 z-10 bg-opacity-50 overflow-y-auto">
+                                                        <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+                                                            <div className="fixed inset-0 transition-opacity" aria-hidden="true">
+                                                                <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
+                                                            </div>
+
+                                                            {/* This is the alert with text area for note */}
+                                                            <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                                                                <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                                                                    <div className="sm:flex sm:items-start w-full">
+                                                                        <div className="mt-3 text-center sm:mt-0 w-full sm:text-left">
+                                                                            <h3 className="text-lg leading-6 font-medium text-gray-900">Why you cancel this order</h3>
+                                                                            <div className="mt-2 w-full">
+                                                                                <textarea
+                                                                                    value={note}
+                                                                                    onChange={(e) => setNote(e.target.value)}
+                                                                                    rows="4"
+                                                                                    cols="10"
+                                                                                    className="shadow-sm w-full p-2 focus:ring-blue-500 focus:border-blue-500 mt-1 block  sm:text-sm border-gray-300 rounded-md"
+                                                                                    placeholder="Enter your note here..."
+                                                                                ></textarea>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row justify-end">
+                                                                    <button
+                                                                        onClick={() => setShowAlert(false)}
+                                                                        type="button"
+                                                                        className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-500 text-base font-medium text-white hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm"
+                                                                    >
+                                                                        Close
+                                                                    </button>
+                                                                    <button
+                                                                        onClick={() => cancelNoteSubmit()}
+                                                                        type="button"
+                                                                        className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-500 text-base font-medium text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm"
+                                                                    >
+                                                                        Submit
+                                                                    </button>
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                )}
                                             </div>}
                                             {
                                                 (order?.status === 'Delivered' || order?.status === 'Returned') && (
                                                     <>
-                                                        {order?.status === 'Returned' && <button
-                                                            onClick={() => {
-                                                                setOpen(!open);
-                                                                setOrderId(order?._id);
-                                                            }}
-                                                            className="text-blue-500 px-4 py-1 bg-red-100 rounded"
-                                                        >
-                                                            Refund
-                                                        </button>
-                                                        }
                                                         <div className='flex items-center gap-2'>
                                                             {order?.status !== 'Returned' && <button
-                                                                onClick={() => updateStatus('Return', order?._id)}
+                                                                onClick={() => {
+                                                                    setOpen(!open);
+                                                                    setOrderId(order?._id);
+                                                                }}
                                                                 className="text-red-500 px-4 py-1 bg-red-100 rounded"
                                                             >
                                                                 Return
                                                             </button>}
                                                             {open && <div className="modal h-screen w-screen fixed bg-[#0000008e] flex items-center justify-center top-0 left-0 z-[1000]">
                                                                 <div className="bg-white  md:w-[500px] text-black p-6 rounded-lg">
-                                                                    <button onClick={() => setOpen(!open)} className='p-2 float-right text-xl'>
+                                                                    <h1 className='font-bold'>If you want refund amount please complete this form</h1> <button onClick={() => setOpen(!open)} className='p-2 float-right text-xl'>
                                                                         x
                                                                     </button> <br />
                                                                     <form onSubmit={handleSubmit} className="">
@@ -372,7 +437,7 @@ const UserMyOrder = () => {
                                                                                 </div>
                                                                             )}
 
-                                                                            <button className='bg-blue-500 text-white px-8 py-2 mt-3 ml-auto rounded' type='submit'>Pay</button>
+                                                                            <button className='bg-blue-500 text-white px-8 py-2 mt-3 ml-auto rounded' type='submit'>Return</button>
                                                                         </div>
                                                                     </form>
 

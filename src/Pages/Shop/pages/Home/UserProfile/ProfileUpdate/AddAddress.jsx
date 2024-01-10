@@ -15,6 +15,11 @@ const AddAddress = ({ open, setOpen, address, refetch }) => {
     const userAddress = address[0] ? address[0] : []
     const [selectedAddress, setSelectedAddress] = useState(userAddress)
     const { setDefaultAddress } = useContext(ShopAuthProvider)
+
+    useEffect(() => {
+        setDefaultAddress(selectedAddress)
+    }, [selectedAddress])
+    
     return (
         <div>
             <div className={`fixed z-50 top-0 left-0 flex h-full min-h-screen w-full items-center justify-center bg-black bg-opacity-90 px-4 py-5 ${setOpen ? "block" : "hidden"}`}>

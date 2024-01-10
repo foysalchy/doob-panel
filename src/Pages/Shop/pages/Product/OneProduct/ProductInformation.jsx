@@ -84,8 +84,8 @@ const ProductInformation = () => {
     const buyNowHandler = (data) => {
         const product = data.data;
         if (!shopUser) {
-            console.log(location, "shop");
-            navigate('/shop/${shopId}/sign-in', { replace: true, state: { from: location?.pathname } });
+            console.log(location?.pathname, "shop");
+            navigate(`/shop/${shopId}/sign-in`, { replace: true, state: { from: location?.pathname } });
         } else {
             const buyNowInfo = [{
                 userId: shopUser?._id,

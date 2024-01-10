@@ -2,12 +2,15 @@ import React, { useContext, useState } from 'react';
 import { ShopAuthProvider } from '../../../../../../AuthProvider/ShopAuthProvide';
 import { useQuery } from '@tanstack/react-query';
 import BrightAlert from 'bright-alert';
+import Swal from 'sweetalert2';
+import { useEffect } from 'react';
 
 const EditAddress = ({ data, refetch, setEditAddress, setNewAddress }) => {
-    console.log(data, "data");
+
     const { shopUser, shopId, shop_id } = useContext(ShopAuthProvider);
 
-    const [division, setDivision] = useState(data === true ? '' : data.province);
+
+
     const [district, setDistrict] = useState('');
 
     const { data: divisions = [], } = useQuery({
@@ -25,23 +28,19 @@ const EditAddress = ({ data, refetch, setEditAddress, setNewAddress }) => {
         },
     });
 
-    const { data: districts = [], refetch: refetchDistricts } = useQuery({
-        queryKey: ["districts"],
-        queryFn: async () => {
-            try {
-                if (division) {
-                    const res = await fetch(`https://bdapis.com/api/v1.1/division/${division}`);
-                    const data = await res.json();
-                    const districts = data.data;
-                    return districts;
-                }
-                return [];
-            } catch (error) {
-                console.error("Error fetching shop data:", error);
-                throw error; // Rethrow the error to mark the query as failed
-            }
-        },
-    });
+
+    const [division, setDivision] = useState(data === true ? '' : data.province);
+
+    const [districts, setDistricts] = useState([])
+
+    const handleProvinceChange = async (event) => {
+        const division = event.target.value
+        const res = await fetch(`https://bdapis.com/api/v1.1/division/${division}`);
+        const data = await res.json();
+        const districts = data.data;
+        setDistricts(districts);
+        console.log(districts, division);
+    };
 
 
     const submitData = (e) => {
@@ -85,6 +84,7 @@ const EditAddress = ({ data, refetch, setEditAddress, setNewAddress }) => {
         })
             .then(response => response.json())
             .then(result => {
+                Swal.fire("success", "", "success")
                 refetch()
                 setEditAddress(false)
                 setNewAddress(false)
@@ -97,7 +97,8 @@ const EditAddress = ({ data, refetch, setEditAddress, setNewAddress }) => {
     }
 
 
-    const upazilla = district && JSON?.parse(district)?.upazilla
+
+    const upazilla = district ? JSON?.parse(district)?.upazilla : []
 
     return (
         <div>
@@ -111,20 +112,22 @@ const EditAddress = ({ data, refetch, setEditAddress, setNewAddress }) => {
                         placeholder="provide your phone Number" id="mobileNumber" name="mobileNumber" className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block py-2 px-3 w-full shadow-sm sm:text-sm border-gray-300 rounded-md border" />
 
                     <label htmlFor="province" className="mt-4 text-sm font-medium text-gray-700">Province</label>
-                    <select defaultValue={data === true ? "" : data.province} onClick={(e) => { setDivision(e.target.value); refetchDistricts(); setDistrict('') }} id="province" name="province" className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                        <option value="">Please choose your province</option>
+                    <select defaultValue={data === true ? "" : data.province} onChange={handleProvinceChange} id="province" name="province" className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                        {/* {!data ? <option value="">Please choose your province</option> : <option value={data?.province}>{data.province}</option>} */}
                         {divisions?.map((division) => <option key={division.division} value={division.division}>{division.division}</option>)}
                     </select>
 
                     <label htmlFor="city" className="mt-4 text-sm font-medium text-gray-700">City</label>
                     <select id="city" defaultValue={data === true ? "" : data.city} onClick={(e) => setDistrict(e.target.value)} name="city" className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                        <option value="">Please choose your city/municipality</option>
-                        {districts && districts?.map((district) => <option label={district.district} key={district.district} value={JSON.stringify(district)}>{district.district}</option>)}
+                        {/* {!data ? <option value="">Please choose your city</option> : <option value={data.city}>{data.province}</option>} */}
+
+                        {districts && districts?.map((district) => <option label={district.district} key={district.district} value={JSON?.stringify(district)}>{district.district}</option>)}
                     </select>
 
                     <label htmlFor="area" className="mt-4 text-sm font-medium text-gray-700">Area</label>
                     <select defaultValue={data === true ? "" : data.area} id="area" name="area" className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                        <option value="">Please choose your area</option>
+
+                        {/* {!data ? <option value="">Please choose your area</option> : <option value={data?.area}>{data.province}</option>} */}
                         {
                             upazilla && upazilla.map((up) => <option value={up}>{up}</option>)
                         }
@@ -161,7 +164,7 @@ const EditAddress = ({ data, refetch, setEditAddress, setNewAddress }) => {
                         <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-20 mt-8 rounded">Update</button>}
                 </div>
             </form>
-        </div>
+        </div >
     );
 };
 
