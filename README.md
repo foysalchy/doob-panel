@@ -53,7 +53,7 @@ Explain how to use your application. Include examples if possible.
 A big thank you to the following individuals who have contributed to this project:
 
 - [Md. Mahadi Hasan](https://github.com/codewithmahadihasan)
-- [Md Nahid](https://github.com/MdNahid360https://github.com/contributor2)
+- [Md Nahid](https://github.com/MdNahid360)
 - [Nazmul Hoque](https://github.com/nazmulsujon)
 
 If you've contributed to this project and your name is missing, please let us know, and we'll add you to the list!
