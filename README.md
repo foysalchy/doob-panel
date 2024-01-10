@@ -10,29 +10,8 @@
 Briefly describe your project. What does it do? What problem does it solve?
 
 ## Folder Stracture
+![image](https://github.com/brightfuturesoft/SaleNow-Frontend/assets/73072248/00844195-96f8-449f-a519-ad8fafa17aa3)
 
-src/
-|-- assets/
-|-- pages/
-|   |-- AdminItem/
-|   |   |-- SupportTicket/
-|   |   |   `-- ... (files related to SupportTicket)
-|   |-- SellerItem/
-|   |   |-- AddProduct/
-|   |   |   `-- ... (files related to AddProduct)
-|   |-- Shop/
-|   |   |-- ProductList/
-|   |   |   `-- ... (files related to ProductList)
-|-- Router/
-|   |-- Router.js
-|   |-- AdminRoute.js
-|   |-- SellerRoute.js
-|   |-- ShopRoute.js
-|   |-- PrivateRoute.js
-|-- components/
-|   |-- ProductList.js
-|-- App.js
-|-- index.js
 
 
 
