@@ -9,8 +9,9 @@ import ForgetPass from './ForgetPass';
 const ShopSignIn = () => {
 
     const page = useLoaderData()
-    const navigate = useNavigate()
+
     const location = useLocation()
+    const navigate = useNavigate()
 
     const pathname = window.location.pathname;
     const idMatch = pathname.match(/\/shop\/([^/]+)/);
@@ -38,10 +39,15 @@ const ShopSignIn = () => {
 
     useEffect(() => {
         if (shopUser) {
-            navigate(`/shop/${shopId}`)
-         }
+            console.log('My Name is Murshed', location);
+            const { from } = location?.state || {
+                from: `/shop/${shopId}`
+            }
+            console.log(from);
+            navigate(from)
+        }
     }, [shopUser])
-    console.log(location)
+
     return (
         <div className='bg-gray-100'>
             <div className='py-8 w-full   sm:max-w-xl md:max-w-full lg:max-w-screen-lg md:px-24 lg:px-8 lg:py-10 mx-auto'>

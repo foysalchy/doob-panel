@@ -4,11 +4,34 @@ import { Link, useLoaderData, useLocation } from 'react-router-dom';
 import AddAddress from '../../Home/UserProfile/ProfileUpdate/AddAddress';
 import { PiPlus } from 'react-icons/pi';
 import CheckoutModal from './CheckoutModal';
+import { useQuery } from '@tanstack/react-query';
 
 const ProductCheckout = () => {
     const { selectProductData, shopUser, shop_id, shopId, orderStage, setOrderStage, defaultAddress } = useContext(ShopAuthProvider)
 
-    const addresses = useLoaderData();
+
+
+    const { data: addresses = [], refetch } = useQuery({
+        queryKey: ["userAddress"],
+        queryFn: async () => {
+            try {
+                const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/user-address?userId=${shopUser?._id}&shopId=${shop_id?.shop_id}`, {
+                    headers: {
+                        "ngrok-skip-browser-warning": "69420",
+                    }
+                });
+
+                const data = await res.json();
+
+                return data;
+            } catch (error) {
+                console.error("Error fetching shop data:", error);
+                throw error; // Rethrow the error to mark the query as failed
+            }
+        },
+    });
+
+
     const [open, setOpen] = useState(false)
     const [handleReload, setHandleReload] = useState(false)
     const [edit, setEdit] = useState(false)
@@ -22,7 +45,7 @@ const ProductCheckout = () => {
         const shippingFeeDiscount = 0;
         return subtotal + shippingFee - shippingFeeDiscount;
     };
-    //? promo code
+
     const [promoPrice, setPromoPrice] = useState(false)
     const [promoDiscount, setPromoDiscount] = useState(false)
     const [process, setProcess] = useState(false)
@@ -51,17 +74,19 @@ const ProductCheckout = () => {
 
     }
 
-    // ? go to back if product is empty
+
 
     useEffect(() => {
         if (selectProductData.length < 1) { window.history.back(); }
     }, [selectProductData]);
 
-    // ? send data in contest
 
 
 
-    let userAddress = addresses?.data?.filter(itm => itm?.defaultAddress)[0];
+
+
+    let userAddress = addresses?.data && addresses?.data?.filter(itm => itm?.defaultAddress)[0] || defaultAddress
+
 
     const sendPlaceOrderData = (data) => {
         let promoHistory;
@@ -84,90 +109,93 @@ const ProductCheckout = () => {
 
 
 
+
     console.log(defaultAddress, "this is default address!! :::");
     return (
         <div>
             <div className='px-4 py-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-10'>
                 <div className='md:flex gap-4 w-full justify-between'>
                     <div className="w-full">
-                        {
-                            addresses?.data?.length < 1 ? <div>
-                                <div className='mt-10' style={{ marginBottom: '10px' }}>
-                                    <button
-                                        onClick={() => setOpen(true)}
-                                        className="flex gap-4 items-center justify-center"
-                                        style={{
-                                            padding: '10px',
-                                            backgroundColor: '#f0f0f0',
-                                            border: 'none',
-                                            borderRadius: '5px',
-                                            cursor: 'pointer',
-                                        }}
-                                    >
-                                        <PiPlus />  Add New Delivery Address
-                                    </button>
-                                </div>
-                                <div className='h-0 w-0' >{open && <AddAddress refetch={setHandleReload} address={addresses?.data} setOpen={setOpen} open={open} />}</div>
-                            </div> : <div className="rounded max-w-4xl p-6 bg-gray-200 text-gray-900 w-full">
-                                <div className='' >
-                                    <div className=" ">
-                                        {
-                                            defaultAddress ?
-                                                <div>
-                                                    <div className='bg-gray-100 capitalize p-4 rounded hover:shadow-xl border'>
-                                                        <h1 >{defaultAddress?.fullName}</h1>
-                                                        <h1>{defaultAddress?.mobileNumber}</h1>
-                                                        <small><span>{defaultAddress?.address},</span> <span>{defaultAddress?.province} - </span> <span>{defaultAddress?.city}</span> <span>{defaultAddress?.area}</span></small>
-                                                        <br />
-                                                        <small className='flex gap-4 items-center mt-2'>
-                                                            <span className='bg-green-200 p-0.5 px-1 rounded text-xs text-black '> {defaultAddress.deliveryLabel}</span>
-                                                            <span className='bg-gray-200 rounded text-xs px-1'>{defaultAddress?.defaultAddress && "DEFAULT DELIVERY ADDRESS"}</span>
-                                                            <span className='bg-gray-200 rounded text-xs px-1'>{defaultAddress?.defaultBillingAddress && "DEFAULT BILLING ADDRESS"}</span>
-                                                            <button onClick={() => setEdit(!edit)} className='bg-gray-200 px-2'>Edit</button>
-                                                            <div className='h-0 w-0' >{edit && <AddAddress refetch={setHandleReload} address={addresses?.data} setOpen={setEdit} open={edit} />}</div>
-                                                        </small>
-                                                    </div>
 
+
+                        <div className="rounded max-w-4xl p-6 bg-gray-200 text-gray-900 w-full">
+                            <div className='' >
+                                <div className=" ">
+                                    {
+                                        defaultAddress ?
+                                            <div>
+                                                <div className='bg-gray-100 capitalize p-4 rounded hover:shadow-xl border'>
+                                                    <h1 >{defaultAddress?.fullName}</h1>
+                                                    <h1>{defaultAddress?.mobileNumber}</h1>
+                                                    <small><span>{defaultAddress?.address},</span> <span>{defaultAddress?.province} - </span> <span>{defaultAddress?.city}</span> <span>{defaultAddress?.area}</span></small>
+                                                    <br />
+                                                    <small className='flex gap-4 items-center mt-2'>
+                                                        <span className='bg-green-200 p-0.5 px-1 rounded text-xs text-black '> {defaultAddress.deliveryLabel}</span>
+                                                        <span className='bg-gray-200 rounded text-xs px-1'>{defaultAddress?.defaultAddress && "DEFAULT DELIVERY ADDRESS"}</span>
+                                                        <span className='bg-gray-200 rounded text-xs px-1'>{defaultAddress?.defaultBillingAddress && "DEFAULT BILLING ADDRESS"}</span>
+                                                        <button onClick={() => setEdit(!edit)} className='bg-gray-200 px-2'>Edit</button>
+                                                        <div className='h-0 w-0' >{edit && <AddAddress refetch={refetch} address={addresses?.data} setOpen={setEdit} open={edit} />}</div>
+                                                    </small>
                                                 </div>
 
-                                                :
+                                            </div>
 
-                                                <div>
-                                                    <div className='bg-gray-100 capitalize p-4 rounded hover:shadow-xl border'>
-                                                        <h1 >{userAddress?.fullName}</h1>
-                                                        <h1>{userAddress?.mobileNumber}</h1>
-                                                        <small><span>{userAddress?.address},</span> <span>{userAddress?.province} - </span> <span>{userAddress?.city}</span> <span>{userAddress?.area}</span></small>
-                                                        <br />
-                                                        <small className='flex gap-4 items-center mt-2'>
-                                                            <span className='bg-green-200 p-0.5 px-1 rounded text-xs text-black '> {userAddress.deliveryLabel}</span>
-                                                            <span className='bg-gray-200 rounded text-xs px-1'>{userAddress?.defaultAddress && "DEFAULT DELIVERY ADDRESS"}</span>
-                                                            <span className='bg-gray-200 rounded text-xs px-1'>{userAddress?.defaultBillingAddress && "DEFAULT BILLING ADDRESS"}</span>
-                                                            <button onClick={() => setEdit(!edit)} className='bg-gray-200 px-2'>Edit</button>
-                                                            <div className='h-0 w-0' >{edit && <AddAddress refetch={setHandleReload} address={addresses?.data} setOpen={setEdit} open={edit} />}</div>
-                                                        </small>
-                                                    </div>
+                                            :
+
+                                            <div>
+                                                <div className='bg-gray-100 capitalize p-4 rounded hover:shadow-xl border'>
+                                                    <h1 >{userAddress?.fullName}</h1>
+                                                    <h1>{userAddress?.mobileNumber}</h1>
+                                                    <small><span>{userAddress?.address},</span> <span>{userAddress?.province} - </span> <span>{userAddress?.city}</span> <span>{userAddress?.area}</span></small>
+                                                    <br />
+                                                    <small className='flex gap-4 items-center mt-2'>
+                                                        <span className='bg-green-200 p-0.5 px-1 rounded text-xs text-black '> {userAddress?.deliveryLabel}</span>
+                                                        <span className='bg-gray-200 rounded text-xs px-1'>{userAddress?.defaultAddress && "DEFAULT DELIVERY ADDRESS"}</span>
+                                                        <span className='bg-gray-200 rounded text-xs px-1'>{userAddress?.defaultBillingAddress && "DEFAULT BILLING ADDRESS"}</span>
+                                                        <button onClick={() => setEdit(!edit)} className='bg-gray-200 px-2'>Edit</button>
+                                                        <div className='h-0 w-0' >{edit && <AddAddress refetch={refetch} address={addresses?.data} setOpen={setEdit} open={edit} />}</div>
+                                                    </small>
                                                 </div>
+                                            </div>
 
-                                        }
-                                    </div>
-                                    {!defaultAddress && <button
-                                        onClick={() => setOpen(true)}
-                                        className="flex gap-4 items-center justify-center mt-4"
-                                        style={{
-                                            padding: '10px',
-                                            backgroundColor: '#f0f0f0',
-                                            border: 'none',
-                                            borderRadius: '5px',
-                                            cursor: 'pointer',
-                                        }}
-                                    >
-                                        <PiPlus />  Add New Delivery Address
-                                    </button>
                                     }
                                 </div>
-                                <div >{open && <AddAddress address={addresses?.data} refetch={setHandleReload} setOpen={setOpen} open={open} />}</div>
+                                {!defaultAddress && <button
+                                    onClick={() => setOpen(true)}
+                                    className="flex gap-4 items-center justify-center mt-4"
+                                    style={{
+                                        padding: '10px',
+                                        backgroundColor: '#f0f0f0',
+                                        border: 'none',
+                                        borderRadius: '5px',
+                                        cursor: 'pointer',
+                                    }}
+                                >
+                                    <PiPlus />  Add New Delivery Address
+                                </button>
+                                }
                             </div>
-                        }
+                            <div >{open && <AddAddress address={addresses?.data} refetch={refetch} setOpen={setOpen} open={open} />}</div>
+                        </div>
+                        <div>
+                            <div className='mt-10' style={{ marginBottom: '10px' }}>
+                                <button
+                                    onClick={() => setOpen(true)}
+                                    className="flex gap-4 items-center justify-center"
+                                    style={{
+                                        padding: '10px',
+                                        backgroundColor: '#f0f0f0',
+                                        border: 'none',
+                                        borderRadius: '5px',
+                                        cursor: 'pointer',
+                                    }}
+                                >
+                                    <PiPlus />  Add New Delivery Address
+                                </button>
+                            </div>
+                            <div className='h-0 w-0' >{open && <AddAddress refetch={refetch} address={addresses?.data} setOpen={setOpen} open={open} />}</div>
+                        </div>
+
                         <div className=" mt-4 rounded max-w-4xl p-6  sm:p-10 bg-gray-200 text-gray-900 w-full">
                             <div className='flex flex-col space-y-4'>
                                 <h2 className="text-xl font-semibold">Your cart</h2>

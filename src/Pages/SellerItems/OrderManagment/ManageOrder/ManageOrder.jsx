@@ -15,9 +15,14 @@ const ManageOrder = () => {
         setSelectedValue(event.target.value);
     };
 
+
+    const [details, setDetails] = useState()
+
+
+
     return (
         <div>
-            <ExportModal openModal={openModal} setOpenModal={setOpenModal} />
+            <ExportModal openModal={openModal} details={details} setOpenModal={setOpenModal} />
             <h3 className="font-bold text-xl">Orders Overview</h3>
             <nav className='flex gap-4 flex-wrap mt-6'>
                 {ordersNav?.map((itm) =>
@@ -71,14 +76,15 @@ const ManageOrder = () => {
                     </div>
                 </div>
             </div>
-            {/* table area */}
+
+
             <div className='mt-12'>
                 {/* table */}
                 {
                     !daraz ?
-                        <OrderTable selectedValue={selectedValue} searchValue={searchValue} />
+                        <OrderTable setDetails={setDetails} setOpenModal={setOpenModal} selectedValue={selectedValue} searchValue={searchValue} />
                         :
-                        <DarazOrderTable searchValue={searchValue} />
+                        <DarazOrderTable selectedValue={selectedValue} searchValue={searchValue} />
 
                 }
             </div>

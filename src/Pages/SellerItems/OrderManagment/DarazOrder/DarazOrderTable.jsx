@@ -6,24 +6,26 @@ import { AuthContext } from '../../../../AuthProvider/UserProvider';
 import { useQuery } from '@tanstack/react-query';
 import AddAddress from '../../../Shop/pages/Home/UserProfile/ProfileUpdate/AddAddress';
 import DarazTableRow from './DarazTableRow';
+import { useEffect } from 'react';
 
 
-const DarazOrderTable = ({ searchValue }) => {
+const DarazOrderTable = ({ selectedValue, searchValue }) => {
 
     const { shopInfo } = useContext(AuthContext);
 
-    let status = "pending"
 
     console.log(`https://salenow-v2-backend.vercel.app/api/v1/seller/daraz-order?id=${shopInfo._id}`);
-    const { data: tData = [], refetch } = useQuery({
+    const { data: tData = [], refetch, isLoading } = useQuery({
         queryKey: ["sellerDarazOrder"],
         queryFn: async () => {
-            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/daraz-order?id=${shopInfo._id}&status=${status}`);
+            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/daraz-order?id=${shopInfo._id}&status=${"Pending"}`);
 
             const data = await res.json();
             return data.data;
         },
     });
+
+    useEffect(() => { refetch }, [selectedValue])
 
     const itemsPerPage = 4; // Number of items to display per page
     const [currentPage, setCurrentPage] = useState(1);
@@ -51,7 +53,7 @@ const DarazOrderTable = ({ searchValue }) => {
 
     return (
         <div className="flex flex-col overflow-hidden mt-4">
-            <div className="overflow-x-auto transparent-scroll sm:-mx-6 lg:-mx-8">
+            {!isLoading ? <div className="overflow-x-auto transparent-scroll sm:-mx-6 lg:-mx-8">
                 <div className="inline-block  min-w-full py-2 sm:px-6 lg:px-8">
                     <div className="overflow-hidden">
                         <table className="min-w-full  bg-white border text-center text-sm font-light">
@@ -97,7 +99,7 @@ const DarazOrderTable = ({ searchValue }) => {
                         </table>
                     </div>
                 </div>
-            </div>
+            </div> : <h1>Loading......</h1>}
             <div className="max-w-2xl mx-auto mt-8 pb-8">
                 <nav aria-label="Page navigation example">
                     <ul className="inline-flex -space-x-px">

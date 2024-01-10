@@ -6,9 +6,10 @@ import AddAddress from './../../../Shop/pages/Home/UserProfile/ProfileUpdate/Add
 import { useReactToPrint } from 'react-to-print';
 import OrderAllinfoModal from './OrderAllinfoModal';
 import ShippingModal from './ShipingModal';
+import { useEffect } from 'react';
 
 
-const OrderTable = ({ searchValue, selectedValue }) => {
+const OrderTable = ({ searchValue, selectedValue, setDetails, setOpenModal }) => {
     const [modalOn, setModalOn] = useState(false)
     const { shopInfo, setCheckUpData } = useContext(AuthContext);
 
@@ -71,13 +72,7 @@ const OrderTable = ({ searchValue, selectedValue }) => {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ status, orderId })
         }).then((res) => res.json()).then((data) => {
-            console.log(data);
-            if (!data.error) {
-                alert("Successfully Updated");
-                refetch()
-            } else {
-                alert("Failed to Update")
-            }
+
 
         });
     }
@@ -135,27 +130,143 @@ const OrderTable = ({ searchValue, selectedValue }) => {
     };
 
 
-    const handleProductStatusUpdate = (status, order, isAccepted) => {
-        const confirmation = window.confirm(`Do you want to quantity update ?`);
+    const handleProductStatusUpdate = (order, note) => {
+        fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/order-quantity-update`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(order)
+        }).then((res) => res.json()).then((data) => {
+            console.log(data);
+            if (data.success) {
+                productStatusUpdate('Refund', order._id)
+            } else {
+                alert("Failed to Update")
+            }
 
-        if (confirmation) {
-            fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/order-quantity-update`, {
-                method: "PUT",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(order)
-            }).then((res) => res.json()).then((data) => {
-                console.log(data);
-                if (data.success) {
-                    productStatusUpdate('Returned', order._id)
-                } else {
-                    alert("Failed to Update")
-                }
+        });
 
-            });
-        } else {
-            productStatusUpdate('Returned', order._id)
-        }
     };
+
+
+
+    const [showAlert, setShowAlert] = useState(false);
+    const [note, setNote] = useState('')
+
+
+
+    const [isChecked, setIsChecked] = useState(false);
+    const [refundCheck, setRefundCheck] = useState(false);
+
+
+    // useEffect(() => {
+    //     if (showAlert) {
+    //         fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/order-status-update?orderId=${orderId}`, {
+    //             method: "PUT",
+    //             headers: { "Content-Type": "application/json" },
+    //             body: JSON.stringify({ status, orderId })
+    //         }).then((res) => res.json()).then((data) => {
+    //             console.log(data);
+    //             if (!data.error) {
+    //                 alert("Successfully Updated");
+    //                 refetch()
+    //             } else {
+    //                 alert("Failed to Update")
+    //             }
+
+    //         });
+    //     }
+    // })
+
+
+    const viewDetails = (order) => {
+        console.log(order);
+        setOpenModal(true)
+
+        fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/refound-order-info?shopId=${shopInfo._id}&orderId=${order._id}`).then((res) => res.json()).then((data) => {
+            console.log(data);
+            const refund = { refund: data.data, order }
+            console.log(refund);
+            setDetails(refund)
+        })
+
+    }
+    const [refundData, setRefundData] = useState(true)
+    const checkBox = (orderId) => {
+        fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/refound-order-info?shopId=${shopInfo._id}&orderId=${orderId}`).then((res) => res.json()).then((data) => {
+            console.log(data);
+            setRefundData(data)
+        })
+    }
+
+
+    const updateOrderInfo = (note, file, id) => {
+        const noteData = { note, file, orderId: id }
+        fetch("https://salenow-v2-backend.vercel.app/api/v1/seller/refound-order-info", {
+            method: 'PUT',
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(noteData),
+        }).then((res) => res.json()).then((data) =>
+            alert(
+                ` Successfully Done!`
+            )
+        )
+
+    }
+    const [file, setFile] = useState()
+    const cancelNoteSubmit = () => {
+
+        console.log({
+            isChecked,
+            refundCheck,
+            note,
+            file,
+            showAlert,
+        });
+
+        if (isChecked && !refundCheck) {
+            handleProductStatusUpdate(showAlert)
+            updateOrderInfo(note, file, showAlert._id)
+        }
+        else if (isChecked && refundCheck) {
+            handleProductStatusUpdate(showAlert)
+            updateOrderInfo(note, file, showAlert._id)
+        }
+        else {
+            updateOrderInfo(note, file, showAlert._id)
+        }
+
+
+        // Perform your submit logic here, such as sending data to an API
+
+        // After submission, you might want to reset the state or close the modal
+        // setIsChecked(false);
+        // setRefundCheck(false);
+        // setNote('');
+        // setShowAlert(false);
+    };
+
+
+    const handleFileChange = async (event) => {
+        const file = event.target.files[0];
+        const imageFormData = new FormData();
+        imageFormData.append("image", file);
+        const imageUrl = await uploadImage(imageFormData);
+        setFile(imageUrl)
+    };
+
+
+    async function uploadImage(formData) {
+        const url = "https://salenow-v2-backend.vercel.app/api/v1/image/upload-image";
+        const response = await fetch(url, {
+            method: "POST",
+            body: formData,
+        });
+        const imageData = await response.json();
+        return imageData.imageUrl;
+    }
+
+
+
     return (
         <div className="flex flex-col overflow-hidden mt-4">
             <div className="overflow-x-auto transparent-scroll sm:-mx-6 lg:-mx-8">
@@ -274,13 +385,13 @@ const OrderTable = ({ searchValue, selectedValue }) => {
                                                 || itm?.status == 'Delivered' && <button onClick={() => productStatusUpdate("Returned", itm?._id)} className='text-[16px] font-[400] text-blue-700' >Returned</button>
                                                 || itm?.status === 'Return' && (
                                                     <div className='flex flex-col justify-center'>
-                                                        <button onClick={() => handleProductStatusUpdate("Returned", itm, true)} className='text-[16px] font-[400] text-blue-700'>Quantity Update</button>
+                                                        <button onClick={() => { setShowAlert(itm), checkBox(itm._id) }} className='text-[16px] font-[400] text-blue-700'>Approve</button>
                                                         <button onClick={() => productStatusUpdate("Failed", itm?._id)} className='text-[16px] font-[400] text-blue-700'>Reject</button>
 
                                                     </div>
                                                 )
-                                                || itm?.status == 'Returned' && <button onClick={() => productStatusUpdate("RefoundOnly", itm?._id)} className='text-[16px] font-[400] text-blue-700' >Refund only</button>
-                                                || itm?.status == 'Refund' && <button onClick={() => productStatusUpdate("Refund", itm?._id)} className='text-[16px] font-[400] text-blue-700' >View Details</button>
+                                                || itm?.status == 'Returned' && <button onClick={() => productStatusUpdate("RefoundOnly", itm?._id)} className='text-[16px] font-[400] text-blue-700' >Refund Data</button>
+                                                || itm?.status == 'Refund' && <button onClick={() => viewDetails(itm)} className='text-[16px] font-[400] text-blue-700' >View Details</button>
                                             }
                                         </td>
                                         {
@@ -293,6 +404,87 @@ const OrderTable = ({ searchValue, selectedValue }) => {
                     </div>
                 </div>
             </div>
+
+            {showAlert && (
+                <div className="fixed inset-0 z-10 bg-opacity-50 overflow-y-auto">
+                    <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+                        <div className="fixed inset-0 transition-opacity" aria-hidden="true">
+                            <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
+                        </div>
+
+                        {/* This is the alert with text area for note */}
+                        <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                            <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                                <div className="sm:flex sm:items-start w-full">
+                                    <div className="mt-3 text-center sm:mt-0 w-full sm:text-left">
+                                        <h3
+                                            onClick={() => setIsChecked(!isChecked)}
+                                            className=" text-lg flex gap-2 items-center cursor-pointer font-medium text-gray-900"
+                                        >
+                                            <input className='h-4 w-4' type="checkbox" checked={isChecked} />
+                                            Do you update your product quantity?
+                                        </h3>
+                                        <h3
+                                            onClick={() => setRefundCheck(!refundCheck)}
+                                            className=" text-lg flex gap-2 items-center cursor-pointer font-medium text-gray-900"
+                                        >
+                                            <input className='h-4 w-4' type="checkbox" checked={refundCheck} />
+                                            Do you give refund for this product?
+                                        </h3>
+                                        {refundCheck && <div>
+                                            <details className="w-full">
+                                                <summary className="focus:outline-none focus-visible:ri">Check Payment Getaway Information?</summary>
+                                                <p className=" ml-4 mt-2 dark:text-gray-700">
+                                                    Holder Name : {refundData?.data?.data?.holder ? refundData?.data?.data?.holder : refundData?.data?.data?.name}
+                                                    <br />
+                                                    Account Number : {refundData?.data?.data?.ac ? refundData?.data?.data?.ac : refundData?.data?.data?.account_number}
+                                                    <br />
+                                                    Bank / Getaway : {refundData?.data?.data?.bank_name ? refundData?.data?.data?.bank_name : refundData?.data?.data?.getway}
+
+                                                </p>
+                                            </details>
+
+                                            <div className='mt-2 flex gap-4'>
+                                                <label htmlFor="">Payment Prove</label>
+                                                <input onChange={handleFileChange} type="file" />
+                                            </div>
+                                        </div>}
+                                        <div className="mt-2 w-full">
+                                            <textarea
+                                                value={note}
+                                                onChange={(e) => setNote(e.target.value)}
+                                                rows="4"
+                                                cols="10"
+                                                className="shadow-sm w-full p-2 focus:ring-blue-500 focus:border-blue-500 mt-1 block  sm:text-sm border-gray-300 rounded-md"
+                                                placeholder="Enter your note here..."
+                                            ></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row justify-end">
+                                <button
+                                    onClick={() => setShowAlert(false)}
+                                    type="button"
+                                    className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-500 text-base font-medium text-white hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm"
+                                >
+                                    Close
+                                </button>
+                                <button
+                                    onClick={() => cancelNoteSubmit()}
+                                    type="button"
+                                    className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-500 text-base font-medium text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm"
+                                >
+                                    Submit
+                                </button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            )}
+
+
             <div className="max-w-2xl mx-auto mt-8 pb-8">
                 <nav aria-label="Page navigation example">
                     <ul className="inline-flex -space-x-px">

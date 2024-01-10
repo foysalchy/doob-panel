@@ -43,7 +43,7 @@ const ShopNav = () => {
 
 
     const [isOpen, setIsOpen] = useState(false);
-    console.log(categories);
+
     return (
 
         <div className='shadow-xl'>
