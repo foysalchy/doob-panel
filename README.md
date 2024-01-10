@@ -46,7 +46,7 @@ Include screenshots or gifs showing the application's main functionality.
 
 ## Demo
 
-Provide a link to a live demo if applicable.
+https://salenow.vercel.app/
 
 ## Getting Started
 
@@ -67,7 +67,16 @@ Explain how to use your application. Include examples if possible.
 
 ## Contributing
 
-Feel free to contribute. Open an issue or submit a pull request.
+## Contributors
+
+A big thank you to the following individuals who have contributed to this project:
+
+- [Md. Mahadi Hasan](https://github.com/codewithmahadihasan)
+- [Md Nahid](https://github.com/MdNahid360https://github.com/contributor2)
+- [Nazmul Hoque](https://github.com/nazmulsujon)
+
+If you've contributed to this project and your name is missing, please let us know, and we'll add you to the list!
+
 
 ## License
 
