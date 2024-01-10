@@ -9,7 +9,9 @@ import ShippingModal from './ShipingModal';
 import { useEffect } from 'react';
 
 
-const OrderTable = ({ searchValue, selectedValue, setDetails, setOpenModal }) => {
+const OrderTable = ({ searchValue, selectedValue, setDetails, setOpenModal, selectedDate }) => {
+
+    console.log(selectedDate);
     const [modalOn, setModalOn] = useState(false)
     const { shopInfo, setCheckUpData } = useContext(AuthContext);
 
@@ -26,14 +28,31 @@ const OrderTable = ({ searchValue, selectedValue, setDetails, setOpenModal }) =>
     const [currentPage, setCurrentPage] = useState(1);
 
 
+    // const filteredData = tData?.filter((item) => {
+    //     if (searchValue === '' && selectedValue === "All") {
+    //         return true; // Include all items when searchValue is empty and selectedValue is "All"
+    //     } else if (selectedValue === "Pending") {
+    //         return !item?.status;
+    //     } else if (searchValue) {
+    //         return item?._id?.toLowerCase().includes(searchValue.toLowerCase()); // Filter by _id
+    //     } else if (selectedValue) {
+    //         return item?.status === selectedValue; // Filter by status
+    //     }
+
+    //     return false; // Exclude items that don't meet any condition
+    // });
     const filteredData = tData?.filter((item) => {
-        if (searchValue === '' && selectedValue === "All") {
-            return true; // Include all items when searchValue is empty and selectedValue is "All"
-        } else if (selectedValue === "Pending") {
+        if (
+            searchValue === '' &&
+            selectedValue === 'All' &&
+            (!selectedDate || new Date(item?.timestamp) >= selectedDate)
+        ) {
+            return true; // Include all items when searchValue is empty and selectedValue is "All" and timestamp is greater than or equal to selectedDate
+        } else if (selectedValue === 'Pending' && (!selectedDate || new Date(item?.timestamp) >= selectedDate)) {
             return !item?.status;
-        } else if (searchValue) {
+        } else if (searchValue && (!selectedDate || new Date(item?.timestamp) >= selectedDate)) {
             return item?._id?.toLowerCase().includes(searchValue.toLowerCase()); // Filter by _id
-        } else if (selectedValue) {
+        } else if (selectedValue && (!selectedDate || new Date(item?.timestamp) >= selectedDate)) {
             return item?.status === selectedValue; // Filter by status
         }
 
