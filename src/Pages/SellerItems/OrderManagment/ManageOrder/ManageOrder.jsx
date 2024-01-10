@@ -15,7 +15,7 @@ const ManageOrder = () => {
         setSelectedValue(event.target.value);
     };
 
-
+    const [selectedDate, setSelectedDate] = useState(null)
     const [details, setDetails] = useState()
 
 
@@ -69,12 +69,20 @@ const ManageOrder = () => {
                         Woo Commerce Order
                     </button>
                 </div>
+                <input
+                    type="date"
+
+                    // value={selectedDate}
+                    onChange={(e) => setSelectedDate(new Date(e.target.value))}
+                />
                 <div className="flex items-center gap-4">
                     <div className='flex items-center bg-white '>
                         <input onChange={(e) => setSearchValue(e.target.value)} type="text" placeholder='Search' className="w-[260px] rounded border-gray-400 focus:outline-none p-2 border" />
 
                     </div>
                 </div>
+
+
             </div>
 
 
@@ -82,7 +90,7 @@ const ManageOrder = () => {
                 {/* table */}
                 {
                     !daraz ?
-                        <OrderTable setDetails={setDetails} setOpenModal={setOpenModal} selectedValue={selectedValue} searchValue={searchValue} />
+                        <OrderTable selectedDate={selectedDate} setDetails={setDetails} setOpenModal={setOpenModal} selectedValue={selectedValue} searchValue={searchValue} />
                         :
                         <DarazOrderTable selectedValue={selectedValue} searchValue={searchValue} />
 
