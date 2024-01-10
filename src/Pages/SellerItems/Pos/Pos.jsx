@@ -30,7 +30,15 @@ const Pos = () => {
     }, [audio]);
     const addProductToCart = (productData) => {
         audio.play();
-        setCartProducts([...cartProducts, productData]);
+        const productInfo = {
+            id: productData._id,
+            name: productData.name,
+            price: parseInt(productData.price),
+            quantity: 1,
+            sku: productData.sku,
+            img: productData.featuredImage.src
+        }
+        setCartProducts([...cartProducts, productInfo]);
     }
 
     const filteredData = searchValue == '' ? productList : productList.filter((itm) => itm.name.toLowerCase().includes(searchValue.toLowerCase()));

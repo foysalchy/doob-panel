@@ -6,6 +6,7 @@ const ProductList = ({ itm, passCount, setPassCount }) => {
 
     const [audio] = useState(new Audio(clickAudio));
 
+
     useEffect(() => {
         // Cleanup the audio when component unmounts
         return () => {
@@ -16,23 +17,24 @@ const ProductList = ({ itm, passCount, setPassCount }) => {
 
 
     const increaseCount = () => {
+
         audio.play();
         setCount(count + 1);
-        setPassCount(count)
+        setPassCount(count + 1)
     };
 
     const decreaseCount = () => {
         audio.play();
         if (count > 0) {
             setCount(count - 1);
-            setPassCount(count)
+            setPassCount(count - 1)
         }
     };
     return (
         <li >
             <div className="flex justify-between items-center my-2 bg-white p-2 rounded-md">
                 <div className="flex items-center gap-2">
-                    <img src={itm?.MetaImage} alt="" className="w-[60px] h-[60px] ring-1 ring-gray-300 rounded-md object-cover" />
+                    <img src={itm?.featuredImage.src} alt="" className="w-[60px] h-[60px] ring-1 ring-gray-300 rounded-md object-cover" />
                     <div className="">
                         <h3 className="text-sm">{itm?.name.slice(0, 16)}...</h3>
                         <h3 className="text-lg">{itm?.price}</h3>
