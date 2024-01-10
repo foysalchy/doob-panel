@@ -9,31 +9,35 @@
 
 Briefly describe your project. What does it do? What problem does it solve?
 
-## Features
+## Folder Stracture
 
-- Landing Page
-- Blogs dynamic Page
-- dynamic Contact
-- Digital service, on time,subscription base
-- Settings
-        Setup Site Content
-        Payment Gateway Setup
-        Create Sellers Package
-        Manage sellers domain
-        Email and Notification
-        Shipping Integration
+src/
+|-- assets/
+|-- pages/
+|   |-- AdminItem/
+|   |   |-- SupportTicket/
+|   |       `-- ... (files related to SupportTicket)
+|   |-- SellerItem/
+|   |   |-- AddProduct/
+|   |       `-- ... (files related to AddProduct)
+|   |-- Shop/
+|       |-- ProductList/
+|           `-- ... (files related to ProductList)
+|-- Router/
+|   |-- Router.js
+|   |-- AdminRoute.js
+|   |-- SellerRoute.js
+|   |-- ShopRoute.js
+|   |-- PrivateRoute.js
+|-- App.js
+|-- index.js
 
-- Register, Login
-- Step by Step Content Upload
-- Create Custom Domain
-- Pages
-- Support Ticket
-- Warehouse & Manage
-- Seller Management
-- Product Management
-- Category Mapping from Daraz
 
 ## Screenshots
+![image](https://github.com/brightfuturesoft/SaleNow-Frontend/assets/73072248/80b89825-bf9c-4ed9-9c2c-2210e72c0606)
+![image](https://github.com/brightfuturesoft/SaleNow-Frontend/assets/73072248/ab3af3ea-0d93-41fb-8a97-b57369cf50dd)
+
+
 
 Include screenshots or gifs showing the application's main functionality.
 
