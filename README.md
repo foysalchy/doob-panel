@@ -17,6 +17,8 @@ Briefly describe your project. What does it do? What problem does it solve?
 
 ## Screenshots
 ![image](https://github.com/brightfuturesoft/SaleNow-Frontend/assets/73072248/80b89825-bf9c-4ed9-9c2c-2210e72c0606)
+
+
 ![image](https://github.com/brightfuturesoft/SaleNow-Frontend/assets/73072248/ab3af3ea-0d93-41fb-8a97-b57369cf50dd)
 
 
