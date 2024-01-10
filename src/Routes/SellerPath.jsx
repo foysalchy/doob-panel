@@ -59,6 +59,7 @@ import ManageWooCommerceOrder from "../Pages/SellerItems/OrderManagment/Woocomme
 import UserSupportTicketForShop from "../Pages/SellerItems/SupportTicket/UserSupportTicket";
 import CustomerReturn from "../Pages/SellerItems/OrderManagment/CustomerReturn/CustomerReturn";
 import ScheduleDropOffs from "../Pages/SellerItems/OrderManagment/ScheduleDropOffs/ScheduleDropOffs";
+import Pos from "../Pages/SellerItems/Pos/Pos";
 
 // `https://salenow-v2-backend.vercel.app/api/v1/seller/daraz-product/${shopInfo._id}
 
@@ -299,6 +300,12 @@ const SellerPath = [
         path: "orders/manage-review",
         element: <ManageReviews />
     },
+    // ? pos path
+    {
+        path: "pos",
+        element: <Pos/>
+    },
+
     {
         path: "refand-order",
         element: "schedule_drop-offs"
