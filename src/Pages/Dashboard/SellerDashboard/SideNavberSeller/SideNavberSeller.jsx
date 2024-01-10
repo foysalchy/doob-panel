@@ -284,6 +284,12 @@ const SideNavberSeller = () => {
                                         <span>Order Management</span>
                                     </Link>
                                 </li>
+                                <li className="rounded-sm hover:bg-gray-800">
+                                    <Link to={'/seller/pos'} rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
+                                        <BiArchive className="w-5 h-5 text-gray-400" />
+                                        <span>POS</span>
+                                    </Link>
+                                </li>
                                 <li className="rounded-sm  hover:bg-gray-800">
                                     <button onClick={() => logOut()} className="flex items-center p-2 space-x-3 rounded-md ">
                                         <IoLogOut className='w-5 h-5 fill-current text-gray-400' />
