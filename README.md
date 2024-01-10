@@ -16,21 +16,24 @@ src/
 |-- pages/
 |   |-- AdminItem/
 |   |   |-- SupportTicket/
-|   |       `-- ... (files related to SupportTicket)
+|   |   |   `-- ... (files related to SupportTicket)
 |   |-- SellerItem/
 |   |   |-- AddProduct/
-|   |       `-- ... (files related to AddProduct)
+|   |   |   `-- ... (files related to AddProduct)
 |   |-- Shop/
-|       |-- ProductList/
-|           `-- ... (files related to ProductList)
+|   |   |-- ProductList/
+|   |   |   `-- ... (files related to ProductList)
 |-- Router/
 |   |-- Router.js
 |   |-- AdminRoute.js
 |   |-- SellerRoute.js
 |   |-- ShopRoute.js
 |   |-- PrivateRoute.js
+|-- components/
+|   |-- ProductList.js
 |-- App.js
 |-- index.js
+
 
 
 ## Screenshots
