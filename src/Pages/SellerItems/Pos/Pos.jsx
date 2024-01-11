@@ -43,6 +43,7 @@ const Pos = () => {
 
     const filteredData = searchValue == '' ? productList : productList.filter((itm) => itm.name.toLowerCase().includes(searchValue.toLowerCase()));
 
+  
     return (
         <div>
             <main className=' p-4 mt-3 rounded-md h-[82vh]'>
