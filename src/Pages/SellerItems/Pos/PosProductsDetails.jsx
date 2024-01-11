@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PosInvoice from './PosInvoice';
 
 const PosProductsDetails = ({ invoice, open, setOpen }) => {
 
@@ -6,7 +7,7 @@ const PosProductsDetails = ({ invoice, open, setOpen }) => {
     const [email, setEmail] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
     const [address, setAddress] = useState('');
-
+    const [invoiceOpen, setInvoiceOpen] = useState(false);
     return (
         <div>
             {
@@ -44,8 +45,8 @@ const PosProductsDetails = ({ invoice, open, setOpen }) => {
                         </ul>
 
 
-                        <h1 className="text-2xl font-bold mb-2 mt-4">User Info</h1> 
-                        
+                        <h1 className="text-2xl font-bold mb-2 mt-4">User Info</h1>
+
                         <form>
 
                             <div className="mb-2">
@@ -105,7 +106,8 @@ const PosProductsDetails = ({ invoice, open, setOpen }) => {
                         </form>
 
 
-                        <button className='bg-gray-900 text-white px-2 w-full py-2 rounded-md mt-5'>Proceed</button>
+                        <button onClick={() => setInvoiceOpen(!invoiceOpen)} className='bg-gray-900 text-white px-2 w-full py-2 rounded-md mt-5'>Proceed</button>
+                        <PosInvoice invoiceData={invoice} setInvoiceOpen={setInvoiceOpen} invoiceOpen={invoiceOpen} />
                     </div>
                 </div>
             }
