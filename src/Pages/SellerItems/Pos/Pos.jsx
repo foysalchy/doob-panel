@@ -43,10 +43,10 @@ const Pos = () => {
 
     const filteredData = searchValue == '' ? productList : productList.filter((itm) => itm.name.toLowerCase().includes(searchValue.toLowerCase()));
 
-  
+
     return (
         <div>
-            <main className=' p-4 mt-3 rounded-md h-[82vh]'>
+            <main className=' p-4 mt-3 rounded-md h-[82vh] overflow-y-auto'>
                 <div className="grid grid-cols-3 gap-2">
                     <div className="col-span-2">
                         <div className="flex items-center bg-gray-100 ring-1 ring-gray-300 p-2 rounded-md">

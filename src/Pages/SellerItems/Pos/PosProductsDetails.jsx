@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import PosInvoice from './PosInvoice';
+import { useQuery } from '@tanstack/react-query';
+import { AuthContext } from '../../../AuthProvider/UserProvider';
 
 const PosProductsDetails = ({ invoice, open, setOpen }) => {
 
@@ -8,6 +10,31 @@ const PosProductsDetails = ({ invoice, open, setOpen }) => {
     const [phoneNumber, setPhoneNumber] = useState('');
     const [address, setAddress] = useState('');
     const [invoiceOpen, setInvoiceOpen] = useState(false);
+
+    const [existing, setExisting] = useState(false)
+
+    const [searchValue, setSearchValue] = useState('')
+    const [searchType, setSearchType] = useState("userNumber")
+    const { shopInfo } = useContext(AuthContext)
+    const [user, setUser] = useState(false)
+    const [error, setError] = useState(false)
+
+
+
+    const fetchData = () => {
+        fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/seller-user?shopId=${shopInfo.shopId}&${searchType}=${searchValue}`).then((res) => res.json()).then((data) => {
+            if (data.userInfo) {
+                setUser(data.userInfo)
+                setExisting(false)
+                setError(false)
+            }
+            else {
+                setError('User not found')
+                setUser(false)
+            }
+        })
+    }
+
     return (
         <div>
             {
@@ -47,7 +74,25 @@ const PosProductsDetails = ({ invoice, open, setOpen }) => {
 
                         <h1 className="text-2xl font-bold mb-2 mt-4">User Info</h1>
 
-                        <form>
+                        <h1 className='flex gap-2'> <input onClick={() => { setExisting(!existing), setUser(false) }} type="checkbox" />New User ?</h1>
+
+                        {existing && <div>
+                            <label> Search User</label>
+                            <div className='flex gap-2 items-center'>
+                                <select onChange={(e) => setSearchType(e.target.value)} className='mt-1 p-2 border  focus:outline-none focus:border-gray-500  focus:ring-0' name="" id="">
+                                    <option value="userNumber">Phone Number</option>
+                                    <option value="userEmail">Email</option>
+                                </select>
+                                <input onChange={(e) => setSearchValue(e.target.value)} className='mt-1 ml-2 w-full p-2 border  focus:outline-none focus:border-gray-500  focus:ring-0' type="text" name="" id="" />
+                                <button onClick={() => fetchData()} className='p-2  px-4 bg-gray-900 text-white'>
+                                    Search
+                                </button>
+                            </div>
+                        </div>}
+                        {
+                            error && <p className='text-sm text-red-500'>Error: {error}</p>
+                        }
+                        {!existing && <form>
 
                             <div className="mb-2">
                                 <label htmlFor="name" className="block text-sm font-medium text-gray-600">
@@ -56,6 +101,7 @@ const PosProductsDetails = ({ invoice, open, setOpen }) => {
                                 <input
                                     type="text"
                                     id="name"
+                                    defaultValue={(user && !existing) ? user?.name : ''}
                                     name="name"
                                     className="mt-1 p-2 w-full border rounded-md"
                                     required
@@ -71,6 +117,7 @@ const PosProductsDetails = ({ invoice, open, setOpen }) => {
                                     type="email"
                                     id="email"
                                     name="email"
+                                    defaultValue={(user && !existing) ? user?.email : ''}
                                     className="mt-1 p-2 w-full border rounded-md"
                                     required
                                     onChange={(e) => setEmail(e.target.value)}
@@ -85,6 +132,7 @@ const PosProductsDetails = ({ invoice, open, setOpen }) => {
                                     type="tel"
                                     id="phoneNumber"
                                     name="phoneNumber"
+                                    defaultValue={(user && !existing) ? user?.phoneNumber : ''}
                                     className="mt-1 p-2 w-full border rounded-md"
                                     required
                                     onChange={(e) => setPhoneNumber(e.target.value)}
@@ -104,7 +152,7 @@ const PosProductsDetails = ({ invoice, open, setOpen }) => {
                                 ></textarea>
                             </div>
                         </form>
-
+                        }
 
                         <button onClick={() => setInvoiceOpen(!invoiceOpen)} className='bg-gray-900 text-white px-2 w-full py-2 rounded-md mt-5'>Proceed</button>
                         <PosInvoice invoiceData={invoice} setInvoiceOpen={setInvoiceOpen} invoiceOpen={invoiceOpen} />

@@ -8,6 +8,9 @@ const PosInvoice = ({ invoiceData, setInvoiceOpen, invoiceOpen }) => {
     const [loader, setLoader] = useState(false);
     const { shopInfo } = useContext(AuthContext)
 
+
+
+
     const downloadPDF = () => {
         setLoader(true);
         const capture = document.getElementById('invoice');

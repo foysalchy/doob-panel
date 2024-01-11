@@ -33,15 +33,13 @@ const ShopAuth = ({ children }) => {
     });
     const [orderStage, setOrderStage] = useState([]);
 
+
+
     const { data: shop_id = {}, isLoading: load, refetch: reload } = useQuery({
         queryKey: ["shop_id"],
         queryFn: async () => {
             try {
-                const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/shopId/${shopId}`, {
-                    headers: {
-                        "ngrok-skip-browser-warning": "69420",
-                    }
-                });
+                const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/shopId/${shopId}`);
                 const data = await res.json();
                 return data;
             } catch (error) {
@@ -51,6 +49,7 @@ const ShopAuth = ({ children }) => {
         },
         enabled: !!shopId
     });
+
 
     const [shopUser, setShopUser] = useState('');
     const [auth, setAuth] = useState();
@@ -123,7 +122,7 @@ const ShopAuth = ({ children }) => {
 
 
     const saveUser = (name, email, provider) => {
-        const user = { name, email, provider, shopId };
+        const user = { name, email, provider, shopId: shopId };
         console.log(user, 'users');
         fetch("https://salenow-v2-backend.vercel.app/api/v1/shop/auth", {
             method: 'post',
