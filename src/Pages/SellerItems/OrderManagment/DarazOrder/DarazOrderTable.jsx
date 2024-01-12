@@ -18,14 +18,14 @@ const DarazOrderTable = ({ selectedValue, searchValue }) => {
     const { data: tData = [], refetch, isLoading } = useQuery({
         queryKey: ["sellerDarazOrder"],
         queryFn: async () => {
-            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/daraz-order?id=${shopInfo._id}&status=${"Pending"}`);
+            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/daraz-order?id=${shopInfo._id}&status=${selectedValue}`);
 
             const data = await res.json();
             return data.data;
         },
     });
 
-    useEffect(() => { refetch }, [selectedValue])
+    useEffect(() => { refetch() }, [selectedValue])
 
     const itemsPerPage = 4; // Number of items to display per page
     const [currentPage, setCurrentPage] = useState(1);

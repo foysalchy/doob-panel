@@ -8,7 +8,7 @@ export const ordersNav = [
     {
         name: 'pending',
         status: '',
-        value: 'Pending',
+        value: 'pending',
         dropdownLink: [
             "all",
         ],
@@ -16,25 +16,25 @@ export const ordersNav = [
     {
         name: 'Ready to ship',
         status: '',
-        value: 'ReadyToShip',
+        value: 'ready_to_ship',
         dropdownLink: [""],
     },
     {
         name: 'shipped',
         status: '',
-        value: 'Shipped',
+        value: 'shipped',
         dropdownLink: [""],
     },
     {
         name: 'delivered',
-        value: 'Delivered',
+        value: 'delivered',
         status: '',
         dropdownLink: [""],
     },
     {
         name: 'cancelled',
         status: '',
-        value: 'Cancel',
+        value: 'canceled',
         dropdownLink: [""],
     },
     {
@@ -46,13 +46,13 @@ export const ordersNav = [
     {
         name: 'returned',
         status: '',
-        value: 'Returned',
+        value: 'returned',
         dropdownLink: [""],
     },
     {
         name: 'failed delivery',
         status: '',
-        value: 'FailedDelivery',
+        value: 'failed',
         dropdownLink: [""],
     },
     {

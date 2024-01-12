@@ -39,7 +39,7 @@ const ShippingModal = ({ readyToShip, setReadyToShip, orderInfo, refetch, ships,
             BaseUrl: shipInfo.api
         }
         if (selectedDelivery === "Other") {
-            productStatusUpdate("ReadyToShip", orderInfo._id)
+            productStatusUpdate("ready_to_ship", orderInfo._id)
             setReadyToShip(false)
         } else {
             console.log(shipInfo);

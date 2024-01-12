@@ -48,7 +48,7 @@ const OrderTable = ({ searchValue, selectedValue, setDetails, setOpenModal, sele
             (!selectedDate || new Date(item?.timestamp) >= selectedDate)
         ) {
             return true; // Include all items when searchValue is empty and selectedValue is "All" and timestamp is greater than or equal to selectedDate
-        } else if (selectedValue === 'Pending' && (!selectedDate || new Date(item?.timestamp) >= selectedDate)) {
+        } else if (selectedValue === 'pending' && (!selectedDate || new Date(item?.timestamp) >= selectedDate)) {
             return !item?.status;
         } else if (searchValue && (!selectedDate || new Date(item?.timestamp) >= selectedDate)) {
             return item?._id?.toLowerCase().includes(searchValue.toLowerCase()); // Filter by _id
@@ -91,7 +91,7 @@ const OrderTable = ({ searchValue, selectedValue, setDetails, setOpenModal, sele
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ status, orderId })
         }).then((res) => res.json()).then((data) => {
-
+            refetch()
 
         });
     }
@@ -396,20 +396,20 @@ const OrderTable = ({ searchValue, selectedValue, setDetails, setOpenModal, sele
                                                     onClick={() => setReadyToShip(itm)}
                                                     className='text-[16px] font-[400] text-blue-700' >Ready to Ship</button>
                                                     <button onClick={() => productStatusUpdate("Cancel", itm?._id)} className='text-[16px] font-[400] text-blue-700' >Cancel</button> </>
-                                                || itm?.status == 'ReadyToShip' && <button onClick={() => productStatusUpdate("Shipped", itm?._id)} className='text-[16px] font-[400] text-blue-700' >Shipped</button>
-                                                || itm?.status == 'Shipped' && <div className='flex flex-col gap-2'>
-                                                    <button onClick={() => productStatusUpdate("Delivered", itm?._id)} className='text-[16px] font-[400] text-blue-700' >Delivered</button>
-                                                    <button onClick={() => productStatusUpdate("Failed", itm?._id)} className='text-[16px] font-[400] text-blue-700' >Failed Delivery</button>
+                                                || itm?.status == 'ready_to_ship' && <button onClick={() => productStatusUpdate("shipped", itm?._id)} className='text-[16px] font-[400] text-blue-700' >Shipped</button>
+                                                || itm?.status == 'shipped' && <div className='flex flex-col gap-2'>
+                                                    <button onClick={() => productStatusUpdate("delivered", itm?._id)} className='text-[16px] font-[400] text-blue-700' >Delivered</button>
+                                                    <button onClick={() => productStatusUpdate("failed", itm?._id)} className='text-[16px] font-[400] text-blue-700' >Failed Delivery</button>
                                                 </div>
-                                                || itm?.status == 'Delivered' && <button onClick={() => productStatusUpdate("Returned", itm?._id)} className='text-[16px] font-[400] text-blue-700' >Returned</button>
+                                                || itm?.status == 'delivered' && <button onClick={() => productStatusUpdate("returned", itm?._id)} className='text-[16px] font-[400] text-blue-700' >Returned</button>
                                                 || itm?.status === 'Return' && (
                                                     <div className='flex flex-col justify-center'>
                                                         <button onClick={() => { setShowAlert(itm), checkBox(itm._id) }} className='text-[16px] font-[400] text-blue-700'>Approve</button>
-                                                        <button onClick={() => productStatusUpdate("Failed", itm?._id)} className='text-[16px] font-[400] text-blue-700'>Reject</button>
+                                                        <button onClick={() => productStatusUpdate("failed", itm?._id)} className='text-[16px] font-[400] text-blue-700'>Reject</button>
 
                                                     </div>
                                                 )
-                                                || itm?.status == 'Returned' && <button onClick={() => productStatusUpdate("RefoundOnly", itm?._id)} className='text-[16px] font-[400] text-blue-700' >Refund Data</button>
+                                                || itm?.status == 'returned' && <button onClick={() => productStatusUpdate("RefoundOnly", itm?._id)} className='text-[16px] font-[400] text-blue-700' >Refund Data</button>
                                                 || itm?.status == 'Refund' && <button onClick={() => viewDetails(itm)} className='text-[16px] font-[400] text-blue-700' >View Details</button>
                                             }
                                         </td>
