@@ -132,7 +132,7 @@ const UserMyOrder = () => {
             .then((data) => {
                 console.log(data);
                 if (data.success) {
-                    updateStatus('Return', orderId)
+                    updateStatus('return', orderId)
 
 
                     Swal.fire({
@@ -245,13 +245,13 @@ const UserMyOrder = () => {
                             let currentStep;
                             if (!order.status) {
                                 currentStep = 2;
-                            } else if (order.status === 'Delivered') {
+                            } else if (order.status === 'delivered') {
                                 currentStep = 5;
-                            } else if (order.status === 'ReadyToShip') {
+                            } else if (order.status === 'ready_to_ship') {
                                 currentStep = 3;
-                            } else if (order.status === 'Shipped') {
+                            } else if (order.status === 'shipped') {
                                 currentStep = 4;
-                            } else if (order.status === 'Cancel' || "Failed" || 'Returned') {
+                            } else if (order.status === 'canceled' || "failed" || 'returned') {
                                 currentStep = 5;
                             } else {
                                 // Default to 1 or any other appropriate value
@@ -331,10 +331,10 @@ const UserMyOrder = () => {
                                                 )}
                                             </div>}
                                             {
-                                                (order?.status === 'Delivered' || order?.status === 'Returned') && (
+                                                (order?.status === 'delivered' || order?.status === 'returned') && (
                                                     <>
                                                         <div className='flex items-center gap-2'>
-                                                            {order?.status !== 'Returned' && <button
+                                                            {order?.status !== 'returned' && <button
                                                                 onClick={() => {
                                                                     setOpen(!open);
                                                                     setOrderId(order?._id);

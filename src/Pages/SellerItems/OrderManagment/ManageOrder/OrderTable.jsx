@@ -392,7 +392,7 @@ const OrderTable = ({ searchValue, selectedValue, setDetails, setOpenModal, sele
                                         <td className="whitespace-nowrap border-r px-6 py-4 text-[16px] font-[400] flex flex-col gap-2">
                                             {!itm?.status &&
                                                 <> <button
-                                                    // onClick={() => productStatusUpdate("ReadyToShip", itm?._id)}
+                                                    
                                                     onClick={() => setReadyToShip(itm)}
                                                     className='text-[16px] font-[400] text-blue-700' >Ready to Ship</button>
                                                     <button onClick={() => productStatusUpdate("Cancel", itm?._id)} className='text-[16px] font-[400] text-blue-700' >Cancel</button> </>
