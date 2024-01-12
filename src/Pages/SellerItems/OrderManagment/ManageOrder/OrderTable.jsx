@@ -149,15 +149,15 @@ const OrderTable = ({ searchValue, selectedValue, setDetails, setOpenModal, sele
     };
 
 
-    const handleProductStatusUpdate = (order, note) => {
+    const handleProductStatusUpdate = (orders) => {
         fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/order-quantity-update`, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(order)
+            body: JSON.stringify(orders)
         }).then((res) => res.json()).then((data) => {
             console.log(data);
             if (data.success) {
-                productStatusUpdate('Refund', order._id)
+                productStatusUpdate('Refund', orders._id)
             } else {
                 alert("Failed to Update")
             }
@@ -245,13 +245,16 @@ const OrderTable = ({ searchValue, selectedValue, setDetails, setOpenModal, sele
         if (isChecked && !refundCheck) {
             handleProductStatusUpdate(showAlert)
             updateOrderInfo(note, file, showAlert._id)
+            setShowAlert(false)
         }
         else if (isChecked && refundCheck) {
             handleProductStatusUpdate(showAlert)
             updateOrderInfo(note, file, showAlert._id)
+            setShowAlert(false)
         }
         else {
             updateOrderInfo(note, file, showAlert._id)
+            setShowAlert(false)
         }
 
 
@@ -392,7 +395,7 @@ const OrderTable = ({ searchValue, selectedValue, setDetails, setOpenModal, sele
                                         <td className="whitespace-nowrap border-r px-6 py-4 text-[16px] font-[400] flex flex-col gap-2">
                                             {!itm?.status &&
                                                 <> <button
-                                                    
+
                                                     onClick={() => setReadyToShip(itm)}
                                                     className='text-[16px] font-[400] text-blue-700' >Ready to Ship</button>
                                                     <button onClick={() => productStatusUpdate("Cancel", itm?._id)} className='text-[16px] font-[400] text-blue-700' >Cancel</button> </>
@@ -402,7 +405,7 @@ const OrderTable = ({ searchValue, selectedValue, setDetails, setOpenModal, sele
                                                     <button onClick={() => productStatusUpdate("failed", itm?._id)} className='text-[16px] font-[400] text-blue-700' >Failed Delivery</button>
                                                 </div>
                                                 || itm?.status == 'delivered' && <button onClick={() => productStatusUpdate("returned", itm?._id)} className='text-[16px] font-[400] text-blue-700' >Returned</button>
-                                                || itm?.status === 'Return' && (
+                                                || itm?.status === 'return' && (
                                                     <div className='flex flex-col justify-center'>
                                                         <button onClick={() => { setShowAlert(itm), checkBox(itm._id) }} className='text-[16px] font-[400] text-blue-700'>Approve</button>
                                                         <button onClick={() => productStatusUpdate("failed", itm?._id)} className='text-[16px] font-[400] text-blue-700'>Reject</button>
