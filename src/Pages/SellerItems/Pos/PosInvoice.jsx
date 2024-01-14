@@ -56,7 +56,6 @@ const PosInvoice = ({ invoiceData, setInvoiceOpen, invoiceOpen }) => {
                                     <p className="text-start text text-gray-500">Address: {shopInfo?.address}</p>
                                 </div>
                             </div>
-
                             <ul className=''>
                                 <div className="border-b border-dashed flex items-center justify-between border-gray-700 py-2 gap-2 ">
                                     <h2 className="text-md font-semibold">Product Name</h2>

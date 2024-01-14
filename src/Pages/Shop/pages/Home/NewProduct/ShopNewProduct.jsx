@@ -34,7 +34,7 @@ const ShopNewProduct = () => {
                                     className="h-5/6"
                                     src="https://i.ibb.co/zfBPGTy/new-product?.png"
                                     srcSet="https://i.ibb.co/zfBPGTy/new-product?.png"
-                                    alt="new-product-icon"
+                                    alt="icon"
                                 />
 
                                 <h3 className="whitespace-nowrap ml-2 font-medium">
@@ -56,6 +56,9 @@ const ShopNewProduct = () => {
                             slidesPerView={3}
                             navigation
                             breakpoints={{
+                                320: {
+                                    slidesPerView: 2,
+                                },
                                 640: {
                                     slidesPerView: 2,
                                 },
@@ -70,19 +73,19 @@ const ShopNewProduct = () => {
                             {products?.data?.map((product, idx) => (
                                 <SwiperSlide key={idx} className="border border-gray-500 border-opacity-90 p-3 rounded">
                                     <Link to={`product/${product?._id}`} >
-                                        <a className="block relative h-48 rounded overflow-hidden">
+                                        <a className="block relative rounded overflow-hidden">
                                             <img
                                                 alt="ecommerce"
-                                                className="object-cover object-center w-full h-full block"
+                                                className="object-cover object-center w-full md:h-auto h-[130px] block"
                                                 src={product?.featuredImage?.src}
                                             />
                                         </a>
-                                        <div className="mt-4">
-                                            <h2 className="text-gray-200 title-font text-lg font-medium">
-                                                {product?.name.slice(0, 20)}..
+                                        <div className="mt-2">
+                                            <h2 className="text-gray-200 title-font md:text-lg text-sm font-medium">
+                                                {product?.name.slice(0, 18)}..
                                             </h2>
                                             <div className="flex items-center gap-10 text-gray-300">
-                                                <del>
+                                                <del className='flex items-center '>
                                                     <span className="kalpurush">৳ </span>
                                                     {product?.regular_price}
                                                 </del>
@@ -91,6 +94,13 @@ const ShopNewProduct = () => {
                                                     {product?.price}
                                                 </p>
                                             </div>
+
+                                            <button
+                                                type="button"
+                                                className="px-5 py-2  font-semibold rounded bg-white text-black w-full mt-3 text-xs "
+                                            >
+                                                Add to card
+                                            </button>
                                         </div>
                                     </Link>
                                 </SwiperSlide>

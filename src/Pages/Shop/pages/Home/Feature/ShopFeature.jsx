@@ -50,8 +50,9 @@ const ShopFeature = () => {
                             <img src={features[1]?.image} alt="" className="h-[250px] object-cover w-full" />
                         </div>
                         <div className="w-full flex gap-2">
-                            <div className={`h-[238px] w-full overflow-hidden ${getCollageLayout(3).join(' ')}`}>
-                                <img src={features[2]?.image} alt="" className="h-full object-cover w-full" />
+
+                            <div style={{ backgroundImage: `url(${features[2]?.image} )` }} className={`md:h-[238px] bg-cover object-cover h-[148px] w-full overflow-hidden bg-red-300 ${getCollageLayout(4).join(' ')}`}>
+
                             </div>
                             <div className={`h-[238px] w-full overflow-hidden ${getCollageLayout(4).join(' ')}`}>
                                 <img src={features[3]?.image} alt="" className=" object-contain w-full" />

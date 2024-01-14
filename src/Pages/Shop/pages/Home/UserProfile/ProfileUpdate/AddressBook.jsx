@@ -36,7 +36,7 @@ const AddressBook = () => {
 
     return (
         <div>
-            <div className='grid grid-cols-2 gap-8 '>
+            <div className='grid md:grid-cols-2 gap-8 '>
                 {address.map((add) => (
                     <div className='bg-white capitalize p-4 rounded hover:shadow-xl border'>
                         <h1 >{add?.fullName}</h1>

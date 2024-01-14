@@ -53,7 +53,9 @@ const ShopUpcoming = () => {
                         slidesPerView={3}
                         navigation
                         breakpoints={{
-                            640: {
+                            320: {
+                                slidesPerView: 2,
+                            }, 640: {
                                 slidesPerView: 2,
                             },
                             768: {
@@ -67,15 +69,15 @@ const ShopUpcoming = () => {
                         {products?.data?.map((product, idx) => (
                             <SwiperSlide key={idx} className="border border-gray-500 border-opacity-90 p-3 rounded">
                                 <Link to={`product/${product?._id}`} >
-                                    <a className="block relative h-48 rounded overflow-hidden">
+                                    <a className="block relative rounded overflow-hidden">
                                         <img
                                             alt="ecommerce"
-                                            className="object-cover object-center w-full h-full block"
+                                            className="object-cover object-center  w-full h-[140px] block"
                                             src={product?.featuredImage?.src}
                                         />
                                     </a>
                                     <div className="mt-4">
-                                        <h2 className="text-gray-900 title-font text-lg font-medium">
+                                        <h2 className="text-gray-900 title-font md:text-lg text-sm font-medium">
                                             {product?.name.slice(0, 20)}..
                                         </h2>
                                         <div className="flex items-center gap-10 text-gray-800">
@@ -88,6 +90,12 @@ const ShopUpcoming = () => {
                                                 {product?.price}
                                             </p>
                                         </div>
+                                        <button
+                                            type="button"
+                                            className="px-5 py-2  font-semibold rounded bg-black text-white w-full mt-3 text-xs "
+                                        >
+                                            Add to card
+                                        </button>
                                     </div>
                                 </Link>
                             </SwiperSlide>
