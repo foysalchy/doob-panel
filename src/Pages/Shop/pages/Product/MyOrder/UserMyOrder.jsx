@@ -9,39 +9,29 @@ import PaymentGetWay from './../../../../AdminItem/Settings/PaymentGetWay/Paymen
 import Swal from 'sweetalert2';
 
 
-const ProductCartSm = ({ order }) => {
+const ProductCartSm = ({ order, list }) => {
 
     return (
-        <div className='flex flex-col gap-3'>
-            {
-                order?.productList?.map((list) => (
-                    <div className='flex flex-col border p-4  justify-between gap-4 w-full'>
-
-                        <div className='w-full'> <img className='w-full h-[220px] border border-opacity-40 rounded object-cover' src={list.img} alt="" /></div>
-
-                        <div className='flex flex-col w-full  gap-1 '>  <h1 className='font-semibold text-md '>{list.productName}</h1>
-                            <p className='font-semibold'> Price: ${list.price}</p>
-                            <p className='text-gray-500 text-clip'>Regular Price:  {list.regular_price} </p>
-                        </div>
-                        <div className='flex gap-2 w-full text-start'>
-                            <h1 className='font-semibold text-sm '>Quantity</h1>
-                            <p className='text-gray-500 text-start '>
-                                {list.quantity}
-                            </p>
-                        </div>
-                        <div className='flex flex-col gap-1 w-full'>
-                            <h1 className='font-semibold text-lg '>Shipping updates</h1>
-                            <p className='text-gray-500'>
-                                {order.status ? order.status : (list.status ? list.status : "Progress")}
-
-                            </p>
-                        </div>
+        <tr>
+            <td class="p-4 border-b border-blue-gray-50">
+                <img src={list.img} alt="Spotify" class="inline-block relative object-center w-12 h-12 rounded-lg border border-blue-gray-50 bg-blue-gray-50/50 object-contain p-1" />
+            </td>
+            <td class="p-4 border-b  border-blue-gray-50">
+                <p class="block antialiased font-sans text-sm leading-normal text-blue-gray-900 font-normal">{list.productName}</p>
+            </td>
+            <td class="p-4 border-b  border-blue-gray-50">
+                <p class="block antialiased font-sans text-sm leading-normal text-blue-gray-900 font-normal">{list.regular_price}</p>
+            </td>
+            <td class="p-4 border-b  border-blue-gray-50">
+                <p class="block antialiased font-sans text-sm leading-normal text-blue-gray-900 font-normal"> {list.quantity}</p>
+            </td>
+            <td class="p-4 border-b  border-blue-gray-50">
+                <p class="block antialiased font-sans text-sm leading-normal text-blue-gray-900 font-normal">{order.status ? order.status : (list.status ? list.status : "Progress")}
+                </p>
+            </td>
+        </tr>
 
 
-                    </div>
-                ))
-            }
-        </div>
     )
 }
 const ProductCartLg = ({ order }) => {
@@ -526,72 +516,40 @@ const UserMyOrder = () => {
                                         </div>
                                     </div>
                                     <div className="md:hidden block">
-                                        <ProductCartSm order={order} />
+                                        <div class="flex items-center justify-center bg-white">
+                                            <div class="p-6 overflow-scroll px-0">
+                                                <table class="w-full min-w-max table-auto text-left">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="border-y border-blue-gray-100 bg-blue-gray-50/50 p-4">
+                                                                <p class="block antialiased font-sans text-sm text-blue-gray-900 font-normal leading-none opacity-70">Photo</p>
+                                                            </th>
+                                                            <th class="border-y border-blue-gray-100 bg-blue-gray-50/50 p-4">
+                                                                <p class="block antialiased font-sans text-sm text-blue-gray-900 font-normal leading-none opacity-70">Name</p>
+                                                            </th>
+                                                            <th class="border-y border-blue-gray-100 bg-blue-gray-50/50 p-4">
+                                                                <p class="block antialiased font-sans text-sm text-blue-gray-900 font-normal leading-none opacity-70">Price</p>
+                                                            </th>
+                                                            <th class="border-y border-blue-gray-100 bg-blue-gray-50/50 p-4">
+                                                                <p class="block antialiased font-sans text-sm text-blue-gray-900 font-normal leading-none opacity-70">Quantity</p>
+                                                            </th>
+                                                            <th class="border-y border-blue-gray-100 bg-blue-gray-50/50 p-4">
+                                                                <p class="block antialiased font-sans text-sm text-blue-gray-900 font-normal leading-none opacity-70">Shipping updates</p>
+                                                            </th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        {
+                                                            order?.productList?.map((list) => <ProductCartSm key={list?._id} order={order} list={list} />)}
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div className="md:block hidden">
                                         <ProductCartLg order={order} />
                                     </div>
-                                    {/* <div className='flex flex-col gap-3'>
-                                        {
-                                            order?.productList?.map((list) => (
-                                                <div className='flex border p-4  justify-between gap-4 w-full'>
-
-                                                    <div className='w-[50%]'> <img className='w-32 h-32 border border-opacity-40 rounded object-cover' src={list.img} alt="" /></div>
-
-                                                    <div className='flex flex-col w-full  gap-1 '>  <h1 className='font-semibold text-lg '>{list.productName}</h1>
-                                                        <p className='font-semibold'> Price: ${list.price}</p>
-                                                        <p className='text-gray-500 text-clip'>Regular Price:  {list.regular_price} </p>
-                                                    </div>
-                                                    <div className='flex flex-col gap-1 w-full text-center'>
-                                                        <h1 className='font-semibold text-lg '>Quantity</h1>
-                                                        <p className='text-gray-500 text-center '>
-                                                            {list.quantity}
-                                                        </p>
-                                                    </div>
-                                                    <div className='flex flex-col gap-1 w-full'>
-                                                        <h1 className='font-semibold text-lg '>Shipping updates</h1>
-                                                        <p className='text-gray-500'>
-                                                            {order.status ? order.status : (list.status ? list.status : "Progress")}
-
-                                                        </p>
-                                                    </div>
-
-
-                                                </div>
-                                            ))
-                                        }
-                                    </div> */}
-                                    {/* {
-                                        (order.status !== 'Cancel' && order.status !== 'Failed' && order.status !== 'Returned') && <div className="mt-4 mx-auto px-4 md:px-0">
-                                            <ul aria-label="Steps" className="items-center text-gray-600 font-medium md:flex">
-                                                {steps.stepsItems.map((item, idx) => (
-                                                    <li aria-current={currentStep == idx + 1 ? "step" : false} className="flex-1 last:flex-none flex gap-x-2 md:items-center">
-                                                        <div className="flex items-center flex-col gap-x-2">
-                                                            <div className={`w-8 h-8 rounded-full border-2 flex-none flex items-center justify-center ${currentStep > idx + 1 ? "bg-indigo-600 border-indigo-600" : "" || currentStep == idx + 1 ? "border-indigo-600" : ""}`}>
-                                                                <span className={` ${currentStep > idx + 1 ? "hidden" : "" || currentStep == idx + 1 ? "text-indigo-600" : ""}`}>
-                                                                    {idx + 1}
-                                                                </span>
-                                                                {
-                                                                    currentStep > idx + 1 ? (
-                                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5 text-white">
-                                                                            <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
-                                                                        </svg>
-                                                                    ) : ""
-                                                                }
-                                                            </div>
-                                                            <hr className={`h-12 border md:hidden ${idx + 1 == steps.stepsItems.length ? "hidden" : "" || currentStep > idx + 1 ? "border-indigo-600" : ""}`} />
-                                                        </div>
-                                                        <div className="h-8 flex items-center md:h-auto">
-                                                            <h3 className={`text-sm ${currentStep === idx + 1 ? "text-indigo-600" : ""}`}>
-                                                                {item}
-                                                            </h3>
-                                                        </div>
-                                                        <hr className={`hidden mr-2 w-full border md:block ${idx + 1 == steps.stepsItems.length ? "hidden" : "" || currentStep > idx + 1 ? "border-indigo-600" : ""}`} />
-                                                    </li>
-                                                ))}
-                                            </ul>
-                                        </div>
-                                    } */}
                                 </div>
                             )
                         })}

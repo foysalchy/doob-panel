@@ -6,7 +6,7 @@ import { PiShoppingCartSimpleBold } from "react-icons/pi";
 import { Link, } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { ShopAuthProvider } from '../../../AuthProvider/ShopAuthProvide';
-import { CgLogOut, CgProfile } from "react-icons/cg";
+import { CgClose, CgLogOut, CgProfile } from "react-icons/cg";
 import { MdFavoriteBorder, MdMenu, MdOutlineFavoriteBorder, MdOutlineShoppingCart } from 'react-icons/md';
 import { IoLogIn, IoSettings } from "react-icons/io5";
 import { FaSignOutAlt } from 'react-icons/fa';
@@ -181,7 +181,7 @@ const ShopNav = () => {
                             >
                                 <div className="inline-flex items-center bg-gray-900 w-[30px] h-[30px] p-2 rounded-full justify-center relative">
                                     <PiShoppingCartSimpleBold className=' text-white' />
-                                    <div className='text-white bg-[red] absolute text-[12px] px-1 rounded-full top-[20px] left-[16px]'>
+                                    <div className='text-white bg-[red] absolute text-[12px] px-1 rounded-full top-[-10px] left-[18px]'>
                                         {cartProducts?.length}
                                     </div>
                                 </div>
@@ -259,13 +259,16 @@ const ShopNav = () => {
                 </div>
             </div>
             {
-                searchOpen && <div className="bg-white p-2 shadow-xl flex items-center gap-2 w-[90%] mx-auto shadow-gray-400 rounded ring-1 ring-gray-100 fixed left-0 right-0 top-2">
-                    <BiSearch className='text-lg' />
-                    <input className='focus:outline-none w-full bg-transparent' type="text" placeholder='Search...' />
+                searchOpen && <div className=" fixed left-0 right-0 flex flex-col items-center justify-center top-0 h-screen bg-[#0c0c0cd6] z-[800]">
+                    <form className="bg-white p-2 shadow-xl flex  items-center gap-2 w-[90%] mx-auto shadow-[#8080805c] rounded ring-1 ring-gray-100">
+                        <BiSearch className='text-lg' />
+                        <input className='focus:outline-none w-full bg-transparent' type="text" placeholder='Search...' />
+                        <CgClose onClick={() => setSearchOpen(!searchOpen)} className='text-lg' />
+                    </form>
                 </div>
             }
             <div className='block lg:hidden'>
-                <div className="fixed z-50 left-0 right-0 bottom-2  p-5 px-6 m-2   flex items-center justify-between   bg-gray-900 shadow-3xl text-gray-400 rounded-2xl cursor-pointer">
+                <div className="fixed  left-0 right-0 bottom-2  p-5 px-6 m-2   flex items-center justify-between   bg-gray-900 shadow-3xl text-gray-400 rounded-2xl cursor-pointer z-[2000]">
                     <Link to={`/shop/${shopId}`} className="flex flex-col items-center transition ease-in duration-200 hover:text-blue-400 ">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"

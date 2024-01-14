@@ -497,7 +497,7 @@ const CategoryByProduct = () => {
                                 {
                                     filteredData?.map((product) => (
                                         <Link to={`/shop/${shopId}/product/${product?._id}`} className=" border p-4 w-full">
-                                            <a className="block relative h-48 rounded overflow-hidden">
+                                            <a className="block relative rounded overflow-hidden">
                                                 <img
                                                     alt="ecommerce"
                                                     className="object-cover object-center w-full h-full block"

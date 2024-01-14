@@ -69,10 +69,10 @@ const ShopUpcoming = () => {
                         {products?.data?.map((product, idx) => (
                             <SwiperSlide key={idx} className="border border-gray-500 border-opacity-90 p-3 rounded">
                                 <Link to={`product/${product?._id}`} >
-                                    <a className="block relative h-48 rounded overflow-hidden">
+                                    <a className="block relative rounded overflow-hidden">
                                         <img
                                             alt="ecommerce"
-                                            className="object-cover object-center w-full h-[130px] block"
+                                            className="object-cover object-center  w-full h-[140px] block"
                                             src={product?.featuredImage?.src}
                                         />
                                     </a>
@@ -90,6 +90,12 @@ const ShopUpcoming = () => {
                                                 {product?.price}
                                             </p>
                                         </div>
+                                        <button
+                                            type="button"
+                                            className="px-5 py-2  font-semibold rounded bg-black text-white w-full mt-3 text-xs "
+                                        >
+                                            Add to card
+                                        </button>
                                     </div>
                                 </Link>
                             </SwiperSlide>
