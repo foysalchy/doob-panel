@@ -57,7 +57,7 @@ const ProfileUpdate = () => {
     return (
         <div className='bg-white rounded w-full py-10 px-8'>
             <form onSubmit={submit}>
-                <div className='grid grid-cols-3 gap-7'>
+                <div className='grid md:grid-cols-3 gap-7'>
                     <div>
                         <h1 className='font-bold mb-2'>Full Name</h1>
                         {!editProfile ? (
@@ -145,10 +145,10 @@ const ProfileUpdate = () => {
                 <div>
                     {!editProfile &&
                         <div className='flex gap-4 mt-8'>
-                            <button type='button' onClick={() => setEditProfile(true)} className="bg-blue-500 text-white px-4 py-2 rounded">
+                            <button type='button' onClick={() => setEditProfile(true)} className="bg-blue-500 md:text-md text-[13px] md:w-auto w-full text-white px-4 py-2 rounded">
                                 Edit Profile
                             </button>
-                            <button onClick={() => setOpen(true)} className="bg-gray-500 text-white px-4 py-2 rounded">
+                            <button onClick={() => setOpen(true)} className="bg-gray-500 md:text-md text-[13px] md:w-auto w-full text-white px-4 py-2 rounded">
                                 Change Your Password
                             </button>
                         </div>}

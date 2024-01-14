@@ -72,8 +72,8 @@ const CategoryByProduct = () => {
 
                     </div>
                     <div >
-                        <div className='flex w-full justify-between gap-8 '>
-                            <div className='w-96 flex flex-col gap-2'>
+                        <div className='flex md:flex-row flex-col w-full justify-between gap-8 '>
+                            <div className='md:w-96 flex flex-col gap-2'>
                                 <div className="space-y-2">
                                     <details
                                         className="overflow-hidden rounded border border-gray-300 [&_summary::-webkit-details-marker]:hidden"
@@ -493,7 +493,7 @@ const CategoryByProduct = () => {
                                 </div>
 
                             </div>
-                            <div className="grid grid-cols-3 gap-4 w-full ">
+                            <div className="grid md:grid-cols-3 grid-cols-2 gap-4 w-full ">
                                 {
                                     filteredData?.map((product) => (
                                         <Link to={`/shop/${shopId}/product/${product?._id}`} className=" border p-4 w-full">
@@ -508,7 +508,7 @@ const CategoryByProduct = () => {
                                                 <h3 className="text-gray-500 text-xs tracking-widest title-font mb-1">
                                                     {product.brandName}
                                                 </h3>
-                                                <h2 className="text-gray-900 title-font text-lg font-medium">
+                                                <h2 className="text-gray-900 title-font md:text-lg text-md font-medium">
                                                     {product.name}
                                                 </h2>
                                                 <p className="mt-1"><span className='kalpurush'>৳</span>{product.price}</p>

@@ -69,10 +69,11 @@ const UserSupportTicket = () => {
 
     return (
         <section className=''>
-            <div className='flex justify-between items-start'>
-                <button onClick={() => setOpenSupport(true)} className='inline-block px-6 py-2.5 border rounded-md border-blue-500 text-primary hover:bg-blue-500 hover:text-white font-medium -mx-4 mb-4'>New Support Ticket</button>
+            <div className='flex md:flex-row flex-col md:justify-between justify-center  md:items-start items-center'>
+
+                <button onClick={() => setOpenSupport(true)} className='inline-block px-6 py-2.5 border rounded-md border-blue-500 text-primary hover:bg-blue-500 hover:text-white font-medium -mx-4 mb-4 md:w-auto w-full'>New Support Ticket</button>
                 <AddNewTicket refetch={refetch} OpenSupport={OpenSupport} setOpenSupport={setOpenSupport} className='w-0 h-0' />
-                <div className="relative w-3/5  ">
+                <div className="relative md:w-3/5 w-full ">
                     <input
                         type="text"
                         id="Search"
@@ -104,7 +105,7 @@ const UserSupportTicket = () => {
                     </span>
                 </div>
             </div>
-            {filteredData.length ? <div className=''>
+            {filteredData.length ? <div className='md:mt-0 mt-3'>
                 <div className='flex flex-wrap -mx-4'>
                     <div className='w-full '>
                         <div className='max-w-full overflow-x-auto'>

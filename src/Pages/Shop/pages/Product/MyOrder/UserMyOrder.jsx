@@ -8,6 +8,79 @@ import UserOrderInvoice from './UserOrderInvoice';
 import PaymentGetWay from './../../../../AdminItem/Settings/PaymentGetWay/PaymentGetWay';
 import Swal from 'sweetalert2';
 
+
+const ProductCartSm = ({ order }) => {
+
+    return (
+        <div className='flex flex-col gap-3'>
+            {
+                order?.productList?.map((list) => (
+                    <div className='flex flex-col border p-4  justify-between gap-4 w-full'>
+
+                        <div className='w-full'> <img className='w-full h-[220px] border border-opacity-40 rounded object-cover' src={list.img} alt="" /></div>
+
+                        <div className='flex flex-col w-full  gap-1 '>  <h1 className='font-semibold text-md '>{list.productName}</h1>
+                            <p className='font-semibold'> Price: ${list.price}</p>
+                            <p className='text-gray-500 text-clip'>Regular Price:  {list.regular_price} </p>
+                        </div>
+                        <div className='flex gap-2 w-full text-start'>
+                            <h1 className='font-semibold text-sm '>Quantity</h1>
+                            <p className='text-gray-500 text-start '>
+                                {list.quantity}
+                            </p>
+                        </div>
+                        <div className='flex flex-col gap-1 w-full'>
+                            <h1 className='font-semibold text-lg '>Shipping updates</h1>
+                            <p className='text-gray-500'>
+                                {order.status ? order.status : (list.status ? list.status : "Progress")}
+
+                            </p>
+                        </div>
+
+
+                    </div>
+                ))
+            }
+        </div>
+    )
+}
+const ProductCartLg = ({ order }) => {
+
+    return (
+        <div className='flex flex-col gap-3'>
+            {
+                order?.productList?.map((list) => (
+                    <div className='flex border p-4  justify-between gap-4 w-full'>
+
+                        <div className='w-[50%]'> <img className='w-32 h-32 border border-opacity-40 rounded object-cover' src={list.img} alt="" /></div>
+
+                        <div className='flex flex-col w-full  gap-1 '>  <h1 className='font-semibold text-lg '>{list.productName}</h1>
+                            <p className='font-semibold'> Price: ${list.price}</p>
+                            <p className='text-gray-500 text-clip'>Regular Price:  {list.regular_price} </p>
+                        </div>
+                        <div className='flex flex-col gap-1 w-full text-center'>
+                            <h1 className='font-semibold text-lg '>Quantity</h1>
+                            <p className='text-gray-500 text-center '>
+                                {list.quantity}
+                            </p>
+                        </div>
+                        <div className='flex flex-col gap-1 w-full'>
+                            <h1 className='font-semibold text-lg '>Shipping updates</h1>
+                            <p className='text-gray-500'>
+                                {order.status ? order.status : (list.status ? list.status : "Progress")}
+
+                            </p>
+                        </div>
+
+
+                    </div>
+                ))
+            }
+        </div>
+    )
+}
+
+
 const UserMyOrder = () => {
     const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('mobile-bank');
     const [getway, setGetway] = useState('Bkash');
@@ -31,7 +104,7 @@ const UserMyOrder = () => {
         },
     });
 
-
+    console.log(shopUser, 'user');
     function formatTimestamp(timestamp) {
         const date = new Date(timestamp);
         const options = { year: 'numeric', month: 'long', day: 'numeric' };
@@ -259,197 +332,206 @@ const UserMyOrder = () => {
                             }
                             return (
                                 <div className=' p-4 rounded border-[0.5px] border-opacity-40 gap-4 border-gray-500 bg-white'>
-                                    <div className='pb-4 flex items-center justify-between'>
-                                        <h1 className="text-xl font-bold ">Order Id : {order._id}</h1>
-                                        <div className='flex items-center gap-4'>
-                                            {/* <UserOrderInvoice order={order} modalOpen={modalOpen} setModalOpen={setModalOpen} /> */}
-                                            <p>Order placed {formatTimestamp(order.timestamp)}</p>
+                                    <div className='pb-4 flex md:flex-row flex-col items-center justify-between'>
+                                        <h1 className="md:text-xl font-bold ">Order Id : {order._id}</h1>
+                                        <p className='md:hidden block'>Order placed {formatTimestamp(order.timestamp)}</p>
+                                        <div className="flex items-center justify-between md:w-auto gap-2 md:mt-0 mt-3 w-full">
+                                            <div className='flex items-center gap-4'>
+                                                {/* <UserOrderInvoice order={order} modalOpen={modalOpen} setModalOpen={setModalOpen} /> */}
+                                                <p className='md:block hidden'>Order placed {formatTimestamp(order.timestamp)}</p>
 
-                                            <button onClick={() => handleViewDetails(order._id)} className='text-blue-500'>View invoice →</button>
+                                                <button onClick={() => handleViewDetails(order._id)} className='text-blue-500 md:text-md text-sm'>View invoice →</button>
 
-                                            {modalOpen && (
-                                                <div>
-                                                    <UserOrderInvoice
-                                                        modalOpen={true}
-                                                        setModalOpen={setModalOpen}
-                                                        order={myOrders?.data?.find(order => order._id === modalOpen)}
-                                                    />
-                                                </div>
-                                            )}
+                                                {modalOpen && (
+                                                    <div>
+                                                        <UserOrderInvoice
+                                                            modalOpen={true}
+                                                            setModalOpen={setModalOpen}
+                                                            order={myOrders?.data?.find(order => order._id === modalOpen)}
+                                                        />
+                                                    </div>
+                                                )}
 
-                                        </div>
-                                        <div className='flex items-center'>
-                                            {!order.status && <div >
-                                                {!order.status ? <button onClick={() => setShowAlert(order._id)} className='text-red-500'>  Cancel</button> : <button className=''>{order.status}ed</button>}
+                                            </div>
+                                            <div className='flex items-center'>
+                                                {!order.status && <div >
+                                                    {!order.status ? <button onClick={() => setShowAlert(order._id)} className='text-red-500'>  Cancel</button> : <button className=''>{order.status}ed</button>}
 
-                                                {showAlert && (
-                                                    <div className="fixed inset-0 z-10 bg-opacity-50 overflow-y-auto">
-                                                        <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-                                                            <div className="fixed inset-0 transition-opacity" aria-hidden="true">
-                                                                <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
-                                                            </div>
+                                                    {showAlert && (
+                                                        <div className="fixed inset-0 z-10 bg-opacity-50 overflow-y-auto">
+                                                            <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+                                                                <div className="fixed inset-0 transition-opacity" aria-hidden="true">
+                                                                    <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
+                                                                </div>
 
-                                                            {/* This is the alert with text area for note */}
-                                                            <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
-                                                                <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                                                                    <div className="sm:flex sm:items-start w-full">
-                                                                        <div className="mt-3 text-center sm:mt-0 w-full sm:text-left">
-                                                                            <h3 className="text-lg leading-6 font-medium text-gray-900">Why you cancel this order</h3>
-                                                                            <div className="mt-2 w-full">
-                                                                                <textarea
-                                                                                    value={note}
-                                                                                    onChange={(e) => setNote(e.target.value)}
-                                                                                    rows="4"
-                                                                                    cols="10"
-                                                                                    className="shadow-sm w-full p-2 focus:ring-blue-500 focus:border-blue-500 mt-1 block  sm:text-sm border-gray-300 rounded-md"
-                                                                                    placeholder="Enter your note here..."
-                                                                                ></textarea>
+                                                                {/* This is the alert with text area for note */}
+                                                                <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                                                                    <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                                                                        <div className="sm:flex sm:items-start w-full">
+                                                                            <div className="mt-3 text-center sm:mt-0 w-full sm:text-left">
+                                                                                <h3 className="text-lg leading-6 font-medium text-gray-900">Why you cancel this order</h3>
+                                                                                <div className="mt-2 w-full">
+                                                                                    <textarea
+                                                                                        value={note}
+                                                                                        onChange={(e) => setNote(e.target.value)}
+                                                                                        rows="4"
+                                                                                        cols="10"
+                                                                                        className="shadow-sm w-full p-2 focus:ring-blue-500 focus:border-blue-500 mt-1 block  sm:text-sm border-gray-300 rounded-md"
+                                                                                        placeholder="Enter your note here..."
+                                                                                    ></textarea>
+                                                                                </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                </div>
-                                                                <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row justify-end">
-                                                                    <button
-                                                                        onClick={() => setShowAlert(false)}
-                                                                        type="button"
-                                                                        className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-500 text-base font-medium text-white hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm"
-                                                                    >
-                                                                        Close
-                                                                    </button>
-                                                                    <button
-                                                                        onClick={() => cancelNoteSubmit()}
-                                                                        type="button"
-                                                                        className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-500 text-base font-medium text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm"
-                                                                    >
-                                                                        Submit
-                                                                    </button>
-                                                                </div>
+                                                                    <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row justify-end">
+                                                                        <button
+                                                                            onClick={() => setShowAlert(false)}
+                                                                            type="button"
+                                                                            className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-500 text-base font-medium text-white hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm"
+                                                                        >
+                                                                            Close
+                                                                        </button>
+                                                                        <button
+                                                                            onClick={() => cancelNoteSubmit()}
+                                                                            type="button"
+                                                                            className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-500 text-base font-medium text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm"
+                                                                        >
+                                                                            Submit
+                                                                        </button>
+                                                                    </div>
 
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                )}
-                                            </div>}
-                                            {
-                                                (order?.status === 'delivered' || order?.status === 'returned') && (
-                                                    <>
-                                                        <div className='flex items-center gap-2'>
-                                                            {order?.status !== 'returned' && <button
-                                                                onClick={() => {
-                                                                    setOpen(!open);
-                                                                    setOrderId(order?._id);
-                                                                }}
-                                                                className="text-red-500 px-4 py-1 bg-red-100 rounded"
-                                                            >
-                                                                Return
-                                                            </button>}
-                                                            {open && <div className="modal h-screen w-screen fixed bg-[#0000008e] flex items-center justify-center top-0 left-0 z-[1000]">
-                                                                <div className="bg-white  md:w-[500px] text-black p-6 rounded-lg">
-                                                                    <h1 className='font-bold'>If you want refund amount please complete this form</h1> <button onClick={() => setOpen(!open)} className='p-2 float-right text-xl'>
-                                                                        x
-                                                                    </button> <br />
-                                                                    <form onSubmit={handleSubmit} className="">
-                                                                        { }
-                                                                        <div className="">
-                                                                            <label className="block text-sm font-medium text-gray-700" htmlFor="paymentMethod">
-                                                                                Payment Method
-                                                                            </label>
-                                                                            <select
-                                                                                id="paymentMethod"
-                                                                                name="paymentMethod"
-                                                                                value={selectedPaymentMethod}
-                                                                                onChange={handlePaymentMethodChange}
-                                                                                className="mt-1 block w-full md:w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                                                                            >
-                                                                                <option value="mobile-bank">Mobile Banking</option>
-                                                                                <option value="bank">Bank</option>
-                                                                            </select>
+                                                    )}
+                                                </div>}
+                                                {
+                                                    (order?.status === 'delivered' || order?.status === 'returned') && (
+                                                        <>
+                                                            <div className='flex items-center gap-2'>
+                                                                {order?.status !== 'returned' && <button
+                                                                    onClick={() => {
+                                                                        setOpen(!open);
+                                                                        setOrderId(order?._id);
+                                                                    }}
+                                                                    className="text-red-500 px-4 py-1 bg-red-100 rounded"
+                                                                >
+                                                                    Return
+                                                                </button>}
+                                                                {open && <div className="modal h-screen w-screen fixed bg-[#0000008e] flex items-center justify-center top-0 left-0 z-[1000]">
+                                                                    <div className="bg-white  md:w-[500px] text-black p-6 rounded-lg">
+                                                                        <h1 className='font-bold'>If you want refund amount please complete this form</h1> <button onClick={() => setOpen(!open)} className='p-2 float-right text-xl'>
+                                                                            x
+                                                                        </button> <br />
+                                                                        <form onSubmit={handleSubmit} className="">
+                                                                            { }
                                                                             <div className="">
-                                                                                <label className="block text-sm font-medium text-gray-700 mt-2" htmlFor="name">
-                                                                                    Name
+                                                                                <label className="block text-sm font-medium text-gray-700" htmlFor="paymentMethod">
+                                                                                    Payment Method
                                                                                 </label>
-                                                                                <input name='name' id='name' className="mt-1 block w-full md:w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder='type your name' type="text" />
-                                                                            </div>
-                                                                            {selectedPaymentMethod === ""}
-                                                                            {showPaymentGetwaySelect && (
+                                                                                <select
+                                                                                    id="paymentMethod"
+                                                                                    name="paymentMethod"
+                                                                                    value={selectedPaymentMethod}
+                                                                                    onChange={handlePaymentMethodChange}
+                                                                                    className="mt-1 block w-full md:w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                                                                >
+                                                                                    <option value="mobile-bank">Mobile Banking</option>
+                                                                                    <option value="bank">Bank</option>
+                                                                                </select>
                                                                                 <div className="">
-                                                                                    <div className="">
-                                                                                        <label
-                                                                                            className="block text-sm font-medium text-gray-700 pb-1 mt-2"
-                                                                                            htmlFor="paymentGetway"
-                                                                                        >
-                                                                                            Payment Getway
-                                                                                        </label>
-                                                                                        <select
-                                                                                            id="paymentGetway"
-                                                                                            name="paymentGetway"
-                                                                                            onChange={(e) => setGetway(e?.target?.value)}
-                                                                                            className="mt-1 block w-full md:w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                                                                                        >
-                                                                                            {PaymentGetWay?.map((itm) => (
-                                                                                                <option key={itm} value={itm}>
-                                                                                                    {itm}
-                                                                                                </option>
-                                                                                            ))}
-                                                                                        </select>
-                                                                                    </div>
-                                                                                    <div className="">
-                                                                                        <label
-                                                                                            className="block text-sm font-medium text-gray-700 pb-1 mt-2"
-                                                                                            htmlFor="account"
-                                                                                        >
-                                                                                            Account Number
-                                                                                        </label>
-                                                                                        <input
-                                                                                            id="account"
-                                                                                            name="account_number"
-                                                                                            type='tel'
-                                                                                            placeholder='type your account number'
-                                                                                            className="mt-1 block w-full md:w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                                                                                        />
-                                                                                    </div>
+                                                                                    <label className="block text-sm font-medium text-gray-700 mt-2" htmlFor="name">
+                                                                                        Name
+                                                                                    </label>
+                                                                                    <input name='name' id='name' className="mt-1 block w-full md:w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder='type your name' type="text" />
                                                                                 </div>
-
-
-                                                                            )}
-
-                                                                            {/* bank inputs */}
-                                                                            {!showPaymentGetwaySelect && (
-                                                                                <div className=''>
+                                                                                {selectedPaymentMethod === ""}
+                                                                                {showPaymentGetwaySelect && (
                                                                                     <div className="">
-                                                                                        <label className="block text-sm font-medium text-gray-700 mt-2" htmlFor="bank_name">
-                                                                                            Bank Name
-                                                                                        </label>
-                                                                                        <input name='bank_name' id='bank_name' className="mt-1 block w-full md:w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder='type your name' type="text" />
+                                                                                        <div className="">
+                                                                                            <label
+                                                                                                className="block text-sm font-medium text-gray-700 pb-1 mt-2"
+                                                                                                htmlFor="paymentGetway"
+                                                                                            >
+                                                                                                Payment Getway
+                                                                                            </label>
+                                                                                            <select
+                                                                                                id="paymentGetway"
+                                                                                                name="paymentGetway"
+                                                                                                onChange={(e) => setGetway(e?.target?.value)}
+                                                                                                className="mt-1 block w-full md:w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                                                                            >
+                                                                                                {PaymentGetWay?.map((itm) => (
+                                                                                                    <option key={itm} value={itm}>
+                                                                                                        {itm}
+                                                                                                    </option>
+                                                                                                ))}
+                                                                                            </select>
+                                                                                        </div>
+                                                                                        <div className="">
+                                                                                            <label
+                                                                                                className="block text-sm font-medium text-gray-700 pb-1 mt-2"
+                                                                                                htmlFor="account"
+                                                                                            >
+                                                                                                Account Number
+                                                                                            </label>
+                                                                                            <input
+                                                                                                id="account"
+                                                                                                name="account_number"
+                                                                                                type='tel'
+                                                                                                placeholder='type your account number'
+                                                                                                className="mt-1 block w-full md:w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                                                                            />
+                                                                                        </div>
                                                                                     </div>
-                                                                                    <div className="">
-                                                                                        <label className="block text-sm font-medium text-gray-700 mt-2" htmlFor="ac">
-                                                                                            AC
-                                                                                        </label>
-                                                                                        <input name='ac' id='ac' className="mt-1 block w-full md:w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder='type your AC number' type="text" />
-                                                                                    </div>
-                                                                                    <div className="">
-                                                                                        <label className="block text-sm font-medium text-gray-700 mt-2" htmlFor="holder">
-                                                                                            Holder
-                                                                                        </label>
-                                                                                        <input name='holder' id='holder' className="mt-1 block w-full md:w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder='type Holder' type="text" />
-                                                                                    </div>
-                                                                                </div>
-                                                                            )}
 
-                                                                            <button className='bg-blue-500 text-white px-8 py-2 mt-3 ml-auto rounded' type='submit'>Return</button>
-                                                                        </div>
-                                                                    </form>
 
-                                                                </div>
-                                                            </div>}
-                                                        </div>
-                                                    </>
-                                                )
-                                            }
+                                                                                )}
+
+                                                                                {/* bank inputs */}
+                                                                                {!showPaymentGetwaySelect && (
+                                                                                    <div className=''>
+                                                                                        <div className="">
+                                                                                            <label className="block text-sm font-medium text-gray-700 mt-2" htmlFor="bank_name">
+                                                                                                Bank Name
+                                                                                            </label>
+                                                                                            <input name='bank_name' id='bank_name' className="mt-1 block w-full md:w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder='type your name' type="text" />
+                                                                                        </div>
+                                                                                        <div className="">
+                                                                                            <label className="block text-sm font-medium text-gray-700 mt-2" htmlFor="ac">
+                                                                                                AC
+                                                                                            </label>
+                                                                                            <input name='ac' id='ac' className="mt-1 block w-full md:w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder='type your AC number' type="text" />
+                                                                                        </div>
+                                                                                        <div className="">
+                                                                                            <label className="block text-sm font-medium text-gray-700 mt-2" htmlFor="holder">
+                                                                                                Holder
+                                                                                            </label>
+                                                                                            <input name='holder' id='holder' className="mt-1 block w-full md:w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder='type Holder' type="text" />
+                                                                                        </div>
+                                                                                    </div>
+                                                                                )}
+
+                                                                                <button className='bg-blue-500 text-white px-8 py-2 mt-3 ml-auto rounded' type='submit'>Return</button>
+                                                                            </div>
+                                                                        </form>
+
+                                                                    </div>
+                                                                </div>}
+                                                            </div>
+                                                        </>
+                                                    )
+                                                }
+                                            </div>
                                         </div>
                                     </div>
-                                    <div className='flex flex-col gap-3'>
+                                    <div className="md:hidden block">
+                                        <ProductCartSm order={order} />
+                                    </div>
+                                    <div className="md:block hidden">
+                                        <ProductCartLg order={order} />
+                                    </div>
+                                    {/* <div className='flex flex-col gap-3'>
                                         {
                                             order?.productList?.map((list) => (
                                                 <div className='flex border p-4  justify-between gap-4 w-full'>
@@ -478,7 +560,7 @@ const UserMyOrder = () => {
                                                 </div>
                                             ))
                                         }
-                                    </div>
+                                    </div> */}
                                     {/* {
                                         (order.status !== 'Cancel' && order.status !== 'Failed' && order.status !== 'Returned') && <div className="mt-4 mx-auto px-4 md:px-0">
                                             <ul aria-label="Steps" className="items-center text-gray-600 font-medium md:flex">
