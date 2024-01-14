@@ -41,10 +41,13 @@ const SellerAllProducts = () => {
 
     const filteredData = products?.filter(
         (item) =>
-            item.productName?.toLowerCase().includes(searchQuery?.toLowerCase()) ||
-            item.sku && item?.sku?.toString()?.includes(searchQuery) ||
-            item?.name?.toString()?.includes(searchQuery)
+
+            item.name?.toLowerCase().includes(searchQuery?.toLowerCase()) ||
+            item.sku && item?.sku?.toString()?.includes(searchQuery)
+
+
     );
+
 
     const startIndex = (currentPage - 1) * pageSize;
     const endIndex = startIndex + pageSize;

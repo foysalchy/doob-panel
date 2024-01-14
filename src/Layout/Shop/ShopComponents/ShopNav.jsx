@@ -11,6 +11,7 @@ import { MdFavoriteBorder, MdMenu, MdOutlineFavoriteBorder } from 'react-icons/m
 import { IoLogIn, IoSettings } from "react-icons/io5";
 import { FaSignOutAlt } from 'react-icons/fa';
 import { BsFillPinMapFill } from "react-icons/bs";
+import { useEffect } from 'react';
 
 const ShopNav = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -44,6 +45,32 @@ const ShopNav = () => {
 
     const [isOpen, setIsOpen] = useState(false);
 
+    const [cartProducts, setCartProducts] = useState([])
+
+    useEffect(() => {
+        const fetchData = () => {
+            if (!shopUser) {
+                const productData = localStorage.getItem('addToCart');
+                setCartProducts(JSON.parse(productData));
+            } else {
+                fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/user/add-to-cart?userId=${shopUser?._id}&shopId=${shop_id?.shop_id}&token=${shopUser?._id}`)
+                    .then(res => res.json())
+                    .then(data => {
+                        setCartProducts(data.data)
+                    })
+                    .catch(error => {
+                        console.error('Error fetching data:', error);
+                    });
+            }
+        };
+
+        const timeoutId = setTimeout(fetchData, 5000);
+
+        return () => clearTimeout(timeoutId); // Cleanup the timeout on component unmount
+
+    }, [shopUser, shop_id]);
+
+
     return (
 
         <div className='shadow-xl'>
@@ -71,33 +98,9 @@ const ShopNav = () => {
                             title="Company"
                         >
                             <img srcSet={shop?.logo} className='w-[110px] h-[50px] object-cover' src={shop?.logo} alt="" />
-                            {/* <span className="ml-2 md:text-xl font-bold tracking-wide text-gray-800 ">
-                                {shop?.shopName}
-                            </span> */}
-                        </Link>
-                        {/* <div className="relative group">
-                            <div className="bg-gray-100 px-4 font-[400] flex items-center gap-2 py-2 rounded-md">
-                                <MdMenu /> All Category
-                            </div>
-                            <div className="group-focus-within::block hidden">
-                                <ul className="absolute top-[43px] left-0 bg-white px-4 py-2 rounded-lg border z-30 shadow w-[260px] flex items-start flex-col gap-3">
-                                    {
-                                        categories?.map((i, index) => <li key={index} className=''>
-                                            <Link className='flex items-center gap-2 break-words' to={`categories/${shop_id.shop_id}/${i?.name}`}>
-                                                <img
-                                                    className="h-4 w-4 rounded text-gray-400 filter grayscale brightness-90 object-cover"
-                                                    src={i?.img}
-                                                    srcSet={i?.img}
-                                                    alt=""
-                                                />
-                                                <p className='font-[400]  capitalize text-md whitespace-no-wrap'>{i?.name}</p>
 
-                                            </Link>
-                                        </li>)
-                                    }
-                                </ul>
-                            </div>
-                        </div> */}
+                        </Link>
+
 
                         <div className="relative group">
                             <div className="bg-gray-100 px-4 font-[400] flex items-center gap-2 py-2 rounded-md cursor-pointer">
@@ -177,6 +180,9 @@ const ShopNav = () => {
                             >
                                 <div className="inline-flex items-center bg-gray-900 w-[30px] h-[30px] p-2 rounded-full justify-center ">
                                     <PiShoppingCartSimpleBold className=' text-white' />
+                                    <div className='text-white'>
+                                        {cartProducts?.length}
+                                    </div>
                                 </div>
                                 My Cart
                             </Link>
@@ -227,11 +233,11 @@ const ShopNav = () => {
 
                                         <hr className="border-gray-200 dark:border-gray-700" />
 
-                                        {/* Add more dropdown items as needed */}
+
 
                                         <a href="#" className="flex items-center p-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
                                             <svg className="w-5 h-5 mx-1" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                {/* SVG path for another menu item */}
+
                                             </svg>
                                             <span className="mx-1">Help</span>
                                         </a>
@@ -253,7 +259,7 @@ const ShopNav = () => {
             </div>
             <div className='block lg:hidden'>
                 <div className="fixed z-50 left-0 right-0 bottom-2  p-5 px-6 m-2   flex items-center justify-between   bg-gray-900 shadow-3xl text-gray-400 rounded-2xl cursor-pointer">
-                    <div className="flex flex-col items-center transition ease-in duration-200 hover:text-blue-400 ">
+                    <Link to={`/shop/${shopId}`} className="flex flex-col items-center transition ease-in duration-200 hover:text-blue-400 ">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             className="h-6 w-6"
@@ -268,7 +274,7 @@ const ShopNav = () => {
                                 d="M17 14v6m-3-3h6M6 10h2a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v2a2 2 0 002 2zm10 0h2a2 2 0 002-2V6a2 2 0 00-2-2h-2a2 2 0 00-2 2v2a2 2 0 002 2zM6 20h2a2 2 0 002-2v-2a2 2 0 00-2-2H6a2 2 0 00-2 2v2a2 2 0 002 2z"
                             ></path>
                         </svg>
-                    </div>
+                    </Link>
                     <div className="flex flex-col items-center transition ease-in duration-200 hover:text-blue-400 ">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -307,7 +313,7 @@ const ShopNav = () => {
                             />
                         </svg>
                     </div>
-                    <div className="flex flex-col items-center transition ease-in duration-200 hover:text-blue-400 ">
+                    <Link to={`/shop/${shopId}/user/my-profile`} className="flex flex-col items-center transition ease-in duration-200 hover:text-blue-400 ">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             className="h-6 w-6"
@@ -322,7 +328,7 @@ const ShopNav = () => {
                                 d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z"
                             ></path>
                         </svg>
-                    </div>
+                    </Link>
                 </div>
 
             </div>

@@ -122,23 +122,6 @@ const AddToCard = () => {
 
 
 
-    // if (shopUser) {
-    //     // If shopUser is true, use cartProducts
-    //     document.cookie =
-    //         "allProducts=" +
-    //         JSON.stringify(allProducts) +
-    //         "; expires=Thu, 01 Jan 2025 00:00:00 UTC; path=/";
-    // } else {
-    //     // If shopUser is false, use cookiesProduct
-    //     const cookieValue = document.cookie
-    //         .split("; ")
-    //         .find((row) => row.startsWith("allProducts="))
-    //         .split("=")[1];
-
-    //     const retrievedArray = JSON.parse(cookieValue);
-    //     setCookiesProduct(retrievedArray);
-    // }
-
     useEffect(() => {
         if (!shopUser) {
             const productData = localStorage.getItem('addToCart');

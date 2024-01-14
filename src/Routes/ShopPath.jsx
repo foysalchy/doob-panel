@@ -142,34 +142,6 @@ const ShopPath = [
     {
         path: ":id/user/cart",
         element: <AddToCard />,
-        // loader: async (params) => {
-        //     const urlObj = new URL(params.request.url)
-
-        //     console.log(urlObj);
-        //     const url = urlObj.href
-        //     const shopIdRegex = /shop_id=([^&]+)/;
-        //     const userIdRegex = /userId=([^&]+)/;
-
-        //     const shopIdMatch = url.match(shopIdRegex);
-        //     const userIdMatch = url.match(userIdRegex);
-
-        //     if (shopIdMatch && userIdMatch) {
-        //         const shopId = shopIdMatch[1];
-        //         const userId = userIdMatch[1];
-        //         try {
-
-        //         } catch (error) {
-        //             console.error("Error fetching data:", error);
-
-        //             return null;
-        //         }
-
-        //     } else {
-        //         console.log("shop_id or userId not found in the URL");
-        //     }
-
-
-        // }
     },
     {
         path: ":id/user/payment",
