@@ -162,10 +162,10 @@ const SellerListOfWarehouse = () => {
 
     return (
         <div>
-            <div className="mt-4 lg:pr-10 w-full mx-auto overflow-auto">
+            <div className="mt-4 lg:pr-10 w-full mx-auto overflow-hidden">
 
                 <button
-                    className="group relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
+                    className="group relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500 md:w-auto w-full"
                     onClick={() => handleViewDetails('Add New Warehouse')}
                 >
                     <span className="absolute -start-full transition-all group-hover:start-4">
@@ -185,14 +185,14 @@ const SellerListOfWarehouse = () => {
                         </svg>
                     </span>
 
-                    <span className="text-sm font-medium transition-all group-hover:ms-4">
+                    <span className="text-sm text-center md:w-auto w-full font-medium transition-all group-hover:ms-4">
                         Add New Warehouse
                     </span>
                 </button>
 
                 {OpenModal === 'Add New Warehouse' && <SellerModalForWarehouse OpenModal={OpenModal} setOpenModal={setOpenModal} data={'Add New Warehouse'} refetch={refetch} />}
 
-                <div className="relative w-3/5 my-6">
+                <div className="relative  my-6">
                     <input
                         type="text"
                         id="Search"
@@ -223,89 +223,89 @@ const SellerListOfWarehouse = () => {
                         </button>
                     </span>
                 </div>
+                <div className="overflow-x-auto overflow-y-hidden">
+                    <table className="table-auto w-full text-left whitespace-no-wrap">
+                        <thead>
+                            <tr>
+                                <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-800  rounded-tl ">
+                                    Warehouse Name
+                                </th>
+                                <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-800 ">
+                                    Address
+                                </th>
+                                <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-800 ">
+                                    Status
+                                </th>
+                                <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-800  rounded-tr ">
+                                    Action
+                                </th>
 
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {
+                                currentData.map((warehouse, index) => (
 
-                <table className="table-auto w-full text-left whitespace-no-wrap">
-                    <thead>
-                        <tr>
-                            <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-800  rounded-tl ">
-                                Warehouse Name
-                            </th>
-                            <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-800 ">
-                                Address
-                            </th>
-                            <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-800 ">
-                                Status
-                            </th>
-                            <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-800  rounded-tr ">
-                                Action
-                            </th>
-
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {
-                            currentData.map((warehouse, index) => (
-
-                                <tr key={index + warehouse._id} className=''>
-                                    <td className="px-4 py-3">
-                                        <div className='flex gap-2 items-center'>
-                                            <img className='h-10 w-10 object-fill'
-                                                src={warehouse.img}
-                                                srcSet={warehouse.img}
-                                                alt="" />
-                                            <div>
-                                                <h2 className="font-medium text-gray-800  ">
-                                                    {warehouse.name}
-                                                </h2>
-                                                <p
-                                                    className="text-sm font-normal text-gray-600 text-gray-400">
-                                                    {warehouse.slag}
-                                                </p>
+                                    <tr key={index + warehouse._id} className=''>
+                                        <td className="px-4 py-3">
+                                            <div className='flex gap-2 items-center'>
+                                                <img className='h-10 w-10 object-fill'
+                                                    src={warehouse.img}
+                                                    srcSet={warehouse.img}
+                                                    alt="" />
+                                                <div>
+                                                    <h2 className="font-medium text-gray-800  ">
+                                                        {warehouse.name}
+                                                    </h2>
+                                                    <p
+                                                        className="text-sm font-normal text-gray-600 text-gray-400">
+                                                        {warehouse.slag}
+                                                    </p>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </td>
-                                    <td className="px-4 py-3">{warehouse.address}</td>
-                                    <td className="px-4 py-3">{!warehouse.status ? (
-                                        <button
-                                            onClick={() => updateStatus(warehouse._id, true)}
-                                            className="inline-flex items-center justify-center py-1 px-4 bg-red-500 rounded shadow-md hover:bg-red-700 focus:shadow-outline focus:outline-none"
-                                        >
-                                            Disable
-                                        </button>
-                                    ) : (
-                                        <button
-                                            onClick={() => updateStatus(warehouse._id, false)}
-                                            className="inline-flex items-center justify-center py-1 px-4 bg-green-500 rounded shadow-md hover:bg-green-700 focus:shadow-outline focus:outline-none"
-                                        >
-                                            Enable
-                                        </button>
-                                    )} </td>
-                                    <td className="px-4  text-2xl flex gap-2 py-6 items-center text-gray-100">
-                                        <MdDelete
-                                            className="text-red-500 cursor-pointer"
-                                            onClick={() => DeleteWarehouse(warehouse._id)}
-                                        />
-                                        <BiEdit className="text-yellow-500 cursor-pointer"
-                                            onClick={() => handleViewDetails(warehouse?._id)}
+                                        </td>
+                                        <td className="px-4 py-3">{warehouse.address}</td>
+                                        <td className="px-4 py-3">{!warehouse.status ? (
+                                            <button
+                                                onClick={() => updateStatus(warehouse._id, true)}
+                                                className="inline-flex items-center justify-center py-1 px-4 bg-red-500 rounded shadow-md hover:bg-red-700 focus:shadow-outline focus:outline-none"
+                                            >
+                                                Disable
+                                            </button>
+                                        ) : (
+                                            <button
+                                                onClick={() => updateStatus(warehouse._id, false)}
+                                                className="inline-flex items-center justify-center py-1 px-4 bg-green-500 rounded shadow-md hover:bg-green-700 focus:shadow-outline focus:outline-none"
+                                            >
+                                                Enable
+                                            </button>
+                                        )} </td>
+                                        <td className="px-4  text-2xl flex gap-2 py-6 items-center text-gray-100">
+                                            <MdDelete
+                                                className="text-red-500 cursor-pointer"
+                                                onClick={() => DeleteWarehouse(warehouse._id)}
+                                            />
+                                            <BiEdit className="text-yellow-500 cursor-pointer"
+                                                onClick={() => handleViewDetails(warehouse?._id)}
 
-                                        />
+                                            />
 
-                                    </td>
-
-
-                                    {OpenModal === warehouse._id && <div className="h-0 w-0">
-                                        <SellerEditWareHouse OpenModal={OpenModal} refetch={refetch} setOpenModal={setOpenModal} data={warehouse} />
-                                    </div>}
+                                        </td>
 
 
+                                        {OpenModal === warehouse._id && <div className="h-0 w-0">
+                                            <SellerEditWareHouse OpenModal={OpenModal} refetch={refetch} setOpenModal={setOpenModal} data={warehouse} />
+                                        </div>}
 
-                                </tr>
-                            ))
-                        }
 
-                    </tbody>
-                </table>
+
+                                    </tr>
+                                ))
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
             <div className='flex justify-center mt-4'>

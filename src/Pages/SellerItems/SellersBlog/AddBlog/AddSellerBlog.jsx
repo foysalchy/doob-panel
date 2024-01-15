@@ -124,7 +124,7 @@ const AddSellerBlog = () => {
             <h1 className="text-2xl font-bold text-center">
                 Publish a blog for you and next
             </h1>
-            <div className=" border-2 p-4 rounded m-10">
+            <div className=" border-2 p-4 rounded md:m-10 m-0">
                 <form onSubmit={dataSubmit} className="space-y-4 ">
                     <div>
                         <label className="sr-only text-black" htmlFor="title">

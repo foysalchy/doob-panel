@@ -24,7 +24,7 @@ const ManageOrder = () => {
         <div>
             <ExportModal openModal={openModal} details={details} setOpenModal={setOpenModal} />
             <h3 className="font-bold text-xl">Orders Overview</h3>
-            <nav className='flex gap-4 flex-wrap mt-6'>
+            <nav className='flex md:gap-4 gap-2 overflow-x-auto mt-6'>
                 {ordersNav?.map((itm) =>
                     itm?.status === 'dropdown' ? (
                         <select
@@ -41,7 +41,7 @@ const ManageOrder = () => {
                         </select>
                     ) : (
                         <button
-                            className={`px-4 border-r border-gray-300 ${selectedValue === itm.value ? 'text-red-500' : '' // Change to your desired color
+                            className={`px-4 border-r md:bg-transparent bg-gray-50 border-gray-300 flex  items-center ${selectedValue === itm.value ? 'text-red-500' : '' // Change to your desired color
                                 }`}
                             key={itm.name}
                             onClick={() => setSelectedValue(itm.value)}
@@ -53,8 +53,8 @@ const ManageOrder = () => {
             </nav>
 
             {/* filter */}
-            <div className="flex items-center justify-between mt-4">
-                <div className="flex items-center gap-4">
+            <div className="flex md:flex-row flex-col items-center justify-between mt-4">
+                <div className="flex flex-wrap justify-center  items-center gap-4">
                     <button className='px-4 bg-white py-1 border'>Print</button>
                     <button onClick={() => setOpenModal(!openModal)} className='px-4 py-1 bg-transparent border'>
                         Export orders
@@ -70,13 +70,14 @@ const ManageOrder = () => {
                     </button>
                 </div>
                 <input
+                    className="w-[260px] md:mt-0 mt-3 rounded border-gray-400 focus:outline-none p-2 border"
                     type="date"
 
                     // value={selectedDate}
                     onChange={(e) => setSelectedDate(new Date(e.target.value))}
                 />
                 <div className="flex items-center gap-4">
-                    <div className='flex items-center bg-white '>
+                    <div className='flex items-center md:mt-0 mt-3 bg-white '>
                         <input onChange={(e) => setSearchValue(e.target.value)} type="text" placeholder='Search' className="w-[260px] rounded border-gray-400 focus:outline-none p-2 border" />
 
                     </div>

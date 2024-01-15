@@ -88,9 +88,9 @@ const SellerLoginCredintiial = () => {
             <div>
                 Follow the message
             </div>
-            <div className='border p-10 bg-gray-100'>
+            <div className='border md:p-10 p-4 mt-3 bg-gray-100'>
                 <h1 className='text-2xl '>Firebase SDK</h1>
-                <form onSubmit={handleSubmit} className=" mx-auto mt-8 p-4  rounded-md shadow-md">
+                <form onSubmit={handleSubmit} className=" mx-auto mt-5 rounded-md ">
                     <div className="mb-4">
                         <label htmlFor="email" className="block text-gray-700 text-sm font-bold mb-2">
                             Email

@@ -28,7 +28,7 @@ const ReviewTable = () => {
                                     <th scope="col" className="border-r px-2 py-4 dark:border-neutral-500">
                                         Order
                                     </th>
-                                    <th scope="col" className="border-r px-6 py-4 dark:border-neutral-500">
+                                    <th scope="col" className="border-r border-gray-400 px-2 py-4 dark:border-neutral-500">
                                         Content
                                     </th>
                                     <th scope="col" className="border-r px-6 py-4 dark:border-neutral-500">

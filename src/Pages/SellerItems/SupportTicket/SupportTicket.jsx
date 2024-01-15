@@ -109,7 +109,7 @@ const SellerSupportTicket = () => {
 
             {contact.length ? <div>
 
-                <div className="relative w-3/5  my-6">
+                <div className="relative md:w-3/5  my-6">
                     <input
                         type="text"
                         id="Search"
@@ -141,9 +141,9 @@ const SellerSupportTicket = () => {
                     </span>
                 </div>
 
-                <div className='overflow-scroll'>
+                <div className='overflow-x-auto overflow-h-hidden'>
 
-                    <table className=' table-fixed  my-10'>
+                    <table className=' table-fixed  md:my-10 '>
                         <thead className='text-center  '>
                             <tr className='overflow-x-auto overflow-y-hidden  border-b border-l border-[#E8E8E8] bg-[#F3F6FF] py-5 px-2 text-center text-base font-medium text-dark whitespace-nowrap '>
                                 <th className="w-1/6 bg-gray-900 border-l rounded-tl-md border-transparent py-4 px-3 text-lg font-semibold text-white  lg:px-4"> Department </th>
@@ -206,67 +206,65 @@ const SellerSupportTicket = () => {
 
                         </tbody>
                     </table>
-                    {viewComment && (
+                </div>
+                {viewComment && (
 
 
-                        <div>
-                            <ViewSupportTicket
-                                refetch={refetch}
-                                viewComment={true}
-                                setViewComment={setViewComment}
-                                ticketDetails={currentData.find(department => department._id === viewComment)}
-                            />
-                        </div>
-
-                    )}
-
-                    <div className='flex justify-center my-4'>
-                        <ol className="flex justify-center gap-1 text-xs font-medium">
-                            <li>
-                                <button
-                                    className="inline-flex h-8 w-8 items-center justify-center rounded border border-gray-400 bg-white text-gray-900 rtl:rotate-180"
-                                    onClick={() => setCurrentPage((prevPage) => Math.max(prevPage - 1, 1))}
-                                    disabled={currentPage === 1}
-                                >
-                                    <span className="sr-only">Prev Page</span>
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        className="h-3 w-3"
-                                        viewBox="0 0 20 20"
-                                        fill="currentColor"
-                                    >
-                                        <BiLeftArrow className='text-xl' />
-                                    </svg>
-                                </button>
-                            </li>
-
-
-                            <div className='border-blue-600 bg-blue-600 text-white p-2 px-3 rounded'>
-
-                                <span> {currentPage}</span>
-                            </div>
-
-                            <li>
-                                <button
-                                    className="inline-flex h-8 w-8 items-center justify-center rounded border border-gray-400 bg-white text-gray-900 rtl:rotate-180"
-                                    onClick={() => setCurrentPage((prevPage) => Math.min(prevPage + 1, Math.ceil(filteredData?.length / pageSize)))}
-                                    disabled={currentPage === Math.ceil(filteredData?.length / pageSize)}
-                                >
-                                    <span className="sr-only">Next Page</span>
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        className="h-3 w-3"
-                                        viewBox="0 0 20 20"
-                                        fill="currentColor"
-                                    >
-                                        <BiRightArrow className='text-xl' />
-                                    </svg>
-                                </button>
-                            </li>
-                        </ol>
+                    <div>
+                        <ViewSupportTicket
+                            refetch={refetch}
+                            viewComment={true}
+                            setViewComment={setViewComment}
+                            ticketDetails={currentData.find(department => department._id === viewComment)}
+                        />
                     </div>
 
+                )}
 
+                <div className='flex justify-center my-4'>
+                    <ol className="flex justify-center gap-1 text-xs font-medium">
+                        <li>
+                            <button
+                                className="inline-flex h-8 w-8 items-center justify-center rounded border border-gray-400 bg-white text-gray-900 rtl:rotate-180"
+                                onClick={() => setCurrentPage((prevPage) => Math.max(prevPage - 1, 1))}
+                                disabled={currentPage === 1}
+                            >
+                                <span className="sr-only">Prev Page</span>
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    className="h-3 w-3"
+                                    viewBox="0 0 20 20"
+                                    fill="currentColor"
+                                >
+                                    <BiLeftArrow className='text-xl' />
+                                </svg>
+                            </button>
+                        </li>
+
+
+                        <div className='border-blue-600 bg-blue-600 text-white p-2 px-3 rounded'>
+
+                            <span> {currentPage}</span>
+                        </div>
+
+                        <li>
+                            <button
+                                className="inline-flex h-8 w-8 items-center justify-center rounded border border-gray-400 bg-white text-gray-900 rtl:rotate-180"
+                                onClick={() => setCurrentPage((prevPage) => Math.min(prevPage + 1, Math.ceil(filteredData?.length / pageSize)))}
+                                disabled={currentPage === Math.ceil(filteredData?.length / pageSize)}
+                            >
+                                <span className="sr-only">Next Page</span>
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    className="h-3 w-3"
+                                    viewBox="0 0 20 20"
+                                    fill="currentColor"
+                                >
+                                    <BiRightArrow className='text-xl' />
+                                </svg>
+                            </button>
+                        </li>
+                    </ol>
                 </div>
 
             </div> : <h1 className="text-3xl text-center font-semibold text-gray-700 mt-8">

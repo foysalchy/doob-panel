@@ -39,7 +39,7 @@ const SellerDashboard = () => {
     const formattedDate = currentDate.toLocaleDateString('en-US', options);
 
     return (
-        <div className="h-screen  pb-24 overflow-auto ">
+        <div className="h-screen  pb-24 overflow-y-auto px-2 ">
             <div className=" bg-gradient-to-r from-[#1493f4] to-[#835177] absolute -z-10 -top-12 -right-14 blur-2xl opacity-10"></div>
             <h1 className="text-4xl font-semibold text-gray-800 capitalize">
                 {greeting}, {user.name}
@@ -50,9 +50,9 @@ const SellerDashboard = () => {
             </h2>
             <div className="flex flex-col items-center w-full my-6 space-y-4 md:space-x-4 md:space-y-0 md:flex-row">
                 <div className="w-full md:w-6/12">
-                    <div className="relative w-full overflow-hidden bg-white shadow-lg ">
+                    <div className="relative ring-1 ring-gray-100 w-full overflow-hidden bg-white shadow-lg  ">
                         <a href="#" className="block w-full h-full">
-                            <div className="flex items-center justify-between px-4 py-6 space-x-4">
+                            <div className="flex items-center justify-between px-4 py-7 space-x-4">
                                 <div className="flex items-center">
                                     <span className="relative p-5 bg-yellow-100 rounded-full">
                                         <svg width="40" fill="currentColor" height="40"
@@ -64,18 +64,18 @@ const SellerDashboard = () => {
                                         </svg>
                                     </span>
                                     <p
-                                        className="ml-2 text-sm font-semibold text-gray-700 border-b border-gray-200 capitalize">
-                                        Level 2 {user.name}
+                                        className="ml-2  text-sm font-semibold text-gray-700 border-b border-gray-200 capitalize">
+                                        Level 2 <br /> {user.name}
                                     </p>
                                 </div>
-                                <div className="mt-6 text-xl font-bold text-black border-b border-gray-200 md:mt-0 ">
+                                <div className="mt-3 text-xl md:font-bold text-black border-b border-gray-200 md:mt-0 ">
                                     $44,453.39
                                     <span className="text-xs text-gray-400">
                                         /$100K
                                     </span>
                                 </div>
                             </div>
-                            <div className="w-full h-3 bg-gray-100">
+                            <div className="w-full hidden h-3 bg-gray-100">
                                 <div className="w-2/5 h-full text-xs text-center  bg-green-400">
                                 </div>
                             </div>
@@ -83,8 +83,8 @@ const SellerDashboard = () => {
                     </div>
                 </div>
                 <div className="flex items-center w-full space-x-4 md:w-1/2">
-                    <div className="w-1/2">
-                        <div className="relative w-full px-4 py-6 bg-white shadow-lg ">
+                    <div className="w-1/2 ">
+                        <div className="relative ring-1 ring-gray-100 md:h-[100px] h-[120px] w-full px-4 py-6 bg-white shadow-lg ">
                             <p className="text-2xl font-bold text-black ">
                                 12
                             </p>
@@ -93,25 +93,27 @@ const SellerDashboard = () => {
                             </p>
                         </div>
                     </div>
-                    <div className="w-1/2">
-                        <div className="relative w-full px-4 py-6 bg-white shadow-lg ">
-                            <div className="text-2xl font-bold text-black flex gap-2">
-                                <span className='kalpurush'>৳</span> <p> 93.76</p>
+                    <div className="w-1/2 ">
+                        <div className="relative w-full px-4 md:h-[100px] h-[120px] ring-1 ring-gray-100 py-6 bg-white shadow-lg ">
+                            <div className="flex items-center justify-between">
+                                <div className="text-2xl font-bold text-black flex gap-2">
+                                    <span className='kalpurush'>৳</span> <p> 93.76</p>
+                                </div>
+
+                                <div className="flex md:relative absolute right-2 top-2 items-center justify-center text-lg font-bold text-white w-[30px] h-[30px] bg-purple-500 rounded-full ">
+                                    ৳
+                                </div>
                             </div>
                             <p className="text-sm text-gray-400">
                                 Commission in approval
                             </p>
-                            <span className="absolute p-4 bg-purple-500 rounded-full top-2 right-4">
-
-                                <span className='kalpurush absolute  transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 text-2xl' >৳</span>
-                            </span>
                         </div>
                     </div>
                 </div>
             </div>
             <div className="flex items-center space-x-4">
                 <button
-                    className="flex items-center px-4 py-2 text-gray-400 border border-gray-300 rounded-r-full rounded-tl-sm rounded-bl-full text-md">
+                    className="flex items-center px-4 py-2 text-gray-400 border border-gray-300 rounded-r-full rounded-tl-sm rounded-bl-full md:text-md w-[203px]">
                     <svg width="20" height="20" fill="currentColor" className="mr-2 text-gray-400" viewBox="0 0 1792 1792"
                         xmlns="http://www.w3.org/2000/svg">
                         <path
@@ -132,12 +134,12 @@ const SellerDashboard = () => {
             </div>
             <div className="grid grid-cols-1 gap-4 my-4 md:grid-cols-2 lg:grid-cols-3">
                 <div className="w-full">
-                    <div className="relative w-full px-4 py-6 bg-white shadow-lg ">
+                    <div className="relative ring-1 ring-gray-100 w-full px-4 h-[120px] bg-white shadow-lg ">
                         <p className="text-sm font-semibold text-gray-700 border-b border-gray-200 w-max ">
                             Product Reffered
                         </p>
                         <div className="flex items-end my-6 space-x-2">
-                            <p className="text-5xl font-bold text-black ">
+                            <p className="md:text-5xl text-3xl font-bold text-black ">
                                 12
                             </p>
                             <span className="flex items-center text-xl font-bold text-green-500">
@@ -154,12 +156,13 @@ const SellerDashboard = () => {
                     </div>
                 </div>
                 <div className="w-full">
-                    <div className="relative w-full px-4 py-6 bg-white shadow-lg ">
+                    <div className="relative w-full ring-1 ring-gray-100 px-4 h-[120px] bg-white shadow-lg ">
                         <p className="text-sm font-semibold text-gray-700 border-b border-gray-200 w-max ">
                             Product Paid
                         </p>
+
                         <div className="flex items-end my-6 space-x-2">
-                            <p className="text-5xl font-bold text-black ">
+                            <p className="md:text-5xl text-3xl font-bold text-black ">
                                 23
                             </p>
                             <span className="flex items-center text-xl font-bold text-green-500">
@@ -176,12 +179,12 @@ const SellerDashboard = () => {
                     </div>
                 </div>
                 <div className="w-full">
-                    <div className="relative w-full px-4 py-6 bg-white shadow-lg ">
+                    <div className="relative w-full px-4 ring-1 ring-gray-100 h-[120px] bg-white shadow-lg ">
                         <p className="text-sm font-semibold text-gray-700 border-b border-gray-200 w-max ">
                             New features
                         </p>
                         <div className="flex items-end my-6 space-x-2">
-                            <p className="text-5xl font-bold text-black ">
+                            <p className="md:text-5xl  text-3xl font-bold text-black ">
                                 12
                             </p>
                             <span className="flex items-center text-xl font-bold text-red-500">
@@ -198,12 +201,12 @@ const SellerDashboard = () => {
                     </div>
                 </div>
                 <div className="w-full">
-                    <div className="relative w-full px-4 py-6 bg-white shadow-lg ">
+                    <div className="relative ring-1 ring-gray-100 w-full px-4 h-[120px] bg-white shadow-lg ">
                         <p className="text-sm font-semibold text-gray-700 border-b border-gray-200 w-max ">
                             Sign in
                         </p>
                         <div className="flex items-end my-6 space-x-2">
-                            <p className="text-5xl font-bold text-black ">
+                            <p className="md:text-5xl text-3xl font-bold text-black ">
                                 16
                             </p>
                             <span className="flex items-center text-xl font-bold text-red-500">
@@ -220,12 +223,12 @@ const SellerDashboard = () => {
                     </div>
                 </div>
                 <div className="w-full">
-                    <div className="relative w-full px-4 py-6 bg-white shadow-lg ">
+                    <div className="relative w-full ring-1 ring-gray-100 px-4 h-[120px] bg-white shadow-lg ">
                         <p className="text-sm font-semibold text-gray-700 border-b border-gray-200 w-max ">
                             Sales
                         </p>
                         <div className="flex items-end my-6 space-x-2">
-                            <p className="text-5xl font-bold text-black ">
+                            <p className="md:text-5xl text-3xl font-bold text-black ">
                                 9
                             </p>
                             <span className="flex items-center text-xl font-bold text-green-500">
@@ -242,12 +245,12 @@ const SellerDashboard = () => {
                     </div>
                 </div>
                 <div className="w-full">
-                    <div className="relative w-full px-4 py-6 bg-white shadow-lg ">
+                    <div className="relative w-full ring-1 ring-gray-100 px-4 h-[120px] bg-white shadow-lg ">
                         <p className="text-sm font-semibold text-gray-700 border-b border-gray-200 w-max ">
                             Maintenance
                         </p>
                         <div className="flex items-end my-6 space-x-2">
-                            <p className="text-5xl font-bold text-black ">
+                            <p className="md:text-5xl text-3xl font-bold text-black ">
                                 15
                             </p>
                             <span className="flex items-center text-xl font-bold text-green-500">

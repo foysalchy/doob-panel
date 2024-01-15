@@ -123,7 +123,7 @@ const UpdateShopProfile = () => {
                     <img
                         srcSet={shopInfo.cover ? shopInfo?.cover : "https://vojislavd.com/ta-template-demo/assets/img/profile-background.jpg"}
                         src={shopInfo.cover ? shopInfo?.cover : "https://vojislavd.com/ta-template-demo/assets/img/profile-background.jpg"}
-                        className="w-full h-[250px] object-cover rounded-tl-lg rounded-tr-lg border group-hover:blur"
+                        className="w-full md:h-[250px] h-[110px] object-cover rounded-tl-lg rounded-tr-lg border group-hover:blur"
                         alt="Cover Photo"
                     />
                     <label className="absolute top-0 left-0 w-full h-full flex items-center justify-center opacity-0 text-white group-hover:opacity-100  bg-black bg-opacity-50">
@@ -173,16 +173,16 @@ const UpdateShopProfile = () => {
                 </div>
 
                 <div className="flex-1 flex flex-col items-center lg:items-end justify-end px-8 mt-2">
-                    <div className="flex items-center space-x-4 mt-2">
+                    <div className="flex md:flex-row justify-center flex-col md:gap-0 gap-3 items-center md:space-x-4 mt-2">
                         <button
-                            className="flex items-center bg-blue-600 hover:bg-blue-700 text-gray-100 px-4 py-2 rounded text-sm space-x-2 transition duration-100"
+                            className="flex items-center bg-blue-600 hover:bg-blue-700 text-gray-100 md:w-auto w-full px-4 py-2 rounded text-sm space-x-2 transition duration-100"
                             onClick={() => handleCopyLink(shopInfo.shopId)}
                         >
                             <BiCopy />
-                            {copy ? <p className="text-green-500">Link copied!</p> : <span>Share Your Site</span>}
+                            {copy ? <p className="text-green-500 flex items-center">Link copied!</p> : <span>Share Your Site</span>}
 
                         </button>
-                        <button onClick={() => setEdit(true)} className="flex items-center bg-blue-600 hover:bg-blue-700 text-gray-100 px-4 py-2 rounded text-sm space-x-2 transition duration-100">
+                        <button onClick={() => setEdit(true)} className="flex items-center bg-blue-600 md:w-auto w-full hover:bg-blue-700 text-gray-100 px-4 py-2 rounded text-sm space-x-2 transition duration-100">
 
                             <BiEdit />
                             <span>Edit Profile</span>

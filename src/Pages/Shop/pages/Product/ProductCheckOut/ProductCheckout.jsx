@@ -123,13 +123,13 @@ const ProductCheckout = () => {
                                 <div className=" ">
                                     {
                                         defaultAddress ?
-                                            <div>
+                                            <div className='grid md:grid-cols-2 grid-cols-1'>
                                                 <div className='bg-gray-100 capitalize p-4 rounded hover:shadow-xl border'>
                                                     <h1 >{defaultAddress?.fullName}</h1>
                                                     <h1>{defaultAddress?.mobileNumber}</h1>
                                                     <small><span>{defaultAddress?.address},</span> <span>{defaultAddress?.province} - </span> <span>{defaultAddress?.city}</span> <span>{defaultAddress?.area}</span></small>
                                                     <br />
-                                                    <small className='flex gap-4 items-center mt-2'>
+                                                    <small className='flex flex-wrap  gap-2 items-center mt-2'>
                                                         <span className='bg-green-200 p-0.5 px-1 rounded text-xs text-black '> {defaultAddress.deliveryLabel}</span>
                                                         <span className='bg-gray-200 rounded text-xs px-1'>{defaultAddress?.defaultAddress && "DEFAULT DELIVERY ADDRESS"}</span>
                                                         <span className='bg-gray-200 rounded text-xs px-1'>{defaultAddress?.defaultBillingAddress && "DEFAULT BILLING ADDRESS"}</span>
@@ -270,7 +270,7 @@ const ProductCheckout = () => {
                         </div>
                         <div className={`${!promoDiscount ? '' : 'mt-6'}`}>
                             {
-                                addresses?.data ? <Link to={`/shop/${shopId}/user/payment?shop_id=${shop_id?.shop_id}`} type="button">
+                                addresses?.data ? <Link to={`/shop/${shopId}/user/payment?shop_id=${shop_id?.shop_id}`} type="button" className='w-full'>
                                     <button onClick={() => sendPlaceOrderData()} className="px-6 py-2 rounded w-full bg-gray-800 text-white" type='button'>
                                         Place Order
                                     </button>

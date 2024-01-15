@@ -15,16 +15,16 @@ import { SiCloudflarepages, SiPagekit } from 'react-icons/si';
 import { BiArchive, BiBookContent, BiCategoryAlt } from 'react-icons/bi';
 import Daraz from './Daraz.png';
 import Logo from "../../../../../Logo.png";
+import { CgClose } from 'react-icons/cg';
 
-const SideNavberSeller = () => {
+const SideNavberSeller = ({ responsive, setResponsive }) => {
     const { user, logOut, shopInfo } = useContext(AuthContext)
-    const [responsive, setResponsive] = useState(false)
 
     return (
 
         <div className='py-2 sticky'>
 
-            <div className={responsive ? "flex  h-screen  overflow-y-auto  flex-col  p-3 w-30  border-r-2  " : "flex flex-col  p-6 w-64  h-screen  overflow-y-auto  "}>
+            <div className={`${responsive ? "flex  h-screen  overflow-y-auto  flex-col  md:p-3 p-0 lg:w-[70px] md:w-[70px] w-0  border-r-2  " : "flex flex-col  p-6 md:w-64 w-[300px]  h-screen  overflow-y-auto"} md:relative fixed  z-[4000] bg-[#111827] top-0 left-0 bottom-0`}>
                 <div className="space-y-3">
                     <div className="flex items-center justify-between">
                         {!responsive && <Link
@@ -62,11 +62,7 @@ const SideNavberSeller = () => {
                             </button>
                             :
                             <button onClick={() => setResponsive(true)} className="p-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" className="w-5 h-5 fill-current text-gray-100">
-                                    <rect width="352" height="32" x="80" y="96"></rect>
-                                    <rect width="352" height="32" x="80" y="240"></rect>
-                                    <rect width="352" height="32" x="80" y="384"></rect>
-                                </svg>
+                                <CgClose />
                             </button>
 
                         }

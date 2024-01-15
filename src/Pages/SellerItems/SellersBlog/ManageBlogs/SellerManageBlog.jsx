@@ -115,7 +115,7 @@ const SellerManageBlog = () => {
             </Link>
 
 
-            <div className="relative w-3/5 my-6">
+            <div className="relative  my-6">
                 <input
                     type="text"
                     id="Search"
@@ -157,14 +157,14 @@ const SellerManageBlog = () => {
             </div>
             <div >
                 <div >
-                    <div className="  py-2 pr-10">
-                        <div className="overflow-hidden border border-gray-200 border-gray-700 md:rounded-lg">
-                            <table className=" divide-y w-full divide-gray-200 divide-gray-700">
+                    <div className="  py-2 md:pr-10 pr-0">
+                        <div className="overflow-y-hidden overflow-x-auto border border-gray-200  md:rounded-lg">
+                            <table className=" divide-y w-full divide-gray-200 ">
                                 <thead className="bg-gray-50 ">
                                     <tr>
                                         <th
                                             scope="col"
-                                            className="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500 text-gray-400"
+                                            className="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500 "
                                         >
                                             <div className="flex items-center gap-x-3">
 

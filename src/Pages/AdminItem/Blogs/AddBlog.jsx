@@ -117,9 +117,9 @@ const AddBlog = () => {
 
       <div className=" mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8">
         <h1 className="text-2xl font-bold text-center">
-          Publish a blog for you and next
+          Publish a blog for you and next ...
         </h1>
-        <div className="p-10 border-2 rounded m-10">
+        <div className="py-10 md:px-10 px-0 border-2 rounded m-10">
           <form onSubmit={dataSubmit} className="space-y-4 ">
             <div>
               <label className="sr-only text-black" htmlFor="title">

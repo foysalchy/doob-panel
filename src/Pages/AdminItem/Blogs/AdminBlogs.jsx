@@ -142,7 +142,7 @@ const AdminBlogs = () => {
         <div className="mt-6">
           <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
             <div className="  py-2 pr-10">
-              <div className="overflow-hidden border border-gray-200 border-gray-700 md:rounded-lg">
+              <div className="overflow-hidden border   md:rounded-lg">
                 <table className=" w-full divide-y divide-gray-200 divide-gray-700">
                   <thead className="bg-gray-50 ">
                     <tr>
