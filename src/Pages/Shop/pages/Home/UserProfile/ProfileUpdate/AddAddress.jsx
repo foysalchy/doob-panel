@@ -19,10 +19,10 @@ const AddAddress = ({ open, setOpen, address, refetch }) => {
     useEffect(() => {
         setDefaultAddress(selectedAddress)
     }, [selectedAddress])
-    
+
     return (
         <div>
-            <div className={`fixed z-50 top-0 left-0 flex h-full min-h-screen w-full items-center justify-center bg-black bg-opacity-90 px-4 py-5 ${setOpen ? "block" : "hidden"}`}>
+            <div className={`fixed z-50 top-0 left-0 flex  h-full min-h-screen w-full items-center justify-center bg-black bg-opacity-90 px-4 py-5 ${setOpen ? "block" : "hidden"}`}>
                 <div className="w-full max-w-[800px]  rounded-[20px] bg-white pb-10 text-center ">
                     <div className='flex justify-between z-50 pt-4 items-start w-full sticky top-0 bg-gray-800 border-b border-gray-300 rounded-t-[18px] px-10'>
                         <div className='pb-2 text-xl font-bold text-white text-center sm:text-2xl'>My Billing </div>
@@ -32,14 +32,14 @@ const AddAddress = ({ open, setOpen, address, refetch }) => {
                     </div>
                     <div className='max-h-[500px] w-full px-10 text-start overflow-y-scroll custom-scroll' >
                         <div className='w-full mt-4'>
-                            {newAddress || editAddress ? <div className='z-50'> <EditAddress setEditAddress={setEditAddress} setNewAddress={setNewAddress} refetch={refetch} data={newAddress ? true : editAddress} /></div> : <div className='grid grid-cols-2 gap-8 '>
+                            {newAddress || editAddress ? <div className='z-50'> <EditAddress setEditAddress={setEditAddress} setNewAddress={setNewAddress} refetch={refetch} data={newAddress ? true : editAddress} /></div> : <div className='grid md:grid-cols-2 grid-cols-1 md:gap-8 gap-3'>
                                 {address.map((add) => (
                                     <div onClick={() => { setSelectedAddress(add) }} className={selectedAddress._id === add._id ? " bg-gray-300 capitalize p-4 rounded hover:shadow-xl border relative" : 'bg-gray-100 capitalize p-4 rounded hover:shadow-xl border relative'}>
                                         <h1 >{add?.fullName}</h1>
                                         <h1>{add?.mobileNumber}</h1>
                                         <small><span>{add?.address},</span> <span>{add?.province} - </span> <span>{add?.city}</span> <span>{add?.area}</span></small>
                                         <br />
-                                        <small className='flex gap-4 items-center mt-2'>
+                                        <small className='flex flex-wrap md:gap-4 gap-1  items-center mt-2'>
                                             <span className='bg-green-200 p-0.5 px-1 rounded text-[9px] text-black '> {add.deliveryLabel}</span>
                                             <span className='bg-gray-200 rounded text-[9px] px-1'>{add?.defaultAddress && "DEFAULT DELIVERY ADDRESS"}</span>
                                             <span className='bg-gray-200 rounded text-[9px] px-1'>{add?.defaultBillingAddress && "DEFAULT BILLING ADDRESS"}</span>

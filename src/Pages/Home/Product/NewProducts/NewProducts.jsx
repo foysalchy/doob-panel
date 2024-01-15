@@ -100,7 +100,7 @@ const NewProducts = () => {
                   <a className="block relative h-32 rounded overflow-hidden">
                     <img
                       alt="ecommerce"
-                      className="object-cover h-full block"
+                      className="object-cover h-[100px] block"
                       src={product?.image}
                       srcSet={product?.image}
                     />

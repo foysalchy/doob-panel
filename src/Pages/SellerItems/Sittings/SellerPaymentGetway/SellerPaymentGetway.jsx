@@ -133,15 +133,11 @@ const SellerPaymentGetaway = () => {
     return (
         <div>
             <div className="">
-
-
-
-
-                <div className="my-10">
+                <div className="md:my-10">
                     <h1 className="text-2xl font-bold text-center">
                         Publish a Category for you and next
                     </h1>
-                    <div className="p-10 border-2  rounded m-10">
+                    <div className="md:p-10 p-4 border-2  rounded md:m-10 mt-6">
                         <form onSubmit={dataSubmit} className="w-full ">
 
                             <div className='my-4'>
@@ -415,7 +411,7 @@ const SellerPaymentGetaway = () => {
 
                                         :
                                         <button disabled={disabled} type='submit'
-                                            className="group relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none mt-4 "
+                                            className="group relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none md:mt-4 md:w-auto w-full"
 
                                         >
                                             <span className="absolute -end-full transition-all group-hover:end-4">
@@ -433,9 +429,9 @@ const SellerPaymentGetaway = () => {
                     </div>
                 </div>
 
-                <div className='border my-10 p-10'>
+                <div className='border md:my-10 my-4 md:p-10 p-2'>
                     <p className='text-xl font-bold text-center'>You are upload {getaway.length} Account Added </p>
-                    <div className='flex items-center justify-center gap-4 my-4 '>
+                    <div className='flex flex-wrap items-center justify-center gap-4 mx-2 my-4 '>
 
                         {
                             getaway.map(get => (

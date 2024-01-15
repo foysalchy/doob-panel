@@ -31,7 +31,7 @@ const ShopNewProduct = () => {
                         <div className="flex justify-between text-white">
                             <div className="flex justify-between align-items-center">
                                 <img
-                                    className="h-5/6"
+                                    className="md:h-5/6"
                                     src="https://i.ibb.co/zfBPGTy/new-product?.png"
                                     srcSet="https://i.ibb.co/zfBPGTy/new-product?.png"
                                     alt="icon"
@@ -76,7 +76,7 @@ const ShopNewProduct = () => {
                                         <a className="block relative rounded overflow-hidden">
                                             <img
                                                 alt="ecommerce"
-                                                className="object-cover object-center w-full md:h-auto h-[130px] block"
+                                                className="object-cover object-center w-full md:h-[160px] h-[130px] block"
                                                 src={product?.featuredImage?.src}
                                             />
                                         </a>

@@ -76,7 +76,7 @@ const SellerAddContactPage = () => {
             <h1 className="text-2xl font-bold text-center">
                 Publish a Category for you and next
             </h1>
-            <div className="p-10 border-2  rounded m-10">
+            <div className="md:p-10 p-4 border-2  rounded md:m-10 mt-2">
                 <form onSubmit={dataSubmit} className="w-full ">
 
                     <div className='my-4'>

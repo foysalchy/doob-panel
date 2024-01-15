@@ -60,7 +60,7 @@ const SellerManageContact = () => {
                     Add Contact Info
                 </span>
             </Link>
-            <div className="relative w-3/5 my-6">
+            <div className="relative my-6">
                 <input
                     type="text"
                     id="Search"

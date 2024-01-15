@@ -80,7 +80,7 @@ const DarazIntegration = () => {
 
     return (
 
-        <div className='grid grid-cols-2 justify-between gap-10 mt-10'>
+        <div className='grid md:grid-cols-2 justify-between md:gap-10 gap-3 md:mt-10'>
 
             <div className={!shopInfo.darazLogin && "bg-gray-300  py-6 text-center  rounded-md "}>
 

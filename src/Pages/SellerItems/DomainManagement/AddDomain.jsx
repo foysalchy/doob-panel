@@ -115,24 +115,18 @@ const AddDomain = () => {
 
     return (
         <div className=' font-poppins'>
-            <div className="my-10">
+            <div className="md:my-10">
                 {
                     !isLoading && domainVideo &&
-
-
                     <div
                         className="flex items-center justify-center "
                         dangerouslySetInnerHTML={{ __html: domainVideo.DomainUrl }}
                     />
-
-
-
-
                 }
                 <h1 className="text-2xl font-bold mt-10 text-center">
                     Upload Your Domain
                 </h1>
-                <div className="text-center my-4">
+                <div className="text-center md:my-4">
 
                     Your Local Domain: <a href={`http://Doob.com/shop/${shopInfo.shopId}`} target="_blank" rel="noopener noreferrer"> <code> Doob.com/shop/{shopInfo.shopId}</code> </a>
                     {shopInfo.domain && <p> Your Custom domain: <a href={`http://${shopInfo.domain}`} target="_blank" rel="noopener noreferrer"> <code>{shopInfo.domain}</code></a></p>}
@@ -140,7 +134,7 @@ const AddDomain = () => {
                 </div>
 
 
-                <div className="p-10 border-2  rounded m-10">
+                <div className="md:p-10 p-3 border-2  rounded md:m-10 m-0 mt-3">
                     <form onSubmit={dataSubmit} className="w-full ">
 
 

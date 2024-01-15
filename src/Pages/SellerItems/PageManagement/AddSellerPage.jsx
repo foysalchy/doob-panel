@@ -43,7 +43,7 @@ const AddSellerPage = () => {
             <h1 className="text-2xl font-bold text-center">
                 Publish a Page for you
             </h1>
-            <div className="p-10 border-2 rounded m-10">
+            <div className="md:p-10 p-2 border-2 rounded md:m-10 mt-3">
                 <form onSubmit={dataSubmit} className="space-y-4 ">
                     <div>
                         <label className="sr-only text-black" htmlFor="title">

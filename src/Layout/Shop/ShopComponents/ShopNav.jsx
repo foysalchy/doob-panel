@@ -269,7 +269,7 @@ const ShopNav = () => {
             }
             <div className='block lg:hidden'>
                 <div className="fixed  left-0 right-0 bottom-2  p-5 px-6 m-2   flex items-center justify-between   bg-gray-900 shadow-3xl text-gray-400 rounded-2xl cursor-pointer z-[2000]">
-                    <Link to={`/shop/${shopId}`} className="flex flex-col items-center transition ease-in duration-200 hover:text-blue-400 ">
+                    {/* <Link to={`/shop/${shopId}`} className="flex flex-col items-center transition ease-in duration-200 hover:text-blue-400 ">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             className="h-6 w-6"
@@ -284,7 +284,43 @@ const ShopNav = () => {
                                 d="M17 14v6m-3-3h6M6 10h2a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v2a2 2 0 002 2zm10 0h2a2 2 0 002-2V6a2 2 0 00-2-2h-2a2 2 0 00-2 2v2a2 2 0 002 2zM6 20h2a2 2 0 002-2v-2a2 2 0 00-2-2H6a2 2 0 00-2 2v2a2 2 0 002 2z"
                             ></path>
                         </svg>
-                    </Link>
+                    </Link> */}
+                    <div className="relative group">
+                        <div className="group-hover:block hidden absolute top-[-224px] left-[-14px] bg-gray-900 px-4 py-2 rounded-lg z-[3000] shadow-xl shadow-[#71b3b41b] w-[240px]">
+                            <ul className="flex items-start flex-col gap-3">
+                                {categories?.map((i, index) => (
+                                    <li key={index} className="hover:bg-gray-800 duration-200 w-full p-1 rounded-md">
+                                        <Link className="flex items-center gap-2 break-words" to={`/shop/${shopId}/categories/${shop_id.shop_id}/${i?.name}`}>
+                                            <img
+                                                className="h-4 w-4 rounded text-gray-400 filter grayscale brightness-90 object-cover"
+                                                src={i?.img}
+                                                srcSet={i?.img}
+                                                alt=""
+                                            />
+                                            <p className="font-[400] break-words capitalize text-md whitespace-no-wrap">{i?.name}</p>
+                                        </Link>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                        <div className="flex flex-col items-center transition ease-in duration-200 hover:text-blue-400">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                className="h-6 w-6"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                            >
+                                <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth={2}
+                                    d="M17 14v6m-3-3h6M6 10h2a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v2a2 2 0 002 2zm10 0h2a2 2 0 002-2V6a2 2 0 00-2-2h-2a2 2 0 00-2 2v2a2 2 0 002 2zM6 20h2a2 2 0 002-2v-2a2 2 0 00-2-2H6a2 2 0 00-2 2v2a2 2 0 002 2z"
+                                ></path>
+                            </svg>
+                        </div>
+
+                    </div>
                     <div onClick={() => setSearchOpen(!searchOpen)} className="flex flex-col items-center transition ease-in duration-200 hover:text-blue-400  z-[2000]">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"

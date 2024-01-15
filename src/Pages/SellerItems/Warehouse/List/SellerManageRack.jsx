@@ -188,7 +188,7 @@ const SellerManageRack = () => {
             <div className="mt-4 lg:pr-10 w-full mx-auto overflow-auto">
 
                 <button
-                    className="group relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
+                    className="group relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 md:w-auto w-full py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
                     onClick={() => handleViewDetails('Add Rack')}
                 >
                     <span className="absolute -start-full transition-all group-hover:start-4">
@@ -208,7 +208,7 @@ const SellerManageRack = () => {
                         </svg>
                     </span>
 
-                    <span className="text-sm font-medium transition-all group-hover:ms-4">
+                    <span className="text-sm font-medium transition-all group-hover:ms-4 md:w-auto w-full text-center">
                         Add New Rack
                     </span>
                 </button>
@@ -216,7 +216,7 @@ const SellerManageRack = () => {
                 {OpenModal === 'Add Rack' && <SellerModalForWarehouse OpenModal={OpenModal} setOpenModal={setOpenModal} data={'Add Rack'} refetch={refetch} />}
 
 
-                <div className="relative w-3/5 my-6">
+                <div className="relative my-6">
                     <input
                         type="text"
                         id="Search"
@@ -248,89 +248,80 @@ const SellerManageRack = () => {
                     </span>
                 </div>
 
+                <div className="overflow-x-auto overflow-y-hidden">
+                    <table className="table-auto w-full text-left whitespace-no-wrap">
+                        <thead>
+                            <tr>
 
-                <table className="table-auto w-full text-left whitespace-no-wrap">
-                    <thead>
-                        <tr>
+                                <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-800  rounded-tl ">
+                                    Rack Name
+                                </th>
+                                <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-800 ">
+                                    Warehouse
+                                </th>
+                                <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-800 ">
+                                    Area
+                                </th>
+                                <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-800 ">
+                                    Status
+                                </th>
+                                <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-800  rounded-tr ">
+                                    Action
+                                </th>
 
-                            <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-800  rounded-tl ">
-                                Rack Name
-                            </th>
-                            <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-800 ">
-                                Warehouse
-                            </th>
-                            <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-800 ">
-                                Area
-                            </th>
-                            <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-800 ">
-                                Status
-                            </th>
-                            <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-800  rounded-tr ">
-                                Action
-                            </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {
+                                currentData.map((warehouse, index) => (
 
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {
-                            currentData.map((warehouse, index) => (
+                                    <tr key={index + warehouse._id} className=''>
 
-                                <tr key={index + warehouse._id} className=''>
+                                        <td className="px-4 py-3">
 
-                                    <td className="px-4 py-3">
+                                            <div className='flex gap-2 items-center'>
+                                                <div>
+                                                    <h2 className="font-medium text-gray-800  ">
+                                                        {warehouse?.rack}
+                                                    </h2>
 
-                                        <div className='flex gap-2 items-center'>
-                                            <div>
-                                                <h2 className="font-medium text-gray-800  ">
-                                                    {warehouse?.rack}
-                                                </h2>
-
+                                                </div>
                                             </div>
-                                        </div>
-                                    </td>
-                                    <td className="px-4 py-3">{warehouse?.warehouse}</td>
-                                    <td className="px-4 py-3">{warehouse?.area}</td>
-                                    <td className="px-4 py-3">{!warehouse.status ? (
-                                        <button
-                                            onClick={() => updateStatus(warehouse._id, true)}
-                                            className="inline-flex items-center justify-center py-1 px-4 bg-red-500 rounded shadow-md hover:bg-red-700 focus:shadow-outline focus:outline-none"
-                                        >
-                                            Disable
-                                        </button>
-                                    ) : (
-                                        <button
-                                            onClick={() => updateStatus(warehouse._id, false)}
-                                            className="inline-flex items-center justify-center py-1 px-4 bg-green-500 rounded shadow-md hover:bg-green-700 focus:shadow-outline focus:outline-none"
-                                        >
-                                            Enable
-                                        </button>
-                                    )} </td>
-                                    <td className="px-4  text-2xl flex gap-2 py-6 items-center text-gray-100">
-                                        <MdDelete
-                                            className="text-red-500 cursor-pointer"
-                                            onClick={() => DeleteWarehouse(warehouse._id)}
-                                        />
-                                        <BiEdit className="text-yellow-500 cursor-pointer"
-                                            onClick={() => handleViewDetails(warehouse?._id)}
+                                        </td>
+                                        <td className="px-4 py-3">{warehouse?.warehouse}</td>
+                                        <td className="px-4 py-3">{warehouse?.area}</td>
+                                        <td className="px-4 py-3">{!warehouse.status ? (
+                                            <button
+                                                onClick={() => updateStatus(warehouse._id, true)}
+                                                className="inline-flex items-center justify-center py-1 px-4 bg-red-500 rounded shadow-md hover:bg-red-700 focus:shadow-outline focus:outline-none"
+                                            >
+                                                Disable
+                                            </button>
+                                        ) : (
+                                            <button
+                                                onClick={() => updateStatus(warehouse._id, false)}
+                                                className="inline-flex items-center justify-center py-1 px-4 bg-green-500 rounded shadow-md hover:bg-green-700 focus:shadow-outline focus:outline-none"
+                                            >
+                                                Enable
+                                            </button>
+                                        )} </td>
+                                        <td className="px-4  text-2xl flex gap-2 py-6 items-center text-gray-100">
+                                            <MdDelete
+                                                className="text-red-500 cursor-pointer"
+                                                onClick={() => DeleteWarehouse(warehouse._id)}
+                                            />
+                                            <BiEdit className="text-yellow-500 cursor-pointer"
+                                                onClick={() => handleViewDetails(warehouse?._id)}
 
-                                        />
+                                            />
 
-                                    </td>
-
-
-
-
-
-                                </tr>
-                            ))
-                        }
-
-                    </tbody>
-                </table>
-
-
-
-
+                                        </td>
+                                    </tr>
+                                ))
+                            }
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
             <div className='flex justify-center mt-4'>

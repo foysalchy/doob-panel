@@ -189,10 +189,10 @@ const SellerManageCell = () => {
 
     return (
         <div>
-            <div className="mt-4 lg:pr-10 w-full mx-auto overflow-auto">
+            <div className="mt-4 lg:pr-10 w-full mx-auto overflow-hidden">
 
                 <button
-                    className="group relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
+                    className="group relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500 md:w-auto w-full"
                     onClick={() => handleViewDetails('Add Cell')}
                 >
                     <span className="absolute -start-full transition-all group-hover:start-4">
@@ -212,7 +212,7 @@ const SellerManageCell = () => {
                         </svg>
                     </span>
 
-                    <span className="text-sm font-medium transition-all group-hover:ms-4">
+                    <span className="text-sm md:w-auto w-full text-center font-medium transition-all group-hover:ms-4">
                         Add New Cell
                     </span>
                 </button>
@@ -220,7 +220,7 @@ const SellerManageCell = () => {
                 {OpenModal === 'Add Cell' && <SellerModalForWarehouse OpenModal={OpenModal} setOpenModal={setOpenModal} data={'Add Cell'} refetch={refetch} />}
 
 
-                <div className="relative w-3/5 my-6">
+                <div className="relative my-6">
                     <input
                         type="text"
                         id="Search"
@@ -252,99 +252,96 @@ const SellerManageCell = () => {
                     </span>
                 </div>
 
+                <div className="overflow-x-auto overflow-y-hidden">
+                    {filteredData.length ? <table className="table-auto w-full text-left whitespace-no-wrap">
+                        <thead>
+                            <tr>
 
-                {filteredData.length ? <table className="table-auto w-full text-left whitespace-no-wrap">
-                    <thead>
-                        <tr>
+                                <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-800  rounded-tl ">
+                                    Cell Name
+                                </th>
+                                <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-800 ">
+                                    Warehouse
+                                </th>
+                                <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-800 ">
+                                    Area
+                                </th>
+                                <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-800 ">
+                                    Rack
+                                </th>
+                                <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-800 ">
+                                    Self
+                                </th>
+                                <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-800 ">
+                                    Status
+                                </th>
+                                <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-800  rounded-tr ">
+                                    Action
+                                </th>
 
-                            <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-800  rounded-tl ">
-                                Cell Name
-                            </th>
-                            <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-800 ">
-                                Warehouse
-                            </th>
-                            <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-800 ">
-                                Area
-                            </th>
-                            <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-800 ">
-                                Rack
-                            </th>
-                            <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-800 ">
-                                Self
-                            </th>
-                            <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-800 ">
-                                Status
-                            </th>
-                            <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-800  rounded-tr ">
-                                Action
-                            </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {
+                                currentData.map((warehouse, index) => (
 
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {
-                            currentData.map((warehouse, index) => (
+                                    <tr key={index + warehouse._id} className=''>
 
-                                <tr key={index + warehouse._id} className=''>
+                                        <td className="px-4 py-3">
 
-                                    <td className="px-4 py-3">
+                                            <div className='flex gap-2 items-center'>
+                                                <div>
+                                                    <h2 className="font-medium text-gray-800  ">
+                                                        {warehouse?.cell}
+                                                    </h2>
 
-                                        <div className='flex gap-2 items-center'>
-                                            <div>
-                                                <h2 className="font-medium text-gray-800  ">
-                                                    {warehouse?.cell}
-                                                </h2>
-
+                                                </div>
                                             </div>
-                                        </div>
-                                    </td>
-                                    <td className="px-4 py-3">{warehouse?.warehouse}</td>
-                                    <td className="px-4 py-3">{warehouse?.area}</td>
-                                    <td className="px-4 py-3">{warehouse?.rack}</td>
-                                    <td className="px-4 py-3">{warehouse?.self}</td>
-                                    <td className="px-4 py-3">{!warehouse.status ? (
-                                        <button
-                                            onClick={() => updateStatus(warehouse._id, true)}
-                                            className="inline-flex items-center justify-center py-1 px-4 bg-red-500 rounded shadow-md hover:bg-red-700 focus:shadow-outline focus:outline-none"
-                                        >
-                                            Disable
-                                        </button>
-                                    ) : (
-                                        <button
-                                            onClick={() => updateStatus(warehouse._id, false)}
-                                            className="inline-flex items-center justify-center py-1 px-4 bg-green-500 rounded shadow-md hover:bg-green-700 focus:shadow-outline focus:outline-none"
-                                        >
-                                            Enable
-                                        </button>
-                                    )} </td>
-                                    <td className="px-4  text-2xl flex gap-2 py-6 items-center text-gray-100">
-                                        <MdDelete
-                                            className="text-red-500 cursor-pointer"
-                                            onClick={() => DeleteWarehouse(warehouse._id)}
-                                        />
-                                        <BiEdit className="text-yellow-500 cursor-pointer"
-                                            onClick={() => handleViewDetails(warehouse?._id)}
+                                        </td>
+                                        <td className="px-4 py-3">{warehouse?.warehouse}</td>
+                                        <td className="px-4 py-3">{warehouse?.area}</td>
+                                        <td className="px-4 py-3">{warehouse?.rack}</td>
+                                        <td className="px-4 py-3">{warehouse?.self}</td>
+                                        <td className="px-4 py-3">{!warehouse.status ? (
+                                            <button
+                                                onClick={() => updateStatus(warehouse._id, true)}
+                                                className="inline-flex items-center justify-center py-1 px-4 bg-red-500 rounded shadow-md hover:bg-red-700 focus:shadow-outline focus:outline-none"
+                                            >
+                                                Disable
+                                            </button>
+                                        ) : (
+                                            <button
+                                                onClick={() => updateStatus(warehouse._id, false)}
+                                                className="inline-flex items-center justify-center py-1 px-4 bg-green-500 rounded shadow-md hover:bg-green-700 focus:shadow-outline focus:outline-none"
+                                            >
+                                                Enable
+                                            </button>
+                                        )} </td>
+                                        <td className="px-4  text-2xl flex gap-2 py-6 items-center text-gray-100">
+                                            <MdDelete
+                                                className="text-red-500 cursor-pointer"
+                                                onClick={() => DeleteWarehouse(warehouse._id)}
+                                            />
+                                            <BiEdit className="text-yellow-500 cursor-pointer"
+                                                onClick={() => handleViewDetails(warehouse?._id)}
 
-                                        />
+                                            />
 
-                                    </td>
-
+                                        </td>
 
 
 
 
-                                </tr>
-                            ))
-                        }
 
-                    </tbody>
-                </table> :
-                    <h1>Sorry no data found</h1>
-                }
+                                    </tr>
+                                ))
+                            }
 
-
-
-
+                        </tbody>
+                    </table> :
+                        <h1>Sorry no data found</h1>
+                    }
+                </div>
             </div>
 
             {filteredData.length ? <div className='flex justify-center mt-4'>

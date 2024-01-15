@@ -122,13 +122,13 @@ const AddSupportTicket = ({ OpenSupport, setOpenSupport, refetch }) => {
         <div className={`fixed z-50 top-0 left-0 flex h-full min-h-screen w-full items-center justify-center bg-black bg-opacity-90 px-4 py-5 ${OpenSupport ? "block" : "hidden"}`}>
             <div className="w-full max-w-[800px]  rounded-[20px] bg-white pb-10 text-center ">
 
-                <div className='flex justify-between z-50 pt-4 items-start w-full sticky top-0 bg-gray-800 border-b border-gray-300 rounded-t-[18px] px-10'>
+                <div className='flex justify-between z-50 pt-4 items-start w-full sticky top-0 bg-gray-800 border-b border-gray-300 rounded-t-[18px] md:px-10 px-3'>
                     <div className='pb-2 text-xl font-bold text-white text-center sm:text-2xl'>Request a Support Ticket</div>
                     <div onClick={() => setOpenSupport(!OpenSupport)} className='cursor-pointer bg-gray-300 rounded-full  mb-2 p-2 text-2xl hover:bg-gray-400'>
                         <RxCross2 className='text-xl' />
                     </div>
                 </div>
-                <div className='max-h-[500px] px-10 text-start overflow-y-scroll' >
+                <div className='max-h-[500px] md:px-10 px-3 text-start overflow-y-scroll' >
                     <form onSubmit={handleSubmit}>
                         <div className=" mt-6 w-full">
                             <label className="block text-gray-700 text-sm font-bold mb-2">
@@ -172,7 +172,7 @@ const AddSupportTicket = ({ OpenSupport, setOpenSupport, refetch }) => {
                             {!Sccenshort ? (
                                 <button
                                     type="button"
-                                    className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-700"
+                                    className="bg-gray-500 md:w-auto w-full text-white px-4 py-2 rounded hover:bg-gray-700"
                                     onClick={() => setSccenshort(!Sccenshort)}
                                 >
                                     Add Screenshot
@@ -209,7 +209,7 @@ const AddSupportTicket = ({ OpenSupport, setOpenSupport, refetch }) => {
 
                         <button
                             type="submit"
-                            className="bg-blue-500 block text-white px-4 mt-4 py-2 rounded hover:bg-blue-700"
+                            className="bg-blue-500 block text-white px-4 mt-4 py-2 md:w-auto w-full rounded hover:bg-blue-700"
                         >
                             Submit Request
                         </button>

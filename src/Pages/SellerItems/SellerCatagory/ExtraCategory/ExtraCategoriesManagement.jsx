@@ -202,7 +202,7 @@ const ExtraCategoriesManagement = () => {
             <div className="mt-4 lg:pr-10 w-full mx-auto overflow-auto">
 
                 <Link to={'add'}
-                    className="group relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
+                    className="group relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500 md:w-auto w-full"
                     onClick={() => handleViewDetails('Add Mega Category')}
                 >
                     <span className="absolute -start-full transition-all group-hover:start-4">
@@ -222,14 +222,14 @@ const ExtraCategoriesManagement = () => {
                         </svg>
                     </span>
 
-                    <span className="text-sm font-medium transition-all group-hover:ms-4">
+                    <span className="text-sm font-medium transition-all group-hover:ms-4 md:w-auto w-full text-center">
                         Add New Extra Category
                     </span>
                 </Link>
 
                 {OpenModal === 'Add Mega Category' && <ModalForCategory OpenModal={OpenModal} setOpenModal={setOpenModal} data={'Add Mega Category'} refetch={refetch} />}
 
-                <div className="relative w-3/5 my-6">
+                <div className="relative my-6">
                     <input
                         type="text"
                         id="Search"

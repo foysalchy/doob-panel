@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import SideNavberSeller from '../Pages/Dashboard/SellerDashboard/SideNavberSeller/SideNavberSeller';
 import { Link, Outlet, useLocation, useParams } from 'react-router-dom';
 
 const SellerDashLayout = () => {
+    const [responsive, setResponsive] = useState(false)
 
     const location = useLocation();
     const paths = location.pathname.split('/').filter((path) => path !== '')
@@ -19,7 +20,7 @@ const SellerDashLayout = () => {
         <div className='flex  '>
 
             <div className="sticky z-50 top-0 h-full min-h-screen  bg-gray-900 text-white">
-                <SideNavberSeller />
+                <SideNavberSeller responsive={responsive} setResponsive={setResponsive} />
             </div>
             <div className="px-4 py-8 w-full   sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-10">
                 <div>
@@ -28,6 +29,15 @@ const SellerDashLayout = () => {
                         className="w-full rounded p-4 mb-4 bg-gray-800 text-gray-100"
                     >
                         <ol className="flex h-8 space-x-2">
+                            <li className='md:hidden block'>
+                                <button onClick={() => setResponsive(!responsive)} className="py-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" className="w-5 h-5 fill-current text-gray-100">
+                                        <rect width="352" height="32" x="80" y="96"></rect>
+                                        <rect width="352" height="32" x="80" y="240"></rect>
+                                        <rect width="352" height="32" x="80" y="384"></rect>
+                                    </svg>
+                                </button>
+                            </li>
                             <li className="flex items-center">
                                 <Link
                                     rel="noopener noreferrer"
@@ -45,26 +55,28 @@ const SellerDashLayout = () => {
                                     </svg>
                                 </Link>
                             </li>
-                            {paths.slice(1).map((path, index) => (
-                                <li className="flex items-center space-x-2" key={index}>
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        viewBox="0 0 32 32"
-                                        aria-hidden="true"
-                                        fill="currentColor"
-                                        className="w-2 h-2 mt-1 transform rotate-90 fill-current text-gray-600"
-                                    >
-                                        <path d="M32 30.031h-32l16-28.061z"></path>
-                                    </svg>
-                                    <Link
-                                        rel="noopener noreferrer"
-                                        to={`/${paths.slice(0, index + 2).join('/')}`}
-                                        className="flex items-center px-1 capitalize hover:underline"
-                                    >
-                                        {convertToTitleCase(path)}
-                                    </Link>
-                                </li>
-                            ))}
+                            <li className="flex w-full overflow-x-auto  overflow-y-hidden items-center">
+                                {paths.slice(1).map((path, index) => (
+                                    <div className="md:text-md text-sm flex items-center space-x-2" key={index}>
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            viewBox="0 0 32 32"
+                                            aria-hidden="true"
+                                            fill="currentColor"
+                                            className="w-2 h-2 mt-1 transform rotate-90 fill-current text-gray-600"
+                                        >
+                                            <path d="M32 30.031h-32l16-28.061z"></path>
+                                        </svg>
+                                        <Link
+                                            rel="noopener noreferrer"
+                                            to={`/${paths.slice(0, index + 2).join('/')}`}
+                                            className="flex items-center px-1 capitalize hover:underline"
+                                        >
+                                            {convertToTitleCase(path)}
+                                        </Link>
+                                    </div>
+                                ))}
+                            </li>
                         </ol>
                     </nav>
                 </div>
