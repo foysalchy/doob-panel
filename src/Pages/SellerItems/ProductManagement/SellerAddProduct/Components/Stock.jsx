@@ -4,7 +4,7 @@ import Select from 'react-select';
 const Stock = ({ field, index, inputFields, setInputFields }) => {
     return (
         <div>
-            <div className='border mt-4 border-gray-400 px-10 py-5 w-full bg-gray-100 rounded'>
+            <div className='border mt-4 border-gray-400 md:px-10 px-2 py-5 w-full bg-gray-100 rounded'>
 
                 <div className='flex flex-col'>
                     <span className='font-bold'>Stock Information</span>
@@ -12,7 +12,7 @@ const Stock = ({ field, index, inputFields, setInputFields }) => {
                 </div>
 
 
-                <div className='grid  gap-4 grid-cols-6 mt-4'>
+                <div className='grid  gap-4 md:grid-cols-6 mt-4'>
                     <div>
                         <label className='text-sm ' htmlFor="Video url ">Quantity</label>
                         <input

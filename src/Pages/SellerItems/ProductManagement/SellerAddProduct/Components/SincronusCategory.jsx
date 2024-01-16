@@ -166,7 +166,7 @@ const SincronusCategory = ({ daraz, setDaraz, woo, setWoo, setInputFields, setDa
         <div>
             <div className='border mt-4 border-gray-400 px-10 py-5 w-full bg-gray-100 rounded'>
 
-                <div className='flex justify-start gap-10'>
+                <div className='flex md:flex-row flex-col justify-start gap-10'>
                     {(shopInfo.darazLogin) && <div className='flex flex-col '>
                         <span className='font-bold'>Are you want Sinuous with Daraz </span>
 
@@ -205,7 +205,7 @@ const SincronusCategory = ({ daraz, setDaraz, woo, setWoo, setInputFields, setDa
                 <div className='flex flex-col mt-3'>
                     <span>Category Information <span className='text-red-500'> *</span></span>
 
-                    <div className='grid grid-cols-4 gap-4'>
+                    <div className='grid md:grid-cols-4 gap-4'>
                         {/* <select
                             onChange={(e) => handleCategoryChange(e.label)}
                             name="megaCategory" id="">
@@ -220,6 +220,7 @@ const SincronusCategory = ({ daraz, setDaraz, woo, setWoo, setInputFields, setDa
                             onChange={(e) => handleCategoryChange(e.label)}
                             placeholder='Select Category'
                             options={option}
+                            className='mt-3'
                         />
                         {selectedCategory && <Select
                             name='subCategory'

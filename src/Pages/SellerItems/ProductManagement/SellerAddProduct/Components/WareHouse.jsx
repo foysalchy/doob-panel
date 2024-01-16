@@ -118,10 +118,11 @@ const WareHouse = ({ adminWare, setAdminWare, shopInfo }) => {
                 <div className='flex flex-col mt-3'>
                     <span>Warehouse Information <span className='text-red-500'> *</span></span>
 
-                    <div className='grid grid-cols-5 gap-4'>
+                    <div className='grid md:grid-cols-5 gap-4'>
                         <div className="">
                             <label className="text-sm">Select Warehouse</label>
                             <Select
+                                className='mt-3'
                                 styles={{
                                     control: (provided) => ({
                                         ...provided,
