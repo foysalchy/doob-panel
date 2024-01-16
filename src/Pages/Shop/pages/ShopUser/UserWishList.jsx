@@ -42,9 +42,11 @@ const UserWishList = () => {
             const buyNowInfo = [product];
             setSelectProductData(buyNowInfo);
             navigate(`/shop/${shopId}/user/order?shop_id=${shop_id.shop_id}&userId=${shopUser._id}`);
-            refetch(); // Call refetch directly after navigating
+            refetch();
         }
     }
+
+    //user paler update
 
     return (
         <div className="max-w-4xl mx-auto ">
