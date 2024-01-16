@@ -16,9 +16,39 @@ import { BiArchive, BiBookContent, BiCategoryAlt } from 'react-icons/bi';
 import Daraz from './Daraz.png';
 import Logo from "../../../../../Logo.png";
 import { CgClose } from 'react-icons/cg';
+import { useQuery } from '@tanstack/react-query';
 
 const SideNavberSeller = ({ responsive, setResponsive }) => {
     const { user, logOut, shopInfo } = useContext(AuthContext)
+    // const { data: prices = [], refetch } = useQuery({
+    //     queryKey: ["prices"],
+    //     queryFn: async () => {
+    //         const res = await fetch("https://salenow-v2-backend.vercel.app/api/v1/admin/pricing");
+    //         const data = await res.json();
+    //         return data;
+    //     },
+    // });
+
+    const { data: prices = [], loader } = useQuery({
+        queryKey: ["prices"],
+        queryFn: async () => {
+            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/subscription-model?priceId=${shopInfo?.priceId}`);
+            const data = await res.json();
+            localStorage.setItem('price', JSON.stringify(data?.data));
+            return data?.data;
+        },
+    });
+
+    // { name: 'Domain Management', route: 'domain-management' },
+    // { name: 'Channel Integration', route: 'channel-integration' },
+    // { name: 'Warehouse', route: 'warehouse' },
+    // { name: 'Staf Account', route: 'staf-account' },
+    //access route
+    const managementPermission = (check) => {
+        return prices?.permissions?.some(itm => itm?.name === check)
+    };
+
+    console.log(prices?.permissions);
 
     return (
 
@@ -228,12 +258,12 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                         <span>Shop Profile</span>
                                     </Link>
                                 </li>
-                                <li className="rounded-sm  hover:bg-gray-800">
+                                {managementPermission('Domain Management') && <li className="rounded-sm  hover:bg-gray-800">
                                     <Link to={'/seller/domain-management'} rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
                                         <MdDomain className="w-5 h-5 fill-current text-gray-400" />
                                         <span>Domain Management</span>
                                     </Link>
-                                </li>
+                                </li>}
 
                                 <li className="rounded-sm  hover:bg-gray-800">
                                     <Link to={'/seller/settings'} rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
@@ -242,12 +272,12 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                         <span>Settings</span>
                                     </Link>
                                 </li>
-                                <li className="rounded-sm hover:bg-gray-800">
+                                {managementPermission('Channel Integration') && <li className="rounded-sm hover:bg-gray-800">
                                     <Link to={'/seller/channel-integration'} rel="noopener noreferrer" className="flex items-center p-2 space-x-3 rounded-md">
                                         <MdOutlineIntegrationInstructions className="w-5 h-5 text-gray-400" />
                                         <span>Channel Integration</span>
                                     </Link>
-                                </li>
+                                </li>}
 
                                 <li className="rounded-sm hover:bg-gray-800">
                                     <Link to={'/seller/categories-management'} rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
@@ -268,12 +298,18 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                         <span>Product Management</span>
                                     </Link>
                                 </li>
-                                <li className="rounded-sm hover:bg-gray-800">
+                                {managementPermission('Warehouse') && <li className="rounded-sm hover:bg-gray-800">
                                     <Link to={'/seller/warehouse'} rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
                                         <BiArchive className="w-5 h-5 text-gray-400" />
                                         <span>Warehouse Management</span>
                                     </Link>
-                                </li>
+                                </li>}
+                                {managementPermission('Staf Account') && <li className="rounded-sm hover:bg-gray-800">
+                                    <Link to={'/seller/staff-account'} rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
+                                        <BiArchive className="w-5 h-5 text-gray-400" />
+                                        <span>Staf Account</span>
+                                    </Link>
+                                </li>}
                                 <li className="rounded-sm hover:bg-gray-800">
                                     <Link to={'/seller/orders'} rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
                                         <BiArchive className="w-5 h-5 text-gray-400" />

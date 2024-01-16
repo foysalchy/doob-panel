@@ -34,15 +34,20 @@ const Router = createBrowserRouter([
   // Invoice Routes
   {
     path: "/userinvoice/:id",
-    element: <UserInvoice />
+    element: <>    <ScrollToTop /> <UserInvoice />
+    </>
   },
   {
     path: "/darazinvoice/:id",
-    element: <DarazInvoice />
+    element: <>
+      <ScrollToTop /><DarazInvoice />
+    </>
   },
   {
     path: "/invoice/:id",
-    element: <Invoice />
+    element: <>
+      <ScrollToTop /><Invoice />
+    </>
   },
   // Seller Route 
   {
