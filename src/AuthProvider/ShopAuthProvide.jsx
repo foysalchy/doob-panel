@@ -11,7 +11,6 @@ const ShopAuth = ({ children }) => {
     const pathname = window.location.pathname;
     const idMatch = pathname.match(/\/shop\/([^/]+)/);
     const [defaultAddress, setDefaultAddress] = useState()
-    console.log(defaultAddress), 'default Address';
     const shopId = idMatch ? idMatch[1] : null;
     const [selectProductData, setSelectProductData] = useState([])
     const { data: shopCredential = {}, isLoading, isError, refetch } = useQuery({
@@ -26,7 +25,6 @@ const ShopAuth = ({ children }) => {
                 const data = await res.json();
                 return data;
             } catch (error) {
-                console.error("Error fetching shop data:", error);
                 throw error; // Rethrow the error to mark the query as failed
             }
         },
@@ -43,7 +41,6 @@ const ShopAuth = ({ children }) => {
                 const data = await res.json();
                 return data;
             } catch (error) {
-                console.error("Error fetching shop data:", error);
                 throw error; // Rethrow the error to mark the query as failed
             }
         },
@@ -123,7 +120,6 @@ const ShopAuth = ({ children }) => {
 
     const saveUser = (name, email, provider) => {
         const user = { name, email, provider, shopId: shopId };
-        console.log(user, 'users');
         fetch("https://salenow-v2-backend.vercel.app/api/v1/shop/auth", {
             method: 'post',
             headers: {
@@ -156,13 +152,11 @@ const ShopAuth = ({ children }) => {
                 const user = userCredential.user;
                 const email = user?.email;
                 const name = user?.displayName;
-                console.log(name, email);
                 const provider = 'Email'
                 saveUser(name, email, provider);
             })
             .catch((error) => {
                 const errorCode = error.code;
-                console.log(error);
                 switch (errorCode) {
                     case 'auth/user-not-found':
                         alert('User not found. Check your email address.');
@@ -222,17 +216,14 @@ const ShopAuth = ({ children }) => {
                 setLoading(false);
             })
             .catch((error) => {
-                console.error("Error signing out:", error);
             });
     };
 
 
     const ForgetPass = (email) => {
         const Auth = getAuth();
-        console.log(email);
         sendPasswordResetEmail(Auth, email)
             .then(() => {
-                console.log('Password reset email sent!');
                 // Password reset email sent!
                 // ..
             })
@@ -245,15 +236,12 @@ const ShopAuth = ({ children }) => {
 
 
     const ChangePass = (newPassword) => {
-        console.log(newPassword);
         const auth = getAuth();
         const user = auth.currentUser;
-        console.log(user);
 
         updatePassword(user, newPassword).then(() => {
             alert('Password Updated')
         }).catch((error) => {
-            console.log(error);
             // An error ocurred
             // ...
         });

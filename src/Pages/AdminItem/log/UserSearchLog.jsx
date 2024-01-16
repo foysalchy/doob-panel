@@ -1,6 +1,6 @@
 import React from 'react';
 
-const UserNewPage = () => {
+const UserSearchLog = () => {
     return (
         <div>
             
@@ -8,4 +8,4 @@ const UserNewPage = () => {
     );
 };
 
-export default UserNewPage;
+export default UserSearchLog;

@@ -13,7 +13,6 @@ const ProductInformation = () => {
 
 
     const product = useLoaderData()
-    console.log(product.data, 'productInfo');
     const [selectedImage, setSelectedImage] = useState(product.data.featuredImage.src);
     const [quantity, setQuantity] = useState(1);
     const location = useLocation();

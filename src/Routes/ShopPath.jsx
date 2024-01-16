@@ -16,6 +16,7 @@ import Payment from "../Pages/Shop/pages/Product/ProductCheckOut/Payment";
 import ProductCheckout from "../Pages/Shop/pages/Product/ProductCheckOut/ProductCheckout";
 import UserSupportTicket from "../Pages/Shop/pages/ShopUser/SupportTicket/SupportTicket";
 import TrackOrder from "../Pages/Shop/pages/ShopUser/TrackOrder/TrackOrder";
+import UserWishList from "../Pages/Shop/pages/ShopUser/UserWishList";
 import Product from './../Pages/Home/Product/Product';
 import NavigateToLogin from "./NavigateToLogin";
 import IsUserRegistration from "./isUserRegistration";
@@ -71,6 +72,10 @@ const ShopPath = [
             {
                 path: 'my-support',
                 element: <UserSupportTicket />,
+            },
+            {
+                path: 'my-wish-list',
+                element: <UserWishList />,
             }
         ]
     },
