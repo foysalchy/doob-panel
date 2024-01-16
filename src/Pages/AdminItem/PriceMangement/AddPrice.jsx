@@ -2,9 +2,13 @@ import React from "react";
 import { useState } from "react";
 import { BsArrowRight } from "react-icons/bs";
 import { Link } from "react-router-dom";
+import Select from 'react-select';
 import Swal from "sweetalert2";
 
 const AddPrice = () => {
+  const [sellerRoutes, setSellerRoutes] = useState(null);
+  const [selectLimit, setSelectLimit] = useState(false);
+  const [limitValue, setLimitValue] = useState('');
   const [formData, setFormData] = useState({
     name: "",
     price: "",
@@ -12,11 +16,31 @@ const AddPrice = () => {
     best: "",
     timeDuration: "",
     benefits: [""],
+    permissions: []
   });
   const [loading, setLoading] = useState(false);
+  // react selector
+  const options = [
+    { name: 'Domain Management', route: 'domain-management' },
+    { name: 'Channel Integration', route: 'channel-integration' },
+    { name: 'Warehouse', route: 'warehouse' },
+    { name: 'Staf Account', route: 'staf-account' },
+    // Add more options as needed
+  ];
+
+  const handleChange = (selectedOption) => {
+    setSellerRoutes(selectedOption)
+    console.log('Selected Option:', sellerRoutes);
+    setFormData({
+      ...formData,
+      permissions: selectedOption
+    });
+  };
+
 
   const handleInputChange = (field, value) => {
     setFormData({ ...formData, [field]: value });
+
   };
 
   const handleBenefitChange = (index, value) => {
@@ -64,9 +88,43 @@ const AddPrice = () => {
           best: "",
           timeDuration: "",
           benefits: [""],
+          permissions: [""]
         });
+
       });
+
+    console.log(formData, "update.......");
   };
+
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/pricing`, {
+  //     method: "POST",
+  //     headers: {
+  //       "content-type": "application/json",
+  //     },
+  //     body: JSON.stringify({
+  //       ...formData,
+  //       permissions: sellerRoutes, // Include selected permissions in formData
+  //     }),
+  //   })
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       setLoading(false);
+  //       Swal.fire("success", "Your Category Publish Successfully", "success");
+  //       setFormData({
+  //         name: "",
+  //         price: "",
+  //         tagname: "",
+  //         best: "",
+  //         timeDuration: "",
+  //         benefits: [""],
+  //         permissions: [], // Clear selected permissions after submit
+  //       });
+  //     });
+
+  //   console.log(formData, "update.......");
+  // };
 
   return (
     <div>
@@ -166,7 +224,17 @@ const AddPrice = () => {
                 <option value="no">No</option>
               </select>
             </div>
-
+            {/* multiple selector */}
+            <div>
+              <label>Selar permission</label>
+              <Select
+                options={options}
+                isMulti // for multiple selection
+                getOptionLabel={(option) => option.name}
+                getOptionValue={(option) => option.route}
+                onChange={handleChange}
+              />
+            </div>
             <div>
               <label>
                 Benefits:
@@ -190,6 +258,11 @@ const AddPrice = () => {
                   </div>
                 ))}
               </label>
+            </div> <br />
+            <label>Daraz Limit:</label><br />
+            <div className="flex items-center mt-3 gap-3">
+              <label htmlFor="ck"><input checked={selectLimit} onChange={() => setSelectLimit(!selectLimit)} type="checkbox" id="ck" /> Life Time</label>
+              <input onChange={(e) => setLimitValue(e.target.value)} name="darazLimit" type="tel" className="border px-2 py-1 rounded" placeholder="daraz limit" />
             </div>
             <div className="flex gap-5 items-start mt-10">
               <button

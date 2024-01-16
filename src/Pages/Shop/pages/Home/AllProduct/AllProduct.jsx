@@ -4,11 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
 
 const AllProduct = () => {
-
-
-
     const { shop_id } = useContext(ShopAuthProvider)
-
     console.log(`https://salenow-v2-backend.vercel.app/api/v1/shop/product/${shop_id.shop_id}/all-product?limit=20`);
     const { data: newProducts = [], refetch } = useQuery({
         queryKey: ["allProduct"],

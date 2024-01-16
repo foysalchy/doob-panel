@@ -110,7 +110,7 @@ const Step3 = ({ prevStep, submitForm, handleChange, values }) => {
             </div>
 
             <div className="grid max-w-md gap-10 row-gap-5 lg:max-w-screen-lg sm:row-gap-10 lg:grid-cols-3 xl:max-w-screen-lg sm:mx-auto my-10">
-                {prices.map((price, index) => (
+                {prices?.map((price, index) => (
                     <div key={index}>
                         {price.status && (
                             <div

@@ -8,6 +8,7 @@ import ForgetPass from './ForgetPass';
 
 const ShopSignIn = () => {
 
+    const { Google, shopCredential, loginWithEmail, shopUser } = useContext(ShopAuthProvider)
     const page = useLoaderData()
 
     const location = useLocation()
@@ -19,7 +20,6 @@ const ShopSignIn = () => {
     const shopId = idMatch ? idMatch[1] : null;
 
 
-    const { Google, shopCredential, loginWithEmail, shopUser } = useContext(ShopAuthProvider)
 
     const userData = (e) => {
         e.preventDefault();

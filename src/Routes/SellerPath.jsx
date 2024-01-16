@@ -60,6 +60,10 @@ import UserSupportTicketForShop from "../Pages/SellerItems/SupportTicket/UserSup
 import CustomerReturn from "../Pages/SellerItems/OrderManagment/CustomerReturn/CustomerReturn";
 import ScheduleDropOffs from "../Pages/SellerItems/OrderManagment/ScheduleDropOffs/ScheduleDropOffs";
 import Pos from "../Pages/SellerItems/Pos/Pos";
+import IsDomainManagement from "./IsDomainManagement";
+import IsChenelIntregation from "./IsChenelIntregation";
+import IsWarehouse from "./IsWarehouse";
+import IsStafAccount from "./IsStafAccount";
 
 // `https://salenow-v2-backend.vercel.app/api/v1/seller/daraz-product/${shopInfo._id}
 
@@ -107,7 +111,9 @@ const SellerPath = [
     },
     {
         path: "domain-management",
-        element: <AddDomain />
+        element: <IsDomainManagement>
+            <AddDomain />
+        </IsDomainManagement>
     },
     {
         path: "settings",
@@ -135,7 +141,9 @@ const SellerPath = [
     },
     {
         path: "channel-integration",
-        element: <DarazIntegration />
+        element: <IsChenelIntregation>
+            <DarazIntegration />
+        </IsChenelIntregation>
     },
     {
         path: "categories-management",
@@ -247,27 +255,33 @@ const SellerPath = [
     },
     {
         path: "warehouse",
-        element: <SellerWareHouseManagement />
+        element: <IsWarehouse>
+            <SellerWareHouseManagement />
+        </IsWarehouse>
     },
     {
         path: "warehouse/warehouse-management",
-        element: <SellerListOfWarehouse />
+        element: <IsWarehouse> <SellerListOfWarehouse /></IsWarehouse>
     },
     {
         path: "warehouse/area-management",
-        element: <SellerAreaListForWarehouse />
+        element: <IsWarehouse><SellerAreaListForWarehouse /></IsWarehouse>
     },
     {
         path: "warehouse/rack-management",
-        element: <SellerManageRack />
+        element: <IsWarehouse><SellerManageRack /></IsWarehouse>
     },
     {
         path: "warehouse/self-management",
-        element: <SellerManageSelf />
+        element: <IsWarehouse><SellerManageSelf /></IsWarehouse>
     },
     {
         path: "warehouse/cell-management",
-        element: <SellerManageCell />
+        element: <IsWarehouse><SellerManageCell /></IsWarehouse>
+    },
+     {
+        path: "staff-account",
+        element: <IsStafAccount><h1>Staf Account</h1></IsStafAccount>
     },
     {
         path: "orders",
@@ -303,7 +317,7 @@ const SellerPath = [
     // ? pos path
     {
         path: "pos",
-        element: <Pos/>
+        element: <Pos />
     },
 
     {

@@ -98,28 +98,28 @@ const AllPrice = () => {
             </thead>
             <tbody>
               {
-                prices.map((price, index) => (
+                prices?.map((price) => (
 
-                  <tr >
+                  <tr key={price?.name}>
                     <td className="px-4 py-3">{price?.name}</td>
                     <td className="px-4 py-3">{price?.price}</td>
-                    <td className="px-4 py-3">{!price.status ? (
+                    <td className="px-4 py-3">{!price?.status ? (
                       <button
-                        onClick={() => publishHandle(price._id)}
+                        onClick={() => publishHandle(price?._id)}
                         className="inline-flex items-center justify-center py-1 px-4 bg-red-500 rounded shadow-md hover:bg-red-700 focus:shadow-outline focus:outline-none"
                       >
                         Publish
                       </button>
                     ) : (
                       <button
-                        onClick={() => unpublishHandle(price._id)}
+                        onClick={() => unpublishHandle(price?._id)}
                         className="inline-flex items-center justify-center py-1 px-4 bg-green-500 rounded shadow-md hover:bg-green-700 focus:shadow-outline focus:outline-none"
                       >
                         Un Publish
                       </button>
                     )} </td>
                     <td className="px-4 py-3 text-xl flex gap-2 items-center text-gray-900">
-                      <MdDelete onClick={() => DeletePrice(price._id)} className="text-red-500 cursor-pointer" />
+                      <MdDelete onClick={() => DeletePrice(price?._id)} className="text-red-500 cursor-pointer" />
                       <BiEdit className="text-yellow-500 cursor-pointer" onClick={() => handleViewDetails(price?._id)} />
                     </td>
 

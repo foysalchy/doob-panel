@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import { RxCross2 } from 'react-icons/rx';
 import Swal from 'sweetalert2';
+import Select from 'react-select';
 
 
 const EditPrice = ({ OpenModal, setOpenModal, FAQInfo, refetch }) => {
 
-
-
     const [benefits, setBenefits] = useState(FAQInfo.benefits);
+    // const [selectedPermissions, setSelectedPermissions] = useState(
+    //     FAQInfo?.permissions || []
+    // );
 
     const appendBenefit = () => {
         const newBenefits = [...benefits, 'New Benefit'];
@@ -20,8 +22,21 @@ const EditPrice = ({ OpenModal, setOpenModal, FAQInfo, refetch }) => {
         setBenefits(newBenefits);
     };
 
+    const options = [
+        { name: 'Domain Management', route: 'domain-management' },
+        { name: 'Channel Integration', route: 'channel-integration' },
+        { name: 'Warehouse', route: 'warehouse' },
+        { name: 'Staf Account', route: 'staf-account' },
+        // Add more options as needed
+    ];
 
+    const selectedPermissions = [];
+    const handleChange = (selectedOptions) => {
+        selectedPermissions.push(selectedOptions);
+        console.log(selectedPermissions, '++++++++++++');
+        // setSelectedPermissions(selectedOptions);
 
+    };
 
     const handleFAQUpdate = async (e) => {
         e.preventDefault();
@@ -39,10 +54,13 @@ const EditPrice = ({ OpenModal, setOpenModal, FAQInfo, refetch }) => {
             best,
             benefits,
             MetaTag,
-            MetaDescription
+            MetaDescription,
+            // permissions: selectedPermissions
+            selectedPermissions
+
+
         }
-
-
+        console.log(data, 'data');
 
         try {
             fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/price/update-price/${FAQInfo._id}`, {
@@ -60,6 +78,8 @@ const EditPrice = ({ OpenModal, setOpenModal, FAQInfo, refetch }) => {
         } catch (error) {
             console.error("Error updating FAQ:", error);
         }
+
+
     };
 
 
@@ -75,9 +95,6 @@ const EditPrice = ({ OpenModal, setOpenModal, FAQInfo, refetch }) => {
         // Update the state with the modified array
         setBenefits(newBenefits);
     };
-
-
-
 
     return (
         <div className={`fixed z-50 top-0 left-0 flex h-full min-h-screen w-full items-center justify-center bg-black bg-opacity-90  px-4 text-start py-5 ${OpenModal ? "block" : "hidden"}`}>
@@ -141,40 +158,53 @@ const EditPrice = ({ OpenModal, setOpenModal, FAQInfo, refetch }) => {
                         </select>
                     </div>
 
-                    <div>
+                    <div className='flex flex-col gap-2'>
+                        <label className='text-start  ml-0'>Selar permission</label>
+                        <Select
+                            options={options}
+                            isMulti={true}
+                            defaultValue={FAQInfo?.permissions}
+                            getOptionLabel={(option) => option.name}
+                            getOptionValue={(option) => option.route}
+                            onChange={handleChange}
+                        />
+                    </div>
+
+                    <div className='flex flex-col items-start gap-2 mt-3 w-full'>
                         Benefits:
-                        <div className='border p-4'>
-                            {
-                                benefits.map((data, i) => (
-                                    <div className='' >
-                                        <div
+                        <div className='border w-full p-4'>
+                            {benefits?.map((data, i) => (
+                                <div className='' key={i}>
+                                    <div
 
-                                            onInput={(e) => handleBenefitChange(i, e.target.textContent)}
-                                            contentEditable
-                                            key={i}
-                                            name='benefit'
-                                            ref={(contentEditable) => {
-                                                if (contentEditable) {
-                                                    const range = document.createRange();
-                                                    const selection = window.getSelection();
-                                                    range.selectNodeContents(contentEditable);
-                                                    range.collapse(false);
-                                                    selection.removeAllRanges();
-                                                    selection.addRange(range);
-                                                }
-                                            }}
-                                            className='w-full p-2 my-1 border border-black text-start'
+                                        onInput={(e) => handleBenefitChange(i, e.target.textContent)}
+                                        contentEditable
+                                        key={i}
+                                        name='benefit'
+                                        ref={(contentEditable) => {
+                                            if (contentEditable) {
+                                                const range = document.createRange();
+                                                const selection = window.getSelection();
+                                                range.selectNodeContents(contentEditable);
+                                                range.collapse(false);
+                                                selection.removeAllRanges();
+                                                selection.addRange(range);
+                                            }
+                                        }}
+                                        className='w-full p-2 my-1 border border-black text-start'
 
-                                        >
-                                            {data}
-                                        </div>
-                                        <button type='button' className='bg-red-500 text-start px-4 py-0.5 mb-2 flex justify-start' onClick={() => removeBenefit(i)}>Remove</button>
+                                    >
+                                        {data}
                                     </div>
-                                ))
+                                    <button type='button' className='bg-red-500 text-start px-4 py-0.5 mb-2 flex justify-start' onClick={() => removeBenefit(i)}>Remove</button>
+                                </div>
+                            ))
                             }
                             <button type='button' className='bg-green-500 px-4 py-1' onClick={appendBenefit}>Add More Benefit</button>
                         </div>
                     </div>
+
+
 
                     <input name='MetaTag' placeholder='Meta Tag' className='w-full p-2 my-4 border border-black' defaultValue={FAQInfo.MetaTag} />
                     <textarea name='MetaDescription' placeholder='Meta Description' className='w-full p-2 my-4 border border-black' defaultValue={FAQInfo.MetaTag} />
