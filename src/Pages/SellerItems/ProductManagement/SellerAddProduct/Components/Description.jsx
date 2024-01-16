@@ -18,7 +18,7 @@ const Description = ({ description, setDescription, shortDescription, setShortDe
 
 
     return (
-        <div className=' border mt-4 border-gray-400 px-10 py-5 pb-16 w-full bg-gray-100 rounded'>
+        <div className=' border mt-4 border-gray-400 md:px-10 px-3 py-5 md:pb-16 pb-20 w-full bg-gray-100 rounded'>
             <div className='flex flex-col'>
                 <span className='font-bold'>Product Description</span>
                 <small>Having accurate product information raises discoverability.</small>
@@ -42,7 +42,7 @@ const Description = ({ description, setDescription, shortDescription, setShortDe
                     }}
                 />
             </div>
-            <div className='mt-16'>
+            <div className='mt-16 py-2'>
                 <div className='flex flex-col mt-3'>
                     <span>Product  Description <span className='text-red-500'> *</span></span>
 
@@ -51,12 +51,9 @@ const Description = ({ description, setDescription, shortDescription, setShortDe
                     onChange={handleDescriptionChange}
                     name='description'
                     value={description}
-                    className=" rounded"
+                    className=" rounded h-[150px]"
                     placeholder="Enter your description here..."
-                    style={{
-                        height: '150px', // Set your desired height
-                        // Add any other styles you want to customize
-                    }}
+
                 />
             </div>
         </div>

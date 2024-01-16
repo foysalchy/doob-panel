@@ -58,10 +58,10 @@ const UploadImage = ({ coverPhoto, setCoverPhoto, youtube, setYoutube }) => {
                     <span>Product Images <span className='text-red-500'> *</span></span>
                     <small>Upload between 3 to 8 images</small>
                 </div>
-                <div className="grid grid-cols-8  mt-4">
+                <div className="grid md:grid-cols-8 gap-2 grid-cols-2 mt-4">
 
-                    <div className='w-24'>
-                        <label htmlFor="coverPhoto" className='bg-gray-300 w-20 h-20 flex justify-center items-center'>
+                    <div className='md:w-24'>
+                        <label htmlFor="coverPhoto" className='bg-gray-300 md:w-20 h-20 flex justify-center items-center'>
                             {coverPhoto ? (
                                 <img src={coverPhoto} alt="Cover Preview" className="w-full h-full object-cover" />
                             ) : (
@@ -78,8 +78,8 @@ const UploadImage = ({ coverPhoto, setCoverPhoto, youtube, setYoutube }) => {
                         />
                         <p className='text-sm'>Cover Photo <span className='text-red-500'> *</span></p>
                     </div>
-                    <div className='w-20 text-center'>
-                        <label htmlFor="Photo1" className='bg-gray-300 cursor-pointer w-20 h-20 flex justify-center items-center'>
+                    <div className='md:w-20 text-center'>
+                        <label htmlFor="Photo1" className='bg-gray-300 cursor-pointer md:w-20 h-20 flex justify-center items-center'>
                             {photo1 ? (
                                 <img src={photo1} alt="Cover Preview" className="w-full h-full object-cover" />
                             ) : (
@@ -97,8 +97,8 @@ const UploadImage = ({ coverPhoto, setCoverPhoto, youtube, setYoutube }) => {
                         />
                         <p className='text-sm'>Photo 1</p>
                     </div>
-                    <div className='w-20 text-center'>
-                        <label htmlFor="Photo2" className='bg-gray-300 cursor-pointer w-20 h-20 flex justify-center items-center'>
+                    <div className='md:w-20 text-center'>
+                        <label htmlFor="Photo2" className='bg-gray-300 cursor-pointer md:w-20 h-20 flex justify-center items-center'>
                             {photo2 ? (
                                 <img src={photo2} alt="Cover Preview" className="w-full h-full object-cover" />
                             ) : (
@@ -115,8 +115,8 @@ const UploadImage = ({ coverPhoto, setCoverPhoto, youtube, setYoutube }) => {
                         />
                         <p className='text-sm'>Photo 2</p>
                     </div>
-                    <div className='w-20 text-center'>
-                        <label htmlFor="Photo3" className='bg-gray-300 cursor-pointer w-20 h-20 flex justify-center items-center'>
+                    <div className='md:w-20 text-center'>
+                        <label htmlFor="Photo3" className='bg-gray-300 cursor-pointer md:w-20 h-20 flex justify-center items-center'>
                             {photo3 ? (
                                 <img src={photo3} alt="Cover Preview" className="w-full h-full object-cover" />
                             ) : (
@@ -133,8 +133,8 @@ const UploadImage = ({ coverPhoto, setCoverPhoto, youtube, setYoutube }) => {
                         />
                         <p className='text-sm'>Photo 3</p>
                     </div>
-                    <div className='w-20 text-center'>
-                        <label htmlFor="Photo4" className='bg-gray-300 cursor-pointer w-20 h-20 flex justify-center items-center'>
+                    <div className='md:w-20 text-center'>
+                        <label htmlFor="Photo4" className='bg-gray-300 cursor-pointer md:w-20 h-20 flex justify-center items-center'>
                             {photo4 ? (
                                 <img src={photo4} alt="Cover Preview" className="w-full h-full object-cover" />
                             ) : (
@@ -151,8 +151,8 @@ const UploadImage = ({ coverPhoto, setCoverPhoto, youtube, setYoutube }) => {
                         />
                         <p className='text-sm'>Photo 4</p>
                     </div>
-                    <div className='w-20 text-center'>
-                        <label htmlFor="Photo5" className='bg-gray-300 cursor-pointer w-20 h-20 flex justify-center items-center'>
+                    <div className='md:w-20 text-center'>
+                        <label htmlFor="Photo5" className='bg-gray-300 cursor-pointer md:w-20 h-20 flex justify-center items-center'>
                             {photo5 ? (
                                 <img src={photo5} alt="Cover Preview" className="w-full h-full object-cover" />
                             ) : (
@@ -169,8 +169,8 @@ const UploadImage = ({ coverPhoto, setCoverPhoto, youtube, setYoutube }) => {
                         />
                         <p className='text-sm'>Photo 5</p>
                     </div>
-                    <div className='w-20 text-center'>
-                        <label htmlFor="Photo6" className='bg-gray-300 cursor-pointer w-20 h-20 flex justify-center items-center'>
+                    <div className='md:w-20 text-center'>
+                        <label htmlFor="Photo6" className='bg-gray-300 cursor-pointer md:w-20 h-20 flex justify-center items-center'>
                             {photo6 ? (
                                 <img src={photo6} alt="Cover Preview" className="w-full h-full object-cover" />
                             ) : (
@@ -187,8 +187,8 @@ const UploadImage = ({ coverPhoto, setCoverPhoto, youtube, setYoutube }) => {
                         />
                         <p className='text-sm'>Photo 6</p>
                     </div>
-                    <div className='w-20 text-center'>
-                        <label htmlFor="Photo7" className='bg-gray-300 cursor-pointer w-20 h-20 flex justify-center items-center'>
+                    <div className='md:w-20 text-center'>
+                        <label htmlFor="Photo7" className='bg-gray-300 cursor-pointer md:w-20 h-20 flex justify-center items-center'>
                             {photo7 ? (
                                 <img src={photo7} alt="Cover Preview" className="w-full h-full object-cover" />
                             ) : (

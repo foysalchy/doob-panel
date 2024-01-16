@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { CgShoppingCart } from 'react-icons/cg';
+import { CgClose, CgShoppingCart } from 'react-icons/cg';
 import { MdDeleteOutline } from 'react-icons/md';
 import ProductList from './ProductList';
 import deleteSound from '../../../../src/assets/sound_button-21.mp3'
 import clickAudio from '../../../../src/assets/sound_beep-29.mp3'
 import PosProductsDetails from './PosProductsDetails';
 
-const PosSidebar = ({ cartProducts, setCartProducts }) => {
+const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
 
     const [open, setOpen] = useState(false);
     const [invoice, setInvoice] = useState({});
@@ -105,6 +105,11 @@ const PosSidebar = ({ cartProducts, setCartProducts }) => {
                                 text-white rounded-full px-2 py-1 text-[10px] font-semibold transform h-6 w-6 p-1 -translate-x-1/2 -translate-y-1
                                 6'>{cartProducts.length}</span>
                             </div>
+
+                            <button onClick={() => setClose(!close)} className='text-[#fb2464] text-xl'>
+                                <CgClose />
+                            </button>
+
                             <button className='bg-[#f1397929] w-[35px] h-[35px] rounded-full flex justify-center items-center'
                                 onClick={() => {
                                     deleteAudio.play();

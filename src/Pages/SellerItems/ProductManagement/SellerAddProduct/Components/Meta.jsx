@@ -2,7 +2,7 @@ import React from 'react';
 
 const Meta = () => {
     return (
-        <div className='border mt-4 border-gray-400 px-10 py-5 w-full bg-gray-100 rounded'>
+        <div className='border mt-4 border-gray-400 md:px-10 px-3 py-5 w-full bg-gray-100 rounded'>
             <div className='flex flex-col mb-4'>
                 <span className='font-bold'>Meta For your Product</span>
                 <small>Sellers can provide meta for your product</small>

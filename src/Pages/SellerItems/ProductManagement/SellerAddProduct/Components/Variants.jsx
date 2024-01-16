@@ -99,7 +99,7 @@ const Variants = ({ inputFields, setInputFields, daraz }) => {
 
 
     return (
-        <div className=' border mt-4 border-gray-400 px-10 py-5 pb-16 w-full bg-gray-100 rounded'>
+        <div className=' border mt-4 border-gray-400 md:px-10 px-3 py-5 pb-16 w-full bg-gray-100 rounded'>
             <div className='flex flex-col mb-4'>
                 <span className='font-bold'>Variants, Price, Stock <span className='text-red-500'> *</span></span>
                 <small>Having accurate product information raises discoverability.</small>

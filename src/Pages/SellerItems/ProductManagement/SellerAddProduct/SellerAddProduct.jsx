@@ -311,7 +311,7 @@ const SellerAddProduct = () => {
     return (
         <div>
 
-            <form className='border p-10' onSubmit={formSubmit} action="">
+            <form className='border md:p-10 p-2' onSubmit={formSubmit} action="">
 
                 <div className='mt-10'>
                     <UploadImage youtube={youtube} setYoutube={setYoutube} coverPhoto={coverPhoto} setCoverPhoto={setCoverPhoto} />

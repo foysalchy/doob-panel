@@ -42,7 +42,7 @@ const InputProductName = ({ brandName, setBrandName }) => {
                 <fieldset className="w-full  text-gray-100">
                     <label for="url" className="block text-sm font-medium">Website</label>
                     <div className="flex">
-                        <span className="flex items-center px-3 pointer-events-none sm:text-sm rounded-l-md dark:bg-gray-700">English</span>
+                        <span className="flex items-center px-3 pointer-events-none h-10 sm:text-sm rounded-l-md dark:bg-gray-700">English</span>
                         <input
                             // value={banglaText}
                             // onChange={(e) => handleBanglaChange(e.target.value)}
@@ -52,7 +52,7 @@ const InputProductName = ({ brandName, setBrandName }) => {
                 <fieldset className="w-full  dark:text-gray-100">
                     <label for="url" className="block text-sm font-medium">Website</label>
                     <div className="flex">
-                        <span className="flex items-center px-3 pointer-events-none sm:text-sm rounded-l-md dark:bg-gray-700">Bengali</span>
+                        <span className="flex items-center px-3 pointer-events-none h-10 sm:text-sm rounded-l-md dark:bg-gray-700">Bengali</span>
                         <input
                             // value={englishText}
                             // onChange={(e) => handleEnglishChange(e.target.value)}
