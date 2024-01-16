@@ -1,7 +1,7 @@
 import React from 'react';
 import { useContext } from 'react';
 import { ShopAuthProvider } from '../../../../../AuthProvider/ShopAuthProvide';
-import { Link, Outlet } from 'react-router-dom';
+import { Link, NavLink, Outlet } from 'react-router-dom';
 import ProfileUpdate from './ProfileUpdate/ProfileUpdate';
 import AddressBook from './ProfileUpdate/AddressBook';
 
@@ -16,15 +16,67 @@ const UserProfile = () => {
         <div className='bg-[#f5f5f5]'>
             <div className='px-4 py-4 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8'>
                 <div className='flex md:flex-row flex-col gap-8  '>
-                    <div className='bg-white p-4 h-[200px]'>
+                    <div className='bg-white p-4 h-[220px]'>
                         <small>Hello, {shopUser?.name}</small>
                         <div className='mt-4 w-64'>
                             <h1 className='text-xl font-semibold'>Manage Your Account</h1>
                             <div className='ml-4 flex flex-col'>
-                                <Link to={`/shop/${shopId}/user/my-profile`} className='text-blue-500'>My Profile</Link>
-                                <Link to={`/shop/${shopId}/user/my-address`} className='text-blue-500'>Address Book</Link>
-                                <Link to={`/shop/${shopId}/user/my-orders`} className='text-blue-500'>My Order</Link>
-                                <Link to={`/shop/${shopId}/user/my-support`} className='text-blue-500'>Support Ticket</Link>
+                                <div className='ml-4 flex flex-col'>
+                                    <NavLink
+                                        to={`/shop/${shopId}/user/my-profile`}
+                                        className={({ isActive }) =>
+                                            isActive
+                                                ? "tracking-wide text-blue-500 font-bold"
+                                                : "tracking-wide text-gray-800 transition-colors duration-200  hover:text-black"
+                                        }
+                                    >
+                                        My Profile
+                                    </NavLink>
+
+                                    <NavLink
+                                        to={`/shop/${shopId}/user/my-address`}
+                                        className={({ isActive }) =>
+                                            isActive
+                                                ? "tracking-wide text-blue-500 font-bold"
+                                                : "tracking-wide text-gray-800 transition-colors duration-200  hover:text-black"
+                                        }
+                                    >
+                                        Address Book
+                                    </NavLink>
+
+                                    <NavLink
+                                        to={`/shop/${shopId}/user/my-orders`}
+                                        className={({ isActive }) =>
+                                            isActive
+                                                ? "tracking-wide text-blue-500 font-bold"
+                                                : "tracking-wide text-gray-800 transition-colors duration-200  hover:text-black"
+                                        }
+                                    >
+                                        My Order
+                                    </NavLink>
+
+                                    <NavLink
+                                        to={`/shop/${shopId}/user/my-wish-list`}
+                                        className={({ isActive }) =>
+                                            isActive
+                                                ? "tracking-wide text-blue-500 font-bold"
+                                                : "tracking-wide text-gray-800 transition-colors duration-200  hover:text-black"
+                                        }
+                                    >
+                                        My Wish List
+                                    </NavLink>
+
+                                    <NavLink
+                                        to={`/shop/${shopId}/user/my-support`}
+                                        className={({ isActive }) =>
+                                            isActive
+                                                ? "tracking-wide text-blue-500 font-bold"
+                                                : "tracking-wide text-gray-800 transition-colors duration-200  hover:text-black"
+                                        }
+                                    >
+                                        Support Ticket
+                                    </NavLink>
+                                </div>
                             </div>
                         </div>
                     </div>
