@@ -32,6 +32,7 @@ import ListOfWarehouse from "../Pages/AdminItem/WareHouseManagement/ListOfWareho
 import WareHouseManagement from "../Pages/AdminItem/WareHouseManagement/WareHouseManagement";
 import AdminDashboard from "../Pages/Dashboard/AdminDashboard";
 import DarazIntrigration from "../Pages/AdminItem/IntrigrationDaraz/DarazIntrigration";
+import AdminSittings from "../Pages/AdminItem/AdminSittings/AdminSittings";
 
 const SupperAdminPath = [
     {
@@ -178,7 +179,12 @@ const SupperAdminPath = [
     {
         path: "add-daraz",
         element: <DarazIntrigration />
+    },
+    {
+        path: 'content-management',
+        element: <AdminSittings />
     }
+
 ]
 
 export { SupperAdminPath }

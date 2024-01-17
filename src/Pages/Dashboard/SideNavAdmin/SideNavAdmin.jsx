@@ -1,9 +1,9 @@
 import React, { useContext, useState } from 'react';
 import { AuthContext } from '../../../AuthProvider/UserProvider';
-import { BiCategory, BiHomeAlt, BiSolidShoppingBags } from "react-icons/bi";
+import { BiCategory, BiHomeAlt, BiSolidReport, BiSolidShoppingBags } from "react-icons/bi";
 import { HiOutlineMenu } from "react-icons/hi";
 import { FaBlogger, FaStore, FaUsersGear } from 'react-icons/fa6';
-import { MdOutlineAdminPanelSettings, MdOutlineRoomPreferences, MdOutlineSubscriptions } from 'react-icons/md';
+import { MdOutlineAdminPanelSettings, MdOutlineContentPaste, MdOutlineRoomPreferences, MdOutlineSubscriptions } from 'react-icons/md';
 import { HiOutlineUserGroup, HiOutlineUsers } from 'react-icons/hi2';
 import { SiGoogledomains } from 'react-icons/si';
 import { FaRegUserCircle } from 'react-icons/fa';
@@ -197,6 +197,24 @@ const SideNavAdmin = () => {
                                 {menu && <span>Warehouse Management</span>}
                             </NavLink>
 
+                            <NavLink rel="noopener noreferrer" to={'/admin/content-management'} className={({ isActive }) => {
+                                return isActive
+                                    ? "flex items-center p-2 space-x-3 rounded-sm bg-gray-800 text-white "
+                                    : "flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
+                            }}>
+                                <MdOutlineContentPaste className="w-5 h-5 fill-current text-gray-400" />
+                                {menu && <span>Content Management</span>}
+                            </NavLink>
+
+                            <NavLink rel="noopener noreferrer" to={'/admin/content-management'} className={({ isActive }) => {
+                                return isActive
+                                    ? "flex items-center p-2 space-x-3 rounded-sm bg-gray-800 text-white "
+                                    : "flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
+                            }}>
+                                <BiSolidReport className="w-5 h-5 fill-current text-gray-400" />
+                                {menu && <span>Report Management</span>}
+                            </NavLink>
+
 
                             <NavLink rel="noopener noreferrer" href="#" className={({ isActive }) => {
                                 return isActive
@@ -206,6 +224,7 @@ const SideNavAdmin = () => {
                                 <BsChatLeftQuote className="w-5 h-5 fill-current text-gray-400" />
                                 {menu && <span>Omni Chat</span>}
                             </NavLink>
+
 
 
                             <NavLink rel="noopener noreferrer" href="#" className={({ isActive }) => {
