@@ -160,7 +160,7 @@ const SellerManagement = () => {
 
                 if (data.user) {
                     if (data.user.role === 'seller') {
-                        fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/checkshop/${data?.user?.email}`)
+                        fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/checkshop?shopEmail=${data?.user?.shopEmail}`)
                             .then((response) => response.json())
                             .then((result) => {
                                 console.log(result, '208');

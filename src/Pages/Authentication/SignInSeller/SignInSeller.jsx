@@ -44,11 +44,11 @@ const SignInSeller = () => {
           setLoading(false);
           setPassError("");
           if (data.user.role === 'seller') {
-            fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/checkshop/${data?.user?.email}`)
+            fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/checkshop?shopEmail=${data?.user?.shopEmail}`)
               .then((response) => response.json())
               .then((result) => {
-
-                if (result.seller) {
+                console.log(result);
+                if (result?.seller) {
                   setShopInfo(result.information[0])
                   setCookie("SellerShop", JSON.stringify(result.information[0]));
                   navigate("/seller/dashboard");
