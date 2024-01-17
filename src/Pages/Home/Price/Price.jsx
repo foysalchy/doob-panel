@@ -1,7 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
-import React from "react";
+import React, { useContext } from "react";
+import { AuthContext } from "../../../AuthProvider/UserProvider";
+import { CgCheck } from "react-icons/cg";
 
 const Price = () => {
+  const { shopInfo } = useContext(AuthContext)
   const { data: prices = [], refetch } = useQuery({
     queryKey: ["prices"],
     queryFn: async () => {
@@ -11,8 +14,25 @@ const Price = () => {
     },
   });
 
+  const { data: permission = [], loader } = useQuery({
+    queryKey: ["prices"],
+    queryFn: async () => {
+      const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/subscription-model?priceId=${shopInfo?.priceId}`);
+      const data = await res.json();
+      localStorage.setItem('price', JSON.stringify(data?.data));
+      return data?.data;
+    },
+  });
 
 
+  //   permission?.find((perm) => perm?._id === price?._id) && 
+
+  //       // {permission?.find((perm) => perm?._id === price?._id)?.permissions.length}
+  //  console.log(permission, 'prices........', prices);
+
+  let price = prices?.map((price) => {
+    console.log(price, 'price');
+  })
 
   return (
     <div className="px-4 py-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-20">
@@ -40,105 +60,140 @@ const Price = () => {
                     {price.best == 'yes' ?
                       <div className="p-4 xl:w-1/4 md:w-1/2 w-full">
                         <div className="h-full p-6 rounded-lg border-2 border-indigo-500 flex flex-col relative overflow-hidden">
-                          <span className="bg-indigo-500 text-white px-3 py-1 tracking-widest text-xs absolute right-0 top-0 rounded-bl">
-                            POPULAR
-                          </span>
-                          <h2 className="text-sm tracking-widest title-font mb-1 font-medium">
-                            {price.name}
-                          </h2>
-                          <h1 className="text-5xl text-gray-900 leading-none flex items-center pb-4 mb-4 border-b border-gray-200">
-                            <span>{price.price}</span>
-                            <span className="text-lg ml-1 font-normal text-gray-500">/{price.timeDuration}</span>
-                          </h1>
-                          {
-                            price.benefits.map((benefit, index) => (
-                              <p className="flex items-center text-gray-600 mb-2">
-                                <span className="w-4 h-4 mr-2 inline-flex items-center justify-center bg-gray-400 text-white rounded-full flex-shrink-0">
-                                  <svg
-                                    fill="none"
-                                    stroke="currentColor"
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth="2.5"
-                                    className="w-3 h-3"
-                                    viewBox="0 0 24 24"
-                                  >
-                                    <path d="M20 6L9 17l-5-5" />
-                                  </svg>
-                                </span>
-                                {benefit}
-                              </p>
-                            ))
-                          }
+                          <div className="flex flex-col justify-between h-full">
+                            <span className="bg-indigo-500 text-white px-3 py-1 tracking-widest text-xs absolute right-0 top-0 rounded-bl">
+                              POPULAR
+                            </span>
 
-                          <p className="text-xs text-gray-500 my-3">
-                            {price.tagname}
-                          </p>
-                          <button className="flex items-center mt-auto text-white bg-indigo-500 border-0 py-2 px-4 w-full focus:outline-none hover:bg-indigo-600 rounded">
-                            Buy Now
-                            <svg
-                              fill="none"
-                              stroke="currentColor"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth={2}
-                              className="w-4 h-4 ml-auto"
-                              viewBox="0 0 24 24"
-                            >
-                              <path d="M5 12h14M12 5l7 7-7 7" />
-                            </svg>
-                          </button>
+                            <h2 className="text-md text-black font-semibold">Permissions</h2>
+                            {permission.find((perm) => perm._id === price._id) && (
+                              <div className="pb-2  w-full">
+                                <ul className="text-xs text-gray-500 ">
+                                  {permission.find((perm) => perm._id === price._id)?.permissions?.map(itm => <li className="flex items-center gap-2 mt-2 text-green-500" key={itm?.name}><div className="bg-green-300 w-[17px] h-[17px] text-black flex items-center justify-center text-lg rounded-full"><CgCheck /></div> {itm?.name}</li>)}
+                                </ul>
+                              </div>
+                            )}
+                            <hr />
+                            <h2 className="text-sm tracking-widest title-font mb-1 font-medium">
+                              {price.name}
+                            </h2>
+
+                            {
+                              price.benefits.map((benefit, index) => (
+                                <p className="flex items-center text-gray-600 mb-2">
+                                  <span className="w-4 h-4 mr-2 inline-flex items-center justify-center bg-gray-400 text-white rounded-full flex-shrink-0">
+                                    <svg
+                                      fill="none"
+                                      stroke="currentColor"
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                      strokeWidth="2.5"
+                                      className="w-3 h-3"
+                                      viewBox="0 0 24 24"
+                                    >
+                                      <path d="M20 6L9 17l-5-5" />
+                                    </svg>
+                                  </span>
+                                  {benefit}
+                                </p>
+                              ))
+                            }
+
+                            <p className="text-xs text-gray-500 my-3">
+                              {price.tagname}
+                            </p>
+                            <div className="">
+                              <h1 className="text-5xl text-gray-900 leading-none flex items-center pb-4 mb-4   border-gray-200">
+                                <span>{price.price}</span>
+                                <span className="text-lg ml-1 font-normal text-gray-500">/{price.timeDuration}</span>
+                              </h1>
+                              <button className="flex items-center mt-auto text-white bg-indigo-500 border-0 py-2 px-4 w-full focus:outline-none hover:bg-indigo-600 rounded">
+                                Buy Now
+                                <svg
+                                  fill="none"
+                                  stroke="currentColor"
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth={2}
+                                  className="w-4 h-4 ml-auto"
+                                  viewBox="0 0 24 24"
+                                >
+                                  <path d="M5 12h14M12 5l7 7-7 7" />
+                                </svg>
+                              </button>
+                            </div>
+                          </div>
+
+
 
                         </div>
                       </div>
                       :
                       <div className="p-4 xl:w-1/4 md:w-1/2 w-full">
-                        <div className="h-full p-6 rounded-lg border-2 border-gray-300 flex flex-col relative overflow-hidden">
-                          <h2 className="text-sm tracking-widest title-font mb-1 font-medium">
-                            {price.name}
-                          </h2>
-                          <h1 className="text-5xl text-gray-900 leading-none flex items-center pb-4 mb-4 border-b border-gray-200">
-                            <span>{price.price}</span>
-                            <span className="text-lg ml-1 font-normal text-gray-500">/{price.timeDuration}</span>
-                          </h1>
-                          {
-                            price.benefits.map((benefit, index) => (
-                              <p className="flex items-center text-gray-600 mb-2">
-                                <span className="w-4 h-4 mr-2 inline-flex items-center justify-center bg-gray-400 text-white rounded-full flex-shrink-0">
-                                  <svg
-                                    fill="none"
-                                    stroke="currentColor"
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth="2.5"
-                                    className="w-3 h-3"
-                                    viewBox="0 0 24 24"
-                                  >
-                                    <path d="M20 6L9 17l-5-5" />
-                                  </svg>
-                                </span>
-                                {benefit}
-                              </p>
-                            ))
-                          }
-                          <p className="text-xs text-gray-500 my-3">
-                            {price.tagname}
-                          </p>
-                          <button className="flex items-center mt-auto text-white bg-gray-600 border-0 py-2 px-4 w-full focus:outline-none hover:bg-gray-500 rounded">
-                            Buy Now
-                            <svg
-                              fill="none"
-                              stroke="currentColor"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth={2}
-                              className="w-4 h-4 ml-auto"
-                              viewBox="0 0 24 24"
-                            >
-                              <path d="M5 12h14M12 5l7 7-7 7" />
-                            </svg>
-                          </button>
+                        <div className="h-full p-6 rounded-lg border-2 border-gray-300 flex flex-col  relative overflow-hidden">
+                          <div className="flex  h-full flex-col justify-between">
+                            <div className=" ">
+                              <h2 className="text-md text-black font-semibold">Permissions</h2>
+                              {permission.find((perm) => perm._id === price._id) && (
+                                <div className=" pb-3 mt-2 w-full">
+                                  <ul className="text-xs text-gray-500 ">
+                                    {permission.find((perm) => perm._id === price._id)?.permissions?.map(itm => <li className="flex items-center gap-2 mt-2 text-green-500" key={itm?.name}><div className="bg-green-300 w-[17px] h-[17px] text-black flex items-center justify-center text-lg rounded-full"><CgCheck /></div> {itm?.name}</li>)}
+                                  </ul>
+                                </div>
+                              )}
 
+                              <hr />
+                              <h2 className="text-sm tracking-widest title-font mb-1 font-medium">
+                                {price.name}
+                              </h2>
+
+                              {
+                                price.benefits.map((benefit, index) => (
+                                  <p className="flex items-center text-gray-600 mb-2">
+                                    <span className="w-4 h-4 mr-2 inline-flex items-center justify-center bg-gray-400 text-white rounded-full flex-shrink-0">
+                                      <svg
+                                        fill="none"
+                                        stroke="currentColor"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        strokeWidth="2.5"
+                                        className="w-3 h-3"
+                                        viewBox="0 0 24 24"
+                                      >
+                                        <path d="M20 6L9 17l-5-5" />
+                                      </svg>
+                                    </span>
+                                    {benefit}
+                                  </p>
+                                ))
+                              }
+                              <p className="text-xs text-gray-500 my-3">
+                                {price.tagname}
+                              </p>
+                            </div>
+                            <div>
+
+                              <h1 className="text-5xl text-gray-900 leading-none flex items-center pb-4 mb-4   border-gray-200">
+                                <span>{price.price}</span>
+                                <span className="text-lg ml-1 font-normal text-gray-500">/{price.timeDuration}</span>
+                              </h1>
+                              <button className="flex items-center mt-auto text-white bg-gray-600 border-0 py-2 px-4 w-full focus:outline-none hover:bg-gray-500 rounded">
+                                Buy Now
+                                <svg
+                                  fill="none"
+                                  stroke="currentColor"
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth={2}
+                                  className="w-4 h-4 ml-auto"
+                                  viewBox="0 0 24 24"
+                                >
+                                  <path d="M5 12h14M12 5l7 7-7 7" />
+                                </svg>
+                              </button>
+                            </div>
+
+                          </div>
                         </div>
                       </div>}
                   </>
