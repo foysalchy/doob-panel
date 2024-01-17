@@ -64,6 +64,7 @@ import IsDomainManagement from "./IsDomainManagement";
 import IsChenelIntregation from "./IsChenelIntregation";
 import IsWarehouse from "./IsWarehouse";
 import IsStafAccount from "./IsStafAccount";
+import IsPos from "./IsPos";
 
 // `https://salenow-v2-backend.vercel.app/api/v1/seller/daraz-product/${shopInfo._id}
 
@@ -317,7 +318,7 @@ const SellerPath = [
     // ? pos path
     {
         path: "pos",
-        element: <Pos />
+        element: <IsPos><Pos /></IsPos>
     },
 
     {

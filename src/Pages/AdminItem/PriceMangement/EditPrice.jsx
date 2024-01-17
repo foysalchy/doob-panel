@@ -27,6 +27,7 @@ const EditPrice = ({ OpenModal, setOpenModal, FAQInfo, refetch }) => {
         { name: 'Channel Integration', route: 'channel-integration' },
         { name: 'Warehouse', route: 'warehouse' },
         { name: 'Staf Account', route: 'staf-account' },
+        { name: 'POS', route: 'pos' },
         // Add more options as needed
     ];
 
