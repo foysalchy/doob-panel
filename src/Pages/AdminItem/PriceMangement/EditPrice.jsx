@@ -7,9 +7,10 @@ import Select from 'react-select';
 const EditPrice = ({ OpenModal, setOpenModal, FAQInfo, refetch }) => {
 
     const [benefits, setBenefits] = useState(FAQInfo.benefits);
-    // const [selectedPermissions, setSelectedPermissions] = useState(
-    //     FAQInfo?.permissions || []
-    // );
+    const [selectedPermissions, setSelectedPermissions] = useState(
+        FAQInfo?.permissions || []
+    );
+
 
     const appendBenefit = () => {
         const newBenefits = [...benefits, 'New Benefit'];
@@ -31,13 +32,13 @@ const EditPrice = ({ OpenModal, setOpenModal, FAQInfo, refetch }) => {
         // Add more options as needed
     ];
 
-    const selectedPermissions = [];
+    // const selectedPermissions = [];
     const handleChange = (selectedOptions) => {
-        selectedPermissions.push(selectedOptions);
-        console.log(selectedPermissions, '++++++++++++');
+        setSelectedPermissions(selectedOptions);
         // setSelectedPermissions(selectedOptions);
-
+        console.log(selectedPermissions, '++++++')
     };
+
 
     const handleFAQUpdate = async (e) => {
         e.preventDefault();
@@ -57,7 +58,7 @@ const EditPrice = ({ OpenModal, setOpenModal, FAQInfo, refetch }) => {
             MetaTag,
             MetaDescription,
             // permissions: selectedPermissions
-            selectedPermissions
+            permissions: selectedPermissions
 
 
         }

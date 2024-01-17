@@ -108,7 +108,7 @@ const WareHouse = ({ adminWare, setAdminWare, shopInfo }) => {
 
                 <div className=' gap-10'>
                     <span className='font-bold'>Select Warehouse</span>
-                    <button className='flex justify-start mt-2' >
+                    <button type='button' className='flex justify-start mt-2' >
                         <span onClick={() => { setAdminWare(false); refetch(); setSelectedWarehouse(''); setSelectedArea(''); setSelectedRack(''); setSelectedSelf(''); setSelectedCell('') }} className={adminWare ? "px-4 py-2 bg-gray-600 text-white  " : "px-4 py-2 bg-violet-400"}>{shopInfo.shopName}</span>
                         <span onClick={() => { setAdminWare(true); refetch(); setSelectedWarehouse(''); setSelectedArea(''); setSelectedRack(''); setSelectedSelf(''); setSelectedCell('') }} className={!adminWare ? "px-4 py-2 bg-gray-600 text-white " : "px-4 py-2 bg-violet-400"}>Doob</span>
                     </button>
@@ -118,11 +118,11 @@ const WareHouse = ({ adminWare, setAdminWare, shopInfo }) => {
                 <div className='flex flex-col mt-3'>
                     <span>Warehouse Information <span className='text-red-500'> *</span></span>
 
-                    <div className='grid md:grid-cols-5 gap-4'>
+                    <div className='grid md:grid-cols-5 mt-3 gap-4'>
                         <div className="">
                             <label className="text-sm">Select Warehouse</label>
                             <Select
-                                className='mt-3'
+                                className=''
                                 styles={{
                                     control: (provided) => ({
                                         ...provided,
@@ -135,7 +135,7 @@ const WareHouse = ({ adminWare, setAdminWare, shopInfo }) => {
                                 }}
                                 onChange={handleWarehouseChange}
                                 name='warehouse'
-                                required
+                                // required
                                 options={isRefetching ? [{ label: 'Loading...', value: null }] : warehouses
                                     .filter((warehouse) => warehouse.status) // Filter based on status
                                     .map((warehouse) => ({
@@ -161,7 +161,7 @@ const WareHouse = ({ adminWare, setAdminWare, shopInfo }) => {
                                 }}
                                 onChange={handleAreaChange}
                                 name='area'
-                                required
+                                // required
                                 options={areas
                                     .filter((area) => area.status) // Filter based on status
                                     .map((area) => ({
@@ -187,7 +187,7 @@ const WareHouse = ({ adminWare, setAdminWare, shopInfo }) => {
                                     }),
                                 }}
                                 name='rack'
-                                required
+                                // required
                                 onChange={handleReckChange}
                                 options={racks
                                     ?.filter((rack) => rack.status)
@@ -214,7 +214,7 @@ const WareHouse = ({ adminWare, setAdminWare, shopInfo }) => {
                                     }),
                                 }}
                                 name='self'
-                                required
+                                // required
                                 onChange={handleSelfChange}
                                 options={selfs?.filter((selfs) => selfs.status).map((self) => ({
                                     value: self.self,
@@ -238,7 +238,7 @@ const WareHouse = ({ adminWare, setAdminWare, shopInfo }) => {
                                     }),
                                 }}
                                 name='cell'
-                                required
+                                // required
                                 onChange={handleCellChange}
                                 options={cells.length && cells?.filter((cell) => cell.status).map((cell) => ({
                                     value: cell.cell,

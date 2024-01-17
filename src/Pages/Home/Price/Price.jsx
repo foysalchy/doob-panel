@@ -64,16 +64,6 @@ const Price = () => {
                             <span className="bg-indigo-500 text-white px-3 py-1 tracking-widest text-xs absolute right-0 top-0 rounded-bl">
                               POPULAR
                             </span>
-
-                            <h2 className="text-md text-black font-semibold">Permissions</h2>
-                            {permission.find((perm) => perm._id === price._id) && (
-                              <div className="pb-2  w-full">
-                                <ul className="text-xs text-gray-500 ">
-                                  {permission.find((perm) => perm._id === price._id)?.permissions?.map(itm => <li className="flex items-center gap-2 mt-2 text-green-500" key={itm?.name}><div className="bg-green-300 w-[17px] h-[17px] text-black flex items-center justify-center text-lg rounded-full"><CgCheck /></div> {itm?.name}</li>)}
-                                </ul>
-                              </div>
-                            )}
-                            <hr />
                             <h2 className="text-sm tracking-widest title-font mb-1 font-medium">
                               {price.name}
                             </h2>
@@ -98,6 +88,30 @@ const Price = () => {
                                 </p>
                               ))
                             }
+                            {permission.find((perm) => perm._id === price._id) && (
+                              <div className="">
+                                <div >
+                                  {permission.find((perm) => perm._id === price._id)?.permissions?.map(itm => <p className="flex items-center text-gray-600 mb-2">
+                                    <span className="w-4 h-4 mr-2 inline-flex items-center justify-center bg-gray-400 text-white rounded-full flex-shrink-0">
+                                      <svg
+                                        fill="none"
+                                        stroke="currentColor"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        strokeWidth="2.5"
+                                        className="w-3 h-3"
+                                        viewBox="0 0 24 24"
+                                      >
+                                        <path d="M20 6L9 17l-5-5" />
+                                      </svg>
+                                    </span>
+                                    {itm?.name}
+
+
+                                  </p>)}
+                                </div>
+                              </div>
+                            )}
 
                             <p className="text-xs text-gray-500 my-3">
                               {price.tagname}
@@ -134,13 +148,7 @@ const Price = () => {
                           <div className="flex  h-full flex-col justify-between">
                             <div className=" ">
                               <h2 className="text-md text-black font-semibold">Permissions</h2>
-                              {permission.find((perm) => perm._id === price._id) && (
-                                <div className=" pb-3 mt-2 w-full">
-                                  <ul className="text-xs text-gray-500 ">
-                                    {permission.find((perm) => perm._id === price._id)?.permissions?.map(itm => <li className="flex items-center gap-2 mt-2 text-green-500" key={itm?.name}><div className="bg-green-300 w-[17px] h-[17px] text-black flex items-center justify-center text-lg rounded-full"><CgCheck /></div> {itm?.name}</li>)}
-                                  </ul>
-                                </div>
-                              )}
+
 
                               <hr />
                               <h2 className="text-sm tracking-widest title-font mb-1 font-medium">
@@ -164,9 +172,37 @@ const Price = () => {
                                       </svg>
                                     </span>
                                     {benefit}
+
+
                                   </p>
                                 ))
                               }
+
+                              {permission.find((perm) => perm._id === price._id) && (
+                                <div className="">
+                                  <div >
+                                    {permission.find((perm) => perm._id === price._id)?.permissions?.map(itm => <p className="flex items-center text-gray-600 mb-2">
+                                      <span className="w-4 h-4 mr-2 inline-flex items-center justify-center bg-gray-400 text-white rounded-full flex-shrink-0">
+                                        <svg
+                                          fill="none"
+                                          stroke="currentColor"
+                                          strokeLinecap="round"
+                                          strokeLinejoin="round"
+                                          strokeWidth="2.5"
+                                          className="w-3 h-3"
+                                          viewBox="0 0 24 24"
+                                        >
+                                          <path d="M20 6L9 17l-5-5" />
+                                        </svg>
+                                      </span>
+                                      {itm?.name}
+
+
+                                    </p>)}
+                                  </div>
+                                </div>
+                              )}
+
                               <p className="text-xs text-gray-500 my-3">
                                 {price.tagname}
                               </p>

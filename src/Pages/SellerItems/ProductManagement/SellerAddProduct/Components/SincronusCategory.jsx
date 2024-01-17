@@ -46,7 +46,10 @@ const SincronusCategory = ({ daraz, setDaraz, woo, setWoo, setInputFields, setDa
                 const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/category/seller/sub-category/get/${shopInfo._id}/${selectedCategory}`);
                 const data = await res.json();
                 if (data) {
-                    setDarazOption(data.daraz)
+                    if (data?.daraz) {
+                        setDarazOption(data?.daraz);
+                        return data.data;
+                    }
                     return data.data;
                 } else {
                     // If data is undefined or falsy, return an empty array or handle it as per your requirements
@@ -70,7 +73,10 @@ const SincronusCategory = ({ daraz, setDaraz, woo, setWoo, setInputFields, setDa
                 const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/category/seller/mini-category/get/${shopInfo._id}/${selectedSubcategory}`);
                 const data = await res.json();
                 if (data) {
-                    setDarazOption(data.daraz)
+                    if (data?.daraz) {
+                        setDarazOption(data?.daraz);
+                        return data.data;
+                    }
                     return data.data;
                 } else {
                     // If data is undefined or falsy, return an empty array or handle it as per your requirements
@@ -95,9 +101,12 @@ const SincronusCategory = ({ daraz, setDaraz, woo, setWoo, setInputFields, setDa
                 const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/category/seller/extra-category/get/${shopInfo._id}/${selectedMinicategory}`);
                 const data = await res.json();
                 if (data) {
-                    setDarazOption(data.daraz)
-                    return data.data;
+                    if (data?.daraz) {
+                        setDarazOption(data?.daraz);
+                        return data.data;
+                    }
                     setDarazOption(data || []);
+                    return data.data;
                 } else {
                     // If data is undefined or falsy, return an empty array or handle it as per your requirements
                     return [];
@@ -205,7 +214,7 @@ const SincronusCategory = ({ daraz, setDaraz, woo, setWoo, setInputFields, setDa
                 <div className='flex flex-col mt-3'>
                     <span>Category Information <span className='text-red-500'> *</span></span>
 
-                    <div className='grid md:grid-cols-4 gap-4'>
+                    <div className='grid md:grid-cols-4 mt-3 items-center gap-4'>
                         {/* <select
                             onChange={(e) => handleCategoryChange(e.label)}
                             name="megaCategory" id="">
@@ -220,7 +229,7 @@ const SincronusCategory = ({ daraz, setDaraz, woo, setWoo, setInputFields, setDa
                             onChange={(e) => handleCategoryChange(e.label)}
                             placeholder='Select Category'
                             options={option}
-                            className='mt-3'
+                            className=''
                         />
                         {selectedCategory && <Select
                             name='subCategory'
