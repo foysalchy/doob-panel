@@ -18,6 +18,8 @@ const Pos = () => {
         },
     });
 
+
+    
     const productList = products;
 
     const [audio] = useState(new Audio(clickAudio));

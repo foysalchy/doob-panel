@@ -214,6 +214,14 @@ const SideNavAdmin = () => {
                                 <BiSolidReport className="w-5 h-5 fill-current text-gray-400" />
                                 {menu && <span>Report Management</span>}
                             </NavLink>
+                            <NavLink rel="noopener noreferrer" to={'/admin/staff-management'} className={({ isActive }) => {
+                                return isActive
+                                    ? "flex items-center p-2 space-x-3 rounded-sm bg-gray-800 text-white "
+                                    : "flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
+                            }}>
+                                <BiSolidReport className="w-5 h-5 fill-current text-gray-400" />
+                                {menu && <span>Staff Management</span>}
+                            </NavLink>
 
 
                             <NavLink rel="noopener noreferrer" href="#" className={({ isActive }) => {

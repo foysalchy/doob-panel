@@ -53,7 +53,7 @@ const Price = () => {
             </div> */}
           </div>
           <div className="flex flex-wrap -m-4">
-            {prices.map((price, index) => (
+            {prices?.map((price, index) => (
               <>
                 {price.status && (
                   <>
@@ -65,11 +65,11 @@ const Price = () => {
                               POPULAR
                             </span>
                             <h2 className="text-sm tracking-widest title-font mb-1 font-medium">
-                              {price.name}
+                              {price?.name}
                             </h2>
 
                             {
-                              price.benefits.map((benefit, index) => (
+                              price?.benefits?.map((benefit, index) => (
                                 <p className="flex items-center text-gray-600 mb-2">
                                   <span className="w-4 h-4 mr-2 inline-flex items-center justify-center bg-gray-400 text-white rounded-full flex-shrink-0">
                                     <svg
@@ -88,10 +88,10 @@ const Price = () => {
                                 </p>
                               ))
                             }
-                            {permission.find((perm) => perm._id === price._id) && (
+                            {permission?.find((perm) => perm._id === price._id) && (
                               <div className="">
                                 <div >
-                                  {permission.find((perm) => perm._id === price._id)?.permissions?.map(itm => <p className="flex items-center text-gray-600 mb-2">
+                                  {permission?.find((perm) => perm._id === price._id)?.permissions?.map(itm => <p className="flex items-center text-gray-600 mb-2">
                                     <span className="w-4 h-4 mr-2 inline-flex items-center justify-center bg-gray-400 text-white rounded-full flex-shrink-0">
                                       <svg
                                         fill="none"
@@ -114,12 +114,12 @@ const Price = () => {
                             )}
 
                             <p className="text-xs text-gray-500 my-3">
-                              {price.tagname}
+                              {price?.tagname}
                             </p>
                             <div className="">
                               <h1 className="text-5xl text-gray-900 leading-none flex items-center pb-4 mb-4   border-gray-200">
                                 <span>{price.price}</span>
-                                <span className="text-lg ml-1 font-normal text-gray-500">/{price.timeDuration}</span>
+                                <span className="text-lg ml-1 font-normal text-gray-500">/{price?.timeDuration}</span>
                               </h1>
                               <button className="flex items-center mt-auto text-white bg-indigo-500 border-0 py-2 px-4 w-full focus:outline-none hover:bg-indigo-600 rounded">
                                 Buy Now

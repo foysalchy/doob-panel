@@ -387,68 +387,64 @@ const SellerAllProducts = () => {
                             </div>
                         </div>
                     </div>
-                    <div className='flex justify-center my-4'>
-                        <ol className="flex justify-center gap-1 text-xs font-medium">
-                            <li>
-                                <button
-                                    className="inline-flex h-8 w-8 items-center justify-center rounded border border-gray-400 bg-white text-gray-900 rtl:rotate-180"
-                                    onClick={() => setCurrentPage((prevPage) => Math.max(prevPage - 1, 1))}
-                                    disabled={currentPage === 1}
-                                >
-                                    <span className="sr-only">Prev Page</span>
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        className="h-3 w-3"
-                                        viewBox="0 0 20 20"
-                                        fill="currentColor"
-                                    >
-                                        <BiLeftArrow className='text-xl' />
-                                    </svg>
-                                </button>
-                            </li>
 
-                            {/* Render your page number buttons dynamically */}
-                            {/* {Array.from({ length: totalPages }).map((_, index) => (
-                            <li key={index}>
-                                <button
-                                    className={`block h-8 w-8 rounded border ${index + 1 === currentPage
-                                        ? '' // Current page styling
-                                        : 'border-gray-100 bg-white text-center leading-8 text-gray-900'
-                                        }`}
-                                    onClick={() => handleChangePage(index + 1)}
-                                >
-                                    {index + 1}
-                                </button>
-                            </li>
-                        ))} */}
-                            <div className='border-blue-600 bg-blue-600 text-white p-2 px-3 rounded'>
+
+                    <div className="flex items-center justify-between mt-6">
+                        <button
+                            onClick={() => setCurrentPage((prevPage) => Math.max(prevPage - 1, 1))}
+                            disabled={currentPage === 1}
+                            className="flex items-center px-5 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 bg-white border rounded-md gap-x-2 hover:bg-gray-100  "
+                        >
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                strokeWidth="1.5"
+                                stroke="currentColor"
+                                className="w-5 h-5 rtl:-scale-x-100"
+                            >
+                                <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    d="M6.75 15.75L3 12m0 0l3.75-3.75M3 12h18"
+                                />
+                            </svg>
+                            <span>previous</span>
+                        </button>
+                        <div className="items-center hidden lg:flex gap-x-3">
+
+                            <div className='px-2 py-1 text-sm text-blue-500 rounded-md  bg-blue-100/60'>
 
                                 <span> {currentPage}</span>
                             </div>
 
-                            <li>
-                                <button
-                                    className="inline-flex h-8 w-8 items-center justify-center rounded border border-gray-400 bg-white text-gray-900 rtl:rotate-180"
-                                    onClick={() => setCurrentPage((prevPage) => Math.min(prevPage + 1, Math.ceil(filteredData?.length / pageSize)))}
-                                    disabled={currentPage === Math.ceil(filteredData?.length / pageSize)}
-                                >
-                                    <span className="sr-only">Next Page</span>
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        className="h-3 w-3"
-                                        viewBox="0 0 20 20"
-                                        fill="currentColor"
-                                    >
-                                        <BiRightArrow className='text-xl' />
-                                    </svg>
-                                </button>
-                            </li>
-                        </ol>
+                        </div>
+                        <button
+                            onClick={() => setCurrentPage((prevPage) => Math.min(prevPage + 1, Math.ceil(filteredData?.length / pageSize)))}
+                            disabled={currentPage === Math.ceil(filteredData?.length / pageSize)}
+                            className="flex items-center px-5 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 bg-white border rounded-md gap-x-2 hover:bg-gray-100  "
+                        >
+                            <span>Next</span>
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                strokeWidth="1.5"
+                                stroke="currentColor"
+                                className="w-5 h-5 rtl:-scale-x-100"
+                            >
+                                <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"
+                                />
+                            </svg>
+                        </button>
                     </div>
 
                 </div>
-            </section >
-        </div >
+            </section>
+        </div>
     );
 };
 export default SellerAllProducts;

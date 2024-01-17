@@ -1,11 +1,8 @@
-import { useQuery } from '@tanstack/react-query';
 import React, { useContext, useState } from 'react';
 import Select from 'react-select';
-import { AuthContext } from '../../../AuthProvider/UserProvider';
 import BrightAlert from 'bright-alert';
 
-const AddNewStaff = () => {
-    const { shopInfo } = useContext(AuthContext)
+const AdminNewStaff = () => {
     const [searchValue, setSearchValue] = useState('')
     const [selectedValue, setSelectedValue] = useState([])
     const [role, setRole] = useState('')
@@ -23,6 +20,7 @@ const AddNewStaff = () => {
                     setValue(data?.data)
                 } else {
                     setError(data?.message)
+                    setValue('')
                 }
             })
     };
@@ -30,20 +28,20 @@ const AddNewStaff = () => {
 
 
     const options = [
-        { name: 'Manage Blogs', route: 'manage-blogs' },
-        { name: 'Manage Contact', route: 'manage-contact' },
-        { name: 'Manage Pages', route: 'manage-pages' },
-        { name: 'Staf Account', route: 'staf-account' },
-        { name: 'Support Tickets', route: 'support-tickets' },
-        { name: 'User Tickets', route: 'user-tickets' },
-        { name: 'Shop Profile', route: 'shop-profile' },
-        { name: 'Domain Management', route: 'domain-management' },
+        { name: 'Blogs', route: 'blog' },
+        { name: 'Manage Product', route: 'manage-product' },
+        { name: 'Manage Category', route: 'manage-category' },
+        { name: 'Faq', route: 'faq' },
+        { name: 'Price Management', route: 'price-management' },
+        { name: 'Page Management', route: 'page-management' },
+        { name: 'Services', route: 'services' },
+        { name: 'Contact', route: 'contact' },
         { name: 'Settings', route: 'settings' },
-        { name: 'Channel Integration', route: 'channel-integration' },
-        { name: 'Categories Management', route: 'categories-management' },
-        { name: 'Product Management', route: 'product-management' },
+        { name: 'Support Ticket', route: 'support-ticket' },
+        { name: 'Seller Management', route: 'seller-management' },
+        { name: 'Warehouse', route: 'warehouse' },
+        { name: 'Content Management', route: 'content-management' },
         { name: 'Staff Management', route: 'staff-management' },
-        { name: 'Orders', route: 'orders' },
         { name: 'Pos', route: 'pos' },
         // Add more options as needed
     ];
@@ -56,12 +54,11 @@ const AddNewStaff = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         const user = value;
-        const shopEmail = shopInfo?.shopEmail
         const permissions = selectedValue
 
-        const data = { user, shopEmail, permissions, role }
+        const data = { user, permissions, role }
         console.log(data)
-        fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/staff-add`, {
+        fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/staff-role`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json'
@@ -136,4 +133,4 @@ const AddNewStaff = () => {
     );
 };
 
-export default AddNewStaff;
+export default AdminNewStaff;

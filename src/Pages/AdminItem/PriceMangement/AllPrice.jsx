@@ -98,7 +98,7 @@ const AllPrice = () => {
             </thead>
             <tbody>
               {
-                prices?.map((price) => (
+                prices.length &&  prices?.map((price) => (
 
                   <tr key={price?.name}>
                     <td className="px-4 py-3">{price?.name}</td>

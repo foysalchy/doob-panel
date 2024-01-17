@@ -27,13 +27,13 @@ const IsPos = ({ children }) => {
     // { name: 'Staf Account', route: 'staf-account' },
     //access route
 
-    let check = prices?.permissions?.some(itm => itm?.name === 'Domain Management')
+    let check = prices?.permissions?.some(itm => itm?.name === 'POS')
     console.log(check);
     if (check) {
         return children
     }
 
-    return <Navigate to="*" state={{ from: location }} replace></Navigate>
+    return <Navigate to="/" state={{ from: location }} replace></Navigate>
 };
 
 export default IsPos;

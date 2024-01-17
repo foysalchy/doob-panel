@@ -33,6 +33,8 @@ import WareHouseManagement from "../Pages/AdminItem/WareHouseManagement/WareHous
 import AdminDashboard from "../Pages/Dashboard/AdminDashboard";
 import DarazIntrigration from "../Pages/AdminItem/IntrigrationDaraz/DarazIntrigration";
 import AdminSittings from "../Pages/AdminItem/AdminSittings/AdminSittings";
+import AdminStaffManagement from "../Pages/AdminItem/AdminStaff/AdminStaffManagement";
+import AdminNewStaff from "../Pages/AdminItem/AdminStaff/AdminNewStaff";
 
 const SupperAdminPath = [
     {
@@ -183,7 +185,15 @@ const SupperAdminPath = [
     {
         path: 'content-management',
         element: <AdminSittings />
-    }
+    },
+    {
+        path: 'staff-management',
+        element: <AdminStaffManagement />
+    },
+    {
+        path: 'staff-management/new-staff',
+        element: <AdminNewStaff />
+    },
 
 ]
 
