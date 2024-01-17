@@ -64,7 +64,7 @@ const AdminLayout = () => {
                             </ol>
                         </nav>
                     </div>
-                    <div className='flex-1    sm:p-0'>
+                    <div className='flex-1 sm:p-0'>
                         <Outlet />
                     </div>
                 </div>

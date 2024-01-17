@@ -106,7 +106,7 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
                                 6'>{cartProducts.length}</span>
                             </div>
 
-                            <button onClick={() => setClose(!close)} className='text-[#fb2464] text-xl'>
+                            <button onClick={() => setClose(!close)} className='text-[#fb2464] lg:hidden text-xl'>
                                 <CgClose />
                             </button>
 

@@ -23,16 +23,18 @@ const ManageProduct = () => {
 
   const filteredData = products.filter(
     (item) =>
-      item.productName?.toLowerCase().includes(searchQuery?.toLowerCase()) ||
+      item.name?.toLowerCase().includes(searchQuery?.toLowerCase()) ||
       item._id.toString().includes(searchQuery)
   );
+
+  console.log(filteredData);
 
   return (
     <div className="">
 
 
       <Link
-        className="group relative inline-flex mb-10 items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
+        className="group relative inline-flex mb-4 items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
         to="/admin/manage-product/add-product"
       >
         <span className="absolute -start-full transition-all group-hover:start-4">
@@ -57,7 +59,7 @@ const ManageProduct = () => {
         </span>
       </Link>
 
-      <div className="relative w-3/5 my-6">
+      <div className="relative w-3/5 my-2">
         <input
           type="text"
           id="Search"
@@ -89,16 +91,16 @@ const ManageProduct = () => {
         </span>
       </div>
 
-      <section className=" px-4 mx-auto">
+      <section className=" mx-auto">
         <div className="flex items-center gap-x-3">
           <h2 className="text-lg font-medium text-gray-800 ">All Product</h2>
           <span className="px-3 py-1 text-xs  bg-blue-100 rounded-full d text-blue-400">
-            {products?.length}
+            {filteredData?.length}
           </span>
         </div>
         <div className="flex flex-col mt-6">
           <div className="overflow-x-auto">
-            <div className="  py-2 ml-4">
+            <div className="  py-2">
               <div className="overflow-hidden border border-gray-200 border-gray-700 md:rounded-lg">
                 <table className=" divide-y w-full divide-gray-700">
                   <thead className="bg-gray-900 text-white ">
@@ -146,7 +148,7 @@ const ManageProduct = () => {
                     </tr>
                   </thead>
                   <tbody className="bg-white divide-y  divide-gray-200 ">
-                    {filteredData.map((product) => (
+                    {filteredData?.map((product) => (
                       <tr>
                         <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                           <div className="inline-flex items-center gap-x-3">
@@ -157,19 +159,19 @@ const ManageProduct = () => {
                             <div className="flex items-center gap-x-2">
                               <img
                                 className="object-cover w-10 h-10 rounded"
-                                srcSet={product?.image[0]["Cover Photo*"][0]}
-                                src={product?.image[0]["Cover Photo*"][0]}
+                                srcSet={product?.featuredImage && product?.featuredImage?.src}
+                                src={product?.featuredImage && product?.featuredImage?.src}
                                 alt=""
                               />
                               <div>
                                 <h2 className="font-medium text-gray-800  ">
-                                  {product?.productName
+                                  {product.name && product?.name
                                     .split(" ")
                                     .slice(0, 5)
                                     .join(" ")}
                                 </h2>
                                 <p className="text-sm font-normal text-gray-600 text-gray-400">
-                                  {product._id}
+                                  {product && product?._id}
                                 </p>
                               </div>
                             </div>
