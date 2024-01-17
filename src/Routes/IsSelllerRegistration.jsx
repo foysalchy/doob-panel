@@ -9,7 +9,7 @@ import groovyWalkAnimation from "./Loading.json";
 
 const IsSelllerRegistration = ({ children }) => {
     const { user, loading } = useContext(AuthContext)
-    const [shopInfo, isShopInfoLoading] = UseShop(user?.email)
+    const [shopInfo, isShopInfoLoading] = UseShop(user?.shopEmail)
 
     const location = useLocation()
 
