@@ -10,7 +10,7 @@ const ShopUpcoming = () => {
     const { shop_id } = useContext(ShopAuthProvider)
 
     console.log(`https://salenow-v2-backend.vercel.app/api/v1/shop/product/${shop_id.shop_id}/upcoming-product`);
-    const { data: products = [], refetch } = useQuery({
+    const { data: products = [], refetch, isLoading } = useQuery({
         queryKey: ["upcoming"],
         queryFn: async () => {
             const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/product/${shop_id.shop_id}/upcoming-product`);
@@ -19,7 +19,7 @@ const ShopUpcoming = () => {
         },
     });
 
-
+    const data = [1, 2, 3, 4]
 
     return (
         <div className="py-4 bg-white rounded mt-6">
@@ -47,7 +47,7 @@ const ShopUpcoming = () => {
                     </div>
                 </div>
                 <div className="border-b border-gray-200 mx-5 mt-2"></div>
-                <div className=" px-5 my-4 mx-auto">
+                {!isLoading ? <div className=" px-5 my-4 mx-auto">
                     <Swiper
                         spaceBetween={10}
                         slidesPerView={3}
@@ -101,7 +101,18 @@ const ShopUpcoming = () => {
                             </SwiperSlide>
                         ))}
                     </Swiper>
-                </div>
+                </div> : <div class="grid px-5 my-4 mx-auto grid-cols-1 gap-8 mt-8 xl:mt-12 xl:gap-12 sm:grid-cols-2 xl:grid-cols-4 lg:grid-cols-3">
+                    {
+                        data.map((i) => (
+                            <div key={i} class="w-full ">
+                                <div class="w-full h-64 bg-gray-300 rounded-lg dark:bg-gray-600"></div>
+
+                                <h1 class="w-56 h-2 mt-4 bg-gray-200 rounded-lg dark:bg-gray-700"></h1>
+                                <p class="w-24 h-2 mt-4 bg-gray-200 rounded-lg dark:bg-gray-700"></p>
+                            </div>
+                        ))
+                    }
+                </div>}
             </section> : ""}
         </div>
     );

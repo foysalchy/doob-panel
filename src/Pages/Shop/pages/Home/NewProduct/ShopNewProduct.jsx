@@ -11,8 +11,9 @@ import { SwiperSlide, Swiper } from 'swiper/react';
 const ShopNewProduct = () => {
     const { shop_id } = useContext(ShopAuthProvider)
 
+
     console.log(`https://salenow-v2-backend.vercel.app/api/v1/shop/product/${shop_id.shop_id}/new-product`);
-    const { data: products = [], refetch } = useQuery({
+    const { data: products = [], refetch, isLoading } = useQuery({
         queryKey: ["products"],
         queryFn: async () => {
             const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/product/${shop_id.shop_id}/new-product`);
@@ -22,6 +23,8 @@ const ShopNewProduct = () => {
     });
 
 
+    const data = [1, 2, 3, 4]
+    console.log(products);
 
     return (
         <div>
@@ -50,7 +53,7 @@ const ShopNewProduct = () => {
                         </div>
                     </div>
                     <div className="border-b border-gray-500 mx-5 mt-2"></div>
-                    <div className=" px-5 my-4 mx-auto">
+                    {!isLoading ? <div className=" px-5 my-4 mx-auto">
                         <Swiper
                             spaceBetween={10}
                             slidesPerView={3}
@@ -106,7 +109,19 @@ const ShopNewProduct = () => {
                                 </SwiperSlide>
                             ))}
                         </Swiper>
+                    </div> : <div class="grid px-5 my-4 grid-cols-1 gap-8 mt-8 xl:mt-12 xl:gap-12 sm:grid-cols-2 xl:grid-cols-4 lg:grid-cols-3">
+                        {
+                            data.map((i) => (
+                                <div key={i} class="w-full ">
+                                    <div class="w-full h-64 bg-gray-300 rounded-lg dark:bg-gray-600"></div>
+
+                                    <h1 class="w-56 h-2 mt-4 bg-gray-200 rounded-lg dark:bg-gray-700"></h1>
+                                    <p class="w-24 h-2 mt-4 bg-gray-200 rounded-lg dark:bg-gray-700"></p>
+                                </div>
+                            ))
+                        }
                     </div>
+                    }
                 </section>
             </div> : ''}
         </div>
