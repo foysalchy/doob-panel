@@ -6,15 +6,9 @@ import { AuthContext } from '../../../AuthProvider/UserProvider';
 const AddNewStaff = () => {
     const { shopInfo } = useContext(AuthContext)
     const [searchValue, setSearchValue] = useState('')
-    const { data: menuItems = [], refetch } = useQuery({
-        queryKey: ["menuItems"],
-        queryFn: async () => {
-            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/seller-allUser?shopId=${shopInfo?.shopId}`);
-            const data = await res.json();
-            return data?.data;
-        },
-    });
-    console.log(menuItems);
+    const [selectedValue, setSelectedValue] = useState([])
+    const [role, setRole] = useState('')
+    const [error, setError] = useState('')
     const [value, setValue] = useState("");
     const [filteredItems, setFilteredItems] = useState([]);
     const [userInfo, setUserInfo] = useState({})
@@ -23,16 +17,16 @@ const AddNewStaff = () => {
         fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/seller-allUser?email=${searchValue}`)
             .then(res => res.json())
             .then(data => {
-                console.log(data, '++++++++++')
+                console.log(data, '+++++++');
+                if (data?.status) {
+                    setValue(data?.data)
+                } else {
+                    setError(data?.message)
+                }
             })
     };
 
-    // const handleSelect = (selectedItem) => {
-    //     let pars = JSON.parse(selectedItem);
-    //     setValue(pars?.name);
-    //     setUserInfo(pars);
-    //     setFilteredItems([]);
-    // };
+
 
     const options = [
         { name: 'Manage Blogs', route: 'manage-blogs' },
@@ -54,18 +48,28 @@ const AddNewStaff = () => {
     ];
 
     const handleChange = (selectedOption) => {
-        console.log('Selected Option:', selectedOption);
+        setSelectedValue(selectedOption);
+
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const user = e.body.userInfo
-        const shopEmail = req.body.shopEmail
-        const permissions = req.body.permissions
+        const user = value;
+        const shopEmail = shopInfo?.shopEmail
+        const permissions = selectedValue
 
+        const data = { user, shopEmail, permissions, role }
+        console.log(data)
         fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/staff-add`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
 
         })
+            .then(res => res.json())
+            .then(data => console.log(data))
     }
 
 
@@ -74,11 +78,10 @@ const AddNewStaff = () => {
         <div>
             <form onSubmit={handleSubmit} className='bg-gray-100 p-4'>
                 <label className='' htmlFor="user">Select User</label>
-                <div className="relative pt-2 inline-block text-left w-full">
+                <div className="relative pt-2 flex items-center gap-4 text-left w-full">
                     <input
                         id='user'
                         type="text"
-                        value={value}
                         onChange={(e) => setSearchValue(e.target.value)}
                         placeholder="Search or Select"
                         className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500"
@@ -97,13 +100,16 @@ const AddNewStaff = () => {
                         </div>
                     )} */}
 
-                    <button type='button' onClick={() => handleSearch()}>
+                    <button className='bg-black text-white py-2 px-4' type='button' onClick={() => handleSearch()}>
                         search
                     </button>
                 </div>
+
+
+                {value?.name ? <input type="text" readOnly value={value?.name} className="w-full p-2 rounded-md ring-1 mt-2 text-green-500 ring-gray-200" placeholder='input user role' /> : <input type="text" readOnly value={`${error} and search again!! `} className="w-full p-2 text-red-500 rounded-md ring-1 mt-2 ring-gray-200" placeholder='input user role' />}
                 <br /><br />
                 <label className='' htmlFor="user">Input Role</label>
-                <input type="text" className="w-full p-2 rounded-md ring-1 mt-2 ring-gray-200" placeholder='input user role' />
+                <input onChange={(e) => setRole(e.target.value)} type="text" className="w-full p-2 rounded-md ring-1 mt-2 ring-gray-200" placeholder='input user role' />
                 <br /><br />
                 <label className='' htmlFor="user">Input Role</label>
                 <Select
