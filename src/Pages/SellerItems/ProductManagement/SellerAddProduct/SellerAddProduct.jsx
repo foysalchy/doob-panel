@@ -119,7 +119,7 @@ const SellerAddProduct = () => {
 
     ]
 
-    const filteredData = datazCategory.filter(item => !ourData.includes(item.label))
+    const filteredData = datazCategory?.length && datazCategory?.filter(item => !ourData.includes(item.label))
 
 
     const formSubmit = async (e) => {
@@ -159,7 +159,7 @@ const SellerAddProduct = () => {
         const MetaImageFile = form?.MetaImage?.files[0]
         const MetaImage = await imageUpload(MetaImageFile)
 
-        const darazOptionData = filteredData.map((item) => {
+        const darazOptionData = filteredData.length && filteredData?.map((item) => {
             const fieldName = item.name;
             const fieldValue = form?.[fieldName]?.value;
             return { [fieldName]: fieldValue };
@@ -358,7 +358,7 @@ const SellerAddProduct = () => {
                 <div className='my-4 mt-10'>
                     <Variants daraz={daraz} inputFields={inputFields} setInputFields={setInputFields} />
                 </div>
-                {daraz && <DarazOption datazCategory={datazCategory} />}
+                {daraz && datazCategory.length && <DarazOption datazCategory={datazCategory} />}
 
                 <ServiceWarranty />
                 <Delivery />

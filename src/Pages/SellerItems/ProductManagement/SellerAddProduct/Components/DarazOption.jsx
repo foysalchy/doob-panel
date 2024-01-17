@@ -29,9 +29,7 @@ const DarazOption = ({ datazCategory }) => {
 
     ]
 
-    console.log(datazCategory.map((item) => console.log(item.name)));
-
-    const filteredData = datazCategory.filter(item => !ourData.includes(item.label))
+    const filteredData = datazCategory && datazCategory.filter(item => !ourData.includes(item.label))
     const renderInput = (category) => {
         switch (category.input_type) {
             case 'numeric':
@@ -88,7 +86,7 @@ const DarazOption = ({ datazCategory }) => {
                         id={category.label}
                         name={category.name}
                         isMulti
-                        options={category.options.map(option => ({ value: option.name, label: option.name }))}
+                        options={category?.options?.map(option => ({ value: option.name, label: option.name }))}
                         className="flex-grow w-full mb-3 md:mr-2 md:mb-0"
                         placeholder={`Please Select ${category.label}`}
                     />
@@ -97,11 +95,11 @@ const DarazOption = ({ datazCategory }) => {
             default:
                 return (
                     <input
-                        type={category.input_type}
-                        id={category.label}
-                        name={category.name}
+                        type={category?.input_type}
+                        id={category?.label}
+                        name={category?.name}
                         className="flex-grow w-full h-10 px-4 mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-purple-400 focus:outline-none focus:shadow-outline"
-                        placeholder={`Please Input ${category.label}`}
+                        placeholder={`Please Input ${category?.label}`}
                     />
                 );
         }
@@ -109,9 +107,9 @@ const DarazOption = ({ datazCategory }) => {
     return (
         <div className="grid grid-cols-2 gap-8 mt-4 border  rounded p-4">
             {filteredData?.map((category) => (
-                <div key={category.label} className="flex w-full items-center space-x-4">
+                <div key={category?.label} className="flex w-full items-center space-x-4">
                     <div className='w-full'>
-                        <label className='text-sm' htmlFor={category.label}>{category.label}</label>
+                        <label className='text-sm' htmlFor={category?.label}>{category?.label}</label>
                         {renderInput(category)}
                     </div>
                 </div>

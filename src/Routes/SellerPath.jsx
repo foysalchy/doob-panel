@@ -65,6 +65,8 @@ import IsChenelIntregation from "./IsChenelIntregation";
 import IsWarehouse from "./IsWarehouse";
 import IsStafAccount from "./IsStafAccount";
 import IsPos from "./IsPos";
+import StafManagement from "../Pages/SellerItems/StafManagement/StafManagement";
+import AddNewStaff from "../Pages/SellerItems/StafManagement/AddNewStaff";
 
 // `https://salenow-v2-backend.vercel.app/api/v1/seller/daraz-product/${shopInfo._id}
 
@@ -338,6 +340,14 @@ const SellerPath = [
     {
         path: "orders/woo-commerce-order",
         element: <ManageWooCommerceOrder />
+    },
+    {
+        path: "staff-management",
+        element: <StafManagement />
+    },
+    {
+        path: "staff/add-new-staff",
+        element: <AddNewStaff />
     },
 
 
