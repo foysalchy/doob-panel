@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import React, { useContext, useState } from 'react';
 import Select from 'react-select';
 import { AuthContext } from '../../../AuthProvider/UserProvider';
+import BrightAlert from 'bright-alert';
 
 const AddNewStaff = () => {
     const { shopInfo } = useContext(AuthContext)
@@ -69,7 +70,15 @@ const AddNewStaff = () => {
 
         })
             .then(res => res.json())
-            .then(data => console.log(data))
+            .then(data => {
+                if (data.status) {
+                    BrightAlert(`${data.message}`, '', "success")
+                }
+                else {
+                    BrightAlert(`Something went wrong`, '', "error")
+                }
+
+            })
     }
 
 

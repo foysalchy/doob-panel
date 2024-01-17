@@ -54,6 +54,7 @@ const MultiStepForm = () => {
             .then((data) => {
                 setLoading(false);
                 setShopInfo(formValues)
+                console.log(formValues);
                 Swal.fire("Welcome as a new seller", "", "success");
                 navigate('/seller/dashboard')
             });
