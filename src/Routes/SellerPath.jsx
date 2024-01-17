@@ -280,7 +280,7 @@ const SellerPath = [
         path: "warehouse/cell-management",
         element: <IsWarehouse><SellerManageCell /></IsWarehouse>
     },
-     {
+    {
         path: "staff-account",
         element: <IsStafAccount><h1>Staf Account</h1></IsStafAccount>
     },
@@ -318,7 +318,9 @@ const SellerPath = [
     // ? pos path
     {
         path: "pos",
-        element: <IsPos><Pos /></IsPos>
+        element: <IsPos>
+            <Pos />
+        </IsPos>
     },
 
     {
