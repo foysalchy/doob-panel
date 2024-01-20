@@ -20,14 +20,6 @@ import { useQuery } from '@tanstack/react-query';
 
 const SideNavberSeller = ({ responsive, setResponsive }) => {
     const { user, logOut, shopInfo } = useContext(AuthContext)
-    // const { data: prices = [], refetch } = useQuery({
-    //     queryKey: ["prices"],
-    //     queryFn: async () => {
-    //         const res = await fetch("https://salenow-v2-backend.vercel.app/api/v1/admin/pricing");
-    //         const data = await res.json();
-    //         return data;
-    //     },
-    // });
 
     const { data: prices = [], loader } = useQuery({
         queryKey: ["prices"],
@@ -39,16 +31,12 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
         },
     });
 
-    // { name: 'Domain Management', route: 'domain-management' },
-    // { name: 'Channel Integration', route: 'channel-integration' },
-    // { name: 'Warehouse', route: 'warehouse' },
-    // { name: 'Staf Account', route: 'staf-account' },
     //access route
     const managementPermission = (check) => {
         return prices?.permissions?.some(itm => itm?.name === check)
     };
 
-    console.log(prices?.permissions);
+    console.log(user, "--------");
 
     return (
 
@@ -111,218 +99,565 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                     </Link>
                                 </li>
 
-                                <li className="rounded-sm">
-                                    <details className="group [&_summary::-webkit-details-marker]:hidden flex items-center rounded-sm  ">
-                                        <summary
-                                            className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50"
-                                        >
-                                            <div className='flex cursor-pointer items-center gap-2'>
-                                                <ImBlog className="w-5 h-5 fill-current text-gray-400" />
+                                {/* start */}
+                                {user?.staffRole ? (
+                                    user?.permissions.find(itm => itm?.name === "Blog") ? (
+                                        <li className="rounded-sm">
+                                            <details className="group [&_summary::-webkit-details-marker]:hidden flex items-center rounded-sm  ">
+                                                <summary
+                                                    className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50"
+                                                >
+                                                    <div className='flex cursor-pointer items-center gap-2'>
+                                                        <ImBlog className="w-5 h-5 fill-current text-gray-400" />
 
-                                                <span>Blog</span>
-                                            </div>
+                                                        <span>Blog</span>
+                                                    </div>
 
-                                            <span
-                                                className="shrink-0 transition duration-300 group-open:-rotate-180"
+                                                    <span
+                                                        className="shrink-0 transition duration-300 group-open:-rotate-180"
+                                                    >
+                                                        <IoIosArrowDown className="h-5 w-5" />
+
+                                                    </span>
+                                                </summary>
+
+                                                <ul className="mt-2 space-y-1 px-4">
+                                                    <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
+                                                        <Link
+                                                            to={'/seller/manage-blogs'}
+                                                            className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 rounded-md"
+                                                        >
+                                                            <MdOutlineManageSearch className='w-5 h-5 fill-current text-gray-400' />  Manage Blogs
+                                                        </Link>
+                                                    </li>
+                                                    <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
+                                                        <Link
+                                                            to={'/seller/manage-blogs/add-blog'}
+                                                            className="  text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 rounded-md"
+                                                        >
+                                                            <MdOutlineAddCircleOutline className='w-5 h-5 fill-current text-gray-400' />   Add Blog
+                                                        </Link>
+                                                    </li>
+
+
+                                                </ul>
+                                            </details>
+                                        </li>
+                                    ) : null
+                                ) : (
+                                    <li className="rounded-sm">
+                                        <details className="group [&_summary::-webkit-details-marker]:hidden flex items-center rounded-sm  ">
+                                            <summary
+                                                className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50"
                                             >
-                                                <IoIosArrowDown className="h-5 w-5" />
+                                                <div className='flex cursor-pointer items-center gap-2'>
+                                                    <ImBlog className="w-5 h-5 fill-current text-gray-400" />
 
-                                            </span>
-                                        </summary>
+                                                    <span>Blog</span>
+                                                </div>
 
-                                        <ul className="mt-2 space-y-1 px-4">
-                                            <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
-                                                <Link
-                                                    to={'/seller/manage-blogs'}
-                                                    className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 rounded-md"
+                                                <span
+                                                    className="shrink-0 transition duration-300 group-open:-rotate-180"
                                                 >
-                                                    <MdOutlineManageSearch className='w-5 h-5 fill-current text-gray-400' />  Manage Blogs
-                                                </Link>
-                                            </li>
-                                            <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
-                                                <Link
-                                                    to={'/seller/manage-blogs/add-blog'}
-                                                    className="  text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 rounded-md"
+                                                    <IoIosArrowDown className="h-5 w-5" />
+
+                                                </span>
+                                            </summary>
+
+                                            <ul className="mt-2 space-y-1 px-4">
+                                                <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
+                                                    <Link
+                                                        to={'/seller/manage-blogs'}
+                                                        className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 rounded-md"
+                                                    >
+                                                        <MdOutlineManageSearch className='w-5 h-5 fill-current text-gray-400' />  Manage Blogs
+                                                    </Link>
+                                                </li>
+                                                <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
+                                                    <Link
+                                                        to={'/seller/manage-blogs/add-blog'}
+                                                        className="  text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 rounded-md"
+                                                    >
+                                                        <MdOutlineAddCircleOutline className='w-5 h-5 fill-current text-gray-400' />   Add Blog
+                                                    </Link>
+                                                </li>
+
+
+                                            </ul>
+                                        </details>
+                                    </li>
+                                )}
+
+                                {/* end */}
+
+                                {user?.staffRole ? (
+                                    user?.permissions.find(itm => itm?.name === "Contact") ? (
+                                        <li className="rounded-sm">
+                                            <details className="group [&_summary::-webkit-details-marker]:hidden flex items-center rounded-sm  ">
+                                                <summary
+                                                    className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50"
                                                 >
-                                                    <MdOutlineAddCircleOutline className='w-5 h-5 fill-current text-gray-400' />   Add Blog
-                                                </Link>
-                                            </li>
+                                                    <div className='flex cursor-pointer items-center gap-2'>
+                                                        <IoShareSocialSharp className="w-5 h-5 fill-current text-gray-400" />
+
+                                                        <span>Contact</span>
+                                                    </div>
+
+                                                    <span
+                                                        className="shrink-0 transition duration-300 group-open:-rotate-180"
+                                                    >
+                                                        <IoIosArrowDown className="h-5 w-5" />
+
+                                                    </span>
+                                                </summary>
+
+                                                <ul className="mt-2 space-y-1 px-4">
+                                                    <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
+                                                        <Link
+                                                            to={'/seller/manage-contact'}
+                                                            className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 rounded-md"
+                                                        >
+                                                            <MdContactSupport className='w-5 h-5 fill-current text-gray-400' />  Contact
+                                                        </Link>
+                                                    </li>
+                                                    <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
+                                                        <Link
+                                                            to={'/seller/manage-contact/add-contact'}
+                                                            className="  text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 rounded-md"
+                                                        >
+                                                            <MdOutlineAddCircleOutline className='w-5 h-5 fill-current text-gray-400' />   Add Contact
+                                                        </Link>
+                                                    </li>
 
 
-                                        </ul>
-                                    </details>
-                                </li>
-                                <li className="rounded-sm">
-                                    <details className="group [&_summary::-webkit-details-marker]:hidden flex items-center rounded-sm  ">
-                                        <summary
-                                            className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50"
-                                        >
-                                            <div className='flex cursor-pointer items-center gap-2'>
-                                                <IoShareSocialSharp className="w-5 h-5 fill-current text-gray-400" />
-
-                                                <span>Contact</span>
-                                            </div>
-
-                                            <span
-                                                className="shrink-0 transition duration-300 group-open:-rotate-180"
+                                                </ul>
+                                            </details>
+                                        </li>
+                                    ) : null
+                                ) : (
+                                    <li className="rounded-sm">
+                                        <details className="group [&_summary::-webkit-details-marker]:hidden flex items-center rounded-sm  ">
+                                            <summary
+                                                className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50"
                                             >
-                                                <IoIosArrowDown className="h-5 w-5" />
+                                                <div className='flex cursor-pointer items-center gap-2'>
+                                                    <IoShareSocialSharp className="w-5 h-5 fill-current text-gray-400" />
 
-                                            </span>
-                                        </summary>
+                                                    <span>Contact</span>
+                                                </div>
 
-                                        <ul className="mt-2 space-y-1 px-4">
-                                            <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
-                                                <Link
-                                                    to={'/seller/manage-contact'}
-                                                    className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 rounded-md"
+                                                <span
+                                                    className="shrink-0 transition duration-300 group-open:-rotate-180"
                                                 >
-                                                    <MdContactSupport className='w-5 h-5 fill-current text-gray-400' />  Contact
-                                                </Link>
-                                            </li>
-                                            <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
-                                                <Link
-                                                    to={'/seller/manage-contact/add-contact'}
-                                                    className="  text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 rounded-md"
+                                                    <IoIosArrowDown className="h-5 w-5" />
+
+                                                </span>
+                                            </summary>
+
+                                            <ul className="mt-2 space-y-1 px-4">
+                                                <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
+                                                    <Link
+                                                        to={'/seller/manage-contact'}
+                                                        className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 rounded-md"
+                                                    >
+                                                        <MdContactSupport className='w-5 h-5 fill-current text-gray-400' />  Contact
+                                                    </Link>
+                                                </li>
+                                                <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
+                                                    <Link
+                                                        to={'/seller/manage-contact/add-contact'}
+                                                        className="  text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 rounded-md"
+                                                    >
+                                                        <MdOutlineAddCircleOutline className='w-5 h-5 fill-current text-gray-400' />   Add Contact
+                                                    </Link>
+                                                </li>
+
+
+                                            </ul>
+                                        </details>
+                                    </li>
+                                )}
+
+
+                                {/* start */}
+                                {user?.staffRole ? (
+                                    user?.permissions.find(itm => itm?.name === "Manage Pages") ? (
+                                        <li className="rounded-sm">
+                                            <details className="group [&_summary::-webkit-details-marker]:hidden flex items-center rounded-sm  ">
+                                                <summary
+                                                    className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50"
                                                 >
-                                                    <MdOutlineAddCircleOutline className='w-5 h-5 fill-current text-gray-400' />   Add Contact
-                                                </Link>
-                                            </li>
+                                                    <div className='flex cursor-pointer items-center gap-2'>
+                                                        <SiCloudflarepages className="w-5 h-5 fill-current text-gray-400" />
+
+                                                        <span>Manage Pages</span>
+                                                    </div>
+
+                                                    <span
+                                                        className="shrink-0 transition duration-300 group-open:-rotate-180"
+                                                    >
+                                                        <IoIosArrowDown className="h-5 w-5" />
+
+                                                    </span>
+                                                </summary>
+
+                                                <ul className="mt-2 space-y-1 px-4">
+                                                    <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
+                                                        <Link
+                                                            to={'/seller/manage-pages'}
+                                                            className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 rounded-md"
+                                                        >
+                                                            <SiPagekit className='w-5 h-5 fill-current text-gray-400' />  Manage Pages
+                                                        </Link>
+                                                    </li>
+                                                    <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
+                                                        <Link
+                                                            to={'/seller/manage-pages/add-page'}
+                                                            className="  text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 rounded-md"
+                                                        >
+                                                            <AiFillFileAdd className='w-5 h-5 fill-current text-gray-400' />   Add Page
+                                                        </Link>
+                                                    </li>
 
 
-                                        </ul>
-                                    </details>
-                                </li>
-                                <li className="rounded-sm">
-                                    <details className="group [&_summary::-webkit-details-marker]:hidden flex items-center rounded-sm  ">
-                                        <summary
-                                            className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50"
-                                        >
-                                            <div className='flex cursor-pointer items-center gap-2'>
-                                                <SiCloudflarepages className="w-5 h-5 fill-current text-gray-400" />
-
-                                                <span>Manage Pages</span>
-                                            </div>
-
-                                            <span
-                                                className="shrink-0 transition duration-300 group-open:-rotate-180"
+                                                </ul>
+                                            </details>
+                                        </li>
+                                    ) : null
+                                ) : (
+                                    <li className="rounded-sm">
+                                        <details className="group [&_summary::-webkit-details-marker]:hidden flex items-center rounded-sm  ">
+                                            <summary
+                                                className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50"
                                             >
-                                                <IoIosArrowDown className="h-5 w-5" />
+                                                <div className='flex cursor-pointer items-center gap-2'>
+                                                    <SiCloudflarepages className="w-5 h-5 fill-current text-gray-400" />
 
-                                            </span>
-                                        </summary>
+                                                    <span>Manage Pages</span>
+                                                </div>
 
-                                        <ul className="mt-2 space-y-1 px-4">
-                                            <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
-                                                <Link
-                                                    to={'/seller/manage-pages'}
-                                                    className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 rounded-md"
+                                                <span
+                                                    className="shrink-0 transition duration-300 group-open:-rotate-180"
                                                 >
-                                                    <SiPagekit className='w-5 h-5 fill-current text-gray-400' />  Manage Pages
-                                                </Link>
-                                            </li>
-                                            <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
-                                                <Link
-                                                    to={'/seller/manage-pages/add-page'}
-                                                    className="  text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 rounded-md"
-                                                >
-                                                    <AiFillFileAdd className='w-5 h-5 fill-current text-gray-400' />   Add Page
-                                                </Link>
-                                            </li>
+                                                    <IoIosArrowDown className="h-5 w-5" />
+
+                                                </span>
+                                            </summary>
+
+                                            <ul className="mt-2 space-y-1 px-4">
+                                                <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
+                                                    <Link
+                                                        to={'/seller/manage-pages'}
+                                                        className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 rounded-md"
+                                                    >
+                                                        <SiPagekit className='w-5 h-5 fill-current text-gray-400' />  Manage Pages
+                                                    </Link>
+                                                </li>
+                                                <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
+                                                    <Link
+                                                        to={'/seller/manage-pages/add-page'}
+                                                        className="  text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 rounded-md"
+                                                    >
+                                                        <AiFillFileAdd className='w-5 h-5 fill-current text-gray-400' />   Add Page
+                                                    </Link>
+                                                </li>
 
 
-                                        </ul>
-                                    </details>
-                                </li>
+                                            </ul>
+                                        </details>
+                                    </li>
+                                )}
+
+                                {/* end */}
 
 
-                                <li className="rounded-sm  hover:bg-gray-800">
-                                    <Link to={'/seller/support-tickets'} rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
-                                        <BsTicket className="w-5 h-5 fill-current text-gray-400" />
+                                {user?.staffRole ? (
+                                    user?.permissions.find(itm => itm?.name === "Support Ticket") ? (
+                                        <li className="rounded-sm  hover:bg-gray-800">
+                                            <Link to={'/seller/support-tickets'} rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
+                                                <BsTicket className="w-5 h-5 fill-current text-gray-400" />
 
-                                        <span>Support Ticket</span>
-                                    </Link>
-                                </li>
-                                <li className="rounded-sm  hover:bg-gray-800">
-                                    <Link to={'/seller/user-tickets'} rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
-                                        <BsTicket className="w-5 h-5 fill-current text-gray-400" />
+                                                <span>Support Ticket</span>
+                                            </Link>
+                                        </li>
+                                    ) : null
+                                ) : (
+                                    <li className="rounded-sm  hover:bg-gray-800">
+                                        <Link to={'/seller/support-tickets'} rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
+                                            <BsTicket className="w-5 h-5 fill-current text-gray-400" />
 
-                                        <span> User Support Ticket</span>
-                                    </Link>
-                                </li>
-                                <li className="rounded-sm  hover:bg-gray-800">
-                                    <Link to={'/seller/shop-profile'} rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
+                                            <span>Support Ticket</span>
+                                        </Link>
+                                    </li>
+                                )}
 
-                                        <IoStorefront className="w-5 h-5 fill-current text-gray-400" />
 
-                                        <span>Shop Profile</span>
-                                    </Link>
-                                </li>
-                                {managementPermission('Domain Management') && <li className="rounded-sm  hover:bg-gray-800">
-                                    <Link to={'/seller/domain-management'} rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
-                                        <MdDomain className="w-5 h-5 fill-current text-gray-400" />
-                                        <span>Domain Management</span>
-                                    </Link>
-                                </li>}
 
-                                <li className="rounded-sm  hover:bg-gray-800">
-                                    <Link to={'/seller/settings'} rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
+                                {user?.staffRole ? (
+                                    user?.permissions.find(itm => itm?.name === "User Support Ticket") ? (
+                                        <li className="rounded-sm  hover:bg-gray-800">
+                                            <Link to={'/seller/user-tickets'} rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
+                                                <BsTicket className="w-5 h-5 fill-current text-gray-400" />
 
-                                        <FiSettings className="w-5 h-5  text-gray-400"></FiSettings>
-                                        <span>Settings</span>
-                                    </Link>
-                                </li>
-                                {managementPermission('Channel Integration') && <li className="rounded-sm hover:bg-gray-800">
-                                    <Link to={'/seller/channel-integration'} rel="noopener noreferrer" className="flex items-center p-2 space-x-3 rounded-md">
-                                        <MdOutlineIntegrationInstructions className="w-5 h-5 text-gray-400" />
-                                        <span>Channel Integration</span>
-                                    </Link>
-                                </li>}
+                                                <span> User Support Ticket</span>
+                                            </Link>
+                                        </li>
 
-                                <li className="rounded-sm hover:bg-gray-800">
-                                    <Link to={'/seller/categories-management'} rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
-                                        <BiCategoryAlt className="w-5 h-5 text-gray-400" />
-                                        <span>Category</span>
-                                    </Link>
-                                </li>
-                                <li className="rounded-sm hover:bg-gray-800">
-                                    <Link to={'/seller/content-management'} rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
-                                        <BiBookContent className="w-5 h-5 text-gray-400" />
-                                        <span>Content Management</span>
-                                    </Link>
-                                </li>
+                                    ) : null
+                                ) : (
+                                    <li className="rounded-sm  hover:bg-gray-800">
+                                        <Link to={'/seller/user-tickets'} rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
+                                            <BsTicket className="w-5 h-5 fill-current text-gray-400" />
 
-                                <li className="rounded-sm hover:bg-gray-800">
-                                    <Link to={'/seller/product-management'} rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
-                                        <BiArchive className="w-5 h-5 text-gray-400" />
-                                        <span>Product Management</span>
-                                    </Link>
-                                </li>
-                                {managementPermission('Warehouse') && <li className="rounded-sm hover:bg-gray-800">
+                                            <span> User Support Ticket</span>
+                                        </Link>
+                                    </li>
+
+                                )}
+
+
+
+                                {user?.staffRole ? (
+                                    user?.permissions.find(itm => itm?.name === "Shop Profile") ? (
+                                        <li className="rounded-sm  hover:bg-gray-800">
+                                            <Link to={'/seller/shop-profile'} rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
+
+                                                <IoStorefront className="w-5 h-5 fill-current text-gray-400" />
+
+                                                <span>Shop Profile</span>
+                                            </Link>
+                                        </li>
+                                    ) : null
+                                ) : (
+
+                                    <li className="rounded-sm  hover:bg-gray-800">
+                                        <Link to={'/seller/shop-profile'} rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
+
+                                            <IoStorefront className="w-5 h-5 fill-current text-gray-400" />
+
+                                            <span>Shop Profile</span>
+                                        </Link>
+                                    </li>
+                                )}
+
+                                {user?.staffRole ? (
+                                    user?.permissions.find(itm => itm?.name === "Domain Management") ? (
+
+                                        managementPermission('Domain Management') && <li className="rounded-sm  hover:bg-gray-800">
+                                            <Link to={'/seller/domain-management'} rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
+                                                <MdDomain className="w-5 h-5 fill-current text-gray-400" />
+                                                <span>Domain Management</span>
+                                            </Link>
+                                        </li>
+                                    ) : null
+                                ) : (
+
+                                    managementPermission('Domain Management') && <li className="rounded-sm  hover:bg-gray-800">
+                                        <Link to={'/seller/domain-management'} rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
+                                            <MdDomain className="w-5 h-5 fill-current text-gray-400" />
+                                            <span>Domain Management</span>
+                                        </Link>
+                                    </li>
+                                )}
+                                {user?.staffRole ? (
+                                    user?.permissions.find(itm => itm?.name === "Settings") ? (
+
+                                        <li className="rounded-sm  hover:bg-gray-800">
+                                            <Link to={'/seller/settings'} rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
+
+                                                <FiSettings className="w-5 h-5  text-gray-400"></FiSettings>
+                                                <span>Settings</span>
+                                            </Link>
+                                        </li>
+                                    ) : null
+                                ) : (
+
+                                    <li className="rounded-sm  hover:bg-gray-800">
+                                        <Link to={'/seller/settings'} rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
+
+                                            <FiSettings className="w-5 h-5  text-gray-400"></FiSettings>
+                                            <span>Settings</span>
+                                        </Link>
+                                    </li>
+                                )}
+                                {user?.staffRole ? (
+                                    user?.permissions.find(itm => itm?.name === "Channel Integration") ? (
+                                        managementPermission('Channel Integration') && <li className="rounded-sm hover:bg-gray-800">
+                                            <Link to={'/seller/channel-integration'} rel="noopener noreferrer" className="flex items-center p-2 space-x-3 rounded-md">
+                                                <MdOutlineIntegrationInstructions className="w-5 h-5 text-gray-400" />
+                                                <span>Channel Integration</span>
+                                            </Link>
+                                        </li>
+                                    ) : null
+                                ) : (
+
+                                    managementPermission('Channel Integration') && <li className="rounded-sm hover:bg-gray-800">
+                                        <Link to={'/seller/channel-integration'} rel="noopener noreferrer" className="flex items-center p-2 space-x-3 rounded-md">
+                                            <MdOutlineIntegrationInstructions className="w-5 h-5 text-gray-400" />
+                                            <span>Channel Integration</span>
+                                        </Link>
+                                    </li>
+                                )}
+
+                                {user?.staffRole ? (
+                                    user?.permissions.find(itm => itm?.name === "Category") ? (
+                                        <li className="rounded-sm hover:bg-gray-800">
+                                            <Link to={'/seller/categories-management'} rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
+                                                <BiCategoryAlt className="w-5 h-5 text-gray-400" />
+                                                <span>Category</span>
+                                            </Link>
+                                        </li>
+                                    ) : null
+                                ) : (
+                                    <li className="rounded-sm hover:bg-gray-800">
+                                        <Link to={'/seller/categories-management'} rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
+                                            <BiCategoryAlt className="w-5 h-5 text-gray-400" />
+                                            <span>Category</span>
+                                        </Link>
+                                    </li>
+                                )}
+
+                                {user?.staffRole ? (
+                                    user?.permissions.find(itm => itm?.name === "Content Management") ? (
+                                        <li className="rounded-sm hover:bg-gray-800">
+                                            <Link to={'/seller/content-management'} rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
+                                                <BiBookContent className="w-5 h-5 text-gray-400" />
+                                                <span>Content Management</span>
+                                            </Link>
+                                        </li>
+
+                                    ) : null
+                                ) : (
+                                    <li className="rounded-sm hover:bg-gray-800">
+                                        <Link to={'/seller/content-management'} rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
+                                            <BiBookContent className="w-5 h-5 text-gray-400" />
+                                            <span>Content Management</span>
+                                        </Link>
+                                    </li>
+
+                                )}
+
+                                {user?.staffRole ? (
+                                    user?.permissions.find(itm => itm?.name === "Product Management") ? (
+                                        <li className="rounded-sm hover:bg-gray-800">
+                                            <Link to="/seller/product-management" rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
+                                                <BiArchive className="w-5 h-5 text-gray-400" />
+                                                <span>Product Management</span>
+                                            </Link>
+                                        </li>
+                                    ) : null
+                                ) : (
+                                    <li className="rounded-sm hover:bg-gray-800">
+                                        <Link to="/seller/product-management" rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
+                                            <BiArchive className="w-5 h-5 text-gray-400" />
+                                            <span>Product Management</span>
+                                        </Link>
+                                    </li>
+                                )}
+
+                                {user?.staffRole ? (
+                                    user?.permissions.find(itm => itm?.name === "Product Management") ? (
+                                        managementPermission('Warehouse') && <li className="rounded-sm hover:bg-gray-800">
+                                            <Link to={'/seller/warehouse'} rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
+                                                <BiArchive className="w-5 h-5 text-gray-400" />
+                                                <span>Warehouse Management</span>
+                                            </Link>
+                                        </li>
+                                    ) : null
+                                ) : (
+                                    managementPermission('Warehouse') && <li className="rounded-sm hover:bg-gray-800">
+                                        <Link to={'/seller/warehouse'} rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
+                                            <BiArchive className="w-5 h-5 text-gray-400" />
+                                            <span>Warehouse Management</span>
+                                        </Link>
+                                    </li>
+                                )}
+
+
+                                {/* {user?.staffRole && managementPermission('Warehouse') && <li className="rounded-sm hover:bg-gray-800">
                                     <Link to={'/seller/warehouse'} rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
                                         <BiArchive className="w-5 h-5 text-gray-400" />
                                         <span>Warehouse Management</span>
                                     </Link>
-                                </li>}
-                                {managementPermission('Staf Account') && <li className="rounded-sm hover:bg-gray-800">
-                                    <Link to={'/seller/staff-management'} rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
-                                        <BiArchive className="w-5 h-5 text-gray-400" />
-                                        <span>Staf Account</span>
-                                    </Link>
-                                </li>}
-                                <li className="rounded-sm hover:bg-gray-800">
-                                    <Link to={'/seller/orders'} rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
-                                        <BiArchive className="w-5 h-5 text-gray-400" />
-                                        <span>Order Management</span>
-                                    </Link>
-                                </li>
+                                </li>} */}
 
-                                {managementPermission('POS') && <li className="rounded-sm hover:bg-gray-800">
-                                    <Link to={'/seller/pos'} rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
-                                        <BiArchive className="w-5 h-5 text-gray-400" />
-                                        <span>POS</span>
-                                    </Link>
-                                </li>}
+                                {user?.staffRole ? (
+                                    user?.permissions.find(itm => itm?.name === "Staf Account") ? (
+                                        managementPermission('Staf Account') && <li className="rounded-sm hover:bg-gray-800">
+                                            <Link to={'/seller/staff-account'} rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
+                                                <BiArchive className="w-5 h-5 text-gray-400" />
+                                                <span>Staff Account</span>
+                                            </Link>
+                                        </li>
+                                    ) : null
+                                ) : (
+                                    managementPermission('Staf Account') && <li className="rounded-sm hover:bg-gray-800">
+                                        <Link to={'/seller/staff-account'} rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
+                                            <BiArchive className="w-5 h-5 text-gray-400" />
+                                            <span>Staff Account</span>
+                                        </Link>
+                                    </li>
+                                )}
+
+                                {user?.staffRole ? (
+                                    user?.permissions.find(itm => itm?.name === "Order Management") ? (
+                                        <li className="rounded-sm hover:bg-gray-800">
+                                            <Link to={'/seller/orders'} rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
+                                                <BiArchive className="w-5 h-5 text-gray-400" />
+                                                <span>Order Management</span>
+                                            </Link>
+                                        </li>
+
+                                    ) : null
+                                ) : (
+                                    <li className="rounded-sm hover:bg-gray-800">
+                                        <Link to={'/seller/orders'} rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
+                                            <BiArchive className="w-5 h-5 text-gray-400" />
+                                            <span>Order Management</span>
+                                        </Link>
+                                    </li>
+
+                                )}
+                                {/* report managements */}
+
+                                {user?.staffRole ? (
+                                    user?.permissions.find(itm => itm?.name === "Order Management") ? (
+                                        <li className="rounded-sm hover:bg-gray-800">
+                                            <Link to={'/seller/report-management'} rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
+                                                <BiArchive className="w-5 h-5 text-gray-400" />
+                                                <span>Report Management</span>
+                                            </Link>
+                                        </li>
+
+                                    ) : null
+                                ) : (
+                                    <li className="rounded-sm hover:bg-gray-800">
+                                        <Link to={'/seller/report-management'} rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
+                                            <BiArchive className="w-5 h-5 text-gray-400" />
+                                            <span>Report Management</span>
+                                        </Link>
+                                    </li>
+
+                                )}
+                                {user?.staffRole ? (
+                                    user?.permissions.find(itm => itm?.name === "Order Management") ? (
+                                        managementPermission('POS') && <li className="rounded-sm hover:bg-gray-800">
+                                            <Link to={'/seller/pos'} rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
+                                                <BiArchive className="w-5 h-5 text-gray-400" />
+                                                <span>POS</span>
+                                            </Link>
+                                        </li>
+
+                                    ) : null
+                                ) : (
+                                    managementPermission('POS') && <li className="rounded-sm hover:bg-gray-800">
+                                        <Link to={'/seller/pos'} rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
+                                            <BiArchive className="w-5 h-5 text-gray-400" />
+                                            <span>POS</span>
+                                        </Link>
+                                    </li>
+
+                                )}
 
                                 <li className="rounded-sm  hover:bg-gray-800">
                                     <button onClick={() => logOut()} className="flex items-center p-2 space-x-3 rounded-md ">

@@ -60,15 +60,19 @@ import UserSupportTicketForShop from "../Pages/SellerItems/SupportTicket/UserSup
 import CustomerReturn from "../Pages/SellerItems/OrderManagment/CustomerReturn/CustomerReturn";
 import ScheduleDropOffs from "../Pages/SellerItems/OrderManagment/ScheduleDropOffs/ScheduleDropOffs";
 import Pos from "../Pages/SellerItems/Pos/Pos";
-import IsDomainManagement from "./IsDomainManagement";
-import IsChenelIntregation from "./IsChenelIntregation";
-import IsWarehouse from "./IsWarehouse";
-import IsStafAccount from "./IsStafAccount";
-import IsPos from "./IsPos";
 import StafManagement from "../Pages/SellerItems/StafManagement/StafManagement";
 import AddNewStaff from "../Pages/SellerItems/StafManagement/AddNewStaff";
-
-// `https://salenow-v2-backend.vercel.app/api/v1/seller/daraz-product/${shopInfo._id}
+import PrivateRoute from "../Hooks/PrivateRoute";
+import ReportManagement from "../Pages/SellerItems/ReportManagement/ReportManagement";
+import SalesHistory from "../Pages/SellerItems/ReportManagement/SalesHistory/SalesHistory";
+import PosHistory from "../Pages/SellerItems/ReportManagement/PosHistory/PosHistory";
+import FinanceHistory from "../Pages/SellerItems/ReportManagement/FinanceHistory/FinanceHistory";
+import CustomerHistory from "../Pages/SellerItems/ReportManagement/CustomerHistory/CustomerHistory";
+import WarehouseHistory from "../Pages/SellerItems/ReportManagement/WarehouseHistory/WarehouseHistory";
+import SubscriberHisroy from "../Pages/SellerItems/ReportManagement/SubscriberHistory/SubscriberHisroy";
+import CommissionHistory from "../Pages/SellerItems/ReportManagement/CummissionHistory/CummissionHistory";
+import UserSearchHistory from "../Pages/SellerItems/ReportManagement/UserSearchHistory/UserSearchHistory";
+import SystemLog from "../Pages/SellerItems/ReportManagement/SystemLog/SystemLog";
 
 
 const SellerPath = [
@@ -114,9 +118,9 @@ const SellerPath = [
     },
     {
         path: "domain-management",
-        element: <IsDomainManagement>
+        element: <PrivateRoute>
             <AddDomain />
-        </IsDomainManagement>
+        </PrivateRoute>
     },
     {
         path: "settings",
@@ -144,9 +148,9 @@ const SellerPath = [
     },
     {
         path: "channel-integration",
-        element: <IsChenelIntregation>
+        element: <PrivateRoute>
             <DarazIntegration />
-        </IsChenelIntregation>
+        </PrivateRoute>
     },
     {
         path: "categories-management",
@@ -258,34 +262,31 @@ const SellerPath = [
     },
     {
         path: "warehouse",
-        element: <IsWarehouse>
-            <SellerWareHouseManagement />
-        </IsWarehouse>
+        element: <PrivateRoute><SellerWareHouseManagement /></PrivateRoute>
+
+
     },
     {
         path: "warehouse/warehouse-management",
-        element: <IsWarehouse> <SellerListOfWarehouse /></IsWarehouse>
+        element: <SellerListOfWarehouse />
     },
     {
         path: "warehouse/area-management",
-        element: <IsWarehouse><SellerAreaListForWarehouse /></IsWarehouse>
+        element: <SellerAreaListForWarehouse />
     },
     {
         path: "warehouse/rack-management",
-        element: <IsWarehouse><SellerManageRack /></IsWarehouse>
+        element: <SellerManageRack />
     },
     {
         path: "warehouse/self-management",
-        element: <IsWarehouse><SellerManageSelf /></IsWarehouse>
+        element: <SellerManageSelf />
     },
     {
         path: "warehouse/cell-management",
-        element: <IsWarehouse><SellerManageCell /></IsWarehouse>
+        element: <SellerManageCell />
     },
-    {
-        path: "staff-account",
-        element: <IsStafAccount><h1>Staf Account</h1></IsStafAccount>
-    },
+
     {
         path: "orders",
         element: <OrderManagement />
@@ -320,9 +321,9 @@ const SellerPath = [
     // ? pos path
     {
         path: "pos",
-        element: <IsPos>
+        element: <PrivateRoute>
             <Pos />
-        </IsPos>
+        </PrivateRoute>
     },
 
     {
@@ -342,13 +343,58 @@ const SellerPath = [
         element: <ManageWooCommerceOrder />
     },
     {
-        path: "staff-management",
-        element: <StafManagement />
+        path: "staff-account",
+        element: <PrivateRoute>
+            <StafManagement />
+        </PrivateRoute>
     },
     {
-        path: "staff/add-new-staff",
+        path: "staff-account/add-new-staff",
         element: <AddNewStaff />
     },
+    {
+        path: "report-management",
+        element:
+            // <PrivateRoute>
+            <ReportManagement />
+        // </PrivateRoute>
+    },
+    {
+        path: "report-management/sales-report",
+        element: <SalesHistory />
+    },
+    {
+        path: "report-management/pos-report",
+        element: <PosHistory />
+    },
+    {
+        path: "report-management/finance-report",
+        element: <FinanceHistory />
+    },
+    {
+        path: "report-management/customer-report",
+        element: <CustomerHistory />
+    },
+    {
+        path: "report-management/warehouse-report",
+        element: <WarehouseHistory />
+    },
+    {
+        path: "report-management/subscriber-report",
+        element: <SubscriberHisroy />
+    },
+    {
+        path: "report-management/commission-report",
+        element: <CommissionHistory />
+    },
+    {
+        path: "report-management/user-search-report",
+        element: <UserSearchHistory />
+    },
+    {
+        path: "report-management/system-log",
+        element: <SystemLog />
+    }
 
 
 

@@ -18,8 +18,7 @@ const AddNewStaff = () => {
         fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/seller-allUser?email=${searchValue}`)
             .then(res => res.json())
             .then(data => {
-                console.log(data, '+++++++');
-                if (data?.status) {
+                 if (data?.status) {
                     setValue(data?.data)
                 } else {
                     setError(data?.message)
@@ -60,8 +59,7 @@ const AddNewStaff = () => {
         const permissions = selectedValue
 
         const data = { user, shopEmail, permissions, role }
-        console.log(data)
-        fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/staff-add`, {
+         fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/staff-add`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json'
@@ -95,19 +93,7 @@ const AddNewStaff = () => {
                         placeholder="Search or Select"
                         className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500"
                     />
-                    {/* {filteredItems.length > 0 && (
-                        <div className="absolute z-10 mt-2 bg-white border rounded-md shadow-lg">
-                            {filteredItems.slice(0, 10).map((item, index) => (
-                                <div
-                                    key={index}
-                                    className="px-4 py-2 cursor-pointer hover:bg-blue-100"
-                                    onClick={() => handleSelect(JSON.stringify(item))}
-                                >
-                                    {item?.name}
-                                </div>
-                            ))}
-                        </div>
-                    )} */}
+                 
 
                     <button className='bg-black text-white py-2 px-4' type='button' onClick={() => handleSearch()}>
                         search
