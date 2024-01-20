@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
-import React from 'react';
+import BrightAlert from 'bright-alert';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 const ShopFooter = () => {
@@ -20,6 +21,38 @@ const ShopFooter = () => {
     });
 
 
+    const [email, setEmail] = useState('');
+    const [error, setError] = useState(false);
+    const [loading, setLoading] = useState(false);
+
+    const submitEmail = (e) => {
+        e.preventDefault()
+
+
+        setLoading(true)
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+        if (email && email.match(emailRegex)) {
+            setError(false)
+            fetch('http://localhost:5000/api/v1/seller/subscriber-report', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ email: email, date: new Date() })
+            })
+                .then((res) => res.json())
+                .then((data) => {
+
+                    setLoading(false)
+                    BrightAlert(`${data.message}`)
+                });
+        } else {
+            setLoading(false)
+            setError('Invalid email');
+        }
+    };
+
 
 
 
@@ -32,16 +65,23 @@ const ShopFooter = () => {
                         <span className="text-base font-medium tracking-wide text-gray-300">
                             Subscribe for updates
                         </span>
-                        <form className="flex flex-col mt-4 md:flex-row">
-                            <input
-                                placeholder="Email"
-                                required
-                                type="text"
-                                className="flex-grow w-full h-12 px-4 mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-purple-400 focus:outline-none focus:shadow-outline"
-                            />
+                        <form onSubmit={submitEmail} className="flex flex-col mt-4 md:flex-row">
+                            <div className='md:mr-2'>
+                                <input
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    placeholder="Email"
+                                    required
+                                    type="text"
+                                    className="flex-grow w-full h-12 px-4 mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-purple-400 focus:outline-none focus:shadow-outline"
+                                />
+                                {error && <p className='text-red-500 text-xs'>{error}</p>}
+                            </div>
                             <button
+
+                                disabled={loading}
+
                                 type="submit"
-                                className="inline-flex items-center justify-center h-12 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-purple-400 hover:bg-purple-700 focus:shadow-outline focus:outline-none"
+                                className="inline-flex items-center justify-center h-12 px-6 font-medium tracking-wide text-white transition duration-200 disabled:bg-purple-300 rounded shadow-md bg-purple-400 hover:bg-purple-700 focus:shadow-outline focus:outline-none"
                             >
                                 Subscribe
                             </button>
