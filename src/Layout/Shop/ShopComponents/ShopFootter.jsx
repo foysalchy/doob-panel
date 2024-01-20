@@ -34,12 +34,12 @@ const ShopFooter = () => {
 
         if (email && email.match(emailRegex)) {
             setError(false)
-            fetch('http://localhost:5000/api/v1/seller/subscriber-report', {
+            fetch('https://salenow-v2-backend.vercel.app/api/v1/seller/subscriber-report', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ email: email, date: new Date() })
+                body: JSON.stringify({ email: email, date: new Date(), shopId:shopId  })
             })
                 .then((res) => res.json())
                 .then((data) => {
