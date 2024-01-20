@@ -20,6 +20,28 @@ const SideNavAdmin = () => {
 
     return (
         <div className='py-6 sticky'>
+
+            {/* start */}
+            {/* {user?.staffRole ? (
+                user?.permissions.find(itm => itm?.name === "Staf Account") ? (
+                    managementPermission('Staf Account') && <li className="rounded-sm hover:bg-gray-800">
+                        <Link to={'/seller/staff-management'} rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
+                            <BiArchive className="w-5 h-5 text-gray-400" />
+                            <span>Staff Account</span>
+                        </Link>
+                    </li>
+                ) : null
+            ) : (
+                managementPermission('Staf Account') && <li className="rounded-sm hover:bg-gray-800">
+                    <Link to={'/seller/staff-management'} rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
+                        <BiArchive className="w-5 h-5 text-gray-400" />
+                        <span>Staff Account</span>
+                    </Link>
+                </li>
+            )} */}
+
+            {/* end */}
+
             <div className={menu ? "flex flex-col h-screen p-2  w-60 text-gray-900 overflow-y-auto transparent-scroll" : 'flex flex-col h-screen p-3 w-14 text-gray-900 overflow-y-auto transparent-scroll'}>
                 <div className="space-y-3">
                     <div className="flex items-center justify-between">
@@ -76,152 +98,430 @@ const SideNavAdmin = () => {
                                 {menu && <span>Home</span>}
                             </NavLink>
 
-
-                            <NavLink to='/admin/blog' rel="noopener noreferrer" href="#" className={({ isActive }) => {
-                                return isActive
-                                    ? "flex items-center p-2 space-x-3 rounded-sm bg-gray-800 text-white "
-                                    : "flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
-                            }}>
-                                <FaBlogger className="w-5 h-5 fill-current text-gray-400" />
-                                {menu && <span>Blogs</span>}
-                            </NavLink>
-
-
-                            <NavLink to='/admin/manage-product' rel="noopener noreferrer" href="#" className={({ isActive }) => {
-                                return isActive
-                                    ? "flex items-center p-2 space-x-3 rounded-sm bg-gray-800 text-white "
-                                    : "flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
-                            }}>
-                                <FaStore className="w-5 h-5 fill-current text-gray-400" />
-                                {menu && <span> Products Management</span>}
-                            </NavLink>
-
-
-
-
-                            <NavLink rel="noopener noreferrer" to='/admin/manage-category' className={({ isActive }) => {
-                                return isActive
-                                    ? "flex items-center p-2 space-x-3 rounded-sm bg-gray-800 text-white "
-                                    : "flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
-                            }}>
-                                <FaUsersGear className="w-5 h-5 fill-current text-gray-400" />
-                                {menu && <span>Sevice Category </span>}
-                            </NavLink>
-
-                            <NavLink rel="noopener noreferrer" to={'/admin/faq'} className={({ isActive }) => {
-                                return isActive
-                                    ? "flex items-center p-2 space-x-3 rounded-sm bg-gray-800 text-white "
-                                    : "flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
-                            }}>
-                                <FaUsersGear className="w-5 h-5 fill-current text-gray-400" />
-                                {menu && <span>FAQ Management</span>}
-                            </NavLink>
+                            {user?.staffRole ? (
+                                user?.permissions.find(itm => itm?.name === "Blog") ? (
+                                    <NavLink to='/admin/blog' rel="noopener noreferrer" href="#" className={({ isActive }) => {
+                                        return isActive
+                                            ? "flex items-center p-2 space-x-3 rounded-sm bg-gray-800 text-white "
+                                            : "flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
+                                    }}>
+                                        <FaBlogger className="w-5 h-5 fill-current text-gray-400" />
+                                        {menu && <span>Blogs</span>}
+                                    </NavLink>
+                                ) : null
+                            ) : (
+                                <NavLink to='/admin/blog' rel="noopener noreferrer" href="#" className={({ isActive }) => {
+                                    return isActive
+                                        ? "flex items-center p-2 space-x-3 rounded-sm bg-gray-800 text-white "
+                                        : "flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
+                                }}>
+                                    <FaBlogger className="w-5 h-5 fill-current text-gray-400" />
+                                    {menu && <span>Blogs</span>}
+                                </NavLink>
+                            )}
 
 
-                            <NavLink rel="noopener noreferrer" to={'/admin/price-management'} className={({ isActive }) => {
-                                return isActive
-                                    ? "flex items-center p-2 space-x-3 rounded-sm bg-gray-800 text-white "
-                                    : "flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
-                            }}>
-                                <AiOutlineAlert className="w-5 h-5 fill-current text-gray-400" />
-                                {menu && <span> Price Management</span>}
-                            </NavLink>
+
+                            {user?.staffRole ? (
+                                user?.permissions.find(itm => itm?.name === "Manage Product") ? (
+
+                                    <NavLink to='/admin/manage-product' rel="noopener noreferrer" href="#" className={({ isActive }) => {
+                                        return isActive
+                                            ? "flex items-center p-2 space-x-3 rounded-sm bg-gray-800 text-white "
+                                            : "flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
+                                    }}>
+                                        <FaStore className="w-5 h-5 fill-current text-gray-400" />
+                                        {menu && <span> Products Management</span>}
+                                    </NavLink>
+                                ) : null
+                            ) : (
+
+                                <NavLink to='/admin/manage-product' rel="noopener noreferrer" href="#" className={({ isActive }) => {
+                                    return isActive
+                                        ? "flex items-center p-2 space-x-3 rounded-sm bg-gray-800 text-white "
+                                        : "flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
+                                }}>
+                                    <FaStore className="w-5 h-5 fill-current text-gray-400" />
+                                    {menu && <span> Products Management</span>}
+                                </NavLink>
+                            )}
+
+                            {user?.staffRole ? (
+                                user?.permissions.find(itm => itm?.name === "Manage Category") ? (
+                                    <NavLink rel="noopener noreferrer" to='/admin/manage-category' className={({ isActive }) => {
+                                        return isActive
+                                            ? "flex items-center p-2 space-x-3 rounded-sm bg-gray-800 text-white "
+                                            : "flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
+                                    }}>
+                                        <FaUsersGear className="w-5 h-5 fill-current text-gray-400" />
+                                        {menu && <span>Sevice Category </span>}
+                                    </NavLink>
+                                ) : null
+                            ) : (
+
+                                <NavLink rel="noopener noreferrer" to='/admin/manage-category' className={({ isActive }) => {
+                                    return isActive
+                                        ? "flex items-center p-2 space-x-3 rounded-sm bg-gray-800 text-white "
+                                        : "flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
+                                }}>
+                                    <FaUsersGear className="w-5 h-5 fill-current text-gray-400" />
+                                    {menu && <span>Sevice Category </span>}
+                                </NavLink>
+                            )}
 
 
-                            <NavLink rel="noopener noreferrer" to={'/admin/page-management'} className={({ isActive }) => {
-                                return isActive
-                                    ? "flex items-center p-2 space-x-3 rounded-sm bg-gray-800 text-white "
-                                    : "flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
-                            }}>
-                                <MdOutlineSubscriptions className="w-5 h-5 fill-current text-gray-400" />
-                                {menu && <span>Page Management</span>}
-                            </NavLink>
+                            {user?.staffRole ? (
+                                user?.permissions.find(itm => itm?.name === "Faq") ? (
+                                    <NavLink rel="noopener noreferrer" to={'/admin/faq'} className={({ isActive }) => {
+                                        return isActive
+                                            ? "flex items-center p-2 space-x-3 rounded-sm bg-gray-800 text-white "
+                                            : "flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
+                                    }}>
+                                        <FaUsersGear className="w-5 h-5 fill-current text-gray-400" />
+                                        {menu && <span>FAQ Management</span>}
+                                    </NavLink>
+                                ) : null
+                            ) : (
+
+                                <NavLink rel="noopener noreferrer" to={'/admin/faq'} className={({ isActive }) => {
+                                    return isActive
+                                        ? "flex items-center p-2 space-x-3 rounded-sm bg-gray-800 text-white "
+                                        : "flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
+                                }}>
+                                    <FaUsersGear className="w-5 h-5 fill-current text-gray-400" />
+                                    {menu && <span>FAQ Management</span>}
+                                </NavLink>
+                            )}
+
+                            {user?.staffRole ? (
+                                user?.permissions.find(itm => itm?.name === "Faq") ? (
+                                    <NavLink rel="noopener noreferrer" to={'/admin/faq'} className={({ isActive }) => {
+                                        return isActive
+                                            ? "flex items-center p-2 space-x-3 rounded-sm bg-gray-800 text-white "
+                                            : "flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
+                                    }}>
+                                        <FaUsersGear className="w-5 h-5 fill-current text-gray-400" />
+                                        {menu && <span>FAQ Management</span>}
+                                    </NavLink>
+                                ) : null
+                            ) : (
+
+                                <NavLink rel="noopener noreferrer" to={'/admin/faq'} className={({ isActive }) => {
+                                    return isActive
+                                        ? "flex items-center p-2 space-x-3 rounded-sm bg-gray-800 text-white "
+                                        : "flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
+                                }}>
+                                    <FaUsersGear className="w-5 h-5 fill-current text-gray-400" />
+                                    {menu && <span>FAQ Management</span>}
+                                </NavLink>
+                            )}
 
 
-                            <NavLink rel="noopener noreferrer" to={'/admin/services'} className={({ isActive }) => {
-                                return isActive
-                                    ? "flex items-center p-2 space-x-3 rounded-sm bg-gray-800 text-white "
-                                    : "flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
-                            }}>
-                                <BsTicketDetailed className="w-5 h-5 fill-current text-gray-400" />
-                                {menu && <span>Service Management</span>}
-                            </NavLink>
+
+                            {user?.staffRole ? (
+                                user?.permissions.find(itm => itm?.name === "Price Management") ? (
+
+                                    <NavLink rel="noopener noreferrer" to={'/admin/price-management'} className={({ isActive }) => {
+                                        return isActive
+                                            ? "flex items-center p-2 space-x-3 rounded-sm bg-gray-800 text-white "
+                                            : "flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
+                                    }}>
+                                        <AiOutlineAlert className="w-5 h-5 fill-current text-gray-400" />
+                                        {menu && <span> Price Management</span>}
+                                    </NavLink>
+                                ) : null
+                            ) : (
 
 
-                            <NavLink rel="noopener noreferrer" to={'/admin/contact'} className={({ isActive }) => {
-                                return isActive
-                                    ? "flex items-center p-2 space-x-3 rounded-sm bg-gray-800 text-white "
-                                    : "flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
-                            }}>
-                                <SiGoogledomains className="w-5 h-5 fill-current text-gray-400" />
-                                {menu && <span>Contact Management</span>}
-                            </NavLink>
+                                <NavLink rel="noopener noreferrer" to={'/admin/price-management'} className={({ isActive }) => {
+                                    return isActive
+                                        ? "flex items-center p-2 space-x-3 rounded-sm bg-gray-800 text-white "
+                                        : "flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
+                                }}>
+                                    <AiOutlineAlert className="w-5 h-5 fill-current text-gray-400" />
+                                    {menu && <span> Price Management</span>}
+                                </NavLink>
+                            )}
 
 
-                            <NavLink rel="noopener noreferrer" to={'/admin/settings'} className={({ isActive }) => {
-                                return isActive
-                                    ? "flex items-center p-2 space-x-3 rounded-sm bg-gray-800 text-white "
-                                    : "flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
-                            }}>
-                                <IoSettings className="w-5 h-5 fill-current text-gray-400" />
-                                {menu && <span>Settings</span>}
-                            </NavLink>
+                            {user?.staffRole ? (
+                                user?.permissions.find(itm => itm?.name === "Admin Pos") ? (
+                                    <NavLink rel="noopener noreferrer" to={'/admin/admin-pos'} className={({ isActive }) => {
+                                        return isActive
+                                            ? "flex items-center p-2 space-x-3 rounded-sm bg-gray-800 text-white "
+                                            : "flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
+                                    }}>
+                                        <AiOutlineAlert className="w-5 h-5 fill-current text-gray-400" />
+                                        {menu && <span> Admin POS</span>}
+                                    </NavLink>
+                                ) : null
+                            ) : (
+                                <NavLink rel="noopener noreferrer" to={'/admin/admin-pos'} className={({ isActive }) => {
+                                    return isActive
+                                        ? "flex items-center p-2 space-x-3 rounded-sm bg-gray-800 text-white "
+                                        : "flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
+                                }}>
+                                    <AiOutlineAlert className="w-5 h-5 fill-current text-gray-400" />
+                                    {menu && <span> Admin POS</span>}
+                                </NavLink>
+                            )}
 
 
-                            <NavLink to={'/admin/support-ticket'} rel="noopener noreferrer" className={({ isActive }) => {
-                                return isActive
-                                    ? "flex items-center p-2 space-x-3 rounded-sm bg-gray-800 text-white "
-                                    : "flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
-                            }}>
-                                <BiSolidShoppingBags className="w-5 h-5 fill-current text-gray-400" />
-                                {menu && <span> Support Ticket</span>}
-                            </NavLink>
+
+                            {user?.staffRole ? (
+                                user?.permissions.find(itm => itm?.name === "Page Management") ? (
+                                    <NavLink rel="noopener noreferrer" to={'/admin/page-management'} className={({ isActive }) => {
+                                        return isActive
+                                            ? "flex items-center p-2 space-x-3 rounded-sm bg-gray-800 text-white "
+                                            : "flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
+                                    }}>
+                                        <MdOutlineSubscriptions className="w-5 h-5 fill-current text-gray-400" />
+                                        {menu && <span>Page Management</span>}
+                                    </NavLink>
+
+                                ) : null
+                            ) : (
+
+                                <NavLink rel="noopener noreferrer" to={'/admin/page-management'} className={({ isActive }) => {
+                                    return isActive
+                                        ? "flex items-center p-2 space-x-3 rounded-sm bg-gray-800 text-white "
+                                        : "flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
+                                }}>
+                                    <MdOutlineSubscriptions className="w-5 h-5 fill-current text-gray-400" />
+                                    {menu && <span>Page Management</span>}
+                                </NavLink>
+
+                            )}
 
 
-                            <NavLink rel="noopener noreferrer" to={'/admin/seller-management'} className={({ isActive }) => {
-                                return isActive
-                                    ? "flex items-center p-2 space-x-3 rounded-sm bg-gray-800 text-white "
-                                    : "flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
-                            }}>
-                                <BiCategory className="w-5 h-5 fill-current text-gray-400" />
-                                {menu && <span>Seller Management</span>}
-                            </NavLink>
 
 
-                            <NavLink rel="noopener noreferrer" to={'/admin/warehouse'} className={({ isActive }) => {
-                                return isActive
-                                    ? "flex items-center p-2 space-x-3 rounded-sm bg-gray-800 text-white "
-                                    : "flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
-                            }}>
-                                <GiNotebook className="w-5 h-5 fill-current text-gray-400" />
-                                {menu && <span>Warehouse Management</span>}
-                            </NavLink>
+                            {user?.staffRole ? (
+                                user?.permissions.find(itm => itm?.name === "Services") ? (
+                                    <NavLink rel="noopener noreferrer" to={'/admin/services'} className={({ isActive }) => {
+                                        return isActive
+                                            ? "flex items-center p-2 space-x-3 rounded-sm bg-gray-800 text-white "
+                                            : "flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
+                                    }}>
+                                        <BsTicketDetailed className="w-5 h-5 fill-current text-gray-400" />
+                                        {menu && <span>Service Management</span>}
+                                    </NavLink>
 
-                            <NavLink rel="noopener noreferrer" to={'/admin/content-management'} className={({ isActive }) => {
-                                return isActive
-                                    ? "flex items-center p-2 space-x-3 rounded-sm bg-gray-800 text-white "
-                                    : "flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
-                            }}>
-                                <MdOutlineContentPaste className="w-5 h-5 fill-current text-gray-400" />
-                                {menu && <span>Content Management</span>}
-                            </NavLink>
 
-                            <NavLink rel="noopener noreferrer" to={'/admin/content-management'} className={({ isActive }) => {
-                                return isActive
-                                    ? "flex items-center p-2 space-x-3 rounded-sm bg-gray-800 text-white "
-                                    : "flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
-                            }}>
-                                <BiSolidReport className="w-5 h-5 fill-current text-gray-400" />
-                                {menu && <span>Report Management</span>}
-                            </NavLink>
-                            <NavLink rel="noopener noreferrer" to={'/admin/staff-management'} className={({ isActive }) => {
-                                return isActive
-                                    ? "flex items-center p-2 space-x-3 rounded-sm bg-gray-800 text-white "
-                                    : "flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
-                            }}>
-                                <BiSolidReport className="w-5 h-5 fill-current text-gray-400" />
-                                {menu && <span>Staff Management</span>}
-                            </NavLink>
+                                ) : null
+                            ) : (
+                                <NavLink rel="noopener noreferrer" to={'/admin/services'} className={({ isActive }) => {
+                                    return isActive
+                                        ? "flex items-center p-2 space-x-3 rounded-sm bg-gray-800 text-white "
+                                        : "flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
+                                }}>
+                                    <BsTicketDetailed className="w-5 h-5 fill-current text-gray-400" />
+                                    {menu && <span>Service Management</span>}
+                                </NavLink>
+                            )}
+
+
+                            {user?.staffRole ? (
+                                user?.permissions.find(itm => itm?.name === "Contact") ? (
+                                    <NavLink rel="noopener noreferrer" to={'/admin/contact'} className={({ isActive }) => {
+                                        return isActive
+                                            ? "flex items-center p-2 space-x-3 rounded-sm bg-gray-800 text-white "
+                                            : "flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
+                                    }}>
+                                        <SiGoogledomains className="w-5 h-5 fill-current text-gray-400" />
+                                        {menu && <span>Contact Management</span>}
+                                    </NavLink>
+
+
+                                ) : null
+                            ) : (
+                                <NavLink rel="noopener noreferrer" to={'/admin/contact'} className={({ isActive }) => {
+                                    return isActive
+                                        ? "flex items-center p-2 space-x-3 rounded-sm bg-gray-800 text-white "
+                                        : "flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
+                                }}>
+                                    <SiGoogledomains className="w-5 h-5 fill-current text-gray-400" />
+                                    {menu && <span>Contact Management</span>}
+                                </NavLink>
+                            )}
+
+
+                            {user?.staffRole ? (
+                                user?.permissions.find(itm => itm?.name === "Settings") ? (
+                                    <NavLink rel="noopener noreferrer" to={'/admin/settings'} className={({ isActive }) => {
+                                        return isActive
+                                            ? "flex items-center p-2 space-x-3 rounded-sm bg-gray-800 text-white "
+                                            : "flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
+                                    }}>
+                                        <IoSettings className="w-5 h-5 fill-current text-gray-400" />
+                                        {menu && <span>Settings</span>}
+                                    </NavLink>
+                                ) : null
+                            ) : (
+                                <NavLink rel="noopener noreferrer" to={'/admin/settings'} className={({ isActive }) => {
+                                    return isActive
+                                        ? "flex items-center p-2 space-x-3 rounded-sm bg-gray-800 text-white "
+                                        : "flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
+                                }}>
+                                    <IoSettings className="w-5 h-5 fill-current text-gray-400" />
+                                    {menu && <span>Settings</span>}
+                                </NavLink>
+                            )}
+
+
+
+                            {user?.staffRole ? (
+                                user?.permissions.find(itm => itm?.name === "Support Ticket") ? (
+
+                                    <NavLink to={'/admin/support-ticket'} rel="noopener noreferrer" className={({ isActive }) => {
+                                        return isActive
+                                            ? "flex items-center p-2 space-x-3 rounded-sm bg-gray-800 text-white "
+                                            : "flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
+                                    }}>
+                                        <BiSolidShoppingBags className="w-5 h-5 fill-current text-gray-400" />
+                                        {menu && <span> Support Ticket</span>}
+                                    </NavLink>
+
+                                ) : null
+                            ) : (
+
+                                <NavLink to={'/admin/support-ticket'} rel="noopener noreferrer" className={({ isActive }) => {
+                                    return isActive
+                                        ? "flex items-center p-2 space-x-3 rounded-sm bg-gray-800 text-white "
+                                        : "flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
+                                }}>
+                                    <BiSolidShoppingBags className="w-5 h-5 fill-current text-gray-400" />
+                                    {menu && <span> Support Ticket</span>}
+                                </NavLink>
+
+                            )}
+
+
+
+                            {user?.staffRole ? (
+                                user?.permissions.find(itm => itm?.name === "Seller Management") ? (
+                                    <NavLink rel="noopener noreferrer" to={'/admin/seller-management'} className={({ isActive }) => {
+                                        return isActive
+                                            ? "flex items-center p-2 space-x-3 rounded-sm bg-gray-800 text-white "
+                                            : "flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
+                                    }}>
+                                        <BiCategory className="w-5 h-5 fill-current text-gray-400" />
+                                        {menu && <span>Seller Management</span>}
+                                    </NavLink>
+
+                                ) : null
+                            ) : (
+                                <NavLink rel="noopener noreferrer" to={'/admin/seller-management'} className={({ isActive }) => {
+                                    return isActive
+                                        ? "flex items-center p-2 space-x-3 rounded-sm bg-gray-800 text-white "
+                                        : "flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
+                                }}>
+                                    <BiCategory className="w-5 h-5 fill-current text-gray-400" />
+                                    {menu && <span>Seller Management</span>}
+                                </NavLink>
+                            )}
+
+
+
+
+                            {user?.staffRole ? (
+                                user?.permissions.find(itm => itm?.name === "Warehouse") ? (
+                                    <NavLink rel="noopener noreferrer" to={'/admin/warehouse'} className={({ isActive }) => {
+                                        return isActive
+                                            ? "flex items-center p-2 space-x-3 rounded-sm bg-gray-800 text-white "
+                                            : "flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
+                                    }}>
+                                        <GiNotebook className="w-5 h-5 fill-current text-gray-400" />
+                                        {menu && <span>Warehouse Management</span>}
+                                    </NavLink>
+
+                                ) : null
+                            ) : (
+                                <NavLink rel="noopener noreferrer" to={'/admin/warehouse'} className={({ isActive }) => {
+                                    return isActive
+                                        ? "flex items-center p-2 space-x-3 rounded-sm bg-gray-800 text-white "
+                                        : "flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
+                                }}>
+                                    <GiNotebook className="w-5 h-5 fill-current text-gray-400" />
+                                    {menu && <span>Warehouse Management</span>}
+                                </NavLink>
+                            )}
+
+
+
+
+                            {user?.staffRole ? (
+                                user?.permissions.find(itm => itm?.name === "Content Management") ? (
+                                    <NavLink rel="noopener noreferrer" to={'/admin/content-management'} className={({ isActive }) => {
+                                        return isActive
+                                            ? "flex items-center p-2 space-x-3 rounded-sm bg-gray-800 text-white "
+                                            : "flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
+                                    }}>
+                                        <MdOutlineContentPaste className="w-5 h-5 fill-current text-gray-400" />
+                                        {menu && <span>Content Management</span>}
+                                    </NavLink>
+
+                                ) : null
+                            ) : (
+
+                                <NavLink rel="noopener noreferrer" to={'/admin/content-management'} className={({ isActive }) => {
+                                    return isActive
+                                        ? "flex items-center p-2 space-x-3 rounded-sm bg-gray-800 text-white "
+                                        : "flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
+                                }}>
+                                    <MdOutlineContentPaste className="w-5 h-5 fill-current text-gray-400" />
+                                    {menu && <span>Content Management</span>}
+                                </NavLink>
+                            )}
+
+
+
+                            {user?.staffRole ? (
+                                user?.permissions.find(itm => itm?.name === "Content Management") ? (
+                                    <NavLink rel="noopener noreferrer" to={'/admin/content-management'} className={({ isActive }) => {
+                                        return isActive
+                                            ? "flex items-center p-2 space-x-3 rounded-sm bg-gray-800 text-white "
+                                            : "flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
+                                    }}>
+                                        <BiSolidReport className="w-5 h-5 fill-current text-gray-400" />
+                                        {menu && <span>Report Management</span>}
+                                    </NavLink>
+
+                                ) : null
+                            ) : (
+                                <NavLink rel="noopener noreferrer" to={'/admin/content-management'} className={({ isActive }) => {
+                                    return isActive
+                                        ? "flex items-center p-2 space-x-3 rounded-sm bg-gray-800 text-white "
+                                        : "flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
+                                }}>
+                                    <BiSolidReport className="w-5 h-5 fill-current text-gray-400" />
+                                    {menu && <span>Report Management</span>}
+                                </NavLink>
+                            )}
+
+                            {user?.staffRole ? (
+                                user?.permissions.find(itm => itm?.name === "Staff Management") ? (
+                                    <NavLink rel="noopener noreferrer" to={'/admin/staff-management'} className={({ isActive }) => {
+                                        return isActive
+                                            ? "flex items-center p-2 space-x-3 rounded-sm bg-gray-800 text-white "
+                                            : "flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
+                                    }}>
+                                        <BiSolidReport className="w-5 h-5 fill-current text-gray-400" />
+                                        {menu && <span>Staff Management</span>}
+                                    </NavLink>
+
+                                ) : null
+                            ) : (
+                                <NavLink rel="noopener noreferrer" to={'/admin/staff-management'} className={({ isActive }) => {
+                                    return isActive
+                                        ? "flex items-center p-2 space-x-3 rounded-sm bg-gray-800 text-white "
+                                        : "flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
+                                }}>
+                                    <BiSolidReport className="w-5 h-5 fill-current text-gray-400" />
+                                    {menu && <span>Staff Management</span>}
+                                </NavLink>
+                            )}
+
 
 
                             <NavLink rel="noopener noreferrer" href="#" className={({ isActive }) => {

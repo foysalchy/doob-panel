@@ -12,9 +12,7 @@ import Swal from 'sweetalert2';
 
 const PopupManagement = () => {
     const [loading, setLoading] = useState(false);
-
     const { shopInfo } = useContext(AuthContext)
-
     const { data: faqs, refetch } = useQuery({
         queryKey: "faqs",
         queryFn: async () => {

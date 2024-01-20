@@ -35,6 +35,8 @@ import DarazIntrigration from "../Pages/AdminItem/IntrigrationDaraz/DarazIntrigr
 import AdminSittings from "../Pages/AdminItem/AdminSittings/AdminSittings";
 import AdminStaffManagement from "../Pages/AdminItem/AdminStaff/AdminStaffManagement";
 import AdminNewStaff from "../Pages/AdminItem/AdminStaff/AdminNewStaff";
+import AdminPos from "../Pages/AdminItem/AdminPos/AdminPos";
+import CheckStaff from "../Hooks/CheckStaff";
 
 const SupperAdminPath = [
     {
@@ -46,25 +48,34 @@ const SupperAdminPath = [
     {
         path: "blog",
         element: (
-            <AdminBlogs />
+            <CheckStaff>
+                <AdminBlogs />
+            </CheckStaff>
         ),
     },
     {
         path: "blog/new-blog",
-        element: <AddBlog />
+        element: <CheckStaff>
+            <AddBlog />
+        </CheckStaff>
     },
 
     {
         path: "manage-product",
-        element: <ManageProduct />
+        element: <CheckStaff>
+            <ManageProduct />
+        </CheckStaff>
     },
     {
         path: "manage-product/add-Product",
-        element: <AddProduct></AddProduct>
+        element:
+            <AddProduct />
     },
     {
         path: "manage-category",
-        element: <CatagoryManagement />
+        element: <CheckStaff>
+            <CatagoryManagement />
+        </CheckStaff>
     },
     {
         path: "manage-category/add-category",
@@ -80,7 +91,9 @@ const SupperAdminPath = [
     },
     {
         path: "price-management",
-        element: <PriceMangement />
+        element: <CheckStaff>
+            <PriceMangement />
+        </CheckStaff>
     },
     {
         path: "price-management/add-pricing",
@@ -88,7 +101,9 @@ const SupperAdminPath = [
     },
     {
         path: "faq",
-        element: <AdminFaq />
+        element: <CheckStaff>
+            <AdminFaq />
+        </CheckStaff>
     },
     {
         path: "faq/add-faq",
@@ -96,7 +111,9 @@ const SupperAdminPath = [
     },
     {
         path: "page-management",
-        element: <PageManagement />
+        element: <CheckStaff>
+            <PageManagement />
+        </CheckStaff>
     },
     {
         path: "page-management/add-page",
@@ -104,7 +121,9 @@ const SupperAdminPath = [
     },
     {
         path: "services",
-        element: <ManageService />
+        element: <CheckStaff>
+            <ManageService />
+        </CheckStaff>
     },
     {
         path: "services/add-service",
@@ -112,7 +131,9 @@ const SupperAdminPath = [
     },
     {
         path: "contact",
-        element: <ContactManagement />
+        element: <CheckStaff>
+            <ContactManagement />
+        </CheckStaff>
     },
     {
         path: "contact/add-contact",
@@ -120,7 +141,9 @@ const SupperAdminPath = [
     },
     {
         path: "settings",
-        element: <Settings />
+        element: <CheckStaff>
+            <Settings />
+        </CheckStaff>
     },
     {
         path: "settings/seller-domain",
@@ -144,7 +167,9 @@ const SupperAdminPath = [
     },
     {
         path: "support-ticket",
-        element: <SupportTicketManagement />
+        element: <CheckStaff>
+            <SupportTicketManagement />
+        </CheckStaff>
     },
     {
         path: "settings/site-content",
@@ -152,11 +177,15 @@ const SupperAdminPath = [
     },
     {
         path: "seller-management",
-        element: <SellerManagement />
+        element: <CheckStaff>
+            <SellerManagement />
+        </CheckStaff>
     },
     {
         path: "warehouse",
-        element: <WareHouseManagement />
+        element: <CheckStaff>
+            <WareHouseManagement />
+        </CheckStaff>
     },
     {
         path: "warehouse/warehouse-management",
@@ -180,19 +209,31 @@ const SupperAdminPath = [
     },
     {
         path: "add-daraz",
-        element: <DarazIntrigration />
+        element: <CheckStaff>
+            <DarazIntrigration />
+        </CheckStaff>
     },
     {
         path: 'content-management',
-        element: <AdminSittings />
+        element: <CheckStaff>
+            <AdminSittings />
+        </CheckStaff>
     },
     {
         path: 'staff-management',
-        element: <AdminStaffManagement />
+        element: <CheckStaff>
+            <AdminStaffManagement />
+        </CheckStaff>
     },
     {
         path: 'staff-management/new-staff',
         element: <AdminNewStaff />
+    },
+    {
+        path: 'admin-pos',
+        element: <CheckStaff>
+            <AdminPos />
+        </CheckStaff>
     },
 
 ]

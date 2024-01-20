@@ -7,11 +7,14 @@ import Lottie from "lottie-react";
 import groovyWalkAnimation from "./Loading.json";
 import { useQuery } from '@tanstack/react-query';
 
+const PrivateRoute = ({ children },) => {
+    const { user, loading, shopInfo } = useContext(AuthContext);
 
-const IsPos = ({ children }) => {
-    const { user, loading, shopInfo } = useContext(AuthContext)
+    const pathname = window.location.pathname;
+    const idMatch = pathname.match(/\/seller\/([^/]+)/);
+    const sellerPath = idMatch ? idMatch[1] : null;
 
-    const { data: prices = [], loader } = useQuery({
+    const { data: prices = [], isLoading } = useQuery({
         queryKey: ["prices"],
         queryFn: async () => {
             const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/subscription-model?priceId=${shopInfo?.priceId}`);
@@ -21,19 +24,20 @@ const IsPos = ({ children }) => {
         },
     });
 
-    // { name: 'Domain Management', route: 'domain-management' },
-    // { name: 'Channel Integration', route: 'channel-integration' },
-    // { name: 'Warehouse', route: 'warehouse' },
-    // { name: 'Staf Account', route: 'staf-account' },
-    //access route
-
-    let check = prices?.permissions?.some(itm => itm?.name === 'POS')
-    console.log(check);
-    if (check) {
-        return children
+    if (isLoading) {
+        return <div></div>
     }
 
-    return <Navigate to="/" state={{ from: location }} replace></Navigate>
+    // Check for the 'POS' permission
+    const check = prices?.permissions?.some(itm => itm?.route === sellerPath);
+    console.log(check);
+
+    if (check || !user.staffRole) {
+        return children;
+    }
+
+    // Redirect to dashboard if the user doesn't have access to POS
+    return <Navigate to="/seller/dashboard" state={{ from: sellerPath }} replace />;
 };
 
-export default IsPos;
+export default PrivateRoute;
