@@ -215,7 +215,7 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
                 </div>
 
                 <button
-                    onClick={() => handleSubmit()}
+                    onClick={handleSubmit}
                     className="bg-gray-900 text-white rounded-md p-2 w-full mt-3">Submit</button>
             </div>
             <PosProductsDetails invoice={invoice} open={open} setOpen={setOpen} />

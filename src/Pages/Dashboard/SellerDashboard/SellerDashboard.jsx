@@ -4,6 +4,8 @@ import { AuthContext } from '../../../AuthProvider/UserProvider';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { FaBangladeshiTakaSign } from "react-icons/fa6";
+import AnouncementContent from './AdminContent/AnouncementContent';
+import NoticeContent from './AdminContent/NoticeContent';
 
 const SellerDashboard = () => {
 
@@ -82,6 +84,7 @@ const SellerDashboard = () => {
                         </a>
                     </div>
                 </div>
+
                 <div className="flex items-center w-full space-x-4 md:w-1/2">
                     <div className="w-1/2 ">
                         <div className="relative ring-1 ring-gray-100 md:h-[100px] h-[120px] w-full px-4 py-6 bg-white shadow-lg ">
@@ -109,6 +112,14 @@ const SellerDashboard = () => {
                             </p>
                         </div>
                     </div>
+                </div>
+            </div>
+            <div className="grid grid-cols-2 gap-3 mb-8 mt-4">
+                <div className="bg-white p-3 ring-1 ring-gray-200 rounded-md shadow-xl ">
+                    <AnouncementContent />
+                </div>
+                <div className="bg-white p-3 ring-1 ring-gray-200 rounded-md shadow-xl ">
+                    <NoticeContent />
                 </div>
             </div>
             <div className="flex items-center space-x-4">

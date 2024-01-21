@@ -394,8 +394,8 @@ const SellerPath = [
     {
         path: "report-management/system-log",
         element: <SystemLog />
-    }
-
+    },
+    
 
 
 
