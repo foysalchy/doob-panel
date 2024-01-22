@@ -1,41 +1,28 @@
-import React, { useContext, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { AuthContext } from '../../../../AuthProvider/UserProvider';
-import { useQuery } from '@tanstack/react-query';
-import { BiCloset } from 'react-icons/bi';
-import WarehouseProductModal from './WarehouseProductModal';
+import React from 'react';
 
-const WarehouseHistory = () => {
-    const { shopInfo } = useContext(AuthContext);
-    const [OpenModal, setOpenModal] = useState(false);
-
-    const { data: warehouseData = [], isLoading } = useQuery({
-        queryKey: ["warehouseData"],
-        queryFn: async () => {
-            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/warehouses-products?shopId=${shopInfo?._id}`);
-            const data = await res.json();
-            return data.warehouses;
-        },
-    });
-
-    console.log(warehouseData, '>>>>>>>>>');
-
+const WarehouseProductModal = ({ setOpenModal, products }) => {
+    console.log(products);
     return (
-        <div>
-            <section className="container px-4 mx-auto">
+        <div className='bg-[#ffffff]  h-screen  overflow-y-auto top-0 pt-10 fixed right-0 left-0 flex  flex-col items-center gap-4 justify-start z-[6000] '>
+            <h1 className='text-xl text-black font-semibold'>WareHouse</h1>
+            <button onClick={() => setOpenModal(false)} className='text-2xl text-black absolute right-8 top-4'>x</button>
+            <section className="container  flex-col  items-center px-4 mx-auto flex justify-center">
                 <div className="flex flex-col">
-                    <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-                        <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
+                    <div className="-mx-4 -my-2 overflow-x-auto ">
+                        <div className="inline-block   py-2 align-middle md:px-6 lg:px-8">
                             <div className="overflow-hidden border border-gray-200 dark:border-gray-700 md:rounded-lg">
-                                <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                                <table className=" divide-y divide-gray-200 dark:divide-gray-700">
                                     <thead className="bg-gray-50 dark:bg-gray-800">
                                         <tr>
-
                                             <th
                                                 scope="col"
-                                                className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                                                className="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
                                             >
-                                                Photo
+                                                <div className="flex items-center gap-x-3">
+                                                    <div className="flex items-center gap-x-2">
+                                                        <span>Photo</span>
+                                                    </div>
+                                                </div>
                                             </th>
                                             <th
                                                 scope="col"
@@ -47,77 +34,81 @@ const WarehouseHistory = () => {
                                                 scope="col"
                                                 className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
                                             >
-                                                Status
+                                                Category
                                             </th>
                                             <th
                                                 scope="col"
                                                 className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
                                             >
-                                                Slag
+                                                Regular Price
                                             </th>
                                             <th
                                                 scope="col"
                                                 className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
                                             >
-                                                Address
+                                                Price
                                             </th>
                                             <th
                                                 scope="col"
                                                 className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
                                             >
-                                                Action
+                                                Quantity
                                             </th>
+                                            <th
+                                                scope="col"
+                                                className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                                            >
+                                                Warehouse
+                                            </th>
+
+
 
                                         </tr>
                                     </thead>
                                     <tbody className="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
-                                        {warehouseData.map(data => <tr key={data?.warehouse?._id}>
-
-                                            <td className="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
-                                                <img src={data?.warehouse?.img} alt="" className="w-[50px] h-[50px] object-cover rounded-lg" />
-                                            </td>
-                                            <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                                <span>{data?.warehouse?.name}</span>
-                                            </td>
-                                            <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                                                <div className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 text-emerald-500 bg-emerald-100/60 dark:bg-gray-800">
-                                                    {data.warehouse.status ? <svg
-                                                        width={12}
-                                                        height={12}
-                                                        viewBox="0 0 12 12"
-                                                        fill="none"
-                                                        xmlns="http://www.w3.org/2000/svg"
-                                                    >
-                                                        <path
-                                                            d="M10 3L4.5 8.5L2 6"
-                                                            stroke="currentColor"
-                                                            strokeWidth="1.5"
-                                                            strokeLinecap="round"
-                                                            strokeLinejoin="round"
-                                                        />
-                                                    </svg> :
-                                                        <BiCloset className='text-lg text-red-500' />
-                                                    }
-
+                                        {
+                                            products?.map((product, index) => <tr>
+                                                {/* <td className="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
+                                                <div className="inline-flex items-center gap-x-3">
+                                                    <input
+                                                        type="checkbox"
+                                                        className="text-blue-500 border-gray-300 rounded dark:bg-gray-900 dark:ring-offset-gray-900 dark:border-gray-700"
+                                                    />
+                                                    <span>#3066</span>
                                                 </div>
+                                            </td> */}
+                                                <td className="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
+                                                    <img src={product?.featuredImage?.src} alt="product" className="w-[60px] h-[60px] rounded-md object-cover" />
+                                                </td>
+                                                <td className="px-4 py-4 text-sm font-medium text-gray-700 w-[200px]">
+                                                    <span className="w-[300px]">{product?.name}</span>
+                                                </td>
+                                                <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap w-[300px] flex items-center flex-wrap gap-2">
+                                                    {product?.categories.map(itm => <span className='bg-blue-500 text-white font-[400] px-2 rounded-full text-[10px]' key={itm?.name}>{itm?.name}</span>)}
+                                                </td>
+                                                <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
+                                                    {product?.price}
+                                                </td>
+                                                <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
+                                                    {product?.regular_price}
+                                                </td>
+                                                <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
+                                                    {product?.stock_quantity}
+                                                </td>
+                                                <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap w-[300px] flex items-center flex-wrap gap-2">
+                                                    {product?.warehouse.map(itm => <span className='bg-blue-500 text-white font-[400] px-2 rounded-full text-[10px]' key={itm?.name}>{itm?.name}</span>)}
+                                                </td>
+
+                                            </tr>
+                                            )
+                                        }
+
+                                        <tr>
+                                            <td colSpan={8}>
+                                                Loader.......
                                             </td>
-                                            <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                                <span>
-                                                    {data?.warehouse?.slag}
-                                                </span>
-                                            </td>
-                                            <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                                {data?.warehouse?.address}
-                                            </td>
-                                            <td className="px-4 py-4 text-sm whitespace-nowrap">
-                                                <div className="flex items-center gap-x-6">
-                                                    <button onClick={() => setOpenModal(data?.warehouse?._id)} className="text-blue-500 transition-colors duration-200 hover:text-indigo-500 focus:outline-none">
-                                                        Product ({data?.products.length})
-                                                    </button>
-                                                </div>
-                                            </td>
-                                            {OpenModal === data.warehouse._id && <WarehouseProductModal setOpenModal={setOpenModal} products={data.products} />}
-                                        </tr>)}
+                                        </tr>
+
                                     </tbody>
                                 </table>
                             </div>
@@ -211,9 +202,8 @@ const WarehouseHistory = () => {
                     </a>
                 </div>
             </section>
-
         </div>
     );
 };
 
-export default WarehouseHistory;
+export default WarehouseProductModal;

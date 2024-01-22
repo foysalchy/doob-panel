@@ -32,11 +32,17 @@ import ListOfWarehouse from "../Pages/AdminItem/WareHouseManagement/ListOfWareho
 import WareHouseManagement from "../Pages/AdminItem/WareHouseManagement/WareHouseManagement";
 import AdminDashboard from "../Pages/Dashboard/AdminDashboard";
 import DarazIntrigration from "../Pages/AdminItem/IntrigrationDaraz/DarazIntrigration";
-import AdminSittings from "../Pages/AdminItem/AdminSittings/AdminSittings";
-import AdminStaffManagement from "../Pages/AdminItem/AdminStaff/AdminStaffManagement";
+ import AdminStaffManagement from "../Pages/AdminItem/AdminStaff/AdminStaffManagement";
 import AdminNewStaff from "../Pages/AdminItem/AdminStaff/AdminNewStaff";
 import AdminPos from "../Pages/AdminItem/AdminPos/AdminPos";
 import CheckStaff from "../Hooks/CheckStaff";
+import ContentManagement from "../Pages/AdminItem/ContentManagement/ContentManagement";
+ import AdminPopupManagement from "../Pages/AdminItem/ContentManagement/AdminPopUp/AdminPopupManagement";
+import AdminAddPopUp from "../Pages/AdminItem/ContentManagement/AdminPopUp/AdminAddPopUp";
+ import AddNotice from "../Pages/AdminItem/ContentManagement/SellerNotice/AddNotice";
+import AdminNoticeManager from "../Pages/AdminItem/ContentManagement/SellerNotice/AdminNoticeManager";
+import AdminAnouncement from "../Pages/AdminItem/ContentManagement/Anouncement/AdminAnouncement";
+import AddAnouncement from "../Pages/AdminItem/ContentManagement/Anouncement/AddAnouncement";
 
 const SupperAdminPath = [
     {
@@ -216,7 +222,43 @@ const SupperAdminPath = [
     {
         path: 'content-management',
         element: <CheckStaff>
-            <AdminSittings />
+            <ContentManagement />
+        </CheckStaff>
+    },
+    {
+        path: 'content-management/admin-popup',
+        element: <CheckStaff>
+            <AdminPopupManagement />
+        </CheckStaff>
+    },
+    {
+        path: 'content-management/admin-popup/add',
+        element: <CheckStaff>
+            <AdminAddPopUp />
+        </CheckStaff>
+    },
+    {
+        path: 'content-management/seller-notice',
+        element: <CheckStaff>
+            <AdminNoticeManager />
+        </CheckStaff>
+    },
+    {
+        path: 'content-management/seller-notice/add',
+        element: <CheckStaff>
+            <AddNotice />
+        </CheckStaff>
+    },
+    {
+        path: 'content-management/admin-anouncement',
+        element: <CheckStaff>
+            <AdminAnouncement />
+        </CheckStaff>
+    },
+    {
+        path: 'content-management/admin-anouncement/add',
+        element: <CheckStaff>
+            <AddAnouncement />
         </CheckStaff>
     },
     {
@@ -235,6 +277,7 @@ const SupperAdminPath = [
             <AdminPos />
         </CheckStaff>
     },
+ 
 
 ]
 

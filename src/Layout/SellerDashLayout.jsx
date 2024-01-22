@@ -2,6 +2,15 @@ import React, { useState } from 'react';
 import SideNavberSeller from '../Pages/Dashboard/SellerDashboard/SideNavberSeller/SideNavberSeller';
 import { Link, Outlet, useLocation, useParams } from 'react-router-dom';
 
+const popUp =()=> {
+  
+    return (
+        <div>
+            hello world!!!
+        </div>
+    )
+}
+
 const SellerDashLayout = () => {
     const [responsive, setResponsive] = useState(false)
 
@@ -15,7 +24,6 @@ const SellerDashLayout = () => {
             .map(word => word.charAt(0).toUpperCase() + word.slice(1))
             .join(' ');
     }
-
     return (
         <div className='flex  '>
 

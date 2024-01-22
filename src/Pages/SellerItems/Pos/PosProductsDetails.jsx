@@ -5,13 +5,6 @@ import { AuthContext } from '../../../AuthProvider/UserProvider';
 
 const PosProductsDetails = ({ invoice, open, setOpen }) => {
 
-    const [name, setName] = useState('');
-    const [email, setEmail] = useState('');
-    const [phoneNumber, setPhoneNumber] = useState('');
-    const [address, setAddress] = useState('');
-    const [invoiceOpen, setInvoiceOpen] = useState(false);
-
-    const [existing, setExisting] = useState(false)
 
     const [searchValue, setSearchValue] = useState('')
     const [searchType, setSearchType] = useState("userNumber")
@@ -35,6 +28,54 @@ const PosProductsDetails = ({ invoice, open, setOpen }) => {
         })
     }
 
+    const [name, setName] = useState(user.name ? user.name : '');
+    const [email, setEmail] = useState(user.email ? user.email : '');
+    const [phoneNumber, setPhoneNumber] = useState(user.phoneNumber ? user.phoneNumber : '');
+    const [address, setAddress] = useState(user.address ? user.address : '');
+    const [invoiceOpen, setInvoiceOpen] = useState(false);
+    const [postData, setPostData] = useState(false)
+    const [existing, setExisting] = useState(false);
+
+    console.log(user, 'user.....');
+    const handleInvoiceSubmit = () => {
+
+        const data = {
+            invoice,
+            userInfo: {
+                name: user.name ? user.name : name,
+                email: user.email ? user.email : email,
+                phoneNumber: user.phoneNumber ? user.phoneNumber : phoneNumber,
+                address: address ? address : '',
+            },
+            shopId: shopInfo._id,
+            date: new Date().getTime(),
+        }
+        setPostData(data);
+ 
+        fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/pos-report`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+        }).then((res) => res.json()).then((data) => {
+             if (data.status) {
+                alert("submited.....")
+                setInvoiceOpen(true)
+                setUser(false)
+                setExisting(false)
+                // setOpen(false)
+                setError(false)
+
+            }
+            else {
+                setError('User not found')
+                setUser(false)
+            }
+        })
+
+
+    }
     return (
         <div>
             {
@@ -74,7 +115,7 @@ const PosProductsDetails = ({ invoice, open, setOpen }) => {
 
                         <h1 className="text-2xl font-bold mb-2 mt-4">User Info</h1>
 
-                        <h1 className='flex gap-2'> <input onClick={() => { setExisting(!existing), setUser(false) }} type="checkbox" />New User ?</h1>
+                        <h1 className='flex gap-2'> <input onClick={() => { setExisting(!existing), setUser(false) }} type="checkbox" />Existing User ?</h1>
 
                         {existing && <div>
                             <label> Search User</label>
@@ -154,8 +195,8 @@ const PosProductsDetails = ({ invoice, open, setOpen }) => {
                         </form>
                         }
 
-                        <button onClick={() => setInvoiceOpen(!invoiceOpen)} className='bg-gray-900 text-white px-2 w-full py-2 rounded-md mt-5'>Proceed</button>
-                        <PosInvoice invoiceData={invoice} setInvoiceOpen={setInvoiceOpen} invoiceOpen={invoiceOpen} />
+                        <button onClick={handleInvoiceSubmit} className='bg-gray-900 text-white px-2 w-full py-2 rounded-md mt-5'>Submit........</button>
+                        {postData && <PosInvoice invoiceData={postData} setInvoiceOpen={setInvoiceOpen} invoiceOpen={invoiceOpen} />}
                     </div>
                 </div>
             }
