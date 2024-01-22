@@ -30,7 +30,6 @@ const PrivateRoute = ({ children },) => {
 
     // Check for the 'POS' permission
     const check = prices?.permissions?.some(itm => itm?.route === sellerPath);
-    console.log(check, '>>>>>>>>>>>>');
 
     if (check || user.staffRole) {
         return children;
