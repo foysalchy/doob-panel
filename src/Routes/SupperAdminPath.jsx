@@ -32,17 +32,26 @@ import ListOfWarehouse from "../Pages/AdminItem/WareHouseManagement/ListOfWareho
 import WareHouseManagement from "../Pages/AdminItem/WareHouseManagement/WareHouseManagement";
 import AdminDashboard from "../Pages/Dashboard/AdminDashboard";
 import DarazIntrigration from "../Pages/AdminItem/IntrigrationDaraz/DarazIntrigration";
- import AdminStaffManagement from "../Pages/AdminItem/AdminStaff/AdminStaffManagement";
+import AdminStaffManagement from "../Pages/AdminItem/AdminStaff/AdminStaffManagement";
 import AdminNewStaff from "../Pages/AdminItem/AdminStaff/AdminNewStaff";
 import AdminPos from "../Pages/AdminItem/AdminPos/AdminPos";
 import CheckStaff from "../Hooks/CheckStaff";
 import ContentManagement from "../Pages/AdminItem/ContentManagement/ContentManagement";
- import AdminPopupManagement from "../Pages/AdminItem/ContentManagement/AdminPopUp/AdminPopupManagement";
+import AdminPopupManagement from "../Pages/AdminItem/ContentManagement/AdminPopUp/AdminPopupManagement";
 import AdminAddPopUp from "../Pages/AdminItem/ContentManagement/AdminPopUp/AdminAddPopUp";
- import AddNotice from "../Pages/AdminItem/ContentManagement/SellerNotice/AddNotice";
+import AddNotice from "../Pages/AdminItem/ContentManagement/SellerNotice/AddNotice";
 import AdminNoticeManager from "../Pages/AdminItem/ContentManagement/SellerNotice/AdminNoticeManager";
 import AdminAnouncement from "../Pages/AdminItem/ContentManagement/Anouncement/AdminAnouncement";
 import AddAnouncement from "../Pages/AdminItem/ContentManagement/Anouncement/AddAnouncement";
+import CategoryManagement from "../Pages/AdminItem/CategoryManagement/CategoryManagement";
+import MegaCategoryManagement from "../Pages/AdminItem/CategoryManagement/MegaCategoryManagement/MegaCategoryManagement";
+import ExtraCategoryManagement from "../Pages/AdminItem/CategoryManagement/ExtraCategoryManagement/ExtraCategoryManagement";
+import MiniCategoryManagement from "../Pages/AdminItem/CategoryManagement/MiniCategoryManagement/MiniCategoryManagement";
+import SubCategoryManagement from "../Pages/AdminItem/CategoryManagement/SubCategoryManagement/SubCategoryManagement";
+import AddMegaCategory from "../Pages/AdminItem/CategoryManagement/MegaCategoryManagement/AddMegaCategory";
+import AddSubCategory from "../Pages/AdminItem/CategoryManagement/SubCategoryManagement/AddSubCategory";
+import AddMiniCategory from "../Pages/AdminItem/CategoryManagement/MiniCategoryManagement/AddMiniCategory";
+import AddExtraCategory from "../Pages/AdminItem/CategoryManagement/ExtraCategoryManagement/AddExtraCategory";
 
 const SupperAdminPath = [
     {
@@ -104,6 +113,60 @@ const SupperAdminPath = [
     {
         path: "price-management/add-pricing",
         element: <AddPrice />
+    },
+    {
+        path: "category-management",
+        element: <CheckStaff>
+            <CategoryManagement />
+        </CheckStaff>
+    },
+    {
+        path: "category-management/mega-category-management",
+        element: <CheckStaff>
+            <MegaCategoryManagement />
+        </CheckStaff>
+    },
+    {
+        path: "category-management/mega-category-management/add",
+        element: <CheckStaff>
+            <AddMegaCategory />
+        </CheckStaff>
+    },
+    {
+        path: "category-management/sub-category-management",
+        element: <CheckStaff>
+            <SubCategoryManagement />
+        </CheckStaff>
+    },
+    {
+        path: "category-management/sub-category-management/add",
+        element: <CheckStaff>
+            <AddSubCategory />
+        </CheckStaff>
+    },
+    {
+        path: "category-management/mini-category-management",
+        element: <CheckStaff>
+            <MiniCategoryManagement />
+        </CheckStaff>
+    },
+    {
+        path: "category-management/mini-category-management/add",
+        element: <CheckStaff>
+            <AddMiniCategory />
+        </CheckStaff>
+    },
+    {
+        path: "category-management/extra-category-management",
+        element: <CheckStaff>
+            <ExtraCategoryManagement />
+        </CheckStaff>
+    },
+    {
+        path: "category-management/extra-category-management/add",
+        element: <CheckStaff>
+            <AddExtraCategory />
+        </CheckStaff>
     },
     {
         path: "faq",
@@ -277,7 +340,7 @@ const SupperAdminPath = [
             <AdminPos />
         </CheckStaff>
     },
- 
+
 
 ]
 

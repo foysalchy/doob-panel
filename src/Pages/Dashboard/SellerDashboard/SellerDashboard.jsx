@@ -24,7 +24,7 @@ const SellerPopUp = ({ showModal, setShowModal, data }) => {
     const currentData = data[currentIndex];
     const style = {
         overlay: 'w-screen h-screen fixed flex items-center justify-center bg-[black] let-0 right-0 top-0 bg-opacity-50 z-[1000]',
-        card: 'bg-white rounded-lg p-3 w-[800px]  relative',
+        card: 'bg-white rounded-lg p-3 lg:w-[800px] md:w-full relative',
         title: 'text-xl font-semibold pb-3',
         img: 'w-full h-[420px] object-contain',
         flexBox: 'flex items-center gap-2 justify-between',
@@ -32,7 +32,7 @@ const SellerPopUp = ({ showModal, setShowModal, data }) => {
     }
     return (
         <div>
-            <div className="relative max-w-screen-lg mx-auto bg-white">
+            <div className="relative lg:max-w-screen-lg mx-auto bg-white">
 
                 <div className={style.card}>
                     <div className="flex  justify-between items-center">
