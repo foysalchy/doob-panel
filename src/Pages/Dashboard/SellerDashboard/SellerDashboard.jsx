@@ -6,10 +6,66 @@ import { useEffect } from 'react';
 import { FaBangladeshiTakaSign } from "react-icons/fa6";
 import AnouncementContent from './AdminContent/AnouncementContent';
 import NoticeContent from './AdminContent/NoticeContent';
+import { RxCross2 } from 'react-icons/rx';
+import { useQuery } from '@tanstack/react-query';
+
+
+
+const SellerPopUp = ({ showModal, setShowModal, data }) => {
+    const [currentIndex, setCurrentIndex] = useState(0);
+    const mHandleNext = () => {
+        setCurrentIndex((prevIndex) => (prevIndex + 1) % data.length);
+    };
+
+    const mHandlePrev = () => {
+        setCurrentIndex((prevIndex) => (prevIndex - 1 + data.length) % data.length);
+    };
+
+    const currentData = data[currentIndex];
+    const style = {
+        overlay: 'w-screen h-screen fixed flex items-center justify-center bg-[black] let-0 right-0 top-0 bg-opacity-50 z-[1000]',
+        card: 'bg-white rounded-lg p-3 w-[800px]  relative',
+        title: 'text-xl font-semibold pb-3',
+        img: 'w-full h-[420px] object-contain',
+        flexBox: 'flex items-center gap-2 justify-between',
+        close: 'absolute bg-gray-100 w-[40px] h-[40px] text-lg top-2 right-2 rounded-full'
+    }
+    return (
+        <div>
+            <div className="relative max-w-screen-lg mx-auto bg-white">
+
+                <div className={style.card}>
+                    <div className="flex  justify-between items-center">
+                        <h3 className={style.title}>Pop Up</h3>
+                        <div onClick={() => setShowModal(false)} className='cursor-pointer bg-gray-300 rounded-full p-2 text-2xl hover:bg-gray-400'>
+                            <RxCross2 className='text-xl' />
+                        </div>
+                    </div>
+                    <a href={currentData.link} >
+                        <div className='h-[400px] overflow-y-auto'>
+                            <h3 className={style.title}>{currentData?.title}</h3>
+                            <div dangerouslySetInnerHTML={{ __html: currentData?.message }}></div>
+
+                            <img className={style.img} src={currentData?.image} alt="" />
+                            <div className="flex items-center gap-2">
+                                <button className={style.nextBtn} onClick={mHandlePrev}>Prev</button>
+                                <button className={style.prevBtn} onClick={mHandleNext}>Next</button>
+                            </div>
+                        </div>
+                    </a>
+
+                </div>
+
+            </div>
+        </div>
+    )
+}
+
+
 
 const SellerDashboard = () => {
 
-    const { user } = useContext(AuthContext)
+    const { user, shopInfo } = useContext(AuthContext)
     const [greeting, setGreeting] = useState('');
     const currentDate = new Date();
 
@@ -40,8 +96,22 @@ const SellerDashboard = () => {
     const options = { month: 'long', day: 'numeric', year: 'numeric' };
     const formattedDate = currentDate.toLocaleDateString('en-US', options);
 
+
+    const [showModal, setShowModal] = useState(true);
+
+    const { data: sellerPopupData = [], refetch, isLoading } = useQuery({
+        queryKey: "sellerPopupData",
+        queryFn: async () => {
+            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/pop-up`);
+            const data = await res.json();
+            return data?.data;
+        },
+    });
     return (
         <div className="h-screen  pb-24 overflow-y-auto px-2 ">
+            {isLoading || showModal && <div className="fixed top-0 left-0 flex items-center justify-center w-full h-full bg-black bg-opacity-90 z-50">
+                <SellerPopUp showModal={showModal} setShowModal={setShowModal} data={sellerPopupData} />
+            </div>}
             <div className=" bg-gradient-to-r from-[#1493f4] to-[#835177] absolute -z-10 -top-12 -right-14 blur-2xl opacity-10"></div>
             <h1 className="text-4xl font-semibold text-gray-800 capitalize">
                 {greeting}, {user.name}
