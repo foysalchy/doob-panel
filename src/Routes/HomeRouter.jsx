@@ -19,6 +19,7 @@ import MainService from "../Pages/Home/Service/MainService"
 import SingleService from "../Pages/Home/Service/SingleService"
 import Profile from "../Pages/Profile/Profile"
 import SellerShopInfo from "../Pages/SellerItems/SellerShopInfo/SellerShopInfo"
+import ScrollToTop from "../SrollTop"
 import AuthError from "./AuthError"
 import SellerRoute from "./SellerRoute"
 
@@ -49,11 +50,17 @@ const homePath = [
     },
     {
         path: "/products",
-        element: <Product />,
+        element: <>
+            <ScrollToTop />
+            <Product />
+        </>,
     },
     {
         path: "/products/:id",
-        element: <ProductDetails />,
+        element: <>
+            <ScrollToTop />
+            <ProductDetails />
+        </>,
     },
     {
         path: "/reset-password/:id",
