@@ -27,6 +27,7 @@ const SliderManagement = () => {
 
 
     const updateStatus = (id, status) => {
+        console.log(id, status);
         fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/slider/status/${id}`, {
             method: "PUT",
             headers: {
@@ -34,7 +35,7 @@ const SliderManagement = () => {
             },
             body: JSON.stringify({ status }),
         }).then((res) => res.json()).then((data) => {
-            Swal.fire(`Seller disable ${status} `, '', 'success');
+            Swal.fire(`Update status success`);
             refetch()
         })
     }

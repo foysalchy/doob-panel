@@ -1,4 +1,3 @@
-import React, { useEffect } from 'react';
 import { useContext } from 'react';
 import { useState } from 'react';
 import { BsArrowRight } from 'react-icons/bs';
@@ -26,10 +25,7 @@ const SellerAddProduct = () => {
 
     const { shopInfo } = useContext(AuthContext)
     const [isChecked, setIsChecked] = useState(true);
-
-    const [datazCategory, setDarazOption] = useState([])
-
-
+    const [datazCategory, setDarazOption] = useState([]);
     const [loading, setLoading] = useState(false)
     const [daraz, setDaraz] = useState(false)
     const [woo, setWoo] = useState(false)
@@ -38,8 +34,14 @@ const SellerAddProduct = () => {
     const [description, setDescription] = useState('')
     const [shortDescription, setShortDescription] = useState('')
     const [youtube, setYoutube] = useState('')
+    const [multiVendor, setMultiVendor] = useState(adminWare);
+
     const [inputFields, setInputFields] = useState([
-        { name: '', image: null, quantity: "", SKU: "", price: '', offerPrice: '', ability: false, vendor: false },
+        { name: '', image: null, quantity: "", SKU: "", price: '', offerPrice: '', ability: false },
+    ]);
+
+    const [variantInput, setVariantInput] = useState([
+        { product1: {}, product2: {}, product3: {}, sellingPrice: "" },
     ]);
 
 
@@ -166,7 +168,12 @@ const SellerAddProduct = () => {
         });
 
 
+        const adminMegaCategory = form?.adminMegaCategory?.value;
+        const adminSubCategory = form?.adminSubCategory?.value;
+        const adminMiniCategory = form?.adminMiniCategory?.value;
+        const adminExtraCategory = form?.adminExtraCategory?.value;
 
+        const adminCategory = [adminMegaCategory, adminSubCategory, adminMiniCategory, adminExtraCategory];
 
 
 
@@ -211,10 +218,6 @@ const SellerAddProduct = () => {
 
 
 
-
-
-
-
         const data = {
 
             videoUrl: youtube,
@@ -238,6 +241,9 @@ const SellerAddProduct = () => {
             length: productLength,
             width: productWidth,
             height: productHight,
+            multiVendor: multiVendor,
+            adminCategory,
+            variantData: variantInput[0],
             // color,
             // size,
             // material,
@@ -254,8 +260,6 @@ const SellerAddProduct = () => {
             // metaKeywords,
             metaDescription: MetaTagMetaDescription,
             MetaImage,
-
-
             // barcode,
             // taxClassId,
 
@@ -280,6 +284,8 @@ const SellerAddProduct = () => {
         }
 
         console.log(data);
+
+
 
 
         fetch('https://salenow-v2-backend.vercel.app/api/v1/seller/normal-product/', {
@@ -328,8 +334,8 @@ const SellerAddProduct = () => {
                 <label
                     htmlFor="Toggle3"
                     className={`inline-flex items-center py-4 rounded-md cursor-pointer ${isChecked ? 'text-gray-800' : ''
-                        }`}
-                >
+                        }`}>
+
                     <input
                         id="Toggle3"
                         type="checkbox"
@@ -339,8 +345,7 @@ const SellerAddProduct = () => {
                     />
                     <span
                         className={`px-4 py-2 rounded-l-md ${isChecked ? ' bg-gray-300' : 'bg-violet-400'
-                            }`}
-                    >
+                            }`}>
                         Upcoming Product
                     </span>
                     <span
@@ -351,12 +356,11 @@ const SellerAddProduct = () => {
                     </span>
                 </label>
 
-
                 <div id='description'>
                     <Description shortDescription={shortDescription} setShortDescription={setShortDescription} description={description} setDescription={setDescription} />
                 </div>
                 <div className='my-4 mt-10'>
-                    <Variants daraz={daraz} inputFields={inputFields} setInputFields={setInputFields} />
+                    <Variants setVariantInput={setVariantInput} variantInput={variantInput} multiVendor={multiVendor} setMultiVendor={setMultiVendor} adminWare={adminWare} daraz={daraz} inputFields={inputFields} setInputFields={setInputFields} />
                 </div>
                 {daraz && datazCategory.length && <DarazOption datazCategory={datazCategory} />}
 

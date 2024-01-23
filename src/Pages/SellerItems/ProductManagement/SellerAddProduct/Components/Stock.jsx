@@ -12,7 +12,7 @@ const Stock = ({ field, index, inputFields, setInputFields }) => {
                 </div>
 
 
-                <div className='grid  gap-4 md:grid-cols-6 mt-4'>
+                <div className='grid items-center gap-4 md:grid-cols-5 mt-4'>
                     <div>
                         <label className='text-sm ' htmlFor="Video url ">Quantity</label>
                         <input
@@ -73,21 +73,7 @@ const Stock = ({ field, index, inputFields, setInputFields }) => {
                         </select>
 
                     </div>
-                    <div className='min-w-fit'>
-                        <label className='text-sm ' htmlFor="Video url ">Sale Multi Vendor</label>
-                        <select
-                            onChange={(e) => {
-                                const newInputFields = [...inputFields];
-                                newInputFields[index].vendor = e.target.value;
-                                setInputFields(newInputFields);
-                            }}
-                            value={field.vendor}
-                            className="flex-grow w-full h-10 px-4 mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-purple-400 focus:outline-none focus:shadow-outline" name="ability" id="">
-                            <option value="yes">Yes</option>
-                            <option value="no">No</option>
-                        </select>
 
-                    </div>
                     {/* <div className='min-w-fit'>
                         <label className='text-sm ' htmlFor="Video url ">Sale Multi Vendor</label>
                         <Select

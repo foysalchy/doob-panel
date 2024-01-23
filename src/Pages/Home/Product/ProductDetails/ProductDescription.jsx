@@ -1,7 +1,7 @@
 import React from "react";
 import { MdDone } from "react-icons/md";
 
-const ProductDescription = ({ description }) => {
+const ProductDescription = ({ metaTitle, description }) => {
   return (
     <div className="">
       <h2 className="border-b">
@@ -15,6 +15,9 @@ const ProductDescription = ({ description }) => {
           __html: description,
         }}
       />
+      {/* <p className="text-gray-500">
+        {metaTitle}
+      </p> */}
     </div>
   );
 };

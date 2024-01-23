@@ -69,13 +69,14 @@ const AdminSliderManagement = () => {
     const EditStatus = (id, status) => {
         console.log(id, status);
         setLoading(true)
-        fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/slider?id=${id}`, {
+        fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/slider?id=${id}&status=${status}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({ status }),
         }).then((res) => res.json()).then((data) => {
+            console.log(data, 'data');
             setLoading(false)
             Swal.fire(`Seller disable ${status} `, '', 'success');
             refetch()
@@ -190,7 +191,7 @@ const AdminSliderManagement = () => {
                                 <div className="flex items-center justify-around">
                                     <button onClick={() => onDelete(itm?._id)} className={style.deactive}>Delete</button>
                                     {
-                                        itm.status ? <button onClick={() => EditStatus(itm?._id, false)} className={style.active}>Activate</button> : <button onClick={() => EditStatus(itm?._id, true)} className={style.deactive} type="button">Deactivate</button>
+                                        itm.status == 'true' ? <button onClick={() => EditStatus(itm?._id, 'false')} className={style.active}>Activate</button> : <button onClick={() => EditStatus(itm?._id, 'true')} className={style.deactive} type="button">Deactivate</button>
                                     }
                                 </div>
                             </td>

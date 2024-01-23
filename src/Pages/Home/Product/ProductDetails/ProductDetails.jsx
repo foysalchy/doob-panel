@@ -8,30 +8,37 @@ import TrendingProducts from "./TrendingProducts";
 
 import { useContext } from "react";
 import { AuthContext } from "../../../../AuthProvider/UserProvider";
+import { useQuery } from "@tanstack/react-query";
+import { useParams } from "react-router-dom";
 
 const ProductDetails = () => {
-
-  
-
   const { user } = useContext(AuthContext)
+  const location = useParams();
 
-  const [selectedImage, setSelectedImage] = useState(
-    "https://i.ibb.co/tPt2Ntp/image-34.png"
-  );
-  const [quantity, setQuantity] = useState(1);
+  const { data: productInfo = [], refetch } = useQuery({
+    queryKey: ["productInfo"],
+    queryFn: async () => {
+      const res = await fetch("https://salenow-v2-backend.vercel.app/api/v1/admin/products");
+      const data = await res.json();
+      return data;
+    },
+  });
 
-  const imageList = [
-    "https://i.ibb.co/tPt2Ntp/image-34.png",
-    "https://img.freepik.com/free-psd/mens-tri-blend-crew-tee-mockup_126278-130.jpg?w=740&t=st=1696792919~exp=1696793519~hmac=2120615b267f5ab7879436d3ac193cf6c02d0b0196dbc7329132e70c0061cd9e",
-    "https://i.ibb.co/MZdnhbh/image-40.png",
-    "https://i.ibb.co/df7rzcZ/image-37.png",
-    "https://i.ibb.co/2FjWjgW/image-39.png",
-    "https://i.ibb.co/df7rzcZ/image-37.png",
-  ];
 
+  const productFind = productInfo.find(product => product._id === location.id);
+  const quantityCheck = parseInt(productFind?.stock_quantity)
+  const [quantity, setQuantity] = useState(quantityCheck);
+
+  const imageList = productFind ? productFind.images : [];
   const handleImageClick = (imageUrl) => {
     setSelectedImage(imageUrl);
   };
+
+  const [selectedImage, setSelectedImage] = useState(
+    productFind?.images[0]?.src
+  );
+
+  console.log(selectedImage);
 
   const handleDecrease = () => {
     if (quantity > 1) {
@@ -53,6 +60,8 @@ const ProductDetails = () => {
 
   const convertedRating = (2 / 10) * 5;
 
+
+  console.log(productFind);
   return (
     <section>
       <div className="py-4">
@@ -122,13 +131,13 @@ const ProductDetails = () => {
                     <div key={index} className="p-4 w-full md:w-11/12 rounded">
                       <a
                         className="block relative h-16 rounded overflow-hidden border"
-                        onClick={() => handleImageClick(imageUrl)}
+                        onClick={() => handleImageClick(imageUrl?.src)}
                       >
                         <img
                           alt={`ecommerce${index + 1}`}
                           className="object-cover cursor-pointer block w-full h-full p-2 "
-                          src={imageUrl}
-                          srcSet={imageUrl}
+                          src={imageUrl?.src}
+                          srcSet={imageUrl?.src}
                         />
                       </a>
                     </div>
@@ -144,10 +153,10 @@ const ProductDetails = () => {
                 </p>
               </div>
               <h2 className="mb-2 leading-tight tracking-tight font-bold text-gray-800 text-2xl md:text-3xl">
-                Mens Long Sleeve T-shirt Cotton Base Layer Slim Muscle
+                {productFind?.name}
               </h2>
               <div>
-                <div className="flex items-center">
+                <div className=" hidden items-center">
                   <div className="flex">
 
                     <span className="flex items-center">
@@ -192,6 +201,7 @@ const ProductDetails = () => {
                     <p>154 Sold</p>
                   </div>
                 </div>
+
                 <div className="my-3">
                   <div className="grid grid-cols-2 md:grid-cols-4 bg-red-100 py-3">
                     <div className="text-center md:border-r-2 border-gray-400">
@@ -214,17 +224,18 @@ const ProductDetails = () => {
                 </div>
                 <div className="my-3">
                   <div className="grid grid-cols-2 md:grid-cols-3 bg-red-100 py-3">
+
                     <div className="text-center md:border-r-2 border-gray-400">
-                      <h6 className="font-bold text-xl text-red-400">$80</h6>
-                      <p className="text-sm text-[#606060]">10 Qty</p>
+                      <h6 className="font-bold text-xl text-red-400">{productFind?.variantData?.product1?.quantityPrice}</h6>
+                      <p className="text-sm text-[#606060]">{productFind?.variantData?.product1?.quantity}  Qty</p>
                     </div>
                     <div className="text-center md:border-r-2 border-gray-400">
-                      <h6 className="font-bold text-xl">$90</h6>
-                      <p className="text-sm text-[#606060]">50 Quantity</p>
+                      <h6 className="font-bold text-xl text-red-400">{productFind?.variantData?.product2?.quantityPrice}</h6>
+                      <p className="text-sm text-[#606060]">{productFind?.variantData?.product2?.quantity}  Qty</p>
                     </div>
                     <div className="text-center">
-                      <h6 className="font-bold text-xl">$18</h6>
-                      <p className="text-sm text-[#606060]">99 Quantity</p>
+                      <h6 className="font-bold text-xl text-red-400">{productFind?.variantData?.product3?.quantityPrice}</h6>
+                      <p className="text-sm text-[#606060]">{productFind?.variantData?.product3?.quantity}  Qty</p>
                     </div>
                   </div>
                 </div>
@@ -279,7 +290,7 @@ const ProductDetails = () => {
       </div>
       <div className="max-w-7xl mx-auto px-4 md:px-4 lg:px-8 my-6">
         <div className="border p-6 rounded">
-          <ProductDescription />
+          <ProductDescription metaTitle={productFind?.metaTitle} description={productFind?.description} />
         </div>
       </div>
       <div className="max-w-7xl mx-auto px-4 md:px-4 lg:px-8 my-6">

@@ -20,8 +20,6 @@ const AdminFeatureImage = () => {
         },
     });
 
-
-
     const [deleteId, setDeletId] = useState('')
     const [deletePopUp, setDeletePopUp] = useState(false)
     const [isDelete, setIsDelete] = useState(false)
@@ -69,7 +67,7 @@ const AdminFeatureImage = () => {
     const EditStatus = (id, status) => {
         console.log(id, status);
         setLoading(true)
-        fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/feature-image?id=${id}`, {
+        fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/feature-image?id=${id}&status=${status}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
@@ -190,7 +188,7 @@ const AdminFeatureImage = () => {
                                 <div className="flex items-center justify-around">
                                     <button onClick={() => onDelete(itm?._id)} className={style.deactive}>Delete</button>
                                     {
-                                        itm.status ? <button onClick={() => EditStatus(itm?._id, false)} className={style.active}>Activate</button> : <button onClick={() => EditStatus(itm?._id, true)} className={style.deactive} type="button">Deactivate</button>
+                                        itm.status ? <button onClick={() => EditStatus(itm?._id, 'false')} className={style.active}>Activate</button> : <button onClick={() => EditStatus(itm?._id, 'true')} className={style.deactive} type="button">Deactivate</button>
                                     }
                                 </div>
                             </td>

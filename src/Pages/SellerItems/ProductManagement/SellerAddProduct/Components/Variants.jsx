@@ -4,11 +4,11 @@ import { MdDelete } from 'react-icons/md';
 import { AuthContext } from '../../../../../AuthProvider/UserProvider';
 import Swal from 'sweetalert2';
 import Stock from './Stock';
+import VariantData from './VariantData';
 
-const Variants = ({ inputFields, setInputFields, daraz }) => {
+const Variants = ({ adminWare, multiVendor, setMultiVendor, inputFields, setInputFields, daraz, variantInput, setVariantInput }) => {
 
     const { shopInfo } = useContext(AuthContext)
-
 
     const handleImageChange = async (index, event) => {
         const file = event.target.files[0];
@@ -104,6 +104,19 @@ const Variants = ({ inputFields, setInputFields, daraz }) => {
                 <span className='font-bold'>Variants, Price, Stock <span className='text-red-500'> *</span></span>
                 <small>Having accurate product information raises discoverability.</small>
             </div>
+            <div className='min-w-fit mb-4'>
+
+                <label className='text-sm ' htmlFor="Video url ">Sale Multi Vendor</label>
+                <select
+                    onChange={(e) => {
+                        setMultiVendor(e.target.value === 'true' && true || e.target.value === 'false' && false);
+                    }}
+                    className="flex-grow w-full h-10 px-4 mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-purple-400 focus:outline-none focus:shadow-outline" name="ability" id="">
+                    <option value={true}>Yes</option>
+                    <option value={false} >No</option>
+                </select>
+
+            </div>
             <div className='flex gap-4 flex-col w-full'>
                 {inputFields.map((field, index) => (
                     <div key={index} className=' border border-green-300 rounded px-4 py-2  w-full'>   <div className='flex gap-10 justify-between items-center'  >
@@ -162,6 +175,7 @@ const Variants = ({ inputFields, setInputFields, daraz }) => {
                 <button type="button" className='bg-green-500 py-2' onClick={handleAddField}>
                     Add Field
                 </button>
+                <VariantData variantInput={variantInput} setVariantInput={setVariantInput} />
             </div>
 
         </div>
