@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import React, { useState } from 'react';
 import { PiNoteLight } from "react-icons/pi";
+import { RxCross2 } from 'react-icons/rx';
 
 
 const NoticeModal = ({ setOpen, open, modalData, index }) => {
@@ -20,14 +21,14 @@ const NoticeModal = ({ setOpen, open, modalData, index }) => {
         title: 'text-xl font-semibold pb-3',
         img: 'w-full h-[420px] object-contain',
         flexBox: 'flex items-center gap-2 justify-between',
-        close: 'absolute bg-gray-100 w-[40px] h-[40px] text-lg top-2 right-2 rounded-full'
+        close: 'absolute bg-gray-100 w-[40px] h-[40px] flex justify-center items-center text-lg top-2 right-2 rounded-full'
     }
-     return (
+    return (
         <div className={style.overlay}>
             <div className={style.card}>
-                <div className="">
+                <div >
                     <h3 className={style.title}>Notice</h3>
-                    <button onClick={() => setOpen(false)} className={style.close}>X</button>
+                    <button onClick={() => setOpen(false)} className={style.close}><RxCross2 /></button>
                 </div>
                 <div className='h-[400px] overflow-y-auto'>
                     <h3 className={style.title}>{currentData?.title}</h3>
@@ -61,7 +62,7 @@ const Carousel = ({ data }) => {
 
     const style = {
         title: 'text-xl font-semibold',
-        subTitle: 'text-red-600 text-lg',
+        subTitle: 'text-red-600 text-lg cursor-pointer',
         message: 'text-gray-600 text-sm',
         nextBtn: 'text-blue-500 text-sm',
         prevBtn: 'text-blue-500 text-sm',
