@@ -32,6 +32,7 @@ const AdminNewStaff = () => {
         { name: 'Manage Product', route: 'manage-product' },
         { name: 'Manage Category', route: 'manage-category' },
         { name: 'Faq', route: 'faq' },
+        { name: 'Category Management', route: 'category-management' },
         { name: 'Price Management', route: 'price-management' },
         { name: 'Page Management', route: 'page-management' },
         { name: 'Services', route: 'services' },
