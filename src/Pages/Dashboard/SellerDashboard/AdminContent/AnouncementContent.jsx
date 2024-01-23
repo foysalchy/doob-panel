@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import React, { useState } from 'react';
 import { MdOutlineAnnouncement } from 'react-icons/md';
+import { RxCross2 } from "react-icons/rx";
 
 const AnouncementModal = ({ setOpen, open, modalData, index }) => {
     const [currentIndex, setCurrentIndex] = useState(index);
@@ -19,7 +20,7 @@ const AnouncementModal = ({ setOpen, open, modalData, index }) => {
         title: 'text-xl font-semibold pb-3',
         img: 'w-full h-[420px] object-contain',
         flexBox: 'flex items-center gap-2 justify-between',
-        close: 'absolute bg-gray-100 w-[40px] h-[40px] text-lg top-2 right-2 rounded-full'
+        close: 'absolute bg-gray-100 w-[40px] h-[40px] flex justify-center items-center text-lg top-2 right-2 rounded-full'
     }
     console.log(modalData, '++>>>>>');
     return (
@@ -27,7 +28,7 @@ const AnouncementModal = ({ setOpen, open, modalData, index }) => {
             <div className={style.card}>
                 <div className="">
                     <h3 className={style.title}>Announcement</h3>
-                    <button onClick={() => setOpen(false)} className={style.close}>X</button>
+                    <button onClick={() => setOpen(false)} className={style.close}><RxCross2 /></button>
                 </div>
                 <div className='h-[400px] overflow-y-auto'>
                     <h3 className={style.title}>{currentData?.title}</h3>
@@ -61,7 +62,7 @@ const Carousel = ({ data }) => {
 
     const style = {
         title: 'text-xl font-semibold',
-        subTitle: 'text-red-600 text-lg',
+        subTitle: 'text-red-600 text-lg cursor-pointer',
         message: 'text-gray-600 text-sm',
         nextBtn: 'text-blue-500 text-sm',
         prevBtn: 'text-blue-500 text-sm',
@@ -115,7 +116,7 @@ const AnouncementContent = () => {
             }
         },
     });
- 
+
     return (
         <div>
             {/* <h2 className="text-xl font-semibold">hello world</h2>

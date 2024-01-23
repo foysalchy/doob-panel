@@ -52,6 +52,10 @@ import AddMegaCategory from "../Pages/AdminItem/CategoryManagement/MegaCategoryM
 import AddSubCategory from "../Pages/AdminItem/CategoryManagement/SubCategoryManagement/AddSubCategory";
 import AddMiniCategory from "../Pages/AdminItem/CategoryManagement/MiniCategoryManagement/AddMiniCategory";
 import AddExtraCategory from "../Pages/AdminItem/CategoryManagement/ExtraCategoryManagement/AddExtraCategory";
+import AdminFeatureImage from "../Pages/AdminItem/ContentManagement/FeaturImage/AdminFeatureImage";
+import AdminFeatureImageAdd from "../Pages/AdminItem/ContentManagement/FeaturImage/AdminFeatureImageAdd";
+import AdminSliderAdd from "../Pages/AdminItem/ContentManagement/SliderManagenent/AdminSliderAdd";
+import AdminSliderManagement from "../Pages/AdminItem/ContentManagement/SliderManagenent/AdminSliderManagement";
 
 const SupperAdminPath = [
     {
@@ -322,6 +326,30 @@ const SupperAdminPath = [
         path: 'content-management/admin-anouncement/add',
         element: <CheckStaff>
             <AddAnouncement />
+        </CheckStaff>
+    },
+    {
+        path: 'content-management/feature-image',
+        element: <CheckStaff>
+            <AdminFeatureImage />
+        </CheckStaff>
+    },
+    {
+        path: 'content-management/feature-image/add',
+        element: <CheckStaff>
+            <AdminFeatureImageAdd />
+        </CheckStaff>
+    },
+    {
+        path: 'content-management/slider',
+        element: <CheckStaff>
+            <AdminSliderManagement />
+        </CheckStaff>
+    },
+    {
+        path: 'content-management/slider/add',
+        element: <CheckStaff>
+            <AdminSliderAdd />
         </CheckStaff>
     },
     {
