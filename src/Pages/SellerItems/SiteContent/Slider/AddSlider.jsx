@@ -6,7 +6,7 @@ import { AuthContext } from '../../../../AuthProvider/UserProvider';
 import Swal from 'sweetalert2';
 
 const AddSlider = () => {
-    const [selectedFile, setSelectedFile] = useState(null);
+    const [selectedFile, setSelectedFile] = useState(false);
     const [previewUrl, setPreviewUrl] = useState(null);
     const [fileName, setFileName] = useState("");
     const { shopInfo } = useContext(AuthContext)
@@ -45,6 +45,7 @@ const AddSlider = () => {
             image: imageUrl,
             link: url,
             shopId: shop,
+            status: false,
             time: new Date()
         };
 

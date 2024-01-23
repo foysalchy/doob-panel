@@ -1,112 +1,33 @@
-import React from "react";
+import React, { useState } from "react";
 import { useContext } from "react";
 import { AuthContext } from "../../../../AuthProvider/UserProvider";
+import { useQuery } from "@tanstack/react-query";
+import { Link } from "react-router-dom";
 
 
 const ForYouProducts = () => {
 
   const { user } = useContext(AuthContext)
+  const [displayedProducts, setDisplayedProducts] = useState(14);
 
-  const newProducts = [
-    {
-      name: "Olevs 9868 Leather",
-      image: "https://i.ibb.co/PNBgKv1/watch.png",
-      price: "999",
-      discountPrice: "400",
-      description: "Analog watch for men",
+  const { data: newProducts = [], refetch } = useQuery({
+    queryKey: ["newProducts"],
+    queryFn: async () => {
+      const res = await fetch("https://salenow-v2-backend.vercel.app/api/v1/admin/products");
+      const data = await res.json();
+      return data;
     },
-    {
-      name: "Olevs 9868 Leather",
-      image: "https://i.ibb.co/PNBgKv1/watch.png",
-      price: "999",
-      discountPrice: "400",
-      description: "Analog watch for men",
-    },
-    {
-      name: "Olevs 9868 Leather",
-      image: "https://i.ibb.co/PNBgKv1/watch.png",
-      price: "999",
-      discountPrice: "400",
-      description: "Analog watch for men",
-    },
-    {
-      name: "Olevs 9868 Leather",
-      image: "https://i.ibb.co/PNBgKv1/watch.png",
-      price: "999",
-      discountPrice: "400",
-      description: "Analog watch for men",
-    },
-    {
-      name: "Olevs 9868 Leather",
-      image: "https://i.ibb.co/PNBgKv1/watch.png",
-      price: "999",
-      discountPrice: "400",
-      description: "Analog watch for men",
-    },
-    {
-      name: "Olevs 9868 Leather",
-      image: "https://i.ibb.co/PNBgKv1/watch.png",
-      price: "999",
-      discountPrice: "400",
-      description: "Analog watch for men",
-    },
-    {
-      name: "Olevs 9868 Leather",
-      image: "https://i.ibb.co/PNBgKv1/watch.png",
-      price: "999",
-      discountPrice: "400",
-      description: "Analog watch for men",
-    },
-    {
-      name: "Olevs 9868 Leather",
-      image: "https://i.ibb.co/PNBgKv1/watch.png",
-      price: "999",
-      discountPrice: "400",
-      description: "Analog watch for men",
-    },
-    {
-      name: "Olevs 9868 Leather",
-      image: "https://i.ibb.co/PNBgKv1/watch.png",
-      price: "999",
-      discountPrice: "400",
-      description: "Analog watch for men",
-    },
-    {
-      name: "Olevs 9868 Leather",
-      image: "https://i.ibb.co/PNBgKv1/watch.png",
-      price: "999",
-      discountPrice: "400",
-      description: "Analog watch for men",
-    },
-    {
-      name: "Olevs 9868 Leather",
-      image: "https://i.ibb.co/PNBgKv1/watch.png",
-      price: "999",
-      discountPrice: "400",
-      description: "Analog watch for men",
-    },
-    {
-      name: "Olevs 9868 Leather",
-      image: "https://i.ibb.co/PNBgKv1/watch.png",
-      price: "999",
-      discountPrice: "400",
-      description: "Analog watch for men",
-    },
-    {
-      name: "Olevs 9868 Leather",
-      image: "https://i.ibb.co/PNBgKv1/watch.png",
-      price: "999",
-      discountPrice: "400",
-      description: "Analog watch for men",
-    },
-    {
-      name: "Olevs 9868 Leather",
-      image: "https://i.ibb.co/PNBgKv1/watch.png",
-      price: "999",
-      discountPrice: "400",
-      description: "Analog watch for men",
-    },
-  ];
+  });
+
+  function extractTextFromHTML(htmlString) {
+    const doc = new DOMParser().parseFromString(htmlString, "text/html");
+    return doc.body.textContent || "";
+  }
+
+  const handleLoadMore = () => {
+    setDisplayedProducts((prev) => prev + 15);
+    refetch();
+  };
 
   return (
     <div>
@@ -134,40 +55,32 @@ const ForYouProducts = () => {
           </div>
           <div className="border-b border-gray-200 mx-5 mt-2"></div>
           <div className="container px-5 py-8 mx-auto">
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-7 gap-2 -m-4 text-black">
-              {newProducts.slice(0, 14).map((product, idx) => {
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 -m-4 text-black">
+              {newProducts?.slice(0, displayedProducts)?.map((product, idx) => {
+                let name = product?.name?.slice(0, 60);
                 return (
-                  <div
-                    key={idx}
-                    className="p-4 w-full md:w-11/12 lg:mx-2 text-black rounded"
-                  >
-                    <a className="block relative h-32 rounded overflow-hidden">
-                      <img
-                        alt="ecommerce"
-                        className="object-cover h-full block"
-                        src={product?.image}
-                        srcSet={product?.image}
-                      />
-                    </a>
-                    <div className="mt-4 text-center">
-                      <h3 className="text-xs mb-1 font-medium">
-                        {product?.name}
-                      </h3>
-                      <h2 className="text-xs ">{product?.description}</h2>
-                      <div className="flex justify-evenly">
-                        <p className="py-0 font-medium">{product?.price}</p>
-                        <del>{product.discountPrice}</del>
-                      </div>
-                      <div className="mt-2">
-                        <button
-                          type="button"
-                          className="px-5 py-2  font-semibold rounded bg-black text-white text-xs "
-                        >
-                          {user.role === 'seller' ? 'Add My Store' : "Add to card"}
-                        </button>
-                      </div>
+
+                  <Link to={`${product._id}`} className="space-y-2">
+                    <img
+                      alt="Ceramic Coffee Mug"
+                      className="h-[200px] w-full rounded-md object-cover"
+                      height="200"
+                      srcSet={product?.featuredImage?.src}
+                      src={product?.featuredImage?.src}
+                      style={{
+                        aspectRatio: "200/200",
+                        objectFit: "cover",
+                      }}
+                      width="200"
+                    />
+                    <div className="flex flex-col items-start">
+                      <span className="text-lg font-semibold">{product?.regular_price}</span>
+                      <span className="text-sm font-medium">
+                        {name}...
+                      </span>
+
                     </div>
-                  </div>
+                  </Link>
                 );
               })}
             </div>
@@ -176,6 +89,7 @@ const ForYouProducts = () => {
       </div>
       <div className="mt-6 flex justify-center">
         <button
+          onClick={handleLoadMore}
           type="button"
           className="px-5 py-2  font-semibold rounded bg-black text-white text-xs "
         >
