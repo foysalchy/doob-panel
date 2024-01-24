@@ -114,7 +114,7 @@ const Header = () => {
   );
 
   return (
-    <div className="fixed top-0 right-0 left-0 z-50 bg-white">
+    <div className="fixed top-0 border-b right-0 left-0 z-50 bg-white">
       <div className="px-4 py-5 mx-auto  sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8">
         <div className="relative flex items-center justify-between">
           <NavLink
@@ -209,11 +209,13 @@ const Header = () => {
 
                                 ))}
 
-                              <div className="pb-2">
+                              <div className="pb-2 px-2">
                                 <strong className="block px-4 text-xs font-medium uppercase text-gray-400">
                                   Danger Zone
                                 </strong>
-
+                                <Link to="user/dashboard">
+                                  <button className="bg-blue-500 text-white rounded-lg. w-[100%] m-auto rounded-lg py-2">Dashboard</button>
+                                </Link>
                                 <div className="px-4">
 
                                   <button

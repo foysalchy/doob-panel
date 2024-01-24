@@ -18,6 +18,9 @@ import Invoice from "../Pages/Invoice/Invoice";
 import DarazInvoice from "../Pages/Invoice/DarazInvoice";
 import UserInvoice from "../Pages/Invoice/UserInvoice";
 import CheckStaff from "../Hooks/CheckStaff";
+import IsUserRegistration from "./isUserRegistration";
+import UserLayout from "../Layout/UserLayout";
+import { UserPath } from "./UserPath";
 
 
 
@@ -63,6 +66,18 @@ const Router = createBrowserRouter([
     ),
     children: SellerPath
   },
+  {
+    path: "/user",
+    element: (
+      <>
+        <ScrollToTop />
+        <IsUserRegistration>
+          <UserLayout />
+        </IsUserRegistration>
+      </>
+    ),
+    children: UserPath
+  },
 
 
   // Shop Route 
@@ -87,7 +102,8 @@ const Router = createBrowserRouter([
           <AdminLayout />
         </SupperAdminRouter>
       </>),
-    children:SupperAdminPath},
+    children: SupperAdminPath
+  },
 
 ]);
 export default Router;
