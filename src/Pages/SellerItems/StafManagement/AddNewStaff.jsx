@@ -117,7 +117,6 @@ const AddNewStaff = () => {
                             </button>
                         </div>
 
-
                         {value?.name ? <input type="text" readOnly value={value?.name} className="w-full p-2 rounded-md ring-1 mt-2 text-green-500 ring-gray-200" placeholder='input user role' /> : <input type="text" readOnly value={`${error} and search again!! `} className="w-full p-2 text-red-500 rounded-md ring-1 mt-2 ring-gray-200" placeholder='input user role' />}
                     </div>}
                     
@@ -139,7 +138,6 @@ const AddNewStaff = () => {
                         className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500"
                     />
                  
-
                     <button className='bg-black text-white py-2 px-4' type='button' onClick={() => handleSearch()}>
                         search
                     </button>
