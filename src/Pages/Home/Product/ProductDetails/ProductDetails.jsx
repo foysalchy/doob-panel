@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import { FaBasketShopping, FaCircle, FaMessage } from "react-icons/fa6";
 import { MdDone } from "react-icons/md";
@@ -24,10 +24,62 @@ const ProductDetails = () => {
     },
   });
 
+  // const { data: pData = [], reload } = useQuery({
+  //   queryKey: ["pData"],
+  //   queryFn: async () => {
+  //     const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/single-product?id=${location.id}`);
+  //     const data = await res.json();
+  //     return data?.data;
+  //   },
+  // });
+
+  // console.log(pData, '>>>>>');
 
   const productFind = productInfo.find(product => product._id === location.id);
-  const quantityCheck = parseInt(productFind?.stock_quantity)
-  const [quantity, setQuantity] = useState(quantityCheck);
+
+
+  const [quantity, setQuantity] = useState(1);
+  const [banifit, setBanifit] = useState({
+    productCost: parseInt(productFind?.variantData?.sellingPrice),
+    sellingPrice: parseInt(productFind?.variantData?.sellingPrice),
+    profit: 0,
+    profitPercent: 0,
+  });
+
+  const allUpdateInfo = () => {
+    const price = parseInt(productFind?.variantData?.sellingPrice);
+    const quantityPars = parseInt(quantity);
+    const productCost = quantityPars * price;
+    const profit = price;
+
+    console.log(banifit.productCost);
+    const myQuantity = 6;
+
+    const nahidComparison = productFind?.variantData.product1.quantity;
+    const mahadiComparison = productFind?.variantData.product2.quantity;
+    const murshedComparison = productFind?.variantData.product3.quantity;
+
+    let comparisonResult = "";
+
+    if (nahidComparison > quantity) {
+      comparisonResult = "Your quantity is greater.";
+    } else if (mahadiComparison > quantity) {
+      comparisonResult = "Your quantity is smaller.";
+    } else if (murshedComparison > quantity) {
+      comparisonResult = "Your quantity is equal.";
+    } else {
+      comparisonResult = "Your quantity is equal.";
+    }
+
+    console.log(comparisonResult);
+    setBanifit({ ...banifit, productCost: productCost });
+  };
+
+  useEffect(() => {
+    allUpdateInfo();
+  }, [quantity]);
+
+
 
   const imageList = productFind ? productFind.images : [];
   const handleImageClick = (imageUrl) => {
@@ -38,7 +90,6 @@ const ProductDetails = () => {
     productFind?.images[0]?.src
   );
 
-  console.log(selectedImage);
 
   const handleDecrease = () => {
     if (quantity > 1) {
@@ -55,13 +106,17 @@ const ProductDetails = () => {
 
     if (!isNaN(inputQuantity) && inputQuantity > 0) {
       setQuantity(inputQuantity);
+
     }
   };
 
+  useEffect(() => {
+    allUpdateInfo();
+  }, [quantity])
+
   const convertedRating = (2 / 10) * 5;
 
-
-  console.log(productFind);
+  // console.log(productFind);
   return (
     <section>
       <div className="py-4">
@@ -205,19 +260,19 @@ const ProductDetails = () => {
                 <div className="my-3">
                   <div className="grid grid-cols-2 md:grid-cols-4 bg-red-100 py-3">
                     <div className="text-center md:border-r-2 border-gray-400">
-                      <h6 className="font-bold text-xl text-red-400">$80</h6>
+                      <h6 className="font-bold text-xl text-red-400">${banifit.productCost}</h6>
                       <p className="text-sm text-[#606060]">Product Costing</p>
                     </div>
                     <div className="text-center md:border-r-2 border-gray-400">
-                      <h6 className="font-bold text-xl">$90</h6>
+                      <h6 className="font-bold text-xl">${banifit.sellingPrice}</h6>
                       <p className="text-sm text-[#606060]">Selling Price</p>
                     </div>
                     <div className="text-center md:border-r-2 border-gray-400">
-                      <h6 className="font-bold text-xl">$18</h6>
+                      <h6 className="font-bold text-xl">${banifit.profit}</h6>
                       <p className="text-sm text-[#606060]">Your Profit</p>
                     </div>
                     <div className="text-center">
-                      <h6 className="font-bold text-xl">10%</h6>
+                      <h6 className="font-bold text-xl">{banifit.profitPercent}%</h6>
                       <p className="text-sm text-[#606060]">Your Profit</p>
                     </div>
                   </div>
@@ -241,14 +296,16 @@ const ProductDetails = () => {
                 </div>
               </div>
 
-              <div className="flex py-4 space-x-4">
+              {user?.role === 'seller' && <div className="flex py-4 space-x-4">
                 <div>
                   <label htmlFor="Quantity" className="sr-only"> Quantity </label>
 
                   <div className="flex items-center gap-1">
                     <button
                       type="button"
-                      onClick={handleDecrease}
+                      onClick={
+                        handleDecrease
+                      }
                       className="w-10 h-10 leading-10 text-gray-600 transition hover:opacity-75"
                     >
                       -
@@ -264,7 +321,8 @@ const ProductDetails = () => {
 
                     <button
                       type="button"
-                      onClick={handleIncrease}
+                      onClick={
+                        handleIncrease}
                       className="w-10 h-10 leading-10 text-gray-600 transition hover:opacity-75 "
                     >
                       +
@@ -275,15 +333,16 @@ const ProductDetails = () => {
                   type="button"
                   className="h-10 px-6 py-2 font-semibold rounded bg-gray-950 hover:bg-gray-800 text-white"
                 >
-                  {user.role === 'seller' ? 'Add My Store' : "Add to card"}
+                  Add My Store
                 </button>
                 <button
+                  onClick={() => { }}
                   type="button"
                   className="h-10 px-6 py-2 font-semibold rounded bg-indigo-600 hover:bg-indigo-500 text-white"
                 >
                   By Now
                 </button>
-              </div>
+              </div>}
             </div>
           </div>
         </div>
