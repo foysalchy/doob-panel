@@ -50,29 +50,40 @@ const ProductDetails = () => {
     const price = parseInt(productFind?.variantData?.sellingPrice);
     const quantityPars = parseInt(quantity);
     const productCost = quantityPars * price;
-    const profit = price;
 
-    console.log(banifit.productCost);
-    const myQuantity = 6;
+    // Compare your quantity   nahid, mahadi, and murshed
+    const product1Quantity = productFind?.variantData.product1.quantity;
+    const product2Quantity = productFind?.variantData.product2.quantity;
+    const product3Quantity = productFind?.variantData.product3.quantity;
 
-    const nahidComparison = productFind?.variantData.product1.quantity;
-    const mahadiComparison = productFind?.variantData.product2.quantity;
-    const murshedComparison = productFind?.variantData.product3.quantity;
+    const product1QuantityPrice = productFind?.variantData?.product1?.quantityPrice;
+    const product2QuantityPrice = productFind?.variantData?.product2?.quantityPrice;
+    const product3QuantityPrice = productFind?.variantData?.product3?.quantityPrice;
 
-    let comparisonResult = "";
+    let profit = 0;
+    let profitPercent = 0;
 
-    if (nahidComparison > quantity) {
-      comparisonResult = "Your quantity is greater.";
-    } else if (mahadiComparison > quantity) {
-      comparisonResult = "Your quantity is smaller.";
-    } else if (murshedComparison > quantity) {
-      comparisonResult = "Your quantity is equal.";
-    } else {
-      comparisonResult = "Your quantity is equal.";
+    if (product1Quantity > quantity) {
+      profit = (quantityPars - product1QuantityPrice) * price;
+      profitPercent = (profit / productCost) * 100;
+    }
+    
+    else if (product2Quantity > quantity) {
+      profit = (quantityPars - product2QuantityPrice) * price;
+      profitPercent = (profit / productCost) * 100;
+    }
+    
+    else if (product3Quantity > quantity) {
+      profit = (quantityPars - product3QuantityPrice) * price;
+      profitPercent = (profit / productCost) * 100;
     }
 
-    console.log(comparisonResult);
-    setBanifit({ ...banifit, productCost: productCost });
+    setBanifit({
+      ...banifit,
+      sellingPrice: price,
+      profit: profit,
+      profitPercent: profitPercent,
+    });
   };
 
   useEffect(() => {
@@ -260,19 +271,19 @@ const ProductDetails = () => {
                 <div className="my-3">
                   <div className="grid grid-cols-2 md:grid-cols-4 bg-red-100 py-3">
                     <div className="text-center md:border-r-2 border-gray-400">
-                      <h6 className="font-bold text-xl text-red-400">${banifit.productCost}</h6>
+                      <h6 className="font-bold text-xl text-red-400">${parseInt(banifit.productCost)}</h6>
                       <p className="text-sm text-[#606060]">Product Costing</p>
                     </div>
                     <div className="text-center md:border-r-2 border-gray-400">
-                      <h6 className="font-bold text-xl">${banifit.sellingPrice}</h6>
+                      <h6 className="font-bold text-xl">${parseInt(banifit.sellingPrice)}</h6>
                       <p className="text-sm text-[#606060]">Selling Price</p>
                     </div>
                     <div className="text-center md:border-r-2 border-gray-400">
-                      <h6 className="font-bold text-xl">${banifit.profit}</h6>
+                      <h6 className="font-bold text-xl">${parseInt(banifit.profit)}</h6>
                       <p className="text-sm text-[#606060]">Your Profit</p>
                     </div>
                     <div className="text-center">
-                      <h6 className="font-bold text-xl">{banifit.profitPercent}%</h6>
+                      <h6 className="font-bold text-xl">{parseInt(banifit.profitPercent)}%</h6>
                       <p className="text-sm text-[#606060]">Your Profit</p>
                     </div>
                   </div>

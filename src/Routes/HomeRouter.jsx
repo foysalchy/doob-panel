@@ -53,14 +53,14 @@ const homePath = [
     {
         path: "/products",
         element: <>
-            <ScrollToTop />
+            {/* <ScrollToTop /> */}
             <Product />
         </>,
     },
     {
         path: "/products/:id",
         element: <>
-            <ScrollToTop />
+            {/* <ScrollToTop /> */}
             <ProductDetails />
         </>,
     },
@@ -90,7 +90,7 @@ const homePath = [
         element: (
             <UserServiceCheckout />
         )
-    },   {
+    }, {
         path: "user-service-payment",
         element: (
             <UserPayment />
