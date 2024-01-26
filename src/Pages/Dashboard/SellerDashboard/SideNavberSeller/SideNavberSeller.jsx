@@ -582,8 +582,8 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                 </li>} */}
 
                                 {user?.staffRole ? (
-                                    user?.permissions.find(itm => itm?.name === "Staf Account") ? (
-                                        managementPermission('Staf Account') && <li className="rounded-sm hover:bg-gray-800">
+                                    user?.permissions.find(itm => itm?.name === "Staff Account") ? (
+                                        managementPermission('Staff Account') && <li className="rounded-sm hover:bg-gray-800">
                                             <Link to={'/seller/staff-account'} rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
                                                 <BiArchive className="w-5 h-5 text-gray-400" />
                                                 <span>Staff Account</span>
@@ -591,7 +591,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                         </li>
                                     ) : null
                                 ) : (
-                                    managementPermission('Staf Account') && <li className="rounded-sm hover:bg-gray-800">
+                                    managementPermission('Staff Account') && <li className="rounded-sm hover:bg-gray-800">
                                         <Link to={'/seller/staff-account'} rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
                                             <BiArchive className="w-5 h-5 text-gray-400" />
                                             <span>Staff Account</span>

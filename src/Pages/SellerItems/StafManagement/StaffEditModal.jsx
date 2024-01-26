@@ -7,8 +7,8 @@ import { AuthContext } from "../../../AuthProvider/UserProvider";
 
 const StaffEditModal = ({ OpenModal, setOpenModal, staffInfo, refetch }) => {
     const { shopInfo } = useContext(AuthContext);
-    const [selectedValue, setSelectedValue] = useState([])
-    const [role, setRole] = useState('')
+    const [selectedValue, setSelectedValue] = useState(staffInfo.permissions)
+    const [role, setRole] = useState(staffInfo.staffRole)
     const [error, setError] = useState('')
     const [value, setValue] = useState("");
 
@@ -16,7 +16,7 @@ const StaffEditModal = ({ OpenModal, setOpenModal, staffInfo, refetch }) => {
         { name: 'Manage Blogs', route: 'manage-blogs' },
         { name: 'Manage Contact', route: 'manage-contact' },
         { name: 'Manage Pages', route: 'manage-pages' },
-        { name: 'Staf Account', route: 'staf-account' },
+        { name: 'Staff Account', route: 'staff-account' },
         { name: 'Support Tickets', route: 'support-tickets' },
         { name: 'User Tickets', route: 'user-tickets' },
         { name: 'Shop Profile', route: 'shop-profile' },
@@ -25,8 +25,7 @@ const StaffEditModal = ({ OpenModal, setOpenModal, staffInfo, refetch }) => {
         { name: 'Channel Integration', route: 'channel-integration' },
         { name: 'Categories Management', route: 'categories-management' },
         { name: 'Product Management', route: 'product-management' },
-        { name: 'Staff Management', route: 'staff-management' },
-        { name: 'Orders', route: 'orders' },
+         { name: 'Orders', route: 'orders' },
         { name: 'Pos', route: 'pos' },
         // Add more options as needed
     ];
@@ -48,7 +47,7 @@ const StaffEditModal = ({ OpenModal, setOpenModal, staffInfo, refetch }) => {
         const permissions = selectedValue
 
         const data = { user, shopEmail, permissions, role }
-
+        console.log(data, permissions, '+++++')
         fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/staff-add`, {
             method: 'PATCH',
             headers: {
@@ -87,7 +86,7 @@ const StaffEditModal = ({ OpenModal, setOpenModal, staffInfo, refetch }) => {
                     -2 rounded-md ring-1 mt-2 text-green-500 ring-gray-200" placeholder='input user role' />
                     <br /><br />
                     <label className='' htmlFor="user">Input Role</label>
-                    <input onChange={(e) => setRole(e.target.value)} type="text" className="w-full p-2 rounded-md ring-1 mt-2 ring-gray-200" placeholder='input user role' />
+                    <input defaultValue={staffInfo.staffRole} onChange={(e) => setRole(e.target.value)} type="text" className="w-full p-2 rounded-md ring-1 mt-2 ring-gray-200" placeholder='input user role' />
                     <br /><br />
                     <label className='' htmlFor="user">Select Permissions </label>
                     <Select
