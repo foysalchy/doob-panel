@@ -73,6 +73,7 @@ import SubscriberHisroy from "../Pages/SellerItems/ReportManagement/SubscriberHi
 import CommissionHistory from "../Pages/SellerItems/ReportManagement/CummissionHistory/CummissionHistory";
 import UserSearchHistory from "../Pages/SellerItems/ReportManagement/UserSearchHistory/UserSearchHistory";
 import SystemLog from "../Pages/SellerItems/ReportManagement/SystemLog/SystemLog";
+import SubscriptionModel from "../Pages/SellerItems/SubcribtionModel/SubscriptionModel";
 
 
 const SellerPath = [
@@ -395,7 +396,11 @@ const SellerPath = [
         path: "report-management/system-log",
         element: <SystemLog />
     },
-    
+    {
+        path: "subscription-management",
+        element: <SubscriptionModel />
+    },
+
 
 
 

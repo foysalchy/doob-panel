@@ -20,6 +20,7 @@ const SignUpSeller = () => {
   const { RegistrationInEmail } = useContext(AuthContext);
   const [shop, setShop] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
+  const [userEmail, setUserEmail] = useState('')
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -35,6 +36,7 @@ const SignUpSeller = () => {
     shopName = form?.shopName?.value;
     let role = "user";
     const createdAt = new Date()
+    setUserEmail(email)
 
     const userId = email.replace(/[@.]/g, '')
 
@@ -63,14 +65,12 @@ const SignUpSeller = () => {
         .then((data) => {
           const result = data.result;
           if (result) {
-
             setLoading(false);
-            setModalOpen(true)
+            setModalOpen(email)
             form.reset();
           } else {
             setPassError(data.message);
           }
-
           setLoading(false);
           form.reset();
         });
@@ -273,7 +273,7 @@ const SignUpSeller = () => {
       </div>
       <div className="h-0 w-0">
 
-        <Modal setModalOpen={setModalOpen} modalOpen={modalOpen} />
+        <Modal email={userEmail} setModalOpen={setModalOpen} modalOpen={modalOpen} />
       </div>
     </div>
   );

@@ -56,6 +56,8 @@ import AdminFeatureImage from "../Pages/AdminItem/ContentManagement/FeaturImage/
 import AdminFeatureImageAdd from "../Pages/AdminItem/ContentManagement/FeaturImage/AdminFeatureImageAdd";
 import AdminSliderAdd from "../Pages/AdminItem/ContentManagement/SliderManagenent/AdminSliderAdd";
 import AdminSliderManagement from "../Pages/AdminItem/ContentManagement/SliderManagenent/AdminSliderManagement";
+import AdminCustomerManage from "../Pages/AdminItem/AdminCustomerManage/AdminCustomerManage";
+import AdminReeferProgram from "../Pages/AdminItem/AdminReferlPogram/AdminRefferPogram";
 
 const SupperAdminPath = [
     {
@@ -366,6 +368,18 @@ const SupperAdminPath = [
         path: 'admin-pos',
         element: <CheckStaff>
             <AdminPos />
+        </CheckStaff>
+    },
+    {
+        path: 'referral-program',
+        element: <CheckStaff>
+            <AdminReeferProgram />
+        </CheckStaff>
+    },
+    {
+        path: 'customer-manage',
+        element: <CheckStaff>
+            <AdminCustomerManage />
         </CheckStaff>
     },
 

@@ -21,26 +21,7 @@ const SideNavAdmin = () => {
     return (
         <div className='py-6 sticky'>
 
-            {/* start */}
-            {/* {user?.staffRole ? (
-                user?.permissions.find(itm => itm?.name === "Staf Account") ? (
-                    managementPermission('Staf Account') && <li className="rounded-sm hover:bg-gray-800">
-                        <Link to={'/seller/staff-management'} rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
-                            <BiArchive className="w-5 h-5 text-gray-400" />
-                            <span>Staff Account</span>
-                        </Link>
-                    </li>
-                ) : null
-            ) : (
-                managementPermission('Staf Account') && <li className="rounded-sm hover:bg-gray-800">
-                    <Link to={'/seller/staff-management'} rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
-                        <BiArchive className="w-5 h-5 text-gray-400" />
-                        <span>Staff Account</span>
-                    </Link>
-                </li>
-            )} */}
 
-            {/* end */}
 
             <div className={menu ? "flex flex-col h-screen p-2  w-60 text-gray-900 overflow-y-auto transparent-scroll" : 'flex flex-col h-screen p-3 w-14 text-gray-900 overflow-y-auto transparent-scroll'}>
                 <div className="space-y-3">
@@ -87,7 +68,7 @@ const SideNavAdmin = () => {
 
                     <div className="flex-1">
                         <ul className="pt-2 pb-4 space-y-1 text-sm">
-                            {/* " hover:" */}
+
                             <NavLink rel="noopener noreferrer" to='/admin/dashboard' className={({ isActive }) => {
                                 return isActive
                                     ? "flex items-center p-2 space-x-3 rounded-sm bg-gray-800 text-white "
@@ -206,7 +187,7 @@ const SideNavAdmin = () => {
                                 ) : null
                             ) : (
 
-                                    <NavLink rel="noopener noreferrer" to={'/admin/category-management'} className={({ isActive }) => {
+                                <NavLink rel="noopener noreferrer" to={'/admin/category-management'} className={({ isActive }) => {
                                     return isActive
                                         ? "flex items-center p-2 space-x-3 rounded-sm bg-gray-800 text-white "
                                         : "flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
@@ -524,7 +505,7 @@ const SideNavAdmin = () => {
 
 
 
-                            <NavLink rel="noopener noreferrer" href="#" className={({ isActive }) => {
+                            <NavLink rel="noopener noreferrer" to={'/admin/omni-chat'} className={({ isActive }) => {
                                 return isActive
                                     ? "flex items-center p-2 space-x-3 rounded-sm bg-gray-800 text-white "
                                     : "flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
@@ -535,7 +516,7 @@ const SideNavAdmin = () => {
 
 
 
-                            <NavLink rel="noopener noreferrer" href="#" className={({ isActive }) => {
+                            <NavLink rel="noopener noreferrer" to={`/admin/referral-program`} className={({ isActive }) => {
                                 return isActive
                                     ? "flex items-center p-2 space-x-3 rounded-sm bg-gray-800 text-white "
                                     : "flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
@@ -545,7 +526,7 @@ const SideNavAdmin = () => {
                             </NavLink>
 
 
-                            <NavLink rel="noopener noreferrer" href="#" className={({ isActive }) => {
+                            <NavLink rel="noopener noreferrer" to={'/admin/customer-manage'} className={({ isActive }) => {
                                 return isActive
                                     ? "flex items-center p-2 space-x-3 rounded-sm bg-gray-800 text-white "
                                     : "flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
@@ -577,7 +558,7 @@ const SideNavAdmin = () => {
                     </div>}
                 </div>
             </div>
-        </div>
+        </div >
     );
 };
 
