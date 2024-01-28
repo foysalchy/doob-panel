@@ -26,7 +26,6 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
         queryFn: async () => {
             const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/subscription-model?priceId=${shopInfo?.priceId}`);
             const data = await res.json();
-            localStorage.setItem('price', JSON.stringify(data?.data));
             return data?.data;
         },
     });
@@ -574,12 +573,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                 )}
 
 
-                                {/* {user?.staffRole && managementPermission('Warehouse') && <li className="rounded-sm hover:bg-gray-800">
-                                    <Link to={'/seller/warehouse'} rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
-                                        <BiArchive className="w-5 h-5 text-gray-400" />
-                                        <span>Warehouse Management</span>
-                                    </Link>
-                                </li>} */}
+
 
                                 {user?.staffRole ? (
                                     user?.permissions.find(itm => itm?.name === "Staff Account") ? (
@@ -618,7 +612,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                     </li>
 
                                 )}
-                                {/* report managements */}
+
 
                                 {user?.staffRole ? (
                                     user?.permissions.find(itm => itm?.name === "Order Management") ? (
@@ -654,6 +648,25 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                         <Link to={'/seller/pos'} rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
                                             <BiArchive className="w-5 h-5 text-gray-400" />
                                             <span>POS</span>
+                                        </Link>
+                                    </li>
+
+                                )}
+                                {user?.staffRole ? (
+                                    user?.permissions.find(itm => itm?.name === "Subscription Management") ? (
+                                        managementPermission('SubscriptionModel') && <li className="rounded-sm hover:bg-gray-800">
+                                            <Link to={'/seller/subscription-management'} rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
+                                                <BiArchive className="w-5 h-5 text-gray-400" />
+                                                <span>Subscription Management</span>
+                                            </Link>
+                                        </li>
+
+                                    ) : null
+                                ) : (
+                                    <li className="rounded-sm hover:bg-gray-800">
+                                        <Link to={'/seller/subscription-management'} rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
+                                            <BiArchive className="w-5 h-5 text-gray-400" />
+                                            <span>Subscription Management</span>
                                         </Link>
                                     </li>
 
