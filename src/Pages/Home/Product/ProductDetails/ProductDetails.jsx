@@ -64,27 +64,43 @@ const ProductDetails = () => {
 
     let profit = 0;
     let profitPercent = 0;
+    let total = productCost;
+    // ...
 
-    if (product1Quantity > quantity) {
-      profit = (quantityPars - product1QuantityPrice) * price;
-      profitPercent = (profit / productCost) * 100;
+    if (quantity >= product1Quantity && quantity < product2Quantity) {
+      const productQuantityPrice = (total / quantity) * quantity;
+      const countProfit = (product1QuantityPrice / product1Quantity) * quantity;
+      profit = productQuantityPrice - countProfit;
+      profitPercent = (productQuantityPrice - countProfit) / 100;
+      console.log('profit 1 : ', profit);
     }
 
-    else if (product2Quantity > quantity) {
-      profit = (quantityPars - product2QuantityPrice) * price;
-      profitPercent = (profit / productCost) * 100;
+    else if (quantity >= product2Quantity && quantity < product3Quantity) {
+      const productQuantityPrice = (total / quantity) * quantity;
+      const countProfit = (product2QuantityPrice / product2Quantity) * quantity;
+
+      profit = productQuantityPrice - countProfit;
+      profitPercent = (productQuantityPrice - countProfit) / 100;
+      console.log('profit 2 : ', profit);
     }
 
-    else if (product3Quantity > quantity) {
-      profit = (quantityPars - product3QuantityPrice) * price;
-      profitPercent = (profit / productCost) * 100;
+    else if (quantity >= product3Quantity) {
+      const productQuantityPrice = (total / quantity) * quantity;
+      const countProfit = (product3QuantityPrice / product3Quantity) * quantity;
+
+      profit = productQuantityPrice - countProfit;
+      profitPercent = (productQuantityPrice - countProfit) / 100;
+      console.log('profit 3 : ', profit);
     }
+
+    // ...
+
 
     setBanifit({
       ...banifit,
       sellingPrice: price,
       profit: profit,
-      profitPercent: profitPercent,
+      profitPercent: parseFloat(profitPercent).toFixed(2),
     });
   };
 
@@ -98,9 +114,9 @@ const ProductDetails = () => {
   const handleImageClick = (imageUrl) => {
     setSelectedImage(imageUrl);
   };
-
+  const blankImg = 'https://i.ibb.co/7p2CvzT/empty.jpg';
   const [selectedImage, setSelectedImage] = useState(
-    productFind?.images[0]?.src
+    productFind?.images[0]?.src ? productFind?.images[0]?.src : blankImg
   );
 
 
@@ -129,13 +145,7 @@ const ProductDetails = () => {
 
   const convertedRating = (2 / 10) * 5;
 
-  if (loader) {
-    return <div>Loading...</div>;
-  }
 
-  if (!productFind) {
-    return <div>Product not found</div>
-  }
 
 
   return (
@@ -195,12 +205,12 @@ const ProductDetails = () => {
                 <div className="h-64  md:h-[22rem] rounded-lg bg-gray-100 mb-4">
                   <div className="h-64 md:h-full rounded-lg bg-gray-100 mb-4 flex items-center justify-center">
                     {
-                      !loader ? <img
+                      selectedImage ? <img
                         className="w-94 h-full"
-                        src={selectedImage}
-                        srcSet={selectedImage}
-                        alt="Selected Image"
-                      /> : 'Loading....'
+                        src={selectedImage ? selectedImage : blankImg}
+                        srcSet={selectedImage ? selectedImage : blankImg}
+                        alt="product image"
+                      /> : <h2>Loading...</h2>
                     }
 
                   </div>
@@ -296,7 +306,7 @@ const ProductDetails = () => {
                       <p className="text-sm text-[#606060]">Your Profit</p>
                     </div>
                     <div className="text-center">
-                      <h6 className="font-bold text-xl">{parseInt(banifit.profitPercent)}%</h6>
+                      <h6 className="font-bold text-xl">{banifit.profitPercent}%</h6>
                       <p className="text-sm text-[#606060]">Your Profit</p>
                     </div>
                   </div>

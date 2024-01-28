@@ -11,22 +11,19 @@ const AddNewStaff = () => {
     const [role, setRole] = useState('')
     const [error, setError] = useState('')
     const [value, setValue] = useState("");
-    const [filteredItems, setFilteredItems] = useState([]);
-    const [newUser, setIsNewUser] = useState(false)
+    const [isNewUser, setIsNewUser] = useState(false)
 
     const handleSearch = () => {
         fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/seller-allUser?email=${searchValue}`)
             .then(res => res.json())
             .then(data => {
-                 if (data?.status) {
+                if (data?.status) {
                     setValue(data?.data)
                 } else {
                     setError(data?.message)
                 }
             })
     };
-
-
 
     const options = [
         { name: 'Manage Blogs', route: 'manage-blogs' },
@@ -59,7 +56,7 @@ const AddNewStaff = () => {
         const permissions = selectedValue
 
         const data = { user, shopEmail, permissions, role }
-         fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/staff-add`, {
+        fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/staff-add`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json'
@@ -119,7 +116,7 @@ const AddNewStaff = () => {
 
                         {value?.name ? <input type="text" readOnly value={value?.name} className="w-full p-2 rounded-md ring-1 mt-2 text-green-500 ring-gray-200" placeholder='input user role' /> : <input type="text" readOnly value={`${error} and search again!! `} className="w-full p-2 text-red-500 rounded-md ring-1 mt-2 ring-gray-200" placeholder='input user role' />}
                     </div>}
-                    
+
                 <label htmlFor="check">
                     <input type="checkbox" id='check' onChange={(e) => setIsNewUser(e.target.checked)} />
                     <span className='ml-2'>New User</span>
