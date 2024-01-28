@@ -19,6 +19,8 @@ import MainService from "../Pages/Home/Service/MainService"
 import SingleService from "../Pages/Home/Service/SingleService"
 import Profile from "../Pages/Profile/Profile"
 import SellerShopInfo from "../Pages/SellerItems/SellerShopInfo/SellerShopInfo"
+import UserPayment from "../Pages/UserItems/UserServiceCheckout/UserPayment"
+import UserServiceCheckout from "../Pages/UserItems/UserServiceCheckout/UserServiceCheckout"
 import ScrollToTop from "../SrollTop"
 import AuthError from "./AuthError"
 import SellerRoute from "./SellerRoute"
@@ -51,14 +53,16 @@ const homePath = [
     {
         path: "/products",
         element: <>
-            <ScrollToTop />
+            {/* <ScrollToTop /> */}
             <Product />
         </>,
     },
     {
         path: "/products/:id",
+        loader: ({ params }) =>
+            fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/single-product?id=${params?.id}`),
         element: <>
-            <ScrollToTop />
+            {/* <ScrollToTop /> */}
             <ProductDetails />
         </>,
     },
@@ -80,6 +84,21 @@ const homePath = [
         element: <SingleService />,
         loader: ({ params }) =>
             fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/service/${params.id}`)
+    },
+    {
+        path: "user-service-checkout/:id",
+        loader: ({ params }) =>
+            fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/service/${params.id}`),
+        element: (
+            <UserServiceCheckout />
+        )
+    }, {
+        path: "user-service-payment",
+        loader: () =>
+            fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/getaway`),
+        element: (
+            <UserPayment />
+        )
     },
     {
         path: "/contact",

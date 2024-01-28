@@ -1,14 +1,15 @@
 import { useQuery } from '@tanstack/react-query';
-import React from 'react';
+import React, { useContext } from 'react';
 import { useLoaderData } from 'react-router';
-
-import { Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import MetaHelmet from '../../../Helmate/Helmate';
+import { AuthContext } from '../../../AuthProvider/UserProvider';
 
 const SingleService = () => {
+    const { setOrderStage } = useContext(AuthContext);
 
     const service = useLoaderData()
-
+    const navigate = useNavigate();
 
     const { data: services = [], refetch, isLoading } = useQuery({
         queryKey: ["services"],
@@ -19,7 +20,19 @@ const SingleService = () => {
         },
     });
 
-    console.log(services[2]);
+    const handleOrder = () => {
+        const order = {
+            id: service._id,
+            title: service.title,
+            price: service.price,
+            img: service.img,
+            category: service.category,
+            subscriptionPeriod: service.subscriptionPeriod,
+
+        }
+        setOrderStage([order])
+        navigate(`/user-service-checkout/${service._id}`)
+    }
 
 
     return (
@@ -49,25 +62,29 @@ const SingleService = () => {
                                 </div>
 
                             </div>
-                            <div className="flex ">
+                            <div className="flex w-full justify-between items-center">
                                 <span className="title-font font-medium text-2xl text-gray-900">
                                     ${service.price}
                                 </span>
-                                <button className="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">
-                                    Buy Now
-                                </button>
-                                <button className="rounded-full w-10 h-10 bg-gray-200 p-0 border-0 inline-flex items-center justify-center text-gray-500 ml-4">
-                                    <svg
-                                        fill="currentColor"
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth={2}
-                                        className="w-5 h-5"
-                                        viewBox="0 0 24 24"
-                                    >
-                                        <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z" />
-                                    </svg>
-                                </button>
+                                <div className="flex items-center">
+                                    {/* <Link to={`/user-service-checkout/${service?._id}`}> */}
+                                    <button onClick={handleOrder} className="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">
+                                        Buy Now
+                                    </button>
+                                    {/* </Link> */}
+                                    <button className="rounded-full w-10 h-10 bg-gray-200 p-0 border-0 inline-flex items-center justify-center text-gray-500 ml-4">
+                                        <svg
+                                            fill="currentColor"
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            strokeWidth={2}
+                                            className="w-5 h-5"
+                                            viewBox="0 0 24 24"
+                                        >
+                                            <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z" />
+                                        </svg>
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>

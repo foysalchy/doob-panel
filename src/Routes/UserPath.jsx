@@ -1,7 +1,7 @@
- import Orders from "../Pages/Dashboard/UserDashboard/Orders/Orders";
 import UserDashboard from "../Pages/Dashboard/UserDashboard/UserDashboard";
-import Wishlist from "../Pages/Dashboard/UserDashboard/Wishlist/Wishlist";
- 
+import UserOrders from "../Pages/UserItems/UserOrders/UserOrders";
+import UserWishlist from "../Pages/UserItems/UserWishlist/UserWishlist";
+
 
 export const UserPath = [
     {
@@ -13,13 +13,15 @@ export const UserPath = [
     {
         path: "orders",
         element: (
-            <Orders />
+            <UserOrders />
         ),
-    }, {
+    }
+    , {
         path: "wishlist",
         element: (
-            <Wishlist />
+            <UserWishlist />
         ),
-    },
+    }
+    
 
 ]

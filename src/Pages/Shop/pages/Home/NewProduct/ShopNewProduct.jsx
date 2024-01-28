@@ -28,10 +28,10 @@ const ShopNewProduct = () => {
 
     return (
         <div>
-            {products?.data?.length ? <div className="py-4 bg-black rounded mt-6">
+            {products?.data?.length ? <div className="py-4 bg-white rounded mt-6">
                 <section className="body-font">
                     <div className="px-5">
-                        <div className="flex justify-between text-white">
+                        <div className="flex justify-between text-black">
                             <div className="flex justify-between align-items-center">
                                 <img
                                     className="md:h-5/6"
@@ -52,7 +52,7 @@ const ShopNewProduct = () => {
                             </button>
                         </div>
                     </div>
-                    <div className="border-b border-gray-500 mx-5 mt-2"></div>
+                    <div className="border-b border-gray-500 border-opacity-50 mx-5 mt-2"></div>
                     {!isLoading ? <div className=" px-5 my-4 mx-auto">
                         <Swiper
                             spaceBetween={10}
@@ -74,7 +74,7 @@ const ShopNewProduct = () => {
                             }}
                         >
                             {products?.data?.map((product, idx) => (
-                                <SwiperSlide key={idx} className="border border-gray-500 border-opacity-90 p-3 rounded">
+                                <SwiperSlide key={idx} className="border my-2 border-gray-500 border-opacity-90 p-3 rounded">
                                     <Link to={`product/${product?._id}`} >
                                         <a className="block relative rounded overflow-hidden">
                                             <img
@@ -84,10 +84,10 @@ const ShopNewProduct = () => {
                                             />
                                         </a>
                                         <div className="mt-2">
-                                            <h2 className="text-gray-200 title-font md:text-lg text-sm font-medium">
+                                            <h2 className="text-black title-font md:text-lg text-sm font-medium">
                                                 {product?.name.slice(0, 18)}..
                                             </h2>
-                                            <div className="flex items-center gap-10 text-gray-300">
+                                            <div className="flex items-center gap-10 text-black">
                                                 <del className='flex items-center '>
                                                     <span className="kalpurush">৳ </span>
                                                     {product?.regular_price}
@@ -100,7 +100,7 @@ const ShopNewProduct = () => {
 
                                             <button
                                                 type="button"
-                                                className="px-5 py-2  font-semibold rounded bg-white text-black w-full mt-3 text-xs "
+                                                className="px-5 py-2  font-semibold rounded bg-black text-white w-full mt-3 text-xs "
                                             >
                                                 Add to card
                                             </button>

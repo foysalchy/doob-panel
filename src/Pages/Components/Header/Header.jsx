@@ -3,6 +3,7 @@ import { Link, NavLink } from "react-router-dom";
 import { AuthContext } from "../../../AuthProvider/UserProvider";
 import { MdDashboard } from "react-icons/md";
 import Logo from "../../../../Logo.png";
+import { CgShoppingCart } from "react-icons/cg";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -145,6 +146,7 @@ const Header = () => {
           </NavLink>
           <ul className="flex items-center hidden space-x-8 lg:flex">
             {menuData}
+           
             <li>
               {!user ? (
                 <Link
@@ -207,15 +209,29 @@ const Header = () => {
                                     </Link>
                                   </div>
 
-                                ))}
+                                )) ||
+                                (user?.role === "user" && (
+                                  <div method="POST" action="#" className=" p-4">
+                                    <Link
+                                      to="user/dashboard"
+                                      className="flex w-full items-center  gap-2 rounded-lg px-4 py-2 text-sm text-green-700 hover:bg-green-50"
+                                      role="menuitem"
+                                    >
+                                      <MdDashboard className="h-4 w-4" />
+
+                                      Dashboard
+                                    </Link>
+                                  </div>
+
+                                ))
+
+                              }
 
                               <div className="pb-2 px-2">
                                 <strong className="block px-4 text-xs font-medium uppercase text-gray-400">
                                   Danger Zone
                                 </strong>
-                                <Link to="user/dashboard">
-                                  <button className="bg-blue-500 text-white rounded-lg. w-[100%] m-auto rounded-lg py-2">Dashboard</button>
-                                </Link>
+
                                 <div className="px-4">
 
                                   <button

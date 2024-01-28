@@ -126,8 +126,6 @@ const AddNewStaff = () => {
                 </label>
                 <br /> <br />
 
-
-            
                 {/* <label className='' htmlFor="user">Select User</label>
                 <div className="relative pt-2 flex items-center gap-4 text-left w-full">
                     <input

@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 const ForYouProducts = () => {
 
   const { user } = useContext(AuthContext)
-  const [displayedProducts, setDisplayedProducts] = useState(14);
+  const [displayedProducts, setDisplayedProducts] = useState(10);
 
   const { data: newProducts = [], refetch } = useQuery({
     queryKey: ["newProducts"],
@@ -25,7 +25,7 @@ const ForYouProducts = () => {
   }
 
   const handleLoadMore = () => {
-    setDisplayedProducts((prev) => prev + 15);
+    setDisplayedProducts((prev) => prev + 10);
     refetch();
   };
 
@@ -63,7 +63,7 @@ const ForYouProducts = () => {
                   <Link to={`${product._id}`} className="space-y-2">
                     <img
                       alt="Ceramic Coffee Mug"
-                      className="h-[200px] w-full rounded-md object-cover"
+                      className="h-[200px] border w-full rounded-md object-cover"
                       height="200"
                       srcSet={product?.featuredImage?.src}
                       src={product?.featuredImage?.src}
