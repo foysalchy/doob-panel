@@ -64,12 +64,15 @@ const ProductDetails = () => {
 
     let profit = 0;
     let profitPercent = 0;
+    let sealingPrice = price;
     let total = productCost;
     // ...
+    const updatedProductCost = total;
 
     if (quantity >= product1Quantity && quantity < product2Quantity) {
       const productQuantityPrice = (total / quantity) * quantity;
       const countProfit = (product1QuantityPrice / product1Quantity) * quantity;
+      sealingPrice = countProfit
       profit = productQuantityPrice - countProfit;
       profitPercent = (productQuantityPrice - countProfit) / 100;
       console.log('profit 1 : ', profit);
@@ -78,7 +81,7 @@ const ProductDetails = () => {
     else if (quantity >= product2Quantity && quantity < product3Quantity) {
       const productQuantityPrice = (total / quantity) * quantity;
       const countProfit = (product2QuantityPrice / product2Quantity) * quantity;
-
+      sealingPrice = countProfit
       profit = productQuantityPrice - countProfit;
       profitPercent = (productQuantityPrice - countProfit) / 100;
       console.log('profit 2 : ', profit);
@@ -87,10 +90,13 @@ const ProductDetails = () => {
     else if (quantity >= product3Quantity) {
       const productQuantityPrice = (total / quantity) * quantity;
       const countProfit = (product3QuantityPrice / product3Quantity) * quantity;
-
+      sealingPrice = countProfit
       profit = productQuantityPrice - countProfit;
       profitPercent = (productQuantityPrice - countProfit) / 100;
       console.log('profit 3 : ', profit);
+    }
+    else {
+      sealingPrice = total;
     }
 
     // ...
@@ -98,17 +104,17 @@ const ProductDetails = () => {
 
     setBanifit({
       ...banifit,
-      sellingPrice: price,
+      productCost: updatedProductCost,
+      sellingPrice: sealingPrice,
       profit: profit,
       profitPercent: parseFloat(profitPercent).toFixed(2),
     });
   };
 
   useEffect(() => {
+
     allUpdateInfo();
   }, [quantity]);
-
-
 
   const imageList = productFind ? productFind.images : [];
   const handleImageClick = (imageUrl) => {
@@ -128,6 +134,9 @@ const ProductDetails = () => {
 
   const handleIncrease = () => {
     setQuantity(quantity + 1);
+
+
+    console.log(banifit);
   };
 
   const handleManualInput = (e) => {
@@ -330,7 +339,7 @@ const ProductDetails = () => {
                 </div>
               </div>
 
-              {user?.role === 'seller' && <div className="flex py-4 space-x-4">
+              <div className="flex py-4 space-x-4">
                 <div>
                   <label htmlFor="Quantity" className="sr-only"> Quantity </label>
 
@@ -376,7 +385,7 @@ const ProductDetails = () => {
                 >
                   By Now
                 </button>
-              </div>}
+              </div>
             </div>
           </div>
         </div>

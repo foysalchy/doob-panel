@@ -16,7 +16,7 @@ const ProductInformation = () => {
     const [selectedImage, setSelectedImage] = useState(product.data.featuredImage.src);
     const [quantity, setQuantity] = useState(1);
     const location = useLocation();
-    const [loader, setLoader] = useState(flase)
+    const [loader, setLoader] = useState(false)
     const { shop_id, shopUser, setSelectProductData } = useContext(ShopAuthProvider)
 
     const handleImageClick = (imageUrl) => {
@@ -50,7 +50,7 @@ const ProductInformation = () => {
     const shopId = idMatch ? idMatch[1] : null;
 
     const addToCart = (data) => {
-        setLoading(true)
+        setLoader(true)
         const product = data.data
         const addToCard = {
             userId: shopUser?._id,
@@ -70,14 +70,14 @@ const ProductInformation = () => {
             const n = cartProduct ? [...cartProduct, addToCard] : [addToCard];
             localStorage.setItem('addToCart', JSON.stringify(n));
             alert('Product added to cart')
-            setLoading(false);
+            setLoader(false);
         } else {
             fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/user/add-to-cart?token=${shopUser._id}`, {
                 method: "POST",
                 headers: { 'Content-Type': 'application/json', "ngrok-skip-browser-warning": "69420", },
                 body: JSON.stringify(addToCard)
             }).then((res) => res.json()).then((data) => {
-                setLoading(false)
+                setLoader(false)
                 alert(data.message)
                 console.log(data);
             })
@@ -107,9 +107,9 @@ const ProductInformation = () => {
         }
     }
 
- 
+
     return (
-        <section className='px-2'>
+        <section className='px-2 py-4  sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 mx-auto'>
             <MetaHelmet title={product.data.metaTitle} description={product.data.metaDescription} image={product.data.MetaImage} />
             <div className="py-4">
                 {/* Breadcrumbs */}
@@ -322,15 +322,15 @@ const ProductInformation = () => {
                                         <button
                                             type="button"
                                             onClick={() => addToCart(product)}
-                                            className="h-10 w-full px-6 py-2 font-semibold rounded bg-gray-950 hover:bg-gray-800 text-white"
+                                            className="h-10 w-[120px] px-2 py-2 font-semibold rounded bg-gray-950 hover:bg-gray-800 text-white"
                                         >
-                                            {loading ? "Loading.." : "Add to card"}
+                                            {loader ? "Loading.." : "Add to card"}
                                         </button>
 
                                         <button
                                             onClick={() => buyNowHandler(product)}
                                             type="button"
-                                            className="h-10 px-6 py-2 w-full font-semibold  rounded bg-indigo-600 hover:bg-indigo-500 text-white"
+                                            className="h-10 px-2 py-2 w-[120px] font-semibold  rounded bg-indigo-600 hover:bg-indigo-500 text-white"
                                         >
                                             By Now
                                         </button>
