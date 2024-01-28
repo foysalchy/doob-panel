@@ -164,6 +164,7 @@ const ShopPath = [
                 try {
                     const response = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/payment-getaway/${shopId}`);
                     const data = await response.json();
+                    console.log(data, 'dtata');
                     return data;
                 } catch (error) {
                     console.error("Error fetching data:", error);

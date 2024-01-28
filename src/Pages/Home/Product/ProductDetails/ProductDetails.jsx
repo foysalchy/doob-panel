@@ -9,12 +9,14 @@ import TrendingProducts from "./TrendingProducts";
 import { useContext } from "react";
 import { AuthContext } from "../../../../AuthProvider/UserProvider";
 import { useQuery } from "@tanstack/react-query";
-import { useParams } from "react-router-dom";
+import { useLoaderData, useParams } from "react-router-dom";
 
 const ProductDetails = () => {
   const { user } = useContext(AuthContext)
   const location = useParams();
+  const [loader, setLoader] = useState(false);
 
+  const myData = useLoaderData();
   const { data: productInfo = [], refetch } = useQuery({
     queryKey: ["productInfo"],
     queryFn: async () => {
@@ -24,18 +26,18 @@ const ProductDetails = () => {
     },
   });
 
-  // const { data: pData = [], reload } = useQuery({
-  //   queryKey: ["pData"],
+  // const { data: productFind = [], refetch } = useQuery({
+  //   queryKey: ["productFind"],
   //   queryFn: async () => {
   //     const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/single-product?id=${location.id}`);
   //     const data = await res.json();
-  //     return data?.data;
+  //     return data;
   //   },
   // });
 
-  // console.log(pData, '>>>>>');
 
-  const productFind = productInfo.find(product => product._id === location.id);
+  // console.log(productFind, '>>>');
+  const productFind = myData?.data;
 
 
   const [quantity, setQuantity] = useState(1);
@@ -67,12 +69,12 @@ const ProductDetails = () => {
       profit = (quantityPars - product1QuantityPrice) * price;
       profitPercent = (profit / productCost) * 100;
     }
-    
+
     else if (product2Quantity > quantity) {
       profit = (quantityPars - product2QuantityPrice) * price;
       profitPercent = (profit / productCost) * 100;
     }
-    
+
     else if (product3Quantity > quantity) {
       profit = (quantityPars - product3QuantityPrice) * price;
       profitPercent = (profit / productCost) * 100;
@@ -127,7 +129,15 @@ const ProductDetails = () => {
 
   const convertedRating = (2 / 10) * 5;
 
-  // console.log(productFind);
+  if (loader) {
+    return <div>Loading...</div>;
+  }
+
+  if (!productFind) {
+    return <div>Product not found</div>
+  }
+
+
   return (
     <section>
       <div className="py-4">
@@ -184,12 +194,15 @@ const ProductDetails = () => {
               <div>
                 <div className="h-64  md:h-[22rem] rounded-lg bg-gray-100 mb-4">
                   <div className="h-64 md:h-full rounded-lg bg-gray-100 mb-4 flex items-center justify-center">
-                    <img
-                      className="w-94 h-full"
-                      src={selectedImage}
-                      srcSet={selectedImage}
-                      alt="Selected Image"
-                    />
+                    {
+                      !loader ? <img
+                        className="w-94 h-full"
+                        src={selectedImage}
+                        srcSet={selectedImage}
+                        alt="Selected Image"
+                      /> : 'Loading....'
+                    }
+
                   </div>
                 </div>
                 <div className="grid grid-cols-4 md:grid-cols-4 lg:grid-cols-6 gap-2 -m-4 text-white">

@@ -59,6 +59,8 @@ const homePath = [
     },
     {
         path: "/products/:id",
+        loader: ({ params }) =>
+            fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/single-product?id=${params?.id}`),
         element: <>
             {/* <ScrollToTop /> */}
             <ProductDetails />
@@ -92,6 +94,8 @@ const homePath = [
         )
     }, {
         path: "user-service-payment",
+        loader: () =>
+            fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/getaway`),
         element: (
             <UserPayment />
         )

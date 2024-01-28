@@ -1,14 +1,15 @@
 import { useQuery } from '@tanstack/react-query';
-import React from 'react';
+import React, { useContext } from 'react';
 import { useLoaderData } from 'react-router';
-
-import { Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import MetaHelmet from '../../../Helmate/Helmate';
+import { AuthContext } from '../../../AuthProvider/UserProvider';
 
 const SingleService = () => {
+    const { setOrderStage } = useContext(AuthContext);
 
     const service = useLoaderData()
-
+    const navigate = useNavigate();
 
     const { data: services = [], refetch, isLoading } = useQuery({
         queryKey: ["services"],
@@ -19,7 +20,19 @@ const SingleService = () => {
         },
     });
 
-    console.log(services[2]);
+    const handleOrder = () => {
+        const order = {
+            id: service._id,
+            title: service.title,
+            price: service.price,
+            img: service.img,
+            category: service.category,
+            subscriptionPeriod: service.subscriptionPeriod,
+
+        }
+        setOrderStage([order])
+        navigate(`/user-service-checkout/${service._id}`)
+    }
 
 
     return (
@@ -54,11 +67,11 @@ const SingleService = () => {
                                     ${service.price}
                                 </span>
                                 <div className="flex items-center">
-                                    <Link to={`/user-service-checkout/${service?._id}`}>
-                                        <button className="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">
-                                            Buy Now
-                                        </button>
-                                    </Link>
+                                    {/* <Link to={`/user-service-checkout/${service?._id}`}> */}
+                                    <button onClick={handleOrder} className="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">
+                                        Buy Now
+                                    </button>
+                                    {/* </Link> */}
                                     <button className="rounded-full w-10 h-10 bg-gray-200 p-0 border-0 inline-flex items-center justify-center text-gray-500 ml-4">
                                         <svg
                                             fill="currentColor"

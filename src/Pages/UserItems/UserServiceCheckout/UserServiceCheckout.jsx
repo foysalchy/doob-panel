@@ -1,25 +1,51 @@
 import { useQuery } from '@tanstack/react-query';
-import React from 'react';
-import { Link, useLoaderData, useParams } from 'react-router-dom';
+import React, { useContext, useState } from 'react';
+import { Link, useLoaderData, useNavigate, useParams } from 'react-router-dom';
+import { AuthContext } from '../../../AuthProvider/UserProvider';
 
 const UserServiceCheckout = () => {
     // const id = useParams()
     const findService = useLoaderData();
+    const { setSelectProductData, setOrderStage } = useContext(AuthContext)
     // const findService = myServices.find((service) => service._id === id.id);
-
-
+    const navigate = useNavigate();
     const subtotal = parseInt(findService?.price) || 0;
-    const shippingFee = 300;
+    const shippingFee = 0;
     const shippingFeeDiscount = 0;
     const discount = 0; // You need to implement promo code functionality to calculate this
     const total = subtotal + shippingFee - shippingFeeDiscount - discount;
+    const [promoPice, setPomoPrice] = useState(false)
+
+    const promoSubmit = (e) => {
+        e.preventDefault();
+
+
+    }
+
+    const sendPlaceOrderData = () => {
+        const data = {
+            normalPrice: total,
+            productId: findService._id,
+            productTitle: findService.title,
+            productPrice: findService.price,
+            productImg: findService.img,
+            productCategory: findService.category,
+            promoPice,
+            discount,
+            shippingFee,
+            shippingFeeDiscount,
+
+
+        }
+
+        setOrderStage(data);
+        navigate('/user-service-payment')
+    }
 
     return (
         <div className='px-4 py-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-10'>
             <div className='md:flex gap-4 w-full justify-between'>
                 <div className="w-full">
-
-
 
                     <div className=" mt-0 rounded max-w-4xl p-6  sm:p-10 bg-gray-200 text-gray-900 w-full">
                         <div className='flex flex-col space-y-4'>
@@ -48,7 +74,7 @@ const UserServiceCheckout = () => {
                     <div className="space-y-1 my-4">
                         <h2 className="text-xl font-semibold ">Order Summary</h2>
                         <div className='flex justify-between '>
-                            <p className="text-gray-700">Subtotal 44 products </p>
+                            <p className="text-gray-700">Subtotal</p>
                             <p className=''>৳ <span className='font-sans'> {subtotal} </span></p>
                         </div>
                         <div className='flex justify-between '>
@@ -61,7 +87,7 @@ const UserServiceCheckout = () => {
                         </div>
 
                     </div>
-                    {/* <form className="products-center space-y-3 sm:justify-center sm:space-x-3 sm:space-y-0 sm:flex lg:justify-start">
+                    <form className="products-center space-y-3 sm:justify-center sm:space-x-3 sm:space-y-0 sm:flex lg:justify-start">
                         <input
                             name='promoCode'
                             type="text"
@@ -71,20 +97,21 @@ const UserServiceCheckout = () => {
                         <button type='submit' className="px-4 py-2 bg-gray-800 rounded text-white">
                             apply
                         </button>
-                    </form> */}
+                    </form>
                     <div className='flex justify-between py-2'>
                         <p className="text-gray-700 ">Total </p>
                         <p className='kalpurush'>৳ <span className='font-sans'> {total}</span></p>
                     </div>
                     <div  >
 
-                        <Link
-                            to={`/user-service-payment`}
+
+                        <button
+                            onClick={sendPlaceOrderData}
                             type="button" className='w-full'>
-                            <button onClick={() => sendPlaceOrderData()} className="px-6 py-2 rounded w-full bg-gray-800 text-white" type='button'>
+                            <div className="px-6 py-2 rounded w-full bg-gray-800 text-white" type='button'>
                                 Place Order
-                            </button>
-                        </Link>
+                            </div>
+                        </button>
 
                     </div>
                 </div>
