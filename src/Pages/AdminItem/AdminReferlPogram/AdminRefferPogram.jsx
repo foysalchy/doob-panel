@@ -93,7 +93,7 @@ const AdminReeferProgram = () => {
                                     </tr>
                                 </thead>
                                 <tbody className="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
-                                    {referUsers.map((users) => (
+                                    {referUsers.map((users, idx) => (
                                         <tr>
                                             <td className="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
                                                 <div className="inline-flex items-center gap-x-3">
@@ -101,7 +101,7 @@ const AdminReeferProgram = () => {
                                                         type="checkbox"
                                                         className="text-blue-500 border-gray-300 rounded dark:bg-gray-900 dark:ring-offset-gray-900 dark:border-gray-700"
                                                     />
-                                                    <span>#3066</span>
+                                                    <span>#{idx}</span>
                                                 </div>
                                             </td>
                                             <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
