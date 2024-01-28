@@ -413,7 +413,6 @@ const PaymentGetWay = () => {
                                             <img
                                                 alt="Developer"
                                                 src="https://download.logo.wine/logo/Nagad/Nagad-Vertical-Logo.wine.png"
-                                                src="https://download.logo.wine/logo/Nagad/Nagad-Vertical-Logo.wine.png"
                                                 srcSet="https://download.logo.wine/logo/Nagad/Nagad-Vertical-Logo.wine.png"
                                                 className="absolute inset-0 w-full mt-4 opacity-75 transition-opacity group-hover:opacity-20"
                                             />

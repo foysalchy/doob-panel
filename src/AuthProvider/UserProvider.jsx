@@ -13,6 +13,8 @@ const UserProvider = ({ children }) => {
     const [reviewCheckUpData, setReviewCheckUpData] = useState({})
     const [invoiceData, setInvoiceData] = useState({})
     const [userAddProduct, setUserAddProduct] = useState(null)
+    const [selectProductData, setSelectProductData] = useState([]);
+    const [orderStage, setOrderStage] = useState([]);
     const logOut = () => {
         setLoading(true);
         const cookies = Cookies.get();
@@ -93,7 +95,11 @@ const UserProvider = ({ children }) => {
         checkUpWoocommerceData,
         setCheckUpWoocommerceData,
         userAddProduct,
-        setUserAddProduct
+        setUserAddProduct,
+        selectProductData,
+        setSelectProductData,
+        orderStage,
+        setOrderStage
     };
 
     return <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>;

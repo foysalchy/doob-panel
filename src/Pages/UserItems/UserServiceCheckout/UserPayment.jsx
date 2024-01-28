@@ -1,18 +1,20 @@
-import React, { useState } from 'react';
- 
+import React, { useContext, useEffect, useState } from 'react';
+
 import UserPaymentAlert from './UserPaymentAlert';
-import { useLoaderData } from 'react-router-dom';
+import { useLoaderData, useNavigate } from 'react-router-dom';
+import { ShopAuthProvider } from '../../../AuthProvider/ShopAuthProvide';
+import { AuthContext } from '../../../AuthProvider/UserProvider';
 
 const UserPayment = () => {
-    // const paymentGetWays = useLoaderData();
+    const paymentGetWays = useLoaderData();
     const [open, setOpen] = useState(false);
-    // const { selectProductData, orderStage, shopUser, shop_id } = useContext(ShopAuthProvider);
+    const { selectProductData, orderStage, user } = useContext(AuthContext);
     const [payment, setPayment] = useState(false);
-    // const [passData, setPassData] = useState([]);
-    // const pathname = window.location.pathname;
-    // const idMatch = pathname.match(/\/shop\/([^/]+)/);
-    // const shopId = idMatch ? idMatch[1] : null;
-    // const navigate = useNavigate();
+    const [passData, setPassData] = useState([]);
+    const pathname = window.location.pathname;
+    const idMatch = pathname.match(/\/shop\/([^/]+)/);
+    const shopId = idMatch ? idMatch[1] : null;
+    const navigate = useNavigate();
     const [previewUrl, setPreviewUrl] = useState(false)
     const [fileName, setFileName] = useState(false)
 
@@ -25,85 +27,135 @@ const UserPayment = () => {
     //     if (!selectProductData.length) { window.history.back(); }
     // }, [selectProductData]);
 
-    // const orderSubmit = () => {
-    //     const data = orderStage
-    //     data.method = payment
-    //     data.timestamp = new Date().getTime()
-    //     data.userId = shopUser._id
-    //     data.shopId = shop_id.shop_id
-    //     if (fileName) {
-    //         data.file = fileName
-    //     }
-    //     setPassData(data);
-    //     fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/user/order?token=${shopUser._id}`, {
-    //         method: "POST",
-    //         headers: { "Content-Type": "application/json" },
-    //         body: JSON.stringify(data)
-    //     }).then((res) => res.json()).then((data) => {
-    //         console.log("data payment", data);
-    //         BrightAlert({ icon: 'success' })
-    //         navigate(`/shop/${shopId}/user/my-orders`)
-    //     });
-
-
-    // }
-
-    // const paymentHandler = async () => {
-    //     console.log(payment);
-
-    // };
+    const orderSubmit = () => {
+        // const data = orderStage
+        // data.method = payment
+        // data.timestamp = new Date().getTime()
+        // data.userId = shopUser._id
+        // data.shopId = shop_id.shop_id
+        // if (fileName) {
+        //     data.file = fileName
+        // }
+        // setPassData(data);
+        // fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/user/order?token=${shopUser._id}`, {
+        //     method: "POST",
+        //     headers: { "Content-Type": "application/json" },
+        //     body: JSON.stringify(data)
+        // }).then((res) => res.json()).then((data) => {
+        //     console.log("data payment", data);
+        //     BrightAlert({ icon: 'success' })
+        //     navigate(`/shop/${shopId}/user/my-orders`)
+        // });
 
 
 
 
+    }
 
-    // const handleFileChange = async (event) => {
-    //     const file = event.target.files[0];
-    //     const imageFormData = new FormData();
-    //     imageFormData.append("image", file);
-    //     const imageUrl = await uploadImage(imageFormData);
+    const paymentHandler = async () => {
+        console.log(payment);
 
-    //     if (file) {
-    //         const reader = new FileReader();
-    //         reader.onloadend = () => {
-    //             setPreviewUrl(reader.result);
-    //         };
-    //         reader.readAsDataURL(file);
-    //         setFileName(imageUrl);
-    //     }
-    // };
+    };
 
 
-    // async function uploadImage(formData) {
-    //     const url = "https://salenow-v2-backend.vercel.app/api/v1/image/upload-image";
-    //     const response = await fetch(url, {
-    //         method: "POST",
-    //         body: formData,
-    //     });
-    //     const imageData = await response.json();
-    //     return imageData.imageUrl;
-    // }
 
-    // console.log(previewUrl);
+
+
+    const handleFileChange = async (event) => {
+        const file = event.target.files[0];
+        const imageFormData = new FormData();
+        imageFormData.append("image", file);
+        const imageUrl = await uploadImage(imageFormData);
+
+        if (file) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setPreviewUrl(reader.result);
+            };
+            reader.readAsDataURL(file);
+            setFileName(imageUrl);
+        }
+    };
+
+
+    async function uploadImage(formData) {
+        const url = "https://salenow-v2-backend.vercel.app/api/v1/image/upload-image";
+        const response = await fetch(url, {
+            method: "POST",
+            body: formData,
+        });
+        const imageData = await response.json();
+        return imageData.imageUrl;
+    }
+
+    console.log(previewUrl);
 
 
     return (
         <div className='px-4 py-5 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8'>
             <div className='grid md:grid-cols-4 grid-cols-1 md:gap-3 gap-2'>
                 <div className="grid md:grid-cols-4 grid-cols-1 md:col-span-3 gap-4">
+
+                    {
+                        paymentGetWays.map(get => (
+                            <div>
+                                {get.Getaway === 'Bkash' &&
+                                    <a href="#scrollDestination">
+                                        <div onClick={() => setPayment(get)} className={`${payment?.Getaway === 'Bkash' && 'shadow-lg shadow-gray-700'}   border border-gray-600 flex md:flex-col flex-row items-center justify-center gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] overflow-hidden`}>
+                                            <img
+                                                alt="Developer"
+                                                src="https://logos-download.com/wp-content/uploads/2022/01/BKash_Logo_icon-1536x1452.png"
+                                                srcSet="https://logos-download.com/wp-content/uploads/2022/01/BKash_Logo_icon-1536x1452.png"
+                                                className="md:h-[120px] md:w-[120px] w-[30px] h-[auto]"
+                                            />
+                                            <h4 className="mt-2  md:font-bold md:text-lg">{get?.Getaway}...</h4>
+                                        </div>
+                                    </a>
+
+                                }
+                                {get.Getaway === 'Nogod' &&
+                                    <a href="#scrollDestination">
+                                        <div onClick={() => setPayment(get)} className={`${payment?.Getaway === 'Nogod' && 'shadow-lg shadow-gray-700'}  border border-gray-600 flex md:flex-col flex-row items-center justify-center gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] overflow-hidden`}>
+                                            <img
+                                                alt="Developer"
+                                                src="https://download.logo.wine/logo/Nagad/Nagad-Vertical-Logo.wine.png"
+                                                srcSet="https://download.logo.wine/logo/Nagad/Nagad-Vertical-Logo.wine.png"
+                                                className="md:h-[120px] md:w-[120px] w-[30px] h-[40px] object-cover"
+                                            />
+                                            <h4 className="mt-2  md:font-bold md:text-lg">{get?.Getaway}</h4>
+                                        </div>
+                                    </a>
+
+                                }
+                                {get.Getaway === 'AmarPay' &&
+                                    <a href="#scrollDestination">
+                                        <div onClick={() => setPayment(get)} className={`${payment?.Getaway === 'AmarPay' && 'shadow-lg shadow-gray-700'}  border border-gray-600 flex md:flex-col flex-row items-center justify-center gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] overflow-hidden`}>
+                                            <img
+                                                alt="Developer"
+                                                src="https://play-lh.googleusercontent.com/xA5zXoyQrqDjgz8bef64gAvnBpofTELWWWXYkuF3t5WnPADHv5Y91A8x51Z0RHJnLzM"
+                                                srcSet="https://play-lh.googleusercontent.com/xA5zXoyQrqDjgz8bef64gAvnBpofTELWWWXYkuF3t5WnPADHv5Y91A8x51Z0RHJnLzM"
+                                                className="md:h-[120px] md:w-[120px] w-[30px] h-[40px] object-cover"
+                                            />
+                                            <h4 className="mt-2  md:font-bold md:text-lg">{get?.Getaway}</h4>
+                                        </div>
+                                    </a>
+                                }
+                                {get.Getaway === 'Bank' &&
+                                    <a href="#scrollDestination">
+                                        <div onClick={() => setPayment(get)} className={`${payment?.Getaway === 'AmarPay' && 'shadow-lg shadow-gray-700'}  border border-gray-600 flex md:flex-col flex-row items-center justify-center gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] overflow-hidden`}>
+
+                                            <h4 className="mt-2  md:font-bold md:text-lg">{get?.Getaway}</h4>
+
+
+                                        </div>
+                                    </a>
+                                }
+                            </div>
+                        ))
+                    }
+
                     <a href="#scrollDestination">
-                        <div onClick={() => setPayment(get)} className={`  && 'shadow-lg shadow-gray-700'}   border border-gray-600 flex md:flex-col flex-row items-center justify-center gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] overflow-hidden`}>
-                            <img
-                                alt="Developer"
-                                src="https://logos-download.com/wp-content/uploads/2022/01/BKash_Logo_icon-1536x1452.png"
-                                srcSet="https://logos-download.com/wp-content/uploads/2022/01/BKash_Logo_icon-1536x1452.png"
-                                className="md:h-[120px] md:w-[120px] w-[30px] h-[auto]"
-                            />
-                            <h4 className="mt-2  md:font-bold md:text-lg">Bekash...</h4>
-                        </div>
-                    </a>
-                    <a href="#scrollDestination">
-                        <div onClick={() => setPayment({ Getaway: "CashOnDelivery" })} className={`   border border-gray-600 flex md:flex-col flex-row items-center justify-center  gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] overflow-hidden`}>
+                        <div onClick={() => setPayment({ Getaway: "CashOnDelivery" })} className={`${payment?.Getaway === 'CashOnDelivery' && 'shadow-lg shadow-gray-700'}  border border-gray-600 flex md:flex-col flex-row items-center justify-center  gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] overflow-hidden`}>
                             <img
                                 alt="Developer"
                                 src="https://salenow-v2-backend.vercel.app/api/v1/image/658ec416b689ffabf15d9fb6.jpg"
@@ -119,14 +171,14 @@ const UserPayment = () => {
                 <div className="">
                     <div className="bg-gray-200 font-sans w-full p-3">
                         <h1 className="md:text-2xl text-md font-semibold">Order Summary</h1>
-                        <p className="md:text-md text-sm text-gray-400 mt-2">Subtotal(  32 Items and shipping fee included)</p>
+                        <p className="md:text-md text-sm text-gray-400 mt-2">Subtotal (1 Items and shipping fee included)</p>
                         <br />
                         <div className="flex items-center justify-between">
                             <h1 className="md:text-xl text-md font-semibold">Total Amount:</h1>
                             <h1 className='flex items-center gap-1  md:text-xl text-md font-semibold'>
-                                <div className=''>
-                                    <span className="kalpurush text-2xl">৳</span>322</div>
-                                <span>44</span>
+                                {!orderStage?.promoPrice?.status && <div className=''>
+                                    <span className="kalpurush text-2xl">৳</span>{orderStage?.normalPrice}</div>}
+                                {orderStage?.promoPrice?.promoPrice && <span>{orderStage?.promoPrice}</span>}
                             </h1>
                         </div>
                     </div>
@@ -138,22 +190,22 @@ const UserPayment = () => {
                 <div className='flex flex-col gap-2 text-xs'>
                     {message.map((mess, i) => <div className='py-2 bg-yellow-200 px-10' key={i}>{mess}</div>)}
                     {
-                         <div className='flex flex-col gap-2 text-xs'>
+                        payment.Getaway === "Bank" && <div className='flex flex-col gap-2 text-xs'>
                             <div className='py-2 bg-red-200 px-10 text-xl flex gap-4 item-center'>
                                 <div>
-                                    Bank Name: bank name
+                                    Bank Name: {payment?.bankName}
                                 </div>
                                 <span>||</span>
                                 <div>
-                                    Account Number: number
+                                    Account Number: {payment.accountNumber}
                                 </div>
                                 <span>||</span>
                                 <div>
-                                    Branch Name: branch name
+                                    Branch Name: {payment?.branchName}
                                 </div>
                                 <span>||</span>
                                 <div>
-                                    Holder Name: holder name
+                                    Holder Name: {payment?.holderName}
                                 </div>
                             </div>
 
@@ -174,7 +226,7 @@ const UserPayment = () => {
                 </div>
 
                 <div id='scrollDestination' className="flex items-center justify-center my-6">
-                    {open && <UserPaymentAlert open={open} />}
+                    {open && <PaymentAlert open={open} />}
 
                     {
                         payment.Getaway === 'CashOnDelivery' ?
@@ -231,7 +283,7 @@ const UserPayment = () => {
                                 (
                                     <div>
                                         <button
-                                            
+                                            onClick={paymentHandler}
                                             className="group relative inline-flex m-auto items-center overflow-hidden rounded bg-gray-900  px-10 py-2 text-white focus:outline-none focus:ring active:bg-gray-900"
                                         >
                                             <span className="absolute -start-full transition-all group-hover:start-4">
@@ -251,7 +303,7 @@ const UserPayment = () => {
                                                 </svg>
                                             </span>
 
-                                            <span className="text-lg font-medium transition-all group-hover:ms-4"> Pay Now Bekash</span>
+                                            <span className="text-lg font-medium transition-all group-hover:ms-4"> Pay Now {payment.Getaway}</span>
                                         </button>
                                     </div>
                                 )

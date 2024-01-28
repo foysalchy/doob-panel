@@ -16,6 +16,7 @@ const ProductInformation = () => {
     const [selectedImage, setSelectedImage] = useState(product.data.featuredImage.src);
     const [quantity, setQuantity] = useState(1);
     const location = useLocation();
+    const [loader, setLoader] = useState(flase)
     const { shop_id, shopUser, setSelectProductData } = useContext(ShopAuthProvider)
 
     const handleImageClick = (imageUrl) => {
@@ -47,9 +48,6 @@ const ProductInformation = () => {
     const idMatch = pathname.match(/\/shop\/([^/]+)/);
 
     const shopId = idMatch ? idMatch[1] : null;
-
-    const [loading, setLoading] = useState(false)
-
 
     const addToCart = (data) => {
         setLoading(true)
@@ -109,6 +107,7 @@ const ProductInformation = () => {
         }
     }
 
+ 
     return (
         <section className='px-2'>
             <MetaHelmet title={product.data.metaTitle} description={product.data.metaDescription} image={product.data.MetaImage} />
