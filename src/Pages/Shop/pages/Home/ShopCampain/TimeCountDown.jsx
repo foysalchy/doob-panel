@@ -38,37 +38,37 @@ const TimeCountDown = ({ start, end }) => {
     return (
         <div>
             {timeCount && (
-                <div className="overflow-hidden flex justify-center items-center">
+                <div className="overflow-hidden h-10 flex justify-center items-center">
                     <div className="flex flex-wrap overflow-hidden font-sans" id="countdown">
                         {/* Days */}
                         <div className="my-1 px-1 w-1/2 overflow-hidden md:w-1/4 flex justify-center transform transition duration-500 hover:scale-110">
-                            <div className="bg-gray-700 p-2 text-gray-100 w-24 text-center m-2 rounded-md shadow-md">
+                            <div className="bg-gray-700 p-2 text-gray-100 w-24 flex items-center justify-center text-center m-2 rounded-md shadow-md">
                                 <p className="days text-xl">{timeRemaining.days}</p>
-                                <p className="m-2">Days</p>
+                                <p className="m-2">D</p>
                             </div>
                         </div>
 
                         {/* Hours */}
                         <div className="my-1 px-1 w-1/2 overflow-hidden md:w-1/4 flex justify-center transform transition duration-500 hover:scale-110">
-                            <div className="bg-gray-700 p-2 text-gray-100 w-24 text-center m-2 rounded-md shadow-md">
+                            <div className="bg-gray-700 p-2 text-gray-100 w-24 flex items-center justify-center text-center m-2 rounded-md shadow-md">
                                 <p className="hours text-xl">{timeRemaining.hours}</p>
-                                <p className="m-2">Hours</p>
+                                <p className="m-2">H</p>
                             </div>
                         </div>
 
                         {/* Minutes */}
                         <div className="my-1 px-1 w-1/2 overflow-hidden md:w-1/4 flex justify-center transform transition duration-500 hover:scale-110">
-                            <div className="bg-gray-700 p-2 text-gray-100 w-24 text-center m-2 rounded-md shadow-md">
+                            <div className="bg-gray-700 p-2 text-gray-100 w-24 flex items-center justify-center text-center m-2 rounded-md shadow-md">
                                 <p className="minutes text-xl">{timeRemaining.minutes}</p>
-                                <p className="m-2">Minutes</p>
+                                <p className="m-2">M</p>
                             </div>
                         </div>
 
                         {/* Seconds */}
                         <div className="my-1 px-1 w-1/2 overflow-hidden md:w-1/4 flex justify-center transform transition duration-500 hover:scale-110">
-                            <div className="bg-gray-700 p-2 text-gray-100 w-24 text-center m-2 rounded-md shadow-md">
+                            <div className="bg-gray-700 p-2 text-gray-100 w-24 flex items-center justify-center text-center m-2 rounded-md shadow-md">
                                 <p className="seconds text-xl">{timeRemaining.seconds}</p>
-                                <p className="m-2">Seconds</p>
+                                <p className="m-2">S</p>
                             </div>
                         </div>
                     </div>
