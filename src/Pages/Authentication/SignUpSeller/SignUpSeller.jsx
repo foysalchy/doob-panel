@@ -6,12 +6,13 @@ import {
   AiTwotoneCheckSquare,
 } from "react-icons/ai";
 import Image from "./wallpaperflare.com_wallpaper.jpg";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../AuthProvider/UserProvider";
 import { updateProfile } from "firebase/auth";
 import Swal from "sweetalert2";
 import { BiCheckbox } from "react-icons/bi";
 import Modal from "./Modal";
+import BrightAlert from "bright-alert";
 
 const SignUpSeller = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -21,7 +22,7 @@ const SignUpSeller = () => {
   const [shop, setShop] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [userEmail, setUserEmail] = useState('')
-
+  const navigate = useNavigate();
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
@@ -29,11 +30,14 @@ const SignUpSeller = () => {
   const signUpData = (event) => {
     event.preventDefault();
     let shopName = "";
+    let referCode = "";
     const form = event.target;
     const name = form.name.value;
+
     const email = form.email.value;
     const password = form.password.value;
     shopName = form?.shopName?.value;
+    referCode = form?.referCode?.value;
     let role = "user";
     const createdAt = new Date()
     setUserEmail(email)
@@ -48,7 +52,7 @@ const SignUpSeller = () => {
       }
       let user = { name, email, password, userId, role, createdAt };
       if (shop) {
-        user = { name, email, password, userId, role, shopName, createdAt };
+        user = { name, email, password, userId, role, shopName, referCode, createdAt };
       }
       // Update user
 
@@ -65,13 +69,18 @@ const SignUpSeller = () => {
         .then((data) => {
           const result = data.result;
           if (result) {
+            if (shop) {
+              handleSubmit(referCode, email);
+            }
             setLoading(false);
-            setModalOpen(email)
+            BrightAlert(`${data.message}`, '', 'success');
             form.reset();
+            navigate('/sign-in');
           } else {
             setPassError(data.message);
           }
           setLoading(false);
+
           form.reset();
         });
     } else {
@@ -79,6 +88,25 @@ const SignUpSeller = () => {
       setLoading(false);
     }
   };
+
+  const handleSubmit = (referCode, email) => {
+    const code = referCode
+    const time = new Date().getTime()
+    const data = { email, code, time }
+
+    fetch('https://salenow-v2-backend.vercel.app/api/v1/admin/refer-code', {
+      method: 'POST',
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+
+    }).then((res) => res.json()).then((data) => {
+
+      setLoading(false)
+      navigate('/sign-in')
+    })
+
+  }
+
 
   return (
     <div>
@@ -228,7 +256,25 @@ const SignUpSeller = () => {
                           id="shopName"
                           name="shopName"
                         />
+
+                        <label
+                          htmlFor="email"
+                          className="inline-block mb-1 font-medium"
+                        >
+                          Refer Code
+                        </label>
+                        <input
+                          placeholder="refer code"
+                          required={shop}
+                          type="text"
+                          className="flex-grow w-full h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
+                          id="shopName"
+                          name="referCode"
+                        />
+
+
                       </div>
+
                     )}
                     <p className="text-sm text-red-500">{passError}</p>
                     <div className="mt-4 mb-2 sm:mb-4">

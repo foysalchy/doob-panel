@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { FaBlogger } from 'react-icons/fa6';
 import { BiHomeAlt, BiLogOut } from 'react-icons/bi';
 import { AuthContext } from '../../../AuthProvider/UserProvider';
@@ -8,6 +8,11 @@ import Logo from "../../../../Logo.png";
 
 const UserSidebar = () => {
     const { user, logOut } = useContext(AuthContext);
+    const navigate = useNavigate();
+    const handleLogout = () => {
+        logOut()
+        navigate('/')
+    }
     return (
         <div className='h-screen'>
 
@@ -53,7 +58,7 @@ const UserSidebar = () => {
                             <p class="text-base leading-4 ">My WishList</p>
                         </NavLink>
 
-                        <button onClick={() => logOut()} className="flex jusitfy-start items-center w-full py-2 px-2 bg-[#ef293d] duration-200 -ml-5 space-x-6 focus:outline-none text-white focus:text-indigo-400   rounded">
+                        <button onClick={handleLogout} className="flex jusitfy-start items-center w-full py-2 px-2 bg-[#ef293d] duration-200 -ml-5 space-x-6 focus:outline-none text-white focus:text-indigo-400   rounded">
                             <IoLogOutOutline className='text-xl mr-6' /> Logout
                         </button>
                     </div>

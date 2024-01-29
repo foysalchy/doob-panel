@@ -58,27 +58,34 @@ const ForYouProducts = () => {
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 -m-4 text-black">
               {newProducts?.slice(0, displayedProducts)?.map((product, idx) => {
                 let name = product?.name?.slice(0, 60);
+                const blankImg = 'https://i.ibb.co/7p2CvzT/empty.jpg';
+                console.log(product);
                 return (
+                  <Link to={`${product._id}`} className="group block overflow-hidden">
+                    <div className="relative h-[250px] sm:h-[250px]">
+                      <img
+                        src={product?.featuredImage?.src}
+                        alt=""
+                        className="absolute inset-0 h-full w-full object-cover opacity-100 group-hover:opacity-0"
+                      />
 
-                  <Link to={`${product._id}`} className="space-y-2">
-                    <img
-                      alt="Ceramic Coffee Mug"
-                      className="h-[200px] border w-full rounded-md object-cover"
-                      height="200"
-                      srcSet={product?.featuredImage?.src}
-                      src={product?.featuredImage?.src}
-                      style={{
-                        aspectRatio: "200/200",
-                        objectFit: "cover",
-                      }}
-                      width="200"
-                    />
-                    <div className="flex flex-col items-start">
-                      <span className="text-lg font-semibold">{product?.regular_price}</span>
-                      <span className="text-sm font-medium">
-                        {name}...
-                      </span>
+                      <img
+                        src={product?.images[1]?.src ? product?.images[1]?.src : blankImg}
+                        alt=""
+                        className="absolute inset-0 h-full w-full object-cover opacity-0 group-hover:opacity-100"
+                      />
+                    </div>
 
+                    <div className="relative bg-white pt-3">
+                      <h3 className="text-sm text-gray-700 group-hover:underline group-hover:underline-offset-4">
+                        {name}
+                      </h3>
+
+                      <div className="mt-1.5 flex items-center justify-between text-gray-900">
+                        <p className="tracking-wide  "><span className="kalpurush">৳</span> {product?.price}</p>
+
+                        <p className="text-xs uppercase tracking-wide">{product?.variations.length} Variant</p>
+                      </div>
                     </div>
                   </Link>
                 );

@@ -5,14 +5,15 @@ import { MdDone } from "react-icons/md";
 import ProductDescription from "./ProductDescription";
 import ProductReviews from "./ProductReviews";
 import TrendingProducts from "./TrendingProducts";
-
-import { useContext } from "react";
+ import { useContext } from "react";
 import { AuthContext } from "../../../../AuthProvider/UserProvider";
 import { useQuery } from "@tanstack/react-query";
 import { useLoaderData, useParams } from "react-router-dom";
+import Swal from "sweetalert2";
+import BrightAlert from 'bright-alert';
 
 const ProductDetails = () => {
-  const { user } = useContext(AuthContext)
+  const { user, shopInfo } = useContext(AuthContext)
   const location = useParams();
   const [loader, setLoader] = useState(false);
 
@@ -154,8 +155,24 @@ const ProductDetails = () => {
 
   const convertedRating = (2 / 10) * 5;
 
-
-
+  const handleStore = (id) => {
+    const data = {
+      shopId: shopInfo?.shopId,
+      shopName: shopInfo?.shopName,
+      shopUid: shopInfo?._id,
+      quantity: quantity
+    }
+    fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/web-store?id=${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data)
+    }).then((res) => res.json()).then((data) => {
+       BrightAlert();
+      refetch()
+    })
+  }
 
   return (
     <section>
@@ -245,10 +262,17 @@ const ProductDetails = () => {
             </div>
             <div className="md:flex-1 px-4 ">
               <div className="flex items-center">
-                <MdDone className="text-green-400" />
-                <p className="text-sm font-medium text-green-400 ml-1">
-                  In Stock
-                </p>
+
+                {productFind?.stock_quantity > quantity ?
+                  <p className="text-sm font-medium text-green-400 ml-1 flex items-center">
+                    <MdDone className="text-green-400" /> In Stock
+                  </p>
+                  :
+                  <p className="text-sm font-medium text-red-400 ml-1 flex items-center">
+                    <MdDone className="text-red-400" /> Out Stock
+                  </p>
+
+                }
               </div>
               <h2 className="mb-2 leading-tight tracking-tight font-bold text-gray-800 text-2xl md:text-3xl">
                 {productFind?.name}
@@ -373,6 +397,7 @@ const ProductDetails = () => {
                   </div>
                 </div>
                 <button
+                  onClick={() => handleStore(productFind?._id)}
                   type="button"
                   className="h-10 px-6 py-2 font-semibold rounded bg-gray-950 hover:bg-gray-800 text-white"
                 >
