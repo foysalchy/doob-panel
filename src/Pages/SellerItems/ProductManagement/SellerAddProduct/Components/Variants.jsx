@@ -97,7 +97,7 @@ const Variants = ({ adminWare, multiVendor, setMultiVendor, inputFields, setInpu
         setInputFields(newInputFields);
     };
 
-
+    console.log(multiVendor);
     return (
         <div className=' border mt-4 border-gray-400 md:px-10 px-3 py-5 pb-16 w-full bg-gray-100 rounded'>
             <div className='flex flex-col mb-4'>
@@ -118,7 +118,7 @@ const Variants = ({ adminWare, multiVendor, setMultiVendor, inputFields, setInpu
 
             </div>
             <div className='flex gap-4 flex-col w-full'>
-                {inputFields.map((field, index) => (
+                {inputFields && inputFields.map((field, index) => (
                     <div key={index} className=' border border-green-300 rounded px-4 py-2  w-full'>   <div className='flex gap-10 justify-between items-center'  >
                         <input
                             type="text"
@@ -172,10 +172,10 @@ const Variants = ({ adminWare, multiVendor, setMultiVendor, inputFields, setInpu
                     </div>
 
                 ))}
-                <button type="button" className='bg-green-500 py-2' onClick={handleAddField}>
+                {inputFields && <button type="button" className='bg-green-500 py-2' onClick={handleAddField}>
                     Add Field
-                </button>
-                <VariantData variantInput={variantInput} setVariantInput={setVariantInput} />
+                </button>}
+                {multiVendor === true && <VariantData variantInput={variantInput} setVariantInput={setVariantInput} />}
             </div>
 
         </div>

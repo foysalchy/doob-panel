@@ -28,28 +28,30 @@ import { AuthContext } from "../AuthProvider/UserProvider";
 // };
 
 const IsUserRegistration = ({ children }) => {
-    const { shopUser, shopId, loading } = useContext(ShopAuthProvider);
+    const { user, loading } = useContext(AuthContext);
     const location = useLocation();
     const navigate = useNavigate();
 
+    console.log(user?.role !== "user");
     useEffect(() => {
         // Check if the user is not logged in and not loading
-        if (!shopUser && !loading) {
-            navigate(`/shop/${shopId}`);
+        if (user == '' && user?.role !== "user" && !loading) {
+            console.log("this navigate");
+            navigate(`/`);
         }
 
         // Cleanup function
         return () => {
             // Perform cleanup if needed
         };
-    }, [shopUser, loading, navigate]);
+    }, [user, loading]);
 
     // Show loading message if loading is true
     if (loading) {
-        return <p>Loading...</p>;
+        return <h1 className="text-black">Loading...</h1>;
     }
 
     // Render children or null
-    return shopUser ? children : null;
+    return user ? children : null;
 };
 export default IsUserRegistration;

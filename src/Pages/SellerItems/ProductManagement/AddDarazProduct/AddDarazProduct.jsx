@@ -7,6 +7,7 @@ import Swal from 'sweetalert2';
 
 import { FixedSizeList as List } from 'react-window';
 import { BsArrowRight } from 'react-icons/bs';
+import Variants from '../SellerAddProduct/Components/Variants';
 
 
 
@@ -20,7 +21,11 @@ const AddDarazProduct = () => {
 
     const [selectedOption, setSelectedOption] = useState(null);
     const [searchTerm, setSearchTerm] = useState('');
-
+    const [multiVendor, setMultiVendor] = useState(true);
+    const [inputFields, setInputFields] = useState(false);
+    const [variantInput, setVariantInput] = useState([
+        { product1: {}, product2: {}, product3: {}, sellingPrice: "" },
+    ]);
 
 
     const { data: Products = [], refetch } = useQuery({
@@ -45,6 +50,8 @@ const AddDarazProduct = () => {
 
     const dataSubmit = async (e) => {
         e.preventDefault()
+
+
         // const product = e.target.darazProduct.value
         const form = e.target
         const warehouse = form.warehouse.value
@@ -52,6 +59,15 @@ const AddDarazProduct = () => {
         const rack = form.rack ? form.rack.value : ''
         const self = form.self ? form.self.value : ''
         const cell = form.cell ? form.cell.value : ''
+
+        const adminMegaCategory = form?.adminMegaCategory?.value;
+        const adminSubCategory = form?.adminSubCategory?.value;
+        const adminMiniCategory = form?.adminMiniCategory?.value;
+        const adminExtraCategory = form?.adminExtraCategory?.value;
+
+        const adminCategory = [adminMegaCategory, adminSubCategory, adminMiniCategory, adminExtraCategory];
+
+
 
         const warehouseValue = [{ name: warehouse }, { name: area }, { name: rack }, { name: self }, { name: cell }]
         setLoading(true)
@@ -106,6 +122,9 @@ const AddDarazProduct = () => {
             shopId: shopInfo._id, // You need to define shopInfo
             adminWare: adminWare,
             item_id: originalData.item_id,
+            multiVendor: multiVendor,
+            adminCategory,
+            variantData: variantInput[0],
             // Add other fields as needed
         };
 
@@ -210,6 +229,7 @@ const AddDarazProduct = () => {
                         )}
                     </div>
                     <WareHouse shopInfo={shopInfo} adminWare={adminWare} setAdminWare={setAdminWare} />
+                    <Variants adminWare={adminWare} multiVendor={multiVendor} setMultiVendor={setMultiVendor} inputFields={inputFields} daraz={true} variantInput={variantInput} setVariantInput={setVariantInput} />
                     <div className="mt-4">
                         {
                             loading ?

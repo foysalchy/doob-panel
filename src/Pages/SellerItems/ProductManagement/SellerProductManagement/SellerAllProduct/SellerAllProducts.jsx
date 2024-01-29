@@ -9,6 +9,7 @@ import DemoImage from './woocommerce-placeholder-600x600.png';
 import Swal from 'sweetalert2';
 import DeleteModal from '../../../../../Common/DeleteModal';
 import { BiLeftArrow, BiRightArrow } from 'react-icons/bi';
+import WebStoreproduct from './WebStoreProducts';
 
 
 const SellerAllProducts = () => {
@@ -27,7 +28,7 @@ const SellerAllProducts = () => {
 
     const [currentPage, setCurrentPage] = useState(1);
     const [searchQuery, setSearchQuery] = useState("");
-
+    const [webStoreProduct, setWebStoreProduct] = useState(false);
 
     const maxLength = 30;
     const pageSize = 10
@@ -172,36 +173,40 @@ const SellerAllProducts = () => {
                 </span>
             </Link>
 
-            <div className="relative w-3/5 my-6">
-                <input
-                    type="text"
-                    id="Search"
-                    value={searchQuery}
-                    onChange={handleSearch}
-                    placeholder="Search for..."
-                    className="w-full px-5 rounded-md border border-gray-900 py-2.5 pe-10 shadow-sm sm:text-sm"
-                />
+            <div className="flex items-center justify-between">
+                <div className="relative w-3/5 my-6">
+                    <input
+                        type="text"
+                        id="Search"
+                        value={searchQuery}
+                        onChange={handleSearch}
+                        placeholder="Search for..."
+                        className="w-full px-5 rounded-md border border-gray-900 py-2.5 pe-10 shadow-sm sm:text-sm"
+                    />
 
-                <span className="absolute inset-y-0 end-0 grid w-10 place-content-center">
-                    <button type="button" className="text-gray-600 hover:text-gray-700">
-                        <span className="sr-only">Search</span>
+                    <span className="absolute inset-y-0 end-0 grid w-10 place-content-center">
+                        <button type="button" className="text-gray-600 hover:text-gray-700">
+                            <span className="sr-only">Search</span>
 
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            strokeWidth="1.5"
-                            stroke="currentColor"
-                            className="h-4 w-4 text-black"
-                        >
-                            <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
-                            />
-                        </svg>
-                    </button>
-                </span>
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                strokeWidth="1.5"
+                                stroke="currentColor"
+                                className="h-4 w-4 text-black"
+                            >
+                                <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
+                                />
+                            </svg>
+                        </button>
+                    </span>
+                </div>
+
+                <button onClick={() => setWebStoreProduct(!webStoreProduct)} className='px-6 py-2 bg-black text-white rounded-md'>{webStoreProduct ? 'My Store' : 'Web Store'}</button>
             </div>
 
             <section >
@@ -211,7 +216,7 @@ const SellerAllProducts = () => {
                         {products?.length}
                     </span>
                 </div>
-                <div className="flex flex-col mt-6">
+                {webStoreProduct ? <WebStoreproduct searchQuery={searchQuery} /> : <div className="flex flex-col mt-6">
                     <div style={{
                         overflowY: 'scroll', // Always show the scrollbar
                         scrollbarWidth: 'thin', // For Firefox
@@ -219,169 +224,170 @@ const SellerAllProducts = () => {
                         msOverflowStyle: 'scrollbar', // For Internet Explorer and Edge
                     }} className="overflow-x-scroll  ">
                         <div className=" w-[1700px]">
-                            <div className="overflow-hidden border  border-gray-700 md:rounded-lg">  <table className="w-full">
-                                <thead className="bg-gray-900 text-white ">
-                                    <tr>
-                                        <th
-                                            scope="col"
-                                            className="py-3.5 px-4 text-sm border font-normal text-left rtl:text-right "
-                                        >
-                                            <div className="flex items-center gap-x-3">
-
-                                                <span>Name</span>
-                                            </div>
-                                        </th>
-                                        <th
-                                            scope="col"
-                                            className="px-12 py-3.5 border text-sm font-normal text-left rtl:text-right "
-                                        >
-                                            <button className="flex items-center gap-x-2">
-                                                <span>Status</span>
-                                            </button>
-                                        </th>
-                                        <th
-                                            scope="col"
-                                            className="px-4 py-3.5 text-sm border font-normal text-left rtl:text-right "
-                                        >
-                                            <button className="flex items-center gap-x-2">
-                                                <span>Categories</span>
-                                            </button>
-                                        </th>
-                                        <th
-                                            scope="col"
-                                            className="px-4 py-3.5 text-sm border font-normal text-left rtl:text-right "
-                                        >
-                                            Regular Price
-                                        </th>
-                                        <th
-                                            scope="col"
-                                            className="px-4 py-3.5 border text-sm font-normal text-left rtl:text-right "
-                                        >
-                                            Price
-                                        </th>
-                                        <th
-                                            scope="col"
-                                            className="px-4 py-3.5 border text-sm font-normal text-left rtl:text-right "
-                                        >
-                                            Stock Quantity
-                                        </th>
-                                        <th scope="col" className="px-4 border py-3.5 text-sm font-normal text-center  ">
-                                            <span >Action</span>
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody className="bg-white divide-y  divide-gray-200 ">
-                                    {currentData.map((product) => (
+                            <div className="overflow-hidden border  border-gray-700 md:rounded-lg">
+                                <table className="w-full">
+                                    <thead className="bg-gray-900 text-white ">
                                         <tr>
-                                            <td className="px-4 py-4 text-sm border-2 font-medium text-gray-700 whitespace-nowrap">
-                                                <div className="inline-flex items-center gap-x-3">
+                                            <th
+                                                scope="col"
+                                                className="py-3.5 px-4 text-sm border font-normal text-left rtl:text-right "
+                                            >
+                                                <div className="flex items-center gap-x-3">
 
-                                                    <div className="flex items-center gap-x-2">
-                                                        {product?.images[0] ? <img
-                                                            className="object-cover w-10 h-10 rounded"
-                                                            srcSet={product?.images[0].src}
-                                                            src={product?.images[0].src}
-                                                            alt=""
-                                                        />
-                                                            : <img
-                                                                className="object-cover border border-black w-10 h-10 rounded"
-                                                                srcSet={DemoImage}
-                                                                src={DemoImage}
+                                                    <span>Name</span>
+                                                </div>
+                                            </th>
+                                            <th
+                                                scope="col"
+                                                className="px-12 py-3.5 border text-sm font-normal text-left rtl:text-right "
+                                            >
+                                                <button className="flex items-center gap-x-2">
+                                                    <span>Status</span>
+                                                </button>
+                                            </th>
+                                            <th
+                                                scope="col"
+                                                className="px-4 py-3.5 text-sm border font-normal text-left rtl:text-right "
+                                            >
+                                                <button className="flex items-center gap-x-2">
+                                                    <span>Categories</span>
+                                                </button>
+                                            </th>
+                                            <th
+                                                scope="col"
+                                                className="px-4 py-3.5 text-sm border font-normal text-left rtl:text-right "
+                                            >
+                                                Regular Price
+                                            </th>
+                                            <th
+                                                scope="col"
+                                                className="px-4 py-3.5 border text-sm font-normal text-left rtl:text-right "
+                                            >
+                                                Price
+                                            </th>
+                                            <th
+                                                scope="col"
+                                                className="px-4 py-3.5 border text-sm font-normal text-left rtl:text-right "
+                                            >
+                                                Stock Quantity
+                                            </th>
+                                            <th scope="col" className="px-4 border py-3.5 text-sm font-normal text-center  ">
+                                                <span >Action</span>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody className="bg-white divide-y  divide-gray-200 ">
+                                        {currentData.map((product) => (
+                                            <tr>
+                                                <td className="px-4 py-4 text-sm border-2 font-medium text-gray-700 whitespace-nowrap">
+                                                    <div className="inline-flex items-center gap-x-3">
+
+                                                        <div className="flex items-center gap-x-2">
+                                                            {product?.images[0] ? <img
+                                                                className="object-cover w-10 h-10 rounded"
+                                                                srcSet={product?.images[0].src}
+                                                                src={product?.images[0].src}
                                                                 alt=""
                                                             />
-                                                        }
-                                                        <div>
-                                                            <h2 className="font-medium text-gray-800  ">
-                                                                {product?.name.split(' ').slice(0, 5).join(' ')}
-                                                            </h2>
-                                                            <p className="text-sm font-normal text-gray-600 ">
-                                                                {product?.sku}
-                                                            </p>
+                                                                : <img
+                                                                    className="object-cover border border-black w-10 h-10 rounded"
+                                                                    srcSet={DemoImage}
+                                                                    src={DemoImage}
+                                                                    alt=""
+                                                                />
+                                                            }
+                                                            <div>
+                                                                <h2 className="font-medium text-gray-800  ">
+                                                                    {product?.name.split(' ').slice(0, 5).join(' ')}
+                                                                </h2>
+                                                                <p className="text-sm font-normal text-gray-600 ">
+                                                                    {product?.sku}
+                                                                </p>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                            </td>
-                                            <td className="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                                                {!product.adminWare ? <div>
-                                                    {product.status === true ? <div
-                                                        onClick={() => updateProductStatus(product._id, false)}
-                                                        className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 cursor-pointer bg-emerald-100/60 bg-gray-800">
-                                                        <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-                                                        <h2 className="text-sm font-normal text-emerald-500">
-                                                            Active
-                                                        </h2>
-                                                    </div> :
-                                                        <div
-                                                            onClick={() => updateProductStatus(product?._id, true)}
-                                                            className="inline-flex items-center px-3 py-1 rounded-full  cursor-pointer gap-x-2 bg-emerald-100/60 bg-gray-800">
-                                                            <span className="h-1.5 w-1.5 rounded-full bg-red-500" />
-                                                            <h2 className="text-sm font-normal text-red-500">
-                                                                Inactive
+                                                </td>
+                                                <td className="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
+                                                    {!product.adminWare ? <div>
+                                                        {product.status === true ? <div
+                                                            onClick={() => updateProductStatus(product._id, false)}
+                                                            className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 cursor-pointer bg-emerald-100/60 bg-gray-800">
+                                                            <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                                                            <h2 className="text-sm font-normal text-emerald-500">
+                                                                Active
                                                             </h2>
-                                                        </div>}
-                                                </div>
-                                                    : <div
-
-                                                        className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 cursor-pointer bg-emerald-100/60 bg-gray-800">
-                                                        <span className="h-1.5 w-1.5 rounded-full bg-yellow-500" />
-                                                        <h2 className="text-sm font-normal text-yellow-500">
-                                                            Pending
-                                                        </h2>
+                                                        </div> :
+                                                            <div
+                                                                onClick={() => updateProductStatus(product?._id, true)}
+                                                                className="inline-flex items-center px-3 py-1 rounded-full  cursor-pointer gap-x-2 bg-emerald-100/60 bg-gray-800">
+                                                                <span className="h-1.5 w-1.5 rounded-full bg-red-500" />
+                                                                <h2 className="text-sm font-normal text-red-500">
+                                                                    Inactive
+                                                                </h2>
+                                                            </div>}
                                                     </div>
-                                                }
-                                            </td>
-                                            <td className="px-4 py-4 text-sm border-2 text-gray-500  whitespace-nowrap">
-                                                {product?.categories
-                                                    .filter((category) => category !== null && category !== '')
-                                                    .map((category) => (
-                                                        <span key={category?.id}>{category?.name}, </span>
-                                                    ))}
-                                            </td>
-                                            <td className="px-4 py-4 text-sm border-2 text-gray-500  whitespace-nowrap">
-                                                {product.regular_price}
-                                            </td>
-                                            <td className="px-4 py-4 text-sm border-2 text-gray-500  whitespace-nowrap">
-                                                {product.price}
-                                            </td>
-                                            <td className="px-4 py-4 text-sm border-2 whitespace-nowrap">
-                                                <div className="flex items-center gap-x-2">
-                                                    <p className="px-3 py-1 text-xs text-indigo-500 rounded-full bg-gray-800 bg-indigo-100/60">
-                                                        {product?.stock_quantity}
-                                                    </p>
-                                                </div>
-                                            </td>
-                                            <td className="px-4 py-4 text-sm border-2 whitespace-nowrap">
-                                                <div className="flex items-center gap-x-6">
-                                                    <button
-                                                        onClick={() => DeleteSeller(product._id)}
-                                                        className=" transition-colors duration-200 text-red-500 hover:text-red-700 focus:outline-none">
-                                                        <MdDelete className="w-5 h-5" />
+                                                        : <div
 
-                                                    </button>
-
-                                                    <button onClick={() => setOpenModal(true)} className=" transition-colors duration-200 hover:text-yellow-500  text-yellow-700 focus:outline-none mr-4">
-                                                        <MdOutlineViewInAr className="w-5 h-5" />
-                                                    </button>
-                                                    {
-                                                        product.woo && <button onClick={() => updateProduct(product._id, product.sku, product.item_id, 'woo')} className=" transition-colors duration-200 hover:text-yellow-500  text-yellow-700 focus:outline-none mr-4">
-                                                            {loadingStates[product._id] ? 'Updating...' : 'Update on woo'}
-                                                        </button>
+                                                            className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 cursor-pointer bg-emerald-100/60 bg-gray-800">
+                                                            <span className="h-1.5 w-1.5 rounded-full bg-yellow-500" />
+                                                            <h2 className="text-sm font-normal text-yellow-500">
+                                                                Pending
+                                                            </h2>
+                                                        </div>
                                                     }
-                                                    {product.daraz && <button onClick={() => updateProduct(product._id, product.variations[0].SKU, product.item_id, 'daraz')} className=" transition-colors duration-200 hover:text-yellow-500  text-yellow-700 focus:outline-none mr-4">
-                                                        {loadingStates[product._id] ? 'Updating...' : 'Update on Daraz'}
-                                                    </button>}
-                                                    {/* <div className='h-0 w-0'>
+                                                </td>
+                                                <td className="px-4 py-4 text-sm border-2 text-gray-500  whitespace-nowrap">
+                                                    {product?.categories
+                                                        .filter((category) => category !== null && category !== '')
+                                                        .map((category) => (
+                                                            <span key={category?.id}>{category?.name}, </span>
+                                                        ))}
+                                                </td>
+                                                <td className="px-4 py-4 text-sm border-2 text-gray-500  whitespace-nowrap">
+                                                    {product.regular_price}
+                                                </td>
+                                                <td className="px-4 py-4 text-sm border-2 text-gray-500  whitespace-nowrap">
+                                                    {product.price}
+                                                </td>
+                                                <td className="px-4 py-4 text-sm border-2 whitespace-nowrap">
+                                                    <div className="flex items-center gap-x-2">
+                                                        <p className="px-3 py-1 text-xs text-indigo-500 rounded-full bg-gray-800 bg-indigo-100/60">
+                                                            {product?.stock_quantity}
+                                                        </p>
+                                                    </div>
+                                                </td>
+                                                <td className="px-4 py-4 text-sm border-2 whitespace-nowrap">
+                                                    <div className="flex items-center gap-x-6">
+                                                        <button
+                                                            onClick={() => DeleteSeller(product._id)}
+                                                            className=" transition-colors duration-200 text-red-500 hover:text-red-700 focus:outline-none">
+                                                            <MdDelete className="w-5 h-5" />
+
+                                                        </button>
+
+                                                        <button onClick={() => setOpenModal(true)} className=" transition-colors duration-200 hover:text-yellow-500  text-yellow-700 focus:outline-none mr-4">
+                                                            <MdOutlineViewInAr className="w-5 h-5" />
+                                                        </button>
+                                                        {
+                                                            product.woo && <button onClick={() => updateProduct(product._id, product.sku, product.item_id, 'woo')} className=" transition-colors duration-200 hover:text-yellow-500  text-yellow-700 focus:outline-none mr-4">
+                                                                {loadingStates[product._id] ? 'Updating...' : 'Update on woo'}
+                                                            </button>
+                                                        }
+                                                        {product.daraz && <button onClick={() => updateProduct(product._id, product.variations[0].SKU, product.item_id, 'daraz')} className=" transition-colors duration-200 hover:text-yellow-500  text-yellow-700 focus:outline-none mr-4">
+                                                            {loadingStates[product._id] ? 'Updating...' : 'Update on Daraz'}
+                                                        </button>}
+                                                        {/* <div className='h-0 w-0'>
                                                             <EditProductForm OpenModal={OpenModal} setOpenModal={setOpenModal} product={product} />
                                                         </div> */}
-                                                </div>
-                                                <div>
+                                                    </div>
+                                                    <div>
 
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </table>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
 
 
                             </div>
@@ -442,7 +448,7 @@ const SellerAllProducts = () => {
                         </button>
                     </div>
 
-                </div>
+                </div>}
             </section>
         </div>
     );
