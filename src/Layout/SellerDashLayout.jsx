@@ -1,17 +1,14 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import SideNavberSeller from '../Pages/Dashboard/SellerDashboard/SideNavberSeller/SideNavberSeller';
 import { Link, Outlet, useLocation, useParams } from 'react-router-dom';
+import { AuthContext } from '../AuthProvider/UserProvider';
+import { useQuery } from '@tanstack/react-query';
 
-const popUp =()=> {
-  
-    return (
-        <div>
-            hello world!!!
-        </div>
-    )
-}
+
 
 const SellerDashLayout = () => {
+    const { user, shopInfo } = useContext(AuthContext)
+
     const [responsive, setResponsive] = useState(false)
 
     const location = useLocation();
@@ -24,6 +21,40 @@ const SellerDashLayout = () => {
             .map(word => word.charAt(0).toUpperCase() + word.slice(1))
             .join(' ');
     }
+
+
+
+    const [services, setServices] = useState(true)
+    const { data: prices = {}, loader } = useQuery({
+        queryKey: ["subscriptionModal"],
+        queryFn: async () => {
+            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/subscription-model?priceId=${shopInfo?.priceId}`);
+            const data = await res.json();
+            return data?.data;
+        },
+    });
+
+    const originalDate = user?.createdAt;
+    const formattedDate = new Date(originalDate);
+
+    // Calculate the time difference in milliseconds
+    const timeDifference = new Date() - formattedDate;
+
+    // Convert milliseconds to days
+    const daysPassed = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+
+    const time = prices?.timeDuration === 'monthly' && 30 || prices?.timeDuration === 'yearly' && 365 || prices?.timeDuration === 'weekly' && 7 || prices?.timeDuration === 'daily' && 1 || prices?.timeDuration === 'lifetime' && 1000000000000000000000000000000;
+
+    console.log(`${daysPassed} days have passed since the user was created.`);
+
+    useEffect(() => {
+        if (daysPassed >= time) {
+
+            setServices(false);
+        }
+    }, [daysPassed, time]);
+
+
     return (
         <div className='flex  '>
 
@@ -34,7 +65,7 @@ const SellerDashLayout = () => {
                 <div>
                     <nav
                         aria-label="breadcrumb"
-                        className="w-full rounded p-4 mb-4 bg-gray-800 text-gray-100"
+                        className="w-full  rounded p-4 mb-4 bg-gray-800 text-gray-100"
                     >
                         <ol className="flex h-8 space-x-2">
                             <li className='md:hidden block'>
@@ -88,7 +119,7 @@ const SellerDashLayout = () => {
                         </ol>
                     </nav>
                 </div>
-                <div className='flex-1  p-4 sm:p-0'>
+                <div className={`blur flex-1  p-4 sm:p-0`}>
                     <Outlet />
                 </div>
             </div>
