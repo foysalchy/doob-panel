@@ -74,6 +74,7 @@ import CommissionHistory from "../Pages/SellerItems/ReportManagement/CummissionH
 import UserSearchHistory from "../Pages/SellerItems/ReportManagement/UserSearchHistory/UserSearchHistory";
 import SystemLog from "../Pages/SellerItems/ReportManagement/SystemLog/SystemLog";
 import SubscriptionModel from "../Pages/SellerItems/SubcribtionModel/SubscriptionModel";
+import InventoryManagement from "../Pages/SellerItems/Inventory/InventoryManagement";
 
 
 const SellerPath = [
@@ -399,6 +400,9 @@ const SellerPath = [
     {
         path: "subscription-management",
         element: <SubscriptionModel />
+    }, {
+        path: "inventory-management",
+        element: <InventoryManagement />
     },
 
 

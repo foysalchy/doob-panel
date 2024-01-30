@@ -1,10 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { AuthContext } from "../../../AuthProvider/UserProvider";
 import { CgCheck } from "react-icons/cg";
+import PriceModal from "./PriceModal";
 
 const Price = () => {
   const { shopInfo } = useContext(AuthContext)
+  const [open, setOpen] = useState(false);
   const { data: prices = [], refetch } = useQuery({
     queryKey: ["prices"],
     queryFn: async () => {
@@ -19,20 +21,10 @@ const Price = () => {
     queryFn: async () => {
       const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/subscription-model?priceId=${shopInfo?.priceId}`);
       const data = await res.json();
-      localStorage.setItem('price', JSON.stringify(data?.data));
+
       return data?.data;
     },
   });
-
-
-  //   permission?.find((perm) => perm?._id === price?._id) && 
-
-  //       // {permission?.find((perm) => perm?._id === price?._id)?.permissions.length}
-  //  console.log(permission, 'prices........', prices);
-
-  let price = prices?.map((price) => {
-    console.log(price, 'price');
-  })
 
   return (
     <div className="px-4 py-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-20">
@@ -53,11 +45,12 @@ const Price = () => {
             </div> */}
           </div>
           <div className="flex flex-wrap -m-4">
-            {prices?.map((price, index) => (
+            {prices.length && prices?.map((price, index) => (
               <>
-                {price.status && (
+               <PriceModal open={open} setOpen={setOpen} />
+                {price?.status && (
                   <>
-                    {price.best == 'yes' ?
+                    {price?.best == 'yes' ?
                       <div className="p-4 xl:w-1/4 md:w-1/2 w-full">
                         <div className="h-full p-6 rounded-lg border-2 border-indigo-500 flex flex-col relative overflow-hidden">
                           <div className="flex flex-col justify-between h-full">
@@ -90,6 +83,7 @@ const Price = () => {
                             }
                             {permission?.find((perm) => perm._id === price._id) && (
                               <div className="">
+
                                 <div >
                                   {permission?.find((perm) => perm._id === price._id)?.permissions?.map(itm => <p className="flex items-center text-gray-600 mb-2">
                                     <span className="w-4 h-4 mr-2 inline-flex items-center justify-center bg-gray-400 text-white rounded-full flex-shrink-0">
@@ -121,7 +115,7 @@ const Price = () => {
                                 <span>{price.price}</span>
                                 <span className="text-lg ml-1 font-normal text-gray-500">/{price?.timeDuration}</span>
                               </h1>
-                              <button className="flex items-center mt-auto text-white bg-indigo-500 border-0 py-2 px-4 w-full focus:outline-none hover:bg-indigo-600 rounded">
+                              <button onClick={() => setOpen(price)} className="flex items-center mt-auto text-white bg-indigo-500 border-0 py-2 px-4 w-full focus:outline-none hover:bg-indigo-600 rounded">
                                 Buy Now
                                 <svg
                                   fill="none"
@@ -130,16 +124,12 @@ const Price = () => {
                                   strokeLinejoin="round"
                                   strokeWidth={2}
                                   className="w-4 h-4 ml-auto"
-                                  viewBox="0 0 24 24"
-                                >
+                                  viewBox="0 0 24 24">
                                   <path d="M5 12h14M12 5l7 7-7 7" />
                                 </svg>
                               </button>
                             </div>
                           </div>
-
-
-
                         </div>
                       </div>
                       :
@@ -213,7 +203,7 @@ const Price = () => {
                                 <span>{price.price}</span>
                                 <span className="text-lg ml-1 font-normal text-gray-500">/{price.timeDuration}</span>
                               </h1>
-                              <button className="flex items-center mt-auto text-white bg-gray-600 border-0 py-2 px-4 w-full focus:outline-none hover:bg-gray-500 rounded">
+                              <button onClick={() => setOpen(price)} className="flex items-center mt-auto text-white bg-gray-600 border-0 py-2 px-4 w-full focus:outline-none hover:bg-gray-500 rounded">
                                 Buy Now
                                 <svg
                                   fill="none"

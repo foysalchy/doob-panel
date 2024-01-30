@@ -1,13 +1,14 @@
 import { useQuery } from '@tanstack/react-query';
 import React, { useContext, useState } from 'react';
 import { AuthContext } from '../../../AuthProvider/UserProvider';
+import { Link } from 'react-router-dom';
 
 const SubscriptionModel = () => {
 
-    const { shopInfo } = useContext(AuthContext)
-
+    const { user, shopInfo } = useContext(AuthContext)
+    const [services, setServices] = useState([])
     const { data: prices = {}, loader } = useQuery({
-        queryKey: { price: "prices" },
+        queryKey: ["subscriptionModal"],
         queryFn: async () => {
             const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/subscription-model?priceId=${shopInfo?.priceId}`);
             const data = await res.json();
@@ -16,177 +17,156 @@ const SubscriptionModel = () => {
     });
 
 
-    console.log(prices);
-    const checkIcon = <svg className="w-5 h-5 mx-auto text-indigo-600" fill="currentColor" viewBox="0 0 20 20"><path d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" /></svg>
-    const minusIcon = <svg className="w-5 h-5 mx-auto text-gray-500" fill="currentColor" viewBox="0 0 20 20"><path d="M4 10a.75.75 0 01.75-.75h10.5a.75.75 0 010 1.5H4.75A.75.75 0 014 10z" /></svg>
-
-
-
-
-    const tables = [
-        {
-            label: "Features",
-            label_icon:
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" />
-                </svg>,
-            items: [
-                {
-                    name: "Aliquam finibus",
-                    basic: checkIcon,
-                    business: checkIcon,
-                    enterprise: checkIcon
-                },
-                {
-                    name: "Vestibulum tristique",
-                    basic: minusIcon,
-                    business: checkIcon,
-                    enterprise: checkIcon
-                },
-                {
-                    name: "Aliquam finibus",
-                    basic: minusIcon,
-                    business: minusIcon,
-                    enterprise: checkIcon
-                },
-                {
-                    name: "Praesent aliquet",
-                    basic: minusIcon,
-                    business: "150GB",
-                    enterprise: "Unlimited"
-                },
-            ]
+    const { data: pricesData = [], refetch } = useQuery({
+        queryKey: ["pricesData"],
+        queryFn: async () => {
+            const res = await fetch("https://salenow-v2-backend.vercel.app/api/v1/admin/pricing");
+            const data = await res.json();
+            return data;
         },
-        {
-            label: "Analytics",
-            label_icon:
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z" />
-                </svg>,
-            items: [
-                {
-                    name: "Aliquam finibus",
-                    basic: checkIcon,
-                    business: checkIcon,
-                    enterprise: checkIcon
-                },
-                {
-                    name: "Vestibulum tristique",
-                    basic: minusIcon,
-                    business: checkIcon,
-                    enterprise: checkIcon
-                },
-                {
-                    name: "Aliquam finibus",
-                    basic: minusIcon,
-                    business: minusIcon,
-                    enterprise: checkIcon
-                },
-                {
-                    name: "Lorinto dinor",
-                    basic: "30",
-                    business: "60",
-                    enterprise: "Custom"
-                },
-                {
-                    name: "Praesent aliquet",
-                    basic: "Limited",
-                    business: "Limited",
-                    enterprise: checkIcon
-                },
-                {
-                    name: "Praesent aliquet",
-                    basic: minusIcon,
-                    business: "150GB",
-                    enterprise: "Unlimited"
-                },
-            ]
-        },
-        {
-            label: "Support",
-            label_icon:
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z" />
-                </svg>,
-            items: [
-                {
-                    name: "Aliquam finibus",
-                    basic: checkIcon,
-                    business: checkIcon,
-                    enterprise: checkIcon
-                },
-                {
-                    name: "Vestibulum tristique",
-                    basic: minusIcon,
-                    business: checkIcon,
-                    enterprise: checkIcon
-                },
-                {
-                    name: "Aliquam finibus",
-                    basic: minusIcon,
-                    business: minusIcon,
-                    enterprise: checkIcon
-                },
-                {
-                    name: "Praesent aliquet",
-                    basic: minusIcon,
-                    business: "150GB",
-                    enterprise: "Unlimited"
-                },
-            ]
-        }
-    ]
+    });
 
+    const originalDate = user?.createdAt;
+    const formattedDate = new Date(originalDate);
+
+    // Calculate the time difference in milliseconds
+    const timeDifference = new Date() - formattedDate;
+
+    // Convert milliseconds to days
+    const daysPassed = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+
+    const time = prices?.timeDuration === 'monthly' && 30 || prices?.timeDuration === 'yearly' && 365 || prices?.timeDuration === 'weekly' && 7 || prices?.timeDuration === 'daily' && 1 || prices?.timeDuration === 'lifetime' && 1000000000000000000000000000000;
+
+    console.log(`${daysPassed} days have passed since the user was created.`);
+    if (daysPassed >= time) {
+        alert('your ads;fj');
+    }
 
     return (
-        <section className="py-14 text-gray-600">
-            <div className="">
-                <div className='relative max-w-xl mx-auto space-y-3 px-4 sm:text-center md:px-0'>
-                    <h3 className="text-indigo-600 font-semibold">
-                        Pricing
-                    </h3>
-                    <p className='text-gray-800 text-3xl font-semibold sm:text-4xl'>
-                        Compare our plans and find yours
-                    </p>
-                    <div className='max-w-xl'>
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam efficitur consequat nunc.
-                        </p>
-                    </div>
-                </div>
-                <div className="mt-16">
+        <div className="bg-white text-black">
+            <div className="container px-6 py-8 mx-auto">
+                <h1 className="text-2xl font-semibold text-center text-gray-800 capitalize lg:text-3xl ">
+                    Simple pricing plan
+                </h1>
+                <p className="max-w-2xl mx-auto mt-4 text-center text-gray-500 xl:mt-6 ">
+                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Alias quas magni
+                    libero consequuntur voluptatum velit amet id repudiandae ea, deleniti
+                    laborum in neque eveniet.
+                </p>
+                <div className="grid grid-cols-1 gap-8 mt-6 lg:grid-cols-3 xl:mt-12">
 
-                    <div className="max-w-screen-xl mx-auto mt-10 space-y-4 px-4 overflow-auto md:overflow-visible md:px-8">
-                        {
+                    {
+                        pricesData?.map(data => {
+                            return (
+                                <div>
+                                    {data._id === prices._id ?
 
-                            <table s className="w-full table-auto text-sm text-left">
-                                <thead className="text-gray-600 font-medium border-b">
-                                    <tr>
-                                        <th className="z-20 top-12 py-6">
-                                            <div className="flex items-center gap-x-3">
-                                                <div className="w-12 h-12 text-indigo-600 rounded-full border flex items-center justify-center">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-                                                        <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" />
-                                                    </svg>
-
-                                                </div>
-                                                <h4 className="text-gray-800 text-xl font-medium">
-                                                    Features
-                                                </h4>
+                                        <div key={data?._id} className="flex items-center justify-between px-8 py-4 border border-blue-500 cursor-pointer rounded-xl">
+                                            <div className="flex flex-col items-center space-y-1">
+                                                <svg
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    className="w-5 h-5 text-blue-600  sm:h-7 sm:w-7"
+                                                    viewBox="0 0 20 20"
+                                                    fill="currentColor"
+                                                >
+                                                    <path
+                                                        fillRule="evenodd"
+                                                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                                        clipRule="evenodd"
+                                                    />
+                                                </svg>
+                                                <h2 className="text-lg font-medium text-gray-700 sm:text-xl ">
+                                                    {data?.name}
+                                                </h2>
                                             </div>
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody className="text-gray-600 divide-y">
+                                            <div className="flex flex-col items-center space-y-1">
 
-                                </tbody>
-                            </table>
+                                                <h2 className="text-2xl font-semibold text-blue-600  sm:text-3xl">
+                                                    ${data?.price} <span className="text-base font-medium">/{data?.timeDuration}</span>
+                                                </h2>
+                                            </div>
+                                        </div>
 
+                                        :
+
+                                        <div key={data?._id} className="flex items-center justify-between px-8 py-4 border border-gray-500 cursor-pointer rounded-xl">
+                                            <div className="flex flex-col items-center space-y-1">
+                                                <svg
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    className="w-5 h-5 text-gray-600  sm:h-7 sm:w-7"
+                                                    viewBox="0 0 20 20"
+                                                    fill="currentColor"
+                                                >
+                                                    <path
+                                                        fillRule="evenodd"
+                                                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                                        clipRule="evenodd"
+                                                    />
+                                                </svg>
+                                                <h2 className="text-lg font-medium text-gray-800 sm:text-xl ">
+                                                    {data?.name}
+                                                </h2>
+                                            </div>
+                                            <div className="flex flex-col items-center space-y-1">
+
+                                                <h2 className="text-2xl font-semibold text-gray-600  sm:text-3xl">
+                                                    ${data?.price} <span className="text-base font-medium">/{data?.timeDuration}</span>
+                                                </h2>
+                                            </div>
+                                        </div>}
+                                </div>
+                            )
                         }
-                    </div>
+                        )
+                    }
+                </div>
+
+                {/* list */}
+                <div className="p-8 mt-8 space-y-8 bg-gray-100  rounded-xl">
+                    {
+                        prices?.benefits?.map(benefit => <div className="flex items-center justify-between text-gray-800 ">
+                            <p className="text-lg sm:text-xl">{benefit}</p>
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                className="w-5 h-5 text-blue-500 sm:h-7 sm:w-7"
+                                viewBox="0 0 20 20"
+                                fill="currentColor"
+                            >
+                                <path
+                                    fillRule="evenodd"
+                                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                    clipRule="evenodd"
+                                />
+                            </svg>
+                        </div>)
+
+                    }
+                    {
+                        prices?.permissions?.map(benefit => <div className="flex items-center justify-between text-gray-800 ">
+                            <p className="text-lg sm:text-xl">{benefit.name}</p>
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                className="w-5 h-5 text-blue-500 sm:h-7 sm:w-7"
+                                viewBox="0 0 20 20"
+                                fill="currentColor"
+                            >
+                                <path
+                                    fillRule="evenodd"
+                                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                    clipRule="evenodd"
+                                />
+                            </svg>
+                        </div>)
+                    }
+                </div>
+                <div className="flex justify-center mt-8">
+                    <Link to={`/price`} className="px-8 py-2 tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-600 rounded-md hover:bg-blue-500 focus:outline-none focus:bg-blue-500 focus:ring focus:ring-blue-300 focus:ring-opacity-80">
+                        Choose Plan
+                    </Link>
                 </div>
             </div>
-        </section>
+        </div>
+
     )
 }
 export default SubscriptionModel;
