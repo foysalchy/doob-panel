@@ -58,6 +58,7 @@ import AdminSliderAdd from "../Pages/AdminItem/ContentManagement/SliderManagenen
 import AdminSliderManagement from "../Pages/AdminItem/ContentManagement/SliderManagenent/AdminSliderManagement";
 import AdminCustomerManage from "../Pages/AdminItem/AdminCustomerManage/AdminCustomerManage";
 import AdminReeferProgram from "../Pages/AdminItem/AdminReferlPogram/AdminRefferPogram";
+import ReportManagement from "../Pages/AdminItem/ReportManagement/ReportManagement";
 
 const SupperAdminPath = [
     {
@@ -260,6 +261,11 @@ const SupperAdminPath = [
         path: "warehouse",
         element: <CheckStaff>
             <WareHouseManagement />
+        </CheckStaff>
+    },{
+        path: "report-management",
+        element: <CheckStaff>
+            <ReportManagement />
         </CheckStaff>
     },
     {

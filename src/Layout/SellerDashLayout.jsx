@@ -3,11 +3,12 @@ import SideNavberSeller from '../Pages/Dashboard/SellerDashboard/SideNavberSelle
 import { Link, Outlet, useLocation, useParams } from 'react-router-dom';
 import { AuthContext } from '../AuthProvider/UserProvider';
 import { useQuery } from '@tanstack/react-query';
+import Swal from 'sweetalert2';
 
 
 
 const SellerDashLayout = () => {
-    const { user, shopInfo } = useContext(AuthContext)
+    const { user, shopInfo, setCookie, setShopInfo } = useContext(AuthContext)
 
     const [responsive, setResponsive] = useState(false)
 
@@ -25,7 +26,7 @@ const SellerDashLayout = () => {
 
 
     const [services, setServices] = useState(true)
-    const { data: prices = {}, loader } = useQuery({
+    const { data: prices = {}, refetch } = useQuery({
         queryKey: ["subscriptionModal"],
         queryFn: async () => {
             const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/subscription-model?priceId=${shopInfo?.priceId}`);
@@ -43,17 +44,62 @@ const SellerDashLayout = () => {
     // Convert milliseconds to days
     const daysPassed = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
 
-    const time = prices?.timeDuration === 'monthly' && 30 || prices?.timeDuration === 'yearly' && 365 || prices?.timeDuration === 'weekly' && 7 || prices?.timeDuration === 'daily' && 1 || prices?.timeDuration === 'lifetime' && 1000000000000000000000000000000;
+    const time = prices?.timeDuration === 'Monthly' && 30 || prices?.timeDuration === 'Yearly' && 365 || prices?.timeDuration === 'Weekly' && 7 || prices?.timeDuration === 'Daily' && 1 || prices?.timeDuration === 'Lifetime' && 1000000000000000000000000000000;
 
-    console.log(`${daysPassed} days have passed since the user was created.`);
+    // console.log(`${daysPassed} days have passed since the user was created.`);
+    localStorage.setItem('checkingPayment', daysPassed);
 
     useEffect(() => {
-        if (daysPassed >= time) {
+        const getTime = localStorage.getItem('checkingPayment');
+        console.log(getTime, 'time');
 
-            setServices(false);
-        }
-    }, [daysPassed, time]);
+        const checkAndUpdateStatus = () => {
+            // Your logic for updating status, setting services, and logging out
+            if (daysPassed > time) {
+                console.log(daysPassed, time, 'daysPassed');
+                // updateStatus(false);
+                setServices(false);
 
+            }
+        };
+
+        // Check and update status immediately when the component mounts
+        checkAndUpdateStatus();
+
+        // Calculate the time until the next day
+        const now = new Date();
+        const tomorrow = new Date(now);
+        tomorrow.setDate(now.getDate() + 1);
+        tomorrow.setHours(0, 0, 0, 0);
+        const timeUntilNextDay = tomorrow - now;
+
+        // Set up an interval to run the checkAndUpdateStatus function every day
+        const intervalId = setInterval(() => {
+            checkAndUpdateStatus();
+        }, timeUntilNextDay);
+
+        // Clean up the interval when the component is unmounted
+        return () => clearInterval(intervalId);
+    }, []); // Empty dependency array to run the effect only once when the component mounts
+
+
+    const updateStatus = (status) => {
+        fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/update-shopInfo-for-status?id=${shopInfo._id}&status=${status}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ status }),
+        }).then((res) => res.json()).then((data) => {
+            console.log(data);
+
+            if (data.modifiedCount > 0) {
+                setShopInfo(data.data)
+                setCookie("SellerShop", JSON.stringify(data.data));
+            }
+            refetch()
+        })
+    }
 
     return (
         <div className='flex  '>
@@ -119,7 +165,7 @@ const SellerDashLayout = () => {
                         </ol>
                     </nav>
                 </div>
-                <div className={`blur flex-1  p-4 sm:p-0`}>
+                <div className={` flex-1  p-4 sm:p-0`}>
                     <Outlet />
                 </div>
             </div>

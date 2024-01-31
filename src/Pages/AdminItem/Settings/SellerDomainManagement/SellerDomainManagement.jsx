@@ -9,6 +9,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { AuthContext } from '../../../../AuthProvider/UserProvider';
 import DeleteModal from '../../../../Common/DeleteModal';
+import BrightAlert from 'bright-alert';
 
 const SellerDomainManagement = () => {
 
@@ -56,10 +57,9 @@ const SellerDomainManagement = () => {
     }
 
 
-    const directLogin = async (email, userId) => {
+    const directLogin = async (email) => {
 
-
-        logOut()
+        const userId = email.replace(/[@.]/g, '')
         let password = ''
         await fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/seller/pass/${userId}`).then((res) => res.json()).then((data) => {
             password = data.password
@@ -82,22 +82,21 @@ const SellerDomainManagement = () => {
             .then((data) => {
 
                 console.log(data);
+                setUser(data.user);
 
                 if (data.user) {
                     if (data.user.role === 'seller') {
-                        fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/checkshop/${data?.user?.email}`)
+                        fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/checkshop?shopEmail=${data?.user?.shopEmail}`)
                             .then((response) => response.json())
                             .then((result) => {
-                                console.log(result);
-                                if (result.seller) {
-
+                                console.log(result, '208');
+                                if (result) {
                                     setUser(data.user);
-                                    setCookie("DoobUser", JSON.stringify(data.user));
                                     setShopInfo(result.information[0])
-                                    setCookie("SellerShop", JSON.stringify(result.information[0]));
                                     navigate("/seller/dashboard");
                                 }
                                 else {
+
                                     navigate("/seller/shop-register");
                                 }
 
@@ -117,15 +116,6 @@ const SellerDomainManagement = () => {
 
             });
     };
-
-
-    const Login = (id) => {
-        console.log(id);
-        const email = id.seller
-        const userId = email.replace(/[@.]/g, '')
-        console.log(userId);
-        directLogin(email, userId)
-    }
 
     const [deleteId, setDeletId] = useState('')
     const [OpenModal, setOpenModal] = useState(false)
@@ -153,6 +143,25 @@ const SellerDomainManagement = () => {
         })
 
         console.log(deleteId, isDelete);
+    }
+
+
+    const updateShopStatus = (id, status) => {
+        console.log(id, status)
+        fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/update-shopInfo-for-status?id=${id}&status=${status}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ status }),
+        }).then((res) => res.json()).then((data) => {
+            console.log(data);
+
+            if (data.success) {
+                BrightAlert();
+                refetch()
+            }
+        })
     }
 
 
@@ -310,8 +319,12 @@ const SellerDomainManagement = () => {
                                                 </td>
 
                                                 <td className="px-4 py-4 text-sm flex gap-3 items-center whitespace-nowrap">
-                                                    <button className='text-green-500' onClick={() => Login(shop)}>Login</button>
+                                                    <button className='text-green-500' onClick={() => directLogin(shop.seller)}>Login</button>
                                                     <button className='text-red-500' onClick={() => Delete(shop._id)}>Delete</button>
+                                                    {shop.status == "false" ?
+                                                        <button className='text-red-500' onClick={() => updateShopStatus(shop._id, true)}>Disable</button>
+                                                        :
+                                                        <button className='text-green-500' onClick={() => updateShopStatus(shop._id, false)}>Enable</button>}
                                                 </td>
                                             </tr>
                                         ))}

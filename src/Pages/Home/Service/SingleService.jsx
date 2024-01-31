@@ -4,9 +4,10 @@ import { useLoaderData } from 'react-router';
 import { useNavigate, Link } from 'react-router-dom';
 import MetaHelmet from '../../../Helmate/Helmate';
 import { AuthContext } from '../../../AuthProvider/UserProvider';
+import BrightAlert from 'bright-alert';
 
 const SingleService = () => {
-    const { setOrderStage } = useContext(AuthContext);
+    const { user, setOrderStage } = useContext(AuthContext);
 
     const service = useLoaderData()
     const navigate = useNavigate();
@@ -21,19 +22,62 @@ const SingleService = () => {
     });
 
     const handleOrder = () => {
-        const order = {
-            id: service._id,
-            title: service.title,
-            price: service.price,
-            img: service.img,
-            category: service.category,
-            subscriptionPeriod: service.subscriptionPeriod,
 
+        if (!user) {
+            navigate('/sign-in')
         }
-        setOrderStage([order])
-        navigate(`/user-service-checkout/${service._id}`)
+        else {
+            const order = {
+                id: service._id,
+                title: service.title,
+                price: service.price,
+                img: service.img,
+                category: service.category,
+                subscriptionPeriod: service.subscriptionPeriod,
+
+            }
+            setOrderStage([order])
+            navigate(`/user-service-checkout/${service._id}`)
+        }
     }
 
+
+    const handleWishlist = () => {
+        if (!user) {
+            navigate('/sign-in');
+        } else {
+            const order = {
+                serviceId: service._id,
+                userId: user._id,
+                img: service.img,
+                email: user.email,
+                title: service.title,
+                price: service.price,
+                img: service.img,
+                category: service.category,
+                subscriptionPeriod: service.subscriptionPeriod,
+            }
+
+            console.log(order);
+
+            fetch(`https://salenow-v2-backend.vercel.app/api/v1/site-user/wishlist`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(order)
+            }).then((res) => res.json()).then((data) => {
+                refetch();
+                BrightAlert();
+                setOpen(!open);
+            })
+        }
+
+    }
+
+    const handleSubmit = () => {
+
+    }
 
     return (
         <div className='px-4 pt-16 relative mx-auto sm:max-w-xl md:max-w-full  lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-20'>
@@ -72,7 +116,9 @@ const SingleService = () => {
                                         Buy Now
                                     </button>
                                     {/* </Link> */}
-                                    <button className="rounded-full w-10 h-10 bg-gray-200 p-0 border-0 inline-flex items-center justify-center text-gray-500 ml-4">
+                                    <button
+                                        onClick={handleWishlist}
+                                        className="rounded-full w-10 h-10 bg-gray-200 p-0 border-0 inline-flex items-center justify-center text-gray-500 ml-4">
                                         <svg
                                             fill="currentColor"
                                             strokeLinecap="round"
@@ -133,9 +179,6 @@ const SingleService = () => {
                                 </Link>
                             ))
                         }
-
-
-
                     </div>
                 </div>
             </section>

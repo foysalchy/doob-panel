@@ -459,7 +459,7 @@ const SideNavAdmin = () => {
 
                             {user?.staffRole ? (
                                 user?.permissions.find(itm => itm?.name === "Content Management") ? (
-                                    <NavLink rel="noopener noreferrer" to={'/admin/content-management'} className={({ isActive }) => {
+                                    <NavLink rel="noopener noreferrer" to={'/admin/report-management'} className={({ isActive }) => {
                                         return isActive
                                             ? "flex items-center p-2 space-x-3 rounded-sm bg-gray-800 text-white "
                                             : "flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
@@ -470,7 +470,7 @@ const SideNavAdmin = () => {
 
                                 ) : null
                             ) : (
-                                <NavLink rel="noopener noreferrer" to={'/admin/content-management'} className={({ isActive }) => {
+                                <NavLink rel="noopener noreferrer" to={'/admin/report-management'} className={({ isActive }) => {
                                     return isActive
                                         ? "flex items-center p-2 space-x-3 rounded-sm bg-gray-800 text-white "
                                         : "flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
