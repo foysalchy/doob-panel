@@ -152,7 +152,7 @@ const AdminFeatureImageAdd = () => {
                             <input
                                 required
                                 name='url'
-                                placeholder="www.Doob.com/"
+                                placeholder="www.salenow.vercel.app/"
                                 className="mt-1 p-2 border border-gray-300 rounded-md w-full text-gray-900 focus:outline-none focus:border-blue-500"
                             />
                         </div>
