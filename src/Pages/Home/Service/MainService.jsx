@@ -85,7 +85,8 @@ const MainService = () => {
                                     <div key={service._id} className={!service.status && 'hidden'}>
                                         {service?.status && (
                                             <li>
-                                                <a href="#" className="relative block group">
+                                                <Link
+                                                    to={`/service/${service._id}`} className="relative block group">
                                                     <img
                                                         src={service?.img}
                                                         srcSet={service?.img}
@@ -103,7 +104,7 @@ const MainService = () => {
                                                             Show Details
                                                         </Link>
                                                     </div>
-                                                </a>
+                                                </Link>
                                             </li>
                                         )}
                                     </div>

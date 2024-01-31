@@ -1,19 +1,71 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
-const EditInventory = ({ open, setOpen }) => {
+const EditInventory = ({ refetch, open, setOpen, data }) => {
+    const [count, setCount] = useState(data?.stock_quantity);
+
+    const handleIncrease = () => {
+        setCount(count + 1);
+    };
+
+    const handleDecrease = () => {
+        if (count > 0) {
+            setCount(count - 1);
+        }
+    };
+
+    const handleSubmit = () => {
+        fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/product-stock-update?productId=${data?._id}&quantity=${count}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        }).then((res) => res.json()).then((data) => {
+            refetch();
+            setOpen(!open);
+
+        })
+    }
+
     return (
         <div className="fixed bg-[#000000a2] top-0 left-0 flex items-center justify-center w-screen h-screen z-[1000]">
             <div className='p-3 shadow-lg relative bg-white w-[500px] rounded-lg'>
                 <header>
-                    <h2 className='text-lg font-medium pb-2 border-b'>Edit Inventory</h2>
+                    <h2 className='text-lg pb-2 border-b font-semibold'>Edit Quantity</h2>
                     <button onClick={() => setOpen(!open)} className='bg-gray-200 h-[30px] w-[30px] text-lg font-regular rounded-full flex items-center justify-center absolute right-2 top-2'>x</button>
-
-                    <form>
-
-                        <button className='bg-blue-500 text-white  px-8 py-2 rounded-md mt-3 font-semibold hover:shadow-lg duration-200 hover:bg-blue-600' type="submit">Update</button>
-                    </form>
+                    {/* <h1 className="text-lg">{data?.name}</h1> */}
+                    {/* form */}
+                    <div ><br />
+                        <div className="flex items-center ring-1 ring-gray-400 rounded-md">
+                            <button
+                                className="cursor-pointer w-full bg-green-500 text-white p-2 rounded m-1 hover:bg-green-600"
+                                onClick={handleDecrease}
+                            >
+                                -
+                            </button>
+                            <input
+                                onChange={(e) => setCount(e.target.value)}
+                                type="text"
+                                className="w-[400px] text-center"
+                                value={count}
+                            />
+                            <button
+                                className="cursor-pointer w-full bg-green-500 text-white p-2 rounded m-1 hover:bg-green-600"
+                                onClick={handleIncrease}
+                            >
+                                +
+                            </button>
+                        </div>
+                        <br />
+                        {/* Add similar structure for other fields */}
+                        <button
+                            onClick={handleSubmit}
+                            type="submit"
+                            className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
+                        >
+                            Save Changes
+                        </button>
+                    </div>
                 </header>
-                modal
             </div>
         </div>
     );

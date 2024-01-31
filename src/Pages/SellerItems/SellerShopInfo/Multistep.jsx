@@ -31,7 +31,9 @@ const MultiStepForm = () => {
         noStore: '',
         daraz: '',
         priceId: '',
+        paymentDate: new Date(),
         date: new Date()
+
     });
 
     const nextStep = () => setStep(step + 1);

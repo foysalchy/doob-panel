@@ -4,6 +4,7 @@ import UserPaymentAlert from './UserPaymentAlert';
 import { useLoaderData, useNavigate } from 'react-router-dom';
 import { ShopAuthProvider } from '../../../AuthProvider/ShopAuthProvide';
 import { AuthContext } from '../../../AuthProvider/UserProvider';
+import BrightAlert from 'bright-alert';
 
 const UserPayment = () => {
     const paymentGetWays = useLoaderData();
@@ -28,26 +29,23 @@ const UserPayment = () => {
     // }, [selectProductData]);
 
     const orderSubmit = () => {
-        // const data = orderStage
-        // data.method = payment
-        // data.timestamp = new Date().getTime()
-        // data.userId = shopUser._id
-        // data.shopId = shop_id.shop_id
-        // if (fileName) {
-        //     data.file = fileName
-        // }
-        // setPassData(data);
-        // fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/user/order?token=${shopUser._id}`, {
-        //     method: "POST",
-        //     headers: { "Content-Type": "application/json" },
-        //     body: JSON.stringify(data)
-        // }).then((res) => res.json()).then((data) => {
-        //     console.log("data payment", data);
-        //     BrightAlert({ icon: 'success' })
-        //     navigate(`/shop/${shopId}/user/my-orders`)
-        // });
-
-
+        const data = orderStage
+        data.method = payment
+        data.timestamp = new Date().getTime()
+        data.userId = user._id
+        if (fileName) {
+            data.file = fileName
+        }
+        setPassData(data);
+        fetch(`https://salenow-v2-backend.vercel.app/api/v1/site-user/order`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(data)
+        }).then((res) => res.json()).then((data) => {
+            console.log("data payment", data);
+            BrightAlert({ icon: 'success' })
+            navigate(`/services`)
+        });
 
 
     }
@@ -95,7 +93,6 @@ const UserPayment = () => {
         <div className='px-4 py-5 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8'>
             <div className='grid md:grid-cols-4 grid-cols-1 md:gap-3 gap-2'>
                 <div className="grid md:grid-cols-4 grid-cols-1 md:col-span-3 gap-4">
-
                     {
                         paymentGetWays.map(get => (
                             <div>
@@ -165,7 +162,6 @@ const UserPayment = () => {
                             <h4 className="mt-2  md:font-bold md:text-lg">Cash On Delivery</h4>
                         </div>
                     </a>
-
                 </div>
 
                 <div className="">

@@ -26,7 +26,7 @@ const SubscriptionModel = () => {
         },
     });
 
-    const originalDate = user?.createdAt;
+    const originalDate = shopInfo?.paymentDate;
     const formattedDate = new Date(originalDate);
 
     // Calculate the time difference in milliseconds
@@ -35,18 +35,26 @@ const SubscriptionModel = () => {
     // Convert milliseconds to days
     const daysPassed = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
 
-    const time = prices?.timeDuration === 'monthly' && 30 || prices?.timeDuration === 'yearly' && 365 || prices?.timeDuration === 'weekly' && 7 || prices?.timeDuration === 'daily' && 1 || prices?.timeDuration === 'lifetime' && 1000000000000000000000000000000;
+    const time = prices?.timeDuration === 'Monthly' && 30 || prices?.timeDuration === 'yearly' && 365 || prices?.timeDuration === 'weekly' && 7 || prices?.timeDuration === 'daily' && 1 || prices?.timeDuration === 'Lifetime' && 10000000000000000000000000000000000;
 
     console.log(`${daysPassed} days have passed since the user was created.`);
-    if (daysPassed >= time) {
-        alert('your ads;fj');
-    }
+
+
+    // if (daysPassed >= time) {
+    //     alert('your ads;fj');
+    // }
+
+    // console.log(daysPassed, time, prices, 'services time');
 
     return (
         <div className="bg-white text-black">
             <div className="container px-6 py-8 mx-auto">
                 <h1 className="text-2xl font-semibold text-center text-gray-800 capitalize lg:text-3xl ">
-                    Simple pricing plan
+                    {`${daysPassed} days have passed since the user was created.`}
+                </h1>
+
+                <h1 className="text-2xl font-semibold text-center text-red-800 capitalize lg:text-3xl ">
+                    {`${time == 10000000000000000000000000000000000 ? 'Unlimited' : time} days you use this service.`}
                 </h1>
                 <p className="max-w-2xl mx-auto mt-4 text-center text-gray-500 xl:mt-6 ">
                     Lorem ipsum, dolor sit amet consectetur adipisicing elit. Alias quas magni

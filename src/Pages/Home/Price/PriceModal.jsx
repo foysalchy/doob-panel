@@ -1,13 +1,16 @@
 import { useQuery } from '@tanstack/react-query';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { MdDelete } from 'react-icons/md';
+import { AuthContext } from '../../../AuthProvider/UserProvider';
+import BrightAlert from 'bright-alert';
 
 const PriceModal = ({ open, setOpen }) => {
-    
+    const { shopInfo, setShopInfo, setCookie } = useContext(AuthContext);
     const [paymentMode, setPaymentMode] = useState(false);
     const [selectGetWay, setSelectGetWay] = useState(false);
+
     const handleNextClick = (e) => {
-        e.stopPropagation(); // Prevent the click event from reaching the parent container
+        e.stopPropagation();
         setPaymentMode(!paymentMode);
     };
 
@@ -20,8 +23,28 @@ const PriceModal = ({ open, setOpen }) => {
         },
     });
 
+    const handleSubmit = () => {
+        fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/update-payment?shopId=${shopInfo._id}&paymentId=${open?._id}`, {
+            method: 'PATCH',
+            headers: {
+                'content-type': 'application/json',
+            },
+            body: JSON.stringify({ paymentId: open?._id, shopId: shopInfo._id, getway: selectGetWay?.Getaway, amount: open?.price, priceName: open?.name })
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                setOpen(false)
+                if (data.success) {
+                    // data.shopInfo
+                    BrightAlert("service selected successfully", '', 'success')
+                    setShopInfo(data.shopInfo)
+                    setCookie("SellerShop", JSON.stringify(data.shopInfo));
+                }
+            });
 
-    console.log(getawayData, 'getawayData');
+    }
+
     return (
         <div
             className={`fixed left-0 top-0 right-0 bottom-0 flex h-full min-h-screen w-full z-[1000] bg-[#0000005b] items-center justify-center bg-dark/90 px-4 py-5 ${open ? "block" : "hidden"
@@ -40,7 +63,7 @@ const PriceModal = ({ open, setOpen }) => {
                 {paymentMode ? <div className='grid grid-cols-3 gap-3'>
                     {
                         getawayData.map(get => (
-                            <div>
+                            <div key={get._id}>
                                 {get.Getaway === 'Bkash' && <button onClick={() => setSelectGetWay(get)} className={`group relative block border  ${selectGetWay._id === get._id ? 'border-blue-500' : 'border-gray-100'}`}>
                                     <img
                                         alt="Developer"
@@ -113,12 +136,17 @@ const PriceModal = ({ open, setOpen }) => {
                         </button>
                     </div>
                     <div className="w-1/2 px-3">
-                        <button
+                        {selectGetWay ? <button
+                            onClick={handleSubmit}
+                            className="block w-full rounded-md border border-blue-500 bg-blue-500 p-3 text-center text-base font-medium text-white transition hover:bg-blue-500"
+                        >
+                            Next..
+                        </button> : <button
                             onClick={handleNextClick}
                             className="block w-full rounded-md border border-blue-500 bg-blue-500 p-3 text-center text-base font-medium text-white transition hover:bg-blue-500"
                         >
                             Next
-                        </button>
+                        </button>}
                     </div>
                 </div>
             </div>
