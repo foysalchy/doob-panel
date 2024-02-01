@@ -247,4 +247,25 @@ font-google {
   font-size: 1.2em;
 }
 
- 
+.loader {
+  display: flex;
+  background-color: #9CA3AF;
+  height: 4px; /* Adjust as needed */
+  width: 100%; /* Adjust as needed */
+}
+
+.loader-inner {
+  width: 50px;
+  height: 4px;
+  background-color:#0087C3;
+  animation: lineAnimation 4s ease-in-out infinite;
+}
+
+@keyframes lineAnimation {
+  0%, 100% {
+    width: 100%;
+  }
+  50% {
+    width: 0%;
+  }
+}

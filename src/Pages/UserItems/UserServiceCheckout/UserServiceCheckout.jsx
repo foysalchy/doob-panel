@@ -6,7 +6,7 @@ import { AuthContext } from '../../../AuthProvider/UserProvider';
 const UserServiceCheckout = () => {
     // const id = useParams()
     const findService = useLoaderData();
-    const { setSelectProductData, setOrderStage } = useContext(AuthContext)
+    const { setSelectProductData, setOrderStage, user } = useContext(AuthContext)
     // const findService = myServices.find((service) => service._id === id.id);
     const navigate = useNavigate();
     const subtotal = parseInt(findService?.price) || 0;
@@ -18,7 +18,7 @@ const UserServiceCheckout = () => {
 
     const promoSubmit = (e) => {
         e.preventDefault();
-
+        alert('wrong code')
 
     }
 
@@ -26,6 +26,7 @@ const UserServiceCheckout = () => {
         const data = {
             normalPrice: total,
             productId: findService._id,
+            userEmail: user.email,
             productTitle: findService.title,
             productPrice: findService.price,
             productImg: findService.img,
@@ -87,7 +88,7 @@ const UserServiceCheckout = () => {
                         </div>
 
                     </div>
-                    <form className="products-center space-y-3 sm:justify-center sm:space-x-3 sm:space-y-0 sm:flex lg:justify-start">
+                    <form onSubmit={promoSubmit} className="products-center space-y-3 sm:justify-center sm:space-x-3 sm:space-y-0 sm:flex lg:justify-start">
                         <input
                             name='promoCode'
                             type="text"

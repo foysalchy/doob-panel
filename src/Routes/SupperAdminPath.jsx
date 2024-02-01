@@ -59,6 +59,9 @@ import AdminSliderManagement from "../Pages/AdminItem/ContentManagement/SliderMa
 import AdminCustomerManage from "../Pages/AdminItem/AdminCustomerManage/AdminCustomerManage";
 import AdminReeferProgram from "../Pages/AdminItem/AdminReferlPogram/AdminRefferPogram";
 import ReportManagement from "../Pages/AdminItem/ReportManagement/ReportManagement";
+import AdminSeviceOrder from "../Pages/AdminItem/AdminServiceOrder/AdminSeviceOrder";
+import AdminSalesReport from "../Pages/AdminItem/ReportManagement/SalesReport/AdminSalesReport";
+import SellerReport from "../Pages/AdminItem/ReportManagement/SallerReport/SellerReport";
 
 const SupperAdminPath = [
     {
@@ -262,11 +265,36 @@ const SupperAdminPath = [
         element: <CheckStaff>
             <WareHouseManagement />
         </CheckStaff>
-    },{
+    },
+    {
         path: "report-management",
         element: <CheckStaff>
             <ReportManagement />
         </CheckStaff>
+    },
+    {
+        path: "report-management/admin-sales",
+        element: <AdminSalesReport />
+    },
+    {
+        path: "report-management/seller-admin",
+        element: <SellerReport />
+    },
+    {
+        path: "report-management/customer-admin",
+        element: <SellerReport />
+    },
+    {
+        path: "report-management/warehouse-admin",
+        element: <SellerReport />
+    },
+    {
+        path: "report-management/subscriber-admin",
+        element: <SellerReport />
+    },
+    {
+        path: "report-management/commission-history-admin",
+        element: <SellerReport />
     },
     {
         path: "warehouse/warehouse-management",
@@ -386,6 +414,12 @@ const SupperAdminPath = [
         path: 'customer-manage',
         element: <CheckStaff>
             <AdminCustomerManage />
+        </CheckStaff>
+    },
+    {
+        path: 'service-order',
+        element: <CheckStaff>
+            <AdminSeviceOrder />
         </CheckStaff>
     },
 

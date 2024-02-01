@@ -1,27 +1,107 @@
 import { useQuery } from '@tanstack/react-query';
 import React from 'react';
+import { useEffect } from 'react';
+import { useState } from 'react';
 
-const AdminReeferProgram = () => {
-    const { data: referUsers = [], refetch } = useQuery({
-        queryKey: ["referUsers"],
+const AdminSalesReport = () => {
+    const { data: serviceOrder = [], refetch } = useQuery({
+        queryKey: ["serviceOrder"],
         queryFn: async () => {
-            const res = await fetch("https://salenow-v2-backend.vercel.app/api/v1/admin/refer-users");
+            const res = await fetch("https://salenow-v2-backend.vercel.app/api/v1/admin/get-all-service-order");
             const data = await res.json();
             return data.data;
         },
     });
 
+    const [input, setInput] = useState('');
+    const [filteredData, setFilteredData] = useState([]);
+    const [startDate, setStartDate] = useState('');
+    const [endDate, setEndDate] = useState('');
 
-    console.log(referUsers);
+    const searchItem = () => {
+        if (input === '' && startDate === '' && endDate === '') {
+            setFilteredData(serviceOrder);
+        } else {
+            const filteredServiceOrder = serviceOrder.filter(order => {
+                const matchesSearch = Object.values(order).some(value =>
+                    typeof value === 'string' && value.toLowerCase().includes(input.toLowerCase())
+                );
 
+                const matchesDateRange = startDate && endDate
+                    ? new Date(order.timestamp) >= new Date(startDate) && new Date(order.timestamp) <= new Date(endDate)
+                    : true;
+
+                return matchesSearch && matchesDateRange;
+            });
+
+            setFilteredData(filteredServiceOrder);
+        }
+    };
+
+    const handleDateRangeChange = (e) => {
+        e.preventDefault()
+        const start = e.target.startDate.value
+        const end = e.target.endDate.value
+        setStartDate(start);
+        setEndDate(end);
+        searchItem();
+    };
+
+    useEffect(() => {
+        setFilteredData(serviceOrder);
+    }, [serviceOrder]);
+
+
+    console.log(new Date(startDate).toDateString(), new Date(endDate).toDateString());
 
     return (
         <section className="container  mx-auto">
+
+            <div className='flex justify-between items-center'>
+                <fieldset className="w-full my-4 space-y-1 dark:text-gray-100">
+                    <label for="Search" className="hidden">Search</label>
+                    <div className="relative">
+                        <span className="absolute inset-y-0 left-0 flex items-center pl-2">
+                            <button type="button" title="search" className="p-1 focus:outline-none focus:ring">
+                                <svg fill="currentColor" viewBox="0 0 512 512" className="w-4 h-4 dark:text-gray-100">
+                                    <path d="M479.6,399.716l-81.084-81.084-62.368-25.767A175.014,175.014,0,0,0,368,192c0-97.047-78.953-176-176-176S16,94.953,16,192,94.953,368,192,368a175.034,175.034,0,0,0,101.619-32.377l25.7,62.2L400.4,478.911a56,56,0,1,0,79.2-79.195ZM48,192c0-79.4,64.6-144,144-144s144,64.6,144,144S271.4,336,192,336,48,271.4,48,192ZM456.971,456.284a24.028,24.028,0,0,1-33.942,0l-76.572-76.572-23.894-57.835L380.4,345.771l76.573,76.572A24.028,24.028,0,0,1,456.971,456.284Z"></path>
+                                </svg>
+                            </button>
+                        </span>
+                        <input type="search" value={input} onChange={(e) => { setInput(e.target.value), searchItem() }} name="Search" placeholder="Search..." className="w-32 py-2 pl-10 text-sm rounded-md sm:w-auto focus:outline-none dark:bg-gray-800 dark:text-gray-100 focus:dark:bg-gray-900 focus:dark:border-violet-400" />
+                    </div>
+                </fieldset>
+
+                <form onSubmit={handleDateRangeChange} className="flex space-x-4">
+
+                    <input
+                        type="date"
+                        className="border border-gray-300 px-2 py-1 rounded"
+                        name='startDate'
+                    />
+                    <span className="text-gray-500">to</span>
+                    <input
+                        name='endDate'
+                        type="date"
+                        className="border border-gray-300 px-2 py-1 rounded"
+                    />
+                    <button
+
+                        className="bg-blue-500 text-white px-4 py-2 rounded"
+                    >
+                        Apply
+                    </button>
+                </form>
+
+            </div>
+
+
+
             <div className="flex flex-col">
-                <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-                    <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
+                <div className=" w-full overflow-x-auto ">
+                    <div className="inline-block min-w-full py-2 align-middle ">
                         <div className="overflow-hidden border border-gray-200 dark:border-gray-700 md:rounded-lg">
-                            <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                            <table className=" divide-y divide-gray-200 dark:divide-gray-700">
                                 <thead className="bg-gray-50 dark:bg-gray-800">
                                     <tr>
                                         <th
@@ -31,32 +111,8 @@ const AdminReeferProgram = () => {
                                             <div className="flex items-center gap-x-3">
 
                                                 <button className="flex items-center gap-x-2">
-                                                    <span>Invoice</span>
-                                                    <svg
-                                                        className="h-3"
-                                                        viewBox="0 0 10 11"
-                                                        fill="none"
-                                                        xmlns="http://www.w3.org/2000/svg"
-                                                    >
-                                                        <path
-                                                            d="M2.13347 0.0999756H2.98516L5.01902 4.79058H3.86226L3.45549 3.79907H1.63772L1.24366 4.79058H0.0996094L2.13347 0.0999756ZM2.54025 1.46012L1.96822 2.92196H3.11227L2.54025 1.46012Z"
-                                                            fill="currentColor"
-                                                            stroke="currentColor"
-                                                            strokeWidth="0.1"
-                                                        />
-                                                        <path
-                                                            d="M0.722656 9.60832L3.09974 6.78633H0.811638V5.87109H4.35819V6.78633L2.01925 9.60832H4.43446V10.5617H0.722656V9.60832Z"
-                                                            fill="currentColor"
-                                                            stroke="currentColor"
-                                                            strokeWidth="0.1"
-                                                        />
-                                                        <path
-                                                            d="M8.45558 7.25664V7.40664H8.60558H9.66065C9.72481 7.40664 9.74667 7.42274 9.75141 7.42691C9.75148 7.42808 9.75146 7.42993 9.75116 7.43262C9.75001 7.44265 9.74458 7.46304 9.72525 7.49314C9.72522 7.4932 9.72518 7.49326 9.72514 7.49332L7.86959 10.3529L7.86924 10.3534C7.83227 10.4109 7.79863 10.418 7.78568 10.418C7.77272 10.418 7.73908 10.4109 7.70211 10.3534L7.70177 10.3529L5.84621 7.49332C5.84617 7.49325 5.84612 7.49318 5.84608 7.49311C5.82677 7.46302 5.82135 7.44264 5.8202 7.43262C5.81989 7.42993 5.81987 7.42808 5.81994 7.42691C5.82469 7.42274 5.84655 7.40664 5.91071 7.40664H6.96578H7.11578V7.25664V0.633865C7.11578 0.42434 7.29014 0.249976 7.49967 0.249976H8.07169C8.28121 0.249976 8.45558 0.42434 8.45558 0.633865V7.25664Z"
-                                                            fill="currentColor"
-                                                            stroke="currentColor"
-                                                            strokeWidth="0.3"
-                                                        />
-                                                    </svg>
+                                                    <span>Service Image</span>
+
                                                 </button>
                                             </div>
                                         </th>
@@ -64,8 +120,35 @@ const AdminReeferProgram = () => {
                                             scope="col"
                                             className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
                                         >
+                                            Order Id
+                                        </th>
+
+                                        <th
+                                            scope="col"
+                                            className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                                        >
+                                            Service Name
+                                        </th>
+                                        <th
+                                            scope="col"
+                                            className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                                        >
+                                            Service Price
+                                        </th>
+                                        <th
+                                            scope="col"
+                                            className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                                        >
+                                            Payment Price
+                                        </th>
+
+                                        <th
+                                            scope="col"
+                                            className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                                        >
                                             Date
                                         </th>
+
 
                                         <th
                                             scope="col"
@@ -73,25 +156,46 @@ const AdminReeferProgram = () => {
                                         >
                                             Customer
                                         </th>
+
                                         <th
                                             scope="col"
                                             className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
                                         >
-                                            Refer Code
+                                            Service Category
                                         </th>
+
+                                        <th
+                                            scope="col"
+                                            className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                                        >
+                                            Payment Getway
+                                        </th>
+
 
                                     </tr>
                                 </thead>
                                 <tbody className="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
-                                    {referUsers.map((users, idx) => (
+                                    {filteredData.map((order, idx) => (
                                         <tr>
+                                            <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                                                <img className='h-10 w-10 rounded-sm' src={order.productImg} alt="" />
+                                            </td>
                                             <td className="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
                                                 <div className="inline-flex items-center gap-x-3">
-                                                    <span># {idx + 1}</span>
+                                                    <span># {order._id}</span>
                                                 </div>
                                             </td>
                                             <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                                {new Date(users.time).toDateString()}
+                                                {order.productTitle}
+                                            </td>
+                                            <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                                                {order.productPrice}
+                                            </td>
+                                            <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                                                {order.normalPrice}
+                                            </td>
+                                            <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                                                {new Date(order.timestamp).toDateString()}
                                             </td>
 
                                             <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
@@ -99,14 +203,18 @@ const AdminReeferProgram = () => {
 
                                                     <div>
                                                         <p className="text-xs font-normal text-gray-600 dark:text-gray-400">
-                                                            {users?.email}
+                                                            {order?.userEmail}
                                                         </p>
                                                     </div>
                                                 </div>
                                             </td>
                                             <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                                {users?.code}
+                                                {order?.productCategory}
                                             </td>
+                                            <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                                                {order?.method?.Getaway}
+                                            </td>
+
 
                                         </tr>
                                     ))}
@@ -206,6 +314,7 @@ const AdminReeferProgram = () => {
         </section>
 
     );
+
 };
 
-export default AdminReeferProgram;
+export default AdminSalesReport;
