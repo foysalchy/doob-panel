@@ -10,7 +10,7 @@ const Price = () => {
   const { data: prices = [], refetch } = useQuery({
     queryKey: ["prices"],
     queryFn: async () => {
-      const res = await fetch("https://salenow-v2-backend.vercel.app/api/v1/admin/pricing");
+      const res = await fetch("https://backend.doob.com.bd/api/v1/admin/pricing");
       const data = await res.json();
       return data;
     },
@@ -19,7 +19,7 @@ const Price = () => {
   const { data: permission = [], loader } = useQuery({
     queryKey: ["prices"],
     queryFn: async () => {
-      const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/subscription-model?priceId=${shopInfo?.priceId}`);
+      const res = await fetch(`https://backend.doob.com.bd/api/v1/seller/subscription-model?priceId=${shopInfo?.priceId}`);
       const data = await res.json();
 
       return data?.data;
@@ -47,7 +47,7 @@ const Price = () => {
           <div className="flex flex-wrap -m-4">
             {prices.length && prices?.map((price, index) => (
               <>
-               <PriceModal open={open} setOpen={setOpen} />
+                <PriceModal open={open} setOpen={setOpen} />
                 {price?.status && (
                   <>
                     {price?.best == 'yes' ?

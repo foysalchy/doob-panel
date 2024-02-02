@@ -25,7 +25,7 @@ const StaffEditModal = ({ OpenModal, setOpenModal, staffInfo, refetch }) => {
         { name: 'Channel Integration', route: 'channel-integration' },
         { name: 'Categories Management', route: 'categories-management' },
         { name: 'Product Management', route: 'product-management' },
-         { name: 'Orders', route: 'orders' },
+        { name: 'Orders', route: 'orders' },
         { name: 'Pos', route: 'pos' },
         // Add more options as needed
     ];
@@ -48,7 +48,7 @@ const StaffEditModal = ({ OpenModal, setOpenModal, staffInfo, refetch }) => {
 
         const data = { user, shopEmail, permissions, role }
         console.log(data, permissions, '+++++')
-        fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/staff-add`, {
+        fetch(`https://backend.doob.com.bd/api/v1/seller/staff-add`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json'

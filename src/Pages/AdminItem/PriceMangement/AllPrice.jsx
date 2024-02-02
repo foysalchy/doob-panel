@@ -12,7 +12,7 @@ const AllPrice = () => {
   const { data: prices = [], refetch } = useQuery({
     queryKey: ["prices"],
     queryFn: async () => {
-      const res = await fetch("https://salenow-v2-backend.vercel.app/api/v1/admin/pricing");
+      const res = await fetch("https://backend.doob.com.bd/api/v1/admin/pricing");
       const data = await res.json();
       return data;
     },
@@ -21,7 +21,7 @@ const AllPrice = () => {
   const publishHandle = (id) => {
     setLoading(true);
 
-    fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/pricing/status/${id}`, {
+    fetch(`https://backend.doob.com.bd/api/v1/admin/pricing/status/${id}`, {
       method: "PUT",
       headers: {
         "content-type": "application/json",
@@ -36,7 +36,7 @@ const AllPrice = () => {
 
   const unpublishHandle = (id) => {
 
-    fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/pricing/unstatus/${id}`, {
+    fetch(`https://backend.doob.com.bd/api/v1/admin/pricing/unstatus/${id}`, {
       method: "PUT",
       headers: {
         "content-type": "application/json",
@@ -50,7 +50,7 @@ const AllPrice = () => {
   };
   const DeletePrice = (id) => {
 
-    fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/pricing/delete/${id}`, {
+    fetch(`https://backend.doob.com.bd/api/v1/admin/pricing/delete/${id}`, {
       method: "Delete",
       headers: {
         "content-type": "application/json",
@@ -98,7 +98,7 @@ const AllPrice = () => {
             </thead>
             <tbody>
               {
-                prices.length &&  prices?.map((price) => (
+                prices.length && prices?.map((price) => (
 
                   <tr key={price?.name}>
                     <td className="px-4 py-3">{price?.name}</td>

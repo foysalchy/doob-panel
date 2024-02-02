@@ -9,11 +9,11 @@ const CustomerHistory = () => {
     const { shopInfo } = useContext(AuthContext);
     const [BiLoader, setLoader] = useState(false)
     const [openModal, setOpenModal] = useState(false);
-   
+
     const { data: customerData = [], isLoading } = useQuery({
         queryKey: ["customerdata"],
         queryFn: async () => {
-            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/customer-report?shopId=${shopInfo?.shopId}`);
+            const res = await fetch(`https://backend.doob.com.bd/api/v1/seller/customer-report?shopId=${shopInfo?.shopId}`);
             const data = await res.json();
             return data;
         },
@@ -97,9 +97,9 @@ const CustomerHistory = () => {
                                                     <button onClick={() => setOpenModal({ customer, status: "cart", title: "Add to cart products" })} className='text-blue-500'>Total Cart Products  ({customer?.addToCart.length})</button>
                                                 </td>
                                                 <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                                    <button 
-                                                    // onClick={() => setOpenModal({ customer, status: "order", title: "Order List" })} 
-                                                    className='text-blue-500'>Total Orders  ({customer?.orderList.length})</button>
+                                                    <button
+                                                        // onClick={() => setOpenModal({ customer, status: "order", title: "Order List" })} 
+                                                        className='text-blue-500'>Total Orders  ({customer?.orderList.length})</button>
                                                 </td>
                                                 <td className="px-4 py-4 text-sm whitespace-nowrap">
                                                     <button onClick={() => setOpenModal({ customer, status: "wishlist", title: "Wishlist" })} className='text-blue-500'>Total Wishlist  ({customer?.wishList.length})</button>

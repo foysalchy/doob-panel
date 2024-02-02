@@ -14,7 +14,7 @@ const Contract = () => {
     const { data: contact = [], refetch } = useQuery({
         queryKey: ["contact"],
         queryFn: async () => {
-            const res = await fetch("https://salenow-v2-backend.vercel.app/api/v1/admin/contact");
+            const res = await fetch("https://backend.doob.com.bd/api/v1/admin/contact");
             const data = await res.json();
             return data;
         },

@@ -5,7 +5,7 @@ import { MdDone } from "react-icons/md";
 import ProductDescription from "./ProductDescription";
 import ProductReviews from "./ProductReviews";
 import TrendingProducts from "./TrendingProducts";
- import { useContext } from "react";
+import { useContext } from "react";
 import { AuthContext } from "../../../../AuthProvider/UserProvider";
 import { useQuery } from "@tanstack/react-query";
 import { useLoaderData, useParams } from "react-router-dom";
@@ -21,7 +21,7 @@ const ProductDetails = () => {
   const { data: productInfo = [], refetch } = useQuery({
     queryKey: ["productInfo"],
     queryFn: async () => {
-      const res = await fetch("https://salenow-v2-backend.vercel.app/api/v1/admin/products");
+      const res = await fetch("https://backend.doob.com.bd/api/v1/admin/products");
       const data = await res.json();
       return data;
     },
@@ -30,7 +30,7 @@ const ProductDetails = () => {
   // const { data: productFind = [], refetch } = useQuery({
   //   queryKey: ["productFind"],
   //   queryFn: async () => {
-  //     const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/single-product?id=${location.id}`);
+  //     const res = await fetch(`https://backend.doob.com.bd/api/v1/admin/single-product?id=${location.id}`);
   //     const data = await res.json();
   //     return data;
   //   },
@@ -162,14 +162,14 @@ const ProductDetails = () => {
       shopUid: shopInfo?._id,
       quantity: quantity
     }
-    fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/web-store?id=${id}`, {
+    fetch(`https://backend.doob.com.bd/api/v1/seller/web-store?id=${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(data)
     }).then((res) => res.json()).then((data) => {
-       BrightAlert();
+      BrightAlert();
       refetch()
     })
   }

@@ -16,7 +16,7 @@ const AdminPopupManagement = () => {
     const { data: popupData = [], refetch } = useQuery({
         queryKey: "popupData",
         queryFn: async () => {
-            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/pop-up`);
+            const res = await fetch(`https://backend.doob.com.bd/api/v1/admin/pop-up`);
             const data = await res.json();
             return data?.data;
         },
@@ -25,7 +25,7 @@ const AdminPopupManagement = () => {
     // const { data: popupData, reload } = useQuery({
     //     queryKey: "popupData",
     //     queryFn: async () => {
-    //         const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/pop-up`);
+    //         const res = await fetch(`https://backend.doob.com.bd/api/v1/admin/pop-up`);
     //         const data = await res.json();
     //         return data?.data;
     //     },
@@ -47,7 +47,7 @@ const AdminPopupManagement = () => {
 
     if (isDelete) {
 
-        fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/popup/delete/${deleteId}`, {
+        fetch(`https://backend.doob.com.bd/api/v1/seller/popup/delete/${deleteId}`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
@@ -80,7 +80,7 @@ const AdminPopupManagement = () => {
     const EditStatus = (id, status) => {
         console.log(id, status);
         setLoading(true)
-        fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/pop-up?popUpId=${id}`, {
+        fetch(`https://backend.doob.com.bd/api/v1/admin/pop-up?popUpId=${id}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
@@ -92,22 +92,22 @@ const AdminPopupManagement = () => {
             refetch()
         })
     }
-   
+
     const onDelete = (id) => {
-         setLoading(true)
-        fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/pop-up?popUpId=${id}`, {
+        setLoading(true)
+        fetch(`https://backend.doob.com.bd/api/v1/admin/pop-up?popUpId=${id}`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
             },
-            
+
         }).then((res) => res.json()).then((data) => {
             setLoading(false)
             Swal.fire(`Seller disable ${status} `, '', 'success');
             refetch()
         })
 
- 
+
     }
     return (
         <div>
@@ -218,7 +218,7 @@ const AdminPopupManagement = () => {
                             </td>
                             <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 ">
                                 <div className="flex items-center justify-around">
-                                    <button onClick={()=> onDelete(itm?._id)} className={style.deactive}>Delete</button>
+                                    <button onClick={() => onDelete(itm?._id)} className={style.deactive}>Delete</button>
                                     {
                                         itm.status ? <button onClick={() => EditStatus(itm?._id, false)} className={style.active}>Activate</button> : <button onClick={() => EditStatus(itm?._id, true)} className={style.deactive} type="button">Deactivate</button>
                                     }

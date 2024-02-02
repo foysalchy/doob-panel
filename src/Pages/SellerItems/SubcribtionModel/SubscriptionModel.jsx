@@ -10,7 +10,7 @@ const SubscriptionModel = () => {
     const { data: prices = {}, loader } = useQuery({
         queryKey: ["subscriptionModal"],
         queryFn: async () => {
-            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/subscription-model?priceId=${shopInfo?.priceId}`);
+            const res = await fetch(`https://backend.doob.com.bd/api/v1/seller/subscription-model?priceId=${shopInfo?.priceId}`);
             const data = await res.json();
             return data?.data;
         },
@@ -20,7 +20,7 @@ const SubscriptionModel = () => {
     const { data: pricesData = [], refetch } = useQuery({
         queryKey: ["pricesData"],
         queryFn: async () => {
-            const res = await fetch("https://salenow-v2-backend.vercel.app/api/v1/admin/pricing");
+            const res = await fetch("https://backend.doob.com.bd/api/v1/admin/pricing");
             const data = await res.json();
             return data;
         },

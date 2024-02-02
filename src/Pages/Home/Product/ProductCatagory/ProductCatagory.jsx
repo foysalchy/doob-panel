@@ -7,11 +7,11 @@ import { Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 
 const ProductCatagory = () => {
-    
+
     const { data: megaCategoryData = [], refetch } = useQuery({
         queryKey: ["megaCategoryData"],
         queryFn: async () => {
-            const res = await fetch("https://salenow-v2-backend.vercel.app/api/v1/admin/category/megacategory");
+            const res = await fetch("https://backend.doob.com.bd/api/v1/admin/category/megacategory");
             const data = await res.json();
             return data.rows;
         },

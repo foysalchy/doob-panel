@@ -104,7 +104,7 @@ const SellerDashboard = () => {
     const { data: sellerPopupData = [], refetch, isLoading } = useQuery({
         queryKey: "sellerPopupData",
         queryFn: async () => {
-            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/pop-up`);
+            const res = await fetch(`https://backend.doob.com.bd/api/v1/admin/pop-up`);
             const data = await res.json();
             return data?.data;
         },

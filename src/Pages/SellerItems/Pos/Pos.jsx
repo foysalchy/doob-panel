@@ -12,14 +12,14 @@ const Pos = () => {
     const { data: products = [], reload } = useQuery({
         queryKey: ["products"],
         queryFn: async () => {
-            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/all-products/${shopInfo._id}`);
+            const res = await fetch(`https://backend.doob.com.bd/api/v1/seller/all-products/${shopInfo._id}`);
             const data = await res.json();
             return data;
         },
     });
 
 
-    
+
     const productList = products;
 
     const [audio] = useState(new Audio(clickAudio));

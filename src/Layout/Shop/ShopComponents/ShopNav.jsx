@@ -23,7 +23,7 @@ const ShopNav = () => {
     const { data: categories = [], refetch: reload } = useQuery({
         queryKey: ["categories"],
         queryFn: async () => {
-            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/category/get/${shopId}`);
+            const res = await fetch(`https://backend.doob.com.bd/api/v1/shop/category/get/${shopId}`);
             const data = await res.json();
             return data;
         },
@@ -34,7 +34,7 @@ const ShopNav = () => {
     const { data: shop = {}, isLoading, refetch } = useQuery({
         queryKey: ["shop"],
         queryFn: async () => {
-            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/${shopId}`);
+            const res = await fetch(`https://backend.doob.com.bd/api/v1/shop/${shopId}`);
             const data = await res.json();
             return data;
         },
@@ -54,7 +54,7 @@ const ShopNav = () => {
                 const productData = localStorage.getItem('addToCart');
                 setCartProducts(JSON.parse(productData));
             } else {
-                fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/user/add-to-cart?userId=${shopUser?._id}&shopId=${shop_id?.shop_id}&token=${shopUser?._id}`)
+                fetch(`https://backend.doob.com.bd/api/v1/shop/user/add-to-cart?userId=${shopUser?._id}&shopId=${shop_id?.shop_id}&token=${shopUser?._id}`)
                     .then(res => res.json())
                     .then(data => {
                         setCartProducts(data.data)

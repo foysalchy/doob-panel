@@ -18,7 +18,7 @@ const SellerAllProducts = () => {
     const { data: products = [], refetch } = useQuery({
         queryKey: ["products"],
         queryFn: async () => {
-            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/all-products/${shopInfo._id}`);
+            const res = await fetch(`https://backend.doob.com.bd/api/v1/seller/all-products/${shopInfo._id}`);
             const data = await res.json();
             return data;
         },
@@ -62,7 +62,7 @@ const SellerAllProducts = () => {
 
     const updateProductStatus = (id, status) => {
         console.log(id);
-        fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/update-product-status`, {
+        fetch(`https://backend.doob.com.bd/api/v1/seller/update-product-status`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json"
@@ -90,7 +90,7 @@ const SellerAllProducts = () => {
     };
     if (isDelete) {
 
-        fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/delete-product`, {
+        fetch(`https://backend.doob.com.bd/api/v1/seller/delete-product`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json"
@@ -116,7 +116,7 @@ const SellerAllProducts = () => {
             [id]: true,
         }));
         const data = { category, item_id, sku, id, shopId: shopInfo._id }
-        fetch("https://salenow-v2-backend.vercel.app/api/v1/seller/update-product", {
+        fetch("https://backend.doob.com.bd/api/v1/seller/update-product", {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json"

@@ -72,7 +72,7 @@ const ProductInformation = () => {
             alert('Product added to cart')
             setLoader(false);
         } else {
-            fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/user/add-to-cart?token=${shopUser._id}`, {
+            fetch(`https://backend.doob.com.bd/api/v1/shop/user/add-to-cart?token=${shopUser._id}`, {
                 method: "POST",
                 headers: { 'Content-Type': 'application/json', "ngrok-skip-browser-warning": "69420", },
                 body: JSON.stringify(addToCard)

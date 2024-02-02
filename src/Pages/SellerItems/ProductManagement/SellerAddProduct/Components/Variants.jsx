@@ -43,7 +43,7 @@ const Variants = ({ adminWare, multiVendor, setMultiVendor, inputFields, setInpu
         const formData = new FormData();
         formData.append('image', imageBlob);
 
-        const url = `https://salenow-v2-backend.vercel.app/api/v1/daraz/daraz-image/${shopInfo._id}`;
+        const url = `https://backend.doob.com.bd/api/v1/daraz/daraz-image/${shopInfo._id}`;
 
         try {
             const response = await fetch(url, {
@@ -71,7 +71,7 @@ const Variants = ({ adminWare, multiVendor, setMultiVendor, inputFields, setInpu
         const formData = new FormData();
         formData.append("image", image);
 
-        const url = `https://salenow-v2-backend.vercel.app/api/v1/image/upload-image`;
+        const url = `https://backend.doob.com.bd/api/v1/image/upload-image`;
 
         return fetch(url, {
             method: "POST",

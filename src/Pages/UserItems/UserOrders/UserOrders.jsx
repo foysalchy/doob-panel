@@ -7,7 +7,7 @@ const UserOrders = () => {
     const { data: wishlistData = [], isLoading } = useQuery({
         queryKey: ["orderListForSideUser"],
         queryFn: async () => {
-            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/site-user/order?userId=${user._id}`);
+            const res = await fetch(`https://backend.doob.com.bd/api/v1/site-user/order?userId=${user._id}`);
             const data = await res.json();
 
             return data?.data;
@@ -74,8 +74,8 @@ const UserOrders = () => {
                                                 <span>Price</span>
                                             </div>
                                         </th>
-                                        
-                                          <th
+
+                                        <th
                                             scope="col"
                                             className="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-800  "
                                         >

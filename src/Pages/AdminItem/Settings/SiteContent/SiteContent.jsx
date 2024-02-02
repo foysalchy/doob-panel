@@ -9,7 +9,7 @@ const SiteContent = () => {
     const { data: domainVideo, refetch, isLoading } = useQuery({
         queryKey: ["category"],
         queryFn: async () => {
-            const res = await fetch("https://salenow-v2-backend.vercel.app/api/v1/admin/domain-video");
+            const res = await fetch("https://backend.doob.com.bd/api/v1/admin/domain-video");
             const data = await res.json();
             return data;
         },
@@ -20,7 +20,7 @@ const SiteContent = () => {
         e.preventDefault();
         const url = e.target.url.value
 
-        fetch('https://salenow-v2-backend.vercel.app/api/v1/admin/add-domain-url', {
+        fetch('https://backend.doob.com.bd/api/v1/admin/add-domain-url', {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'
@@ -45,7 +45,7 @@ const SiteContent = () => {
 
 
     const deleteVideo = (id) => {
-        fetch('https://salenow-v2-backend.vercel.app/api/v1/admin/delete-domain-url', {
+        fetch('https://backend.doob.com.bd/api/v1/admin/delete-domain-url', {
             method: "delete",
             headers: {
                 'Content-Type': 'application/json'

@@ -32,7 +32,7 @@ const AddContact = () => {
             }
         }
 
-        fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/contact`, {
+        fetch(`https://backend.doob.com.bd/api/v1/admin/contact`, {
             method: "POST",
             headers: {
                 "content-type": "application/json",

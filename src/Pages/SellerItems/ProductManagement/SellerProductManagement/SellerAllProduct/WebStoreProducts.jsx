@@ -13,7 +13,7 @@ export default function WebStoreproduct({ searchQuery }) {
         queryKey: ["productData"],
         queryFn: async () => {
             try {
-                const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/web-store?id=${shopInfo._id}`);
+                const res = await fetch(`https://backend.doob.com.bd/api/v1/seller/web-store?id=${shopInfo._id}`);
                 const data = await res.json();
                 return data?.products;
             } catch (error) {

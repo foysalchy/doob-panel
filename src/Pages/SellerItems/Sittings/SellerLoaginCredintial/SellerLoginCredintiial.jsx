@@ -59,7 +59,7 @@ const SellerLoginCredintiial = () => {
             service: { email: emailActive, google: googleActive, facebook: facebookActive }
         };
 
-        fetch('https://salenow-v2-backend.vercel.app/api/v1/shop/firebase/add', {
+        fetch('https://backend.doob.com.bd/api/v1/shop/firebase/add', {
             method: 'PATCH',
             body: JSON.stringify(data),
             headers: {
