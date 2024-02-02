@@ -1,8 +1,12 @@
 import React, { useContext, useState } from 'react';
 import Select from 'react-select';
 import BrightAlert from 'bright-alert';
+import { AuthContext } from '../../../AuthProvider/UserProvider';
 
 const AdminNewStaff = () => {
+
+    const { user } = useContext(AuthContext)
+
     const [searchValue, setSearchValue] = useState('')
     const [selectedValue, setSelectedValue] = useState([])
     const [role, setRole] = useState('')
@@ -12,7 +16,7 @@ const AdminNewStaff = () => {
     const [isNewUser, setIsNewUser] = useState(false)
 
     const handleSearch = () => {
-        fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/seller-allUser?email=${searchValue}`)
+        fetch(`https://backend.doob.com.bd/api/v1/seller/seller-allUser?email=${searchValue}`)
             .then(res => res.json())
             .then(data => {
                 console.log(data, '+++++++');
@@ -24,6 +28,8 @@ const AdminNewStaff = () => {
                 }
             })
     };
+
+
 
 
 
@@ -52,51 +58,128 @@ const AdminNewStaff = () => {
 
     };
 
-    const handleSubmit = (e) => {
+
+
+    const API_BASE_URL = "https://backend.doob.com.bd";
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        const user = value;
-        const permissions = selectedValue
 
-        const data = { user, permissions, role }
-        console.log(data)
-        fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/staff-role`, {
-            method: 'PATCH',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
+        try {
+            let userData = value;
 
-        })
-            .then(res => res.json())
-            .then(data => {
-                if (data.status) {
-                    BrightAlert(`${data.message}`, '', "success")
+            if (isNewUser) {
+                const name = e.target.name.value;
+                const email = e.target.email.value;
+                const password = e.target.password.value;
+                const role = "supperadmin";
+                const userId = email.replace(/[@.]/g, '');
+                const createdAt = new Date();
+
+                const signUpResponse = await fetch(`${API_BASE_URL}/api/v1/auth/sign-up`, {
+                    method: "post",
+                    headers: {
+                        "content-type": "application/json",
+                    },
+                    body: JSON.stringify({ name, email, password, role, userId, createdAt }),
+                });
+
+                const signUpData = await signUpResponse.json();
+
+                if (signUpData.result) {
+                    userData = { name, email, password, userId, role, createdAt };
+                } else {
+                    BrightAlert(`${signUpData.message}`, '', 'warning');
+                    return;
                 }
-                else {
-                    BrightAlert(`Something went wrong`, '', "error")
-                }
+            }
 
-            })
-    }
+            console.log('hit');
+            const permissions = selectedValue;
+            const data = { userData, permissions, role };
+
+            const staffRoleResponse = await fetch(`${API_BASE_URL}/api/v1/admin/staff-role`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data),
+            });
+
+            const staffRoleData = await staffRoleResponse.json();
+            console.log(staffRoleData);
+
+            if (staffRoleData.status) {
+                sendEmail(user.email, userData.email, userData.name, userData?.password);
+                BrightAlert(`${staffRoleData.message}`, '', "success");
+            } else {
+                BrightAlert(`Something went wrong`, '', "error");
+            }
+        } catch (error) {
+            console.error("An error occurred:", error);
+            BrightAlert(`An error occurred: ${error.message}`, '', "error");
+        }
+    };
+
+    const sendEmail = async (senderEmail, receiverEmail, name, password) => {
+        const emailData = {
+            senderEmail,
+            receiverEmail,
+            subject: 'Staff permission on our website',
+            body: {
+                logo: 'https://salenow.vercel.app/assets/Logo-7314a69b.png',
+                password,
+                name
+            }
+        };
+
+        try {
+            const response = await fetch(`${API_BASE_URL}/api/v1/site-user/send-email`, {
+                method: 'POST',  // Assuming it should be a POST request
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(emailData),
+            });
+
+            const responseData = await response.json();
+
+            if (!responseData.success) {
+                console.error("Email sending failed:", responseData.message);
+                // Handle the failure as needed
+            }
+        } catch (error) {
+            console.error("An error occurred while sending email:", error);
+            // Handle the error as needed
+        }
+    };
+
 
 
 
     return (
         <div>
             <form onSubmit={handleSubmit} className='bg-gray-100 p-4'>
+
+                <label htmlFor="check">
+                    <input type="checkbox" id='check' onChange={(e) => setIsNewUser(e.target.checked)} />
+                    <span className='ml-2'>New User</span>
+                </label>
+                <br /> <br />
+
                 {isNewUser ? <div>
                     <div className='pb-3'>
                         <div className="flex flex-col gap-3 mt-3">
                             <label className='' htmlFor="fullname">Input FullName</label>
-                            <input type="text" id='fullname' className="w-full p-2 rounded-md ring-1 mt-1 ring-gray-200" placeholder='input user fullname' />
+                            <input type="text" id='fullname' name='name' className="w-full p-2 rounded-md ring-1 mt-1 ring-gray-200" placeholder='input user fullname' />
                         </div>
                         <div className="flex flex-col gap-3 mt-3">
                             <label className='' htmlFor="email">Input Email</label>
-                            <input type="text" className="w-full p-2 rounded-md ring-1 mt-1 ring-gray-200" placeholder='input user email' />
+                            <input type="text" name='email' className="w-full p-2 rounded-md ring-1 mt-1 ring-gray-200" placeholder='input user email' />
                         </div>
                         <div className="flex flex-col gap-3 mt-3">
                             <label className='' htmlFor="password">Input Password</label>
-                            <input type="text" className="w-full p-2 rounded-md ring-1 mt-1 ring-gray-200" placeholder='input user password' />
+                            <input type="text" className="w-full p-2 rounded-md ring-1 mt-1 ring-gray-200" name='password' placeholder='input user password' />
                         </div>
                     </div>
                 </div> :
@@ -132,11 +215,9 @@ const AdminNewStaff = () => {
 
                         {value?.name ? <input type="text" readOnly value={value?.name} className="w-full p-2 rounded-md ring-1 mt-2 text-green-500 ring-gray-200" placeholder='input user role' /> : <input type="text" readOnly value={`${error} and search again!! `} className="w-full p-2 text-red-500 rounded-md ring-1 mt-2 ring-gray-200" placeholder='input user role' />}
                     </div>}
-                <label htmlFor="check">
-                    <input type="checkbox" id='check' onChange={(e) => setIsNewUser(e.target.checked)} />
-                    <span className='ml-2'>New User</span>
-                </label>
-                <br /> <br />
+
+
+
                 <label className='' htmlFor="user">Input Role</label>
                 <input onChange={(e) => setRole(e.target.value)} type="text" className="w-full p-2 rounded-md ring-1 mt-2 ring-gray-200" placeholder='input user role' />
                 <br /><br />

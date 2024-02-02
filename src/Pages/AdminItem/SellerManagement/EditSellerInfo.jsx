@@ -21,7 +21,7 @@ const EditSellerInfo = ({ OpenModal, setOpenModal, SellerInfo, refetch }) => {
         }
 
         try {
-            fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/seller/update-sellerinfo/${SellerInfo._id}`, {
+            fetch(`https://backend.doob.com.bd/api/v1/admin/seller/update-sellerinfo/${SellerInfo._id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',

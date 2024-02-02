@@ -257,8 +257,8 @@ font-google {
 .loader-inner {
   width: 50px;
   height: 4px;
-  background-color:#0087C3;
-  animation: lineAnimation 4s ease-in-out infinite;
+  background-color: #0087C3;
+  animation: lineAnimation 0.05s ease-in-out infinite; /* Adjusted duration to 0.05s */
 }
 
 @keyframes lineAnimation {

@@ -81,6 +81,11 @@ const AddNewStaff = () => {
     return (
         <div>
             <form onSubmit={handleSubmit} className='bg-gray-100 p-4'>
+                <label htmlFor="check">
+                    <input type="checkbox" id='check' onChange={(e) => setIsNewUser(e.target.checked)} />
+                    <span className='ml-2'>New User</span>
+                </label>
+                <br /> <br />
                 {isNewUser ? <div>
                     <div className='pb-3'>
                         <div className="flex flex-col gap-3 mt-3">
@@ -117,11 +122,7 @@ const AddNewStaff = () => {
                         {value?.name ? <input type="text" readOnly value={value?.name} className="w-full p-2 rounded-md ring-1 mt-2 text-green-500 ring-gray-200" placeholder='input user role' /> : <input type="text" readOnly value={`${error} and search again!! `} className="w-full p-2 text-red-500 rounded-md ring-1 mt-2 ring-gray-200" placeholder='input user role' />}
                     </div>}
 
-                <label htmlFor="check">
-                    <input type="checkbox" id='check' onChange={(e) => setIsNewUser(e.target.checked)} />
-                    <span className='ml-2'>New User</span>
-                </label>
-                <br /> <br />
+
 
                 {/* <label className='' htmlFor="user">Select User</label>
                 <div className="relative pt-2 flex items-center gap-4 text-left w-full">

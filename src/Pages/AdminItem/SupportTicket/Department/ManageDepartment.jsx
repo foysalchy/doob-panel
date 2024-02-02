@@ -9,7 +9,7 @@ const ManageDepartment = ({ ManageDepartment, setManageDepartment }) => {
     const { data: departments = [], refetch, isLoading } = useQuery({
         queryKey: ["departments"],
         queryFn: async () => {
-            const res = await fetch("https://salenow-v2-backend.vercel.app/api/v1/admin/departments");
+            const res = await fetch("https://backend.doob.com.bd/api/v1/admin/departments");
             const data = await res.json();
             return data;
         },
@@ -18,7 +18,7 @@ const ManageDepartment = ({ ManageDepartment, setManageDepartment }) => {
 
     const DeleteHandle = (id) => {
 
-        fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/delete_department/${id}`, {
+        fetch(`https://backend.doob.com.bd/api/v1/admin/delete_department/${id}`, {
             method: "DELETE"
         }).then(() => {
             refetch()

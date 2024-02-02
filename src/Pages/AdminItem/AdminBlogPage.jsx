@@ -5,7 +5,7 @@ const AdminBlogPage = () => {
   const [blogs, setBlogs] = useState([]);
 
   useEffect(() => {
-    fetch("https://salenow-v2-backend.vercel.app/api/v1/admin/all-blogs")
+    fetch("https://backend.doob.com.bd/api/v1/admin/all-blogs")
       .then((response) => response.json())
       .then((data) => {
         setBlogs(data);

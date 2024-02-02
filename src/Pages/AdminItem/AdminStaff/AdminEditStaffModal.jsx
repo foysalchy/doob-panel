@@ -50,7 +50,7 @@ const AdminEditStaffModal = ({ OpenModal, setOpenModal, staffInfo, refetch }) =>
 
         const data = { user, permissions, role }
 
-        fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/staff-role`, {
+        fetch(`https://backend.doob.com.bd/api/v1/admin/staff-role`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json'
@@ -76,16 +76,14 @@ const AdminEditStaffModal = ({ OpenModal, setOpenModal, staffInfo, refetch }) =>
             <div className="w-full max-w-[800px]  rounded-[20px] bg-white pb-10 px-8 text-center md:px-[30px] ">
                 <div className='flex justify-between z-50 pt-4 items-start w-full sticky top-0 bg-white border border-black-b'>
                     <div className='pb-2 text-xl font-bold text-dark text-center sm:text-2xl'>Update Staff</div>
-                    <div onClick={() => setOpenModal(!OpenModal)} className='cursor-pointer bg-gray-500 rounded-full px-2.5 mb-2 p-1 text-2xl hover:text-red-500'>
+                    <div onClick={() => setOpenModal(!OpenModal)} className='cursor-pointer bg-gray-500 rounded-full px-2.5 mb-2 p-1 text-2xl hover:text-red-500 flex justify-center items-center h-10'>
                         <RxCross2 className='text-xl' />
                     </div>
                 </div>
 
-                <form className='h-[500px] overflow-y-scroll text-start' onSubmit={handleSubmit}>
+                <form className='h-[300px] overflow-y-scroll text-start' onSubmit={handleSubmit}>
 
-                    <input type="text" readOnly value={staffInfo?.name} className="w-full p
-                    
-                    -2 rounded-md ring-1 mt-2 text-green-500 ring-gray-200" placeholder='input user role' />
+                    <input type="text" readOnly value={staffInfo?.name} className="w-full p-2 rounded-md ring-1 mt-2 text-green-500 ring-gray-200" placeholder='input user role' />
                     <br /><br />
                     <label className='' htmlFor="user">Input Role</label>
                     <input defaultValue={staffInfo?.staffRole} onChange={(e) => setRole(e.target.value)} type="text" className="w-full p-2 rounded-md ring-1 mt-2 ring-gray-200" placeholder='input user role' />

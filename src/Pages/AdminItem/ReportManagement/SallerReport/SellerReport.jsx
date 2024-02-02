@@ -2,12 +2,13 @@ import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
+import TableLoader from '../../../../Common/TableLoader';
 
 const SellerReport = () => {
     const { data: serviceOrder = [], refetch, isLoading } = useQuery({
         queryKey: ["sellerReport"],
         queryFn: async () => {
-            const res = await fetch("https://salenow-v2-backend.vercel.app/api/v1/admin/seller-report");
+            const res = await fetch("https://backend.doob.com.bd/api/v1/admin/seller-report");
             const data = await res.json();
             return data.data;
         },
@@ -209,11 +210,7 @@ const SellerReport = () => {
 
                                 <tbody className="bg-white divide-y divide-gray-200  ">
                                     {isLoading && <tr>
-                                        <td colSpan="5" className='w-full'>
-                                            <div className="loader w-full">
-                                                <div className="loader-inner"></div>
-                                            </div>
-                                        </td>
+                                        <TableLoader colSpan={5} />
                                     </tr>}
                                     {
                                         filteredData?.map((shopInfo) => (

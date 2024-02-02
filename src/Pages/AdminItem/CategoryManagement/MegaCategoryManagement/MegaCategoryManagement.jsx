@@ -8,7 +8,7 @@ const MegaCategoryManagement = () => {
     const { data: megaCategory = [], refetch } = useQuery({
         queryKey: ["megaCategory"],
         queryFn: async () => {
-            const res = await fetch("https://salenow-v2-backend.vercel.app/api/v1/admin/category/megacategory");
+            const res = await fetch("https://backend.doob.com.bd/api/v1/admin/category/megacategory");
             const data = await res.json();
             return data.rows;
         },
@@ -17,8 +17,8 @@ const MegaCategoryManagement = () => {
 
     // status update
     const statusUpdate = (id, status) => {
-        console.log(`https://salenow-v2-backend.vercel.app/api/v1/admin/category/megacategory?id=${id}&status=${status}`);
-        fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/category/megacategory?id=${id}&status=${status}`, {
+        console.log(`https://backend.doob.com.bd/api/v1/admin/category/megacategory?id=${id}&status=${status}`);
+        fetch(`https://backend.doob.com.bd/api/v1/admin/category/megacategory?id=${id}&status=${status}`, {
             method: "PUT",
             headers: {
                 "content-type": "application/json",
@@ -41,7 +41,7 @@ const MegaCategoryManagement = () => {
             <Link to={'add'} ><button className={style.addBtn}> Add mega category</button></Link> <br />
 
             <div className="max-w-screen-xl mx-auto px-4 md:px-8">
-              
+
                 <div className="mt-12 shadow-sm border rounded-lg overflow-x-auto">
                     <table className="w-full table-auto text-sm text-left">
                         <thead className="bg-gray-50 text-gray-600 font-medium border-b">
@@ -56,7 +56,7 @@ const MegaCategoryManagement = () => {
                         <tbody className="text-gray-600 divide-y">
                             {
                                 megaCategory.map((item, idx) => {
-                                    const formattedTimeStamp = new Date(item.timeStamp ).toLocaleString();
+                                    const formattedTimeStamp = new Date(item.timeStamp).toLocaleString();
                                     return (
                                         <tr key={idx}>
                                             <td className="flex items-center gap-x-3 py-3 px-6 whitespace-nowrap">

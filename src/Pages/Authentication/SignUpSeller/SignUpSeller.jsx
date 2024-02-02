@@ -58,7 +58,7 @@ const SignUpSeller = () => {
 
       setPassError("");
 
-      fetch("https://salenow-v2-backend.vercel.app/api/v1/auth/sign-up", {
+      fetch("https://backend.doob.com.bd/api/v1/auth/sign-up", {
         method: "post",
         headers: {
           "content-type": "application/json",
@@ -94,7 +94,7 @@ const SignUpSeller = () => {
     const time = new Date().getTime()
     const data = { email, code, time }
 
-    fetch('https://salenow-v2-backend.vercel.app/api/v1/admin/refer-code', {
+    fetch('https://backend.doob.com.bd/api/v1/admin/refer-code', {
       method: 'POST',
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),

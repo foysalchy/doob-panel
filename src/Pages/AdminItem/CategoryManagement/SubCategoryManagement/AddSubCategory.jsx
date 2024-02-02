@@ -7,7 +7,7 @@ const AddSubCategory = () => {
     const { data: subCategory = [], refetch } = useQuery({
         queryKey: ["subCategory"],
         queryFn: async () => {
-            const res = await fetch("https://salenow-v2-backend.vercel.app/api/v1/admin/category/megacategory");
+            const res = await fetch("https://backend.doob.com.bd/api/v1/admin/category/megacategory");
             const data = await res.json();
             return data.rows;
         },
@@ -31,7 +31,7 @@ const AddSubCategory = () => {
             status: 'true'
         }
 
-        fetch("https://salenow-v2-backend.vercel.app/api/v1/admin/category/subcategory", {
+        fetch("https://backend.doob.com.bd/api/v1/admin/category/subcategory", {
             method: 'post',
             headers: {
                 'content-type': 'application/json',
@@ -78,7 +78,7 @@ const AddSubCategory = () => {
                         <option selected disabled> Select your mega category</option>
                         {subCategory?.map((item, idx) => (
                             <option key={idx} value={item._id}>
-                                {item.name}  
+                                {item.name}
                             </option>
                         ))}
                     </select>
