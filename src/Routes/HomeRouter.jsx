@@ -60,7 +60,7 @@ const homePath = [
     {
         path: "/products/:id",
         loader: ({ params }) =>
-            fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/single-product?id=${params?.id}`),
+            fetch(`https://backend.doob.com.bd/api/v1/admin/single-product?id=${params?.id}`),
         element: <>
             {/* <ScrollToTop /> */}
             <ProductDetails />
@@ -83,19 +83,19 @@ const homePath = [
         path: "/service/:id",
         element: <SingleService />,
         loader: ({ params }) =>
-            fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/service/${params.id}`)
+            fetch(`https://backend.doob.com.bd/api/v1/admin/service/${params.id}`)
     },
     {
         path: "user-service-checkout/:id",
         loader: ({ params }) =>
-            fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/service/${params.id}`),
+            fetch(`https://backend.doob.com.bd/api/v1/admin/service/${params.id}`),
         element: (
             <UserServiceCheckout />
         )
     }, {
         path: "user-service-payment",
         loader: () =>
-            fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/getaway`),
+            fetch(`https://backend.doob.com.bd/api/v1/admin/getaway`),
         element: (
             <UserPayment />
         )
@@ -112,7 +112,7 @@ const homePath = [
         path: "/blogs/:id",
         element: <SingleBlog />,
         loader: ({ params }) =>
-            fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/all-blogs/${params.id}`),
+            fetch(`https://backend.doob.com.bd/api/v1/admin/all-blogs/${params.id}`),
     },
     {
         path: "/faq",
@@ -126,7 +126,7 @@ const homePath = [
                 path: "/faq/:id",
                 element: <SingleFaq />,
                 loader: ({ params }) =>
-                    fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/faq/${params.id}`),
+                    fetch(`https://backend.doob.com.bd/api/v1/admin/faq/${params.id}`),
             },
         ],
     },
@@ -134,7 +134,7 @@ const homePath = [
         path: "/pages/:id",
         element: <Trams />,
         loader: ({ params }) =>
-            fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/page/${params.id}`),
+            fetch(`https://backend.doob.com.bd/api/v1/admin/page/${params.id}`),
     },
     {
         path: "/profile",

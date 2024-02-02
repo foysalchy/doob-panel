@@ -17,7 +17,7 @@ const AddPage = () => {
       description,
     };
 
-    fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/addpage`, {
+    fetch(`https://backend.doob.com.bd/api/v1/admin/addpage`, {
       method: "POST",
       headers: {
         "content-type": "application/json",

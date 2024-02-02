@@ -53,7 +53,7 @@ const SellerAddProduct = () => {
         const formData = new FormData();
         formData.append("image", image);
 
-        const url = `https://salenow-v2-backend.vercel.app/api/v1/image/upload-image`;
+        const url = `https://backend.doob.com.bd/api/v1/image/upload-image`;
 
         return fetch(url, {
             method: "POST",
@@ -72,7 +72,7 @@ const SellerAddProduct = () => {
         const formData = new FormData();
         formData.append('image', imageBlob);
 
-        const url = `https://salenow-v2-backend.vercel.app/api/v1/daraz/daraz-image/${shopInfo._id}`;
+        const url = `https://backend.doob.com.bd/api/v1/daraz/daraz-image/${shopInfo._id}`;
 
         try {
             const response = await fetch(url, {
@@ -288,7 +288,7 @@ const SellerAddProduct = () => {
 
 
 
-        fetch('https://salenow-v2-backend.vercel.app/api/v1/seller/normal-product/', {
+        fetch('https://backend.doob.com.bd/api/v1/seller/normal-product/', {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'

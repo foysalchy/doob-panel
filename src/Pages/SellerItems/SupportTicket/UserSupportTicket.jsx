@@ -40,7 +40,7 @@ const UserSupportTicketForShop = () => {
     const { data: tickets = [], refetch, isLoading } = useQuery({
         queryKey: ["userSuport"],
         queryFn: async () => {
-            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/user-support?shopId=${shopInfo._id}`);
+            const res = await fetch(`https://backend.doob.com.bd/api/v1/seller/user-support?shopId=${shopInfo._id}`);
             const data = await res.json();
             return data;
         },
@@ -159,7 +159,7 @@ const UserSupportTicketForShop = () => {
 
 
     const statusUpdate = ({ id, status }) => {
-        fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/user-support/${id}`, {
+        fetch(`https://backend.doob.com.bd/api/v1/seller/user-support/${id}`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ status: status }),
@@ -387,7 +387,7 @@ const UserSupportTicketForShop = () => {
                                             )}
 
                                             <td className="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-500 text-sm leading-5">
-                                                <button onClick={() => fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/user-support/${ticket._id}`, {
+                                                <button onClick={() => fetch(`https://backend.doob.com.bd/api/v1/seller/user-support/${ticket._id}`, {
                                                     method: 'delete',
                                                     headers: { 'Content-Type': 'application/json' },
                                                     body: JSON.stringify({ status: 'Open' }),

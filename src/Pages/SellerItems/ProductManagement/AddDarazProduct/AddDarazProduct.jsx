@@ -31,7 +31,7 @@ const AddDarazProduct = () => {
     const { data: Products = [], refetch } = useQuery({
         queryKey: ["allProduct"],
         queryFn: async () => {
-            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/daraz-product/${shopInfo._id}`);
+            const res = await fetch(`https://backend.doob.com.bd/api/v1/seller/daraz-product/${shopInfo._id}`);
             const data = await res.json();
             return data;
         },
@@ -129,7 +129,7 @@ const AddDarazProduct = () => {
         };
 
         console.log(renamedData);
-        fetch('https://salenow-v2-backend.vercel.app/api/v1/seller/daraz-product/', {
+        fetch('https://backend.doob.com.bd/api/v1/seller/daraz-product/', {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'

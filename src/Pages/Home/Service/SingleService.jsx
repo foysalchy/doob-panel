@@ -15,7 +15,7 @@ const SingleService = () => {
     const { data: services = [], refetch, isLoading } = useQuery({
         queryKey: ["services"],
         queryFn: async () => {
-            const res = await fetch("https://salenow-v2-backend.vercel.app/api/v1/admin/services");
+            const res = await fetch("https://backend.doob.com.bd/api/v1/admin/services");
             const data = await res.json();
             return data;
         },
@@ -61,7 +61,7 @@ const SingleService = () => {
 
             console.log(order);
 
-            fetch(`https://salenow-v2-backend.vercel.app/api/v1/site-user/wishlist`, {
+            fetch(`https://backend.doob.com.bd/api/v1/site-user/wishlist`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"

@@ -14,12 +14,12 @@ import { Link } from 'react-router-dom';
 const SubCategoriesManagement = () => {
 
     const { shopInfo } = useContext(AuthContext)
-    console.log(`https://salenow-v2-backend.vercel.app/api/v1/category/seller/sub/${shopInfo._id}`);
+    console.log(`https://backend.doob.com.bd/api/v1/category/seller/sub/${shopInfo._id}`);
 
     const { data: categories = [], refetch } = useQuery({
         queryKey: ["categories"],
         queryFn: async () => {
-            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/category/seller/sub/${shopInfo._id}`);
+            const res = await fetch(`https://backend.doob.com.bd/api/v1/category/seller/sub/${shopInfo._id}`);
             const data = await res.json();
             return data;
         },
@@ -135,7 +135,7 @@ const SubCategoriesManagement = () => {
 
 
     const updateStatus = (id, status) => {
-        fetch(`https://salenow-v2-backend.vercel.app/api/v1/category/seller/sub/status/${id}`, {
+        fetch(`https://backend.doob.com.bd/api/v1/category/seller/sub/status/${id}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
@@ -172,7 +172,7 @@ const SubCategoriesManagement = () => {
         }).then((result) => {
             if (result.dismiss === Swal.DismissReason.timer) {
                 // Timer completed, initiate the fetch for deletion
-                fetch(`https://salenow-v2-backend.vercel.app/api/v1/category/seller/sub/delete/${id}`, {
+                fetch(`https://backend.doob.com.bd/api/v1/category/seller/sub/delete/${id}`, {
                     method: "DELETE",
                     headers: {
                         "Content-Type": "application/json",

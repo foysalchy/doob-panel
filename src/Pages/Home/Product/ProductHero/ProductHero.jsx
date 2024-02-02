@@ -12,7 +12,7 @@ const ProductHero = () => {
     const { data: megaSideCategoryData = [], refetch } = useQuery({
         queryKey: ["megaSideCategoryData"],
         queryFn: async () => {
-            const res = await fetch("https://salenow-v2-backend.vercel.app/api/v1/admin/category/megacategory");
+            const res = await fetch("https://backend.doob.com.bd/api/v1/admin/category/megacategory");
             const data = await res.json();
             return data.rows;
         },
@@ -21,7 +21,7 @@ const ProductHero = () => {
     const { data: heroBanner = [], reload } = useQuery({
         queryKey: "heroBanner",
         queryFn: async () => {
-            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/slider`);
+            const res = await fetch(`https://backend.doob.com.bd/api/v1/admin/slider`);
             const data = await res.json();
             return data?.data;
         },

@@ -22,7 +22,7 @@ const ProductListCartSm = ({
     const addToFavorite = (favorite) => {
         delete favorite._id;
         console.log(favorite);
-        fetch("https://salenow-v2-backend.vercel.app/api/v1/shop/user/wishlist", {
+        fetch("https://backend.doob.com.bd/api/v1/shop/user/wishlist", {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(favorite) // Corrected the case of JSON
@@ -114,7 +114,7 @@ const ProductListCartLg = ({
     const addToFavorite = (favorite) => {
         delete favorite._id;
         console.log(favorite);
-        fetch("https://salenow-v2-backend.vercel.app/api/v1/shop/user/wishlist", {
+        fetch("https://backend.doob.com.bd/api/v1/shop/user/wishlist", {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(favorite) // Corrected the case of JSON
@@ -297,7 +297,7 @@ const AddToCard = () => {
         setAllProducts((prevProducts) =>
             prevProducts.filter((product) => product._id !== productId)
         );
-        fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/user/add-to-cart?productId=${productId}&token=${shopUser._id}`, {
+        fetch(`https://backend.doob.com.bd/api/v1/shop/user/add-to-cart?productId=${productId}&token=${shopUser._id}`, {
             method: "DELETE",
             headers: { "Content-Type": "application/json", "ngrok-skip-browser-warning": "69420", }
 
@@ -318,7 +318,7 @@ const AddToCard = () => {
             setCartProducts(JSON.parse(productData));
         } else {
 
-            fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/user/add-to-cart?userId=${shopUser?._id}&shopId=${shop_id?.shop_id}&token=${shopUser?._id}`)
+            fetch(`https://backend.doob.com.bd/api/v1/shop/user/add-to-cart?userId=${shopUser?._id}&shopId=${shop_id?.shop_id}&token=${shopUser?._id}`)
                 .then(res => res.json())
                 .then(data => {
                     setCartProducts(data.data)
@@ -327,7 +327,7 @@ const AddToCard = () => {
                     for (let i = 0; i < datas?.length; i++) {
                         const element = datas[i];
                         element.userId = shopUser?._id
-                        fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/user/add-to-cart?token=${shopUser._id}`, {
+                        fetch(`https://backend.doob.com.bd/api/v1/shop/user/add-to-cart?token=${shopUser._id}`, {
                             method: "POST",
                             headers: { 'Content-Type': 'application/json', "ngrok-skip-browser-warning": "69420", },
                             body: JSON.stringify(element)
@@ -355,7 +355,7 @@ const AddToCard = () => {
     //     const code = e.target.promoCode.value
     //     const shopId = shop_id.shop_id
     //     console.log(price);
-    //     fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/user/promocode?shopId=${shopId}&code=${code}&token=${shopUser._id}&price=${price}`, {
+    //     fetch(`https://backend.doob.com.bd/api/v1/shop/user/promocode?shopId=${shopId}&code=${code}&token=${shopUser._id}&price=${price}`, {
     //         headers: {
     //             "ngrok-skip-browser-warning": "69420",
     //         }

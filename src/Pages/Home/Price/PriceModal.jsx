@@ -17,14 +17,14 @@ const PriceModal = ({ open, setOpen }) => {
     const { data: getawayData = [], refetch, isLoading } = useQuery({
         queryKey: ["getawayData"],
         queryFn: async () => {
-            const res = await fetch("https://salenow-v2-backend.vercel.app/api/v1/admin/getaway");
+            const res = await fetch("https://backend.doob.com.bd/api/v1/admin/getaway");
             const data = await res.json();
             return data;
         },
     });
 
     const handleSubmit = () => {
-        fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/update-payment?shopId=${shopInfo._id}&paymentId=${open?._id}`, {
+        fetch(`https://backend.doob.com.bd/api/v1/seller/update-payment?shopId=${shopInfo._id}&paymentId=${open?._id}`, {
             method: 'PATCH',
             headers: {
                 'content-type': 'application/json',

@@ -18,7 +18,7 @@ const FeatureManagement = () => {
     const { data: faqs = [], refetch } = useQuery({
         queryKey: ["faqs"],
         queryFn: async () => {
-            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/feature/${shopInfo._id}`);
+            const res = await fetch(`https://backend.doob.com.bd/api/v1/seller/feature/${shopInfo._id}`);
             const data = await res.json();
             return data;
         },
@@ -27,7 +27,7 @@ const FeatureManagement = () => {
 
 
     const updateStatus = (id, status) => {
-        fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/feature/status/${id}`, {
+        fetch(`https://backend.doob.com.bd/api/v1/seller/feature/status/${id}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
@@ -54,7 +54,7 @@ const FeatureManagement = () => {
 
     if (isDelete) {
 
-        fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/feature/delete/${deleteId}`, {
+        fetch(`https://backend.doob.com.bd/api/v1/seller/feature/delete/${deleteId}`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",

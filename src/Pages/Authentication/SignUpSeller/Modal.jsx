@@ -44,8 +44,8 @@ const Modal = ({ email, modalOpen, setModalOpen }) => {
         const time = new Date().getTime()
         const data = { email, code, time }
         setLoading(true)
-        
-        fetch('https://salenow-v2-backend.vercel.app/api/v1/admin/refer-code', {
+
+        fetch('https://backend.doob.com.bd/api/v1/admin/refer-code', {
             method: 'POST',
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(data),

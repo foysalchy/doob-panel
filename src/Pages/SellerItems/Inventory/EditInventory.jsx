@@ -14,7 +14,7 @@ const EditInventory = ({ refetch, open, setOpen, data }) => {
     };
 
     const handleSubmit = () => {
-        fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/product-stock-update?productId=${data?._id}&quantity=${count}`, {
+        fetch(`https://backend.doob.com.bd/api/v1/seller/product-stock-update?productId=${data?._id}&quantity=${count}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",

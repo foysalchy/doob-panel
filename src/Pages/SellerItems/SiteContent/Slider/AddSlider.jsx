@@ -56,7 +56,7 @@ const AddSlider = () => {
 
 
     async function uploadImage(formData) {
-        const url = "https://salenow-v2-backend.vercel.app/api/v1/image/upload-image";
+        const url = "https://backend.doob.com.bd/api/v1/image/upload-image";
         const response = await fetch(url, {
             method: "POST",
             body: formData,
@@ -67,7 +67,7 @@ const AddSlider = () => {
 
     const postSlider = (Slider) => {
 
-        fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/slider/add`, {
+        fetch(`https://backend.doob.com.bd/api/v1/seller/slider/add`, {
             method: "POST",
             headers: {
                 "content-type": "application/json",

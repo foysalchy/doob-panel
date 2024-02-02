@@ -18,7 +18,7 @@ const TrackOrder = () => {
         e.preventDefault();
         setLoading(true)
         const orderId = e.target.orderId.value
-        fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/order-track?token=${shopUser._id}&orderId=${orderId}`).then((res) => res.json()).then((data) => {
+        fetch(`https://backend.doob.com.bd/api/v1/shop/order-track?token=${shopUser._id}&orderId=${orderId}`).then((res) => res.json()).then((data) => {
             setOrder(data.data)
             setLoading(false)
         })

@@ -7,7 +7,7 @@ const CatagoryManagement = () => {
   const { data: category = [], refetch } = useQuery({
     queryKey: ["category"],
     queryFn: async () => {
-      const res = await fetch("https://salenow-v2-backend.vercel.app/api/v1/admin/category");
+      const res = await fetch("https://backend.doob.com.bd/api/v1/admin/category");
       const data = await res.json();
       return data;
     },
@@ -15,7 +15,7 @@ const CatagoryManagement = () => {
 
   const DeleteCategory = (id) => {
 
-    fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/category`, {
+    fetch(`https://backend.doob.com.bd/api/v1/admin/category`, {
       method: "DELETE",
       headers: {
         "content-type": "application/json",

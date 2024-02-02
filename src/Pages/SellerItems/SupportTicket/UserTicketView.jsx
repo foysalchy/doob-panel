@@ -27,7 +27,7 @@ const UserTicketView = ({ viewTicket, setViewTicket, ticketDetails, refetch }) =
         }
         console.log(data);
 
-        fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/user-support-comment/${id}`, {
+        fetch(`https://backend.doob.com.bd/api/v1/seller/user-support-comment/${id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
