@@ -8,24 +8,26 @@ import TrendingProducts from "./TrendingProducts";
 import { useContext } from "react";
 import { AuthContext } from "../../../../AuthProvider/UserProvider";
 import { useQuery } from "@tanstack/react-query";
-import { useLoaderData, useParams } from "react-router-dom";
+import { Link, useLoaderData, useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 import BrightAlert from 'bright-alert';
+import MetaHelmet from "../../../../Helmate/Helmate";
 
 const ProductDetails = () => {
   const { user, shopInfo } = useContext(AuthContext)
   const location = useParams();
+  const navigate = useNavigate()
   const [loader, setLoader] = useState(false);
 
   const myData = useLoaderData();
-  const { data: productInfo = [], refetch } = useQuery({
-    queryKey: ["productInfo"],
-    queryFn: async () => {
-      const res = await fetch("https://backend.doob.com.bd/api/v1/admin/products");
-      const data = await res.json();
-      return data;
-    },
-  });
+  // const { data: productInfo = [], refetch } = useQuery({
+  //   queryKey: ["productInfo"],
+  //   queryFn: async () => {
+  //     const res = await fetch("https://backend.doob.com.bd/api/v1/admin/products");
+  //     const data = await res.json();
+  //     return data;
+  //   },
+  // });
 
   // const { data: productFind = [], refetch } = useQuery({
   //   queryKey: ["productFind"],
@@ -156,71 +158,65 @@ const ProductDetails = () => {
   const convertedRating = (2 / 10) * 5;
 
   const handleStore = (id) => {
-    const data = {
-      shopId: shopInfo?.shopId,
-      shopName: shopInfo?.shopName,
-      shopUid: shopInfo?._id,
-      quantity: quantity
+    if (shopInfo) {
+      const data = {
+        shopId: shopInfo?.shopId,
+        shopName: shopInfo?.shopName,
+        shopUid: shopInfo?._id,
+        quantity: quantity
+      }
+      fetch(`https://backend.doob.com.bd/api/v1/seller/web-store?id=${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data)
+      }).then((res) => res.json()).then((data) => {
+        BrightAlert();
+        refetch()
+      })
     }
-    fetch(`https://backend.doob.com.bd/api/v1/seller/web-store?id=${id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data)
-    }).then((res) => res.json()).then((data) => {
-      BrightAlert();
-      refetch()
-    })
+    else {
+      navigate('/sign-in')
+    }
+
   }
 
+  console.log(productFind);
   return (
     <section>
       <div className="py-4">
-        {/* Breadcrumbs */}
+        <MetaHelmet title={productFind.metaTitle} description={productFind.metaDescription} image={productFind.MetaImage} />
         <div className="max-w-7xl mx-auto px-4 md:px-4 lg:px-12 ">
           <div className="flex items-center space-x-2 text-gray-400 text-sm">
-            <a href="#" className="hover:underline hover:text-gray-600">
+            <Link to={'/products'} className="hover:underline hover:text-gray-600">
               Home
-            </a>
-            <span>
-              <svg
-                className="h-5 w-5 leading-none text-gray-300"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
+            </Link>
+            {productFind.categories.filter((category) => category && category.name).map((category, index) => [
+              <span key={`arrow-${index}`}>
+                <svg
+                  className="h-5 w-5 leading-none text-gray-300"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M9 5l7 7-7 7"
+                  />
+                </svg>
+              </span>,
+              <Link
+                key={`category-${index}`}
+                to={`/product/categories/${category.name}`}
+                className="hover:underline hover:text-gray-600"
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M9 5l7 7-7 7"
-                />
-              </svg>
-            </span>
-            <a href="#" className="hover:underline hover:text-gray-600">
-              Clothing
-            </a>
-            <span>
-              <svg
-                className="h-5 w-5 leading-none text-gray-300"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M9 5l7 7-7 7"
-                />
-              </svg>
-            </span>
-            <a href="#" className="hover:underline hover:text-gray-600">
-              Men's Wear
-            </a>
+                {category.name}
+              </Link>,
+            ])}
           </div>
         </div>
 
@@ -430,7 +426,7 @@ const ProductDetails = () => {
           <TrendingProducts />
         </div>
       </div>
-    </section>
+    </section >
   );
 };
 

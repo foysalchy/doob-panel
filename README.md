@@ -58,6 +58,9 @@ A big thank you to the following individuals who have contributed to this projec
 
 If you've contributed to this project and your name is missing, please let us know, and we'll add you to the list!
 
+## Deploy on vps 
+ `scp -r dist  root@178.128.29.230:/var/www/SaleNow-Frontend`
+ need also pass: contact with project manager
 
 ## License
 
