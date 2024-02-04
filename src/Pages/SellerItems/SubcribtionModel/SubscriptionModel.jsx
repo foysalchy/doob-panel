@@ -35,7 +35,7 @@ const SubscriptionModel = () => {
     // Convert milliseconds to days
     const daysPassed = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
 
-    const time = prices?.timeDuration === 'Monthly' && 30 || prices?.timeDuration === 'yearly' && 365 || prices?.timeDuration === 'weekly' && 7 || prices?.timeDuration === 'daily' && 1 || prices?.timeDuration === 'Lifetime' && 10000000000000000000000000000000000;
+    const time = prices?.timeDuration === 'Monthly' && 30 || prices?.timeDuration === 'Yearly' && 365 || prices?.timeDuration === 'Weekly' && 7 || prices?.timeDuration === 'Daily' && 1 || prices?.timeDuration === 'Lifetime' && 10000000000000000000000000000000000;
 
     console.log(`${daysPassed} days have passed since the user was created.`);
 
@@ -67,7 +67,7 @@ const SubscriptionModel = () => {
                         pricesData?.map(data => {
                             return (
                                 <div>
-                                    {data._id === prices._id ?
+                                    {data._id === prices?._id ?
 
                                         <div key={data?._id} className="flex items-center justify-between px-8 py-4 border border-blue-500 cursor-pointer rounded-xl">
                                             <div className="flex flex-col items-center space-y-1">

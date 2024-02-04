@@ -45,7 +45,7 @@ const Price = () => {
             </div> */}
           </div>
           <div className="flex flex-wrap -m-4">
-            {prices.length && prices?.map((price, index) => (
+            {prices?.length && prices?.map((price, index) => (
               <>
                 <PriceModal open={open} setOpen={setOpen} />
                 {price?.status && (

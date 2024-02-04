@@ -40,6 +40,8 @@ export default function WebStoreproduct({ searchQuery }) {
     // Get the current page data
     const currentData = filteredData.slice(startIndex, endIndex);
 
+    
+
 
 
 
@@ -92,6 +94,12 @@ export default function WebStoreproduct({ searchQuery }) {
                                         className="px-4 py-3.5 border text-sm font-normal text-left rtl:text-right "
                                     >
                                         Price
+                                    </th>
+                                    <th
+                                        scope="col"
+                                        className="px-4 py-3.5 border text-sm font-normal text-left rtl:text-right "
+                                    >
+                                        Your Price
                                     </th>
                                     <th
                                         scope="col"

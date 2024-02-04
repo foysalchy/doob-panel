@@ -85,7 +85,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                         }
                     </div>
 
-                    {(shopInfo.status === 'true' && user.disable === false) ?
+                    {(shopInfo.status === 'true' && user.disable === false)  && prices?
                         // status
 
                         <>
