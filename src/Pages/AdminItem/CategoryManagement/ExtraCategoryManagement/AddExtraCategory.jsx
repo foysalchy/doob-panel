@@ -61,7 +61,7 @@ const AddMiniCategory = () => {
         fetch(`https://backend.doob.com.bd/api/v1/admin/category/miniCategory?id=${optionId}`)
             .then((res) => res.json())
             .then((data) => {
-                console.log(data, '>>>>>');
+             
                 setMiniCategorys(data.row)
             })
             .catch((error) => {

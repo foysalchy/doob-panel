@@ -20,6 +20,8 @@ const ProductCatagory = () => {
     const slidesPerViewDesktop = 9;
     const slidesPerViewTablet = 6;
     const slidesPerViewMobile = 4;
+
+    
     return (
         <div className='py-4 bg-white rounded mt-6'>
 

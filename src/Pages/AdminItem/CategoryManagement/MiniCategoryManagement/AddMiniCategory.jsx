@@ -50,6 +50,9 @@ const AddMiniCategory = () => {
             .catch((error) => {
                 console.error('Error:', error);
             });
+
+        console.log(optionId, 'id')
+
     };
     const sortedWarehouses = subCategorys?.filter(warehouse => warehouse.status === 'true');
 

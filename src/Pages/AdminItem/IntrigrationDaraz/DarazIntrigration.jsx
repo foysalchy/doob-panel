@@ -86,7 +86,7 @@ const DarazIntegration = () => {
 
 
                 {!shopInfo.darazLogin && <a
-                    href='https://api.daraz.com.bd/oauth/authorize?response_type=code&force_auth=true&redirect_uri=https://doob-bd.vercel.app/seller/channel-integration/&client_id=501436'
+                    href='https://api.daraz.com.bd/oauth/authorize?response_type=code&force_auth=true&redirect_uri=https://doob.com.bd/seller/channel-integration/&client_id=501436'
                     className="text-blue-500 hover:underline mb-4 inline-block"
                 >
                     Login Daraz

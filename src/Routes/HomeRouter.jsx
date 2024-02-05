@@ -13,6 +13,7 @@ import FaqLayout from "../Pages/Home/Faq/FaqLayout"
 import SingleFaq from "../Pages/Home/Faq/SingleFaq"
 import Home from "../Pages/Home/Home/Home"
 import Price from "../Pages/Home/Price/Price"
+import CommonCategory from "../Pages/Home/Product/CommonCategory/CommonCategory"
 import Product from "../Pages/Home/Product/Product"
 import ProductDetails from "../Pages/Home/Product/ProductDetails/ProductDetails"
 import MainService from "../Pages/Home/Service/MainService"
@@ -57,6 +58,32 @@ const homePath = [
             <Product />
         </>,
     },
+    {
+        path: ':product/categories/:shopId/:categoryId',
+        element: <CommonCategory />,
+        loader: async ({ params }) => {
+            console.log('params:', params); // Log params to the console
+
+            const shopId = params.shopId;
+            const categoryName = params.categoryId
+
+            if (categoryName !== null) {
+                console.log('Fetching data for categoryName:', categoryName);
+
+                const response = await fetch(`https://backend.doob.com.bd/api/v1/shop/product/${shopId}/categories?category=${encodeURIComponent(categoryName)}`);
+                const data = await response.json();
+
+                console.log('Fetched data:', data);
+
+                return data;
+            } else {
+                // Handle the case when categoryName is not present
+                console.error('categoryName is not defined in the query parameters');
+                return null; // or handle it appropriately
+            }
+        },
+    },
+
     {
         path: "/products/:id",
         loader: ({ params }) =>

@@ -1,12 +1,15 @@
 import { useQuery } from '@tanstack/react-query';
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../../../AuthProvider/UserProvider';
 import { Link } from 'react-router-dom';
+import { CgClose } from 'react-icons/cg';
 
 const SubscriptionModel = () => {
 
     const { user, shopInfo } = useContext(AuthContext)
     const [services, setServices] = useState([])
+    const [showWarning, setShowWarning] = useState(false)
+
     const { data: prices = {}, loader } = useQuery({
         queryKey: ["subscriptionModal"],
         queryFn: async () => {
@@ -44,10 +47,33 @@ const SubscriptionModel = () => {
     //     alert('your ads;fj');
     // }
 
-    // console.log(daysPassed, time, prices, 'services time');
+    const showWarningIfNeeded = () => {
+        if (daysPassed > 0 && daysPassed <= 5) {
+            setShowWarning(true);
+        }else{
+            setShowWarning(false);
+        }
+    };
+
+    // Use useEffect to trigger the warning check on component mount and when daysPassed changes
+    useEffect(() => {
+        showWarningIfNeeded();
+    }, [daysPassed]);
+
+    console.log(daysPassed, 'services time');
 
     return (
         <div className="bg-white text-black">
+            {showWarning && (
+                <div className="bg-orange-100 px-2 py-3 rounded- flex justify-between items-center">
+                    <p className="text-sm text-orange-800 capitalize ">
+                        Hi dear, only 5 days left for your service. Please renew{' '}
+                        <button className="bg-orange-500 px-4 ml-2 py-1 text-xs rounded text-black">
+                            Renew
+                        </button>
+                    </p>
+                </div>
+            )}
             <div className="container px-6 py-8 mx-auto">
                 <h1 className="text-2xl font-semibold text-center text-gray-800 capitalize lg:text-3xl ">
                     {`${daysPassed} days have passed since the user was created.`}
@@ -67,6 +93,7 @@ const SubscriptionModel = () => {
                         pricesData?.map(data => {
                             return (
                                 <div>
+
                                     {data._id === prices?._id ?
 
                                         <div key={data?._id} className="flex items-center justify-between px-8 py-4 border border-blue-500 cursor-pointer rounded-xl">
