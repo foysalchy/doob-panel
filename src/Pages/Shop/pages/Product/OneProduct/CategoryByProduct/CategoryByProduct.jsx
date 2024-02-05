@@ -64,6 +64,9 @@ const CategoryByProduct = () => {
 
         applyFilters();
     }, [products, checkedBrands, minPrice, maxPrice]);
+
+    console.log(filteredData, 'filtered');
+
     return (
         <div>
             <section className="text-gray-600 body-font">

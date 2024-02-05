@@ -20,12 +20,14 @@ const AddPriceRole = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const priceRole = e.target.priceRole.value
+        const to = e.target.to.value
+        const from = e.target.from.value
+        const priceRange = e.target.priceRange.value
         const shopId = shopInfo._id
-        const data = { priceRole, shopId }
+        const data = { to, from, priceRange, shopId }
 
         fetch('https://backend.doob.com.bd/api/v1/seller/add-price-role', {
-            method: "PATCH",
+            method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(data)
         }).then((res) => res.json()).then((data) => {
@@ -45,16 +47,44 @@ const AddPriceRole = () => {
                 <p>Your Price role</p>  <span className='kalpurush'> : ৳</span> <span>{priceRole.data}</span>
             </div>
             <form className="bg-white shadow-md w-full rounded px-8 pt-6 pb-8 mb-4" onSubmit={handleSubmit}>
+                <div className="grid grid-cols-2 gap-3">
+                    <div className="mb-4">
+                        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="priceRole">
+                            To
+                        </label>
+                        <input
+                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            id="priceRole"
+                            type="text"
+                            name="to"
+                            placeholder="Enter To value"
+                        />
+                    </div>
+
+                    <div className="mb-4">
+                        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="priceRole">
+                            From
+                        </label>
+                        <input
+                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            id="priceRole"
+                            type="text"
+                            name="from"
+                            placeholder="Enter From value"
+                        />
+                    </div>
+                </div>
+
                 <div className="mb-4">
                     <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="priceRole">
-                        Price Role
+                        Price Range
                     </label>
                     <input
                         className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         id="priceRole"
-                        type="text"
-                        name="priceRole"
-                        placeholder="Enter Price Role"
+                        type="number"
+                        name="priceRange"
+                        placeholder="Enter price range"
                     />
                 </div>
                 <div className="flex items-center justify-between">

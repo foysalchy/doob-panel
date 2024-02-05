@@ -24,8 +24,7 @@ const SellerListOfWarehouse = () => {
         },
     });
 
-    console.log(`https://backend.doob.com.bd/api/v1/seller/warehouse/get/${shopInfo._id}`);
-    const [searchQuery, setSearchQuery] = useState("");
+     const [searchQuery, setSearchQuery] = useState("");
 
     const handleSearch = (event) => {
         setSearchQuery(event.target.value);

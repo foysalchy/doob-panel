@@ -75,6 +75,7 @@ import UserSearchHistory from "../Pages/SellerItems/ReportManagement/UserSearchH
 import SystemLog from "../Pages/SellerItems/ReportManagement/SystemLog/SystemLog";
 import SubscriptionModel from "../Pages/SellerItems/SubcribtionModel/SubscriptionModel";
 import InventoryManagement from "../Pages/SellerItems/Inventory/InventoryManagement";
+import PriceRole from "../Pages/SellerItems/Sittings/AddPriceRole/PriceRole";
 
 
 const SellerPath = [
@@ -130,6 +131,10 @@ const SellerPath = [
     },
     {
         path: "settings/price-role",
+        element: <PriceRole />
+    },
+    {
+        path: "settings/add-price-role",
         element: <AddPriceRole />
     },
     {
