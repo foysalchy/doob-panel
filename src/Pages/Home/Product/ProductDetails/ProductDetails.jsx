@@ -13,6 +13,25 @@ import Swal from "sweetalert2";
 import BrightAlert from 'bright-alert';
 import MetaHelmet from "../../../../Helmate/Helmate";
 
+const StarRating = ({ rating, onRatingChange }) => {
+  return (
+    <div className="flex items-center">
+      {[1, 2, 3, 4, 5].map((star) => (
+        <span
+          key={star}
+          onClick={() => onRatingChange(star)}
+          className={`cursor-pointer text-2xl ${star <= rating ? 'text-yellow-500' : 'text-gray-300'
+            }`}
+        >
+          ★
+        </span>
+      ))}
+    </div>
+  );
+};
+
+
+
 const ProductDetails = () => {
   const { user, shopInfo } = useContext(AuthContext)
   const location = useParams();
@@ -179,8 +198,36 @@ const ProductDetails = () => {
     else {
       navigate('/sign-in')
     }
-
   }
+
+  const [comment, setComment] = useState('');
+  const [photo, setPhoto] = useState(null);
+  const [rating, setRating] = useState(0);
+
+  const handleCommentChange = (e) => {
+    setComment(e.target.value);
+  };
+
+  const handlePhotoChange = (e) => {
+    // Handle photo upload logic
+    const selectedPhoto = e.target.files[0];
+    setPhoto(selectedPhoto);
+  };
+
+  const handleRatingChange = (newRating) => {
+    setRating(newRating);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Handle form submission logic
+    const data = {
+      comment, photo, rating
+    }
+    console.log('post data:', data);
+
+  };
+
 
 
   return (
@@ -413,30 +460,75 @@ const ProductDetails = () => {
       </div>
       <div className="max-w-7xl mx-auto px-4 md:px-4 lg:px-8 my-6">
         {user && (
-          <div className="flex justify-center items-center ">
-            <div className="h-80 px-7 w-full rounded-[12px] bg-white p-4 shadow-md border">
-              <p className="text-xl font-semibold text-blue-900 cursor-pointer transition-all hover:text-black">
-                Add Comment
-              </p>
-              <textarea
-                className="h-40 px-3 text-sm py-1 mt-5 outline-none border-gray-300 w-full resize-none border rounded-lg placeholder:text-sm"
-                placeholder="Add your comments here"
-                defaultValue={""}
-              />
-              <div className="flex justify-between mt-2">
-                <div className="bg-red-500 w-[50px] h-[50px] overflow-hidden relative">
-                  <input className="absolute top-0 left-0 w-[300px]" type="file" />
-                </div>
-                <p className="text-sm text-blue-900 ">Enter atleast 15 characters</p>
-                <button className="h-12 w-[150px] bg-blue-400 text-sm text-white rounded-lg transition-all cursor-pointer hover:bg-blue-600">
-                  Submit comment
+          <div className="bg-gray-100 py-2 px-3">
+            <form className="border-b border-gray-400 mx-auto mt-2" onSubmit={handleSubmit}>
+              <div className="mb-4">
+                <label htmlFor="comment" className="block text-gray-700 text-sm font-bold mb-2">
+                  Comment
+                </label>
+                <textarea
+                  id="comment"
+                  name="comment"
+                  placeholder="write your comment..."
+                  rows="4"
+                  value={comment}
+                  onChange={handleCommentChange}
+                  className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-indigo-500"
+                ></textarea>
+              </div>
+
+              <div className="mb-4">
+                <label htmlFor="photo" className="block text-gray-700 text-sm font-bold mb-2">
+                  Upload Photo
+                </label>
+                <input
+                  type="file"
+                  id="photo"
+                  name="photo"
+                  onChange={handlePhotoChange}
+                  className="w-full border bg-white border-gray-300 rounded py-2 px-3 focus:outline-none focus:border-indigo-500"
+                />
+              </div>
+
+              <div className="mb-4">
+                <label className="block text-gray-700 text-sm font-bold mb-2">Rating</label>
+                <StarRating rating={rating} onRatingChange={handleRatingChange} />
+              </div>
+
+              <div className="mb-6">
+                <button
+                  type="submit"
+                  className="bg-indigo-500 text-white py-2 px-4 rounded focus:outline-none hover:bg-indigo-700"
+                >
+                  Post Comment
                 </button>
               </div>
+            </form>
+            <div className="bg-white p-2 mt-8">
+              <h3 className="mt-2 font-semibold pb-4">All Comment</h3>
+              <div className="flex">
+                <div className="flex-shrink-0 mr-3">
+                  <img
+                    className="mt-2 rounded-full w-8 h-8 sm:w-10 sm:h-10"
+                    src="https://images.unsplash.com/photo-1604426633861-11b2faead63c?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=200&h=200&q=80"
+                    alt=""
+                  />
+                </div>
+                <div className="flex-1 border rounded-lg px-4 py-2 sm:px-6 sm:py-4 leading-relaxed">
+                  <h5 className="font-[500]">Sarah</h5>{" "}
+                  <p className="text-sm text-gray-500">
+                    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
+                    nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
+                    erat, sed diam voluptua.
+                  </p>
+                </div>
+              </div>
             </div>
+
+
           </div>
-
         )}
-
+        <br />
         <div className="border p-6 rounded">
           <ProductDescription metaTitle={productFind?.metaTitle} description={productFind?.description} />
         </div>

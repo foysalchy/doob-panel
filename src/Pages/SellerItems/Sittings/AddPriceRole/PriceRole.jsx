@@ -16,11 +16,7 @@ export default function PriceRole() {
     const totalPages = Math.ceil(filteredData?.length / pageSize);
 
     // const currentData = filteredData.slice(startIndex, endIndex);
-    const currentData = [
-        { _id: 1, to: 'dhaka', from: 'mymenshingh', priceRange: '100-200' },
-        { _id: 2, to: 'dhaka', from: 'mymenshingh', priceRange: '100-200' },
-        { _id: 3, to: 'dhaka', from: 'mymenshingh', priceRange: '100-200' },
-    ];
+
 
     const { data: priceRole = [], refetch } = useQuery({
         queryKey: ["priceRole"],
@@ -68,17 +64,17 @@ export default function PriceRole() {
 
                     </tr>
                 </thead>
-                <tbody>
+                <tbody >
                     {
-                        currentData?.map(itm => <tr key={itm?._id} className='border'>
+                        priceRole?.map(itm => <tr key={itm?._id} className='border bg-gray-50'>
                             <td className="px-4 border-r py-3">
-                                fdag
+                                {itm?.to ? itm.to : 'Empty'}
                             </td>
                             <td className="px-4 border-r py-3">
-                                fdag
+                                {itm?.from ? itm.from : 'Empty'}
                             </td>
                             <td className="px-4 border-r py-3">
-                                fdag
+                                {itm?.priceRange ? itm.priceRange : 'Empty'}
                             </td>
                             <td className="px-4 border-r py-3 flex gap-4">
                                 <button className="text-red-600">Delete</button>

@@ -18,25 +18,25 @@ const ProductHero = () => {
     const [allCategory, setAllCategory] = useState({
         subCategorys: [],
         miniCategorys: [],
-        extraCategorys: []
+        extraCategorys: [],
     });
-    const [subCategoryData, setSubCategoryData] = useState([])
+    const [subCategoryData, setSubCategoryData] = useState([]);
     const [openDropdownIndex, setOpenDropdownIndex] = useState(null);
     const { user, shopInfo } = useContext(AuthContext);
 
-    const { data: megaSideCategoryData = [], refetch } = useQuery({
-        queryKey: ["megaSideCategoryData"],
+    const { data: megaSideCategoryData = [], refetch: refetchMegaCategory } = useQuery({
+        queryKey: ['megaSideCategoryData'],
         queryFn: async () => {
-            const res = await fetch("https://backend.doob.com.bd/api/v1/admin/category/megacategory");
+            const res = await fetch('https://backend.doob.com.bd/api/v1/admin/category/megacategory');
             const data = await res.json();
             return data.rows;
         },
     });
 
-    const { data: heroBanner = [], reload } = useQuery({
-        queryKey: "heroBanner",
+    const { data: heroBanner = [] } = useQuery({
+        queryKey: 'heroBanner',
         queryFn: async () => {
-            const res = await fetch(`https://backend.doob.com.bd/api/v1/admin/slider`);
+            const res = await fetch('https://backend.doob.com.bd/api/v1/admin/slider');
             const data = await res.json();
             return data?.data;
         },
@@ -46,86 +46,72 @@ const ProductHero = () => {
     const bannerFind = heroBanner?.filter((item) => item.status === 'true');
 
     useEffect(() => {
-        if (megaSideCategoryData.length) {
-            const fetchData = async () => {
-                const setData = [];
-
-                for (const itm of megaSideCategoryData) {
-                    try {
-                        const response = await fetch(`https://backend.doob.com.bd/api/v1/admin/category/subcategory?id=${itm?._id}`);
-                        const data = await response.json();
-                        setData.push(data.subCategory);
-                    } catch (error) {
-                        console.error('Error:', error);
-                    }
+        const fetchData = async () => {
+            const subCategoryPromises = megaSideCategoryData.map(async (item) => {
+                try {
+                    const response = await fetch(`https://backend.doob.com.bd/api/v1/admin/category/subcategory?id=${item?._id}`);
+                    const data = await response.json();
+                    return data.subCategory;
+                } catch (error) {
+                    console.error('Error:', error);
+                    return [];
                 }
+            });
 
-                setAllCategory((prevCategory) => ({
-                    ...prevCategory,
-                    subCategorys: setData.flat(), // Use flat() to flatten the array of arrays
-                }));
-            };
+            const subCategories = await Promise.all(subCategoryPromises);
+            setAllCategory((prevCategory) => ({ ...prevCategory, subCategorys: subCategories.flat() }));
+        };
 
+        if (megaSideCategoryData.length) {
             fetchData();
         }
     }, [megaSideCategoryData]);
 
     useEffect(() => {
-        if (allCategory?.subCategorys.length) {
-            const fetchData = async () => {
-                const setData = [];
-                const subCategorys = allCategory.subCategorys;
-                for (const itm of subCategorys) {
-                    try {
-                        const response = await fetch(`https://backend.doob.com.bd/api/v1/admin/category/miniCategory?id=${itm?._id}`);
-                        const data = await response.json();
-                        setData.push(data.row);
-                    } catch (error) {
-                        console.error('Error:', error);
-                    }
+        const fetchData = async () => {
+            const miniCategoryPromises = allCategory.subCategorys.map(async (itm) => {
+                try {
+                    const response = await fetch(`https://backend.doob.com.bd/api/v1/admin/category/miniCategory?id=${itm?._id}`);
+                    const data = await response.json();
+                    return data.row;
+                } catch (error) {
+                    console.error('Error:', error);
+                    return [];
                 }
+            });
 
-                setAllCategory((prevCategory) => ({
-                    ...prevCategory,
-                    miniCategorys: setData.flat(),
-                }));
-            };
+            const miniCategories = await Promise.all(miniCategoryPromises);
+            setAllCategory((prevCategory) => ({ ...prevCategory, miniCategorys: miniCategories.flat() }));
+        };
 
-
+        if (allCategory.subCategorys.length) {
             fetchData();
         }
     }, [allCategory.subCategorys]);
 
-
     useEffect(() => {
-        if (allCategory.miniCategorys.length) {
-            const fetchData = async () => {
-                const setData = [];
-                const miniCategorys = allCategory.miniCategorys;
-                for (const itm of miniCategorys) {
-                    // console.log(`https://backend.doob.com.bd/api/v1/admin/category/extraCategory?id=${itm?._id}`, 'extra>>>>>>.');
-                    try {
-                        const response = await fetch(`https://backend.doob.com.bd/api/v1/admin/category/extraCategory?id=${itm?._id}`);
-                        const data = await response.json();
-                        setData.push(data.rows);
-                    } catch (error) {
-                        console.error('Error:', error);
-                    }
+        const fetchData = async () => {
+            const extraCategoryPromises = allCategory.miniCategorys.map(async (itm) => {
+                try {
+                    const response = await fetch(`https://backend.doob.com.bd/api/v1/admin/category/extraCategory?id=${itm?._id}`);
+                    const data = await response.json();
+                    return data.rows;
+                } catch (error) {
+                    console.error('Error:', error);
+                    return [];
                 }
+            });
 
-                setAllCategory((prevCategory) => ({
-                    ...prevCategory,
-                    extraCategorys: setData.flat(),
-                }));
-            };
+            const extraCategories = await Promise.all(extraCategoryPromises);
+            setAllCategory((prevCategory) => ({ ...prevCategory, extraCategorys: extraCategories.flat() }));
+        };
 
-
+        if (allCategory.miniCategorys.length) {
             fetchData();
         }
     }, [allCategory.miniCategorys]);
 
-    // console.log(allCategory, '>>>>');
-    const subCategoryHandler = (category, index) => {
+    const subCategoryHandler = async (category, index) => {
         const filteredSubCategory = allCategory?.subCategorys.filter(
             (subCategory) => subCategory.megaCategoryId === category?._id
         );
@@ -134,8 +120,7 @@ const ProductHero = () => {
     };
 
 
-
-    console.log(megaSideCategoryData, 'subCategoryData');
+    console.log(allCategory, 'subCategoryData');
     return (
         <div className='flex gap-4 '>
             <div className="bg-white w-[340px] relative flex flex-col gap-2 rounded-lg p-4">
@@ -157,7 +142,7 @@ const ProductHero = () => {
                                 className="absolute right-[-196px] ring-1 ring-gray-400 top-0 z-20 w-48 h-full py-2 mt-2 origin-top-right bg-white rounded-md shadow-xl  "
                             >
                                 {
-                                    subCategoryData.map((itm, index) => <div>
+                                    subCategoryData.map((itm, index) => <div key={index}>
                                         <Link to={`/category-products/${shopInfo?.shopId}/${itm?.megaCategoryId}`}>
                                             <button
                                                 className="flex duration-150 hover:text-white w-full justify-between items-center px-2 py-2 text-sm font-normal  hover:bg-black   "
