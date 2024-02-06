@@ -1,15 +1,16 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { AuthContext } from "../../../AuthProvider/UserProvider";
-import { MdDashboard } from "react-icons/md";
+import { MdCategory, MdDashboard, MdOutlineCategory } from "react-icons/md";
 import Logo from "../../../../Logo.png";
-import { CgShoppingCart } from "react-icons/cg";
+import { useQuery } from "@tanstack/react-query";
+import { FaAngleRight } from "react-icons/fa6";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [userDash, setUserDash] = useState(false);
-  const { user, logOut } = useContext(AuthContext);
-
+  const { user, logOut, shopInfo } = useContext(AuthContext);
+  const [on, setOn] = useState(false);
   const menuData = (
     <>
       <li>
@@ -114,6 +115,110 @@ const Header = () => {
     </>
   );
 
+
+  const [allCategory, setAllCategory] = useState({
+    subCategorys: [],
+    miniCategorys: [],
+    extraCategorys: [],
+  });
+  const [subCategoryData, setSubCategoryData] = useState([]);
+  const [openDropdownIndex, setOpenDropdownIndex] = useState(null);
+
+  const { data: megaSideCategoryData = [], refetch: refetchMegaCategory } = useQuery({
+    queryKey: ['megaSideCategoryData'],
+    queryFn: async () => {
+      const res = await fetch('https://backend.doob.com.bd/api/v1/admin/category/megacategory');
+      const data = await res.json();
+      return data.rows;
+    },
+  });
+
+  const { data: heroBanner = [] } = useQuery({
+    queryKey: 'heroBanner',
+    queryFn: async () => {
+      const res = await fetch('https://backend.doob.com.bd/api/v1/admin/slider');
+      const data = await res.json();
+      return data?.data;
+    },
+  });
+
+  const blankImg = 'https://i.ibb.co/7p2CvzT/empty.jpg';
+  const bannerFind = heroBanner?.filter((item) => item.status === 'true');
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const subCategoryPromises = megaSideCategoryData.map(async (item) => {
+        try {
+          const response = await fetch(`https://backend.doob.com.bd/api/v1/admin/category/subcategory?id=${item?._id}`);
+          const data = await response.json();
+          return data.subCategory;
+        } catch (error) {
+          console.error('Error:', error);
+          return [];
+        }
+      });
+
+      const subCategories = await Promise.all(subCategoryPromises);
+      setAllCategory((prevCategory) => ({ ...prevCategory, subCategorys: subCategories.flat() }));
+    };
+
+    if (megaSideCategoryData.length) {
+      fetchData();
+    }
+  }, [megaSideCategoryData]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const miniCategoryPromises = allCategory.subCategorys.map(async (itm) => {
+        try {
+          const response = await fetch(`https://backend.doob.com.bd/api/v1/admin/category/miniCategory?id=${itm?._id}`);
+          const data = await response.json();
+          return data.row;
+        } catch (error) {
+          console.error('Error:', error);
+          return [];
+        }
+      });
+
+      const miniCategories = await Promise.all(miniCategoryPromises);
+      setAllCategory((prevCategory) => ({ ...prevCategory, miniCategorys: miniCategories.flat() }));
+    };
+
+    if (allCategory.subCategorys.length) {
+      fetchData();
+    }
+  }, [allCategory.subCategorys]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const extraCategoryPromises = allCategory.miniCategorys.map(async (itm) => {
+        try {
+          const response = await fetch(`https://backend.doob.com.bd/api/v1/admin/category/extraCategory?id=${itm?._id}`);
+          const data = await response.json();
+          return data.rows;
+        } catch (error) {
+          console.error('Error:', error);
+          return [];
+        }
+      });
+
+      const extraCategories = await Promise.all(extraCategoryPromises);
+      setAllCategory((prevCategory) => ({ ...prevCategory, extraCategorys: extraCategories.flat() }));
+    };
+
+    if (allCategory.miniCategorys.length) {
+      fetchData();
+    }
+  }, [allCategory.miniCategorys]);
+
+  const subCategoryHandler = async (category, index) => {
+    const filteredSubCategory = allCategory?.subCategorys.filter(
+      (subCategory) => subCategory.megaCategoryId === category?._id
+    );
+    setSubCategoryData(filteredSubCategory);
+    setOpenDropdownIndex(openDropdownIndex === index ? null : index);
+  };
+
   return (
     <div className="fixed top-0 border-b right-0 left-0 z-50 bg-white">
       <div className="px-4 py-5 mx-auto  sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8">
@@ -146,7 +251,7 @@ const Header = () => {
           </NavLink>
           <ul className="flex items-center hidden space-x-8 lg:flex">
             {menuData}
-           
+
             <li>
               {!user ? (
                 <Link
@@ -267,8 +372,55 @@ const Header = () => {
               )}
             </li>
           </ul>
+          <div className="lg:hidden relative flex items-center gap-1">
+            <div className="">
+              <button onClick={() => setOn(!on)} className="border p-1 rounded">
+                <MdOutlineCategory />
+              </button>
+              {on && <div className="absolute left-[-130px] top-[50px]">
+                <div className="bg-white border w-[200px] relative flex flex-col gap-2 rounded-lg p-4">
+                  {megaSideCategoryData.map((item, index) => (
+                    <div key={index} className="  inline-block">
+                      {/* Dropdown toggle button */}
+                      <button
+                        onClick={() => subCategoryHandler(item, index)}
+                        className="  flex  items-center  w-full justify-between"
+                      >
+                        {item?.name}
+                        <FaAngleRight className="absolute right-2" />
+                      </button>
 
-          <div className="lg:hidden flex items-center gap-1">
+                      {/* Dropdown menu */}
+                      {openDropdownIndex === index && (
+                        <div
+                          onClick={() => setOpenDropdownIndex(null)}
+                          className="  ring-1 ring-gray-400 top-0 ml-[-0px] z-20 w-full h-full py-2 mt-2  bg-white rounded-md shadow-xl  "
+                        >
+                          {
+                            subCategoryData.map((itm, index) => <div key={index}>
+                              <Link to={`/category-products/${shopInfo?.shopId}/${itm?.megaCategoryId}`}>
+                                <button
+                                  className="flex duration-150 hover:text-white w-full justify-between items-center px-2 py-2 text-sm font-normal  hover:bg-black   "
+                                  type="button"
+                                  id={item?._id}
+                                  data-te-dropdown-toggle-ref
+                                  aria-expanded="false"
+                                  data-te-ripple-init
+                                  data-te-ripple-color="light"
+                                >
+                                  {itm?.subCategory}
+                                </button>
+                              </Link>
+                            </div>)
+                          }
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>}
+            </div>
+
             {!user ? (
               <Link
                 to="/sign-up"

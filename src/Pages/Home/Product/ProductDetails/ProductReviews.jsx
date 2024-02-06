@@ -1,7 +1,7 @@
 import React from "react";
 import { FaStar } from "react-icons/fa6";
 
-const ProductReviews = () => {
+const ProductReviews = ({ comments }) => {
   const progressBarStyle = {
     width: "100%",
   };
@@ -18,6 +18,18 @@ const ProductReviews = () => {
     width: "20%",
   };
 
+  console.log(comments, 'comments review');
+
+  if (!Array.isArray(comments) || comments.length === 0) {
+    return (
+      <div>
+        <p>No reviews available.</p>
+      </div>
+    );
+  }
+
+  // let rate = Array(comm).fill(star)
+  console.log(Array(3).fill("n"));
   return (
     <div>
       <div className="text-center mb-5 ">
@@ -123,59 +135,39 @@ const ProductReviews = () => {
           </li>
         </ol>
       </div>
-      <div>
+      <div className="">
         <h4 className="text-xl text-center my-5">Review this product</h4>
-        <section className="">
-          <div className="container px-5 mx-auto">
-            <div className="lg:w-11/12 flex flex-col sm:flex-row sm:items-center md:items-start mx-auto">
-              <div>
-                <h1 className="flex-grow sm:pr-16 text-xl font-medium title-font text-gray-900">
-                  Kristin Watson
-                </h1>
-                <p>
-                  This is 💯 one hundred percent the best lip mask duo ever !!!
-                  The scent is delicious and it’s so smooth from the scrub &
-                  mask ~ This is perfection~ Smells just like honey 🍯 & the
-                  packaging is so adorable ~ I’m so very happy with this product
-                  🐻 🍯 ~
-                </p>
-                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-8 gap-2 items-center my-5">
-                  <img
-                    className="w-[100px] h-[100px]"
-                    src="https://img.freepik.com/free-psd/mens-tri-blend-crew-tee-mockup_126278-130.jpg?w=740&t=st=1696792919~exp=1696793519~hmac=2120615b267f5ab7879436d3ac193cf6c02d0b0196dbc7329132e70c0061cd9eg"
-                    srcSet="https://img.freepik.com/free-psd/mens-tri-blend-crew-tee-mockup_126278-130.jpg?w=740&t=st=1696792919~exp=1696793519~hmac=2120615b267f5ab7879436d3ac193cf6c02d0b0196dbc7329132e70c0061cd9eg"
-                    alt="product"
-                  />
-                  <img
-                    className="w-[100px] h-[100px]"
-                    src="https://img.freepik.com/free-psd/mens-tri-blend-crew-tee-mockup_126278-130.jpg?w=740&t=st=1696792919~exp=1696793519~hmac=2120615b267f5ab7879436d3ac193cf6c02d0b0196dbc7329132e70c0061cd9e"
-                    srcSet="https://img.freepik.com/free-psd/mens-tri-blend-crew-tee-mockup_126278-130.jpg?w=740&t=st=1696792919~exp=1696793519~hmac=2120615b267f5ab7879436d3ac193cf6c02d0b0196dbc7329132e70c0061cd9e"
-                    alt="product"
-                  />
-                  <img
-                    className="w-[100px] h-[100px]"
-                    src="https://i.ibb.co/mzCpLH6/attractive-woman-wearing-hat-posing-black-background-1.png"
-                    srcSet="https://i.ibb.co/mzCpLH6/attractive-woman-wearing-hat-posing-black-background-1.png"
-                    alt="product"
-                  />
-                  <img
-                    className="w-[100px] h-[100px]"
-                    src="https://img.freepik.com/free-psd/mens-tri-blend-crew-tee-mockup_126278-130.jpg?w=740&t=st=1696792919~exp=1696793519~hmac=2120615b267f5ab7879436d3ac193cf6c02d0b0196dbc7329132e70c0061cd9e"
-                    srcSet="https://img.freepik.com/free-psd/mens-tri-blend-crew-tee-mockup_126278-130.jpg?w=740&t=st=1696792919~exp=1696793519~hmac=2120615b267f5ab7879436d3ac193cf6c02d0b0196dbc7329132e70c0061cd9e"
-                    alt="product"
-                  />
+        {
+          comments &&
+          comments.map((comment) => (
+            <section className="" key={comment.id}>
+              <div className="container px-5 mx-auto ">
+                <div className="lg:w-11/12 flex flex-col  sm:flex-row sm:items-center md:items-start mx-auto">
+                  <div>
+                    <h1 className="flex-grow sm:pr-16 text-xl font-medium title-font text-gray-900">
+                      {comment?.name}
+                    </h1>
+                    <p>{comment?.comment}</p>
+                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-8 gap-2 items-center my-5">
+                      <img
+                        className="w-[100px] h-[100px]"
+                        src={comment?.photo?.image}
+                        alt="product"
+                      />
+                    </div>
+                  </div>
+                  <div className="flex justify-between items-center lg:ml-5 mt-2 md:mt-0">
+                    {
+                      Array(comment?.rating).fill('n').map(itm => <FaStar key={itm} className="text-yellow-400" />)
+                    }
+
+                  </div>
                 </div>
               </div>
-              <div className="flex justify-between items-center lg:ml-5 mt-2 md:mt-0">
-                <FaStar className="text-yellow-400" />
-                <FaStar className="text-yellow-400" />
-                <FaStar className="text-yellow-400" />
-                <FaStar className="text-yellow-400" />
-                <FaStar className="text-yellow-400" />
-              </div>
-            </div>
-          </div>
-        </section>
+            </section>
+          ))
+        }
+
       </div>
     </div>
   );

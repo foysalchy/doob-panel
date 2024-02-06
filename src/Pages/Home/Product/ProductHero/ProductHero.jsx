@@ -21,6 +21,8 @@ const ProductHero = () => {
         extraCategorys: [],
     });
     const [subCategoryData, setSubCategoryData] = useState([]);
+    const [miniCategoryData, setminiCategoryData] = useState([]);
+    const [extraCategoryData, setExtraCategoryData] = useState([]);
     const [openDropdownIndex, setOpenDropdownIndex] = useState(null);
     const { user, shopInfo } = useContext(AuthContext);
 
@@ -115,12 +117,30 @@ const ProductHero = () => {
         const filteredSubCategory = allCategory?.subCategorys.filter(
             (subCategory) => subCategory.megaCategoryId === category?._id
         );
+
         setSubCategoryData(filteredSubCategory);
         setOpenDropdownIndex(openDropdownIndex === index ? null : index);
     };
 
+    const miniCategoryHandler = async (category, index) => {
+        const filteredSubCategory = allCategory?.miniCategorys.filter(
+            (miniCategory) => miniCategory.subCategoryId === category?._id
+        );
 
-    console.log(allCategory, 'subCategoryData');
+        setminiCategoryData(filteredSubCategory);
+    };
+
+    const extraCategoryHandler = async (category, index) => {
+        const filteredSubCategory = allCategory?.extraCategorys.filter(
+            (extraCategory) => extraCategory.extraCategoryId === category?._id
+        );
+
+        setExtraCategoryData(filteredSubCategory);
+        console.log(filteredSubCategory, 'extra-->>>>>');
+    };
+
+
+    // console.log(allCategory, 'subCategoryData');
     return (
         <div className='flex gap-4 '>
             <div className="bg-white w-[340px] relative flex flex-col gap-2 rounded-lg p-4">
@@ -139,23 +159,62 @@ const ProductHero = () => {
                         {openDropdownIndex === index && (
                             <div
                                 onClick={() => setOpenDropdownIndex(null)}
-                                className="absolute right-[-196px] ring-1 ring-gray-400 top-0 z-20 w-48 h-full py-2 mt-2 origin-top-right bg-white rounded-md shadow-xl  "
+                                className="absolute right-[-196px] top-0 z-20 w-48 h-full py-2 mt-2 origin-top-right bg-white  "
                             >
                                 {
-                                    subCategoryData.map((itm, index) => <div key={index}>
-                                        <Link to={`/category-products/${shopInfo?.shopId}/${itm?.megaCategoryId}`}>
-                                            <button
-                                                className="flex duration-150 hover:text-white w-full justify-between items-center px-2 py-2 text-sm font-normal  hover:bg-black   "
-                                                type="button"
-                                                id={item?._id}
-                                                data-te-dropdown-toggle-ref
-                                                aria-expanded="false"
-                                                data-te-ripple-init
-                                                data-te-ripple-color="light"
-                                            >
-                                                {itm?.subCategory}
-                                            </button>
-                                        </Link>
+                                    subCategoryData.map((itm, index) => <div
+                                        key={index}
+
+                                    >
+                                        {
+                                            miniCategoryData?.length > 0 ?
+                                                <div
+                                                // to={`/category-products/${shopInfo?.shopId}/${itm?.megaCategoryId}`}
+                                                >
+                                                    <div
+                                                        onMouseMove={() => miniCategoryHandler(itm, index)}
+                                                        className="flex relative duration-150 hover:text-white w-full justify-between items-center px-2 py-2 text-sm font-normal  hover:bg-black   "
+                                                        type="button"
+                                                        id={item?._id}
+                                                        data-te-dropdown-toggle-ref
+                                                        aria-expanded="false"
+                                                        data-te-ripple-init
+                                                        data-te-ripple-color="light"
+                                                    >
+                                                        {itm?.subCategory}
+
+                                                    </div>
+                                                    {miniCategoryData.length == 0 ? '' : <div className="bg-white   border-gray-400 absolute top-0 h-full right-[-160px] w-[160px]">
+                                                        {miniCategoryData.map((itm, index) =>
+
+                                                            <div onMouseMove={(() => extraCategoryHandler(itm, index))} key={index} className="flex justify-between items-center px-2 py-2 text-sm font-normal hover:text-white  hover:bg-black   ">
+                                                                {itm?.miniCategoryName}
+                                                            </div>)}
+                                                        <div className="absolute w-[200px] bg-white right-[-200px] top-0 h-full">
+                                                            aslks
+                                                        </div>
+                                                    </div>}
+                                                </div>
+
+                                                :
+
+                                                <Link to={`/categories/${shopInfo?.shopId}/${itm?._id}`}>
+                                                    <div
+                                                        onMouseMove={() => miniCategoryHandler(itm, index)}
+                                                        className="flex relative duration-150 hover:text-white w-full justify-between items-center px-2 py-2 text-sm font-normal  hover:bg-black   "
+                                                        type="button"
+                                                        id={item?._id}
+                                                        data-te-dropdown-toggle-ref
+                                                        aria-expanded="false"
+                                                        data-te-ripple-init
+                                                        data-te-ripple-color="light"
+                                                    >
+                                                        {itm?.subCategory}
+
+                                                    </div>
+                                                </Link>
+                                        }
+
                                     </div>)
                                 }
                             </div>

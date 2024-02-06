@@ -12,6 +12,7 @@ import { Link, useLoaderData, useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 import BrightAlert from 'bright-alert';
 import MetaHelmet from "../../../../Helmate/Helmate";
+import ReleventProduct from "./ReleventProduct";
 
 const StarRating = ({ rating, onRatingChange }) => {
   return (
@@ -37,7 +38,7 @@ const ProductDetails = () => {
   const location = useParams();
   const navigate = useNavigate()
   const [loader, setLoader] = useState(false);
-
+  const [userName, setUserName] = useState(user?.name)
   const myData = useLoaderData();
   // const { data: productInfo = [], refetch } = useQuery({
   //   queryKey: ["productInfo"],
@@ -218,17 +219,123 @@ const ProductDetails = () => {
     setRating(newRating);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Handle form submission logic
-    const data = {
-      comment, photo, rating
-    }
-    console.log('post data:', data);
 
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+
+  //   const selectedFile = e.target.photo.files[0];
+  //   const imageFormData = new FormData();
+  //   imageFormData.append("image", selectedFile);
+
+  //   try {
+  //     // Upload the image and get the URL
+  //     const imageUrl = await uploadImage(imageFormData);
+
+  //     // Construct imgData object with the image URL
+  //     const imgData = {
+  //       image: imageUrl,
+  //       link: window.location.href,
+  //     };
+
+  //     // Construct the data object for posting the comment
+  //     const data = {
+  //       name: user?.name,
+  //       comment,
+  //       photo: imgData,
+  //       rating,
+  //       productId: myData?.data?._id,
+  //       shopId: myData?.data?.shopId
+  //     };
+
+  //     // Post the comment data to the backend
+  //     const response = await fetch("https://backend.doob.com.bd/api/v1/seller/add-new-comment", {
+  //       method: 'post',
+  //       headers: {
+  //         'content-type': 'application/json',
+  //         "ngrok-skip-browser-warning": "69420",
+  //       },
+  //       body: JSON.stringify(data)
+  //     });
+
+  //     // Handle the response
+  //     const responseData = await response.json();
+  //     const user = responseData.user;
+  //     BrightAlert();
+  //     console.log(responseData, 'uploaded');
+  //   } catch (error) {
+  //     console.error("Error posting comment:", error);
+  //   }
+  // };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const selectedFile = e.target.photo.files[0];
+    const imageFormData = new FormData();
+    imageFormData.append("image", selectedFile);
+
+    try {
+      // Upload the image and get the URL
+      const imageUrl = await uploadImage(imageFormData);
+
+      // Construct imgData object with the image URL
+      const imgData = {
+        image: imageUrl,
+        link: window.location.href,
+      };
+
+      // Construct the data object for posting the comment
+      const data = {
+        name: userName ? userName : '', // Fixed 'user2' to 'user'
+        comment,
+        photo: imgData,
+        rating,
+        productId: myData?.data?._id,
+        shopId: myData?.data?.shopId
+      };
+
+      // Post the comment data to the backend
+      const response = await fetch("https://backend.doob.com.bd/api/v1/seller/add-new-comment", {
+        method: 'post',
+        headers: {
+          'content-type': 'application/json',
+          "ngrok-skip-browser-warning": "69420",
+        },
+        body: JSON.stringify(data)
+      });
+
+      // Handle the response
+      const responseData = await response.json();
+      const user = responseData.user;
+      BrightAlert();
+      console.log(responseData, 'uploaded');
+    } catch (error) {
+      console.error("Error posting comment:", error);
+    }
   };
 
 
+  async function uploadImage(formData) {
+    const url = "https://backend.doob.com.bd/api/v1/image/upload-image";
+    const response = await fetch(url, {
+      method: "POST",
+      body: formData,
+    });
+    const imageData = await response.json();
+    return imageData.imageUrl;
+  }
+
+
+  const { data: comments = {}, isLoading, refetch } = useQuery({
+    queryKey: ["comments"],
+    queryFn: async () => {
+      const res = await fetch(`https://backend.doob.com.bd/api/v1/seller/all-shop-product-comment`);
+      const data = await res.json();
+      return data?.comments;
+    },
+  });
+
+  console.log(comments, 'comments.....');
 
   return (
     <section>
@@ -504,30 +611,29 @@ const ProductDetails = () => {
                 </button>
               </div>
             </form>
-            <div className="bg-white p-2 mt-8">
-              <h3 className="mt-2 font-semibold pb-4">All Comment</h3>
-              <div className="flex">
-                <div className="flex-shrink-0 mr-3">
-                  <img
-                    className="mt-2 rounded-full w-8 h-8 sm:w-10 sm:h-10"
-                    src="https://images.unsplash.com/photo-1604426633861-11b2faead63c?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=200&h=200&q=80"
-                    alt=""
-                  />
+          </div>
+        )}
+        <div className="bg-white p-2 mt-8">
+          <h3 className="mt-2 font-semibold pb-4">All Comment</h3>
+          {
+            Array.isArray(comments) && comments.map((comment, index) =>
+              <div key={comment?._id} className="flex mb-3">
+                <div className="flex-shrink-0  mr-3">
+                  <div
+                    className="mt-2 rounded-full bg-gray-100 flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10">
+                    {comment?.name ? comment?.name.charAt(0) : '🙎‍♂️'}
+                  </div>
                 </div>
-                <div className="flex-1 border rounded-lg px-4 py-2 sm:px-6 sm:py-4 leading-relaxed">
-                  <h5 className="font-[500]">Sarah</h5>{" "}
+                <div className="flex-1 border bg-gray-50 rounded-lg px-4 py-2 sm:px-6 sm:py-4 leading-relaxed">
+                  <h5 className="font-[500]">{comment?.name}</h5>{" "}
                   <p className="text-sm text-gray-500">
-                    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
-                    nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
-                    erat, sed diam voluptua.
+                    {comment?.comment}
                   </p>
                 </div>
               </div>
-            </div>
-
-
-          </div>
-        )}
+            )
+          }
+        </div>
         <br />
         <div className="border p-6 rounded">
           <ProductDescription metaTitle={productFind?.metaTitle} description={productFind?.description} />
@@ -535,14 +641,19 @@ const ProductDetails = () => {
       </div>
       <div className="max-w-7xl mx-auto px-4 md:px-4 lg:px-8 my-6">
         <div className="border p-6 rounded">
-          <ProductReviews />
+          <ProductReviews comments={comments} />
         </div>
       </div>
       <div className="max-w-7xl mx-auto px-4 md:px-4 lg:px-8 my-6">
         <div className="border p-6 rounded">
-          <TrendingProducts />
+          <ReleventProduct productFind={productFind} />
         </div>
       </div>
+      {/* <div className="max-w-7xl mx-auto px-4 md:px-4 lg:px-8 my-6">
+        <div className="border p-6 rounded">
+          <TrendingProducts />
+        </div>
+      </div> */}
     </section >
   );
 };

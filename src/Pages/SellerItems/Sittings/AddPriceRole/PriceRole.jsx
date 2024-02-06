@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import EditPriceRoleModal from "./EditPriceRoleModal";
 import { useQuery } from "@tanstack/react-query";
 import { AuthContext } from "../../../../AuthProvider/UserProvider";
+import BrightAlert from "bright-alert";
 
 export default function PriceRole() {
     const [open, setOpen] = useState(false)
@@ -29,7 +30,18 @@ export default function PriceRole() {
     });
 
 
-    console.log(priceRole, '<<<<<( 0--0 )>>>>>');
+    const handleDelete = (id) => {
+        fetch(`https://backend.doob.com.bd/api/v1/seller/get-price-role/${id}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+
+        }).then((res) => res.json()).then((data) => {
+            BrightAlert('Deleted Successfully');
+        })
+    }
+
     return (
         <div className="overflow-x-auto overflow-y-hidden">
             <Link to={`/seller/settings/add-price-role`}>
@@ -77,7 +89,7 @@ export default function PriceRole() {
                                 {itm?.priceRange ? itm.priceRange : 'Empty'}
                             </td>
                             <td className="px-4 border-r py-3 flex gap-4">
-                                <button className="text-red-600">Delete</button>
+                                <button onClick={() => handleDelete(itm?._id)} className="text-red-600">Delete</button>
                                 <button onClick={() => setOpen(itm)} className="text-blue-600">Edit</button>
                             </td>
                             <div className="m-0 p-0">

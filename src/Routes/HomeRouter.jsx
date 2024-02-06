@@ -59,9 +59,9 @@ const homePath = [
         </>,
     },
     {
-        path: ':product/categories/:shopId/:categoryId',
+        path: '/categories/:shopId/:categoryId',
         element: <CommonCategory />,
-        loader: async ({ params }) => {
+            loader: async ({ params }) => {
             console.log('params:', params); // Log params to the console
 
             const shopId = params.shopId;
