@@ -21,7 +21,16 @@ const ProductHero = () => {
         extraCategorys: [],
     });
     const [subCategoryData, setSubCategoryData] = useState([]);
+    const [miniCategoryData, setminiCategoryData] = useState([]);
+    const [extraCategoryData, setExtraCategoryData] = useState([]);
     const [openDropdownIndex, setOpenDropdownIndex] = useState(null);
+    const [active, setActive] = useState(
+        {
+            step1: null,
+            step2: null,
+        },
+
+    );
     const { user, shopInfo } = useContext(AuthContext);
 
     const { data: megaSideCategoryData = [], refetch: refetchMegaCategory } = useQuery({
@@ -115,21 +124,47 @@ const ProductHero = () => {
         const filteredSubCategory = allCategory?.subCategorys.filter(
             (subCategory) => subCategory.megaCategoryId === category?._id
         );
+
         setSubCategoryData(filteredSubCategory);
+        setminiCategoryData([]);
+        setExtraCategoryData([]);
         setOpenDropdownIndex(openDropdownIndex === index ? null : index);
+
+    };
+
+    const miniCategoryHandler = async (category, index) => {
+        const filteredSubCategory = allCategory?.miniCategorys.filter(
+            (miniCategory) => miniCategory.subCategoryId === category?._id
+        );
+
+        setminiCategoryData(filteredSubCategory);
+        setActive({ ...active, step1: category?._id })
+
+    };
+
+    const extraCategoryHandler = async (category, index) => {
+        // console.log(allCategory.extraCategorys[0].miniCategoryId, 'dd');
+        const filteredSubCategory = allCategory?.extraCategorys.filter(
+            (extraCategory) => extraCategory?.miniCategoryId === category?._id
+        );
+
+        setExtraCategoryData(filteredSubCategory);
+        setActive({ ...active, step2: category?._id })
+
+        console.log(filteredSubCategory, 'filteredSubCategory');
     };
 
 
-    console.log(allCategory, 'subCategoryData');
+    console.log(active, 'subCategoryData');
     return (
         <div className='flex gap-4 '>
-            <div className="bg-white w-[340px] relative flex flex-col gap-2 rounded-lg p-4">
+            <div className="bg-white w-[340px] relative lg:flex hidden flex-col gap-2 rounded-lg p-4">
                 {megaSideCategoryData.map((item, index) => (
                     <div key={index} className="  inline-block">
                         {/* Dropdown toggle button */}
                         <button
                             onClick={() => subCategoryHandler(item, index)}
-                            className="  flex  items-center  w-full justify-between"
+                            className={`flex  items-center  w-full justify-between px-2 py-2 text-sm font-normal  hover:bg-black hover:text-white  relative  ${openDropdownIndex === index ? 'bg-black text-white' : 'text-black'}`}
                         >
                             {item?.name}
                             <FaAngleRight className="absolute right-2" />
@@ -139,23 +174,76 @@ const ProductHero = () => {
                         {openDropdownIndex === index && (
                             <div
                                 onClick={() => setOpenDropdownIndex(null)}
-                                className="absolute right-[-196px] ring-1 ring-gray-400 top-0 z-20 w-48 h-full py-2 mt-2 origin-top-right bg-white rounded-md shadow-xl  "
-                            >
+                                className="absolute right-[-196px] top-0 z-20 w-48 h-full py-2 mt-2 origin-top-right bg-white">
                                 {
                                     subCategoryData.map((itm, index) => <div key={index}>
-                                        <Link to={`/category-products/${shopInfo?.shopId}/${itm?.megaCategoryId}`}>
-                                            <button
-                                                className="flex duration-150 hover:text-white w-full justify-between items-center px-2 py-2 text-sm font-normal  hover:bg-black   "
-                                                type="button"
-                                                id={item?._id}
-                                                data-te-dropdown-toggle-ref
-                                                aria-expanded="false"
-                                                data-te-ripple-init
-                                                data-te-ripple-color="light"
-                                            >
-                                                {itm?.subCategory}
-                                            </button>
-                                        </Link>
+                                        {
+                                            miniCategoryData?.length > 0 ?
+                                                <div
+                                                // to={`/category-products/${shopInfo?.shopId}/${itm?.megaCategoryId}`}
+                                                >
+                                                    <div
+                                                        onMouseMove={() => miniCategoryHandler(itm, index)}
+                                                        className={`flex  items-center  w-full justify-between px-2 py-2 text-sm font-normal  hover:bg-black hover:text-white  relative  ${active?.step1 === itm?._id ? 'bg-black text-white' : 'text-black'}`}
+                                                        type="button"
+                                                        id={item?._id}
+                                                        data-te-dropdown-toggle-ref
+                                                        aria-expanded="false"
+                                                        data-te-ripple-init
+                                                        data-te-ripple-color="light">
+                                                        {itm?.subCategory}...nnn
+
+                                                    </div>
+
+                                                    {miniCategoryData.length <= 1 ? '' : <div className="bg-white    border-gray-400 absolute top-0 h-full right-[-160px] w-[160px]">
+                                                        {miniCategoryData.map((itm, index) =>
+                                                            <div key={index}>
+                                                                {
+                                                                    !megaSideCategoryData.length == 0 ? <Link to={`/products/catagory/${itm?._id}`}>
+                                                                        <div onMouseMove={(() => extraCategoryHandler(itm, index))} className={`flex mt-2 items-center  w-full justify-between px-2 py-2 text-sm font-normal  hover:bg-black hover:text-white  relative  ${active?.step2 === itm?._id ? 'bg-black text-white' : 'text-black'}`}>
+                                                                            {itm?.miniCategoryName}
+                                                                        </div>
+                                                                    </Link> : <div onMouseMove={(() => extraCategoryHandler(itm, index))} className="flex justify-between items-center px-2 py-2 text-sm font-normal hover:text-white  hover:bg-black   ">
+                                                                        {itm?.miniCategoryName}
+                                                                    </div>
+                                                                }
+                                                            </div>
+                                                        )}
+                                                        {extraCategoryData.length == 0 ? '' : <div className="absolute w-[200px] p-2 bg-white right-[-200px] top-0 h-full">
+                                                            {
+                                                                extraCategoryData?.map((itm, index) => <div key={index}>
+                                                                    {
+                                                                        extraCategoryData.length == 0 ? <div>
+                                                                            {itm?.extraCategoryName}
+                                                                        </div> : <Link to={`/products/catagory/${itm?._id}`}>
+                                                                            <div className='py-2 px-2 hover:bg-black hover:text-white'> {itm?.extraCategoryName}</div>
+                                                                        </Link>
+                                                                    }
+                                                                </div>)
+                                                            }
+                                                        </div>}
+                                                    </div>}
+                                                </div>
+
+                                                :
+
+                                                <Link to={`/products/catagory/${itm?._id}`}>
+                                                    <div
+                                                        onMouseMove={() => miniCategoryHandler(itm, index)}
+                                                        className={`flex items-center  w-full justify-between px-2 py-2 text-sm font-normal  hover:bg-gray-900 hover:text-white  relative  ${active?.step2 === itm?._id ? 'bg-black text-white' : 'text-black'}`}
+                                                        type="button"
+                                                        id={item?._id}
+                                                        data-te-dropdown-toggle-ref
+                                                        aria-expanded="false"
+                                                        data-te-ripple-init
+                                                        data-te-ripple-color="light"
+                                                    >
+                                                        {itm?.subCategory}
+
+                                                    </div>
+                                                </Link>
+                                        }
+
                                     </div>)
                                 }
                             </div>

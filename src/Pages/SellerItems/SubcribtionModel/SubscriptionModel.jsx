@@ -3,9 +3,10 @@ import React, { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../../../AuthProvider/UserProvider';
 import { Link } from 'react-router-dom';
 import { CgClose } from 'react-icons/cg';
+import PriceModal from '../../Home/Price/PriceModal';
 
 const SubscriptionModel = () => {
-
+    const [open, setOpen] = useState(false);
     const { user, shopInfo } = useContext(AuthContext)
     const [services, setServices] = useState([])
     const [showWarning, setShowWarning] = useState(false)
@@ -50,7 +51,7 @@ const SubscriptionModel = () => {
     const showWarningIfNeeded = () => {
         if (daysPassed > 0 && daysPassed <= 5) {
             setShowWarning(true);
-        }else{
+        } else {
             setShowWarning(false);
         }
     };
@@ -195,9 +196,24 @@ const SubscriptionModel = () => {
                     }
                 </div>
                 <div className="flex justify-center mt-8">
-                    <Link to={`/price`} className="px-8 py-2 tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-600 rounded-md hover:bg-blue-500 focus:outline-none focus:bg-blue-500 focus:ring focus:ring-blue-300 focus:ring-opacity-80">
-                        Choose Plan
-                    </Link>
+                    {/* <Link to={`/price`} className="px-8 py-2 tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-600 rounded-md hover:bg-blue-500 focus:outline-none focus:bg-blue-500 focus:ring focus:ring-blue-300 focus:ring-opacity-80">
+                        Renew
+                    </Link> */}
+                    <PriceModal open={open} setOpen={setOpen} />
+
+                    <button onClick={() => setOpen(prices)} className="flex items-center mt-auto text-white bg-indigo-500 border-0 py-2 px-4  focus:outline-none hover:bg-indigo-600 rounded">
+                        Renew
+                        <svg
+                            fill="none"
+                            stroke="currentColor"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            className="w-4 h-4 ml-auto"
+                            viewBox="0 0 24 24">
+                            <path d="M5 12h14M12 5l7 7-7 7" />
+                        </svg>
+                    </button>
                 </div>
             </div>
         </div>

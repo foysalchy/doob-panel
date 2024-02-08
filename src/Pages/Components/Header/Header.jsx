@@ -3,13 +3,15 @@ import { Link, NavLink } from "react-router-dom";
 import { AuthContext } from "../../../AuthProvider/UserProvider";
 import { MdDashboard } from "react-icons/md";
 import Logo from "../../../../Logo.png";
-import { CgShoppingCart } from "react-icons/cg";
+import { CgArrowLeft, CgShoppingCart } from "react-icons/cg";
+import Category from "./CategoryListSm";
+import CategoryListSm from "./CategoryListSm";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [userDash, setUserDash] = useState(false);
   const { user, logOut } = useContext(AuthContext);
-
+  const [on, setOn] = useState(false);
   const menuData = (
     <>
       <li>
@@ -116,8 +118,8 @@ const Header = () => {
 
   return (
     <div className="fixed top-0 border-b right-0 left-0 z-50 bg-white">
-      <div className="px-4 py-5 mx-auto  sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8">
-        <div className="relative flex items-center justify-between">
+      <div className=" sm:max-w-xl mx-auto md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8">
+        <div className="px-4 py-4 relative flex mx-auto  items-center justify-between">
           <NavLink
             to="/"
             aria-label="Company"
@@ -146,7 +148,7 @@ const Header = () => {
           </NavLink>
           <ul className="flex items-center hidden space-x-8 lg:flex">
             {menuData}
-           
+
             <li>
               {!user ? (
                 <Link
@@ -398,7 +400,7 @@ const Header = () => {
             </button>
 
             {isMenuOpen && (
-              <div className="absolute top-0 z-10 left-0 w-full">
+              <div className="absolute  top-0 z-10 left-0 bottom-0 bg-white right-0 w-screen h-screen">
                 <div className="p-6 bg-white border rounded shadow">
                   <div className="flex items-center justify-between mb-4">
                     <div>
@@ -427,8 +429,18 @@ const Header = () => {
                       </button>
                     </div>
                   </div>
-                  <nav>
-                    <ul className="space-y-4">{menuData}</ul>
+                  <nav className={`grid ${on ? 'grid-cols-1' : 'grid-cols-2'} gap-2`}>
+                    {!on && <div>
+                      <h1 className="text-center border-b pb-2 border-gray-500">Menu</h1>
+                      <ul className="space-y-4 border-r px-2  border-gray-500">{menuData}</ul>
+                    </div>}
+                    <div >
+                      <div className={`flex items-center w-full ${on ? 'justify-between' : 'justify-center'} border-b pb-2 border-gray-500`}>
+                        {on && <button onClick={() => setOn(false)}><CgArrowLeft /></button>}
+                        <h1 className="text-center">Category</h1>
+                      </div>
+                      <CategoryListSm setOn={setOn} />
+                    </div>
                   </nav>
                 </div>
               </div>

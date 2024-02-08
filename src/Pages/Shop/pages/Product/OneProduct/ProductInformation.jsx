@@ -8,6 +8,7 @@ import { Link, useLoaderData, useLocation, useNavigate } from 'react-router-dom'
 import { Helmet } from 'react-helmet';
 import MetaHelmet from '../../../../../Helmate/Helmate';
 import { ShopAuthProvider } from '../../../../../AuthProvider/ShopAuthProvide';
+import { useQuery } from '@tanstack/react-query';
 
 const ProductInformation = () => {
 
@@ -106,6 +107,16 @@ const ProductInformation = () => {
             navigate(`/shop/${shopId}/user/order?shop_id=${shop_id.shop_id}&userId=${shopUser._id}`)
         }
     }
+
+
+    const { data: comments = {}, isLoading, refetch } = useQuery({
+        queryKey: ["comments"],
+        queryFn: async () => {
+            const res = await fetch(`https://backend.doob.com.bd/api/v1/seller/product-comment?id=${product?._id}`);
+            const data = await res.json();
+            return data?.comments;
+        },
+    });
 
 
     return (
@@ -349,7 +360,7 @@ const ProductInformation = () => {
             </div>
             <div className="max-w-7xl mx-auto px-4 md:px-4 lg:px-8 my-6">
                 <div className="border p-6 rounded">
-                    <ProductReviews />
+                    <ProductReviews comments={comments} />
                 </div>
             </div>
             <div className="max-w-7xl mx-auto px-4 md:px-4 lg:px-8 my-6">

@@ -1,9 +1,35 @@
+import { useContext } from "react";
+import { AuthContext } from "../../../../AuthProvider/UserProvider";
+import BrightAlert from "bright-alert";
+
 export default function ({ setOpen, itm }) {
+    const { shopInfo } = useContext(AuthContext);
+
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(e.target.to.value);
-        console.log(e.target.from.value);
-        console.log(e.target.priceRange.value);
+
+        const data = {
+            to: e.target.to.value,
+            from: e.target.from.value,
+            priceRange: e.target.priceRange.value,
+            shopId: shopInfo?.shopId
+        }
+
+        fetch(`https://backend.doob.com.bd/api/v1/seller/edit-price-role`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                BrightAlert("Price role updated!!");
+                setOpen(false);
+            })
+
     };
     return (
         <div className="bg-[#00000038] flex items-center p-3 w-screen h-screen top-0 left-0 z-[2000] fixed">
