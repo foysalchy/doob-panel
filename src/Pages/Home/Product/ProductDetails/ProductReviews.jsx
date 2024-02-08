@@ -25,11 +25,11 @@ const ProductReviews = ({ comments }) => {
   const progressBarStyle5 = { width: `${((averageRating - 4) / 5) * 100}%` };
 
 
-  console.log(totalRating, 'comments review>>>>>>');
+  console.log(comments, 'comments review>>>>>>');
   return (
     <div>
       <div className="text-center mb-5 ">
-        <h2 className="text-xl font-medium">Ratings & Reviews (273)</h2>
+        <h2 className="text-xl font-medium">Ratings & Reviews ({comments.length})</h2>
         <p>Summary</p>
       </div>
       <div className="border-b">
@@ -136,36 +136,40 @@ const ProductReviews = ({ comments }) => {
         {
           comments &&
           comments.map((comment) => {
-            console.log(comment?.name && comment?.name, 'name');
-            return (
-              <section className="" key={comment.id}>
-                <div className="container  mx-auto mb-2  ">
-                  <div className="border-b pt-2 mt-2 px-2 flex flex-col  sm:flex-row sm:items-center md:items-start mx-auto">
-                    <div>
-                      <div className="flex-grow flex gap-2 items-center  sm:pr-16 text-xl font-medium title-font text-gray-900">
-                        <div className="bg-gray-100 w-[40px] rounded-full flex items-center justify-center h-[40px]">
-                          {comment?.name ? comment.name.charAt(0) : '🙍‍♂️'}
-                        </div>
-                        <span className="">{comment?.name}</span>
-                      </div>
-                      <p className="text-gray-500">{comment?.comment}</p>
-                      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-8 gap-2 items-center my-5">
-                        <img
-                          className="w-[100px] h-[100px]"
-                          src={comment?.photo?.image}
-                          alt="product"
-                        />
-                      </div>
-                    </div>
-                    <div className="flex justify-between items-center lg:ml-5 mt-2 md:mt-0">
-                      {
-                        Array(comment?.rating).fill('n').map(itm => <FaStar key={itm} className="text-yellow-400" />)
-                      }
 
+            return (
+              <div className="max-w-4xl mb-3 mx-auto p-4 bg-white shadow rounded-lg">
+                <div className="flex items-center justify-between border-b pb-4">
+                  <div className="flex items-center space-x-3">
+                    {/* <div className="w-10 h-10 bg-gray-300 rounded-full" /> */}
+                    <div>
+                      <div className="font-semibold">{comment?.name}</div>
+                      {/* <div className="text-sm text-gray-500">25, Nov 2025</div> */}
+                    </div>
+                  </div>
+                  <div className="flex items-center space-x-1">
+                    <div className="text-sm font-semibold">Rating:</div>
+                    <div className="flex">
+
+                      {
+                        Array(comment?.rating).fill('n').map(itm => <svg className="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                          <path d="M9.049 2.927c.396-.802 1.556-.802 1.952 0l1.837 3.729a1.172 1.172 0 00.885.676l4.118.598c.84.122 1.175 1.154.567 1.745l-2.982 2.905a1.172 1.172 0 00-.339 1.04l.703 4.093c.145.842-.738 1.481-1.487 1.083l-3.675-1.933a1.172 1.172 0 00-1.091 0l-3.675 1.933c-.749.398-1.632-.241-1.487-1.083l.703-4.093a1.172 1.172 0 00-.339-1.04l-2.982-2.905c-.608-.591-.273-1.623.567-1.745l4.118-.598a1.172 1.172 0 00.885-.676l1.837-3.729z" />
+                        </svg>)
+                      }
                     </div>
                   </div>
                 </div>
-              </section>
+                <div className="pt-4">
+                  <p className="mt-2 text-gray-600">
+                    {comment?.comment}
+                  </p> <br />
+
+                  <div className="flex items-center">
+                    <img src={comment?.photo?.image} alt="" className="w-20 h-20" />
+                  </div>
+                </div>
+              </div>
+
             )
           })
         }
@@ -176,3 +180,4 @@ const ProductReviews = ({ comments }) => {
 };
 
 export default ProductReviews;
+
