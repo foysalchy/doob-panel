@@ -178,6 +178,8 @@ const ProductDetails = () => {
   const convertedRating = (2 / 10) * 5;
 
   const handleStore = (id) => {
+
+
     if (shopInfo) {
       const data = {
         shopId: shopInfo?.shopId,
@@ -326,17 +328,16 @@ const ProductDetails = () => {
   }
 
 
-  const { data: comments = {}, isLoading, refetch } = useQuery({
+  const { data: comments = {}, refetch: reload } = useQuery({
     queryKey: ["comments"],
     queryFn: async () => {
-      const res = await fetch(`https://backend.doob.com.bd/api/v1/seller/all-shop-product-comment`);
+      const res = await fetch(`https://backend.doob.com.bd/api/v1/seller/product-comment?id=${productFind?._id}`);
       const data = await res.json();
       return data?.comments;
     },
   });
 
-  console.log(comments, 'comments.....');
-
+  console.log(comment, 'comment');
   return (
     <section>
       <div className="py-4">
@@ -566,8 +567,9 @@ const ProductDetails = () => {
         </div>
       </div>
       <div className="max-w-7xl mx-auto px-4 md:px-4 lg:px-8 my-6">
+        {/* comment form */}
         {user && (
-          <div className="bg-gray-100 py-2 px-3">
+          <div className="bg-gray-100 hidden py-2 px-3">
             <form className="border-b border-gray-400 mx-auto mt-2" onSubmit={handleSubmit}>
               <div className="mb-4">
                 <label htmlFor="comment" className="block text-gray-700 text-sm font-bold mb-2">
@@ -613,7 +615,7 @@ const ProductDetails = () => {
             </form>
           </div>
         )}
-        <div className="bg-white p-2 mt-8">
+        <div className="bg-white hidden p-2 mt-8">
           <h3 className="mt-2 font-semibold pb-4">All Comment</h3>
           {
             Array.isArray(comments) && comments.map((comment, index) =>
@@ -634,6 +636,8 @@ const ProductDetails = () => {
             )
           }
         </div>
+        {/* end comment */}
+
         <br />
         <div className="border p-6 rounded">
           <ProductDescription metaTitle={productFind?.metaTitle} description={productFind?.description} />

@@ -17,6 +17,8 @@ const ReviewTable = () => {
         setCurrentPage(newPage);
     };
 
+    // console.log(`https://backend.doob.com.bd/api/v1/seller/`, 'review.....');
+
     return (
         <div className="flex flex-col">
             <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -49,7 +51,6 @@ const ReviewTable = () => {
                     </div>
                 </div>
             </div>
-
             <div className="flex justify-center mt-4">
                 <ul className="flex space-x-2">
                     {Array.from({ length: totalPages }).map((_, index) => (

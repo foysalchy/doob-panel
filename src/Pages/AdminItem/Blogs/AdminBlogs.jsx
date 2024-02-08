@@ -247,6 +247,7 @@ const AdminBlogs = () => {
                     ))}
                   </tbody>
                 </table>
+                {filteredData.length < 1 && <div className="bg-gray-100 text-center py-4 text-gray-500 text-xl">Empty</div>}
               </div>
             </div>
           </div>

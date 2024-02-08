@@ -3,6 +3,7 @@ import AddProduct from "../AddProduct";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
+import BrightAlert from "bright-alert";
 
 const ManageProduct = () => {
   const { data: products = [], refetch } = useQuery({
@@ -27,7 +28,23 @@ const ManageProduct = () => {
       item._id.toString().includes(searchQuery)
   );
 
-  console.log(filteredData);
+  const updateProductStatus = (id, status) => {
+    console.log(id);
+    fetch(`https://backend.doob.com.bd/api/v1/seller/update-product-status`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        id,
+        status
+      })
+
+    }).then((res) => res.json()).then((data) => {
+      BrightAlert()
+      refetch()
+    })
+  }
 
   return (
     <div className="">
@@ -178,12 +195,23 @@ const ManageProduct = () => {
                           </div>
                         </td>
                         <td className="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                          <div className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-emerald-100/60 bg-gray-800">
-                            <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-                            <h2 className="text-sm font-normal text-emerald-500">
-                              Active
-                            </h2>
-                          </div>
+                          {product.status === true ?
+                            <div
+                              onClick={() => updateProductStatus(product._id, false)}
+                              className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 cursor-pointer bg-emerald-100/60 bg-gray-800">
+                              <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                              <h2 className="text-sm font-normal text-emerald-500">
+                                Active
+                              </h2>
+                            </div> :
+                            <div
+                              onClick={() => updateProductStatus(product?._id, true)}
+                              className="inline-flex items-center px-3 py-1 rounded-full  cursor-pointer gap-x-2 bg-emerald-100/60 bg-gray-800">
+                              <span className="h-1.5 w-1.5 rounded-full bg-red-500" />
+                              <h2 className="text-sm font-normal text-red-500">
+                                Pending
+                              </h2>
+                            </div>}
                         </td>
                         <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
                           {product?.categoryName}

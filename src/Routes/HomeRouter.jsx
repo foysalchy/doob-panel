@@ -59,28 +59,13 @@ const homePath = [
         </>,
     },
     {
-        path: '/categories/:shopId/:categoryId',
+        path: '/products/catagory/:categoryId',
         element: <CommonCategory />,
-            loader: async ({ params }) => {
-            console.log('params:', params); // Log params to the console
-
-            const shopId = params.shopId;
-            const categoryName = params.categoryId
-
-            if (categoryName !== null) {
-                console.log('Fetching data for categoryName:', categoryName);
-
-                const response = await fetch(`https://backend.doob.com.bd/api/v1/shop/product/${shopId}/categories?category=${encodeURIComponent(categoryName)}`);
-                const data = await response.json();
-
-                console.log('Fetched data:', data);
-
-                return data;
-            } else {
-                // Handle the case when categoryName is not present
-                console.error('categoryName is not defined in the query parameters');
-                return null; // or handle it appropriately
-            }
+        loader: async ({ params }) => {
+            const categoryName = params.categoryId;
+            const response = await fetch(`https://backend.doob.com.bd/api/v1/seller/admin-category-item?id=${categoryName}`);
+            const data = await response.json();
+             return data?.data;
         },
     },
 
