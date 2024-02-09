@@ -5,7 +5,7 @@ import { FaAngleRight } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import { SwiperSlide } from "swiper/react";
 
-export default function CategoryListSm({setOn}) {
+export default function CategoryListSm({ setOn }) {
     const [allCategory, setAllCategory] = useState({
         subCategorys: [],
         miniCategorys: [],
@@ -54,7 +54,7 @@ export default function CategoryListSm({setOn}) {
                     const data = await response.json();
                     return data.subCategory;
                 } catch (error) {
-                    console.error('Error:', error);
+                    // console.error('Error:', error);
                     return [];
                 }
             });
@@ -76,7 +76,7 @@ export default function CategoryListSm({setOn}) {
                     const data = await response.json();
                     return data.row;
                 } catch (error) {
-                    console.error('Error:', error);
+                    // console.error('Error:', error);
                     return [];
                 }
             });
@@ -98,7 +98,7 @@ export default function CategoryListSm({setOn}) {
                     const data = await response.json();
                     return data.rows;
                 } catch (error) {
-                    console.error('Error:', error);
+                    // console.error('Error:', error);
                     return [];
                 }
             });
@@ -113,6 +113,7 @@ export default function CategoryListSm({setOn}) {
     }, [allCategory.miniCategorys]);
 
     const subCategoryHandler = async (category, index) => {
+        setOpenDropdownIndex(prevIndex => prevIndex === index ? null : index);
         const filteredSubCategory = allCategory?.subCategorys.filter(
             (subCategory) => subCategory.megaCategoryId === category?._id
         );
@@ -120,7 +121,7 @@ export default function CategoryListSm({setOn}) {
         setSubCategoryData(filteredSubCategory);
         setminiCategoryData([]);
         setExtraCategoryData([]);
-        setOpenDropdownIndex(openDropdownIndex === index ? null : index);
+        // setOpenDropdownIndex(openDropdownIndex === index ? null : index);
 
     };
 
@@ -145,76 +146,114 @@ export default function CategoryListSm({setOn}) {
         setActive({ ...active, step2: category?._id })
 
     };
-    // console.log(allCategory, 'filteredSubCategory');
+    console.log(extraCategoryData, 'filteredSubCategory');
     return (
-        <div className='flex gap-4 '>
-            <div onClick={()=> setOn(true)} className="bg-white relative lg:hidden block w-full flex-col gap-2 rounded-lg p-4">
-                {megaSideCategoryData.map((item, index) => (
-                    <div key={index} className="w-full  inline-block">
-                        {/* Dropdown toggle button */}
-                        <button
-                            onClick={() => subCategoryHandler(item, index)}
-                            className={`flex  items-center  w-full justify-between px-2 py-2 text-sm font-normal  hover:bg-black hover:text-white  relative  ${openDropdownIndex === index ? 'bg-black text-white' : 'text-black'}`}
-                        >
-                            {item?.name}
-                            <FaAngleRight className="absolute right-2" />
-                        </button>
-                        {/* Dropdown */}
-                        <div
-                            className={`${openDropdownIndex === index ? 'block p-1 border' : 'hidden'
-                                }  `} >
-                            {
-                                subCategoryData?.map((itm, index) => <div className="">
-                                    {
-                                        miniCategoryData.length > 0 ? <div onMouseMove={() => miniCategoryHandler(itm, index)} className={`flex items-center  w-full justify-between px-2 py-2 text-sm font-normal  hover:bg-gray-900 hover:text-white  relative  ${active?.step1 === itm?._id ? 'bg-black text-white' : 'text-black'}`}>
-                                            {itm?.subCategory}
-                                        </div> :
-                                            <Link className="  w-full" to={`/products/catagory/${itm?._id}`} onMouseMove={() => miniCategoryHandler(itm, index)} >
-                                                <div className={`flex items-center  w-full justify-between px-2 py-2 text-sm font-normal  hover:bg-gray-900 hover:text-white  relative  ${active?.step2 === itm?._id ? 'bg-black text-white' : 'text-black'}`}>
-                                                    {itm?.subCategory}
-                                                </div>
-                                            </Link>
-                                    }
+        <div className=' '>
+            <div className="grid grid-cols-4 gap-2 pt-2">
+                {/* mega category */}
+                <div className="">
+                    {megaSideCategoryData.map((item, index) => (
+                        <div key={index} className="">
+                            {!subCategoryData.length === 0 ?
+                                <Link
+                                    to={`/products/catagory/${item?._id}`}>
+                                    <div
+                                        onClick={() => subCategoryHandler(item, index)}
+                                        className={`flex flex-col gap-2 bg-gray-100 w-full h-auto rounded  items-center justify-center mb-2 px-2 py-2 text-sm font-normal   relative  ${openDropdownIndex === index ? '' : 'text-black'}`}>
+                                        <img src={item?.image} alt="" className="w-[70px] rounded-full h-[70px] object-cover ring-1 ring-gray-400" />
+                                        <p className="text-sm text-center">{item?.name}</p>
 
-                                    {
-                                        miniCategoryData.length > 0 && active.step1 === itm?._id && miniCategoryData?.map((itm, index) => {
-                                            // console.log(itm, 'test...');
-                                            return (
-                                                <div className=" mb-1 w-full border p-1">
-                                                    {
-                                                        extraCategoryData.length > 0 ? <div onMouseMove={() => extraCategoryHandler(itm, index)} >
-                                                            <button className={`flex items-center  w-full justify-between px-2 py-2 text-sm font-normal  hover:bg-gray-900 hover:text-white  relative  ${active?.step2 === itm?._id ? 'bg-black text-white' : 'text-black'}`}>
-                                                                {itm?.miniCategoryName} ..
-                                                            </button>
-                                                            {
-                                                                subCategoryData.length > 0 && active.step2 === itm?._id ? <div className="bg-gray-100 text-black">
-                                                                    {
-                                                                        extraCategoryData?.map((itm, index) => <Link key={itm?._id} className="  w-full" to={`/products/catagory/${itm?._id}`} >
-                                                                            <div className="hover:bg-gray-700 hover:text-white px-2 py-2 mb-1 w-full text-sm">
-                                                                                {itm?.extraCategoryName}
-                                                                            </div>
-                                                                        </Link>)
-                                                                    }
-                                                                </div> : <></>
-                                                            }
-                                                        </div> : <Link to={`/products/catagory/${itm?._id}`} onMouseMove={() => extraCategoryHandler(itm, index)} >
-                                                            <div className={`flex items-center  w-full justify-between px-2 py-2 text-sm font-normal  hover:bg-gray-900 hover:text-white  relative  ${active?.step2 === itm?._id ? 'bg-black text-white' : 'text-black'}`}>
-
-                                                                {itm?.miniCategoryName}
-                                                            </div>
-                                                        </Link>
-                                                    }
-                                                </div>
-                                            )
-                                        })
-                                    }
-
-
-                                </div>)
+                                    </div>
+                                </Link> :
+                                <div className="">
+                                    <button
+                                        onClick={() => subCategoryHandler(item, index)}
+                                        className={`${openDropdownIndex === index ? 'bg-gray-800 text-white' : 'bg-gray-100 text-black'} flex flex-col gap-2 w-full h-auto rounded  items-center justify-center mb-2 px-2 py-2 text-sm font-normal   relative `}
+                                    >
+                                        <img src={item?.image} alt="" className="w-[70px] rounded-full h-[70px] object-cover ring-1 ring-gray-400" />
+                                        <p className="text-sm">{item?.name}</p>
+                                    </button>
+                                </div>
                             }
                         </div>
-                    </div>
-                ))}
+                    ))}
+                </div>
+                {/* Sub category */}
+                <div className="">
+                    {subCategoryData.map((item, index) => (
+                        <div key={index} className="">
+                            {miniCategoryData.length < 1 ? (
+                                <Link to={`/products/catagory/${item?._id}`}>
+                                    <div
+                                        onClick={() => miniCategoryHandler(item, index)}
+                                        className={`${active.step1 === item?._id ? 'bg-gray-800 text-white' : 'bg-gray-100 text-black'} flex flex-col gap-2 w-full h-auto rounded  items-center justify-center mb-2 px-2 py-2 text-sm font-normal   relative `}
+                                    >
+                                        <img src={item?.img} alt="" className="w-[70px] rounded-full h-[70px] object-cover ring-1 ring-gray-400" />
+                                        <p className="text-sm text-center">{item?.subCategory}</p>
+                                    </div>
+                                </Link>
+                            ) : (
+                                <div className="">
+                                    <button
+                                        onClick={() => miniCategoryHandler(item, index)}
+                                        className={`${active.step1 === item?._id ? 'bg-gray-800 text-white' : 'bg-gray-100 text-black'} flex flex-col gap-2 w-full h-auto rounded  items-center justify-center mb-2 px-2 py-2 text-sm font-normal   relative `}
+                                    >
+                                        <img src={item?.img} alt="" className="w-[70px] rounded-full h-[70px] object-cover ring-1 ring-gray-400" />
+                                        <p className="text-sm">{item?.subCategory}</p>
+                                    </button>
+                                </div>
+                            )}
+                        </div>
+                    ))}
+                </div>
+
+
+                {/* Mini category */}
+                <div className="">
+                    {miniCategoryData.map((item, index) => (
+                        <div key={index} className="">
+                            {!extraCategoryData.length > 1 ?
+                                <Link
+                                    to={`/products/catagory/${item?._id}`}>
+                                    <div
+                                        onClick={() => extraCategoryHandler(item, index)}
+                                        className={`${active.step2 === item?._id ? 'bg-gray-800 text-white' : 'bg-gray-100 text-black'} flex flex-col gap-2 w-full h-auto rounded  items-center justify-center mb-2 px-2 py-2 text-sm font-normal   relative `}>
+                                        <img src={item?.img} alt="" className="w-[70px] rounded-full h-[70px] object-cover ring-1 ring-gray-400" />
+                                        <p className="text-sm text-center">{item?.miniCategoryName}..</p>
+
+                                    </div>
+                                </Link> :
+                                <div className="">
+                                    <button
+                                        onClick={() => extraCategoryHandler(item, index)}
+                                        className={`${active.step2 === item?._id ? 'bg-gray-800 text-white' : 'bg-gray-100 text-black'} flex flex-col gap-2 w-full h-auto rounded  items-center justify-center mb-2 px-2 py-2 text-sm font-normal   relative `}
+                                    >
+                                        <img src={item?.img} alt="" className="w-[70px] rounded-full h-[70px] object-cover ring-1 ring-gray-400" />
+                                        <p className="text-sm">{item?.miniCategoryName}</p>
+                                    </button>
+                                </div>
+                            }
+                        </div>
+                    ))}
+                </div>
+
+                {/* Extra category */}
+                <div className="">
+                    {extraCategoryData.map((item, index) => (
+                        <div key={index} className="">
+                            <div className="">
+                                <Link
+                                    to={`/products/catagory/${item?._id}`}
+                                    className={`${active.step1 === item?._id ? 'bg-gray-800 text-white' : 'bg-gray-100 text-black'} flex flex-col gap-2 w-full h-auto rounded  items-center justify-center mb-2 px-2 py-2 text-sm font-normal   relative `}
+                                >
+                                    <img src={item?.img} alt="" className="w-[70px] rounded-full h-[70px] object-cover ring-1 ring-gray-400" />
+                                    <p className="text-sm">{item?.miniCategoryName}</p>
+                                </Link>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+
             </div>
         </div>
     );

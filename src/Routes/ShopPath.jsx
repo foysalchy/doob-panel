@@ -1,3 +1,4 @@
+import CategorieItems from "../Layout/Shop/ShopComponents/categorieItems";
 import Error from "../Pages/Home/Error/Error";
 import ShopAllBlog from "../Pages/Shop/ShopBlog/ShopAllBlog";
 import ShopSingleBlog from "../Pages/Shop/ShopBlog/ShopSingleBlog";
@@ -53,6 +54,14 @@ const ShopPath = [
         </NavigateToLogin>,
 
     },
+     {
+         path: 'categories',
+        element: <NavigateToLogin>
+            <CategorieItems />
+        </NavigateToLogin>,
+
+    },
+    
     {
         path: ':id/user',
         element: <IsUserRegistration><UserProfile /></IsUserRegistration>,
