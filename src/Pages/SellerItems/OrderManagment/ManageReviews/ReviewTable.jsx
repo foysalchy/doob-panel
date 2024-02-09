@@ -1,14 +1,15 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import ReviewTableRow from './ReviewTableRow';
+import { AuthContext } from '../../../../AuthProvider/UserProvider';
+import { useQuery } from '@tanstack/react-query';
 
-const ReviewTable = () => {
+const ReviewTable = ({ search }) => {
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 4; // You can change this value based on your requirements
-
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
-
+    const { shopInfo } = useContext(AuthContext)
     const totalItems = [1, 2, 3, 4, 5, 6, 7, 8, 9].length;
 
     const totalPages = Math.ceil(totalItems / itemsPerPage);
@@ -17,7 +18,16 @@ const ReviewTable = () => {
         setCurrentPage(newPage);
     };
 
-    // console.log(`https://backend.doob.com.bd/api/v1/seller/`, 'review.....');
+
+    const { data: reviewData = [], refetch } = useQuery({
+        queryKey: ["reviewData"],
+        queryFn: async () => {
+            const res = await fetch(`https:/backend.doob.com.bd/api/v1/seller/all-shop-product-comment?shopId=${shopInfo._id}`);
+            const data = await res.json();
+            return data?.comments;
+        },
+    });
+
 
     return (
         <div className="flex flex-col">
@@ -45,7 +55,8 @@ const ReviewTable = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {[1, 2, 3, 4, 5, 6, 7, 8, 9]?.slice(startIndex, endIndex)?.map(itm => <ReviewTableRow key={itm} />)}
+                                {
+                                    reviewData?.slice(startIndex, endIndex)?.map(itm => <ReviewTableRow refetch={refetch} itm={itm} key={itm} />)}
                             </tbody>
                         </table>
                     </div>

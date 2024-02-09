@@ -36,6 +36,7 @@ const SubCategoryManagement = () => {
         addBtn: 'bg-black text-white px-4 py-2 flex items-center rounded-lg',
 
     }
+    console.log(subCategory, 'subCategory');
     return (
         <div>
             <Link to={'add'} ><button className={style.addBtn}> Add mega category</button></Link>
@@ -45,6 +46,7 @@ const SubCategoryManagement = () => {
                     <table className="w-full table-auto text-sm text-left">
                         <thead className="bg-gray-50 text-gray-600 font-medium border-b">
                             <tr>
+                                <th className="py-3 px-6">Photo</th>
                                 <th className="py-3 px-6">Sub Category Name</th>
                                 <th className="py-3 px-6">Mega Category Id</th>
                                 <th className="py-3 px-6">Mega Category Name</th>
@@ -57,6 +59,9 @@ const SubCategoryManagement = () => {
                                     // const formattedTimeStamp = new Date(item.timeStamp * 1000).toLocaleString();
                                     return (
                                         <tr key={idx}>
+                                            <td className="px-6 py-4 whitespace-nowrap">
+                                                <img src={item?.img} alt="" className="ring-1 ring-gray-400 w-[60px] object-cover h-[60px] rounded" />
+                                            </td>
                                             <td className="px-6 py-4 whitespace-nowrap">{item.subCategory}</td>
                                             <td className="px-6 py-4 whitespace-nowrap">{item.megaCategoryId}</td>
                                             <td className="px-6 py-4 whitespace-nowrap">{item.megaCategoryName}</td>

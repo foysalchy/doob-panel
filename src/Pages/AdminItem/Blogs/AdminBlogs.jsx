@@ -253,8 +253,6 @@ const AdminBlogs = () => {
           </div>
         </div>
       </section>
-
-
     </div>
 
   );
