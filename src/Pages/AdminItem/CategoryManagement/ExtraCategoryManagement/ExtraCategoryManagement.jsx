@@ -63,6 +63,7 @@ const ExtraCategoryManagement = () => {
                     <table className="w-full table-auto text-sm text-left">
                         <thead className="bg-gray-50 text-gray-600 font-medium border-b">
                             <tr>
+                                <th className="py-3 px-6">Photo </th>
                                 <th className="py-3 px-6">Extra Category </th>
                                 <th className="py-3 px-6">Mini Category</th>
                                 <th className="py-3 px-6">Sub Category</th>
@@ -78,6 +79,9 @@ const ExtraCategoryManagement = () => {
                                     const formattedTimeStamp = new Date(item.timeStamp).toLocaleString();
                                     return (
                                         <tr key={idx}>
+                                            <td className="px-6 py-4 whitespace-nowrap">
+                                                <img src={item?.img} alt="" className="ring-1 ring-gray-400 w-[60px] object-cover h-[60px] rounded" />
+                                            </td>
                                             <td className="px-6 py-4 whitespace-nowrap">{item.extraCategoryName}</td>
                                             <td className="px-6 py-4 whitespace-nowrap">{item.miniCategoryName}</td>
                                             <td className="px-6 py-4 whitespace-nowrap">{item.subCategoryName}</td>

@@ -11,6 +11,34 @@ import { useNavigate } from 'react-router-dom';
 
 const AddMiniCategory = () => {
     const navigate = useNavigate();
+    const [upload, setUpload] = useState('')
+    const [uplodOk, setUploadOk] = useState(false);
+
+    const imageUploading = (e) => {
+        e.preventDefault();
+        const selectedFile = e.target.files[0];
+        const formData = new FormData();
+        formData.append("image", selectedFile);
+        const url = `https://backend.doob.com.bd/api/v1/image/upload-image`;
+        fetch(url, {
+            method: "POST",
+            body: formData,
+        })
+            .then((res) => res.json())
+            .then((imageData) => {
+
+                if (imageData.imageUrl) {
+                    setUpload(imageData.imageUrl)
+                    setUploadOk(true)
+                }
+                else {
+                    setUpload('')
+                }
+
+            });
+    }
+
+
     const handleGoBack = () => {
         navigate(-1); // This will go back to the previous page
     };
@@ -79,6 +107,7 @@ const AddMiniCategory = () => {
             subCategoryName,
             subCategoryId,
             miniCategoryName,
+            img: upload,
             status: 'true',
 
             timeStamp: new Date().getTime(),
@@ -168,6 +197,12 @@ const AddMiniCategory = () => {
                         placeholder="E.g., Trendy Fashion Accessories"
                         className="mt-1 p-2 border border-gray-300 rounded-md w-full text-gray-900 focus:outline-none focus:border-blue-500"
                     />
+                </div>
+                <div className="flex flex-col gap-2 mt-6">
+                    <label htmlFor="upload">
+                        Upload Image
+                    </label>
+                    <input onChange={imageUploading} required type="file" placeholder="enter sub category" id="upload" className="w-full px-3 py-2 border-2 text-sm text-gray-600 bg-white  shadow-sm outline-none appearance-none  " />
                 </div>
 
                 <button type='submit' className="group mt-4 relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500">

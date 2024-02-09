@@ -155,18 +155,20 @@ const ProductHero = () => {
     };
 
 
-    console.log(active, 'subCategoryData');
+    console.log(subCategoryData, 'subCategoryData');
     return (
         <div className='flex gap-4 '>
-            <div className="bg-white w-[340px] relative lg:flex hidden flex-col gap-2 rounded-lg p-4">
+            <div className="bg-white  w-[340px] relative lg:flex hidden flex-col gap-2 rounded-lg p-4">
                 {megaSideCategoryData.map((item, index) => (
                     <div key={index} className="  inline-block">
                         {/* Dropdown toggle button */}
                         <button
                             onClick={() => subCategoryHandler(item, index)}
-                            className={`flex  items-center  w-full justify-between px-2 py-2 text-sm font-normal  hover:bg-black hover:text-white  relative  ${openDropdownIndex === index ? 'bg-black text-white' : 'text-black'}`}
+                            className={`flex  items-center  w-full justify-between px-2 py-2 text-sm font-normal  hover:bg-black hover:text-white  relative  ${openDropdownIndex === index ? 'bg-gray-100 text-black' : 'text-black'} rounded`}
                         >
-                            {item?.name}
+                            <span className="flex items-center gap-2">
+                                <img src={item?.image} alt="" className="w-8 h-8 rounded-full ring-1 ring-gray-200" /> {item?.name}
+                            </span>
                             <FaAngleRight className="absolute right-2" />
                         </button>
 
@@ -174,49 +176,60 @@ const ProductHero = () => {
                         {openDropdownIndex === index && (
                             <div
                                 onClick={() => setOpenDropdownIndex(null)}
-                                className="absolute right-[-196px] top-0 z-20 w-48 h-full py-2 mt-2 origin-top-right bg-white">
+                                className="absolute rounded-l-xl right-[-196px] top-0 z-20 w-48 h-full py-2 mt-2 px-2 origin-top-right bg-white">
                                 {
-                                    subCategoryData.map((itm, index) => <div key={index}>
+                                    subCategoryData.map((subCategory, index) => <div key={index}>
                                         {
                                             miniCategoryData?.length > 0 ?
                                                 <div
                                                 // to={`/category-products/${shopInfo?.shopId}/${itm?.megaCategoryId}`}
                                                 >
                                                     <div
-                                                        onMouseMove={() => miniCategoryHandler(itm, index)}
-                                                        className={`flex  items-center  w-full justify-between px-2 py-2 text-sm font-normal  hover:bg-black hover:text-white  relative  ${active?.step1 === itm?._id ? 'bg-black text-white' : 'text-black'}`}
+                                                        onMouseMove={() => miniCategoryHandler(subCategory, index)}
+                                                        className={`flex items-center hover:bg-gray-100 w-full justify-between px-2 py-2 text-sm font-normal cursor-pointer mb-1 rounded relative  ${active?.step1 === subCategory?._id ? 'text-black bg-gray-100' : 'text-black'}`}
                                                         type="button"
                                                         id={item?._id}
                                                         data-te-dropdown-toggle-ref
                                                         aria-expanded="false"
                                                         data-te-ripple-init
                                                         data-te-ripple-color="light">
-                                                        {itm?.subCategory}...nnn
+                                                        <span className="flex items-center gap-2">
+                                                            <img src={subCategory?.img} alt="" className="w-8 h-8 rounded-full ring-1 ring-gray-200" /> {subCategory?.subCategory}
+                                                        </span>
 
                                                     </div>
 
-                                                    {miniCategoryData.length <= 1 ? '' : <div className="bg-white    border-gray-400 absolute top-0 h-full right-[-160px] w-[160px]">
-                                                        {miniCategoryData.map((itm, index) =>
+                                                    {miniCategoryData.length <= 1 ? '' : <div className="bg-white    border-gray-400 absolute top-0 h-full right-[-180px] px-2 w-[190px]">
+                                                        {miniCategoryData.map((miniCategory, index) =>
                                                             <div key={index}>
                                                                 {
-                                                                    !megaSideCategoryData.length == 0 ? <Link to={`/products/catagory/${itm?._id}`}>
-                                                                        <div onMouseMove={(() => extraCategoryHandler(itm, index))} className={`flex mt-2 items-center  w-full justify-between px-2 py-2 text-sm font-normal  hover:bg-black hover:text-white  relative  ${active?.step2 === itm?._id ? 'bg-black text-white' : 'text-black'}`}>
-                                                                            {itm?.miniCategoryName}
+                                                                    !megaSideCategoryData.length == 0 ? <Link to={`/products/catagory/${miniCategory?._id}`}>
+                                                                        <div onMouseMove={(() => extraCategoryHandler(miniCategory, index))} className={`flex mt-2 items-center  w-full justify-between px-2 py-2 text-sm font-normal rounded hover:bg-gray-100 hover:text-black  relative  ${active?.step2 === miniCategory?._id ? 'bg-gray-100 text-black' : 'text-black'}`}>
+                                                                            <span className="flex items-center gap-2">
+                                                                                <img src={miniCategory?.img} alt="" className="w-8 h-8 rounded-full ring-1 ring-gray-200" /> {miniCategory?.miniCategoryName}
+                                                                            </span>
                                                                         </div>
-                                                                    </Link> : <div onMouseMove={(() => extraCategoryHandler(itm, index))} className="flex justify-between items-center px-2 py-2 text-sm font-normal hover:text-white  hover:bg-black   ">
-                                                                        {itm?.miniCategoryName}
+                                                                    </Link> : <div onMouseMove={(() => extraCategoryHandler(miniCategory, index))} className="flex justify-between items-center px-2 py-2 text-sm font-normal hover:text-white  hover:bg-black   ">
+                                                                        {miniCategory?.miniCategoryName}
                                                                     </div>
                                                                 }
                                                             </div>
                                                         )}
-                                                        {extraCategoryData.length == 0 ? '' : <div className="absolute w-[200px] p-2 bg-white right-[-200px] top-0 h-full">
+                                                        {extraCategoryData.length == 0 ? '' : <div className="absolute w-[500px] p-2 bg-white right-[-500px] grid grid-cols-5 gap-2 rounded-r-lg  top-0 h-full">
                                                             {
-                                                                extraCategoryData?.map((itm, index) => <div key={index}>
+                                                                extraCategoryData?.map((extraCategory, index) => <div key={index}>
                                                                     {
                                                                         extraCategoryData.length == 0 ? <div>
-                                                                            {itm?.extraCategoryName}
-                                                                        </div> : <Link to={`/products/catagory/${itm?._id}`}>
-                                                                            <div className='py-2 px-2 hover:bg-black hover:text-white'> {itm?.extraCategoryName}</div>
+                                                                            {extraCategory?.extraCategoryName}
+                                                                        </div> : <Link to={`/products/catagory/${extraCategory?._id}`}>
+                                                                            <div className='py-2 px-2'>
+                                                                                <span className="flex flex-col hover:bg-gray-100 items-center gap-2 w-[90px] p-2 rounded-lg ">
+                                                                                    <img src={extraCategory?.img} alt="" className="w-14 h-14 object-cover rounded-full ring-1 ring-gray-200" />
+                                                                                    <p className="text-xs font-semibold text-center">
+                                                                                        {extraCategory?.extraCategoryName}
+                                                                                    </p>
+                                                                                </span>
+                                                                            </div>
                                                                         </Link>
                                                                     }
                                                                 </div>)
@@ -227,10 +240,10 @@ const ProductHero = () => {
 
                                                 :
 
-                                                <Link to={`/products/catagory/${itm?._id}`}>
+                                                <Link to={`/products/catagory/${subCategory?._id}`}>
                                                     <div
-                                                        onMouseMove={() => miniCategoryHandler(itm, index)}
-                                                        className={`flex items-center  w-full justify-between px-2 py-2 text-sm font-normal  hover:bg-gray-900 hover:text-white  relative  ${active?.step2 === itm?._id ? 'bg-black text-white' : 'text-black'}`}
+                                                        onMouseMove={() => miniCategoryHandler(subCategory, index)}
+                                                        className={`flex items-center  w-full justify-between hover:bg-gray-100 px-2 py-2 text-sm font-normal  mb-1 rounded relative  ${active?.step2 === subCategory?._id ? 'black-black ' : 'text-black'}`}
                                                         type="button"
                                                         id={item?._id}
                                                         data-te-dropdown-toggle-ref
@@ -238,8 +251,9 @@ const ProductHero = () => {
                                                         data-te-ripple-init
                                                         data-te-ripple-color="light"
                                                     >
-                                                        {itm?.subCategory}
-
+                                                        <span className="flex items-center gap-2">
+                                                            <img src={subCategory?.img} alt="" className="w-8 h-8 rounded-full ring-1 ring-gray-200" /> {subCategory?.subCategory}
+                                                        </span>
                                                     </div>
                                                 </Link>
                                         }

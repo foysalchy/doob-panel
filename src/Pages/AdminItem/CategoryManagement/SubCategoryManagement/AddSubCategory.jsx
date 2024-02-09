@@ -3,6 +3,34 @@ import { useState } from "react";
 import Swal from "sweetalert2";
 
 const AddSubCategory = () => {
+    const [upload, setUpload] = useState('')
+    const [uplodOk, setUploadOk] = useState(false);
+
+    const imageUploading = (e) => {
+        e.preventDefault();
+        const selectedFile = e.target.files[0];
+        const formData = new FormData();
+        formData.append("image", selectedFile);
+        const url = `https://backend.doob.com.bd/api/v1/image/upload-image`;
+        fetch(url, {
+            method: "POST",
+            body: formData,
+        })
+            .then((res) => res.json())
+            .then((imageData) => {
+
+                if (imageData.imageUrl) {
+                    setUpload(imageData.imageUrl)
+                    setUploadOk(true)
+                }
+                else {
+                    setUpload('')
+                }
+
+            });
+    }
+
+
 
     const { data: subCategory = [], refetch } = useQuery({
         queryKey: ["subCategory"],
@@ -28,6 +56,7 @@ const AddSubCategory = () => {
             megaCategoryId: megaCategory.id,
             megaCategoryName: megaCategory.name,
             subCategory: subCategory,
+            img: upload,
             status: 'true'
         }
 
@@ -90,6 +119,12 @@ const AddSubCategory = () => {
                         Enter Sub Category Name
                     </label>
                     <input required type="text" placeholder="enter sub category" name="subCategory" id="upload" className="w-full px-3 py-2 border-2 text-sm text-gray-600 bg-white  shadow-sm outline-none appearance-none  " />
+                </div>
+                <div className="flex flex-col gap-2 mt-6">
+                    <label htmlFor="upload">
+                        Upload Image
+                    </label>
+                    <input onChange={imageUploading} required type="file" placeholder="enter sub category" id="upload" className="w-full px-3 py-2 border-2 text-sm text-gray-600 bg-white  shadow-sm outline-none appearance-none  " />
                 </div>
                 <div className="flex flex-col gap-2">
 
