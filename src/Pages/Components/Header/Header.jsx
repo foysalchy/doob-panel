@@ -429,17 +429,21 @@ const Header = () => {
                       </button>
                     </div>
                   </div>
-                  <nav className={`grid ${on ? 'grid-cols-1' : 'grid-cols-2'} gap-2`}>
-                    {!on && <div>
-                      <h1 className="text-center border-b pb-2 border-gray-500">Menu</h1>
-                      <ul className="space-y-4 border-r px-2  border-gray-500">{menuData}</ul>
-                    </div>}
-                    <div >
-                      <div className={`flex items-center w-full ${on ? 'justify-between' : 'justify-center'} border-b pb-2 border-gray-500`}>
-                        {on && <button onClick={() => setOn(false)}><CgArrowLeft /></button>}
-                        <h1 className="text-center">Category</h1>
-                      </div>
-                      <CategoryListSm setOn={setOn} />
+                  <nav className={``}>
+                    <div className="flex items-center justify-between border-b ">
+                      <button className={`${on ? 'bg-white' : 'bg-gray-100 border-b border-blue-700'} text-center  p-2  w-full`} onClick={() => setOn(!on)}>
+                        Menue
+                      </button>
+                      <button className={`${on ? 'bg-gray-100 border-b border-blue-700' : 'bg-white'} text-center  p-2  w-full`} onClick={() => setOn(!on)}>
+                        Category
+                      </button>
+                    </div>
+
+                    <div className="">
+                      {
+                        on ? <CategoryListSm setOn={setOn} /> : <ul className="space-y-4 pt-3 border-r px-2  ">{menuData}</ul> 
+                      }
+
                     </div>
                   </nav>
                 </div>

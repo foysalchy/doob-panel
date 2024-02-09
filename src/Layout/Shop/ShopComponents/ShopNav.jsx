@@ -13,6 +13,7 @@ import { FaSignOutAlt } from 'react-icons/fa';
 import { BsFillPinMapFill } from "react-icons/bs";
 import { useEffect } from 'react';
 import { BiHomeAlt, BiSearch } from 'react-icons/bi';
+import CategorieItems from './categorieItems';
 
 const ShopNav = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -267,88 +268,44 @@ const ShopNav = () => {
                     </form>
                 </div>
             }
+            {isMenuOpen && <CategorieItems setIsMenuOpen={setIsMenuOpen} shopId={shopId} categories={categories} />}
             <div className='block lg:hidden'>
-                <div className="fixed  left-0 right-0 bottom-2  p-5 px-6 m-2   flex items-center justify-between   bg-gray-900 shadow-3xl text-gray-400 rounded-2xl cursor-pointer z-[2000]">
-                    {/* <Link to={`/shop/${shopId}`} className="flex flex-col items-center transition ease-in duration-200 hover:text-blue-400 ">
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            className="h-6 w-6"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                        >
-                            <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M17 14v6m-3-3h6M6 10h2a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v2a2 2 0 002 2zm10 0h2a2 2 0 002-2V6a2 2 0 00-2-2h-2a2 2 0 00-2 2v2a2 2 0 002 2zM6 20h2a2 2 0 002-2v-2a2 2 0 00-2-2H6a2 2 0 00-2 2v2a2 2 0 002 2z"
-                            ></path>
-                        </svg>
-                    </Link> */}
-                    <div className="relative group">
-                        <div className="group-hover:block hidden absolute top-[-224px] left-[-14px] bg-gray-900 px-4 py-2 rounded-lg z-[3000] shadow-xl shadow-[#71b3b41b] w-[240px]">
-                            <ul className="flex items-start flex-col gap-3">
-                                {categories?.map((i, index) => (
-                                    <li key={index} className="hover:bg-gray-800 duration-200 w-full p-1 rounded-md">
-                                        <Link className="flex items-center gap-2 break-words" to={`/shop/${shopId}/categories/${shop_id.shop_id}/${i?.name}`}>
-                                            <img
-                                                className="h-4 w-4 rounded text-gray-400 filter grayscale brightness-90 object-cover"
-                                                src={i?.img}
-                                                srcSet={i?.img}
-                                                alt=""
-                                            />
-                                            <p className="font-[400] break-words capitalize text-md whitespace-no-wrap">{i?.name}</p>
-                                        </Link>
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
-                        <div className="flex flex-col items-center transition ease-in duration-200 hover:text-blue-400">
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                className="h-6 w-6"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                            >
-                                <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={2}
-                                    d="M17 14v6m-3-3h6M6 10h2a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v2a2 2 0 002 2zm10 0h2a2 2 0 002-2V6a2 2 0 00-2-2h-2a2 2 0 00-2 2v2a2 2 0 002 2zM6 20h2a2 2 0 002-2v-2a2 2 0 00-2-2H6a2 2 0 00-2 2v2a2 2 0 002 2z"
-                                ></path>
-                            </svg>
-                        </div>
-
-                    </div>
-                    <div onClick={() => setSearchOpen(!searchOpen)} className="flex flex-col items-center transition ease-in duration-200 hover:text-blue-400  z-[2000]">
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            className="h-6 w-6"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                        >
-                            <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                            />
-                        </svg>
-                    </div>
-                    <div className="flex flex-col items-center  hover:text-blue-400 ">
-                        <Link className='absolute bottom-5' to={`/shop/salenow`}>
-                            <div className=" shadow-2xl text-center flex items-center justify-center rounded-full border-4 text-3xl border-gray-50 hover:border-blue-500 bg-blue-500 w-20 h-20 p-2 text-white transition ease-in duration-200 ">
+                <div className="fixed  left-0 right-0 bottom-0  px-4 py-3 flex items-center justify-between   bg-gray-900 shadow-3xl text-gray-400 cursor-pointer z-[2000]">
+                    <div>
+                        <Link className='flex flex-col items-center transition ease-in duration-200 hover:text-blue-400' to={`/shop/salenow`}>
+                            <div className="flex flex-col items-center justify-center">
                                 <BiHomeAlt className='text-[28px]' />
-                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full border-4 opacity-50" />
+                                <div className="text-xs text-gray-400">Home</div>
                             </div>
                         </Link>
+                    </div>
+                    <div className="relative group">
+                        {/* categories */}
+                        <button onClick={() => setIsMenuOpen(!isMenuOpen)}>
+                            <div className="flex flex-col items-center transition ease-in duration-200 hover:text-blue-400">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    className="h-6 w-6"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                >
+                                    <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        strokeWidth={2}
+                                        d="M17 14v6m-3-3h6M6 10h2a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v2a2 2 0 002 2zm10 0h2a2 2 0 002-2V6a2 2 0 00-2-2h-2a2 2 0 00-2 2v2a2 2 0 002 2zM6 20h2a2 2 0 002-2v-2a2 2 0 00-2-2H6a2 2 0 00-2 2v2a2 2 0 002 2z"
+                                    ></path>
+                                </svg>
+                                <div className="text-xs text-gray-400">Category..</div>
+                            </div>
+                        </button>
                     </div>
                     <div className="flex flex-col items-center transition ease-in duration-200 hover:text-blue-400 relative z-[2000]">
                         <Link to={`/shop/${shopId}/user/cart`}>
                             <span className="absolute bg-red px-2 bg-[red] rounded-full  text-white text-[11px] left-4 -top-2"> {cartProducts?.length}</span>
                             <MdOutlineShoppingCart className='text-2xl ' />
+                            <div className="text-xs text-gray-400">Cart</div>
                         </Link>
 
                     </div>
@@ -367,6 +324,7 @@ const ShopNav = () => {
                                 d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z"
                             ></path>
                         </svg>
+                        <div className="text-xs text-gray-400">Profile</div>
                     </Link>
                 </div>
 

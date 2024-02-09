@@ -249,31 +249,6 @@ const SideNavAdmin = () => {
                                 </NavLink>
                             )}
 
-
-                            {user?.staffRole ? (
-                                user?.permissions.find(itm => itm?.name === "Admin Pos") ? (
-                                    <NavLink rel="noopener noreferrer" to={'/admin/admin-pos'} className={({ isActive }) => {
-                                        return isActive
-                                            ? "flex items-center p-2 space-x-3 rounded-sm bg-gray-800 text-white "
-                                            : "flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
-                                    }}>
-                                        <AiOutlineAlert className="w-5 h-5 fill-current text-gray-400" />
-                                        {menu && <span> Admin POS</span>}
-                                    </NavLink>
-                                ) : null
-                            ) : (
-                                <NavLink rel="noopener noreferrer" to={'/admin/admin-pos'} className={({ isActive }) => {
-                                    return isActive
-                                        ? "flex items-center p-2 space-x-3 rounded-sm bg-gray-800 text-white "
-                                        : "flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
-                                }}>
-                                    <AiOutlineAlert className="w-5 h-5 fill-current text-gray-400" />
-                                    {menu && <span> Admin POS</span>}
-                                </NavLink>
-                            )}
-
-
-
                             {user?.staffRole ? (
                                 user?.permissions.find(itm => itm?.name === "Page Management") ? (
                                     <NavLink rel="noopener noreferrer" to={'/admin/page-management'} className={({ isActive }) => {
