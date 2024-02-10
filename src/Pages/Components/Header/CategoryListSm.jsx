@@ -177,8 +177,7 @@ export default function CategoryListSm({ setOn }) {
                             <div className="">
                                 <button
                                     onClick={() => miniCategoryHandler(item, index)}
-                                    className={`${active.step1 === item._id ? 'bg-gray-800 text-white' : 'bg-gray-100 text-black'} flex gap-2 w-full h-auto rounded items-center justify-between mb-2 px-2 py-3 text-sm font-normal relative`}
-                                >
+                                    className={`${active.step1 === item._id ? 'bg-gray-800 text-white' : 'bg-gray-100 text-black'} flex gap-2 w-full h-auto rounded items-center justify-between mb-2 px-2 py-3 text-sm font-normal relative`}>
                                     <p className="text-sm">{item.subCategory}</p>
                                     <FaAngleDown />
                                 </button>
