@@ -124,10 +124,10 @@ export default function CategoryListSm({ setOn }) {
     };
 
     const miniCategoryHandler = async (category, index) => {
-        const filteredSubCategory = allCategory?.miniCategorys.filter(
+        const filteredMiniCategory = allCategory?.miniCategorys.filter(
             (miniCategory) => miniCategory.subCategoryId === category?._id
         );
-        setminiCategoryData(filteredSubCategory);
+        setminiCategoryData(filteredMiniCategory);
         setActive({ ...active, step1: category?._id })
     };
 
@@ -138,7 +138,10 @@ export default function CategoryListSm({ setOn }) {
         setExtraCategoryData(filteredSubCategory);
         setActive({ ...active, step2: category?._id })
     };
+    const [activeMiniCategory, setActiveMiniCategory] = useState(null);
 
+
+    console.log(activeMiniCategory, 'data......');
     return (
         <div className=' '>
             <div className="grid grid-cols-4 gap-2 pt-2">
@@ -173,36 +176,128 @@ export default function CategoryListSm({ setOn }) {
                 {/* Sub category */}
                 <div className="col-span-3">
                     {subCategoryData.map((item, index) => (
-                        <div key={item._id}>
-                            <div className="">
-                                <button
-                                    onClick={() => miniCategoryHandler(item, index)}
-                                    className={`${active.step1 === item._id ? 'bg-gray-800 text-white' : 'bg-gray-100 text-black'} flex gap-2 w-full h-auto rounded items-center justify-between mb-2 px-2 py-3 text-sm font-normal relative`}>
+                        <div className="space-y-2 mb-2">
+                            <details
+                                onClick={() => miniCategoryHandler(item, index)}
+                                className={` overflow-hidden rounded border border-gray-300 [&_summary::-webkit-details-marker]:hidden }`}
+                            >
+                                <summary
+                                    className={`${active.step1 === item._id ? 'bg-gray-900 text-white' : 'bg-white text-black'} flex cursor-pointer items-center justify-between gap-2 p-4 transition`}
+                                >
                                     <p className="text-sm">{item.subCategory}</p>
-                                    <FaAngleDown />
-                                </button>
-                            </div>
-                            {active.step1 === item._id && (
-                                <div className="grid pb-3 grid-cols-3 gap-2">
-                                    {miniCategoryData.map((miniItem, miniIndex) => (
-                                        <div className={`${active.step2 === miniItem._id ? 'bg-gray-800 text-white' : 'bg-gray-100 text-black'} flex flex-col gap-2 h-[90px] w-full rounded items-center justify-center mb-2 px-2 py-2 text-sm font-normal relative`} key={miniItem._id}>
-                                            <Link to={`/products/catagory/${item?._id}`}>
-                                                <div >
-                                                    <button className="flex items-center justify-center flex-col gap-1"
+
+                                    <span className="transition group-open:-rotate-180">
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            fill="none"
+                                            viewBox="0 0 24 24"
+                                            strokeWidth="1.5"
+                                            stroke="currentColor"
+                                            className="h-4 w-4"
+                                        >
+                                            <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                                        </svg>
+                                    </span>
+                                </summary>
+
+                                <div className="border-t border-gray-200 bg-gray-50">
+                                    {active.step1 === item._id && <ul className="space-y-1 border-t border-gray-200 p-1">
+                                        {
+                                            miniCategoryData.map((miniItem, miniIndex) => (
+                                                <div className="space-y-2 mb-2">
+                                                    <details
                                                         onClick={() => extraCategoryHandler(miniItem, miniIndex)}
-
+                                                        className={`overflow-hidden rounded border border-gray-300 [&_summary::-webkit-details-marker]:hidden }`}
                                                     >
-                                                        <img src={miniItem.img} alt="" className="w-[34px] rounded-full h-[34px] mt-2 object-cover ring-1 ring-gray-400" />
-                                                        <p className="text-xs">{miniItem.miniCategoryName.slice(0, 10)}...</p>
-                                                    </button>
-                                                </div>
-                                            </Link>
+                                                        <summary
+                                                            className="flex cursor-pointer items-center justify-between gap-2 bg-white p-4 text-gray-900 transition"
+                                                        >
+                                                            <span className="text-sm font-medium"> {miniItem?.miniCategoryName.slice(0, 10)} </span>
 
-                                        </div>
-                                    ))}
+                                                            <span className="transition group-open:-rotate-180">
+                                                                <svg
+                                                                    xmlns="http://www.w3.org/2000/svg"
+                                                                    fill="none"
+                                                                    viewBox="0 0 24 24"
+                                                                    strokeWidth="1.5"
+                                                                    stroke="currentColor"
+                                                                    className="h-4 w-4"
+                                                                >
+                                                                    <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                                                                </svg>
+                                                            </span>
+                                                        </summary>
+
+                                                        <div className="border-t border-gray-200 bg-gray-50">
+                                                            {<ul className=" border-gray-200 p-1 grid grid-cols-3 gap-2">
+                                                                {extraCategoryData.map((extraItem, extraIndex) => (
+                                                                    <div onClick={() => setOn(false)} key={extraItem._id} className="">
+                                                                        <Link className=" w-full h-full flex justify-between" to={`/products/catagory/${item?._id}`}>
+                                                                            <div className="flex flex-col bg-gray-100 hover:bg-red-50 duration-150 hover:ring-1 ring-red-400 p-2 rounded items-center justify-between w-full gap-1">
+                                                                                <img src={extraItem?.img} alt="" className="w-[50px] h-[50px] rounded-full bg-red-50 ring-1 ring-red-300 p-1 object-cover" />
+                                                                                <p className="text-xs">{extraItem.extraCategoryName.slice(0, 10)}</p>
+                                                                            </div>
+                                                                        </Link>
+                                                                    </div>
+                                                                ))}
+                                                            </ul>}
+                                                        </div>
+                                                    </details>
+                                                </div>
+                                            ))}
+                                    </ul>}
                                 </div>
-                            )}
+                            </details>
                         </div>
+                        //   <div className="" key={item._id}>
+                        //         <div className="">
+                        //             <button
+                        //                 onClick={() => miniCategoryHandler(item, index)}
+                        //                 className={`${active.step1 === item._id ? 'bg-gray-800 text-white' : 'bg-gray-100 text-black'} flex gap-2 w-full h-auto rounded items-center justify-between mb-2 px-2 py-3 text-sm font-normal relative`}>
+                        //                 <p className="text-sm">{item.subCategory}</p>
+                        //                 <FaAngleDown />
+                        //             </button>
+                        //         </div>
+                        //         {active.step1 === item._id && (
+                        //             <div className={`${miniCategoryData.length && ' p-1 border border-gray-300 mb-3 '}`}>
+                        //                 {
+                        //                     miniCategoryData.map((miniItem, miniIndex) => (
+                        //                         <div>
+
+                        //                             <div className={`${active.step2 === miniItem._id ? 'bg-gray-800 text-white' : 'bg-gray-100 text-black'} flex gap-2  w-full rounded items-center justify-between mb-2 px-2 py-3 text-sm font-normal relative`} key={miniItem._id}>
+                        //                                 <Link className=" w-full h-full flex items-center justify-between" to={`/products/catagory/${item?._id}`}>
+                        //                                     <div className="w-full">
+                        //                                         <button className="flex items-center justify-between w-full gap-1"
+                        //                                             onClick={() => extraCategoryHandler(miniItem, miniIndex)}
+                        //                                         >
+                        //                                             <p className="">{miniItem.miniCategoryName.slice(0, 10)}</p>
+                        //                                             <FaAngleDown />
+                        //                                         </button>
+                        //                                     </div>
+                        //                                 </Link>
+                        //                                 <div>
+                        //                                 </div>
+                        //                             </div>
+                        // {active.step2 === miniItem._id && (
+                        //     <div className={`${extraCategoryData.length ? 'grid grid-cols-3 gap-2 ' : ''} bg-white rounded-md p-1`}>
+                        // {extraCategoryData.map((extraItem, extraIndex) => (
+                        //     <div key={extraItem._id} className="">
+                        //         <Link className=" w-full h-full flex justify-between" to={`/products/catagory/${item?._id}`}>
+                        //             <div className="flex flex-col bg-gray-100 hover:bg-red-50 duration-150 hover:ring-1 ring-red-400 p-2 rounded items-center justify-between w-full gap-1">
+                        //                 <img src={extraItem?.img} alt="" className="w-[50px] h-[50px] rounded-full bg-red-50 ring-1 ring-red-300 p-1 object-cover" />
+                        //                 <p className="text-xs">{extraItem.extraCategoryName.slice(0, 10)}</p>
+                        //             </div>
+                        //         </Link>
+                        //     </div>
+                        // ))}
+                        //     </div>
+                        // )}
+                        //                         </div>
+
+                        //                     ))}
+                        //             </div>
+                        //         )}
+                        //     </div>
                     ))}
                 </div>
 
