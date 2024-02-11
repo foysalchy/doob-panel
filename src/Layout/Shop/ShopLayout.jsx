@@ -28,9 +28,15 @@ const ShopLayout = () => {
         },
     });
 
+    useEffect(() => {
+        document.getElementsByTagName('head').remove
+    })
 
     return (
         <div >
+            <head>
+                <title>Hello world</title>
+            </head>
             {isLoading ?
                 <div className="grid h-screen px-4 bg-black place-content-center">
                     <Lottie animationData={groovyWalkAnimation} loop={true} />

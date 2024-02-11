@@ -4,6 +4,7 @@
 
 html{
   scroll-behavior: smooth;
+  font-family: 'Helvetica Neue', sans-serif;
 }
 .font-inner{
     font-family: 'Inter', sans-serif;

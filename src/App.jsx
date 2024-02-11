@@ -5,6 +5,7 @@ import { useContext, useState } from "react";
 import { useEffect } from "react";
 import { AuthContext } from "./AuthProvider/UserProvider";
 import ScrollToTop from "./SrollTop";
+import Logo from '../Logo.png';
 
 
 function App() {
@@ -29,9 +30,6 @@ function App() {
       window.removeEventListener('offline', handleOnlineStatus);
     };
   }, []);
-
-
-
 
 
 

@@ -5,6 +5,7 @@ const MetaHelmet = ({ title, description, image }) => {
 
     return (
         <Helmet>
+
             <title>{`${title} - Doob`}</title>
             <meta name="description" content={description} />
             <meta name="keywords" content={title} />

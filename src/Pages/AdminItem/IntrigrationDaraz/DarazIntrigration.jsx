@@ -31,6 +31,9 @@ const DarazIntegration = () => {
 
     }, [])
 
+
+
+
     useEffect(() => {
         if (code) {
 
@@ -75,28 +78,41 @@ const DarazIntegration = () => {
             })
         }
 
+
     }, [code])
 
+
+    const { data: darazShop = [], isLoading, refetch } = useQuery({
+        queryKey: ["darazShopBd"],
+        queryFn: async () => {
+            const res = await fetch(`https://backend.doob.com.bd/api/v1/seller/seller-daraz-accounts?id=${shopInfo._id}`);
+            const data = await res.json();
+            return data.data;
+        },
+    });
+
+
+    console.log(darazShop);
 
     return (
 
         <div className='grid md:grid-cols-2 justify-between md:gap-10 gap-3 md:mt-10'>
 
-            <div className={!shopInfo.darazLogin && "bg-gray-300  py-6 text-center  rounded-md "}>
+            <div className={"bg-gray-300  py-6 text-center  rounded-md "}>
 
 
-                {!shopInfo.darazLogin && <a
+                {<a
                     href='https://api.daraz.com.bd/oauth/authorize?response_type=code&force_auth=true&redirect_uri=https://doob.com.bd/seller/channel-integration/&client_id=501436'
                     className="text-blue-500 hover:underline mb-4 inline-block"
                 >
                     Login Daraz
                 </a>}
-
+                {/* 
                 {shopInfo.darazLogin && (
                     <div className="bg-green-100 border-l-4 border-green-500  py-6 text-center  rounded-md">
                         <h1 className="text-green-700 font-bold">Your daraz account is connected</h1>
                     </div>
-                )}
+                )} */}
 
 
             </div>
@@ -121,6 +137,13 @@ const DarazIntegration = () => {
 
             </div>
 
+            <div className='text-2xl bg-gray-500'>
+                {
+                    darazShop.map(shop =>
+                        <h1>{shop.result.account}</h1>
+                    )
+                }
+            </div>
             <div className='h-0 w-0'>
                 <ModalForWoo setOpenModal={setWoModal} OpenModal={wooModal} shopId={shopInfo._id} setShopInfo={setShopInfo} />
             </div>
