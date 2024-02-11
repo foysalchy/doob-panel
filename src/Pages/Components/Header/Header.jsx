@@ -441,7 +441,7 @@ const Header = () => {
 
                     <div className="">
                       {
-                        on ? <CategoryListSm setOn={setOn} /> : <ul className="space-y-4 pt-3 border-r px-2  ">{menuData}</ul> 
+                        on ? <CategoryListSm setOn={setIsMenuOpen} /> : <ul className="space-y-4 pt-3 border-r px-2  ">{menuData}</ul>
                       }
 
                     </div>
