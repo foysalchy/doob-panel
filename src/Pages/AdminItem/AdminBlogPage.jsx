@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 
 const AdminBlogPage = () => {
   const [blogs, setBlogs] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     fetch("https://backend.doob.com.bd/api/v1/admin/all-blogs")
@@ -15,15 +16,27 @@ const AdminBlogPage = () => {
       });
   }, []);
 
-
+  const filteredBlogs = blogs.filter((blog) =>
+    blog.title.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   return (
     <div>
       <div className="px-4 py-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-20">
-
+        <div className="mb-4">
+          <input
+            type="text"
+            placeholder="Search blogs..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          />
+        </div>
         <div className="grid gap-8 lg:grid-cols-3 sm:max-w-sm sm:mx-auto lg:max-w-full">
-          {blogs.map((blog, index) => (
-            <Link key={blog._id} to={`/blogs/${blog._id}`}
+          {filteredBlogs.map((blog, index) => (
+            <Link
+              key={blog._id}
+              to={`/blogs/${blog._id}`}
               className={!blog.status ? "hidden" : "overflow-hidden transition-shadow duration-300 bg-white rounded shadow-sm"}
             >
               <img
@@ -34,7 +47,6 @@ const AdminBlogPage = () => {
               />
               <div className="p-5 border border-t-0">
                 <p
-
                   aria-label="Category"
                   title="Visit the East"
                   className="inline-block mb-3 text-2xl font-bold leading-5 transition-colors duration-200 hover:text-purple-700"
@@ -64,3 +76,4 @@ const AdminBlogPage = () => {
 };
 
 export default AdminBlogPage;
+

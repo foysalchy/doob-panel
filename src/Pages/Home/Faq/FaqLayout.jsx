@@ -1,32 +1,45 @@
-import React from "react";
-import { useEffect } from "react";
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, Outlet } from "react-router-dom";
 
 const FaqLayout = () => {
-  const [faqs, setFaq] = useState([]);
+  const [faqs, setFaqs] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     fetch("https://backend.doob.com.bd/api/v1/admin/faq")
       .then((response) => response.json())
       .then((data) => {
-        setFaq(data);
+        setFaqs(data);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
   }, []);
 
+  const handleSearch = (event) => {
+    setSearchQuery(event.target.value);
+  };
+
+  const filteredFaqs = faqs.filter((faq) =>
+    faq.title.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   return (
     <div>
       <div className="px-4 pb-10 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 ">
         <section className="bg-white ">
           <div className=" ">
-
-            <div className=" grid grid-cols-12 gap-4">
-              <div className=" col-span-3">
-                <div className="mt-4 space-y-4  lg:mt-8">
-                  {faqs.map((faq, index) => (
+            <div className="grid grid-cols-12 gap-4">
+              <div className="col-span-3">
+                <div className="mt-4 space-y-4 lg:mt-8">
+                  <input
+                    type="text"
+                    value={searchQuery}
+                    onChange={handleSearch}
+                    placeholder="Search FAQs..."
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
+                  />
+                  {filteredFaqs.map((faq, index) => (
                     <div
                       key={index}
                       className="overflow-hidden transition-shadow duration-300 bg-white rounded shadow-sm"
@@ -45,8 +58,8 @@ const FaqLayout = () => {
                   ))}
                 </div>
               </div>
-              <div className="ml-4 col-span-9 flex  lg:mt-0">
-                <Outlet></Outlet>
+              <div className="ml-4 mt-4 col-span-9 flex">
+                <Outlet />
               </div>
             </div>
           </div>
@@ -55,4 +68,5 @@ const FaqLayout = () => {
     </div>
   );
 };
+
 export default FaqLayout;
