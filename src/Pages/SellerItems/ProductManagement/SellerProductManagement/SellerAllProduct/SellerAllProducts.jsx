@@ -143,6 +143,15 @@ const SellerAllProducts = () => {
 
     }
 
+    const { data: priceRole = [] } = useQuery({
+        queryKey: ["priceRole"],
+        queryFn: async () => {
+            const res = await fetch(`https://backend.doob.com.bd/api/v1/seller/get-price-role/${shopInfo?._id}`);
+            const data = await res.json();
+            return data?.data;
+        },
+    });
+
     return (
         <div className="">
             <div className='h-0 w-0'>   <DeleteModal setOpenModal={setDeletePopUp} OpenModal={deletePopUp} setIsDelete={setIsDelete} /></div>
@@ -216,7 +225,7 @@ const SellerAllProducts = () => {
                         {products?.length}
                     </span>
                 </div>
-                {webStoreProduct ? <WebStoreproduct searchQuery={searchQuery} /> : <div className="flex flex-col mt-6">
+                {webStoreProduct ? <WebStoreproduct priceRole={priceRole} searchQuery={searchQuery} /> : <div className="flex flex-col mt-6">
                     <div style={{
                         overflowY: 'scroll', // Always show the scrollbar
                         scrollbarWidth: 'thin', // For Firefox

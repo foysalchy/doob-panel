@@ -9,6 +9,7 @@ import { Helmet } from 'react-helmet';
 import MetaHelmet from '../../../../../Helmate/Helmate';
 import { ShopAuthProvider } from '../../../../../AuthProvider/ShopAuthProvide';
 import { useQuery } from '@tanstack/react-query';
+import BrightAlert from 'bright-alert';
 
 const ProductInformation = () => {
 
@@ -19,7 +20,9 @@ const ProductInformation = () => {
     const location = useLocation();
     const [loader, setLoader] = useState(false)
     const { shop_id, shopUser, setSelectProductData } = useContext(ShopAuthProvider)
+    const [variations, setVariations] = useState(null)
 
+    console.log(product, "product");
     const handleImageClick = (imageUrl) => {
         setSelectedImage(imageUrl);
     };
@@ -56,9 +59,9 @@ const ProductInformation = () => {
         const addToCard = {
             userId: shopUser?._id,
             quantity: quantity,
-            img: product.featuredImage.src,
-            productName: product.name,
-            price: product.price,
+            img: product?.daraz ? variations?.image[0] : selectedImage,
+            productName: variations?.name ? variations?.name : product.name,
+            price: variations?.price ? variations?.price : product.price,
             regular_price: product.regular_price,
             productId: product._id,
             shopId: shop_id.shop_id
@@ -70,7 +73,7 @@ const ProductInformation = () => {
             const cartProduct = JSON.parse(getData);
             const n = cartProduct ? [...cartProduct, addToCard] : [addToCard];
             localStorage.setItem('addToCart', JSON.stringify(n));
-            alert('Product added to cart')
+            BrightAlert('Product added to cart')
             setLoader(false);
         } else {
             fetch(`https://backend.doob.com.bd/api/v1/shop/user/add-to-cart?token=${shopUser._id}`, {
@@ -79,7 +82,7 @@ const ProductInformation = () => {
                 body: JSON.stringify(addToCard)
             }).then((res) => res.json()).then((data) => {
                 setLoader(false)
-                alert(data.message)
+                BrightAlert(data.message)
                 console.log(data);
             })
         }
@@ -96,9 +99,9 @@ const ProductInformation = () => {
             const buyNowInfo = [{
                 userId: shopUser?._id,
                 quantity: quantity,
-                img: product.featuredImage.src,
-                productName: product.name,
-                price: product.price,
+                img: product?.daraz ? variations?.image[0] : selectedImage,
+                productName: variations?.name ? variations?.name : product.name,
+                price: variations?.price ? variations?.price : product.price,
                 regular_price: product.regular_price,
                 productId: product._id,
                 shopId: shop_id.shop_id
@@ -165,15 +168,15 @@ const ProductInformation = () => {
                                     <div className="h-64 md:h-full rounded-lg bg-gray-100 mb-4 flex items-center justify-center">
                                         <img
                                             className="w-94 h-full"
-                                            src={selectedImage}
-                                            srcSet={selectedImage}
+                                            src={product?.data?.daraz ? variations?.image[0] : selectedImage}
+                                            srcSet={product?.data?.daraz ? variations?.image[0] : selectedImage}
                                             alt="Selected Image"
                                         />
                                     </div>
                                 </div>
                                 <div className="grid grid-cols-4 md:grid-cols-4 lg:grid-cols-6 gap-2 -m-4 text-white">
                                     {product.data.images.map((imageUrl, index) => (
-                                        <div key={index} className="p-4 w-full md:w-11/12 rounded">
+                                        <div onClick={() => setVariations(null)} key={index} className="p-4 w-full md:w-11/12 rounded">
                                             <Link
                                                 className="block relative h-16 rounded overflow-hidden border"
                                                 onClick={() => handleImageClick(imageUrl.src)}
@@ -196,7 +199,7 @@ const ProductInformation = () => {
                                 {product.data.brandName}
                             </h2>
                             <h1 className="text-gray-900 md:text-3xl title-font font-medium mb-1">
-                                {product.data.name}
+                                {variations?.name ? variations?.name : product.data.name}
                             </h1>
                             <div className="flex my-2 items-center">
                                 <div className="flex items-center">
@@ -256,11 +259,11 @@ const ProductInformation = () => {
                             <div className='flex justify-between items-start'>
                                 <div className="title-font font-medium md:text-2xl text-lg text-gray-900 flex items-start">
                                     <span>Price :</span>  <div>
-                                        <span className='kalpurush'>৳</span>{product.data.price}
+                                        <span className='kalpurush'>৳</span>{variations?.price ? variations?.price : product.data.price}
                                         <br />
-                                        <div className=' line-through text-lg text-gray-500'>
+                                        {!variations && <div className=' line-through text-lg text-gray-500'>
                                             <span className='kalpurush   '>৳</span>{product.data.regular_price}
-                                        </div>
+                                        </div>}
                                     </div>
                                 </div>
 
@@ -290,12 +293,17 @@ const ProductInformation = () => {
                                         <FaXTwitter />
                                     </a>
                                 </div>
-
                             </div>
 
-                            <div className="flex mt-6 items-center pb-5 border-b-2 border-gray-100 mb-5">
-
-                            </div>
+                            {<div className="flex mt-6 items-center   mb-5">
+                                {
+                                    product?.data?.variations && product?.data?.variations.map((variation, index) => <div onClick={() => setVariations(variation)} key={index}
+                                        className='w-[50px] h-[50px] border border-gray-300'
+                                    >
+                                        <img src={!product?.data ? variation?.image[0] : variation?.image} alt="" className="w-full h-full" />
+                                    </div>)
+                                }
+                            </div>}
                             <div >
 
                                 <div className="flex md:flex-row flex-col gap-3 py-4 space-x-4 justify-between">

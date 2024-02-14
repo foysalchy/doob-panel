@@ -6,7 +6,7 @@ import done from "./done1.json";
 import { RxCross2 } from 'react-icons/rx';
 import { useQuery } from '@tanstack/react-query';
 import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css';
+// import 'react-quill/dist/quill.snow.css';
 import Swal from 'sweetalert2';
 
 const AddSupportTicket = ({ OpenSupport, setOpenSupport, refetch }) => {

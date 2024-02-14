@@ -148,7 +148,7 @@ const Variants = ({ adminWare, multiVendor, setMultiVendor, inputFields, setInpu
                                 type="file"
                                 id={`coverPhoto-${index}`}
                                 name={`coverPhoto-${index}`}
-
+                                multiple
                                 accept="image/*"
                                 style={{ display: 'none' }}
                                 onChange={(event) => handleImageChange(index, event)}
