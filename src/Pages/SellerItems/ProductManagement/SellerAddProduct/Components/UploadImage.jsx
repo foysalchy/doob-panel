@@ -95,27 +95,6 @@ const UploadImage = ({ coverPhoto, setCoverPhoto, youtube, setYoutube }) => {
 
                 <div className="grid md:grid-cols-8 gap-2 grid-cols-2 mt-4">
 
-                    {/* 
-                    <div className='md:w-24'>
-                        <div className='md:w-24'>
-                            <label htmlFor="coverPhoto" className='bg-gray-300 md:w-20 h-20 flex justify-center items-center'>
-                                {coverPhoto ? (
-                                    <img src={coverPhoto} alt="Cover Preview" className="w-full h-full object-cover" />
-                                ) : (
-                                    <span className='text-xl'>+</span>
-                                )}
-                            </label>
-                            <input
-                                type="file"
-                                id="coverPhoto"
-                                name='coverPhoto'
-                                accept="image/*"
-                                style={{ display: 'none' }}
-                                onChange={(event) => handleImageChange(setCoverPhoto, event)}
-                            />
-                            <p className='text-sm'>Cover Photo <span className='text-red-500'> *</span></p>
-                        </div>
-                    </div> */}
                     <div
                         className="md:w-20  text-center relative flex items-center justify-center flex-col"
                         onDragOver={(event) => handleDragOver(event)}
