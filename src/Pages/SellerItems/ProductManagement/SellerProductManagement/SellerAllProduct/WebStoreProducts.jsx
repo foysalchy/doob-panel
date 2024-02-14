@@ -4,7 +4,7 @@ import { AuthContext } from "../../../../../AuthProvider/UserProvider";
 import DemoImage from './woocommerce-placeholder-600x600.png';
 import { MdDelete, MdOutlineViewInAr } from "react-icons/md";
 
-export default function WebStoreproduct({ searchQuery }) {
+export default function WebStoreproduct({ priceRole, searchQuery }) {
     const { shopInfo } = useContext(AuthContext);
     const [currentPage, setCurrentPage] = useState(1);
     const pageSize = 10
@@ -40,11 +40,48 @@ export default function WebStoreproduct({ searchQuery }) {
     // Get the current page data
     const currentData = filteredData.slice(startIndex, endIndex);
 
-    
 
 
+    // const myPriceRole = (pocket) => {
+    //     const vale = priceRole.find((category) => parseInt(pocket) >= parseInt(category?.from) && parseInt(pocket) <= parseInt(category?.to));
 
+    //     console.log(vale, ">>");
 
+    //     const data = vale?.percentage === 'yes' ? parseInt(pocket) + (parseInt(pocket) * parseInt(vale?.priceRange)) / 100 : parseInt(pocket) + parseInt(vale?.priceRange);
+
+    //     return data;
+    // }
+    const myPriceRole = (pocket) => {
+        // Log the input pocket value
+        console.log("Input Pocket:", pocket);
+
+        // Find the relevant price range based on the pocket value
+        const priceRange = priceRole.find((category) => {
+            const from = parseInt(category.to);
+            const to = parseInt(category.from);
+            const parsedPocket = parseInt(pocket);
+            console.log("Comparing:", from, to, parsedPocket);
+            return parsedPocket >= from && parsedPocket <= to;
+        });
+
+        // Log the found price range
+        console.log("Price Range:", priceRange);
+
+        // Check if the priceRange is valid
+        if (!priceRange) {
+            console.log("Price range not found for the given pocket value.");
+            return null;
+        }
+
+        // Parse the priceRange value based on whether it's a percentage or not
+        const price = parseFloat(priceRange.priceRange);
+        const data = priceRange.percentage === 'yes' ?
+            parseFloat(pocket) + (parseFloat(pocket) * price) / 100 :
+            parseFloat(pocket) + price;
+
+        // Return the calculated data
+        return data;
+    };
     return (
         <div className="flex flex-col mt-6">
             <div style={{
@@ -184,6 +221,9 @@ export default function WebStoreproduct({ searchQuery }) {
                                         </td>
                                         <td className="px-4 py-4 text-sm border-2 text-gray-500  whitespace-nowrap">
                                             {product.price}
+                                        </td>
+                                        <td className="px-4 py-4 text-sm border-2 text-gray-500  whitespace-nowrap">
+                                            {!myPriceRole(product?.price) ? product?.regular_price : myPriceRole(product?.price)}
                                         </td>
                                         <td className="px-4 py-4 text-sm border-2 whitespace-nowrap">
                                             <div className="flex items-center gap-x-2">

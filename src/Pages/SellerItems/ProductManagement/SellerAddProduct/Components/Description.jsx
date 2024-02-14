@@ -1,7 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
 import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css';
 
 const Description = ({ description, setDescription, shortDescription, setShortDescription, categories }) => {
 
@@ -27,7 +26,6 @@ const Description = ({ description, setDescription, shortDescription, setShortDe
             <div>
                 <div className='flex flex-col mt-3'>
                     <span>Product Short Description <span className='text-red-500'> *</span></span>
-
                 </div>
 
                 <ReactQuill

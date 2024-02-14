@@ -23,8 +23,9 @@ const AddPriceRole = () => {
         const to = e.target.to.value
         const from = e.target.from.value
         const priceRange = e.target.priceRange.value
-        const shopId = shopInfo._id
-        const data = { to, from, priceRange, shopId }
+        const percentage = e.target.percentage.value
+        const shopId = shopInfo._id;
+        const data = { to, from, priceRange, shopId, percentage }
 
         fetch('https://backend.doob.com.bd/api/v1/seller/add-price-role', {
             method: "POST",
@@ -53,9 +54,10 @@ const AddPriceRole = () => {
                             To
                         </label>
                         <input
+                            required
                             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                             id="priceRole"
-                            type="text"
+                            type="number"
                             name="to"
                             placeholder="Enter To value"
                         />
@@ -66,9 +68,10 @@ const AddPriceRole = () => {
                             From
                         </label>
                         <input
+                            required
                             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                             id="priceRole"
-                            type="text"
+                            type="number"
                             name="from"
                             placeholder="Enter From value"
                         />
@@ -77,9 +80,23 @@ const AddPriceRole = () => {
 
                 <div className="mb-4">
                     <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="priceRole">
+                        Percentage
+                    </label>
+                    <select
+                     name="percentage"
+                        required
+                        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                        <option value="yes">Yes</option>
+                        <option value="no">No</option>
+                    </select>
+                </div>
+
+                <div className="mb-4">
+                    <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="priceRole">
                         Price Range
                     </label>
                     <input
+                        required
                         className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         id="priceRole"
                         type="number"

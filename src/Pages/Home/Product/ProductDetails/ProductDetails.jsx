@@ -39,29 +39,16 @@ const ProductDetails = () => {
   const navigate = useNavigate()
   const [loader, setLoader] = useState(false);
   const [userName, setUserName] = useState(user?.name)
+  const [variationData, setVariationData] = useState(null)
+
   const myData = useLoaderData();
-  // const { data: productInfo = [], refetch } = useQuery({
-  //   queryKey: ["productInfo"],
-  //   queryFn: async () => {
-  //     const res = await fetch("https://backend.doob.com.bd/api/v1/admin/products");
-  //     const data = await res.json();
-  //     return data;
-  //   },
-  // });
-
-  // const { data: productFind = [], refetch } = useQuery({
-  //   queryKey: ["productFind"],
-  //   queryFn: async () => {
-  //     const res = await fetch(`https://backend.doob.com.bd/api/v1/admin/single-product?id=${location.id}`);
-  //     const data = await res.json();
-  //     return data;
-  //   },
-  // });
-
-
-  // console.log(productFind, '>>>');
   const productFind = myData?.data;
 
+  if (variationData) {
+    console.log(variationData?.name);
+  } else {
+    productFind?.name
+  }
 
   const [quantity, setQuantity] = useState(1);
   const [banifit, setBanifit] = useState({
@@ -71,6 +58,9 @@ const ProductDetails = () => {
     profitPercent: 0,
   });
 
+  useEffect(() => {
+
+  }, [variationData])
   const allUpdateInfo = () => {
     const price = parseInt(productFind?.variantData?.sellingPrice);
     const quantityPars = parseInt(quantity);
@@ -337,7 +327,7 @@ const ProductDetails = () => {
     },
   });
 
-  console.log(comment, 'comment');
+  // console.log(productFind, 'comment');
   return (
     <section>
       <div className="py-4">
@@ -394,7 +384,7 @@ const ProductDetails = () => {
                 </div>
                 <div className="grid grid-cols-4 md:grid-cols-4 lg:grid-cols-6 gap-2 -m-4 text-white">
                   {imageList.map((imageUrl, index) => (
-                    <div key={index} className="p-4 w-full md:w-11/12 rounded">
+                    <div onClick={() => setVariationData(null)} key={index} className="p-4 w-full md:w-11/12 rounded">
                       <a
                         className="block relative h-16 rounded overflow-hidden border"
                         onClick={() => handleImageClick(imageUrl?.src)}
@@ -426,7 +416,7 @@ const ProductDetails = () => {
                 }
               </div>
               <h2 className="mb-2 leading-tight tracking-tight font-bold text-gray-800 text-2xl md:text-3xl">
-                {productFind?.name}
+                {variationData?.name ? variationData?.name : productFind?.name}
               </h2>
               <div>
                 <div className=" hidden items-center">
@@ -550,17 +540,25 @@ const ProductDetails = () => {
                 <button
                   onClick={() => handleStore(productFind?._id)}
                   type="button"
-                  className="h-10 px-6 py-2 font-semibold rounded bg-gray-950 hover:bg-gray-800 text-white"
+                  className="h-10 px-6 py-2 text-sm rounded bg-gray-950 hover:bg-gray-800 text-white"
                 >
                   Add My Store
                 </button>
                 <button
                   onClick={() => { }}
                   type="button"
-                  className="h-10 px-6 py-2 font-semibold rounded bg-indigo-600 hover:bg-indigo-500 text-white"
+                  className="h-10 px-6 py-2 text-sm rounded bg-indigo-600 hover:bg-indigo-500 text-white"
                 >
-                  By Now
+                  Buy Now
                 </button>
+              </div>
+              {/* variation data */}
+              <div className="flex">
+                {
+                  productFind?.variations?.map((variation, index) => <div onClick={() => setVariationData(variation)} className={`w-[50px] h-[50px] object-cover`} key={index}>
+                    <img className="w-full h-full" src={variation?.image} alt={variation?.name} />
+                  </div>)
+                }
               </div>
             </div>
           </div>
@@ -639,15 +637,15 @@ const ProductDetails = () => {
         {/* end comment */}
 
         <br />
-        <div className="border p-6 rounded">
+        {productFind?.description && <div className="border p-6 rounded">
           <ProductDescription metaTitle={productFind?.metaTitle} description={productFind?.description} />
-        </div>
+        </div>}
       </div>
-      <div className="max-w-7xl mx-auto px-4 md:px-4 lg:px-8 my-6">
+      {comments && <div className="max-w-7xl mx-auto px-4 md:px-4 lg:px-8 my-6">
         <div className="border p-6 rounded">
           <ProductReviews comments={comments} />
         </div>
-      </div>
+      </div>}
       <div className="max-w-7xl mx-auto px-4 md:px-4 lg:px-8 my-6">
         <div className="border p-6 rounded">
           <ReleventProduct productFind={productFind} />

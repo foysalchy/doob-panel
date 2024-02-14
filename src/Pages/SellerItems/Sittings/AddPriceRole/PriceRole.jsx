@@ -25,19 +25,21 @@ export default function PriceRole() {
             const res = await fetch(`https://backend.doob.com.bd/api/v1/seller/get-price-role/${shopInfo?._id}`);
             const data = await res.json();
             console.log(data, 'data');
-            return data?.datamAhadi624234a;
+            return data?.data;
         },
     });
 
 
     const handleDelete = (id) => {
-        fetch(`https://backend.doob.com.bd/api/v1/seller/get-price-role/${id}`, {
+        fetch(`https://backend.doob.com.bd/api/v1/seller/delete-price-role?id=${id}`, {
             method: 'DELETE',
             headers: {
+
                 'Content-Type': 'application/json'
             },
 
         }).then((res) => res.json()).then((data) => {
+            refetch();
             BrightAlert('Deleted Successfully');
         })
     }
@@ -70,6 +72,9 @@ export default function PriceRole() {
                         <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-800 ">
                             Price Range
                         </th>
+                        <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-800 ">
+                            Percentage
+                        </th>
                         <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-800  rounded-tr ">
                             Action
                         </th>
@@ -84,10 +89,13 @@ export default function PriceRole() {
                             </td>
                             <td className="px-4 border-r py-3">
                                 {itm?.from ? itm.from : 'Empty'}
-                            </td>
-                            <td className="px-4 border-r py-3">
+                            </td> <td className="px-4 border-r py-3">
                                 {itm?.priceRange ? itm.priceRange : 'Empty'}
                             </td>
+                            <td className="px-4 border-r py-3 capitalize">
+                                {itm?.percentage ? itm.percentage : 'No'}
+                            </td>
+
                             <td className="px-4 border-r py-3 flex gap-4">
                                 <button onClick={() => handleDelete(itm?._id)} className="text-red-600">Delete</button>
                                 <button onClick={() => setOpen(itm)} className="text-blue-600">Edit</button>

@@ -4,8 +4,7 @@ import { BsArrowRight } from 'react-icons/bs';
 import { AuthContext } from '../../../../AuthProvider/UserProvider';
 import Select from 'react-select';
 import { useQuery } from '@tanstack/react-query';
-import UploadImage from './Components/UploadImage';
-import InputProductName from './Components/InputProductName';
+ import InputProductName from './Components/InputProductName';
 import SincronusCategory from './Components/SincronusCategory';
 import Description from './Components/Description';
 import Stock from './Components/Stock';
@@ -16,6 +15,7 @@ import Meta from './Components/Meta';
 import Swal from 'sweetalert2';
 import Variants from './Components/Variants';
 import DarazOption from './Components/DarazOption';
+import UploadImage from './Components/UploadImage';
 
 
 
