@@ -124,16 +124,18 @@ const UploadImage = ({ coverPhoto, setCoverPhoto, youtube, setYoutube }) => {
                         <input
                             type="file"
                             id="coverPhoto"
-                            required
+
                             className='w-[20px] absolute top-0 left-0 bottom-0 right-0 m-auto overflow-hidden opacity-0 cursor-pointer'
                             name="coverPhoto"
                             accept="image/*"
                             style={{ display: "block" }}
                             onChange={(event) => handleImageChange(setCoverPhoto, event)}
-                        /> <input
+                        />
+
+                        <input
                             type="file"
                             id="coverPhoto"
-                            required
+
                             className=''
                             name="coverPhoto"
                             accept="image/*"
@@ -168,7 +170,7 @@ const UploadImage = ({ coverPhoto, setCoverPhoto, youtube, setYoutube }) => {
                         <input
                             type="file"
                             id="Photo1"
-                            required
+
                             name="photo1"
                             className='absolute top-0 left-0 bottom-0 right-0 m-auto overflow-hidden w-[20px] opacity-0 cursor-pointer'
                             accept="image/*"
@@ -178,7 +180,7 @@ const UploadImage = ({ coverPhoto, setCoverPhoto, youtube, setYoutube }) => {
                         <input
                             type="file"
                             id="Photo1"
-                            required
+
                             name="photo1"
                             accept="image/*"
                             style={{ display: "none" }}
@@ -212,7 +214,7 @@ const UploadImage = ({ coverPhoto, setCoverPhoto, youtube, setYoutube }) => {
                         <input
                             type="file"
                             id="Photo2"
-                            required
+
                             name="photo2"
                             accept="image/*"
                             className='absolute top-0 left-0 bottom-0 right-0 m-auto overflow-hidden w-[20px] opacity-0 cursor-pointer'
@@ -222,7 +224,7 @@ const UploadImage = ({ coverPhoto, setCoverPhoto, youtube, setYoutube }) => {
                         <input
                             type="file"
                             id="Photo2"
-                            required
+
                             name="photo2"
                             accept="image/*"
                             style={{ display: "none" }}
@@ -256,7 +258,7 @@ const UploadImage = ({ coverPhoto, setCoverPhoto, youtube, setYoutube }) => {
                         <input
                             type="file"
                             id="Photo3"
-                            required
+
                             name="photo3"
                             className='absolute top-0 left-0 bottom-0 right-0 m-auto overflow-hidden w-[20px] opacity-0 cursor-pointer'
                             accept="image/*"
@@ -266,7 +268,7 @@ const UploadImage = ({ coverPhoto, setCoverPhoto, youtube, setYoutube }) => {
                         <input
                             type="file"
                             id="Photo3"
-                            required
+
                             name="photo3"
                             accept="image/*"
                             style={{ display: "none" }}
@@ -300,7 +302,7 @@ const UploadImage = ({ coverPhoto, setCoverPhoto, youtube, setYoutube }) => {
                         <input
                             type="file"
                             id="Photo4"
-                            required
+
                             name="photo4"
                             accept="image/*"
                             className='absolute top-0 left-0 bottom-0 right-0 m-auto overflow-hidden w-[20px] opacity-0 cursor-pointer'
@@ -309,7 +311,7 @@ const UploadImage = ({ coverPhoto, setCoverPhoto, youtube, setYoutube }) => {
                         /> <input
                             type="file"
                             id="Photo4"
-                            required
+
                             name="photo4"
                             accept="image/*"
                             style={{ display: "none" }}
@@ -343,7 +345,7 @@ const UploadImage = ({ coverPhoto, setCoverPhoto, youtube, setYoutube }) => {
                         <input
                             type="file"
                             id="Photo5"
-                            required
+
                             name="photo5"
                             accept="image/*"
                             className='absolute top-0 left-0 bottom-0 right-0 m-auto overflow-hidden w-[20px] opacity-0 cursor-pointer'
@@ -353,7 +355,7 @@ const UploadImage = ({ coverPhoto, setCoverPhoto, youtube, setYoutube }) => {
                         <input
                             type="file"
                             id="Photo5"
-                            required
+
                             name="photo5"
                             accept="image/*"
                             style={{ display: "none" }}
@@ -387,7 +389,7 @@ const UploadImage = ({ coverPhoto, setCoverPhoto, youtube, setYoutube }) => {
                         <input
                             type="file"
                             id="Photo5"
-                            required
+
                             name="photo6"
                             accept="image/*"
                             className='absolute top-0 left-0 bottom-0 right-0 m-auto overflow-hidden w-[20px] opacity-0 cursor-pointer'
@@ -396,7 +398,7 @@ const UploadImage = ({ coverPhoto, setCoverPhoto, youtube, setYoutube }) => {
                         /> <input
                             type="file"
                             id="Photo5"
-                            required
+
                             name="photo6"
                             accept="image/*"
                             style={{ display: "none" }}
@@ -431,7 +433,7 @@ const UploadImage = ({ coverPhoto, setCoverPhoto, youtube, setYoutube }) => {
                         <input
                             type="file"
                             id="Photo6"
-                            required
+
                             name="photo7"
                             accept="image/*"
                             className='absolute top-0 left-0 bottom-0 right-0 m-auto overflow-hidden w-[20px] opacity-0 cursor-pointer'
@@ -440,7 +442,7 @@ const UploadImage = ({ coverPhoto, setCoverPhoto, youtube, setYoutube }) => {
                         /> <input
                             type="file"
                             id="Photo6"
-                            required
+
                             name="photo7"
                             accept="image/*"
                             style={{ display: "none" }}
@@ -467,5 +469,3 @@ const UploadImage = ({ coverPhoto, setCoverPhoto, youtube, setYoutube }) => {
 };
 
 export default UploadImage;
-
-

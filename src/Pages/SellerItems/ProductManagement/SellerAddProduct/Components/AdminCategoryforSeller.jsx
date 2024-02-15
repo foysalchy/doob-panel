@@ -166,7 +166,7 @@ const AdminCategoryforSeller = () => {
                                 }),
                             }}
                             name='adminMiniCategoryName'
-                            required
+                            // required
                             options={sortedMiniCategorys}
                             placeholder="Select mini Category"
                         />
@@ -189,7 +189,7 @@ const AdminCategoryforSeller = () => {
                                 }),
                             }}
                             name='adminExtraCategoryName'
-                            required
+                            // required
                             options={sortedExtraCategorys}
                             placeholder="Select mini Category"
                         />

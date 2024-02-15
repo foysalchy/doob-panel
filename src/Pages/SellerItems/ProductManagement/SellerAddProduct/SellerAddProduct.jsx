@@ -282,10 +282,7 @@ const SellerAddProduct = () => {
 
 
         }
-
-        console.log(data);
-
-
+ 
 
 
         fetch('https://backend.doob.com.bd/api/v1/seller/normal-product/', {

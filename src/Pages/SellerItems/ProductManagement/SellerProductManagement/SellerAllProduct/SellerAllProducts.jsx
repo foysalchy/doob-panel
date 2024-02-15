@@ -10,11 +10,14 @@ import Swal from 'sweetalert2';
 import DeleteModal from '../../../../../Common/DeleteModal';
 import { BiLeftArrow, BiRightArrow } from 'react-icons/bi';
 import WebStoreproduct from './WebStoreProducts';
+import PrintPage from './SellerPrintPage';
+import SellerPrintPage from './SellerPrintPage';
 
 
 const SellerAllProducts = () => {
     const { shopInfo } = useContext(AuthContext)
     const [loadingStates, setLoadingStates] = useState({});
+    const [printProduct, setPrintProduct] = useState([]);
     const { data: products = [], refetch } = useQuery({
         queryKey: ["products"],
         queryFn: async () => {
@@ -152,6 +155,38 @@ const SellerAllProducts = () => {
         },
     });
 
+
+    // select product
+    const [selectProducts, setSelectProducts] = useState([]);
+    const [on, setOn] = useState(null);
+
+    const handleUpdateCheck = (productId) => {
+        setSelectProducts(prevSelectedProducts => {
+            if (prevSelectedProducts.includes(productId)) {
+                return prevSelectedProducts.filter(id => id !== productId);
+            } else {
+                return [...prevSelectedProducts, productId];
+            }
+        });
+    };
+
+    const handleSelectAll = () => {
+        if (selectProducts.length === products.length) {
+            // If all products are already selected, deselect all
+            setSelectProducts([]);
+        } else {
+            // Otherwise, select all products
+            const allProductIds = products.map(product => product._id);
+            setSelectProducts(allProductIds);
+        }
+    };
+
+    const logSelectedProducts = () => {
+        const selectedProductData = products.filter(product => selectProducts.includes(product._id));
+        setPrintProduct(selectedProductData)
+        setOn(!on)
+    };
+
     return (
         <div className="">
             <div className='h-0 w-0'>   <DeleteModal setOpenModal={setDeletePopUp} OpenModal={deletePopUp} setIsDelete={setIsDelete} /></div>
@@ -218,12 +253,17 @@ const SellerAllProducts = () => {
                 <button onClick={() => setWebStoreProduct(!webStoreProduct)} className='px-6 py-2 bg-black text-white rounded-md'>{webStoreProduct ? 'My Store' : 'Web Store'}</button>
             </div>
 
+
             <section >
-                <div className="flex items-center gap-x-3">
-                    <h2 className="text-lg font-medium text-gray-800 ">All Product</h2>
-                    <span className="px-3 py-1 text-xs  bg-blue-100 rounded-full d text-blue-400">
-                        {products?.length}
-                    </span>
+                <div className="flex items-center justify-between gap-x-3">
+                    <div className="flex items-center">
+                        <h2 className="text-lg font-medium text-gray-800 ">All Product</h2>
+                        <span className="px-3 py-1 text-xs  bg-blue-100 rounded-full d text-blue-400">
+                            {products?.length}
+                        </span>
+                    </div>
+
+                    <button onClick={logSelectedProducts} disabled={!selectProducts.length} className='bg-blue-500 px-8 py-2 rounded text-white'> Print</button>
                 </div>
                 {webStoreProduct ? <WebStoreproduct priceRole={priceRole} searchQuery={searchQuery} /> : <div className="flex flex-col mt-6">
                     <div style={{
@@ -233,10 +273,20 @@ const SellerAllProducts = () => {
                         msOverflowStyle: 'scrollbar', // For Internet Explorer and Edge
                     }} className="overflow-x-scroll  ">
                         <div className=" w-[1700px]">
+                            {on &&
+                                <div className='absolute top-0 left-0 right-0 bottom-0 m-auto z-[3000]'> <SellerPrintPage setOn={setOn} products={printProduct} /></div>
+                            }
                             <div className="overflow-hidden border  border-gray-700 md:rounded-lg">
                                 <table className="w-full">
                                     <thead className="bg-gray-900 text-white ">
+
                                         <tr>
+                                            <th className='px-2'>
+                                                <label className='flex items-center gap-2  font-medium' htmlFor="select">
+                                                    <input id='select' type="checkbox" checked={selectProducts.length === products.length} onChange={handleSelectAll} />
+                                                    Select all
+                                                </label>
+                                            </th>
                                             <th
                                                 scope="col"
                                                 className="py-3.5 px-4 text-sm border font-normal text-left rtl:text-right "
@@ -288,16 +338,36 @@ const SellerAllProducts = () => {
                                     <tbody className="bg-white divide-y  divide-gray-200 ">
                                         {currentData.map((product) => (
                                             <tr>
+                                                <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap   flex items-center justify-center">
+                                                    <label>
+                                                        <input
+                                                            type="checkbox"
+                                                            checked={selectProducts.includes(product._id)}
+                                                            onChange={() => handleUpdateCheck(product._id)}
+                                                        />
+                                                    </label>
+                                                </td>
+
                                                 <td className="px-4 py-4 text-sm border-2 font-medium text-gray-700 whitespace-nowrap">
                                                     <div className="inline-flex items-center gap-x-3">
 
-                                                        <div className="flex items-center gap-x-2">
-                                                            {product?.images[0] ? <img
-                                                                className="object-cover w-10 h-10 rounded"
-                                                                srcSet={product?.images[0].src}
-                                                                src={product?.images[0].src}
-                                                                alt=""
-                                                            />
+                                                        <div className="flex relative items-center gap-x-2">
+                                                            {product?.images[0] ?
+                                                                <div className="imgSm  ">
+                                                                    <img
+                                                                        className="object-cover w-10 h-10 rounded"
+                                                                        srcSet={product?.images[0].src}
+                                                                        src={product?.images[0].src}
+                                                                        alt=""
+                                                                    />
+                                                                    <div
+                                                                        style={{
+                                                                            backgroundImage: `url(${product?.images[0].src})`,
+                                                                        }}
+                                                                        className="absolute top-[-40px] duration-150 abs hidden bg-[url(${product?.featuredImage?.src})] left-[43px] object-cover bg-cover bg-white shadow-xl opacity-100 z-50 w-[150px] h-[150px] ring-1 ring-gray-500"
+                                                                    >
+                                                                    </div>
+                                                                </div>
                                                                 : <img
                                                                     className="object-cover border border-black w-10 h-10 rounded"
                                                                     srcSet={DemoImage}
@@ -397,8 +467,6 @@ const SellerAllProducts = () => {
                                         ))}
                                     </tbody>
                                 </table>
-
-
                             </div>
                         </div>
                     </div>

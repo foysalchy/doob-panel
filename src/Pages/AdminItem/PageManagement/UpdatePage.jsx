@@ -19,7 +19,6 @@ const UpdatePage = ({ OpenModal, setOpenModal, FAQInfo, refetch }) => {
         const data = {
             title,
             description,
-            MetaTag,
             MetaDescription
         }
 
@@ -62,8 +61,8 @@ const UpdatePage = ({ OpenModal, setOpenModal, FAQInfo, refetch }) => {
                         </div>
                     </div>
 
-                    <input name='MetaTag' placeholder='Meta Tag' className='w-full p-2 my-4 border' defaultValue={FAQInfo.MetaTag} />
-                    <textarea name='MetaDescription' placeholder='Meta Description' className='w-full p-2 my-4 border' defaultValue={FAQInfo.MetaTag} />
+                    <input name='MetaTag' placeholder='Meta Tag' className='w-full p-2 my-4 border' defaultValue={FAQInfo.metaTag} />
+                    <textarea name='MetaDescription' placeholder='Meta Description' className='w-full p-2 my-4 border' defaultValue={FAQInfo.metaDescription} />
 
                     <div className='flex justify-start'>
                         <button type='submit' className="group relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500 mt-4">

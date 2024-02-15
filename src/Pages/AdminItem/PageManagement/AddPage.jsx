@@ -6,17 +6,31 @@ import Swal from "sweetalert2";
 
 const AddPage = () => {
   const [loading, setLoading] = useState(false);
-  const dataSubmit = (event) => {
+
+  const dataSubmit = async (event) => {
     setLoading(true);
     event.preventDefault();
     const form = event.target;
     const title = form.title.value;
     const description = form.description.value;
+    const metaTag = form.metaTag.value;
+    const metaDescription = form.metaDescription.value;
+    const MetaImage = form.metaImg.files[0]
+
+    const imageFormData = new FormData();
+    imageFormData.append("image", MetaImage);
+    const imageUrl = await uploadImage(imageFormData);
+
+
     const faq = {
       title,
       description,
+      metaTag,
+      metaDescription,
+      metaImg: imageUrl
     };
 
+    console.log(faq);
     fetch(`https://backend.doob.com.bd/api/v1/admin/addpage`, {
       method: "POST",
       headers: {
@@ -32,6 +46,16 @@ const AddPage = () => {
         form.reset();
       });
   };
+
+  async function uploadImage(formData) {
+    const url = "https://backend.doob.com.bd/api/v1/image/upload-image";
+    const response = await fetch(url, {
+      method: "POST",
+      body: formData,
+    });
+    const imageData = await response.json();
+    return imageData.imageUrl;
+  }
   return (
     <div>
 
@@ -59,6 +83,47 @@ const AddPage = () => {
               <div>
                 <JoditEditor name="description" id="message"></JoditEditor>
               </div>
+            </div>
+
+            <div>
+              <label className="sr-only text-black" htmlFor="metaTag">
+                Meta Title
+              </label>
+              <input
+                required
+                className="w-full rounded-lg border border-gray-900 p-3 text-sm"
+                placeholder="Meta tag"
+                type="text"
+                id="metaTag"
+                name="metaTag"
+              />
+            </div>
+            <div>
+              <label className="sr-only text-black" htmlFor="metaDescription">
+                Meta Description
+              </label>
+              <textarea
+                required
+                className="w-full rounded-lg border border-gray-900 p-3 text-sm"
+                placeholder="Meta description...."
+                type="text"
+                id="metaDescription"
+                name="metaDescription"
+              />
+            </div>
+
+            <div>
+              <label className="sr-only text-black" htmlFor="metaImg">
+                Meta Image
+              </label>
+              <input
+                required
+                className="w-full rounded-lg border border-gray-900 p-3 text-sm"
+                placeholder="Meta image...."
+                type="file"
+                id="metaImg"
+                name="metaImg"
+              />
             </div>
             <div className="mt-4">
               {
