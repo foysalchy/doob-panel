@@ -47,9 +47,11 @@ const PageManagement = () => {
         refetch();
       });
   };
+
+
   const DeleteHandle = (id) => {
 
-    fetch(`https://backend.doob.com.bd/api/v1/admin/page/delete/${id}`, {
+    fetch(`https://backend.doob.com.bd/api/v1/admin/page/delete?id=${id}`, {
       method: "Delete",
       headers: {
         "content-type": "application/json",
@@ -57,6 +59,7 @@ const PageManagement = () => {
     })
       .then((res) => res.json())
       .then((data) => {
+        console.log(data);
         Swal.fire("success", "Your Price Delete Successfully", "success");
         refetch();
       });

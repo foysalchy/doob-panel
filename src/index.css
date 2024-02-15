@@ -274,3 +274,8 @@ font-google {
  .bg-ree{
   background-color: red!important;
  }
+
+ /* Add this CSS to your stylesheet */
+.imgSm:hover .abs {
+  display: block;
+}

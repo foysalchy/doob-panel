@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import BrightAlert from "bright-alert";
+import SellerPrintPage from "../../../SellerItems/ProductManagement/SellerProductManagement/SellerAllProduct/SellerPrintPage";
 
 const ManageProduct = () => {
   const { data: products = [], refetch } = useQuery({
@@ -45,6 +46,41 @@ const ManageProduct = () => {
       refetch()
     })
   }
+
+
+
+  // select product
+  const [selectProducts, setSelectProducts] = useState([]);
+  const [on, setOn] = useState(null);
+  const [printProduct, setPrintProduct] = useState([]);
+
+  const handleUpdateCheck = (productId) => {
+    setSelectProducts(prevSelectedProducts => {
+      if (prevSelectedProducts.includes(productId)) {
+        return prevSelectedProducts.filter(id => id !== productId);
+      } else {
+        return [...prevSelectedProducts, productId];
+      }
+    });
+  };
+
+  const handleSelectAll = () => {
+    if (selectProducts.length === products.length) {
+      // If all products are already selected, deselect all
+      setSelectProducts([]);
+    } else {
+      // Otherwise, select all products
+      const allProductIds = products.map(product => product._id);
+      setSelectProducts(allProductIds);
+    }
+  };
+
+  const logSelectedProducts = () => {
+    const selectedProductData = products.filter(product => selectProducts.includes(product._id));
+    setPrintProduct(selectedProductData)
+    setOn(!on)
+  };
+
 
   return (
     <div className="">
@@ -109,19 +145,32 @@ const ManageProduct = () => {
       </div>
 
       <section className=" mx-auto">
-        <div className="flex items-center gap-x-3">
-          <h2 className="text-lg font-medium text-gray-800 ">All Product</h2>
-          <span className="px-3 py-1 text-xs  bg-blue-100 rounded-full d text-blue-400">
-            {filteredData?.length}
-          </span>
+        <div className="flex items-center justify-between gap-x-3">
+          <div className="flex items-center gap-2">
+            <h2 className="text-lg font-medium text-gray-800 ">All Product</h2>
+            <span className="px-3 py-1 text-xs  bg-blue-100 rounded-full d text-blue-400">
+              {products?.length}
+            </span>
+          </div>
+
+          <button onClick={logSelectedProducts} disabled={!selectProducts.length} className='bg-blue-500 px-8 py-2 rounded text-white'> Print</button>
         </div>
         <div className="flex flex-col mt-6">
           <div className="overflow-x-auto">
             <div className="  py-2">
+              {on &&
+                <div className='absolute top-0 left-0 right-0 bottom-0 m-auto z-[3000]'> <SellerPrintPage setOn={setOn} products={printProduct} /></div>
+              }
               <div className="overflow-hidden border border-gray-200 border-gray-700 md:rounded-lg">
                 <table className=" divide-y w-full divide-gray-700">
                   <thead className="bg-gray-900 text-white ">
                     <tr>
+                      <th className='px-2'>
+                        <label className='flex items-center gap-2  font-medium' htmlFor="select">
+                          <input id='select' type="checkbox" checked={selectProducts.length === products.length} onChange={handleSelectAll} />
+                          Select all
+                        </label>
+                      </th>
                       <th
                         scope="col"
                         className="py-3.5 px-4 text-sm font-normal text-left rtl:text-right "
@@ -167,29 +216,38 @@ const ManageProduct = () => {
                   <tbody className="bg-white divide-y  divide-gray-200 ">
                     {filteredData?.map((product) => (
                       <tr>
+
                         <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                           <div className="inline-flex items-center gap-x-3">
-                            <input
-                              type="checkbox"
-                              className="text-blue-500 border-gray-300 rounded bg-gray-900 ring-offset-gray-900 border-gray-700"
-                            />
-                            <div className="flex items-center gap-x-2">
-                              <img
-                                className="object-cover w-10 h-10 rounded"
-                                srcSet={product?.featuredImage && product?.featuredImage?.src}
-                                src={product?.featuredImage && product?.featuredImage?.src}
-                                alt=""
+                            <label>
+                              <input
+                                type="checkbox"
+                                checked={selectProducts.includes(product._id)}
+                                onChange={() => handleUpdateCheck(product._id)}
                               />
+                            </label>
+                            <div className="flex  duration-150 items-center gap-x-2 relative">
+                              <div className="imgSm bg-red-400">
+                                <img
+                                  className="object-cover  w-10 h-10 rounded hover:cursor-pointer"
+                                  srcSet={product?.featuredImage && product?.featuredImage?.src}
+                                  src={product?.featuredImage && product?.featuredImage?.src}
+                                  alt=""
+                                />
+                                <div
+                                  style={{
+                                    backgroundImage: `url(${product?.featuredImage?.src})`,
+                                  }}
+                                  className="absolute top-[-40px] duration-150 abs hidden bg-[url(${product?.featuredImage?.src})] left-[43px] object-cover bg-cover bg-white shadow-xl w-[150px] h-[150px] ring-1 ring-gray-500"
+                                >
+                                </div>
+                              </div>
+
                               <div>
-                                <h2 className="font-medium text-gray-800  ">
-                                  {product.name && product?.name
-                                    .split(" ")
-                                    .slice(0, 5)
-                                    .join(" ")}
+                                <h2 className="font-medium text-gray-800 ">
+                                  {product.name && product?.name.split(" ").slice(0, 5).join(" ")}
                                 </h2>
-                                <p className="text-sm font-normal text-gray-600 text-gray-400">
-                                  {product && product?._id}
-                                </p>
+                                <p className="text-sm font-normal text-gray-600 text-gray-400">{product && product?._id}</p>
                               </div>
                             </div>
                           </div>
