@@ -63,6 +63,8 @@ const SubscriptionModel = () => {
 
     console.log(daysPassed, 'services time');
 
+    console.log(prices, 'services time prices ====={}');
+
     return (
         <div className="bg-white text-black">
             {showWarning && (

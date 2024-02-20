@@ -3,6 +3,7 @@ import JoditEditor from "jodit-react";
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
 import { BsArrowRight } from "react-icons/bs";
+import { useQuery } from "@tanstack/react-query";
 
 const AddBlog = () => {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -10,9 +11,19 @@ const AddBlog = () => {
   const [fileName, setFileName] = useState("");
   const [loading, setLoading] = useState(false);
 
+  const [upload, setUpload] = useState("");
+  const [uplodOk, setUploadOk] = useState(false);
 
-  const [upload, setUpload] = useState('')
-  const [uplodOk, setUploadOk] = useState(false)
+  const { data: blogCategories = [], refetch } = useQuery({
+    queryKey: ["blogcategory"],
+    queryFn: async () => {
+      const res = await fetch(
+        "https://backend.doob.com.bd/api/v1/admin/blog-category"
+      );
+      const data = await res.json();
+      return data;
+    },
+  });
 
   const imageUploading = (e) => {
     e.preventDefault();
@@ -26,20 +37,14 @@ const AddBlog = () => {
     })
       .then((res) => res.json())
       .then((imageData) => {
-
         if (imageData.imageUrl) {
-          setUpload(imageData.imageUrl)
-          setUploadOk(true)
+          setUpload(imageData.imageUrl);
+          setUploadOk(true);
+        } else {
+          setUpload("");
         }
-        else {
-          setUpload('')
-        }
-
       });
-  }
-
-
-
+  };
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
@@ -55,19 +60,17 @@ const AddBlog = () => {
     }
   };
 
-
-
-
   const dataSubmit = (event) => {
     setLoading(true);
     event.preventDefault();
     const form = event.target;
     const title = form.title.value;
+    const category = form.category.value;
     const image = form.photo.files[0];
     const message = form.message.value;
-    const MetaImage = upload
-    const MetaTag = form.MetaTag.value
-    const MetaDescription = form.MetaDescription.value
+    const MetaImage = upload;
+    const MetaTag = form.MetaTag.value;
+    const MetaDescription = form.MetaDescription.value;
 
     const formData = new FormData();
     formData.append("image", image);
@@ -81,19 +84,19 @@ const AddBlog = () => {
         const image = imageData.imageUrl;
         const blog = {
           title,
+          category,
           message,
           img: image,
           date: new Date(),
           MetaImage,
           MetaDescription,
-          MetaTag
+          MetaTag,
         };
         postBlog(blog, form);
       });
   };
 
   const postBlog = (blog, form) => {
-
     fetch(`https://backend.doob.com.bd/api/v1/admin/new-blog`, {
       method: "POST",
       headers: {
@@ -113,8 +116,7 @@ const AddBlog = () => {
   };
 
   return (
-    <div >
-
+    <div>
       <div className=" mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8">
         <h1 className="text-2xl font-bold text-center">
           Publish a blog for you and next ...
@@ -171,12 +173,30 @@ const AddBlog = () => {
                 <input
                   required
                   id="dropzone-file"
-                  type="file" accept="image/jpeg, image/png, image/gif, image/bmp, image/webp, image/heic"
+                  type="file"
+                  accept="image/jpeg, image/png, image/gif, image/bmp, image/webp, image/heic"
                   name="photo"
                   className="hidden"
                   onChange={handleFileChange}
                 />
               </label>
+            </div>
+
+            <div className="relative mt-1.5">
+              <select
+                type="text"
+                id="Category"
+                name="category"
+                className="w-full mt-1 rounded-lg border border-gray-900 px-3 py-2 text-sm"
+                placeholder="Select a category"
+              >
+                <option selected disabled value="Select Blog Category">
+                  Select Blog Category
+                </option>
+                {blogCategories?.map((category, i) => (
+                  <option value={category?.title}>{category?.title}</option>
+                ))}
+              </select>
             </div>
 
             <div>
@@ -225,37 +245,43 @@ const AddBlog = () => {
                 id="MetaImage'"
                 name="MetaImage'"
               />
-              {uplodOk && 'done'}
+              {uplodOk && "done"}
             </div>
 
-
             <div className="mt-4">
-              {
-                loading ?
-                  <button disabled className="group relative cursor-not-allowed inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none mt-4">
-                    <span className="text-sm font-medium">
-                      Loading...
-                    </span>
-                    <svg className="animate-spin h-4 w-4 ml-3 text-white" viewBox="0 0 24 24">
-
-                      <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                    </svg>
-                  </button>
-
-                  :
-                  <button type='submit'
-                    className="group relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none mt-4 "
-
+              {loading ? (
+                <button
+                  disabled
+                  className="group relative cursor-not-allowed inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none mt-4"
+                >
+                  <span className="text-sm font-medium">Loading...</span>
+                  <svg
+                    className="animate-spin h-4 w-4 ml-3 text-white"
+                    viewBox="0 0 24 24"
                   >
-                    <span className="absolute -end-full transition-all group-hover:end-4">
-                      <BsArrowRight />
-                    </span>
+                    <circle
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      strokeWidth="4"
+                    />
+                  </svg>
+                </button>
+              ) : (
+                <button
+                  type="submit"
+                  className="group relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none mt-4 "
+                >
+                  <span className="absolute -end-full transition-all group-hover:end-4">
+                    <BsArrowRight />
+                  </span>
 
-                    <span className="text-sm font-medium transition-all group-hover:me-4">
-                      Upload Blog
-                    </span>
-                  </button>
-              }
+                  <span className="text-sm font-medium transition-all group-hover:me-4">
+                    Upload Blog
+                  </span>
+                </button>
+              )}
             </div>
           </form>
         </div>

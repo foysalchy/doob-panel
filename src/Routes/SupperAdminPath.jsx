@@ -62,6 +62,8 @@ import ReportManagement from "../Pages/AdminItem/ReportManagement/ReportManageme
 import AdminSeviceOrder from "../Pages/AdminItem/AdminServiceOrder/AdminSeviceOrder";
 import AdminSalesReport from "../Pages/AdminItem/ReportManagement/SalesReport/AdminSalesReport";
 import SellerReport from "../Pages/AdminItem/ReportManagement/SallerReport/SellerReport";
+import AddBlogsCatagorys from "../Pages/AdminItem/BlogsCatagorys/AddBlogsCatagorys";
+import BlogsCatagoryManagement from "../Pages/AdminItem/BlogsCatagorys/BlogsCatagoryManagement";
 
 const SupperAdminPath = [
     {
@@ -82,6 +84,18 @@ const SupperAdminPath = [
         path: "blog/new-blog",
         element: <CheckStaff>
             <AddBlog />
+        </CheckStaff>
+    },
+
+    {
+        path: "add-blog-category",
+        element: <AddBlogsCatagorys />
+    },
+
+    {
+        path: "manage-blog-category",
+        element: <CheckStaff>
+            <BlogsCatagoryManagement />
         </CheckStaff>
     },
 
