@@ -25,8 +25,8 @@ const AdminBlogPage = () => {
       <div className="px-4 py-10 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-10">
 
         <section className="bg-white ">
-          <div className="container">
-            <div className="-mx-4 flex flex-wrap">
+          <div className="container m-auto">
+            <div className="lg:first-letter:-mx-4 flex flex-wrap">
               <div className="w-full px-4">
                 <div className="mx-auto mb-[60px] max-w-[510px] text-center lg:mb-20">
                   <span className="mb-2 block text-lg font-semibold text-primary">
