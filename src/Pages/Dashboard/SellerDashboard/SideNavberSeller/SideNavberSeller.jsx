@@ -47,6 +47,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
 
             <div className={`${responsive ? "flex  h-screen  overflow-y-auto  flex-col  md:p-3 p-0 lg:w-[70px] md:w-[70px] w-0  border-r-2  " : "flex flex-col  p-6 md:w-64 w-[300px]  h-screen  overflow-y-auto"} md:relative fixed  z-[4000] bg-[#111827] top-0 left-0 bottom-0`}>
                 <div className="space-y-3">
+
                     <div className="flex items-center justify-between">
                         {!responsive && <Link
                             to="/"
@@ -126,7 +127,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
 
                                                         </span>
                                                     </summary>
-
+                                                    
                                                     <ul className="mt-2 space-y-1 px-4">
                                                         <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
                                                             <Link
@@ -1327,7 +1328,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                         ) : null
                                     ) : (
                                         <li className=" ">
-                                           
+
                                             <details className="group [&_summary::-webkit-details-marker]:hidden flex items-center rounded-sm  ">
                                                 <summary
                                                     className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50"
@@ -1380,7 +1381,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                     </li>
                                                     <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
                                                         <Link
-                                                                to={'/seller/report-management/subscriber-report'}
+                                                            to={'/seller/report-management/subscriber-report'}
                                                             className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
                                                         >
                                                             <BsSubscript className='w-5 h-5 fill-current text-gray-400 ' /> Subscriber Report
@@ -1388,7 +1389,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                     </li>
                                                     <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
                                                         <Link
-                                                                to={'/seller/report-management/user-search-report'}
+                                                            to={'/seller/report-management/user-search-report'}
                                                             className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
                                                         >
                                                             <BiSearchAlt className='w-5 h-5 fill-current text-gray-400 ' /> Search Report
@@ -1396,10 +1397,10 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                     </li>
                                                     <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
                                                         <Link
-                                                                to={'/seller/report-management/warehouse-report'}
+                                                            to={'/seller/report-management/warehouse-report'}
                                                             className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
                                                         >
-                                                                <FaWarehouse className='w-5 h-5 fill-current text-gray-400 ' /> Warehouse Report
+                                                            <FaWarehouse className='w-5 h-5 fill-current text-gray-400 ' /> Warehouse Report
                                                         </Link>
                                                     </li>
 

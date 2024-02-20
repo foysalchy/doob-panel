@@ -11,7 +11,7 @@ import {
   BiSolidShoppingBags,
 } from "react-icons/bi";
 import { HiOutlineMenu } from "react-icons/hi";
-import { FaBlogger, FaPeopleGroup, FaSalesforce, FaStore, FaUsersGear, FaWarehouse } from "react-icons/fa6";
+import { FaAngleLeft, FaAngleRight, FaBlogger, FaPeopleGroup, FaSalesforce, FaStore, FaUsersGear, FaWarehouse } from "react-icons/fa6";
 import {
   MdAnnouncement,
   MdEmail,
@@ -46,14 +46,18 @@ const SideNavAdmin = () => {
   const [menu, setMenu] = useState(true);
 
   return (
-    <div className="py-6 sticky">
+    <div className="py-6 bg-red sticky">
+      <button onClick={() => setMenu(!menu)} className={`absolute bg-gray-900 right-[-10px] w-[25px] h-[25px] flex items-center justify-center rounded-full text-white top-20 z-[1000]`}>
+        {menu ? <FaAngleLeft /> : <FaAngleRight />}
+      </button>
       <div
         className={
           menu
-            ? "flex flex-col h-screen p-2  w-60 text-gray-900 overflow-y-auto transparent-scroll"
-            : "flex flex-col h-screen p-3 w-14 text-gray-900 overflow-y-auto transparent-scroll"
+            ? "flex flex-col h-screen py-2 duration-300  px-2 w-60 text-gray-900 overflow-y-auto transparent-scroll relative"
+            : "flex  flex-col h-screen py-3 duration-300 px-2 w-14 text-gray-900 overflow-y-auto transparent-scroll relative"
         }
       >
+
         <div className="space-y-3">
           <div className="flex items-center justify-between">
             {menu ? (
@@ -89,7 +93,7 @@ const SideNavAdmin = () => {
                 </svg>
               </Link>
             )}
-            {!menu ? (
+            {/* {!menu ? (
               <button className="p-2">
                 <HiOutlineMenu
                   onClick={() => setMenu(true)}
@@ -103,12 +107,13 @@ const SideNavAdmin = () => {
                   className="w-5 h-5 fill-current text-gray-900"
                 />
               </button>
-            )}
+            )} */}
           </div>
 
           <div className="flex-1">
             <ul className="pt-2 pb-4 space-y-1 text-sm">
               <NavLink
+                onMouseMove={() => setMenu(true)}
                 rel="noopener noreferrer"
                 to="/admin/dashboard"
                 className={({ isActive }) => {
@@ -126,6 +131,7 @@ const SideNavAdmin = () => {
                   <NavLink
                     to="/admin/blog"
                     rel="noopener noreferrer"
+                    onMouseMove={() => setMenu(true)}
                     href="#"
                     className={({ isActive }) => {
                       return isActive
@@ -139,6 +145,7 @@ const SideNavAdmin = () => {
                 ) : null
               ) : (
                 <NavLink
+                  onMouseMove={() => setMenu(true)}
                   to="/admin/blog"
                   rel="noopener noreferrer"
                   href="#"
@@ -159,6 +166,7 @@ const SideNavAdmin = () => {
                   (itm) => itm?.name === "Blog Category"
                 ) ? (
                   <NavLink
+                    onMouseMove={() => setMenu(true)}
                     rel="noopener noreferrer"
                     to="/admin/manage-blog-category"
                     className={({ isActive }) => {
@@ -173,6 +181,7 @@ const SideNavAdmin = () => {
                 ) : null
               ) : (
                 <NavLink
+                  onMouseMove={() => setMenu(true)}
                   rel="noopener noreferrer"
                   to="/admin/manage-blog-category"
                   className={({ isActive }) => {
@@ -194,6 +203,7 @@ const SideNavAdmin = () => {
                   (itm) => itm?.name === "Service Order"
                 ) ? (
                   <NavLink
+                    onMouseMove={() => setMenu(true)}
                     to="/admin/service-order"
                     rel="noopener noreferrer"
                     href="#"
@@ -209,6 +219,7 @@ const SideNavAdmin = () => {
                 ) : null
               ) : (
                 <NavLink
+                  onMouseMove={() => setMenu(true)}
                   to="/admin/service-order"
                   rel="noopener noreferrer"
                   href="#"
@@ -231,6 +242,7 @@ const SideNavAdmin = () => {
                   (itm) => itm?.name === "Manage Product"
                 ) ? (
                   <NavLink
+                    onMouseMove={() => setMenu(true)}
                     to="/admin/manage-product"
                     rel="noopener noreferrer"
                     href="#"
@@ -246,6 +258,7 @@ const SideNavAdmin = () => {
                 ) : null
               ) : (
                 <NavLink
+                  onMouseMove={() => setMenu(true)}
                   to="/admin/manage-product"
                   rel="noopener noreferrer"
                   href="#"
@@ -264,7 +277,7 @@ const SideNavAdmin = () => {
                 user?.permissions.find((itm) => itm?.name === "Faq") ? (
                   <>
                     {
-                      menu && <li className="">
+                      menu && <li onMouseMove={() => setMenu(true)} className="">
                         <details className="group [&_summary::-webkit-details-marker]:hidden flex items-center rounded-sm  ">
                           <summary
                             className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-black hover:text-gray-50"
@@ -329,7 +342,9 @@ const SideNavAdmin = () => {
               ) : (
                 <>
                   {
-                    menu && <li className="">
+                    menu &&
+                    <li onMouseMove={() => setMenu(true)} className="relative">
+
                       <details className="group [&_summary::-webkit-details-marker]:hidden flex items-center rounded-sm  ">
                         <summary
                           className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-black hover:text-gray-50"
@@ -396,7 +411,9 @@ const SideNavAdmin = () => {
                 user?.permissions.find((itm) => itm?.name === "Warehouse") ? (
                   <>
                     {menu &&
-                      <li className="">
+                      <li
+                        onMouseMove={() => setMenu(true)}
+                        className="">
                         <details className="group [&_summary::-webkit-details-marker]:hidden flex items-center rounded-sm  ">
                           <summary
                             className="flex cursor-pointer items-center justify-between text-black  p-2 rounded-sm hover:bg-gray-800  hover:text-gray-50"
@@ -467,7 +484,8 @@ const SideNavAdmin = () => {
               ) : (
                 <>
                   {menu &&
-                    <li className="">
+                    <li onMouseMove={() => setMenu(true)} className="">
+
                       <details className="group [&_summary::-webkit-details-marker]:hidden flex items-center rounded-sm  ">
                         <summary
                           className="flex cursor-pointer items-center justify-between text-black  p-2 rounded-sm hover:bg-gray-800  hover:text-gray-50"
@@ -541,6 +559,7 @@ const SideNavAdmin = () => {
                   (itm) => itm?.name === "Manage Category"
                 ) ? (
                   <NavLink
+                    onMouseMove={() => setMenu(true)}
                     rel="noopener noreferrer"
                     to="/admin/manage-category"
                     className={({ isActive }) => {
@@ -555,6 +574,7 @@ const SideNavAdmin = () => {
                 ) : null
               ) : (
                 <NavLink
+                  onMouseMove={() => setMenu(true)}
                   rel="noopener noreferrer"
                   to="/admin/manage-category"
                   className={({ isActive }) => {
@@ -571,6 +591,7 @@ const SideNavAdmin = () => {
               {user?.staffRole ? (
                 user?.permissions.find((itm) => itm?.name === "Faq") ? (
                   <NavLink
+                    onMouseMove={() => setMenu(true)}
                     rel="noopener noreferrer"
                     to={"/admin/faq"}
                     className={({ isActive }) => {
@@ -585,6 +606,7 @@ const SideNavAdmin = () => {
                 ) : null
               ) : (
                 <NavLink
+                  onMouseMove={() => setMenu(true)}
                   rel="noopener noreferrer"
                   to={"/admin/faq"}
                   className={({ isActive }) => {
@@ -598,13 +620,14 @@ const SideNavAdmin = () => {
                 </NavLink>
               )}
 
-           
+
 
               {user?.staffRole ? (
                 user?.permissions.find(
                   (itm) => itm?.name === "Price Management"
                 ) ? (
                   <NavLink
+                    onMouseMove={() => setMenu(true)}
                     rel="noopener noreferrer"
                     to={"/admin/price-management"}
                     className={({ isActive }) => {
@@ -619,6 +642,7 @@ const SideNavAdmin = () => {
                 ) : null
               ) : (
                 <NavLink
+                  onMouseMove={() => setMenu(true)}
                   rel="noopener noreferrer"
                   to={"/admin/price-management"}
                   className={({ isActive }) => {
@@ -637,6 +661,7 @@ const SideNavAdmin = () => {
                   (itm) => itm?.name === "Page Management"
                 ) ? (
                   <NavLink
+                    onMouseMove={() => setMenu(true)}
                     rel="noopener noreferrer"
                     to={"/admin/page-management"}
                     className={({ isActive }) => {
@@ -651,6 +676,7 @@ const SideNavAdmin = () => {
                 ) : null
               ) : (
                 <NavLink
+                  onMouseMove={() => setMenu(true)}
                   rel="noopener noreferrer"
                   to={"/admin/page-management"}
                   className={({ isActive }) => {
@@ -667,6 +693,7 @@ const SideNavAdmin = () => {
               {user?.staffRole ? (
                 user?.permissions.find((itm) => itm?.name === "Services") ? (
                   <NavLink
+                    onMouseMove={() => setMenu(true)}
                     rel="noopener noreferrer"
                     to={"/admin/services"}
                     className={({ isActive }) => {
@@ -681,6 +708,7 @@ const SideNavAdmin = () => {
                 ) : null
               ) : (
                 <NavLink
+                  onMouseMove={() => setMenu(true)}
                   rel="noopener noreferrer"
                   to={"/admin/services"}
                   className={({ isActive }) => {
@@ -697,6 +725,7 @@ const SideNavAdmin = () => {
               {user?.staffRole ? (
                 user?.permissions.find((itm) => itm?.name === "Contact") ? (
                   <NavLink
+                    onMouseMove={() => setMenu(true)}
                     rel="noopener noreferrer"
                     to={"/admin/contact"}
                     className={({ isActive }) => {
@@ -711,6 +740,7 @@ const SideNavAdmin = () => {
                 ) : null
               ) : (
                 <NavLink
+                  onMouseMove={() => setMenu(true)}
                   rel="noopener noreferrer"
                   to={"/admin/contact"}
                   className={({ isActive }) => {
@@ -726,7 +756,7 @@ const SideNavAdmin = () => {
 
               {user?.staffRole ? (
                 user?.permissions.find((itm) => itm?.name === "Settings") ? (
-                  <li className="">
+                  <li onMouseMove={() => setMenu(true)} className="">
                     <details className="group [&_summary::-webkit-details-marker]:hidden flex items-center rounded-sm  ">
                       <summary
                         className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-black hover:text-gray-50"
@@ -805,7 +835,7 @@ const SideNavAdmin = () => {
               ) :
 
                 <>
-                  <li className="">
+                  <li onMouseMove={() => setMenu(true)} className="">
                     <details className="group [&_summary::-webkit-details-marker]:hidden flex items-center rounded-sm  ">
                       <summary
                         className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-black hover:text-gray-50"
@@ -888,6 +918,7 @@ const SideNavAdmin = () => {
                   (itm) => itm?.name === "Support Ticket"
                 ) ? (
                   <NavLink
+                    onMouseMove={() => setMenu(true)}
                     to={"/admin/support-ticket"}
                     rel="noopener noreferrer"
                     className={({ isActive }) => {
@@ -902,6 +933,7 @@ const SideNavAdmin = () => {
                 ) : null
               ) : (
                 <NavLink
+                  onMouseMove={() => setMenu(true)}
                   to={"/admin/support-ticket"}
                   rel="noopener noreferrer"
                   className={({ isActive }) => {
@@ -920,6 +952,7 @@ const SideNavAdmin = () => {
                   (itm) => itm?.name === "Seller Management"
                 ) ? (
                   <NavLink
+                    onMouseMove={() => setMenu(true)}
                     rel="noopener noreferrer"
                     to={"/admin/seller-management"}
                     className={({ isActive }) => {
@@ -934,6 +967,7 @@ const SideNavAdmin = () => {
                 ) : null
               ) : (
                 <NavLink
+                  onMouseMove={() => setMenu(true)}
                   rel="noopener noreferrer"
                   to={"/admin/seller-management"}
                   className={({ isActive }) => {
@@ -947,7 +981,7 @@ const SideNavAdmin = () => {
                 </NavLink>
               )}
 
-             
+
 
               {user?.staffRole ? (
                 user?.permissions.find(
@@ -955,7 +989,7 @@ const SideNavAdmin = () => {
                 ) ? (
                   <>
                     {menu &&
-                      <li className="">
+                      <li onMouseMove={() => setMenu(true)} className="">
                         <details className="group [&_summary::-webkit-details-marker]:hidden flex items-center rounded-sm  ">
                           <summary
                             className="flex cursor-pointer items-center justify-between text-black  p-2 rounded-sm hover:bg-gray-800  hover:text-gray-50"
@@ -1026,7 +1060,7 @@ const SideNavAdmin = () => {
               ) : (
                 <>
                   {menu &&
-                    <li className="">
+                    <li onMouseMove={() => setMenu(true)} className="">
                       <details className="group [&_summary::-webkit-details-marker]:hidden flex items-center rounded-sm  ">
                         <summary
                           className="flex cursor-pointer items-center justify-between text-black  p-2 rounded-sm hover:bg-gray-800  hover:text-gray-50"
@@ -1101,7 +1135,7 @@ const SideNavAdmin = () => {
                 ) ? (
                   <>
                     {menu &&
-                      <li className="">
+                      <li onMouseMove={() => setMenu(true)} className="">
                         <details className="group [&_summary::-webkit-details-marker]:hidden flex items-center rounded-sm  ">
                           <summary
                             className="flex cursor-pointer items-center justify-between text-black  p-2 rounded-sm hover:bg-gray-800  hover:text-gray-50"
@@ -1181,7 +1215,7 @@ const SideNavAdmin = () => {
               ) : (
                 <>
                   {menu &&
-                    <li className="">
+                    <li onMouseMove={() => setMenu(true)} className="">
                       <details className="group [&_summary::-webkit-details-marker]:hidden flex items-center rounded-sm  ">
                         <summary
                           className="flex cursor-pointer items-center justify-between text-black  p-2 rounded-sm hover:bg-gray-800  hover:text-gray-50"
@@ -1264,6 +1298,7 @@ const SideNavAdmin = () => {
                   (itm) => itm?.name === "Staff Management"
                 ) ? (
                   <NavLink
+                    onMouseMove={() => setMenu(true)}
                     rel="noopener noreferrer"
                     to={"/admin/staff-management"}
                     className={({ isActive }) => {
@@ -1278,6 +1313,7 @@ const SideNavAdmin = () => {
                 ) : null
               ) : (
                 <NavLink
+                  onMouseMove={() => setMenu(true)}
                   rel="noopener noreferrer"
                   to={"/admin/staff-management"}
                   className={({ isActive }) => {
@@ -1292,6 +1328,7 @@ const SideNavAdmin = () => {
               )}
 
               <NavLink
+                onMouseMove={() => setMenu(true)}
                 rel="noopener noreferrer"
                 to={"/admin/omni-chat"}
                 className={({ isActive }) => {
@@ -1305,6 +1342,7 @@ const SideNavAdmin = () => {
               </NavLink>
 
               <NavLink
+                onMouseMove={() => setMenu(true)}
                 rel="noopener noreferrer"
                 to={`/admin/referral-program`}
                 className={({ isActive }) => {
@@ -1318,6 +1356,7 @@ const SideNavAdmin = () => {
               </NavLink>
 
               <NavLink
+                onMouseMove={() => setMenu(true)}
                 rel="noopener noreferrer"
                 to={"/admin/customer-manage"}
                 className={({ isActive }) => {
