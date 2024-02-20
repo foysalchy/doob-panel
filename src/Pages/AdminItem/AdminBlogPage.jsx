@@ -1,3 +1,4 @@
+import { useQuery } from "@tanstack/react-query";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
@@ -20,15 +21,40 @@ const AdminBlogPage = () => {
     blog.title.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+
+  // category
+  const { data: categories = [], isLoading: isCategoriesLoading, refetch } = useQuery({
+    queryKey: ['categories'],
+    queryFn: async () => {
+      const res = await fetch('https://backend.doob.com.bd/api/v1/admin/category');
+      const data = await res.json();
+      return data;
+    },
+  });
+
+
+  const blnkData = [{}, {}, {}];
+  const [selectedCategory, setSelectedCategory] = useState(null);
+
+  const filterServices = (category) => {
+    setSelectedCategory(category);
+  };
+
+  useEffect(() => {
+    // Trigger a refetch of services when categories change
+    refetch();
+  }, [categories, refetch]);
+
+
   return (
     <div>
       <div className="px-4 py-10 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-10">
 
         <section className="bg-white ">
-          <div className="container">
-            <div className="-mx-4 flex flex-wrap">
+          <div className="container m-auto">
+            <div className="lg:first-letter:-mx-4 flex flex-wrap">
               <div className="w-full px-4">
-                <div className="mx-auto mb-[60px] max-w-[510px] text-center lg:mb-20">
+                <div className="mx-auto mb-[60px] max-w-[510px] text-center">
                   <span className="mb-2 block text-lg font-semibold text-primary">
                     Our Blogs
                   </span>
@@ -73,6 +99,28 @@ const AdminBlogPage = () => {
                         </svg>
                       </button>
                     </span>
+                  </div>
+                </div>
+                <div className="mt-2 mb-8">
+                  <div className="flex flex-wrap gap-4">
+                    <button
+                      onClick={() => filterServices(null)}
+                      className={`px-4 py-2 text-sm font-medium uppercase tracking-wide ${selectedCategory === null ? 'bg-black text-white' : 'bg-gray-300 text-gray-700'
+                        }`}
+                    >
+                      All
+                    </button>
+                    {!isCategoriesLoading &&
+                      categories.map((category) => (
+                        <button
+                          key={category.id}
+                          onClick={() => filterServices(category.title)}
+                          className={`px-4 py-2 text-sm font-medium uppercase tracking-wide ${selectedCategory === category.title ? 'bg-black text-white' : 'bg-gray-300 text-gray-700'
+                            }`}
+                        >
+                          {category.title}
+                        </button>
+                      ))}
                   </div>
                 </div>
               </div>
