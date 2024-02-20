@@ -21,7 +21,7 @@ const SingleBlog = () => {
   }, []);
   const blogInfo = useLoaderData();
 
-console.log(blogInfo, 'blogInfo');
+  console.log(blogInfo, 'blogInfo');
   const extractInnerText = (html) => {
     const parser = new DOMParser();
     const doc = parser.parseFromString(html, "text/html");
@@ -81,7 +81,7 @@ console.log(blogInfo, 'blogInfo');
     return 'just now';
   }
 
- 
+
   return (
     <div className=" ">
       <MetaHelmet title={blogInfo?.MetaTag} description={blogInfo?.MetaDescription} image={blogInfo?.MetaImage} />

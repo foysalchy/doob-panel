@@ -124,7 +124,7 @@ const homePath = [
         path: "/blogs/:id",
         element: <SingleBlog />,
         loader: ({ params }) =>
-        fetch(`https://backend.doob.com.bd/api/v1/admin/all-blogs/:${params.id}`),
+        fetch(`https://backend.doob.com.bd/api/v1/admin/all-blogs/${params.id}`),
     },
     {
         path: "/faq",

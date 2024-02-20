@@ -1,28 +1,45 @@
 import React, { useContext, useState } from "react";
 import { AuthContext } from "../../../AuthProvider/UserProvider";
 import {
+  BiArea,
   BiCategory,
+  BiHistory,
   BiHomeAlt,
+  BiSlider,
+  BiSolidBellRing,
   BiSolidReport,
   BiSolidShoppingBags,
 } from "react-icons/bi";
 import { HiOutlineMenu } from "react-icons/hi";
-import { FaBlogger, FaStore, FaUsersGear } from "react-icons/fa6";
+import { FaBlogger, FaPeopleGroup, FaSalesforce, FaStore, FaUsersGear, FaWarehouse } from "react-icons/fa6";
 import {
+  MdAnnouncement,
+  MdEmail,
   MdOutlineAdminPanelSettings,
   MdOutlineContentPaste,
   MdOutlineRoomPreferences,
   MdOutlineSubscriptions,
+  MdPayment,
+  MdReport,
+  MdSelfImprovement,
+  MdSettings,
+  MdSystemSecurityUpdate,
+  MdWarehouse,
 } from "react-icons/md";
 import { HiOutlineUserGroup, HiOutlineUsers } from "react-icons/hi2";
 import { SiGoogledomains } from "react-icons/si";
-import { FaRegUserCircle } from "react-icons/fa";
-import { AiOutlineAlert, AiOutlineClose } from "react-icons/ai";
-import { BsChatLeftQuote, BsTicketDetailed } from "react-icons/bs";
-import { GiNotebook } from "react-icons/gi";
-import { IoLogOut, IoSettings } from "react-icons/io5";
+import { FaRegUserCircle, FaShippingFast } from "react-icons/fa";
+import { AiFillCustomerService, AiOutlineAlert, AiOutlineClose } from "react-icons/ai";
+import { BsChatLeftQuote, BsHddRack, BsSubscript, BsTicketDetailed } from "react-icons/bs";
+import { GiEarbuds, GiNotebook } from "react-icons/gi";
+import { IoLogOut, IoNotificationsCircle, IoSettings } from "react-icons/io5";
 import { Link, NavLink } from "react-router-dom";
 import Logo from "../../../../Logo.png";
+import { TbCategory } from "react-icons/tb";
+import { IoIosArrowDown, IoMdPhotos } from "react-icons/io";
+import { FiSettings } from "react-icons/fi";
+import { GrDomain } from "react-icons/gr";
+import { PiWarehouseThin } from "react-icons/pi";
 
 const SideNavAdmin = () => {
   const { user, logOut } = useContext(AuthContext);
@@ -136,7 +153,7 @@ const SideNavAdmin = () => {
                 </NavLink>
               )}
 
-            
+
               {user?.staffRole ? (
                 user?.permissions.find(
                   (itm) => itm?.name === "Blog Category"
@@ -207,7 +224,7 @@ const SideNavAdmin = () => {
               )}
 
 
- 
+
 
               {user?.staffRole ? (
                 user?.permissions.find(
@@ -241,6 +258,282 @@ const SideNavAdmin = () => {
                   <FaStore className="w-5 h-5 fill-current text-gray-400" />
                   {menu && <span> Products Management</span>}
                 </NavLink>
+              )}
+
+              {user?.staffRole ? (
+                user?.permissions.find((itm) => itm?.name === "Faq") ? (
+                  <>
+                    {
+                      menu && <li className="">
+                        <details className="group [&_summary::-webkit-details-marker]:hidden flex items-center rounded-sm  ">
+                          <summary
+                            className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-black hover:text-gray-50"
+                          >
+                            <div className='flex cursor-pointer items-center gap-2'>
+                              <TbCategory className="w-5 h-5 fill-current text-gray-400" />
+
+                              <span>Category</span>
+                            </div>
+
+                            <span
+                              className="shrink-0 transition duration-300 group-open:-rotate-180"
+                            >
+                              <IoIosArrowDown className="h-5 w-5" />
+
+                            </span>
+                          </summary>
+
+                          <ul className="mt-2 space-y-1 px-4">
+                            <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50'>
+                              <Link
+                                to={'/admin/category-management/mega-category-management'}
+                                className=" hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                              >
+                                <TbCategory className='w-5 h-5 fill-current text-gray-400 ' />  Mega Category
+                              </Link>
+                            </li>
+                            <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50'>
+                              <Link
+                                to={'/admin/category-management/sub-category-management'}
+                                className=" hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                              >
+                                <TbCategory className='w-5 h-5 fill-current text-gray-400 ' />  Sub Category
+                              </Link>
+                            </li>
+                            <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50'>
+                              <Link
+                                to={'/admin/category-management/mini-category-management'}
+                                className=" hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                              >
+                                <TbCategory className='w-5 h-5 fill-current text-gray-400 ' />  Mini Category
+                              </Link>
+                            </li>
+
+                            <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50'>
+                              <Link
+                                to={'/admin/category-management/extra-category-management'}
+                                className=" hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                              >
+                                <TbCategory className='w-5 h-5 fill-current text-gray-400 ' />
+                                Extra Category
+                              </Link>
+                            </li>
+
+
+                          </ul>
+                        </details>
+                      </li>
+                    }
+                  </>
+                ) : null
+              ) : (
+                <>
+                  {
+                    menu && <li className="">
+                      <details className="group [&_summary::-webkit-details-marker]:hidden flex items-center rounded-sm  ">
+                        <summary
+                          className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-black hover:text-gray-50"
+                        >
+                          <div className='flex cursor-pointer items-center gap-2'>
+                            <TbCategory className="w-5 h-5 fill-current text-gray-400" />
+
+                            <span>Category...</span>
+                          </div>
+
+                          <span
+                            className="shrink-0 transition duration-300 group-open:-rotate-180"
+                          >
+                            <IoIosArrowDown className="h-5 w-5" />
+
+                          </span>
+                        </summary>
+
+                        <ul className="mt-2 space-y-1 px-4">
+                          <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50'>
+                            <Link
+                              to={'/admin/category-management/mega-category-management'}
+                              className=" hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                            >
+                              <TbCategory className='w-5 h-5 fill-current text-gray-400 ' />  Mega Category
+                            </Link>
+                          </li>
+                          <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50'>
+                            <Link
+                              to={'/admin/category-management/sub-category-management'}
+                              className=" hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                            >
+                              <TbCategory className='w-5 h-5 fill-current text-gray-400 ' />  Sub Category
+                            </Link>
+                          </li>
+                          <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50'>
+                            <Link
+                              to={'/admin/category-management/mini-category-management'}
+                              className=" hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                            >
+                              <TbCategory className='w-5 h-5 fill-current text-gray-400 ' />  Mini Category
+                            </Link>
+                          </li>
+
+                          <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50'>
+                            <Link
+                              to={'/admin/category-management/extra-category-management'}
+                              className=" hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                            >
+                              <TbCategory className='w-5 h-5 fill-current text-gray-400 ' />
+                              Extra Category
+                            </Link>
+                          </li>
+
+
+                        </ul>
+                      </details>
+                    </li>
+                  }
+                </>
+              )}
+
+              {user?.staffRole ? (
+                user?.permissions.find((itm) => itm?.name === "Warehouse") ? (
+                  <>
+                    {menu &&
+                      <li className="">
+                        <details className="group [&_summary::-webkit-details-marker]:hidden flex items-center rounded-sm  ">
+                          <summary
+                            className="flex cursor-pointer items-center justify-between text-black  p-2 rounded-sm hover:bg-gray-800  hover:text-gray-50"
+                          >
+                            <div className='flex cursor-pointer items-center gap-2'>
+                              <MdWarehouse className="w-5 h-5 fill-current text-gray-400" />
+                              <span>Warehouse </span>
+                            </div>
+
+                            <span
+                              className="shrink-0 transition duration-300 group-open:-rotate-180"
+                            >
+                              <IoIosArrowDown className="h-5 w-5" />
+
+                            </span>
+                          </summary>
+
+                          <ul className="mt-2 space-y-1 px-4">
+                            <li className='flex cursor-pointer items-center justify-between text-black  p-2 rounded-sm hover:bg-gray-800  hover:text-gray-50'>
+                              <Link
+                                to={'/admin/warehouse/warehouse-management'}
+                                className="  flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                              >
+                                <PiWarehouseThin className='w-5 h-5 fill-current text-gray-400 ' /> Manage Warehouse
+                              </Link>
+                            </li>
+                            <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-black'>
+                              <Link
+                                to={'/admin/warehouse/area-management'}
+                                className="  flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                              >
+                                <BiArea className='w-5 h-5 fill-current text-gray-400 ' /> Area Management
+                              </Link>
+                            </li>
+                            <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-black'>
+                              <Link
+                                to={'/admin/warehouse/rack-management'}
+                                className="  flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                              >
+                                <BsHddRack className='w-5 h-5 fill-current text-gray-400 ' /> Rack Management
+                              </Link>
+                            </li>
+                            <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-black'>
+                              <Link
+                                to={'/admin/warehouse/self-management'}
+                                className="  flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                              >
+                                <MdSelfImprovement className='w-5 h-5 fill-current text-gray-400 ' /> Self Management
+                              </Link>
+                            </li>
+                            <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-black'>
+                              <Link
+                                to={'/admin/warehouse/cell-management'}
+                                className="  flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                              >
+                                <BiSolidBellRing className='w-5 h-5 fill-current text-gray-400 ' /> Cell Management
+                              </Link>
+                            </li>
+
+
+                          </ul>
+                        </details>
+                      </li>
+
+                    }
+                  </>
+                ) : null
+              ) : (
+                <>
+                  {menu &&
+                    <li className="">
+                      <details className="group [&_summary::-webkit-details-marker]:hidden flex items-center rounded-sm  ">
+                        <summary
+                          className="flex cursor-pointer items-center justify-between text-black  p-2 rounded-sm hover:bg-gray-800  hover:text-gray-50"
+                        >
+                          <div className='flex cursor-pointer items-center gap-2'>
+                            <MdWarehouse className="w-5 h-5 fill-current text-gray-400" />
+                            <span>Warehouse </span>
+                          </div>
+
+                          <span
+                            className="shrink-0 transition duration-300 group-open:-rotate-180"
+                          >
+                            <IoIosArrowDown className="h-5 w-5" />
+
+                          </span>
+                        </summary>
+
+                        <ul className="mt-2 space-y-1 px-4">
+                          <li className='flex cursor-pointer items-center justify-between text-black  p-2 rounded-sm hover:bg-gray-800  hover:text-gray-50'>
+                            <Link
+                              to={'/admin/warehouse/warehouse-management'}
+                              className="  flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                            >
+                              <PiWarehouseThin className='w-5 h-5 fill-current text-gray-400 ' /> Manage Warehouse
+                            </Link>
+                          </li>
+                          <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-black'>
+                            <Link
+                              to={'/admin/warehouse/area-management'}
+                              className="  flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                            >
+                              <BiArea className='w-5 h-5 fill-current text-gray-400 ' /> Area Management
+                            </Link>
+                          </li>
+                          <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-black'>
+                            <Link
+                              to={'/admin/warehouse/rack-management'}
+                              className="  flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                            >
+                              <BsHddRack className='w-5 h-5 fill-current text-gray-400 ' /> Rack Management
+                            </Link>
+                          </li>
+                          <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-black'>
+                            <Link
+                              to={'/admin/warehouse/self-management'}
+                              className="  flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                            >
+                              <MdSelfImprovement className='w-5 h-5 fill-current text-gray-400 ' /> Self Management
+                            </Link>
+                          </li>
+                          <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-black'>
+                            <Link
+                              to={'/admin/warehouse/cell-management'}
+                              className="  flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                            >
+                              <BiSolidBellRing className='w-5 h-5 fill-current text-gray-400 ' /> Cell Management
+                            </Link>
+                          </li>
+
+
+                        </ul>
+                      </details>
+                    </li>
+
+                  }
+                </>
               )}
 
               {user?.staffRole ? (
@@ -305,35 +598,7 @@ const SideNavAdmin = () => {
                 </NavLink>
               )}
 
-              {user?.staffRole ? (
-                user?.permissions.find((itm) => itm?.name === "Faq") ? (
-                  <NavLink
-                    rel="noopener noreferrer"
-                    to={"/admin/category-managementss"}
-                    className={({ isActive }) => {
-                      return isActive
-                        ? "flex items-center p-2 space-x-3 rounded-sm bg-gray-800 text-white "
-                        : "flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
-                    }}
-                  >
-                    <FaUsersGear className="w-5 h-5 fill-current text-gray-400" />
-                    {menu && <span>Category Management</span>}
-                  </NavLink>
-                ) : null
-              ) : (
-                <NavLink
-                  rel="noopener noreferrer"
-                  to={"/admin/category-management"}
-                  className={({ isActive }) => {
-                    return isActive
-                      ? "flex items-center p-2 space-x-3 rounded-sm bg-gray-800 text-white "
-                      : "flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
-                  }}
-                >
-                  <FaUsersGear className="w-5 h-5 fill-current text-gray-400" />
-                  {menu && <span>Category Management</span>}
-                </NavLink>
-              )}
+           
 
               {user?.staffRole ? (
                 user?.permissions.find(
@@ -461,33 +726,162 @@ const SideNavAdmin = () => {
 
               {user?.staffRole ? (
                 user?.permissions.find((itm) => itm?.name === "Settings") ? (
-                  <NavLink
-                    rel="noopener noreferrer"
-                    to={"/admin/settings"}
-                    className={({ isActive }) => {
-                      return isActive
-                        ? "flex items-center p-2 space-x-3 rounded-sm bg-gray-800 text-white "
-                        : "flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
-                    }}
-                  >
-                    <IoSettings className="w-5 h-5 fill-current text-gray-400" />
-                    {menu && <span>Settings</span>}
-                  </NavLink>
+                  <li className="">
+                    <details className="group [&_summary::-webkit-details-marker]:hidden flex items-center rounded-sm  ">
+                      <summary
+                        className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-black hover:text-gray-50"
+                      >
+                        <div className='flex cursor-pointer items-center gap-2'>
+                          <MdSettings className="w-5 h-5 fill-current text-gray-400" />
+
+                          <span>Settings</span>
+                        </div>
+
+                        <span
+                          className="shrink-0 transition duration-300 group-open:-rotate-180"
+                        >
+                          <IoIosArrowDown className="h-5 w-5" />
+
+                        </span>
+                      </summary>
+
+                      <ul className="mt-2 space-y-1 px-4">
+                        <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50'>
+                          <Link
+                            to={'/admin/settings/site-content'}
+                            className=" hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                          >
+                            <MdSettings className='w-5 h-5 fill-current text-gray-400 ' />  Site Content
+                          </Link>
+                        </li>
+                        <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50'>
+                          <Link
+                            to={'/admin/settings/payment-management'}
+                            className=" hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                          >
+                            <MdPayment className='w-5 h-5 fill-current text-gray-400 ' />Payment Getaway
+                          </Link>
+                        </li>
+                        <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50'>
+                          <Link
+                            to={'/admin/settings/seller-domain'}
+                            className=" hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                          >
+                            <GrDomain className='w-5 h-5 fill-current text-gray-400 ' />Seller Domain
+                          </Link>
+                        </li>
+                        <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50'>
+                          <Link
+                            to={'/admin/settings/send-email'}
+                            className=" hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                          >
+                            <MdEmail className='w-5 h-5 fill-current text-gray-400 ' />Send Email
+                          </Link>
+                        </li>
+                        <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50'>
+                          <Link
+                            to={'/admin/settings/shipping'}
+                            className=" hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                          >
+                            <FaShippingFast className='w-5 h-5 fill-current text-gray-400 ' />Shipping
+                          </Link>
+                        </li>
+                        <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50'>
+                          <Link
+                            to={'/admin/settings/daraz-setup'}
+                            className=" hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                          >
+                            <MdSystemSecurityUpdate className='w-5 h-5 fill-current text-gray-400 ' />Daraz Setup
+                          </Link>
+                        </li>
+
+
+
+
+                      </ul>
+                    </details>
+                  </li>
                 ) : null
-              ) : (
-                <NavLink
-                  rel="noopener noreferrer"
-                  to={"/admin/settings"}
-                  className={({ isActive }) => {
-                    return isActive
-                      ? "flex items-center p-2 space-x-3 rounded-sm bg-gray-800 text-white "
-                      : "flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
-                  }}
-                >
-                  <IoSettings className="w-5 h-5 fill-current text-gray-400" />
-                  {menu && <span>Settings</span>}
-                </NavLink>
-              )}
+              ) :
+
+                <>
+                  <li className="">
+                    <details className="group [&_summary::-webkit-details-marker]:hidden flex items-center rounded-sm  ">
+                      <summary
+                        className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-black hover:text-gray-50"
+                      >
+                        <div className='flex cursor-pointer items-center gap-2'>
+                          <MdSettings className="w-5 h-5 fill-current text-gray-400" />
+
+                          <span>Settings</span>
+                        </div>
+
+                        <span
+                          className="shrink-0 transition duration-300 group-open:-rotate-180"
+                        >
+                          <IoIosArrowDown className="h-5 w-5" />
+
+                        </span>
+                      </summary>
+
+                      <ul className="mt-2 space-y-1 px-4">
+                        <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50'>
+                          <Link
+                            to={'/admin/settings/site-content'}
+                            className=" hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                          >
+                            <MdSettings className='w-5 h-5 fill-current text-gray-400 ' />  Site Content
+                          </Link>
+                        </li>
+                        <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50'>
+                          <Link
+                            to={'/admin/settings/payment-management'}
+                            className=" hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                          >
+                            <MdPayment className='w-5 h-5 fill-current text-gray-400 ' />Payment Getaway
+                          </Link>
+                        </li>
+                        <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50'>
+                          <Link
+                            to={'/admin/settings/seller-domain'}
+                            className=" hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                          >
+                            <GrDomain className='w-5 h-5 fill-current text-gray-400 ' />Seller Domain
+                          </Link>
+                        </li>
+                        <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50'>
+                          <Link
+                            to={'/admin/settings/send-email'}
+                            className=" hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                          >
+                            <MdEmail className='w-5 h-5 fill-current text-gray-400 ' />Send Email
+                          </Link>
+                        </li>
+                        <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50'>
+                          <Link
+                            to={'/admin/settings/shipping'}
+                            className=" hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                          >
+                            <FaShippingFast className='w-5 h-5 fill-current text-gray-400 ' />Shipping
+                          </Link>
+                        </li>
+                        <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50'>
+                          <Link
+                            to={'/admin/settings/daraz-setup'}
+                            className=" hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                          >
+                            <MdSystemSecurityUpdate className='w-5 h-5 fill-current text-gray-400 ' />Daraz Setup
+                          </Link>
+                        </li>
+
+
+
+
+                      </ul>
+                    </details>
+                  </li>
+                </>
+              }
 
               {user?.staffRole ? (
                 user?.permissions.find(
@@ -553,98 +947,316 @@ const SideNavAdmin = () => {
                 </NavLink>
               )}
 
+             
+
               {user?.staffRole ? (
-                user?.permissions.find((itm) => itm?.name === "Warehouse") ? (
-                  <NavLink
-                    rel="noopener noreferrer"
-                    to={"/admin/warehouse"}
-                    className={({ isActive }) => {
-                      return isActive
-                        ? "flex items-center p-2 space-x-3 rounded-sm bg-gray-800 text-white "
-                        : "flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
-                    }}
-                  >
-                    <GiNotebook className="w-5 h-5 fill-current text-gray-400" />
-                    {menu && <span>Warehouse Management</span>}
-                  </NavLink>
+                user?.permissions.find(
+                  (itm) => itm?.name === "Content Management"
+                ) ? (
+                  <>
+                    {menu &&
+                      <li className="">
+                        <details className="group [&_summary::-webkit-details-marker]:hidden flex items-center rounded-sm  ">
+                          <summary
+                            className="flex cursor-pointer items-center justify-between text-black  p-2 rounded-sm hover:bg-gray-800  hover:text-gray-50"
+                          >
+                            <div className='flex cursor-pointer items-center gap-2'>
+                              <IoMdPhotos className="w-5 h-5 fill-current text-gray-400" />
+                              <span>Content Management </span>
+                            </div>
+
+                            <span
+                              className="shrink-0 transition duration-300 group-open:-rotate-180"
+                            >
+                              <IoIosArrowDown className="h-5 w-5" />
+
+                            </span>
+                          </summary>
+
+                          <ul className="mt-2 space-y-1 px-4">
+                            <li className='flex cursor-pointer items-center justify-between text-black  p-2 rounded-sm hover:bg-gray-800  hover:text-gray-50'>
+                              <Link
+                                to={'/admin/content-management/admin-popup'}
+                                className="  flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                              >
+                                <FaPeopleGroup className='w-5 h-5 fill-current text-gray-400 ' /> Pop UP
+                              </Link>
+                            </li>
+                            <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-black'>
+                              <Link
+                                to={'/admin/content-management/seller-notice'}
+                                className="  flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                              >
+                                <IoNotificationsCircle className='w-5 h-5 fill-current text-gray-400 ' /> Notice
+                              </Link>
+                            </li>
+                            <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-black'>
+                              <Link
+                                to={'/admin/content-management/admin-anouncement'}
+                                className="  flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                              >
+                                <MdAnnouncement className='w-5 h-5 fill-current text-gray-400 ' /> Announcement Management
+                              </Link>
+                            </li>
+                            <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-black'>
+                              <Link
+                                to={'/admin/content-management/feature-image'}
+                                className="  flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                              >
+                                <MdSelfImprovement className='w-5 h-5 fill-current text-gray-400 ' />Feature Management
+                              </Link>
+                            </li>
+                            <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-black'>
+                              <Link
+                                to={'/admin/content-management/slider'}
+                                className="  flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                              >
+                                <BiSlider className='w-5 h-5 fill-current text-gray-400 ' /> Slider Management
+                              </Link>
+                            </li>
+
+
+                          </ul>
+                        </details>
+                      </li>
+
+                    }
+                  </>
                 ) : null
               ) : (
-                <NavLink
-                  rel="noopener noreferrer"
-                  to={"/admin/warehouse"}
-                  className={({ isActive }) => {
-                    return isActive
-                      ? "flex items-center p-2 space-x-3 rounded-sm bg-gray-800 text-white "
-                      : "flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
-                  }}
-                >
-                  <GiNotebook className="w-5 h-5 fill-current text-gray-400" />
-                  {menu && <span>Warehouse Management</span>}
-                </NavLink>
+                <>
+                  {menu &&
+                    <li className="">
+                      <details className="group [&_summary::-webkit-details-marker]:hidden flex items-center rounded-sm  ">
+                        <summary
+                          className="flex cursor-pointer items-center justify-between text-black  p-2 rounded-sm hover:bg-gray-800  hover:text-gray-50"
+                        >
+                          <div className='flex cursor-pointer items-center gap-2'>
+                            <IoMdPhotos className="w-5 h-5 fill-current text-gray-400" />
+                            <span>Content Management </span>
+                          </div>
+
+                          <span
+                            className="shrink-0 transition duration-300 group-open:-rotate-180"
+                          >
+                            <IoIosArrowDown className="h-5 w-5" />
+
+                          </span>
+                        </summary>
+
+                        <ul className="mt-2 space-y-1 px-4">
+                          <li className='flex cursor-pointer items-center justify-between text-black  p-2 rounded-sm hover:bg-gray-800  hover:text-gray-50'>
+                            <Link
+                              to={'/admin/content-management/admin-popup'}
+                              className="  flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                            >
+                              <FaPeopleGroup className='w-5 h-5 fill-current text-gray-400 ' /> Pop UP
+                            </Link>
+                          </li>
+                          <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-black'>
+                            <Link
+                              to={'/admin/content-management/seller-notice'}
+                              className="  flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                            >
+                              <IoNotificationsCircle className='w-5 h-5 fill-current text-gray-400 ' /> Notice
+                            </Link>
+                          </li>
+                          <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-black'>
+                            <Link
+                              to={'/admin/content-management/admin-anouncement'}
+                              className="  flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                            >
+                              <MdAnnouncement className='w-5 h-5 fill-current text-gray-400 ' /> Announcement Management
+                            </Link>
+                          </li>
+                          <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-black'>
+                            <Link
+                              to={'/admin/content-management/feature-image'}
+                              className="  flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                            >
+                              <MdSelfImprovement className='w-5 h-5 fill-current text-gray-400 ' />Feature Management
+                            </Link>
+                          </li>
+                          <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-black'>
+                            <Link
+                              to={'/admin/content-management/slider'}
+                              className="  flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                            >
+                              <BiSlider className='w-5 h-5 fill-current text-gray-400 ' /> Slider Management
+                            </Link>
+                          </li>
+
+
+                        </ul>
+                      </details>
+                    </li>
+
+                  }
+                </>
               )}
 
               {user?.staffRole ? (
                 user?.permissions.find(
                   (itm) => itm?.name === "Content Management"
                 ) ? (
-                  <NavLink
-                    rel="noopener noreferrer"
-                    to={"/admin/content-management"}
-                    className={({ isActive }) => {
-                      return isActive
-                        ? "flex items-center p-2 space-x-3 rounded-sm bg-gray-800 text-white "
-                        : "flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
-                    }}
-                  >
-                    <MdOutlineContentPaste className="w-5 h-5 fill-current text-gray-400" />
-                    {menu && <span>Content Management</span>}
-                  </NavLink>
-                ) : null
-              ) : (
-                <NavLink
-                  rel="noopener noreferrer"
-                  to={"/admin/content-management"}
-                  className={({ isActive }) => {
-                    return isActive
-                      ? "flex items-center p-2 space-x-3 rounded-sm bg-gray-800 text-white "
-                      : "flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
-                  }}
-                >
-                  <MdOutlineContentPaste className="w-5 h-5 fill-current text-gray-400" />
-                  {menu && <span>Content Management</span>}
-                </NavLink>
-              )}
+                  <>
+                    {menu &&
+                      <li className="">
+                        <details className="group [&_summary::-webkit-details-marker]:hidden flex items-center rounded-sm  ">
+                          <summary
+                            className="flex cursor-pointer items-center justify-between text-black  p-2 rounded-sm hover:bg-gray-800  hover:text-gray-50"
+                          >
+                            <div className='flex cursor-pointer items-center gap-2'>
+                              <MdReport className="w-5 h-5 fill-current text-gray-400" />
+                              <span>Report Management </span>
+                            </div>
 
-              {user?.staffRole ? (
-                user?.permissions.find(
-                  (itm) => itm?.name === "Content Management"
-                ) ? (
-                  <NavLink
-                    rel="noopener noreferrer"
-                    to={"/admin/report-management"}
-                    className={({ isActive }) => {
-                      return isActive
-                        ? "flex items-center p-2 space-x-3 rounded-sm bg-gray-800 text-white "
-                        : "flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
-                    }}
-                  >
-                    <BiSolidReport className="w-5 h-5 fill-current text-gray-400" />
-                    {menu && <span>Report Management</span>}
-                  </NavLink>
+                            <span
+                              className="shrink-0 transition duration-300 group-open:-rotate-180"
+                            >
+                              <IoIosArrowDown className="h-5 w-5" />
+
+                            </span>
+                          </summary>
+
+                          <ul className="mt-2 space-y-1 px-4">
+                            <li className='flex cursor-pointer items-center justify-between text-black  p-2 rounded-sm hover:bg-gray-800  hover:text-gray-50'>
+                              <Link
+                                to={'/admin/report-management/admin-sales'}
+                                className="  flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                              >
+                                <FaSalesforce className='w-5 h-5 fill-current text-gray-400 ' /> Sales
+                              </Link>
+                            </li>
+                            <li className='flex cursor-pointer items-center justify-between text-black  p-2 rounded-sm hover:bg-gray-800  hover:text-gray-50'>
+                              <Link
+                                to={'/admin/report-management/seller-admin'}
+                                className="  flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                              >
+                                <FaSalesforce className='w-5 h-5 fill-current text-gray-400 ' /> Seller
+                              </Link>
+                            </li>
+                            <li className='flex cursor-pointer items-center justify-between text-black  p-2 rounded-sm hover:bg-gray-800  hover:text-gray-50'>
+                              <Link
+                                to={'/admin/report-management/customer-admin'}
+                                className="  flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                              >
+                                <AiFillCustomerService className='w-5 h-5 fill-current text-gray-400 ' /> Cusotmer
+                              </Link>
+                            </li>
+                            <li className='flex cursor-pointer items-center justify-between text-black  p-2 rounded-sm hover:bg-gray-800  hover:text-gray-50'>
+                              <Link
+                                to={'/admin/report-management/warehouse-admin'}
+                                className="  flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                              >
+                                <FaWarehouse className='w-5 h-5 fill-current text-gray-400 ' /> Warehouse
+                              </Link>
+                            </li>
+                            <li className='flex cursor-pointer items-center justify-between text-black  p-2 rounded-sm hover:bg-gray-800  hover:text-gray-50'>
+                              <Link
+                                to={'/admin/report-management/subscriber-admin'}
+                                className="  flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                              >
+                                <BsSubscript className='w-5 h-5 fill-current text-gray-400 ' /> Subscriber
+                              </Link>
+                            </li>
+                            <li className='flex cursor-pointer items-center justify-between text-black  p-2 rounded-sm hover:bg-gray-800  hover:text-gray-50'>
+                              <Link
+                                to={'/admin/report-management/commission-history-admin'}
+                                className="  flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                              >
+                                <BiHistory className='w-5 h-5 fill-current text-gray-400 ' /> Commission History
+                              </Link>
+                            </li>
+
+
+
+                          </ul>
+                        </details>
+                      </li>
+
+                    }
+                  </>
                 ) : null
               ) : (
-                <NavLink
-                  rel="noopener noreferrer"
-                  to={"/admin/report-management"}
-                  className={({ isActive }) => {
-                    return isActive
-                      ? "flex items-center p-2 space-x-3 rounded-sm bg-gray-800 text-white "
-                      : "flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
-                  }}
-                >
-                  <BiSolidReport className="w-5 h-5 fill-current text-gray-400" />
-                  {menu && <span>Report Management</span>}
-                </NavLink>
+                <>
+                  {menu &&
+                    <li className="">
+                      <details className="group [&_summary::-webkit-details-marker]:hidden flex items-center rounded-sm  ">
+                        <summary
+                          className="flex cursor-pointer items-center justify-between text-black  p-2 rounded-sm hover:bg-gray-800  hover:text-gray-50"
+                        >
+                          <div className='flex cursor-pointer items-center gap-2'>
+                            <MdReport className="w-5 h-5 fill-current text-gray-400" />
+                            <span>Report Management </span>
+                          </div>
+
+                          <span
+                            className="shrink-0 transition duration-300 group-open:-rotate-180"
+                          >
+                            <IoIosArrowDown className="h-5 w-5" />
+
+                          </span>
+                        </summary>
+
+                        <ul className="mt-2 space-y-1 px-4">
+                          <li className='flex cursor-pointer items-center justify-between text-black  p-2 rounded-sm hover:bg-gray-800  hover:text-gray-50'>
+                            <Link
+                              to={'/admin/report-management/admin-sales'}
+                              className="  flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                            >
+                              <FaSalesforce className='w-5 h-5 fill-current text-gray-400 ' /> Sales
+                            </Link>
+                          </li>
+                          <li className='flex cursor-pointer items-center justify-between text-black  p-2 rounded-sm hover:bg-gray-800  hover:text-gray-50'>
+                            <Link
+                              to={'/admin/report-management/seller-admin'}
+                              className="  flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                            >
+                              <FaSalesforce className='w-5 h-5 fill-current text-gray-400 ' /> Seller
+                            </Link>
+                          </li>
+                          <li className='flex cursor-pointer items-center justify-between text-black  p-2 rounded-sm hover:bg-gray-800  hover:text-gray-50'>
+                            <Link
+                              to={'/admin/report-management/customer-admin'}
+                              className="  flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                            >
+                              <AiFillCustomerService className='w-5 h-5 fill-current text-gray-400 ' /> Cusotmer
+                            </Link>
+                          </li>
+                          <li className='flex cursor-pointer items-center justify-between text-black  p-2 rounded-sm hover:bg-gray-800  hover:text-gray-50'>
+                            <Link
+                              to={'/admin/report-management/warehouse-admin'}
+                              className="  flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                            >
+                              <FaWarehouse className='w-5 h-5 fill-current text-gray-400 ' /> Warehouse
+                            </Link>
+                          </li>
+                          <li className='flex cursor-pointer items-center justify-between text-black  p-2 rounded-sm hover:bg-gray-800  hover:text-gray-50'>
+                            <Link
+                              to={'/admin/report-management/subscriber-admin'}
+                              className="  flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                            >
+                              <BsSubscript className='w-5 h-5 fill-current text-gray-400 ' /> Subscriber
+                            </Link>
+                          </li>
+                          <li className='flex cursor-pointer items-center justify-between text-black  p-2 rounded-sm hover:bg-gray-800  hover:text-gray-50'>
+                            <Link
+                              to={'/admin/report-management/commission-history-admin'}
+                              className="  flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                            >
+                              <BiHistory className='w-5 h-5 fill-current text-gray-400 ' /> Commission History
+                            </Link>
+                          </li>
+
+
+
+                        </ul>
+                      </details>
+                    </li>
+
+                  }
+                </>
               )}
 
               {user?.staffRole ? (
