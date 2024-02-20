@@ -124,6 +124,7 @@ const SingleBlog = () => {
                 __html: blogInfo.message,
               }}
             />
+            
           </div>
           <hr className="my-4 border-gray-500" />
           <form onSubmit={uploadComment} className="">
