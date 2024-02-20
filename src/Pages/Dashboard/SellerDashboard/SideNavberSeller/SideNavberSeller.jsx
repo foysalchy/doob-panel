@@ -1262,7 +1262,6 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
 
                                                         </span>
                                                     </summary>
-
                                                     <ul className="mt-2 space-y-1 px-4">
                                                         <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
                                                             <Link
