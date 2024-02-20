@@ -84,23 +84,38 @@ const SellerDashboard = () => {
     //     onClose();
     // }
 
-
     const [showModal, setShowModal] = useState(localStorage.getItem('showModal') === 'true' || true);
 
     useEffect(() => {
         const isModalOpen = localStorage.getItem('isModalOpen');
         if (isModalOpen === 'true') {
             setShowModal(false);
-            setTimeout(() => {
+            const lastClosedTime = localStorage.getItem('lastClosedTime');
+            const fourHours = 4 * 60 * 60 * 1000; // 4 hours in milliseconds
+            const timeSinceClose = Date.now() - Number(lastClosedTime);
+            const remainingTime = fourHours - timeSinceClose;
+
+            if (remainingTime <= 0) {
                 setShowModal(true);
                 localStorage.setItem('isModalOpen', true);
-            }, 4 * 60 * 60 * 1000); // 4 hours in milliseconds
+            } else {
+                setTimeout(() => {
+                    setShowModal(true);
+                    localStorage.setItem('isModalOpen', true);
+                }, remainingTime);
+            }
         }
     }, []);
 
     const onClose = () => {
         setShowModal(false);
         localStorage.setItem('isModalOpen', false);
+        localStorage.setItem('lastClosedTime', Date.now());
+
+        setTimeout(() => {
+            setShowModal(true);
+            localStorage.setItem('isModalOpen', true);
+        }, 4 * 60 * 60 * 1000); // 4 hours in milliseconds
     };
 
     return (

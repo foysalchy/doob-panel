@@ -11,8 +11,6 @@ import AddDarazProduct from "../Pages/SellerItems/ProductManagement/AddDarazProd
 import AddWooProduct from "../Pages/SellerItems/ProductManagement/AddWooProduct/AddWooProduct";
 import SellerAddProduct from "../Pages/SellerItems/ProductManagement/SellerAddProduct/SellerAddProduct";
 import SellerAllProducts from "../Pages/SellerItems/ProductManagement/SellerProductManagement/SellerAllProduct/SellerAllProducts";
-import SellerProductManagement from "../Pages/SellerItems/ProductManagement/SellerProductManagement/SellerProductManagement";
-import CategoriesManagement from "../Pages/SellerItems/SellerCatagory/CategoriesManagement/CategoriesManagement";
 import ExtraCategoriesManagement from "../Pages/SellerItems/SellerCatagory/ExtraCategory/ExtraCategoriesManagement";
 import MageCategoriesManagement from "../Pages/SellerItems/SellerCatagory/MegaCategory/MageCategoriesManagement";
 import MiniCategoriesManagement from "../Pages/SellerItems/SellerCatagory/MiniCategory/MiniCategoriesManagement";
@@ -40,7 +38,6 @@ import AddPriceRole from "../Pages/SellerItems/Sittings/AddPriceRole/AddPriceRol
 import SellerEmail from "../Pages/SellerItems/Sittings/SellerEmail/SellerEmail";
 import SellerLoginCredintiial from "../Pages/SellerItems/Sittings/SellerLoaginCredintial/SellerLoginCredintiial";
 import SellerPaymentGetaway from "../Pages/SellerItems/Sittings/SellerPaymentGetway/SellerPaymentGetway";
-import SellerSittingsPage from "../Pages/SellerItems/Sittings/SellerSittingsPage";
 import SellerShipping from "../Pages/SellerItems/Sittings/Shiping/SellerShiping";
 import SellerSupportTicket from "../Pages/SellerItems/SupportTicket/SupportTicket";
 import UpdateShopProfile from "../Pages/SellerItems/UpdateShopProfile/UpdateShopProfile";
@@ -125,10 +122,7 @@ const SellerPath = [
             <AddDomain />
         </PrivateRoute>
     },
-    {
-        path: "settings",
-        element: <SellerSittingsPage />
-    },
+
     {
         path: "settings/price-role",
         element: <PriceRole />
@@ -159,10 +153,7 @@ const SellerPath = [
             <DarazIntegration />
         </PrivateRoute>
     },
-    {
-        path: "categories-management",
-        element: <CategoriesManagement />
-    },
+
     {
         path: "categories-management/mega-categories-management",
         element: <MageCategoriesManagement />
@@ -195,10 +186,7 @@ const SellerPath = [
         path: "categories-management/extra-categories-management/add",
         element: <AddExtraCategory />
     },
-    {
-        path: "content-management",
-        element: <SiteContentSeller />
-    },
+
     {
         path: "content-management/slider-management",
         element: <SliderManagement />
@@ -247,10 +235,7 @@ const SellerPath = [
         path: "content-management/campaign-management/add",
         element: <AddCampaign />
     },
-    {
-        path: "product-management",
-        element: <SellerProductManagement />
-    },
+
     {
         path: "product-management/manage",
         element: <SellerAllProducts />
@@ -267,15 +252,12 @@ const SellerPath = [
         path: "product-management/add-product",
         element: <SellerAddProduct />
     },
-    {
-        path: "warehouse",
-        element: <PrivateRoute><SellerWareHouseManagement /></PrivateRoute>
 
-
-    },
     {
         path: "warehouse/warehouse-management",
-        element: <SellerListOfWarehouse />
+        element: <PrivateRoute>
+            <SellerListOfWarehouse />
+        </PrivateRoute>
     },
     {
         path: "warehouse/area-management",
@@ -283,15 +265,24 @@ const SellerPath = [
     },
     {
         path: "warehouse/rack-management",
-        element: <SellerManageRack />
+        element:
+        <PrivateRoute>
+            <SellerManageRack />
+        </PrivateRoute>
     },
     {
         path: "warehouse/self-management",
-        element: <SellerManageSelf />
+        element:
+           <PrivateRoute>
+               <SellerManageSelf />            
+        </PrivateRoute>
     },
     {
         path: "warehouse/cell-management",
-        element: <SellerManageCell />
+        element:
+           <PrivateRoute>
+               <SellerManageCell />            
+        </PrivateRoute>
     },
 
     {

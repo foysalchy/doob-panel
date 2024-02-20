@@ -21,7 +21,7 @@ const SingleBlog = () => {
   }, []);
   const blogInfo = useLoaderData();
 
-
+  console.log(blogInfo, 'blogInfo');
   const extractInnerText = (html) => {
     const parser = new DOMParser();
     const doc = parser.parseFromString(html, "text/html");
