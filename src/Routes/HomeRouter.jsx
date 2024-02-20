@@ -65,7 +65,7 @@ const homePath = [
             const categoryName = params.categoryId;
             const response = await fetch(`https://backend.doob.com.bd/api/v1/seller/admin-category-item?id=${categoryName}`);
             const data = await response.json();
-             return data?.data;
+            return data?.data;
         },
     },
 
@@ -124,7 +124,7 @@ const homePath = [
         path: "/blogs/:id",
         element: <SingleBlog />,
         loader: ({ params }) =>
-            fetch(`https://backend.doob.com.bd/api/v1/admin/all-blogs/${params.id}`),
+        fetch(`https://backend.doob.com.bd/api/v1/admin/all-blogs/:${params.id}`),
     },
     {
         path: "/faq",
