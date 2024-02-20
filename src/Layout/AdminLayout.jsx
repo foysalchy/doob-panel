@@ -20,9 +20,9 @@ const AdminLayout = () => {
     return (
         <div>
 
-            <div className='flex gap-8 px-4 '>
+            <div className='flex gap-8 pr-4 '>
                 <SideNavAdmin />
-                <div className=" py-8 w-full   sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-10">
+                <div className=" py-4 w-full h-screen   sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-2">
                     <div >
                         <nav
                             aria-label="breadcrumb"
@@ -64,7 +64,7 @@ const AdminLayout = () => {
                             </ol>
                         </nav>
                     </div>
-                    <div className='flex-1 sm:p-0'>
+                    <div className='flex-1 h-[80vh]    sm:p-0'>
                         <Outlet />
                     </div>
                 </div>
