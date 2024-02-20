@@ -157,7 +157,7 @@ const AdminBlogs = () => {
                       </th>
                       <th
                         scope="col"
-                        className="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 text-gray-400"
+                        className="px-12 py-3.5 text-sm font-normal text-left rtl:text-right  text-gray-400"
                       >
                         <button className="flex items-center gap-x-2">
                           <span>Status</span>
