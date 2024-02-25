@@ -3,11 +3,15 @@ import { useContext, useState } from "react";
 import { AuthContext } from "../../../../../AuthProvider/UserProvider";
 import DemoImage from './woocommerce-placeholder-600x600.png';
 import { MdDelete, MdOutlineViewInAr } from "react-icons/md";
+import DeleteModal from "../../../../../Common/DeleteModal";
+import Swal from "sweetalert2";
 
 export default function WebStoreproduct({ priceRole, searchQuery }) {
     const { shopInfo } = useContext(AuthContext);
     const [currentPage, setCurrentPage] = useState(1);
     const pageSize = 10
+
+    console.log(`https://backend.doob.com.bd/api/v1/seller/web-store?id=${shopInfo._id}`);
 
     const { data: productData = [], refetch } = useQuery({
         queryKey: ["productData"],
@@ -42,15 +46,36 @@ export default function WebStoreproduct({ priceRole, searchQuery }) {
 
 
 
-    // const myPriceRole = (pocket) => {
-    //     const vale = priceRole.find((category) => parseInt(pocket) >= parseInt(category?.from) && parseInt(pocket) <= parseInt(category?.to));
 
-    //     console.log(vale, ">>");
+    const [deleteId, setDeletId] = useState('')
+    const [deletePopUp, setDeletePopUp] = useState(false)
+    const [isDelete, setIsDelete] = useState(false)
 
-    //     const data = vale?.percentage === 'yes' ? parseInt(pocket) + (parseInt(pocket) * parseInt(vale?.priceRange)) / 100 : parseInt(pocket) + parseInt(vale?.priceRange);
+    const DeleteSeller = (id) => {
+        console.log(id);
+        setDeletId(id)
+        setDeletePopUp(true)
+    };
+    if (isDelete) {
 
-    //     return data;
-    // }
+        fetch(`https://backend.doob.com.bd/api/v1/seller/delete-product`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                id: deleteId,
+            })
+
+        }).then((res) => res.json()).then((data) => {
+            setIsDelete(false)
+            Swal.fire('Delete Success', '', 'success')
+            refetch()
+        })
+
+        console.log(deleteId, isDelete);
+    }
+
     const myPriceRole = (pocket) => {
         // Log the input pocket value
         console.log("Input Pocket:", pocket);
@@ -84,6 +109,9 @@ export default function WebStoreproduct({ priceRole, searchQuery }) {
     };
     return (
         <div className="flex flex-col mt-6">
+
+            <div className='h-0 w-0'>   <DeleteModal setOpenModal={setDeletePopUp} OpenModal={deletePopUp} setIsDelete={setIsDelete} /></div>
+
             <div style={{
                 overflowY: 'scroll', // Always show the scrollbar
                 scrollbarWidth: 'thin', // For Firefox
@@ -228,7 +256,7 @@ export default function WebStoreproduct({ priceRole, searchQuery }) {
                                         <td className="px-4 py-4 text-sm border-2 whitespace-nowrap">
                                             <div className="flex items-center gap-x-2">
                                                 <p className="px-3 py-1 text-xs text-indigo-500 rounded-full bg-gray-800 bg-indigo-100/60">
-                                                    {product?.sellers?.find(itm => itm?.shopUid === shopInfo?._id)?.quantity}
+                                                    {product.stock_quantity}
                                                 </p>
                                             </div>
                                         </td>

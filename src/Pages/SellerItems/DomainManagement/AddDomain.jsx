@@ -16,6 +16,28 @@ const AddDomain = () => {
     const [edit, setEdit] = useState(false)
     const [error, setError] = useState(false)
 
+    const { data: domainDoc, refetch: reload, isLoading: loading } = useQuery({
+        queryKey: ["domainDoc"],
+        queryFn: async () => {
+            const res = await fetch("https://backend.doob.com.bd/api/v1/admin/domain-document");
+            const data = await res.json();
+            return data.result;
+        },
+    });
+
+    const { data: buyDomain, } = useQuery({
+        queryKey: ["buyDomain"],
+        queryFn: async () => {
+            const res = await fetch("https://backend.doob.com.bd/api/v1/admin/buy-domain");
+            const data = await res.json();
+            return data;
+        },
+    });
+
+
+
+
+
     const dataSubmit = (event) => {
         event.preventDefault();
         const domain = event.target.domain.value;
@@ -116,6 +138,12 @@ const AddDomain = () => {
     return (
         <div className=' font-poppins'>
             <div className="md:my-10">
+                <div
+
+                    dangerouslySetInnerHTML={{
+                        __html: domainDoc?.data,
+                    }}
+                />
                 {
                     !isLoading && domainVideo &&
                     <div
@@ -131,6 +159,29 @@ const AddDomain = () => {
                     Your Local Domain: <a href={`http://salenow.vercel.app/shop/${shopInfo.shopId}`} target="_blank" rel="noopener noreferrer"> <code> salenow.vercel.app/shop/{shopInfo.shopId}</code> </a>
                     {shopInfo.domain && <p> Your Custom domain: <a href={`http://${shopInfo.domain}`} target="_blank" rel="noopener noreferrer"> <code>{shopInfo.domain}</code></a></p>}
 
+                    <a
+                        class="group mt-4 relative inline-flex items-center overflow-hidden rounded bg-indigo-600 px-8 py-3 text-white focus:outline-none focus:ring active:bg-indigo-500"
+                        href={buyDomain?.url}
+                    >
+                        <span class="absolute -start-full text-white g transition-all group-hover:start-4">
+                            <svg
+                                class="size-5 rtl:rotate-180"
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M17 8l4 4m0 0l-4 4m4-4H3"
+                                />
+                            </svg>
+                        </span>
+
+                        <span class="text-sm font-medium transition-all group-hover:ms-4"> Buy Domain </span>
+                    </a>
                 </div>
 
 
@@ -227,7 +278,7 @@ const AddDomain = () => {
                 </div>
             </div>
 
-        </div >
+        </div>
     );
 };
 

@@ -69,6 +69,30 @@ const HomeAbout = () => {
                         />
                         <YoutubeModal link={'https://www.youtube.com/embed/rNSIwjmynYQ?si=7YTw727sHfQqEnrC" '} isOpen={isModalOpen} onClose={closeModal} />
                     </div>
+                    <div className=" mx-auto flex flex-row-reverse flex-wrap mt-20">
+
+                        <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
+
+                            <h1 className="text-gray-900 text-4xl title-font font-bold mb-1">
+                                Doob Wholsale
+                            </h1>
+
+                            <p className="leading-relaxed mt-2">
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.
+                            </p>
+
+
+                        </div>
+                        <img
+                            onClick={openModal}
+                            srcSet={Photo1}
+                            src={Photo1}
+                            alt="ecommerce"
+                            className="lg:w-[600px] lg:pl-10 mt-8 md:mt-0 w-full lg:h-[400px] h-auto object-cover object-center rounded"
+
+                        />
+                        <YoutubeModal link={'https://www.youtube.com/embed/rNSIwjmynYQ?si=7YTw727sHfQqEnrC" '} isOpen={isModalOpen} onClose={closeModal} />
+                    </div>
                 </div>
             </section>
 

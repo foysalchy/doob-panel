@@ -4,7 +4,7 @@ import { BsArrowRight } from 'react-icons/bs';
 import { AuthContext } from '../../../../AuthProvider/UserProvider';
 import Select from 'react-select';
 import { useQuery } from '@tanstack/react-query';
- import InputProductName from './Components/InputProductName';
+import InputProductName from './Components/InputProductName';
 import SincronusCategory from './Components/SincronusCategory';
 import Description from './Components/Description';
 import Stock from './Components/Stock';
@@ -41,7 +41,7 @@ const SellerAddProduct = () => {
     ]);
 
     const [variantInput, setVariantInput] = useState([
-        { product1: {}, product2: {}, product3: {}, sellingPrice: "" },
+        { product1: {}, product2: {}, product3: {}, sellingPrice: "", ProductCost: '' },
     ]);
 
 
@@ -191,21 +191,23 @@ const SellerAddProduct = () => {
             form.photo6,
             form.photo7,
         ];
+        console.log(additionalPhotos[0][0].files[0]);
+        const firstFile = additionalPhotos.length > 0 && additionalPhotos[0].length > 0 && additionalPhotos[0][0].files[0];
 
+        if (firstFile) {
+            console.log(firstFile);
+        }
 
         const uploadedImageUrls = await Promise.all(
-            additionalPhotos.filter(fileInput => fileInput && fileInput.files[0]).map(async (fileInput, index) => {
-                const file = fileInput.files[0];
-                if (file && !daraz) {
-                    const imageUrl = await imageUpload(file);
-                    formData.append(`photo${index + 2}`, imageUrl);
-                    return {
-                        name: `photo ${index}`,
-                        src: imageUrl,
-                    };
-                }
-                else {
-                    const imageUrl = await DarazImage(file);
+            additionalPhotos?.filter(fileInputArray => fileInputArray.length > 0 && fileInputArray[0].files[0]).map(async (fileInputArray, index) => {
+                const file = fileInputArray[0].files[0];
+                let imageUrl;
+                if (file) {
+                    if (!daraz) {
+                        imageUrl = await imageUpload(file);
+                    } else {
+                        imageUrl = await DarazImage(file);
+                    }
                     formData.append(`photo${index + 2}`, imageUrl);
                     return {
                         name: `photo ${index}`,
@@ -282,7 +284,7 @@ const SellerAddProduct = () => {
 
 
         }
- 
+
 
 
         fetch('https://backend.doob.com.bd/api/v1/seller/normal-product/', {

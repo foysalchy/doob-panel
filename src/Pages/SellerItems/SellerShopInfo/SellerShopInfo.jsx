@@ -4,12 +4,12 @@ import DemoNav from './DemoNav';
 
 const SellerShopInfo = () => {
     return (
-        <div className=' sm:max-w-xl mx-auto md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8'>
-            <div className='flex w-full gap-6 mt-4 '>
-                <div className='sticky w-[320px]  rounded mb-4 top-0 h-full min-h-screen  bg-gray-900 text-white'>
+        <div className=' '>
+            <div className='flex w-full gap-6  '>
+                <div className='sticky w-[320px]   mb-4 top-0 h-full min-h-screen  bg-gray-900 text-white'>
                     <DemoNav />
                 </div>
-                <div className='w-full'>
+                <div className='w-full mt-4'>
                     <form className=' mx-auto rounded border-2 p-6' action="">
                         <div className='' >
 

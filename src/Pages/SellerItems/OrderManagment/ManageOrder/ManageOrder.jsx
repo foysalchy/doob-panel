@@ -24,6 +24,18 @@ const ManageOrder = () => {
         <div>
             <ExportModal openModal={openModal} details={details} setOpenModal={setOpenModal} />
             <h3 className="font-bold text-xl">Orders Overview</h3>
+            <div className="flex flex-wrap justify-start  items-center gap-4">
+
+                <button onClick={() => setDaraz(false)} className='px-4 py-1 bg-transparent border'>
+                    Web Order
+                </button>
+                <button onClick={() => setDaraz(true)} className='px-4 py-1 bg-transparent border'>
+                    Daraz Order
+                </button>
+                <button onClick={() => setOpenModal(!openModal)} className='px-4 py-1 bg-transparent border'>
+                    Woo Commerce Order
+                </button>
+            </div>
             <nav className='flex md:gap-4 gap-2 overflow-x-auto mt-6'>
                 {ordersNav?.map((itm) =>
                     itm?.status === 'dropdown' ? (
@@ -54,21 +66,10 @@ const ManageOrder = () => {
 
             {/* filter */}
             <div className="flex md:flex-row flex-col items-center justify-between mt-4">
-                <div className="flex flex-wrap justify-center  items-center gap-4">
-                    <button className='px-4 bg-white py-1 border'>Print</button>
-                    <button onClick={() => setOpenModal(!openModal)} className='px-4 py-1 bg-transparent border'>
-                        Export orders
-                    </button>
-                    <button onClick={() => setDaraz(false)} className='px-4 py-1 bg-transparent border'>
-                        Web Order
-                    </button>
-                    <button onClick={() => setDaraz(true)} className='px-4 py-1 bg-transparent border'>
-                        Daraz Order
-                    </button>
-                    <button onClick={() => setOpenModal(!openModal)} className='px-4 py-1 bg-transparent border'>
-                        Woo Commerce Order
-                    </button>
-                </div>
+                <button className='px-4 bg-white py-1 border'>Print</button>
+                <button onClick={() => setOpenModal(!openModal)} className='px-4 py-1 bg-transparent border'>
+                    Export orders
+                </button>
                 <input
                     className="w-[260px] md:mt-0 mt-3 rounded border-gray-400 focus:outline-none p-2 border"
                     type="date"

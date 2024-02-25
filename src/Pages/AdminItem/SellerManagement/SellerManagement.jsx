@@ -171,7 +171,7 @@ const SellerManagement = () => {
                                 }
                                 else {
 
-                                    navigate("/seller/shop-register");
+                                    navigate("/shop-register");
                                 }
 
                             });

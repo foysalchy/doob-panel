@@ -111,7 +111,7 @@ const SellerDashLayout = () => {
                 <div>
                     <nav
                         aria-label="breadcrumb"
-                        className="w-full  rounded p-4 mb-4 bg-gray-800 text-gray-100"
+                        className="w-full lg:hidden rounded p-4 mb-4 bg-gray-800 text-gray-100"
                     >
                         <ol className="flex h-8 space-x-2">
                             <li className='md:hidden block'>

@@ -139,7 +139,7 @@ const SellerDashboard = () => {
             <h2 className="text-gray-400 text-md">
                 Here&#x27;s what&#x27;s happening with your ambassador account today.
             </h2>
-            <div className="flex flex-col items-center w-full my-6 space-y-4 md:space-x-4 md:space-y-0 md:flex-row">
+            <div className="flex flex-col items-start w-full my-6 space-y-4 md:space-x-4 md:space-y-0 md:flex-row">
                 <div className="w-full md:w-6/12">
                     <div className="relative ring-1 ring-gray-100 w-full overflow-hidden bg-white shadow-lg  ">
                         <a href="#" className="block w-full h-full">
@@ -166,6 +166,12 @@ const SellerDashboard = () => {
                                     </span>
                                 </div>
                             </div>
+                            <div className="mt-3 p-4 text-xl md:font-bold text-black border-b border-gray-200 md:mt-0 ">
+                                All Product
+                                <span className="ml-4 text-gray-400">
+                                    12
+                                </span>
+                            </div>
                             <div className="w-full hidden h-3 bg-gray-100">
                                 <div className="w-2/5 h-full text-xs text-center  bg-green-400">
                                 </div>
@@ -174,7 +180,16 @@ const SellerDashboard = () => {
                     </div>
                 </div>
 
-                <div className="flex items-center w-full space-x-4 md:w-1/2">
+                <div className="flex flex-col border px-8 rounded-xl shadow-3 py-4 md:w-[700px] w-full gap-3 mb-8 mt-4">
+                    {/* <div className="bg-white  p-3 ring-1 ring-gray-400 rounded-md shadow-xl "> */}
+                    <AnouncementContent />
+                    {/* </div> */}
+                    <hr />
+                    {/* <div className="bg-white p-3 ring-1 ring-gray-200 rounded-md shadow-xl "> */}
+                    <NoticeContent />
+                    {/* </div> */}
+                </div>
+                {/* <div className="flex items-center w-full space-x-4 md:w-1/2">
                     <div className="w-1/2 ">
                         <div className="relative ring-1 ring-gray-100 md:h-[100px] h-[120px] w-full px-4 py-6 bg-white shadow-lg ">
                             <p className="text-2xl font-bold text-black ">
@@ -201,16 +216,9 @@ const SellerDashboard = () => {
                             </p>
                         </div>
                     </div>
-                </div>
+                </div> */}
             </div>
-            <div className="grid grid-cols-2 gap-3 mb-8 mt-4">
-                <div className="bg-white p-3 ring-1 ring-gray-200 rounded-md shadow-xl ">
-                    <AnouncementContent />
-                </div>
-                <div className="bg-white p-3 ring-1 ring-gray-200 rounded-md shadow-xl ">
-                    <NoticeContent />
-                </div>
-            </div>
+
             <div className="flex items-center space-x-4">
                 <div>
                     <div>

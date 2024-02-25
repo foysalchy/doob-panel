@@ -281,10 +281,10 @@ const SellerAllProducts = () => {
                                     <thead className="bg-gray-900 text-white ">
 
                                         <tr>
-                                            <th className='px-2'>
-                                                <label className='flex items-center gap-2  font-medium' htmlFor="select">
+                                            <th className='px-2 text-center'>
+                                                <label className='flex justify-center items-center gap-2  font-medium' htmlFor="select">
                                                     <input id='select' type="checkbox" checked={selectProducts.length === products.length} onChange={handleSelectAll} />
-                                                    Select all
+
                                                 </label>
                                             </th>
                                             <th

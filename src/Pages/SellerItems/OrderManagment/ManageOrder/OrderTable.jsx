@@ -297,135 +297,95 @@ const OrderTable = ({ searchValue, selectedValue, setDetails, setOpenModal, sele
             <div className="overflow-x-auto transparent-scroll sm:-mx-6 lg:-mx-8">
                 <div className="inline-block  min-w-full py-2 sm:px-6 lg:px-8">
                     <div className="overflow-hidden">
-                        <table className="min-w-full  bg-white border text-center text-sm font-light">
-                            <thead className="border-b  font-medium  ">
+
+                        <table className="w-full bg-white border text-center text-sm font-light">
+                            <thead className="border-b font-medium">
                                 <tr>
-                                    <th scope="col" className="border-r px-2 py-4 font-[500]">
-
-                                    </th>
-                                    <th scope="col" className="border-r px-2 py-4 font-[500]">
-
-                                    </th>
-                                    <th scope="col" className="border-r px-2 py-4 font-[500]">
-                                        Document
-                                    </th>
-                                    <th scope="col" className="border-r px-2 py-4 font-[500]">
-                                        Order No.
-                                    </th>
-                                    <th scope="col" className="border-r px-2 py-4 text-sm font-[500]">
-                                        Order Date
-                                    </th>
-                                    <th scope="col" className="border-r px-2 py-4 text-sm font-[500]">
-                                        Pending Since
-                                    </th>
-                                    <th scope="col" className="border-r px-2 py-4 text-sm font-[500]">
-                                        Payment Method
-                                    </th>
-                                    <th scope="col" className="border-r px-2 py-4 text-sm font-[500]">
-                                        Retail Price
-                                    </th>
-                                    <th scope="col" className="border-r px-2 py-4 text-sm font-[500]">
-                                        Status
-                                    </th>
-                                    <th scope="col" className="border-r px-2 py-4 text-sm font-[500]">
-                                        Actions
-                                    </th>
+                                    <th scope="col" className="border-r px-2 py-4 font-[500]">#</th>
+                                    <th scope="col" className="border-r px-2 py-4 font-[500]">Details</th>
+                                    <th scope="col" className="border-r px-2 py-4 font-[500]">Document</th>
+                                    <th scope="col" className="border-r px-2 py-4 font-[500]">Order No.</th>
+                                    <th scope="col" className="border-r px-2 py-4 font-[500]">Order Date</th>
+                                    <th scope="col" className="border-r px-2 py-4 font-[500]">Pending Since</th>
+                                    <th scope="col" className="border-r px-2 py-4 font-[500]">Payment Method</th>
+                                    <th scope="col" className="border-r px-2 py-4 font-[500]">Retail Price</th>
+                                    <th scope="col" className="border-r px-2 py-4 font-[500]">Status</th>
+                                    <th scope="col" className="border-r px-2 py-4 font-[500]">Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {currentItems?.map((itm, index) => (
-                                    <tr className="border-b ">
-                                        <td className="whitespace-nowrap border-r px-6 py-4 font-medium ">
-                                            # {index + 1}
-                                        </td>
-                                        <td className="whitespace-nowrap border-r text-2xl">
-                                            <button onClick={() => setModalOn(!modalOn)} className=' px-4 py-4'>+</button>
-                                            <OrderAllinfoModal status={itm?.status ? itm?.status : 'Pending'} setModalOn={setModalOn} modalOn={modalOn} productList={itm?.productList} />
-                                        </td>
-                                        <td className="whitespace-nowrap border-r px-6 py-4 ">
-                                            <Link to={`/invoice/${itm?._id}`} onClick={handlePrint} className='text-blue-600 font-[500] text-[16px]'>Invoice</Link>
-                                        </td>
-                                        <td className="whitespace-nowrap border-r px-6 py-4 text-[16px] font-[400]">
-                                            <Link to="order-checkup" onClick={() => setCheckUpData(itm)} className='text-blue-500 font-[400]'>{itm?._id}</Link>
-                                        </td>
-                                        <td className="whitespace-nowrap border-r px-6 py-4 text-[16px] font-[400]">
-                                            {formattedDate(itm?.timestamp)}
-                                        </td>
-                                        <td className="whitespace-nowrap border-r px-6 py-4 text-[16px] font-[400]">
-                                            {getTimeAgo(itm?.timestamp)}
-                                        </td>
-                                        <td className="whitespace-nowrap border-r  px-6 py-4 text-[16px] font-[400]">
-                                            {itm?.method.Getaway}
-                                            {itm?.method.Getaway === 'Bank' && (
-                                                <div className='flex justify-center'>
-                                                    <img
-                                                        src={itm.file}
-                                                        className='h-10 '
-
-                                                        alt=""
-                                                        onClick={() => handleImageClick(itm.file)}
-                                                    />
-                                                </div>
-                                            )}
-                                            {/* END: ed8c6549bwf9 */}
-
-
-                                            {showImage && (
-                                                <div className="fixed inset-0 z-50 bg-black bg-opacity-20 flex items-center justify-center">
-                                                    <div className="relative max-w-full max-h-full">
-                                                        <span
-                                                            className="absolute top-4 right-4 text-white bg-black w-10 h-10 rounded-full flex justify-center items-center cursor-pointer text-2xl"
-                                                            onClick={() => setShowImage(false)}
-                                                        >
-                                                            X
-                                                        </span>
-                                                        <img
-                                                            src={selectedImage}
-                                                            alt=""
-                                                            className="max-w-full max-h-full object-contain"
-                                                            style={{ boxShadow: '0 0 10px rgba(0, 0, 0, 0.5)' }}
-                                                        />
-                                                    </div>
-                                                </div>
-                                            )}
-                                        </td>
-                                        <td className="whitespace-nowrap border-r px-6 py-4 text-[16px] font-[400]">
-                                            {ratial_price(itm?.productList)}
-                                        </td>
-                                        <td className="whitespace-nowrap border-r px-6 py-4 text-[16px] font-[400]">
-                                            {itm?.status ? <>{itm?.status}</> : <>Pending</>}
-                                        </td>
-                                        <td className="whitespace-nowrap border-r px-6 py-4 text-[16px] font-[400] flex flex-col gap-2">
-                                            {!itm?.status &&
-                                                <> <button
-
-                                                    onClick={() => setReadyToShip(itm)}
-                                                    className='text-[16px] font-[400] text-blue-700' >Ready to Ship</button>
-                                                    <button onClick={() => productStatusUpdate("Cancel", itm?._id)} className='text-[16px] font-[400] text-blue-700' >Cancel</button> </>
-                                                || itm?.status == 'ready_to_ship' && <button onClick={() => productStatusUpdate("shipped", itm?._id)} className='text-[16px] font-[400] text-blue-700' >Shipped</button>
-                                                || itm?.status == 'shipped' && <div className='flex flex-col gap-2'>
-                                                    <button onClick={() => productStatusUpdate("delivered", itm?._id)} className='text-[16px] font-[400] text-blue-700' >Delivered</button>
-                                                    <button onClick={() => productStatusUpdate("failed", itm?._id)} className='text-[16px] font-[400] text-blue-700' >Failed Delivery</button>
-                                                </div>
-                                                || itm?.status == 'delivered' && <button onClick={() => productStatusUpdate("returned", itm?._id)} className='text-[16px] font-[400] text-blue-700' >Returned</button>
-                                                || itm?.status === 'return' && (
-                                                    <div className='flex flex-col justify-center'>
-                                                        <button onClick={() => { setShowAlert(itm), checkBox(itm._id) }} className='text-[16px] font-[400] text-blue-700'>Approve</button>
-                                                        <button onClick={() => productStatusUpdate("failed", itm?._id)} className='text-[16px] font-[400] text-blue-700'>Reject</button>
-
-                                                    </div>
-                                                )
-                                                || itm?.status == 'returned' && <button onClick={() => productStatusUpdate("RefoundOnly", itm?._id)} className='text-[16px] font-[400] text-blue-700' >Refund Data</button>
-                                                || itm?.status == 'Refund' && <button onClick={() => viewDetails(itm)} className='text-[16px] font-[400] text-blue-700' >View Details</button>
-                                            }
-                                        </td>
-                                        {
-                                            itm._id === readyToShip._id && <ShippingModal readyToShip={readyToShip} setReadyToShip={setReadyToShip} productStatusUpdate={productStatusUpdate} orderInfo={itm} refetch={refetch} ships={ships} />
-                                        }
-                                    </tr>
+                                {currentItems?.map((item, index) => (
+                                    <React.Fragment key={item._id}>
+                                        <tr className={index % 2 === 0 ? "bg-gray-100" : ""}>
+                                            <td className="border-r px-6 py-4 font-medium">{index + 1}</td>
+                                            <td className="border-r px-6 py-4">
+                                                {!modalOn ? (
+                                                    <button onClick={() => setModalOn(item._id)} className="px-4 py-2">Details</button>
+                                                ) : (
+                                                    <button onClick={() => setModalOn(false)} className="px-4 py-2">Close</button>
+                                                )}
+                                            </td>
+                                            <td className="border-r px-6 py-4">
+                                                <Link to={`/invoice/${item?._id}`} onClick={handlePrint} className="text-blue-600 font-[500]">Invoice</Link>
+                                            </td>
+                                            <td className="border-r px-6 py-4">
+                                                <Link to="order-checkup" onClick={() => setCheckUpData(item)} className="text-blue-500 font-[400]">{item?._id}</Link>
+                                            </td>
+                                            <td className="border-r px-6 py-4">{formattedDate(item?.timestamp)}</td>
+                                            <td className="border-r w-[200px] px-6 py-4">{getTimeAgo(item?.timestamp)}</td>
+                                            <td className="border-r px-6 py-4">{item?.method.Getaway}</td>
+                                            <td className="border-r px-6 py-4">{ratial_price(item?.productList)}</td>
+                                            <td className="border-r px-6 py-4">{item?.status ? item?.status : 'Pending'}</td>
+                                            <td className="border-r px-6 py-4">
+                                                <td className="whitespace-nowrap border-r px-6 py-4 text-[16px] font-[400] flex flex-col gap-2">
+                                                    {!item?.status && (
+                                                        <>
+                                                            <button onClick={() => setReadyToShip(item)} className="text-[16px] font-[400] text-blue-700">Ready to Ship</button>
+                                                            <button onClick={() => productStatusUpdate("Cancel", item?._id)} className="text-[16px] font-[400] text-blue-700">Cancel</button>
+                                                        </>
+                                                    ) || item?.status === 'ready_to_ship' && (
+                                                        <button onClick={() => productStatusUpdate("shipped", item?._id)} className="text-[16px] font-[400] text-blue-700">Shipped</button>
+                                                    ) || item?.status === 'shipped' && (
+                                                        <div className="flex flex-col gap-2">
+                                                            <button onClick={() => productStatusUpdate("delivered", item?._id)} className="text-[16px] font-[400] text-blue-700">Delivered</button>
+                                                            <button onClick={() => productStatusUpdate("failed", item?._id)} className="text-[16px] font-[400] text-blue-700">Failed Delivery</button>
+                                                        </div>
+                                                    ) || item?.status === 'delivered' && (
+                                                        <button onClick={() => productStatusUpdate("returned", item?._id)} className="text-[16px] font-[400] text-blue-700">Returned</button>
+                                                    ) || item?.status === 'return' && (
+                                                        <div className="flex flex-col justify-center">
+                                                            <button onClick={() => { setShowAlert(item), checkBox(item._id) }} className="text-[16px] font-[400] text-blue-700">Approve</button>
+                                                            <button onClick={() => productStatusUpdate("failed", item?._id)} className="text-[16px] font-[400] text-blue-700">Reject</button>
+                                                        </div>
+                                                    ) || item?.status === 'returned' && (
+                                                        <button onClick={() => productStatusUpdate("RefoundOnly", item?._id)} className="text-[16px] font-[400] text-blue-700">Refund Data</button>
+                                                    ) || item?.status === 'Refund' && (
+                                                        <button onClick={() => viewDetails(item)} className="text-[16px] font-[400] text-blue-700">View Details</button>
+                                                    )}
+                                                </td>
+                                            </td>
+                                        </tr>
+                                        {item._id === readyToShip._id && (
+                                            <tr>
+                                                <td colSpan="10">
+                                                    <ShippingModal readyToShip={readyToShip} setReadyToShip={setReadyToShip} productStatusUpdate={productStatusUpdate} orderInfo={item} refetch={refetch} ships={ships} />
+                                                </td>
+                                            </tr>
+                                        )}
+                                        {item._id === modalOn && (
+                                            <tr>
+                                                <td colSpan="10">
+                                                    <OrderAllinfoModal status={item?.status ? item?.status : 'Pending'} setModalOn={setModalOn} modalOn={modalOn} productList={item?.productList} />
+                                                </td>
+                                            </tr>
+                                        )}
+                                    </React.Fragment>
                                 ))}
                             </tbody>
                         </table>
+
+
+
                     </div>
                 </div>
             </div>
@@ -535,3 +495,11 @@ const OrderTable = ({ searchValue, selectedValue, setDetails, setOpenModal, sele
 };
 
 export default OrderTable;
+
+
+
+
+
+
+
+

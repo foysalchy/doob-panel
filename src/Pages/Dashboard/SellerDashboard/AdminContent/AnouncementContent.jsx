@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import React, { useState } from 'react';
-import { MdOutlineAnnouncement } from 'react-icons/md';
+import { TfiAnnouncement } from "react-icons/tfi";
 import { RxCross2 } from "react-icons/rx";
 
 const AnouncementModal = ({ setOpen, open, modalData, index }) => {
@@ -77,17 +77,19 @@ const Carousel = ({ data }) => {
             {open._id === currentData?._id && <AnouncementModal setOpen={setOpen} open={open} modalData={data} index={currentIndex} />}
             <div>
                 <div className={style.flexBox}>
-                    <div className="">
-                        <div className="flex items-center gap-2">
-                            <MdOutlineAnnouncement className='text-xl' />
-                            <h2 className={style.title}>Announcements</h2>
+                    <div className="flex items-start gap-2">
+                        <TfiAnnouncement className='text-xl mt-1' />
+                        <div>
+                            <div className="flex items-center gap-2">
+                                <h2 className={style.title}>Announcements</h2>
+                            </div>
+                            {/* Use optional chaining to handle potential undefined values */}
+                            <h3 onClick={() => {
+                                setOpen(currentData)
+                                console.log(currentData._id);
+                            }} className={style.subTitle}>{currentData?.title}</h3>
+                            <p className={style.message} dangerouslySetInnerHTML={{ __html: currentData?.message }} />
                         </div>
-                        {/* Use optional chaining to handle potential undefined values */}
-                        <h3 onClick={() => {
-                            setOpen(currentData)
-                            console.log(currentData._id);
-                        }} className={style.subTitle}>{currentData?.title}</h3>
-                        <p className={style.message} dangerouslySetInnerHTML={{ __html: currentData?.message }} />
                     </div>
                     <div className={style.hFlex}>
                         <p className={style.numbers}>{[currentIndex + 1]} / {data.length}</p> <br />

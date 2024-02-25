@@ -5,8 +5,12 @@ import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import BrightAlert from "bright-alert";
 import SellerPrintPage from "../../../SellerItems/ProductManagement/SellerProductManagement/SellerAllProduct/SellerPrintPage";
+import WarehouseModal from "./WarehouseModal";
 
 const ManageProduct = () => {
+
+  const [doobProduct, setDoobProduct] = useState(false)
+
   const { data: products = [], refetch } = useQuery({
     queryKey: ["products"],
     queryFn: async () => {
@@ -16,18 +20,33 @@ const ManageProduct = () => {
     },
   });
 
+  const { data: othersProduct = [] } = useQuery({
+    queryKey: ["othersProducts"],
+    queryFn: async () => {
+      const res = await fetch("http://localhost:5000/api/v1/admin/others-products");
+      const data = await res.json();
+      return data;
+    },
+  });
+
 
   const [searchQuery, setSearchQuery] = useState("");
+
+  const [modalOpen, setModalOpen] = useState(false)
 
   const handleSearch = (event) => {
     setSearchQuery(event.target.value);
   };
 
-  const filteredData = products.filter(
-    (item) =>
-      item.name?.toLowerCase().includes(searchQuery?.toLowerCase()) ||
-      item._id.toString().includes(searchQuery)
-  );
+  const filteredData = doobProduct
+    ? products.filter((item) =>
+      (item.name && item.name.toLowerCase().includes(searchQuery?.toLowerCase())) ||
+      (item._id && item._id.toString().includes(searchQuery))
+    )
+    : othersProduct.filter((item) =>
+      (item.name && item.name.toLowerCase().includes(searchQuery?.toLowerCase())) ||
+      (item._id && item._id.toString().includes(searchQuery))
+    );
 
   const updateProductStatus = (id, status) => {
     console.log(id);
@@ -65,21 +84,22 @@ const ManageProduct = () => {
   };
 
   const handleSelectAll = () => {
-    if (selectProducts.length === products.length) {
+    if (selectProducts.length === filteredData.length) {
       // If all products are already selected, deselect all
       setSelectProducts([]);
     } else {
       // Otherwise, select all products
-      const allProductIds = products.map(product => product._id);
+      const allProductIds = filteredData.map(product => product._id);
       setSelectProducts(allProductIds);
     }
   };
 
   const logSelectedProducts = () => {
-    const selectedProductData = products.filter(product => selectProducts.includes(product._id));
+    const selectedProductData = filteredData.filter(product => selectProducts.includes(product._id));
     setPrintProduct(selectedProductData)
     setOn(!on)
   };
+
 
 
   return (
@@ -108,7 +128,7 @@ const ManageProduct = () => {
         </span>
 
         <span className="text-sm font-medium transition-all group-hover:ms-4">
-          Add Product
+          Add Commission
         </span>
       </Link>
 
@@ -153,7 +173,10 @@ const ManageProduct = () => {
             </span>
           </div>
 
-          <button onClick={logSelectedProducts} disabled={!selectProducts.length} className='bg-blue-500 px-8 py-2 rounded text-white'> Print</button>
+          <div className='flex gap-2 items-center'>
+            <button onClick={logSelectedProducts} disabled={!selectProducts.length} className='bg-blue-500 px-8 py-2 rounded text-white'> Print</button>
+            <button onClick={() => setDoobProduct(!doobProduct)} className='bg-blue-500 px-8 py-2 rounded text-white'>{!doobProduct ? "Your product" : " Others Product"}</button>
+          </div>
         </div>
         <div className="flex flex-col mt-6">
           <div className="overflow-x-auto">
@@ -167,7 +190,7 @@ const ManageProduct = () => {
                     <tr>
                       <th className='px-2'>
                         <label className='flex items-center gap-2  font-medium' htmlFor="select">
-                          <input id='select' type="checkbox" checked={selectProducts.length === products.length} onChange={handleSelectAll} />
+                          <input id='select' type="checkbox" checked={selectProducts.length === filteredData.length} onChange={handleSelectAll} />
                           Select all
                         </label>
                       </th>
@@ -271,8 +294,9 @@ const ManageProduct = () => {
                               </h2>
                             </div>}
                         </td>
-                        <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
-                          {product?.categoryName}
+
+                        <td className="px-4 py-4 text-sm text-white  whitespace-nowrap">
+                          <button className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 cursor-pointer bg-emerald-100/60 bg-gray-800" onClick={() => setModalOpen(product?._id)}> Select Warehouse</button>
                         </td>
                         <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
                           authurmelo@example.com
@@ -320,6 +344,9 @@ const ManageProduct = () => {
                             </button>
                           </div>
                         </td>
+                        <div className="h-0 w-0">
+                          {modalOpen == product?._id && <WarehouseModal doobProduct={doobProduct} modalOpen={modalOpen} product={product} setModalOpen={setModalOpen} />}
+                        </div>
                       </tr>
                     ))}
                   </tbody>

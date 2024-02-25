@@ -1,0 +1,49 @@
+import React, { useState } from 'react';
+import PriceModal from '../../Home/Price/PriceModal';
+
+const SubscriptionInvoice = ({ commissionHistory, invoice, setInvoice, due, pricesData, id }) => {
+    const [open, setOpen] = useState(false);
+
+    const allCommissions = commissionHistory.reduce((total, commission) => total + commission.commission, 0);
+    let selectedObject = pricesData.find(item => item._id === id);
+    console.log(selectedObject);
+    const handleSubmit = () => {
+        selectedObject.price = parseInt(allCommissions) + parseInt(selectedObject?.price)
+
+        setOpen(selectedObject)
+
+    }
+    return (
+        <div className={`fixed left-0 top-0 bg-black  flex  z-50 h-full min-h-screen w-full items-center justify-center bg-dark/90 px-4 py-5 ${invoice ? "block" : "hidden"
+            }`}>
+            <div className="w-full max-w-[570px] rounded-[20px] bg-white opacity-100 px-8 py-12 text-center dark:bg-dark-2 md:px-[70px] md:py-[60px]">
+                <h3 className="pb-[18px] text-xl font-semibold text-dark dark:text-back sm:text-2xl">
+                    Your Total Commission : {parseInt(allCommissions).toFixed()}
+                    Your Due =  {parseInt(allCommissions) + parseInt(selectedObject?.price)}
+                </h3>
+                <span
+                    className={`mx-auto mb-6 inline-block h-1 w-[90px] rounded bg-primary`}
+                ></span>
+                <div className="-mx-3 flex flex-wrap">
+                    <div className="w-1/2 px-3">
+                        <button
+                            onClick={() => setInvoice(false)}
+                            className="block w-full rounded-md border border-stroke p-3 text-center text-base font-medium text-dark transition hover:border-red-600 hover:bg-red-600 hover:text-white dark:text-white"
+                        >
+                            Cancel
+                        </button>
+                    </div>
+
+                    {open && <PriceModal open={open} setOpen={setOpen} />}
+                    <div className="w-1/2 px-3">
+                        <button onClick={() => handleSubmit(selectedObject)} className="block w-full rounded-md border border-primary bg-primary p-3 text-center text-base font-medium text-white transition hover:bg-blue-dark">
+                            View Details
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div >
+    );
+};
+
+export default SubscriptionInvoice;

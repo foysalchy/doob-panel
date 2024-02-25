@@ -15,6 +15,15 @@ const Step3 = ({ prevStep, submitForm, handleChange, values }) => {
         },
     });
 
+    const { data: permission = [], loader } = useQuery({
+        queryKey: ["prices"],
+        queryFn: async () => {
+            const res = await fetch(`https://backend.doob.com.bd/api/v1/seller/subscription-model?priceId=${shopInfo?.priceId}`);
+            const data = await res.json();
+
+            return data?.data;
+        },
+    });
     const [selectedPriceId, setSelectedPriceId] = useState(null);
 
     const handlePriceClick = (priceId) => {
@@ -110,7 +119,7 @@ const Step3 = ({ prevStep, submitForm, handleChange, values }) => {
             </div>
 
             <div className="grid max-w-md gap-10 row-gap-5 lg:max-w-screen-lg sm:row-gap-10 lg:grid-cols-3 xl:max-w-screen-lg sm:mx-auto my-10">
-                {prices?.map((price, index) => (
+                {prices.length && prices?.map((price, index) => (
                     <div key={index}>
                         {price.status && (
                             <div
@@ -119,8 +128,57 @@ const Step3 = ({ prevStep, submitForm, handleChange, values }) => {
                                     }`}
                                 onClick={() => handlePriceClick(price._id)}
                             >
-                                <div className="text-center">
+                                <div className="text-center h-[500px]">
                                     <div className="text-lg font-semibold">{price.name}</div>
+                                    <hr />
+                                    {
+                                        price.benefits.map((benefit, index) => (
+                                            <p className="flex items-center text-gray-600 mb-2">
+                                                <span className="w-4 h-4 mr-2 inline-flex items-center justify-center bg-gray-400 text-white rounded-full flex-shrink-0">
+                                                    <svg
+                                                        fill="none"
+                                                        stroke="currentColor"
+                                                        strokeLinecap="round"
+                                                        strokeLinejoin="round"
+                                                        strokeWidth="2.5"
+                                                        className="w-3 h-3"
+                                                        viewBox="0 0 24 24"
+                                                    >
+                                                        <path d="M20 6L9 17l-5-5" />
+                                                    </svg>
+                                                </span>
+                                                {benefit}
+
+
+                                            </p>
+                                        ))
+                                    }
+
+                                    {permission.find((perm) => perm._id === price._id) && (
+                                        <div className="">
+                                            <div >
+                                                {permission.find((perm) => perm._id === price._id)?.permissions?.map(itm => <p className="flex items-center text-gray-600 mb-2">
+                                                    <span className="w-4 h-4 mr-2 inline-flex items-center justify-center bg-gray-400 text-white rounded-full flex-shrink-0">
+                                                        <svg
+                                                            fill="none"
+                                                            stroke="currentColor"
+                                                            strokeLinecap="round"
+                                                            strokeLinejoin="round"
+                                                            strokeWidth="2.5"
+                                                            className="w-3 h-3"
+                                                            viewBox="0 0 24 24"
+                                                        >
+                                                            <path d="M20 6L9 17l-5-5" />
+                                                        </svg>
+                                                    </span>
+                                                    {itm?.name}
+
+
+                                                </p>)}
+                                            </div>
+                                        </div>
+                                    )}
+
                                     <div className=" mt-2">
                                         <div className="mr-1 text-3xl font-bold  flex justify-center items-baseline gap-1">
                                             <span>{price.price}</span>

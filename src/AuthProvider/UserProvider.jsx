@@ -6,6 +6,7 @@ export const AuthContext = createContext();
 const UserProvider = ({ children }) => {
     const [user, setUser] = useState('');
     const [shopInfo, setShopInfo] = useState('');
+    const [search, setSearch] = useState(false)
     const [loading, setLoading] = useState(true);
     const [checkUpData, setCheckUpData] = useState({})
     const [checkUpDarazData, setCheckUpDarazData] = useState({})
@@ -84,6 +85,8 @@ const UserProvider = ({ children }) => {
         setCookie,
         loading,
         setLoading,
+        search,
+        setSearch,
         shopInfo,
         setShopInfo,
         checkUpData,

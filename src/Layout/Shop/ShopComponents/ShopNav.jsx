@@ -99,7 +99,7 @@ const ShopNav = () => {
                             aria-label="Company"
                             title="Company"
                         >
-                            <img srcSet={shop?.logo} className='w-[110px] h-[50px] object-cover' src={shop?.logo} alt="" />
+                            <img srcSet={shop?.logo} className='w-[170px] h-[50px] object-cover' src={shop?.logo} alt="" />
 
                         </Link>
 

@@ -49,7 +49,8 @@ const Pos = () => {
 
     return (
         <div>
-            <main className=' md:p-4 mt-3 rounded-md h-[82vh] overflow-y-auto'>
+
+            <main className=' md:p-4 mt-3 rounded-md h-screen overflow-y-auto'>
                 <div className="grid md:grid-cols-3 gap-2 ">
                     <div className="md:col-span-2">
                         <div className="flex items-center justify-between gap-3">
@@ -61,7 +62,7 @@ const Pos = () => {
                                 <small className="text-sm absolute bg-[#ff0059] text-white py-0 px-1 text-[8px] rounded-full right-[-9px] top-[-3px]">{cartProducts?.length}</small>
                             </button>
                         </div>
-                        <div className="bg-gray-100 p-4 rounded-lg mt-3  overflow-y-auto grid md:grid-cols-3 grid-cols-2 gap-3 h-[90vh]">
+                        <div className="bg-gray-100 p-4 rounded-lg mt-3  overflow-y-auto grid md:grid-cols-5 grid-cols-2 gap-3 h-[90vh]">
                             {
                                 filteredData?.map((itm, index) => (
                                     <div key={itm?._id}>

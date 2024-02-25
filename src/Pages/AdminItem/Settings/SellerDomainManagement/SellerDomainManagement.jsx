@@ -97,7 +97,7 @@ const SellerDomainManagement = () => {
                                 }
                                 else {
 
-                                    navigate("/seller/shop-register");
+                                    navigate("/shop-register");
                                 }
 
                             });
@@ -168,7 +168,9 @@ const SellerDomainManagement = () => {
     return (
         <div className="">
 
-            <div className='h-0 w-0'>   <DeleteModal setOpenModal={setOpenModal} OpenModal={OpenModal} setIsDelete={setIsDelete} /></div>
+            <div className='h-0 w-0'>
+                <DeleteModal setOpenModal={setOpenModal} OpenModal={OpenModal} setIsDelete={setIsDelete} />
+            </div>
 
             {!isLoading &&
                 <div className="relative w-3/5 my-6">

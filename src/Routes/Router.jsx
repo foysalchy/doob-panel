@@ -21,6 +21,14 @@ import CheckStaff from "../Hooks/CheckStaff";
 import IsUserRegistration from "./isUserRegistration";
 import UserLayout from "../Layout/UserLayout";
 import { UserPath } from "./UserPath";
+import SellerShopInfo from "../Pages/SellerItems/SellerShopInfo/SellerShopInfo";
+import SellerRoute from "./SellerRoute";
+import PrivateRoute from "../Hooks/PrivateRoute";
+import Pos from "../Pages/SellerItems/Pos/Pos";
+import PoroductLayout from "../Layout/PoroductLayout";
+import Product from "../Pages/Home/Product/Product";
+import CommonCategory from "../Pages/Home/Product/CommonCategory/CommonCategory";
+import ProductDetails from "../Pages/Home/Product/ProductDetails/ProductDetails";
 
 
 
@@ -66,6 +74,13 @@ const Router = createBrowserRouter([
     ),
     children: SellerPath
   },
+
+  {
+    path: "/seller/pos",
+    element: <PrivateRoute>
+      <Pos />
+    </PrivateRoute>
+  },
   {
     path: "/user",
     element: (
@@ -105,7 +120,48 @@ const Router = createBrowserRouter([
     children: SupperAdminPath
   },
 
+  {
+    path: "/shop-register",
+    element: (
+      <SellerRoute>
+        <SellerShopInfo />
+      </SellerRoute>
+    ),
+  },
+
+  {
+    path: '/products',
+    element: <PoroductLayout />,
+    children: [
+      {
+        path: "",
+        element: <>
+          {/* <ScrollToTop /> */}
+          <Product />
+        </>,
+      },
+      {
+        path: 'catagory/:categoryId',
+        element: <CommonCategory />,
+        loader: async ({ params }) => {
+          const categoryName = params.categoryId;
+          const response = await fetch(`https://backend.doob.com.bd/api/v1/seller/admin-category-item?id=${categoryName}`);
+          const data = await response.json();
+          return data?.data;
+        },
+      },
+      {
+        path: ":id",
+        loader: ({ params }) =>
+          fetch(`https://backend.doob.com.bd/api/v1/admin/single-product?id=${params?.id}`),
+        element: <>
+          {/* <ScrollToTop /> */}
+          <ProductDetails />
+        </>,
+      },
+    ]
+  }
+
+
 ]);
 export default Router;
-
-

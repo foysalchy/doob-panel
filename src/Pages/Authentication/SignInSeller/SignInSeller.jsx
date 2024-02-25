@@ -54,7 +54,7 @@ const SignInSeller = () => {
                   navigate("/seller/dashboard");
                 }
                 else {
-                  navigate("/seller/shop-register");
+                  navigate("/shop-register");
                 }
 
               });

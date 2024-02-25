@@ -13,6 +13,7 @@ import Swal from "sweetalert2";
 import BrightAlert from 'bright-alert';
 import MetaHelmet from "../../../../Helmate/Helmate";
 import ReleventProduct from "./ReleventProduct";
+import ModalForPayment from "./ModalFOrPayment";
 
 const StarRating = ({ rating, onRatingChange }) => {
   return (
@@ -83,30 +84,27 @@ const ProductDetails = () => {
     const updatedProductCost = total;
 
     if (quantity >= product1Quantity && quantity < product2Quantity) {
-      const productQuantityPrice = (total / quantity) * quantity;
-      const countProfit = (product1QuantityPrice / product1Quantity) * quantity;
-      sealingPrice = countProfit
-      profit = productQuantityPrice - countProfit;
-      profitPercent = (productQuantityPrice - countProfit) / 100;
+      console.log(quantity * product1QuantityPrice);
+      // const productQuantityPrice = (total / quantity) * quantity;
+      // const countProfit = (product1QuantityPrice / product1Quantity) * quantity;
+      sealingPrice = quantity * product1QuantityPrice
+      profit = productCost - sealingPrice;
+      profitPercent = (profit / sealingPrice) * 100;
       console.log('profit 1 : ', profit);
     }
 
     else if (quantity >= product2Quantity && quantity < product3Quantity) {
-      const productQuantityPrice = (total / quantity) * quantity;
-      const countProfit = (product2QuantityPrice / product2Quantity) * quantity;
-      sealingPrice = countProfit
-      profit = productQuantityPrice - countProfit;
-      profitPercent = (productQuantityPrice - countProfit) / 100;
-      console.log('profit 2 : ', profit);
+      // const productQuantityPrice = (total / quantity) * quantity;
+      // const countProfit = (product2QuantityPrice / product2Quantity) * quantity;
+      sealingPrice = quantity * product2QuantityPrice
+      profit = productCost - sealingPrice;
+      profitPercent = (profit / sealingPrice) * 100;
     }
 
     else if (quantity >= product3Quantity) {
-      const productQuantityPrice = (total / quantity) * quantity;
-      const countProfit = (product3QuantityPrice / product3Quantity) * quantity;
-      sealingPrice = countProfit
-      profit = productQuantityPrice - countProfit;
-      profitPercent = (productQuantityPrice - countProfit) / 100;
-      console.log('profit 3 : ', profit);
+      sealingPrice = quantity * product3QuantityPrice
+      profit = productCost - sealingPrice;
+      profitPercent = (profit / sealingPrice) * 100;
     }
     else {
       sealingPrice = total;
@@ -149,7 +147,7 @@ const ProductDetails = () => {
     setQuantity(quantity + 1);
 
 
-    console.log(banifit);
+    console.log(userInfo);
   };
 
   const handleManualInput = (e) => {
@@ -167,7 +165,7 @@ const ProductDetails = () => {
 
   const convertedRating = (2 / 10) * 5;
 
-  const handleStore = (id) => {
+  const handleStore = (id, getway, userInfo) => {
 
 
     if (shopInfo) {
@@ -175,9 +173,13 @@ const ProductDetails = () => {
         shopId: shopInfo?.shopId,
         shopName: shopInfo?.shopName,
         shopUid: shopInfo?._id,
-        quantity: quantity
+        quantity: quantity,
+        sellingPrice: banifit.sellingPrice,
+        getway: getway,
+        userInfo
       }
-      fetch(`https://backend.doob.com.bd/api/v1/seller/web-store?id=${id}`, {
+      console.log(data);
+      fetch(`http://localhost:5000/api/v1/seller/web-store?id=${id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -185,7 +187,6 @@ const ProductDetails = () => {
         body: JSON.stringify(data)
       }).then((res) => res.json()).then((data) => {
         BrightAlert();
-        refetch()
       })
     }
     else {
@@ -195,6 +196,7 @@ const ProductDetails = () => {
 
   const [comment, setComment] = useState('');
   const [photo, setPhoto] = useState(null);
+  const [invoice, setInvoice] = useState(false);
   const [rating, setRating] = useState(0);
 
   const handleCommentChange = (e) => {
@@ -202,7 +204,6 @@ const ProductDetails = () => {
   };
 
   const handlePhotoChange = (e) => {
-    // Handle photo upload logic
     const selectedPhoto = e.target.files[0];
     setPhoto(selectedPhoto);
   };
@@ -212,52 +213,6 @@ const ProductDetails = () => {
   };
 
 
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-
-  //   const selectedFile = e.target.photo.files[0];
-  //   const imageFormData = new FormData();
-  //   imageFormData.append("image", selectedFile);
-
-  //   try {
-  //     // Upload the image and get the URL
-  //     const imageUrl = await uploadImage(imageFormData);
-
-  //     // Construct imgData object with the image URL
-  //     const imgData = {
-  //       image: imageUrl,
-  //       link: window.location.href,
-  //     };
-
-  //     // Construct the data object for posting the comment
-  //     const data = {
-  //       name: user?.name,
-  //       comment,
-  //       photo: imgData,
-  //       rating,
-  //       productId: myData?.data?._id,
-  //       shopId: myData?.data?.shopId
-  //     };
-
-  //     // Post the comment data to the backend
-  //     const response = await fetch("https://backend.doob.com.bd/api/v1/seller/add-new-comment", {
-  //       method: 'post',
-  //       headers: {
-  //         'content-type': 'application/json',
-  //         "ngrok-skip-browser-warning": "69420",
-  //       },
-  //       body: JSON.stringify(data)
-  //     });
-
-  //     // Handle the response
-  //     const responseData = await response.json();
-  //     const user = responseData.user;
-  //     BrightAlert();
-  //     console.log(responseData, 'uploaded');
-  //   } catch (error) {
-  //     console.error("Error posting comment:", error);
-  //   }
-  // };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -326,6 +281,8 @@ const ProductDetails = () => {
       return data?.comments;
     },
   });
+
+  console.log(banifit.productCost === isNaN);
 
   // console.log(productFind, 'comment');
   return (
@@ -481,14 +438,15 @@ const ProductDetails = () => {
                   </div>
                 </div>
 
-                <div className="my-3">
+                {user ? <div className="my-3">
                   <div className="grid grid-cols-2 md:grid-cols-4 bg-red-100 py-3">
                     <div className="text-center md:border-r-2 border-gray-400">
-                      <h6 className="font-bold text-xl text-red-400">${parseInt(banifit.productCost)}</h6>
+                      <h6 className="font-bold text-xl">${isNaN(banifit.sellingPrice) ? "0" : parseInt(banifit.sellingPrice)}</h6>
+
                       <p className="text-sm text-[#606060]">Product Costing</p>
                     </div>
                     <div className="text-center md:border-r-2 border-gray-400">
-                      <h6 className="font-bold text-xl">${parseInt(banifit.sellingPrice)}</h6>
+                      <h6 className="font-bold text-xl text-red-400">${isNaN(banifit.productCost) ? '0' : parseInt(banifit.productCost)}</h6>
                       <p className="text-sm text-[#606060]">Selling Price</p>
                     </div>
                     <div className="text-center md:border-r-2 border-gray-400">
@@ -500,8 +458,27 @@ const ProductDetails = () => {
                       <p className="text-sm text-[#606060]">Your Profit</p>
                     </div>
                   </div>
-                </div>
-                <div className="my-3">
+                </div> : <div className="my-3">
+                  <div className="grid grid-cols-2 md:grid-cols-4 bg-red-100 py-3">
+                    <div className="text-center md:border-r-2 border-gray-400">
+                      <h6 className="font-bold text-xl text-red-400">0</h6>
+                      <p className="text-sm text-[#606060]">Product Costing</p>
+                    </div>
+                    <div className="text-center md:border-r-2 border-gray-400">
+                      <h6 className="font-bold text-xl">0</h6>
+                      <p className="text-sm text-[#606060]">Selling Price</p>
+                    </div>
+                    <div className="text-center md:border-r-2 border-gray-400">
+                      <h6 className="font-bold text-xl">0</h6>
+                      <p className="text-sm text-[#606060]">Your Profit</p>
+                    </div>
+                    <div className="text-center">
+                      <h6 className="font-bold text-xl">{0}%</h6>
+                      <p className="text-sm text-[#606060]">Your Profit</p>
+                    </div>
+                  </div>
+                </div>}
+                {user ? <div className="my-3">
                   <div className="grid grid-cols-2 md:grid-cols-3 bg-red-100 py-3">
 
                     <div className="text-center md:border-r-2 border-gray-400">
@@ -517,7 +494,23 @@ const ProductDetails = () => {
                       <p className="text-sm text-[#606060]">{productFind?.variantData?.product3?.quantity}  Qty</p>
                     </div>
                   </div>
-                </div>
+                </div> : <div className="my-3">
+                  <div className="grid grid-cols-2 md:grid-cols-3 bg-red-100 py-3">
+
+                    <div className="text-center md:border-r-2 border-gray-400">
+                      <h6 className="font-bold text-xl text-red-400">{0}</h6>
+                      <p className="text-sm text-[#606060]">{0}  Qty</p>
+                    </div>
+                    <div className="text-center md:border-r-2 border-gray-400">
+                      <h6 className="font-bold text-xl text-red-400">{0}</h6>
+                      <p className="text-sm text-[#606060]">{0}  Qty</p>
+                    </div>
+                    <div className="text-center">
+                      <h6 className="font-bold text-xl text-red-400">{0}</h6>
+                      <p className="text-sm text-[#606060]">{0}  Qty</p>
+                    </div>
+                  </div>
+                </div>}
               </div>
 
               <div className="flex py-4 space-x-4">
@@ -553,20 +546,25 @@ const ProductDetails = () => {
                     </button>
                   </div>
                 </div>
+                {/* 
                 <button
                   onClick={() => handleStore(productFind?._id)}
                   type="button"
-                  className="h-10 px-6 py-2 text-sm rounded bg-gray-950 hover:bg-gray-800 text-white"
+                  className="h-10 px-6 py-2 text-sm rounded bg-indigo-600 hover:bg-indigo-500 text-white"
                 >
-                  Add My Store
-                </button>
+                  Buy Now
+                </button> */}
+
                 <button
-                  onClick={() => { }}
+                  onClick={() => setInvoice(productFind?._id)}
                   type="button"
                   className="h-10 px-6 py-2 text-sm rounded bg-indigo-600 hover:bg-indigo-500 text-white"
                 >
                   Buy Now
                 </button>
+
+                {invoice && <ModalForPayment quantity={quantity} seller={productFind.shopId} product={productFind} handleStore={handleStore} invoice={invoice} setInvoice={setInvoice} sellingPrice={banifit.sellingPrice} />}
+
               </div>
               {/* variation data */}
               <div className="flex">
@@ -677,3 +675,7 @@ const ProductDetails = () => {
 };
 
 export default ProductDetails;
+
+
+
+

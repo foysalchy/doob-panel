@@ -82,7 +82,7 @@ const ForYouProducts = () => {
                       </h3>
 
                       <div className="mt-1.5 flex items-center justify-between text-gray-900">
-                        <p className="tracking-wide  "><span className="kalpurush">৳</span> {product?.price}</p>
+                        <p className="tracking-wide  "><span className="kalpurush">৳</span> {user ? product?.price : 0}</p>
 
                         <p className="text-xs uppercase tracking-wide">{product?.variations.length} Variant</p>
                       </div>

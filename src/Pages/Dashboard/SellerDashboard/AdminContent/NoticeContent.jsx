@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import React, { useState } from 'react';
+import { IoWarning } from 'react-icons/io5';
 import { PiNoteLight } from "react-icons/pi";
 import { RxCross2 } from 'react-icons/rx';
 
@@ -76,15 +77,17 @@ const Carousel = ({ data }) => {
                 {/* <img src={data[currentIndex].image} alt={data[currentIndex].title} /> */}
                 {open._id === currentData?._id && <NoticeModal setOpen={setOpen} open={open} modalData={data} index={currentIndex} />}
                 <div className={style?.flexBox}>
-                    <div className="">
-                        <div className="flex items-center gap-2">
-                            <PiNoteLight className='text-xl' />
-                            <h2 className={currentData?.title}>Notice</h2>
+                    <div className="flex gap-2">
+                        <IoWarning className='text-xl mt-1' />
+                        <div>
+                            <div className="flex items-center gap-2">
+                                <h2 className={`${currentData?.title}, text-xl font-semibold`}>Notice</h2>
+                            </div>
+                            <h3 onClick={() => {
+                                setOpen(currentData)
+                            }} className={style?.subTitle}>{currentData?.title}</h3>
+                            <p className={style.message} dangerouslySetInnerHTML={{ __html: data[currentIndex]?.title }} />
                         </div>
-                        <h3 onClick={() => {
-                            setOpen(currentData)
-                        }} className={style?.subTitle}>{currentData?.title}</h3>
-                        <p className={style.message} dangerouslySetInnerHTML={{ __html: data[currentIndex]?.title }} />
                     </div>
                     <div className={style.hFlex}>
                         <p className={style?.numbers} >  {[currentIndex + 1]} / {data.length}</p> <br />

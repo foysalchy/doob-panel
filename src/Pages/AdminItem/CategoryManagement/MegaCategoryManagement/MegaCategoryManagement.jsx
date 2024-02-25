@@ -17,8 +17,22 @@ const MegaCategoryManagement = () => {
 
     // status update
     const statusUpdate = (id, status) => {
-        console.log(`https://backend.doob.com.bd/api/v1/admin/category/megacategory?id=${id}&status=${status}`);
         fetch(`https://backend.doob.com.bd/api/v1/admin/category/megacategory?id=${id}&status=${status}`, {
+            method: "PUT",
+            headers: {
+                "content-type": "application/json",
+            },
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                console.log(data, 'status update');
+                Swal.fire(" Status Updated", "", "success");
+                refetch()
+            });
+    }
+
+    const featureStatus = (id, status) => {
+        fetch(`https://backend.doob.com.bd/api/v1/admin/category/feature?id=${id}&feature=${status}`, {
             method: "PUT",
             headers: {
                 "content-type": "application/json",
@@ -69,6 +83,11 @@ const MegaCategoryManagement = () => {
                                             <td className="px-6 py-4 whitespace-nowrap">
                                                 {
                                                     item.status == 'true' ? <button onClick={() => statusUpdate(item?._id, false)} className="">Active</button> : <button onClick={() => statusUpdate(item?._id, true)} className=''>Deactivate</button>
+                                                }
+                                            </td>
+                                            <td>
+                                                {
+                                                    item.feature == 'true' ? <button onClick={() => featureStatus(item?._id, false)} className="">Feature Active</button> : <button onClick={() => featureStatus(item?._id, true)} className=''>Feature InActive</button>
                                                 }
                                             </td>
                                         </tr>

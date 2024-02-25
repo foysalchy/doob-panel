@@ -4,12 +4,12 @@ const EditInventory = ({ refetch, open, setOpen, data }) => {
     const [count, setCount] = useState(data?.stock_quantity);
 
     const handleIncrease = () => {
-        setCount(count + 1);
+        setCount(parseInt(count) + 1);
     };
 
     const handleDecrease = () => {
         if (count > 0) {
-            setCount(count - 1);
+            setCount(parseInt(count) - 1);
         }
     };
 

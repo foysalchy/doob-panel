@@ -28,6 +28,7 @@ const AdminBlogPage = () => {
     queryFn: async () => {
       const res = await fetch('https://backend.doob.com.bd/api/v1/admin/blog-category');
       const data = await res.json();
+      console.log(data);
       return data;
     },
   });
@@ -47,6 +48,7 @@ const AdminBlogPage = () => {
   }, [categories, refetch]);
 
 
+  console.log(categories);
 
 
   return (
@@ -116,7 +118,7 @@ const AdminBlogPage = () => {
                     All
                   </button>
                   {!isCategoriesLoading &&
-                    categories.map((category) => (
+                    categories?.map((category) => (
                       <button
                         key={category.id}
                         onClick={() => filterServices(category.title)}

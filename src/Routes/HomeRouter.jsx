@@ -51,33 +51,7 @@ const homePath = [
         path: "/forget-pass",
         element: <ForgetPass />,
     },
-    {
-        path: "/products",
-        element: <>
-            {/* <ScrollToTop /> */}
-            <Product />
-        </>,
-    },
-    {
-        path: '/products/catagory/:categoryId',
-        element: <CommonCategory />,
-        loader: async ({ params }) => {
-            const categoryName = params.categoryId;
-            const response = await fetch(`https://backend.doob.com.bd/api/v1/seller/admin-category-item?id=${categoryName}`);
-            const data = await response.json();
-            return data?.data;
-        },
-    },
 
-    {
-        path: "/products/:id",
-        loader: ({ params }) =>
-            fetch(`https://backend.doob.com.bd/api/v1/admin/single-product?id=${params?.id}`),
-        element: <>
-            {/* <ScrollToTop /> */}
-            <ProductDetails />
-        </>,
-    },
     {
         path: "/reset-password/:id",
         element: <ResetPass />,
@@ -124,7 +98,7 @@ const homePath = [
         path: "/blogs/:id",
         element: <SingleBlog />,
         loader: ({ params }) =>
-        fetch(`https://backend.doob.com.bd/api/v1/admin/all-blogs/${params.id}`),
+            fetch(`https://backend.doob.com.bd/api/v1/admin/all-blogs/${params.id}`),
     },
     {
         path: "/faq",
@@ -152,14 +126,7 @@ const homePath = [
         path: "/profile",
         element: <Profile />,
     },
-    {
-        path: "/seller/shop-register",
-        element: (
-            <SellerRoute>
-                <SellerShopInfo />
-            </SellerRoute>
-        ),
-    },
+
 ]
 
 export { homePath }

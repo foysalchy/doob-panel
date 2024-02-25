@@ -48,7 +48,7 @@ const IsUserRegistration = ({ children }) => {
 
     // Show loading message if loading is true
     if (loading) {
-        return <h1 className="text-black">Loading...</h1>;
+        return <h1 className="text-black  py-20">Loading...</h1>;
     }
 
     // Render children or null

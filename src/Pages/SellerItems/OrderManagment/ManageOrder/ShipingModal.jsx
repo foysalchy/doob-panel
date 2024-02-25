@@ -34,9 +34,9 @@ const ShippingModal = ({ readyToShip, setReadyToShip, orderInfo, refetch, ships,
             recipient_phone,
             recipient_address,
             note,
-            ApiKey: shipInfo.key,
-            SecretKey: shipInfo.secretKey,
-            BaseUrl: shipInfo.api
+            // ApiKey: shipInfo.key,
+            // SecretKey: shipInfo.secretKey,
+            // BaseUrl: shipInfo.api
         }
         if (selectedDelivery === "Other") {
             productStatusUpdate("ready_to_ship", orderInfo._id)

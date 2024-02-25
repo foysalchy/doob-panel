@@ -70,9 +70,17 @@ const VariantData = ({ variantInput, setVariantInput }) => {
                         setVariantInput(newInputFields);
                     }} type="number" defaultValue={1} className={style.input} />
                 </div>
+                <div className={style.cart}>
+                    <label className={style.label} htmlFor="">Product cost  </label>
+                    <input onChange={(e) => {
+                        const newInputFields = [...variantInput];
+                        newInputFields[0].ProductCost = e.target.value;
+                        setVariantInput(newInputFields);
+                    }} type="number" defaultValue={1} className={style.input} />
+                </div>
 
             </div>
-            variand data
+
 
             <AdminCategoryforSeller />
         </div>

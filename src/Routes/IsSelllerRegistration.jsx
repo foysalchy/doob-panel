@@ -25,7 +25,7 @@ const IsSelllerRegistration = ({ children }) => {
         return children
     }
 
-    return <Navigate to="/seller/shop-register" state={{ from: location }} replace></Navigate>
+    return <Navigate to="/shop-register" state={{ from: location }} replace></Navigate>
 };
 
 export default IsSelllerRegistration;

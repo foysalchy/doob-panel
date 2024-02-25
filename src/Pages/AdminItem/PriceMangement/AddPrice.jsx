@@ -186,27 +186,84 @@ const AddPrice = () => {
               >
                 Time Duration
               </label>
-
-              <div className="relative mt-1.5">
-                <input
-                  onChange={(e) =>
-                    handleInputChange("timeDuration", e.target.value)
-                  }
-                  type="text"
-                  list="HeadlineActArtist"
-                  id="HeadlineAct"
-                  className="flex-grow w-full h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-purple-400 focus:outline-none focus:shadow-outline"
-                  placeholder="Please select"
-                />
-              </div>
-
-              <datalist name="HeadlineAct" id="HeadlineActArtist">
+              <select onChange={(e) =>
+                handleInputChange("timeDuration", e.target.value)
+              }
+                type="text"
+                list="HeadlineActArtist"
+                id="HeadlineAct"
+                className="flex-grow w-full h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-purple-400 focus:outline-none focus:shadow-outline" name="HeadlineAct" >
                 <option value="10Days">10 days</option>
                 <option value="Monthly">Monthly</option>
                 <option value="Yearly">Yearly</option>
                 <option value="Lifetime">Lifetime</option>
-              </datalist>
+              </select>
+
+
+
             </div>
+
+            <label
+              htmlFor="firstName"
+              className="inline-block mb-1 font-medium"
+            >
+              1st Mouth Descount
+            </label>
+            <input
+              placeholder="$50"
+              required
+              type="number"
+              name="pricingPrice"
+              value={formData.one}
+              onChange={(e) => handleInputChange("one", e.target.value)}
+              className="flex-grow w-full h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-purple-400 focus:outline-none focus:shadow-outline"
+            />
+            <label
+              htmlFor="firstName"
+              className="inline-block mb-1 font-medium"
+            >
+              Six Month Discount
+            </label>
+            <input
+              placeholder="$50"
+              required
+              type="number"
+              name="pricingPrice"
+              value={formData.six}
+              onChange={(e) => handleInputChange("six", e.target.value)}
+              className="flex-grow w-full h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-purple-400 focus:outline-none focus:shadow-outline"
+            />
+            <label
+              htmlFor="firstName"
+              className="inline-block mb-1 font-medium"
+            >
+              One Year Discount
+            </label>
+            <input
+              placeholder="$50"
+              required
+              type="number"
+              name="pricingPrice"
+              value={formData.twelve}
+              onChange={(e) => handleInputChange("twelve", e.target.value)}
+              className="flex-grow w-full h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-purple-400 focus:outline-none focus:shadow-outline"
+            />
+            <label
+              htmlFor="firstName"
+              className="inline-block mb-1 font-medium"
+            >
+              Two Year Discount
+            </label>
+            <input
+              placeholder="$50"
+              required
+              type="number"
+              name="pricingPrice"
+              value={formData.twenty}
+              onChange={(e) => handleInputChange("twenty", e.target.value)}
+              className="flex-grow w-full h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-purple-400 focus:outline-none focus:shadow-outline"
+            />
+
             <div>
               <label
                 for="HeadlineAct"

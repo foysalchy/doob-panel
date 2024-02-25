@@ -56,9 +56,10 @@ const ProductCheckout = () => {
         e.preventDefault();
         const price = calculateTotal()
         const code = e.target.promoCode.value;
-        const shopId = shop_id.shop_id
+        const shopId = shop_id.shop_id;
+        const userEmail = shopUser.email
         console.log(price);
-        fetch(`https://backend.doob.com.bd/api/v1/shop/user/promocode?shopId=${shopId}&code=${code}&token=${shopUser._id}&price=${price}`, {
+        fetch(`https://backend.doob.com.bd/api/v1/shop/user/promocode?shopId=${shopId}&code=${code}&email=${userEmail}&token=${shopUser._id}&price=${price}`, {
             headers: {
                 "ngrok-skip-browser-warning": "69420",
             }

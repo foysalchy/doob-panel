@@ -21,13 +21,13 @@ const ProductCatagory = () => {
     const slidesPerViewTablet = 6;
     const slidesPerViewMobile = 4;
 
-    
+
     return (
         <div className='py-4 bg-white rounded mt-6'>
 
             <Swiper slidesPerView={window.innerWidth >= 1024 ? slidesPerViewDesktop : (window.innerWidth >= 768 ? slidesPerViewTablet : slidesPerViewMobile)}
                 className="mySwiper">
-                {megaCategoryData?.map((itm, index) => (
+                {megaCategoryData?.filter((item) => item.feature == 'true').map((itm, index) => (
                     <SwiperSlide key={index}>
 
                         <Link to={`/products/catagory/${itm._id}`} className=' flex flex-col items-center justify-center w-full'>

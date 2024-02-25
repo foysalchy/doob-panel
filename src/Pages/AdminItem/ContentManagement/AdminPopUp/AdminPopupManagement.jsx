@@ -93,6 +93,22 @@ const AdminPopupManagement = () => {
         })
     }
 
+    const EditUserStatus = (id, status) => {
+        console.log(id, status);
+        setLoading(true)
+        fetch(`http://localhost:5000/api/v1/admin/user-pop-up?popUpId=${id}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ status }),
+        }).then((res) => res.json()).then((data) => {
+            setLoading(false)
+            Swal.fire(`Seller disable ${status} `, '', 'success');
+            refetch()
+        })
+    }
+
     const onDelete = (id) => {
         setLoading(true)
         fetch(`https://backend.doob.com.bd/api/v1/admin/pop-up?popUpId=${id}`, {
@@ -154,12 +170,12 @@ const AdminPopupManagement = () => {
                             >
                                 Photo
                             </th>
-                            <th
+                            {/* <th
                                 scope="col"
                                 className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
                             >
                                 URL
-                            </th>
+                            </th> */}
                             <th
                                 scope="col"
                                 className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
@@ -184,6 +200,12 @@ const AdminPopupManagement = () => {
                             >
                                 Action
                             </th>
+                            <th
+                                scope="col"
+                                className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                            >
+                                User Popup
+                            </th>
                         </tr>
                     </thead>
                     <tbody className="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
@@ -193,9 +215,9 @@ const AdminPopupManagement = () => {
                                     <img src={itm?.image} alt="" className="w-20 h-20 rounded-lg" />
                                 </div>
                             </td>
-                            <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 ">
+                            {/* <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 ">
                                 {itm?.link}
-                            </td>
+                            </td> */}
                             <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 ">
                                 {itm?.title}
                             </td>
@@ -217,12 +239,18 @@ const AdminPopupManagement = () => {
                                 })}
                             </td>
                             <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 ">
-                                <div className="flex items-center justify-around">
+                                <div className="flex items-center gap-2 justify-around">
                                     <button onClick={() => onDelete(itm?._id)} className={style.deactive}>Delete</button>
                                     {
                                         itm.status ? <button onClick={() => EditStatus(itm?._id, false)} className={style.active}>Activate</button> : <button onClick={() => EditStatus(itm?._id, true)} className={style.deactive} type="button">Deactivate</button>
                                     }
+
                                 </div>
+                            </td>
+                            <td>
+                                {
+                                    itm.userStatus ? <button onClick={() => EditUserStatus(itm?._id, false)} className={style.active}>Activate</button> : <button onClick={() => EditUserStatus(itm?._id, true)} className={style.deactive} type="button">Deactivate</button>
+                                }
                             </td>
                         </tr>)}
                     </tbody>

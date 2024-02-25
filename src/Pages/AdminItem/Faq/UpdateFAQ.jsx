@@ -12,12 +12,14 @@ const UpdateFAQ = ({ OpenModal, setOpenModal, FAQInfo, refetch }) => {
 
         const title = e.target.title.value;
         const description = e.target.description.value
+        const sortIndex = e.target.sortIndex.value
         const MetaTag = e.target.MetaTag.value
         const MetaDescription = e.target.MetaDescription.value
 
         const data = {
             title,
             description,
+            sortIndex,
             MetaTag,
             MetaDescription
         }
@@ -58,6 +60,20 @@ const UpdateFAQ = ({ OpenModal, setOpenModal, FAQInfo, refetch }) => {
                         <div>
                             <JoditEditor value={FAQInfo.description} name="description" id="answer" />
                         </div>
+                    </div>
+                    <div>
+                        <label className="sr-only text-black" htmlFor="sortIndex">
+                            Sort Index
+                        </label>
+                        <input
+                            required
+                            defaultValue={FAQInfo.sortIndex}
+                            className="w-full rounded-lg border border-gray-900 p-3 text-sm"
+                            placeholder="Sort Index"
+                            type="number"
+                            id="sortIndex"
+                            name="sortIndex"
+                        />
                     </div>
 
                     <input name='MetaTag' placeholder='Meta Tag' className='w-full p-2 my-4 border' defaultValue={FAQInfo.MetaTag} />

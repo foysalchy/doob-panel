@@ -4,6 +4,7 @@ import { AuthContext } from '../../../AuthProvider/UserProvider';
 import { Link } from 'react-router-dom';
 import { CgClose } from 'react-icons/cg';
 import PriceModal from '../../Home/Price/PriceModal';
+import SubscriptionInvoice from './SubscriptionInvoice';
 
 const SubscriptionModel = () => {
     const [open, setOpen] = useState(false);
@@ -21,6 +22,19 @@ const SubscriptionModel = () => {
     });
 
 
+
+
+    const { data: commissionHistory = [], } = useQuery({
+        queryKey: ["commissionHistory"],
+        queryFn: async () => {
+            const res = await fetch(`https://backend.doob.com.bd/api/v1/seller/get-commission?shopId=${shopInfo._id}`);
+            const data = await res.json();
+            console.log(data)
+            return data.history;
+        },
+    });
+
+
     const { data: pricesData = [], refetch } = useQuery({
         queryKey: ["pricesData"],
         queryFn: async () => {
@@ -29,6 +43,24 @@ const SubscriptionModel = () => {
             return data;
         },
     });
+
+
+    const {
+        data: possibility,
+    } = useQuery({
+        queryKey: "possibility",
+        queryFn: async () => {
+            const res = await fetch(
+                `https://backend.doob.com.bd/api/v1/seller/check-free-trail?shopId=${shopInfo._id}`
+            );
+            const data = await res.json();
+            console.log(data);
+            return data.freeTrialActive
+        },
+    });
+
+    console.log(`https://backend.doob.com.bd/api/v1/seller/check-free-trail?shopId=${shopInfo._id}`, 'posible');
+
 
     const originalDate = shopInfo?.paymentDate;
     const formattedDate = new Date(originalDate);
@@ -65,16 +97,36 @@ const SubscriptionModel = () => {
 
     console.log(prices, 'services time prices ====={}');
 
+    const [invoice, setInvoice] = useState(false)
+
+
     return (
         <div className="bg-white text-black">
             {showWarning && (
                 <div className="bg-orange-100 px-2 py-3 rounded- flex justify-between items-center">
                     <p className="text-sm text-orange-800 capitalize ">
                         Hi dear, only 5 days left for your service. Please renew{' '}
-                        <button className="bg-orange-500 px-4 ml-2 py-1 text-xs rounded text-black">
+                        <button onClick={() => setInvoice(true)} className="bg-orange-500 px-4 ml-2 py-1 text-xs rounded text-black">
                             Renew
                         </button>
                     </p>
+                    <div className='h-0 w-0'>
+                        {invoice && <SubscriptionInvoice pricesData={pricesData} id={prices} commissionHistory={commissionHistory} setInvoice={setInvoice} invoice={invoice} />}
+                    </div>
+                </div>
+            )}
+
+            {possibility && (
+                <div className="bg-orange-100 px-2 py-3 rounded- flex justify-between items-center">
+                    <p className="text-sm text-orange-800 capitalize ">
+                        Hi dear, Your free trial is end. Please renew{' '}
+                        <button onClick={() => setInvoice(true)} className="bg-orange-500 px-4 ml-2 py-1 text-xs rounded text-black">
+                            Renew
+                        </button>
+                    </p>
+                    <div className='h-0 w-0'>
+                        {invoice && <SubscriptionInvoice pricesData={pricesData} id={prices?._id} commissionHistory={commissionHistory} setInvoice={setInvoice} invoice={invoice} />}
+                    </div>
                 </div>
             )}
             <div className="container px-6 py-8 mx-auto">
@@ -85,11 +137,7 @@ const SubscriptionModel = () => {
                 <h1 className="text-2xl font-semibold text-center text-red-800 capitalize lg:text-3xl ">
                     {`${time == 10000000000000000000000000000000000 ? 'Unlimited' : time} days you use this service.`}
                 </h1>
-                <p className="max-w-2xl mx-auto mt-4 text-center text-gray-500 xl:mt-6 ">
-                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Alias quas magni
-                    libero consequuntur voluptatum velit amet id repudiandae ea, deleniti
-                    laborum in neque eveniet.
-                </p>
+
                 <div className="grid grid-cols-1 gap-8 mt-6 lg:grid-cols-3 xl:mt-12">
 
                     {
@@ -97,7 +145,7 @@ const SubscriptionModel = () => {
                             return (
                                 <div>
 
-                                    {data._id === prices?._id ?
+                                    {data._id === prices?._id &&
 
                                         <div key={data?._id} className="flex items-center justify-between px-8 py-4 border border-blue-500 cursor-pointer rounded-xl">
                                             <div className="flex flex-col items-center space-y-1">
@@ -125,33 +173,8 @@ const SubscriptionModel = () => {
                                             </div>
                                         </div>
 
-                                        :
 
-                                        <div key={data?._id} className="flex items-center justify-between px-8 py-4 border border-gray-500 cursor-pointer rounded-xl">
-                                            <div className="flex flex-col items-center space-y-1">
-                                                <svg
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    className="w-5 h-5 text-gray-600  sm:h-7 sm:w-7"
-                                                    viewBox="0 0 20 20"
-                                                    fill="currentColor"
-                                                >
-                                                    <path
-                                                        fillRule="evenodd"
-                                                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                                                        clipRule="evenodd"
-                                                    />
-                                                </svg>
-                                                <h2 className="text-lg font-medium text-gray-800 sm:text-xl ">
-                                                    {data?.name}
-                                                </h2>
-                                            </div>
-                                            <div className="flex flex-col items-center space-y-1">
-
-                                                <h2 className="text-2xl font-semibold text-gray-600  sm:text-3xl">
-                                                    ${data?.price} <span className="text-base font-medium">/{data?.timeDuration}</span>
-                                                </h2>
-                                            </div>
-                                        </div>}
+                                    }
                                 </div>
                             )
                         }
@@ -160,7 +183,7 @@ const SubscriptionModel = () => {
                 </div>
 
                 {/* list */}
-                <div className="p-8 mt-8 space-y-8 bg-gray-100  rounded-xl">
+                {/* <div className="p-8 mt-8 space-y-8 bg-gray-100  rounded-xl">
                     {
                         prices?.benefits?.map(benefit => <div className="flex items-center justify-between text-gray-800 ">
                             <p className="text-lg sm:text-xl">{benefit}</p>
@@ -196,7 +219,7 @@ const SubscriptionModel = () => {
                             </svg>
                         </div>)
                     }
-                </div>
+                </div> */}
                 <div className="flex justify-center mt-8">
                     {/* <Link to={`/price`} className="px-8 py-2 tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-600 rounded-md hover:bg-blue-500 focus:outline-none focus:bg-blue-500 focus:ring focus:ring-blue-300 focus:ring-opacity-80">
                         Renew
@@ -204,7 +227,7 @@ const SubscriptionModel = () => {
                     <PriceModal open={open} setOpen={setOpen} />
 
                     <button onClick={() => setOpen(prices)} className="flex items-center mt-auto text-white bg-indigo-500 border-0 py-2 px-4  focus:outline-none hover:bg-indigo-600 rounded">
-                        Renew
+                        Update
                         <svg
                             fill="none"
                             stroke="currentColor"

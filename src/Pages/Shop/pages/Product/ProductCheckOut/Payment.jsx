@@ -33,19 +33,22 @@ const Payment = () => {
         data.timestamp = new Date().getTime()
         data.userId = shopUser._id
         data.shopId = shop_id.shop_id
-        if (fileName) {
-            data.file = fileName
+        if (!fileName && payment.Getaway == ! 'CashOnDelivery') {
+            BrightAlert("Please add your bank transaction", "Bank transaction Image Mandatory", 'info')
         }
-        setPassData(data);
-        fetch(`https://backend.doob.com.bd/api/v1/shop/user/order?token=${shopUser._id}`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(data)
-        }).then((res) => res.json()).then((data) => {
-            console.log("data payment", data);
-            BrightAlert({ icon: 'success' })
-            navigate(`/shop/${shopId}/user/my-orders`)
-        });
+        else {
+            data.file = fileName
+            setPassData(data);
+            fetch(`https://backend.doob.com.bd/api/v1/shop/user/order?token=${shopUser._id}`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(data)
+            }).then((res) => res.json()).then((data) => {
+                console.log("data payment", data);
+                BrightAlert({ icon: 'success' })
+                navigate(`/shop/${shopId}/user/my-orders`)
+            });
+        }
 
 
     }

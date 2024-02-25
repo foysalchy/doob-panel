@@ -398,7 +398,7 @@ const UserMyOrder = () => {
                                                 {
                                                     (order?.status === 'delivered' || order?.status === 'returned') && (
                                                         <>
-                                                            <div className='flex items-center gap-2'>
+                                                            <div className='flex items-center gap-2 '>
                                                                 {order?.status !== 'returned' && <button
                                                                     onClick={() => {
                                                                         setOpen(!open);
@@ -409,8 +409,8 @@ const UserMyOrder = () => {
                                                                     Return
                                                                 </button>}
                                                                 {open && <div className="modal h-screen w-screen fixed bg-[#0000008e] flex items-center justify-center top-0 left-0 z-[1000]">
-                                                                    <div className="bg-white  md:w-[500px] text-black p-6 rounded-lg">
-                                                                        <h1 className='font-bold'>If you want refund amount please complete this form</h1> <button onClick={() => setOpen(!open)} className='p-2 float-right text-xl'>
+                                                                    <div className="bg-white  md:w-[500px] text-black p-6 rounded-lg relative">
+                                                                        <h1 className='font-bold'>Please Select Your Payment Method for Refund</h1> <button onClick={() => setOpen(!open)} className='p-2 float-right text-xl absolute top-2 right-2 '>
                                                                             x
                                                                         </button> <br />
                                                                         <form onSubmit={handleSubmit} className="">

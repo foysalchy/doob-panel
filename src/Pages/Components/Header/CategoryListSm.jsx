@@ -32,6 +32,7 @@ export default function CategoryListSm({ setOn }) {
         queryFn: async () => {
             const res = await fetch('https://backend.doob.com.bd/api/v1/admin/category/megacategory');
             const data = await res.json();
+            
             return data.rows;
         },
     });
@@ -155,7 +156,7 @@ export default function CategoryListSm({ setOn }) {
                                     <div
                                         onClick={() => subCategoryHandler(item, index)}
                                         className={`flex flex-col gap-2 bg-gray-100 w-full h-auto rounded  items-center justify-center mb-2 px-2 py-2 text-sm font-normal   relative  ${openDropdownIndex === index ? '' : 'text-black'}`}>
-                                        <img src={item?.image} alt="" className="w-[70px] rounded-full h-[60px] object-cover ring-1 ring-gray-400" />
+                                        <img src={item?.image} alt="" className="w-[70px]  h-[60px] object-cover ring-1 ring-gray-400" />
                                         <p className="text-sm text-center">{item?.name}</p>
 
                                     </div>
@@ -165,7 +166,7 @@ export default function CategoryListSm({ setOn }) {
                                         onClick={() => subCategoryHandler(item, index)}
                                         className={`${openDropdownIndex === index ? 'bg-gray-800 text-white' : 'bg-gray-100 text-black'} flex flex-col gap-2 w-full h-auto rounded  items-center justify-center mb-2 px-2 py-2 text-sm font-normal   relative `}
                                     >
-                                        <img src={item?.image} alt="" className="w-[60px] rounded-full h-[60px] object-cover ring-1 ring-gray-400" />
+                                        <img src={item?.image} alt="" className="w-[60px]  h-[60px] object-cover ring-1 ring-gray-400" />
                                         <p className="text-sm">{item?.name}</p>
                                     </button>
                                 </div>
@@ -179,7 +180,7 @@ export default function CategoryListSm({ setOn }) {
                         <div className="space-y-2 mb-2">
                             <details
                                 onClick={() => miniCategoryHandler(item, index)}
-                                className={` overflow-hidden rounded border border-gray-300 [&_summary::-webkit-details-marker]:hidden }`}
+                                className={` overflow-hidden rounded   [&_summary::-webkit-details-marker]:hidden }`}
                             >
                                 <summary
                                     className={`${active.step1 === item._id ? 'bg-gray-900 text-white' : 'bg-white text-black'} flex cursor-pointer items-center justify-between gap-2 p-4 transition`}
@@ -200,14 +201,14 @@ export default function CategoryListSm({ setOn }) {
                                     </span>
                                 </summary>
 
-                                <div className="border-t border-gray-200 bg-gray-50">
-                                    {active.step1 === item._id && <ul className="space-y-1 border-t border-gray-200 p-1">
+                                <div className="-t -gray-200 bg-gray-50">
+                                    {active.step1 === item._id && <ul className="space-y-1 -t -gray-200 p-1">
                                         {
                                             miniCategoryData.map((miniItem, miniIndex) => (
                                                 <div className="space-y-2 mb-2">
                                                     <details
                                                         onClick={() => extraCategoryHandler(miniItem, miniIndex)}
-                                                        className={`overflow-hidden rounded border border-gray-300 [&_summary::-webkit-details-marker]:hidden }`}
+                                                        className={`overflow-hidden rounded   [&_summary::-webkit-details-marker]:hidden }`}
                                                     >
                                                         <summary
                                                             className="flex cursor-pointer items-center justify-between gap-2 bg-white p-4 text-gray-900 transition"
@@ -228,13 +229,13 @@ export default function CategoryListSm({ setOn }) {
                                                             </span>
                                                         </summary>
 
-                                                        <div className="border-t border-gray-200 bg-gray-50">
-                                                            {<ul className=" border-gray-200 p-1 grid grid-cols-3 gap-2">
+                                                        <div className="-t -gray-200 bg-gray-50">
+                                                            {<ul className=" -gray-200 p-1 grid grid-cols-3 gap-2">
                                                                 {extraCategoryData.map((extraItem, extraIndex) => (
                                                                     <div onClick={() => setOn(false)} key={extraItem._id} className="">
                                                                         <Link className=" w-full h-full flex justify-between" to={`/products/catagory/${item?._id}`}>
                                                                             <div className="flex flex-col bg-gray-100 hover:bg-red-50 duration-150 hover:ring-1 ring-red-400 p-2 rounded items-center justify-between w-full gap-1">
-                                                                                <img src={extraItem?.img} alt="" className="w-[50px] h-[50px] rounded-full bg-red-50 ring-1 ring-red-300 p-1 object-cover" />
+                                                                                <img src={extraItem?.img} alt="" className="w-[50px] h-[50px]  bg-red-50 ring-1 ring-red-300 p-1 object-cover" />
                                                                                 <p className="text-xs">{extraItem.extraCategoryName.slice(0, 10)}</p>
                                                                             </div>
                                                                         </Link>
@@ -259,7 +260,7 @@ export default function CategoryListSm({ setOn }) {
                         //             </button>
                         //         </div>
                         //         {active.step1 === item._id && (
-                        //             <div className={`${miniCategoryData.length && ' p-1 border border-gray-300 mb-3 '}`}>
+                        //             <div className={`${miniCategoryData.length && ' p-1   mb-3 '}`}>
                         //                 {
                         //                     miniCategoryData.map((miniItem, miniIndex) => (
                         //                         <div>
@@ -284,7 +285,7 @@ export default function CategoryListSm({ setOn }) {
                         //     <div key={extraItem._id} className="">
                         //         <Link className=" w-full h-full flex justify-between" to={`/products/catagory/${item?._id}`}>
                         //             <div className="flex flex-col bg-gray-100 hover:bg-red-50 duration-150 hover:ring-1 ring-red-400 p-2 rounded items-center justify-between w-full gap-1">
-                        //                 <img src={extraItem?.img} alt="" className="w-[50px] h-[50px] rounded-full bg-red-50 ring-1 ring-red-300 p-1 object-cover" />
+                        //                 <img src={extraItem?.img} alt="" className="w-[50px] h-[50px]  bg-red-50 ring-1 ring-red-300 p-1 object-cover" />
                         //                 <p className="text-xs">{extraItem.extraCategoryName.slice(0, 10)}</p>
                         //             </div>
                         //         </Link>

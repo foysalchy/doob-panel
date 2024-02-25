@@ -73,6 +73,7 @@ import SystemLog from "../Pages/SellerItems/ReportManagement/SystemLog/SystemLog
 import SubscriptionModel from "../Pages/SellerItems/SubcribtionModel/SubscriptionModel";
 import InventoryManagement from "../Pages/SellerItems/Inventory/InventoryManagement";
 import PriceRole from "../Pages/SellerItems/Sittings/AddPriceRole/PriceRole";
+import ManageWebOrder from "../Pages/SellerItems/OrderManagment/ManageOrder/ManageWebOrder";
 
 
 const SellerPath = [
@@ -266,23 +267,23 @@ const SellerPath = [
     {
         path: "warehouse/rack-management",
         element:
-        <PrivateRoute>
-            <SellerManageRack />
-        </PrivateRoute>
+            <PrivateRoute>
+                <SellerManageRack />
+            </PrivateRoute>
     },
     {
         path: "warehouse/self-management",
         element:
-           <PrivateRoute>
-               <SellerManageSelf />            
-        </PrivateRoute>
+            <PrivateRoute>
+                <SellerManageSelf />
+            </PrivateRoute>
     },
     {
         path: "warehouse/cell-management",
         element:
-           <PrivateRoute>
-               <SellerManageCell />            
-        </PrivateRoute>
+            <PrivateRoute>
+                <SellerManageCell />
+            </PrivateRoute>
     },
 
     {
@@ -292,6 +293,10 @@ const SellerPath = [
     {
         path: "orders/manage-order",
         element: <ManageOrder />
+    },
+    {
+        path: "orders/web-store-order",
+        element: <ManageWebOrder />
     },
     {
         path: "orders/customer-return",
@@ -317,12 +322,7 @@ const SellerPath = [
         element: <ManageReviews />
     },
     // ? pos path
-    {
-        path: "pos",
-        element: <PrivateRoute>
-            <Pos />
-        </PrivateRoute>
-    },
+
 
     {
         path: "refand-order",

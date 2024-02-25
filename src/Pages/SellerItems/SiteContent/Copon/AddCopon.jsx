@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { useContext } from 'react';
 import { useState } from 'react';
 import { AuthContext } from '../../../../AuthProvider/UserProvider';
@@ -10,16 +10,14 @@ import { useNavigate } from 'react-router-dom';
 
 const AddCopon = () => {
 
-    const { shopInfo } = useContext(AuthContext)
-    const [uniq, setUniq] = useState(false)
-    const [loading, setLoading] = useState(false)
-
+    const { shopInfo } = useContext(AuthContext);
+    const [uniq, setUniq] = useState(false);
+    const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
     const handleGoBack = () => {
         navigate(-1);
     };
-
 
     const [formData, setFormData] = useState({
         code: '',
@@ -28,8 +26,13 @@ const AddCopon = () => {
         price: 10,
         usageLimitPerUser: 1,
         userLimit: 100,
-        shopId: shopInfo._id
+        shopId: shopInfo._id,
+        selectedGmails: [],
+        startDateTime: '',
+        endDateTime: '',
     });
+
+    console.log(formData);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -37,11 +40,13 @@ const AddCopon = () => {
         const updatedValue = name === 'code' ? value.replace(/\s+/g, '').toUpperCase() : value;
 
         if (updatedValue.length > 3) {
-            fetch(`https://backend.doob.com.bd/api/v1/seller/uniq-promo/${shopInfo._id}/${updatedValue}`).then((res) => res.json()).then((data) => setUniq(data))
+            fetch(`https://backend.doob.com.bd/api/v1/seller/uniq-promo/${shopInfo._id}/${updatedValue}`)
+                .then((res) => res.json())
+                .then((data) => setUniq(data));
+        } else {
+            setUniq(false);
         }
-        else {
-            setUniq(false)
-        }
+
         setFormData((prevData) => ({
             ...prevData,
             [name]: updatedValue,
@@ -50,18 +55,24 @@ const AddCopon = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+
+        // Add selected Gmails to formData
+        setFormData((prevData) => ({
+            ...prevData,
+            selectedGmails: selectedGmails,
+        }));
+
         fetch(`https://backend.doob.com.bd/api/v1/seller/promo-code/add`, {
-            method: "POST",
+            method: 'POST',
             headers: {
-                "content-type": "application/json",
+                'content-type': 'application/json',
             },
             body: JSON.stringify(formData),
         })
             .then((res) => res.json())
             .then((data) => {
-
-                Swal.fire("Your Promo Code Publish Successfully", "", "success");
-                setLoading(false)
+                Swal.fire('Your Promo Code Published Successfully', '', 'success');
+                setLoading(false);
                 setFormData({
                     code: '',
                     name: '',
@@ -69,16 +80,47 @@ const AddCopon = () => {
                     price: 10,
                     usageLimitPerUser: 1,
                     userLimit: 100,
-                    shopId: shopInfo._id
+                    shopId: shopInfo._id,
+                    selectedGmails: [],
+
                 });
-                handleGoBack()
-
+                handleGoBack();
             });
-
-
     };
 
+    const [inputValue, setInputValue] = useState('');
+    const [selectedGmails, setSelectedGmails] = useState([]);
 
+    const handleInputChange = (e) => {
+        setInputValue(e.target.value);
+    };
+
+    const handleInputKeyDown = (e) => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            handleAddGmail();
+        }
+    };
+
+    const handleAddGmail = () => {
+        if (inputValue.trim() !== '') {
+            setSelectedGmails([...selectedGmails, inputValue.trim()]);
+            setFormData((prevData) => ({
+                ...prevData,
+                SelectGamails: [...selectedGmails, inputValue.trim()]
+            }));
+            setInputValue('');
+        }
+    };
+
+    const handleRemoveGmail = (gmail) => {
+        const updatedGmails = selectedGmails.filter((item) => item !== gmail);
+        setSelectedGmails(updatedGmails);
+        setFormData((prevData) => ({
+            ...prevData,
+            SelectGamails: updatedGmails,
+        }));
+    };
 
     return (
         <div className="">
@@ -189,6 +231,9 @@ const AddCopon = () => {
                             />
                         </div>
 
+
+
+
                         <div className="mb-4">
                             <label htmlFor="userLimit" className="block text-sm font-medium text-gray-900">
                                 User Limit
@@ -202,6 +247,59 @@ const AddCopon = () => {
                                 onChange={handleChange}
                                 className="flex-grow  w-full h-12 px-4 mb-3 transition duration-200 bg-white border border-gray-900 rounded shadow-sm appearance-none md:mr-2 md:mb-0 placeholder:text-gray-700 focus:outline-none focus:shadow-outline "
                                 min="1"
+                            />
+                        </div>
+
+                        <div className="mb-4">
+                            <label htmlFor="startDateTime" className="block text-sm font-medium text-gray-900">
+                                Set Timer
+                            </label>
+                            <div className="flex">
+                                <input
+                                    type="datetime-local"
+                                    id="startDateTime"
+                                    name="startDateTime"
+
+                                    value={formData.startDateTime}
+                                    onChange={handleChange}
+                                    className="flex-grow w-full h-12 px-4 mr-2 mb-3 transition duration-200 bg-white border border-gray-900 rounded shadow-sm appearance-none placeholder:text-gray-700 focus:outline-none focus:shadow-outline"
+                                />
+                                <input
+                                    type="datetime-local"
+                                    id="endDateTime"
+                                    name="endDateTime"
+                                    value={formData.endDateTime}
+                                    onChange={handleChange}
+                                    className="flex-grow w-full h-12 px-4 mb-3 transition duration-200 bg-white border border-gray-900 rounded shadow-sm appearance-none placeholder:text-gray-700 focus:outline-none focus:shadow-outline"
+                                />
+                            </div>
+                        </div>
+
+                        <div className="relative">
+                            <div className="">
+                                {selectedGmails.map((gmail) => (
+                                    <div
+                                        key={gmail}
+                                        className="inline-block m-1 bg-blue-500 text-white rounded px-2 py-1 mr-1"
+                                    >
+                                        {gmail}
+                                        <button
+                                            type="button"
+                                            onClick={() => handleRemoveGmail(gmail)}
+                                            className="ml-1"
+                                        >
+                                            &times;
+                                        </button>
+                                    </div>
+                                ))}
+                            </div>
+                            <input
+                                type="text"
+                                className="border border-gray-300 rounded px-3 py-2 w-full focus:outline-none"
+                                placeholder={selectedGmails.length === 0 ? 'Enter Gmail address' : ''}
+                                value={inputValue}
+                                onChange={handleInputChange}
+                                onKeyDown={handleInputKeyDown}
                             />
                         </div>
 

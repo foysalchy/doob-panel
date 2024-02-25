@@ -48,6 +48,10 @@ const EditPrice = ({ OpenModal, setOpenModal, FAQInfo, refetch }) => {
         const best = e.target.best.value
         const MetaTag = e.target.MetaTag.value
         const MetaDescription = e.target.MetaDescription.value
+        const one = e.target.one.value
+        const six = e.target.six.value
+        const twelve = e.target.twelve.value
+        const twenty = e.target.twenty.value
 
         const data = {
             name,
@@ -57,7 +61,10 @@ const EditPrice = ({ OpenModal, setOpenModal, FAQInfo, refetch }) => {
             benefits,
             MetaTag,
             MetaDescription,
-            // permissions: selectedPermissions
+            one,
+            six,
+            twelve,
+            twenty,
             permissions: selectedPermissions
 
 
@@ -102,7 +109,7 @@ const EditPrice = ({ OpenModal, setOpenModal, FAQInfo, refetch }) => {
         <div className={`fixed z-50 top-0 left-0 flex h-full min-h-screen w-full items-center justify-center bg-black bg-opacity-90  px-4 text-start py-5 ${OpenModal ? "block" : "hidden"}`}>
             <div className="w-full max-w-[800px]  rounded-[20px] bg-white pb-10 px-8 text-center md:px-[30px] ">
                 <div className='flex justify-between z-50 pt-4 items-start w-full sticky top-0 bg-white border border-black-b'>
-                    <div className='pb-2 text-xl font-bold text-dark text-center sm:text-2xl'>Update FAQ</div>
+                    <div className='pb-2 text-xl font-bold text-dark text-center sm:text-2xl'>Update Pricing</div>
                     <div onClick={() => setOpenModal(!OpenModal)} className='cursor-pointer bg-gray-500 rounded-full px-2.5 mb-2 p-1 text-2xl hover:text-red-500'>
                         <RxCross2 className='text-xl' />
                     </div>
@@ -141,6 +148,64 @@ const EditPrice = ({ OpenModal, setOpenModal, FAQInfo, refetch }) => {
                         <option value="Yearly">Yearly</option>
                         <option value="Lifetime">Lifetime</option>
                     </datalist>
+
+                    <label
+                        htmlFor="firstName"
+                        className="inline-block mb-1 font-medium"
+                    >
+                        1st Mouth Descount
+                    </label>
+                    <input
+                        placeholder="$50"
+                        required
+                        type="number"
+                        defaultValue={FAQInfo?.one}
+                        name="one"
+                        className="flex-grow w-full h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-purple-400 focus:outline-none focus:shadow-outline"
+                    />
+                    <label
+                        htmlFor="firstName"
+                        className="inline-block mb-1 font-medium"
+                    >
+                        Six Month Discount
+                    </label>
+                    <input
+                        placeholder="$50"
+                        required
+                        defaultValue={FAQInfo?.six}
+                        type="number"
+                        name="six"
+                        className="flex-grow w-full h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-purple-400 focus:outline-none focus:shadow-outline"
+                    />
+                    <label
+                        htmlFor="firstName"
+                        className="inline-block mb-1 font-medium"
+                    >
+                        One Year Discount
+                    </label>
+                    <input
+                        placeholder="$50"
+                        required
+                        defaultValue={FAQInfo?.twelve}
+                        type="number"
+                        name="twelve"
+                        className="flex-grow w-full h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-purple-400 focus:outline-none focus:shadow-outline"
+                    />
+                    <label
+                        htmlFor="firstName"
+                        className="inline-block mb-1 font-medium"
+                    >
+                        Two Year Discount
+                    </label>
+                    <input
+                        placeholder="$50"
+                        defaultValue={FAQInfo?.twenty}
+                        required
+                        type="number"
+                        name="twenty"
+                        className="flex-grow w-full h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-purple-400 focus:outline-none focus:shadow-outline"
+                    />
+
 
                     <div>
                         <p

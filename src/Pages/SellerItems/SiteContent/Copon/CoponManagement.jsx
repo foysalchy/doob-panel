@@ -208,6 +208,14 @@ const CoponManagement = () => {
                                                     <span>One User Limit</span>
                                                 </button>
                                             </th>
+                                            <th
+                                                scope="col"
+                                                className="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 "
+                                            >
+                                                <button className="flex items-center gap-x-2">
+                                                    <span>Start to End</span>
+                                                </button>
+                                            </th>
 
                                             <th
                                                 scope="col"
@@ -291,6 +299,13 @@ const CoponManagement = () => {
                                                 <td className="px-4 py-4 text-sm font-medium text-gray-700">
                                                     <div className="font-medium text-center text-gray-800   ">
                                                         {faq?.usageLimitPerUser}
+                                                    </div>
+
+
+                                                </td>
+                                                <td className="px-4 py-4 text-sm font-medium text-gray-700">
+                                                    <div className="font-medium text-center text-gray-800   ">
+                                                        {faq?.startDateTime && <p>{new Date(faq?.startDateTime).toLocaleString()} to  {new Date(faq?.endDateTime).toLocaleString()}</p>}
                                                     </div>
 
 

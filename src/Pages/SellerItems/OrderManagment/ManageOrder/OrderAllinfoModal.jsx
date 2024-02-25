@@ -5,9 +5,11 @@ const OrderAllinfoModal = ({ status, productList, setModalOn, modalOn }) => {
     // const {img, productName, productId, quantity, price, shopId, userId } = productList
     return (
         <>
+            {/* bg-[#0000007a] overflow-x-hidden overflow-y-auto fixed w-screen top-0 left-0 bottom-0 h-screen z-[2000] flex items-start justify-center */}
             {
-                modalOn && <div className='bg-[#0000007a] overflow-x-hidden overflow-y-auto fixed w-screen top-0 left-0 bottom-0 h-screen z-[2000] flex items-start justify-center'>
-                    <div className="bg-white p-6 relative top-10">
+                modalOn && <div className=''>
+                    <div className="">
+                        {/* bg-white p-6 relative top-10 */}
                         <h3 className="text-md font-semibold text-start pb-3">Products</h3>
                         <button onClick={() => setModalOn(false)} className="bg-red-600 text-[16px] px-2 rounded text-white font-[400] absolute top-6 right-6">close</button>
                         <table className="min-w-full  bg-white border text-center text-sm font-light ">

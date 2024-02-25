@@ -17,7 +17,7 @@ const MultiStepForm = () => {
     const [step, setStep] = useState(1);
     const [loading, setLoading] = useState(false)
     const navigate = useNavigate()
-    const { user, setShopInfo } = useContext(AuthContext)
+    const { user, setShopInfo, setCookie, setUser } = useContext(AuthContext)
 
     const [formValues, setFormValues] = useState({
         seller: user.email,
@@ -32,7 +32,8 @@ const MultiStepForm = () => {
         daraz: '',
         priceId: '',
         paymentDate: new Date(),
-        date: new Date()
+        date: new Date(),
+        status: 'true'
 
     });
 
@@ -45,6 +46,7 @@ const MultiStepForm = () => {
 
     const submitForm = (e) => {
         e.preventDefault()
+        setLoading(true)
         fetch(`https://backend.doob.com.bd/api/v1/shop/info`, {
             method: "POST",
             headers: {
@@ -55,8 +57,10 @@ const MultiStepForm = () => {
             .then((res) => res.json())
             .then((data) => {
                 setLoading(false);
-                setShopInfo(formValues)
-                console.log(formValues);
+                setShopInfo(data.shopUser)
+                setUser(data.user)
+                setCookie("DoobUser", JSON.stringify(data.user));
+                setCookie("SellerShop", JSON.stringify(data.shopUser));
                 Swal.fire("Welcome as a new seller", "", "success");
                 navigate('/seller/dashboard')
             });

@@ -27,13 +27,13 @@ import groovyWalkAnimation from "./Loading.json"
 // };
 
 const NavigateToLogin = ({ children }) => {
-    const { shopUser, shopId, loading } = useContext(ShopAuthProvider);
+    const { shopUser, shopId } = useContext(ShopAuthProvider);
     const location = useLocation();
     const navigate = useNavigate();
 
     useEffect(() => {
         // Check if the user is not logged in and not loading
-        if (!shopUser && !loading) {
+        if (!shopUser) {
             navigate(`/shop/${shopId}/sign-in`);
         }
 
@@ -41,12 +41,12 @@ const NavigateToLogin = ({ children }) => {
         return () => {
             // Perform cleanup if needed
         };
-    }, [shopUser, loading, navigate, shopId]);
+    }, [shopUser, navigate, shopId]);
 
     // Show loading message if loading is true
-    if (loading) {
-        return <p>Loading...</p>;
-    }
+    // if (loading) {
+    //     return <p className="text-5xl">Loading...</p>;
+    // }
 
     // Render children or null
     return shopUser ? children : null;

@@ -239,7 +239,7 @@ const Step1 = ({ nextStep, handleChange, values }) => {
 
                     <div>
                         <p className='mt-2 mb-2 text-black'>
-                            Shop Logo <span className='text-red-500'>*</span>
+                            Shop Logo (170*50 pixel)<span className='text-red-500'>*</span>
 
                         </p>
 

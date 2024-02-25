@@ -36,7 +36,7 @@ import AdminStaffManagement from "../Pages/AdminItem/AdminStaff/AdminStaffManage
 import AdminNewStaff from "../Pages/AdminItem/AdminStaff/AdminNewStaff";
 import AdminPos from "../Pages/AdminItem/AdminPos/AdminPos";
 import CheckStaff from "../Hooks/CheckStaff";
- import AdminPopupManagement from "../Pages/AdminItem/ContentManagement/AdminPopUp/AdminPopupManagement";
+import AdminPopupManagement from "../Pages/AdminItem/ContentManagement/AdminPopUp/AdminPopupManagement";
 import AdminAddPopUp from "../Pages/AdminItem/ContentManagement/AdminPopUp/AdminAddPopUp";
 import AddNotice from "../Pages/AdminItem/ContentManagement/SellerNotice/AddNotice";
 import AdminNoticeManager from "../Pages/AdminItem/ContentManagement/SellerNotice/AdminNoticeManager";
@@ -63,6 +63,7 @@ import AdminSalesReport from "../Pages/AdminItem/ReportManagement/SalesReport/Ad
 import SellerReport from "../Pages/AdminItem/ReportManagement/SallerReport/SellerReport";
 import AddBlogsCatagorys from "../Pages/AdminItem/BlogsCatagorys/AddBlogsCatagorys";
 import BlogsCatagoryManagement from "../Pages/AdminItem/BlogsCatagorys/BlogsCatagoryManagement";
+import SellerOrderManagement from "../Pages/AdminItem/SellerOrderManagement/SellerOrderManagenent";
 
 const SupperAdminPath = [
     {
@@ -137,7 +138,7 @@ const SupperAdminPath = [
         path: "price-management/add-pricing",
         element: <AddPrice />
     },
- 
+
     {
         path: "category-management/mega-category-management",
         element: <CheckStaff>
@@ -226,7 +227,7 @@ const SupperAdminPath = [
         path: "contact/add-contact",
         element: <AddContact />
     },
-    
+
     {
         path: "settings/seller-domain",
         element:
@@ -243,26 +244,26 @@ const SupperAdminPath = [
     },
     {
         path: "settings/send-email",
-        element: 
-           <CheckStaff>
-               <SendEmail />
-                
+        element:
+            <CheckStaff>
+                <SendEmail />
+
             </CheckStaff>
     },
     {
         path: "settings/shipping",
         element:
-           <CheckStaff>
-               <ShippingManagement />
-                
+            <CheckStaff>
+                <ShippingManagement />
+
             </CheckStaff>
     },
     {
         path: "settings/daraz-setup",
         element:
-           <CheckStaff>
-                
-               <Daraz />
+            <CheckStaff>
+
+                <Daraz />
             </CheckStaff>
     },
     {
@@ -343,7 +344,7 @@ const SupperAdminPath = [
             <DarazIntrigration />
         </CheckStaff>
     },
- 
+
     {
         path: 'content-management/admin-popup',
         element: <CheckStaff>
@@ -436,6 +437,12 @@ const SupperAdminPath = [
         path: 'service-order',
         element: <CheckStaff>
             <AdminSeviceOrder />
+        </CheckStaff>
+    },
+    {
+        path: 'seller-order-management',
+        element: <CheckStaff>
+            <SellerOrderManagement />
         </CheckStaff>
     },
 
