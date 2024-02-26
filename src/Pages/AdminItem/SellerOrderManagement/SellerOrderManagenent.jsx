@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import React, { useState } from 'react';
 import ReadyToShipModal from './ReadyToShipModal';
 import BrightAlert from 'bright-alert';
-import Barcode from 'react-barcode';
+import BarCode from 'react-barcode';
 
 const SellerOrderManagement = () => {
     const { data: products = [], refetch } = useQuery({
@@ -14,47 +14,21 @@ const SellerOrderManagement = () => {
         },
     });
 
-    // const { data: products = [] } = useQuery({
-    //     queryKey: ["products"],
-    //     queryFn: async () => {
-    //         const res = await fetch("https://backend.doob.com.bd/api/v1/admin/products");
-    //         const data = await res.json();
-    //         return data;
-    //     },
-    // });
+
 
 
     const [searchQuery, setSearchQuery] = useState("");
 
     const [modalOpen, setModalOpen] = useState(false)
 
-    const handleSearch = (event) => {
-        setSearchQuery(event.target.value);
-    };
 
     const filteredData = products?.length && products?.filter(
         (product) =>
-            // product.name?.toLowerCase().includes(searchQuery?.toLowerCase()) ||
-            product._id.toString().includes(searchQuery)
+            product.product.name?.toLowerCase().includes(searchQuery?.toLowerCase()) ||
+            product._id?.toLowerCase().includes(searchQuery?.toLowerCase()) ||
+            product.customerName?.toLowerCase().includes(searchQuery?.toLowerCase()) ||
+            product.product.productId.toString().includes(searchQuery)
     );
-
-    const updateProductStatus = (id, status) => {
-        console.log(id);
-        fetch(`https://backend.doob.com.bd/api/v1/seller/update-seller-order-status`, {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                id,
-                status
-            })
-
-        }).then((res) => res.json()).then((data) => {
-            BrightAlert()
-            refetch()
-        })
-    }
 
 
 
@@ -116,7 +90,7 @@ const SellerOrderManagement = () => {
         });
     }
 
-    console.log(modalOpen, 'modalOpen');
+
 
     return (
         <div>
@@ -128,7 +102,7 @@ const SellerOrderManagement = () => {
                             {products?.length}
                         </span>
                     </div>
-
+                    <input className='border' onChange={(e) => setSearchQuery(e.target.value)} type="text" />
                     {/* <button onClick={logSelectedProducts} disabled={!selectProducts.length} className='bg-blue-500 px-8 py-2 rounded text-white'> Print</button> */}
                 </div>
                 <div className="flex flex-col mt-6">
@@ -156,11 +130,19 @@ const SellerOrderManagement = () => {
                                             </th>
                                             <th scope="col" className="py-3.5 px-4 text-sm font-normal text-left rtl:text-right">
                                                 <div className="flex items-center gap-x-3">
+                                                    <span>Date and time</span>
+                                                </div>
+                                            </th>
+                                            <th scope="col" className="py-3.5 px-4 text-sm font-normal text-left rtl:text-right">
+                                                <div className="flex items-center gap-x-3">
                                                     <span>Customer Name</span>
                                                 </div>
                                             </th>
                                             <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right">
                                                 Order Quantity
+                                            </th>
+                                            <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right">
+                                                Order Price
                                             </th>
                                             <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left">
                                                 <span>Action</span>
@@ -190,7 +172,7 @@ const SellerOrderManagement = () => {
                                                                     <h2 className="font-medium text-gray-800">
                                                                         {product.product && product.product.name.split(" ").slice(0, 5).join(" ")}
                                                                     </h2>
-                                                                    <p className="text-sm font-normal text-gray-600">{product._id}</p>
+                                                                    <p className="text-sm font-normal text-gray-600">{product.product.productId}</p>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -239,10 +221,20 @@ const SellerOrderManagement = () => {
                                                             )}
                                                         </div>
                                                     </td>
+                                                    <td className="px-4 py-4 text-sm whitespace-nowrap">
+                                                        <div className="flex items-center gap-x-2">
+                                                            <p className="px-3 py-1 text-xs text-indigo-500 rounded-full bg-gray-800 bg-indigo-100/60">{new Date(product.date).toLocaleString()}</p>
+                                                        </div>
+                                                    </td>
                                                     <td className="px-4 py-4 text-sm text-gray-500 whitespace-nowrap">{product.customerName}</td>
                                                     <td className="px-4 py-4 text-sm whitespace-nowrap">
                                                         <div className="flex items-center gap-x-2">
                                                             <p className="px-3 py-1 text-xs text-indigo-500 rounded-full bg-gray-800 bg-indigo-100/60">{product.quantity}</p>
+                                                        </div>
+                                                    </td>
+                                                    <td className="px-4 py-4 text-sm whitespace-nowrap">
+                                                        <div className="flex items-center gap-x-2">
+                                                            <p className="px-3 py-1 text-xs text-indigo-500 rounded-full bg-gray-800 bg-indigo-100/60">{product.price}</p>
                                                         </div>
                                                     </td>
                                                     <td className="px-4 py-4 flex items-center gap-4 text-sm whitespace-nowrap">
@@ -260,13 +252,24 @@ const SellerOrderManagement = () => {
 
                                                 {modalOpen._id === product._id && (
                                                     <tr>
-                                                        <td colSpan="5" className="p-4 bg-gray-100">
+                                                        <td colSpan="5" className=" bg-gray-100">
                                                             {/* Product information */}
-                                                            <div className="flex flex-col">
+                                                            <div className="">
                                                                 <h2 className="text-lg font-semibold">Billing Information</h2>
-                                                                <div className='w-[50px]'>
-                                                                    {/* Barcode component */}
-                                                                    <Barcode className='' value={modalOpen._id} />
+                                                                <div className='flex gap-2 items-center'>
+
+                                                                    <div className="wrap ">
+                                                                        <BarCode value={product._id} />
+                                                                    </div>
+                                                                    <div className='flex gap-2'>
+                                                                        <h1>Name: {modalOpen.userInfo.name}</h1>
+                                                                        <h1>Phone: {modalOpen.userInfo.phoneNumber}</h1>
+                                                                        <h1>City:  {modalOpen.userInfo.city}</h1>
+                                                                        <h1>Area: {modalOpen.userInfo.area}</h1>
+                                                                    </div>
+                                                                    <div>
+
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </td>

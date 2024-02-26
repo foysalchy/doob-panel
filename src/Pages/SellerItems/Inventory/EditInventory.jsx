@@ -7,6 +7,8 @@ const EditInventory = ({ refetch, open, setOpen, data }) => {
         setCount(parseInt(count) + 1);
     };
 
+    console.log(data);
+
     const handleDecrease = () => {
         if (count > 0) {
             setCount(parseInt(count) - 1);
@@ -14,16 +16,35 @@ const EditInventory = ({ refetch, open, setOpen, data }) => {
     };
 
     const handleSubmit = () => {
-        fetch(`https://backend.doob.com.bd/api/v1/seller/product-stock-update?productId=${data?._id}&quantity=${count}`, {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json",
-            },
-        }).then((res) => res.json()).then((data) => {
-            refetch();
-            setOpen(!open);
+        const stock = {
+            productId: data._id,
+            quantity: count,
+            shopId: data.shopId,
+        }
+        console.log(stock);
+        {
+            data.adminWare ? (fetch(`http://localhost:5000/api/v1/admin/stock-request`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(stock)
+            }).then((res) => res.json()).then((data) => {
+                refetch();
+                setOpen(!open);
 
-        })
+            })) : (fetch(`https://backend.doob.com.bd/api/v1/seller/product-stock-update?productId=${data?._id}&quantity=${count}`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+
+            }).then((res) => res.json()).then((data) => {
+                refetch();
+                setOpen(!open);
+
+            }))
+        }
     }
 
     return (

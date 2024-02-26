@@ -281,4 +281,9 @@ font-google {
 }
 
 
+.wrap svg {
+  width: 150px;
+  padding: 0; /* Set your preferred width */
+  margin: 0;
+}
 
