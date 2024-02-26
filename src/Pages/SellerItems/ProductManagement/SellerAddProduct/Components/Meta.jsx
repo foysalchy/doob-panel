@@ -35,7 +35,7 @@ const Meta = () => {
             </div>
             <div className=" mt-2">
                 <label className="text-sm">Upload Image</label>
-                <input required name='MetaImage' type="file" placeholder="Upload Image" className="flex-grow w-full py-4 px-4 mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-purple-400 focus:outline-none focus:shadow-outline" />
+                <input  name='MetaImage' type="file" placeholder="Upload Image" className="flex-grow w-full py-4 px-4 mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-purple-400 focus:outline-none focus:shadow-outline" />
             </div>
 
         </div>
