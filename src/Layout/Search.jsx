@@ -23,8 +23,7 @@ const Search = () => {
             // Handle errors
             console.error('Error:', error);
         }
-    };
-
+    };  
     const handleInputChange = (e) => {
         const input = e.target.value;
         console.log(input);

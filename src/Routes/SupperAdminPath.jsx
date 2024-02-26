@@ -64,6 +64,7 @@ import SellerReport from "../Pages/AdminItem/ReportManagement/SallerReport/Selle
 import AddBlogsCatagorys from "../Pages/AdminItem/BlogsCatagorys/AddBlogsCatagorys";
 import BlogsCatagoryManagement from "../Pages/AdminItem/BlogsCatagorys/BlogsCatagoryManagement";
 import SellerOrderManagement from "../Pages/AdminItem/SellerOrderManagement/SellerOrderManagenent";
+import StockManagement from "../Pages/SellerItems/StockManagement/StockManagement";
 
 const SupperAdminPath = [
     {
@@ -71,6 +72,10 @@ const SupperAdminPath = [
         element: (
             <AdminDashboard />
         ),
+    },
+    {
+        path: "seller-manage",
+        element: <StockManagement />
     },
     {
         path: "blog",

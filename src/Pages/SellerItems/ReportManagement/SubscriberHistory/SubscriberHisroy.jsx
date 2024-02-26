@@ -1,11 +1,12 @@
 import { useQuery } from '@tanstack/react-query';
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { FaLongArrowAltRight } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../../../AuthProvider/UserProvider';
 
 const SubscriberHisroy = () => {
     const { shopInfo } = useContext(AuthContext)
+    const [currentPage, setCurrentPage] = useState(1);
     const { data: subscribers = [], isLoading } = useQuery({
         queryKey: ["subscriberReport"],
         queryFn: async () => {
@@ -37,6 +38,30 @@ const SubscriberHisroy = () => {
             formattedDate,
             formattedTime
         };
+    };
+
+    // Function to handle pagination
+    const handlePagination = (pageNumber) => {
+        setCurrentPage(pageNumber);
+    };
+
+    // Calculate start and end index for pagination
+    const itemsPerPage = 6;
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+
+    // Slice the subscribers array based on pagination
+    const displayedSubscribers = subscribers.slice(startIndex, endIndex);
+
+
+    // Function to handle next page
+    const nextPage = () => {
+        setCurrentPage((prevPage) => Math.min(prevPage + 1, Math.ceil(subscribers.length / itemsPerPage)));
+    };
+
+    // Function to handle previous page
+    const prevPage = () => {
+        setCurrentPage((prevPage) => Math.max(prevPage - 1, 1));
     };
 
     return (
@@ -79,7 +104,7 @@ const SubscriberHisroy = () => {
                                     </thead>
                                     <tbody className="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
                                         {
-                                            subscribers?.map((subscriber, index) => (
+                                            displayedSubscribers?.map((subscriber, index) => (
                                                 <tr key={subscriber?.id}>
                                                     <td className="px-4 py-3 text-sm text-gray-500 dark:text-gray-400">
                                                         {index + 1}
@@ -110,91 +135,33 @@ const SubscriberHisroy = () => {
                         </div>
                     </div>
                 </div>
-                <div className="flex items-center justify-between mt-6">
-                    <a
-                        href="#"
-                        className="flex items-center px-5 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 bg-white border rounded-md gap-x-2 hover:bg-gray-100 dark:bg-gray-900 dark:text-gray-200 dark:border-gray-700 dark:hover:bg-gray-800"
+                {/* Pagination */}
+                <div className="flex justify-center mt-4">
+                    <button
+                        onClick={prevPage}
+                        disabled={currentPage === 1}
+                        className={`mx-1 px-3 py-1 rounded-md ${currentPage === 1 ? 'bg-gray-200 text-gray-700' : 'bg-blue-500 text-white hover:bg-blue-600'}`}
                     >
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            strokeWidth="1.5"
-                            stroke="currentColor"
-                            className="w-5 h-5 rtl:-scale-x-100"
-                        >
-                            <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="M6.75 15.75L3 12m0 0l3.75-3.75M3 12h18"
-                            />
-                        </svg>
-                        <span>previous</span>
-                    </a>
-                    <div className="items-center hidden md:flex gap-x-3">
-                        <a
-                            href="#"
-                            className="px-2 py-1 text-sm text-blue-500 rounded-md dark:bg-gray-800 bg-blue-100/60"
-                        >
-                            1
-                        </a>
-                        <a
-                            href="#"
-                            className="px-2 py-1 text-sm text-gray-500 rounded-md dark:hover:bg-gray-800 dark:text-gray-300 hover:bg-gray-100"
-                        >
-                            2
-                        </a>
-                        <a
-                            href="#"
-                            className="px-2 py-1 text-sm text-gray-500 rounded-md dark:hover:bg-gray-800 dark:text-gray-300 hover:bg-gray-100"
-                        >
-                            3
-                        </a>
-                        <a
-                            href="#"
-                            className="px-2 py-1 text-sm text-gray-500 rounded-md dark:hover:bg-gray-800 dark:text-gray-300 hover:bg-gray-100"
-                        >
-                            ...
-                        </a>
-                        <a
-                            href="#"
-                            className="px-2 py-1 text-sm text-gray-500 rounded-md dark:hover:bg-gray-800 dark:text-gray-300 hover:bg-gray-100"
-                        >
-                            12
-                        </a>
-                        <a
-                            href="#"
-                            className="px-2 py-1 text-sm text-gray-500 rounded-md dark:hover:bg-gray-800 dark:text-gray-300 hover:bg-gray-100"
-                        >
-                            13
-                        </a>
-                        <a
-                            href="#"
-                            className="px-2 py-1 text-sm text-gray-500 rounded-md dark:hover:bg-gray-800 dark:text-gray-300 hover:bg-gray-100"
-                        >
-                            14
-                        </a>
-                    </div>
-                    <a
-                        href="#"
-                        className="flex items-center px-5 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 bg-white border rounded-md gap-x-2 hover:bg-gray-100 dark:bg-gray-900 dark:text-gray-200 dark:border-gray-700 dark:hover:bg-gray-800"
+                        Previous
+                    </button>
+                    {
+                        Array.from({ length: Math.ceil(subscribers.length / itemsPerPage) }, (_, i) => (
+                            <button
+                                key={i}
+                                onClick={() => handlePagination(i + 1)}
+                                className={`mx-1 px-3 py-1 rounded-md ${currentPage === i + 1 ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}`}
+                            >
+                                {i + 1}
+                            </button>
+                        ))
+                    }
+                    <button
+                        onClick={nextPage}
+                        disabled={currentPage === Math.ceil(subscribers.length / itemsPerPage)}
+                        className={`mx-1 px-3 py-1 rounded-md ${currentPage === Math.ceil(subscribers.length / itemsPerPage) ? 'bg-gray-200 text-gray-700' : 'bg-blue-500 text-white hover:bg-blue-600'}`}
                     >
-                        <span>Next</span>
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            strokeWidth="1.5"
-                            stroke="currentColor"
-                            className="w-5 h-5 rtl:-scale-x-100"
-                        >
-                            <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"
-                            />
-                        </svg>
-                    </a>
+                        Next
+                    </button>
                 </div>
             </section>
 

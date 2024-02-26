@@ -394,7 +394,7 @@ const AddExtraCategory = () => {
                         <FaLongArrowAltRight />
 
                     </span>
-                    <span className="text-sm font-medium transition-all group-hover:ms-4">Add SubCategory</span>
+                    <span className="text-sm font-medium transition-all group-hover:ms-4">Add Extra Category</span>
                 </button>
             </form>
         </div>

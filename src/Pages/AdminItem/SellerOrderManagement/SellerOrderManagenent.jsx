@@ -3,19 +3,17 @@ import React, { useState } from 'react';
 import ReadyToShipModal from './ReadyToShipModal';
 import BrightAlert from 'bright-alert';
 import BarCode from 'react-barcode';
+import SellerOrderInvoice from './SellerOrderInvoice';
 
 const SellerOrderManagement = () => {
     const { data: products = [], refetch } = useQuery({
         queryKey: ["sellerAllOrder"],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/api/v1/admin/get-shop-all-order`);
+            const res = await fetch(`https://backend.doob.com.bd/api/v1/admin/get-shop-all-order`);
             const data = await res.json();
             return data.data;
         },
     });
-
-
-
 
     const [searchQuery, setSearchQuery] = useState("");
 
@@ -61,6 +59,7 @@ const SellerOrderManagement = () => {
     const logSelectedProducts = () => {
         const selectedProductData = products.filter(product => selectProducts.includes(product._id));
         setPrintProduct(selectedProductData)
+        console.log(selectedProductData, 'selected products');
         setOn(!on)
     };
 
@@ -69,7 +68,7 @@ const SellerOrderManagement = () => {
 
     const productStatusUpdate = (status, orderId) => {
         console.log(status, orderId);
-        fetch(`http://localhost:5000/api/v1/seller/update-seller-order-status?orderId=${orderId}&status=${status}`, {
+        fetch(`https://backend.doob.com.bd/api/v1/seller/update-seller-order-status?orderId=${orderId}&status=${status}`, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ status, orderId })
@@ -80,7 +79,7 @@ const SellerOrderManagement = () => {
     }
 
     const deleteMethod = (orderId) => {
-        fetch(`http://localhost:5000/api/v1/seller/delete-seller-order?orderId=${orderId}`, {
+        fetch(`https://backend.doob.com.bd/api/v1/seller/delete-seller-order?orderId=${orderId}`, {
             method: "DELETE",
             headers: { "Content-Type": "application/json" },
         }).then((res) => res.json()).then((data) => {
@@ -91,6 +90,8 @@ const SellerOrderManagement = () => {
     }
 
 
+    console.log(selectProducts, 'selectProducts');
+
 
     return (
         <div>
@@ -98,19 +99,24 @@ const SellerOrderManagement = () => {
                 <div className="flex products-center justify-between gap-x-3">
                     <div className="flex products-center gap-2">
                         <h2 className="text-lg font-medium text-gray-800 ">All Product</h2>
-                        <span className="px-3 py-1 text-xs  bg-blue-100 rounded-full d text-blue-400">
+                        <span className="px-2 flex items-center  py-1 text-xs h-[22px] bg-blue-100 rounded-full d text-blue-400">
                             {products?.length}
                         </span>
                     </div>
-                    <input className='border' onChange={(e) => setSearchQuery(e.target.value)} type="text" />
-                    {/* <button onClick={logSelectedProducts} disabled={!selectProducts.length} className='bg-blue-500 px-8 py-2 rounded text-white'> Print</button> */}
+                    <div className="md:flex items-center gap-3">
+                        <input className='border' onChange={(e) => setSearchQuery(e.target.value)} type="text" />
+                        <button
+                            disabled={printProduct.length < 1 ? false : true}
+                            onClick={logSelectedProducts}
+                            className='bg-blue-500 px-8 py-2 rounded text-white'> Invoice</button>
+                    </div>
                 </div>
                 <div className="flex flex-col mt-6">
                     <div className="overflow-x-auto">
                         <div className="py-2">
                             {on && (
                                 <div className="absolute top-0 left-0 right-0 bottom-0 m-auto z-[3000]">
-                                    <SellerPrintPage setOn={setOn} products={printProduct} />
+                                    <SellerOrderInvoice setOn={setOn} products={printProduct} />
                                 </div>
                             )}
                             <div className="overflow-hidden border border-gray-700 md:rounded-lg">

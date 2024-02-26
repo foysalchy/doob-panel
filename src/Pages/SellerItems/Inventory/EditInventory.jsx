@@ -23,7 +23,7 @@ const EditInventory = ({ refetch, open, setOpen, data }) => {
         }
         console.log(stock);
         {
-            data.adminWare ? (fetch(`http://localhost:5000/api/v1/admin/stock-request`, {
+            data.adminWare ? (fetch(`https://backend.doob.com.bd/api/v1/admin/stock-request`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

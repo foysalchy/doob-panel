@@ -3,6 +3,7 @@ import React from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import TableLoader from '../../../../Common/TableLoader';
+import { BiLeftArrow, BiRightArrow } from 'react-icons/bi';
 
 const SellerReport = () => {
     const { data: serviceOrder = [], refetch, isLoading } = useQuery({
@@ -82,7 +83,80 @@ const SellerReport = () => {
     };
 
 
-    console.log(serviceOrder);
+
+
+    const [currentPage, setCurrentPage] = useState(1);
+
+    const pageSize = 6;
+    const startIndex = (currentPage - 1) * pageSize;
+    const endIndex = startIndex + pageSize;
+    const totalPages = Math.ceil(filteredData?.length / pageSize);
+
+    const currentData = filteredData.slice(startIndex, endIndex);
+
+    const handleChangePage = (newPage) => {
+
+        setCurrentPage(newPage);
+    };
+
+
+
+    const renderPageNumbers = () => {
+        const startPage = Math.max(1, currentPage - Math.floor(pageSize / 2));
+        const endPage = Math.min(totalPages, startPage + pageSize - 1);
+
+        return (
+            <React.Fragment>
+                {/* First Page */}
+                {startPage > 1 && (
+                    <li>
+                        <button
+                            className={`block h-8 w-8 rounded border border-gray-900 bg-white text-center leading-8 text-gray-900`}
+                            onClick={() => handleChangePage(1)}
+                        >
+                            1
+                        </button>
+                    </li>
+                )}
+
+
+
+                {/* Current Page */}
+                {Array.from({ length: endPage - startPage + 1 }).map((_, index) => {
+                    const pageNumber = startPage + index;
+                    return (
+                        <li key={pageNumber}>
+                            <button
+                                className={`block h-8 w-8 rounded border ${pageNumber === currentPage
+                                    ? 'border-blue-600 bg-blue-600 text-white'
+                                    : 'border-gray-900 bg-white text-center leading-8 text-gray-900'
+                                    }`}
+                                onClick={() => handleChangePage(pageNumber)}
+                            >
+                                {pageNumber}
+                            </button>
+                        </li>
+                    );
+                })}
+
+
+
+                {/* Last Page */}
+                {endPage < totalPages && (
+                    <li>
+                        <button
+                            className={`block h-8 w-8 rounded border border-gray-100 bg-white text-center leading-8 text-gray-100`}
+                            onClick={() => handleChangePage(totalPages)}
+                        >
+                            {totalPages}
+                        </button>
+                    </li>
+                )}
+            </React.Fragment>
+        );
+    };
+
+    
     return (
         <section className="container px-4 mx-auto">
             <div className="sm:flex sm:items-center sm:justify-between">
@@ -272,55 +346,48 @@ const SellerReport = () => {
                     </div>
                 </div>
             </div>
-            <div className="mt-6 sm:flex sm:items-center sm:justify-between ">
-                <div className="text-sm text-gray-500 ">
-                    Page{" "}
-                    <span className="font-medium text-gray-700 ">
-                        1 of 10
-                    </span>
-                </div>
-                <div className="flex items-center mt-4 gap-x-4 sm:mt-0">
-                    <a
-                        href="#"
-                        className="flex items-center justify-center w-1/2 px-5 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 bg-white border rounded-md sm:w-auto gap-x-2 hover:bg-gray-100    "
-                    >
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            strokeWidth="1.5"
-                            stroke="currentColor"
-                            className="w-5 h-5 rtl:-scale-x-100"
+           
+
+            <div className='flex justify-center mt-4'>
+                <ol className="flex justify-center gap-1 text-xs font-medium">
+                    <li>
+                        <button
+                            className="inline-flex h-8 w-8 items-center justify-center rounded border border-gray-900 bg-white text-gray-900 rtl:rotate-180"
+                            onClick={() => handleChangePage(Math.max(1, currentPage - 1))}
+                            disabled={currentPage === 1}
                         >
-                            <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="M6.75 15.75L3 12m0 0l3.75-3.75M3 12h18"
-                            />
-                        </svg>
-                        <span>previous</span>
-                    </a>
-                    <a
-                        href="#"
-                        className="flex items-center justify-center w-1/2 px-5 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 bg-white border rounded-md sm:w-auto gap-x-2 hover:bg-gray-100    "
-                    >
-                        <span>Next</span>
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            strokeWidth="1.5"
-                            stroke="currentColor"
-                            className="w-5 h-5 rtl:-scale-x-100"
+                            <span className="sr-only">Prev Page</span>
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                className="h-3 w-3"
+                                viewBox="0 0 20 20"
+                                fill="currentColor"
+                            >
+                                <BiLeftArrow className='text-xl' />
+                            </svg>
+                        </button>
+                    </li>
+
+                    {renderPageNumbers()}
+
+                    <li>
+                        <button
+                            className="inline-flex h-8 w-8 items-center justify-center rounded border border-gray-900 disabled:cursor-not-allowed bg-white text-gray-900 rtl:rotate-180"
+                            onClick={() => handleChangePage(Math.min(totalPages, currentPage + 1))}
+                            disabled={currentPage === totalPages}
                         >
-                            <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"
-                            />
-                        </svg>
-                    </a>
-                </div>
+                            <span className="sr-only">Next Page</span>
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                className="h-3 w-3"
+                                viewBox="0 0 20 20"
+                                fill="currentColor"
+                            >
+                                <BiRightArrow className='text-xl' />
+                            </svg>
+                        </button>
+                    </li>
+                </ol>
             </div>
         </section >
 

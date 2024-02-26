@@ -20,7 +20,7 @@ const UpComingProducts = () => {
 
 
   const data = [1, 2, 3, 4]
-
+  const blankImg = "https://i.ibb.co/2K1Z2D5/blank.jpg"
 
   return (
     <div>

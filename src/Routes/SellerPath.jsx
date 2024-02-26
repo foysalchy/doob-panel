@@ -74,6 +74,8 @@ import SubscriptionModel from "../Pages/SellerItems/SubcribtionModel/Subscriptio
 import InventoryManagement from "../Pages/SellerItems/Inventory/InventoryManagement";
 import PriceRole from "../Pages/SellerItems/Sittings/AddPriceRole/PriceRole";
 import ManageWebOrder from "../Pages/SellerItems/OrderManagment/ManageOrder/ManageWebOrder";
+import StockManagement from "../Pages/SellerItems/StockManagement/StockManagement";
+import SellerStockManagement from "../Pages/SellerItems/SellerStockManagement/SellerStockManagement";
 
 
 const SellerPath = [
@@ -290,6 +292,11 @@ const SellerPath = [
         path: "orders",
         element: <OrderManagement />
     },
+    {
+        path: "stock-management",
+        element: <SellerStockManagement />
+    },
+
     {
         path: "orders/manage-order",
         element: <ManageOrder />

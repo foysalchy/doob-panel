@@ -118,7 +118,7 @@ const WarehouseModal = ({ modalOpen, setModalOpen, product, doobProduct }) => {
             warehouse: doobProduct ? adminCategory : product.warehouse
         }
 
-        fetch(`http://localhost:5000/api/v1/admin/update-product-info?productId=${product._id}`, {
+        fetch(`https://backend.doob.com.bd/api/v1/admin/update-product-info?productId=${product._id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type':
