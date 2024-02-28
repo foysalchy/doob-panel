@@ -14,7 +14,7 @@ const ManageProduct = () => {
   const { data: products = [], refetch } = useQuery({
     queryKey: ["products"],
     queryFn: async () => {
-      const res = await fetch("https://backend.doob.com.bd/api/v1/admin/products");
+      const res = await fetch("http://localhost:5000/api/v1/admin/products");
       const data = await res.json();
       return data;
     },
@@ -23,7 +23,7 @@ const ManageProduct = () => {
   const { data: othersProduct = [] } = useQuery({
     queryKey: ["othersProducts"],
     queryFn: async () => {
-      const res = await fetch("https://backend.doob.com.bd/api/v1/admin/others-products");
+      const res = await fetch("http://localhost:5000/api/v1/admin/others-products");
       const data = await res.json();
       return data;
     },
@@ -50,7 +50,7 @@ const ManageProduct = () => {
 
   const updateProductStatus = (id, status) => {
     console.log(id);
-    fetch(`https://backend.doob.com.bd/api/v1/seller/update-product-status`, {
+    fetch(`http://localhost:5000/api/v1/seller/update-product-status`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json"

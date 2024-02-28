@@ -23,7 +23,7 @@ const AdminPosProductsDetails = ({ invoice, open, setOpen }) => {
 
 
     const fetchData = () => {
-        fetch(`https://backend.doob.com.bd/api/v1/seller/seller-user?shopId=${shopInfo.shopId}&${searchType}=${searchValue}`).then((res) => res.json()).then((data) => {
+        fetch(`http://localhost:5000/api/v1/seller/seller-user?shopId=${shopInfo.shopId}&${searchType}=${searchValue}`).then((res) => res.json()).then((data) => {
             if (data.userInfo) {
                 setUser(data.userInfo)
                 setExisting(false)

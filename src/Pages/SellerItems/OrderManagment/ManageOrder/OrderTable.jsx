@@ -18,7 +18,7 @@ const OrderTable = ({ searchValue, selectedValue, setDetails, setOpenModal, sele
     const { data: tData = [], refetch } = useQuery({
         queryKey: ["sellerOrder"],
         queryFn: async () => {
-            const res = await fetch(`https://backend.doob.com.bd/api/v1/seller/order?shopId=${shopInfo._id}`);
+            const res = await fetch(`http://localhost:5000/api/v1/seller/order?shopId=${shopInfo._id}`);
             const data = await res.json();
             return data.data;
         },
@@ -86,7 +86,7 @@ const OrderTable = ({ searchValue, selectedValue, setDetails, setOpenModal, sele
 
 
     const productStatusUpdate = (status, orderId) => {
-        fetch(`https://backend.doob.com.bd/api/v1/seller/order-status-update?orderId=${orderId}&status=${status}`, {
+        fetch(`http://localhost:5000/api/v1/seller/order-status-update?orderId=${orderId}&status=${status}`, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ status, orderId })
@@ -99,7 +99,7 @@ const OrderTable = ({ searchValue, selectedValue, setDetails, setOpenModal, sele
     const { data: ships = [] } = useQuery({
         queryKey: ["getaway"],
         queryFn: async () => {
-            const res = await fetch(`https://backend.doob.com.bd/api/v1/seller/shipping-interrogation/${shopInfo._id}`);
+            const res = await fetch(`http://localhost:5000/api/v1/seller/shipping-interrogation/${shopInfo._id}`);
             const data = await res.json();
             return data;
         },
@@ -153,7 +153,7 @@ const OrderTable = ({ searchValue, selectedValue, setDetails, setOpenModal, sele
 
 
     const handleProductStatusUpdate = (orders) => {
-        fetch(`https://backend.doob.com.bd/api/v1/seller/order-quantity-update`, {
+        fetch(`http://localhost:5000/api/v1/seller/order-quantity-update`, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(orders)
@@ -182,7 +182,7 @@ const OrderTable = ({ searchValue, selectedValue, setDetails, setOpenModal, sele
 
     // useEffect(() => {
     //     if (showAlert) {
-    //         fetch(`https://backend.doob.com.bd/api/v1/seller/order-status-update?orderId=${orderId}`, {
+    //         fetch(`http://localhost:5000/api/v1/seller/order-status-update?orderId=${orderId}`, {
     //             method: "PUT",
     //             headers: { "Content-Type": "application/json" },
     //             body: JSON.stringify({ status, orderId })
@@ -204,7 +204,7 @@ const OrderTable = ({ searchValue, selectedValue, setDetails, setOpenModal, sele
         console.log(order);
         setOpenModal(true)
 
-        fetch(`https://backend.doob.com.bd/api/v1/seller/refound-order-info?shopId=${shopInfo._id}&orderId=${order._id}`).then((res) => res.json()).then((data) => {
+        fetch(`http://localhost:5000/api/v1/seller/refound-order-info?shopId=${shopInfo._id}&orderId=${order._id}`).then((res) => res.json()).then((data) => {
             console.log(data);
             const refund = { refund: data.data, order }
             console.log(refund);
@@ -214,7 +214,7 @@ const OrderTable = ({ searchValue, selectedValue, setDetails, setOpenModal, sele
     }
     const [refundData, setRefundData] = useState(true)
     const checkBox = (orderId) => {
-        fetch(`https://backend.doob.com.bd/api/v1/seller/refound-order-info?shopId=${shopInfo._id}&orderId=${orderId}`).then((res) => res.json()).then((data) => {
+        fetch(`http://localhost:5000/api/v1/seller/refound-order-info?shopId=${shopInfo._id}&orderId=${orderId}`).then((res) => res.json()).then((data) => {
             console.log(data);
             setRefundData(data)
         })
@@ -223,7 +223,7 @@ const OrderTable = ({ searchValue, selectedValue, setDetails, setOpenModal, sele
 
     const updateOrderInfo = (note, file, id) => {
         const noteData = { note, file, orderId: id }
-        fetch("https://backend.doob.com.bd/api/v1/seller/refound-order-info", {
+        fetch("http://localhost:5000/api/v1/seller/refound-order-info", {
             method: 'PUT',
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(noteData),
@@ -281,7 +281,7 @@ const OrderTable = ({ searchValue, selectedValue, setDetails, setOpenModal, sele
 
 
     async function uploadImage(formData) {
-        const url = "https://backend.doob.com.bd/api/v1/image/upload-image";
+        const url = "http://localhost:5000/api/v1/image/upload-image";
         const response = await fetch(url, {
             method: "POST",
             body: formData,

@@ -4,19 +4,20 @@ import BrightAlert from 'bright-alert';
 import BarCode from 'react-barcode';
 import { AuthContext } from '../../../../AuthProvider/UserProvider';
 import ReadyToShipModal from '../../../AdminItem/SellerOrderManagement/ReadyToShipModal';
+import OrderInvoice from './OrderInvoice';
 
 const ManageWebOrder = () => {
     const { shopInfo } = useContext(AuthContext)
     const { data: products = [], refetch } = useQuery({
         queryKey: ["sellerAllOrder"],
         queryFn: async () => {
-            const res = await fetch(`https://backend.doob.com.bd/api/v1/seller/get-my-order?shopId=${shopInfo?._id}`);
+            const res = await fetch(`http://localhost:5000/api/v1/seller/get-my-order?shopId=${shopInfo?._id}`);
             const data = await res.json();
             return data.data;
         },
     });
 
-    console.log(`https://backend.doob.com.bd/api/v1/seller/get-my-order?shopId=${shopInfo?._id}`)
+    console.log(`http://localhost:5000/api/v1/seller/get-my-order?shopId=${shopInfo?._id}`)
 
     const [searchQuery, setSearchQuery] = useState("");
 
@@ -70,7 +71,7 @@ const ManageWebOrder = () => {
 
     const productStatusUpdate = (status, orderId) => {
         console.log(status, orderId);
-        fetch(`https://backend.doob.com.bd/api/v1/seller/update-seller-order-status?orderId=${orderId}&status=${status}`, {
+        fetch(`http://localhost:5000/api/v1/seller/update-seller-order-status?orderId=${orderId}&status=${status}`, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ status, orderId })
@@ -81,7 +82,7 @@ const ManageWebOrder = () => {
     }
 
     const deleteMethod = (orderId) => {
-        fetch(`https://backend.doob.com.bd/api/v1/seller/delete-seller-order?orderId=${orderId}`, {
+        fetch(`http://localhost:5000/api/v1/seller/delete-seller-order?orderId=${orderId}`, {
             method: "DELETE",
             headers: { "Content-Type": "application/json" },
         }).then((res) => res.json()).then((data) => {
@@ -90,6 +91,9 @@ const ManageWebOrder = () => {
 
         });
     }
+
+
+
 
 
 
@@ -251,31 +255,7 @@ const ManageWebOrder = () => {
                                                     </td>
                                                 </tr>
 
-                                                {modalOpen._id === product._id && (
-                                                    <tr>
-                                                        <td colSpan="5" className=" bg-gray-100">
-                                                            {/* Product information */}
-                                                            <div className="">
-                                                                <h2 className="text-lg font-semibold">Billing Information</h2>
-                                                                <div className='flex gap-2 items-center'>
-
-                                                                    <div className="wrap ">
-                                                                        <BarCode value={product._id} />
-                                                                    </div>
-                                                                    <div className='flex gap-2'>
-                                                                        <h1>Name: {modalOpen.userInfo.name}</h1>
-                                                                        <h1>Phone: {modalOpen.userInfo.phoneNumber}</h1>
-                                                                        <h1>City:  {modalOpen.userInfo.city}</h1>
-                                                                        <h1>Area: {modalOpen.userInfo.area}</h1>
-                                                                    </div>
-                                                                    <div>
-
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                )}
+                                                {modalOpen._id === product._id && <OrderInvoice products={modalOpen} setModalOpen={setModalOpen} />}
                                             </React.Fragment>
 
 

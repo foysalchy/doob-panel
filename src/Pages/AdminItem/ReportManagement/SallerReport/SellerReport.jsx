@@ -9,7 +9,7 @@ const SellerReport = () => {
     const { data: serviceOrder = [], refetch, isLoading } = useQuery({
         queryKey: ["sellerReport"],
         queryFn: async () => {
-            const res = await fetch("https://backend.doob.com.bd/api/v1/admin/seller-report");
+            const res = await fetch("http://localhost:5000/api/v1/admin/seller-report");
             const data = await res.json();
             return data.data;
         },
@@ -156,7 +156,7 @@ const SellerReport = () => {
         );
     };
 
-    
+
     return (
         <section className="container px-4 mx-auto">
             <div className="sm:flex sm:items-center sm:justify-between">
@@ -346,7 +346,7 @@ const SellerReport = () => {
                     </div>
                 </div>
             </div>
-           
+
 
             <div className='flex justify-center mt-4'>
                 <ol className="flex justify-center gap-1 text-xs font-medium">

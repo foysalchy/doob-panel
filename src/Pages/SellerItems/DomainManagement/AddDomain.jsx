@@ -19,7 +19,7 @@ const AddDomain = () => {
     const { data: domainDoc, refetch: reload, isLoading: loading } = useQuery({
         queryKey: ["domainDoc"],
         queryFn: async () => {
-            const res = await fetch("https://backend.doob.com.bd/api/v1/admin/domain-document");
+            const res = await fetch("http://localhost:5000/api/v1/admin/domain-document");
             const data = await res.json();
             return data.result;
         },
@@ -28,7 +28,7 @@ const AddDomain = () => {
     const { data: buyDomain, } = useQuery({
         queryKey: ["buyDomain"],
         queryFn: async () => {
-            const res = await fetch("https://backend.doob.com.bd/api/v1/admin/buy-domain");
+            const res = await fetch("http://localhost:5000/api/v1/admin/buy-domain");
             const data = await res.json();
             return data;
         },
@@ -43,12 +43,12 @@ const AddDomain = () => {
         const domain = event.target.domain.value;
         shopInfo.domain = domain
 
-        fetch(`https://backend.doob.com.bd/api/v1/api/dns?domain=${domain}&txtValue=salenow.vercel.app/shop/${txtValue}`)
+        fetch(`http://localhost:5000/api/v1/api/dns?domain=${domain}&txtValue=salenow.vercel.app/shop/${txtValue}`)
             .then((res) => res.json())
             .then((data) => {
 
                 if (data.isValuePresent === true) {
-                    fetch('https://backend.doob.com.bd/api/v1/seller/addDomain',
+                    fetch('http://localhost:5000/api/v1/seller/addDomain',
                         {
                             method: "POST",
                             headers: {
@@ -127,7 +127,7 @@ const AddDomain = () => {
     const { data: domainVideo, refetch, isLoading } = useQuery({
         queryKey: ["category"],
         queryFn: async () => {
-            const res = await fetch("https://backend.doob.com.bd/api/v1/admin/domain-video");
+            const res = await fetch("http://localhost:5000/api/v1/admin/domain-video");
             const data = await res.json();
             return data;
         },

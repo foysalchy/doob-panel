@@ -47,7 +47,7 @@ const ShippingModal = ({ readyToShip, setReadyToShip, orderInfo, refetch, ships,
             console.log(uploadData);
 
             try {
-                const res = await fetch(`https://backend.doob.com.bd/api/v1/seller/order-submit-steadfast`, {
+                const res = await fetch(`http://localhost:5000/api/v1/seller/order-submit-steadfast`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'

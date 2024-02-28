@@ -20,8 +20,8 @@ const ProductInformation = () => {
     const location = useLocation();
     const [loader, setLoader] = useState(false)
     const { shop_id, shopUser, setSelectProductData } = useContext(ShopAuthProvider)
-    const [variations, setVariations] = useState(null)
-
+    const [variations, setVariations] = useState(null);
+    const [showVariant, setShowVariant] = useState(product.data.images)
     console.log(product, "product");
     const handleImageClick = (imageUrl) => {
         setSelectedImage(imageUrl);
@@ -60,7 +60,7 @@ const ProductInformation = () => {
             userId: shopUser?._id,
             quantity: quantity,
             img: product?.daraz ? variations?.image[0] : selectedImage,
-            productName: variations?.name ? variations?.name : product.name,
+            productName: variations?.name ? `${product.name} - ${variations?.name}` : product.name,
             price: variations?.price ? variations?.price : product.price,
             regular_price: product.regular_price,
             productId: product._id,
@@ -76,7 +76,7 @@ const ProductInformation = () => {
             BrightAlert('Product added to cart')
             setLoader(false);
         } else {
-            fetch(`https://backend.doob.com.bd/api/v1/shop/user/add-to-cart?token=${shopUser._id}`, {
+            fetch(`http://localhost:5000/api/v1/shop/user/add-to-cart?token=${shopUser._id}`, {
                 method: "POST",
                 headers: { 'Content-Type': 'application/json', "ngrok-skip-browser-warning": "69420", },
                 body: JSON.stringify(addToCard)
@@ -100,7 +100,7 @@ const ProductInformation = () => {
                 userId: shopUser?._id,
                 quantity: quantity,
                 img: product?.daraz ? variations?.image[0] : selectedImage,
-                productName: variations?.name ? variations?.name : product.name,
+                productName: variations?.name ? `${product.name} - ${variations?.name}` : product.name,
                 price: variations?.price ? variations?.price : product.price,
                 regular_price: product.regular_price,
                 productId: product._id,
@@ -115,12 +115,11 @@ const ProductInformation = () => {
     const { data: comments = {}, isLoading, refetch } = useQuery({
         queryKey: ["comments"],
         queryFn: async () => {
-            const res = await fetch(`https://backend.doob.com.bd/api/v1/seller/product-comment?id=${product?._id}`);
+            const res = await fetch(`http://localhost:5000/api/v1/seller/product-comment?id=${product?._id}`);
             const data = await res.json();
             return data?.comments;
         },
     });
-
 
     return (
         <section className='px-2 py-4  sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 mx-auto'>
@@ -175,7 +174,7 @@ const ProductInformation = () => {
                                     </div>
                                 </div>
                                 <div className="grid grid-cols-4 md:grid-cols-4 lg:grid-cols-6 gap-2 -m-4 text-white">
-                                    {product.data.images.map((imageUrl, index) => (
+                                    {showVariant?.map((imageUrl, index) => (
                                         <div onClick={() => setVariations(null)} key={index} className="p-4 w-full md:w-11/12 rounded">
                                             <Link
                                                 className="block relative h-16 rounded overflow-hidden border"
@@ -199,7 +198,7 @@ const ProductInformation = () => {
                                 {product.data.brandName}
                             </h2>
                             <h1 className="text-gray-900 md:text-3xl title-font font-medium mb-1">
-                                {variations?.name ? variations?.name : product.data.name}
+                                {variations?.name ? `${product?.data?.name} - ${variations?.name}` : product?.data.name}
                             </h1>
                             <div className="flex my-2 items-center">
                                 <div className="flex items-center">
@@ -300,7 +299,7 @@ const ProductInformation = () => {
                                     product?.data?.variations && product?.data?.variations.map((variation, index) => <div onClick={() => setVariations(variation)} key={index}
                                         className='w-[50px] h-[50px] border border-gray-300'
                                     >
-                                        <img src={!product?.data ? variation?.image[0] : variation?.image} alt="" className="w-full h-full" />
+                                        <img onClick={() => setShowVariant(variation?.variantImag)} src={!product?.data ? variation?.image[0] : variation?.image} alt="" className="w-full h-full" />
                                     </div>)
                                 }
                             </div>}

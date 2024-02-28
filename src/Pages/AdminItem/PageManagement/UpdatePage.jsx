@@ -25,7 +25,7 @@ const UpdatePage = ({ OpenModal, setOpenModal, FAQInfo, refetch }) => {
 
 
         try {
-            fetch(`https://backend.doob.com.bd/api/v1/admin/page/update-page/${FAQInfo._id}`, {
+            fetch(`http://localhost:5000/api/v1/admin/page/update-page/${FAQInfo._id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',

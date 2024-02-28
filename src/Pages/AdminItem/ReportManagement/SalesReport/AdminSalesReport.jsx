@@ -3,12 +3,14 @@ import React from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import { BiLeftArrow, BiRightArrow } from 'react-icons/bi';
+import AdminSalesInvoice from './AdminSalesInvoice';
 
 const AdminSalesReport = () => {
+    const [modalOpen, setModalOpen] = useState(false);
     const { data: serviceOrder = [], refetch } = useQuery({
         queryKey: ["serviceOrder"],
         queryFn: async () => {
-            const res = await fetch("https://backend.doob.com.bd/api/v1/admin/get-all-service-order");
+            const res = await fetch("http://localhost:5000/api/v1/admin/get-all-service-order");
             const data = await res.json();
             return data.data;
         },
@@ -20,6 +22,7 @@ const AdminSalesReport = () => {
     const [endDate, setEndDate] = useState('');
 
     const searchItem = () => {
+
         if (input === '' && startDate === '' && endDate === '') {
             setFilteredData(serviceOrder);
         } else {
@@ -255,7 +258,7 @@ const AdminSalesReport = () => {
                                                 <img className='h-10 w-10 rounded-sm' src={order.productImg} alt="" />
                                             </td>
                                             <td className="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
-                                                <div className="inline-flex items-center gap-x-3">
+                                                <div onClick={() => setModalOpen(order)} className="inline-flex items-center text-blue-500 gap-x-3">
                                                     <span># {order._id}</span>
                                                 </div>
                                             </td>
@@ -289,6 +292,7 @@ const AdminSalesReport = () => {
                                                 {order?.method?.Getaway}
                                             </td>
 
+                                            {modalOpen._id === order._id && <AdminSalesInvoice products={modalOpen} setModalOpen={setModalOpen} />}
 
                                         </tr>
                                     ))}

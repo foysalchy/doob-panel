@@ -20,7 +20,7 @@ const SingleService = () => {
     queryKey: ["services"],
     queryFn: async () => {
       const res = await fetch(
-        "https://backend.doob.com.bd/api/v1/admin/services"
+        "http://localhost:5000/api/v1/admin/services"
       );
       const data = await res.json();
       return data;
@@ -63,7 +63,7 @@ const SingleService = () => {
 
       console.log(order);
 
-      fetch(`https://backend.doob.com.bd/api/v1/site-user/wishlist`, {
+      fetch(`http://localhost:5000/api/v1/site-user/wishlist`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -79,14 +79,14 @@ const SingleService = () => {
     }
   };
 
-  
+
   const uploadReview = (e) => {
     e.preventDefault();
     const reviews = e.target.reviews.value
     const userData = { name: user.name, userId: user._id }
     const timestamp = new Date().getTime()
     let data = { text: reviews, user: userData, timeStamp: timestamp, }
-    fetch(`https://backend.doob.com.bd/api/v1/admin/service/reviews?id=${service._id}`, {
+    fetch(`http://localhost:5000/api/v1/admin/service/reviews?id=${service._id}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json'
@@ -286,7 +286,7 @@ const SingleService = () => {
                     </svg>
                   </button>
                 </div>
-                
+
 
                 <div className="px-5 py-3">
                   <h3 className="text-gray-700 uppercase">{service.title}</h3>

@@ -26,7 +26,7 @@ const ViewUserSupportTicket = ({ viewComment, setViewComment, ticketDetails, ref
             'name': shopUser?.name
         }
         // / support - ticket /: id
-        fetch(`https://backend.doob.com.bd/api/v1/seller/user-support-comment/${id}`, {
+        fetch(`http://localhost:5000/api/v1/seller/user-support-comment/${id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'

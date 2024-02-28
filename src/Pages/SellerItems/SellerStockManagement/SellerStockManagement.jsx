@@ -1,12 +1,16 @@
 import { useQuery } from '@tanstack/react-query';
-  
+import { useContext, useState } from 'react';
+import { AuthContext } from '../../../AuthProvider/UserProvider';
+import SellerStockInvoice from './SellerStockInvoice';
+
 
 const SellerStockManagement = () => {
-
+    const [on, setOn] = useState(false);
+    const { shopInfo } = useContext(AuthContext)
     const { data: stockRequest = [], refetch } = useQuery({
         queryKey: ["stockRequest"],
         queryFn: async () => {
-            const res = await fetch(`https://backend.doob.com.bd/api/v1/admin/stock-request`);
+            const res = await fetch(`http://localhost:5000/api/v1/admin/seller-stock-request?shopId=${shopInfo._id}`);
             const data = await res.json();
             console.log(data, 'data');
             return data?.data;
@@ -14,10 +18,16 @@ const SellerStockManagement = () => {
     });
 
 
+    console.log(stockRequest, 'invoice data.....');
     return (
-        <div>
+        <div className='relative'>
             <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
-                <h2 className="text-xl font-semibold pb-4">Stock Quantity Management</h2>
+                <div className="flex pb-4 items-center justify-between">
+                    <h2 className="text-xl font-semibold pb-4">Stock Quantity Management</h2>
+
+
+                </div>
+
                 <div className="overflow-hidden border border-gray-200 border-gray-700 md:rounded-lg">
                     <table className="min-w-full divide-y divide-gray-200 divide-gray-700">
                         <thead className="bg-gray-50 ">
@@ -54,7 +64,7 @@ const SellerStockManagement = () => {
                                         <div className="inline-flex items-center gap-x-3">
                                             <div className="w-5/12">
                                                 <h2 className="font-medium text-gray-800  ">
-                                                    {itm?.productId}
+                                                    <button onClick={() => setOn(itm)} className='  text-blue-500'>{itm?.productId}</button>
                                                 </h2>
                                             </div>
                                         </div>
@@ -71,7 +81,9 @@ const SellerStockManagement = () => {
                                     <td className="px-4 py-4 text-sm whitespace-nowrap">
                                         {itm?.quantity}
                                     </td>
-
+                                    {
+                                        on?._id === itm?._id && <SellerStockInvoice setOn={setOn} products={itm} />
+                                    }
 
                                 </tr>
                             ))}

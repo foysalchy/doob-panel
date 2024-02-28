@@ -8,14 +8,14 @@ export default function Component() {
     const [searchTerm, setSearchTerm] = useState('');
     const [searchResults, setSearchResults] = useState([]);
     const [searchHistory, setSearchHistory] = useState([]);
-
+    const [value, setValue] = useState('')
     const searchData = async () => {
         const term = searchTerm;
-        console.log(`https://backend.doob.com.bd/api/v1/admin/search?term=${encodeURIComponent(term)}`);
+        // console.log(`http://localhost:5000/api/v1/admin/search?term=${encodeURIComponent(term)}`);
         try {
-            const response = await fetch(`https://backend.doob.com.bd/api/v1/admin/search?term=${encodeURIComponent(term)}`);
+            const response = await fetch(`http://localhost:5000/api/v1/admin/search?term=${encodeURIComponent(term)}`);
             const data = await response.json();
-            console.log(data);
+            // console.log(data);
             setSearchResults(data);
             setSearchHistory([]);
 
@@ -29,15 +29,16 @@ export default function Component() {
 
     const handleInputChange = (e) => {
         const input = e.target.value;
-        console.log(input);
+        // console.log(input);
+        setValue(input);
         setSearchTerm(input)
         setSearchResults()
         setSearch(input)
-        fetch(`https://backend.doob.com.bd/api/v1/admin/search-history?term=${encodeURIComponent(input)}`).then((response) => response.json()).then((data) => setSearchHistory(data))
+        fetch(`http://localhost:5000/api/v1/admin/search-history?term=${encodeURIComponent(input)}`).then((response) => response.json()).then((data) => setSearchHistory(data))
     };
 
 
-    console.log(searchHistory, "searchResult ");
+    console.log(value, "searchResult....... ");
     return (
         <div className="bg-white shadow-md">
             <div className="flex items-center justify-between max-w-7xl mx-auto py-4 px-8">
@@ -55,14 +56,14 @@ export default function Component() {
                     <button
                         className="bg-black text-white px-4 py-2 rounded-md hover:bg-gray-800"
                         onClick={searchData}>Search</button>
-                    { 
+                    {!value == '' &&
                         <div className="bg-white w-full left-0 ring-1 ring-gray-500 absolute top-[52px] z-[1000] p-3">
                             {/* Display search history suggestions */}
                             {searchHistory.length && <div className="mt-4 w-full">
                                 <div className='flex flex-wrap justify-center gap-2'>
                                     {searchHistory.slice(0, 10).map((item, index) => (
                                         <button className='border-2 text-sm px-2 rounded-2xl ' onClick={() => setSearchTerm(item.term)} key={index}>
-                                            
+
                                             {item.term}</button>
                                     ))}
                                 </div>

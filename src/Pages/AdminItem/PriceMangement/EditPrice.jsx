@@ -72,7 +72,7 @@ const EditPrice = ({ OpenModal, setOpenModal, FAQInfo, refetch }) => {
         console.log(data, 'data');
 
         try {
-            fetch(`https://backend.doob.com.bd/api/v1/admin/price/update-price/${FAQInfo._id}`, {
+            fetch(`http://localhost:5000/api/v1/admin/price/update-price/${FAQInfo._id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',

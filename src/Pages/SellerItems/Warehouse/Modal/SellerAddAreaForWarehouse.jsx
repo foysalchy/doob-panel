@@ -13,7 +13,7 @@ const SellerAddAreaForWarehouse = ({ setNewData, recall, setOpenModal }) => {
     const { data: warehouses = [], refetch } = useQuery({
         queryKey: ["warehouses"],
         queryFn: async () => {
-            const res = await fetch(`https://backend.doob.com.bd/api/v1/seller/warehouse/get/${shopInfo._id}`);
+            const res = await fetch(`http://localhost:5000/api/v1/seller/warehouse/get/${shopInfo._id}`);
             const data = await res.json();
             return data;
         },
@@ -38,7 +38,7 @@ const SellerAddAreaForWarehouse = ({ setNewData, recall, setOpenModal }) => {
             shopId: shopInfo._id,
             status: nextStae
         }
-        fetch(`https://backend.doob.com.bd/api/v1/seller/warehouse/area/`, {
+        fetch(`http://localhost:5000/api/v1/seller/warehouse/area/`, {
             method: 'post',
             headers: {
                 'Content-Type': 'application/json'

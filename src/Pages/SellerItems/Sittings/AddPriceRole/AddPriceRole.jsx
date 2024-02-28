@@ -12,7 +12,7 @@ const AddPriceRole = () => {
     const { data: priceRole = {}, refetch, isLoading } = useQuery({
         queryKey: ["getaway"],
         queryFn: async () => {
-            const res = await fetch(`https://backend.doob.com.bd/api/v1/seller/get-price-role/${shopInfo._id}`);
+            const res = await fetch(`http://localhost:5000/api/v1/seller/get-price-role/${shopInfo._id}`);
             const data = await res.json();
             return data;
         },
@@ -27,7 +27,7 @@ const AddPriceRole = () => {
         const shopId = shopInfo._id;
         const data = { to, from, priceRange, shopId, percentage }
 
-        fetch('https://backend.doob.com.bd/api/v1/seller/add-price-role', {
+        fetch('http://localhost:5000/api/v1/seller/add-price-role', {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(data)
@@ -83,7 +83,7 @@ const AddPriceRole = () => {
                         Percentage
                     </label>
                     <select
-                     name="percentage"
+                        name="percentage"
                         required
                         className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                         <option value="yes">Yes</option>

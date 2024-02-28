@@ -16,7 +16,7 @@ const PopupManagement = () => {
     const { data: faqs, refetch } = useQuery({
         queryKey: "faqs",
         queryFn: async () => {
-            const res = await fetch(`https://backend.doob.com.bd/api/v1/seller/popup/${shopInfo._id}`);
+            const res = await fetch(`http://localhost:5000/api/v1/seller/popup/${shopInfo._id}`);
             const data = await res.json();
             return data;
         },
@@ -25,7 +25,7 @@ const PopupManagement = () => {
     console.log(faqs);
 
     const updateStatus = (id, status) => {
-        fetch(`https://backend.doob.com.bd/api/v1/seller/popup/status/${id}`, {
+        fetch(`http://localhost:5000/api/v1/seller/popup/status/${id}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
@@ -52,7 +52,7 @@ const PopupManagement = () => {
 
     if (isDelete) {
 
-        fetch(`https://backend.doob.com.bd/api/v1/seller/popup/delete/${deleteId}`, {
+        fetch(`http://localhost:5000/api/v1/seller/popup/delete/${deleteId}`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",

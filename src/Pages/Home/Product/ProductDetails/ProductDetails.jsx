@@ -179,7 +179,7 @@ const ProductDetails = () => {
         userInfo
       }
       console.log(data);
-      fetch(`https://backend.doob.com.bd/api/v1/seller/web-store?id=${id}`, {
+      fetch(`http://localhost:5000/api/v1/seller/web-store?id=${id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -242,7 +242,7 @@ const ProductDetails = () => {
       };
 
       // Post the comment data to the backend
-      const response = await fetch("https://backend.doob.com.bd/api/v1/seller/add-new-comment", {
+      const response = await fetch("http://localhost:5000/api/v1/seller/add-new-comment", {
         method: 'post',
         headers: {
           'content-type': 'application/json',
@@ -263,7 +263,7 @@ const ProductDetails = () => {
 
 
   async function uploadImage(formData) {
-    const url = "https://backend.doob.com.bd/api/v1/image/upload-image";
+    const url = "http://localhost:5000/api/v1/image/upload-image";
     const response = await fetch(url, {
       method: "POST",
       body: formData,
@@ -276,7 +276,7 @@ const ProductDetails = () => {
   const { data: comments = {}, refetch: reload } = useQuery({
     queryKey: ["comments"],
     queryFn: async () => {
-      const res = await fetch(`https://backend.doob.com.bd/api/v1/seller/product-comment?id=${productFind?._id}`);
+      const res = await fetch(`http://localhost:5000/api/v1/seller/product-comment?id=${productFind?._id}`);
       const data = await res.json();
       return data?.comments;
     },

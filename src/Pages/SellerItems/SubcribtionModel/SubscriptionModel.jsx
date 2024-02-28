@@ -15,7 +15,7 @@ const SubscriptionModel = () => {
     const { data: prices = {}, loader } = useQuery({
         queryKey: ["subscriptionModal"],
         queryFn: async () => {
-            const res = await fetch(`https://backend.doob.com.bd/api/v1/seller/subscription-model?priceId=${shopInfo?.priceId}`);
+            const res = await fetch(`http://localhost:5000/api/v1/seller/subscription-model?priceId=${shopInfo?.priceId}`);
             const data = await res.json();
             return data?.data;
         },
@@ -27,7 +27,7 @@ const SubscriptionModel = () => {
     const { data: commissionHistory = [], } = useQuery({
         queryKey: ["commissionHistory"],
         queryFn: async () => {
-            const res = await fetch(`https://backend.doob.com.bd/api/v1/seller/get-commission?shopId=${shopInfo._id}`);
+            const res = await fetch(`http://localhost:5000/api/v1/seller/get-commission?shopId=${shopInfo._id}`);
             const data = await res.json();
             console.log(data)
             return data.history;
@@ -38,7 +38,7 @@ const SubscriptionModel = () => {
     const { data: pricesData = [], refetch } = useQuery({
         queryKey: ["pricesData"],
         queryFn: async () => {
-            const res = await fetch("https://backend.doob.com.bd/api/v1/admin/pricing");
+            const res = await fetch("http://localhost:5000/api/v1/admin/pricing");
             const data = await res.json();
             return data;
         },
@@ -51,7 +51,7 @@ const SubscriptionModel = () => {
         queryKey: "possibility",
         queryFn: async () => {
             const res = await fetch(
-                `https://backend.doob.com.bd/api/v1/seller/check-free-trail?shopId=${shopInfo._id}`
+                `http://localhost:5000/api/v1/seller/check-free-trail?shopId=${shopInfo._id}`
             );
             const data = await res.json();
             console.log(data);
@@ -59,7 +59,7 @@ const SubscriptionModel = () => {
         },
     });
 
-    console.log(`https://backend.doob.com.bd/api/v1/seller/check-free-trail?shopId=${shopInfo._id}`, 'posible');
+    console.log(`http://localhost:5000/api/v1/seller/check-free-trail?shopId=${shopInfo._id}`, 'posible');
 
 
     const originalDate = shopInfo?.paymentDate;

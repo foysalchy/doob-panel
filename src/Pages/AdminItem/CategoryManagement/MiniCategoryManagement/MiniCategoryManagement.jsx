@@ -8,12 +8,12 @@ const MiniCategoryManagement = () => {
         addBtn: 'bg-black text-white px-4 py-2 flex items-center rounded-lg',
 
     }
-   
+
 
     const { data: miniCategory = [], refetch } = useQuery({
         queryKey: ["miniCategory"],
         queryFn: async () => {
-            const res = await fetch("https://backend.doob.com.bd/api/v1/admin/category/miniCategories");
+            const res = await fetch("http://localhost:5000/api/v1/admin/category/miniCategories");
             const data = await res.json();
             return data.rows;
         },
@@ -21,7 +21,7 @@ const MiniCategoryManagement = () => {
 
     // status update
     const statusUpdate = (id, status) => {
-        fetch(`https://backend.doob.com.bd/api/v1/admin/category/miniCategory?id=${id}&status=${status}`, {
+        fetch(`http://localhost:5000/api/v1/admin/category/miniCategory?id=${id}&status=${status}`, {
             method: "PUT",
             headers: {
                 "content-type": "application/json",
@@ -62,7 +62,7 @@ const MiniCategoryManagement = () => {
                                             <td className="px-6 py-4 whitespace-nowrap">
                                                 <img src={item?.img} alt="" className="ring-1 ring-gray-400 w-[60px] object-cover h-[60px] rounded" />
                                             </td>
-                                              <td className="px-6 py-4 whitespace-nowrap">{item.miniCategoryName}</td>
+                                            <td className="px-6 py-4 whitespace-nowrap">{item.miniCategoryName}</td>
                                             <td className="px-6 py-4 whitespace-nowrap">{item.subCategoryName}</td>
                                             <td className="px-6 py-4 whitespace-nowrap">{item.megaCategoryName}</td>
                                             <td className="px-6 py-4 whitespace-nowrap">{formattedTimeStamp}</td>

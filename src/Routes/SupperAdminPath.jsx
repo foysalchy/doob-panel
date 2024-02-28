@@ -65,6 +65,7 @@ import AddBlogsCatagorys from "../Pages/AdminItem/BlogsCatagorys/AddBlogsCatagor
 import BlogsCatagoryManagement from "../Pages/AdminItem/BlogsCatagorys/BlogsCatagoryManagement";
 import SellerOrderManagement from "../Pages/AdminItem/SellerOrderManagement/SellerOrderManagenent";
 import StockManagement from "../Pages/SellerItems/StockManagement/StockManagement";
+import AdminHomePageControl from "../Pages/AdminItem/ContentManagement/AdminHomePageControl/AdminHomePageControl";
 
 const SupperAdminPath = [
     {
@@ -130,7 +131,7 @@ const SupperAdminPath = [
         element: <AdminSingleBlog />,
         loader: async ({ params }) => {
             const id = params.id;
-            return fetch(`https://backend.doob.com.bd/api/v1/admin/all-blogs/${id}`);
+            return fetch(`http://localhost:5000/api/v1/admin/all-blogs/${id}`);
         },
     },
     {
@@ -350,6 +351,12 @@ const SupperAdminPath = [
         </CheckStaff>
     },
 
+    {
+        path: 'content-management/home-control',
+        element: <CheckStaff>
+            <AdminHomePageControl />
+        </CheckStaff>
+    },
     {
         path: 'content-management/admin-popup',
         element: <CheckStaff>

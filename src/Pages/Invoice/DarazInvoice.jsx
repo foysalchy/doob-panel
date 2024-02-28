@@ -18,12 +18,12 @@ const DarazInvoice = () => {
         queryKey: ["invoiceDarazOrder"],
         queryFn: async () => {
             if (shopInfo) {
-                const res = await fetch(`https://backend.doob.com.bd/api/v1/seller/daraz-single-order?id=${shopInfo?._id}&orderId=${id}`);
+                const res = await fetch(`http://localhost:5000/api/v1/seller/daraz-single-order?id=${shopInfo?._id}&orderId=${id}`);
                 const data = await res.json();
                 return data.data;
             }
         },
-    }); 
+    });
     const info = darazInvoiceData.find(itm => itm?.order_id == id);
     let totalPrice = 0;
 

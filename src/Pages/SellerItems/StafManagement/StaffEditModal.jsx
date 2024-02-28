@@ -48,7 +48,7 @@ const StaffEditModal = ({ OpenModal, setOpenModal, staffInfo, refetch }) => {
 
         const data = { user, shopEmail, permissions, role }
         console.log(data, permissions, '+++++')
-        fetch(`https://backend.doob.com.bd/api/v1/seller/staff-add`, {
+        fetch(`http://localhost:5000/api/v1/seller/staff-add`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json'

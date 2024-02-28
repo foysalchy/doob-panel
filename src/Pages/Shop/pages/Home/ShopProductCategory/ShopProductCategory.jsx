@@ -16,7 +16,7 @@ const ShopProductCategory = () => {
     const { data: categories = [], isLoading, refetch } = useQuery({
         queryKey: ["categories"],
         queryFn: async () => {
-            const res = await fetch(`https://backend.doob.com.bd/api/v1/shop/category/get/${shopId}`);
+            const res = await fetch(`http://localhost:5000/api/v1/shop/category/get/${shopId}`);
             const data = await res.json();
             return data;
         },

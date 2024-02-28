@@ -3,14 +3,16 @@ import React, { useState } from 'react';
 import { BiEdit } from 'react-icons/bi';
 import StockEdit from './StockEdit';
 import BrightAlert from 'bright-alert';
+import StockInvoiceAdmin from './StockInvoiceAdmin';
 
 
 const StockManagement = () => {
     const [on, setOn] = useState(false)
+    const [invoiceOn, setInvoiceOn] = useState(false)
     const { data: stockRequest = [], refetch } = useQuery({
         queryKey: ["stockRequest"],
         queryFn: async () => {
-            const res = await fetch(`https://backend.doob.com.bd/api/v1/admin/stock-request`);
+            const res = await fetch(`http://localhost:5000/api/v1/admin/stock-request`);
             const data = await res.json();
             console.log(data, 'data');
             return data?.data;
@@ -19,7 +21,7 @@ const StockManagement = () => {
 
     const handleUpdate = (data) => {
         console.log(data);
-        fetch(`https://backend.doob.com.bd/api/v1/admin/stock-request?id=${data?._id}&quantity=${data?.quantity}`, {
+        fetch(`http://localhost:5000/api/v1/admin/stock-request?id=${data?._id}&quantity=${data?.quantity}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
@@ -60,7 +62,6 @@ const StockManagement = () => {
                                 >
                                     Quantity
                                 </th>
-
                                 <th
                                     scope="col"
                                     className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 text-gray-400"
@@ -75,7 +76,7 @@ const StockManagement = () => {
                                     <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                                         <div className="inline-flex items-center gap-x-3">
                                             <div className="w-5/12">
-                                                <h2 className="font-medium text-gray-800  ">
+                                                <h2 onClick={() => setInvoiceOn(itm)} className="font-medium text-blue-500  ">
                                                     {itm?.productId}
                                                 </h2>
                                             </div>
@@ -100,6 +101,10 @@ const StockManagement = () => {
                                         </button>
                                     </td>
                                     {/* {on._id=== itm?._id && <StockEdit setOn={setOn} itm={itm} />} */}
+
+                                    {
+                                        invoiceOn?._id === itm?._id && <StockInvoiceAdmin setOn={setInvoiceOn} products={itm} />
+                                    }
                                 </tr>
                             ))}
                         </tbody>

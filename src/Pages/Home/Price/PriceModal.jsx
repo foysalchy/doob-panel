@@ -24,7 +24,7 @@ const PriceModal = ({ open, setOpen }) => {
     queryKey: ["getawayData"],
     queryFn: async () => {
       const res = await fetch(
-        "https://backend.doob.com.bd/api/v1/admin/getaway"
+        "http://localhost:5000/api/v1/admin/getaway"
       );
       const data = await res.json();
       return data;
@@ -38,7 +38,7 @@ const PriceModal = ({ open, setOpen }) => {
     queryKey: ["possibility"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/seller/check-free-trail?shopId=${shopInfo._id}`
+        `http://localhost:5000/api/v1/seller/check-free-trail?shopId=${shopInfo._id}`
       );
       const data = await res.json();
       return data.possible
@@ -62,7 +62,7 @@ const PriceModal = ({ open, setOpen }) => {
 
     if (shopInfo) {
       fetch(
-        `https://backend.doob.com.bd/api/v1/seller/update-payment?shopId=${shopInfo._id}&paymentId=${open?._id}`,
+        `http://localhost:5000/api/v1/seller/update-payment?shopId=${shopInfo._id}&paymentId=${open?._id}`,
         {
           method: "PATCH",
           headers: {

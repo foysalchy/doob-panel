@@ -25,13 +25,13 @@ const AddSubCategory = () => {
         queryKey: ["category"],
         queryFn: async () => {
 
-            const res = await fetch(`https://backend.doob.com.bd/api/v1/category/seller/${shopInfo._id}`);
+            const res = await fetch(`http://localhost:5000/api/v1/category/seller/${shopInfo._id}`);
             const data = await res.json();
             return data;
         },
     });
 
-    console.log(`https://backend.doob.com.bd/api/v1/category/seller/${shopInfo._id}`);
+    console.log(`http://localhost:5000/api/v1/category/seller/${shopInfo._id}`);
 
     const option = darazData?.filter((warehouse) => warehouse.status).map((warehouse) => ({
         value: JSON.stringify(warehouse),
@@ -79,7 +79,7 @@ const AddSubCategory = () => {
             status: true
         }
 
-        const url = `https://backend.doob.com.bd/api/v1/category/seller/sub/add`;
+        const url = `http://localhost:5000/api/v1/category/seller/sub/add`;
 
         const response = await fetch(url, {
             method: "POST",

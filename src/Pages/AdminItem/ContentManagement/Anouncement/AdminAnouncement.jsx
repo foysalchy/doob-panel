@@ -16,7 +16,7 @@ const AdminAnouncement = () => {
     const { data: popupData = [], refetch } = useQuery({
         queryKey: "announcement",
         queryFn: async () => {
-            const res = await fetch(`https://backend.doob.com.bd/api/v1/admin/announcement`);
+            const res = await fetch(`http://localhost:5000/api/v1/admin/announcement`);
             const data = await res.json();
             return data?.data;
         },
@@ -38,7 +38,7 @@ const AdminAnouncement = () => {
 
     if (isDelete) {
 
-        fetch(`https://backend.doob.com.bd/api/v1/seller/popup/delete/${deleteId}`, {
+        fetch(`http://localhost:5000/api/v1/seller/popup/delete/${deleteId}`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
@@ -71,7 +71,7 @@ const AdminAnouncement = () => {
     const EditStatus = (id, status) => {
         console.log(id, status);
         setLoading(true)
-        fetch(`https://backend.doob.com.bd/api/v1/admin/announcement?AnointmentId=${id}`, {
+        fetch(`http://localhost:5000/api/v1/admin/announcement?AnointmentId=${id}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
@@ -86,14 +86,14 @@ const AdminAnouncement = () => {
 
     const onDelete = (id) => {
         setLoading(true)
-        fetch(`https://backend.doob.com.bd/api/v1/admin/announcement?AnointmentId=${id}`, {
+        fetch(`http://localhost:5000/api/v1/admin/announcement?AnointmentId=${id}`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
             },
 
         }).then((res) => res.json()).then((data) => {
-            console.log(data, `https://backend.doob.com.bd/api/v1/admin/announcement?AnointmentId=${id}`);
+            console.log(data, `http://localhost:5000/api/v1/admin/announcement?AnointmentId=${id}`);
             setLoading(false)
             Swal.fire(`Seller disable ${status} `, '', 'success');
             refetch()

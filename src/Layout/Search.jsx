@@ -10,9 +10,9 @@ const Search = () => {
 
     const searchData = async () => {
         const term = searchTerm;
-        console.log(`https://backend.doob.com.bd/api/v1/admin/search?term=${encodeURIComponent(term)}`);
+        console.log(`http://localhost:5000/api/v1/admin/search?term=${encodeURIComponent(term)}`);
         try {
-            const response = await fetch(`https://backend.doob.com.bd/api/v1/admin/search?term=${encodeURIComponent(term)}`);
+            const response = await fetch(`http://localhost:5000/api/v1/admin/search?term=${encodeURIComponent(term)}`);
             const data = await response.json();
             console.log(data);
             setSearchResults(data);
@@ -23,14 +23,14 @@ const Search = () => {
             // Handle errors
             console.error('Error:', error);
         }
-    };  
+    };
     const handleInputChange = (e) => {
         const input = e.target.value;
         console.log(input);
         setSearchTerm(input)
         setSearchResults()
 
-        fetch(`https://backend.doob.com.bd/api/v1/admin/search-history?term=${encodeURIComponent(input)}`).then((response) => response.json()).then((data) => setSearchHistory(data))
+        fetch(`http://localhost:5000/api/v1/admin/search-history?term=${encodeURIComponent(input)}`).then((response) => response.json()).then((data) => setSearchHistory(data))
     };
 
     return (

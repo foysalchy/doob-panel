@@ -24,7 +24,7 @@ const AddExtraCategory = () => {
         queryKey: ["category"],
         queryFn: async () => {
             if (shopInfo.darazLogin) {
-                const res = await fetch(`https://backend.doob.com.bd/api/v1/category/seller/${shopInfo._id}`);
+                const res = await fetch(`http://localhost:5000/api/v1/category/seller/${shopInfo._id}`);
                 const data = await res.json();
                 return data;
             }
@@ -85,7 +85,7 @@ const AddExtraCategory = () => {
         }
         console.log(data);
 
-        const url = `https://backend.doob.com.bd/api/v1/category/seller/extra/add`;
+        const url = `http://localhost:5000/api/v1/category/seller/extra/add`;
 
         fetch(url, {
             method: "POST",
@@ -122,7 +122,7 @@ const AddExtraCategory = () => {
             megaCategory: selectedOption.value,
         };
 
-        fetch(`https://backend.doob.com.bd/api/v1/category/seller/sub`, {
+        fetch(`http://localhost:5000/api/v1/category/seller/sub`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -158,7 +158,7 @@ const AddExtraCategory = () => {
             subCategoryName: value.value,
             megaCategory,
         }
-        fetch(`https://backend.doob.com.bd/api/v1/category/seller/mini`, {
+        fetch(`http://localhost:5000/api/v1/category/seller/mini`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

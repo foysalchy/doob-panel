@@ -39,7 +39,7 @@ const SupportTicketManagement = () => {
     const { data: tickets = [], refetch, isLoading } = useQuery({
         queryKey: ["contact"],
         queryFn: async () => {
-            const res = await fetch(`https://backend.doob.com.bd/api/v1/admin/supportTicketRequest`);
+            const res = await fetch(`http://localhost:5000/api/v1/admin/supportTicketRequest`);
             const data = await res.json();
             return data;
         },
@@ -372,7 +372,7 @@ const SupportTicketManagement = () => {
                                                     <span className="relative text-xs">New Ticket</span>
                                                 </span>
                                                     || ticket?.status === 'Open' &&
-                                                    <button onClick={() => fetch(`https://backend.doob.com.bd/api/v1/support/support-ticket/status/${ticket.ticketId}`, {
+                                                    <button onClick={() => fetch(`http://localhost:5000/api/v1/support/support-ticket/status/${ticket.ticketId}`, {
                                                         method: 'PUT',
                                                         headers: { 'Content-Type': 'application/json' },
                                                         body: JSON.stringify({ status: 'Closed' }),
@@ -390,7 +390,7 @@ const SupportTicketManagement = () => {
                                                         <span className="relative text-xs">Open</span>
                                                     </button>
                                                     || ticket.status === 'Closed' &&
-                                                    <button onClick={() => fetch(`https://backend.doob.com.bd/api/v1/support/support-ticket/status/${ticket.ticketId}`, {
+                                                    <button onClick={() => fetch(`http://localhost:5000/api/v1/support/support-ticket/status/${ticket.ticketId}`, {
                                                         method: 'PUT',
                                                         headers: { 'Content-Type': 'application/json' },
                                                         body: JSON.stringify({ status: 'Open' }),
@@ -433,7 +433,7 @@ const SupportTicketManagement = () => {
                                             )}
 
                                             <td className="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-500 text-sm leading-5">
-                                                <button onClick={() => fetch(`https://backend.doob.com.bd/api/v1/admin/support-ticket/${ticket._id}`, {
+                                                <button onClick={() => fetch(`http://localhost:5000/api/v1/admin/support-ticket/${ticket._id}`, {
                                                     method: 'delete',
                                                     headers: { 'Content-Type': 'application/json' },
                                                     body: JSON.stringify({ status: 'Open' }),

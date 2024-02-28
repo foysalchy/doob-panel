@@ -12,11 +12,11 @@ const ShopNewProduct = () => {
     const { shop_id } = useContext(ShopAuthProvider)
 
 
-    console.log(`https://backend.doob.com.bd/api/v1/shop/product/${shop_id.shop_id}/new-product`);
+    console.log(`http://localhost:5000/api/v1/shop/product/${shop_id.shop_id}/new-product`);
     const { data: products = [], refetch, isLoading } = useQuery({
         queryKey: ["products"],
         queryFn: async () => {
-            const res = await fetch(`https://backend.doob.com.bd/api/v1/shop/product/${shop_id.shop_id}/new-product`);
+            const res = await fetch(`http://localhost:5000/api/v1/shop/product/${shop_id.shop_id}/new-product`);
             const data = await res.json();
             return data;
         },

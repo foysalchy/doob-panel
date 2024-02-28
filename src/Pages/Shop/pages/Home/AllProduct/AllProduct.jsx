@@ -5,11 +5,11 @@ import { Link } from 'react-router-dom';
 
 const AllProduct = () => {
     const { shop_id } = useContext(ShopAuthProvider)
-    console.log(`https://backend.doob.com.bd/api/v1/shop/product/${shop_id.shop_id}/all-product?limit=20`);
+    console.log(`http://localhost:5000/api/v1/shop/product/${shop_id.shop_id}/all-product?limit=20`);
     const { data: newProducts = [], refetch } = useQuery({
         queryKey: ["allProduct"],
         queryFn: async () => {
-            const res = await fetch(`https://backend.doob.com.bd/api/v1/shop/product/${shop_id.shop_id}/all-product?limit=20`);
+            const res = await fetch(`http://localhost:5000/api/v1/shop/product/${shop_id.shop_id}/all-product?limit=20`);
             const data = await res.json();
             return data;
         },

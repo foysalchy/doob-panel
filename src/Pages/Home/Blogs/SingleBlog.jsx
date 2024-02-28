@@ -15,7 +15,7 @@ const SingleBlog = () => {
   const { user } = useContext(AuthContext)
 
   useEffect(() => {
-    fetch("https://backend.doob.com.bd/api/v1/admin/all-blogs")
+    fetch("http://localhost:5000/api/v1/admin/all-blogs")
       .then((res) => res.json())
       .then((data) => setBlogList(data));
   }, []);
@@ -35,7 +35,7 @@ const SingleBlog = () => {
     const userData = { name: user.name, userId: user._id }
     const timestamp = new Date().getTime()
     let data = { text: comment, user: userData, timeStamp: timestamp, }
-    fetch(`https://backend.doob.com.bd/api/v1/admin/add-blog-comment?id=${blogInfo._id}`, {
+    fetch(`http://localhost:5000/api/v1/admin/add-blog-comment?id=${blogInfo._id}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json'
@@ -124,7 +124,7 @@ const SingleBlog = () => {
                 __html: blogInfo.message,
               }}
             />
-            
+
           </div>
           <hr className="my-4 border-gray-500" />
           <form onSubmit={uploadComment} className="">

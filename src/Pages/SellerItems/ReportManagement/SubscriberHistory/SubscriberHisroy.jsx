@@ -3,6 +3,7 @@ import React, { useContext, useState } from 'react';
 import { FaLongArrowAltRight } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../../../AuthProvider/UserProvider';
+import { BiLeftArrow, BiRightArrow } from 'react-icons/bi';
 
 const SubscriberHisroy = () => {
     const { shopInfo } = useContext(AuthContext)
@@ -10,7 +11,7 @@ const SubscriberHisroy = () => {
     const { data: subscribers = [], isLoading } = useQuery({
         queryKey: ["subscriberReport"],
         queryFn: async () => {
-            const res = await fetch(`https://backend.doob.com.bd/api/v1/seller/subscriber-report?shopId=${shopInfo?.shopId}`);
+            const res = await fetch(`http://localhost:5000/api/v1/seller/subscriber-report?shopId=${shopInfo?.shopId}`);
             const data = await res.json();
             return data?.data;
         },
@@ -47,21 +48,76 @@ const SubscriberHisroy = () => {
 
     // Calculate start and end index for pagination
     const itemsPerPage = 6;
-    const startIndex = (currentPage - 1) * itemsPerPage;
-    const endIndex = startIndex + itemsPerPage;
-
-    // Slice the subscribers array based on pagination
-    const displayedSubscribers = subscribers.slice(startIndex, endIndex);
 
 
-    // Function to handle next page
-    const nextPage = () => {
-        setCurrentPage((prevPage) => Math.min(prevPage + 1, Math.ceil(subscribers.length / itemsPerPage)));
+
+    const pageSize = 6;
+    const startIndex = (currentPage - 1) * pageSize;
+    const endIndex = startIndex + pageSize;
+    const totalPages = Math.ceil(subscribers?.length / pageSize);
+
+    const currentData = subscribers.slice(startIndex, endIndex);
+
+    const handleChangePage = (newPage) => {
+
+        setCurrentPage(newPage);
     };
 
-    // Function to handle previous page
-    const prevPage = () => {
-        setCurrentPage((prevPage) => Math.max(prevPage - 1, 1));
+
+
+    const renderPageNumbers = () => {
+        const startPage = Math.max(1, currentPage - Math.floor(pageSize / 2));
+        const endPage = Math.min(totalPages, startPage + pageSize - 1);
+
+        return (
+            <React.Fragment>
+                {/* First Page */}
+                {startPage > 1 && (
+                    <li>
+                        <button
+                            className={`block h-8 w-8 rounded border border-gray-900 bg-white text-center leading-8 text-gray-900`}
+                            onClick={() => handleChangePage(1)}
+                        >
+                            1
+                        </button>
+                    </li>
+                )}
+
+
+
+                {/* Current Page */}
+                {Array.from({ length: endPage - startPage + 1 }).map((_, index) => {
+                    const pageNumber = startPage + index;
+                    return (
+                        <li key={pageNumber}>
+                            <button
+                                className={`block h-8 w-8 rounded border ${pageNumber === currentPage
+                                    ? 'border-blue-600 bg-blue-600 text-white'
+                                    : 'border-gray-900 bg-white text-center leading-8 text-gray-900'
+                                    }`}
+                                onClick={() => handleChangePage(pageNumber)}
+                            >
+                                {pageNumber}
+                            </button>
+                        </li>
+                    );
+                })}
+
+
+
+                {/* Last Page */}
+                {endPage < totalPages && (
+                    <li>
+                        <button
+                            className={`block h-8 w-8 rounded border border-gray-100 bg-white text-center leading-8 text-gray-100`}
+                            onClick={() => handleChangePage(totalPages)}
+                        >
+                            {totalPages}
+                        </button>
+                    </li>
+                )}
+            </React.Fragment>
+        );
     };
 
     return (
@@ -104,7 +160,7 @@ const SubscriberHisroy = () => {
                                     </thead>
                                     <tbody className="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
                                         {
-                                            displayedSubscribers?.map((subscriber, index) => (
+                                            currentData?.map((subscriber, index) => (
                                                 <tr key={subscriber?.id}>
                                                     <td className="px-4 py-3 text-sm text-gray-500 dark:text-gray-400">
                                                         {index + 1}
@@ -136,32 +192,47 @@ const SubscriberHisroy = () => {
                     </div>
                 </div>
                 {/* Pagination */}
-                <div className="flex justify-center mt-4">
-                    <button
-                        onClick={prevPage}
-                        disabled={currentPage === 1}
-                        className={`mx-1 px-3 py-1 rounded-md ${currentPage === 1 ? 'bg-gray-200 text-gray-700' : 'bg-blue-500 text-white hover:bg-blue-600'}`}
-                    >
-                        Previous
-                    </button>
-                    {
-                        Array.from({ length: Math.ceil(subscribers.length / itemsPerPage) }, (_, i) => (
+
+                <div className='flex justify-center mt-4'>
+                    <ol className="flex justify-center gap-1 text-xs font-medium">
+                        <li>
                             <button
-                                key={i}
-                                onClick={() => handlePagination(i + 1)}
-                                className={`mx-1 px-3 py-1 rounded-md ${currentPage === i + 1 ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}`}
+                                className="inline-flex h-8 w-8 items-center justify-center rounded border border-gray-900 bg-white text-gray-900 rtl:rotate-180"
+                                onClick={() => handleChangePage(Math.max(1, currentPage - 1))}
+                                disabled={currentPage === 1}
                             >
-                                {i + 1}
+                                <span className="sr-only">Prev Page</span>
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    className="h-3 w-3"
+                                    viewBox="0 0 20 20"
+                                    fill="currentColor"
+                                >
+                                    <BiLeftArrow className='text-xl' />
+                                </svg>
                             </button>
-                        ))
-                    }
-                    <button
-                        onClick={nextPage}
-                        disabled={currentPage === Math.ceil(subscribers.length / itemsPerPage)}
-                        className={`mx-1 px-3 py-1 rounded-md ${currentPage === Math.ceil(subscribers.length / itemsPerPage) ? 'bg-gray-200 text-gray-700' : 'bg-blue-500 text-white hover:bg-blue-600'}`}
-                    >
-                        Next
-                    </button>
+                        </li>
+
+                        {renderPageNumbers()}
+
+                        <li>
+                            <button
+                                className="inline-flex h-8 w-8 items-center justify-center rounded border border-gray-900 disabled:cursor-not-allowed bg-white text-gray-900 rtl:rotate-180"
+                                onClick={() => handleChangePage(Math.min(totalPages, currentPage + 1))}
+                                disabled={currentPage === totalPages}
+                            >
+                                <span className="sr-only">Next Page</span>
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    className="h-3 w-3"
+                                    viewBox="0 0 20 20"
+                                    fill="currentColor"
+                                >
+                                    <BiRightArrow className='text-xl' />
+                                </svg>
+                            </button>
+                        </li>
+                    </ol>
                 </div>
             </section>
 

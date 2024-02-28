@@ -16,7 +16,7 @@ const AddMegaCategory = () => {
 
         const formData = new FormData();
         formData.append("image", image);
-        const url = `https://backend.doob.com.bd/api/v1/image/upload-image`;
+        const url = `http://localhost:5000/api/v1/image/upload-image`;
         fetch(url, {
             method: "POST",
             body: formData,
@@ -37,7 +37,7 @@ const AddMegaCategory = () => {
     }
 
     const postCategory = (categoryData, form) => {
-        fetch("https://backend.doob.com.bd/api/v1/admin/category/megacategory", {
+        fetch("http://localhost:5000/api/v1/admin/category/megacategory", {
             method: 'post',
             headers: {
                 'content-type': 'application/json',

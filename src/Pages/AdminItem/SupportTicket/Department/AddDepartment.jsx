@@ -10,7 +10,7 @@ const AddDepartment = ({ ModalOpen, setModalOpen }) => {
     const handleUpload = () => {
         setLoading(true)
 
-        fetch('https://backend.doob.com.bd/api/v1/admin/department', {
+        fetch('http://localhost:5000/api/v1/admin/department', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

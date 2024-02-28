@@ -11,14 +11,14 @@ const ReviewTableRow = ({ refetch, itm }) => {
     const [openModal, setOpenModal] = useState(false);
 
     const handleDelete = () => {
-        fetch(`https://backend.doob.com.bd/api/v1/seller/delete-comment?id=${itm?._id}`, {
+        fetch(`http://localhost:5000/api/v1/seller/delete-comment?id=${itm?._id}`, {
             method: 'DELETE',
         })
             .then(res => res.json())
             .then(data => {
                 BrightAlert(`${data.message}`, '', "success");
                 refetch();
-                
+
             });
     }
     return (

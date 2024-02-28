@@ -8,7 +8,7 @@ const AdminSeviceOrder = () => {
     const { data: serviceOrder = [], refetch } = useQuery({
         queryKey: ["serviceOrder"],
         queryFn: async () => {
-            const res = await fetch("https://backend.doob.com.bd/api/v1/admin/get-all-service-order");
+            const res = await fetch("http://localhost:5000/api/v1/admin/get-all-service-order");
             const data = await res.json();
             return data.data;
         },

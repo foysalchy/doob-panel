@@ -40,7 +40,7 @@ import { IoIosArrowDown, IoMdPhotos } from "react-icons/io";
 import { FiSettings } from "react-icons/fi";
 import { GrDomain } from "react-icons/gr";
 import { PiWarehouseThin } from "react-icons/pi";
-
+import { VscFileMedia } from "react-icons/vsc";
 const SideNavAdmin = () => {
   const { user, logOut } = useContext(AuthContext);
   const [menu, setMenu] = useState(true);
@@ -109,7 +109,7 @@ const SideNavAdmin = () => {
               </button>
             )} */}
           </div>
-            
+
           <div className="flex-1">
             <ul className="pt-2 pb-4 space-y-1 text-sm">
               <NavLink
@@ -1116,6 +1116,14 @@ const SideNavAdmin = () => {
                         <ul className="mt-2 space-y-1 px-4">
                           <li className='flex cursor-pointer items-center justify-between text-black  p-2 rounded-sm hover:bg-gray-800  hover:text-gray-50'>
                             <Link
+                              to={'/admin/content-management/home-control'}
+                              className="  flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                            >
+                              <VscFileMedia className='w-5 h-5 fill-current text-gray-400 ' /> Home Control
+                            </Link>
+                          </li>
+                          <li className='flex cursor-pointer items-center justify-between text-black  p-2 rounded-sm hover:bg-gray-800  hover:text-gray-50'>
+                            <Link
                               to={'/admin/content-management/admin-popup'}
                               className="  flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
                             >
@@ -1404,7 +1412,7 @@ const SideNavAdmin = () => {
                 {menu && <span>Customer manage</span>}
               </NavLink>
 
-             <NavLink
+              <NavLink
                 onMouseMove={() => setMenu(true)}
                 rel="noopener noreferrer"
                 to={"/admin/seller-manage"}

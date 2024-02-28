@@ -24,7 +24,7 @@ const ProfileUpdate = () => {
         };
         console.log(data);
 
-        fetch(`https://backend.doob.com.bd/api/v1/shop/update/userInfo?token=${shopUser._id}`, {
+        fetch(`http://localhost:5000/api/v1/shop/update/userInfo?token=${shopUser._id}`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',

@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { BiCheck } from 'react-icons/bi';
+import { BiCheck, BiLeftArrow, BiRightArrow } from 'react-icons/bi';
 import { Link } from 'react-router-dom';
 import TableRow from './DarazTableRow';
 import { AuthContext } from '../../../../AuthProvider/UserProvider';
@@ -14,11 +14,11 @@ const DarazOrderTable = ({ selectedValue, searchValue }) => {
     const { shopInfo } = useContext(AuthContext);
 
 
-    console.log(`https://backend.doob.com.bd/api/v1/seller/daraz-order?id=${shopInfo._id}`);
+    console.log(`http://localhost:5000/api/v1/seller/daraz-order?id=${shopInfo._id}`);
     const { data: tData = [], refetch, isLoading } = useQuery({
         queryKey: ["sellerDarazOrder"],
         queryFn: async () => {
-            const res = await fetch(`https://backend.doob.com.bd/api/v1/seller/daraz-order?id=${shopInfo._id}&status=${selectedValue}`);
+            const res = await fetch(`http://localhost:5000/api/v1/seller/daraz-order?id=${shopInfo._id}&status=${selectedValue}`);
 
             const data = await res.json();
             return data.data;
@@ -44,10 +44,75 @@ const DarazOrderTable = ({ selectedValue, searchValue }) => {
         : tData?.orders;
 
     console.log(filteredData);
-    // Calculate the range of items to display based on pagination
-    const startIndex = (currentPage - 1) * itemsPerPage;
-    const endIndex = startIndex + itemsPerPage;
-    // const currentItems = filteredData?.slice(startIndex, endIndex);
+
+    const pageSize = 6;
+    const startIndex = (currentPage - 1) * pageSize;
+    const endIndex = startIndex + pageSize;
+    const totalPages = Math.ceil(filteredData?.length / pageSize);
+
+    const currentData = filteredData.slice(startIndex, endIndex);
+
+    const handleChangePage = (newPage) => {
+
+        setCurrentPage(newPage);
+    };
+
+
+
+    const renderPageNumbers = () => {
+        const startPage = Math.max(1, currentPage - Math.floor(pageSize / 2));
+        const endPage = Math.min(totalPages, startPage + pageSize - 1);
+
+        return (
+            <React.Fragment>
+                {/* First Page */}
+                {startPage > 1 && (
+                    <li>
+                        <button
+                            className={`block h-8 w-8 rounded border border-gray-900 bg-white text-center leading-8 text-gray-900`}
+                            onClick={() => handleChangePage(1)}
+                        >
+                            1
+                        </button>
+                    </li>
+                )}
+
+
+
+                {/* Current Page */}
+                {Array.from({ length: endPage - startPage + 1 }).map((_, index) => {
+                    const pageNumber = startPage + index;
+                    return (
+                        <li key={pageNumber}>
+                            <button
+                                className={`block h-8 w-8 rounded border ${pageNumber === currentPage
+                                    ? 'border-blue-600 bg-blue-600 text-white'
+                                    : 'border-gray-900 bg-white text-center leading-8 text-gray-900'
+                                    }`}
+                                onClick={() => handleChangePage(pageNumber)}
+                            >
+                                {pageNumber}
+                            </button>
+                        </li>
+                    );
+                })}
+
+
+
+                {/* Last Page */}
+                {endPage < totalPages && (
+                    <li>
+                        <button
+                            className={`block h-8 w-8 rounded border border-gray-100 bg-white text-center leading-8 text-gray-100`}
+                            onClick={() => handleChangePage(totalPages)}
+                        >
+                            {totalPages}
+                        </button>
+                    </li>
+                )}
+            </React.Fragment>
+        );
+    };
 
     console.log(tData);
 
@@ -92,7 +157,7 @@ const DarazOrderTable = ({ selectedValue, searchValue }) => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {filteredData?.map((itm, index) => (
+                                {currentData?.map((itm, index) => (
                                     <DarazTableRow data={itm} index={index} key={index} />
                                 ))}
                             </tbody>
@@ -100,25 +165,48 @@ const DarazOrderTable = ({ selectedValue, searchValue }) => {
                     </div>
                 </div>
             </div> : <h1>Loading......</h1>}
-            <div className="max-w-2xl mx-auto mt-8 pb-8">
-                <nav aria-label="Page navigation example">
-                    <ul className="inline-flex -space-x-px">
-                        {Array.from({ length: Math.ceil(filteredData?.length / itemsPerPage) }, (_, i) => (
-                            <li key={i}>
-                                <button
-                                    onClick={() => setCurrentPage(i + 1)}
-                                    className={`bg-white border ${currentPage === i + 1
-                                        ? 'text-blue-600'
-                                        : 'text-gray-500 hover:bg-gray-100 hover:text-gray-700'
-                                        } border-gray-300 leading-tight py-2 px-3 rounded ${i === 0 ? 'rounded-l-lg' : ''
-                                        } ${i === Math.ceil(filteredData?.length / itemsPerPage) - 1 ? 'rounded-r-lg' : ''}`}
-                                >
-                                    {i + 1}
-                                </button>
-                            </li>
-                        ))}
-                    </ul>
-                </nav>
+
+
+            <div className='flex justify-center mt-4'>
+                <ol className="flex justify-center gap-1 text-xs font-medium">
+                    <li>
+                        <button
+                            className="inline-flex h-8 w-8 items-center justify-center rounded border border-gray-900 bg-white text-gray-900 rtl:rotate-180"
+                            onClick={() => handleChangePage(Math.max(1, currentPage - 1))}
+                            disabled={currentPage === 1}
+                        >
+                            <span className="sr-only">Prev Page</span>
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                className="h-3 w-3"
+                                viewBox="0 0 20 20"
+                                fill="currentColor"
+                            >
+                                <BiLeftArrow className='text-xl' />
+                            </svg>
+                        </button>
+                    </li>
+
+                    {renderPageNumbers()}
+
+                    <li>
+                        <button
+                            className="inline-flex h-8 w-8 items-center justify-center rounded border border-gray-900 disabled:cursor-not-allowed bg-white text-gray-900 rtl:rotate-180"
+                            onClick={() => handleChangePage(Math.min(totalPages, currentPage + 1))}
+                            disabled={currentPage === totalPages}
+                        >
+                            <span className="sr-only">Next Page</span>
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                className="h-3 w-3"
+                                viewBox="0 0 20 20"
+                                fill="currentColor"
+                            >
+                                <BiRightArrow className='text-xl' />
+                            </svg>
+                        </button>
+                    </li>
+                </ol>
             </div>
         </div>
     );

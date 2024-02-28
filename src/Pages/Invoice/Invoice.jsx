@@ -3,6 +3,7 @@ import { useReactToPrint } from 'react-to-print';
 import { AuthContext } from '../../AuthProvider/UserProvider';
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
+import Barcode from 'react-barcode';
 
 const Invoice = () => {
     const { id } = useParams();
@@ -17,7 +18,7 @@ const Invoice = () => {
     const { data: iData = [], refetch } = useQuery({
         queryKey: ["sellerOrder"],
         queryFn: async () => {
-            const res = await fetch(`https://backend.doob.com.bd/api/v1/seller/order?shopId=${shopInfo._id}`);
+            const res = await fetch(`http://localhost:5000/api/v1/seller/order?shopId=${shopInfo._id}`);
             const data = await res.json();
             return data.data;
         },
@@ -79,6 +80,9 @@ const Invoice = () => {
                         </div>
                         <div id="invoice">
                             <h1>INVOICE</h1>
+                            <div className="wrap-2 mt-[-57px] ml-[40px]">
+                                <Barcode value={info._id} />
+                            </div>
                             <div className="date">Date of Invoice: {formattedDate(info?.timestamp)}</div>
                         </div>
                     </div>

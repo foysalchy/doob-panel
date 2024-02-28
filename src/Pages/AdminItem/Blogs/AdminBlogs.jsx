@@ -9,7 +9,7 @@ const AdminBlogs = () => {
   const { data: blogs = [], refetch } = useQuery({
     queryKey: ["blogs"],
     queryFn: async () => {
-      const res = await fetch("https://backend.doob.com.bd/api/v1/admin/all-blogs");
+      const res = await fetch("http://localhost:5000/api/v1/admin/all-blogs");
       const data = await res.json();
       return data;
     },
@@ -17,7 +17,7 @@ const AdminBlogs = () => {
 
   const DeleteBlog = (id) => {
 
-    fetch(`https://backend.doob.com.bd/api/v1/admin/blog`, {
+    fetch(`http://localhost:5000/api/v1/admin/blog`, {
       method: "DELETE",
       headers: {
         "content-type": "application/json",
@@ -46,7 +46,7 @@ const AdminBlogs = () => {
   );
 
   const statusUpdate = (id, status) => {
-    fetch(`https://backend.doob.com.bd/api/v1/admin/blog`, {
+    fetch(`http://localhost:5000/api/v1/admin/blog`, {
       method: "PUT",
       headers: {
         "content-type": "application/json",

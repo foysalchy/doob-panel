@@ -21,7 +21,7 @@ const ModalForWoo = ({ setOpenModal, OpenModal, shopId, setShopInfo }) => {
             shopId
         }
         fetch(
-            `https://backend.doob.com.bd/api/v1/woo/login`,
+            `http://localhost:5000/api/v1/woo/login`,
             {
                 method: "POST",
                 headers: {

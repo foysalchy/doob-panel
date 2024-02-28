@@ -11,7 +11,7 @@ const PageManagement = () => {
   const { data: faqs = [], refetch } = useQuery({
     queryKey: ["faqs"],
     queryFn: async () => {
-      const res = await fetch("https://backend.doob.com.bd/api/v1/admin/pages");
+      const res = await fetch("http://localhost:5000/api/v1/admin/pages");
       const data = await res.json();
       return data;
     },
@@ -20,7 +20,7 @@ const PageManagement = () => {
   const ActiveHandle = (id) => {
 
 
-    fetch(`https://backend.doob.com.bd/api/v1/admin/page/status/${id}`, {
+    fetch(`http://localhost:5000/api/v1/admin/page/status/${id}`, {
       method: "PUT",
       headers: {
         "content-type": "application/json",
@@ -35,7 +35,7 @@ const PageManagement = () => {
 
   const DeactiveHandle = (id) => {
 
-    fetch(`https://backend.doob.com.bd/api/v1/admin/page/unstatus/${id}`, {
+    fetch(`http://localhost:5000/api/v1/admin/page/unstatus/${id}`, {
       method: "PUT",
       headers: {
         "content-type": "application/json",
@@ -51,7 +51,7 @@ const PageManagement = () => {
 
   const DeleteHandle = (id) => {
 
-    fetch(`https://backend.doob.com.bd/api/v1/admin/page/delete?id=${id}`, {
+    fetch(`http://localhost:5000/api/v1/admin/page/delete?id=${id}`, {
       method: "Delete",
       headers: {
         "content-type": "application/json",
