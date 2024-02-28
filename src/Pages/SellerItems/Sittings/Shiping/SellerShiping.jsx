@@ -47,7 +47,7 @@ const SellerShipping = () => {
         const name = selectedMedia
         const api = event.target.api.value
         const key = event.target.key.value
-        const secretKey = event.target.key.value
+        const secretKey = event.target.secretKey.value
 
         const data = {
             name,
@@ -124,7 +124,7 @@ const SellerShipping = () => {
                                 <select name='Media' onChange={handleGetaway}
                                     value={selectedMedia} id="countries" className="flex-grow w-full re h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline">
                                     <option disabled>Choose your Api</option>
-                                    <option value="Redx">Redx</option>
+                                    <option value="Pathao">Pathao</option>
                                     <option value="Steadfast">Steadfast </option>
                                 </select>
                             </div>
@@ -216,11 +216,11 @@ const SellerShipping = () => {
                                 ships?.map(get => (
                                     <div>
 
-                                        {get.name === 'Redx' && <div className="group border relative block bg-white">
+                                        {get.name === 'Pathao' && <div className="group border relative block bg-white">
                                             <img
                                                 alt="Developer"
-                                                src="https://logowik.com/content/uploads/images/redx2046.jpg"
-                                                srcSet="https://logowik.com/content/uploads/images/redx2046.jpg"
+                                                src="https://seeklogo.com/images/P/pathao-logo-003EC541E2-seeklogo.com.png"
+                                                srcSet="https://seeklogo.com/images/P/pathao-logo-003EC541E2-seeklogo.com.png"
                                                 className="absolute inset-0 py-3 object-cover opacity-75 flex justify-center items-center transition-opacity group-hover:opacity-20"
                                             />
 

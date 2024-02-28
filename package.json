@@ -16,6 +16,7 @@
     "@dnd-kit/utilities": "^3.2.2",
     "@emailjs/browser": "^3.11.0",
     "@tanstack/react-query": "^4.36.1",
+    "bkash-payment": "^3.0.2",
     "bright-alert": "^0.2.3",
     "crypto-js": "^4.2.0",
     "firebase": "^10.7.1",

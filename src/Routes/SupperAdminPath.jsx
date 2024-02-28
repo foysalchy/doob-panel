@@ -64,6 +64,7 @@ import SellerReport from "../Pages/AdminItem/ReportManagement/SallerReport/Selle
 import AddBlogsCatagorys from "../Pages/AdminItem/BlogsCatagorys/AddBlogsCatagorys";
 import BlogsCatagoryManagement from "../Pages/AdminItem/BlogsCatagorys/BlogsCatagoryManagement";
 import SellerOrderManagement from "../Pages/AdminItem/SellerOrderManagement/SellerOrderManagenent";
+import AllOrderManage from "../Pages/AdminItem/Order/AllOrderManage";
 
 const SupperAdminPath = [
     {
@@ -443,6 +444,12 @@ const SupperAdminPath = [
         path: 'seller-order-management',
         element: <CheckStaff>
             <SellerOrderManagement />
+        </CheckStaff>
+    },
+    {
+        path: 'seller-order',
+        element: <CheckStaff>
+            <AllOrderManage />
         </CheckStaff>
     },
 

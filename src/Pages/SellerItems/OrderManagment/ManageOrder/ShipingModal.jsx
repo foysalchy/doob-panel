@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { RxCross2 } from 'react-icons/rx';
+import BrightAlert from 'bright-alert';
 
 const ShippingModal = ({ readyToShip, setReadyToShip, orderInfo, refetch, ships, productStatusUpdate }) => {
     console.log(orderInfo);
 
     // const { shopInfo } = useContext(AuthContext)
     let shipInfo = ships[0]
+    console.log(shipInfo);
 
 
     const [loading, setLoading] = useState(false)
@@ -34,9 +36,9 @@ const ShippingModal = ({ readyToShip, setReadyToShip, orderInfo, refetch, ships,
             recipient_phone,
             recipient_address,
             note,
-            // ApiKey: shipInfo.key,
-            // SecretKey: shipInfo.secretKey,
-            // BaseUrl: shipInfo.api
+            ApiKey: shipInfo.key,
+            SecretKey: shipInfo.secretKey,
+            BaseUrl: shipInfo.api
         }
         if (selectedDelivery === "Other") {
             productStatusUpdate("ready_to_ship", orderInfo._id)
@@ -47,30 +49,32 @@ const ShippingModal = ({ readyToShip, setReadyToShip, orderInfo, refetch, ships,
             console.log(uploadData);
 
             try {
-                const res = await fetch(`https://backend.doob.com.bd/api/v1/seller/order-submit-steadfast`, {
+                await fetch(`http://localhost:5000/api/v1/seller/order-submit-steadfast`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify(uploadData),
-                });
+                }).then((res) => res.json()).then((data) => {
+                    console.log(data);
+                    event.target.reset();
+                    setLoading(false);
+                    readyToShip(false)
+                    BrightAlert("Comment Uploaded", "", "success");
+                    refetch();
+                })
 
-                if (!res.ok) {
-                    throw new Error(`HTTP error! Status: ${res.status}`);
-                }
 
-                const data = await res.json();
-                console.log(data);
-                event.target.reset();
-                setLoading(false);
-                Swal.fire("Comment Uploaded", "", "success");
-                refetch();
+
+
             } catch (error) {
                 console.error('Error:', error.message);
                 // Handle the error, e.g., show an error message to the user
             }
         }
     }
+
+    console.log(shipInfo);
 
 
     return (
@@ -109,7 +113,7 @@ const ShippingModal = ({ readyToShip, setReadyToShip, orderInfo, refetch, ships,
                                     >
                                         <option value="Other">Other</option>
                                         {ships?.map((ship) => (
-                                            <option value={ship}>{ship.name}</option>
+                                            <option value={JSON.stringify(ship)}>{ship.name}</option>
                                         ))}
 
 
@@ -221,7 +225,7 @@ const ShippingModal = ({ readyToShip, setReadyToShip, orderInfo, refetch, ships,
                                                 ? "Uploading.."
                                                 : selectedDelivery === "Other"
                                                     ? "Ready to ship"
-                                                    : `Ready for ${selectedDelivery}`
+                                                    : `Ready for Ship`
                                         }
                                     />
                                 </div>
