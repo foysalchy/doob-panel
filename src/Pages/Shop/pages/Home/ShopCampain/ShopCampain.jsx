@@ -71,7 +71,7 @@ const ShopCampain = () => {
     const { data: shopCampainData = [], isLoading } = useQuery({
         queryKey: ["shopCampain"],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/api/v1/shop/shop-campaign?shop_id=${shop_id?.shop_id}`);
+            const res = await fetch(`https://backend.doob.com.bd/api/v1/shop/shop-campaign?shop_id=${shop_id?.shop_id}`);
             const data = await res.json();
             return data?.data;
         },

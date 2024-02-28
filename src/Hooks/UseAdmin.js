@@ -7,7 +7,7 @@ const useAdmin = () => {
   const { user } = useContext(AuthContext);
   useEffect(() => {
     if (user?.email) {
-      fetch(`http://localhost:5000/api/v1/users/supperadmin/${user?.email}`,)
+      fetch(`https://backend.doob.com.bd/api/v1/users/supperadmin/${user?.email}`,)
         .then((res) => res.json())
         .then((data) => {
           setIsAdmin(data?.isAdmin);

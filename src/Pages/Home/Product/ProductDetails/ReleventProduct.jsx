@@ -71,7 +71,7 @@ const ReleventProduct = ({ productFind }) => {
     const { data: releventProduct = [], refetch } = useQuery({
         queryKey: ["releventProduct"],
         queryFn: async () => {
-            const res = await fetch("http://localhost:5000/api/v1/admin/products");
+            const res = await fetch("https://backend.doob.com.bd/api/v1/admin/products");
             const data = await res.json();
             return data;
         },

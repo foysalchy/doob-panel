@@ -14,7 +14,7 @@ const StockEdit = ({ setOn, itm }) => {
         };
 
         console.log(data);
-        // fetch(`http://localhost:5000/api/v1/admin/stock-request?id=${itm?._id}&quantity=${newQuantity}`, {
+        // fetch(`https://backend.doob.com.bd/api/v1/admin/stock-request?id=${itm?._id}&quantity=${newQuantity}`, {
         //     method: "PUT",
         //     headers: {
         //         "Content-Type": "application/json",

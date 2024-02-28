@@ -15,7 +15,7 @@ const PosProductsDetails = ({ invoice, open, setOpen }) => {
 
 
     const fetchData = () => {
-        fetch(`http://localhost:5000/api/v1/seller/seller-user?shopId=${shopInfo.shopId}&${searchType}=${searchValue}`).then((res) => res.json()).then((data) => {
+        fetch(`https://backend.doob.com.bd/api/v1/seller/seller-user?shopId=${shopInfo.shopId}&${searchType}=${searchValue}`).then((res) => res.json()).then((data) => {
             if (data.userInfo) {
                 setUser(data.userInfo)
                 setExisting(false)
@@ -52,7 +52,7 @@ const PosProductsDetails = ({ invoice, open, setOpen }) => {
         }
         setPostData(data);
 
-        fetch(`http://localhost:5000/api/v1/seller/pos-report`, {
+        fetch(`https://backend.doob.com.bd/api/v1/seller/pos-report`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

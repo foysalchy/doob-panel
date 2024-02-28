@@ -26,7 +26,7 @@ const ShopInformation = () => {
     const { data: contacts = [], refetch } = useQuery({
         queryKey: ["contact"],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/api/v1/shop/contact/${shopInfo?.shopId}`);
+            const res = await fetch(`https://backend.doob.com.bd/api/v1/shop/contact/${shopInfo?.shopId}`);
             const data = await res.json();
             return data;
         },

@@ -36,7 +36,7 @@ const SellerAddContactPage = () => {
             }
         }
 
-        fetch(`http://localhost:5000/api/v1/shop/contactInfo`, {
+        fetch(`https://backend.doob.com.bd/api/v1/shop/contactInfo`, {
             method: "POST",
             headers: {
                 "content-type": "application/json",

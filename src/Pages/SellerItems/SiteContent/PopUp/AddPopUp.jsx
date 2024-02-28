@@ -55,7 +55,7 @@ const AddPopUp = () => {
 
 
     async function uploadImage(formData) {
-        const url = "http://localhost:5000/api/v1/image/upload-image";
+        const url = "https://backend.doob.com.bd/api/v1/image/upload-image";
         const response = await fetch(url, {
             method: "POST",
             body: formData,
@@ -66,7 +66,7 @@ const AddPopUp = () => {
 
     const postSlider = (Slider) => {
 
-        fetch(`http://localhost:5000/api/v1/seller/popup/add`, {
+        fetch(`https://backend.doob.com.bd/api/v1/seller/popup/add`, {
             method: "PUT",
             headers: {
                 "content-type": "application/json",

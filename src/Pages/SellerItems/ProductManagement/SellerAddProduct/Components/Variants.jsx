@@ -45,7 +45,7 @@ const Variants = ({ adminWare, multiVendor, setMultiVendor, inputFields, setInpu
         const formData = new FormData();
         formData.append('image', imageBlob);
 
-        const url = `http://localhost:5000/api/v1/daraz/daraz-image/${shopInfo._id}`;
+        const url = `https://backend.doob.com.bd/api/v1/daraz/daraz-image/${shopInfo._id}`;
 
         try {
             const response = await fetch(url, {
@@ -74,12 +74,12 @@ const Variants = ({ adminWare, multiVendor, setMultiVendor, inputFields, setInpu
         const formData = new FormData();
         formData.append("image", image);
 
-        const url = `http://localhost:5000/api/v1/image/upload-image`;
+        const url = `https://backend.doob.com.bd/api/v1/image/upload-image`;
 
         return fetch(url, {
             method: "POST",
             headers: {
-                "Origin": "http://localhost:5000/api/v1/image/upload-image"
+                "Origin": "https://backend.doob.com.bd/api/v1/image/upload-image"
             },
             body: formData,
 
@@ -193,7 +193,7 @@ const Variants = ({ adminWare, multiVendor, setMultiVendor, inputFields, setInpu
                     </div>
                         <div>
                             <input ccept="image/jpeg, image/png, image/gif, image/bmp, image/webp, image/heic"
-                             onChange={(e) => handleMultipleImg(e, index)} type="file" multiple />
+                                onChange={(e) => handleMultipleImg(e, index)} type="file" multiple />
                         </div>
 
 

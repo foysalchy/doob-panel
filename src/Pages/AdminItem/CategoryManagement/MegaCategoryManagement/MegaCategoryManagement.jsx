@@ -8,7 +8,7 @@ const MegaCategoryManagement = () => {
     const { data: megaCategory = [], refetch } = useQuery({
         queryKey: ["megaCategory"],
         queryFn: async () => {
-            const res = await fetch("http://localhost:5000/api/v1/admin/category/megacategory");
+            const res = await fetch("https://backend.doob.com.bd/api/v1/admin/category/megacategory");
             const data = await res.json();
             return data.rows;
         },
@@ -17,7 +17,7 @@ const MegaCategoryManagement = () => {
 
     // status update
     const statusUpdate = (id, status) => {
-        fetch(`http://localhost:5000/api/v1/admin/category/megacategory?id=${id}&status=${status}`, {
+        fetch(`https://backend.doob.com.bd/api/v1/admin/category/megacategory?id=${id}&status=${status}`, {
             method: "PUT",
             headers: {
                 "content-type": "application/json",
@@ -32,7 +32,7 @@ const MegaCategoryManagement = () => {
     }
 
     const featureStatus = (id, status) => {
-        fetch(`http://localhost:5000/api/v1/admin/category/feature?id=${id}&feature=${status}`, {
+        fetch(`https://backend.doob.com.bd/api/v1/admin/category/feature?id=${id}&feature=${status}`, {
             method: "PUT",
             headers: {
                 "content-type": "application/json",

@@ -13,7 +13,7 @@ const AdminCategoryforSeller = () => {
         navigate(-1); // This will go back to the previous page
     };
 
-    let megaCategoryUrl = `http://localhost:5000/api/v1/admin/category/megacategory`;
+    let megaCategoryUrl = `https://backend.doob.com.bd/api/v1/admin/category/megacategory`;
 
     const { data: megaCategories = [], refetch } = useQuery({
         queryKey: ["megaCategories"],
@@ -39,7 +39,7 @@ const AdminCategoryforSeller = () => {
     const handleSelectChange = (selectedOption) => {
         setSubCategorys([])
         const optionId = selectedOption.value
-        fetch(`http://localhost:5000/api/v1/admin/category/subcategory?id=${optionId}`)
+        fetch(`https://backend.doob.com.bd/api/v1/admin/category/subcategory?id=${optionId}`)
             .then((res) => res.json())
             .then((data) => {
                 setSubCategorys(data.subCategory)
@@ -59,7 +59,7 @@ const AdminCategoryforSeller = () => {
     const onHandleMiniCategorys = (selectedOption) => {
         setMiniCategorys([])
         const optionId = selectedOption.value;
-        fetch(`http://localhost:5000/api/v1/admin/category/miniCategory?id=${optionId}`)
+        fetch(`https://backend.doob.com.bd/api/v1/admin/category/miniCategory?id=${optionId}`)
             .then((res) => res.json())
             .then((data) => {
                 console.log(data, '>>>>>');
@@ -81,8 +81,8 @@ const AdminCategoryforSeller = () => {
     const onHandleExtraCategorys = (selectedOption) => {
         setExtraCategorys([])
         const optionId = selectedOption.value;
-        // console.log(`http://localhost:5000/api/v1/admin/category/extraCategory?id=${optionId}`);
-        fetch(`http://localhost:5000/api/v1/admin/category/extraCategory?id=${optionId}`)
+        // console.log(`https://backend.doob.com.bd/api/v1/admin/category/extraCategory?id=${optionId}`);
+        fetch(`https://backend.doob.com.bd/api/v1/admin/category/extraCategory?id=${optionId}`)
             .then((res) => res.json())
             .then((data) => {
                 console.log(data, '>>>>>');

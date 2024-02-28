@@ -13,7 +13,7 @@ const MiniCategoryManagement = () => {
     const { data: miniCategory = [], refetch } = useQuery({
         queryKey: ["miniCategory"],
         queryFn: async () => {
-            const res = await fetch("http://localhost:5000/api/v1/admin/category/miniCategories");
+            const res = await fetch("https://backend.doob.com.bd/api/v1/admin/category/miniCategories");
             const data = await res.json();
             return data.rows;
         },
@@ -21,7 +21,7 @@ const MiniCategoryManagement = () => {
 
     // status update
     const statusUpdate = (id, status) => {
-        fetch(`http://localhost:5000/api/v1/admin/category/miniCategory?id=${id}&status=${status}`, {
+        fetch(`https://backend.doob.com.bd/api/v1/admin/category/miniCategory?id=${id}&status=${status}`, {
             method: "PUT",
             headers: {
                 "content-type": "application/json",

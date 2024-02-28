@@ -8,7 +8,7 @@ const CustomerReturn = () => {
     const { data: tData = [], refetch } = useQuery({
         queryKey: ["sellerOrder"],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/api/v1/seller/order?shopId=${shopInfo._id}`);
+            const res = await fetch(`https://backend.doob.com.bd/api/v1/seller/order?shopId=${shopInfo._id}`);
             const data = await res.json();
             return data.data;
         },

@@ -15,13 +15,13 @@ const SellerManageSelf = () => {
     const { data: selfs = [], refetch } = useQuery({
         queryKey: ["selfs"],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/api/v1/seller/warehouse/self/${shopInfo._id}`);
+            const res = await fetch(`https://backend.doob.com.bd/api/v1/seller/warehouse/self/${shopInfo._id}`);
             const data = await res.json();
             return data;
         },
     });
 
-    console.log(`http://localhost:5000/api/v1/seller/warehouse/self/${shopInfo._id}`);
+    console.log(`https://backend.doob.com.bd/api/v1/seller/warehouse/self/${shopInfo._id}`);
 
     const [searchQuery, setSearchQuery] = useState("");
 
@@ -116,7 +116,7 @@ const SellerManageSelf = () => {
 
 
     const updateStatus = (id, status) => {
-        fetch(`http://localhost:5000/api/v1/seller/warehouse/self/status/${id}`, {
+        fetch(`https://backend.doob.com.bd/api/v1/seller/warehouse/self/status/${id}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
@@ -153,7 +153,7 @@ const SellerManageSelf = () => {
         }).then((result) => {
             if (result.dismiss === Swal.DismissReason.timer) {
                 // Timer completed, initiate the fetch for deletion
-                fetch(`http://localhost:5000/api/v1/seller/warehouse/self/delete/${id}`, {
+                fetch(`https://backend.doob.com.bd/api/v1/seller/warehouse/self/delete/${id}`, {
                     method: "DELETE",
                     headers: {
                         "Content-Type": "application/json",

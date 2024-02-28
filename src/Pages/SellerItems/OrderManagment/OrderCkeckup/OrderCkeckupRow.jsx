@@ -7,7 +7,7 @@ const OrderCkeckupRow = ({ itm, orderId }) => {
     const statusUpdate = (orderId, productId, status) => {
         console.log(orderId, productId, status);
 
-        fetch(`http://localhost:5000/api/v1/seller/order-single-product-status-update?orderId=${orderId}&productId=${productId}&status=${status}`, {
+        fetch(`https://backend.doob.com.bd/api/v1/seller/order-single-product-status-update?orderId=${orderId}&productId=${productId}&status=${status}`, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
         }).then((res) => res.json()).then((data) => {
@@ -26,7 +26,7 @@ const OrderCkeckupRow = ({ itm, orderId }) => {
     const { data: Data = [], refetch } = useQuery({
         queryKey: ["sellerOrder"],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/api/v1/seller/order?shopId=${shopInfo._id}`);
+            const res = await fetch(`https://backend.doob.com.bd/api/v1/seller/order?shopId=${shopInfo._id}`);
             const data = await res.json();
             return data.data;
         },

@@ -61,7 +61,7 @@ const AddNotice = () => {
 
 
     async function uploadImage(formData) {
-        const url = "http://localhost:5000/api/v1/image/upload-image";
+        const url = "https://backend.doob.com.bd/api/v1/image/upload-image";
         const response = await fetch(url, {
             method: "POST",
             body: formData,
@@ -72,7 +72,7 @@ const AddNotice = () => {
 
     const postSlider = (Slider) => {
 
-        fetch(`http://localhost:5000/api/v1/admin/seller-notice`, {
+        fetch(`https://backend.doob.com.bd/api/v1/admin/seller-notice`, {
             method: "POST",
             headers: {
                 "content-type": "application/json",

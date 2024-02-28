@@ -31,7 +31,7 @@ const AddPage = () => {
     };
 
     console.log(faq);
-    fetch(`http://localhost:5000/api/v1/admin/addpage`, {
+    fetch(`https://backend.doob.com.bd/api/v1/admin/addpage`, {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -48,7 +48,7 @@ const AddPage = () => {
   };
 
   async function uploadImage(formData) {
-    const url = "http://localhost:5000/api/v1/image/upload-image";
+    const url = "https://backend.doob.com.bd/api/v1/image/upload-image";
     const response = await fetch(url, {
       method: "POST",
       body: formData,

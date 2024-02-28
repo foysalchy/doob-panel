@@ -59,7 +59,7 @@ const SellerLoginCredintiial = () => {
             service: { email: emailActive, google: googleActive, facebook: facebookActive }
         };
 
-        fetch('http://localhost:5000/api/v1/shop/firebase/add', {
+        fetch('https://backend.doob.com.bd/api/v1/shop/firebase/add', {
             method: 'PATCH',
             body: JSON.stringify(data),
             headers: {

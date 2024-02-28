@@ -38,7 +38,7 @@ const EditInventory = ({ refetch, open, setOpen, data }) => {
         }
 
         {
-            data.adminWare ? (fetch(`http://localhost:5000/api/v1/admin/stock-request`, {
+            data.adminWare ? (fetch(`https://backend.doob.com.bd/api/v1/admin/stock-request`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -48,7 +48,7 @@ const EditInventory = ({ refetch, open, setOpen, data }) => {
                 refetch();
                 setOpen(!open);
 
-            })) : (fetch(`http://localhost:5000/api/v1/seller/product-stock-update?productId=${data?._id}&quantity=${count}`, {
+            })) : (fetch(`https://backend.doob.com.bd/api/v1/seller/product-stock-update?productId=${data?._id}&quantity=${count}`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",

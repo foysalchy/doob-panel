@@ -16,7 +16,7 @@ const AdminPopupManagement = () => {
     const { data: popupData = [], refetch } = useQuery({
         queryKey: "popupData",
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/api/v1/admin/pop-up`);
+            const res = await fetch(`https://backend.doob.com.bd/api/v1/admin/pop-up`);
             const data = await res.json();
             return data?.data;
         },
@@ -25,7 +25,7 @@ const AdminPopupManagement = () => {
     // const { data: popupData, reload } = useQuery({
     //     queryKey: "popupData",
     //     queryFn: async () => {
-    //         const res = await fetch(`http://localhost:5000/api/v1/admin/pop-up`);
+    //         const res = await fetch(`https://backend.doob.com.bd/api/v1/admin/pop-up`);
     //         const data = await res.json();
     //         return data?.data;
     //     },
@@ -47,7 +47,7 @@ const AdminPopupManagement = () => {
 
     if (isDelete) {
 
-        fetch(`http://localhost:5000/api/v1/seller/popup/delete/${deleteId}`, {
+        fetch(`https://backend.doob.com.bd/api/v1/seller/popup/delete/${deleteId}`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
@@ -80,7 +80,7 @@ const AdminPopupManagement = () => {
     const EditStatus = (id, status) => {
         console.log(id, status);
         setLoading(true)
-        fetch(`http://localhost:5000/api/v1/admin/pop-up?popUpId=${id}`, {
+        fetch(`https://backend.doob.com.bd/api/v1/admin/pop-up?popUpId=${id}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
@@ -96,7 +96,7 @@ const AdminPopupManagement = () => {
     const EditUserStatus = (id, status) => {
         console.log(id, status);
         setLoading(true)
-        fetch(`http://localhost:5000/api/v1/admin/user-pop-up?popUpId=${id}`, {
+        fetch(`https://backend.doob.com.bd/api/v1/admin/user-pop-up?popUpId=${id}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
@@ -111,7 +111,7 @@ const AdminPopupManagement = () => {
 
     const onDelete = (id) => {
         setLoading(true)
-        fetch(`http://localhost:5000/api/v1/admin/pop-up?popUpId=${id}`, {
+        fetch(`https://backend.doob.com.bd/api/v1/admin/pop-up?popUpId=${id}`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",

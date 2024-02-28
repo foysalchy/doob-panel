@@ -9,7 +9,7 @@ const MainService = () => {
     const { data: services = [], refetch, isLoading } = useQuery({
         queryKey: ["services"],
         queryFn: async () => {
-            const res = await fetch("http://localhost:5000/api/v1/admin/services");
+            const res = await fetch("https://backend.doob.com.bd/api/v1/admin/services");
             const data = await res.json();
             return data;
         },
@@ -18,7 +18,7 @@ const MainService = () => {
     const { data: categories = [], isLoading: isCategoriesLoading } = useQuery({
         queryKey: ['categories'],
         queryFn: async () => {
-            const res = await fetch('http://localhost:5000/api/v1/admin/category');
+            const res = await fetch('https://backend.doob.com.bd/api/v1/admin/category');
             const data = await res.json();
             return data;
         },

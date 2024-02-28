@@ -30,7 +30,7 @@ export default function CategoryListSm({ setOn }) {
     const { data: megaSideCategoryData = [], refetch: refetchMegaCategory } = useQuery({
         queryKey: ['megaSideCategoryData'],
         queryFn: async () => {
-            const res = await fetch('http://localhost:5000/api/v1/admin/category/megacategory');
+            const res = await fetch('https://backend.doob.com.bd/api/v1/admin/category/megacategory');
             const data = await res.json();
 
             return data.rows;
@@ -40,7 +40,7 @@ export default function CategoryListSm({ setOn }) {
     const { data: heroBanner = [] } = useQuery({
         queryKey: 'heroBanner',
         queryFn: async () => {
-            const res = await fetch('http://localhost:5000/api/v1/admin/slider');
+            const res = await fetch('https://backend.doob.com.bd/api/v1/admin/slider');
             const data = await res.json();
             return data?.data;
         },
@@ -53,7 +53,7 @@ export default function CategoryListSm({ setOn }) {
         const fetchData = async () => {
             const subCategoryPromises = megaSideCategoryData.map(async (item) => {
                 try {
-                    const response = await fetch(`http://localhost:5000/api/v1/admin/category/subcategory?id=${item?._id}`);
+                    const response = await fetch(`https://backend.doob.com.bd/api/v1/admin/category/subcategory?id=${item?._id}`);
                     const data = await response.json();
                     return data.subCategory;
                 } catch (error) {
@@ -74,7 +74,7 @@ export default function CategoryListSm({ setOn }) {
         const fetchData = async () => {
             const miniCategoryPromises = allCategory.subCategorys.map(async (itm) => {
                 try {
-                    const response = await fetch(`http://localhost:5000/api/v1/admin/category/miniCategory?id=${itm?._id}`);
+                    const response = await fetch(`https://backend.doob.com.bd/api/v1/admin/category/miniCategory?id=${itm?._id}`);
                     const data = await response.json();
                     return data.row;
                 } catch (error) {
@@ -95,7 +95,7 @@ export default function CategoryListSm({ setOn }) {
         const fetchData = async () => {
             const extraCategoryPromises = allCategory.miniCategorys.map(async (itm) => {
                 try {
-                    const response = await fetch(`http://localhost:5000/api/v1/admin/category/extraCategory?id=${itm?._id}`);
+                    const response = await fetch(`https://backend.doob.com.bd/api/v1/admin/category/extraCategory?id=${itm?._id}`);
                     const data = await response.json();
                     return data.rows;
                 } catch (error) {

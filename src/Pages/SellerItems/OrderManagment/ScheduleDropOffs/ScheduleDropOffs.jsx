@@ -8,12 +8,12 @@ const ScheduleDropOffs = () => {
     const [searchValue, setSearchValue] = useState('');
     const { shopInfo } = useContext(AuthContext);
 
-    // console.log(`http://localhost:5000/api/v1/seller/refund-order?shopId=${shopInfo?._id}`);
+    // console.log(`https://backend.doob.com.bd/api/v1/seller/refund-order?shopId=${shopInfo?._id}`);
 
     const { data: refundData = [] } = useQuery({
         queryKey: ["selarRefundOrder"],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/api/v1/seller/refund-order?shopId=${shopInfo?._id}`);
+            const res = await fetch(`https://backend.doob.com.bd/api/v1/seller/refund-order?shopId=${shopInfo?._id}`);
             const data = await res.json();
             return data?.data;
         },

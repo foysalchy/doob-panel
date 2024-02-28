@@ -21,7 +21,7 @@ const EditSellerInfo = ({ OpenModal, setOpenModal, SellerInfo, refetch }) => {
         }
 
         try {
-            fetch(`http://localhost:5000/api/v1/admin/seller/update-sellerinfo/${SellerInfo._id}`, {
+            fetch(`https://backend.doob.com.bd/api/v1/admin/seller/update-sellerinfo/${SellerInfo._id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',

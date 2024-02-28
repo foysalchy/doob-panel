@@ -12,7 +12,7 @@ const AreaListForWarehouse = () => {
     const { data: areas = [], refetch } = useQuery({
         queryKey: ["areas"],
         queryFn: async () => {
-            const res = await fetch("http://localhost:5000/api/v1/admin/warehouse/area");
+            const res = await fetch("https://backend.doob.com.bd/api/v1/admin/warehouse/area");
             const data = await res.json();
             return data;
         },
@@ -109,7 +109,7 @@ const AreaListForWarehouse = () => {
 
 
     const updateStatus = (id, status) => {
-        fetch(`http://localhost:5000/api/v1/admin/warehouse/area/status/${id}`, {
+        fetch(`https://backend.doob.com.bd/api/v1/admin/warehouse/area/status/${id}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
@@ -146,7 +146,7 @@ const AreaListForWarehouse = () => {
         }).then((result) => {
             if (result.dismiss === Swal.DismissReason.timer) {
 
-                fetch(`http://localhost:5000/api/v1/admin/warehouse/area/delete/${id}`, {
+                fetch(`https://backend.doob.com.bd/api/v1/admin/warehouse/area/delete/${id}`, {
                     method: "DELETE",
                     headers: {
                         "Content-Type": "application/json",

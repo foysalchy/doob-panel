@@ -18,7 +18,7 @@ const AdminCustomerManage = () => {
     const { data: users = [], refetch } = useQuery({
         queryKey: ["users"],
         queryFn: async () => {
-            const res = await fetch("http://localhost:5000/api/v1/admin/user");
+            const res = await fetch("https://backend.doob.com.bd/api/v1/admin/user");
             const data = await res.json();
             return data;
         },
@@ -117,7 +117,7 @@ const AdminCustomerManage = () => {
 
 
     const updateStatus = (id, status) => {
-        fetch(`http://localhost:5000/api/v1/admin/seller/status/${id}`, {
+        fetch(`https://backend.doob.com.bd/api/v1/admin/seller/status/${id}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
@@ -134,7 +134,7 @@ const AdminCustomerManage = () => {
 
 
         let password = ''
-        await fetch(`http://localhost:5000/api/v1/admin/seller/pass/${userId}`).then((res) => res.json()).then((data) => {
+        await fetch(`https://backend.doob.com.bd/api/v1/admin/seller/pass/${userId}`).then((res) => res.json()).then((data) => {
             password = data.password
 
         })
@@ -144,7 +144,7 @@ const AdminCustomerManage = () => {
         };
         console.log(data);
 
-        await fetch("http://localhost:5000/api/v1/auth/sign-in", {
+        await fetch("https://backend.doob.com.bd/api/v1/auth/sign-in", {
             method: "post",
             headers: {
                 "content-type": "application/json",
@@ -159,7 +159,7 @@ const AdminCustomerManage = () => {
 
                 if (data.user) {
                     if (data.user.role === 'seller') {
-                        fetch(`http://localhost:5000/api/v1/shop/checkshop?shopEmail=${data?.user?.shopEmail}`)
+                        fetch(`https://backend.doob.com.bd/api/v1/shop/checkshop?shopEmail=${data?.user?.shopEmail}`)
                             .then((response) => response.json())
                             .then((result) => {
                                 console.log(result, '208');
@@ -213,7 +213,7 @@ const AdminCustomerManage = () => {
 
     if (isDelete) {
 
-        fetch(`http://localhost:5000/api/v1/admin/seller/delete/${deleteId}`, {
+        fetch(`https://backend.doob.com.bd/api/v1/admin/seller/delete/${deleteId}`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",

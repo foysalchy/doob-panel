@@ -27,7 +27,7 @@ const UserTicketView = ({ viewTicket, setViewTicket, ticketDetails, refetch }) =
         }
         console.log(data);
 
-        fetch(`http://localhost:5000/api/v1/seller/user-support-comment/${id}`, {
+        fetch(`https://backend.doob.com.bd/api/v1/seller/user-support-comment/${id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'

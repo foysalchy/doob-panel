@@ -16,7 +16,7 @@ const AdminNewStaff = () => {
     const [isNewUser, setIsNewUser] = useState(false)
 
     const handleSearch = () => {
-        fetch(`http://localhost:5000/api/v1/seller/seller-allUser?email=${searchValue}`)
+        fetch(`https://backend.doob.com.bd/api/v1/seller/seller-allUser?email=${searchValue}`)
             .then(res => res.json())
             .then(data => {
                 console.log(data, '+++++++');

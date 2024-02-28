@@ -21,7 +21,7 @@ const SellerAllProducts = () => {
     const { data: products = [], refetch } = useQuery({
         queryKey: ["products"],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/api/v1/seller/all-products/${shopInfo._id}`);
+            const res = await fetch(`https://backend.doob.com.bd/api/v1/seller/all-products/${shopInfo._id}`);
             const data = await res.json();
             return data;
         },
@@ -65,7 +65,7 @@ const SellerAllProducts = () => {
 
     const updateProductStatus = (id, status) => {
         console.log(id);
-        fetch(`http://localhost:5000/api/v1/seller/update-product-status`, {
+        fetch(`https://backend.doob.com.bd/api/v1/seller/update-product-status`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json"
@@ -93,7 +93,7 @@ const SellerAllProducts = () => {
     };
     if (isDelete) {
 
-        fetch(`http://localhost:5000/api/v1/seller/delete-product`, {
+        fetch(`https://backend.doob.com.bd/api/v1/seller/delete-product`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json"
@@ -119,7 +119,7 @@ const SellerAllProducts = () => {
             [id]: true,
         }));
         const data = { category, item_id, sku, id, shopId: shopInfo._id }
-        fetch("http://localhost:5000/api/v1/seller/update-product", {
+        fetch("https://backend.doob.com.bd/api/v1/seller/update-product", {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json"
@@ -149,7 +149,7 @@ const SellerAllProducts = () => {
     const { data: priceRole = [] } = useQuery({
         queryKey: ["priceRole"],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/api/v1/seller/get-price-role/${shopInfo?._id}`);
+            const res = await fetch(`https://backend.doob.com.bd/api/v1/seller/get-price-role/${shopInfo?._id}`);
             const data = await res.json();
             return data?.data;
         },

@@ -11,9 +11,9 @@ export default function Component() {
     const [value, setValue] = useState('')
     const searchData = async () => {
         const term = searchTerm;
-        // console.log(`http://localhost:5000/api/v1/admin/search?term=${encodeURIComponent(term)}`);
+        // console.log(`https://backend.doob.com.bd/api/v1/admin/search?term=${encodeURIComponent(term)}`);
         try {
-            const response = await fetch(`http://localhost:5000/api/v1/admin/search?term=${encodeURIComponent(term)}`);
+            const response = await fetch(`https://backend.doob.com.bd/api/v1/admin/search?term=${encodeURIComponent(term)}`);
             const data = await response.json();
             // console.log(data);
             setSearchResults(data);
@@ -34,7 +34,7 @@ export default function Component() {
         setSearchTerm(input)
         setSearchResults()
         setSearch(input)
-        fetch(`http://localhost:5000/api/v1/admin/search-history?term=${encodeURIComponent(input)}`).then((response) => response.json()).then((data) => setSearchHistory(data))
+        fetch(`https://backend.doob.com.bd/api/v1/admin/search-history?term=${encodeURIComponent(input)}`).then((response) => response.json()).then((data) => setSearchHistory(data))
     };
 
 

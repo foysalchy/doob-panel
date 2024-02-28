@@ -7,12 +7,12 @@ import Swal from 'sweetalert2';
 import DeleteModal from '../../../Common/DeleteModal';
 
 const AdminStaffManagement = () => {
-    //http://localhost:5000/api/v1/admin/staff-role
+    //https://backend.doob.com.bd/api/v1/admin/staff-role
     const [modalOpen, setModalOpen] = useState(false);
     const { data: staffInfo = [], refetch } = useQuery({
         queryKey: ["staffInfo"],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/api/v1/admin/staff-role`);
+            const res = await fetch(`https://backend.doob.com.bd/api/v1/admin/staff-role`);
             const data = await res.json();
             localStorage.setItem('price', JSON.stringify(data?.data));
             return data;
@@ -44,7 +44,7 @@ const AdminStaffManagement = () => {
 
     if (isDelete) {
 
-        fetch(`http://localhost:5000/api/v1/admin/staff-delete?email=${deleteId}`, {
+        fetch(`https://backend.doob.com.bd/api/v1/admin/staff-delete?email=${deleteId}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",

@@ -22,7 +22,7 @@ const AddSellerPage = () => {
             shop: shopInfo.shopId
         };
 
-        fetch(`http://localhost:5000/api/v1/seller/page`, {
+        fetch(`https://backend.doob.com.bd/api/v1/seller/page`, {
             method: "POST",
             headers: {
                 "content-type": "application/json",

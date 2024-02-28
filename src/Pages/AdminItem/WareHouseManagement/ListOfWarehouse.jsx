@@ -15,7 +15,7 @@ const ListOfWarehouse = () => {
     const { data: warehouses = [], refetch } = useQuery({
         queryKey: ["warehouses"],
         queryFn: async () => {
-            const res = await fetch("http://localhost:5000/api/v1/admin/warehouse");
+            const res = await fetch("https://backend.doob.com.bd/api/v1/admin/warehouse");
             const data = await res.json();
             return data;
         },
@@ -112,7 +112,7 @@ const ListOfWarehouse = () => {
 
 
     const updateStatus = (id, status) => {
-        fetch(`http://localhost:5000/api/v1/admin/warehouse/status/${id}`, {
+        fetch(`https://backend.doob.com.bd/api/v1/admin/warehouse/status/${id}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
@@ -128,7 +128,7 @@ const ListOfWarehouse = () => {
     const DeleteWarehouse = async (id) => {
 
 
-        const response = await fetch(`http://localhost:5000/api/v1/admin/warehouse/delete/${id}`, {
+        const response = await fetch(`https://backend.doob.com.bd/api/v1/admin/warehouse/delete/${id}`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
