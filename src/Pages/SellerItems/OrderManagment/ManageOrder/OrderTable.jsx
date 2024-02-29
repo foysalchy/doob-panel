@@ -290,6 +290,21 @@ const OrderTable = ({ searchValue, selectedValue, setDetails, setOpenModal, sele
         return imageData.imageUrl;
     }
 
+    const updateCourier_status = (id, courier_id) => {
+        fetch(`https://backend.doob.com.bd/api/v1/admin/courier_status?orderId=${id}&id=${courier_id}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+        }).then((res) => res.json()).then((data) => {
+            console.log(data.status);
+            if (data.status) {
+                alert("Successfully Updated");
+                refetch()
+            } else {
+                alert("Failed to Update")
+            }
+
+        });
+    }
 
 
     return (
@@ -309,8 +324,11 @@ const OrderTable = ({ searchValue, selectedValue, setDetails, setOpenModal, sele
                                     <th scope="col" className="border-r px-2 py-4 font-[500]">Pending Since</th>
                                     <th scope="col" className="border-r px-2 py-4 font-[500]">Payment Method</th>
                                     <th scope="col" className="border-r px-2 py-4 font-[500]">Retail Price</th>
+                                    <th scope="col" className="border-r px-2 py-4 font-[500]">courier_status</th>
+                                    <th scope="col" className="border-r px-2 py-4 font-[500]">courier_id</th>
                                     <th scope="col" className="border-r px-2 py-4 font-[500]">Status</th>
                                     <th scope="col" className="border-r px-2 py-4 font-[500]">Actions</th>
+                                    <th scope="col" className="border-r px-2 py-4 font-[500]">Check Status</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -335,6 +353,8 @@ const OrderTable = ({ searchValue, selectedValue, setDetails, setOpenModal, sele
                                             <td className="border-r w-[200px] px-6 py-4">{getTimeAgo(item?.timestamp)}</td>
                                             <td className="border-r px-6 py-4">{item?.method.Getaway}</td>
                                             <td className="border-r px-6 py-4">{ratial_price(item?.productList)}</td>
+                                            <td className="border-r px-6 py-4">{item?.courier_status}</td>
+                                            <td className="border-r px-6 py-4">{item?.courier_id}</td>
                                             <td className="border-r px-6 py-4">{item?.status ? item?.status : 'Pending'}</td>
                                             <td className="border-r px-6 py-4">
                                                 <td className="whitespace-nowrap border-r px-6 py-4 text-[16px] font-[400] flex flex-col gap-2">
@@ -363,6 +383,9 @@ const OrderTable = ({ searchValue, selectedValue, setDetails, setOpenModal, sele
                                                         <button onClick={() => viewDetails(item)} className="text-[16px] font-[400] text-blue-700">View Details</button>
                                                     )}
                                                 </td>
+                                            </td>
+                                            <td className="border-r px-6 py-4">
+                                                {item?.courier_id && <button onClick={() => updateCourier_status(item._id, item.courier_id)}>Check Status</button>}
                                             </td>
                                         </tr>
                                         {item._id === readyToShip._id && (

@@ -66,6 +66,7 @@ import BlogsCatagoryManagement from "../Pages/AdminItem/BlogsCatagorys/BlogsCata
 import SellerOrderManagement from "../Pages/AdminItem/SellerOrderManagement/SellerOrderManagenent";
 import StockManagement from "../Pages/SellerItems/StockManagement/StockManagement";
 import AdminHomePageControl from "../Pages/AdminItem/ContentManagement/AdminHomePageControl/AdminHomePageControl";
+import AllOrderManage from "../Pages/AdminItem/Order/AllOrderManage";
 
 const SupperAdminPath = [
     {
@@ -455,6 +456,12 @@ const SupperAdminPath = [
         path: 'seller-order-management',
         element: <CheckStaff>
             <SellerOrderManagement />
+        </CheckStaff>
+    },
+    {
+        path: 'seller-order',
+        element: <CheckStaff>
+            <AllOrderManage />
         </CheckStaff>
     },
 
