@@ -36,6 +36,26 @@ const ModalForPayment = ({ invoice, setInvoice, sellingPrice, handleStore, selle
 
     const [next, setNext] = useState(false)
 
+
+    const payWithBkash = async () => {
+        try {
+            const response = await fetch('https://backend.doob.com.bd/api/v1/seller/bkash/payment/create', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'credentials': 'include'
+                },
+                body: JSON.stringify({ amount: 50, orderId: 1 }),
+                credentials: 'include'
+            });
+            const data = await response.json();
+            window.location.href = data.bkashURL;
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+
     return (
         <div className={`fixed inset-0 flex items-center justify-center z-50 ${invoice ? 'visible' : 'hidden'}`}>
             <div className="fixed inset-0 bg-gray-900 bg-opacity-50 transition-opacity" aria-hidden="true"></div>
@@ -53,8 +73,8 @@ const ModalForPayment = ({ invoice, setInvoice, sellingPrice, handleStore, selle
                                     {getaways.map((get) => (
                                         <div>
                                             {get.Getaway === 'Bkash' &&
-                                                <a href="#scrollDestination">
-                                                    <div onClick={() => setPayment(get)} className={`${payment?.Getaway === 'Bkash' && 'shadow-lg shadow-gray-700'}   border border-gray-600 flex md:flex-col flex-row items-center justify-center gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] overflow-hidden`}>
+                                                <button >
+                                                    <div onClick={() => { payWithBkash() }} className={`${payment?.Getaway === 'Bkash' && 'shadow-lg shadow-gray-700'}   border border-gray-600 flex md:flex-col flex-row items-center justify-center gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] overflow-hidden`}>
                                                         <img
                                                             alt="Developer"
                                                             src="https://logos-download.com/wp-content/uploads/2022/01/BKash_Logo_icon-1536x1452.png"
@@ -63,7 +83,7 @@ const ModalForPayment = ({ invoice, setInvoice, sellingPrice, handleStore, selle
                                                         />
                                                         <h4 className="mt-2  md:font-bold md:text-lg">{get?.Getaway}...</h4>
                                                     </div>
-                                                </a>
+                                                </button>
 
                                             }
                                             {get.Getaway === 'Nogod' &&

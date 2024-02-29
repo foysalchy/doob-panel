@@ -8,7 +8,7 @@ const MiniCategoryManagement = () => {
         addBtn: 'bg-black text-white px-4 py-2 flex items-center rounded-lg',
 
     }
-   
+
 
     const { data: miniCategory = [], refetch } = useQuery({
         queryKey: ["miniCategory"],
@@ -62,7 +62,7 @@ const MiniCategoryManagement = () => {
                                             <td className="px-6 py-4 whitespace-nowrap">
                                                 <img src={item?.img} alt="" className="ring-1 ring-gray-400 w-[60px] object-cover h-[60px] rounded" />
                                             </td>
-                                              <td className="px-6 py-4 whitespace-nowrap">{item.miniCategoryName}</td>
+                                            <td className="px-6 py-4 whitespace-nowrap">{item.miniCategoryName}</td>
                                             <td className="px-6 py-4 whitespace-nowrap">{item.subCategoryName}</td>
                                             <td className="px-6 py-4 whitespace-nowrap">{item.megaCategoryName}</td>
                                             <td className="px-6 py-4 whitespace-nowrap">{formattedTimeStamp}</td>

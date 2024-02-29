@@ -23,7 +23,7 @@ const DarazInvoice = () => {
                 return data.data;
             }
         },
-    }); 
+    });
     const info = darazInvoiceData.find(itm => itm?.order_id == id);
     let totalPrice = 0;
 

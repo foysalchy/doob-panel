@@ -291,7 +291,7 @@ const OrderTable = ({ searchValue, selectedValue, setDetails, setOpenModal, sele
     }
 
     const updateCourier_status = (id, courier_id) => {
-        fetch(`http://localhost:5000/api/v1/admin/courier_status?orderId=${id}&id=${courier_id}`, {
+        fetch(`https://backend.doob.com.bd/api/v1/admin/courier_status?orderId=${id}&id=${courier_id}`, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
         }).then((res) => res.json()).then((data) => {

@@ -18,7 +18,7 @@ const ReviewTableRow = ({ refetch, itm }) => {
             .then(data => {
                 BrightAlert(`${data.message}`, '', "success");
                 refetch();
-                
+
             });
     }
     return (

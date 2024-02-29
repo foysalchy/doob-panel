@@ -96,7 +96,7 @@ const AdminPopupManagement = () => {
     const EditUserStatus = (id, status) => {
         console.log(id, status);
         setLoading(true)
-        fetch(`http://localhost:5000/api/v1/admin/user-pop-up?popUpId=${id}`, {
+        fetch(`https://backend.doob.com.bd/api/v1/admin/user-pop-up?popUpId=${id}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
