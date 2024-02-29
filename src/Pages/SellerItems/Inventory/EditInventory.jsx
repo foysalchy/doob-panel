@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import { AuthContext } from '../../../AuthProvider/UserProvider';
 
 const EditInventory = ({ refetch, open, setOpen, data }) => {
     const [count, setCount] = useState(data?.stock_quantity);
-
+    const { shopInfo } = useContext(AuthContext)
     const handleIncrease = () => {
         setCount(parseInt(count) + 1);
     };
 
-    console.log(data);
 
     const handleDecrease = () => {
         if (count > 0) {
@@ -18,10 +18,25 @@ const EditInventory = ({ refetch, open, setOpen, data }) => {
     const handleSubmit = () => {
         const stock = {
             productId: data._id,
+            shopInfo: {
+                address: shopInfo?.address,
+                shopEmail: shopInfo?.shopEmail,
+                shopName: shopInfo?.shopName,
+                shopPhone: shopInfo?.shopPhone,
+            },
+            productInfo: {
+                name: data?.name,
+                price: data?.price,
+                image: data?.featuredImage?.src,
+                quantity: data?.stock_quantity,
+
+            },
+            warehouse: data?.warehouse,
+            date: new Date().getTime(),
             quantity: count,
             shopId: data.shopId,
         }
-        console.log(stock);
+
         {
             data.adminWare ? (fetch(`https://backend.doob.com.bd/api/v1/admin/stock-request`, {
                 method: "POST",
@@ -45,6 +60,8 @@ const EditInventory = ({ refetch, open, setOpen, data }) => {
 
             }))
         }
+        console.log(data, '>>>>>>><<<<<<<<<<<<<<<<<<<');
+
     }
 
     return (

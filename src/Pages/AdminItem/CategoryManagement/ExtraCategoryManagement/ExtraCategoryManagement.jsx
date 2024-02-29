@@ -9,7 +9,6 @@ const ExtraCategoryManagement = () => {
 
     }
 
-
     const { data: extraCategory = [], refetch } = useQuery({
         queryKey: ["extraCategory"],
         queryFn: async () => {

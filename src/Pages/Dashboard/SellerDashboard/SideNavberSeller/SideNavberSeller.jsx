@@ -973,7 +973,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                     </li>
                                                     <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
                                                         <Link
-                                                            to={'/seller/product-management/manage'}
+                                                            to={'/seller/product-management/add-woo-product'}
                                                             className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
                                                         >
                                                             <CgAdd className='w-5 h-5 fill-current text-gray-400 ' /> Woo Product
@@ -1414,8 +1414,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                     <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
                                                         <Link
                                                             to={'/seller/report-management/warehouse-report'}
-                                                            className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
-                                                        >
+                                                            className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md">
                                                             <FaWarehouse className='w-5 h-5 fill-current text-gray-400 ' /> Warehouse Report
                                                         </Link>
                                                     </li>
@@ -1425,6 +1424,13 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                         </li>
 
                                     )}
+                                    <li className="rounded-sm hover:bg-gray-800">
+                                        <Link to={`stock-management`} className="flex items-center p-2 space-x-3 rounded-md gap-3">
+                                            <BiArchive className="w-5 h-5 text-gray-400" />
+                                            Stock Management
+                                        </Link>
+                                    </li>
+
                                     {user?.staffRole ? (
                                         user?.permissions.find(itm => itm?.name === "Order Management") ? (
                                             managementPermission('POS') && <li className="rounded-sm hover:bg-gray-800">

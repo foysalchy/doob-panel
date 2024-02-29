@@ -67,7 +67,7 @@ const InventoryManagement = () => {
     })
 
 
-    console.log(searchProduct);
+    // console.log(productData);
     return (
         <div>
             <div className="overflow-x-auto transparent-scroll sm:-mx-6 lg:-mx-8">
@@ -141,7 +141,7 @@ const InventoryManagement = () => {
                                         <tr className="border-b ">
 
                                             <td className="whitespace-nowrap border-r px-2 py-2 font-medium ">
-                                                <img src={product.featuredImage.src} alt="" className="w-[80px] h-[80px] rounded-lg object-cover m-auto" />
+                                                <img src={product?.featuredImage?.src} alt="" className="w-[80px] h-[80px] rounded-lg object-cover m-auto" />
                                             </td>
                                             <td className="whitespace-wrap text-sm text-start w-[300px] border-r px-6 py-4 font-medium ">
                                                 {product?.name}

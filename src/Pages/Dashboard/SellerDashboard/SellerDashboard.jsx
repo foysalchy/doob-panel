@@ -119,7 +119,7 @@ const SellerDashboard = () => {
     };
 
     return (
-        <div className="h-screen  pb-24 overflow-y-auto px-2 ">
+        <div className="h-screen    ">
             {/* {isLoading || showModal && (
                 <div className="fixed top-0 left-0 flex items-center justify-center w-full h-full bg-black bg-opacity-90 z-50">
                     <SellerPopUp onClose={onClose} showModal={showModal} setShowModal={setShowModal} data={sellerPopupData} handleClose={handleClose} />
@@ -141,7 +141,11 @@ const SellerDashboard = () => {
             </h2>
             <div className="flex flex-col items-start w-full my-6 space-y-4 md:space-x-4 md:space-y-0 md:flex-row">
                 <div className="w-full md:w-6/12">
-                    <div className="relative ring-1 ring-gray-100 w-full overflow-hidden bg-white shadow-lg  ">
+                    <div
+                        style={{
+                            boxShadow: `0 1px 2px #d0d0d0`
+                        }}
+                        className="relative ring-1 ring-gray-100 w-full overflow-hidden rounded-lg bg-white  ">
                         <a href="#" className="block w-full h-full">
                             <div className="flex items-center justify-between px-4 py-7 space-x-4">
                                 <div className="flex items-center">
@@ -180,7 +184,11 @@ const SellerDashboard = () => {
                     </div>
                 </div>
 
-                <div className="flex flex-col border px-8 rounded-xl shadow-3 py-4 md:w-[700px] w-full gap-3 mb-8 mt-4">
+                <div
+                    style={{
+                        boxShadow: `0 1px 2px #d0d0d0`
+                    }}
+                    className="flex flex-col bg-white rounded-lg border px-8  shadow-3 py-4 md:w-[700px] w-full gap-3 mb-8 mt-4">
                     {/* <div className="bg-white  p-3 ring-1 ring-gray-400 rounded-md shadow-xl "> */}
                     <AnouncementContent />
                     {/* </div> */}
@@ -224,7 +232,10 @@ const SellerDashboard = () => {
                     <div>
                         <div className="relative inline-block">
                             <button
-                                className="flex items-center px-4 py-2  text-gray-400 border border-gray-300 rounded-r-full rounded-tl-sm rounded-bl-full md:text-md w-[203px]"
+                                style={{
+                                    boxShadow: `0 1px 2px #d0d0d0`
+                                }}
+                                className="flex text-black bg-white items-center px-4 py-2    border border-gray-300 rounded-r-full rounded-tl-sm rounded-bl-full md:text-md w-[203px]"
                                 onClick={handleButtonClick}
                             >
                                 <svg
@@ -242,9 +253,9 @@ const SellerDashboard = () => {
                             </button>
 
                             {showDatePicker && (
-                                <div className="absolute top-0.5 left-6 border-none focus:none  z-10 mt-2">
+                                <div className="absolute top-0.5 left-6 border-none focus:none text-black z-10 mt-2">
                                     <DatePicker
-                                        wrapperClassName="focus:outline-none  focus:border-blue-500 focus:ring-2 focus:ring-blue-500"
+                                        wrapperClassName="focus:outline-none text-black focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:text-black"
                                         calendarClassName="border border-gray-300"
                                         selected={selectedDate}
                                         onChange={(date) => setSelectedDate(date)}
@@ -259,13 +270,18 @@ const SellerDashboard = () => {
 
 
                 </div>
-                <span className="text-sm text-gray-400">
+                <span
+                    className="text-sm bg-white text-gray-800">
                     Compared to {formattedDate}
                 </span>
             </div>
             <div className="grid grid-cols-1 gap-4 my-4 md:grid-cols-2 lg:grid-cols-3">
                 <div className="w-full">
-                    <div className="relative ring-1 ring-gray-100 w-full px-4 h-[120px] bg-white shadow-lg ">
+                    <div
+                        style={{
+                            boxShadow: `0 1px 2px #d0d0d0`
+                        }}
+                        className="relative rounded-lg ring-1 ring-gray-100 w-full px-4 h-[120px] bg-white shadow-lg ">
                         <p className="text-sm font-semibold text-gray-700 border-b border-gray-200 w-max ">
                             Product Referred
                         </p>
@@ -287,7 +303,11 @@ const SellerDashboard = () => {
                     </div>
                 </div>
                 <div className="w-full">
-                    <div className="relative w-full ring-1 ring-gray-100 px-4 h-[120px] bg-white shadow-lg ">
+                    <div
+                        style={{
+                            boxShadow: `0 1px 2px #d0d0d0`
+                        }}
+                        className="relative rounded-lg w-full ring-1 ring-gray-100 px-4 h-[120px] bg-white shadow-lg ">
                         <p className="text-sm font-semibold text-gray-700 border-b border-gray-200 w-max ">
                             Product Paid
                         </p>
@@ -310,7 +330,11 @@ const SellerDashboard = () => {
                     </div>
                 </div>
                 <div className="w-full">
-                    <div className="relative w-full px-4 ring-1 ring-gray-100 h-[120px] bg-white shadow-lg ">
+                    <div
+                        style={{
+                            boxShadow: `0 1px 2px #d0d0d0`
+                        }}
+                        className="relative rounded-lg w-full px-4 ring-1 ring-gray-100 h-[120px] bg-white shadow-lg ">
                         <p className="text-sm font-semibold text-gray-700 border-b border-gray-200 w-max ">
                             New features
                         </p>
@@ -332,7 +356,11 @@ const SellerDashboard = () => {
                     </div>
                 </div>
                 <div className="w-full">
-                    <div className="relative ring-1 ring-gray-100 w-full px-4 h-[120px] bg-white shadow-lg ">
+                    <div
+                        style={{
+                            boxShadow: `0 1px 2px #d0d0d0`
+                        }}
+                        className="relative rounded-lg ring-1 ring-gray-100 w-full px-4 h-[120px] bg-white shadow-lg ">
                         <p className="text-sm font-semibold text-gray-700 border-b border-gray-200 w-max ">
                             Sign in
                         </p>
@@ -354,7 +382,11 @@ const SellerDashboard = () => {
                     </div>
                 </div>
                 <div className="w-full">
-                    <div className="relative w-full ring-1 ring-gray-100 px-4 h-[120px] bg-white shadow-lg ">
+                    <div
+                        style={{
+                            boxShadow: `0 1px 2px #d0d0d0`
+                        }}
+                        className="relative rounded-lg w-full ring-1 ring-gray-100 px-4 h-[120px] bg-white shadow-lg ">
                         <p className="text-sm font-semibold text-gray-700 border-b border-gray-200 w-max ">
                             Sales
                         </p>
@@ -376,7 +408,11 @@ const SellerDashboard = () => {
                     </div>
                 </div>
                 <div className="w-full">
-                    <div className="relative w-full ring-1 ring-gray-100 px-4 h-[120px] bg-white shadow-lg ">
+                    <div
+                        style={{
+                            boxShadow: `0 1px 2px #d0d0d0`
+                        }}
+                        className="relative rounded-lg w-full ring-1 ring-gray-100 px-4 h-[120px] bg-white shadow-lg ">
                         <p className="text-sm font-semibold text-gray-700 border-b border-gray-200 w-max ">
                             Maintenance
                         </p>

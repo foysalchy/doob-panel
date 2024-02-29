@@ -5,9 +5,10 @@ import { useQuery } from '@tanstack/react-query';
 import BrightAlert from 'bright-alert';
 import BarCode from 'react-barcode';
 import ReadyToShipModal from '../../../AdminItem/SellerOrderManagement/ReadyToShipModal';
+import SalesInvoice from './SalesInvoice';
 
 const SalesHistory = () => {
-
+    const [on, setOn] = useState(false);
     const { shopInfo } = useContext(AuthContext)
 
     const { data: myOrders = [], refetch } = useQuery({
@@ -258,8 +259,11 @@ const SalesHistory = () => {
                                 // Default to 1 or any other appropriate value
                                 currentStep = 1;
                             }
+
+                            console.log(order, '------------>>>>>>>>>>>>>>');
                             return (
                                 <div className=' p-4 rounded border-[0.5px] border-opacity-40 gap-4 border-gray-500 bg-white'>
+                                    {on?._id === order?._id && <SalesInvoice products={order} setModalOpen={setOn} />}
                                     <div className='pb-4 flex md:flex-row flex-col items-center justify-between'>
                                         <h1 className="md:text-xl font-bold ">Order Id : {order._id}</h1>
                                         <p className='md:hidden block'>Order placed {formatTimestamp(order.date)}</p>
@@ -268,17 +272,9 @@ const SalesHistory = () => {
                                                 {/* <UserOrderInvoice order={order} modalOpen={modalOpen} setModalOpen={setModalOpen} /> */}
                                                 <p className='md:block hidden'>Order placed {formatTimestamp(order.date)}</p>
 
-                                                <button onClick={() => handleViewDetails(order._id)} className='text-blue-500 md:text-md text-sm'>View invoice →</button>
+                                                <button onClick={() => setOn(order)} className='text-blue-500 md:text-md text-sm'>View invoice →</button>
 
-                                                {modalOpen && (
-                                                    <div>
-                                                        <UserOrderInvoice
-                                                            modalOpen={true}
-                                                            setModalOpen={setModalOpen}
-                                                            order={myOrders?.data?.find(order => order._id === modalOpen)}
-                                                        />
-                                                    </div>
-                                                )}
+
 
                                             </div>
                                             <div className='flex items-center'>
@@ -389,11 +385,12 @@ const SalesHistory = () => {
                                                                                                 onChange={(e) => setGetway(e?.target?.value)}
                                                                                                 className="mt-1 block w-full md:w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                                                                             >
-                                                                                                {PaymentGetWay?.map((itm) => (
-                                                                                                    <option key={itm} value={itm}>
-                                                                                                        {itm}
-                                                                                                    </option>
-                                                                                                ))}
+                                                                                                {PaymentGetWay?.
+                                                                                                    ((itm) => (
+                                                                                                        <option key={itm} value={itm}>
+                                                                                                            {itm}
+                                                                                                        </option>
+                                                                                                    ))}
                                                                                             </select>
                                                                                         </div>
                                                                                         <div className="">

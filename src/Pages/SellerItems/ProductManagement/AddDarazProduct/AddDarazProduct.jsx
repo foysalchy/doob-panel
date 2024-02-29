@@ -24,7 +24,19 @@ const AddDarazProduct = () => {
     const [multiVendor, setMultiVendor] = useState(true);
     const [inputFields, setInputFields] = useState(false);
     const [variantInput, setVariantInput] = useState([
-        { product1: {}, product2: {}, product3: {}, sellingPrice: "" },
+        {
+            product1: {
+                quantity: 1,
+                quantityPrice: 1
+            }, product2: {
+                quantity: 1,
+                quantityPrice: 1
+            }, product3: {
+                quantity: 1,
+                quantityPrice: 1
+            },
+            sellingPrice: 1
+        }
     ]);
 
 

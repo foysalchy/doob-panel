@@ -37,6 +37,8 @@ const Variants = ({ adminWare, multiVendor, setMultiVendor, inputFields, setInpu
         }
     };
 
+    const [multipleImg, setMultipleImg] = useState([]);
+
     const ImageUpload = async (image) => {
         const imageBlob = new Blob([image], { type: 'image/jpeg' });
 
@@ -67,6 +69,7 @@ const Variants = ({ adminWare, multiVendor, setMultiVendor, inputFields, setInpu
         }
     };
 
+
     const Upload = (image) => {
         const formData = new FormData();
         formData.append("image", image);
@@ -75,7 +78,11 @@ const Variants = ({ adminWare, multiVendor, setMultiVendor, inputFields, setInpu
 
         return fetch(url, {
             method: "POST",
+            headers: {
+                "Origin": "https://backend.doob.com.bd/api/v1/image/upload-image"
+            },
             body: formData,
+
         })
             .then((res) => res.json())
             .then((imageData) => {
@@ -87,9 +94,10 @@ const Variants = ({ adminWare, multiVendor, setMultiVendor, inputFields, setInpu
     const handleAddField = () => {
         setInputFields([...inputFields, {
 
-            name: '', image: null, quantity: "", SKU: "", price: '', offerPrice: '', ability: false, vendor: false
+            name: '', image: null, quantity: "", SKU: "", price: '', offerPrice: '', ability: false, vendor: false, variantImag: null
         }]);
     };
+
 
     const handleRemoveField = (index) => {
         const newInputFields = [...inputFields];
@@ -97,7 +105,20 @@ const Variants = ({ adminWare, multiVendor, setMultiVendor, inputFields, setInpu
         setInputFields(newInputFields);
     };
 
-    console.log(multiVendor);
+    const handleMultipleImg = async (e, index) => {
+        const imgs = e.target.files;
+        let imgUrls = [];
+        for (let i = 0; i < imgs.length; i++) {
+            const img = imgs[i];
+            const url = await Upload(img);
+            imgUrls.push({ src: url });
+        }
+
+        const newInputFields = [...inputFields];
+        newInputFields[index].variantImag = imgUrls;
+        setInputFields(newInputFields);
+    }
+
     return (
         <div className=' border mt-4 border-gray-400 md:px-10 px-3 py-5 pb-16 w-full bg-gray-100 rounded'>
             <div className='flex flex-col mb-4'>
@@ -155,6 +176,8 @@ const Variants = ({ adminWare, multiVendor, setMultiVendor, inputFields, setInpu
                             />
                         </div>
 
+
+
                         {
                             (inputFields.length > 1) && (
                                 <button
@@ -168,6 +191,12 @@ const Variants = ({ adminWare, multiVendor, setMultiVendor, inputFields, setInpu
                         }
 
                     </div>
+                        <div>
+                            <input ccept="image/jpeg, image/png, image/gif, image/bmp, image/webp, image/heic"
+                                onChange={(e) => handleMultipleImg(e, index)} type="file" multiple />
+                        </div>
+
+
                         <Stock field={field} index={index} inputFields={inputFields} setInputFields={setInputFields} />
                     </div>
 

@@ -3,6 +3,7 @@ import { useReactToPrint } from 'react-to-print';
 import { AuthContext } from '../../AuthProvider/UserProvider';
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
+import Barcode from 'react-barcode';
 
 const Invoice = () => {
     const { id } = useParams();
@@ -79,6 +80,9 @@ const Invoice = () => {
                         </div>
                         <div id="invoice">
                             <h1>INVOICE</h1>
+                            <div className="wrap-2 mt-[-57px] ml-[40px]">
+                                <Barcode value={info._id} />
+                            </div>
                             <div className="date">Date of Invoice: {formattedDate(info?.timestamp)}</div>
                         </div>
                     </div>

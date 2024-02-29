@@ -287,3 +287,13 @@ font-google {
   margin: 0;
 }
 
+.wrap-2 svg {
+  width: 180px;
+  padding: 0!important; /* Set your preferred width */
+  margin: 0!important;
+}
+
+.react-datepicker__input-container > input{
+  color : black!important;
+  background : transparent!important; 
+}

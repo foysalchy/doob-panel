@@ -3,17 +3,14 @@ import { Link } from 'react-router-dom';
 import ReviewTableRow from './ReviewTableRow';
 import { AuthContext } from '../../../../AuthProvider/UserProvider';
 import { useQuery } from '@tanstack/react-query';
+import { BiLeftArrow, BiRightArrow } from 'react-icons/bi';
 
 const ReviewTable = ({ search }) => {
-    const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 4; // You can change this value based on your requirements
-    const startIndex = (currentPage - 1) * itemsPerPage;
-    const endIndex = startIndex + itemsPerPage;
+  
+ 
     const { shopInfo } = useContext(AuthContext)
-    const totalItems = [1, 2, 3, 4, 5, 6, 7, 8, 9].length;
-
-    const totalPages = Math.ceil(totalItems / itemsPerPage);
-
+ 
+ 
     const handlePageChange = (newPage) => {
         setCurrentPage(newPage);
     };
@@ -27,6 +24,80 @@ const ReviewTable = ({ search }) => {
             return data?.comments;
         },
     });
+
+
+
+
+    const [currentPage, setCurrentPage] = useState(1);
+
+    const pageSize = 6;
+    const startIndex = (currentPage - 1) * pageSize;
+    const endIndex = startIndex + pageSize;
+    const totalPages = Math.ceil(reviewData?.length / pageSize);
+
+    const currentData = reviewData.slice(startIndex, endIndex);
+
+    const handleChangePage = (newPage) => {
+
+        setCurrentPage(newPage);
+    };
+
+
+
+    const renderPageNumbers = () => {
+        const startPage = Math.max(1, currentPage - Math.floor(pageSize / 2));
+        const endPage = Math.min(totalPages, startPage + pageSize - 1);
+
+        return (
+            <React.Fragment>
+                {/* First Page */}
+                {startPage > 1 && (
+                    <li>
+                        <button
+                            className={`block h-8 w-8 rounded border border-gray-900 bg-white text-center leading-8 text-gray-900`}
+                            onClick={() => handleChangePage(1)}
+                        >
+                            1
+                        </button>
+                    </li>
+                )}
+
+
+
+                {/* Current Page */}
+                {Array.from({ length: endPage - startPage + 1 }).map((_, index) => {
+                    const pageNumber = startPage + index;
+                    return (
+                        <li key={pageNumber}>
+                            <button
+                                className={`block h-8 w-8 rounded border ${pageNumber === currentPage
+                                    ? 'border-blue-600 bg-blue-600 text-white'
+                                    : 'border-gray-900 bg-white text-center leading-8 text-gray-900'
+                                    }`}
+                                onClick={() => handleChangePage(pageNumber)}
+                            >
+                                {pageNumber}
+                            </button>
+                        </li>
+                    );
+                })}
+
+
+
+                {/* Last Page */}
+                {endPage < totalPages && (
+                    <li>
+                        <button
+                            className={`block h-8 w-8 rounded border border-gray-100 bg-white text-center leading-8 text-gray-100`}
+                            onClick={() => handleChangePage(totalPages)}
+                        >
+                            {totalPages}
+                        </button>
+                    </li>
+                )}
+            </React.Fragment>
+        );
+    };
 
 
     return (
@@ -62,22 +133,47 @@ const ReviewTable = ({ search }) => {
                     </div>
                 </div>
             </div>
-            <div className="flex justify-center mt-4">
-                <ul className="flex space-x-2">
-                    {Array.from({ length: totalPages }).map((_, index) => (
-                        <li key={index}>
-                            <button
-                                className={`px-4 py-2 border ${currentPage === index + 1
-                                    ? 'bg-blue-500 text-white'
-                                    : 'text-blue-500'
-                                    }`}
-                                onClick={() => handlePageChange(index + 1)}
+
+            <div className='flex justify-center mt-4'>
+                <ol className="flex justify-center gap-1 text-xs font-medium">
+                    <li>
+                        <button
+                            className="inline-flex h-8 w-8 items-center justify-center rounded border border-gray-900 bg-white text-gray-900 rtl:rotate-180"
+                            onClick={() => handleChangePage(Math.max(1, currentPage - 1))}
+                            disabled={currentPage === 1}
+                        >
+                            <span className="sr-only">Prev Page</span>
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                className="h-3 w-3"
+                                viewBox="0 0 20 20"
+                                fill="currentColor"
                             >
-                                {index + 1}
-                            </button>
-                        </li>
-                    ))}
-                </ul>
+                                <BiLeftArrow className='text-xl' />
+                            </svg>
+                        </button>
+                    </li>
+
+                    {renderPageNumbers()}
+
+                    <li>
+                        <button
+                            className="inline-flex h-8 w-8 items-center justify-center rounded border border-gray-900 disabled:cursor-not-allowed bg-white text-gray-900 rtl:rotate-180"
+                            onClick={() => handleChangePage(Math.min(totalPages, currentPage + 1))}
+                            disabled={currentPage === totalPages}
+                        >
+                            <span className="sr-only">Next Page</span>
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                className="h-3 w-3"
+                                viewBox="0 0 20 20"
+                                fill="currentColor"
+                            >
+                                <BiRightArrow className='text-xl' />
+                            </svg>
+                        </button>
+                    </li>
+                </ol>
             </div>
         </div>
     );
