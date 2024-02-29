@@ -42,7 +42,7 @@ const SalesHistory = () => {
 
     const userProductCancel = (orderId, status) => {
         console.log(orderId, status);
-        fetch(`http://localhost:5000/api/v1/seller/update-seller-order-status?orderId=${orderId}&status=${status}`, {
+        fetch(`https://backend.doob.com.bd/api/v1/seller/update-seller-order-status?orderId=${orderId}&status=${status}`, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
         }).then((res) => res.json()).then((data) => {
@@ -66,7 +66,7 @@ const SalesHistory = () => {
 
     // ? update status
     const updateStatus = (status, orderId) => {
-        fetch(`http://localhost:5000/api/v1/seller/update-seller-order-status?orderId=${orderId}&status=${status}`, {
+        fetch(`https://backend.doob.com.bd/api/v1/seller/update-seller-order-status?orderId=${orderId}&status=${status}`, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ status, orderId })

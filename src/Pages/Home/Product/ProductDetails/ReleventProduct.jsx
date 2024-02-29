@@ -87,7 +87,7 @@ const ReleventProduct = ({ productFind }) => {
     const relevantProducts = releventProduct.filter(product =>
         product.adminCategory.some(category => productFind.adminCategory.includes(category))
     );
- 
+
     return (
         <div className=" bg-white rounded ">
             <section className="body-font">

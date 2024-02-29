@@ -23,7 +23,7 @@ const ManageProduct = () => {
   const { data: othersProduct = [] } = useQuery({
     queryKey: ["othersProducts"],
     queryFn: async () => {
-      const res = await fetch("http://localhost:5000/api/v1/admin/others-products");
+      const res = await fetch("https://backend.doob.com.bd/api/v1/admin/others-products");
       const data = await res.json();
       return data;
     },
