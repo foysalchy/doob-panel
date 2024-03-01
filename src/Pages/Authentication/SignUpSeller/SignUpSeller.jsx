@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   AiFillCheckSquare,
   AiFillEye,
@@ -144,16 +144,34 @@ const SignUpSeller = () => {
     }
   };
 
+  const [setTime, setSetTime] = useState(false);
+
+  const [timeRemaining, setTimeRemaining] = useState(120);
+
   const handleNumberForm = (e) => {
     e.preventDefault();
     fetch(`http://localhost:5001/api/v1/auth/send-otp?number=${phoneNumber}`).then((response) => response.json()).then((data) => {
       console.log(data)
       setPhone(phone)
       setSwitchNumberForm(false)
-      setSwitchOtpForm(true)
+      setSwitchOtpForm(true);
+      setSetTime(true);
+
     })
   }
-  
+
+  const handleResendOtp = () => {
+    setTimeRemaining(120)
+    fetch(`http://localhost:5001/api/v1/auth/send-otp?number=${phoneNumber}`).then((response) => response.json()).then((data) => {
+      console.log(data)
+      setPhone(phone)
+      setSwitchNumberForm(false)
+      setSwitchOtpForm(true);
+      setSetTime(true);
+
+    })
+  }
+
   const handleOtpForm = (e) => {
     e.preventDefault();
     const form = e.target;
@@ -161,16 +179,31 @@ const SignUpSeller = () => {
 
     fetch(`http://localhost:5001/api/v1/auth/verify-otp?number=${phoneNumber}&otp=${otp}`).then((response) => response.json()).then((data) => {
       if (data.success) {
-        setSwitchNumberForm(true)
+        setSwitchNumberForm(false)
         setSwitchOtpForm(false)
         setSwitchForm(true)
       }
-      
+
     })
 
   }
 
+  useEffect(() => {
+    if (setTime) {
+      const timer = setInterval(() => {
+        setTimeRemaining((prevTime) => {
+          console.log('Time remaining:', prevTime); // Log remaining time to console
+          if (prevTime === 0) {
+            clearInterval(timer);
+            setSetTime(false)
+          }
+          return prevTime - 1;
+        });
+      }, 1000);
 
+      return () => clearInterval(timer);
+    }
+  }, [setTime]);
 
   return (
     <div>
@@ -273,7 +306,10 @@ const SignUpSeller = () => {
                         id="otp"
                         name="otp"
                       />
-                 
+                      {setTime && timeRemaining > 0 && <small className="">Resend OTP after  {`${Math.floor(timeRemaining / 60)}, ${timeRemaining % 60 < 10 ? `0${timeRemaining % 60}` : timeRemaining % 60}`}</small>}
+
+                      {timeRemaining < 1 && <small className="text-blue-500" onClick={handleResendOtp}>Resend</small>}
+                      <br />
                       <button
                         type="submit"
                         className="bg-gray-900 text-white px-8 w-full py-3 rounded mt-3">Submit</button>
