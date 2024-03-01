@@ -31,48 +31,6 @@ const SignUpSeller = () => {
 
 
   // otp number form
-  const handleNumberForm = (e) => {
-    e.preventDefault();
-    const form = e.target;
-    const phone = form.phone.value;
-    setPhone(phone);
-
-    const generateOTP = (length) => {
-      let otp = '';
-      const characters = '0123456789';
-      const charactersLength = characters.length;
-      for (let i = 0; i < length; i++) {
-        otp += characters.charAt(Math.floor(Math.random() * charactersLength));
-      }
-      return otp;
-    }
-
-    const otpLength = 6;
-    const otp = generateOTP(otpLength);
-    localStorage.setItem('otp', otp);
-
-    setSwitchNumberForm(false);
-    setSwitchOtpForm(true);
-
-    console.log(phone);
-  }
-  // otp form
-  const handleOtpForm = (e) => {
-    e.preventDefault();
-    const form = e.target;
-    const phone = form.otp.value;
-
-    const getOtp = localStorage.getItem('otp');
-    if (phone === getOtp) {
-      setSwitchNumberForm(false)
-      setSwitchOtpForm(false)
-      setSwitchForm(true)
-    }
-    else {
-      alert('Invalid OTP');
-    }
-
-  }
 
 
   const togglePasswordVisibility = () => {
@@ -160,6 +118,60 @@ const SignUpSeller = () => {
   }
 
 
+  function isBangladeshiPhoneNumber(phoneNumber) {
+    // Remove any non-digit characters from the phone number
+    const cleanedNumber = phoneNumber.replace(/\D/g, '');
+
+    // Check if the cleaned number starts with +880 and has a valid length
+    return /^880\d{10}$/.test(cleanedNumber);
+  }
+
+  const [phoneNumber, setPhoneNumber] = useState('+880');
+  const [valid, setValid] = useState(false);
+
+  const handleInputChange = (event) => {
+    let newPhoneNumber = event.target.value;
+    if (!newPhoneNumber.startsWith('+880')) {
+      // If the country code is removed, add it back
+      newPhoneNumber = '+880' + newPhoneNumber.replace(/\D/g, '');
+    }
+    setPhoneNumber(newPhoneNumber); // Update the phone number in the state
+
+    if (isBangladeshiPhoneNumber(newPhoneNumber)) {
+      setValid(true);
+    } else {
+      setValid(false);
+    }
+  };
+
+  const handleNumberForm = (e) => {
+    e.preventDefault();
+    fetch(`http://localhost:5001/api/v1/auth/send-otp?number=${phoneNumber}`).then((response) => response.json()).then((data) => {
+      console.log(data)
+      setPhone(phone)
+      setSwitchNumberForm(false)
+      setSwitchOtpForm(true)
+    })
+  }
+  
+  const handleOtpForm = (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const otp = form.otp.value;
+
+    fetch(`http://localhost:5001/api/v1/auth/verify-otp?number=${phoneNumber}&otp=${otp}`).then((response) => response.json()).then((data) => {
+      if (data.success) {
+        setSwitchNumberForm(true)
+        setSwitchOtpForm(false)
+        setSwitchForm(true)
+      }
+      
+    })
+
+  }
+
+
+
   return (
     <div>
       <div className="relative">
@@ -217,14 +229,18 @@ const SignUpSeller = () => {
                         Phone
                       </label>
                       <input
-                        placeholder="+0000000000000"
+                        placeholder="+8801XXXXXXXXX"
+                        value={phoneNumber}
                         required
-                        type="number"
+                        type="text"
+                        onChange={handleInputChange}
                         className="flex-grow w-full h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded "
                         id="phone"
                         name="phone"
                       />
+                      {!valid && <small className="text-red-500">Your Number is not valid</small>}
                       <button
+                        disabled={!valid}
                         type="submit"
                         className="bg-gray-900 text-white px-8 w-full py-3 rounded mt-3">Submit</button>
                     </div>
@@ -247,13 +263,17 @@ const SignUpSeller = () => {
                         Enter the OTP send from {phone}
                       </span>
                       <input
-                        placeholder="0  0  0  0"
+                        placeholder="0000"
                         required
+                        style={{
+                          'letterSpacing': '20px'
+                        }}
                         type="number"
-                        className="flex-grow w-full h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded "
+                        className="flex-grow   w-full h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded "
                         id="otp"
                         name="otp"
                       />
+                 
                       <button
                         type="submit"
                         className="bg-gray-900 text-white px-8 w-full py-3 rounded mt-3">Submit</button>

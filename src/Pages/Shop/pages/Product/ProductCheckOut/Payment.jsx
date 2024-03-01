@@ -53,8 +53,10 @@ const Payment = () => {
 
     }
 
-    const paymentHandler = async () => {
-        payWithBkash()
+    const paymentHandler = async (get) => {
+        get.Getaway === 'Bkash' && payWithBkash()
+        get.Getaway === 'AmarPay' && payWithAmarPay()
+      
 
     };
 
@@ -67,11 +69,30 @@ const Payment = () => {
                     'Content-Type': 'application/json',
                     'credentials': 'include'
                 },
-                body: JSON.stringify({ amount: 50, orderId: 1 }),
+                body: JSON.stringify({ amount: orderStage?.promoHistory?.status?orderStage.promoHistory.promoPrice : orderStage?.promoHistory?.normalPrice , orderId: 1 }),
                 credentials: 'include'
             });
             const data = await response.json();
             window.location.href = data.bkashURL;
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    const payWithAmarPay = async () => {
+        try {
+            const response = await fetch('http://localhost:5001/api/v1/seller/amarpay/payment/create', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'credentials': 'include'
+                },
+                body: JSON.stringify({ amount: orderStage?.promoHistory?.status ? orderStage.promoHistory.promoPrice : orderStage?.promoHistory?.normalPrice, orderId: 1 }),
+                credentials: 'include'
+            });
+            const data = await response.json();
+            console.log(data);
+            // window.location.href = data.bkashURL;
         } catch (error) {
             console.log(error);
         }
@@ -300,7 +321,7 @@ const Payment = () => {
                                 (
                                     <div>
                                         <button
-                                            onClick={paymentHandler}
+                                            onClick={paymentHandler(payment)}
                                             className="group relative inline-flex m-auto items-center overflow-hidden rounded bg-gray-900  px-10 py-2 text-white focus:outline-none focus:ring active:bg-gray-900"
                                         >
                                             <span className="absolute -start-full transition-all group-hover:start-4">

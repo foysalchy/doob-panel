@@ -11,9 +11,7 @@ const ManageWebOrder = () => {
     const { data: products = [], refetch } = useQuery({
         queryKey: ["sellerAllOrder"],
         queryFn: async () => {
-            loginWithOtp
-            const res = await fetch(`http://localhost:5001/api/v1/admin/get-shop-all-order`);
-            // const res = await fetch(`http://localhost:5001/api/v1/seller/get-my-order?shopId=${shopInfo?._id}`)main
+            const res = await fetch(`https://backend.doob.com.bd/api/v1/seller/get-my-order?shopId=${shopInfo?._id}`)
             const data = await res.json();
             return data.data;
         },
