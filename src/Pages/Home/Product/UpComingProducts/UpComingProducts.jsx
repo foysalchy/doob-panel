@@ -23,12 +23,9 @@ const UpComingProducts = () => {
   const blankImg = "https://i.ibb.co/2K1Z2D5/blank.jpg"
 
   return (
-    <div>
+    <div className='  bg-white'>
 
-
-      {AdminNewProducts?.length ? <div className="py-4 bg-white rounded mt-6">
-        <section className="body-font">
-          <div className="px-5">
+<div className="px-5">
             <div className="flex justify-between text-black">
               <div className="flex justify-between align-items-center">
                 <img
@@ -50,6 +47,11 @@ const UpComingProducts = () => {
               </button>
             </div>
           </div>
+      {AdminNewProducts?.length ? 
+      <div className="py-4 bg-white rounded mt-6">
+        <section className="body-font">
+          
+
           <div className="border-b border-gray-500 border-opacity-50 mx-5 mt-2"></div>
           {!isLoading ? <div className=" px-5 my-4 mx-auto">
             <Swiper
@@ -117,7 +119,20 @@ const UpComingProducts = () => {
           </div>
           }
         </section>
-      </div> : ''}
+      </div>
+       : 
+      <div className='p-4 grid md:grid-cols-4 grid-cols-1 gap-4'>
+          {Array(4).fill().map((_, index) => (
+            <div key={index} className="flex flex-col  f-full rounded shadow-md  animate-pulse h-96">
+              <div className="h-48 rounded-t dark:bg-gray-200"></div>
+              <div className="flex-1 px-4 py-8 space-y-4 sm:p-8 dark:bg-gray-100">
+                <div className="w-full h-6 rounded dark:bg-gray-200"></div>
+                <div className="w-full h-6 rounded dark:bg-gray-200"></div>
+                <div className="w-3/4 h-6 rounded dark:bg-gray-200"></div>
+              </div>
+            </div>
+          ))}   
+      </div>}
     </div>
   );
 };
