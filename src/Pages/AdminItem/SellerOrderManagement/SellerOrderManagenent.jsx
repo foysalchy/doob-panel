@@ -8,7 +8,7 @@ const SellerOrderManagement = () => {
     const { data: products = [], refetch } = useQuery({
         queryKey: ["sellerAllOrder"],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/api/v1/admin/get-shop-all-order`);
+            const res = await fetch(`https://backend.doob.com.bd/api/v1/admin/get-shop-all-order`);
             const data = await res.json();
             return data.data;
         },
@@ -69,7 +69,7 @@ const SellerOrderManagement = () => {
 
     const productStatusUpdate = (status, orderId) => {
         console.log(status, orderId);
-        fetch(`http://localhost:5000/api/v1/seller/update-seller-order-status?orderId=${orderId}&status=${status}`, {
+        fetch(`https://backend.doob.com.bd/api/v1/seller/update-seller-order-status?orderId=${orderId}&status=${status}`, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ status, orderId })
@@ -80,7 +80,7 @@ const SellerOrderManagement = () => {
     }
 
     const deleteMethod = (orderId) => {
-        fetch(`http://localhost:5000/api/v1/seller/delete-seller-order?orderId=${orderId}`, {
+        fetch(`https://backend.doob.com.bd/api/v1/seller/delete-seller-order?orderId=${orderId}`, {
             method: "DELETE",
             headers: { "Content-Type": "application/json" },
         }).then((res) => res.json()).then((data) => {

@@ -179,7 +179,7 @@ const ProductDetails = () => {
         userInfo
       }
       console.log(data);
-      fetch(`http://localhost:5000/api/v1/seller/web-store?id=${id}`, {
+      fetch(`https://backend.doob.com.bd/api/v1/seller/web-store?id=${id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

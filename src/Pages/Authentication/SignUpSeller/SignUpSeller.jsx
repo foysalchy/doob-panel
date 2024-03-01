@@ -15,6 +15,11 @@ import Modal from "./Modal";
 import BrightAlert from "bright-alert";
 
 const SignUpSeller = () => {
+  const [switchForm, setSwitchForm] = useState(false);
+  const [switchNumberForm, setSwitchNumberForm] = useState(true);
+  const [switchOtpForm, setSwitchOtpForm] = useState(false);
+  const [phone, setPhone] = useState('');
+
   const [showPassword, setShowPassword] = useState(false);
   const [passError, setPassError] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -23,6 +28,53 @@ const SignUpSeller = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [userEmail, setUserEmail] = useState('')
   const navigate = useNavigate();
+
+
+  // otp number form
+  const handleNumberForm = (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const phone = form.phone.value;
+    setPhone(phone);
+
+    const generateOTP = (length) => {
+      let otp = '';
+      const characters = '0123456789';
+      const charactersLength = characters.length;
+      for (let i = 0; i < length; i++) {
+        otp += characters.charAt(Math.floor(Math.random() * charactersLength));
+      }
+      return otp;
+    }
+
+    const otpLength = 6;
+    const otp = generateOTP(otpLength);
+    localStorage.setItem('otp', otp);
+
+    setSwitchNumberForm(false);
+    setSwitchOtpForm(true);
+
+    console.log(phone);
+  }
+  // otp form
+  const handleOtpForm = (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const phone = form.otp.value;
+
+    const getOtp = localStorage.getItem('otp');
+    if (phone === getOtp) {
+      setSwitchNumberForm(false)
+      setSwitchOtpForm(false)
+      setSwitchForm(true)
+    }
+    else {
+      alert('Invalid OTP');
+    }
+
+  }
+
+
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
@@ -144,173 +196,240 @@ const SignUpSeller = () => {
                   </svg>
                 </Link>
               </div>
+
               <div className="w-full max-w-xl xl:px-8 xl:w-5/12">
-                <div className="bg-white rounded shadow-2xl p-7 sm:p-10">
-                  <h3 className="mb-4 text-xl font-semibold sm:text-center sm:mb-6 sm:text-2xl">
-                    Sign up for updates
-                  </h3>
-                  <form onChange={() => setPassError("")} onSubmit={signUpData}>
-                    <div className="mb-1 sm:mb-2">
+                {/* otp number form */}
+                {switchNumberForm &&
+                  <form
+                    className="bg-white rounded shadow-2xl p-7 sm:p-10"
+                    onSubmit={handleNumberForm}>
+                    <div className="mb-1 sm:mb-2 ">
+                      <h3 className="mb-4 text-xl font-semibold sm:text-center sm:mb-6 sm:text-2xl">
+                        Sign up for updates
+                      </h3>
+                      <p className="text-xs text-start">
+                        We will send you the 4 digit verification code
+                      </p>
                       <label
-                        htmlFor="name"
+                        htmlFor="phone"
                         className="inline-block mb-1 font-medium"
                       >
-                        Full Name
+                        Phone
                       </label>
                       <input
-
-                        placeholder="John Doe"
+                        placeholder="+0000000000000"
                         required
-                        type="text"
-                        className="flex-grow w-full h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
-                        id="name"
-                        name="name"
+                        type="number"
+                        className="flex-grow w-full h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded "
+                        id="phone"
+                        name="phone"
                       />
+                      <button
+                        type="submit"
+                        className="bg-gray-900 text-white px-8 w-full py-3 rounded mt-3">Submit</button>
                     </div>
+
+                  </form>}
+
+                {/* otp form */}
+                {switchOtpForm &&
+                  <form
+                    className="bg-white rounded shadow-2xl p-7 sm:p-10"
+                    onSubmit={handleOtpForm}>
                     <div className="mb-1 sm:mb-2">
-                      <label
-                        htmlFor="email"
-                        className="inline-block mb-1 font-medium"
+                      <h3 className="mb-4 text-xl font-semibold sm:text-center sm:mb-6 sm:text-2xl">
+                        Sign up for updates
+                      </h3>
+                      <span
+                        htmlFor="otp"
+                        className="inline-block text-xs mb-1 font-medium"
                       >
-                        Email
-                      </label>
+                        Enter the OTP send from {phone}
+                      </span>
                       <input
-
-                        placeholder="xyz@email.com"
+                        placeholder="0  0  0  0"
                         required
-                        type="email"
-                        className="flex-grow w-full h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
-                        id="email"
-                        name="email"
+                        type="number"
+                        className="flex-grow w-full h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded "
+                        id="otp"
+                        name="otp"
                       />
+                      <button
+                        type="submit"
+                        className="bg-gray-900 text-white px-8 w-full py-3 rounded mt-3">Submit</button>
                     </div>
 
-                    <div className="mb-1 sm:mb-2">
-                      <label
-                        htmlFor="email"
-                        className="inline-block mb-1 font-medium"
-                      >
-                        Password
-                      </label>
-                      <div className="relative">
+                  </form>}
+
+                {/* main form */}
+                {switchForm &&
+                  <div className="bg-white rounded shadow-2xl p-7 sm:p-10">
+                    <h3 className="mb-4 text-xl font-semibold sm:text-center sm:mb-6 sm:text-2xl">
+                      Sign up for updates
+                    </h3>
+                    <form onChange={() => setPassError("")} onSubmit={signUpData}>
+                      <div className="mb-1 sm:mb-2">
+                        <label
+                          htmlFor="name"
+                          className="inline-block mb-1 font-medium"
+                        >
+                          Full Name
+                        </label>
                         <input
 
-                          placeholder="*******"
+                          placeholder="John Doe"
                           required
-
-                          type={showPassword ? "text" : "password"}
-                          className="flex-grow w-full re h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
-                          id="password"
-                          name="password"
+                          type="text"
+                          className="flex-grow w-full h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
+                          id="name"
+                          name="name"
                         />
-                        {showPassword ? (
-                          <span
-                            className="absolute inset-y-0 end-0 grid place-content-center px-4"
-                            onClick={togglePasswordVisibility}
-                          >
-                            <AiFillEyeInvisible />
-                          </span>
-                        ) : (
-                          <span
-                            className="absolute inset-y-0 end-0 grid place-content-center px-4"
-                            onClick={togglePasswordVisibility}
-                          >
-                            <AiFillEye />
-                          </span>
-                        )}
                       </div>
-                    </div>
-
-                    <div className="text-xs text-gray-600 text-center sm:text-sm"> {!shop ? (
-                      <div
-                        className="flex gap-1 cursor-pointer"
-
-                        onClick={() => { setShop(true); setPassError(''); }}
-                      >
-                        <AiTwotoneCheckSquare className="text-2xl " />
-                        <p className="">Are you try to create as a seller?</p>
-                      </div>
-                    ) : (
-                      <div
-                        className="flex gap-1 cursor-pointer"
-                        onClick={() => { setShop(false); setPassError(''); }}
-                      >
-                        <AiFillCheckSquare className="text-2xl " />
-                        <p className="">No i try to create as a user</p>
-                      </div>
-                    )}</div>
-
-                    {shop && (
                       <div className="mb-1 sm:mb-2">
                         <label
                           htmlFor="email"
                           className="inline-block mb-1 font-medium"
                         >
-                          Shop Name
+                          Email
                         </label>
                         <input
-                          placeholder="Sell Now"
-                          required={shop}
-                          type="text"
-                          className="flex-grow w-full h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
-                          id="shopName"
-                          name="shopName"
-                        />
 
+                          placeholder="xyz@email.com"
+                          required
+                          type="email"
+                          className="flex-grow w-full h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
+                          id="email"
+                          name="email"
+                        />
+                      </div>
+
+                      <div className="mb-1 sm:mb-2">
                         <label
                           htmlFor="email"
                           className="inline-block mb-1 font-medium"
                         >
-                          Refer Code
+                          Password
                         </label>
-                        <input
-                          placeholder="refer code"
-                          type="text"
-                          className="flex-grow w-full h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
-                          id="shopName"
-                          name="referCode"
-                        />
+                        <div className="relative">
+                          <input
 
+                            placeholder="*******"
+                            required
 
+                            type={showPassword ? "text" : "password"}
+                            className="flex-grow w-full re h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
+                            id="password"
+                            name="password"
+                          />
+                          {showPassword ? (
+                            <span
+                              className="absolute inset-y-0 end-0 grid place-content-center px-4"
+                              onClick={togglePasswordVisibility}
+                            >
+                              <AiFillEyeInvisible />
+                            </span>
+                          ) : (
+                            <span
+                              className="absolute inset-y-0 end-0 grid place-content-center px-4"
+                              onClick={togglePasswordVisibility}
+                            >
+                              <AiFillEye />
+                            </span>
+                          )}
+                        </div>
                       </div>
 
-                    )}
-                    <p className="text-sm text-red-500">{passError}</p>
-                    <div className="mt-4 mb-2 sm:mb-4">
-                      {!loading ? (
-                        <button
-                          type="submit"
-                          className="inline-flex items-center justify-center w-full h-12 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md hover:bg-black bg-gray-800 focus:shadow-outline focus:outline-none"
+                      <div className="text-xs text-gray-600 text-center sm:text-sm"> {!shop ? (
+                        <div
+                          className="flex gap-1 cursor-pointer"
+
+                          onClick={() => { setShop(true); setPassError(''); }}
                         >
-                          Sign Up
-                        </button>
+                          <AiTwotoneCheckSquare className="text-2xl " />
+                          <p className="">Are you try to create as a seller?</p>
+                        </div>
                       ) : (
-                        <button
-                          disabled
-                          className="inline-flex items-center justify-center w-full h-12 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md hover:bg-black bg-gray-800 focus:shadow-outline focus:outline-none"
+                        <div
+                          className="flex gap-1 cursor-pointer"
+                          onClick={() => { setShop(false); setPassError(''); }}
                         >
-                          Loading...
-                        </button>
+                          <AiFillCheckSquare className="text-2xl " />
+                          <p className="">No i try to create as a user</p>
+                        </div>
+                      )}</div>
+
+                      {shop && (
+                        <div className="mb-1 sm:mb-2">
+                          <label
+                            htmlFor="email"
+                            className="inline-block mb-1 font-medium"
+                          >
+                            Shop Name
+                          </label>
+                          <input
+                            placeholder="Sell Now"
+                            required={shop}
+                            type="text"
+                            className="flex-grow w-full h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
+                            id="shopName"
+                            name="shopName"
+                          />
+
+                          <label
+                            htmlFor="email"
+                            className="inline-block mb-1 font-medium"
+                          >
+                            Refer Code
+                          </label>
+                          <input
+                            placeholder="refer code"
+                            type="text"
+                            className="flex-grow w-full h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
+                            id="shopName"
+                            name="referCode"
+                          />
+
+
+                        </div>
+
                       )}
-                    </div>
+                      <p className="text-sm text-red-500">{passError}</p>
+                      <div className="mt-4 mb-2 sm:mb-4">
+                        {!loading ? (
+                          <button
+                            type="submit"
+                            className="inline-flex items-center justify-center w-full h-12 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md hover:bg-black bg-gray-800 focus:shadow-outline focus:outline-none"
+                          >
+                            Sign Up
+                          </button>
+                        ) : (
+                          <button
+                            disabled
+                            className="inline-flex items-center justify-center w-full h-12 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md hover:bg-black bg-gray-800 focus:shadow-outline focus:outline-none"
+                          >
+                            Loading...
+                          </button>
+                        )}
+                      </div>
 
 
-                    <p className="text-xs text-gray-600 text-center sm:text-sm">
+                      <p className="text-xs text-gray-600 text-center sm:text-sm">
 
-                      By clicking "Sign up", you agree to the
-                      <br />
-                      <Link className="underline text-blue-500" to={"/terms"}>
-                        Terms of Use
-                      </Link>{" "}
-                      and{" "}
-                      <Link className="underline text-blue-500" to={"/"}>
-                        Privacy Policy
-                      </Link>
-                    </p>
-                  </form>
+                        By clicking "Sign up", you agree to the
+                        <br />
+                        <Link className="underline text-blue-500" to={"/terms"}>
+                          Terms of Use
+                        </Link>{" "}
+                        and{" "}
+                        <Link className="underline text-blue-500" to={"/"}>
+                          Privacy Policy
+                        </Link>
+                      </p>
+                    </form>
 
 
-                </div>
+                  </div>}
+
               </div>
             </div>
           </div>

@@ -9,6 +9,8 @@ import CategoryList from './CategoryList';
 import { Dropdown, Ripple, initTE } from 'tw-elements';
 import { FaAngleRight } from 'react-icons/fa6';
 import { AuthContext } from '../../../../AuthProvider/UserProvider';
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
 
 
 initTE({ Dropdown, Ripple });
@@ -159,7 +161,14 @@ const ProductHero = () => {
     return (
         <div className='flex gap-4 '>
             <div className="bg-white  w-[340px] relative lg:flex hidden flex-col gap-2 rounded-lg p-4">
-                {megaSideCategoryData.map((item, index) => (
+                {megaSideCategoryData ? <>
+                    <Skeleton
+                        style={{
+                            height : '28px'
+                        }}
+                        count={10} />
+                </> :
+                megaSideCategoryData.map((item, index) => (
                     <div key={index} className="  inline-block">
                         {/* Dropdown toggle button */}
                         <button
