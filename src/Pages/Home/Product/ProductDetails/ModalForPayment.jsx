@@ -54,6 +54,24 @@ const ModalForPayment = ({ invoice, setInvoice, sellingPrice, handleStore, selle
             console.log(error);
         }
     }
+    const payWithAmarPay = async () => {
+        try {
+            const response = await fetch('http://localhost:5001/api/v1/seller/amarpay/payment/create', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'credentials': 'include'
+                },
+                body: JSON.stringify({ amount: 50, orderId: 1 }),
+                credentials: 'include'
+            });
+            const data = await response.json();
+            console.log(data);
+            // window.location.href = data.bkashURL;
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
 
     return (
@@ -102,7 +120,7 @@ const ModalForPayment = ({ invoice, setInvoice, sellingPrice, handleStore, selle
                                             }
                                             {get.Getaway === 'AmarPay' &&
                                                 <a href="#scrollDestination">
-                                                    <div onClick={() => setPayment(get)} className={`${payment?.Getaway === 'AmarPay' && 'shadow-lg shadow-gray-700'}  border border-gray-600 flex md:flex-col flex-row items-center justify-center gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] overflow-hidden`}>
+                                                    <div onClick={payWithAmarPay()} className={`${payment?.Getaway === 'AmarPay' && 'shadow-lg shadow-gray-700'}  border border-gray-600 flex md:flex-col flex-row items-center justify-center gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] overflow-hidden`}>
                                                         <img
                                                             alt="Developer"
                                                             src="https://play-lh.googleusercontent.com/xA5zXoyQrqDjgz8bef64gAvnBpofTELWWWXYkuF3t5WnPADHv5Y91A8x51Z0RHJnLzM"

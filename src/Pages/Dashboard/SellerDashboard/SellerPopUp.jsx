@@ -37,7 +37,7 @@ const SellerPopUp = ({ onClose, showModal, setShowModal, handleClose, data }) =>
                             <RxCross2 className='text-xl' />
                         </div>
                     </div>
-                    <a href={currentData.link} >
+                    <a href={currentData?.link} >
                         <div className='h-[400px] overflow-y-auto'>
                             <h3 className={style.title}>{currentData?.title}</h3>
                             <div dangerouslySetInnerHTML={{ __html: currentData?.message }}></div>
