@@ -43,7 +43,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
 
     return (
 
-        <div className='py-2 sticky'>
+        <div className=' sticky'>
 
             <div className={`${responsive ? "flex  h-screen  overflow-y-auto  flex-col  md:p-3 p-0 lg:w-[70px] md:w-[70px] w-0  border-r-2  " : "flex flex-col  p-6 md:w-64 w-[300px]  h-screen  overflow-y-auto"} md:relative fixed  z-[4000] bg-[#111827] top-0 left-0 bottom-0`}>
                 <div className="space-y-3">
