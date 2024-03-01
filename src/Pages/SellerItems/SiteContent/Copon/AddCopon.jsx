@@ -40,7 +40,7 @@ const AddCopon = () => {
         const updatedValue = name === 'code' ? value.replace(/\s+/g, '').toUpperCase() : value;
 
         if (updatedValue.length > 3) {
-            fetch(`https://backend.doob.com.bd/api/v1/seller/uniq-promo/${shopInfo._id}/${updatedValue}`)
+            fetch(`http://localhost:5001/api/v1/seller/uniq-promo/${shopInfo._id}/${updatedValue}`)
                 .then((res) => res.json())
                 .then((data) => setUniq(data));
         } else {
@@ -62,7 +62,7 @@ const AddCopon = () => {
             selectedGmails: selectedGmails,
         }));
 
-        fetch(`https://backend.doob.com.bd/api/v1/seller/promo-code/add`, {
+        fetch(`http://localhost:5001/api/v1/seller/promo-code/add`, {
             method: 'POST',
             headers: {
                 'content-type': 'application/json',

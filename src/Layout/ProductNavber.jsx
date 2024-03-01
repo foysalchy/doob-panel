@@ -11,9 +11,9 @@ export default function Component() {
     const [value, setValue] = useState('')
     const searchData = async () => {
         const term = searchTerm;
-        // console.log(`https://backend.doob.com.bd/api/v1/admin/search?term=${encodeURIComponent(term)}`);
+        // console.log(`http://localhost:5001/api/v1/admin/search?term=${encodeURIComponent(term)}`);
         try {
-            const response = await fetch(`https://backend.doob.com.bd/api/v1/admin/search?term=${encodeURIComponent(term)}`);
+            const response = await fetch(`http://localhost:5001/api/v1/admin/search?term=${encodeURIComponent(term)}`);
             const data = await response.json();
             // console.log(data);
             setSearchResults(data);
@@ -34,7 +34,7 @@ export default function Component() {
         setSearchTerm(input)
         setSearchResults()
         setSearch(input)
-        fetch(`https://backend.doob.com.bd/api/v1/admin/search-history?term=${encodeURIComponent(input)}`).then((response) => response.json()).then((data) => setSearchHistory(data))
+        fetch(`http://localhost:5001/api/v1/admin/search-history?term=${encodeURIComponent(input)}`).then((response) => response.json()).then((data) => setSearchHistory(data))
     };
 
 
@@ -87,13 +87,13 @@ export default function Component() {
                     <a className="text-black hover:text-gray-700" href="#">
                         Track Order
                     </a>
-                    <a className="text-black hover:text-gray-700" href="#">
+                    {/* <a className="text-black hover:text-gray-700" href="#">
                         My Cart
-                    </a>
+                    </a> */}
                     <Link to='/sign-in' className="text-black hover:text-gray-700" href="#">
                         Log-in
                     </Link>
-                    <button className="bg-black text-white px-4 py-2 rounded-md hover:bg-gray-800">Download APP</button>
+                    <button className="bg-black text-white px-4 py-2 rounded-md hover:bg-gray-800">http://localhost:5001/api/</button>
                 </div>
             </div>
         </div>

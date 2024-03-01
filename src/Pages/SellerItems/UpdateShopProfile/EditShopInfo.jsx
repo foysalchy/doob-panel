@@ -29,7 +29,7 @@ const EditShopInfo = ({ Edit, setEdit, }) => {
 
         if (name.length > 2) {
             try {
-                const response = await fetch(`https://backend.doob.com.bd/api/v1/shop/info/${name}`);
+                const response = await fetch(`http://localhost:5001/api/v1/shop/info/${name}`);
                 const data = await response.json();
 
                 if (data) {
@@ -79,7 +79,7 @@ const EditShopInfo = ({ Edit, setEdit, }) => {
         try {
             if (shopID) {
                 shopInfo.shopId = shopUnicName;
-                fetch(`https://backend.doob.com.bd/api/v1/shop/updateInfo`, {
+                fetch(`http://localhost:5001/api/v1/shop/updateInfo`, {
                     method: 'PUT',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(shopInfo)
@@ -103,7 +103,7 @@ const EditShopInfo = ({ Edit, setEdit, }) => {
             }
 
             else {
-                fetch(`https://backend.doob.com.bd/api/v1/shop/updateInfo`, {
+                fetch(`http://localhost:5001/api/v1/shop/updateInfo`, {
                     method: 'PUT',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(shopInfo)
@@ -146,7 +146,7 @@ const EditShopInfo = ({ Edit, setEdit, }) => {
     // const createNewShopInfo = async (updatedShopInfo) => {
     //     // Make a POST request to create new shopInfo on the server
     //     try {
-    //         fetch(`https://backend.doob.com.bd/api/v1/shop/updateInfo`, {
+    //         fetch(`http://localhost:5001/api/v1/shop/updateInfo`, {
     //             method: 'PUT',
     //             headers: { 'Content-Type': 'application/json' },
     //             body: JSON.stringify(updatedShopInfo)

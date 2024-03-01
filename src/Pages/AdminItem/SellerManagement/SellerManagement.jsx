@@ -19,7 +19,7 @@ const SellerManagement = () => {
     const { data: sellers = [], refetch } = useQuery({
         queryKey: ["sellers"],
         queryFn: async () => {
-            const res = await fetch("https://backend.doob.com.bd/api/v1/admin/seller");
+            const res = await fetch("http://localhost:5001/api/v1/admin/seller");
             const data = await res.json();
             return data;
         },
@@ -118,7 +118,7 @@ const SellerManagement = () => {
 
 
     const updateStatus = (id, status) => {
-        fetch(`https://backend.doob.com.bd/api/v1/admin/seller/status/${id}`, {
+        fetch(`http://localhost:5001/api/v1/admin/seller/status/${id}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
@@ -135,7 +135,7 @@ const SellerManagement = () => {
 
 
         let password = ''
-        await fetch(`https://backend.doob.com.bd/api/v1/admin/seller/pass/${userId}`).then((res) => res.json()).then((data) => {
+        await fetch(`http://localhost:5001/api/v1/admin/seller/pass/${userId}`).then((res) => res.json()).then((data) => {
             password = data.password
 
         })
@@ -145,7 +145,7 @@ const SellerManagement = () => {
         };
         console.log(data);
 
-        await fetch("https://backend.doob.com.bd/api/v1/auth/sign-in", {
+        await fetch("http://localhost:5001/api/v1/auth/sign-in", {
             method: "post",
             headers: {
                 "content-type": "application/json",
@@ -160,7 +160,7 @@ const SellerManagement = () => {
 
                 if (data.user) {
                     if (data.user.role === 'seller') {
-                        fetch(`https://backend.doob.com.bd/api/v1/shop/checkshop?shopEmail=${data?.user?.shopEmail}`)
+                        fetch(`http://localhost:5001/api/v1/shop/checkshop?shopEmail=${data?.user?.shopEmail}`)
                             .then((response) => response.json())
                             .then((result) => {
                                 console.log(result, '208');
@@ -214,7 +214,7 @@ const SellerManagement = () => {
 
     if (isDelete) {
 
-        fetch(`https://backend.doob.com.bd/api/v1/admin/seller/delete/${deleteId}`, {
+        fetch(`http://localhost:5001/api/v1/admin/seller/delete/${deleteId}`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",

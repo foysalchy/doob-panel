@@ -13,7 +13,7 @@ const ModalForPayment = ({ invoice, setInvoice, sellingPrice, handleStore, selle
         // Fetch payment gateways
         const fetchPaymentGetways = async () => {
             try {
-                const response = await fetch(`https://backend.doob.com.bd/api/v1/seller/payment-getaway/${seller}`);
+                const response = await fetch(`http://localhost:5001/api/v1/seller/payment-getaway/${seller}`);
                 const data = await response.json();
                 setGetaways(data);
             } catch (error) {
@@ -39,7 +39,7 @@ const ModalForPayment = ({ invoice, setInvoice, sellingPrice, handleStore, selle
 
     const payWithBkash = async () => {
         try {
-            const response = await fetch('https://backend.doob.com.bd/api/v1/seller/bkash/payment/create', {
+            const response = await fetch('http://localhost:5001/api/v1/seller/bkash/payment/create', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

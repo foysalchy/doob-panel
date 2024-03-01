@@ -76,7 +76,7 @@ const ProductInformation = () => {
             BrightAlert('Product added to cart')
             setLoader(false);
         } else {
-            fetch(`https://backend.doob.com.bd/api/v1/shop/user/add-to-cart?token=${shopUser._id}`, {
+            fetch(`http://localhost:5001/api/v1/shop/user/add-to-cart?token=${shopUser._id}`, {
                 method: "POST",
                 headers: { 'Content-Type': 'application/json', "ngrok-skip-browser-warning": "69420", },
                 body: JSON.stringify(addToCard)
@@ -115,7 +115,7 @@ const ProductInformation = () => {
     const { data: comments = {}, isLoading, refetch } = useQuery({
         queryKey: ["comments"],
         queryFn: async () => {
-            const res = await fetch(`https://backend.doob.com.bd/api/v1/seller/product-comment?id=${product?._id}`);
+            const res = await fetch(`http://localhost:5001/api/v1/seller/product-comment?id=${product?._id}`);
             const data = await res.json();
             return data?.comments;
         },

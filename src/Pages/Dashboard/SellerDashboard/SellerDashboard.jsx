@@ -21,7 +21,8 @@ const SellerDashboard = () => {
     const { user, shopInfo } = useContext(AuthContext)
     const [greeting, setGreeting] = useState('');
     const currentDate = new Date();
-
+    const [open, setOpen] = useState(false);
+    const [openAnouncement, setOpenAnouncement] = useState(false);
     useEffect(() => {
         const currentHour = new Date().getHours();
 
@@ -55,7 +56,7 @@ const SellerDashboard = () => {
     const { data: sellerPopupData = [], refetch, isLoading } = useQuery({
         queryKey: "sellerPopupData",
         queryFn: async () => {
-            const res = await fetch(`https://backend.doob.com.bd/api/v1/admin/pop-up`);
+            const res = await fetch(`http://localhost:5001/api/v1/admin/pop-up`);
             const data = await res.json();
             return data?.data;
         },
@@ -126,11 +127,14 @@ const SellerDashboard = () => {
                 </div>
             )} */}
 
-            {isLoading || showModal && (
+            {sellerPopupData.length ? showModal && (
                 <div className="fixed top-0 left-0 flex items-center justify-center w-full h-full bg-black bg-opacity-90 z-50">
                     <SellerPopUp onClose={onClose} showModal={showModal} setShowModal={setShowModal} data={sellerPopupData} handleClose={onClose} />
                 </div>
-            )}
+            )
+                :
+                ''
+            }
             <div className=" bg-gradient-to-r from-[#1493f4] to-[#835177] absolute -z-10 -top-12 -right-14 blur-2xl opacity-10"></div>
             <h1 className="text-4xl font-semibold text-gray-800 capitalize">
                 {greeting}, {user.name}
@@ -190,11 +194,11 @@ const SellerDashboard = () => {
                     }}
                     className="flex flex-col bg-white rounded-lg border px-8  shadow-3 py-4 md:w-[700px] w-full gap-3 mb-8 mt-4">
                     {/* <div className="bg-white  p-3 ring-1 ring-gray-400 rounded-md shadow-xl "> */}
-                    <AnouncementContent />
+                    {<AnouncementContent setOpen={setOpenAnouncement} />}
                     {/* </div> */}
                     <hr />
                     {/* <div className="bg-white p-3 ring-1 ring-gray-200 rounded-md shadow-xl "> */}
-                    <NoticeContent />
+                    {<NoticeContent setOpen={setOpen} />}
                     {/* </div> */}
                 </div>
                 {/* <div className="flex items-center w-full space-x-4 md:w-1/2">

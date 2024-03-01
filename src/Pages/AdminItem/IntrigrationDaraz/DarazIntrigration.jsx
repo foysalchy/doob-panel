@@ -37,7 +37,7 @@ const DarazIntegration = () => {
     useEffect(() => {
         if (code) {
 
-            fetch('https://backend.doob.com.bd/api/v1/daraz/get-key').then((res) => res.json()).then((data) => {
+            fetch('http://localhost:5001/api/v1/daraz/get-key').then((res) => res.json()).then((data) => {
                 const { appkey, secretkey } = data[0]
 
                 const appKey = appkey
@@ -60,7 +60,7 @@ const DarazIntegration = () => {
                 };
 
 
-                fetch(`https://backend.doob.com.bd/api/v1/daraz/addCode/${shopInfo._id}`, {
+                fetch(`http://localhost:5001/api/v1/daraz/addCode/${shopInfo._id}`, {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json',
@@ -85,7 +85,7 @@ const DarazIntegration = () => {
     const { data: darazShop = [], isLoading, refetch } = useQuery({
         queryKey: ["darazShopBd"],
         queryFn: async () => {
-            const res = await fetch(`https://backend.doob.com.bd/api/v1/seller/seller-daraz-accounts?id=${shopInfo._id}`);
+            const res = await fetch(`http://localhost:5001/api/v1/seller/seller-daraz-accounts?id=${shopInfo._id}`);
             const data = await res.json();
             return data.data;
         },

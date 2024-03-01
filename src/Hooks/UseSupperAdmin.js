@@ -10,7 +10,7 @@ const UseSupperAdmin = () => {
   useEffect(() => {
     if (!loading) {
       if (user?.email) {
-        fetch(`https://backend.doob.com.bd/api/v1/users/supper-admin/${user?.email}`)
+        fetch(`http://localhost:5001/api/v1/users/supper-admin/${user?.email}`)
           .then((res) => res.json())
           .then(async (data) => {
             setIsSupperAdmin(data?.isAdmin);

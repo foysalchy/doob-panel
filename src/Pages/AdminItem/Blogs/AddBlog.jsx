@@ -18,7 +18,7 @@ const AddBlog = () => {
     queryKey: ["blogcategory"],
     queryFn: async () => {
       const res = await fetch(
-        "https://backend.doob.com.bd/api/v1/admin/blog-category"
+        "http://localhost:5001/api/v1/admin/blog-category"
       );
       const data = await res.json();
       return data;
@@ -30,7 +30,7 @@ const AddBlog = () => {
     const selectedFile = e.target.files[0];
     const formData = new FormData();
     formData.append("image", selectedFile);
-    const url = `https://backend.doob.com.bd/api/v1/image/upload-image`;
+    const url = `http://localhost:5001/api/v1/image/upload-image`;
     fetch(url, {
       method: "POST",
       body: formData,
@@ -74,7 +74,7 @@ const AddBlog = () => {
 
     const formData = new FormData();
     formData.append("image", image);
-    const url = `https://backend.doob.com.bd/api/v1/image/upload-image`;
+    const url = `http://localhost:5001/api/v1/image/upload-image`;
     fetch(url, {
       method: "POST",
       body: formData,
@@ -97,7 +97,7 @@ const AddBlog = () => {
   };
 
   const postBlog = (blog, form) => {
-    fetch(`https://backend.doob.com.bd/api/v1/admin/new-blog`, {
+    fetch(`http://localhost:5001/api/v1/admin/new-blog`, {
       method: "POST",
       headers: {
         "content-type": "application/json",

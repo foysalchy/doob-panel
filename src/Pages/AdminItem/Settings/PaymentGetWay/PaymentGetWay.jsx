@@ -13,7 +13,7 @@ const PaymentGetWay = () => {
     const { data: getaway = [], refetch, isLoading } = useQuery({
         queryKey: ["getaway"],
         queryFn: async () => {
-            const res = await fetch("https://backend.doob.com.bd/api/v1/admin/getaway");
+            const res = await fetch("http://localhost:5001/api/v1/admin/getaway");
             const data = await res.json();
             return data;
         },
@@ -53,7 +53,7 @@ const PaymentGetWay = () => {
 
 
 
-        fetch(`https://backend.doob.com.bd/api/v1/admin/getaway`, {
+        fetch(`http://localhost:5001/api/v1/admin/getaway`, {
             method: "POST",
             headers: {
                 "content-type": "application/json",
@@ -93,7 +93,7 @@ const PaymentGetWay = () => {
 
 
     const deleteHandel = (id) => {
-        fetch(`https://backend.doob.com.bd/api/v1/admin/getaway/${id}`, {
+        fetch(`http://localhost:5001/api/v1/admin/getaway/${id}`, {
             method: "Delete",
             headers: {
                 "content-type": "application/json",

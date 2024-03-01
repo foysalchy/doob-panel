@@ -10,7 +10,7 @@ const SubCategoryManagement = () => {
     const { data: subCategory = [], refetch } = useQuery({
         queryKey: ["subCategory"],
         queryFn: async () => {
-            const res = await fetch("https://backend.doob.com.bd/api/v1/admin/category/subcategories");
+            const res = await fetch("http://localhost:5001/api/v1/admin/category/subcategories");
             const data = await res.json();
             return data.rows;
         },
@@ -18,7 +18,7 @@ const SubCategoryManagement = () => {
 
     // status update
     const statusUpdate = (id, status) => {
-        fetch(`https://backend.doob.com.bd/api/v1/admin/category/subcategory?id=${id}&status=${status}`, {
+        fetch(`http://localhost:5001/api/v1/admin/category/subcategory?id=${id}&status=${status}`, {
             method: "PUT",
             headers: {
                 "content-type": "application/json",

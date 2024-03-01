@@ -16,7 +16,7 @@ const AddMiniCategory = () => {
         const selectedFile = e.target.files[0];
         const formData = new FormData();
         formData.append("image", selectedFile);
-        const url = `https://backend.doob.com.bd/api/v1/image/upload-image`;
+        const url = `http://localhost:5001/api/v1/image/upload-image`;
         fetch(url, {
             method: "POST",
             body: formData,
@@ -40,7 +40,7 @@ const AddMiniCategory = () => {
         navigate(-1); // This will go back to the previous page
     };
 
-    let megaCategoryUrl = `https://backend.doob.com.bd/api/v1/admin/category/megacategory`;
+    let megaCategoryUrl = `http://localhost:5001/api/v1/admin/category/megacategory`;
 
     const { data: megaCategories = [], refetch } = useQuery({
         queryKey: ["megaCategories"],
@@ -66,7 +66,7 @@ const AddMiniCategory = () => {
     const handleSelectChange = (selectedOption) => {
         setSubCategorys([])
         const optionId = selectedOption.value
-        fetch(`https://backend.doob.com.bd/api/v1/admin/category/subcategory?id=${optionId}`)
+        fetch(`http://localhost:5001/api/v1/admin/category/subcategory?id=${optionId}`)
             .then((res) => res.json())
             .then((data) => {
                 setSubCategorys(data.subCategory)
@@ -86,7 +86,7 @@ const AddMiniCategory = () => {
     const onHandleMiniCategorys = (selectedOption) => {
         setMiniCategorys([])
         const optionId = selectedOption.value;
-        fetch(`https://backend.doob.com.bd/api/v1/admin/category/miniCategory?id=${optionId}`)
+        fetch(`http://localhost:5001/api/v1/admin/category/miniCategory?id=${optionId}`)
             .then((res) => res.json())
             .then((data) => {
 
@@ -130,7 +130,7 @@ const AddMiniCategory = () => {
         }
         console.log(data, "------>");
 
-        const url = `https://backend.doob.com.bd/api/v1/admin/category/extraCategory`;
+        const url = `http://localhost:5001/api/v1/admin/category/extraCategory`;
         fetch(url, {
             method: "POST",
             headers: {

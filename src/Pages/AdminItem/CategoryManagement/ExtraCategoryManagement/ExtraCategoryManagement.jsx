@@ -12,7 +12,7 @@ const ExtraCategoryManagement = () => {
     const { data: extraCategory = [], refetch } = useQuery({
         queryKey: ["extraCategory"],
         queryFn: async () => {
-            const res = await fetch("https://backend.doob.com.bd/api/v1/admin/category/extraCategories");
+            const res = await fetch("http://localhost:5001/api/v1/admin/category/extraCategories");
             const data = await res.json();
             return data.rows;
         },
@@ -20,7 +20,7 @@ const ExtraCategoryManagement = () => {
 
     // status update
     const statusUpdate = (id, status) => {
-        fetch(`https://backend.doob.com.bd/api/v1/admin/category/extraCategory?id=${id}&status=${status}`, {
+        fetch(`http://localhost:5001/api/v1/admin/category/extraCategory?id=${id}&status=${status}`, {
             method: "PUT",
             headers: {
                 "content-type": "application/json",
@@ -37,7 +37,7 @@ const ExtraCategoryManagement = () => {
 
     // status update
     const onDelete = (id) => {
-        fetch(`https://backend.doob.com.bd/api/v1/admin/category/extraCategory?id=${id}`, {
+        fetch(`http://localhost:5001/api/v1/admin/category/extraCategory?id=${id}`, {
             method: "DELETE",
             headers: {
                 "content-type": "application/json",

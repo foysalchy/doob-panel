@@ -110,7 +110,7 @@ const SignUpSeller = () => {
 
       setPassError("");
 
-      fetch("https://backend.doob.com.bd/api/v1/auth/sign-up", {
+      fetch("http://localhost:5001/api/v1/auth/sign-up", {
         method: "post",
         headers: {
           "content-type": "application/json",
@@ -146,7 +146,7 @@ const SignUpSeller = () => {
     const time = new Date().getTime()
     const data = { email, code, time }
 
-    fetch('https://backend.doob.com.bd/api/v1/admin/refer-code', {
+    fetch('http://localhost:5001/api/v1/admin/refer-code', {
       method: 'POST',
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),

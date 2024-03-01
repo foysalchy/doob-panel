@@ -71,7 +71,7 @@ const AddPrice = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    fetch(`https://backend.doob.com.bd/api/v1/admin/pricing`, {
+    fetch(`http://localhost:5001/api/v1/admin/pricing`, {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -99,7 +99,7 @@ const AddPrice = () => {
 
   // const handleSubmit = (e) => {
   //   e.preventDefault();
-  //   fetch(`https://backend.doob.com.bd/api/v1/admin/pricing`, {
+  //   fetch(`http://localhost:5001/api/v1/admin/pricing`, {
   //     method: "POST",
   //     headers: {
   //       "content-type": "application/json",

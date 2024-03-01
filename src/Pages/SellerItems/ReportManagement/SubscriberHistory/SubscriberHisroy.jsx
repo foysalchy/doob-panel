@@ -11,7 +11,7 @@ const SubscriberHisroy = () => {
     const { data: subscribers = [], isLoading } = useQuery({
         queryKey: ["subscriberReport"],
         queryFn: async () => {
-            const res = await fetch(`https://backend.doob.com.bd/api/v1/seller/subscriber-report?shopId=${shopInfo?.shopId}`);
+            const res = await fetch(`http://localhost:5001/api/v1/seller/subscriber-report?shopId=${shopInfo?.shopId}`);
             const data = await res.json();
             return data?.data;
         },

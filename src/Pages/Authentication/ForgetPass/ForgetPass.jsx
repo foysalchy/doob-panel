@@ -11,7 +11,7 @@ const ForgetPass = () => {
     const form = event.target;
     const email = form.email.value;
 
-    fetch("https://backend.doob.com.bd/api/v1/auth/reset-pass", {
+    fetch("http://localhost:5001/api/v1/auth/reset-pass", {
       method: "post",
       headers: {
         "content-type": "application/json",

@@ -21,7 +21,7 @@ const WarehouseModal = ({ modalOpen, setModalOpen, product, doobProduct }) => {
     const { data: warehouses = [], refetch, isRefetching } = useQuery({
         queryKey: ["warehouses"],
         queryFn: async () => {
-            const getWarehouseApiUrl = "https://backend.doob.com.bd/api/v1/admin/warehouse";
+            const getWarehouseApiUrl = "http://localhost:5001/api/v1/admin/warehouse";
 
             const res = await fetch(getWarehouseApiUrl);
             if (!res.ok) {
@@ -40,7 +40,7 @@ const WarehouseModal = ({ modalOpen, setModalOpen, product, doobProduct }) => {
         setCells([]);
 
 
-        const getAreaApiUrl = `https://backend.doob.com.bd/api/v1/admin/warehouse/area/${selectedWarehouse}`;
+        const getAreaApiUrl = `http://localhost:5001/api/v1/admin/warehouse/area/${selectedWarehouse}`;
 
 
         const areaRes = await fetch(getAreaApiUrl);
@@ -58,7 +58,7 @@ const WarehouseModal = ({ modalOpen, setModalOpen, product, doobProduct }) => {
         setSelfs([]);
         setCells([]);
 
-        const getRackApiUrl = `https://backend.doob.com.bd/api/v1/admin/warehouse/rack/${selectedWarehouse}/${selectedArea}`;
+        const getRackApiUrl = `http://localhost:5001/api/v1/admin/warehouse/rack/${selectedWarehouse}/${selectedArea}`;
 
         const rackRes = await fetch(getRackApiUrl);
         const rackData = await rackRes.json();
@@ -73,7 +73,7 @@ const WarehouseModal = ({ modalOpen, setModalOpen, product, doobProduct }) => {
         setSelectedRack(selectedRack);
         setCells([]);
 
-        const getSelfApiUrl = `https://backend.doob.com.bd/api/v1/admin/warehouse/self/${selectedWarehouse}/${selectedArea}/${selectedRack}`;
+        const getSelfApiUrl = `http://localhost:5001/api/v1/admin/warehouse/self/${selectedWarehouse}/${selectedArea}/${selectedRack}`;
 
 
         const selfRes = await fetch(getSelfApiUrl);
@@ -90,7 +90,7 @@ const WarehouseModal = ({ modalOpen, setModalOpen, product, doobProduct }) => {
         const selectedSelfs = selectedOption.value;
         setSelectedSelf(selectedSelfs);
 
-        const getCellApiUrl = `https://backend.doob.com.bd/api/v1/admin/warehouse/cell/${selectedWarehouse}/${selectedArea}/${selectedRack}/${selectedSelf}`;
+        const getCellApiUrl = `http://localhost:5001/api/v1/admin/warehouse/cell/${selectedWarehouse}/${selectedArea}/${selectedRack}/${selectedSelf}`;
 
         const cellsRes = await fetch(getCellApiUrl);
         const cellData = await cellsRes.json();
@@ -118,7 +118,7 @@ const WarehouseModal = ({ modalOpen, setModalOpen, product, doobProduct }) => {
             warehouse: doobProduct ? adminCategory : product.warehouse
         }
 
-        fetch(`https://backend.doob.com.bd/api/v1/admin/update-product-info?productId=${product._id}`, {
+        fetch(`http://localhost:5001/api/v1/admin/update-product-info?productId=${product._id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type':

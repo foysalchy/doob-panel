@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { TfiAnnouncement } from "react-icons/tfi";
 import { RxCross2 } from "react-icons/rx";
 
-const AnouncementModal = ({ setOpen, open, modalData, index }) => {
+const AnouncementModal = ({ setOpen, modalData, index }) => {
     const [currentIndex, setCurrentIndex] = useState(index);
     const mHandleNext = () => {
         setCurrentIndex((prevIndex) => (prevIndex + 1) % modalData.length);
@@ -109,7 +109,7 @@ const AnouncementContent = () => {
         queryKey: ["announcementData"],
         queryFn: async () => {
             try {
-                const res = await fetch(`https://backend.doob.com.bd/api/v1/admin/announcement`);
+                const res = await fetch(`http://localhost:5001/api/v1/admin/announcement`);
                 const data = await res.json();
                 return data?.data;
             } catch (error) {
@@ -124,7 +124,7 @@ const AnouncementContent = () => {
             {/* <h2 className="text-xl font-semibold">hello world</h2>
             <p className="text-red-500">hello world...........</p> */}
 
-            {!isLoading && <Carousel data={data} />}
+            {data ? <Carousel data={data} /> : ''}
         </div>
     );
 };
