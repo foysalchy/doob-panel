@@ -8,7 +8,7 @@ const useSeller = () => {
 
   useEffect(() => {
     if (user?.email) {
-      fetch(`https://backend.doob.com.bd/api/v1/users/seller/${user?.email}`)
+      fetch(`http://localhost:5001/api/v1/users/seller/${user?.email}`)
         .then((res) => res.json())
         .then((data) => {
           setIsSeller(data?.isSeller);

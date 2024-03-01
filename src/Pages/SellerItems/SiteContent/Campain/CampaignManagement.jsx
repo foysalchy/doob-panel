@@ -15,7 +15,7 @@ const CampaignManagement = () => {
     const { data: faqs = [], refetch } = useQuery({
         queryKey: ["faqs"],
         queryFn: async () => {
-            const res = await fetch(`https://backend.doob.com.bd/api/v1/seller/get-campaign/${shopInfo._id}`);
+            const res = await fetch(`http://localhost:5001/api/v1/seller/get-campaign/${shopInfo._id}`);
             const data = await res.json();
             return data;
         },
@@ -29,7 +29,7 @@ const CampaignManagement = () => {
             id,
             status
         }
-        fetch(`https://backend.doob.com.bd/api/v1/seller/update-status-campaign`, {
+        fetch(`http://localhost:5001/api/v1/seller/update-status-campaign`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
@@ -58,7 +58,7 @@ const CampaignManagement = () => {
 
     if (isDelete) {
 
-        fetch(`https://backend.doob.com.bd/api/v1/seller/delete-campaign/${deleteId}`, {
+        fetch(`http://localhost:5001/api/v1/seller/delete-campaign/${deleteId}`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",

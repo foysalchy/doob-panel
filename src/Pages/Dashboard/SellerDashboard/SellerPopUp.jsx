@@ -2,7 +2,7 @@ import { useState } from "react";
 import { RxCross2 } from 'react-icons/rx';
 
 
-const SellerPopUp = ({ onClose, showModal, setShowModal, handleClose, data }) => {
+const SellerPopUp = ({ showModal, setShowModal, handleClose, data }) => {
     const [currentIndex, setCurrentIndex] = useState(0);
     const mHandleNext = () => {
         setCurrentIndex((prevIndex) => (prevIndex + 1) % data.length);
@@ -22,8 +22,8 @@ const SellerPopUp = ({ onClose, showModal, setShowModal, handleClose, data }) =>
         close: 'absolute bg-gray-100 w-[40px] h-[40px] text-lg top-2 right-2 rounded-full'
     }
 
-    const handlePopUP =()=>{
-        
+    const handlePopUP = () => {
+
     }
 
     return (

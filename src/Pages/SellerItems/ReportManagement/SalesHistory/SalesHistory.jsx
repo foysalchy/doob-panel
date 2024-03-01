@@ -14,7 +14,7 @@ const SalesHistory = () => {
     const { data: myOrders = [], refetch } = useQuery({
         queryKey: ["myWebstoreOrder"],
         queryFn: async () => {
-            const res = await fetch(`https://backend.doob.com.bd/api/v1/seller/get-my-perches?shopId=${shopInfo?._id}`);
+            const res = await fetch(`http://localhost:5001/api/v1/seller/get-my-perches?shopId=${shopInfo?._id}`);
             const data = await res.json();
             return data;
         },
@@ -43,7 +43,7 @@ const SalesHistory = () => {
 
     const userProductCancel = (orderId, status) => {
         console.log(orderId, status);
-        fetch(`https://backend.doob.com.bd/api/v1/seller/update-seller-order-status?orderId=${orderId}&status=${status}`, {
+        fetch(`http://localhost:5001/api/v1/seller/update-seller-order-status?orderId=${orderId}&status=${status}`, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
         }).then((res) => res.json()).then((data) => {
@@ -67,7 +67,7 @@ const SalesHistory = () => {
 
     // ? update status
     const updateStatus = (status, orderId) => {
-        fetch(`https://backend.doob.com.bd/api/v1/seller/update-seller-order-status?orderId=${orderId}&status=${status}`, {
+        fetch(`http://localhost:5001/api/v1/seller/update-seller-order-status?orderId=${orderId}&status=${status}`, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ status, orderId })
@@ -121,7 +121,7 @@ const SalesHistory = () => {
 
         console.log(data);
         fetch(
-            `https://backend.doob.com.bd/api/v1/shop/refund-Order?token=${shopInfo._id}`,
+            `http://localhost:5001/api/v1/shop/refund-Order?token=${shopInfo._id}`,
             {
                 method: "POST",
                 headers: {
@@ -220,7 +220,7 @@ const SalesHistory = () => {
 
 
     const cancelNoteSubmit = () => {
-        fetch(`https://backend.doob.com.bd/api/v1/shop/user/order-cancel-reason?token=${shopInfo._id}`, {
+        fetch(`http://localhost:5001/api/v1/shop/user/order-cancel-reason?token=${shopInfo._id}`, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ note, orderId: showAlert })

@@ -132,9 +132,9 @@ const Header = () => {
           </NavLink>
           <ul className="flex items-center hidden space-x-8 lg:flex">
             {menuData}
-            <div >
+            {/* <div >
               <BiSearch onClick={() => setSearch(!search)} className="tracking-wide text-gray-800 transition-colors duration-200 font-semibold hover:text-black underline underline-offset-8 text-lg " />
-            </div>
+            </div> */}
             <li>
 
               {!user ? (

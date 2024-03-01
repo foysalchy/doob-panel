@@ -45,7 +45,7 @@ const Modal = ({ email, modalOpen, setModalOpen }) => {
         const data = { email, code, time }
         setLoading(true)
 
-        fetch('https://backend.doob.com.bd/api/v1/admin/refer-code', {
+        fetch('http://localhost:5001/api/v1/admin/refer-code', {
             method: 'POST',
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(data),

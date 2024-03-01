@@ -13,7 +13,7 @@ const ForYouProducts = () => {
   const { data: newProducts = [], refetch } = useQuery({
     queryKey: ["newProducts"],
     queryFn: async () => {
-      const res = await fetch("https://backend.doob.com.bd/api/v1/admin/products");
+      const res = await fetch("http://localhost:5001/api/v1/admin/products");
       const data = await res.json();
       return data;
     },
@@ -55,8 +55,8 @@ const ForYouProducts = () => {
           </div>
           <div className="border-b border-gray-200 mx-5 mt-2"></div>
           <div className="container px-5 py-8 mx-auto">
-            {newProducts ? 
-            <>
+            {newProducts ?
+              <>
                 <div className="p-4 grid md:grid-cols-4 grid-cols-1 gap-4">
                   {Array(4).fill().map((_, index) => (
                     <div key={index} className="flex flex-col  f-full rounded shadow-md  animate-pulse h-96">
@@ -69,45 +69,45 @@ const ForYouProducts = () => {
                     </div>
                   ))}
                 </div>
-            </>
-            :
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 -m-4 text-black">
-              {  
-                newProducts?.slice(0, displayedProducts)?.map((product, idx) => {
-                  let name = product?.name?.slice(0, 60);
-                  const blankImg = 'https://i.ibb.co/7p2CvzT/empty.jpg';
-                  console.log(product);
-                  return (
-                    <Link to={`${product._id}`} className="group block overflow-hidden">
-                      <div className="relative h-[250px] sm:h-[250px]">
-                        <img
-                          src={product?.featuredImage?.src}
-                          alt=""
-                          className="absolute inset-0 h-full w-full object-cover opacity-100 group-hover:opacity-0"
-                        />
+              </>
+              :
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 -m-4 text-black">
+                {
+                  newProducts?.slice(0, displayedProducts)?.map((product, idx) => {
+                    let name = product?.name?.slice(0, 60);
+                    const blankImg = 'https://i.ibb.co/7p2CvzT/empty.jpg';
+                    console.log(product);
+                    return (
+                      <Link to={`${product._id}`} className="group block overflow-hidden">
+                        <div className="relative h-[250px] sm:h-[250px]">
+                          <img
+                            src={product?.featuredImage?.src}
+                            alt=""
+                            className="absolute inset-0 h-full w-full object-cover opacity-100 group-hover:opacity-0"
+                          />
 
-                        <img
-                          src={product?.images[1]?.src ? product?.images[1]?.src : blankImg}
-                          alt=""
-                          className="absolute inset-0 h-full w-full object-cover opacity-0 group-hover:opacity-100"
-                        />
-                      </div>
-
-                      <div className="relative bg-white pt-3">
-                        <h3 className="text-sm text-gray-700 group-hover:underline group-hover:underline-offset-4">
-                          {name}
-                        </h3>
-
-                        <div className="mt-1.5 flex items-center justify-between text-gray-900">
-                          <p className="tracking-wide  "><span className="kalpurush">৳</span> {user ? product?.price : 0}</p>
-
-                          <p className="text-xs uppercase tracking-wide">{product?.variations.length} Variant</p>
+                          <img
+                            src={product?.images[1]?.src ? product?.images[1]?.src : blankImg}
+                            alt=""
+                            className="absolute inset-0 h-full w-full object-cover opacity-0 group-hover:opacity-100"
+                          />
                         </div>
-                      </div>
-                    </Link>
-                  );
-                })}
-            </div>}
+
+                        <div className="relative bg-white pt-3">
+                          <h3 className="text-sm text-gray-700 group-hover:underline group-hover:underline-offset-4">
+                            {name}
+                          </h3>
+
+                          <div className="mt-1.5 flex items-center justify-between text-gray-900">
+                            <p className="tracking-wide  "><span className="kalpurush">৳</span> {user ? product?.price : 0}</p>
+
+                            <p className="text-xs uppercase tracking-wide">{product?.variations.length} Variant</p>
+                          </div>
+                        </div>
+                      </Link>
+                    );
+                  })}
+              </div>}
           </div>
         </section>
       </div>

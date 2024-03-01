@@ -10,14 +10,14 @@ const UserWishList = () => {
     const { data: wishlist = {}, isLoading, refetch } = useQuery({
         queryKey: ["wishlist"],
         queryFn: async () => {
-            const res = await fetch(`https://backend.doob.com.bd/api/v1/shop/user/wishlist?userId=${shopUser._id}&shopId=${shop_id.shop_id}`);
+            const res = await fetch(`http://localhost:5001/api/v1/shop/user/wishlist?userId=${shopUser._id}&shopId=${shop_id.shop_id}`);
             const data = await res.json();
             return data;
         },
     });
 
     const removeWishlist = (wishListId) => {
-        fetch(`https://backend.doob.com.bd/api/v1/shop/user/wishlist?wishlistId=${wishListId}`, {
+        fetch(`http://localhost:5001/api/v1/shop/user/wishlist?wishlistId=${wishListId}`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",

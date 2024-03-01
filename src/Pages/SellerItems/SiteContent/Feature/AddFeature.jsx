@@ -55,7 +55,7 @@ const AddFeature = () => {
 
 
     async function uploadImage(formData) {
-        const url = "https://backend.doob.com.bd/api/v1/image/upload-image";
+        const url = "http://localhost:5001/api/v1/image/upload-image";
         const response = await fetch(url, {
             method: "POST",
             body: formData,
@@ -66,7 +66,7 @@ const AddFeature = () => {
 
     const postSlider = (Slider) => {
 
-        fetch(`https://backend.doob.com.bd/api/v1/seller/feature/add`, {
+        fetch(`http://localhost:5001/api/v1/seller/feature/add`, {
             method: "POST",
             headers: {
                 "content-type": "application/json",

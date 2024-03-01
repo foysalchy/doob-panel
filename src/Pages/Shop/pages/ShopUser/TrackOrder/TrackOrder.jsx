@@ -18,7 +18,7 @@ const TrackOrder = () => {
         e.preventDefault();
         setLoading(true)
         const orderId = e.target.orderId.value
-        fetch(`https://backend.doob.com.bd/api/v1/shop/order-track?token=${shopUser._id}&orderId=${orderId}`).then((res) => res.json()).then((data) => {
+        fetch(`http://localhost:5001/api/v1/shop/order-track?token=${shopUser._id}&orderId=${orderId}`).then((res) => res.json()).then((data) => {
             setOrder(data.data)
             setLoading(false)
         })

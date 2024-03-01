@@ -18,7 +18,7 @@ const CategoryByProduct = () => {
     useEffect(() => {
         const fetchBrands = async () => {
             try {
-                const res = await fetch(`https://backend.doob.com.bd/api/v1/seller/brand/${shop_id?.shop_id}`);
+                const res = await fetch(`http://localhost:5001/api/v1/seller/brand/${shop_id?.shop_id}`);
                 const data = await res.json();
                 // Update brands state
                 setBrands(data);

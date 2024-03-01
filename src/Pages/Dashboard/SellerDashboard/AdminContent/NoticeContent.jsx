@@ -110,7 +110,7 @@ const NoticeContent = () => {
     const { data: noticeInfo = [], refetch } = useQuery({
         queryKey: "noticeInfo",
         queryFn: async () => {
-            const res = await fetch(`https://backend.doob.com.bd/api/v1/admin/seller-notice`);
+            const res = await fetch(`http://localhost:5001/api/v1/admin/seller-notice`);
             const data = await res.json();
             return data?.data;
         },
@@ -121,7 +121,7 @@ const NoticeContent = () => {
             {/* <h2 className="text-xl font-semibold">hello world</h2>
             <p className="text-red-500">hello world...........</p> */}
 
-            <Carousel data={noticeInfo} />
+            {noticeInfo.length ? <Carousel data={noticeInfo} /> : ''}
         </div>
     );
 };

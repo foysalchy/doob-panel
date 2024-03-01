@@ -19,9 +19,6 @@ const SignInSeller = () => {
     setShowPassword(!showPassword);
   };
 
-
-
-
   const loginUser = (event) => {
     event.preventDefault();
     const form = event.target;
@@ -32,7 +29,7 @@ const SignInSeller = () => {
       password,
     };
     setLoading(true);
-    fetch("https://backend.doob.com.bd/api/v1/auth/sign-in", {
+    fetch("http://localhost:5001/api/v1/auth/sign-in", {
       method: "post",
       headers: {
         "content-type": "application/json",
@@ -47,7 +44,7 @@ const SignInSeller = () => {
           setLoading(false);
           setPassError("");
           if (data.user.role === 'seller') {
-            fetch(`https://backend.doob.com.bd/api/v1/shop/checkshop?shopEmail=${data?.user?.shopEmail}`)
+            fetch(`http://localhost:5001/api/v1/shop/checkshop?shopEmail=${data?.user?.shopEmail}`)
               .then((response) => response.json())
               .then((result) => {
                 console.log(result);

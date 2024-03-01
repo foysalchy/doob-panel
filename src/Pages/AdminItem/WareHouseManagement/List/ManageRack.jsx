@@ -12,7 +12,7 @@ const ManageRack = () => {
     const { data: racks = [], refetch } = useQuery({
         queryKey: ["racks"],
         queryFn: async () => {
-            const res = await fetch("https://backend.doob.com.bd/api/v1/admin/warehouse/rack");
+            const res = await fetch("http://localhost:5001/api/v1/admin/warehouse/rack");
             const data = await res.json();
             return data;
         },
@@ -110,7 +110,7 @@ const ManageRack = () => {
 
 
     const updateStatus = (id, status) => {
-        fetch(`https://backend.doob.com.bd/api/v1/admin/warehouse/rack/status/${id}`, {
+        fetch(`http://localhost:5001/api/v1/admin/warehouse/rack/status/${id}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
@@ -147,7 +147,7 @@ const ManageRack = () => {
         }).then((result) => {
             if (result.dismiss === Swal.DismissReason.timer) {
                 // Timer completed, initiate the fetch for deletion
-                fetch(`https://backend.doob.com.bd/api/v1/admin/warehouse/rack/delete/${id}`, {
+                fetch(`http://localhost:5001/api/v1/admin/warehouse/rack/delete/${id}`, {
                     method: "DELETE",
                     headers: {
                         "Content-Type": "application/json",
