@@ -79,7 +79,7 @@ const SingleService = () => {
     }
   };
 
-  
+
   const uploadReview = (e) => {
     e.preventDefault();
     const reviews = e.target.reviews.value
@@ -286,7 +286,7 @@ const SingleService = () => {
                     </svg>
                   </button>
                 </div>
-                
+
 
                 <div className="px-5 py-3">
                   <h3 className="text-gray-700 uppercase">{service.title}</h3>

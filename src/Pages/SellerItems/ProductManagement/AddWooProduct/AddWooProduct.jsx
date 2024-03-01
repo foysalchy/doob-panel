@@ -6,14 +6,32 @@ import Swal from 'sweetalert2';
 import WareHouse from '../SellerAddProduct/Components/WareHouse';
 import Meta from '../SellerAddProduct/Components/Meta';
 import { BsArrowRight } from 'react-icons/bs';
+import Variants from '../SellerAddProduct/Components/Variants';
 
 const AddWooProduct = () => {
     const { shopInfo } = useContext(AuthContext)
     const [adminWare, setAdminWare] = useState(true)
     const [loading, setLoading] = useState(false)
     const [selectedOption, setSelectedOption] = useState(null);
-    const [searchTerm, setSearchTerm] = useState('');
+    const [inputFields, setInputFields] = useState(false);
+    const [variantInput, setVariantInput] = useState([
+        {
+            product1: {
+                quantity: 1,
+                quantityPrice: 1
+            }, product2: {
+                quantity: 1,
+                quantityPrice: 1
+            }, product3: {
+                quantity: 1,
+                quantityPrice: 1
+            },
+            sellingPrice: 1
+        }
+    ]);
 
+    const [searchTerm, setSearchTerm] = useState('');
+    const [multiVendor, setMultiVendor] = useState(true);
     const { data: allProduct = [], refetch } = useQuery({
         queryKey: ["woo-product"],
         queryFn: async () => {
@@ -37,33 +55,39 @@ const AddWooProduct = () => {
 
 
 
-    const imageUpload = (image) => {
+    const imageUpload = async (image) => {
         const formData = new FormData();
         formData.append("image", image);
 
         const url = `https://backend.doob.com.bd/api/v1/image/upload-image`;
 
-        return fetch(url, {
+        const res = await fetch(url, {
             method: "POST",
             body: formData,
-        })
-            .then((res) => res.json())
-            .then((imageData) => {
-                const imageUrl = imageData.imageUrl;
-                return imageUrl;
-            });
+        });
+        const imageData = await res.json();
+        const imageUrl = imageData.imageUrl;
+        return imageUrl;
     };
 
 
     const dataSubmit = async (e) => {
+        e.preventDefault();
         setLoading(true)
-        e.preventDefault()
-        const product = selectedOption
+
         const form = e.target
+        const adminMegaCategory = form?.adminMegaCategory?.value;
+        const adminSubCategory = form?.adminSubCategory?.value;
+        const adminMiniCategory = form?.adminMiniCategory?.value;
+        const adminExtraCategory = form?.adminExtraCategory?.value;
+
+        const adminCategory = [adminMegaCategory, adminSubCategory, adminMiniCategory, adminExtraCategory];
+
+        const product = selectedOption
         const MetaTag = form?.MetaTag?.value
         const MetaTagMetaDescription = form?.MetaDescription?.value
-        const MetaImageFile = form?.MetaImage?.files[0]
-        const MetaImage = await imageUpload(MetaImageFile)
+        // const MetaImageFile = form?.MetaImage?.files[0]
+        // const MetaImage = await imageUpload(MetaImageFile)
 
         const warehouse = form.warehouse.value
         const area = form?.area?.value || null
@@ -77,11 +101,14 @@ const AddWooProduct = () => {
         data.shopId = shopInfo._id
         data.metaTitle = MetaTag
         data.metaDescription = MetaTagMetaDescription
-        data.MetaImage = MetaImage
+        // data.MetaImage = MetaImage
         data.warehouseValue = warehouseValue
         data.adminWare = adminWare
         data.woo = true
-        data.daraz = false
+        data.daraz = false,
+            data.multiVendor = multiVendor,
+            data.adminCategory = adminCategory,
+            data.variantData = variantInput[0]
 
         console.log(data);
         fetch('https://backend.doob.com.bd/api/v1/seller/woo-product/', {
@@ -172,11 +199,12 @@ const AddWooProduct = () => {
                     ) : ''}
                 </div>
 
+                <Variants adminWare={adminWare} multiVendor={multiVendor} setMultiVendor={setMultiVendor} inputFields={inputFields} daraz={true} variantInput={variantInput} setVariantInput={setVariantInput} />
 
                 <WareHouse shopInfo={shopInfo} adminWare={adminWare} setAdminWare={setAdminWare} />
                 <Meta />
                 <div className="mt-4">
-                    {
+                    {/* {
                         loading ?
                             <button type='button' className="group relative cursor-not-allowed inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none mt-4">
                                 <span className="text-sm font-medium">
@@ -202,7 +230,21 @@ const AddWooProduct = () => {
                                     Upload Product
                                 </span>
                             </button>
-                    }
+                    } */}
+
+                    <button type='submit'
+
+                        className={!loading ? "group relative cursor-pointer inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none mt-4 " : "group relative inline-flex items-center overflow-hidden rounded bg-gray-700 px-8 py-3 text-white focus:outline-none mt-4 cursor-not-allowed"}
+
+                    >
+                        <span className="absolute -end-full transition-all group-hover:end-4">
+                            <BsArrowRight />
+                        </span>
+
+                        <span className="text-sm font-medium transition-all group-hover:me-4">
+                            Upload Product
+                        </span>
+                    </button>
                 </div>
             </form>
         </div>

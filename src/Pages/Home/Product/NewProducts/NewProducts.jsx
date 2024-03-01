@@ -18,6 +18,7 @@ const NewProducts = () => {
     },
   });
 
+  const blankImg = "https://i.ibb.co/2K1Z2D5/blank.jpg"
 
   const data = [1, 2, 3, 4]
 

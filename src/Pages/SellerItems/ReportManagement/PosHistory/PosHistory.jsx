@@ -8,6 +8,9 @@ import PosInvoiceModal from './PosInvoiceModal';
 const PosHistory = () => {
     const [openInvoice, setOpenInvoice] = useState(false);
     const { shopInfo } = useContext(AuthContext);
+    const ITEMS_PER_PAGE = 10; // Define number of items per page
+    const [currentPage, setCurrentPage] = useState(1); // Manage current page state
+
     const { data: posData = [], isLoading } = useQuery({
         queryKey: ["posData"],
         queryFn: async () => {
@@ -17,7 +20,26 @@ const PosHistory = () => {
         },
     });
 
-    console.log(posData, '>>>>>>');
+    // Calculate total number of pages
+    const totalPages = Math.ceil(posData.length / ITEMS_PER_PAGE);
+
+    // Determine start and end index for pagination
+    const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+    const endIndex = startIndex + ITEMS_PER_PAGE;
+
+    // Handle next page navigation
+    const nextPage = () => {
+        if (currentPage < totalPages) {
+            setCurrentPage(currentPage + 1);
+        }
+    };
+
+    // Handle previous page navigation
+    const prevPage = () => {
+        if (currentPage > 1) {
+            setCurrentPage(currentPage - 1);
+        }
+    };
     return (
         <div>
             <section className="container px-4 mx-auto">
@@ -192,91 +214,25 @@ const PosHistory = () => {
                         </div>
                     </div>
                 </div>
+                {/* Pagination controls */}
                 <div className="flex items-center justify-between mt-6">
-                    <a
-                        href="#"
+                    <button
+                        onClick={prevPage}
+                        disabled={currentPage === 1}
                         className="flex items-center px-5 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 bg-white border rounded-md gap-x-2 hover:bg-gray-100 dark:bg-gray-900 dark:text-gray-200 dark:border-gray-700 dark:hover:bg-gray-800"
                     >
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            strokeWidth="1.5"
-                            stroke="currentColor"
-                            className="w-5 h-5 rtl:-scale-x-100"
-                        >
-                            <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="M6.75 15.75L3 12m0 0l3.75-3.75M3 12h18"
-                            />
-                        </svg>
-                        <span>previous</span>
-                    </a>
-                    <div className="items-center hidden md:flex gap-x-3">
-                        <a
-                            href="#"
-                            className="px-2 py-1 text-sm text-blue-500 rounded-md dark:bg-gray-800 bg-blue-100/60"
-                        >
-                            1
-                        </a>
-                        <a
-                            href="#"
-                            className="px-2 py-1 text-sm text-gray-500 rounded-md dark:hover:bg-gray-800 dark:text-gray-300 hover:bg-gray-100"
-                        >
-                            2
-                        </a>
-                        <a
-                            href="#"
-                            className="px-2 py-1 text-sm text-gray-500 rounded-md dark:hover:bg-gray-800 dark:text-gray-300 hover:bg-gray-100"
-                        >
-                            3
-                        </a>
-                        <a
-                            href="#"
-                            className="px-2 py-1 text-sm text-gray-500 rounded-md dark:hover:bg-gray-800 dark:text-gray-300 hover:bg-gray-100"
-                        >
-                            ...
-                        </a>
-                        <a
-                            href="#"
-                            className="px-2 py-1 text-sm text-gray-500 rounded-md dark:hover:bg-gray-800 dark:text-gray-300 hover:bg-gray-100"
-                        >
-                            12
-                        </a>
-                        <a
-                            href="#"
-                            className="px-2 py-1 text-sm text-gray-500 rounded-md dark:hover:bg-gray-800 dark:text-gray-300 hover:bg-gray-100"
-                        >
-                            13
-                        </a>
-                        <a
-                            href="#"
-                            className="px-2 py-1 text-sm text-gray-500 rounded-md dark:hover:bg-gray-800 dark:text-gray-300 hover:bg-gray-100"
-                        >
-                            14
-                        </a>
+                        <span>Previous</span>
+                    </button>
+                    <div>
+                        Page {currentPage} of {totalPages}
                     </div>
-                    <a
-                        href="#"
+                    <button
+                        onClick={nextPage}
+                        disabled={currentPage === totalPages}
                         className="flex items-center px-5 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 bg-white border rounded-md gap-x-2 hover:bg-gray-100 dark:bg-gray-900 dark:text-gray-200 dark:border-gray-700 dark:hover:bg-gray-800"
                     >
                         <span>Next</span>
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            strokeWidth="1.5"
-                            stroke="currentColor"
-                            className="w-5 h-5 rtl:-scale-x-100"
-                        >
-                            <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"
-                            />
-                        </svg>
-                    </a>
+                    </button>
                 </div>
             </section>
 

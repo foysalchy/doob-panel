@@ -15,7 +15,7 @@ const AnouncementModal = ({ setOpen, open, modalData, index }) => {
 
     const currentData = modalData[currentIndex];
     const style = {
-        overlay: 'w-screen h-screen fixed flex items-center justify-center bg-[black] let-0 right-0 top-0 bg-opacity-50 z-[1000]',
+        overlay: 'w-screen bg-white h-screen fixed flex items-center justify-center bg-[black] let-0 right-0 top-0 bg-opacity-50 z-[1000]',
         card: 'bg-white rounded-lg p-3 w-[800px]  relative',
         title: 'text-xl font-semibold pb-3',
         img: 'w-full h-[420px] object-contain',

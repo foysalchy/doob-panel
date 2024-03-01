@@ -22,7 +22,9 @@ const SellerPopUp = ({ onClose, showModal, setShowModal, handleClose, data }) =>
         close: 'absolute bg-gray-100 w-[40px] h-[40px] text-lg top-2 right-2 rounded-full'
     }
 
-
+    const handlePopUP =()=>{
+        
+    }
 
     return (
         <div>

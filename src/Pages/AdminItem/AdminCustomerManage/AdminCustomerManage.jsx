@@ -44,7 +44,7 @@ const AdminCustomerManage = () => {
 
     const [currentPage, setCurrentPage] = useState(1);
 
-    const pageSize = 10;
+    const pageSize = 6;
     const startIndex = (currentPage - 1) * pageSize;
     const endIndex = startIndex + pageSize;
     const totalPages = Math.ceil(filteredData?.length / pageSize);
@@ -228,6 +228,7 @@ const AdminCustomerManage = () => {
 
         console.log(deleteId, isDelete);
     }
+
 
 
 

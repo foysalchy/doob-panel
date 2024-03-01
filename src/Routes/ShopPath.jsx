@@ -54,14 +54,14 @@ const ShopPath = [
         </NavigateToLogin>,
 
     },
-     {
-         path: 'categories',
+    {
+        path: 'categories',
         element: <NavigateToLogin>
             <CategorieItems />
         </NavigateToLogin>,
 
     },
-    
+
     {
         path: ':id/user',
         element: <IsUserRegistration><UserProfile /></IsUserRegistration>,

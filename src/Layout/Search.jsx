@@ -24,7 +24,6 @@ const Search = () => {
             console.error('Error:', error);
         }
     };
-
     const handleInputChange = (e) => {
         const input = e.target.value;
         console.log(input);

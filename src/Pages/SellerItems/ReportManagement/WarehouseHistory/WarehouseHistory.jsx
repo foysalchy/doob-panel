@@ -8,6 +8,7 @@ import WarehouseProductModal from './WarehouseProductModal';
 const WarehouseHistory = () => {
     const { shopInfo } = useContext(AuthContext);
     const [OpenModal, setOpenModal] = useState(false);
+    const itemsPerPage = 10; // Number of items per page
 
     const { data: warehouseData = [], isLoading } = useQuery({
         queryKey: ["warehouseData"],
@@ -18,7 +19,16 @@ const WarehouseHistory = () => {
         },
     });
 
-    console.log(warehouseData, '>>>>>>>>>');
+    // Calculate total number of pages
+    const totalPages = Math.ceil(warehouseData.length / itemsPerPage);
+
+    // Function to paginate data
+    const paginate = (pageNumber) => {
+        return warehouseData.slice((pageNumber - 1) * itemsPerPage, pageNumber * itemsPerPage);
+    };
+
+    const [currentPage, setCurrentPage] = useState(1);
+
 
     return (
         <div>
@@ -124,91 +134,64 @@ const WarehouseHistory = () => {
                         </div>
                     </div>
                 </div>
-                <div className="flex items-center justify-between mt-6">
-                    <a
-                        href="#"
-                        className="flex items-center px-5 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 bg-white border rounded-md gap-x-2 hover:bg-gray-100 dark:bg-gray-900 dark:text-gray-200 dark:border-gray-700 dark:hover:bg-gray-800"
-                    >
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            strokeWidth="1.5"
-                            stroke="currentColor"
-                            className="w-5 h-5 rtl:-scale-x-100"
-                        >
-                            <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="M6.75 15.75L3 12m0 0l3.75-3.75M3 12h18"
-                            />
-                        </svg>
-                        <span>previous</span>
-                    </a>
-                    <div className="items-center hidden md:flex gap-x-3">
+                <div className="flex items-center justify-center mt-6">
+                    <div className="flex items-center justify-between mt-6">
                         <a
                             href="#"
-                            className="px-2 py-1 text-sm text-blue-500 rounded-md dark:bg-gray-800 bg-blue-100/60"
+                            onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                            className="flex items-center px-2 py-2 mr-2 text-sm text-gray-700 capitalize transition-colors duration-200 bg-white border rounded-md gap-x-2 hover:bg-gray-100 dark:bg-gray-900 dark:text-gray-200 dark:border-gray-700 dark:hover:bg-gray-800"
                         >
-                            1
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                strokeWidth="1.5"
+                                stroke="currentColor"
+                                className="w-5 h-5 rtl:-scale-x-100"
+                            >
+                                <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    d="M6.75 15.75L3 12m0 0l3.75-3.75M3 12h18"
+                                />
+                            </svg>
                         </a>
+                        <div className="items-center hidden md:flex gap-x-3">
+                            {Array.from({ length: totalPages }, (_, i) => (
+                                <a
+                                    key={i}
+                                    href="#"
+                                    onClick={() => setCurrentPage(i + 1)}
+                                    className={`px-2 py-1 mr-2 text-sm rounded-md ${currentPage === i + 1
+                                        ? 'text-blue-500 dark:bg-gray-800 bg-blue-100/60'
+                                        : 'text-gray-500 dark:hover:bg-gray-800 dark:text-gray-300 hover:bg-gray-100'
+                                        }`}
+                                >
+                                    {i + 1}
+                                </a>
+                            ))}
+                        </div>
                         <a
                             href="#"
-                            className="px-2 py-1 text-sm text-gray-500 rounded-md dark:hover:bg-gray-800 dark:text-gray-300 hover:bg-gray-100"
+                            onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+                            className="flex items-center  px-2 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 bg-white border rounded-md gap-x-2 hover:bg-gray-100 dark:bg-gray-900 dark:text-gray-200 dark:border-gray-700 dark:hover:bg-gray-800"
                         >
-                            2
-                        </a>
-                        <a
-                            href="#"
-                            className="px-2 py-1 text-sm text-gray-500 rounded-md dark:hover:bg-gray-800 dark:text-gray-300 hover:bg-gray-100"
-                        >
-                            3
-                        </a>
-                        <a
-                            href="#"
-                            className="px-2 py-1 text-sm text-gray-500 rounded-md dark:hover:bg-gray-800 dark:text-gray-300 hover:bg-gray-100"
-                        >
-                            ...
-                        </a>
-                        <a
-                            href="#"
-                            className="px-2 py-1 text-sm text-gray-500 rounded-md dark:hover:bg-gray-800 dark:text-gray-300 hover:bg-gray-100"
-                        >
-                            12
-                        </a>
-                        <a
-                            href="#"
-                            className="px-2 py-1 text-sm text-gray-500 rounded-md dark:hover:bg-gray-800 dark:text-gray-300 hover:bg-gray-100"
-                        >
-                            13
-                        </a>
-                        <a
-                            href="#"
-                            className="px-2 py-1 text-sm text-gray-500 rounded-md dark:hover:bg-gray-800 dark:text-gray-300 hover:bg-gray-100"
-                        >
-                            14
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                strokeWidth="1.5"
+                                stroke="currentColor"
+                                className="w-5 h-5 rtl:-scale-x-100"
+                            >
+                                <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"
+                                />
+                            </svg>
                         </a>
                     </div>
-                    <a
-                        href="#"
-                        className="flex items-center px-5 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 bg-white border rounded-md gap-x-2 hover:bg-gray-100 dark:bg-gray-900 dark:text-gray-200 dark:border-gray-700 dark:hover:bg-gray-800"
-                    >
-                        <span>Next</span>
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            strokeWidth="1.5"
-                            stroke="currentColor"
-                            className="w-5 h-5 rtl:-scale-x-100"
-                        >
-                            <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"
-                            />
-                        </svg>
-                    </a>
                 </div>
             </section>
 

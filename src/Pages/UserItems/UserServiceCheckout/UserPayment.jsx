@@ -51,10 +51,27 @@ const UserPayment = () => {
     }
 
     const paymentHandler = async () => {
-        console.log(payment);
+        payWithBkash()
 
     };
 
+
+    const payWithBkash = async () => {
+        try {
+            const response = await fetch('https://backend.doob.com.bd/api/v1/seller/bkash/payment/create', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ amount: 50, orderId: 1, userId: 'asdhfbuyagsdf' }),
+            });
+            const data = await response.json();
+            console.log(data.bkashURL);
+            window.location.href = data.bkashURL;
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
 
 

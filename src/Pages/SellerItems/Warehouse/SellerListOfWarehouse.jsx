@@ -24,7 +24,7 @@ const SellerListOfWarehouse = () => {
         },
     });
 
-     const [searchQuery, setSearchQuery] = useState("");
+    const [searchQuery, setSearchQuery] = useState("");
 
     const handleSearch = (event) => {
         setSearchQuery(event.target.value);
@@ -223,7 +223,7 @@ const SellerListOfWarehouse = () => {
                     </span>
                 </div>
                 <div className="overflow-x-auto overflow-y-hidden">
-                    <table className="table-auto w-full text-left whitespace-no-wrap">
+                    <table className="table-auto border rounded-lg overflo w-full text-left whitespace-no-wrap">
                         <thead>
                             <tr>
                                 <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-800  rounded-tl ">
@@ -307,47 +307,7 @@ const SellerListOfWarehouse = () => {
                 </div>
             </div>
 
-            <div className='flex justify-center mt-4'>
-                <ol className="flex justify-center gap-1 text-xs font-medium">
-                    <li>
-                        <button
-                            className="inline-flex h-8 w-8 items-center justify-center rounded border border-gray-900 bg-white text-gray-900 rtl:rotate-180"
-                            onClick={() => handleChangePage(Math.max(1, currentPage - 1))}
-                            disabled={currentPage === 1}
-                        >
-                            <span className="sr-only">Prev Page</span>
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                className="h-3 w-3"
-                                viewBox="0 0 20 20"
-                                fill="currentColor"
-                            >
-                                <BiLeftArrow className='text-xl' />
-                            </svg>
-                        </button>
-                    </li>
 
-                    {renderPageNumbers()}
-
-                    <li>
-                        <button
-                            className="inline-flex h-8 w-8 items-center justify-center rounded border border-gray-900 disabled:cursor-not-allowed bg-white text-gray-900 rtl:rotate-180"
-                            onClick={() => handleChangePage(Math.min(totalPages, currentPage + 1))}
-                            disabled={currentPage === totalPages}
-                        >
-                            <span className="sr-only">Next Page</span>
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                className="h-3 w-3"
-                                viewBox="0 0 20 20"
-                                fill="currentColor"
-                            >
-                                <BiRightArrow className='text-xl' />
-                            </svg>
-                        </button>
-                    </li>
-                </ol>
-            </div>
         </div>
     );
 };

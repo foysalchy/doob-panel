@@ -34,7 +34,7 @@ const SellerAllProducts = () => {
     const [webStoreProduct, setWebStoreProduct] = useState(false);
 
     const maxLength = 30;
-    const pageSize = 10
+    const pageSize = 6
 
 
 
@@ -405,13 +405,26 @@ const SellerAllProducts = () => {
                                                                 </h2>
                                                             </div>}
                                                     </div>
-                                                        : <div
+                                                        :
+                                                        <div>
+                                                            {!product?.status ? <div
 
-                                                            className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 cursor-pointer bg-emerald-100/60 bg-gray-800">
-                                                            <span className="h-1.5 w-1.5 rounded-full bg-yellow-500" />
-                                                            <h2 className="text-sm font-normal text-yellow-500">
-                                                                Pending
-                                                            </h2>
+                                                                className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 cursor-pointer bg-emerald-100/60 bg-gray-800">
+                                                                <span className="h-1.5 w-1.5 rounded-full bg-yellow-500" />
+                                                                <h2 className="text-sm font-normal text-yellow-500">
+                                                                    Pending
+                                                                </h2>
+                                                            </div>
+                                                                :
+                                                                <div
+                                                                    onClick={() => updateProductStatus(product._id, false)}
+                                                                    className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 cursor-pointer bg-emerald-100/60 bg-gray-800">
+                                                                    <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                                                                    <h2 className="text-sm font-normal text-emerald-500">
+                                                                        Active
+                                                                    </h2>
+                                                                </div>
+                                                            }
                                                         </div>
                                                     }
                                                 </td>
