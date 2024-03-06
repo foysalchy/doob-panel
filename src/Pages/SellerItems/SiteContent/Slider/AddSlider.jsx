@@ -46,7 +46,8 @@ const AddSlider = () => {
             link: url,
             shopId: shop,
             status: false,
-            time: new Date()
+            time: new Date(),
+            status: true
         };
 
         console.log(data);
@@ -56,7 +57,7 @@ const AddSlider = () => {
 
 
     async function uploadImage(formData) {
-        const url = "http://localhost:5001/api/v1/image/upload-image";
+        const url = "https://salenow-v2-backend.vercel.app/api/v1/image/upload-image";
         const response = await fetch(url, {
             method: "POST",
             body: formData,
@@ -67,7 +68,7 @@ const AddSlider = () => {
 
     const postSlider = (Slider) => {
 
-        fetch(`http://localhost:5001/api/v1/seller/slider/add`, {
+        fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/slider/add`, {
             method: "POST",
             headers: {
                 "content-type": "application/json",

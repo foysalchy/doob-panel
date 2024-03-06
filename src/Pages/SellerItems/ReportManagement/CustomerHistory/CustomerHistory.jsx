@@ -14,7 +14,7 @@ const CustomerHistory = () => {
     const { data: customerData = [], isLoading } = useQuery({
         queryKey: ["customerdata"],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5001/api/v1/seller/customer-report?shopId=${shopInfo?.shopId}`);
+            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/customer-report?shopId=${shopInfo?.shopId}`);
             const data = await res.json();
             return data;
         },

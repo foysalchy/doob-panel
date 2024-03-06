@@ -12,7 +12,7 @@ const NewProducts = () => {
   const { data: AdminNewProducts = [], refetch, isLoading } = useQuery({
     queryKey: ["AdminNewProducts"],
     queryFn: async () => {
-      const res = await fetch(`http://localhost:5001/api/v1/admin/new-products`);
+      const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/new-products`);
       const data = await res.json();
       return data;
     },

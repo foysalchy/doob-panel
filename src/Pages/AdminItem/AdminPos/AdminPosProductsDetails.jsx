@@ -23,7 +23,7 @@ const AdminPosProductsDetails = ({ invoice, open, setOpen }) => {
 
 
     const fetchData = () => {
-        fetch(`http://localhost:5001/api/v1/seller/seller-user?shopId=${shopInfo.shopId}&${searchType}=${searchValue}`).then((res) => res.json()).then((data) => {
+        fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/seller-user?shopId=${shopInfo.shopId}&${searchType}=${searchValue}`).then((res) => res.json()).then((data) => {
             if (data.userInfo) {
                 setUser(data.userInfo)
                 setExisting(false)

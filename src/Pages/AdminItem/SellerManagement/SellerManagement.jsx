@@ -19,7 +19,7 @@ const SellerManagement = () => {
     const { data: sellers = [], refetch } = useQuery({
         queryKey: ["sellers"],
         queryFn: async () => {
-            const res = await fetch("http://localhost:5001/api/v1/admin/seller");
+            const res = await fetch("https://salenow-v2-backend.vercel.app/api/v1/admin/seller");
             const data = await res.json();
             return data;
         },
@@ -45,7 +45,7 @@ const SellerManagement = () => {
 
     const [currentPage, setCurrentPage] = useState(1);
 
-    const pageSize = 6;
+    const pageSize = 10;
     const startIndex = (currentPage - 1) * pageSize;
     const endIndex = startIndex + pageSize;
     const totalPages = Math.ceil(filteredData?.length / pageSize);
@@ -118,7 +118,7 @@ const SellerManagement = () => {
 
 
     const updateStatus = (id, status) => {
-        fetch(`http://localhost:5001/api/v1/admin/seller/status/${id}`, {
+        fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/seller/status/${id}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
@@ -131,13 +131,11 @@ const SellerManagement = () => {
     }
 
     const directLogin = async (email, userId) => {
-
-
-
         let password = ''
-        await fetch(`http://localhost:5001/api/v1/admin/seller/pass/${userId}`).then((res) => res.json()).then((data) => {
+        console.log(`https://salenow-v2-backend.vercel.app/api/v1/admin/seller/pass/${userId}`);
+        await fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/seller/pass/${userId}`).then((res) => res.json()).then((data) => {
+            console.log(data);
             password = data.password
-
         })
         const data = {
             email,
@@ -145,7 +143,7 @@ const SellerManagement = () => {
         };
         console.log(data);
 
-        await fetch("http://localhost:5001/api/v1/auth/sign-in", {
+        await fetch("https://salenow-v2-backend.vercel.app/api/v1/auth/sign-in", {
             method: "post",
             headers: {
                 "content-type": "application/json",
@@ -160,7 +158,7 @@ const SellerManagement = () => {
 
                 if (data.user) {
                     if (data.user.role === 'seller') {
-                        fetch(`http://localhost:5001/api/v1/shop/checkshop?shopEmail=${data?.user?.shopEmail}`)
+                        fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/checkshop?shopEmail=${data?.user?.shopEmail}`)
                             .then((response) => response.json())
                             .then((result) => {
                                 console.log(result, '208');
@@ -214,7 +212,7 @@ const SellerManagement = () => {
 
     if (isDelete) {
 
-        fetch(`http://localhost:5001/api/v1/admin/seller/delete/${deleteId}`, {
+        fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/seller/delete/${deleteId}`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",

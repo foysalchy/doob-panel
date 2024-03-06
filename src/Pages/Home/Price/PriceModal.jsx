@@ -24,7 +24,7 @@ const PriceModal = ({ open, setOpen }) => {
     queryKey: ["getawayData"],
     queryFn: async () => {
       const res = await fetch(
-        "http://localhost:5001/api/v1/admin/getaway"
+        "https://salenow-v2-backend.vercel.app/api/v1/admin/getaway"
       );
       const data = await res.json();
       return data;
@@ -38,7 +38,7 @@ const PriceModal = ({ open, setOpen }) => {
     queryKey: ["possibility"],
     queryFn: async () => {
       const res = await fetch(
-        `http://localhost:5001/api/v1/seller/check-free-trail?shopId=${shopInfo._id}`
+        `https://salenow-v2-backend.vercel.app/api/v1/seller/check-free-trail?shopId=${shopInfo._id}`
       );
       const data = await res.json();
       return data.possible
@@ -62,7 +62,7 @@ const PriceModal = ({ open, setOpen }) => {
 
     if (shopInfo) {
       fetch(
-        `http://localhost:5001/api/v1/seller/update-payment?shopId=${shopInfo._id}&paymentId=${open?._id}`,
+        `https://salenow-v2-backend.vercel.app/api/v1/seller/update-payment?shopId=${shopInfo._id}&paymentId=${open?._id}`,
         {
           method: "PATCH",
           headers: {
@@ -191,7 +191,7 @@ const PriceModal = ({ open, setOpen }) => {
             </div>
             <div className="flex flex-col items-center space-y-1">
               <h2 className="text-2xl font-semibold text-blue-600  sm:text-3xl">
-                ${parseInt(open?.price) * parseInt(time.split(',')[1]) - parseInt(time.split(',')[0])}
+                ${parseInt(open?.price) * parseInt(time.split(',')[1])}
                 <span className="text-base font-medium">
                   /{open?.timeDuration}
                 </span>

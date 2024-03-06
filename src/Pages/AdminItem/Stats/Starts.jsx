@@ -8,7 +8,7 @@ const Starts = () => {
     const { data: newUsers = [], refetch } = useQuery({
         queryKey: ["newUser"],
         queryFn: async () => {
-            const res = await fetch("http://localhost:5001/api/v1/admin/previous-week-users");
+            const res = await fetch("https://salenow-v2-backend.vercel.app/api/v1/admin/previous-week-users");
             const data = await res.json();
             return data;
         },

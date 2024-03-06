@@ -17,16 +17,16 @@ const SellerPageManagement = () => {
     const { data: faqs = [], refetch } = useQuery({
         queryKey: ["faqs"],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5001/api/v1/seller/pages/${shopInfo.shopId}`);
+            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/pages/${shopInfo.shopId}`);
             const data = await res.json();
             return data;
         },
     });
-
+    console.log(`https://salenow-v2-backend.vercel.app/api/v1/seller/pages/${shopInfo.shopId}`);
     const ActiveHandle = (id) => {
         setLoading(true);
 
-        fetch(`http://localhost:5001/api/v1/seller/page/status/${id}`, {
+        fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/page/status/${id}`, {
             method: "PUT",
             headers: {
                 "content-type": "application/json",
@@ -41,7 +41,7 @@ const SellerPageManagement = () => {
 
     const DeactiveHandle = (id) => {
 
-        fetch(`http://localhost:5001/api/v1/seller/page/falseStatus/${id}`, {
+        fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/page/falseStatus/${id}`, {
             method: "PUT",
             headers: {
                 "content-type": "application/json",
@@ -55,7 +55,7 @@ const SellerPageManagement = () => {
     };
     const DeleteHandle = (id) => {
 
-        fetch(`http://localhost:5001/api/v1/seller/page/delete/${id}`, {
+        fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/page/delete/${id}`, {
             method: "Delete",
             headers: {
                 "content-type": "application/json",
@@ -89,7 +89,7 @@ const SellerPageManagement = () => {
                 </span>
 
                 <span className="text-sm font-medium transition-all group-hover:ms-4">
-                    Add New Blog
+                    Add New Page
                 </span>
             </Link>
 

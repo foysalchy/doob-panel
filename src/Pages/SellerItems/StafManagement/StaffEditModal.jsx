@@ -48,7 +48,7 @@ const StaffEditModal = ({ OpenModal, setOpenModal, staffInfo, refetch }) => {
 
         const data = { user, shopEmail, permissions, role }
         console.log(data, permissions, '+++++')
-        fetch(`http://localhost:5001/api/v1/seller/staff-add`, {
+        fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/staff-add`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json'

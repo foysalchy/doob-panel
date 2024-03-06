@@ -18,7 +18,7 @@ const DarazInvoice = () => {
         queryKey: ["invoiceDarazOrder"],
         queryFn: async () => {
             if (shopInfo) {
-                const res = await fetch(`http://localhost:5001/api/v1/seller/daraz-single-order?id=${shopInfo?._id}&orderId=${id}`);
+                const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/daraz-single-order?id=${shopInfo?._id}&orderId=${id}`);
                 const data = await res.json();
                 return data.data;
             }

@@ -30,6 +30,7 @@ const AddCopon = () => {
         selectedGmails: [],
         startDateTime: '',
         endDateTime: '',
+        status: true
     });
 
     console.log(formData);
@@ -40,7 +41,7 @@ const AddCopon = () => {
         const updatedValue = name === 'code' ? value.replace(/\s+/g, '').toUpperCase() : value;
 
         if (updatedValue.length > 3) {
-            fetch(`http://localhost:5001/api/v1/seller/uniq-promo/${shopInfo._id}/${updatedValue}`)
+            fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/uniq-promo/${shopInfo._id}/${updatedValue}`)
                 .then((res) => res.json())
                 .then((data) => setUniq(data));
         } else {
@@ -62,7 +63,7 @@ const AddCopon = () => {
             selectedGmails: selectedGmails,
         }));
 
-        fetch(`http://localhost:5001/api/v1/seller/promo-code/add`, {
+        fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/promo-code/add`, {
             method: 'POST',
             headers: {
                 'content-type': 'application/json',

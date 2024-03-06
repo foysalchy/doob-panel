@@ -36,7 +36,7 @@ const UpdateShopProfile = () => {
         const selectedFile = e.target.files[0];
         const formData = new FormData();
         formData.append("image", selectedFile);
-        const url = `http://localhost:5001/api/v1/image/upload-image`;
+        const url = `https://salenow-v2-backend.vercel.app/api/v1/image/upload-image`;
         fetch(url, {
             method: "POST",
             body: formData,
@@ -48,7 +48,7 @@ const UpdateShopProfile = () => {
                     const image = imageData.imageUrl;
 
 
-                    fetch(`http://localhost:5001/api/v1/shop/update-cover/${shopInfo._id}`, {
+                    fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/update-cover/${shopInfo._id}`, {
                         method: "PUt",
 
                         headers: {
@@ -78,7 +78,7 @@ const UpdateShopProfile = () => {
         const selectedFile = e.target.files[0];
         const formData = new FormData();
         formData.append("image", selectedFile);
-        const url = `http://localhost:5001/api/v1/image/upload-image`;
+        const url = `https://salenow-v2-backend.vercel.app/api/v1/image/upload-image`;
         fetch(url, {
             method: "POST",
             body: formData,
@@ -89,7 +89,7 @@ const UpdateShopProfile = () => {
                 if (imageData.imageUrl) {
                     const image = imageData.imageUrl;
 
-                    fetch(`http://localhost:5001/api/v1/shop/update-logo/${shopInfo._id}`, {
+                    fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/update-logo/${shopInfo._id}`, {
                         method: "PUt",
                         headers: {
                             "Content-Type": "application/json"

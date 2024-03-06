@@ -109,7 +109,7 @@ const AnouncementContent = () => {
         queryKey: ["announcementData"],
         queryFn: async () => {
             try {
-                const res = await fetch(`http://localhost:5001/api/v1/admin/announcement`);
+                const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/announcement`);
                 const data = await res.json();
                 return data?.data;
             } catch (error) {

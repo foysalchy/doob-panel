@@ -14,6 +14,7 @@ import { BsFillPinMapFill } from "react-icons/bs";
 import { useEffect } from 'react';
 import { BiHomeAlt, BiSearch } from 'react-icons/bi';
 import CategorieItems from './categorieItems';
+import { Footer } from './shopFotterComponent';
 
 const ShopNav = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -24,7 +25,7 @@ const ShopNav = () => {
     const { data: categories = [], refetch: reload } = useQuery({
         queryKey: ["categories"],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5001/api/v1/shop/category/get/${shopId}`);
+            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/category/get/${shopId}`);
             const data = await res.json();
             return data;
         },
@@ -35,7 +36,7 @@ const ShopNav = () => {
     const { data: shop = {}, isLoading, refetch } = useQuery({
         queryKey: ["shop"],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5001/api/v1/shop/${shopId}`);
+            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/${shopId}`);
             const data = await res.json();
             return data;
         },
@@ -55,7 +56,7 @@ const ShopNav = () => {
                 const productData = localStorage.getItem('addToCart');
                 setCartProducts(JSON.parse(productData));
             } else {
-                fetch(`http://localhost:5001/api/v1/shop/user/add-to-cart?userId=${shopUser?._id}&shopId=${shop_id?.shop_id}&token=${shopUser?._id}`)
+                fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/user/add-to-cart?userId=${shopUser?._id}&shopId=${shop_id?.shop_id}&token=${shopUser?._id}`)
                     .then(res => res.json())
                     .then(data => {
                         setCartProducts(data.data)
@@ -74,6 +75,7 @@ const ShopNav = () => {
 
 
     return (
+
 
         <div className='shadow-xl'>
             <Helmet >
@@ -329,7 +331,7 @@ const ShopNav = () => {
                 </div>
 
             </div>
-        </div >
+        </div>
     );
 };
 

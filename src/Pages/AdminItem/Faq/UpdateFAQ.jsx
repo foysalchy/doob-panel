@@ -26,7 +26,7 @@ const UpdateFAQ = ({ OpenModal, setOpenModal, FAQInfo, refetch }) => {
 
 
         try {
-            const response = await fetch(`http://localhost:5001/api/v1/admin/faq/update-faq/${FAQInfo._id}`, {
+            const response = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/faq/update-faq/${FAQInfo._id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',

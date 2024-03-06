@@ -6,11 +6,11 @@ import { useQuery } from '@tanstack/react-query';
 import { BiLeftArrow, BiRightArrow } from 'react-icons/bi';
 
 const ReviewTable = ({ search }) => {
-  
- 
+
+
     const { shopInfo } = useContext(AuthContext)
- 
- 
+
+
     const handlePageChange = (newPage) => {
         setCurrentPage(newPage);
     };
@@ -19,7 +19,7 @@ const ReviewTable = ({ search }) => {
     const { data: reviewData = [], refetch } = useQuery({
         queryKey: ["reviewData"],
         queryFn: async () => {
-            const res = await fetch(`https:/backend.doob.com.bd/api/v1/seller/all-shop-product-comment?shopId=${shopInfo._id}`);
+            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/all-shop-product-comment?shopId=${shopInfo._id}`);
             const data = await res.json();
             return data?.comments;
         },

@@ -20,7 +20,7 @@ const ShopSingleBlog = () => {
 
     const [blogList, setBlogList] = useState([]);
     useEffect(() => {
-        fetch(`http://localhost:5001/api/v1/seller/blog/${shopId}`)
+        fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/blog/${shopId}`)
             .then((res) => res.json())
             .then((data) => setBlogList(data));
     }, []);

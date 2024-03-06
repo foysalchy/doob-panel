@@ -8,12 +8,12 @@ const ScheduleDropOffs = () => {
     const [searchValue, setSearchValue] = useState('');
     const { shopInfo } = useContext(AuthContext);
 
-    // console.log(`http://localhost:5001/api/v1/seller/refund-order?shopId=${shopInfo?._id}`);
+    // console.log(`https://salenow-v2-backend.vercel.app/api/v1/seller/refund-order?shopId=${shopInfo?._id}`);
 
     const { data: refundData = [] } = useQuery({
         queryKey: ["selarRefundOrder"],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5001/api/v1/seller/refund-order?shopId=${shopInfo?._id}`);
+            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/refund-order?shopId=${shopInfo?._id}`);
             const data = await res.json();
             return data?.data;
         },
@@ -77,7 +77,7 @@ const ScheduleDropOffs = () => {
                     </thead>
                     <tbody>
                         {
-                            filteredData?.map((itm, index) => <tr className="border-b ">
+                            filteredData.length ? filteredData?.map((itm, index) => <tr className="border-b ">
                                 <td className="whitespace-nowrap border-r px-6 py-4 font-medium ">
                                     {index + 1}
                                 </td>
@@ -124,7 +124,7 @@ const ScheduleDropOffs = () => {
 
 
 
-                            </tr>)
+                            </tr>) : ''
                         }
 
                     </tbody>

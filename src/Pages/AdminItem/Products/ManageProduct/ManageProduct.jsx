@@ -14,7 +14,7 @@ const ManageProduct = () => {
   const { data: products = [], refetch } = useQuery({
     queryKey: ["products"],
     queryFn: async () => {
-      const res = await fetch("http://localhost:5001/api/v1/admin/products");
+      const res = await fetch("https://salenow-v2-backend.vercel.app/api/v1/admin/products");
       const data = await res.json();
       return data;
     },
@@ -23,7 +23,7 @@ const ManageProduct = () => {
   const { data: othersProduct = [] } = useQuery({
     queryKey: ["othersProducts"],
     queryFn: async () => {
-      const res = await fetch("http://localhost:5001/api/v1/admin/others-products");
+      const res = await fetch("https://salenow-v2-backend.vercel.app/api/v1/admin/others-products");
       const data = await res.json();
       return data;
     },
@@ -39,18 +39,18 @@ const ManageProduct = () => {
   };
 
   const filteredData = doobProduct
-    ? products.filter((item) =>
+    ? products?.filter((item) =>
       (item.name && item.name.toLowerCase().includes(searchQuery?.toLowerCase())) ||
       (item._id && item._id.toString().includes(searchQuery))
     )
-    : othersProduct.filter((item) =>
+    : othersProduct.length && othersProduct?.filter((item) =>
       (item.name && item.name.toLowerCase().includes(searchQuery?.toLowerCase())) ||
       (item._id && item._id.toString().includes(searchQuery))
     );
 
   const updateProductStatus = (id, status) => {
     console.log(id);
-    fetch(`http://localhost:5001/api/v1/seller/update-product-status`, {
+    fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/update-product-status`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json"
@@ -237,7 +237,7 @@ const ManageProduct = () => {
                     </tr>
                   </thead>
                   <tbody className="bg-white divide-y  divide-gray-200 ">
-                    {filteredData?.map((product) => (
+                    {filteredData.length ? filteredData?.map((product) => (
                       <tr>
 
                         <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
@@ -348,7 +348,7 @@ const ManageProduct = () => {
                           {modalOpen == product?._id && <WarehouseModal doobProduct={doobProduct} modalOpen={modalOpen} product={product} setModalOpen={setModalOpen} />}
                         </div>
                       </tr>
-                    ))}
+                    )) : ''}
                   </tbody>
                 </table>
               </div>

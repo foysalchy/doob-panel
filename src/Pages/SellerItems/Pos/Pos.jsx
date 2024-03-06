@@ -12,7 +12,7 @@ const Pos = () => {
     const { data: products = [], reload } = useQuery({
         queryKey: ["products"],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5001/api/v1/seller/all-products/${shopInfo._id}`);
+            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/all-products/${shopInfo._id}`);
             const data = await res.json();
             return data;
         },
@@ -64,7 +64,7 @@ const Pos = () => {
                         </div>
                         <div className="bg-gray-100 p-4 rounded-lg mt-3  overflow-y-auto grid md:grid-cols-5 grid-cols-2 gap-3 h-[90vh]">
                             {
-                                filteredData?.map((itm, index) => (
+                                filteredData.length ? filteredData?.map((itm, index) => (
                                     <div key={itm?._id}>
                                         <div onClick={() => addProductToCart(itm)} className="card bg-white rounded-xl p-2">
                                             <div style={{ backgroundImage: `url('${itm?.featuredImage?.src}')` }} className="card-body md:h-[200px] h-[100px] bg-cover object-cover rounded-xl">
@@ -79,7 +79,7 @@ const Pos = () => {
                                             </div>
                                         </div>
                                     </div>
-                                ))
+                                )) : ''
                             }
                         </div>
                     </div>

@@ -28,7 +28,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
     const { data: prices = [], loader } = useQuery({
         queryKey: ["prices"],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5001/api/v1/seller/subscription-model?priceId=${shopInfo?.priceId}`);
+            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/subscription-model?priceId=${shopInfo?.priceId}`);
             const data = await res.json();
             return data?.data;
         },

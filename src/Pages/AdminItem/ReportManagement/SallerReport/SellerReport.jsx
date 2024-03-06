@@ -9,7 +9,7 @@ const SellerReport = () => {
     const { data: serviceOrder = [], refetch, isLoading } = useQuery({
         queryKey: ["sellerReport"],
         queryFn: async () => {
-            const res = await fetch("http://localhost:5001/api/v1/admin/seller-report");
+            const res = await fetch("https://salenow-v2-backend.vercel.app/api/v1/admin/seller-report");
             const data = await res.json();
             return data.data;
         },
@@ -287,7 +287,7 @@ const SellerReport = () => {
                                         <TableLoader colSpan={5} />
                                     </tr>}
                                     {
-                                        filteredData?.map((shopInfo) => (
+                                        filteredData.length ? filteredData?.map((shopInfo) => (
 
                                             <tr>
                                                 <td className="px-4 py-4 text-sm font-medium whitespace-nowrap">
@@ -337,7 +337,7 @@ const SellerReport = () => {
                                                 </td>
 
                                             </tr>
-                                        ))
+                                        )) : ''
                                     }
 
                                 </tbody>

@@ -13,7 +13,8 @@ import Swal from "sweetalert2";
 import BrightAlert from 'bright-alert';
 import MetaHelmet from "../../../../Helmate/Helmate";
 import ReleventProduct from "./ReleventProduct";
-import ModalForPayment from "./ModalFOrPayment";
+import ModalForPayment from "./ModalForPayment";
+
 
 const StarRating = ({ rating, onRatingChange }) => {
   return (
@@ -179,7 +180,7 @@ const ProductDetails = () => {
         userInfo
       }
       console.log(data);
-      fetch(`http://localhost:5001/api/v1/seller/web-store?id=${id}`, {
+      fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/web-store?id=${id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -242,7 +243,7 @@ const ProductDetails = () => {
       };
 
       // Post the comment data to the backend
-      const response = await fetch("http://localhost:5001/api/v1/seller/add-new-comment", {
+      const response = await fetch("https://salenow-v2-backend.vercel.app/api/v1/seller/add-new-comment", {
         method: 'post',
         headers: {
           'content-type': 'application/json',
@@ -263,7 +264,7 @@ const ProductDetails = () => {
 
 
   async function uploadImage(formData) {
-    const url = "http://localhost:5001/api/v1/image/upload-image";
+    const url = "https://salenow-v2-backend.vercel.app/api/v1/image/upload-image";
     const response = await fetch(url, {
       method: "POST",
       body: formData,
@@ -276,7 +277,7 @@ const ProductDetails = () => {
   const { data: comments = {}, refetch: reload } = useQuery({
     queryKey: ["comments"],
     queryFn: async () => {
-      const res = await fetch(`http://localhost:5001/api/v1/seller/product-comment?id=${productFind?._id}`);
+      const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/product-comment?id=${productFind?._id}`);
       const data = await res.json();
       return data?.comments;
     },

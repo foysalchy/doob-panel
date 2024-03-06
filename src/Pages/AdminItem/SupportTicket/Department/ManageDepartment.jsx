@@ -9,7 +9,7 @@ const ManageDepartment = ({ ManageDepartment, setManageDepartment }) => {
     const { data: departments = [], refetch, isLoading } = useQuery({
         queryKey: ["departments"],
         queryFn: async () => {
-            const res = await fetch("http://localhost:5001/api/v1/admin/departments");
+            const res = await fetch("https://salenow-v2-backend.vercel.app/api/v1/admin/departments");
             const data = await res.json();
             return data;
         },
@@ -18,7 +18,7 @@ const ManageDepartment = ({ ManageDepartment, setManageDepartment }) => {
 
     const DeleteHandle = (id) => {
 
-        fetch(`http://localhost:5001/api/v1/admin/delete_department/${id}`, {
+        fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/delete_department/${id}`, {
             method: "DELETE"
         }).then(() => {
             refetch()
@@ -121,7 +121,7 @@ const ManageDepartment = ({ ManageDepartment, setManageDepartment }) => {
 
                             <tbody>
                                 {
-                                    filteredData?.map((department) => (
+                                    filteredData.length ? filteredData?.map((department) => (
 
                                         <tr>
                                             <td className="border-b border-l border-[#E8E8E8] bg-[#F3F6FF] py-5 px-2 text-center text-base font-medium text-dark">{department.name}</td>
@@ -132,7 +132,7 @@ const ManageDepartment = ({ ManageDepartment, setManageDepartment }) => {
                                             </td>
 
                                         </tr>
-                                    ))
+                                    )) : ""
                                 }
 
 

@@ -17,7 +17,7 @@ const UserInvoice = () => {
     // const { data: userInvoiceData = [], refetch } = useQuery({
     //     queryKey: ["userInvoiceData"],
     //     queryFn: async () => {
-    //         const res = await fetch(`http://localhost:5001/api/v1/seller/order?shopId=${shopInfo._id}`);
+    //         const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/order?shopId=${shopInfo._id}`);
     //         const data = await res.json();
     //         return data.data;
     //     },

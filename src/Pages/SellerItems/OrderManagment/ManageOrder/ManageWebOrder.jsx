@@ -11,13 +11,13 @@ const ManageWebOrder = () => {
     const { data: products = [], refetch } = useQuery({
         queryKey: ["sellerAllOrder"],
         queryFn: async () => {
-            const res = await fetch(`https://backend.doob.com.bd/api/v1/seller/get-my-order?shopId=${shopInfo?._id}`)
+            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/get-my-order?shopId=${shopInfo?._id}`)
             const data = await res.json();
             return data.data;
         },
     });
 
-    console.log(`http://localhost:5001/api/v1/seller/get-my-order?shopId=${shopInfo?._id}`)
+    console.log(`https://salenow-v2-backend.vercel.app/api/v1/seller/get-my-order?shopId=${shopInfo?._id}`)
 
     const [searchQuery, setSearchQuery] = useState("");
 
@@ -71,7 +71,7 @@ const ManageWebOrder = () => {
 
     const productStatusUpdate = (status, orderId) => {
         console.log(status, orderId);
-        fetch(`http://localhost:5001/api/v1/seller/update-seller-order-status?orderId=${orderId}&status=${status}`, {
+        fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/update-seller-order-status?orderId=${orderId}&status=${status}`, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ status, orderId })
@@ -82,7 +82,7 @@ const ManageWebOrder = () => {
     }
 
     const deleteMethod = (orderId) => {
-        fetch(`http://localhost:5001/api/v1/seller/delete-seller-order?orderId=${orderId}`, {
+        fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/delete-seller-order?orderId=${orderId}`, {
             method: "DELETE",
             headers: { "Content-Type": "application/json" },
         }).then((res) => res.json()).then((data) => {

@@ -7,7 +7,7 @@ const useAdmin = () => {
   const { user } = useContext(AuthContext);
   useEffect(() => {
     if (user?.email) {
-      fetch(`http://localhost:5001/api/v1/users/supperadmin/${user?.email}`,)
+      fetch(`https://salenow-v2-backend.vercel.app/api/v1/users/supperadmin/${user?.email}`,)
         .then((res) => res.json())
         .then((data) => {
           setIsAdmin(data?.isAdmin);

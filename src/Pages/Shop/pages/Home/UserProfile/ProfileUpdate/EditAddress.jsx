@@ -71,8 +71,8 @@ const EditAddress = ({ data, refetch, setEditAddress, setNewAddress }) => {
             shopId: shop_id?.shop_id,
             userId: shopUser?._id
         };
-        console.log(data == true ? "http://localhost:5001/api/v1/shop/upload-Address" : `http://localhost:5001/api/v1/shop/upload-Address?addressId=${data._id}`);
-        const url = data == true ? "http://localhost:5001/api/v1/shop/upload-Address" : `http://localhost:5001/api/v1/shop/upload-Address?addressId=${data._id}`
+        console.log(data == true ? "https://salenow-v2-backend.vercel.app/api/v1/shop/upload-Address" : `https://salenow-v2-backend.vercel.app/api/v1/shop/upload-Address?addressId=${data._id}`);
+        const url = data == true ? "https://salenow-v2-backend.vercel.app/api/v1/shop/upload-Address" : `https://salenow-v2-backend.vercel.app/api/v1/shop/upload-Address?addressId=${data._id}`
 
         fetch(url, {
             method: 'PATCH',

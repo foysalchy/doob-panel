@@ -44,11 +44,12 @@ const AddBrand = () => {
             MetaTag,
             MetaDescription,
             MetaImage: metaImageFormData,
-            shopId
+            shopId,
+            status: true
         }
         postSlider(formData, form)
 
-        console.log('Form submitted with data:', formData);
+
 
     };
 
@@ -57,7 +58,7 @@ const AddBrand = () => {
 
 
     async function uploadImage(formData) {
-        const url = "http://localhost:5001/api/v1/image/upload-image";
+        const url = "https://salenow-v2-backend.vercel.app/api/v1/image/upload-image";
         const response = await fetch(url, {
             method: "POST",
             body: formData,
@@ -68,7 +69,7 @@ const AddBrand = () => {
 
     const postSlider = (Slider, form) => {
 
-        fetch(`http://localhost:5001/api/v1/seller/brand/add`, {
+        fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/brand/add`, {
             method: "POST",
             headers: {
                 "content-type": "application/json",
@@ -183,7 +184,7 @@ const AddBrand = () => {
                                 <FaLongArrowAltRight />
 
                             </span>
-                            <span className="text-sm font-medium transition-all group-hover:ms-4">{loading ? 'Uploading ...' : 'Add Pop Up'}</span>
+                            <span className="text-sm font-medium transition-all group-hover:ms-4">{loading ? 'Uploading ...' : 'Add Your Brand'}</span>
                         </button>
                     </form>
                 </div>

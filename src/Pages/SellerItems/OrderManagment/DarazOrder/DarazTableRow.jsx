@@ -57,7 +57,7 @@ const DarazTableRow = ({ data }) => {
             cancellation_reason: cancel
         }
         console.log(cancel);
-        fetch("http://localhost:5001/api/v1/seller/darazOrderCancel", {
+        fetch("https://salenow-v2-backend.vercel.app/api/v1/seller/darazOrderCancel", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -72,7 +72,7 @@ const DarazTableRow = ({ data }) => {
     const { data: issues = [], refetch } = useQuery({
         queryKey: ["sellerDarazCancelIssue"],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5001/api/v1/seller/daraz-cancel-reason?id=${shopInfo._id}`);
+            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/daraz-cancel-reason?id=${shopInfo._id}`);
 
             const data = await res.json();
             return data.data;
@@ -87,7 +87,7 @@ const DarazTableRow = ({ data }) => {
             id,
             orderNumber: order
         }
-        fetch("http://localhost:5001/api/v1/seller/daraz-ready-to-ship", {
+        fetch("https://salenow-v2-backend.vercel.app/api/v1/seller/daraz-ready-to-ship", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"

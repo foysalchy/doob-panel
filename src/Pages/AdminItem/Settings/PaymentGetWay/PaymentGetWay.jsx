@@ -13,7 +13,7 @@ const PaymentGetWay = () => {
     const { data: getaway = [], refetch, isLoading } = useQuery({
         queryKey: ["getaway"],
         queryFn: async () => {
-            const res = await fetch("http://localhost:5001/api/v1/admin/getaway");
+            const res = await fetch("https://salenow-v2-backend.vercel.app/api/v1/admin/getaway");
             const data = await res.json();
             return data;
         },
@@ -53,7 +53,7 @@ const PaymentGetWay = () => {
 
 
 
-        fetch(`http://localhost:5001/api/v1/admin/getaway`, {
+        fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/getaway`, {
             method: "POST",
             headers: {
                 "content-type": "application/json",
@@ -93,7 +93,7 @@ const PaymentGetWay = () => {
 
 
     const deleteHandel = (id) => {
-        fetch(`http://localhost:5001/api/v1/admin/getaway/${id}`, {
+        fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/getaway/${id}`, {
             method: "Delete",
             headers: {
                 "content-type": "application/json",
@@ -118,7 +118,7 @@ const PaymentGetWay = () => {
 
                 <div className="my-10">
                     <h1 className="text-2xl font-bold text-center">
-                        Publish a Category for you and next
+                        Publish your Payment Getway
                     </h1>
                     <div className="p-10 border-2  rounded m-10">
                         <form onSubmit={dataSubmit} className="w-full ">

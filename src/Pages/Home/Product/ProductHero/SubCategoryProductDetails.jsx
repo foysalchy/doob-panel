@@ -23,7 +23,7 @@ const SubCategoryProductDetails = () => {
     // const { data: productInfo = [], refetch } = useQuery({
     //   queryKey: ["productInfo"],
     //   queryFn: async () => {
-    //     const res = await fetch("http://localhost:5001/api/v1/admin/products");
+    //     const res = await fetch("https://salenow-v2-backend.vercel.app/api/v1/admin/products");
     //     const data = await res.json();
     //     return data;
     //   },
@@ -32,7 +32,7 @@ const SubCategoryProductDetails = () => {
     // const { data: productFind = [], refetch } = useQuery({
     //   queryKey: ["productFind"],
     //   queryFn: async () => {
-    //     const res = await fetch(`http://localhost:5001/api/v1/admin/single-product?id=${location.id}`);
+    //     const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/single-product?id=${location.id}`);
     //     const data = await res.json();
     //     return data;
     //   },
@@ -165,7 +165,7 @@ const SubCategoryProductDetails = () => {
                 shopUid: shopInfo?._id,
                 quantity: quantity
             }
-            fetch(`http://localhost:5001/api/v1/seller/web-store?id=${id}`, {
+            fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/web-store?id=${id}`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",

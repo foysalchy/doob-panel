@@ -29,7 +29,7 @@ const SellerDashLayout = () => {
     const { data: prices = {}, refetch } = useQuery({
         queryKey: ["subscriptionModal"],
         queryFn: async () => {
-            const res = await fetch(`https://backend.doob.com.bd/api/v1/seller/subscription-model?priceId=${shopInfo?.priceId}`);
+            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/subscription-model?priceId=${shopInfo?.priceId}`);
             const data = await res.json();
             return data?.data;
         },
@@ -84,7 +84,7 @@ const SellerDashLayout = () => {
 
 
     const updateStatus = (status) => {
-        fetch(`https://backend.doob.com.bd/api/v1/seller/update-shopInfo-for-status?id=${shopInfo._id}&status=${status}`, {
+        fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/update-shopInfo-for-status?id=${shopInfo._id}&status=${status}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",

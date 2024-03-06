@@ -49,7 +49,7 @@ const ShippingModal = ({ readyToShip, setReadyToShip, orderInfo, refetch, ships,
             console.log(uploadData);
 
             try {
-                await fetch(`http://localhost:5001/api/v1/seller/order-submit-steadfast`, {
+                await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/order-submit-steadfast`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'

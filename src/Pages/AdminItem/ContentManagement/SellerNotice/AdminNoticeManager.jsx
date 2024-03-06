@@ -16,7 +16,7 @@ const AdminNoticeManager = () => {
     const { data: popupData = [], refetch } = useQuery({
         queryKey: "noticeData",
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5001/api/v1/admin/seller-notice`);
+            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/seller-notice`);
             const data = await res.json();
             return data?.data;
         },
@@ -25,7 +25,7 @@ const AdminNoticeManager = () => {
     // const { data: popupData, reload } = useQuery({
     //     queryKey: "popupData",
     //     queryFn: async () => {
-    //         const res = await fetch(`http://localhost:5001/api/v1/admin/seller-notice`);
+    //         const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/seller-notice`);
     //         const data = await res.json();
     //         return data?.data;
     //     },
@@ -47,7 +47,7 @@ const AdminNoticeManager = () => {
 
     if (isDelete) {
 
-        fetch(`http://localhost:5001/api/v1/seller/popup/delete/${deleteId}`, {
+        fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/popup/delete/${deleteId}`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
@@ -80,7 +80,7 @@ const AdminNoticeManager = () => {
     const EditStatus = (id, status) => {
         console.log(id, status);
         setLoading(true)
-        fetch(`http://localhost:5001/api/v1/admin/seller-notice?NoticeId=${id}`, {
+        fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/seller-notice?NoticeId=${id}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
@@ -95,14 +95,14 @@ const AdminNoticeManager = () => {
 
     const onDelete = (id) => {
         setLoading(true)
-        fetch(`http://localhost:5001/api/v1/admin/seller-notice?NoticeId=${id}`, {
+        fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/seller-notice?NoticeId=${id}`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
             },
 
         }).then((res) => res.json()).then((data) => {
-            console.log(data, `http://localhost:5001/api/v1/admin/seller-notice?NoticeId=${id}`);
+            console.log(data, `https://salenow-v2-backend.vercel.app/api/v1/admin/seller-notice?NoticeId=${id}`);
             setLoading(false)
             Swal.fire(`Seller disable ${status} `, '', 'success');
             refetch()

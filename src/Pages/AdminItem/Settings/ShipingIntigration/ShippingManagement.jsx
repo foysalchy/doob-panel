@@ -13,7 +13,7 @@ const ShippingManagement = () => {
     const { data: ships = [], refetch, isLoading } = useQuery({
         queryKey: ["getaway"],
         queryFn: async () => {
-            const res = await fetch("http://localhost:5001/api/v1/admin/allShippings");
+            const res = await fetch("https://salenow-v2-backend.vercel.app/api/v1/admin/allShippings");
             const data = await res.json();
             return data;
         },
@@ -54,7 +54,7 @@ const ShippingManagement = () => {
             secretKey
         }
 
-        fetch('http://localhost:5001/api/v1/admin/shipping-interrogation', {
+        fetch('https://salenow-v2-backend.vercel.app/api/v1/admin/shipping-interrogation', {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'
@@ -86,7 +86,7 @@ const ShippingManagement = () => {
 
 
     const deleteHandel = (id) => {
-        fetch(`http://localhost:5001/api/v1/admin/removeShipping/${id}`, {
+        fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/removeShipping/${id}`, {
             method: "Delete",
             headers: {
                 "content-type": "application/json",
@@ -109,7 +109,7 @@ const ShippingManagement = () => {
             <div>
                 <div className="my-10">
                     <h1 className="text-2xl font-bold text-center">
-                        Publish a Category for you and next
+                        Publish your shipping information
                     </h1>
                     <div className="p-10 bg-[#d3edc1] border-2  rounded m-10">
                         <form onSubmit={dataSubmit} className="w-full ">

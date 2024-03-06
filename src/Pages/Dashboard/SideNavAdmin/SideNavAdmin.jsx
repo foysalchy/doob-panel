@@ -1370,7 +1370,7 @@ const SideNavAdmin = () => {
                 </NavLink>
               )}
 
-              <NavLink
+              {/* <NavLink
                 onMouseMove={() => setMenu(true)}
                 rel="noopener noreferrer"
                 to={"/admin/omni-chat"}
@@ -1382,7 +1382,7 @@ const SideNavAdmin = () => {
               >
                 <BsChatLeftQuote className="w-5 h-5 fill-current text-gray-400" />
                 {menu && <span>Omni Chat</span>}
-              </NavLink>
+              </NavLink> */}
 
               <NavLink
                 onMouseMove={() => setMenu(true)}

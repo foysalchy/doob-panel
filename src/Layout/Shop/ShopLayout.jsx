@@ -9,6 +9,7 @@ import groovyWalkAnimation from "./Loading.json";
 import { useState } from 'react';
 import { useEffect } from 'react';
 import ShopAuth from '../../AuthProvider/ShopAuthProvide';
+import { Footer } from './ShopComponents/shopFotterComponent';
 
 
 const ShopLayout = () => {
@@ -22,7 +23,7 @@ const ShopLayout = () => {
     const { data: shop = {}, isLoading, refetch } = useQuery({
         queryKey: ["shop"],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5001/api/v1/shop/${shopId}`);
+            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/${shopId}`);
             const data = await res.json();
             return data;
         },
@@ -50,7 +51,7 @@ const ShopLayout = () => {
                                 <ShopSmallNav />
                                 <ShopNav />
                                 <Outlet />
-                                <ShopFooter />
+                                <Footer />
                             </div>
                         </ShopAuth>
                         :

@@ -24,7 +24,7 @@ const AddExtraCategory = () => {
         queryKey: ["category"],
         queryFn: async () => {
             if (shopInfo.darazLogin) {
-                const res = await fetch(`http://localhost:5001/api/v1/category/seller/${shopInfo._id}`);
+                const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/category/seller/${shopInfo._id}`);
                 const data = await res.json();
                 return data;
             }
@@ -85,7 +85,7 @@ const AddExtraCategory = () => {
         }
         console.log(data);
 
-        const url = `http://localhost:5001/api/v1/category/seller/extra/add`;
+        const url = `https://salenow-v2-backend.vercel.app/api/v1/category/seller/extra/add`;
 
         fetch(url, {
             method: "POST",
@@ -122,7 +122,7 @@ const AddExtraCategory = () => {
             megaCategory: selectedOption.value,
         };
 
-        fetch(`http://localhost:5001/api/v1/category/seller/sub`, {
+        fetch(`https://salenow-v2-backend.vercel.app/api/v1/category/seller/sub`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -158,7 +158,7 @@ const AddExtraCategory = () => {
             subCategoryName: value.value,
             megaCategory,
         }
-        fetch(`http://localhost:5001/api/v1/category/seller/mini`, {
+        fetch(`https://salenow-v2-backend.vercel.app/api/v1/category/seller/mini`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

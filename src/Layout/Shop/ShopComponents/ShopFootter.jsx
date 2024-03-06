@@ -14,7 +14,7 @@ const ShopFooter = () => {
     const { data: pages = [], refetch, isLoading } = useQuery({
         queryKey: ["sellerPages"],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5001/api/v1/seller/pages/${shopId}`);
+            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/pages/${shopId}`);
             const data = await res.json();
             return data;
         },
@@ -27,14 +27,12 @@ const ShopFooter = () => {
 
     const submitEmail = (e) => {
         e.preventDefault()
-
-
         setLoading(true)
         const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
         if (email && email.match(emailRegex)) {
             setError(false)
-            fetch('http://localhost:5001/api/v1/seller/subscriber-report', {
+            fetch('https://salenow-v2-backend.vercel.app/api/v1/seller/subscriber-report', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

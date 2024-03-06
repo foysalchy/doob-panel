@@ -61,7 +61,7 @@ const AddAnouncement = () => {
 
 
     async function uploadImage(formData) {
-        const url = "http://localhost:5001/api/v1/image/upload-image";
+        const url = "https://salenow-v2-backend.vercel.app/api/v1/image/upload-image";
         const response = await fetch(url, {
             method: "POST",
             body: formData,
@@ -72,7 +72,7 @@ const AddAnouncement = () => {
 
     const postSlider = (Slider) => {
 
-        fetch(`http://localhost:5001/api/v1/admin/announcement`, {
+        fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/announcement`, {
             method: "POST",
             headers: {
                 "content-type": "application/json",

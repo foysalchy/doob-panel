@@ -36,7 +36,7 @@ const SellerAddContactPage = () => {
             }
         }
 
-        fetch(`http://localhost:5001/api/v1/shop/contactInfo`, {
+        fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/contactInfo`, {
             method: "POST",
             headers: {
                 "content-type": "application/json",
@@ -74,7 +74,7 @@ const SellerAddContactPage = () => {
 
         <div className="my-10">
             <h1 className="text-2xl font-bold text-center">
-                Publish a Category for you and next
+                Publish your contact information
             </h1>
             <div className="md:p-10 p-4 border-2  rounded md:m-10 mt-2">
                 <form onSubmit={dataSubmit} className="w-full ">

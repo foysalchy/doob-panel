@@ -13,7 +13,7 @@ const EditSellerBlog = ({ OpenModal, setOpenModal, BlogInfo, refetch }) => {
         formData.append("image", image);
 
         try {
-            const response = await fetch("http://localhost:5001/api/v1/image/upload-image", {
+            const response = await fetch("https://salenow-v2-backend.vercel.app/api/v1/image/upload-image", {
                 method: "POST",
                 body: formData,
             });
@@ -37,7 +37,7 @@ const EditSellerBlog = ({ OpenModal, setOpenModal, BlogInfo, refetch }) => {
         const data = { img, title, message, MetaTag, MetaDescription };
 
         try {
-            const response = await fetch(`http://localhost:5001/api/v1/seller/blog/update-blog/${BlogInfo._id}`, {
+            const response = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/blog/update-blog/${BlogInfo._id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',

@@ -20,7 +20,7 @@ const ShopSmallNav = () => {
     const { data: shop = {}, refetch, isLoading } = useQuery({
         queryKey: ["buyer"],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5001/api/v1/shop/${shopId}`);
+            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/${shopId}`);
             const data = await res.json();
             return data;
         },

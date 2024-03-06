@@ -14,7 +14,7 @@ const AdminFeatureImage = () => {
     const { data: featureImage = [], refetch } = useQuery({
         queryKey: ["featureImage"],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5001/api/v1/admin/feature-images`);
+            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/feature-images`);
             const data = await res.json();
             return data?.data ? data?.data : [];
         },
@@ -34,7 +34,7 @@ const AdminFeatureImage = () => {
 
     // if (isDelete) {
 
-    //     fetch(`http://localhost:5001/api/v1/seller/popup/delete/${deleteId}`, {
+    //     fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/popup/delete/${deleteId}`, {
     //         method: "DELETE",
     //         headers: {
     //             "Content-Type": "application/json",
@@ -67,7 +67,7 @@ const AdminFeatureImage = () => {
     const EditStatus = (id, status) => {
         console.log(id, status);
         setLoading(true)
-        fetch(`http://localhost:5001/api/v1/admin/feature-image?id=${id}&status=${status}`, {
+        fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/feature-image?id=${id}&status=${status}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
@@ -82,7 +82,7 @@ const AdminFeatureImage = () => {
 
     const onDelete = (id) => {
         setLoading(true)
-        fetch(`http://localhost:5001/api/v1/admin/feature-image?id=${id}`, {
+        fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/feature-image?id=${id}`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",

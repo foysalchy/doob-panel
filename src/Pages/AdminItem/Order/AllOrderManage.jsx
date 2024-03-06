@@ -32,7 +32,7 @@ const AllOrderManage = () => {
     const { data: tData = [], refetch } = useQuery({
         queryKey: ["AllSellerOrder"],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5001/api/v1/admin/all-seller-orders`);
+            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/all-seller-orders`);
             const data = await res.json();
             return data.data;
         },
@@ -86,7 +86,7 @@ const AllOrderManage = () => {
 
 
     const productStatusUpdate = (status, orderId) => {
-        fetch(`http://localhost:5001/api/v1/seller/order-status-update?orderId=${orderId}&status=${status}`, {
+        fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/order-status-update?orderId=${orderId}&status=${status}`, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ status, orderId })
@@ -99,7 +99,7 @@ const AllOrderManage = () => {
     const { data: ships = [] } = useQuery({
         queryKey: ["getaway"],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5001/api/v1/seller/shipping-interrogation/${shopInfo._id}`);
+            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/shipping-interrogation/${shopInfo._id}`);
             const data = await res.json();
             return data;
         },
@@ -153,7 +153,7 @@ const AllOrderManage = () => {
 
 
     const handleProductStatusUpdate = (orders) => {
-        fetch(`http://localhost:5001/api/v1/seller/order-quantity-update`, {
+        fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/order-quantity-update`, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(orders)
@@ -186,7 +186,7 @@ const AllOrderManage = () => {
         console.log(order);
         setOpenModal(true)
 
-        fetch(`http://localhost:5001/api/v1/seller/refound-order-info?shopId=${shopInfo._id}&orderId=${order._id}`).then((res) => res.json()).then((data) => {
+        fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/refound-order-info?shopId=${shopInfo._id}&orderId=${order._id}`).then((res) => res.json()).then((data) => {
             console.log(data);
             const refund = { refund: data.data, order }
             console.log(refund);
@@ -196,7 +196,7 @@ const AllOrderManage = () => {
     }
     const [refundData, setRefundData] = useState(true)
     const checkBox = (orderId) => {
-        fetch(`http://localhost:5001/api/v1/seller/refound-order-info?shopId=${shopInfo._id}&orderId=${orderId}`).then((res) => res.json()).then((data) => {
+        fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/refound-order-info?shopId=${shopInfo._id}&orderId=${orderId}`).then((res) => res.json()).then((data) => {
             console.log(data);
             setRefundData(data)
         })
@@ -205,7 +205,7 @@ const AllOrderManage = () => {
 
     const updateOrderInfo = (note, file, id) => {
         const noteData = { note, file, orderId: id }
-        fetch("http://localhost:5001/api/v1/seller/refound-order-info", {
+        fetch("https://salenow-v2-backend.vercel.app/api/v1/seller/refound-order-info", {
             method: 'PUT',
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(noteData),
@@ -254,7 +254,7 @@ const AllOrderManage = () => {
 
 
     async function uploadImage(formData) {
-        const url = "http://localhost:5001/api/v1/image/upload-image";
+        const url = "https://salenow-v2-backend.vercel.app/api/v1/image/upload-image";
         const response = await fetch(url, {
             method: "POST",
             body: formData,

@@ -10,7 +10,7 @@ const AdminSalesReport = () => {
     const { data: serviceOrder = [], refetch } = useQuery({
         queryKey: ["serviceOrder"],
         queryFn: async () => {
-            const res = await fetch("http://localhost:5001/api/v1/admin/get-all-service-order");
+            const res = await fetch("https://salenow-v2-backend.vercel.app/api/v1/admin/get-all-service-order");
             const data = await res.json();
             return data.data;
         },

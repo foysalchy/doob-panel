@@ -60,7 +60,7 @@ If you've contributed to this project and your name is missing, please let us kn
 
 ## Deploy on vps 
 ````
-scp -r dist  root@178.128.29.230:/var/www/SaleNow-Frontend
+scp -r dist  root@152.42.184.243:/var/www/SaleNow-Frontend
 ````
 need also pass: contact with project manager
 

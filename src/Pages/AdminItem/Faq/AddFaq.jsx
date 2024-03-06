@@ -20,7 +20,7 @@ const AddFaq = () => {
       sortIndex, // Include sort index in the FAQ object
     };
 
-    fetch(`http://localhost:5001/api/v1/admin/newfaq`, {
+    fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/newfaq`, {
       method: "POST",
       headers: {
         "content-type": "application/json",

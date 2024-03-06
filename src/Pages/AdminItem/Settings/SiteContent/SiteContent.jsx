@@ -11,7 +11,7 @@ const SiteContent = () => {
     const { data: domainVideo, refetch, isLoading } = useQuery({
         queryKey: ["category"],
         queryFn: async () => {
-            const res = await fetch("http://localhost:5001/api/v1/admin/domain-video");
+            const res = await fetch("https://salenow-v2-backend.vercel.app/api/v1/admin/domain-video");
             const data = await res.json();
             return data;
         },
@@ -20,7 +20,7 @@ const SiteContent = () => {
     const { data: domainDoc, refetch: reload, isLoading: loading } = useQuery({
         queryKey: ["domainDoc"],
         queryFn: async () => {
-            const res = await fetch("http://localhost:5001/api/v1/admin/domain-document");
+            const res = await fetch("https://salenow-v2-backend.vercel.app/api/v1/admin/domain-document");
             const data = await res.json();
             return data.result;
         },
@@ -30,7 +30,7 @@ const SiteContent = () => {
     const { data: buyDomain, refetch: reLoading, isLoading: load } = useQuery({
         queryKey: ["buyDomain"],
         queryFn: async () => {
-            const res = await fetch("http://localhost:5001/api/v1/admin/buy-domain");
+            const res = await fetch("https://salenow-v2-backend.vercel.app/api/v1/admin/buy-domain");
             const data = await res.json();
             return data;
         },
@@ -43,7 +43,7 @@ const SiteContent = () => {
         e.preventDefault();
         const url = e.target.url.value
 
-        fetch('http://localhost:5001/api/v1/admin/add-domain-url', {
+        fetch('https://salenow-v2-backend.vercel.app/api/v1/admin/add-domain-url', {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'
@@ -68,7 +68,7 @@ const SiteContent = () => {
 
 
     const deleteVideo = (id) => {
-        fetch('http://localhost:5001/api/v1/admin/delete-domain-url', {
+        fetch('https://salenow-v2-backend.vercel.app/api/v1/admin/delete-domain-url', {
             method: "delete",
             headers: {
                 'Content-Type': 'application/json'
@@ -96,7 +96,7 @@ const SiteContent = () => {
         };
 
         try {
-            const response = await fetch("http://localhost:5001/api/v1/admin/domain-document", {
+            const response = await fetch("https://salenow-v2-backend.vercel.app/api/v1/admin/domain-document", {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json"
@@ -124,7 +124,7 @@ const SiteContent = () => {
         e.preventDefault();
         const url = e.target.url.value
         try {
-            const response = await fetch("http://localhost:5001/api/v1/admin/buy-domain", {
+            const response = await fetch("https://salenow-v2-backend.vercel.app/api/v1/admin/buy-domain", {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json"

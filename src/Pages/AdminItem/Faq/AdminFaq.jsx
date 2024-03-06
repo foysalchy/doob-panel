@@ -11,7 +11,7 @@ const AdminFaq = () => {
   const { data: faqs = [], refetch } = useQuery({
     queryKey: ["faqs"],
     queryFn: async () => {
-      const res = await fetch("http://localhost:5001/api/v1/admin/faq");
+      const res = await fetch("https://salenow-v2-backend.vercel.app/api/v1/admin/faq");
       const data = await res.json();
       return data;
     },
@@ -20,7 +20,7 @@ const AdminFaq = () => {
   const ActiveHandle = (id) => {
     setLoading(true);
 
-    fetch(`http://localhost:5001/api/v1/admin/faq/status/${id}`, {
+    fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/faq/status/${id}`, {
       method: "PUT",
       headers: {
         "content-type": "application/json",
@@ -35,7 +35,7 @@ const AdminFaq = () => {
 
   const DeactiveHandle = (id) => {
 
-    fetch(`http://localhost:5001/api/v1/admin/faq/unstatus/${id}`, {
+    fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/faq/unstatus/${id}`, {
       method: "PUT",
       headers: {
         "content-type": "application/json",
@@ -49,7 +49,7 @@ const AdminFaq = () => {
   };
   const DeleteHandle = (id) => {
 
-    fetch(`http://localhost:5001/api/v1/admin/faq/delete/${id}`, {
+    fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/faq/delete/${id}`, {
       method: "Delete",
       headers: {
         "content-type": "application/json",
@@ -180,7 +180,7 @@ const AdminFaq = () => {
                     </tr>
                   </thead>
                   <tbody className="bg-white divide-y divide-gray-200 ">
-                    {filteredData?.map((faq, index) => (
+                    {filteredData.length ? filteredData?.map((faq, index) => (
                       <tr>
                         <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                           <div className="inline-flex items-center gap-x-3">
@@ -245,7 +245,8 @@ const AdminFaq = () => {
                           <UpdateFAQ OpenModal={OpenModal} refetch={refetch} setOpenModal={setOpenModal} FAQInfo={faq} />
                         </div>}
                       </tr>
-                    ))}
+                    ))
+                      : ''}
                   </tbody>
                 </table>
               </div>

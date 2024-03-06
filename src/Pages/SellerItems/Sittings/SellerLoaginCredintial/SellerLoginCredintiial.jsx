@@ -59,7 +59,7 @@ const SellerLoginCredintiial = () => {
             service: { email: emailActive, google: googleActive, facebook: facebookActive }
         };
 
-        fetch('http://localhost:5001/api/v1/shop/firebase/add', {
+        fetch('https://salenow-v2-backend.vercel.app/api/v1/shop/firebase/add', {
             method: 'PATCH',
             body: JSON.stringify(data),
             headers: {

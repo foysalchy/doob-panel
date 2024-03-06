@@ -9,7 +9,7 @@ const AdminBlogs = () => {
   const { data: blogs = [], refetch } = useQuery({
     queryKey: ["blogs"],
     queryFn: async () => {
-      const res = await fetch("http://localhost:5001/api/v1/admin/all-blogs");
+      const res = await fetch("https://salenow-v2-backend.vercel.app/api/v1/admin/all-blogs");
       const data = await res.json();
       return data;
     },
@@ -17,7 +17,7 @@ const AdminBlogs = () => {
 
   const DeleteBlog = (id) => {
 
-    fetch(`http://localhost:5001/api/v1/admin/blog`, {
+    fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/blog`, {
       method: "DELETE",
       headers: {
         "content-type": "application/json",
@@ -46,7 +46,7 @@ const AdminBlogs = () => {
   );
 
   const statusUpdate = (id, status) => {
-    fetch(`http://localhost:5001/api/v1/admin/blog`, {
+    fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/blog`, {
       method: "PUT",
       headers: {
         "content-type": "application/json",

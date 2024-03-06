@@ -50,7 +50,7 @@ const AdminEditStaffModal = ({ OpenModal, setOpenModal, staffInfo, refetch }) =>
 
         const data = { user, permissions, role }
 
-        fetch(`http://localhost:5001/api/v1/admin/staff-role`, {
+        fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/staff-role`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json'

@@ -94,7 +94,8 @@ const AddCampaign = () => {
             isFlash: isChecked,
             startTime,
             endTime,
-            shopId: shopInfo._id
+            shopId: shopInfo._id,
+            status: true
         }
         postSlider(formData, form)
 
@@ -106,7 +107,7 @@ const AddCampaign = () => {
     const { data: products = [], refetch } = useQuery({
         queryKey: ["products"],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5001/api/v1/seller/all-products/${shopInfo._id}`);
+            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/all-products/${shopInfo._id}`);
             const data = await res.json();
             return data;
         },
@@ -116,7 +117,7 @@ const AddCampaign = () => {
 
 
     async function uploadImage(formData) {
-        const url = "http://localhost:5001/api/v1/image/upload-image";
+        const url = "https://salenow-v2-backend.vercel.app/api/v1/image/upload-image";
         const response = await fetch(url, {
             method: "POST",
             body: formData,
@@ -128,7 +129,7 @@ const AddCampaign = () => {
     const postSlider = (data, form) => {
         console.log(data);
 
-        fetch(`http://localhost:5001/api/v1/seller/add-campaign`, {
+        fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/add-campaign`, {
             method: "PATCH",
             headers: {
                 "content-type": "application/json",

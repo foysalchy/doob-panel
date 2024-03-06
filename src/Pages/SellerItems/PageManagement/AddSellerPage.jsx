@@ -22,7 +22,7 @@ const AddSellerPage = () => {
             shop: shopInfo.shopId
         };
 
-        fetch(`http://localhost:5001/api/v1/seller/page`, {
+        fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/page`, {
             method: "POST",
             headers: {
                 "content-type": "application/json",
@@ -32,7 +32,7 @@ const AddSellerPage = () => {
             .then((res) => res.json())
             .then((data) => {
                 setLoading(false);
-                Swal.fire("success", "Your Blog Publish Successfully", "success");
+                Swal.fire("success", "Your page Publish Successfully", "success");
 
                 form.reset();
             });

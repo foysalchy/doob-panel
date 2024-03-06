@@ -20,7 +20,7 @@ const SingleService = () => {
     queryKey: ["services"],
     queryFn: async () => {
       const res = await fetch(
-        "http://localhost:5001/api/v1/admin/services"
+        "https://salenow-v2-backend.vercel.app/api/v1/admin/services"
       );
       const data = await res.json();
       return data;
@@ -63,7 +63,7 @@ const SingleService = () => {
 
       console.log(order);
 
-      fetch(`http://localhost:5001/api/v1/site-user/wishlist`, {
+      fetch(`https://salenow-v2-backend.vercel.app/api/v1/site-user/wishlist`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -86,7 +86,7 @@ const SingleService = () => {
     const userData = { name: user.name, userId: user._id }
     const timestamp = new Date().getTime()
     let data = { text: reviews, user: userData, timeStamp: timestamp, }
-    fetch(`http://localhost:5001/api/v1/admin/service/reviews?id=${service._id}`, {
+    fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/service/reviews?id=${service._id}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json'

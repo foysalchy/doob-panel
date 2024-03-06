@@ -7,7 +7,7 @@ const BlogsCatagoryManagement = () => {
   const { data: category = [], refetch } = useQuery({
     queryKey: ["category"],
     queryFn: async () => {
-      const res = await fetch("http://localhost:5001/api/v1/admin/blog-category");
+      const res = await fetch("https://salenow-v2-backend.vercel.app/api/v1/admin/blog-category");
       const data = await res.json();
       return data;
     },
@@ -15,7 +15,7 @@ const BlogsCatagoryManagement = () => {
 
   const DeleteCategory = (id) => {
 
-    fetch(`http://localhost:5001/api/v1/admin/blog-category`, {
+    fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/blog-category`, {
       method: "DELETE",
       headers: {
         "content-type": "application/json",

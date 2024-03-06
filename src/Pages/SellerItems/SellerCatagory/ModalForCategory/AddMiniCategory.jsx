@@ -18,13 +18,13 @@ const AddMiniCategory = () => {
         navigate(-1); // This will go back to the previous page
     };
 
-    console.log(`http://localhost:5001/api/v1/category/seller/${shopInfo._id}`);
+    console.log(`https://salenow-v2-backend.vercel.app/api/v1/category/seller/${shopInfo._id}`);
 
     const { data: darazData = [], refetch } = useQuery({
         queryKey: ["category"],
         queryFn: async () => {
 
-            const res = await fetch(`http://localhost:5001/api/v1/category/seller/${shopInfo._id}`);
+            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/category/seller/${shopInfo._id}`);
             const data = await res.json();
             return data;
 
@@ -88,7 +88,7 @@ const AddMiniCategory = () => {
         console.log(data);
 
 
-        const url = `http://localhost:5001/api/v1/category/seller/mini/add`;
+        const url = `https://salenow-v2-backend.vercel.app/api/v1/category/seller/mini/add`;
 
         fetch(url, {
             method: "POST",
@@ -125,7 +125,7 @@ const AddMiniCategory = () => {
             subCategoryName: darazCategoryString,
         };
 
-        fetch(`http://localhost:5001/api/v1/category/seller/sub`, {
+        fetch(`https://salenow-v2-backend.vercel.app/api/v1/category/seller/sub`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

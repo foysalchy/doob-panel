@@ -11,13 +11,13 @@ export default function WebStoreproduct({ priceRole, searchQuery }) {
     const [currentPage, setCurrentPage] = useState(1);
     const pageSize = 10
 
-    console.log(`http://localhost:5001/api/v1/seller/web-store?id=${shopInfo._id}`);
+    console.log(`https://salenow-v2-backend.vercel.app/api/v1/seller/web-store?id=${shopInfo._id}`);
 
     const { data: productData = [], refetch } = useQuery({
         queryKey: ["productData"],
         queryFn: async () => {
             try {
-                const res = await fetch(`http://localhost:5001/api/v1/seller/web-store?id=${shopInfo._id}`);
+                const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/web-store?id=${shopInfo._id}`);
                 const data = await res.json();
                 return data?.products;
             } catch (error) {
@@ -58,7 +58,7 @@ export default function WebStoreproduct({ priceRole, searchQuery }) {
     };
     if (isDelete) {
 
-        fetch(`http://localhost:5001/api/v1/seller/delete-product`, {
+        fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/delete-product`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json"

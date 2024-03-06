@@ -34,7 +34,7 @@ const AddBlogsCatagorys = () => {
 
     const formData = new FormData();
     formData.append("image", image);
-    const url = `http://localhost:5001/api/v1/image/upload-image`;
+    const url = `https://salenow-v2-backend.vercel.app/api/v1/image/upload-image`;
     fetch(url, {
       method: "POST",
       body: formData,
@@ -51,7 +51,7 @@ const AddBlogsCatagorys = () => {
   };
 
   const PostCategory = (category, form) => {
-    fetch(`http://localhost:5001/api/v1/admin/blog-category`, {
+    fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/blog-category`, {
       method: "POST",
       headers: {
         "content-type": "application/json",

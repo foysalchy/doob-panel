@@ -11,7 +11,7 @@ const ReviewTableRow = ({ refetch, itm }) => {
     const [openModal, setOpenModal] = useState(false);
 
     const handleDelete = () => {
-        fetch(`http://localhost:5001/api/v1/seller/delete-comment?id=${itm?._id}`, {
+        fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/delete-comment?id=${itm?._id}`, {
             method: 'DELETE',
         })
             .then(res => res.json())
