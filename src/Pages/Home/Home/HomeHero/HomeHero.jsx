@@ -36,7 +36,7 @@ const HomeHero = () => {
                                 <span className='font-extrabold'>Doob -</span> <span className='font-bold'> The Choice of</span>
                                 <br />
                                 <span className='text-3xl font-semibold '>
-                                    280,000+ Southeast Asia Sellers
+                                    80,000+ Southeast Asia Sellers
                                 </span>
                             </h1>
                             <p className="text-base text-gray-700 md:text-lg mt-4">
