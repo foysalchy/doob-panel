@@ -27,19 +27,19 @@ const ProductCheckout = ({ setNext, product, quantity, sellingPrice, userInfo, s
                                         <p className="text-sm text-gray-500">Quantity: {quantity}</p>
                                     </div>
                                 </div>
-                                <span className="font-semibold">${product.price} </span>
+                                <span className="font-semibold">৳{product.price} </span>
                             </div>
 
                         </div>
                         <div className="mt-6">
                             <div className="flex justify-between">
                                 <span>Subtotal</span>
-                                <span>${parseInt(product.price) * parseInt(quantity)}</span>
+                                <span>৳{parseInt(product.price) * parseInt(quantity)}</span>
                             </div>
                             <hr className='my-2' />
                             <div className="flex justify-between">
                                 <span>All</span>
-                                <span>${sellingPrice}</span>
+                                <span>৳{sellingPrice}</span>
                             </div>
 
                             {/* <button className="w-full mt-4 bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition-colors">

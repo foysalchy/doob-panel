@@ -102,7 +102,7 @@ const AddMagaCategory = () => {
             console.log(categoryData);
             await postCategory(categoryData);
 
-            Swal.fire("Warehouse Upload Successfully", "", "success");
+            Swal.fire("Maga Category Upload Successfully", "", "success");
             refetch()
             handleGoBack()
         } catch (error) {

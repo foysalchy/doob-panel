@@ -83,7 +83,7 @@ const UserWishList = () => {
                                         <div className="text-sm text-gray-500">Awesome yellow t-shirt</div>
                                     </div>
                                 </td>
-                                <td className="py-4 px-6  ">${list?.price}</td>
+                                <td className="py-4 px-6  ">৳{list?.price}</td>
                                 <td className="py-4 px-6  ">
                                     <span className="bg-green-100 text-green-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded">
                                         In Stock

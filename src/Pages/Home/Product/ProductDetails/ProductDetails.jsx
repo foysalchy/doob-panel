@@ -442,16 +442,16 @@ const ProductDetails = () => {
                 {user ? <div className="my-3">
                   <div className="grid grid-cols-2 md:grid-cols-4 bg-red-100 py-3">
                     <div className="text-center md:border-r-2 border-gray-400">
-                      <h6 className="font-bold text-xl">${isNaN(banifit.sellingPrice) ? "0" : parseInt(banifit.sellingPrice)}</h6>
+                      <h6 className="font-bold text-xl">৳{isNaN(banifit.sellingPrice) ? "0" : parseInt(banifit.sellingPrice)}</h6>
 
                       <p className="text-sm text-[#606060]">Product Costing</p>
                     </div>
                     <div className="text-center md:border-r-2 border-gray-400">
-                      <h6 className="font-bold text-xl text-red-400">${isNaN(banifit.productCost) ? '0' : parseInt(banifit.productCost)}</h6>
+                      <h6 className="font-bold text-xl text-red-400">৳{isNaN(banifit.productCost) ? '0' : parseInt(banifit.productCost)}</h6>
                       <p className="text-sm text-[#606060]">Selling Price</p>
                     </div>
                     <div className="text-center md:border-r-2 border-gray-400">
-                      <h6 className="font-bold text-xl">${parseInt(banifit.profit)}</h6>
+                      <h6 className="font-bold text-xl">৳{parseInt(banifit.profit)}</h6>
                       <p className="text-sm text-[#606060]">Your Profit</p>
                     </div>
                     <div className="text-center">
