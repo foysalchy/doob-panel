@@ -67,7 +67,7 @@ const MegaCategoryManagement = () => {
                                 <th className="py-3 px-6">Status</th>
                             </tr>
                         </thead>
-                        <tbody className="text-gray-600 divide-y">
+                         <tbody className="text-gray-600 divide-y">
                             {
                                 megaCategory.map((item, idx) => {
                                     const formattedTimeStamp = new Date(item.timeStamp).toLocaleString();
@@ -84,6 +84,8 @@ const MegaCategoryManagement = () => {
                                                 {
                                                     item.status == 'true' ? <button onClick={() => statusUpdate(item?._id, false)} className="">Active</button> : <button onClick={() => statusUpdate(item?._id, true)} className=''>Deactivate</button>
                                                 }
+
+                                              
                                             </td>
                                             <td>
                                                 {

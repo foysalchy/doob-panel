@@ -45,7 +45,7 @@ const PriceModal = ({ open, setOpen }) => {
     },
   });
 
-  const [time, setTime] = useState('one')
+  const [time, setTime] = useState('one,1')
   console.log(possibility);
 
 
@@ -95,7 +95,7 @@ const PriceModal = ({ open, setOpen }) => {
     }
   };
 
-  console.log(time.split(',')[0], time.split(',')[1]);
+  console.log(time, 'price');
 
   return (
     <div
@@ -191,7 +191,7 @@ const PriceModal = ({ open, setOpen }) => {
             </div>
             <div className="flex flex-col items-center space-y-1">
               <h2 className="text-2xl font-semibold text-blue-600  sm:text-3xl">
-                ${parseInt(open?.price) * parseInt(time.split(',')[1])}
+                ${parseInt(open?.price) * parseInt(time?.split(',')[1])}
                 <span className="text-base font-medium">
                   /{open?.timeDuration}
                 </span>

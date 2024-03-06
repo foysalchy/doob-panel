@@ -329,7 +329,7 @@ const ExtraCategoriesManagement = () => {
                                                                     <span>&gt;</span>
                                                                     {warehouse?.subCategoryName}
                                                                     <span>&gt;</span>
-                                                                    {category?.miniCategoryName}
+                                                                    {warehouse?.miniCategoryName}
                                                                     <span>&gt;</span>
                                                                     {warehouse?.extraCategoryName}
                                                                 </h2>

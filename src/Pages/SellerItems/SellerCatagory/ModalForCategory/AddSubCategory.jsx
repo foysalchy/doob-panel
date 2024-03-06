@@ -55,13 +55,23 @@ const AddSubCategory = () => {
     };
 
 
+    const uploadImage = async (formData) => {
+        const url = `https://salenow-v2-backend.vercel.app/api/v1/image/upload-image`;
+        const response = await fetch(url, {
+            method: "POST",
+            body: formData,
+        });
 
+        const imageData = await response.json();
+        return imageData.imageUrl;
+    };
 
 
     const UploadArea = async (e) => {
         e.preventDefault();
-
+        const image = e.target.image;
         const megaCategory = e.target.megaCategory.value || '';
+        const megaCategoryId = JSON.parse(megaCategory)._id;
         const darazSubCategory = e.target?.darazSubCategory?.value || '';
         const wooSubCategory = e.target.wooSubCategory?.value || '';
         const subCategoryName = e.target.subcategoryName.value
@@ -69,16 +79,23 @@ const AddSubCategory = () => {
         if (darazSubCategory) {
             darazCategory_id = JSON.parse(darazSubCategory).category_id
         }
+
+        const imageFormData = new FormData();
+        imageFormData.append("image", image.files[0]);
+        const imageUrl = await uploadImage(imageFormData);
         const data = {
+            img: imageUrl,
             megaCategory,
             darazSubCategory,
             wooSubCategory,
             subCategoryName,
             shopId: shopInfo._id,
             darazCategory_id,
-            status: true
+            status: true,
+            megaCategoryId: megaCategoryId
         }
 
+ 
         const url = `https://salenow-v2-backend.vercel.app/api/v1/category/seller/sub/add`;
 
         const response = await fetch(url, {
@@ -233,7 +250,10 @@ const AddSubCategory = () => {
                     />
                 </div>
 
-
+                <div className=" mt-4">
+                    <label className="text-sm">Upload Image</label>
+                    <input required name='image' type="file" placeholder="Upload Image" className="w-full p-2 border border-black rounded-md  text-gray-900" />
+                </div>
 
                 <button type='submit' className="group mt-4 relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500">
                     <span className="absolute -start-full transition-all group-hover:start-4">

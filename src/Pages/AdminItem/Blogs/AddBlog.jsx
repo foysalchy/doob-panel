@@ -89,10 +89,12 @@ const AddBlog = () => {
           img: image,
           date: new Date(),
           MetaImage,
+          status: true,
           MetaDescription,
           MetaTag,
         };
         postBlog(blog, form);
+      
       });
   };
 
@@ -112,6 +114,7 @@ const AddBlog = () => {
         form.reset();
         setPreviewUrl("");
         setFileName("");
+        window.location.href = '/admin/blog';
       });
   };
 

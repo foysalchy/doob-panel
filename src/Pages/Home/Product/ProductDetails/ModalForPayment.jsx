@@ -32,9 +32,21 @@ const ModalForPayment = ({ invoice, setInvoice, sellingPrice, handleStore, selle
 
         }
         handleStore(invoice, getway, userInfo);
+        paymentHandler(payment)
     };
 
     const [next, setNext] = useState(false)
+
+    const paymentHandler = async (payment) => {
+        console.log(payment.Getaway, '*******');
+        if (payment.Getaway === 'Bkash') {
+            payWithBkash()
+        }
+        else if (payment.Getaway === 'AmarPay') {
+            payWithAmarPay()
+        }
+
+    };
 
 
     const payWithBkash = async () => {
@@ -43,31 +55,34 @@ const ModalForPayment = ({ invoice, setInvoice, sellingPrice, handleStore, selle
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'credentials': 'include'
                 },
-                body: JSON.stringify({ amount: 50, orderId: 1 }),
-                credentials: 'include'
+                body: JSON.stringify({ amount: orderStage?.promoHistory?.promoPrice ? orderStage?.promoHistory?.promoPrice : orderStage?.promoHistory?.normalPrice, userId: 'asdhfbuyagsdf' }),
             });
             const data = await response.json();
+            console.log(data.bkashURL);
             window.location.href = data.bkashURL;
         } catch (error) {
             console.log(error);
         }
     }
+
+
     const payWithAmarPay = async () => {
+        console.log(orderStage.productPrice);
         try {
             const response = await fetch('https://salenow-v2-backend.vercel.app/api/v1/seller/amarpay/payment/create', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'credentials': 'include'
                 },
-                body: JSON.stringify({ amount: 50, orderId: 1 }),
-                credentials: 'include'
+                body: JSON.stringify({ amount: orderStage?.promoHistory?.promoPrice ? orderStage?.promoHistory?.promoPrice : orderStage?.promoHistory?.normalPrice, orderId: 1 }),
             });
             const data = await response.json();
             console.log(data);
-            // window.location.href = data.bkashURL;
+            if (data.payment_url) {
+                window.location.href = data.payment_url;
+            }
+
         } catch (error) {
             console.log(error);
         }
