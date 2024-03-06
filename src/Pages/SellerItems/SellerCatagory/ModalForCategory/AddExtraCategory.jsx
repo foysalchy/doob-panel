@@ -23,13 +23,9 @@ const AddExtraCategory = () => {
     const { data: darazData = [], refetch } = useQuery({
         queryKey: ["category"],
         queryFn: async () => {
-            if (shopInfo.darazLogin) {
-                const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/category/seller/${shopInfo._id}`);
-                const data = await res.json();
-                return data;
-            }
-
-            return [];
+            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/category/seller/${shopInfo._id}`);
+            const data = await res.json();
+            return data;
         },
     });
 
@@ -40,7 +36,7 @@ const AddExtraCategory = () => {
     }))
 
 
-
+    console.log(darazData, 'testing....', `https://salenow-v2-backend.vercel.app/api/v1/category/seller/${shopInfo._id}`);
 
     const [daraz, setDaraz] = useState(false);
     const [wocomarce, setWocomarce] = useState(false);
@@ -58,11 +54,21 @@ const AddExtraCategory = () => {
 
     const [miniCategoryName, setMiniCategoryName] = useState('')
 
+    const uploadImage = async (formData) => {
+        const url = `https://salenow-v2-backend.vercel.app/api/v1/image/upload-image`;
+        const response = await fetch(url, {
+            method: "POST",
+            body: formData,
+        });
+
+        const imageData = await response.json();
+        return imageData.imageUrl;
+    };
 
 
     const UploadArea = async (e) => {
         e.preventDefault();
-
+        const image = e.target.image;
         const megaCategory = e.target.megaCategory.value || '';
         const darazExtraCategory = e.target.darazExtraCategory?.value || '';
         const wooMiniCategory = e.target.wooMiniCategory?.value || '';
@@ -72,18 +78,25 @@ const AddExtraCategory = () => {
         if (darazExtraCategory) {
             darazCategory_id = JSON.parse(darazExtraCategory).data.category_id
         }
+
+           const imageFormData = new FormData();
+        imageFormData.append("image", image.files[0]);
+        const imageUrl = await uploadImage(imageFormData);
+
         const data = {
+            img : imageUrl,
             megaCategory,
             darazExtraCategory,
             wooMiniCategory,
             subCategoryName,
-            miniCategoryName: miniCategoryName,
+            miniCategoryName: miniCategoryName.split(',')[0],
+            miniCategoryId: miniCategoryName.split(',')[1],
             shopId: shopInfo._id,
             extraCategoryName,
             darazCategory_id,
             status: true
         }
-        console.log(data);
+       
 
         const url = `https://salenow-v2-backend.vercel.app/api/v1/category/seller/extra/add`;
 
@@ -131,7 +144,6 @@ const AddExtraCategory = () => {
         })
             .then((res) => res.json())
             .then((data) => {
-
                 setSubCategorys(data)
             })
             .catch((error) => {
@@ -188,7 +200,6 @@ const AddExtraCategory = () => {
     const miniCategoriesOption = miniCategories && miniCategories.map((warehouse) => {
         try {
             const miniCategory = warehouse;
-            console.log(miniCategory);
             const data = warehouse.darazMiniCategory && JSON.parse(warehouse?.darazMiniCategory);
 
             darazSubCategoryName = data.name;
@@ -209,7 +220,6 @@ const AddExtraCategory = () => {
     })
 
 
-    console.log(miniCategories, 'mini Category');
 
     const darazOptionData = darazOption && darazOption?.map((data) => {
 
@@ -225,23 +235,18 @@ const AddExtraCategory = () => {
     const darazCategoryHandle = (value) => {
 
 
-        try {
+        setMiniCategoryName(`${value?.value?.miniCategoryName},${value?.value?._id}`)
+        if (value?.value?.darazMiniCategory.length) {
+            const arryData = JSON.parse(value?.value?.darazMiniCategory)?.child
 
-            // console.log(value.value, 'value');
-            // console.log();
-            const arryData = JSON.parse(value?.value.darazMiniCategory).child
-            setMiniCategoryName(value?.value.miniCategoryName)
-            console.log(value.value.miniCategoryName);
             if (arryData.children) {
-                setDarazOption(arryData.children);
+                setDarazOption(arryData?.children);
             } else {
                 setDarazOption(false);
             }
-
-
-        } catch (error) {
-            console.error('Error parsing JSON:', error);
         }
+
+
     };
 
 
@@ -386,6 +391,10 @@ const AddExtraCategory = () => {
                     />
                 </div>
 
+                <div className=" mt-4">
+                    <label className="text-sm">Upload Image</label>
+                    <input required name='image' type="file" placeholder="Upload Image" className="w-full p-2 border border-black rounded-md  text-gray-900" />
+                </div>
 
 
                 <button type='submit' className="group mt-4 relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500">

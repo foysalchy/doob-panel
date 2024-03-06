@@ -58,23 +58,39 @@ const AddMiniCategory = () => {
 
 
 
+    const uploadImage = async (formData) => {
+        const url = `https://salenow-v2-backend.vercel.app/api/v1/image/upload-image`;
+        const response = await fetch(url, {
+            method: "POST",
+            body: formData,
+        });
+
+        const imageData = await response.json();
+        return imageData.imageUrl;
+    };
 
 
     const UploadArea = async (e) => {
         e.preventDefault();
-
+        const image = e.target.image;
         const megaCategory = e.target.megaCategory.value || '';
         const darazMiniCategory = e.target.darazMiniCategory?.value || '';
         const wooMiniCategory = e.target.wooMiniCategory?.value || '';
-        const subCategoryName = e.target.subCategoryName.value
+        const subCategoryName = e.target.subCategoryName.value.split(',')[1];
         const miniCategoryName = e.target.miniCategoryName.value
+        const miniCategoryId = e.target.subCategoryName.value.split(',')[0];
 
         let darazCategory_id = ''
         if (darazMiniCategory) {
             darazCategory_id = JSON.parse(darazMiniCategory).child.category_id
         }
 
+           const imageFormData = new FormData();
+        imageFormData.append("image", image.files[0]);
+        const imageUrl = await uploadImage(imageFormData);
+
         const data = {
+            img : imageUrl,
             megaCategory,
             darazMiniCategory,
             wooMiniCategory,
@@ -82,10 +98,11 @@ const AddMiniCategory = () => {
             miniCategoryName,
             shopId: shopInfo._id,
             darazCategory_id,
-            status: true
+            status: true,
+            subCategoryId: miniCategoryId
         }
 
-        console.log(data);
+        console.log(data, 'net check......');
 
 
         const url = `https://salenow-v2-backend.vercel.app/api/v1/category/seller/mini/add`;
@@ -147,8 +164,10 @@ const AddMiniCategory = () => {
     const sortedWarehouses = filteredWarehouses?.filter(warehouse => warehouse.status).sort((a, b) => a?.subCategoryName?.localeCompare(b.subCategoryName));
 
     const subcategoryOption = sortedWarehouses?.map((warehouse) => ({
-        value: warehouse.subCategoryName,
+
+        value: `${warehouse._id},${warehouse?.subCategoryName}`,
         label: warehouse.subCategoryName,
+
     }));
 
     const darazOption = sortedWarehouses?.map((warehouse) => {
@@ -261,7 +280,10 @@ const AddMiniCategory = () => {
                     />
                 </div>
 
-
+                <div className=" mt-4">
+                    <label className="text-sm">Upload Image</label>
+                    <input required name='image' type="file" placeholder="Upload Image" className="w-full p-2 border border-black rounded-md  text-gray-900" />
+                </div>
 
                 <button type='submit' className="group mt-4 relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500">
                     <span className="absolute -start-full transition-all group-hover:start-4">

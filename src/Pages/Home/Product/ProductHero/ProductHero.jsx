@@ -157,11 +157,13 @@ const ProductHero = () => {
     };
 
 
-    console.log(subCategoryData, 'subCategoryData');
+    console.log(megaSideCategoryData, 'megaSideCategoryData');
     return (
         <div className='flex gap-4 '>
+            
             <div className="bg-white  w-[340px] relative lg:flex hidden flex-col gap-2 rounded-lg p-4">
-                {megaSideCategoryData ? <>
+                {!megaSideCategoryData ? <>
+
                     <Skeleton
                         style={{
                             height: '28px'

@@ -68,6 +68,7 @@ const AdminBlogs = () => {
   };
 
 
+  console.log(blogs, 'blogs..........');
 
   return (
 

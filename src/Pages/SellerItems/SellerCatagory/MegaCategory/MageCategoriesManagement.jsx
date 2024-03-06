@@ -15,7 +15,7 @@ import { Link } from 'react-router-dom';
 
 
 const MageCategoriesManagement = () => {
-
+    const [editOn, setEditOn] = useState(false);
     const { shopInfo } = useContext(AuthContext)
 
 
@@ -198,11 +198,39 @@ const MageCategoriesManagement = () => {
     };
 
 
+    const futuresUpdate = (id, status) => {
+        console.log(id, status, 'dsfa');
+        fetch(`https://salenow-v2-backend.vercel.app/api/v1/category/seller/category/updateStatus?id=${id}`, {
+            method: "PUT",
 
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ feature: status }),
 
+        }).then((res) => res.json()).then((data) => {
+            console.log(data);
+            Swal.fire(`Category  feature ${status} `, '', 'success');
+            refetch()
+        })
+    }
 
+    const menuUpdate = (id, status) => {
+        console.log(id, status, 'dsfa');
+        fetch(`https://salenow-v2-backend.vercel.app/api/v1/category/seller/category/updateStatus?id=${id}`, {
+            method: "PUT",
 
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ menu: status }),
 
+        }).then((res) => res.json()).then((data) => {
+            console.log(data);
+            Swal.fire(`Category  menu ${status} `, '', 'success');
+            refetch()
+        })
+    }
 
     return (
 
@@ -330,14 +358,26 @@ const MageCategoriesManagement = () => {
                                             >
                                                 Enable
                                             </button>
-                                        )} </td>
+                                        )}
+                                            <button
+                                                onClick={() => futuresUpdate(warehouse?._id, warehouse?.body?.feature ? false : true)}
+                                                className={`${warehouse?.body?.feature ? 'bg-green-500' : 'bg-red-500'} text-white ml-2 rounded capitalize px-3 py-1`}>
+                                                futures
+                                            </button>
+                                            <button
+                                                onClick={() => menuUpdate(warehouse?._id, warehouse?.body?.menu ? false : true)}
+                                                className={`${warehouse?.body?.menu ? 'bg-green-500' : 'bg-red-500'} text-white ml-2 rounded capitalize px-3 py-1`}
+                                            >
+                                                menu
+                                            </button>
+                                        </td>
                                         <td className="px-4  text-2xl flex gap-2 py-6 items-center text-gray-100">
                                             <MdDelete
                                                 className="text-red-500 cursor-pointer"
                                                 onClick={() => DeleteWarehouse(warehouse?._id)}
                                             />
                                             <BiEdit className="text-yellow-500 cursor-pointer"
-                                                onClick={() => handleViewDetails(warehouse?._id)}
+                                                onClick={() => setEditOn(true)}
 
                                             />
 
@@ -345,8 +385,8 @@ const MageCategoriesManagement = () => {
 
 
                                         {/* {OpenModal === warehouse?._id && <div className="h-0 w-0">
-                                        <EditWareHouse OpenModal={OpenModal} refetch={refetch} setOpenModal={setOpenModal} data={warehouse} />
-                                    </div>} */}
+                                            <EditWareHouse OpenModal={OpenModal} refetch={refetch} setOpenModal={setOpenModal} data={warehouse} />
+                                        </div>} */}
 
 
 
@@ -357,7 +397,9 @@ const MageCategoriesManagement = () => {
                         </tbody>
                     </table>
                 </div>
+                {/* modal */}
 
+                {/* modal end */}
             </div>
 
 

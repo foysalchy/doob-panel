@@ -29,6 +29,7 @@ const ForYouProducts = () => {
     refetch();
   };
 
+  console.log(newProducts, 'products......');
   return (
     <div>
       <div className="py-4 bg-white rounded mt-6">
@@ -55,7 +56,7 @@ const ForYouProducts = () => {
           </div>
           <div className="border-b border-gray-200 mx-5 mt-2"></div>
           <div className="container px-5 py-8 mx-auto">
-            {newProducts ?
+            {!newProducts ?
               <>
                 <div className="p-4 grid md:grid-cols-4 grid-cols-1 gap-4">
                   {Array(4).fill().map((_, index) => (
