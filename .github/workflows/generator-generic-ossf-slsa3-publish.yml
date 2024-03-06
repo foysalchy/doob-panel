@@ -10,40 +10,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-    - name: Install dependencies
-      run: npm install
+      - name: Install dependencies
+        run: npm install
 
-    - name: Build
-      run: npm run build
+      - name: Build
+        run: npm run build
 
-    - name: Deploy
-      run: scp -r dist root@152.42.184.243:/var/www/SaleNow-Frontend
-      env:
-        SSH_PASSWORD: name: Build and Deploy
-
-on:
-  push:
-    branches:
-      - main
-
-jobs:
-  build:
-    runs-on: ubuntu-latest
-
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-
-    - name: Install dependencies
-      run: npm install
-
-    - name: Build
-      run: npm run build
-
-    - name: Deploy
-      run: scp -r dist root@152.42.184.243:/var/www/SaleNow-Frontend
-      env:
-        SSH_PASSWORD: mAhadi624234a
+      - name: Deploy
+        run: |
+          scp -r -o "StrictHostKeyChecking=no" -o "PasswordAuthentication=yes" dist root@152.42.184.243:/var/www/SaleNow-Frontend << EOF
+          mAhadi624234a
+          EOF
