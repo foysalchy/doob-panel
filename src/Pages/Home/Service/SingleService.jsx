@@ -290,7 +290,7 @@ const SingleService = () => {
 
                 <div className="px-5 py-3">
                   <h3 className="text-gray-700 uppercase">{service.title}</h3>
-                  <span className="text-gray-500 mt-2">${service.price}</span>
+                  <span className="text-gray-500 mt-2">৳{service.price}</span>
                 </div>
               </Link>
             ))}

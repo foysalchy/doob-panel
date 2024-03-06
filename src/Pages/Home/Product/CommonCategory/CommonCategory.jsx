@@ -43,7 +43,7 @@ export default function CommonCategory() {
 
     // console.log(loadAllProducts);
     const categoryFilter = (categories) => {
-       
+
         console.log(categories, 'filtered');
     }
 
@@ -317,8 +317,8 @@ export default function CommonCategory() {
                                                 </h5>
                                                 <div className="mt-2 mb-5 flex items-center justify-between">
                                                     <p>
-                                                        <span className="text-xl font-bold text-slate-900">${itm?.price}</span>
-                                                        <span className="text-sm text-slate-900 line-through">${itm?.regular_price}</span>
+                                                        <span className="text-xl font-bold text-slate-900">৳{itm?.price}</span>
+                                                        <span className="text-sm text-slate-900 line-through">৳{itm?.regular_price}</span>
                                                     </p>
                                                 </div>
                                                 <Link to={`/products/${itm._id}`}

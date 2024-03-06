@@ -39,18 +39,20 @@ const SignUpSeller = () => {
 
   const signUpData = (event) => {
     event.preventDefault();
-    let shopName = "";
+
     let referCode = "";
     const form = event.target;
     const name = form.name.value;
 
     const email = form.email.value;
     const password = form.password.value;
-    shopName = form?.shopName?.value;
+    let shopName = form?.shopName?.value || '';
     referCode = form?.referCode?.value;
     let role = "user";
     const createdAt = new Date()
+    const phoneNumber = phone
     setUserEmail(email)
+
 
     const userId = email.replace(/[@.]/g, '')
 
@@ -60,9 +62,9 @@ const SignUpSeller = () => {
       if (shop) {
         role = "seller";
       }
-      let user = { name, email, password, userId, role, createdAt };
+      let user = { name, email, password, userId, phoneNumber, role, createdAt, referCode };
       if (shop) {
-        user = { name, email, password, userId, role, shopName, referCode, createdAt };
+        user = { name, email, password, userId, role, shopName, phoneNumber, referCode, createdAt };
       }
       // Update user
 
@@ -147,15 +149,22 @@ const SignUpSeller = () => {
   const [setTime, setSetTime] = useState(false);
 
   const [timeRemaining, setTimeRemaining] = useState(120);
+  const [otpError, setOtpError] = useState(false);
 
   const handleNumberForm = (e) => {
     e.preventDefault();
     fetch(`https://salenow-v2-backend.vercel.app/api/v1/auth/send-otp?number=${phoneNumber}`).then((response) => response.json()).then((data) => {
-      console.log(data)
-      setPhone(phone)
-      setSwitchNumberForm(false)
-      setSwitchOtpForm(true);
-      setSetTime(true);
+      if (data.success) {
+        console.log(data)
+        setPhone(phone)
+        setSwitchNumberForm(false)
+        setSwitchOtpForm(true);
+        setSetTime(true);
+      }
+      else {
+        setOtpError('Already  registered')
+      }
+
 
     })
   }
@@ -306,7 +315,9 @@ const SignUpSeller = () => {
                         id="otp"
                         name="otp"
                       />
-                      {setTime && timeRemaining > 0 && <small className="">Resend OTP after  {`${Math.floor(timeRemaining / 60)}, ${timeRemaining % 60 < 10 ? `0${timeRemaining % 60}` : timeRemaining % 60}`}</small>}
+                      {otpError ? <small>{otpError}</small> : <div>
+                        {setTime && timeRemaining > 0 && <small className="">Resend OTP after  {`${Math.floor(timeRemaining / 60)}, ${timeRemaining % 60 < 10 ? `0${timeRemaining % 60}` : timeRemaining % 60}`}</small>}
+                      </div>}
 
                       {timeRemaining < 1 && <small className="text-blue-500" onClick={handleResendOtp}>Resend</small>}
                       <br />

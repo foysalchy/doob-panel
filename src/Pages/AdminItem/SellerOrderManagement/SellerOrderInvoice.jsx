@@ -100,9 +100,9 @@ const SellerOrderInvoice = ({ setOn, products }) => {
                             <p className="font-bold">TOTAL</p>
                         </div>
                         <div className="text-right">
-                            <p>${subtotal}</p>
-                            <p>${tax}</p>
-                            <p>${total}</p>
+                            <p>৳{subtotal}</p>
+                            <p>৳{tax}</p>
+                            <p>৳{total}</p>
                         </div>
                     </div>
                     <div className="mt-8">

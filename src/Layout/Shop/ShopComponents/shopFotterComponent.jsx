@@ -1,6 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
+import { ShopAuthProvider } from "../../../AuthProvider/ShopAuthProvide";
+import { FaFacebook, FaFacebookMessenger, FaInstagram, FaLine, FaLinkedin, FaPinterest, FaReddit, FaSkype, FaSnapchat, FaSquareXTwitter, FaTelegram, FaTumblr, FaViber, FaWhatsapp, FaYoutube } from 'react-icons/fa6';
 
 export const Footer = () => {
 
@@ -28,6 +30,16 @@ export const Footer = () => {
             return data;
         },
     });
+    const { shop_id } = useContext(ShopAuthProvider)
+    const { data: contacts = [] } = useQuery({
+        queryKey: ["contact"],
+        queryFn: async () => {
+            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/contact/${shopId}`);
+            const data = await res.json();
+            return data;
+        },
+    });
+    console.log(`https://salenow-v2-backend.vercel.app/api/v1/shop/contact/${shopId}`, 'footer');
 
     const [email, setEmail] = useState('');
     const [error, setError] = useState(false);
@@ -199,7 +211,7 @@ export const Footer = () => {
                         © Copyright Shop Now 2024. All right reserved.
                     </p>
                     <div className="flex items-center mt-4 space-x-4 sm:mt-0">
-                        <a
+                        {/* <a
                             href="/"
                             className="text-gray-500 transition-colors duration-300 hover:text-teal-accent-400"
                         >
@@ -223,7 +235,95 @@ export const Footer = () => {
                             <svg viewBox="0 0 24 24" fill="currentColor" className="h-5">
                                 <path d="M22,0H2C0.895,0,0,0.895,0,2v20c0,1.105,0.895,2,2,2h11v-9h-3v-4h3V8.413c0-3.1,1.893-4.788,4.659-4.788 c1.325,0,2.463,0.099,2.795,0.143v3.24l-1.918,0.001c-1.504,0-1.795,0.715-1.795,1.763V11h4.44l-1,4h-3.44v9H22c1.105,0,2-0.895,2-2 V2C24,0.895,23.105,0,22,0z" />
                             </svg>
-                        </a>
+                        </a> */}
+                        {
+                            contacts.map((cont) => (
+                                <div key={cont._id}>
+
+                                    {
+
+
+                                        (cont.media === 'Facebook' &&
+                                            <a href={`https://facebook.com/${cont.URL}`} target="_blank">
+                                                <FaFacebook className='cursor-pointer rounded-full text-blue-700 hover:text-blue-900  text-4xl bg-white p-1 ' />
+                                            </a>)
+                                        ||
+                                        (cont.media === 'Messenger' &&
+                                            <a href={`https://M.me/${cont.URL}`} target="_blank">
+                                                <FaFacebookMessenger className='cursor-pointer rounded-full text-[#663399] hover:text-purple-700  bg-white p-1  text-4xl' />
+                                            </a>)
+                                        ||
+                                        (cont.media === 'Instagram' &&
+                                            <a href={`https://instagram.com/${cont.URL}`} target="_blank">
+                                                <FaInstagram className='cursor-pointer rounded-full text-red-700 hover:text-red-900  text-4xl bg-white p-1 ' />
+                                            </a>)
+                                        ||
+                                        (cont.media === 'Twitter' &&
+                                            <a href={`https://twitter.com/${cont.URL}`} target="_blank">
+                                                <FaSquareXTwitter className='cursor-pointer rounded-full text-gray-700 hover:text-gray-900  text-4xl bg-white p-1 ' />
+                                            </a>)
+                                        ||
+                                        (cont.media === 'Whatsapp' &&
+                                            <a href={`https://wa.me/${cont.URL}`} target="_blank">
+                                                <FaWhatsapp className='cursor-pointer rounded-full text-green-500 hover:text-green-700  text-4xl bg-white p-1 ' />
+                                            </a>)
+                                        ||
+                                        (cont.media === 'Viber' &&
+                                            <a href={`viber://add?number=${cont.URL}`} target="_blank">
+                                                <FaViber className='cursor-pointer rounded-full text-purple-500 hover:text-purple-700  text-4xl bg-white p-1 ' />
+                                            </a>)
+                                        ||
+                                        (cont.media === 'Telegram' &&
+                                            <a href={`https://t.me/${cont.URL}`} target="_blank">
+                                                <FaTelegram className='cursor-pointer rounded-full text-blue-500 hover:text-blue-700  text-4xl bg-white p-1 ' />
+                                            </a>)
+                                        ||
+                                        (cont.media === 'Skype' &&
+                                            <a href={`skype:${cont.URL}?chat`} target="_blank">
+                                                <FaSkype className='cursor-pointer rounded-full text-blue-500 hover:text-blue-700  text-4xl bg-white p-1 ' />
+                                            </a>)
+                                        ||
+                                        (cont.media === 'YouTube' &&
+                                            <a href={`https://youtube.com/${cont.URL}`} target="_blank">
+                                                <FaYoutube className='cursor-pointer rounded-full text-red-500 hover:text-red-700  text-4xl bg-white p-1 ' />
+                                            </a>)
+                                        ||
+                                        (cont.media === 'LINE' &&
+                                            <a href={`https://line.me/${cont.URL}`} target="_blank">
+                                                <FaLine className='cursor-pointer rounded-full text-green-500 hover:text-green-700  text-4xl bg-white p-1 ' />
+                                            </a>)
+                                        ||
+                                        (cont.media === 'Reddit' &&
+                                            <a href={`https://reddit.com/${cont.URL}`} target="_blank">
+                                                <FaReddit className='bg-white p-1  text-red-500 border hover:text-red-700  text-4xl' />
+                                            </a>)
+                                        ||
+                                        (cont.media === 'Snapchat' &&
+                                            <a href={`https://snapchat.com/add/${cont.URL}`} target="_blank">
+                                                <FaSnapchat className='bg-yellow-500 p-1  text-black border hover:bg-yellow-700  text-4xl' />
+                                            </a>)
+                                        ||
+                                        (cont.media === 'Pinterest' &&
+                                            <a href={`https://pinterest.com/${cont.URL}`} target="_blank">
+                                                <FaPinterest className='cursor-pointer rounded-full text-red-500 hover:text-red-700  text-4xl bg-white p-1 ' />
+                                            </a>)
+                                        ||
+                                        (cont.media === 'Tumblr' &&
+                                            <a href={`https://tumblr.com/${cont.URL}`} target="_blank">
+                                                <FaTumblr className='cursor-pointer rounded-full text-violet-500 hover:text-violet-700  text-4xl bg-white p-1 ' />
+                                            </a>)
+                                        ||
+                                        (cont.media === 'Linkedin' &&
+                                            <a href={`https://linkedin.com/in/${cont.URL}`} target="_blank">
+                                                <FaLinkedin className='cursor-pointer rounded-full text-blue-500 hover:text-blue-700  text-4xl bg-white p-1 ' />
+                                            </a>)
+
+                                    }
+
+
+                                </div>
+                            ))
+                        }
                     </div>
                 </div>
             </div>
