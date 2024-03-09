@@ -39,6 +39,11 @@ const ShopSingleBlog = () => {
         month: 'long',
         day: 'numeric',
     });
+
+
+
+
+
     return (
         <div className=" ">
 

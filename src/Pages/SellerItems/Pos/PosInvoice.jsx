@@ -4,7 +4,7 @@ import React, { useContext, useState } from 'react';
 import { AuthContext } from '../../../AuthProvider/UserProvider';
 // import localImg from '../../../assets/Logo.png'
 
-const PosInvoice = ({ invoiceData, setInvoiceOpen, invoiceOpen }) => {
+const PosInvoice = ({ setOpen, invoiceData, setInvoiceOpen, invoiceOpen }) => {
     const [loader, setLoader] = useState(false);
     const { shopInfo } = useContext(AuthContext)
 
@@ -36,7 +36,7 @@ const PosInvoice = ({ invoiceData, setInvoiceOpen, invoiceOpen }) => {
                             {/* Invoice */}
                         </h1>
                         <div className="flex gap-3 items-center">
-                            <button onClick={() => setInvoiceOpen(!invoiceOpen)} className='px-4 py-2 text-white rounded-md bg-red-600'>Close</button>
+                            <button onClick={() => { setInvoiceOpen(!invoiceOpen), setOpen(false) }} className='px-4 py-2 text-white rounded-md bg-red-600'>Close</button>
                             <button
                                 onClick={downloadPDF}
                                 disabled={!(loader === false)}
@@ -54,6 +54,11 @@ const PosInvoice = ({ invoiceData, setInvoiceOpen, invoiceOpen }) => {
                                     <p className="text-start text text-gray-500">Email: {shopInfo?.shopEmail}</p>
                                     <p className="text-start text text-gray-500">Phone: {shopInfo?.shopNumber}</p>
                                     <p className="text-start text text-gray-500">Address: {shopInfo?.address}</p>
+                                </div>
+                                <div>
+                                    <h1 className='text-2xl'>Recept</h1>
+                                    paid date: {new Date().toLocaleDateString()}
+                                    <p></p>
                                 </div>
                             </div>
                             <ul className=''>
@@ -79,20 +84,21 @@ const PosInvoice = ({ invoiceData, setInvoiceOpen, invoiceOpen }) => {
                                 <li>
                                     <div className=" border-dashed flex items-center justify-between border-gray-700 py-2 gap-2 ">
                                         <h2 className="text-md font-semibold"> Total :</h2>
-                                        <h2 className="text-md border-b pb-1 border-dashed border-gray-600 w-[130px]">{invoiceData?.total} TK</h2>
+                                        <h2 className="text-md border-b pb-1 border-dashed border-gray-600 w-[130px]">{invoiceData?.invoice?.total} TK</h2>
                                     </div>
                                 </li>
+
                                 <li>
                                     <div className=" border-dashed flex items-center justify-between border-gray-700 py-2 gap-2 ">
                                         <h2 className="text-md font-semibold"> Pay Amount: :</h2>
-                                        <h2 className="text-md border-b pb-1 border-dashed border-gray-600 w-[130px]">{invoiceData?.discount} TK</h2>
+                                        <h2 className="text-md border-b pb-1 border-dashed border-gray-600 w-[130px]">{invoiceData?.invoice?.cash} TK</h2>
                                     </div>
                                 </li>
                             </ul>
                             <div className="border-t mt-6 border-dashed flex items-center justify-between border-gray-700 py-2 gap-2 ">
                                 <h2 className="text-md font-semibold">Your total change today :</h2>
 
-                                <h2 className="text-lg font-semibold pb-1 border-dashed border-gray-600  ">{invoiceData?.change} TK</h2>
+                                <h2 className="text-lg font-semibold pb-1 border-dashed border-gray-600  ">{invoiceData?.invoice.change} TK</h2>
                             </div>
                         </div>
                     </div>

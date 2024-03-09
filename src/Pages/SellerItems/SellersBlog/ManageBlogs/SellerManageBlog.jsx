@@ -8,6 +8,7 @@ import { useState } from 'react';
 import Swal from 'sweetalert2';
 import EditSellerBlog from './EditSellerBlog';
 import { BiEdit } from 'react-icons/bi';
+import { BsEye } from 'react-icons/bs';
 
 
 const SellerManageBlog = () => {
@@ -254,8 +255,10 @@ const SellerManageBlog = () => {
 
                                                     </button>
                                                     <BiEdit onClick={() => handleViewDetails(blog._id)} className="transition-colors text-xl duration-200 cursor-pointer text-yellow-500 hover:text-yellow-700 focus:outline-none" />
+                                                    <Link to={`/shop/${shopInfo.shopId}/blog/${blog._id}`}>
+                                                        <BsEye className="transition-colors text-xl duration-200 cursor-pointer text-green-500 hover:text-green-700 focus:outline-none" />
+                                                    </Link>
                                                 </div>
-
                                             </td>
                                             {OpenModal === blog._id && <div className="h-0 w-0">
                                                 <EditSellerBlog OpenModal={OpenModal} refetch={refetch} setOpenModal={setOpenModal} BlogInfo={blog} />

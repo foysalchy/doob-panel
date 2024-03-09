@@ -73,7 +73,8 @@ const AddCellModal = ({ recall, setOpenModal }) => {
             area,
             rack,
             self,
-            cell
+            cell,
+            status: true
         };
 
         fetch('https://salenow-v2-backend.vercel.app/api/v1/admin/warehouse/cell', {

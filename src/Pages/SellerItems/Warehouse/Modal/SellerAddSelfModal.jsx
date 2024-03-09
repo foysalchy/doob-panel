@@ -61,7 +61,7 @@ const SellerAddSelfModal = ({ setNewData, recall, setOpenModal }) => {
             rack,
             self,
             shopId: shopInfo._id,
-            status: nextStae
+            status: true
         };
 
         fetch('https://salenow-v2-backend.vercel.app/api/v1/seller/warehouse/self', {

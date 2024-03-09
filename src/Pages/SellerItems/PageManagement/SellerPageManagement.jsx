@@ -8,6 +8,7 @@ import { AuthContext } from '../../../AuthProvider/UserProvider';
 import { FaArrowRightLong } from 'react-icons/fa6';
 import { BiEdit } from 'react-icons/bi';
 import SellerUpdatePage from './SellerUpdatePage';
+import { BsEye } from 'react-icons/bs';
 
 const SellerPageManagement = () => {
     const [loading, setLoading] = useState(false);
@@ -190,6 +191,9 @@ const SellerPageManagement = () => {
                                                         <button onClick={() => handleViewDetails(faq?._id)}>
                                                             <BiEdit className=" transition-colors text-xl duration-200 text-yellow-500 hover:text-yellow-700 focus:outline-none" />
                                                         </button>
+                                                        <Link to={`/shop/${shopInfo.shopId}/pages/${blog._id}`}>
+                                                            <BsEye className="transition-colors text-xl duration-200 cursor-pointer text-green-500 hover:text-green-700 focus:outline-none" />
+                                                        </Link>
                                                     </div>
                                                 </td>
                                                 {OpenModal === faq?._id && <div className="h-0 w-0">

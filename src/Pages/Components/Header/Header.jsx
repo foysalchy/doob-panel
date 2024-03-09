@@ -138,14 +138,15 @@ const Header = () => {
             <li>
 
               {!user ? (
-                <Link
+                <div
                   to="/sign-in"
-                  className="inline-flex items-center justify-center h-12 px-6  tracking-wide text-white transition duration-200 rounded shadow-md bg-black hover:bg-black focus:shadow-outline focus:outline-none"
+                  className="inline-flex text-blue-400 items-center justify-center h-12 px-6  gap-2 text-xl   text-black  font-bold"
                   aria-label="Sign up"
                   title="Sign up"
                 >
-                  Sign In
-                </Link>
+                  <Link to={"/sign-in"}> Sign In</Link>
+                  /<Link to={"/sign-up"}> Sign Up</Link>
+                </div>
               ) : (
                 <>
                   {

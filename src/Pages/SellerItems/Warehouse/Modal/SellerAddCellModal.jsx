@@ -77,7 +77,8 @@ const SellerAddCellModal = ({ recall, setOpenModal }) => {
             rack,
             self,
             cell,
-            shopId: shopInfo._id
+            shopId: shopInfo._id,
+            status: true
         };
 
         fetch('https://salenow-v2-backend.vercel.app/api/v1/seller/warehouse/cell', {

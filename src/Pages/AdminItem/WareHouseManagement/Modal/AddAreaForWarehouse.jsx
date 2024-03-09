@@ -32,7 +32,7 @@ const AddAreaForWarehouse = ({ setNewData, recall, setOpenModal }) => {
         const data = {
             warehouse,
             area,
-            status: nextStae
+            status: true
         }
         fetch('https://salenow-v2-backend.vercel.app/api/v1/admin/warehouse/area', {
             method: 'post',

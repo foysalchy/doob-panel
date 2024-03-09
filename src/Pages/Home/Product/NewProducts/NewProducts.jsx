@@ -89,12 +89,13 @@ const NewProducts = () => {
                     </div>
 
                     <div className="relative bg-white pt-3">
-                      <h3 className="text-sm text-gray-700 group-hover:underline group-hover:underline-offset-4">
-                        {name}
+                      <h3 className="capitalize text-gray-700 group-hover:underline group-hover:underline-offset-4">
+                        {product.name}
                       </h3>
 
                       <div className="mt-1.5 flex items-center justify-between text-gray-900">
-                        <p className="tracking-wide  "><span className="kalpurush">৳</span> {user ? product?.price : 0}</p>
+                        <p className="tracking-wide  "><span className="kalpurush">৳</span> {user ? product?.price : <Link className='text-xs' to={'/sign-up'}>View price <br />upon
+                          logging in</Link>}</p>
 
                         <p className="text-xs uppercase tracking-wide">{product?.variations.length} Variant</p>
                       </div>

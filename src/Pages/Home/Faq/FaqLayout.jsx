@@ -24,6 +24,8 @@ const FaqLayout = () => {
     faq.title.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
+  console.log(filteredFaqs);
+
   return (
     <div>
       <div className="px-4 pb-10 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 ">
@@ -39,7 +41,9 @@ const FaqLayout = () => {
                     placeholder="Search FAQs..."
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
                   />
-                  {filteredFaqs.map((faq, index) => (
+                  {filteredFaqs.sort((a, b) => a.sortIndex
+                    - b.sortIndex
+                  ).map((faq, index) => (
                     <div
                       key={index}
                       className="overflow-hidden transition-shadow duration-300 bg-white rounded shadow-sm"

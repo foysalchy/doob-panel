@@ -36,7 +36,7 @@ const SellerAddAreaForWarehouse = ({ setNewData, recall, setOpenModal }) => {
             warehouse,
             area,
             shopId: shopInfo._id,
-            status: nextStae
+            status: true
         }
         fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/warehouse/area/`, {
             method: 'post',

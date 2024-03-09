@@ -32,7 +32,7 @@ const SellerAddNewWarehouse = ({ setNewData, refetch, setOpenModal }) => {
                     address,
                     description,
                     shopId: shopInfo._id,
-                    status: nextStae
+                    status: true
                 };
                 postWareHouse(data);
             });

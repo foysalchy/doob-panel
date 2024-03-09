@@ -4,6 +4,7 @@ import { BiEdit } from "react-icons/bi";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import EditBlog from "./EditBlog";
+import { BsEye } from "react-icons/bs";
 
 const AdminBlogs = () => {
   const { data: blogs = [], refetch } = useQuery({
@@ -238,6 +239,11 @@ const AdminBlogs = () => {
                               </svg>
                             </button>
                             <BiEdit onClick={() => handleViewDetails(blog._id)} className="transition-colors text-xl duration-200 cursor-pointer text-yellow-500 hover:text-yellow-700 focus:outline-none" />
+
+                            <Link to={`/blogs/${blog._id}`}>
+                              <BsEye className="transition-colors text-xl duration-200 cursor-pointer text-green-500 hover:text-green-700 focus:outline-none" />
+                            </Link>
+
                           </div>
 
                         </td>
