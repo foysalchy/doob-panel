@@ -6,6 +6,7 @@ const CategoryManagement = () => {
     return (
         <div>
             <div className='grid lg:grid-cols-4 md:grid-cols-2 gap-4 py-10 pr-10'>
+                
                 <Link
                     to={'mega-category-management'}
                     className="group relative inline-flex items-center justify-center overflow-hidden rounded bg-gray-900 px-8 py-6 text-white focus:outline-none focus:ring active:bg-gray-500"
