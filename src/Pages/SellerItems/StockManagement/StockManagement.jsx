@@ -21,12 +21,12 @@ const StockManagement = () => {
 
     const handleUpdate = (data) => {
         console.log(data);
-        fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/stock-request?id=${data?._id}&quantity=${data?.quantity}`, {
+        fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/stock-request?id=${data?.productId}?orderId=${data?._id}&quantity=${data?.quantity}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({ status: data?.status }),
+            body: JSON.stringify({ status: 'active' }),
         }).then((res) => res.json()).then((data) => {
             BrightAlert('Update Quantity', '', 'success');
             refetch()
@@ -44,7 +44,7 @@ const StockManagement = () => {
                                     className="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500 text-gray-400"
                                 >
                                     <div className="flex items-center gap-x-3">
-                                        <span>Product Id</span>
+                                        <span>Order Id</span>
                                     </div>
                                 </th>
                                 <th
@@ -77,7 +77,7 @@ const StockManagement = () => {
                                         <div className="inline-flex items-center gap-x-3">
                                             <div className="w-5/12">
                                                 <h2 onClick={() => setInvoiceOn(itm)} className="font-medium text-blue-500  ">
-                                                    {itm?.productId}
+                                                    {itm?._id}
                                                 </h2>
                                             </div>
                                         </div>
@@ -85,6 +85,7 @@ const StockManagement = () => {
                                     <td className="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                                         <button
                                             // onClick={() => DeactiveHandle(faq?._id)}
+                                            onClick={() => handleUpdate(itm)}
                                             className="inline-flex items-center px-3 py-1 rounded-full gap-x-2   text-green-500  "
                                         >
                                             {itm?.status}
@@ -95,7 +96,7 @@ const StockManagement = () => {
                                         {itm?.quantity}
                                     </td>
 
-                                    <td onClick={() => handleUpdate(itm)} className="px-4 py-4 text-lg text-green-500 whitespace-nowrap">
+                                    <td  className="px-4 py-4 text-lg text-green-500 whitespace-nowrap">
                                         <button className="text-sm flex items-center gap-2 bg-[#23b123ea] px-2 py-1 rounded text-white">
                                             {itm?.quantity} <BiEdit />
                                         </button>

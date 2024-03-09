@@ -1,18 +1,23 @@
 import { useQuery } from '@tanstack/react-query';
-import React from 'react';
+import React, { useContext } from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import { BiLeftArrow, BiRightArrow } from 'react-icons/bi';
+import { AuthContext } from '../../../AuthProvider/UserProvider';
 
-const AdminSeviceOrder = () => {
+const ServiceManagementSaller = () => {
+    const { shopInfo } = useContext(AuthContext)
+
     const { data: serviceOrder = [], refetch } = useQuery({
-        queryKey: ["serviceOrder"],
+        queryKey: ["serviceOrderSaller"],
         queryFn: async () => {
-            const res = await fetch("https://salenow-v2-backend.vercel.app/api/v1/admin/get-all-service-order");
+            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/saller/my-service?shopId=${shopInfo._id}`);
             const data = await res.json();
             return data.data;
         },
     });
+
+    console.log(`https://salenow-v2-backend.vercel.app/api/v1/saller/my-service?shopId=${shopInfo._id}`);
 
     const [input, setInput] = useState('');
     const [filteredData, setFilteredData] = useState([]);
@@ -61,7 +66,7 @@ const AdminSeviceOrder = () => {
     const endIndex = startIndex + pageSize;
     const totalPages = Math.ceil(filteredData?.length / pageSize);
 
-    const currentData = filteredData.slice(startIndex, endIndex);
+    const currentData = filteredData && filteredData?.slice(startIndex, endIndex);
 
     const handleChangePage = (newPage) => {
 
@@ -189,7 +194,7 @@ const AdminSeviceOrder = () => {
                 <div className=" w-full overflow-x-auto ">
                     <div className="inline-block min-w-full py-2 align-middle ">
                         <div className="overflow-hidden border border-gray-200 dark:border-gray-700 md:rounded-lg">
-                            <table className=" divide-y divide-gray-200 dark:divide-gray-700">
+                            <table className=" divide-y  divide-gray-200 dark:divide-gray-700">
                                 <thead className="bg-gray-50 dark:bg-gray-00">
                                     <tr>
                                         <th
@@ -380,4 +385,4 @@ const AdminSeviceOrder = () => {
     );
 };
 
-export default AdminSeviceOrder;
+export default ServiceManagementSaller;

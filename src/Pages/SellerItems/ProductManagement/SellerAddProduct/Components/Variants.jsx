@@ -167,6 +167,7 @@ const Variants = ({ adminWare, multiVendor, setMultiVendor, inputFields, setInpu
                             </label>
                             <input
                                 type="file"
+                                required
                                 id={`coverPhoto-${index}`}
                                 name={`coverPhoto-${index}`}
                                 multiple
@@ -175,7 +176,6 @@ const Variants = ({ adminWare, multiVendor, setMultiVendor, inputFields, setInpu
                                 onChange={(event) => handleImageChange(index, event)}
                             />
                         </div>
-
 
 
                         {

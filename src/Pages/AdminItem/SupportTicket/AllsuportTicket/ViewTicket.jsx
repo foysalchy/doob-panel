@@ -7,34 +7,58 @@ import Swal from 'sweetalert2';
 const ViewTicket = ({ viewTicket, setViewTicket, ticketDetails, refetch }) => {
 
     const [loading, setLoading] = useState(false)
-    const commentSubmit = (event) => {
+
+
+    const uploadImage = async (formData) => {
+        const url = `https://salenow-v2-backend.vercel.app/api/v1/image/upload-image`;
+        const response = await fetch(url, {
+            method: "POST",
+            body: formData,
+        });
+
+        const imageData = await response.json();
+        return imageData.imageUrl;
+    };
+
+    const commentSubmit = async(event) => {
         setLoading(true)
         event.preventDefault();
         const time = new Date()
         const comment = event.target.comment.value
-        const id = ticketDetails.ticketId
+        const image = event.target.image;
+        const id = ticketDetails.ticketId;
+
+        const imageFormData = new FormData();
+        imageFormData.append("image", image.files[0]);
+        const imageUrl = await uploadImage(imageFormData);
+
+
         const data = {
             "id": id,
             "time": `${time}`,
+            "image": imageUrl,
             "content": comment
 
 
         }
         // / support - ticket /: id
-        fetch(`https://salenow-v2-backend.vercel.app/api/v1/support/support-ticket/${id}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data),
-        }).then((res) => res.json())
-            .finally(() => {
-                event.target.reset()
-                setLoading(false)
-                Swal.fire("Comment Uploaded", "", "success");
-                refetch()
-            }
-            );
+        // fetch(`https://salenow-v2-backend.vercel.app/api/v1/support/support-ticket/${id}`, {
+        //     method: 'PUT',
+        //     headers: {
+        //         'Content-Type': 'application/json'
+        //     },
+        //     body: JSON.stringify(data),
+        // }).then((res) => res.json())
+        //     .finally(() => {
+        //         event.target.reset()
+        //         setLoading(false)
+        //         Swal.fire("Comment Uploaded", "", "success");
+        //         refetch()
+        //     }
+        //     );
+
+
+        console.log(data);
 
     }
 
@@ -152,8 +176,24 @@ const ViewTicket = ({ viewTicket, setViewTicket, ticketDetails, refetch }) => {
                                                 className="w-full bg-gray-100 rounded border border-gray-400 h-20 py-2 px-3 font-medium placeholder-gray-700 focus:outline-none focus:bg-white"
                                             ></textarea>
                                         </div>
+                                        <div className="flex justify-start px-4">
+                                            <div className="mr-auto max-w-xs">
+                                                <label
+                                                    htmlFor="example1"
+                                                    className="mb-1 block text-start text-sm font-medium text-gray-700"
+                                                >
+                                                    Upload file
+                                                </label>
+                                                <input
+                                                    id="example1"
+                                                    type="file"
+                                                    className="mt-2 block w-full text-sm file:mr-4 file:rounded-md file:border-0 file:bg-teal-500 file:py-2 file:px-4 file:text-sm file:font-semibold file:text-white hover:file:bg-teal-700 focus:outline-none disabled:pointer-events-none disabled:opacity-60"
+                                                />
+                                            </div>
+
+                                        </div>
                                         <div className="flex justify-end px-4">
-                                            <input type="submit" disabled={loading} className="px-2.5 py-1.5 rounded-md text-white cursor-pointer text-sm bg-indigo-500" value={loading ? "Uploading.." : "Comment"} />
+                                            <input type="submit" name='image' disabled={loading} className="px-2.5 py-1.5 rounded-md text-white cursor-pointer text-sm bg-indigo-500" value={loading ? "Uploading.." : "Comment"} />
                                         </div>
                                     </form>
                                 </div>

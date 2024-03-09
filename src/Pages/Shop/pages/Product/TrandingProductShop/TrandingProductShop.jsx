@@ -1,9 +1,15 @@
 import React, { useContext } from 'react';
-import { ShopAuthProvider } from '../../../../../AuthProvider/ShopAuthProvide';
 import { useQuery } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
+import { ShopAuthProvider } from '../../../../../AuthProvider/ShopAuthProvide';
 
-const AllProduct = () => {
+const TrandingProductShop = () => {
+    const pathname = window.location.pathname;
+    const idMatch = pathname.match(/\/shop\/([^/]+)/);
+
+    const shopId = idMatch ? idMatch[1] : null;
+
+
     const { shop_id } = useContext(ShopAuthProvider)
     // console.log(`https://salenow-v2-backend.vercel.app/api/v1/shop/product/${shop_id.shop_id}/all-product?limit=20`);
     const { data: newProducts = [], refetch } = useQuery({
@@ -30,14 +36,9 @@ const AllProduct = () => {
                                     alt="new-product-icon"
                                 />
 
-                                <h3 className="whitespace-nowrap ml-2 font-medium">For You</h3>
+                                <h3 className="whitespace-nowrap ml-2 font-medium">Trading Products</h3>
                             </div>
-                            <button
-                                type="button"
-                                className="px-5 py-2 font-semibold rounded bg-black text-gray-100 text-xs "
-                            >
-                                SHOP MORE
-                            </button>
+                            
                         </div>
                     </div>
                     <div className="border-b border-gray-200 mx-5 mt-2"></div>
@@ -45,7 +46,7 @@ const AllProduct = () => {
                         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-2 -m-4 text-black">
                             {newProducts?.data?.map((product, idx) => {
                                 return (
-                                    <Link to={`product/${product?._id}`}
+                                    <Link to={`/shop/${shopId}/product/${product?._id}`}
                                         key={idx}
                                         className="p-4 w-full md:w-11/12 border lg:mx-2 text-black rounded"
                                     >
@@ -94,4 +95,4 @@ const AllProduct = () => {
     );
 };
 
-export default AllProduct;
+export default TrandingProductShop;

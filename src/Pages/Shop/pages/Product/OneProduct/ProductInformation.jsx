@@ -10,12 +10,13 @@ import MetaHelmet from '../../../../../Helmate/Helmate';
 import { ShopAuthProvider } from '../../../../../AuthProvider/ShopAuthProvide';
 import { useQuery } from '@tanstack/react-query';
 import BrightAlert from 'bright-alert';
+import TrandingProductShop from '../TrandingProductShop/TrandingProductShop';
 
 const ProductInformation = () => {
 
 
     const product = useLoaderData()
-    const [selectedImage, setSelectedImage] = useState(product.data.featuredImage.src);
+    // const [selectedImage, setSelectedImage] = useState(product.data.featuredImage.src);
     const [quantity, setQuantity] = useState(1);
     const location = useLocation();
     const [loader, setLoader] = useState(false)
@@ -23,9 +24,50 @@ const ProductInformation = () => {
     const [variations, setVariations] = useState(null);
     const [showVariant, setShowVariant] = useState(product.data.images)
     console.log(product, "product");
+
+
     const handleImageClick = (imageUrl) => {
         setSelectedImage(imageUrl);
     };
+
+
+    let imageList = product?.data ? product?.data?.images : [];
+    const [selectedImage, setSelectedImage] = useState(imageList.length > 0 ? imageList[0]?.src : blankImg);
+
+    const [clickImage, setClickImage] = useState(imageList.length > 0 ? imageList[0].src : '');
+
+
+
+    const blankImg = 'https://i.ibb.co/7p2CvzT/empty.jpg';
+
+
+    const path = useLocation();
+
+    console.log(variations, 'location........');
+
+    const handleVariation = (variation) => {
+        setVariations(variation);
+        setShowVariant(variation?.variantImag ? variation?.variantImag : product?.data.images)
+    
+    }
+
+    useEffect(() => {
+        setVariations(product?.data?.variations[0])
+        setShowVariant(product?.data.images)
+
+        
+
+        if (imageList.length > 0) {
+            setSelectedImage(imageList[0]?.src);
+
+        }
+        else {
+            product?.data?.featuredImage?.src ? product?.data?.featuredImage?.src : blankImg
+        }
+
+
+    }, [path.pathname])
+
 
     const handleDecrease = () => {
         if (quantity > 1) {
@@ -293,10 +335,11 @@ const ProductInformation = () => {
                                     </a>
                                 </div>
                             </div>
-
-                            {<div className="flex mt-6 items-center   mb-5">
+                            <br />
+                            <p>Variations: {variations?.name}</p>
+                            {<div className="flex  gap-2  items-center   mb-5">
                                 {
-                                    product?.data?.variations && product?.data?.variations.map((variation, index) => <div onClick={() => setVariations(variation)} key={index}
+                                    product?.data?.variations && product?.data?.variations.map((variation, index) => <div onClick={() => handleVariation(variation)} key={index}
                                         className='w-[50px] h-[50px] border border-gray-300'
                                     >
                                         <img onClick={() => setShowVariant(variation?.variantImag)} src={!product?.data ? variation?.image[0] : variation?.image} alt="" className="w-full h-full" />
@@ -356,7 +399,6 @@ const ProductInformation = () => {
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -372,7 +414,7 @@ const ProductInformation = () => {
             </div>
             <div className="max-w-7xl mx-auto px-4 md:px-4 lg:px-8 my-6">
                 <div className="border p-6 rounded">
-                    <TrendingProducts />
+                    <TrandingProductShop />
                 </div>
             </div>
         </section>

@@ -20,7 +20,7 @@ const ViewSupportTicket = ({ viewComment, setViewComment, ticketDetails, refetch
         const data = {
             "id": id,
             "time": `${time}`,
-            "content": comment,
+            "content": {comment : comment, img : ''},
             'user': user?.name
         }
         // / support - ticket /: id

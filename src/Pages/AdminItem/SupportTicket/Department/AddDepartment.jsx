@@ -62,7 +62,7 @@ const AddDepartment = ({ ModalOpen, setModalOpen }) => {
                     >
 
                         <h3 className="pb-2 text-xl font-bold text-dark sm:text-2xl">
-                            Add DepartmentName
+                            Add Department Name
                         </h3>
                         <span
                             className={`mx-auto mb-6 inline-block h-1 w-[90px] rounded bg-yellow-300`}
