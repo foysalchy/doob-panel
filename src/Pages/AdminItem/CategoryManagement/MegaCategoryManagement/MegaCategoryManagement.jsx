@@ -86,16 +86,16 @@ const MegaCategoryManagement = () => {
 
         console.log(data, id);
 
-        // fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/feature-image-update?id=${id}`, {
-        //     method: "PUT",
-        //     headers: {
-        //         "Content-Type": "application/json",
-        //     },
-        //     body: JSON.stringify(data),
-        // }).then((res) => res.json()).then((data) => {
-        //     Swal.fire(`Category update `, '', 'success');
-        //     refetch()
-        // })
+        fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/feature-image-update?id=${id}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+        }).then((res) => res.json()).then((data) => {
+            Swal.fire(`Category update `, '', 'success');
+            refetch()
+        })
 
         setEditOn(false);
     }

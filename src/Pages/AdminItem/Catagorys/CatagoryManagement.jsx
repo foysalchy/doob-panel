@@ -4,6 +4,8 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 
 const CatagoryManagement = () => {
+  const [openModal, setOpenModal] = useState(false);
+
   const { data: category = [], refetch } = useQuery({
     queryKey: ["category"],
     queryFn: async () => {
@@ -37,6 +39,43 @@ const CatagoryManagement = () => {
   const filteredData = category && category?.filter((item) =>
     item?.title?.toLowerCase().includes(searchQuery?.toLowerCase())
   );
+
+
+  const uploadImage = async (formData) => {
+    const url = `https://salenow-v2-backend.vercel.app/api/v1/image/upload-image`;
+    const response = await fetch(url, {
+      method: "POST",
+      body: formData,
+    });
+
+    const imageData = await response.json();
+    return imageData.imageUrl;
+  };
+  
+
+  const handleEdit = async(e) => {
+    e.preventDefault();
+
+    const form = e.target;
+    const image = e.target.image;
+    const title = e.target.title.value;
+
+    const imageFormData = new FormData();
+    imageFormData.append("image", image.files[0]);
+    const imageUrl = await uploadImage(imageFormData);
+
+    const data = {
+      title,
+      image : imageUrl,
+    };
+  
+    
+    console.log(data);
+    
+  }
+
+
+
 
   return (
     <div>
@@ -112,6 +151,10 @@ const CatagoryManagement = () => {
                 <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
                   Category Name
                 </th>
+
+                <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
+                  Action
+                </th>
                 <th className="px-4 py-2"></th>
               </tr>
             </thead>
@@ -121,6 +164,7 @@ const CatagoryManagement = () => {
                 <tr>
                   <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
                     <img
+                      name="image"
                       className="w-10 h-10 rounded object-fill"
                       srcSet={cate.img}
                       src={cate.img}
@@ -138,7 +182,44 @@ const CatagoryManagement = () => {
                     >
                       Delete
                     </button>
+                    <button
+                      onClick={() => setOpenModal(cate)}
+                      className="inline-block rounded ml-3 bg-blue-600 px-4 py-2 text-xs font-medium text-white hover:bg-red-700"
+                    >
+                      Edit
+                    </button>
                   </td>
+
+                  <div>
+
+                    <div onClick={() => setOpenModal(false)} className={`fixed z-[100] flex items-center justify-center ${openModal?._id === cate?._id ? 'visible opacity-100' : 'invisible opacity-0'} inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}>
+                      <div onClick={(e_) => e_.stopPropagation()} className={`text- w-[500px] absolute max-w-md rounded-sm bg-white p-6 drop-shadow-lg dark:bg-black dark:text-white ${openModal?._id === cate?._id ? 'scale-1 opacity-1 duration-300' : 'scale-0 opacity-0 duration-150'}`}>
+                        <form
+                          onSubmit={handleEdit}
+                          action="">
+                          <h1 className="mb-2 text-2xl font-semibold">Edit Category!</h1>
+
+
+                          <div className="flex flex-col gap-2 bb-3">
+                            <label htmlFor="title" className="text-sm font-medium">Category Name</label>
+                            <input name="title" type="text" id="title" className="w-full text-black placeholder:hover:text=black px-4 py-2 rounded-sm border border-gray-300" defaultValue={openModal?.title} />
+                          </div> <br />
+                          <div className="flex flex-col gap-2 bb-3">
+                            <label htmlFor="img" className="text-sm font-medium">Photo</label>
+                            <input type="file" className="w-full bg-white text-black placeholder:hover:text=black px-4 py-2 rounded-sm border border-gray-300" name="image"  />
+                          </div>
+
+                          <br />
+
+                          <div className="flex justify-between">
+                            <button type="submit" className="me-2 rounded-sm bg-green-700 px-6 py-[6px] text-white">Edit</button>
+
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+
                 </tr>
               ))}
             </tbody>

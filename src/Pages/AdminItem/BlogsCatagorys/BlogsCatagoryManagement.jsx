@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import BrightAlert from "bright-alert";
 import React from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
@@ -58,7 +59,7 @@ const BlogsCatagoryManagement = () => {
     e.preventDefault();
 
     const form = e.target;
-    const name = form.name.value;
+    const title = form.name.value;
     const image = form.image;
 
     const imageFormData = new FormData();
@@ -67,11 +68,25 @@ const BlogsCatagoryManagement = () => {
 
 
     const data = {
-      name,
+      id: openModal._id,
+      title: title,
       img: imageUrl,
     };
 
-    console.log(data);
+    fetch(`https://salenow-v2-backend.vercel.app/api/admin/blog-category-details`, {
+      method: "PUT",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        BrightAlert()
+        refetch();
+      })
+
+    console.log(data, category);
     setOpenModal(false)
   }
   return (
@@ -197,7 +212,7 @@ const BlogsCatagoryManagement = () => {
                           <label className="text-start" htmlFor="name">Name</label>
                           <input className="w-full px-2 py-2 border border-gray-200 rounded-sm" type="text"
                             name="name"
-                            value={openModal?.title} />
+                            defaultValue={openModal?.title} />
                         </div>
                         <div className="flex flex-col mt-2">
                           <labe className="text-start" htmlFor="image">Photo</labe>

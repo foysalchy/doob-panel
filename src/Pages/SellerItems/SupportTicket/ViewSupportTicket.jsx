@@ -10,6 +10,7 @@ const ViewSupportTicket = ({ viewComment, setViewComment, ticketDetails, refetch
 
     const { user } = useContext(AuthContext)
     const [loading, setLoading] = useState(false)
+    const [openModal, setOpenModal] = useState(false);
 
     const commentSubmit = (event) => {
         setLoading(true)
@@ -17,10 +18,21 @@ const ViewSupportTicket = ({ viewComment, setViewComment, ticketDetails, refetch
         const time = new Date()
         const comment = event.target.comment.value
         const id = ticketDetails.ticketId
+
+        let content = {
+            comment,
+        }
+
+        // imageUrl && content.imageUrl = imageUrl;
+        if (imageUrl) {
+            content.imageUrl = imageUrl;
+        }
+
         const data = {
             "id": id,
             "time": `${time}`,
-            "content": {comment : comment, img : ''},
+            // "content": {comment : comment, img : ''},
+            "content": content,
             'user': user?.name
         }
         // / support - ticket /: id
@@ -125,24 +137,47 @@ const ViewSupportTicket = ({ viewComment, setViewComment, ticketDetails, refetch
                                 <div  >
 
                                     {ticketDetails.comments.map((comment) => (
-                                        <div className="text-start grid grid-cols-1 gap-4 p-4 mb-8 border rounded-lg  shadow-lg">
-                                            <div className=" flex gap-4">
-                                                <div className='p-2 px-[18px] text-white text-xl font-semibold rounded-full w-fit bg-gray-500'><p>{comment?.user.slice(0, 1)}</p></div>
-                                                <div className="flex flex-col w-full">
-                                                    <div className="flex flex-row justify-between">
-                                                        <p className=" text-xl whitespace-nowrap truncate overflow-hidden">
-                                                            {comment?.user}
-                                                        </p>
-                                                        <a className="text-gray-500 text-xl" href="#">
-                                                            <i className="fa-solid fa-trash" />
-                                                        </a>
+                                        <div className="grid grid-cols-4 gap-2 mb-8 border rounded-lg  shadow-lg">
+                                            <div className="text-start col-span-3 grid grid-cols-1 gap-4 p-4">
+                                                <div className=" flex gap-4">
+                                                    <div className='p-2 px-[18px] text-white text-xl font-semibold rounded-full w-fit bg-gray-500'><p>{comment?.user.slice(0, 1)}</p></div>
+                                                    <div className="flex flex-col w-full">
+                                                        <div className="flex flex-row justify-between">
+                                                            <p className=" text-xl whitespace-nowrap truncate overflow-hidden">
+                                                                {comment?.user}
+                                                            </p>
+                                                            <a className="text-gray-500 text-xl" href="#">
+                                                                <i className="fa-solid fa-trash" />
+                                                            </a>
+                                                        </div>
+                                                        <p className="text-gray-700 text-sm">{formatDateTime(comment?.time)}</p>
                                                     </div>
-                                                    <p className="text-gray-700 text-sm">{formatDateTime(comment?.time)}</p>
+                                                </div>
+                                                <p className="-mt-2 ml-14 text-gray-900">
+                                                    {comment?.content?.comment}
+                                                </p>
+                                            </div>
+
+                                            <div
+
+                                                className="p-2">
+                                                <img
+                                                    onClick={() => setOpenModal(comment?.content?.imageUrl)}
+                                                    src={comment?.content?.imageUrl} alt="" className="h-full" />
+
+                                                <div>
+
+                                                    <div onClick={() => setOpenModal(false)} className={`fixed z-[100] flex items-center justify-center ${openModal === comment?.content?.imageUrl ? 'visible opacity-100' : 'invisible opacity-0'} inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}>
+
+                                                        <div onClick={(e_) => e_.stopPropagation()} className={`text- w-[500px] absolute max-w-md rounded-sm bg-white p-6 drop-shadow-lg dark:bg-black dark:text-white ${openModal === comment?.content?.imageUrl ? 'scale-1 opacity-1 duration-300' : 'scale-0 opacity-0 duration-150'}`}>
+                                                            <img src={openModal} alt="" className='relative w-full h-full  object-cover' />
+                                                            <div className="flex justify-between">
+                                                                <button onClick={() => setOpenModal(false)} className="w-[30px] h-[30px] bg-white absolute top-[-14px] right-[-14px] border-2 border-red-500 text-black rounded-full">x</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <p className="-mt-2 ml-14 text-gray-900">
-                                                {comment?.content}
-                                            </p>
                                         </div>
 
                                     ))}
