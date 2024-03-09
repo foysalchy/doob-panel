@@ -9,7 +9,7 @@ import BrightAlert from 'bright-alert';
 const UserPayment = () => {
     const paymentGetWays = useLoaderData();
     const [open, setOpen] = useState(false);
-    const { selectProductData, orderStage, user } = useContext(AuthContext);
+    const { selectProductData, orderStage, user, shopInfo } = useContext(AuthContext);
     const [payment, setPayment] = useState(false);
     const [passData, setPassData] = useState([]);
     const pathname = window.location.pathname;
@@ -32,7 +32,8 @@ const UserPayment = () => {
         const data = orderStage
         data.method = payment
         data.timestamp = new Date().getTime()
-        data.userId = user._id
+        data.userId = shopInfo._Id ? shopInfo._Id : user?._id
+
         if (fileName) {
             data.file = fileName
         }

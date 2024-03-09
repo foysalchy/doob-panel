@@ -76,6 +76,7 @@ import PriceRole from "../Pages/SellerItems/Sittings/AddPriceRole/PriceRole";
 import ManageWebOrder from "../Pages/SellerItems/OrderManagment/ManageOrder/ManageWebOrder";
 import StockManagement from "../Pages/SellerItems/StockManagement/StockManagement";
 import SellerStockManagement from "../Pages/SellerItems/SellerStockManagement/SellerStockManagement";
+import ServiceManagementSaller from "../Pages/SellerItems/ServiceMangaementSaller/ServiceManagementSaller";
 
 
 const SellerPath = [
@@ -293,6 +294,10 @@ const SellerPath = [
         element: <OrderManagement />
     },
     {
+        path: "service",
+        element: <ServiceManagementSaller />
+    },
+    {
         path: "stock-management",
         element: <SellerStockManagement />
     },
@@ -300,6 +305,10 @@ const SellerPath = [
     {
         path: "orders/manage-order",
         element: <ManageOrder />
+    },
+    {
+        path: "service/manage-service",
+        element: <ServiceManagementSaller />
     },
     {
         path: "orders/web-store-order",

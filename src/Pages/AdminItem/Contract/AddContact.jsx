@@ -1,4 +1,5 @@
-import React from 'react';
+import { useQuery } from '@tanstack/react-query';
+import React, { useEffect } from 'react';
 import { useState } from 'react';
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
 import { BsArrowRight } from 'react-icons/bs';
@@ -8,6 +9,30 @@ import Swal from 'sweetalert2';
 const AddContact = () => {
 
     const [loading, setLoading] = useState(false);
+
+    const [msg, setMsg] = useState(false); // State to store the message
+    const [selectedMedia, setSelectedMedia] = useState('Choose a Social Media');
+
+
+    const { data: contact = [], refetch, isLoading } = useQuery({
+        queryKey: ["contact"],
+        queryFn: async () => {
+            const res = await fetch("https://salenow-v2-backend.vercel.app/api/v1/admin/contact");
+            const data = await res.json();
+            return data;
+        },
+    });;
+
+    useEffect(() => {
+        const check = contact.some(itm => itm?.media === selectedMedia);
+
+        if (check) {
+            setMsg(true)
+        } else {
+            setMsg(false)
+        }
+    }, [contact, selectedMedia]);
+
 
 
 
@@ -42,7 +67,7 @@ const AddContact = () => {
             .then((res) => res.json())
             .then((data) => {
                 setLoading(false);
-                Swal.fire("success", "Your Category Publish Successfully", "success");
+                Swal.fire("success","", "success");
 
                 form.reset();
                 setPreDeleteUrl("");
@@ -53,7 +78,6 @@ const AddContact = () => {
         event.target.reset();
     }
 
-    const [selectedMedia, setSelectedMedia] = useState('Choose a Social Media');
 
     const isEmailCheck = (event) => {
         const selectedValue = event.target.value;
@@ -99,6 +123,9 @@ const AddContact = () => {
                                 <option value="Twitter">Twitter </option>
                                 <option value="Skype">Skype </option>
                             </select>
+
+                            {msg && <p className="text-red-600">It is already selected</p>}
+
                         </div>
                         <div>
                             <label className="sr-only text-black" htmlFor="title">
@@ -159,7 +186,9 @@ const AddContact = () => {
                                     </button>
 
                                     :
-                                    <button type='submit'
+                                    <button
+                                        disabled={!msg ? false : true}
+                                        type='submit'
                                         className="group relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none mt-4 "
 
                                     >

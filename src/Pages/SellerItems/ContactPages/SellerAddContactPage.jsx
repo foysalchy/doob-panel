@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useContext } from 'react';
 import { useState } from 'react';
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
@@ -6,12 +6,36 @@ import { BsArrowRight } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../../AuthProvider/UserProvider';
 import Swal from 'sweetalert2';
+import { useQuery } from '@tanstack/react-query';
 
 const SellerAddContactPage = () => {
     const [loading, setLoading] = useState(false);
 
-
     const { shopInfo } = useContext(AuthContext)
+
+    const [selectedMedia, setSelectedMedia] = useState('Choose a Social Media');
+    const [msg, setMsg] = useState(false); // State to store the message
+
+    const { data: contact = [], refetch } = useQuery({
+        queryKey: ["contact"],
+        queryFn: async () => {
+            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/contact/${shopInfo?.shopId}`);
+            const data = await res.json();
+
+            return data;
+        },
+    });
+
+    useEffect(() => {
+        const check = contact.some(itm => itm?.media === selectedMedia);
+
+        if (check) {
+            setMsg(true)
+        } else {
+            setMsg(false)
+        }
+    }, [contact, selectedMedia]);
+
 
     const dataSubmit = (event) => {
         setLoading(true)
@@ -57,7 +81,6 @@ const SellerAddContactPage = () => {
         event.target.reset();
     }
 
-    const [selectedMedia, setSelectedMedia] = useState('Choose a Social Media');
 
     const isEmailCheck = (event) => {
         const selectedValue = event.target.value;
@@ -101,7 +124,9 @@ const SellerAddContactPage = () => {
                             <option value="Twitter">Twitter </option>
                             <option value="Skype">Skype </option>
                         </select>
+                        {msg && <p className="text-red-600">It is already selected</p>}
                     </div>
+
                     <div>
                         <label className="sr-only text-black" htmlFor="title">
                             Provide URL
@@ -131,7 +156,9 @@ const SellerAddContactPage = () => {
                                 </button>
 
                                 :
-                                <button type='submit'
+                                <button
+                                    disabled={!msg ? false : true}
+                                    type='submit'
                                     className="group relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none mt-4 "
 
                                 >

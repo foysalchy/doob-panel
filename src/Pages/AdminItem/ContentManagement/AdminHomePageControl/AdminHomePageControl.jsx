@@ -30,6 +30,23 @@ const AdminHomePageControl = () => {
             testimonialSection: customerData
         }
         console.log(formData)
+
+
+        fetch("https://salenow-v2-backend.vercel.app/api/v1/admin/upload-content", {
+            method: 'post',
+            headers: {
+                'content-type': 'application/json',
+                "ngrok-skip-browser-warning": "69420",
+            },
+            body: JSON.stringify(formData)
+        })
+            .then(res => res.json())
+            .then(data => {
+                const user = data.user;
+               
+            });
+
+
     }
     return (
         <div>

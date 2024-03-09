@@ -8,7 +8,7 @@ import TrendingProducts from "./TrendingProducts";
 import { useContext } from "react";
 import { AuthContext } from "../../../../AuthProvider/UserProvider";
 import { useQuery } from "@tanstack/react-query";
-import { Link, useLoaderData, useNavigate, useParams } from "react-router-dom";
+import { Link, useLoaderData, useLocation, useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 import BrightAlert from 'bright-alert';
 import MetaHelmet from "../../../../Helmate/Helmate";
@@ -42,6 +42,9 @@ const ProductDetails = () => {
   const [loader, setLoader] = useState(false);
   const [userName, setUserName] = useState(user?.name)
   const [variationData, setVariationData] = useState(null)
+
+
+  console.log(variationData, 'variationData...................');
 
   const myData = useLoaderData();
   const productFind = myData?.data;
@@ -128,15 +131,40 @@ const ProductDetails = () => {
     allUpdateInfo();
   }, [quantity]);
 
-  const imageList = productFind ? productFind.images : [];
+  let imageList = productFind ? productFind.images : [];
+  const [clickImage, setClickImage] = useState(imageList.length > 0 ? imageList[0].src : '');
+
+  useEffect(() => {
+    console.log(clickImage, 'clickImage');
+  }, [clickImage]); // Watching clickImage for changes
+
+
+
   const handleImageClick = (imageUrl) => {
+    setClickImage(imageUrl);
     setSelectedImage(imageUrl);
   };
-  const blankImg = 'https://i.ibb.co/7p2CvzT/empty.jpg';
-  const [selectedImage, setSelectedImage] = useState(
-    productFind?.images[0]?.src ? productFind?.images[0]?.src : blankImg
-  );
 
+  const blankImg = 'https://i.ibb.co/7p2CvzT/empty.jpg';
+
+  const [selectedImage, setSelectedImage] = useState(imageList.length > 0 ? imageList[0]?.src : blankImg);
+
+  const path = useLocation();
+
+  console.log(path, 'location........');
+
+  useEffect(() => {
+    setVariationData(productFind?.variations[0])
+    if (imageList.length > 0) {
+      setSelectedImage(imageList[0]?.src);
+    }
+    else {
+      productFind?.featuredImage?.src ? productFind?.featuredImage?.src : blankImg
+    }
+
+
+  }, [path.pathname])
+  console.log(imageList, 'list.........', productFind);
 
   const handleDecrease = () => {
     if (quantity > 1) {
@@ -568,7 +596,8 @@ const ProductDetails = () => {
 
               </div>
               {/* variation data */}
-              <div className="flex">
+              <div className="flex flex-col gap-2">
+                <p className="">Variations : {variationData?.name}</p>
                 {
                   productFind?.variations?.map((variation, index) => <div onClick={() => setVariationData(variation)} className={`w-[50px] h-[50px] object-cover`} key={index}>
                     <img className="w-full h-full" src={variation?.image} alt={variation?.name} />
