@@ -14,7 +14,7 @@ const SellerEmail = () => {
     const { data: options = [], refetch } = useQuery({
         queryKey: ["options"],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5001/api/v1/seller/get-seller-user?id=${shopInfo?.shopId}`);
+            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/get-seller-user?id=${shopInfo?.shopId}`);
             const data = await res.json();
             console.log(data.data);
             return data?.data;

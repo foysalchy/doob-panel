@@ -75,7 +75,7 @@ const SignUpSeller = () => {
       setPassError("");
       console.log(user);
 
-      fetch("http://localhost:5001/api/v1/auth/sign-up", {
+      fetch("https://salenow-v2-backend.vercel.app/api/v1/auth/sign-up", {
         method: "post",
         headers: {
           "content-type": "application/json",
@@ -111,7 +111,7 @@ const SignUpSeller = () => {
     const time = new Date().getTime()
     const data = { email, code, time }
 
-    fetch('http://localhost:5001/api/v1/admin/refer-code', {
+    fetch('https://salenow-v2-backend.vercel.app/api/v1/admin/refer-code', {
       method: 'POST',
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
@@ -158,7 +158,7 @@ const SignUpSeller = () => {
 
   const handleNumberForm = (e) => {
     e.preventDefault();
-    fetch(`http://localhost:5001/api/v1/auth/send-otp?number=${phoneNumber}`).then((response) => response.json()).then((data) => {
+    fetch(`https://salenow-v2-backend.vercel.app/api/v1/auth/send-otp?number=${phoneNumber}`).then((response) => response.json()).then((data) => {
 
       if (data.success) {
 
@@ -178,7 +178,7 @@ const SignUpSeller = () => {
 
   const handleResendOtp = () => {
     setTimeRemaining(120)
-    fetch(`http://localhost:5001/api/v1/auth/send-otp?number=${phoneNumber}`).then((response) => response.json()).then((data) => {
+    fetch(`https://salenow-v2-backend.vercel.app/api/v1/auth/send-otp?number=${phoneNumber}`).then((response) => response.json()).then((data) => {
 
       setPhone(phone)
       setSwitchNumberForm(false)
@@ -193,7 +193,7 @@ const SignUpSeller = () => {
     const form = e.target;
     const otp = form.otp.value;
 
-    fetch(`http://localhost:5001/api/v1/auth/verify-otp?number=${phoneNumber}&otp=${otp}`).then((response) => response.json()).then((data) => {
+    fetch(`https://salenow-v2-backend.vercel.app/api/v1/auth/verify-otp?number=${phoneNumber}&otp=${otp}`).then((response) => response.json()).then((data) => {
       if (data.success) {
         setSwitchNumberForm(false)
         setSwitchOtpForm(false)

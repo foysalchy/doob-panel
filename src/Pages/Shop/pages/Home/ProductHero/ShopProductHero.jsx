@@ -117,7 +117,7 @@ const ShopProductHero = () => {
 
     const blankImg = 'https://i.ibb.co/7p2CvzT/empty.jpg';
     const bannerFind = heroBanner?.filter((item) => item.status === 'true');
-    // http://localhost:5001/api65e8a0a2e04a44a47ce186c3
+    // https://salenow-v2-backend.vercel.app/api65e8a0a2e04a44a47ce186c3
     useEffect(() => {
         const fetchData = async () => {
             const subCategoryPromises = megaSideCategoryData?.filter(itm => itm?.body?.menu === true).map(async (item) => {

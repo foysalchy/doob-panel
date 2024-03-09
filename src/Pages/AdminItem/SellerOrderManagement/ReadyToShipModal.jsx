@@ -4,13 +4,9 @@ import { RxCross2 } from 'react-icons/rx';
 import Swal from 'sweetalert2';
 
 const ReadyToShipModal = ({ readyToShip, setReadyToShip, orderInfo, refetch, productStatusUpdate }) => {
-    console.log(orderInfo);
-
-
-
     const [loading, setLoading] = useState(false)
-
     const [selectedDelivery, setSelectedDelivery] = useState('Other');
+    console.log(selectedDelivery);
     const handleDeliveryChange = (event) => {
         setSelectedDelivery(event.target.value);
     };
@@ -38,10 +34,11 @@ const ReadyToShipModal = ({ readyToShip, setReadyToShip, orderInfo, refetch, pro
             // SecretKey: shipInfo.secretKey,
             // BaseUrl: shipInfo.api
         }
-        if (selectedDelivery === "Other") {
-            productStatusUpdate("ready_to_ship", orderInfo._id)
-            setReadyToShip(false)
-        } else {
+        if (selectedDelivery === "Other" || selectedDelivery === undefined) {
+            productStatusUpdate("ready_to_ship", orderInfo._id);
+            setReadyToShip(false);
+        }
+        else {
             console.log(shipInfo);
             const api = `${shipInfo.api}/${shipInfo.key}/${shipInfo.secretKey}`
             console.log(uploadData);
