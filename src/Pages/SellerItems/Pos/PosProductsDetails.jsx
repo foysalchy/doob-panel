@@ -50,29 +50,32 @@ const PosProductsDetails = ({ invoice, open, setOpen }) => {
             shopId: shopInfo._id,
             date: new Date().getTime(),
         }
-        setPostData(data);
+        if (user.name || name) {
+            setPostData(data);
+            fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/pos-report`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(data),
+            }).then((res) => res.json()).then((data) => {
+                if (data.status) {
+                    alert("submited.....")
+                    setInvoiceOpen(true)
+                    setUser(false)
+                    setExisting(false)
+                    // setOpen(false)
+                    setError(false)
 
-        fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/pos-report`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(data),
-        }).then((res) => res.json()).then((data) => {
-            if (data.status) {
-                alert("submited.....")
-                setInvoiceOpen(true)
-                setUser(false)
-                setExisting(false)
-                // setOpen(false)
-                setError(false)
+                }
+                else {
+                    setError('User not found')
+                    setUser(false)
+                }
+            })
+        }
 
-            }
-            else {
-                setError('User not found')
-                setUser(false)
-            }
-        })
+
 
 
     }
@@ -195,8 +198,8 @@ const PosProductsDetails = ({ invoice, open, setOpen }) => {
                         </form>
                         }
 
-                        <button onClick={handleInvoiceSubmit} className='bg-gray-900 text-white px-2 w-full py-2 rounded-md mt-5'>Submit........</button>
-                        {postData && <PosInvoice invoiceData={postData} setInvoiceOpen={setInvoiceOpen} invoiceOpen={invoiceOpen} />}
+                        <button onClick={handleInvoiceSubmit} className='bg-gray-900 text-white px-2 w-full py-2 rounded-md mt-5'>Submit</button>
+                        {postData && <PosInvoice setOpen={setOpen} invoiceData={postData} setInvoiceOpen={setInvoiceOpen} invoiceOpen={invoiceOpen} />}
                     </div>
                 </div>
             }

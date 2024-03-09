@@ -209,7 +209,7 @@ const Step1 = ({ nextStep, handleChange, values }) => {
                     <div>
 
                         <p className='mt-10 mb-2 text-black'>
-                            Name <span className='text-red-500'>*</span>
+                            Shop Domain <span className='text-red-500'>*</span>
 
                         </p>
 
@@ -219,7 +219,7 @@ const Step1 = ({ nextStep, handleChange, values }) => {
                                 required
                                 onBlur={shopNameCheck}
                                 type='text'
-                                placeholder='Input Your Uniq Shop Name'
+                                placeholder='Input Your Uniq Shop domain name'
                                 value={shopName}
                                 onChange={(e) => setShopName(e.target.value)}
                                 className={uniq ? "border-green-700 flex-grow w-full h-12 px-4 mb-3 transition duration-200 bg-white border  rounded shadow-sm appearance-none md:mr-2 md:mb-0 placeholder:text-gray-700 focus:outline-none focus:shadow-outline" : " flex-grow w-full h-12 px-4 mb-3 transition duration-200 bg-white border border-red-500 rounded shadow-sm appearance-none md:mr-2 md:mb-0 placeholder:text-gray-700 focus:outline-none focus:shadow-outline"}

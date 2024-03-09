@@ -55,7 +55,7 @@ const AddSelfModal = ({ setNewData, recall, setOpenModal }) => {
             area,
             rack,
             self,
-            status: nextStae
+            status: true
         };
 
         fetch('https://salenow-v2-backend.vercel.app/api/v1/admin/warehouse/self', {

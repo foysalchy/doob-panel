@@ -29,7 +29,7 @@ const AddNewWarehouse = ({ setNewData, refetch, setOpenModal }) => {
                     slag,
                     address,
                     description,
-                    status: nextStae
+                    status: true
                 };
                 postWareHouse(data);
             });

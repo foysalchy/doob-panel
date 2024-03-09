@@ -47,7 +47,7 @@ const AddRackModal = ({ setNewData, recall, setOpenModal }) => {
             warehouse,
             area,
             rack,
-            status: nextStae
+            status: true
         }
         fetch('https://salenow-v2-backend.vercel.app/api/v1/admin/warehouse/rack', {
             method: 'post',

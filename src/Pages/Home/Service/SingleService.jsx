@@ -156,7 +156,7 @@ const SingleService = () => {
               </div>
               <div className="flex w-full justify-between items-center">
                 <span className="title-font font-medium text-2xl text-gray-900">
-                  ${service.price}
+                  {service.price} BDT
                 </span>
                 <div className="flex items-center">
                   {/* <Link to={`/user-service-checkout/${service?._id}`}> */}

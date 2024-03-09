@@ -24,10 +24,11 @@ const SignUpSeller = () => {
   const [passError, setPassError] = useState(false);
   const [loading, setLoading] = useState(false);
   const { RegistrationInEmail } = useContext(AuthContext);
-  const [shop, setShop] = useState(false);
+  const [shop, setShop] = useState(true);
   const [modalOpen, setModalOpen] = useState(false);
   const [userEmail, setUserEmail] = useState('')
   const navigate = useNavigate();
+  const [phoneNumber, setPhoneNumber] = useState('+880');
 
 
   // otp number form
@@ -40,37 +41,41 @@ const SignUpSeller = () => {
   const signUpData = (event) => {
     event.preventDefault();
 
-    let referCode = "";
+
     const form = event.target;
     const name = form.name.value;
 
     const email = form.email.value;
     const password = form.password.value;
-    let shopName = form?.shopName?.value || '';
-    referCode = form?.referCode?.value;
+    const shopName = form?.shopName?.value
+    const referCode = form?.referCode?.value;
     let role = "user";
     const createdAt = new Date()
-    const phoneNumber = phone
+
     setUserEmail(email)
 
+    console.log(form?.shopName?.value);
 
     const userId = email.replace(/[@.]/g, '')
 
 
     setLoading(true);
+    let user = { name, email, password, userId, phoneNumber, role, createdAt, referCode }
     if (password.length >= 6) {
       if (shop) {
         role = "seller";
+        user.role = role;
+        user.shopName = shopName;
+
       }
-      let user = { name, email, password, userId, phoneNumber, role, createdAt, referCode };
-      if (shop) {
-        user = { name, email, password, userId, role, shopName, phoneNumber, referCode, createdAt };
-      }
+
+
       // Update user
 
       setPassError("");
+      console.log(user);
 
-      fetch("https://salenow-v2-backend.vercel.app/api/v1/auth/sign-up", {
+      fetch("http://localhost:5001/api/v1/auth/sign-up", {
         method: "post",
         headers: {
           "content-type": "application/json",
@@ -106,7 +111,7 @@ const SignUpSeller = () => {
     const time = new Date().getTime()
     const data = { email, code, time }
 
-    fetch('https://salenow-v2-backend.vercel.app/api/v1/admin/refer-code', {
+    fetch('http://localhost:5001/api/v1/admin/refer-code', {
       method: 'POST',
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
@@ -128,7 +133,7 @@ const SignUpSeller = () => {
     return /^880\d{10}$/.test(cleanedNumber);
   }
 
-  const [phoneNumber, setPhoneNumber] = useState('+880');
+
   const [valid, setValid] = useState(false);
 
   const handleInputChange = (event) => {
@@ -153,9 +158,10 @@ const SignUpSeller = () => {
 
   const handleNumberForm = (e) => {
     e.preventDefault();
-    fetch(`https://salenow-v2-backend.vercel.app/api/v1/auth/send-otp?number=${phoneNumber}`).then((response) => response.json()).then((data) => {
+    fetch(`http://localhost:5001/api/v1/auth/send-otp?number=${phoneNumber}`).then((response) => response.json()).then((data) => {
+
       if (data.success) {
-        console.log(data)
+
         setPhone(phone)
         setSwitchNumberForm(false)
         setSwitchOtpForm(true);
@@ -163,6 +169,7 @@ const SignUpSeller = () => {
       }
       else {
         setOtpError('Already  registered')
+        setSwitchNumberForm(true)
       }
 
 
@@ -171,8 +178,8 @@ const SignUpSeller = () => {
 
   const handleResendOtp = () => {
     setTimeRemaining(120)
-    fetch(`https://salenow-v2-backend.vercel.app/api/v1/auth/send-otp?number=${phoneNumber}`).then((response) => response.json()).then((data) => {
-      console.log(data)
+    fetch(`http://localhost:5001/api/v1/auth/send-otp?number=${phoneNumber}`).then((response) => response.json()).then((data) => {
+
       setPhone(phone)
       setSwitchNumberForm(false)
       setSwitchOtpForm(true);
@@ -186,7 +193,7 @@ const SignUpSeller = () => {
     const form = e.target;
     const otp = form.otp.value;
 
-    fetch(`https://salenow-v2-backend.vercel.app/api/v1/auth/verify-otp?number=${phoneNumber}&otp=${otp}`).then((response) => response.json()).then((data) => {
+    fetch(`http://localhost:5001/api/v1/auth/verify-otp?number=${phoneNumber}&otp=${otp}`).then((response) => response.json()).then((data) => {
       if (data.success) {
         setSwitchNumberForm(false)
         setSwitchOtpForm(false)
@@ -201,7 +208,7 @@ const SignUpSeller = () => {
     if (setTime) {
       const timer = setInterval(() => {
         setTimeRemaining((prevTime) => {
-          console.log('Time remaining:', prevTime); // Log remaining time to console
+
           if (prevTime === 0) {
             clearInterval(timer);
             setSetTime(false)
@@ -251,7 +258,7 @@ const SignUpSeller = () => {
                 </Link>
               </div>
 
-              <div className="w-full max-w-xl xl:px-8 xl:w-5/12">
+              <div className="w-full max-w-xl xl:px-8 xl:w-7/12">
                 {/* otp number form */}
                 {switchNumberForm &&
                   <form
@@ -275,11 +282,15 @@ const SignUpSeller = () => {
                         value={phoneNumber}
                         required
                         type="text"
-                        onChange={handleInputChange}
+                        onChange={(e) => {
+                          handleInputChange(e);
+                          setOtpError(false);
+                        }}
                         className="flex-grow w-full h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded "
                         id="phone"
                         name="phone"
                       />
+                      {otpError && <small>{otpError}</small>}
                       {!valid && <small className="text-red-500">Your Number is not valid</small>}
                       <button
                         disabled={!valid}
@@ -315,9 +326,9 @@ const SignUpSeller = () => {
                         id="otp"
                         name="otp"
                       />
-                      {otpError ? <small>{otpError}</small> : <div>
+                      <div>
                         {setTime && timeRemaining > 0 && <small className="">Resend OTP after  {`${Math.floor(timeRemaining / 60)}, ${timeRemaining % 60 < 10 ? `0${timeRemaining % 60}` : timeRemaining % 60}`}</small>}
-                      </div>}
+                      </div>
 
                       {timeRemaining < 1 && <small className="text-blue-500" onClick={handleResendOtp}>Resend</small>}
                       <br />
@@ -335,23 +346,63 @@ const SignUpSeller = () => {
                       Sign up for updates
                     </h3>
                     <form onChange={() => setPassError("")} onSubmit={signUpData}>
-                      <div className="mb-1 sm:mb-2">
-                        <label
-                          htmlFor="name"
-                          className="inline-block mb-1 font-medium"
-                        >
-                          Full Name
-                        </label>
-                        <input
+                      <div className="flex gap-4">
+                        <div className="mb-1 sm:mb-2">
+                          <label
+                            htmlFor="name"
+                            className="inline-block mb-1 font-medium"
+                          >
+                            Full Name
+                          </label>
 
-                          placeholder="John Doe"
-                          required
-                          type="text"
-                          className="flex-grow w-full h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
-                          id="name"
-                          name="name"
-                        />
+                          <input
+
+                            placeholder="John Doe"
+                            required
+                            type="text"
+                            className="flex-grow w-full h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
+                            id="name"
+                            name="name"
+                          />
+                        </div>
+                        {shop && (
+                          <div className="mb-1 sm:mb-2">
+                            <label
+                              htmlFor="email"
+                              className="inline-block mb-1 font-medium"
+                            >
+                              Shop Name
+                            </label>
+                            <input
+                              placeholder="Sell Now"
+                              required={shop}
+                              type="text"
+
+                              className="flex-grow w-full h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
+                              id="shopName"
+                              name="shopName"
+                            />
+
+
+
+
+                          </div>
+
+                        )}
                       </div>
+                      <label
+                        htmlFor="email"
+                        className="inline-block mb-1 font-medium"
+                      >
+                        Refer Code
+                      </label>
+                      <input
+                        placeholder="refer code"
+                        type="text"
+                        className="flex-grow w-full h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
+                        id="referCode"
+                        name="referCode"
+                      />
                       <div className="mb-1 sm:mb-2">
                         <label
                           htmlFor="email"
@@ -406,7 +457,7 @@ const SignUpSeller = () => {
                         </div>
                       </div>
 
-                      <div className="text-xs text-gray-600 text-center sm:text-sm"> {!shop ? (
+                      {/* <div className="text-xs text-gray-600 text-center sm:text-sm"> {!shop ? (
                         <div
                           className="flex gap-1 cursor-pointer"
 
@@ -423,43 +474,9 @@ const SignUpSeller = () => {
                           <AiFillCheckSquare className="text-2xl " />
                           <p className="">No i try to create as a user</p>
                         </div>
-                      )}</div>
-
-                      {shop && (
-                        <div className="mb-1 sm:mb-2">
-                          <label
-                            htmlFor="email"
-                            className="inline-block mb-1 font-medium"
-                          >
-                            Shop Name
-                          </label>
-                          <input
-                            placeholder="Sell Now"
-                            required={shop}
-                            type="text"
-                            className="flex-grow w-full h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
-                            id="shopName"
-                            name="shopName"
-                          />
-
-                          <label
-                            htmlFor="email"
-                            className="inline-block mb-1 font-medium"
-                          >
-                            Refer Code
-                          </label>
-                          <input
-                            placeholder="refer code"
-                            type="text"
-                            className="flex-grow w-full h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
-                            id="shopName"
-                            name="referCode"
-                          />
+                      )}</div> */}
 
 
-                        </div>
-
-                      )}
                       <p className="text-sm text-red-500">{passError}</p>
                       <div className="mt-4 mb-2 sm:mb-4">
                         {!loading ? (
