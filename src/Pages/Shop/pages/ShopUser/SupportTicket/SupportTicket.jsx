@@ -52,7 +52,7 @@ const UserSupportTicket = () => {
     };
 
 
-    const filteredData = supportTickets.filter((item) =>
+    const filteredData = supportTickets.length && supportTickets?.filter((item) =>
         item?._id?.toLowerCase().includes(searchQuery?.toLowerCase()) ||
         item?.subject?.toLowerCase().includes(searchQuery?.toLowerCase()) ||
         String(`#${item.ticketId}`)?.toLowerCase().includes(String(`${searchQuery}`)?.toLowerCase())
@@ -105,7 +105,7 @@ const UserSupportTicket = () => {
                     </span>
                 </div>
             </div>
-            {filteredData.length ? <div className='md:mt-0 mt-3'>
+            {filteredData?.length ? <div className='md:mt-0 mt-3'>
                 <div className='flex flex-wrap -mx-4'>
                     <div className='w-full '>
                         <div className='max-w-full overflow-x-auto'>
@@ -121,7 +121,7 @@ const UserSupportTicket = () => {
                                 </thead>
 
                                 <tbody>
-                                    {filteredData.map((ticket) => (
+                                    {filteredData?.map((ticket) => (
                                         <tr>
                                             <td className={TdStyle.TdStyle}>#{ticket?.ticketId}</td>
                                             <td className={TdStyle.TdStyle2}>

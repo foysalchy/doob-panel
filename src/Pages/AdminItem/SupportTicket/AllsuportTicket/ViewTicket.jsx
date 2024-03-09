@@ -5,8 +5,8 @@ import ReactQuill from 'react-quill';
 import Swal from 'sweetalert2';
 
 const ViewTicket = ({ viewTicket, setViewTicket, ticketDetails, refetch }) => {
- 
-    
+
+
     const [loading, setLoading] = useState(false)
     const [viewImg, setViewImage] = useState(null)
     const [openModal, setOpenModal] = useState(false);
@@ -29,6 +29,8 @@ const ViewTicket = ({ viewTicket, setViewTicket, ticketDetails, refetch }) => {
         const formData = new FormData(event.target);
         const comment = event.target.comment.value;
         const image = event.target.image;
+
+
 
 
         const id = ticketDetails.ticketId;
@@ -141,14 +143,14 @@ const ViewTicket = ({ viewTicket, setViewTicket, ticketDetails, refetch }) => {
                     >
 
 
-                        <div className="w-full max-w-[800px] h-[90%]  rounded-[20px]  bg-white relative pb-10 px-8 text-center md:px-[30px] overflow-scroll">
+                        <div className="w-full max-w-[800px] h-[90%]  rounded-[20px]  bg-white relative pb-10 px-8 text-center md:px-[30px] ">
                             <div className='flex justify-between z-50 pt-4 items-start w-full sticky top-0 bg-white border-b'>
                                 <div className='pb-2 text-xl font-bold text-dark text-center sm:text-2xl'>{ticketDetails.userInfo.name}'s Message</div>
                                 <div onClick={() => setViewTicket(!viewTicket)} className='cursor-pointer bg-gray-500 rounded-full px-2.5 mb-2 p-1 text-2xl hover:text-red-500'>
                                     <button> <RxCross2 className='text-xl' /></button>
                                 </div>
                             </div>
-                            <div>
+                            <div className='overflow-y-auto h-[90%]'>
                                 <h3 className="pb-2 text-xl my-4 font-bold text-dark sm:text-xl text-start">
                                     Subject:   {ticketDetails.subject}
                                 </h3>

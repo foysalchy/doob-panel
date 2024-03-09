@@ -89,6 +89,8 @@ const BlogsCatagoryManagement = () => {
     console.log(data, category);
     setOpenModal(false)
   }
+
+  
   return (
     <div>
 

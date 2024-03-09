@@ -12,12 +12,32 @@ const ViewSupportTicket = ({ viewComment, setViewComment, ticketDetails, refetch
     const [loading, setLoading] = useState(false)
     const [openModal, setOpenModal] = useState(false);
 
-    const commentSubmit = (event) => {
+
+
+    const uploadImage = async (formData) => {
+        const url = `https://salenow-v2-backend.vercel.app/api/v1/image/upload-image`;
+        const response = await fetch(url, {
+            method: "POST",
+            body: formData,
+        });
+
+        const imageData = await response.json();
+        return imageData.imageUrl;
+    };
+
+
+    const commentSubmit = async (event) => {
         setLoading(true)
         event.preventDefault();
         const time = new Date()
         const comment = event.target.comment.value
         const id = ticketDetails.ticketId
+        const image = event.target.image;
+
+
+        const imageFormData = new FormData();
+        imageFormData.append("image", image.files[0]);
+        const imageUrl = await uploadImage(imageFormData);
 
         let content = {
             comment,
@@ -91,14 +111,14 @@ const ViewSupportTicket = ({ viewComment, setViewComment, ticketDetails, refetch
                     >
 
 
-                        <div className="w-full max-w-[800px] h-[90%]  rounded-[20px]  bg-white  pb-10 px-8 text-center md:px-[30px] overflow-scroll">
+                        <div className="w-full max-w-[800px] h-[90%]  rounded-[20px]  bg-white  pb-10 px-8 text-center md:px-[30px]  ">
                             <div className='flex justify-between  pt-4 items-start w-full sticky top-0 bg-white border-b'>
                                 <div className='pb-2 text-xl font-bold text-dark text-center sm:text-2xl'>{ticketDetails.userInfo.name}'s Message</div>
                                 <div onClick={() => setViewComment(!setViewComment)} className='cursor-pointer bg-gray-500 rounded-full px-2.5 mb-2 p-1 text-2xl hover:text-red-500'>
                                     <button> <RxCross2 className='text-xl' /></button>
                                 </div>
                             </div>
-                            <div>
+                            <div className='overflow-y-auto h-[90%]'>
                                 <h3 className="pb-2 text-xl my-4 font-bold text-dark sm:text-xl text-start">
                                     Subject:   {ticketDetails.subject}
                                 </h3>
@@ -190,6 +210,7 @@ const ViewSupportTicket = ({ viewComment, setViewComment, ticketDetails, refetch
                                                     placeholder="Comment"
                                                     className="w-full bg-gray-100 rounded border border-gray-400 h-20 py-2 px-3 font-medium placeholder-gray-700 focus:outline-none focus:bg-white"
                                                 ></textarea>
+                                                <input type="file" name="image" className='w-full mt-2' />
                                             </div>
                                             <div className="flex justify-end px-4">
                                                 <input type="submit" disabled={loading} className="px-2.5 py-1.5 rounded-md text-white cursor-pointer text-sm bg-indigo-500" value={loading ? "Uploading.." : "Comment"} />

@@ -7,20 +7,53 @@ import { AuthContext } from '../../../AuthProvider/UserProvider';
 
 
 const UserTicketView = ({ viewTicket, setViewTicket, ticketDetails, refetch }) => {
-
+    const [openModal, setOpenModal] = useState(false);
     const { shopInfo } = useContext(AuthContext)
 
     const [loading, setLoading] = useState(false)
-    const commentSubmit = (event) => {
+
+
+
+
+
+    const uploadImage = async (formData) => {
+        const url = `https://salenow-v2-backend.vercel.app/api/v1/image/upload-image`;
+        const response = await fetch(url, {
+            method: "POST",
+            body: formData,
+        });
+
+        const imageData = await response.json();
+        return imageData.imageUrl;
+    };
+
+
+
+    const commentSubmit = async (event) => {
         setLoading(true)
         event.preventDefault();
         const time = new Date()
         const comment = event.target.comment.value
-        const id = ticketDetails._id
+        const id = ticketDetails._id;
+        const image = event.target.image;
+
+        const imageFormData = new FormData();
+        imageFormData.append("image", image.files[0]);
+        const imageUrl = await uploadImage(imageFormData);
+
+        let content = {
+            comment,
+        }
+
+        // imageUrl && content.imageUrl = imageUrl;
+        if (imageUrl) {
+            content.imageUrl = imageUrl;
+        }
+
         const data = {
             "id": id,
             "time": `${time}`,
-            "content": comment,
+            "content": content,
             "name": shopInfo.shopName
 
 
@@ -86,14 +119,14 @@ const UserTicketView = ({ viewTicket, setViewTicket, ticketDetails, refetch }) =
                     >
 
 
-                        <div className="w-full max-w-[800px] h-[90%]  rounded-[20px]  bg-white  pb-10 px-8 text-center md:px-[30px] overflow-scroll">
+                        <div className="w-full max-w-[800px] h-[90%]  rounded-[20px]  bg-white  pb-10 px-8 text-center md:px-[30px] ">
                             <div className='flex justify-between z-50 pt-4 items-start w-full sticky top-0 bg-white border-b'>
                                 <div className='pb-2 text-xl font-bold text-dark text-center sm:text-2xl'>{ticketDetails.name}'s Message</div>
                                 <div onClick={() => setViewTicket(!viewTicket)} className='cursor-pointer bg-gray-500 rounded-full px-2.5 mb-2 p-1 text-2xl hover:text-red-500'>
                                     <button> <RxCross2 className='text-xl' /></button>
                                 </div>
                             </div>
-                            <div>
+                            <div className='overflow-y-auto h-[90%]'>
                                 <h3 className="pb-2 text-xl my-4 font-bold text-dark sm:text-xl text-start">
                                     Subject:   {ticketDetails.subject}
                                 </h3>
@@ -132,28 +165,56 @@ const UserTicketView = ({ viewTicket, setViewTicket, ticketDetails, refetch }) =
                                 <div  >
 
                                     {ticketDetails.comments.map((comment) => (
-                                        <div className="text-start grid grid-cols-1 gap-4 p-4 mb-8 border rounded-lg  shadow-lg">
-                                            <div className=" flex gap-4 items-start">
-                                                {/* <div className='p-2 px-[18px] text-white text-xl font-semibold rounded-full w-fit bg-gray-500'><p>{comment?.user.slice(0, 1)}</p></div> */}
-                                                <div>
-                                                    <p className="h-10 w-10 rounded-full  bg-gray-500 flex items-center justify-center text-xl text-white">
-                                                        {comment?.user.slice(0, 1)}
-                                                    </p>
-                                                </div>
-                                                <div className="flex flex-col w-full">
-                                                    <div className="flex flex-row justify-between">
-                                                        <p className=" text-xl whitespace-nowrap truncate overflow-hidden">
-                                                            {comment?.user}
+
+                                        <div className="grid grid-cols-4 gap-2 border rounded-lg  shadow-lg mb-8 p-4">
+
+                                            <div className="text-start col-span-3 grid grid-cols-1 gap-4  ">
+                                                <div className=" flex gap-4 items-start">
+                                                    {/* <div className='p-2 px-[18px] text-white text-xl font-semibold rounded-full w-fit bg-gray-500'><p>{comment?.user.slice(0, 1)}</p></div> */}
+                                                    <div>
+                                                        <p className="h-10 w-10 rounded-full  bg-gray-500 flex items-center justify-center text-xl text-white">
+                                                            {comment?.user.slice(0, 1)}
                                                         </p>
-
                                                     </div>
+                                                    <div className="flex flex-col w-full">
+                                                        <div className="flex flex-row justify-between">
+                                                            <p className=" text-xl whitespace-nowrap truncate overflow-hidden">
+                                                                {comment?.user}
+                                                            </p>
 
-                                                    <p className="text-gray-700 text-sm">{formatDateTime(comment?.time)}</p>
+                                                        </div>
+
+                                                        <p className="text-gray-700 text-sm">{formatDateTime(comment?.time)}</p>
+                                                    </div>
+                                                </div>
+                                                <p className="-mt-2 ml-14 text-gray-900">
+                                                    {comment?.content?.comment}
+                                                </p>
+
+
+                                            </div>
+
+
+                                            <div
+
+                                                className="">
+                                                <img
+                                                    onClick={() => setOpenModal(comment?.content?.imageUrl)}
+                                                    src={comment?.content?.imageUrl} alt="" className="" />
+
+                                                <div>
+
+                                                    <div onClick={() => setOpenModal(false)} className={`fixed z-[100] flex items-center justify-center ${openModal === comment?.content?.imageUrl ? 'visible opacity-100' : 'invisible opacity-0'} inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}>
+
+                                                        <div onClick={(e_) => e_.stopPropagation()} className={`text- w-[500px] absolute max-w-md rounded-sm bg-white p-6 drop-shadow-lg dark:bg-black dark:text-white ${openModal === comment?.content?.imageUrl ? 'scale-1 opacity-1 duration-300' : 'scale-0 opacity-0 duration-150'}`}>
+                                                            <img src={openModal} alt="" className='relative w-full h-full  object-cover' />
+                                                            <div className="flex justify-between">
+                                                                <button onClick={() => setOpenModal(false)} className="w-[30px] h-[30px] bg-white absolute top-[-14px] right-[-14px] border-2 border-red-500 text-black rounded-full">x</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <p className="-mt-2 ml-14 text-gray-900">
-                                                {comment?.content}
-                                            </p>
                                         </div>
 
                                     ))}
@@ -165,9 +226,10 @@ const UserTicketView = ({ viewTicket, setViewTicket, ticketDetails, refetch }) =
                                                 placeholder="Comment"
                                                 className="w-full bg-gray-100 rounded border border-gray-400 h-20 py-2 px-3 font-medium placeholder-gray-700 focus:outline-none focus:bg-white"
                                             ></textarea>
+                                            <input type="file" name="image" className="w-full" />
                                         </div>
                                         <div className="flex justify-end px-4">
-                                            <input type="submit" disabled={loading} className="px-2.5 py-1.5 rounded-md text-white cursor-pointer text-sm bg-indigo-500" value={loading ? "Uploading.." : "Comment"} />
+                                            <input type="submit" disabled={loading} className="px-2.5 py-1.5  rounded-md text-white cursor-pointer text-sm bg-indigo-500" value={loading ? "Uploading.." : "Comment"} />
                                         </div>
                                     </form>
                                 </div>

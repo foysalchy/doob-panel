@@ -1,11 +1,14 @@
 import { useQuery } from '@tanstack/react-query';
-import React from 'react';
+import { useState } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
 
-
-
+// Import Swiper styles
+import "swiper/css";
+import { Pagination, Autoplay } from 'swiper/modules';
 
 
 const ShopFeature = () => {
+    const [currentSlider, setCurrentSlider] = useState(0);
 
     const pathname = window.location.pathname;
     const idMatch = pathname.match(/\/shop\/([^/]+)/);
@@ -29,56 +32,26 @@ const ShopFeature = () => {
         },
     });
 
-    if (isLoading) {
-        return <div>Loading...</div>;
-    }
-
-    if (isError) {
-        return <div>Error fetching data. Please try again.</div>;
-    }
-
     return (
-        <div className="flex justify-center">
-            <div className="flex flex-col md:flex-row space-y-2 items-center justify-center w-full p-4">
-                <div className={`w-full md:w-1/2 mx-2 lg:h-[500px] overflow-hidden ${getCollageLayout(0).join(' ')}`}>
-                    <img src={features[0]?.image} alt="" className="h-full object-cover w-full" />
-                </div>
-
-                <div className={`w-full md:w-1/2  ${getCollageLayout(1).join(' ')}`}>
-                    <div className="flex flex-col space-y-2 ">
-                        <div className={`w-full overflow-hidden ${getCollageLayout(2).join(' ')}`}>
-                            <img src={features[1]?.image} alt="" className="h-[250px] object-cover w-full" />
+        <div className='my-12'>
+            <h2 className="text- pb-4">Feature Images</h2>
+            <Swiper
+                pagination={true}
+                autoplay={true}
+                modules={[Pagination, Autoplay]}
+                className="mySwiper">
+                {
+                    features?.map(itm => <SwiperSlide>
+                        <div className="md:h-[500px] h-[170px]">
+                            <img src={itm?.image} alt="" className="w-full h-full object-cover" />
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum sit inventore deserunt non fugit officia earum obcaecati deleniti, quidem praesentium, est architecto minus, placeat molestiae? Nemo ab tenetur possimus quas?
                         </div>
-                        <div className="w-full flex gap-2">
+                    </SwiperSlide>)
+                }
 
-                            <div style={{ backgroundImage: `url(${features[2]?.image} )` }} className={`md:h-[238px] bg-cover object-cover h-[148px] w-full overflow-hidden bg-red-300 ${getCollageLayout(4).join(' ')}`}>
-
-                            </div>
-                            <div className={`h-[238px] w-full overflow-hidden ${getCollageLayout(4).join(' ')}`}>
-                                <img src={features[3]?.image} alt="" className=" object-contain w-full" />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            </Swiper>
         </div>
     );
 };
 
-const getCollageLayout = (index) => {
-    switch (index) {
-        case 0:
-            return ['col-span-2 row-span-2'];
-        case 1:
-            return [];
-        case 2:
-            return [];
-        case 3:
-            return ['col-span-1 row-span-2'];
-        case 4:
-            return ['col-span-1 row-span-2'];
-        default:
-            return [];
-    }
-};
 export default ShopFeature;

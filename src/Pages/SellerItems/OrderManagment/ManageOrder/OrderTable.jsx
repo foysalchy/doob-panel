@@ -9,10 +9,9 @@ import ShippingModal from './ShipingModal';
 import { useEffect } from 'react';
 
 
-const OrderTable = ({ searchValue, selectedValue, setDetails, setOpenModal, selectedDate }) => {
+const OrderTable = ({ setPassData, ordersNav, orderCounts, searchValue, selectedValue, setDetails, setOpenModal, selectedDate }) => {
+    const [modalOn, setModalOn] = useState(false);
 
-    console.log(selectedDate);
-    const [modalOn, setModalOn] = useState(false)
     const { shopInfo, setCheckUpData } = useContext(AuthContext);
 
     const { data: tData = [], refetch } = useQuery({
@@ -41,6 +40,7 @@ const OrderTable = ({ searchValue, selectedValue, setDetails, setOpenModal, sele
 
     //     return false; // Exclude items that don't meet any condition
     // });
+
     const filteredData = tData?.filter((item) => {
         if (
             searchValue === '' &&
@@ -53,12 +53,52 @@ const OrderTable = ({ searchValue, selectedValue, setDetails, setOpenModal, sele
         } else if (searchValue && (!selectedDate || new Date(item?.timestamp) >= selectedDate)) {
             return item?._id?.toLowerCase().includes(searchValue.toLowerCase()); // Filter by _id
         } else if (selectedValue && (!selectedDate || new Date(item?.timestamp) >= selectedDate)) {
-            return item?.status === selectedValue; // Filter by status
+            return item?.status === selectedValue;
         }
 
         return false; // Exclude items that don't meet any condition
     });
-    console.log(filteredData);
+
+
+    // const filteredData = tData?.filter((item) => {
+    //     if (
+    //         searchValue === '' &&
+    //         selectedValue === 'All' &&
+    //         (!selectedDate || new Date(item?.timestamp) >= selectedDate)
+    //     ) {
+    //         return true; // Include all items when searchValue is empty and selectedValue is "All" and timestamp is greater than or equal to selectedDate
+    //     } else if (selectedValue === 'pending' && (!selectedDate || new Date(item?.timestamp) >= selectedDate)) {
+    //         return !item?.status;
+    //     } else if (searchValue && (!selectedDate || new Date(item?.timestamp) >= selectedDate)) {
+    //         return item?._id?.toLowerCase().includes(searchValue.toLowerCase()); // Filter by _id
+    //     } else if (selectedValue && (!selectedDate || new Date(item?.timestamp) >= selectedDate)) {
+    //         return item?.status === selectedValue;
+    //     } else if (selectedValue && (!selectedDate || new Date(item?.timestamp) >= selectedDate)) {
+    //         // Filter by ordersNav name
+    //         return ordersNav.some(navItem => navItem.name.toLowerCase() == selectedValue.toLowerCase());
+    //     }
+
+    //     return false; // Exclude items that don't meet any condition
+    // });
+
+
+
+
+
+    useState(() => {
+        orderCounts = ordersNav.map(navItem => {
+            const count = tData.filter(item => item.status === navItem.value).length;
+            return { ...navItem, count };
+        });
+
+        console.log(ordersNav.map(navItem => {
+            const count = tData.filter(item => item.status === navItem.value).length;
+            return { ...navItem, count };
+        }), 'msg-------')
+    }, [tData])
+
+    console.log(orderCounts, 'orderCounts')
+
     // Calculate the range of items to display based on pagination
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
@@ -307,6 +347,9 @@ const OrderTable = ({ searchValue, selectedValue, setDetails, setOpenModal, sele
     }
 
 
+    console.log(currentItems, 'orderssssss')
+
+
     return (
         <div className="flex flex-col overflow-hidden mt-4">
             <div className="overflow-x-auto transparent-scroll sm:-mx-6 lg:-mx-8">
@@ -355,9 +398,10 @@ const OrderTable = ({ searchValue, selectedValue, setDetails, setOpenModal, sele
                                             <td className="border-r px-6 py-4">{ratial_price(item?.productList)}</td>
                                             <td className="border-r px-6 py-4">{item?.courier_status}</td>
                                             <td className="border-r px-6 py-4">{item?.courier_id}</td>
-                                            <td className="border-r px-6 py-4">{item?.status ? item?.status : 'Pending'}</td>
-                                            <td className="border-r px-6 py-4">
-                                                <td className="whitespace-nowrap border-r px-6 py-4 text-[16px] font-[400] flex flex-col gap-2">
+                                            <td className="border-r px-6 py-4">{item?.status ? item?.status : 'Pending'}
+                                            </td>
+                                            <td className="border-r px-6 py-4 flex items-center gap-2">
+                                                <td className="whitespace-nowrap  px-6 py-4 text-[16px] font-[400] flex flex-col gap-2">
                                                     {!item?.status && (
                                                         <>
                                                             <button onClick={() => setReadyToShip(item)} className="text-[16px] font-[400] text-blue-700">Ready to Ship</button>
@@ -383,6 +427,37 @@ const OrderTable = ({ searchValue, selectedValue, setDetails, setOpenModal, sele
                                                         <button onClick={() => viewDetails(item)} className="text-[16px] font-[400] text-blue-700">View Details</button>
                                                     )}
                                                 </td>
+
+                                                {/* <button
+                                                    onClick={() => setModalOn(item)}
+                                                    className='bg-blue-500 text-white px-3 py-1 text-sm rounded'>
+                                                    Edit
+                                                </button> */}
+
+                                                <div>
+                                                    <div onClick={() => setModalOn(false)} className={`fixed z-[100] flex items-center justify-center ${modalOn?._id === item?._id ? 'visible opacity-100' : 'invisible opacity-0'} inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}>
+                                                        <div onClick={(e_) => e_.stopPropagation()} className={`text- absolute w-[500px] rounded-sm bg-white p-6 drop-shadow-lg dark:bg-black dark:text-white ${modalOn?._id === item?._id ? 'scale-1 opacity-1 duration-300' : 'scale-0 opacity-0 duration-150'}`}>
+                                                            <h1 className="mb-2 text-2xl font-semibold">Edit Order { }</h1>
+                                                            <form>
+
+                                                                <div className="flex items-start w-full mb-6 flex-col gap-1">
+                                                                    <label htmlFor="name">Name</label>
+                                                                    <input type="text"
+                                                                        className='border border-white w-full bg-transparent text-white py-2'
+
+                                                                        defaultValue={item?.addresses?.fullName}
+                                                                    />
+                                                                </div>
+
+                                                                <div className="flex justify-between">
+                                                                    <button type='submit' onClick={() => setModalOn(false)} className="me-2 rounded-sm bg-green-700 px-6 py-[6px] text-white">Ok</button>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
                                             </td>
                                             <td className="border-r px-6 py-4">
                                                 {item?.courier_id && <button onClick={() => updateCourier_status(item._id, item.courier_id)}>Check Status</button>}
