@@ -32,9 +32,9 @@ export const ordersNav = [
         dropdownLink: [""],
     },
     {
-        name: 'cancelled',
+        name: 'Cancel',
         status: '',
-        value: 'canceled',
+        value: 'Cancel',
         dropdownLink: [""],
     },
     {

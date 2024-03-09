@@ -77,6 +77,7 @@ import ManageWebOrder from "../Pages/SellerItems/OrderManagment/ManageOrder/Mana
 import StockManagement from "../Pages/SellerItems/StockManagement/StockManagement";
 import SellerStockManagement from "../Pages/SellerItems/SellerStockManagement/SellerStockManagement";
 import ServiceManagementSaller from "../Pages/SellerItems/ServiceMangaementSaller/ServiceManagementSaller";
+import BlogCategorySeller from "../Pages/SellerItems/SellersBlog/BlogCategorySeller/BlogCategorySeller";
 
 
 const SellerPath = [
@@ -91,6 +92,10 @@ const SellerPath = [
     {
         path: "manage-blogs/add-blog",
         element: <AddSellerBlog />
+    },
+    {
+        path: "manage-blogs/blog-category",
+        element: <BlogCategorySeller />
     },
     {
         path: "manage-contact",

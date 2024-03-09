@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import EditService from './EditService';
+import { BsEye } from 'react-icons/bs';
 
 const ManageService = () => {
 
@@ -285,6 +286,9 @@ const ManageService = () => {
                                                                     />
                                                                 </svg>
                                                             </button>
+                                                            <Link to={`/service/${service?._id}`}>
+                                                                <BsEye className=" transition-colors text-xl duration-200 text-green-500 hover:text-green-700 focus:outline-none" />
+                                                            </Link>
                                                         </div>
                                                     </td>
 

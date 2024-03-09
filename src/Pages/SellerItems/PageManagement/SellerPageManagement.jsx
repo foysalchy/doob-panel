@@ -191,7 +191,7 @@ const SellerPageManagement = () => {
                                                         <button onClick={() => handleViewDetails(faq?._id)}>
                                                             <BiEdit className=" transition-colors text-xl duration-200 text-yellow-500 hover:text-yellow-700 focus:outline-none" />
                                                         </button>
-                                                        <Link to={`/shop/${shopInfo.shopId}/pages/${blog._id}`}>
+                                                        <Link to={`/shop/${shopInfo.shopId}/pages/${faq?._id}`}>
                                                             <BsEye className="transition-colors text-xl duration-200 cursor-pointer text-green-500 hover:text-green-700 focus:outline-none" />
                                                         </Link>
                                                     </div>

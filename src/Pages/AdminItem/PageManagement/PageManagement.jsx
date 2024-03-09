@@ -1,12 +1,15 @@
 import { useQuery } from "@tanstack/react-query";
-import React from "react";
+import React, { useContext } from "react";
 import { useState } from "react";
 import { BiEdit } from "react-icons/bi";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import UpdatePage from "./UpdatePage";
+import { BsEye } from "react-icons/bs";
+import { AuthContext } from "../../../AuthProvider/UserProvider";
 
 const PageManagement = () => {
+  const { shopInfo } = useContext(AuthContext)
 
   const { data: faqs = [], refetch } = useQuery({
     queryKey: ["faqs"],
@@ -73,6 +76,7 @@ const PageManagement = () => {
   const handleViewDetails = (ticketId) => {
     setOpenModal(ticketId);
   };
+
 
 
 
@@ -202,6 +206,14 @@ const PageManagement = () => {
                             <button onClick={() => handleViewDetails(faq?._id)}>
                               <BiEdit className=" transition-colors text-xl duration-200 text-yellow-500 hover:text-yellow-700 focus:outline-none" />
                             </button>
+
+                            <Link
+                              to={`/admin/pages/${faq?._id}`}
+                              onClick={() => handleViewDetails(faq?._id)}>
+                              <BsEye className=" transition-colors text-xl duration-200 text-green-500 hover:text-green-700 focus:outline-none" />
+                            </Link>
+
+
                           </div>
                         </td>
                         {OpenModal === faq?._id && <div className="h-0 w-0">

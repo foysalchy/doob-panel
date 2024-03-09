@@ -145,7 +145,14 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                 <MdOutlineAddCircleOutline className='w-5 h-5 fill-current text-gray-400' />   Add Blog
                                                             </Link>
                                                         </li>
-
+                                                        <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
+                                                            <Link
+                                                                to={'/seller/manage-blogs/blog-category'}
+                                                                className="  text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 rounded-md"
+                                                            >
+                                                                <MdOutlineAddCircleOutline className='w-5 h-5 fill-current text-gray-400' />   Blog Category
+                                                            </Link>
+                                                        </li>
 
                                                     </ul>
                                                 </details>
@@ -186,6 +193,14 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                             className="  text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 rounded-md"
                                                         >
                                                             <MdOutlineAddCircleOutline className='w-5 h-5 fill-current text-gray-400' />   Add Blog
+                                                        </Link>
+                                                    </li> 
+                                                    <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
+                                                        <Link
+                                                            to={'/seller/manage-blogs/blog-category'}
+                                                            className="  text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 rounded-md"
+                                                        >
+                                                            <MdOutlineAddCircleOutline className='w-5 h-5 fill-current text-gray-400' />   Blog Category
                                                         </Link>
                                                     </li>
 

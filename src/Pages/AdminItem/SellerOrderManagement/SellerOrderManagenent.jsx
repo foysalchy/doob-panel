@@ -63,7 +63,7 @@ const SellerOrderManagement = () => {
         setOn(!on)
     };
 
-
+ 
     const [readyToShip, setReadyToShip] = useState(false)
 
     const productStatusUpdate = (status, orderId) => {

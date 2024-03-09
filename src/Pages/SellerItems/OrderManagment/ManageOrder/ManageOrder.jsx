@@ -7,18 +7,24 @@ import DarazOrderTable from '../DarazOrder/DarazOrderTable';
 // import OrderTable from './OrderTable';
 
 const ManageOrder = () => {
+
+    let orderCounts = {};
+    const [passData, setPassData] = useState([])
+    // const [porductQuantity, setProductQuantity] = useState(0);
     const [selectedValue, setSelectedValue] = useState('All');
     const [openModal, setOpenModal] = useState(false);
     const [daraz, setDaraz] = useState(false);
+
     const [searchValue, setSearchValue] = useState('');
     const handleSelectChange = (event) => {
         setSelectedValue(event.target.value);
     };
 
     const [selectedDate, setSelectedDate] = useState(null)
-    const [details, setDetails] = useState()
+    const [details, setDetails] = useState();
 
 
+    console.log(orderCounts, 'pps')
 
     return (
         <div>
@@ -36,6 +42,7 @@ const ManageOrder = () => {
                     Woo Commerce Order
                 </button>
             </div>
+
             <nav className='flex md:gap-4 gap-2 overflow-x-auto mt-6'>
                 {ordersNav?.map((itm) =>
                     itm?.status === 'dropdown' ? (
@@ -46,9 +53,9 @@ const ManageOrder = () => {
                             value={selectedValue}
                             onChange={handleSelectChange}
                         >
-                            <option selected value="pending">Pending</option>
+                            <option selected value="pending">Pending </option>
                             {itm?.dropdownLink?.map((option) => (
-                                <option key={option}>{option}</option>
+                                <option key={option}>{option}  </option>
                             ))}
                         </select>
                     ) : (
@@ -59,6 +66,7 @@ const ManageOrder = () => {
                             onClick={() => setSelectedValue(itm.value)}
                         >
                             {itm.name}
+                            {/* {selectedValue === itm.value && porductQuantity} */}
                         </button>
                     )
                 )}
@@ -92,7 +100,7 @@ const ManageOrder = () => {
                 {/* table */}
                 {
                     !daraz ?
-                        <OrderTable selectedDate={selectedDate} setDetails={setDetails} setOpenModal={setOpenModal} selectedValue={selectedValue} searchValue={searchValue} />
+                        <OrderTable setPassData={setPassData} ordersNav={ordersNav} orderCounts={orderCounts} selectedDate={selectedDate} setDetails={setDetails} setOpenModal={setOpenModal} selectedValue={selectedValue} searchValue={searchValue} />
                         :
                         <DarazOrderTable selectedValue={selectedValue} searchValue={searchValue} />
 
