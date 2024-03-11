@@ -8,7 +8,7 @@ import EditProductForm from './EditProduct';
 import DemoImage from './woocommerce-placeholder-600x600.png';
 import Swal from 'sweetalert2';
 import DeleteModal from '../../../../../Common/DeleteModal';
-import { BiLeftArrow, BiRightArrow } from 'react-icons/bi';
+import { BiEdit, BiLeftArrow, BiRightArrow } from 'react-icons/bi';
 import WebStoreproduct from './WebStoreProducts';
 import PrintPage from './SellerPrintPage';
 import SellerPrintPage from './SellerPrintPage';
@@ -457,8 +457,8 @@ const SellerAllProducts = () => {
 
                                                         </button>
 
-                                                        <button onClick={() => setOpenModal(true)} className=" transition-colors duration-200 hover:text-yellow-500  text-yellow-700 focus:outline-none mr-4">
-                                                            <MdOutlineViewInAr className="w-5 h-5" />
+                                                        <button onClick={() => setOpenModal(true)} className=" transition-colors duration-200 hover:text-green-500  text-green-700 focus:outline-none mr-4">
+                                                            <BiEdit className="w-5 h-5" />
                                                         </button>
                                                         {
                                                             product.woo && <button onClick={() => updateProduct(product._id, product.sku, product.item_id, 'woo')} className=" transition-colors duration-200 hover:text-yellow-500  text-yellow-700 focus:outline-none mr-4">
@@ -468,9 +468,9 @@ const SellerAllProducts = () => {
                                                         {product.daraz && <button onClick={() => updateProduct(product._id, product.variations[0].SKU, product.item_id, 'daraz')} className=" transition-colors duration-200 hover:text-yellow-500  text-yellow-700 focus:outline-none mr-4">
                                                             {loadingStates[product._id] ? 'Updating...' : 'Update on Daraz'}
                                                         </button>}
-                                                        {/* <div className='h-0 w-0'>
+                                                        <div className='h-0 w-0'>
                                                             <EditProductForm OpenModal={OpenModal} setOpenModal={setOpenModal} product={product} />
-                                                        </div> */}
+                                                        </div>
                                                     </div>
                                                     <div>
 

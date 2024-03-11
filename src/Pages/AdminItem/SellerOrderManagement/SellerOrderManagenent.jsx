@@ -4,6 +4,7 @@ import ReadyToShipModal from './ReadyToShipModal';
 import BrightAlert from 'bright-alert';
 import BarCode from 'react-barcode';
 import SellerOrderInvoice from './SellerOrderInvoice';
+import OrderInvoice from './OrderInvoice';
 
 const SellerOrderManagement = () => {
     const { data: products = [], refetch } = useQuery({
@@ -243,44 +244,22 @@ const SellerOrderManagement = () => {
                                                             <p className="px-3 py-1 text-xs text-indigo-500 rounded-full bg-gray-800 bg-indigo-100/60">{product.price}</p>
                                                         </div>
                                                     </td>
-                                                    <td className="px-4 py-4 flex items-center gap-4 text-sm whitespace-nowrap">
+                                                    <td className="px-4  py-4 flex items-center gap-4 text-sm whitespace-nowrap">
                                                         <button onClick={() => deleteMethod(product._id)} className="transition-colors duration-200 text-red-500 hover:text-red-700 focus:outline-none">
                                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-5 h-5">
                                                                 <path strokeLinecap="round" strokeLinejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
                                                             </svg>
                                                         </button>
-                                                        <button onClick={() => setModalOpen(modalOpen ? false : product)} className="group relative inline-block overflow-hidden border border-indigo-600 px-8 py-3 focus:outline-none focus:ring">
+                                                        <button onClick={() => setModalOpen( product)} className="group relative inline-block overflow-hidden border border-indigo-600 px-8 py-3 focus:outline-none focus:ring">
                                                             <span className="absolute inset-y-0 left-0 w-[2px] bg-indigo-600 transition-all group-hover:w-full group-active:bg-indigo-500"></span>
                                                             <span className="relative text-sm font-medium text-indigo-600 transition-colors group-hover:text-white">{modalOpen._id === product._id ? 'Close Details' : "View Details"}</span>
                                                         </button>
                                                     </td>
                                                 </tr>
 
-                                                {modalOpen._id === product._id && (
-                                                    <tr>
-                                                        <td colSpan="5" className=" bg-gray-100">
-                                                            {/* Product information */}
-                                                            <div className="">
-                                                                <h2 className="text-lg font-semibold">Billing Information</h2>
-                                                                <div className='flex gap-2 items-center'>
-
-                                                                    <div className="wrap ">
-                                                                        <BarCode value={product._id} />
-                                                                    </div>
-                                                                    <div className='flex gap-2'>
-                                                                        <h1>Name: {modalOpen.userInfo.name}</h1>
-                                                                        <h1>Phone: {modalOpen.userInfo.phoneNumber}</h1>
-                                                                        <h1>City:  {modalOpen.userInfo.city}</h1>
-                                                                        <h1>Area: {modalOpen.userInfo.area}</h1>
-                                                                    </div>
-                                                                    <div>
-
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                )}
+                                              {
+                                                modalOpen?._id === product._id && <OrderInvoice openModal={modalOpen} setOpenModal={setModalOpen} product={product}/>
+                                              }
                                             </React.Fragment>
 
 

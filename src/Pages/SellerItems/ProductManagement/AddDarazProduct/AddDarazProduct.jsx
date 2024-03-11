@@ -217,7 +217,7 @@ const AddDarazProduct = () => {
                                 {filteredProducts.length ?
                                     (
                                         <span>{
-                                            filteredProducts.map((product, i) => (
+                                        filteredProducts.map((product, i) => (
                                                 <div
                                                     key={i}
                                                     onClick={() => handleSelectChange(product)}
