@@ -309,6 +309,10 @@ const SignUpSeller = () => {
                       <h3 className="mb-4 text-xl font-semibold sm:text-center sm:mb-6 sm:text-2xl">
                         Sign up for updates
                       </h3>
+                      <p className="text-xs text-start">
+                        We have already send you  4 digit
+                        <br />verification code on your number *********{phoneNumber.slice(-3)}
+                      </p>
                       <span
                         htmlFor="otp"
                         className="inline-block text-xs mb-1 font-medium"
