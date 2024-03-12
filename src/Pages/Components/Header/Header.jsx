@@ -146,7 +146,7 @@ const Header = () => {
         </NavLink>
       </li>
 
-      <li>
+      {/* <li>
         <NavLink
           href="/"
           aria-label="Our product"
@@ -159,7 +159,7 @@ const Header = () => {
         >
           Features
         </NavLink>
-      </li>
+      </li> */}
 
       <li>
         <NavLink
@@ -189,7 +189,7 @@ const Header = () => {
           learn
         </NavLink>
       </li>
-
+{/* 
       <li>
         <NavLink
           to="/blogs"
@@ -219,7 +219,7 @@ const Header = () => {
           Contact
         </NavLink>
       </li>
-      
+       */}
       
 
     </>
