@@ -67,11 +67,11 @@ const ShopNav = () => {
             }
         };
 
-        const timeoutId = setTimeout(fetchData, 5000);
+        const timeoutId = setTimeout(fetchData, 1000);
 
         return () => clearTimeout(timeoutId); // Cleanup the timeout on component unmount
 
-    }, [shopUser, shop_id]);
+    }, [shopUser, shop_id, cartProducts]);
 
 
     return (

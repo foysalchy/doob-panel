@@ -341,6 +341,8 @@ const AddToCard = () => {
     }, [shopUser]);
 
 
+    console.log(`https://salenow-v2-backend.vercel.app/api/v1/shop/user/add-to-cart?userId=${shopUser?._id}&shopId=${shop_id?.shop_id}&token=${shopUser?._id}`);
+
 
 
     // const [promoPrice, setPromoPrice] = useState(false)

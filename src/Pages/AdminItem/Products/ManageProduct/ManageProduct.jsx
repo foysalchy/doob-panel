@@ -6,9 +6,10 @@ import { useQuery } from "@tanstack/react-query";
 import BrightAlert from "bright-alert";
 import SellerPrintPage from "../../../SellerItems/ProductManagement/SellerProductManagement/SellerAllProduct/SellerPrintPage";
 import WarehouseModal from "./WarehouseModal";
+import EditProduct from "./EditProduct";
 
 const ManageProduct = () => {
-
+  const [openModal, setOpenModal] = useState(false);
   const [doobProduct, setDoobProduct] = useState(false)
 
   const { data: products = [], refetch } = useQuery({
@@ -101,6 +102,8 @@ const ManageProduct = () => {
   };
 
 
+
+  console.log(products, '+++++++');
 
   return (
     <div className="">
@@ -249,29 +252,32 @@ const ManageProduct = () => {
                                 onChange={() => handleUpdateCheck(product._id)}
                               />
                             </label>
-                            <div className="flex  duration-150 items-center gap-x-2 relative">
-                              <div className="imgSm bg-red-400">
-                                <img
-                                  className="object-cover  w-10 h-10 rounded hover:cursor-pointer"
-                                  srcSet={product?.featuredImage && product?.featuredImage?.src}
-                                  src={product?.featuredImage && product?.featuredImage?.src}
-                                  alt=""
-                                />
-                                <div
-                                  style={{
-                                    backgroundImage: `url(${product?.featuredImage?.src})`,
-                                  }}
-                                  className="absolute top-[-40px] duration-150 abs hidden bg-[url(${product?.featuredImage?.src})] left-[43px] object-cover bg-cover bg-white shadow-xl w-[150px] h-[150px] ring-1 ring-gray-500"
-                                >
-                                </div>
-                              </div>
 
-                              <div>
-                                <h2 className="font-medium text-gray-800 ">
-                                  {product.name && product?.name.split(" ").slice(0, 5).join(" ")}
-                                </h2>
-                                <p className="text-sm font-normal text-gray-600 text-gray-400">{product && product?._id}</p>
+                          </div>
+                        </td>
+                        <td>
+                          <div className="flex  duration-150 items-center gap-x-2 relative">
+                            <div className="imgSm bg-red-400">
+                              <img
+                                className="object-cover  w-10 h-10 rounded hover:cursor-pointer"
+                                srcSet={product?.featuredImage && product?.featuredImage?.src}
+                                src={product?.featuredImage && product?.featuredImage?.src}
+                                alt=""
+                              />
+                              <div
+                                style={{
+                                  backgroundImage: `url(${product?.featuredImage?.src})`,
+                                }}
+                                className="absolute top-[-40px] duration-150 abs hidden bg-[url(${product?.featuredImage?.src})] left-[43px] object-cover bg-cover bg-white shadow-xl w-[150px] h-[150px] ring-1 ring-gray-500"
+                              >
                               </div>
+                            </div>
+
+                            <div>
+                              <h2 className="font-medium text-gray-800 ">
+                                {product.name && product?.name.split(" ").slice(0, 5).join(" ")}
+                              </h2>
+                              <p className="text-sm font-normal text-gray-600 text-gray-400">{product && product?._id}</p>
                             </div>
                           </div>
                         </td>
@@ -326,7 +332,9 @@ const ManageProduct = () => {
                                 />
                               </svg>
                             </button>
-                            <button className=" transition-colors duration-200 hover:text-yellow-500  text-yellow-700 focus:outline-none">
+                            {/* <button
+                              onClick={() => setOpenModal(product)}
+                              className=" transition-colors duration-200 hover:text-yellow-500  text-yellow-700 focus:outline-none">
                               <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 fill="none"
@@ -341,12 +349,20 @@ const ManageProduct = () => {
                                   d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
                                 />
                               </svg>
-                            </button>
+                            </button> */}
+
+                            {/* modal */}
+                            {/* <EditProduct openModal={openModal} setOpenModal={setOpenModal} product={product} /> */}
+                            {/* modal end */}
+
+
                           </div>
                         </td>
                         <div className="h-0 w-0">
                           {modalOpen == product?._id && <WarehouseModal doobProduct={doobProduct} modalOpen={modalOpen} product={product} setModalOpen={setModalOpen} />}
                         </div>
+
+
                       </tr>
                     )) : ''}
                   </tbody>

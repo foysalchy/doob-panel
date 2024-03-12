@@ -151,11 +151,11 @@ const EditAddress = ({ data, refetch, setEditAddress, setNewAddress }) => {
                     </select>
                     <div className="mt-4">
                         <label htmlFor="defaultAddress" className="flex items-center">
-                            <input type="checkbox" defaultChecked={data === true ? false : data.defaultAddress} id="defaultAddress" name="defaultAddress" className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded" />
+                            <input type="checkbox" defaultChecked={data === true ? true : data.defaultAddress} id="defaultAddress" name="defaultAddress" className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded" />
                             <span className="ml-2 text-sm text-gray-700">Default delivery address</span>
                         </label>
                         <label htmlFor="defaultBillingAddress" className="flex items-center mt-2">
-                            <input defaultChecked={data === true ? false : data.defaultBillingAddress} type="checkbox" id="defaultBillingAddress" name="defaultBillingAddress" className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded" />
+                            <input defaultChecked={data === true ? true : data.defaultBillingAddress} type="checkbox" id="defaultBillingAddress" name="defaultBillingAddress" className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded" />
                             <span className="ml-2 text-sm text-gray-700">Default billing address</span>
                         </label>
                     </div>

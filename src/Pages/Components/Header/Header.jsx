@@ -7,28 +7,32 @@ import { CgArrowLeft, CgShoppingCart } from "react-icons/cg";
 import Category from "./CategoryListSm";
 import CategoryListSm from "./CategoryListSm";
 import { BiSearch } from "react-icons/bi";
+import { FaAngleDown } from "react-icons/fa6";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [userDash, setUserDash] = useState(false);
   const { user, logOut, search, setSearch } = useContext(AuthContext);
   const [on, setOn] = useState(false);
+  const [dropdowns, setDropdowns] = useState({});
+
+  const toggleDropdown = (dropdownId) => {
+    setDropdowns(prevState => {
+      const newState = {};
+
+      // Close all dropdowns except the one being toggled
+      Object.keys(prevState).forEach(key => {
+        newState[key] = key === dropdownId ? !prevState[key] : false;
+      });
+
+      return {
+        ...newState,
+        [dropdownId]: !prevState[dropdownId] || false,
+      };
+    });
+  };
   const menuData = (
     <>
-      <li>
-        <NavLink
-          href="/"
-          aria-label="Our product"
-          title="Our product"
-          className={({ isActive }) => {
-            return isActive
-              ? "tracking-wide text-gray-800 transition-colors duration-200 font-semibold hover:text-black underline underline-offset-8 text-lg "
-              : "tracking-wide text-gray-800 transition-colors duration-200 font-semibold hover:text-black hover:underline underline-offset-8 text-lg ";
-          }}
-        >
-          Features
-        </NavLink>
-      </li>
       <li>
         <NavLink
           to="/products"
@@ -36,41 +40,97 @@ const Header = () => {
           title="Our product"
           className={({ isActive }) => {
             return isActive
-              ? "tracking-wide text-gray-800 transition-colors duration-200 font-semibold hover:text-black underline underline-offset-8 text-lg "
-              : "tracking-wide text-gray-800 transition-colors duration-200 font-semibold hover:text-black hover:underline underline-offset-8 text-lg ";
+              ? "tracking-wide text-gray-800 transition-colors duration-200 font-semibold hover:text-black underline underline-offset-8   "
+              : "tracking-wide text-gray-800 transition-colors duration-200 font-semibold hover:text-black hover:underline underline-offset-8   ";
           }}
         >
           Product
         </NavLink>
       </li>
-      <li>
-        <NavLink
-          to="/price"
-          aria-label="Product pricing"
-          title="Product pricing"
-          className={({ isActive }) => {
-            return isActive
-              ? "tracking-wide text-gray-800 transition-colors duration-200 font-semibold hover:text-black underline underline-offset-8 text-lg "
-              : "tracking-wide text-gray-800 transition-colors duration-200 font-semibold hover:text-black hover:underline underline-offset-8 text-lg ";
-          }}
+
+
+      <li className="relative">
+        <button
+          onClick={() => toggleDropdown('solution')}
+          className="tracking-wide   text-gray-800 transition-colors duration-200 font-semibold hover:text-black  underline-offset-8 flex items-center gap-2"
         >
-          Pricing
-        </NavLink>
+          Solution  <FaAngleDown />
+        </button>
+        <div className={`${dropdowns['solution'] ? 'h-[auto]' : 'h-[0px]'} w-[200px] overflow-hidden duration-300 absolute top-[24px] left-0 ri`}>
+          <ul className="bg-gray-100 shadow-xl w-[200px] mt-3 p-2">
+            <li>
+              <Link to={``} className="">
+                <div className="w-full hover:text-blue-500 duration-200 mb-2">Create Online Store</div>
+              </Link>
+            </li>
+            <li>
+              <Link to={``} className="">
+                <div className="w-full hover:text-blue-500 duration-200 mb-2">Get domain</div>
+              </Link>
+            </li>
+            <li>
+              <Link to={``} className="">
+                <div className="w-full hover:text-blue-500 duration-200 mb-2">Mobile App</div>
+              </Link>
+            </li>
+            <li>
+              <Link to={``} className="">
+                <div className="w-full hover:text-blue-500 duration-200 mb-2">POS System</div>
+              </Link>
+            </li>
+            <li>
+              <Link to={``} className="">
+                <div className="w-full hover:text-blue-500 duration-200 mb-2">Dropshipping</div>
+              </Link>
+            </li>
+            <li>
+              <Link to={``} className="">
+                <div className="w-full hover:text-blue-500 duration-200 mb-2">Wholesale</div>
+              </Link>
+            </li>
+            <li>
+              <Link to={``} className="">
+                <div className="w-full hover:text-blue-500 duration-200 mb-2">Warehousing </div>
+              </Link>
+            </li>
+          </ul>
+        </div>
       </li>
-      <li>
-        <NavLink
-          to="/blogs"
-          aria-label="About us"
-          title="About us"
-          className={({ isActive }) => {
-            return isActive
-              ? "tracking-wide text-gray-800 transition-colors duration-200 font-semibold hover:text-black underline underline-offset-8 text-lg "
-              : "tracking-wide text-gray-800 transition-colors duration-200 font-semibold hover:text-black hover:underline underline-offset-8 text-lg ";
-          }}
+
+      <li className="relative">
+        <button
+          onClick={() => toggleDropdown('marketing')}
+          className="tracking-wide   text-gray-800 transition-colors duration-200 font-semibold hover:text-black  underline-offset-8 flex items-center gap-2"
         >
-          Blog
-        </NavLink>
+          Marketing  <FaAngleDown />
+        </button>
+        <div className={`${dropdowns['marketing'] ? 'h-[auto]' : 'h-[0px]'} w-[200px] overflow-hidden duration-300 absolute top-[24px] left-0 ri`}>
+          <ul className="bg-gray-100 shadow-xl w-[200px] mt-3 p-2">
+            <li>
+              <Link to={``} className="">
+                <div className="w-full hover:text-blue-500 duration-200 mb-2">Facebook Ads</div>
+              </Link>
+            </li>
+            <li>
+              <Link to={``} className="">
+                <div className="w-full hover:text-blue-500 duration-200 mb-2">Google Ads</div>
+              </Link>
+            </li>
+            <li>
+              <Link to={``} className="">
+                <div className="w-full hover:text-blue-500 duration-200 mb-2">Email Marketing</div>
+              </Link>
+            </li>
+            <li>
+              <Link to={``} className="">
+                <div className="w-full hover:text-blue-500 duration-200 mb-2">SMS Marketing</div>
+              </Link>
+            </li>
+           
+          </ul>
+        </div>
       </li>
+
       <li>
         <NavLink
           to="/services"
@@ -78,13 +138,73 @@ const Header = () => {
           title="Services"
           className={({ isActive }) => {
             return isActive
-              ? "tracking-wide text-gray-800 transition-colors duration-200 font-semibold hover:text-black underline underline-offset-8 text-lg "
-              : "tracking-wide text-gray-800 transition-colors duration-200 font-semibold hover:text-black hover:underline underline-offset-8 text-lg ";
+              ? "tracking-wide text-gray-800 transition-colors duration-200 font-semibold hover:text-black underline underline-offset-8 text- "
+              : "tracking-wide text-gray-800 transition-colors duration-200 font-semibold hover:text-black hover:underline underline-offset-8 text- ";
           }}
         >
           Services
         </NavLink>
       </li>
+
+      {/* <li>
+        <NavLink
+          href="/"
+          aria-label="Our product"
+          title="Our product"
+          className={({ isActive }) => {
+            return isActive
+              ? "tracking-wide text-gray-800 transition-colors duration-200 font-semibold hover:text-black    "
+              : "tracking-wide text-gray-800 transition-colors duration-200 font-semibold hover:text-black hover:underline   ";
+          }}
+        >
+          Features
+        </NavLink>
+      </li> */}
+
+      <li>
+        <NavLink
+          to="/price"
+          aria-label="Product pricing"
+          title="Product pricing"
+          className={({ isActive }) => {
+            return isActive
+              ? "tracking-wide text-gray-800 transition-colors duration-200 font-semibold hover:text-black underline underline-offset-8 text- "
+              : "tracking-wide text-gray-800 transition-colors duration-200 font-semibold hover:text-black hover:underline underline-offset-8 text- ";
+          }}
+        >
+          Pricing
+        </NavLink>
+      </li>
+      <li>
+        <NavLink
+          to="/faq"
+          aria-label="Product pricing"
+          title="Product pricing"
+          className={({ isActive }) => {
+            return isActive
+              ? "tracking-wide text-gray-800 transition-colors duration-200 font-semibold hover:text-black border-b pb-2 border-black text- "
+              : "tracking-wide text-gray-800 transition-colors duration-200 font-semibold hover:text-black  text- ";
+          }}
+        >
+          learn
+        </NavLink>
+      </li>
+{/* 
+      <li>
+        <NavLink
+          to="/blogs"
+          aria-label="About us"
+          title="About us"
+          className={({ isActive }) => {
+            return isActive
+              ? "tracking-wide text-gray-800 transition-colors duration-200 font-semibold hover:text-black underline underline-offset-8 text- "
+              : "tracking-wide text-gray-800 transition-colors duration-200 font-semibold hover:text-black hover:underline underline-offset-8 text- ";
+          }}
+        >
+          Blog
+        </NavLink>
+      </li>
+  
       <li>
         <NavLink
           to="/contact"
@@ -92,27 +212,15 @@ const Header = () => {
           title="contact"
           className={({ isActive }) => {
             return isActive
-              ? "tracking-wide text-gray-800 transition-colors duration-200 font-semibold hover:text-black underline underline-offset-8 text-lg "
-              : "tracking-wide text-gray-800 transition-colors duration-200 font-semibold hover:text-black hover:underline underline-offset-8 text-lg ";
+              ? "tracking-wide text-gray-800 transition-colors duration-200 font-semibold hover:text-black underline underline-offset-8 text- "
+              : "tracking-wide text-gray-800 transition-colors duration-200 font-semibold hover:text-black hover:underline underline-offset-8 text- ";
           }}
         >
           Contact
         </NavLink>
       </li>
-      <li>
-        <NavLink
-          to="/faq"
-          aria-label="About us"
-          title="About us"
-          className={({ isActive }) => {
-            return isActive
-              ? "tracking-wide text-gray-800 transition-colors duration-200 font-semibold hover:text-black underline underline-offset-8 text-lg "
-              : "tracking-wide text-gray-800 transition-colors duration-200 font-semibold hover:text-black hover:underline underline-offset-8 text-lg ";
-          }}
-        >
-          F.A.Q
-        </NavLink>
-      </li>
+       */}
+      
 
     </>
   );
@@ -133,7 +241,7 @@ const Header = () => {
           <ul className="flex items-center hidden space-x-8 lg:flex">
             {menuData}
             {/* <div >
-              <BiSearch onClick={() => setSearch(!search)} className="tracking-wide text-gray-800 transition-colors duration-200 font-semibold hover:text-black underline underline-offset-8 text-lg " />
+              <BiSearch onClick={() => setSearch(!search)} className="tracking-wide text-gray-800 transition-colors duration-200 font-semibold hover:text-black underline underline-offset-8 text- " />
             </div> */}
             <li>
 

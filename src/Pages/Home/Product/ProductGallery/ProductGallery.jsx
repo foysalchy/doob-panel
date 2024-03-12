@@ -1,5 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
+ import { useState } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+
+// Import Swiper styles
+import "swiper/css";
+import { Pagination, Autoplay } from 'swiper/modules';
+
 
 const ProductGallery = () => {
 
@@ -14,56 +21,24 @@ const ProductGallery = () => {
 
   const blankImg = 'https://i.ibb.co/7p2CvzT/empty.jpg';
   return (
-    <section className="text-gray-600 body-font">
-      <div className="container mt-6 py-4 mx-auto flex flex-wrap">
+    <div className='my-12 p-6 bg-white'>
+      <h2 className="text- py-4">Feature Images</h2>
+      <Swiper
+        pagination={true}
+        autoplay={true}
+        modules={[Pagination, Autoplay]}
+        className="mySwiper">
+        {
+          featureImageData?.map(itm => <SwiperSlide>
+            <div className="md:h-[500px] h-[170px]">
+              <img src={itm?.image} alt="" className="w-full h-full object-cover" />
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum sit inventore deserunt non fugit officia earum obcaecati deleniti, quidem praesentium, est architecto minus, placeat molestiae? Nemo ab tenetur possimus quas?
+            </div>
+          </SwiperSlide>)
+        }
 
-        <div className="flex flex-wrap md:-m-2 -m-1">
-          <div className="flex flex-wrap w-full lg:w-1/2">
-            <div className="md:p-2 p-1 w-full">
-              {/* <img
-                alt="gallery"
-                className="w-full h-full object-cover object-center block bg-black"
-                src={featureImageData[0]?.status == 'false' ? featureImageData[0]?.image : blankImg}
-                srcSet={featureImageData[0]?.status == 'false' ? featureImageData[0]?.image : blankImg}
-              /> */}
-
-              <img
-                alt="gallery"
-                className="w-full h-full object-cover object-center block bg-black"
-                src={featureImageData[0]?.image}
-              // srcSet={featureImageData[0]?.status == 'false' ? featureImageData[0]?.image : blankImg}
-              />
-            </div>
-          </div>
-          <div className="flex flex-wrap w-full lg:w-1/2">
-            <div className="md:p-2 p-1 w-full">
-              <img
-                alt="gallery"
-                className="w-full h-80 object-cover object-center block bg-black"
-                src={featureImageData[1]?.status == 'true' ? featureImageData[1].image : blankImg}
-                srcSet={featureImageData[1]?.status == 'true' ? featureImageData[1].image : blankImg}
-              />
-            </div>
-            <div className="md:p-2 p-1 w-1/2 ">
-              <img
-                alt="gallery"
-                className="w-full h-80 object-cover object-center block bg-black"
-                src={featureImageData[2]?.status == "true" ? featureImageData[2].image : blankImg}
-                srcSet={featureImageData[2]?.status == "true" ? featureImageData[2].image : blankImg}
-              />
-            </div>
-            <div className="md:p-2 p-1 w-1/2 ">
-              <img
-                alt="gallery"
-                className="w-full h-80 object-cover object-center block bg-black"
-                src={featureImageData[3]?.status == "true" ? featureImageData[3].image : blankImg}
-                srcSet={featureImageData[3]?.status == "true" ? featureImageData[3].image : blankImg}
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+      </Swiper>
+    </div>
   );
 };
 
