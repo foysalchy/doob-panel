@@ -4,15 +4,16 @@ import { MdEmail } from 'react-icons/md';
 import { FaFacebook } from 'react-icons/fa6';
 import { BsGoogle } from 'react-icons/bs';
 import BrightAlert from 'bright-alert';
+import { useQuery } from '@tanstack/react-query';
 
 const SellerLoginCredintiial = () => {
 
     const { shopInfo } = useContext(AuthContext)
 
 
-    const [emailActive, setEmailActive] = useState(true);
-    const [googleActive, setGoogleActive] = useState(true);
-    const [facebookActive, setFacebookActive] = useState(true);
+    const [emailActive, setEmailActive] = useState(false);
+    const [googleActive, setGoogleActive] = useState(false);
+    const [facebookActive, setFacebookActive] = useState(false);
     const [loading, setLoading] = useState(false);
 
     const handleToggle = (button) => {
@@ -35,7 +36,6 @@ const SellerLoginCredintiial = () => {
         e.preventDefault();
         setLoading(true)
         const email = e.target.email.value;
-        const password = e.target.password.value;
         const apiKey = e.target.apiKey.value;
         const authDomain = e.target.authDomain.value;
         const projectId = e.target.projectId.value;
@@ -47,7 +47,6 @@ const SellerLoginCredintiial = () => {
 
         const data = {
             email,
-            password,
             apiKey,
             authDomain,
             projectId,
@@ -82,6 +81,23 @@ const SellerLoginCredintiial = () => {
             });
     };
 
+    const { data: shopCredential = {} } = useQuery({
+        queryKey: ["sellerCredential"],
+        queryFn: async () => {
+            try {
+                const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/firebase/${shopInfo?.shopId}`, {
+                    headers: {
+                        "ngrok-skip-browser-warning": "69420",
+                    }
+                });
+                const data = await res.json();
+                return data;
+            } catch (error) {
+                throw error; // Rethrow the error to mark the query as failed
+            }
+        },
+    });
+
     return (
         <div>
 
@@ -95,55 +111,79 @@ const SellerLoginCredintiial = () => {
                         <label htmlFor="email" className="block text-gray-700 text-sm font-bold mb-2">
                             Email
                         </label>
-                        <input type="email" name="email" id="email" className="w-full p-2 border rounded-md" />
+                        <input
+                            readOnly={shopCredential.email ? true : false}
+                            defaultValue={shopCredential.email ? shopCredential.email : ''}
+                            type="email"
+                            name="email"
+                            id="email"
+                            className="w-full p-2 border rounded-md"
+                        />
+
                     </div>
-                    <div className="mb-4">
-                        <label htmlFor="password" className="block text-gray-700 text-sm font-bold mb-2">
-                            Password
-                        </label>
-                        <input type="password" name="password" id="password" className="w-full p-2 border rounded-md" />
-                    </div>
+
                     <div className="mb-4">
                         <label htmlFor="apiKey" className="block text-gray-700 text-sm font-bold mb-2">
                             Api Key
                         </label>
-                        <input type="text" name="apiKey" id="apiKey" className="w-full p-2 border rounded-md" />
+                        <input
+                            readOnly={shopCredential.apiKey ? true : false}
+                            defaultValue={shopCredential.apiKey ? shopCredential.apiKey : ''}
+                            type="text" name="apiKey" id="apiKey" className="w-full p-2 border rounded-md" />
                     </div>
                     <div className="mb-4">
                         <label htmlFor="authDomain" className="block text-gray-700 text-sm font-bold mb-2">
                             Auth Domain
                         </label>
-                        <input type="text" name="authDomain" id="authDomain" className="w-full p-2 border rounded-md" />
+                        <input
+                            readOnly={shopCredential.authDomain ? true : false}
+                            defaultValue={shopCredential.authDomain ? shopCredential.authDomain : ''}
+                            type="text" name="authDomain" id="authDomain" className="w-full p-2 border rounded-md" />
                     </div>
                     <div className="mb-4">
                         <label htmlFor="projectId" className="block text-gray-700 text-sm font-bold mb-2">
                             Project Id
                         </label>
-                        <input type="text" name="projectId" id="projectId" className="w-full p-2 border rounded-md" />
+                        <input
+
+                            readOnly={shopCredential.projectId ? true : false}
+                            defaultValue={shopCredential.email ? shopCredential.projectId : ''} type="text" name="projectId" id="projectId" className="w-full p-2 border rounded-md" />
                     </div>
                     <div className="mb-4">
                         <label htmlFor="storageBucket" className="block text-gray-700 text-sm font-bold mb-2">
                             Storage Bucket
                         </label>
-                        <input type="text" name="storageBucket" id="storageBucket" className="w-full p-2 border rounded-md" />
+                        <input
+                            readOnly={shopCredential.storageBucket ? true : false}
+                            defaultValue={shopCredential.storageBucket ? shopCredential.storageBucket : ''}
+                            type="text" name="storageBucket" id="storageBucket" className="w-full p-2 border rounded-md" />
                     </div>
                     <div className="mb-4">
                         <label htmlFor="messagingSenderId" className="block text-gray-700 text-sm font-bold mb-2">
                             Messaging Sender ID
                         </label>
-                        <input type="text" name="messagingSenderId" id="messagingSenderId" className="w-full p-2 border rounded-md" />
+                        <input
+                            readOnly={shopCredential.messagingSenderId ? true : false}
+                            defaultValue={shopCredential.messagingSenderId ? shopCredential.messagingSenderId : ''}
+                            type="text" name="messagingSenderId" id="messagingSenderId" className="w-full p-2 border rounded-md" />
                     </div>
                     <div className="mb-4">
                         <label htmlFor="appId" className="block text-gray-700 text-sm font-bold mb-2">
                             App ID
                         </label>
-                        <input type="text" name="appId" id="appId" className="w-full p-2 border rounded-md" />
+                        <input
+                            readOnly={shopCredential.appId ? true : false}
+                            defaultValue={shopCredential.appId ? shopCredential.appId : ''}
+                            type="text" name="appId" id="appId" className="w-full p-2 border rounded-md" />
                     </div>
                     <div className="mb-4">
                         <label htmlFor="measurementId" className="block text-gray-700 text-sm font-bold mb-2">
                             Measurement ID
                         </label>
-                        <input type="text" name="measurementId" id="measurementId" className="w-full p-2 border rounded-md" />
+                        <input
+                            readOnly={shopCredential.measurementId ? true : false}
+                            defaultValue={shopCredential.measurementId ? shopCredential.measurementId : ''}
+                            type="text" name="measurementId" id="measurementId" className="w-full p-2 border rounded-md" />
                     </div>
                     <label htmlFor=""> Select your services</label>       <div className="flex space-x-4">
                         {/* Email Logo */}

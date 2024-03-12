@@ -394,19 +394,11 @@ const SignUpSeller = () => {
 
                         )}
                       </div>
-                      <label
-                        htmlFor="email"
-                        className="inline-block mb-1 font-medium"
-                      >
-                        Refer Code
-                      </label>
-                      <input
-                        placeholder="refer code"
-                        type="text"
-                        className="flex-grow w-full h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
-                        id="referCode"
-                        name="referCode"
-                      />
+
+
+
+
+
                       <div className="mb-1 sm:mb-2">
                         <label
                           htmlFor="email"
@@ -425,41 +417,60 @@ const SignUpSeller = () => {
                         />
                       </div>
 
-                      <div className="mb-1 sm:mb-2">
-                        <label
-                          htmlFor="email"
-                          className="inline-block mb-1 font-medium"
-                        >
-                          Password
-                        </label>
-                        <div className="relative">
+                      <div className="grid grid-cols-2 gap-3 items-center">
+                        <div className="order-last">
+                          <label
+                            htmlFor="email"
+                            className="inline-block mb-1 font-medium"
+                          >
+                            Refer Code
+                          </label>
                           <input
-
-                            placeholder="*******"
-                            required
-
-                            type={showPassword ? "text" : "password"}
-                            className="flex-grow w-full re h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
-                            id="password"
-                            name="password"
+                            placeholder="refer code"
+                            type="text"
+                            className="flex-grow w-full h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
+                            id="referCode"
+                            name="referCode"
                           />
-                          {showPassword ? (
-                            <span
-                              className="absolute inset-y-0 end-0 grid place-content-center px-4"
-                              onClick={togglePasswordVisibility}
-                            >
-                              <AiFillEyeInvisible />
-                            </span>
-                          ) : (
-                            <span
-                              className="absolute inset-y-0 end-0 grid place-content-center px-4"
-                              onClick={togglePasswordVisibility}
-                            >
-                              <AiFillEye />
-                            </span>
-                          )}
+                        </div>
+
+                        <div className="mb-1 sm:mb-2">
+                          <label
+                            htmlFor="email"
+                            className="inline-block mb-1 font-medium"
+                          >
+                            Password
+                          </label>
+                          <div className="relative">
+                            <input
+
+                              placeholder="*******"
+                              required
+
+                              type={showPassword ? "text" : "password"}
+                              className="flex-grow w-full re h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
+                              id="password"
+                              name="password"
+                            />
+                            {showPassword ? (
+                              <span
+                                className="absolute inset-y-0 end-0 grid place-content-center px-4"
+                                onClick={togglePasswordVisibility}
+                              >
+                                <AiFillEyeInvisible />
+                              </span>
+                            ) : (
+                              <span
+                                className="absolute inset-y-0 end-0 grid place-content-center px-4"
+                                onClick={togglePasswordVisibility}
+                              >
+                                <AiFillEye />
+                              </span>
+                            )}
+                          </div>
                         </div>
                       </div>
+
 
                       {/* <div className="text-xs text-gray-600 text-center sm:text-sm"> {!shop ? (
                         <div

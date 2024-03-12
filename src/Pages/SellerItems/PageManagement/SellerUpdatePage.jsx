@@ -54,16 +54,31 @@ const SellerUpdatePage = ({ OpenModal, setOpenModal, FAQInfo, refetch }) => {
                 </div>
 
                 <form className='h-[500px] overflow-y-scroll' onSubmit={handleFAQUpdate}>
+                    <label className="sr-only text-black" htmlFor="title">
+                        Title
+                    </label>
                     <input name='title' className='w-full p-2 my-4 border' defaultValue={FAQInfo.title} />
-
+                    <div>
+                        <label className="sr-only text-black" htmlFor="title">
+                            Select Page
+                        </label>
+                        <select
+                            name='page'
+                            className="w-full rounded-lg border bg-white border-gray-900 p-3 text-sm">
+                            <option value="footer1">Footer 1</option>
+                            <option value="footer2">Footer 2</option>
+                            <option value="solution">Solution</option>
+                            <option value="marketing">Marketing</option>
+                        </select>
+                    </div> <br />
                     <div>
                         <div>
                             <JoditEditor value={FAQInfo.description} name="description" id="answer" />
                         </div>
                     </div>
 
-                    <input name='MetaTag' placeholder='Meta Tag' className='w-full p-2 my-4 border' defaultValue={FAQInfo.MetaTag} />
-                    <textarea name='MetaDescription' placeholder='Meta Description' className='w-full p-2 my-4 border' defaultValue={FAQInfo.MetaTag} />
+                    <input name='MetaTag' placeholder='Meta Tag' className='w-full p-2 my-4 border' defaultValue={FAQInfo.metaTag} />
+                    <textarea name='MetaDescription' placeholder='Meta Description' className='w-full p-2 my-4 border' defaultValue={FAQInfo.metaDescription} />
 
                     <div className='flex justify-start'>
                         <button type='submit' className="group relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500 mt-4">

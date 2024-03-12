@@ -11,6 +11,7 @@ import { useQuery } from '@tanstack/react-query';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import SellerPopUp from './SellerPopUp';
+import { Link } from 'react-router-dom';
 
 
 
@@ -68,6 +69,24 @@ const SellerDashboard = () => {
     const handleButtonClick = () => {
         setShowDatePicker(!showDatePicker);
     };
+
+
+    const { data: shopCredential = {} } = useQuery({
+        queryKey: ["shopCredential"],
+        queryFn: async () => {
+            try {
+                const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/firebase/${shopInfo.shopId}`, {
+                    headers: {
+                        "ngrok-skip-browser-warning": "69420",
+                    }
+                });
+                const data = await res.json();
+                return data;
+            } catch (error) {
+                throw error; // Rethrow the error to mark the query as failed
+            }
+        },
+    });
 
 
     // // popup control
@@ -143,6 +162,17 @@ const SellerDashboard = () => {
             <h2 className="text-gray-400 text-md">
                 Here&#x27;s what&#x27;s happening with your ambassador account today.
             </h2>
+            {shopCredential?._id && <div className="">
+                <div class="bg-red-100 border border-orange-400 text-orange-700 px-4 py-3 rounded relative" role="alert">
+                    <strong class="font-bold">Warning: </strong>
+                    <Link to={`/seller/settings/auth-credential`}>
+                        <span class="block sm:inline"> You have no auth credential yet now. so your website have no user login please setup your auth credential. </span>
+                    </Link>
+                    <span class="absolute top-0 bottom-0 right-0 px-4 py-3">
+
+                    </span>
+                </div>
+            </div>}
             <div className="flex flex-col items-start w-full my-6 space-y-4 md:space-x-4 md:space-y-0 md:flex-row">
                 <div className="w-full md:w-6/12">
                     <div
