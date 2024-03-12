@@ -32,7 +32,7 @@ const UserPayment = () => {
         const data = orderStage
         data.method = payment
         data.timestamp = new Date().getTime()
-        data.userId = shopInfo._Id ? shopInfo._Id : user?._id
+        data.userId = shopInfo._id ? shopInfo._id : user?._id
 
         if (fileName) {
             data.file = fileName

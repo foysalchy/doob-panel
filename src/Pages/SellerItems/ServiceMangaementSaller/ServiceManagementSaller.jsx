@@ -11,13 +11,13 @@ const ServiceManagementSaller = () => {
     const { data: serviceOrder = [], refetch } = useQuery({
         queryKey: ["serviceOrderSaller"],
         queryFn: async () => {
-            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/saller/my-service?shopId=${shopInfo._id}`);
+            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/my-service?shopId=${shopInfo._id}`);
             const data = await res.json();
             return data.data;
         },
     });
 
-    console.log(`https://salenow-v2-backend.vercel.app/api/v1/saller/my-service?shopId=${shopInfo._id}`);
+    console.log(`https://salenow-v2-backend.vercel.app/api/v1/seller/my-service?shopId=${shopInfo._id}`);
 
     const [input, setInput] = useState('');
     const [filteredData, setFilteredData] = useState([]);
@@ -55,7 +55,7 @@ const ServiceManagementSaller = () => {
 
     useEffect(() => {
         setFilteredData(serviceOrder);
-    }, [serviceOrder]);
+    }, [input]);
 
 
 

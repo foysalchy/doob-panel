@@ -16,6 +16,7 @@
     "@dnd-kit/utilities": "^3.2.2",
     "@emailjs/browser": "^3.11.0",
     "@tanstack/react-query": "^4.36.1",
+    "@tinymce/tinymce-react": "^4.3.2",
     "bkash-payment": "^3.0.2",
     "bright-alert": "^0.2.3",
     "crypto-js": "^4.2.0",
@@ -43,6 +44,7 @@
     "react-window": "^1.8.10",
     "sweetalert2": "^11.6.13",
     "swiper": "^10.3.1",
+    "tinymce": "^6.8.3",
     "tw-elements": "^1.1.0",
     "vercel": "^32.3.0"
   },
