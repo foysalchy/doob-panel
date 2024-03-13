@@ -34,6 +34,12 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
     const [discount, setDiscount] = useState(0);
     const [presents, setPresents] = useState(false);
 
+    const singleDiscount = (index, value) => {
+        const updatedCart = [...cartProducts];
+        updatedCart[index].discount = value;
+        setCartProducts(updatedCart);
+    };
+
     const increaseQuantity = (index) => {
         const updatedCart = [...cartProducts];
         updatedCart[index].quantity += 1;
@@ -93,6 +99,12 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
         setOpen(true)
     }
 
+    const handleDelete = (id) => {
+        deleteAudio.play();
+        const updatedCartProducts = cartProducts.filter(product => product.id !== id);
+        setCartProducts(updatedCartProducts);
+    };
+
     return (
         <div className=' h-full flex flex-col justify-between'>
             <div className="relative">
@@ -121,7 +133,12 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
                             {
                                 cartProducts?.map((itm, index) => (
                                     <li >
-                                        <div className="flex justify-between items-center my-2 bg-white p-2 rounded-md">
+                                        <div className="flex justify-between items-center my-4 bg-white relative p-2 rounded-md">
+                                            <button
+                                                onClick={() => handleDelete(itm.id)}
+                                                className='bg-red-500 text-white text-xs w-[20px] h-[20px]  rounded-full absolute right-0 -top-2'>
+                                                x
+                                            </button>
                                             <div className="flex items-center gap-2">
                                                 <img src={itm?.img} alt="" className="w-[60px] h-[60px] ring-1 ring-gray-300 rounded-md object-cover" />
                                                 <div className="">
@@ -129,29 +146,36 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
                                                     <h3 className="text-lg">{itm?.price}</h3>
                                                 </div>
                                             </div>
-                                            <div className="flex items-center gap-2">
-                                                <div className="flex border bg-gray-300 items-center">
+                                            <div className="relative">
+                                                <span className='text-xs absolute top-[-17px] text-center left-0 right-0'>Discount</span>
+                                                <input
+                                                    onChange={(e) => singleDiscount(index ,e.target.value)}
+                                                type="number" className="border border-red-500 rounded w-[60px] px-1" />
+                                            </div>
+
+                                            <div className="flex mr-2 items-center relative">
+                                                <div className="absolute left-[-10px]">
                                                     <button
                                                         onClick={() => decreaseQuantity(index)}
-                                                        className="px-3 py-1   bg-gray-300 text-gray-700 rounded-l"
-                                                    >
-                                                        -
-                                                    </button>
-                                                    <input
-                                                        type="text"
-                                                        value={itm?.quantity}
-                                                        readOnly
-                                                        className="w-12 text-center bg-white border border-gray-300 text-sm  px-2 py-1"
-                                                    />
-                                                    <button
-                                                        onClick={() => increaseQuantity(index)}
-                                                        className="px-3 py-1 bg-gray-300 text-gray-700 rounded-r"
-                                                    >
-                                                        +
+                                                        className='relative bg-red-500 w-[18px] h-[18px] rounded-full  flex items-center justify-center'>
+                                                        <span className="text-white absolute top-[-4px] left-0 right-0 bottom-0">-</span>
                                                     </button>
                                                 </div>
-
+                                                <input
+                                                    type="text"
+                                                    value={itm?.quantity}
+                                                    readOnly
+                                                    className='border text-center border-red-500 rounded w-[60px] px-3' />
+                                                <div className="absolute right-[-9px]">
+                                                    <button
+                                                        onClick={() => increaseQuantity(index)}
+                                                        className='relative bg-red-500 w-[18px] h-[18px] rounded-full flex items-center justify-center'>
+                                                        <span className="text-white absolute top-[-3px] left-0 right-0 bottom-0">+</span>
+                                                    </button>
+                                                </div>
                                             </div>
+
+
                                         </div>
                                     </li>
                                 ))

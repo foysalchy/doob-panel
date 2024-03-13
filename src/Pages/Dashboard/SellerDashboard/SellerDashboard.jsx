@@ -162,7 +162,7 @@ const SellerDashboard = () => {
             <h2 className="text-gray-400 text-md">
                 Here&#x27;s what&#x27;s happening with your ambassador account today.
             </h2>
-            {shopCredential?._id && <div className="">
+            {!shopCredential?._id && <div className="">
                 <div class="bg-red-100 border border-orange-400 text-orange-700 px-4 py-3 rounded relative" role="alert">
                     <strong class="font-bold">Warning: </strong>
                     <Link to={`/seller/settings/auth-credential`}>

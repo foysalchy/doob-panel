@@ -6,6 +6,25 @@ html{
   scroll-behavior: smooth;
   font-family: 'Helvetica Neue', sans-serif;
 }
+
+/* Remove the default number input spinners */
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none!important;
+    margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+    -moz-appearance: textfield!important;
+}
+
+/* Remove arrows for IE10 and below */
+input[type="number"] {
+    -webkit-appearance: none!important;
+    margin: 0;
+}
+
 .font-inner{
     font-family: 'Inter', sans-serif;
 }
