@@ -4,9 +4,21 @@ import ReadyToShipModal from './ReadyToShipModal';
 import BrightAlert from 'bright-alert';
 import BarCode from 'react-barcode';
 import SellerOrderInvoice from './SellerOrderInvoice';
-import OrderInvoice from './OrderInvoice';
+import OrderInvoice from './OrderInvoice'
+import { ordersNav } from './ManageOrderNavData';
+import { BiLeftArrow, BiRightArrow } from 'react-icons/bi';
+
 
 const SellerOrderManagement = () => {
+    const [selectedValue, setSelectedValue] = useState('All');
+    const [searchQuery, setSearchQuery] = useState("");
+    const [selectedDate, setSelectedDate] = useState(null)
+    const [modalOpen, setModalOpen] = useState(false)
+
+    const handleSelectChange = (event) => {
+        setSelectedValue(event.target.value);
+    };
+
     const { data: products = [], refetch } = useQuery({
         queryKey: ["sellerAllOrder"],
         queryFn: async () => {
@@ -16,18 +28,37 @@ const SellerOrderManagement = () => {
         },
     });
 
-    const [searchQuery, setSearchQuery] = useState("");
 
-    const [modalOpen, setModalOpen] = useState(false)
+    const filteredData = products?.filter((item) => {
+        if (
+            searchQuery === '' &&
+            selectedValue === 'All' &&
+            (!selectedDate || new Date(item?.timestamp) >= selectedDate)
+        ) {
+            return true; // Include all items when searchValue is empty and selectedValue is "All" and timestamp is greater than or equal to selectedDate
+        } else if (selectedValue === 'pending' && (!selectedDate || new Date(item?.timestamp) >= selectedDate)) {
+            return !item?.status;
+        } else if (searchQuery && (!selectedDate || new Date(item?.timestamp) >= selectedDate)) {
+            return item?._id?.toLowerCase().includes(searchQuery.toLowerCase()); // Filter by _id
+        } else if (selectedValue && (!selectedDate || new Date(item?.timestamp) >= selectedDate)) {
+            return item?.status === selectedValue;
+        }
+
+        return false; // Exclude items that don't meet any condition
+    });
+
+    console.log(filteredData, 'filteredData....')
 
 
-    const filteredData = products?.length && products?.filter(
-        (product) =>
-            product.product.name?.toLowerCase().includes(searchQuery?.toLowerCase()) ||
-            product._id?.toLowerCase().includes(searchQuery?.toLowerCase()) ||
-            product.customerName?.toLowerCase().includes(searchQuery?.toLowerCase()) ||
-            product.product.productId.toString().includes(searchQuery)
-    );
+
+
+    // const filteredData = products?.length && products?.filter(
+    //     (product) =>
+    //         product.product.name?.toLowerCase().includes(searchQuery?.toLowerCase()) ||
+    //         product._id?.toLowerCase().includes(searchQuery?.toLowerCase()) ||
+    //         product.customerName?.toLowerCase().includes(searchQuery?.toLowerCase()) ||
+    //         product.product.productId.toString().includes(searchQuery)
+    // );
 
 
 
@@ -64,7 +95,7 @@ const SellerOrderManagement = () => {
         setOn(!on)
     };
 
- 
+
     const [readyToShip, setReadyToShip] = useState(false)
 
     const productStatusUpdate = (status, orderId) => {
@@ -90,10 +121,79 @@ const SellerOrderManagement = () => {
         });
     }
 
+    const [currentPage, setCurrentPage] = useState(1);
 
-    console.log(selectProducts, 'selectProducts');
+    const pageSize = 10;
+    const startIndex = (currentPage - 1) * pageSize;
+    const endIndex = startIndex + pageSize;
+    const totalPages = Math.ceil(filteredData?.length / pageSize);
+
+    const currentData = filteredData.slice(startIndex, endIndex);
+
+    const handleChangePage = (newPage) => {
+
+        setCurrentPage(newPage);
+    };
 
 
+
+    const renderPageNumbers = () => {
+        const startPage = Math.max(1, currentPage - Math.floor(pageSize / 2));
+        const endPage = Math.min(totalPages, startPage + pageSize - 1);
+
+        return (
+            <React.Fragment>
+                {/* First Page */}
+                {startPage > 1 && (
+                    <li>
+                        <button
+                            className={`block h-8 w-8 rounded border border-gray-900 bg-white text-center leading-8 text-gray-900`}
+                            onClick={() => handleChangePage(1)}
+                        >
+                            1
+                        </button>
+                    </li>
+                )}
+
+
+
+                {/* Current Page */}
+                {Array.from({ length: endPage - startPage + 1 }).map((_, index) => {
+                    const pageNumber = startPage + index;
+                    return (
+                        <li key={pageNumber}>
+                            <button
+                                className={`block h-8 w-8 rounded border ${pageNumber === currentPage
+                                    ? 'border-blue-600 bg-blue-600 text-white'
+                                    : 'border-gray-900 bg-white text-center leading-8 text-gray-900'
+                                    }`}
+                                onClick={() => handleChangePage(pageNumber)}
+                            >
+                                {pageNumber}
+                            </button>
+                        </li>
+                    );
+                })}
+
+
+
+                {/* Last Page */}
+                {endPage < totalPages && (
+                    <li>
+                        <button
+                            className={`block h-8 w-8 rounded border border-gray-100 bg-white text-center leading-8 text-gray-100`}
+                            onClick={() => handleChangePage(totalPages)}
+                        >
+                            {totalPages}
+                        </button>
+                    </li>
+                )}
+            </React.Fragment>
+        );
+    };
+
+
+    console.log(currentData, 'pagensadsfasd')
     return (
         <div>
             <section className=" mx-auto">
@@ -104,14 +204,55 @@ const SellerOrderManagement = () => {
                             {products?.length}
                         </span>
                     </div>
+
                     <div className="md:flex items-center gap-3">
-                        <input className='border' onChange={(e) => setSearchQuery(e.target.value)} type="text" />
-                        <button
+                        <input
+                            className="w-[260px] md:mt-0 mt-3 rounded border-gray-400 focus:outline-none p-2 border"
+                            type="date"
+
+                            // value={selectedDate}
+                            onChange={(e) => setSelectedDate(new Date(e.target.value))}
+                        />
+
+                        <input className='border p-2 rounded' placeholder="search..." onChange={(e) => setSearchQuery(e.target.value)} type="text" />
+                        {/* <button
                             disabled={printProduct.length < 1 ? false : true}
                             onClick={logSelectedProducts}
-                            className='bg-blue-500 px-8 py-2 rounded text-white'> Invoice</button>
+                            className='bg-blue-500 px-8 py-2 rounded text-white'> Invoice</button> */}
                     </div>
                 </div>
+
+                <nav className='flex md:gap-4 gap-2 overflow-x-auto mt-6'>
+                    {ordersNav?.map((itm) =>
+                        itm?.status === 'dropdown' ? (
+                            <select
+                                key={itm.name}
+                                className={`px-4 border-r bg-transparent relative border-gray-300 flex items-center gap-2 justify-center ${selectedValue === 'pending' ? ' ' : '' // Change to your desired color
+                                    }`}
+                                value={selectedValue}
+                                onChange={handleSelectChange}
+                            >
+                                <option selected value="pending">Pending </option>
+                                {itm?.dropdownLink?.map((option) => (
+                                    <option key={option}>{option}  </option>
+                                ))}
+                            </select>
+                        ) : (
+                            <button
+                                className={`px-4 border-r md:bg-transparent bg-gray-50 border-gray-300 flex  items-center ${selectedValue === itm.value ? 'text-red-500' : '' // Change to your desired color
+                                    }`}
+                                key={itm.name}
+                                onClick={() => setSelectedValue(itm.value)}
+                            >
+                                {itm.name}
+                                {/* {selectedValue === itm.value && porductQuantity} */}
+                            </button>
+                        )
+                    )}
+                </nav>
+
+
+
                 <div className="flex flex-col mt-6">
                     <div className="overflow-x-auto">
                         <div className="py-2">
@@ -124,11 +265,8 @@ const SellerOrderManagement = () => {
                                 <table className="divide-y w-full divide-gray-700">
                                     <thead className="bg-gray-900 text-white">
                                         <tr>
-                                            <th className="px-2">
-                                                <label className="flex items-center gap-2 font-medium" htmlFor="select">
-                                                    <input id="select" type="checkbox" checked={selectProducts.length === products.length} onChange={handleSelectAll} />
-                                                    Select all
-                                                </label>
+                                            <th className="px-2 text-start ">
+                                                Product Info
                                             </th>
                                             <th scope="col" className="px-12 py-3.5 text-sm font-normal text-left rtl:text-right">
                                                 <button className="flex items-center gap-x-2">
@@ -157,18 +295,14 @@ const SellerOrderManagement = () => {
                                         </tr>
                                     </thead>
                                     <tbody className="bg-white divide-y divide-gray-200">
-                                        {filteredData.length && filteredData?.map((product) => (
+                                        {currentData.length ? currentData?.map((product) => (
                                             <React.Fragment key={product._id}>
                                                 <tr key={product._id}>
                                                     <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                                                         <div className="inline-flex items-center gap-x-3">
-                                                            <input
-                                                                type="checkbox"
-                                                                checked={selectProducts.includes(product._id)}
-                                                                onChange={() => handleUpdateCheck(product._id)}
-                                                            />
+
                                                             <div className="flex gap-x-2 relative">
-                                                                <div className="bg-red-400 w-10 h-10 overflow-hidden rounded-full">
+                                                                <div className=" w-10 h-10 overflow-hidden rounded-full">
                                                                     <img
                                                                         className="object-cover w-full h-full hover:cursor-pointer"
                                                                         src={product.image}
@@ -250,23 +384,71 @@ const SellerOrderManagement = () => {
                                                                 <path strokeLinecap="round" strokeLinejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
                                                             </svg>
                                                         </button>
-                                                        <button onClick={() => setModalOpen( product)} className="group relative inline-block overflow-hidden border border-indigo-600 px-8 py-3 focus:outline-none focus:ring">
+                                                        <button onClick={() => setModalOpen(product)} className="group relative inline-block overflow-hidden border border-indigo-600 px-8 py-3 focus:outline-none focus:ring">
                                                             <span className="absolute inset-y-0 left-0 w-[2px] bg-indigo-600 transition-all group-hover:w-full group-active:bg-indigo-500"></span>
                                                             <span className="relative text-sm font-medium text-indigo-600 transition-colors group-hover:text-white">{modalOpen._id === product._id ? 'Close Details' : "View Details"}</span>
                                                         </button>
                                                     </td>
                                                 </tr>
 
-                                              {
-                                                modalOpen?._id === product._id && <OrderInvoice openModal={modalOpen} setOpenModal={setModalOpen} product={product}/>
-                                              }
+                                                {
+                                                    modalOpen?._id === product._id && <OrderInvoice openModal={modalOpen} setOpenModal={setModalOpen} product={product} />
+                                                }
                                             </React.Fragment>
 
-
-                                        ))}
+                                        )) : <tr className="text-[gray] py-4 font-seminold  text-center w-full">
+                                            <td colSpan={7}>
+                                                No items metch
+                                            </td>
+                                        </tr>}
 
                                     </tbody>
                                 </table>
+
+
+
+
+                            </div>
+                            <div className='flex justify-center mt-8'>
+                                <ol className="flex justify-center gap-1 text-xs font-medium">
+                                    <li>
+                                        <button
+                                            className="inline-flex h-8 w-8 items-center justify-center rounded border border-gray-900 bg-white text-gray-900 rtl:rotate-180"
+                                            onClick={() => handleChangePage(Math.max(1, currentPage - 1))}
+                                            disabled={currentPage === 1}
+                                        >
+                                            <span className="sr-only">Prev Page</span>
+                                            <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                className="h-3 w-3"
+                                                viewBox="0 0 20 20"
+                                                fill="currentColor"
+                                            >
+                                                <BiLeftArrow className='text-xl' />
+                                            </svg>
+                                        </button>
+                                    </li>
+
+                                    {renderPageNumbers()}
+
+                                    <li>
+                                        <button
+                                            className="inline-flex h-8 w-8 items-center justify-center rounded border border-gray-900 disabled:cursor-not-allowed bg-white text-gray-900 rtl:rotate-180"
+                                            onClick={() => handleChangePage(Math.min(totalPages, currentPage + 1))}
+                                            disabled={currentPage === totalPages}
+                                        >
+                                            <span className="sr-only">Next Page</span>
+                                            <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                className="h-3 w-3"
+                                                viewBox="0 0 20 20"
+                                                fill="currentColor"
+                                            >
+                                                <BiRightArrow className='text-xl' />
+                                            </svg>
+                                        </button>
+                                    </li>
+                                </ol>
                             </div>
                         </div>
                     </div>

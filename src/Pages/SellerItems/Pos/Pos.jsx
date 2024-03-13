@@ -33,19 +33,69 @@ const Pos = () => {
     }, [audio]);
     const addProductToCart = (productData) => {
         audio.play();
-        const productInfo = {
-            id: productData._id,
-            name: productData.name,
-            price: parseInt(productData.price),
-            quantity: 1,
-            sku: productData.sku,
-            img: productData.featuredImage.src
+
+        const findProduct = productList.find((itm) => itm._id.includes(productData._id));
+        const existingProductIndex = cartProducts.findIndex(itm => itm.id.includes(productData._id));
+
+        if (findProduct) {
+            const productInfo = {
+                id: findProduct._id,
+                name: findProduct.name,
+                price: parseInt(findProduct.price),
+                quantity: 1,
+                sku: findProduct.sku,
+                img: findProduct.featuredImage.src
+            };
+
+            if (existingProductIndex !== -1) {
+                // If product is already in cart, update its quantity
+                const updatedCartProducts = [...cartProducts];
+                updatedCartProducts[existingProductIndex].quantity++;
+                setCartProducts(updatedCartProducts);
+            } else {
+                // If product is not in cart, add it to the cart
+                setCartProducts([...cartProducts, productInfo]);
+            }
+
         }
-        setCartProducts([...cartProducts, productInfo]);
+
     }
 
-    const filteredData = searchValue == '' ? productList : productList.filter((itm) => itm.name.toLowerCase().includes(searchValue.toLowerCase()));
+    const filteredData = searchValue == '' ? productList : productList.filter((itm) => itm.name.toLowerCase().includes(searchValue.toLowerCase()) || itm._id.includes(searchValue));
 
+
+
+    const handleSearch = (e) => {
+        e.preventDefault();
+        const searchValue = e.target.search.value;
+        const findProduct = productList.find((itm) => itm._id.includes(searchValue));
+        const existingProductIndex = cartProducts.findIndex(itm => itm.id.includes(searchValue));
+
+        if (findProduct) {
+            const productInfo = {
+                id: findProduct._id,
+                name: findProduct.name,
+                price: parseInt(findProduct.price),
+                quantity: 1,
+                sku: findProduct.sku,
+                img: findProduct.featuredImage.src
+            };
+
+            if (existingProductIndex !== -1) {
+                // If product is already in cart, update its quantity
+                const updatedCartProducts = [...cartProducts];
+                updatedCartProducts[existingProductIndex].quantity++;
+                setCartProducts(updatedCartProducts);
+            } else {
+                // If product is not in cart, add it to the cart
+                setCartProducts([...cartProducts, productInfo]);
+            }
+
+            console.log(findProduct, 'searchValue');
+        }
+    };
+
+    console.log(filteredData, 'filteredData', productList);
 
     return (
         <div>
@@ -54,9 +104,12 @@ const Pos = () => {
                 <div className="grid md:grid-cols-3 gap-2 ">
                     <div className="md:col-span-2">
                         <div className="flex items-center justify-between gap-3">
-                            <div className="flex items-center bg-gray-100 ring-1 ring-gray-300 p-2 rounded-md w-full">
-                                <BiSearch className='text-gray-600 text-lg' /> <input onChange={(e) => setSearchValue(e.target.value)} type="text" className="outline-none bg-transparent w-full px-2" placeholder='Search...' />
-                            </div>
+                            <form
+                                onSubmit={handleSearch}
+                                className="flex items-center bg-gray-100 ring-1 ring-gray-300 p-2 rounded-md w-full">
+                                <BiSearch className='text-gray-600 text-lg' />
+                                <input name='search' onChange={(e) => setSearchValue(e.target.value)} type="text" className="outline-none bg-transparent w-full px-2" placeholder='Search...' />
+                            </form>
                             <button onClick={() => setClose(!close)} className='md:hidden block text-2xl relative mr-3'>
                                 <BiShoppingBag className=' text-[red]' />
                                 <small className="text-sm absolute bg-[#ff0059] text-white py-0 px-1 text-[8px] rounded-full right-[-9px] top-[-3px]">{cartProducts?.length}</small>
