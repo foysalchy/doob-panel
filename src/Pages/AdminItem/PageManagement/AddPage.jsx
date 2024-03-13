@@ -12,6 +12,7 @@ const AddPage = () => {
     event.preventDefault();
     const form = event.target;
     const title = form.title.value;
+    const page = form.page.value;
     const description = form.description.value;
     const metaTag = form.metaTag.value;
     const metaDescription = form.metaDescription.value;
@@ -26,6 +27,7 @@ const AddPage = () => {
       title,
       description,
       metaTag,
+      page,
       metaDescription,
       metaImg: imageUrl
     };
@@ -78,7 +80,19 @@ const AddPage = () => {
                 name="title"
               />
             </div>
-
+            <div>
+              <label className="sr-only text-black" htmlFor="title">
+                Select Page
+              </label>
+              <select
+                name='page'
+                className="w-full rounded-lg border bg-white border-gray-900 p-3 text-sm">
+                <option value="footer1">Footer 1</option>
+                <option value="footer2">Footer 2</option>
+                <option value="solution">Solution</option>
+                <option value="marketing">Marketing</option>
+              </select>
+            </div>
             <div>
               <div>
                 <JoditEditor name="description" id="message"></JoditEditor>
@@ -148,7 +162,7 @@ const AddPage = () => {
                     </span>
 
                     <span className="text-sm font-medium transition-all group-hover:me-4">
-                      Send Email
+                     Add Page
                     </span>
                   </button>
               }

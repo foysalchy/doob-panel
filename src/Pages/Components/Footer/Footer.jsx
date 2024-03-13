@@ -14,12 +14,15 @@ const Footer = () => {
   });
 
 
-  
+  const page1 = pages.filter(itm => itm?.page == 'footer1');
+  const page2 = pages.filter(itm => itm?.page == 'footer2');
+  console.log(page1, 'pages///////');
+
   return (
 
     <>
 
-      <div className="bg-gray-900">
+      {/* <div className="bg-gray-900">
         <div className="px-4 pt-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8">
           <div className="grid gap-10 row-gap-6 mb-8 sm:grid-cols-2 lg:grid-cols-4">
             <div className="sm:col-span-2">
@@ -138,14 +141,14 @@ const Footer = () => {
               © Copyright 2020 Lorem Inc. All rights reserved.
             </p>
             <ul className="flex flex-col mb-3 space-y-2 lg:mb-0 sm:space-y-0 sm:space-x-5 sm:flex-row">
-              {pages.length ? pages?.map((page, i) => (
+              {pages.length ? page1?.map((page, i) => (
                 <li>
                   {page?.status && (
                     <Link
                       to={`/pages/${page?._id}`}
-                      className="text-sm text-gray-600 transition-colors duration-300 hover:text-deep-purple-accent-400"
+                      className="text-sm text-gray-100 transition-colors duration-300 hover:text-deep-purple-accent-400"
                     >
-                      {page?.title}
+                      mm  {page?.title}
                     </Link>
                   )}
                 </li>
@@ -153,7 +156,7 @@ const Footer = () => {
             </ul>
           </div>
         </div>
-      </div>
+      </div> */}
 
 
       <div className="bg-gray-900">
@@ -165,179 +168,102 @@ const Footer = () => {
                   Page 1
                 </p>
                 <ul className="mt-2 space-y-2">
-                  <li>
-                    <a
-                      href="/"
-                      className="text-gray-500 transition-colors duration-300 hover:text-deep-purple-accent-200"
-                    >
-                      News
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="/"
-                      className="text-gray-500 transition-colors duration-300 hover:text-deep-purple-accent-200"
-                    >
-                      World
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="/"
-                      className="text-gray-500 transition-colors duration-300 hover:text-deep-purple-accent-200"
-                    >
-                      Games
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="/"
-                      className="text-gray-500 transition-colors duration-300 hover:text-deep-purple-accent-200"
-                    >
-                      References
-                    </a>
-                  </li>
+                  {
+                    page1.length ? page1.map((page, i) => (
+                      <li key={i}>
+                        <Link
+                          to={`/pages/${page?._id}`}
+                          className="text-sm text-gray-400 transition-colors duration-300 hover:text-deep-purple-accent-400"
+                        >
+                          {page?.title}
+                        </Link>
+                      </li>
+                    )) : ''
+                  }
                 </ul>
+
               </div>
               <div>
                 <p className="font-medium tracking-wide text-gray-300">page 2</p>
                 <ul className="mt-2 space-y-2">
-                  <li>
-                    <a
-                      href="/"
-                      className="text-gray-500 transition-colors duration-300 hover:text-deep-purple-accent-200"
-                    >
-                      Web
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="/"
-                      className="text-gray-500 transition-colors duration-300 hover:text-deep-purple-accent-200"
-                    >
-                      eCommerce
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="/"
-                      className="text-gray-500 transition-colors duration-300 hover:text-deep-purple-accent-200"
-                    >
-                      Business
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="/"
-                      className="text-gray-500 transition-colors duration-300 hover:text-deep-purple-accent-200"
-                    >
-                      Entertainment
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="/"
-                      className="text-gray-500 transition-colors duration-300 hover:text-deep-purple-accent-200"
-                    >
-                      Portfolio
-                    </a>
-                  </li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium tracking-wide text-gray-300"> Quick Links</p>
-                <ul className="mt-2 space-y-2">
-                  {pages.length ? pages?.filter(itm=> itm?.page == 'footer1')?.map((page, i) => (
-                    <li>
-                      {page?.status && (
+                  {
+                    page2.length ? page2.map((page, i) => (
+                      <li key={i}>
                         <Link
                           to={`/pages/${page?._id}`}
-                          className="text-sm text-gray-600 transition-colors duration-300 hover:text-deep-purple-accent-400"
+                          className="text-sm text-gray-400 transition-colors duration-300 hover:text-deep-purple-accent-400"
                         >
                           {page?.title}
                         </Link>
-                      )}
-                    </li>
-                  )) : ''}
-                  <li>
-                    <a
-                      href="/"
-                      className="text-gray-500 transition-colors duration-300 hover:text-deep-purple-accent-200"
-                    >
-                      Media
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="/"
-                      className="text-gray-500 transition-colors duration-300 hover:text-deep-purple-accent-200"
-                    >
-                      Brochure
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="/"
-                      className="text-gray-500 transition-colors duration-300 hover:text-deep-purple-accent-200"
-                    >
-                      Nonprofit
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="/"
-                      className="text-gray-500 transition-colors duration-300 hover:text-deep-purple-accent-200"
-                    >
-                      Educational
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="/"
-                      className="text-gray-500 transition-colors duration-300 hover:text-deep-purple-accent-200"
-                    >
-                      Projects
-                    </a>
-                  </li>
+                      </li>
+                    )) : ''
+                  }
                 </ul>
               </div>
+
+
+              <div>
+                <p className="font-medium tracking-wide text-gray-300"> Quick Links</p>
+                <ul className="mt-2 space-y-2">
+                                   
+                  <li>
+                    <Link
+                      to={`/products`}
+                      className="text-gray-500 transition-colors duration-300 hover:text-deep-purple-accent-200"
+                    >
+                      Products
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      to={`/services`}
+                      className="text-gray-500 transition-colors duration-300 hover:text-deep-purple-accent-200"
+                    >
+                      Service
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      to={`/price`}
+                      className="text-gray-500 transition-colors duration-300 hover:text-deep-purple-accent-200"
+                    >
+                      Pricing
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      to={`/faq`}
+                      className="text-gray-500 transition-colors duration-300 hover:text-deep-purple-accent-200"
+                    >
+                      Learn
+                    </Link>
+                  </li>
+         
+
+                </ul>
+              </div>
+
               <div>
                 <p className="font-medium tracking-wide text-gray-300">
                   Contact
                 </p>
                 <ul className="mt-2 space-y-2">
                   <li>
-                    <a
-                      href="/"
+                    <Link
+                      to="/"
                       className="text-gray-500 transition-colors duration-300 hover:text-deep-purple-accent-200"
                     >
-                      Infopreneur
-                    </a>
+                      +8801712345678
+                    </Link>
                   </li>
                   <li>
-                    <a
-                      href="/"
+                    <Link to="/"
                       className="text-gray-500 transition-colors duration-300 hover:text-deep-purple-accent-200"
                     >
-                      Personal
-                    </a>
+                      nahid@example.com
+                    </Link>
                   </li>
-                  <li>
-                    <a
-                      href="/"
-                      className="text-gray-500 transition-colors duration-300 hover:text-deep-purple-accent-200"
-                    >
-                      Wiki
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="/"
-                      className="text-gray-500 transition-colors duration-300 hover:text-deep-purple-accent-200"
-                    >
-                      Forum
-                    </a>
-                  </li>
+                  
                 </ul>
               </div>
             </div>

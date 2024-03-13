@@ -56,6 +56,20 @@ const UpdatePage = ({ OpenModal, setOpenModal, FAQInfo, refetch }) => {
                     <input name='title' className='w-full p-2 my-4 border' defaultValue={FAQInfo.title} />
 
                     <div>
+                        {/* <label className="sr-only text-black" htmlFor="title">
+                            Select Page
+                        </label> */}
+                        <select
+                            name='page'
+                            className="w-full rounded-lg border bg-white border-gray-900 p-3 text-sm">
+                            <option value="footer1">Footer 1</option>
+                            <option value="footer2">Footer 2</option>
+                            <option value="solution">Solution</option>
+                            <option value="marketing">Marketing</option>
+                        </select>
+                    </div>
+<br />
+                    <div>
                         <div>
                             <JoditEditor value={FAQInfo.description} name="description" id="answer" />
                         </div>
