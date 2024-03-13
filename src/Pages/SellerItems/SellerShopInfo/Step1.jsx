@@ -63,7 +63,7 @@ const Step1 = ({ nextStep, handleChange, values }) => {
         name = name?.toLowerCase().replace(/\s+/g, '-');
         setShopName(name);
 
-        if (name.length > 2) {
+        if (name.length > 3) {
             try {
                 const response = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/info/${name}`);
                 const data = await response.json();
