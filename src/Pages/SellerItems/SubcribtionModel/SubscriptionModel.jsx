@@ -12,16 +12,19 @@ const SubscriptionModel = () => {
     const [services, setServices] = useState([])
     const [showWarning, setShowWarning] = useState(false)
 
+
+
+
     const { data: prices = {}, loader } = useQuery({
         queryKey: ["subscriptionModal"],
         queryFn: async () => {
-            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/subscription-model?priceId=${shopInfo?.priceId}`);
+            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/subscription-model?priceId=${shopInfo?.priceId}&shopId=${shopInfo._id}`);
             const data = await res.json();
             return data?.data;
         },
     });
 
-
+    console.log(`https://salenow-v2-backend.vercel.app/api/v1/seller/subscription-model?priceId=${shopInfo?.priceId}&shopId=${shopInfo._id}`, 'services time prices ====={}');
 
 
     const { data: commissionHistory = [], } = useQuery({
@@ -59,7 +62,7 @@ const SubscriptionModel = () => {
         },
     });
 
-    console.log(`https://salenow-v2-backend.vercel.app/api/v1/seller/check-free-trail?shopId=${shopInfo._id}`, 'posible');
+    // console.log(`https://salenow-v2-backend.vercel.app/api/v1/seller/check-free-trail?shopId=${shopInfo._id}`, 'posible');
 
 
     const originalDate = shopInfo?.paymentDate;
@@ -220,12 +223,19 @@ const SubscriptionModel = () => {
                         </div>)
                     }
                 </div> */}
-                <div className="flex justify-center mt-8">
+                <div className="flex gap-3 justify-center mt-8">
                     {/* <Link to={`/price`} className="px-8 py-2 tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-600 rounded-md hover:bg-blue-500 focus:outline-none focus:bg-blue-500 focus:ring focus:ring-blue-300 focus:ring-opacity-80">
                         Renew
                     </Link> */}
                     <PriceModal open={open} setOpen={setOpen} />
 
+                    <Link to={`/price`}>
+                        <div
+                            className="flex items-center mt-auto text-white bg-indigo-500 border-0 py-2 px-4  focus:outline-none hover:bg-indigo-600 rounded">
+                            Renew
+
+                        </div>
+                    </Link>
                     <button onClick={() => setOpen(prices)} className="flex items-center mt-auto text-white bg-indigo-500 border-0 py-2 px-4  focus:outline-none hover:bg-indigo-600 rounded">
                         Update
                         <svg

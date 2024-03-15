@@ -12,12 +12,16 @@ import { BiEdit, BiLeftArrow, BiRightArrow } from 'react-icons/bi';
 import WebStoreproduct from './WebStoreProducts';
 import PrintPage from './SellerPrintPage';
 import SellerPrintPage from './SellerPrintPage';
+import { RxCross2 } from 'react-icons/rx';
 
 
 const SellerAllProducts = () => {
     const { shopInfo } = useContext(AuthContext)
     const [loadingStates, setLoadingStates] = useState({});
     const [printProduct, setPrintProduct] = useState([]);
+    const [priceOn, setPriceOn] = useState(false);
+    const [stockOn, setStockOn] = useState(false);
+  
     const { data: products = [], refetch } = useQuery({
         queryKey: ["products"],
         queryFn: async () => {
@@ -27,7 +31,8 @@ const SellerAllProducts = () => {
         },
     });
 
-    const [OpenModal, setOpenModal] = useState(false)
+    const [openModal, setOpenModal] = useState(false)
+    const [onModal, setOnModal] = useState(false)
 
     const [currentPage, setCurrentPage] = useState(1);
     const [searchQuery, setSearchQuery] = useState("");
@@ -186,6 +191,22 @@ const SellerAllProducts = () => {
         setPrintProduct(selectedProductData)
         setOn(!on)
     };
+
+    const handleEditPrice = (e) => {
+        e.preventDefault();
+        const editPrice = e.target.editPrice.value
+
+        console.log(editPrice);
+        setPriceOn(false)
+    }
+
+    const handleEditStock = (e) => {
+        e.preventDefault();
+        const editStock = e.target.editStock.value
+
+        console.log(editStock);
+        setStockOn(false)
+    }
 
     return (
         <div className="">
@@ -438,14 +459,53 @@ const SellerAllProducts = () => {
                                                 <td className="px-4 py-4 text-sm border-2 text-gray-500  whitespace-nowrap">
                                                     {product.regular_price}
                                                 </td>
-                                                <td className="px-4 py-4 text-sm border-2 text-gray-500  whitespace-nowrap">
-                                                    {product.price}
+                                                <td className="px-4  py-4 text-sm border-2 text-gray-500  whitespace-nowrap">
+                                                    <div className="flex items-center gap-2">
+                                                        {product.price}  <button onClick={() => setPriceOn(product)}> <BiEdit className='text-lg' /></button>
+
+                                                        <div onClick={() => setPriceOn(false)} className={`fixed z-[100] flex items-center justify-center ${priceOn?._id == product?._id ? 'visible opacity-100' : 'invisible opacity-0'} inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}>
+                                                            <div onClick={(e_) => e_.stopPropagation()} className={`text- absolute max-w-md rounded-sm bg-white p-6 drop-shadow-lg dark:bg-white dark:text-black ${priceOn?._id == product?._id ? 'scale-1 opacity-1 duration-300' : 'scale-0 opacity-0 duration-150'}`}>
+                                                                <form onSubmit={handleEditPrice}>
+                                                                    <h2 className="text-lg font-medium text-gray-800 mb-4">Update Price</h2>
+                                                                    <input
+                                                                        name='editPrice'
+                                                                        defaultValue={priceOn?.price}
+                                                                        type="text" placeholder='update price' className='w-[300px] py-2 my-4 border px-2 rounded' />
+                                                                    <div className="flex justify-between">
+                                                                        <button type='submit' className="me-2 rounded-sm bg-green-700 px-6 py-[6px] text-white">Update</button>
+                                                                        <button onClick={() => setPriceOn(false)} className="rounded-sm border border-red-600 px-6 py-[6px] text-red-600 duration-150 hover:bg-red-600 hover:text-white">Cancel</button>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
                                                 </td>
                                                 <td className="px-4 py-4 text-sm border-2 whitespace-nowrap">
                                                     <div className="flex items-center gap-x-2">
-                                                        <p className="px-3 py-1 text-xs text-indigo-500 rounded-full bg-gray-800 bg-indigo-100/60">
-                                                            {product?.stock_quantity}
-                                                        </p>
+                                                        <div className="flex items-center gap-2">
+                                                            <p className="px-3 py-1 text-xs text-indigo-500 rounded-full bg-gray-800 bg-indigo-100/60">
+                                                                {product?.stock_quantity}
+                                                            </p>
+                                                            <button onClick={() => setStockOn(product)}> <BiEdit className='text-lg' /></button>
+
+
+                                                            <div onClick={() => setStockOn(false)} className={`fixed z-[100] flex items-center justify-center ${stockOn?._id == product?._id ? 'visible opacity-100' : 'invisible opacity-0'} inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}>
+                                                                <div onClick={(e_) => e_.stopPropagation()} className={`text- absolute max-w-md rounded-sm bg-white p-6 drop-shadow-lg dark:bg-white dark:text-black ${stockOn?._id == product?._id ? 'scale-1 opacity-1 duration-300' : 'scale-0 opacity-0 duration-150'}`}>
+                                                                    <form onSubmit={handleEditStock}>
+                                                                        <h2 className="text-lg font-medium text-gray-800 mb-4">Update Stock Quantity</h2>
+                                                                        <input
+                                                                            name='editStock'
+                                                                            defaultValue={stockOn?.stock_quantity}
+                                                                            type="text" placeholder='update price' className='w-[300px] py-2 my-4 border px-2 rounded' />
+                                                                        <div className="flex justify-between">
+                                                                            <button type='submit' className="me-2 rounded-sm bg-green-700 px-6 py-[6px] text-white">Update</button>
+                                                                            <button onClick={() => setStockOn(false)} className="rounded-sm border border-red-600 px-6 py-[6px] text-red-600 duration-150 hover:bg-red-600 hover:text-white">Cancel</button>
+                                                                        </div>
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </td>
                                                 <td className="px-4 py-4 text-sm border-2 whitespace-nowrap">
@@ -457,9 +517,9 @@ const SellerAllProducts = () => {
 
                                                         </button>
 
-                                                        <button onClick={() => setOpenModal(true)} className=" transition-colors duration-200 hover:text-green-500  text-green-700 focus:outline-none mr-4">
+                                                        <Link to={`/seller/product-management/edit/${product?._id}`} onClick={() => setOnModal(product)} className=" transition-colors duration-200 hover:text-green-500  text-green-700 focus:outline-none mr-4">
                                                             <BiEdit className="w-5 h-5" />
-                                                        </button>
+                                                        </Link>
                                                         {
                                                             product.woo && <button onClick={() => updateProduct(product._id, product.sku, product.item_id, 'woo')} className=" transition-colors duration-200 hover:text-yellow-500  text-yellow-700 focus:outline-none mr-4">
                                                                 {loadingStates[product._id] ? 'Updating...' : 'Update on woo'}
@@ -468,9 +528,22 @@ const SellerAllProducts = () => {
                                                         {product.daraz && <button onClick={() => updateProduct(product._id, product.variations[0].SKU, product.item_id, 'daraz')} className=" transition-colors duration-200 hover:text-yellow-500  text-yellow-700 focus:outline-none mr-4">
                                                             {loadingStates[product._id] ? 'Updating...' : 'Update on Daraz'}
                                                         </button>}
-                                                        <div className='h-0 w-0'>
-                                                            <EditProductForm OpenModal={OpenModal} setOpenModal={setOpenModal} product={product} />
+
+                                                        {/* modal */}
+                                                        <div onClick={() => setOnModal(false)} className={`fixed z-[100] overflow-hidden flex items-center justify-center ${onModal?._id == product?._id ? 'visible opacity-100' : 'invisible opacity-0'} inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}>
+
+                                                            <div onClick={(e_) => e_.stopPropagation()} className={`text- absolute w-[90%] rounded-sm bg-white p-6 drop-shadow-lg  ${onModal?._id == product?._id ? 'scale-1 opacity-1 duration-300' : 'scale-0 opacity-0 duration-150'}`}>
+
+                                                                <EditProductForm product={onModal} />
+
+                                                                <div className="flex justify-between">
+
+                                                                    <button type='button' onClick={() => setOnModal(false)} className="absolute top-0 right-2 bg-red-500 text-white w-[30px] h-[30px] rounded-full flex items-center justify-center">x</button>
+                                                                </div>
+                                                            </div>
                                                         </div>
+
+                                                        {/* end */}
                                                     </div>
                                                     <div>
 

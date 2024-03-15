@@ -2,9 +2,10 @@ import React from 'react';
 import { useState } from 'react';
 
 
-const ImageUploadSeller = ({ product,  coverPhoto, setCoverPhoto, youtube, setYoutube }) => {
+const ImageUploadSeller = ({ product, coverPhoto, setCoverPhoto, youtube, setYoutube }) => {
 
-    const [photo1, setPhoto1] = useState('');
+
+    const [photo1, setPhoto1] = useState(product?.images?.length > 0 ? product.images[0].src : '');
     const [photo2, setPhoto2] = useState('');
     const [photo3, setPhoto3] = useState('');
     const [photo4, setPhoto4] = useState('');
@@ -13,6 +14,8 @@ const ImageUploadSeller = ({ product,  coverPhoto, setCoverPhoto, youtube, setYo
     const [photo7, setPhoto7] = useState('');
     const [deletItem, setDeletItem] = useState('');
     const [youtubeError, setYoutubeError] = useState('')
+
+    // console.log(p1, 'p11111111111');
 
 
     const handleCheck = (value) => {
@@ -472,4 +475,3 @@ const ImageUploadSeller = ({ product,  coverPhoto, setCoverPhoto, youtube, setYo
 };
 
 export default ImageUploadSeller;
- 

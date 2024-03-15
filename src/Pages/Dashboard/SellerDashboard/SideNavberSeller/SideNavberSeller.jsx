@@ -25,12 +25,12 @@ import { GiScales, GiWoodBeam } from 'react-icons/gi';
 const SideNavberSeller = ({ responsive, setResponsive }) => {
     const { user, logOut, shopInfo } = useContext(AuthContext)
 
-    const { data: prices = [], loader } = useQuery({
+    const { data: prices = {}, loader } = useQuery({
         queryKey: ["prices"],
         queryFn: async () => {
-            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/subscription-model?priceId=${shopInfo?.priceId}`);
+            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/subscription-model?priceId=${shopInfo?.priceId}&shopId=${shopInfo?._id}`);
             const data = await res.json();
-            return data?.data;
+            return data?.data?.result;
         },
     });
 
@@ -39,7 +39,8 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
         return prices?.permissions?.some(itm => itm?.name === check)
     };
 
-    console.log(shopInfo.status, "--------", (shopInfo.status === 'true' && user.disable === false));
+
+    console.log(managementPermission('mahadi') && 'nahid', 'check----------')
 
     return (
 
@@ -1625,7 +1626,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                     </span>
                                                 </summary>
 
-                                                    <ul className="mt-2 space-y-1 px-2 bg-[#1b202ea1] border">
+                                                <ul className="mt-2 space-y-1 px-2 bg-[#1b202ea1] border">
                                                     <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
                                                         <Link
                                                             to={'/seller/manage-blogs'}
@@ -1725,7 +1726,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                     </span>
                                                 </summary>
 
-                                                    <ul className="mt-2 space-y-1 px-2 bg-[#1b202ea1] border">
+                                                <ul className="mt-2 space-y-1 px-2 bg-[#1b202ea1] border">
                                                     <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
                                                         <Link
                                                             to={'/seller/manage-contact'}
@@ -1863,7 +1864,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                     </span>
                                                 </summary>
 
-                                                    <ul className="mt-2 space-y-1   px-2 bg-[#1b202ea1] border">
+                                                <ul className="mt-2 space-y-1   px-2 bg-[#1b202ea1] border">
                                                     <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
                                                         <Link
                                                             to={'/seller/content-management/popup-management'}
@@ -2029,7 +2030,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                     </span>
                                                 </summary>
 
-                                                    <ul className="mt-2 space-y-1 px-2 bg-[#1b202ea1] border">
+                                                <ul className="mt-2 space-y-1 px-2 bg-[#1b202ea1] border">
                                                     <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
                                                         <Link
                                                             to={'/seller/content-management/brand-management'}
@@ -2132,7 +2133,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                     </span>
                                                 </summary>
 
-                                                    <ul className="mt-2 space-y-1 px-2 bg-[#1b202ea1] border">
+                                                <ul className="mt-2 space-y-1 px-2 bg-[#1b202ea1] border">
                                                     <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
                                                         <Link
                                                             to={'/seller/service/manage-service'}

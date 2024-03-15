@@ -89,7 +89,7 @@ const AddCampaign = () => {
             MetaTag,
             MetaDescription,
             MetaImage: metaImage,
-            shopId,
+            // shopId,
             products,
             isFlash: isChecked,
             startTime,

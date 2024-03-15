@@ -29,9 +29,9 @@ const SellerDashLayout = () => {
     const { data: prices = {}, refetch } = useQuery({
         queryKey: ["subscriptionModal"],
         queryFn: async () => {
-            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/subscription-model?priceId=${shopInfo?.priceId}`);
+            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/subscription-model?priceId=${shopInfo?.priceId}&shopId=${shopInfo?._id}`);
             const data = await res.json();
-            return data?.data;
+            return data?.data?.result;
         },
     });
 

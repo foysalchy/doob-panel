@@ -78,6 +78,7 @@ import StockManagement from "../Pages/SellerItems/StockManagement/StockManagemen
 import SellerStockManagement from "../Pages/SellerItems/SellerStockManagement/SellerStockManagement";
 import ServiceManagementSaller from "../Pages/SellerItems/ServiceMangaementSaller/ServiceManagementSaller";
 import BlogCategorySeller from "../Pages/SellerItems/SellersBlog/BlogCategorySeller/BlogCategorySeller";
+import EditProductForm from "../Pages/SellerItems/ProductManagement/SellerProductManagement/SellerAllProduct/EditProduct";
 
 
 const SellerPath = [
@@ -248,6 +249,10 @@ const SellerPath = [
     {
         path: "product-management/manage",
         element: <SellerAllProducts />
+    },
+    {
+        path: "product-management/edit/:id",
+        element: <EditProductForm />
     },
     {
         path: "product-management/add-daraz-product",
