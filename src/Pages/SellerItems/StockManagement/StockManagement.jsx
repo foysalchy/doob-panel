@@ -20,14 +20,15 @@ const StockManagement = () => {
     });
 
     const handleUpdate = (data) => {
-        console.log(data);
-        fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/stock-request?id=${data?.productId}?orderId=${data?._id}&quantity=${data?.quantity}`, {
+        console.log(data?.productId);
+        fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/stock-request-update?productId=${data?.productId}&orderId=${data?._id}&quantity=${data?.quantity}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({ status: 'active' }),
         }).then((res) => res.json()).then((data) => {
+            console.log(data);
             BrightAlert('Update Quantity', '', 'success');
             refetch()
         })
@@ -84,9 +85,10 @@ const StockManagement = () => {
                                     </td>
                                     <td className="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                                         <button
+                                            disabled={itm.status == 'active'}
                                             // onClick={() => DeactiveHandle(faq?._id)}
                                             onClick={() => handleUpdate(itm)}
-                                            className="inline-flex items-center px-3 py-1 rounded-full gap-x-2   text-green-500  "
+                                            className="inline-flex items-center px-3 py-1 rounded-full gap-x-2   text-green-500 text-sm flex items-center gap-2 bg-[#23b123ea] px-2 py-1 rounded text-white "
                                         >
                                             {itm?.status}
                                         </button>
@@ -96,9 +98,9 @@ const StockManagement = () => {
                                         {itm?.quantity}
                                     </td>
 
-                                    <td  className="px-4 py-4 text-lg text-green-500 whitespace-nowrap">
+                                    <td className="px-4 py-4 text-lg text-green-500 whitespace-nowrap">
                                         <button className="text-sm flex items-center gap-2 bg-[#23b123ea] px-2 py-1 rounded text-white">
-                                            {itm?.quantity} <BiEdit />
+                                            {itm?.quantity}
                                         </button>
                                     </td>
                                     {/* {on._id=== itm?._id && <StockEdit setOn={setOn} itm={itm} />} */}

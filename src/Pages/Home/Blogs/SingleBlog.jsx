@@ -137,17 +137,20 @@ const SingleBlog = () => {
           </form>
           <div className="space-y-4">
             {
-              blogInfo?.comments?.map((comment) => (
-                <div className="space-y-2">
+              (user.role === "superadmin" ? blogInfo?.comments : blogInfo?.comments?.filter((comm) => comm.status))?.map((comment) => (
+                <div className="space-y-2" key={comment.id}>
                   <div className="flex items-center space-x-2">
                     <div className="rounded-full overflow-hidden w-8 h-8">
-                      <div height={32}
+                      <div
+                        height={32}
                         src="/placeholder.svg"
                         style={{
                           aspectRatio: "32/32",
                           objectFit: "cover",
                         }}
-                        width={32} className="rounded-full flex justify-center items-center border border-black">
+                        width={32}
+                        className="rounded-full flex justify-center items-center border border-black"
+                      >
                         {comment.user.name.slice(0, 1)}
                       </div>
                     </div>
@@ -160,6 +163,7 @@ const SingleBlog = () => {
                 </div>
               ))
             }
+
 
           </div>
 

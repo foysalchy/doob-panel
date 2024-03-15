@@ -137,7 +137,7 @@ const DarazIntegration = () => {
 
             </div>
 
-            <div className='text-2xl bg-gray-500'>
+            <div className='text-2xl px-4 py-2 rounded bg-gray-500'>
                 {
                     darazShop.map(shop =>
                         <h1>{shop.result.account}</h1>

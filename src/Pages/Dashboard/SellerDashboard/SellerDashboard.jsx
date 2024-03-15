@@ -89,46 +89,32 @@ const SellerDashboard = () => {
     });
 
 
-    // // popup control
-    // localStorage.setItem('isModalOpen', true);
+  
 
-    // const handleClose = () => {
-    //     let check = localStorage.getItem('isModalOpen');
-    //     if (check === 'true') {
-    //         setShowModal(false);
+    const [showModal, setShowModal] = useState(false);
 
-    //         setTimeout(() => {
-    //             setShowModal(true);
-    //         }, 4 * 60 * 60 * 1000);
-    //     }
-    //     onClose();
-    // }
-
-    const [showModal, setShowModal] = useState(localStorage.getItem('showModal') === 'true' || true);
+    const [popup, setPopUp] = useState(true);
 
     useEffect(() => {
-        const isModalOpen = localStorage.getItem('isModalOpen');
-        if (isModalOpen === 'true') {
-            setShowModal(false);
-            const lastClosedTime = localStorage.getItem('lastClosedTime');
-            const fourHours = 4 * 60 * 60 * 1000; // 4 hours in milliseconds
-            const timeSinceClose = Date.now() - Number(lastClosedTime);
-            const remainingTime = fourHours - timeSinceClose;
+        const lastModalShownTimestamp = localStorage.getItem('lastClosedTime');
+        if (lastModalShownTimestamp) {
+            const lastShownTime = new Date(parseInt(lastModalShownTimestamp));
+            const currentTime = new Date();
+            const timeDifference = currentTime.getTime() - lastShownTime.getTime();
+            const hoursDifference = timeDifference / (1000 * 3600); // Convert milliseconds to hours
 
-            if (remainingTime <= 0) {
-                setShowModal(true);
-                localStorage.setItem('isModalOpen', true);
+            if (hoursDifference >= 5) {
+                setPopUp(true); // More than 5 hours, set popup to true
             } else {
-                setTimeout(() => {
-                    setShowModal(true);
-                    localStorage.setItem('isModalOpen', true);
-                }, remainingTime);
+                setPopUp(false); // Less than 5 hours, set popup to false
             }
         }
     }, []);
 
+
     const onClose = () => {
         setShowModal(false);
+        setPopUp(false)
         localStorage.setItem('isModalOpen', false);
         localStorage.setItem('lastClosedTime', Date.now());
 
@@ -146,9 +132,9 @@ const SellerDashboard = () => {
                 </div>
             )} */}
 
-            {sellerPopupData.length ? showModal && (
+            {sellerPopupData.length ? popup && (
                 <div className="fixed top-0 left-0 flex items-center justify-center w-full h-full bg-black bg-opacity-90 z-50">
-                    <SellerPopUp onClose={onClose} showModal={showModal} setShowModal={setShowModal} data={sellerPopupData} handleClose={onClose} />
+                    <SellerPopUp onClose={onClose} showModal={popup} setShowModal={setPopUp} data={sellerPopupData} handleClose={onClose} />
                 </div>
             )
                 :

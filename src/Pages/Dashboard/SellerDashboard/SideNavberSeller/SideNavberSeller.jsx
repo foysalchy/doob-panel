@@ -1022,6 +1022,14 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                     </li>
                                                     <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
                                                         <Link
+                                                            to={'/seller/orders/claim-return'}
+                                                            className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                                        >
+                                                            <MdManageAccounts className='w-5 h-5 fill-current text-gray-400 ' /> Claim Return
+                                                        </Link>
+                                                    </li>
+                                                    <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
+                                                        <Link
                                                             to={'/seller/orders/web-store-order'}
                                                             className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
                                                         >

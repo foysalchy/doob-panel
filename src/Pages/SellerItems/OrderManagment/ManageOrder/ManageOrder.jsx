@@ -32,10 +32,10 @@ const ManageOrder = () => {
             <h3 className="font-bold text-xl">Orders Overview</h3>
             <div className="flex flex-wrap justify-start  items-center gap-4">
 
-                <button onClick={() => setDaraz(false)} className='px-4 py-1 bg-transparent border'>
+                <button onClick={() => setDaraz(false)} className={`px-4 py-1 border text-white ${daraz ? "bg-gray-500 " : "bg-gray-900"}`}>
                     Web Order
                 </button>
-                <button onClick={() => setDaraz(true)} className='px-4 py-1 bg-transparent border'>
+                <button onClick={() => setDaraz(true)} className={`px-4 py-1 border text-white ${!daraz ? "bg-gray-500 " : "bg-gray-900"}`}>
                     Daraz Order
                 </button>
                 <button onClick={() => setOpenModal(!openModal)} className='px-4 py-1 bg-transparent border'>

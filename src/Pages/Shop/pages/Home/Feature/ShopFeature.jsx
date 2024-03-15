@@ -34,17 +34,19 @@ const ShopFeature = () => {
 
     return (
         <div className='my-12'>
-            <h2 className="text- pb-4">Feature Images</h2>
+
             <Swiper
                 pagination={true}
                 autoplay={true}
+                slidesPerView={2}
+                spaceBetween={20}
                 modules={[Pagination, Autoplay]}
                 className="mySwiper">
                 {
                     features?.map(itm => <SwiperSlide>
                         <div className="md:h-[500px] h-[170px]">
-                            <img src={itm?.image} alt="" className="w-full h-full object-cover" />
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum sit inventore deserunt non fugit officia earum obcaecati deleniti, quidem praesentium, est architecto minus, placeat molestiae? Nemo ab tenetur possimus quas?
+                            <img src={itm?.image} alt="" className="w-full border rounded-xl h-full object-cover" />
+
                         </div>
                     </SwiperSlide>)
                 }

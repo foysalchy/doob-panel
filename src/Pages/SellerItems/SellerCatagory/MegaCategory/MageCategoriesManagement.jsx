@@ -232,7 +232,7 @@ const MageCategoriesManagement = () => {
         })
     }
 
-    
+
     const uploadImage = async (formData) => {
         const url = `https://salenow-v2-backend.vercel.app/api/v1/image/upload-image`;
         const response = await fetch(url, {
@@ -249,16 +249,16 @@ const MageCategoriesManagement = () => {
         const form = e.target;
         const image = form.image;
         const name = form.name.value;
- 
+
         const imageFormData = new FormData();
         imageFormData.append("img", image.files[0]);
         const imageUrl = await uploadImage(imageFormData);
 
 
         const data = {
-           img: imageUrl ? imageUrl : editOn?.img,
-           name : name
- 
+            img: imageUrl ? imageUrl : editOn?.img,
+            name: name
+
         }
 
         console.log(data, id);
@@ -406,13 +406,13 @@ const MageCategoriesManagement = () => {
                                             </button>
                                         )}
                                             <button
-                                                onClick={() => futuresUpdate(warehouse?._id, warehouse?.body?.feature ? false : true)}
-                                                className={`${warehouse?.body?.feature ? 'bg-green-500' : 'bg-red-500'} text-white ml-2 rounded capitalize px-3 py-1`}>
+                                                onClick={() => futuresUpdate(warehouse?._id, warehouse?.feature ? false : true)}
+                                                className={`${warehouse?.feature ? 'bg-green-500' : 'bg-red-500'} text-white ml-2 rounded capitalize px-3 py-1`}>
                                                 futures
                                             </button>
                                             <button
-                                                onClick={() => menuUpdate(warehouse?._id, warehouse?.body?.menu ? false : true)}
-                                                className={`${warehouse?.body?.menu ? 'bg-green-500' : 'bg-red-500'} text-white ml-2 rounded capitalize px-3 py-1`}
+                                                onClick={() => menuUpdate(warehouse?._id, warehouse?.menu ? false : true)}
+                                                className={`${warehouse?.menu ? 'bg-green-500' : 'bg-red-500'} text-white ml-2 rounded capitalize px-3 py-1`}
                                             >
                                                 menu
                                             </button>

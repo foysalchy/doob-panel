@@ -50,7 +50,7 @@ const DarazOrderTable = ({ selectedValue, searchValue }) => {
     const endIndex = startIndex + pageSize;
     const totalPages = Math.ceil(filteredData?.length / pageSize);
 
-    const currentData = filteredData.slice(startIndex, endIndex);
+    const currentData = filteredData?.length && filteredData?.slice(startIndex, endIndex);
 
     const handleChangePage = (newPage) => {
 
@@ -65,7 +65,7 @@ const DarazOrderTable = ({ selectedValue, searchValue }) => {
 
         return (
             <React.Fragment>
-                {/* First Page */}
+
                 {startPage > 1 && (
                     <li>
                         <button

@@ -120,7 +120,7 @@ const ShopProductHero = () => {
     // https://salenow-v2-backend.vercel.app/api65e8a0a2e04a44a47ce186c3
     useEffect(() => {
         const fetchData = async () => {
-            const subCategoryPromises = megaSideCategoryData?.filter(itm => itm?.body?.menu === true).map(async (item) => {
+            const subCategoryPromises = megaSideCategoryData?.filter(itm => itm?.menu === true).map(async (item) => {
                 try {
                     const response = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/category/seller/sub-category-by-id?shopId=${shop_id?.shop_id}&id=${item?._id}`);
                     const data = await response.json();
@@ -269,7 +269,7 @@ const ShopProductHero = () => {
 
                             loading......
                         </> :
-                            megaSideCategoryData.filter(itm => itm?.body?.menu === true).map((item, index) => (
+                            megaSideCategoryData.filter(itm => itm?.menu === true).map((item, index) => (
                                 <div key={index} className="  inline-block">
                                     {/* Dropdown toggle button */}
                                     <button
