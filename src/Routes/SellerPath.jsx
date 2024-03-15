@@ -78,6 +78,7 @@ import StockManagement from "../Pages/SellerItems/StockManagement/StockManagemen
 import SellerStockManagement from "../Pages/SellerItems/SellerStockManagement/SellerStockManagement";
 import ServiceManagementSaller from "../Pages/SellerItems/ServiceMangaementSaller/ServiceManagementSaller";
 import BlogCategorySeller from "../Pages/SellerItems/SellersBlog/BlogCategorySeller/BlogCategorySeller";
+import ClimAndReturn from "../Pages/SellerItems/OrderManagment/ManageOrder/ClimAndReturn/ClimAndReturn";
 
 
 const SellerPath = [
@@ -310,6 +311,10 @@ const SellerPath = [
     {
         path: "orders/manage-order",
         element: <ManageOrder />
+    },
+    {
+        path: "orders/claim-return",
+        element: <ClimAndReturn />
     },
     {
         path: "service/manage-service",

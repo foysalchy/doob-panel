@@ -159,7 +159,7 @@ export default function CategorieItems({ setIsMenuOpen }) {
             <div className="grid grid-cols-4 gap-2 pt-2 h-full overflow-y-">
                 {/* mega category */}
                 <div className="">
-                    {megaSideCategoryData?.filter(itm => itm?.body?.menu === true).map((item, index) => (
+                    {megaSideCategoryData?.filter(itm => itm?.menu === true).map((item, index) => (
                         <div key={index} className="">
                             {!subCategoryData.length === 0 ?
                                 <Link

@@ -31,6 +31,8 @@ const Pos = () => {
             audio.currentTime = 0;
         };
     }, [audio]);
+
+
     const addProductToCart = (productData) => {
         audio.play();
 
@@ -68,8 +70,10 @@ const Pos = () => {
     const handleSearch = (e) => {
         e.preventDefault();
         const searchValue = e.target.search.value;
+        console.log(searchValue);
         const findProduct = productList.find((itm) => itm._id.includes(searchValue));
         const existingProductIndex = cartProducts.findIndex(itm => itm.id.includes(searchValue));
+        //need to reset e searchValue
 
         if (findProduct) {
             const productInfo = {
@@ -90,12 +94,12 @@ const Pos = () => {
                 // If product is not in cart, add it to the cart
                 setCartProducts([...cartProducts, productInfo]);
             }
+            e.target.reset();
 
-            console.log(findProduct, 'searchValue');
         }
     };
 
-    console.log(filteredData, 'filteredData', productList);
+   
 
     return (
         <div>

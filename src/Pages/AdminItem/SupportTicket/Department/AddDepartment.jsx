@@ -88,7 +88,7 @@ const AddDepartment = ({ ModalOpen, setModalOpen }) => {
                                     disabled={departmentName === ''}
                                     className={`block w-full p-3 text-base font-medium text-center text-white transition border rounded-lg border-primary bg-green-500 disabled:blur-sm hover:bg-opacity-90`}
                                 >
-                                    View Details
+                                    Upload
                                 </button>
                             </div>
                         </div>

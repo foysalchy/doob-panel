@@ -67,7 +67,6 @@ const ViewTicket = ({ viewTicket, setViewTicket, ticketDetails, refetch }) => {
             .finally(() => {
                 event.target.reset()
                 setLoading(false)
-                Swal.fire("Comment Uploaded", "", "success");
                 refetch()
             }
             );

@@ -149,8 +149,8 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
                                             <div className="relative">
                                                 <span className='text-xs absolute top-[-17px] text-center left-0 right-0'>Discount</span>
                                                 <input
-                                                    onChange={(e) => singleDiscount(index ,e.target.value)}
-                                                type="number" className="border border-red-500 rounded w-[60px] px-1" />
+                                                    onChange={(e) => singleDiscount(index, e.target.value)}
+                                                    type="number" className="border border-red-500 rounded w-[60px] px-1" />
                                             </div>
 
                                             <div className="flex mr-2 items-center relative">
@@ -209,7 +209,7 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
                     <input
                         value={cash}
                         onChange={(e) => setCash(e.target.value)}
-                        type="text"
+                        type="number"
                         className="bg-transparent px-2 text-right ring-1 w-[80px] ring-gray-300 rounded-md text-lg"
                     />
                 </div>
@@ -239,8 +239,9 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
                 </div>
 
                 <button
+                    disabled={changeAmount < 0}
                     onClick={handleSubmit}
-                    className="bg-gray-900 text-white rounded-md p-2 w-full mt-3">Submit</button>
+                    className={`${changeAmount < 0 ? 'bg-gray-500 cursor-not-allowed' : "bg-gray-900"} b text-white rounded-md p-2 w-full mt-3`}>Submit</button>
             </div>
             <PosProductsDetails invoice={invoice} open={open} setOpen={setOpen} />
         </div>
