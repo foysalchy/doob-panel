@@ -41,11 +41,12 @@ const AddSlider = () => {
         const imageFormData = new FormData();
         imageFormData.append("image", selectedFile);
         const imageUrl = await uploadImage(imageFormData);
+    
         const data = {
             image: imageUrl,
             link: url,
             shopId: shop,
-            status: false,
+            // status: false,
             time: new Date(),
             status: true
         };

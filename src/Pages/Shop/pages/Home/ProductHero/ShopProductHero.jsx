@@ -264,14 +264,10 @@ const ShopProductHero = () => {
                                 </div>
                             ))}
                     </div> */}
-                    <div className="bg-white w-full relative lg:flex hidden flex-col gap-2 rounded-lg p-4">
+                    <div className="bg-black w-full relative lg:flex hidden flex-col gap-2 rounded-lg p-4">
                         {!megaSideCategoryData ? <>
 
-                            <Skeleton
-                                style={{
-                                    height: '28px'
-                                }}
-                                count={10} />
+                            loading......
                         </> :
                             megaSideCategoryData.filter(itm => itm?.menu === true).map((item, index) => (
                                 <div key={index} className="  inline-block">
@@ -385,8 +381,9 @@ const ShopProductHero = () => {
                                 </div>
                             ))}
                     </div>
-
                 </div>
+
+
                 <div className='lg:w-[80%] w-[100%]'>
 
                     <Swiper pagination={true} modules={[Pagination]} className="mySwiper rounded-md">

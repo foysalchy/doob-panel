@@ -25,12 +25,12 @@ import { GiScales, GiWoodBeam } from 'react-icons/gi';
 const SideNavberSeller = ({ responsive, setResponsive }) => {
     const { user, logOut, shopInfo } = useContext(AuthContext)
 
-    const { data: prices = [], loader } = useQuery({
+    const { data: prices = {}, loader } = useQuery({
         queryKey: ["prices"],
         queryFn: async () => {
-            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/subscription-model?priceId=${shopInfo?.priceId}`);
+            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/subscription-model?priceId=${shopInfo?.priceId}&shopId=${shopInfo?._id}`);
             const data = await res.json();
-            return data?.data;
+            return data?.data?.result;
         },
     });
 
@@ -39,7 +39,8 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
         return prices?.permissions?.some(itm => itm?.name === check)
     };
 
-    console.log(shopInfo.status, "--------", (shopInfo.status === 'true' && user.disable === false));
+
+    console.log(managementPermission('mahadi') && 'nahid', 'check----------')
 
     return (
 

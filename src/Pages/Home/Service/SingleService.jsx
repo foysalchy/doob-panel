@@ -35,7 +35,7 @@ const SingleService = () => {
         id: service._id,
         title: service.title,
         price: service.price,
-        img: service.img,
+        img: service?.img,
         category: service.category,
         subscriptionPeriod: service.subscriptionPeriod,
       };
@@ -56,7 +56,6 @@ const SingleService = () => {
         email: user.email,
         title: service.title,
         price: service.price,
-        img: service.img,
         category: service.category,
         subscriptionPeriod: service.subscriptionPeriod,
       };

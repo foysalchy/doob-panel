@@ -1,11 +1,12 @@
 import { useQuery } from '@tanstack/react-query';
-import React from 'react';
+import React, { useContext } from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import { BsArrowLeft, BsArrowRight } from 'react-icons/bs';
+import { AuthContext } from '../../../AuthProvider/UserProvider';
 
 const Step3 = ({ prevStep, submitForm, handleChange, values }) => {
-
+    const { shopInfo } = useContext(AuthContext);
     const { data: prices = [], refetch } = useQuery({
         queryKey: ["prices"],
         queryFn: async () => {
@@ -18,10 +19,10 @@ const Step3 = ({ prevStep, submitForm, handleChange, values }) => {
     const { data: permission = [], loader } = useQuery({
         queryKey: ["prices"],
         queryFn: async () => {
-            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/subscription-model?priceId=${shopInfo?.priceId}`);
+            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/subscription-model?priceId=${shopInfo?.priceId}&shopId=${shopInfo?._id}`);
             const data = await res.json();
 
-            return data?.data;
+            return data?.data?.result;
         },
     });
     const [selectedPriceId, setSelectedPriceId] = useState(null);

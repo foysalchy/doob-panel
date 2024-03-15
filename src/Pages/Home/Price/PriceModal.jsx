@@ -46,19 +46,17 @@ const PriceModal = ({ open, setOpen }) => {
   });
 
   const [time, setTime] = useState('one,1')
-  console.log(possibility);
-
 
   const handleSubmit = () => {
-
     console.log({
       paymentId: open?._id,
       shopId: shopInfo._id,
       getway: selectGetWay?.Getaway,
       amount: open?.price,
       priceName: open?.name,
-      time
-    });
+      time,
+    }
+    );
 
     if (shopInfo) {
       fetch(
@@ -74,7 +72,9 @@ const PriceModal = ({ open, setOpen }) => {
             getway: selectGetWay?.Getaway,
             amount: open?.price,
             priceName: open?.name,
-            time
+            time,
+            buyingPrice: parseInt(open?.price) * parseInt(time?.split(',')[1])
+
           }),
         }
       )
@@ -95,7 +95,7 @@ const PriceModal = ({ open, setOpen }) => {
     }
   };
 
-  console.log(time, 'price');
+  console.log(time.split(',')[0], 'price', open);
 
   return (
     <div
