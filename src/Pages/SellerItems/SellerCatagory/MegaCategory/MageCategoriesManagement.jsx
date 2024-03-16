@@ -27,7 +27,7 @@ const MageCategoriesManagement = () => {
             return data;
         },
     });
-
+    console.log(categories, 'category');
     const [searchQuery, setSearchQuery] = useState("");
 
     const handleSearch = (event) => {

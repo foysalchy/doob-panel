@@ -82,17 +82,45 @@ const DarazIntegration = () => {
     }, [code])
 
 
-    const { data: darazShop = [], isLoading, refetch } = useQuery({
+    const { data: darazShop = {}, isLoading, refetch } = useQuery({
         queryKey: ["darazShopBd"],
         queryFn: async () => {
             const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/seller-daraz-accounts?id=${shopInfo._id}`);
+            const data = await res.json();
+            return data.data[0];
+        },
+    })
+
+    console.log(`https://salenow-v2-backend.vercel.app/api/v1/seller/get-privious-account?shopId=${shopInfo._id}`);
+
+    const { data: priviousAccount = [], isLoading: loading, refetch: reload } = useQuery({
+        queryKey: ["priviousAccount"],
+        queryFn: async () => {
+            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/daraz/get-privious-account?shopId=${shopInfo._id}`);
             const data = await res.json();
             return data.data;
         },
     });
 
+    const switchAccount = (_id, id) => {
+        fetch(`https://salenow-v2-backend.vercel.app/api/v1/daraz/switching-your-daraz?id=${id}&loginId=${_id}`, {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                console.log(data); // Log response data
+                Swal.fire("Success", "", "success"); // Show success message (assuming you're using SweetAlert)
+                refetch(); // Refetch data
+                reload(); // Reload data
+            })
 
-    console.log(darazShop);
+    };
+
+
+
 
     return (
 
@@ -139,8 +167,19 @@ const DarazIntegration = () => {
 
             <div className='text-2xl px-4 py-2 rounded bg-gray-500'>
                 {
-                    darazShop.map(shop =>
-                        <h1>{shop.result.account}</h1>
+
+                    <h1>{darazShop?.result?.account}</h1>
+
+                }
+            </div>
+            <br />
+            <br />
+            <div>
+                <h1>Previous Login</h1>
+                <hr />
+                {
+                    priviousAccount.filter(shop => shop.result.account !== darazShop?.result?.account).map(shop =>
+                        <h1 className='text-2xl px-4 py-2 border rounded bg-gray-500'>{shop.result.account} <span onClick={() => switchAccount(shop._id, shop.oldId)} className='cursor-pointer'>Switch</span></h1>
                     )
                 }
             </div>

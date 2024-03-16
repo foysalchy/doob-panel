@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../../../AuthProvider/UserProvider';
 
 const EditInventory = ({ refetch, open, setOpen, data }) => {
-    const [count, setCount] = useState(data?.stock_quantity);
+    const [count, setCount] = useState(0);
     const { shopInfo } = useContext(AuthContext)
     const handleIncrease = () => {
         setCount(parseInt(count) + 1);
