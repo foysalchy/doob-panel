@@ -26,7 +26,7 @@ const PosInvoice = ({ setOpen, invoiceData, setInvoiceOpen, invoiceOpen }) => {
         });
     };
 
-    console.log(invoiceData);
+    console.log(invoiceData, '****');
     return (
         <>
             {
@@ -67,13 +67,17 @@ const PosInvoice = ({ setOpen, invoiceData, setInvoiceOpen, invoiceOpen }) => {
                                     <h2 className="text-md font-semibold">Price</h2>
                                 </div>
                                 {
-                                    invoiceData?.items?.map((itm, index) => <li key={index}>
-                                        <div className="border-b border-dashed flex items-start text-start border-gray-700 py-2 gap-2">
-                                            <span>
-                                                {`(${index + 1})`}
-                                            </span>
-                                            <div className="">
+                                    invoiceData?.invoice?.items?.map((itm, index) => <li key={index}>
+                                        <div className="border-b border-dashed justify-between flex  items-start text-start border-gray-700 py-2 gap-2">
+                                            <div className="flex items-center gap-2">
+                                                <span>
+                                                    {`(${index + 1})`}
+                                                </span>
                                                 <h2 className="w-[400px]">{itm?.name}</h2>
+                                            </div>
+
+                                            <div className="">
+                                                <h2 className=""> ৳ {itm?.price}</h2>
                                             </div>
                                         </div>
                                     </li>)
@@ -84,21 +88,21 @@ const PosInvoice = ({ setOpen, invoiceData, setInvoiceOpen, invoiceOpen }) => {
                                 <li>
                                     <div className=" border-dashed flex items-center justify-between border-gray-700 py-2 gap-2 ">
                                         <h2 className="text-md font-semibold"> Total :</h2>
-                                        <h2 className="text-md border-b pb-1 border-dashed border-gray-600 w-[130px]">{invoiceData?.invoice?.total} TK</h2>
+                                        <h2 className="text-md border-b pb-1 border-dashed border-gray-600 w-[130px]">{invoiceData?.invoice?.total}  ৳</h2>
                                     </div>
                                 </li>
 
                                 <li>
                                     <div className=" border-dashed flex items-center justify-between border-gray-700 py-2 gap-2 ">
                                         <h2 className="text-md font-semibold"> Pay Amount: :</h2>
-                                        <h2 className="text-md border-b pb-1 border-dashed border-gray-600 w-[130px]">{invoiceData?.invoice?.cash} TK</h2>
+                                        <h2 className="text-md border-b pb-1 border-dashed border-gray-600 w-[130px]">{invoiceData?.invoice?.cash}  ৳</h2>
                                     </div>
                                 </li>
                             </ul>
                             <div className="border-t mt-6 border-dashed flex items-center justify-between border-gray-700 py-2 gap-2 ">
                                 <h2 className="text-md font-semibold">Your total change today :</h2>
 
-                                <h2 className="text-lg font-semibold pb-1 border-dashed border-gray-600  ">{invoiceData?.invoice.change} TK</h2>
+                                <h2 className="text-lg font-semibold pb-1 border-dashed border-gray-600  ">{invoiceData?.invoice.change}  ৳</h2>
                             </div>
                         </div>
                     </div>

@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import BrightAlert from "bright-alert";
 import React from "react";
 import { useState } from "react";
+import { BsEye } from "react-icons/bs";
 import { Link } from "react-router-dom";
 
 const BlogCategorySeller = () => {
@@ -95,7 +96,7 @@ const BlogCategorySeller = () => {
         <div>
             <Link
                 className="group relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
-                to="/admin/add-blog-category"
+                to="/seller/manage-blogs/add-blog-category"
             >
                 <span className="absolute -start-full transition-all group-hover:start-4">
                     <svg
@@ -185,19 +186,28 @@ const BlogCategorySeller = () => {
                                         {cate.title}
                                     </td>
                                     <td className="whitespace-nowrap px-4 py-2">
-                                        <button
-                                            onClick={() => DeleteCategory(cate._id)}
-                                            className="inline-block rounded  bg-red-600 px-4 py-2 text-xs font-medium text-white hover:bg-red-700"
-                                        >
-                                            Delete
-                                        </button>
+                                      <div className="flex items-center gap-2">
+                                            <button
+                                                onClick={() => DeleteCategory(cate._id)}
+                                                className="inline-block rounded  bg-red-600 px-4 py-2 text-xs font-medium text-white hover:bg-red-700"
+                                            >
+                                                Delete
+                                            </button>
 
-                                        <button
-                                            onClick={() => setOpenModal(cate)}
-                                            className="inline-block rounded ml-4 bg-blue-600 px-4 py-2 text-xs font-medium text-white hover:bg-blue-700"
-                                        >
-                                            Edit
-                                        </button>
+                                            <button
+                                                onClick={() => setOpenModal(cate)}
+                                                className="inline-block rounded ml-4 bg-blue-600 px-4 py-2 text-xs font-medium text-white hover:bg-blue-700"
+                                            >
+                                                Edit
+                                            </button>
+
+                                            {/* <button
+                                                onClick={() => setOpenModal(cate)}
+                                                className="inline-block rounded  h-full py-1 ml-4  text-green-600 font-medium text-lg hover:text-green-700"
+                                            >
+                                                <BsEye className="" />
+                                            </button> */}
+                                      </div>
                                     </td>
 
 
@@ -223,6 +233,7 @@ const BlogCategorySeller = () => {
 
                                                 <div className="flex justify-start">
                                                     <button type="submit" className="me-2 rounded-sm bg-blue-700 px-8 py-2 text-white">Edit</button>
+
                                                 </div>
                                             </form>
                                         </div>
