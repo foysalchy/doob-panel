@@ -30,17 +30,21 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
         queryFn: async () => {
             const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/subscription-model?priceId=${shopInfo?.priceId}&shopId=${shopInfo?._id}`);
             const data = await res.json();
+            console.log(data?.data?.result);
             return data?.data?.result;
         },
     });
 
-    //access route
+
+
+
     const managementPermission = (check) => {
         return prices?.permissions?.some(itm => itm?.name === check)
     };
 
+    console.log(managementPermission('POS') && prices.permissions);
 
-    console.log(managementPermission('mahadi') && 'nahid', 'check----------')
+
 
     return (
 
@@ -91,7 +95,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                         }
                     </div>
 
-                    {(shopInfo.status === 'true' && user.disable === false) && prices ?
+                    {(shopInfo.status == 'true' && user.disable === false) && prices ?
                         // status
 
                         <>

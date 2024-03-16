@@ -79,6 +79,7 @@ import SellerStockManagement from "../Pages/SellerItems/SellerStockManagement/Se
 import ServiceManagementSaller from "../Pages/SellerItems/ServiceMangaementSaller/ServiceManagementSaller";
 import BlogCategorySeller from "../Pages/SellerItems/SellersBlog/BlogCategorySeller/BlogCategorySeller";
 import EditProductForm from "../Pages/SellerItems/ProductManagement/SellerProductManagement/SellerAllProduct/EditProduct";
+import ClimAndReturn from "../Pages/SellerItems/OrderManagment/ManageOrder/ClimAndReturn/ClimAndReturn";
 import AddBlogCategory from "../Pages/SellerItems/SellersBlog/AddBlogCategory/AddBlogCategory";
 
 
@@ -335,6 +336,10 @@ const SellerPath = [
     }, {
         path: "orders/refand-order",
         element: <ScheduleDropOffs />
+    },
+    {
+        path: "orders/claim-return",
+        element: <ClimAndReturn />
     },
     {
         path: "orders/manage-order/order-checkup",

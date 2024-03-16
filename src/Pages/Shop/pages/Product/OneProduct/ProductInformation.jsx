@@ -48,14 +48,14 @@ const ProductInformation = () => {
     const handleVariation = (variation) => {
         setVariations(variation);
         setShowVariant(variation?.variantImag ? variation?.variantImag : product?.data.images)
-    
+
     }
 
     useEffect(() => {
         setVariations(product?.data?.variations[0])
         setShowVariant(product?.data.images)
 
-        
+
 
         if (imageList.length > 0) {
             setSelectedImage(imageList[0]?.src);
@@ -96,8 +96,8 @@ const ProductInformation = () => {
     const shopId = idMatch ? idMatch[1] : null;
 
     const addToCart = (data) => {
-        setLoader(true)
-        const product = data.data
+        setLoader(true);
+        const product = data.data;
         const addToCard = {
             userId: shopUser?._id,
             quantity: quantity,
@@ -107,15 +107,28 @@ const ProductInformation = () => {
             regular_price: product.regular_price,
             productId: product._id,
             shopId: shop_id.shop_id
-        }
+        };
 
         if (!shopUser) {
             const getData = localStorage.getItem('addToCart');
-            // localStorage.setItem('addToCart', JSON.stringify([addToCard]));
             const cartProduct = JSON.parse(getData);
-            const n = cartProduct ? [...cartProduct, addToCard] : [addToCard];
-            localStorage.setItem('addToCart', JSON.stringify(n));
-            BrightAlert('Product added to cart')
+            if (cartProduct) {
+                const existingProductIndex = cartProduct.findIndex(item => item.productId === addToCard.productId);
+                if (existingProductIndex !== -1) {
+                    // Update the quantity of the existing product
+                    cartProduct[existingProductIndex].quantity += quantity;
+                    localStorage.setItem('addToCart', JSON.stringify(cartProduct));
+                    BrightAlert('Product quantity updated in cart');
+                } else {
+                    // Add the product to the cart
+                    const updatedCart = [...cartProduct, addToCard];
+                    localStorage.setItem('addToCart', JSON.stringify(updatedCart));
+                    BrightAlert('Product added to cart');
+                }
+            } else {
+                localStorage.setItem('addToCart', JSON.stringify([addToCard]));
+                BrightAlert('Product added to cart');
+            }
             setLoader(false);
         } else {
             fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/user/add-to-cart?token=${shopUser._id}`, {
@@ -123,13 +136,13 @@ const ProductInformation = () => {
                 headers: { 'Content-Type': 'application/json', "ngrok-skip-browser-warning": "69420", },
                 body: JSON.stringify(addToCard)
             }).then((res) => res.json()).then((data) => {
-                setLoader(false)
-                BrightAlert(data.message)
+                setLoader(false);
+                BrightAlert(data.message);
                 console.log(data);
-            })
+            });
         }
-
     };
+
 
     const navigate = useNavigate()
     const buyNowHandler = (data) => {

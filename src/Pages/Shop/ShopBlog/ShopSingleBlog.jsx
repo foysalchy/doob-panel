@@ -41,6 +41,13 @@ const ShopSingleBlog = () => {
     });
 
 
+    const [searchQuery, setSearchQuery] = useState('');
+
+    const filteredBlogList = blogList.filter(blg => {
+        // Check if the blog's title contains the search query
+        return blg.title.toLowerCase().includes(searchQuery.toLowerCase());
+    });
+
 
 
 
@@ -93,14 +100,19 @@ const ShopSingleBlog = () => {
                     </div>
                 </div>
                 <div className="border-l px-2 border-[#8080805f] md:col-span-4 ">
+                    <input
+                        type="text"
+                        value={searchQuery}
+                        onChange={e => setSearchQuery(e.target.value)}
+                        placeholder="Search blogs..."
+                        className="w-full mt-3 mb-3 p-2 border border-gray-300 rounded"
+                    />
                     <h3 className=" pb-2 border-b border-[#000000e7]">Another blogs</h3>
-                    {blogList?.map((blg) => (
-                        <div className={`${!blg.status && 'hidden'} bg-gray-300`} >
-
+                    {filteredBlogList.map((blg) => (
+                        <div className={`${!blg.status && 'hidden'} bg-gray-300`} key={blg._id}>
                             <Link
                                 to={`/shop/${shopId}/blog/${blg._id}`}
-                                key={blg._id}
-                                className="flex items-start gap-2 mt-3 duration-200  p-2 "
+                                className="flex items-start gap-2 mt-3 duration-200 p-2"
                             >
                                 <img
                                     loading="eager"
@@ -109,13 +121,11 @@ const ShopSingleBlog = () => {
                                     alt=""
                                     className="md:w-[110px] w-[110px] h-[110px] object-cover"
                                 />
-                                <div className="">
-                                    <h4 className=" text-sm ">{blg.title}</h4>
+                                <div>
+                                    <h4 className="text-sm">{blg.title}</h4>
                                 </div>
                             </Link>
-
                         </div>
-
                     ))}
                 </div>
             </div>

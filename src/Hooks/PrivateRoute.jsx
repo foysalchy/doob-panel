@@ -13,18 +13,16 @@ const PrivateRoute = ({ children },) => {
     const pathname = window.location.pathname;
     const idMatch = pathname.match(/\/seller\/([^/]+)/);
     const sellerPath = idMatch ? idMatch[1] : null;
-
+    console.log(`https://salenow-v2-backend.vercel.app/api/v1/seller/subscription-model?priceId=${shopInfo?.priceId}&shopId=${shopInfo._id}`);
     const { data: prices = [], isLoading } = useQuery({
         queryKey: ["prices"],
         queryFn: async () => {
-            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/subscription-model?priceId=${shopInfo?.priceId}&shopId=${shopInfo?._id}`);
+            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/subscription-model?priceId=${shopInfo?.priceId}&shopId=${shopInfo._id}`);
             const data = await res.json();
-            localStorage.setItem('price', JSON.stringify(data?.data?.result));
-            return data?.data?.result;
+            return data?.data.result;
         },
     });
 
-console.log(prices, '---------------------------------------------')
 
     if (isLoading) {
         return <div></div>
