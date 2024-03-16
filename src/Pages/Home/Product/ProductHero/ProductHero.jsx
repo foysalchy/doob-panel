@@ -160,7 +160,6 @@ const ProductHero = () => {
     console.log(megaSideCategoryData, 'megaSideCategoryData');
     return (
         <div className='flex gap-4 '>
-            
             <div className="bg-white  w-[340px] relative lg:flex hidden flex-col gap-2 rounded-lg p-4">
                 {!megaSideCategoryData ? <>
 
@@ -187,7 +186,7 @@ const ProductHero = () => {
                             {openDropdownIndex === index && (
                                 <div
                                     onClick={() => setOpenDropdownIndex(null)}
-                                    className="absolute rounded-l-xl right-[-196px] top-0 z-20 w-48 h-full py-2 mt-2 px-2 origin-top-right bg-white">
+                                    className="absolute right-[-196px] top-0 z-20 w-48 h-full py-2 mt-2 px-2 origin-top-right bg-white">
                                     {
                                         subCategoryData.map((subCategory, index) => <div key={index}>
                                             {
@@ -226,7 +225,7 @@ const ProductHero = () => {
                                                                     }
                                                                 </div>
                                                             )}
-                                                            {extraCategoryData.length == 0 ? '' : <div className="absolute w-[500px] p-2 bg-white right-[-500px] grid grid-cols-5 gap-2 rounded-r-lg  top-0 h-full">
+                                                            {extraCategoryData.length == 0 ? '' : <div className="absolute w-[500px] p-2 bg-white right-[-500px] grid grid-cols-5 gap-2 top-0 h-full">
                                                                 {
                                                                     extraCategoryData?.map((extraCategory, index) => <div key={index}>
                                                                         {
@@ -251,7 +250,7 @@ const ProductHero = () => {
 
                                                     :
 
-                                                    <Link to={`/products/catagory/${subCategory?._id}`}>
+                                                    <button>
                                                         <div
                                                             onMouseMove={() => miniCategoryHandler(subCategory, index)}
                                                             className={`flex items-center  w-full justify-between hover:bg-gray-100 px-2 py-2 text-sm font-normal  mb-1 rounded relative  ${active?.step2 === subCategory?._id ? 'black-black ' : 'text-black'}`}
@@ -266,7 +265,7 @@ const ProductHero = () => {
                                                                 <img src={subCategory?.img} alt="" className="w-8 h-8 rounded-full ring-1 ring-gray-200" /> {subCategory?.subCategory}
                                                             </span>
                                                         </div>
-                                                    </Link>
+                                                    </button>
                                             }
 
                                         </div>)

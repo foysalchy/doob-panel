@@ -24,6 +24,8 @@ const PrivateRoute = ({ children },) => {
         },
     });
 
+console.log(prices, '---------------------------------------------')
+
     if (isLoading) {
         return <div></div>
     }

@@ -73,7 +73,7 @@ const PriceModal = ({ open, setOpen }) => {
             amount: open?.price,
             priceName: open?.name,
             time,
-            buyingPrice: parseInt(open?.price) * parseInt(time?.split(',')[1])
+            buyingPrice: parseInt(open?.price) * parseInt(time?.split(',')[1]) - parseInt(time?.split(',')[0])
 
           }),
         }
@@ -191,7 +191,8 @@ const PriceModal = ({ open, setOpen }) => {
             </div>
             <div className="flex flex-col items-center space-y-1">
               <h2 className="text-2xl font-semibold text-blue-600  sm:text-3xl">
-                ${parseInt(open?.price) * parseInt(time?.split(',')[1])}
+                ৳
+                {parseInt(open?.price) * parseInt(time?.split(',')[1]) - parseInt(time?.split(',')[0])}
                 <span className="text-base font-medium">
                   /{open?.timeDuration}
                 </span>

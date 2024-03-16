@@ -11,7 +11,7 @@ const SubscriptionModel = () => {
     const { user, shopInfo } = useContext(AuthContext)
     const [services, setServices] = useState([])
     const [showWarning, setShowWarning] = useState(false)
-
+    
 
 
 
@@ -76,7 +76,6 @@ const SubscriptionModel = () => {
 
     const time = prices?.timeDuration === 'Monthly' && 30 || prices?.timeDuration === 'Yearly' && 365 || prices?.timeDuration === 'Weekly' && 7 || prices?.timeDuration === 'Daily' && 1 || prices?.timeDuration === 'Lifetime' && 10000000000000000000000000000000000;
 
-    console.log(`${daysPassed} days have passed since the user was created.`);
 
 
     // if (daysPassed >= time) {
@@ -98,10 +97,14 @@ const SubscriptionModel = () => {
 
     console.log(daysPassed, 'services time');
 
-    console.log(prices, 'services time prices ====={}');
 
     const [invoice, setInvoice] = useState(false)
 
+
+    // const buyTi
+    const showBuyingPrice = parseInt(prices?.orderInfo?.buyingPrice)
+
+    console.log(prices, '--------*************');
 
     return (
         <div className="bg-white text-black">
@@ -141,7 +144,25 @@ const SubscriptionModel = () => {
                     {`${time == 10000000000000000000000000000000000 ? 'Unlimited' : time} days you use this service.`}
                 </h1>
 
-                <div className="grid grid-cols-1 gap-8 mt-6 lg:grid-cols-3 xl:mt-12">
+                <div className="flex justify-center mt-3">
+                    <div className="w-[300px] bg-[#0000ff08] text-center border-2 border-blue-400 p-3 rounded">
+                        <h2 className="font-semibold pb-2">Order Information:</h2>
+                        <ul>
+                            <li className='text-sm text-gray-500'>
+                                {/* parseInt(open?.price) * parseInt(time?.split(',')[1]) - parseInt(time?.split(',')[0]) */}
+                                <span className=" text-black">Amount :</span> {parseInt(prices?.orderInfo?.amount) * parseInt(prices?.orderInfo?.time?.split(',')[1])} ৳
+                            </li>
+                            <li className='text-sm text-gray-500 '>
+                                <span className=" text-black">Buying Price :</span> {prices?.orderInfo?.buyingPrice} ৳
+                            </li>
+                            <li className='text-sm text-gray-500 '>
+                                <span className=" text-black">Discount Price :</span> {prices?.orderInfo?.time?.split(',')[0]} ৳
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                {/* <div className="grid grid-cols-1 gap-8 mt-6 lg:grid-cols-3 xl:mt-12">
 
                     {
                         pricesData?.map(data => {
@@ -183,7 +204,7 @@ const SubscriptionModel = () => {
                         }
                         )
                     }
-                </div>
+                </div> */}
 
                 {/* list */}
                 {/* <div className="p-8 mt-8 space-y-8 bg-gray-100  rounded-xl">
@@ -232,12 +253,12 @@ const SubscriptionModel = () => {
                     <Link to={`/price`}>
                         <div
                             className="flex items-center mt-auto text-white bg-indigo-500 border-0 py-2 px-4  focus:outline-none hover:bg-indigo-600 rounded">
-                            Renew
+                            Update
 
                         </div>
                     </Link>
                     <button onClick={() => setOpen(prices)} className="flex items-center mt-auto text-white bg-indigo-500 border-0 py-2 px-4  focus:outline-none hover:bg-indigo-600 rounded">
-                        Update
+                        Renew
                         <svg
                             fill="none"
                             stroke="currentColor"
