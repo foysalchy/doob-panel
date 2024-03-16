@@ -23,7 +23,8 @@ const PrivateRoute = ({ children },) => {
         },
     });
 
-    if (isLoading || loading) {
+
+    if (isLoading) {
         return <div></div>
     }
 

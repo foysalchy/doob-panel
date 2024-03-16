@@ -32,6 +32,8 @@ const ShopProductHero = () => {
         },
     });
 
+console.log(categories, 'checkkkkkkkkkk')
+
     const { shop_id } = useContext(ShopAuthProvider)
 
     const { data: Banar = [] } = useQuery({
@@ -223,7 +225,7 @@ const ShopProductHero = () => {
     };
 
 
-    console.log(extraCategoryData, 'extraCategoryData======');
+    console.log(subCategoryData, 'extraCategoryData======');
     //end copy
     return (
         <div>
@@ -264,7 +266,7 @@ const ShopProductHero = () => {
                                 </div>
                             ))}
                     </div> */}
-                    <div className="bg-black w-full relative lg:flex hidden flex-col gap-2 rounded-lg p-4">
+                    <div className=" w-full relative lg:flex hidden flex-col gap-2 rounded-lg p-4">
                         {!megaSideCategoryData ? <>
 
                             loading......
@@ -272,19 +274,35 @@ const ShopProductHero = () => {
                             megaSideCategoryData.filter(itm => itm?.menu === true).map((item, index) => (
                                 <div key={index} className="  inline-block">
                                     {/* Dropdown toggle button */}
-                                    <button
-                                        onClick={() => subCategoryHandler(item, index)}
-                                        className={`flex  items-center  w-full justify-between px-2 py-2 text-sm font-normal  hover:bg-black hover:text-white  relative  ${openDropdownIndex === index ? 'bg-gray-100 text-black' : 'text-black'} rounded`}
-                                    >
-                                        <span className="flex items-center gap-2">
-                                            {/* <img src={item?.image} alt="" className="w-8 h-8 rounded-full ring-1 ring-gray-200" /> */}
-                                            {item?.name}
-                                        </span>
-                                        <FaAngleRight className="absolute right-2" />
-                                    </button>
+                                    <div>
+                                        {
+                                            <button
+                                                onClick={() => subCategoryHandler(item, index)}
+                                                className={`flex  items-center  w-full justify-between px-2 py-2 text-sm font-normal  hover:bg-black hover:text-white  relative  ${openDropdownIndex === index ? 'bg-gray-100 text-black' : 'text-black'} rounded`}
+                                            >
+                                                <span className="flex items-center gap-2">
+                                                    {/* <img src={item?.image} alt="" className="w-8 h-8 rounded-full ring-1 ring-gray-200" /> */}
+                                                    {item?.name}
+                                                </span>
+                                                <FaAngleRight className="absolute right-2" />
+                                            </button>
+                                                // :
 
+                                                // <Link to={``}
+                                                //     // onClick={() => subCategoryHandler(item, index)}
+                                                //     className={`flex  items-center  w-full justify-between px-2 py-2 text-sm font-normal  hover:bg-black hover:text-white  relative  ${openDropdownIndex === index ? 'bg-gray-100 text-black' : 'text-black'} rounded`}
+                                                // >
+                                                //     <span className="flex items-center gap-2">
+                                                //         {/* <img src={item?.image} alt="" className="w-8 h-8 rounded-full ring-1 ring-gray-200" /> */}
+                                                //         {item?.name}
+                                                //     </span>
+                                                //     {/* <FaAngleRight className="absolute right-2" /> */}
+                                                // </Link>
+
+                                        }
+                                    </div>
                                     {/* Dropdown menu */}
-                                    {openDropdownIndex === index && (
+                                    {openDropdownIndex === index || subCategoryData.length > 0 && (
                                         <div
                                             onClick={() => setOpenDropdownIndex(null)}
                                             className="absolute  right-[-196px] top-0 z-20 w-48 h-full py-2 mt-2 px-2 origin-top-right bg-white">
@@ -302,6 +320,7 @@ const ShopProductHero = () => {
                                                                     aria-expanded="false"
                                                                     data-te-ripple-init
                                                                     data-te-ripple-color="light">
+                                                                        mn
                                                                     <span className="flex items-center gap-2 text-black">
                                                                         <img src={subCategory?.img} alt="" className="w-8 h-8 rounded-full ring-1 ring-gray-200" />
 
@@ -337,12 +356,13 @@ const ShopProductHero = () => {
                                                                                 {
                                                                                     extraCategoryData.length == 0 ? <div>
                                                                                         {extraCategory?.extraCategoryName}
-                                                                                    </div> : <Link to={`/products/catagory/${extraCategory?._id}`}>
+
+                                                                                    </div> : <Link to={`${extraCategory?._id}/categories/${shopId}/${item?.categoryId}`}>
                                                                                         <div className='py-2 px-2'>
                                                                                             <span className="flex flex-col hover:bg-gray-100 items-center gap-2 w-[90px] p-2 rounded-lg ">
                                                                                                 <img src={extraCategory?.img} alt="" className="w-14 h-14 object-cover rounded-full ring-1 ring-gray-200" />
                                                                                                 <p className="text-xs font-semibold text-center">
-                                                                                                    {extraCategory?.extraCategoryName}
+                                                                                                    {extraCategory?.extraCategoryName} ..
                                                                                                 </p>
                                                                                             </span>
                                                                                         </div>
@@ -356,7 +376,7 @@ const ShopProductHero = () => {
 
                                                             :
 
-                                                            <Link to={`/products/catagory/${subCategory?._id}`}>
+                                                            <Link to={`${item?._id}/categories/${shopId}/${item?.categoryId}`}>
                                                                 <div
                                                                     onMouseMove={() => miniCategoryHandler(subCategory, index)}
                                                                     className={`flex items-center  w-full justify-between hover:bg-gray-100 px-2 py-2 text-sm font-normal  mb-1 rounded relative  ${active?.step2 === subCategory?._id ? 'black-black ' : 'text-black'}`}

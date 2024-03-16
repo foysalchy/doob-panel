@@ -80,6 +80,7 @@ import ServiceManagementSaller from "../Pages/SellerItems/ServiceMangaementSalle
 import BlogCategorySeller from "../Pages/SellerItems/SellersBlog/BlogCategorySeller/BlogCategorySeller";
 import EditProductForm from "../Pages/SellerItems/ProductManagement/SellerProductManagement/SellerAllProduct/EditProduct";
 import ClimAndReturn from "../Pages/SellerItems/OrderManagment/ManageOrder/ClimAndReturn/ClimAndReturn";
+import AddBlogCategory from "../Pages/SellerItems/SellersBlog/AddBlogCategory/AddBlogCategory";
 
 
 const SellerPath = [
@@ -94,6 +95,10 @@ const SellerPath = [
     {
         path: "manage-blogs/add-blog",
         element: <AddSellerBlog />
+    },
+    {
+        path: "manage-blogs/add-blog-category",
+        element: <AddBlogCategory />
     },
     {
         path: "manage-blogs/blog-category",

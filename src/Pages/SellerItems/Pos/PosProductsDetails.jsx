@@ -2,54 +2,39 @@ import React, { useContext, useState } from 'react';
 import PosInvoice from './PosInvoice';
 import { useQuery } from '@tanstack/react-query';
 import { AuthContext } from '../../../AuthProvider/UserProvider';
+import BrightAlert from 'bright-alert';
 
-const PosProductsDetails = ({ invoice, open, setOpen }) => {
+const PosProductsDetails = ({ passUser, invoice, open, setOpen }) => {
 
 
-    const [searchValue, setSearchValue] = useState('')
-    const [searchType, setSearchType] = useState("userNumber")
     const { shopInfo } = useContext(AuthContext)
     const [user, setUser] = useState(false)
     const [error, setError] = useState(false)
 
+    const { name, email, phoneNumber, address } = passUser
 
 
-    const fetchData = () => {
-        fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/seller-user?shopId=${shopInfo.shopId}&${searchType}=${searchValue}`).then((res) => res.json()).then((data) => {
-            if (data.userInfo) {
-                setUser(data.userInfo)
-                setExisting(false)
-                setError(false)
-            }
-            else {
-                setError('User not found')
-                setUser(false)
-            }
-        })
-    }
 
-    const [name, setName] = useState(user.name ? user.name : '');
-    const [email, setEmail] = useState(user.email ? user.email : '');
-    const [phoneNumber, setPhoneNumber] = useState(user.phoneNumber ? user.phoneNumber : '');
-    const [address, setAddress] = useState(user.address ? user.address : '');
     const [invoiceOpen, setInvoiceOpen] = useState(false);
     const [postData, setPostData] = useState(false)
     const [existing, setExisting] = useState(false);
 
-    console.log(user, 'user.....');
     const handleInvoiceSubmit = () => {
 
         const data = {
             invoice,
             userInfo: {
-                name: user.name ? user.name : name,
-                email: user.email ? user.email : email,
-                phoneNumber: user.phoneNumber ? user.phoneNumber : phoneNumber,
-                address: address ? address : '',
+                name,
+                email,
+                phoneNumber,
+                address
             },
             shopId: shopInfo._id,
             date: new Date().getTime(),
         }
+
+        console.log(data, 'data....');
+
         if (user.name || name) {
             setPostData(data);
             fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/pos-report`, {
@@ -60,7 +45,7 @@ const PosProductsDetails = ({ invoice, open, setOpen }) => {
                 body: JSON.stringify(data),
             }).then((res) => res.json()).then((data) => {
                 if (data.status) {
-                    alert("submited.....")
+                    BrightAlert()
                     setInvoiceOpen(true)
                     setUser(false)
                     setExisting(false)
@@ -79,6 +64,8 @@ const PosProductsDetails = ({ invoice, open, setOpen }) => {
 
 
     }
+
+
     return (
         <div>
             {
@@ -115,7 +102,7 @@ const PosProductsDetails = ({ invoice, open, setOpen }) => {
                             </li>
                         </ul>
 
-
+                        {/* 
                         <h1 className="text-2xl font-bold mb-2 mt-4">User Info</h1>
 
                         <h1 className='flex gap-2'> <input onClick={() => { setExisting(!existing), setUser(false) }} type="checkbox" />Existing User ?</h1>
@@ -135,71 +122,20 @@ const PosProductsDetails = ({ invoice, open, setOpen }) => {
                         </div>}
                         {
                             error && <p className='text-sm text-red-500'>Error: {error}</p>
-                        }
-                        {!existing && <form>
+                        } */}
 
-                            <div className="mb-2">
-                                <label htmlFor="name" className="block text-sm font-medium text-gray-600">
-                                    Name:
-                                </label>
-                                <input
-                                    type="text"
-                                    id="name"
-                                    defaultValue={(user && !existing) ? user?.name : ''}
-                                    name="name"
-                                    className="mt-1 p-2 w-full border rounded-md"
-                                    required
-                                    onChange={(e) => setName(e.target.value)}
-                                />
-                            </div>
+                        <button
+                            disabled={postData ? true : false}
+                            className={`${postData ? 'bg-gray-500 cursor-not-allowed' : "bg-gray-900"} b text-white rounded-md p-2 w-full mt-3`}
+                            onClick={handleInvoiceSubmit} >
+                            Submit ..
+                        </button>
 
-                            <div className="mb-2">
-                                <label htmlFor="email" className="block text-sm font-medium text-gray-600">
-                                    Email:
-                                </label>
-                                <input
-                                    type="email"
-                                    id="email"
-                                    name="email"
-                                    defaultValue={(user && !existing) ? user?.email : ''}
-                                    className="mt-1 p-2 w-full border rounded-md"
-                                    required
-                                    onChange={(e) => setEmail(e.target.value)}
-                                />
-                            </div>
-
-                            <div className="mb-2">
-                                <label htmlFor="phoneNumber" className="block text-sm font-medium text-gray-600">
-                                    Phone Number:
-                                </label>
-                                <input
-                                    type="tel"
-                                    id="phoneNumber"
-                                    name="phoneNumber"
-                                    defaultValue={(user && !existing) ? user?.phoneNumber : ''}
-                                    className="mt-1 p-2 w-full border rounded-md"
-                                    required
-                                    onChange={(e) => setPhoneNumber(e.target.value)}
-                                />
-                            </div>
-
-                            <div className="mb-2">
-                                <label htmlFor="address" className="block text-sm font-medium text-gray-600">
-                                    Address:
-                                </label>
-                                <textarea
-                                    id="address"
-                                    name="address"
-                                    className="mt-1 p-2 w-full border rounded-md"
-                                    required
-                                    onChange={(e) => setAddress(e.target.value)}
-                                ></textarea>
-                            </div>
-                        </form>
-                        }
-
-                        <button onClick={handleInvoiceSubmit} className='bg-gray-900 text-white px-2 w-full py-2 rounded-md mt-5'>Submit</button>
                         {postData && <PosInvoice setOpen={setOpen} invoiceData={postData} setInvoiceOpen={setInvoiceOpen} invoiceOpen={invoiceOpen} />}
+
+
+                        {/* <button onClick={handleInvoiceSubmit} className='bg-gray-900 text-white px-2 w-full py-2 rounded-md mt-5'>Submit</button>
+                        {postData && <PosInvoice setOpen={setOpen} invoiceData={postData} setInvoiceOpen={setInvoiceOpen} invoiceOpen={invoiceOpen} />} */}
                     </div>
                 </div>
             }

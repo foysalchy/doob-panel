@@ -2077,12 +2077,6 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                     )}
 
 
-
-
-
-
-
-
                                     {/* service management */}
                                     {user?.staffRole ? (
                                         user?.permissions.find(itm => itm?.name === "Service Management") ? (
@@ -2192,6 +2186,8 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
 
                                     )}
 
+
+
                                     <li className="rounded-sm  hover:bg-gray-800">
                                         <button onClick={() => logOut()} className="flex items-center p-2 space-x-3 rounded-md ">
                                             <IoLogOut className='w-5 h-5 fill-current text-gray-400' />
@@ -2200,6 +2196,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                     </li>
                                 </ul>
                             </div>}
+
                             {
                                 responsive &&
                                 <div className="flex-1 ">
@@ -2236,6 +2233,9 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                             </div>
                         </>
                     }
+
+
+
                 </div>
 
 
@@ -2258,6 +2258,8 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                         </div>
                     )
                 }
+
+
             </div>
         </div>
 
