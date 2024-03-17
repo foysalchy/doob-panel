@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useLoaderData } from 'react-router';
 import { Link, useLocation } from 'react-router-dom';
 
@@ -12,7 +12,7 @@ const ShopAllBlog = () => {
     const shopId = idMatch ? idMatch[1] : null;
 
     const [searchTerm, setSearchTerm] = useState('')
-    const [selectedCategory, setSelectedCategory] = useState('All')
+    const [selectedCategory, setSelectedCategory] = useState('all')
 
     const extractInnerText = (html) => {
         const parser = new DOMParser();
@@ -31,7 +31,23 @@ const ShopAllBlog = () => {
     });
 
     const location = useLocation();
-    console.log(location.hash.replace("#", ""));
+    const path = location.hash.replace("#", "")
+
+    useEffect(() => {
+        // Update selected category based on path
+        setSelectedCategory(path);
+    }, [path]);
+
+    // Filter blogs based on selected category
+    const filteredBlogs = blogs.filter(blog => {
+        // Check if the blog matches the selected category or if the category is 'all'
+        const categoryMatch = selectedCategory === 'all' || blog.category === selectedCategory;
+        // Check if the blog title contains the search term
+        const titleMatch = blog.title.toLowerCase().includes(searchTerm.toLowerCase());
+        return categoryMatch && titleMatch;
+    });
+
+
 
     return (
         <div className="px-4 py-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-20">
@@ -94,7 +110,7 @@ const ShopAllBlog = () => {
             </div>
 
             <div className="grid gap-8 lg:grid-cols-3 sm:max-w-sm sm:mx-auto lg:max-w-full">
-                {blogs.map((blog, index) => (
+                {filteredBlogs.map((blog, index) => (
                     <div className={!blog.status && "hidden"}>
 
                         {blog.status && <div
