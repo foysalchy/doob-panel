@@ -64,6 +64,7 @@ const BlogCategorySeller = () => {
         const form = e.target;
         const title = form.name.value;
         const image = form.image;
+        const slag = form.slag.value;
 
         const imageFormData = new FormData();
         imageFormData.append("image", image.files[0]);
@@ -74,9 +75,10 @@ const BlogCategorySeller = () => {
             id: openModal._id,
             title: title,
             img: imageUrl,
+            slag
         };
 
-        fetch(`https://salenow-v2-backend.vercel.app/api/admin/blog-category-details`, {
+        fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/update-blog-category`, {
             method: "PUT",
             headers: {
                 "content-type": "application/json",
@@ -226,6 +228,12 @@ const BlogCategorySeller = () => {
                                                     <input className="w-full px-2 py-2 border border-gray-200 rounded-sm" type="text"
                                                         name="name"
                                                         defaultValue={openModal?.title} />
+                                                </div>
+                                                <div className="flex flex-col mt-2">
+                                                    <label className="text-start" htmlFor="name">Slag</label>
+                                                    <input className="w-full px-2 py-2 border border-gray-200 rounded-sm" type="text"
+                                                        name="slag"
+                                                        defaultValue={openModal?.slag} />
                                                 </div>
                                                 <div className="flex flex-col mt-2">
                                                     <labe className="text-start" htmlFor="image">Photo</labe>
