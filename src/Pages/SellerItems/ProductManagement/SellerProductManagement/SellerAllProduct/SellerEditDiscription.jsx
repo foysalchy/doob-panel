@@ -3,7 +3,7 @@ import { useState } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
-const SellerEditDiscription = ({ description, setDescription, shortDescription, setShortDescription, categories }) => {
+const SellerEditDiscription = ({ product, description, setDescription, shortDescription, setShortDescription, categories }) => {
 
 
 
@@ -32,7 +32,7 @@ const SellerEditDiscription = ({ description, setDescription, shortDescription, 
                 <ReactQuill
                     name='shortDescription'
                     className="rounded"
-                    value={shortDescription}
+                    value={product.description}
                     onChange={handleShortDescriptionChange}
                     placeholder="Enter your description here..."
                     style={{
@@ -49,7 +49,7 @@ const SellerEditDiscription = ({ description, setDescription, shortDescription, 
                 <ReactQuill
                     onChange={handleDescriptionChange}
                     name='description'
-                    value={description}
+                    value={product?.shortDescription}
                     className=" rounded h-[150px]"
                     placeholder="Enter your description here..."
 

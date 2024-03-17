@@ -5,14 +5,15 @@ import { useState } from 'react';
 const ImageUploadSeller = ({ product, coverPhoto, setCoverPhoto, youtube, setYoutube }) => {
 
 
-    const [photo1, setPhoto1] = useState(product?.images?.length > 0 ? product.images[0].src : '');
-    const [photo2, setPhoto2] = useState('');
-    const [photo3, setPhoto3] = useState('');
-    const [photo4, setPhoto4] = useState('');
-    const [photo5, setPhoto5] = useState('');
-    const [photo6, setPhoto6] = useState('');
-    const [photo7, setPhoto7] = useState('');
+    const [photo1, setPhoto1] = useState(product?.images[0]?.src || '');
+    const [photo2, setPhoto2] = useState(product?.images[1]?.src || '');
+    const [photo3, setPhoto3] = useState(product?.images[2]?.src || '');
+    const [photo4, setPhoto4] = useState(product?.images[3]?.src || '');
+    const [photo5, setPhoto5] = useState(product?.images[4]?.src || '');
+    const [photo6, setPhoto6] = useState(product?.images[5]?.src || '');
+    const [photo7, setPhoto7] = useState(product?.images[6]?.src || '');
     const [deletItem, setDeletItem] = useState('');
+
     const [youtubeError, setYoutubeError] = useState('')
 
     // console.log(p1, 'p11111111111');
@@ -115,7 +116,7 @@ const ImageUploadSeller = ({ product, coverPhoto, setCoverPhoto, youtube, setYou
                             {coverPhoto ? (
                                 <div className='relative'>
                                     <img
-                                        src={coverPhoto}
+                                        src={product?.images[0].src || ''}
                                         id="coverPhoto"
                                         alt="coverPhoto Preview"
                                         className="w-full h-full object-cover cursor-grab"
