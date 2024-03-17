@@ -6,6 +6,7 @@ import { BsArrowRight } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { AuthContext } from '../../../../AuthProvider/UserProvider';
+import { useQuery } from '@tanstack/react-query';
 
 const AddSellerBlog = () => {
     const [selectedFile, setSelectedFile] = useState(null);
@@ -14,6 +15,15 @@ const AddSellerBlog = () => {
     const [loading, setLoading] = useState(false);
     const { shopInfo, user } = useContext(AuthContext)
 
+
+    const { data: category = [], refetch } = useQuery({
+        queryKey: ["blog-category"],
+        queryFn: async () => {
+            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/blog-category?shopId=${shopInfo.shopId}`);
+            const data = await res.json();
+            return data.data;
+        },
+    });
 
     const [upload, setUpload] = useState('')
     const [uplodOk, setUploadOk] = useState(false)
@@ -65,6 +75,7 @@ const AddSellerBlog = () => {
         event.preventDefault();
         const form = event.target;
         const title = form.title.value;
+        const category = form.category.value;
         const image = form.photo.files[0];
         const message = form.message.value;
         const shop = shopInfo?.shopId
@@ -87,10 +98,11 @@ const AddSellerBlog = () => {
                     message,
                     img: image,
                     shop,
-                    author: user,
+                    category,
                     date: new Date(),
                     MetaImage,
                     MetaTag,
+                    status: true,
                     MetaDescription,
 
                 };
@@ -182,6 +194,11 @@ const AddSellerBlog = () => {
                                 onChange={handleFileChange}
                             />
                         </label>
+                    </div>
+                    <div>
+                        <select className="w-full rounded-lg border border-gray-900 p-3 text-sm" name="category" id="">
+                            {category?.map((cat) => <option value={cat.slag}>{cat.title}</option>)}
+                        </select>
                     </div>
 
                     <div>

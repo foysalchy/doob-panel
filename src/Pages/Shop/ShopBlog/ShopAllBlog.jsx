@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
-import React from 'react';
+import React, { useState } from 'react';
 import { useLoaderData } from 'react-router';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 const ShopAllBlog = () => {
 
@@ -11,7 +11,8 @@ const ShopAllBlog = () => {
 
     const shopId = idMatch ? idMatch[1] : null;
 
-    console.log('Shop ID:', shopId);
+    const [searchTerm, setSearchTerm] = useState('')
+    const [selectedCategory, setSelectedCategory] = useState('All')
 
     const extractInnerText = (html) => {
         const parser = new DOMParser();
@@ -19,17 +20,79 @@ const ShopAllBlog = () => {
         return doc.body.textContent || "";
     };
 
-    const { data: category = [], refetch } = useQuery({
-        queryKey: ["category"],
+
+    const { data: category = [], refetch, isLoading } = useQuery({
+        queryKey: ["blog-category"],
         queryFn: async () => {
-            const res = await fetch("https://salenow-v2-backend.vercel.app/api/v1/admin/blog-category");
+            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/blog-category?shopId=${shopId}`);
             const data = await res.json();
-            return data;
+            return data.data;
         },
     });
 
+    const location = useLocation();
+    console.log(location.hash.replace("#", ""));
+
     return (
         <div className="px-4 py-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-20">
+
+            <div className="relative border border-gray-500 rounded">
+                <label for="Search" className="sr-only"> Search </label>
+
+                <input
+                    type="text"
+                    id="Search"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    placeholder="Search for..."
+                    className="w-full rounded-md  py-2.5 px-4 pe-10 shadow-sm sm:text-sm"
+                />
+
+                <span className="absolute border-gray-700 inset-y-0 end-0 grid w-10 place-content-center">
+                    <button type="button" className="text-gray-600 hover:text-gray-700">
+                        <span className="sr-only">Search</span>
+
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke-width="1.5"
+                            stroke="currentColor"
+                            className="h-4 w-4"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
+                            />
+                        </svg>
+                    </button>
+                </span>
+            </div>
+
+            <div className=" my-8">
+                <div className="flex flex-wrap gap-4">
+                    <a
+                        href='#all'
+                        className={`px-4 py-2 text-sm font-medium uppercase tracking-wide ${selectedCategory === null ? 'bg-black text-white' : 'bg-gray-300 text-gray-700'
+                            }`}
+                    >
+                        All
+                    </a>
+                    {!isLoading &&
+                        category?.map((category) => (
+                            <a
+                                key={category.id}
+                                href={`#${category.slag}`}
+                                className={`px-4 py-2 text-sm font-medium uppercase tracking-wide ${selectedCategory === category.title ? 'bg-black text-white' : 'bg-gray-300 text-gray-700'
+                                    }`}
+                            >
+                                {category.title}
+                            </a>
+                        ))}
+                </div>
+            </div>
+
             <div className="grid gap-8 lg:grid-cols-3 sm:max-w-sm sm:mx-auto lg:max-w-full">
                 {blogs.map((blog, index) => (
                     <div className={!blog.status && "hidden"}>
@@ -56,7 +119,7 @@ const ShopAllBlog = () => {
                                 <div
                                     className="mb-2 text-sm text-gray-700">
                                     {
-                                        extractInnerText(blog?.message.slice(0, 200) + "...")
+                                        extractInnerText(blog?.message?.slice(0, 200) + "...")
                                     }
                                 </div>
 

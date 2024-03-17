@@ -1,10 +1,13 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { FaLongArrowAltRight } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { AuthContext } from '../../../../AuthProvider/UserProvider';
 import AddProductModal from './AddProductModal';
 import { BiLeftArrow, BiRightArrow } from 'react-icons/bi';
+import { saveAs } from 'file-saver';
+
+
 
 const CustomerHistory = () => {
     const { shopInfo } = useContext(AuthContext);
@@ -93,10 +96,59 @@ const CustomerHistory = () => {
         );
     };
 
+    const [csvData, setCsvData] = useState([]);
+
+
+    // const handleExportToCsv = () => {
+    //     const headers = ["Name", "Email", "Provider", "Added Products", "Orders", "Wishlist"];
+    //     const rows = currentData.map(customer => [
+    //         customer.name,
+    //         customer.email,
+    //         customer.provider,
+    //         customer.addToCart.length,
+    //         customer.orderList.length,
+    //         customer.wishList.length
+    //     ]);
+
+    //     const csvContent = [headers.join(",")].concat(rows.map(row => row.join(","))).join("\n");
+
+    //     const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8" });
+    //     saveAs(blob, "table_data.csv");
+    // };
+
+
+
+    const handleExportToExcel = () => {
+        const headers = ["Name", "Email", "Provider", "Added Products", "Orders", "Wishlist"];
+        const rows = customerData.map(customer => [
+            customer.name,
+            customer.email,
+            customer.provider,
+            customer.addToCart.length,
+            customer.orderList.length,
+            customer.wishList.length
+        ]);
+
+        // Combine headers and rows with appropriate delimiters
+        const csvContent = [headers.join("\t")].concat(rows.map(row => row.join("\t"))).join("\n");
+
+        // Create a Blob object with UTF-8 encoding (supports international characters)
+        const blob = new Blob([csvContent], { type: "text/tsv;charset=utf-8" });
+
+        // Trigger a download using FileSaver.js (https://github.com/eligrey/FileSaver.js)
+        if (typeof saveAs !== 'undefined') { // Check if FileSaver.js is included
+            saveAs(blob, "table_data.xlsx"); // Use .xlsx extension for Excel-like behavior
+        } else {
+            console.warn("FileSaver.js library not found. Download functionality limited.");
+            // Provide alternative download instructions (optional)
+        }
+    };
+
 
     return (
         <div>
             <section className="container px-4 mx-auto">
+                <button onClick={handleExportToExcel} className="text-blue-500">Export to CSV</button>
                 <div className="flex flex-col">
                     <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                         <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
