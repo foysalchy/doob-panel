@@ -21,7 +21,7 @@ const SellerAllProducts = () => {
     const [printProduct, setPrintProduct] = useState([]);
     const [priceOn, setPriceOn] = useState(false);
     const [stockOn, setStockOn] = useState(false);
-  
+
     const { data: products = [], refetch } = useQuery({
         queryKey: ["products"],
         queryFn: async () => {
@@ -500,6 +500,7 @@ const SellerAllProducts = () => {
                                                                             type="text" placeholder='update price' className='w-[300px] py-2 my-4 border px-2 rounded' />
                                                                         <div className="flex justify-between">
                                                                             <button type='submit' className="me-2 rounded-sm bg-green-700 px-6 py-[6px] text-white">Update</button>
+
                                                                             <button onClick={() => setStockOn(false)} className="rounded-sm border border-red-600 px-6 py-[6px] text-red-600 duration-150 hover:bg-red-600 hover:text-white">Cancel</button>
                                                                         </div>
                                                                     </form>
@@ -516,10 +517,14 @@ const SellerAllProducts = () => {
                                                             <MdDelete className="w-5 h-5" />
 
                                                         </button>
-
+                                                        
                                                         <Link to={`/seller/product-management/edit/${product?._id}`} onClick={() => setOnModal(product)} className=" transition-colors duration-200 hover:text-green-500  text-green-700 focus:outline-none mr-4">
                                                             <BiEdit className="w-5 h-5" />
                                                         </Link>
+
+                                                        {/* <button product={product} onClick={() => setOnModal(product)} className=" transition-colors duration-200 hover:text-green-500  text-green-700 focus:outline-none mr-4">
+                                                            <BiEdit className="w-5 h-5" />
+                                                        </button> */}
                                                         {
                                                             product.woo && <button onClick={() => updateProduct(product._id, product.sku, product.item_id, 'woo')} className=" transition-colors duration-200 hover:text-yellow-500  text-yellow-700 focus:outline-none mr-4">
                                                                 {loadingStates[product._id] ? 'Updating...' : 'Update on woo'}
@@ -530,18 +535,22 @@ const SellerAllProducts = () => {
                                                         </button>}
 
                                                         {/* modal */}
-                                                        <div onClick={() => setOnModal(false)} className={`fixed z-[100] overflow-hidden flex items-center justify-center ${onModal?._id == product?._id ? 'visible opacity-100' : 'invisible opacity-0'} inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}>
+                                                        {onModal?._id === product?._id && <div className={`bg-white p-6 fixed w-screen h-full top-0 left-0 z-[3000]`}>
+                                                            <EditProductForm product={onModal} />
+                                                        </div>}
+
+                                                        {/* <div onClick={() => setOnModal(false)} className={`fixed z-[100] overflow-hidden flex items-center justify-center ${onModal?._id == product?._id ? 'visible opacity-100' : 'invisible opacity-0'} inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}>
 
                                                             <div onClick={(e_) => e_.stopPropagation()} className={`text- absolute w-[90%] rounded-sm bg-white p-6 drop-shadow-lg  ${onModal?._id == product?._id ? 'scale-1 opacity-1 duration-300' : 'scale-0 opacity-0 duration-150'}`}>
 
-                                                                <EditProductForm product={onModal} />
+                                                              
 
                                                                 <div className="flex justify-between">
 
                                                                     <button type='button' onClick={() => setOnModal(false)} className="absolute top-0 right-2 bg-red-500 text-white w-[30px] h-[30px] rounded-full flex items-center justify-center">x</button>
                                                                 </div>
                                                             </div>
-                                                        </div>
+                                                        </div> */}
 
                                                         {/* end */}
                                                     </div>

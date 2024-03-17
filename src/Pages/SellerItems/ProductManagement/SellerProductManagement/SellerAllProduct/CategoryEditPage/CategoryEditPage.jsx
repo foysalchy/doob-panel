@@ -1,29 +1,36 @@
-import { useContext } from 'react';
-import { useState } from 'react';
-import { BsArrowRight } from 'react-icons/bs';
-import { AuthContext } from '../../../../AuthProvider/UserProvider';
-import Select from 'react-select';
 import { useQuery } from '@tanstack/react-query';
-import InputProductName from './Components/SellerInputProductName';
-import SincronusCategory from './Components/SincronusCategory';
-import Description from './Components/Description';
-import Stock from './Components/Stock';
-import ServiceWarranty from './Components/ServiceWarranty';
-import Delivery from './Components/Delivery';
-import WareHouse from './Components/WareHouse';
-import Meta from './Components/Meta';
-import Swal from 'sweetalert2';
-import Variants from './Components/Variants';
-import DarazOption from './Components/DarazOption';
-import UploadImage from './Components/UploadImage';
+import React, { useContext, useState } from 'react';
+import { AuthContext } from '../../../../../../AuthProvider/UserProvider';
+import { useParams } from 'react-router-dom';
+import ImageUploadSeller from '../ImageUploadSeller';
+import SellerInputProductName from '../../../SellerAddProduct/Components/SellerInputProductName';
+import EditSincronusCategory from '../EditSincronusCategory';
+import EditWareHouse from '../EditWarehiuses';
+import SellerEditDiscription from '../SellerEditDiscription';
+import SellerEditVariantData from '../SellerEditVariantData';
+import EditDarazCategory from '../EditDarazCategory';
+import ServiceWarranty from '../EditServiceWaranty';
+import EditDelivery from '../EditDelavery';
+import EditMeta from '../EditMeta';
+import { BsArrowRight } from 'react-icons/bs';
 
-
-
-
-
-const SellerAddProduct = () => {
-
+const CategoryEditPage = () => {
+    const id = useParams().id;
     const { shopInfo } = useContext(AuthContext)
+
+    const { data: getProduct = [], refetch } = useQuery({
+        queryKey: ["getProduct"],
+        queryFn: async () => {
+            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/all-products/${shopInfo._id}`);
+            const data = await res.json();
+            return data;
+        },
+    });
+
+
+    const product = getProduct.find(itm => itm._id === id ? itm._id === id : {});
+
+
     const [isChecked, setIsChecked] = useState(true);
     const [datazCategory, setDarazOption] = useState([]);
     const [loading, setLoading] = useState(false)
@@ -36,6 +43,7 @@ const SellerAddProduct = () => {
     const [youtube, setYoutube] = useState('')
     const [multiVendor, setMultiVendor] = useState(adminWare);
 
+
     const [inputFields, setInputFields] = useState([
         { name: '', image: null, quantity: "", SKU: "", price: '', offerPrice: '', ability: false },
     ]);
@@ -44,10 +52,7 @@ const SellerAddProduct = () => {
         { product1: {}, product2: {}, product3: {}, sellingPrice: "", ProductCost: '' },
     ]);
 
-
     const [brandName, setBrandName] = useState()
-
-
 
     const imageUpload = (image) => {
         const formData = new FormData();
@@ -96,34 +101,7 @@ const SellerAddProduct = () => {
         }
     };
 
-    const ourData = [
-        "Product Description",
-        "Video URL",
-        "Name",
-        "Price",
-        "Color Family",
-        "Images",
-        "Warranty Type",
-        "SellerSKU",
-        "Quantity",
-        "Special Price",
-        "Package Weight(kg)",
-        "Package Weight (kg)",
-        "Option",
-        "adminWare",
-        "Package Length (cm)",
-        "English description",
-        "Package Width (cm)",
-        "Package Height (cm)",
-        "Name in English language",
-        "Short Description En",
-        "Brand"
-
-    ]
-
     const filteredData = datazCategory?.length && datazCategory?.filter(item => !ourData.includes(item.label))
-
-
     const formSubmit = async (e) => {
         setLoading(true)
         e.preventDefault();
@@ -270,8 +248,8 @@ const SellerAddProduct = () => {
             status: false,
             createdAt: Date.now(),
             // updatedAt,
-            featuredImage: 
-            [0],
+            featuredImage:
+                [0],
             images: uploadedImageUrls.filter(image => image !== null),
             videos: youtube,
             // attributes,
@@ -286,50 +264,46 @@ const SellerAddProduct = () => {
 
         }
 
+        // console.log(data, 'edit --------------------------->');
 
+        // fetch('https://salenow-v2-backend.vercel.app/api/v1/seller/normal-product/', {
+        //     method: "POST",
+        //     headers: {
+        //         'Content-Type': 'application/json'
+        //     }
+        //     , body: JSON.stringify({ data })
+        // }).then((res) => res.json()).then((data) => {
 
-        fetch('https://salenow-v2-backend.vercel.app/api/v1/seller/normal-product/', {
-            method: "POST",
-            headers: {
-                'Content-Type': 'application/json'
-            }
-            , body: JSON.stringify({ data })
-        }).then((res) => res.json()).then((data) => {
+        //     if (
+        //         data.error
+        //     ) {
+        //         Swal.fire(`${data.message}`, '', 'warning')
+        //         setLoading(false)
+        //     }
+        //     else {
+        //         Swal.fire('', '', 'success')
+        //         setLoading(false)
+        //     }
 
-            if (
-                data.error
-            ) {
-                Swal.fire(`${data.message}`, '', 'warning')
-                setLoading(false)
-            }
-            else {
-                Swal.fire('', '', 'success')
-                setLoading(false)
-            }
-
-        })
+        // })
     };
 
 
-
-
+    console.log(product, '>>>>>>>>>>>>>>>>>');
 
     return (
         <div>
-
             <form className='border md:p-10 p-2' onSubmit={formSubmit} action="">
-
+                <h2 className="font-bold text-xl">Edit Product</h2>
                 <div className='mt-10'>
-                    <UploadImage youtube={youtube} setYoutube={setYoutube} coverPhoto={coverPhoto} setCoverPhoto={setCoverPhoto} />
+                    <ImageUploadSeller product={product} youtube={youtube} setYoutube={setYoutube} coverPhoto={coverPhoto} setCoverPhoto={setCoverPhoto} />
                 </div>
 
+                <SellerInputProductName product={product} brandName={brandName} setBrandName={setBrandName} />
 
+                <EditSincronusCategory product={product} datazCategory={datazCategory} setDarazOption={setDarazOption} setInputFields={setInputFields} daraz={daraz} setDaraz={setDaraz} woo={woo} setWoo={setWoo} />
 
-                <InputProductName brandName={brandName} setBrandName={setBrandName} />
-
-                <SincronusCategory datazCategory={datazCategory} setDarazOption={setDarazOption} setInputFields={setInputFields} daraz={daraz} setDaraz={setDaraz} woo={woo} setWoo={setWoo} />
-
-                <WareHouse shopInfo={shopInfo} adminWare={adminWare} setAdminWare={setAdminWare} />
+                <EditWareHouse product={product} shopInfo={shopInfo} adminWare={adminWare} setAdminWare={setAdminWare} />
 
                 <label
                     htmlFor="Toggle3"
@@ -357,19 +331,21 @@ const SellerAddProduct = () => {
                 </label>
 
                 <div id='description'>
-                    <Description shortDescription={shortDescription} setShortDescription={setShortDescription} description={description} setDescription={setDescription} />
+                    <SellerEditDiscription product={product} shortDescription={shortDescription} setShortDescription={setShortDescription} description={description} setDescription={setDescription} />
                 </div>
+
                 <div className='my-4 mt-10'>
-                    <Variants setVariantInput={setVariantInput} variantInput={variantInput} multiVendor={multiVendor} setMultiVendor={setMultiVendor} adminWare={adminWare} daraz={daraz} inputFields={inputFields} setInputFields={setInputFields} />
+                    <SellerEditVariantData product={product} setVariantInput={setVariantInput} variantInput={variantInput} multiVendor={multiVendor} setMultiVendor={setMultiVendor} adminWare={adminWare} daraz={daraz} inputFields={inputFields} setInputFields={setInputFields} />
                 </div>
-                {daraz && datazCategory.length && <DarazOption datazCategory={datazCategory} />}
+
+                {daraz && datazCategory.length && <EditDarazCategory datazCategory={datazCategory} />}
 
                 <ServiceWarranty />
-                <Delivery />
-                <div>
 
-                </div>
-                <Meta />
+                <EditDelivery />
+
+                <EditMeta />
+
                 <div className="mt-4">
                     {
                         loading ?
@@ -378,32 +354,26 @@ const SellerAddProduct = () => {
                                     Loading...
                                 </span>
                                 <svg className="animate-spin h-4 w-4 ml-3 text-white" viewBox="0 0 24 24">
-
                                     <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                                 </svg>
                             </button>
-
                             :
                             <button type='submit'
                                 // disabled={loading || coverPhoto}
-                                className={(loading || coverPhoto) ? "group relative cursor-pointer inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none mt-4 " : "group relative inline-flex items-center overflow-hidden rounded bg-gray-700 px-8 py-3 text-white focus:outline-none mt-4 cursor-not-allowed"}
-
-                            >
+                                className={(loading || coverPhoto) ? "group relative cursor-pointer inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none mt-4 " : "group relative inline-flex items-center overflow-hidden rounded bg-gray-700 px-8 py-3 text-white focus:outline-none mt-4 cursor-not-allowed"}>
                                 <span className="absolute -end-full transition-all group-hover:end-4">
                                     <BsArrowRight />
                                 </span>
 
                                 <span className="text-sm font-medium transition-all group-hover:me-4">
-                                    Upload Product
+                                    Edit Product
                                 </span>
                             </button>
                     }
                 </div>
             </form>
-
-
         </div>
     );
 };
 
-export default SellerAddProduct;
+export default CategoryEditPage;

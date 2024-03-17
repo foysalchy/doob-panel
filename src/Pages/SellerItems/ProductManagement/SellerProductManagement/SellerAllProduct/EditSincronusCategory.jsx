@@ -6,7 +6,7 @@ import Select from 'react-select';
 import { useEffect } from 'react';
 
 
-const EditSincronusCategory = ({ daraz, setDaraz, woo, setWoo, setInputFields, setDarazOption }) => {
+const EditSincronusCategory = ({product, daraz, setDaraz, woo, setWoo, setInputFields, setDarazOption }) => {
 
     const { shopInfo } = useContext(AuthContext)
 

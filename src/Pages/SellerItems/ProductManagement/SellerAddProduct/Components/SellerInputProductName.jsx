@@ -4,7 +4,7 @@ import Select from 'react-select';
 import { AuthContext } from '../../../../../AuthProvider/UserProvider';
 import { useQuery } from '@tanstack/react-query';
 
-const InputProductName = ({ brandName, setBrandName }) => {
+const SellerInputProductName = ({ product,brandName, setBrandName }) => {
 
 
     const { shopInfo } = useContext(AuthContext)
@@ -44,7 +44,7 @@ const InputProductName = ({ brandName, setBrandName }) => {
                     <div className="flex">
                         <span className="flex items-center px-3 pointer-events-none h-10 sm:text-sm rounded-l-md dark:bg-gray-700">English</span>
                         <input
-
+                            defaultValue={product?.name ? product?.name : ''}
                             type="text" name="productNameEn" placeholder="Ex. Nikon Coolpix A300 Digital Camera" className="flex-grow w-full h-10 px-4 mb-3 transition duration-200 bg-white text-black border border-gray-300 rounded-r shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-purple-400 focus:outline-none focus:shadow-outline" />
                     </div>
                 </fieldset>
@@ -53,7 +53,7 @@ const InputProductName = ({ brandName, setBrandName }) => {
                     <div className="flex">
                         <span className="flex items-center px-3 pointer-events-none h-10 sm:text-sm rounded-l-md dark:bg-gray-700">Bengali</span>
                         <input
-
+                            defaultValue={product?.BnName ? product?.BnName : ''}
                             type="text" name="productNameBn" placeholder="Ex. Nikon Coolpix A300 Digital Camera" className="flex-grow w-full h-10 px-4 mb-3 transition duration-200 bg-white text-black border border-gray-300 rounded-r shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-purple-400 focus:outline-none focus:shadow-outline" />
                     </div>
                 </fieldset>
@@ -82,4 +82,4 @@ const InputProductName = ({ brandName, setBrandName }) => {
     );
 };
 
-export default InputProductName;
+export default SellerInputProductName;
