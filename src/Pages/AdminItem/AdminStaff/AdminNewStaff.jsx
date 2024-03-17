@@ -72,7 +72,6 @@ const AdminNewStaff = () => {
                 const name = e.target.name.value;
                 const email = e.target.email.value;
                 const password = e.target.password.value;
-                const role = "supperadmin";
                 const userId = email.replace(/[@.]/g, '');
                 const createdAt = new Date();
 
@@ -85,6 +84,7 @@ const AdminNewStaff = () => {
                 });
 
                 const signUpData = await signUpResponse.json();
+                console.log(signUpData);
 
                 if (signUpData.result) {
                     userData = { name, email, password, userId, role, createdAt };

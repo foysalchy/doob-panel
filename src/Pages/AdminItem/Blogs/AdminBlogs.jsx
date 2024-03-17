@@ -216,6 +216,8 @@ const AdminBlogs = () => {
                                 Inactive
                               </h2>
                             </button>}
+
+                        
                         </td>
 
 

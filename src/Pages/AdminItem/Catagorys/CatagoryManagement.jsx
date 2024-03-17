@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import BrightAlert from "bright-alert";
 import React from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
@@ -55,8 +56,6 @@ const CatagoryManagement = () => {
 
   const handleEdit = async (e) => {
     e.preventDefault();
-
-    const form = e.target;
     const image = e.target.image;
     const title = e.target.title.value;
 
@@ -67,10 +66,19 @@ const CatagoryManagement = () => {
     const data = {
       title,
       image: imageUrl,
+      id: openModal._id
     };
 
-
-    console.log(data);
+    fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/category-update`, {
+      method: "PUT",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(data),
+    }).then((res) => res.json()).then((data) => {
+      BrightAlert()
+      refetch()
+    })
 
   }
 

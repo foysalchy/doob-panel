@@ -19,7 +19,7 @@ const BlogCategorySeller = () => {
 
     const DeleteCategory = (id) => {
 
-        fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/blog-category`, {
+        fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/DeleteBlogCategoryById?id=${id}`, {
             method: "DELETE",
             headers: {
                 "content-type": "application/json",
@@ -78,7 +78,7 @@ const BlogCategorySeller = () => {
             slag
         };
 
-        fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/update-blog-category`, {
+        fetch(`http://localhost:5001/api/v1/seller/update-blog-category`, {
             method: "PUT",
             headers: {
                 "content-type": "application/json",
@@ -205,15 +205,12 @@ const BlogCategorySeller = () => {
                                                 Edit
                                             </button>
 
-                                            <Link to={`/shop/${shopInfo.shopId}/blog`}>
+
+                                            <Link
+                                                to={`/shop/${shopInfo.shopId}/blog#${cate.slag}`}
                                                 <BsEye className="transition-colors text-xl duration-200 cursor-pointer text-green-500 hover:text-green-700 focus:outline-none" />
                                             </Link>
-                                            {/* <button
-                                                onClick={() => setOpenModal(cate)}
-                                                className="inline-block rounded  h-full py-1 ml-4  text-green-600 font-medium text-lg hover:text-green-700"
-                                            >
-                                                <BsEye className="" />
-                                            </button> */}
+                                           
                                         </div>
                                     </td>
 
@@ -245,7 +242,7 @@ const BlogCategorySeller = () => {
                                                 </div>
 
                                                 <div className="flex justify-start">
-                                                    <button type="submit" className="me-2 rounded-sm bg-blue-700 px-8 py-2 text-white">Edit</button>
+                                                    <button type="submit" className="me-2 rounded-sm bg-blue-700 px-8 py-2 text-white">Save</button>
 
                                                 </div>
                                             </form>

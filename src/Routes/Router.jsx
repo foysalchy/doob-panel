@@ -29,6 +29,7 @@ import PoroductLayout from "../Layout/PoroductLayout";
 import Product from "../Pages/Home/Product/Product";
 import CommonCategory from "../Pages/Home/Product/CommonCategory/CommonCategory";
 import ProductDetails from "../Pages/Home/Product/ProductDetails/ProductDetails";
+import EmailVerify from "../Common/EmailVerify";
 
 
 
@@ -42,6 +43,10 @@ const Router = createBrowserRouter([
       <MainLayout />
     </>,
     children: homePath
+  },
+  {
+    path: '/email-verify',
+    element: <EmailVerify />
   },
   // Invoice Routes
   {
