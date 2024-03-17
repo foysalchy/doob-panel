@@ -205,6 +205,9 @@ const BlogCategorySeller = () => {
                                                 Edit
                                             </button>
 
+                                            <Link to={`/shop/${shopInfo.shopId}/blog`}>
+                                                <BsEye className="transition-colors text-xl duration-200 cursor-pointer text-green-500 hover:text-green-700 focus:outline-none" />
+                                            </Link>
                                             {/* <button
                                                 onClick={() => setOpenModal(cate)}
                                                 className="inline-block rounded  h-full py-1 ml-4  text-green-600 font-medium text-lg hover:text-green-700"

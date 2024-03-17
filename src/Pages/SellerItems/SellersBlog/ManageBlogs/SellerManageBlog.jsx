@@ -51,6 +51,19 @@ const SellerManageBlog = () => {
 
 
 
+    const blogStash = (id, status) => {
+
+        fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/blog-trash?id=${id}`,
+            {
+                method: "PUT",
+                body: JSON.stringify({ status: status })
+            }).then(() => {
+                Swal.fire("success");
+                refetch()
+            })
+    }
+
+
     const publishBlog = (id) => {
 
         fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/blog/publish-status/${id}`,
@@ -174,6 +187,14 @@ const SellerManageBlog = () => {
                                         </th>
                                         <th
                                             scope="col"
+                                            className="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500 "
+                                        >
+                                            <div className="flex items-center gap-x-3">
+                                                <span>Stash</span>
+                                            </div>
+                                        </th>
+                                        <th
+                                            scope="col"
                                             className="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 text-gray-400"
                                         >
                                             <button className="flex items-center gap-x-2">
@@ -232,8 +253,19 @@ const SellerManageBlog = () => {
                                                         </h2>
                                                     </button>}
                                             </td>
+                                            <td className="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
 
-
+                                                {!blog.trash ? <button onClick={() => blogStash(blog._id, false)} className="inline-flex items-center px-3 py-1 rounded gap-x-2 bg-emerald-100/60 text-white bg-green-600">
+                                                    <h2 className="text-sm font-normal ">
+                                                        ON
+                                                    </h2>
+                                                </button> :
+                                                    <button onClick={() => blogStash(blog._id, true)} className="inline-flex items-center px-3 py-1 rounded gap-x-2 bg-emerald-100/60 bg-red-600">
+                                                        <h2 className="text-sm font-normal text-white">
+                                                            OFF
+                                                        </h2>
+                                                    </button>}
+                                            </td>
 
                                             <td className="px-4 py-4 text-sm whitespace-nowrap">
                                                 <div className="flex gap-4 justify-center">
