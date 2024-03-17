@@ -1,17 +1,19 @@
 import { useQuery } from "@tanstack/react-query";
 import BrightAlert from "bright-alert";
-import React from "react";
+import React, { useContext } from "react";
 import { useState } from "react";
 import { BsEye } from "react-icons/bs";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../../../AuthProvider/UserProvider";
 
 const BlogCategorySeller = () => {
+    const { shopInfo } = useContext(AuthContext)
     const { data: category = [], refetch } = useQuery({
-        queryKey: ["category"],
+        queryKey: ["blog-category"],
         queryFn: async () => {
-            const res = await fetch("https://salenow-v2-backend.vercel.app/api/v1/admin/blog-category");
+            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/blog-category?shopId=${shopInfo.shopId}`);
             const data = await res.json();
-            return data;
+            return data.data;
         },
     });
 
@@ -186,7 +188,7 @@ const BlogCategorySeller = () => {
                                         {cate.title}
                                     </td>
                                     <td className="whitespace-nowrap px-4 py-2">
-                                      <div className="flex items-center gap-2">
+                                        <div className="flex items-center gap-2">
                                             <button
                                                 onClick={() => DeleteCategory(cate._id)}
                                                 className="inline-block rounded  bg-red-600 px-4 py-2 text-xs font-medium text-white hover:bg-red-700"
@@ -207,7 +209,7 @@ const BlogCategorySeller = () => {
                                             >
                                                 <BsEye className="" />
                                             </button> */}
-                                      </div>
+                                        </div>
                                     </td>
 
 
