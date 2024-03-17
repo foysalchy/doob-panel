@@ -51,9 +51,9 @@ const CatagoryManagement = () => {
     const imageData = await response.json();
     return imageData.imageUrl;
   };
-  
 
-  const handleEdit = async(e) => {
+
+  const handleEdit = async (e) => {
     e.preventDefault();
 
     const form = e.target;
@@ -66,12 +66,12 @@ const CatagoryManagement = () => {
 
     const data = {
       title,
-      image : imageUrl,
+      image: imageUrl,
     };
-  
-    
+
+
     console.log(data);
-    
+
   }
 
 
@@ -206,13 +206,13 @@ const CatagoryManagement = () => {
                           </div> <br />
                           <div className="flex flex-col gap-2 bb-3">
                             <label htmlFor="img" className="text-sm font-medium">Photo</label>
-                            <input type="file" className="w-full bg-white text-black placeholder:hover:text=black px-4 py-2 rounded-sm border border-gray-300" name="image"  />
+                            <input type="file" className="w-full bg-white text-black placeholder:hover:text=black px-4 py-2 rounded-sm border border-gray-300" name="image" />
                           </div>
 
                           <br />
 
                           <div className="flex justify-between">
-                            <button type="submit" className="me-2 rounded-sm bg-green-700 px-6 py-[6px] text-white">Edit</button>
+                            <button type="submit" className="me-2 rounded-sm bg-green-700 px-6 py-[6px] text-white">Save</button>
 
                           </div>
                         </form>

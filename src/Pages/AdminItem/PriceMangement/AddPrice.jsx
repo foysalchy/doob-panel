@@ -316,11 +316,17 @@ const AddPrice = () => {
                   </div>
                 ))}
               </label>
-            </div> <br />
-            <label>Daraz Limit:</label><br />
+            </div>
+            <div className="my-4" >
+              <label>Daraz Limit:</label>
+              <input onChange={(e) => setLimitValue(e.target.value)} name="darazLimit" type="number" className="border px-2 py-1 rounded" placeholder="daraz limit" />
+            </div>
+
+            <label>Product Limit:</label>
+            <input onChange={(e) => handleInputChange("product_limit", e.target.value)} name="product_limit" type="number" className="border px-2 py-1 rounded" placeholder="product_limit" /><br />
             <div className="flex items-center mt-3 gap-3">
               <label htmlFor="ck"><input checked={selectLimit} onChange={() => setSelectLimit(!selectLimit)} type="checkbox" id="ck" /> Life Time</label>
-              <input onChange={(e) => setLimitValue(e.target.value)} name="darazLimit" type="tel" className="border px-2 py-1 rounded" placeholder="daraz limit" />
+
             </div>
             <div className="flex gap-5 items-start mt-10">
               <button

@@ -1,4 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
+import BrightAlert from 'bright-alert';
 import React from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
@@ -128,7 +129,7 @@ const AdminSeviceOrder = () => {
 
     const handleStateUpdate = (id, status) => {
         console.log(status, 'state update');
-        fetch(`"https://salenow-v2-backend.vercel.app/api/v1/admin/get-all-service-order?id=${id}`, {
+        fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/get-all-service-order?id=${id}`, {
             method: "PUT",
             headers: {
                 "content-type": "application/json",
@@ -137,7 +138,7 @@ const AdminSeviceOrder = () => {
         })
             .then((res) => res.json())
             .then((data) => {
-                alert("update successful");
+                BrightAlert()
                 refetch();
             })
     }
@@ -316,9 +317,9 @@ const AdminSeviceOrder = () => {
                                                         {
                                                             order?.status ? <span>
                                                                 {
-                                                                    order?.status === true ? <span className='text-yellow-500'>Pending</span> : <span className='text-green-500'>Active</span>
+                                                                    order?.status === true ? <span className='text-green-500'>Active</span> : <span className='text-red-500'>Inactive</span>
                                                                 }
-                                                            </span> : <span>InActive</span>
+                                                            </span> : <span className='text-yellow-500'>Pending</span>
                                                         }
                                                     </span>
                                                 </button>
