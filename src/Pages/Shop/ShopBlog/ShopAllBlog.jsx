@@ -35,8 +35,13 @@ const ShopAllBlog = () => {
 
     useEffect(() => {
         // Update selected category based on path
-        setSelectedCategory(path);
+        if (path === undefined || path === '') {
+            setSelectedCategory('all');
+        } else {
+            setSelectedCategory(path);
+        }
     }, [path]);
+
 
     // Filter blogs based on selected category
     const filteredBlogs = blogs.filter(blog => {
@@ -90,7 +95,7 @@ const ShopAllBlog = () => {
                 <div className="flex flex-wrap gap-4">
                     <a
                         href='#all'
-                        className={`px-4 py-2 text-sm font-medium uppercase tracking-wide ${selectedCategory === null ? 'bg-black text-white' : 'bg-gray-300 text-gray-700'
+                        className={`px-4 py-2 text-sm font-medium uppercase tracking-wide ${selectedCategory === 'all' ? 'bg-black text-white' : 'bg-gray-300 text-gray-700'
                             }`}
                     >
                         All
@@ -100,7 +105,7 @@ const ShopAllBlog = () => {
                             <a
                                 key={category.id}
                                 href={`#${category.slag}`}
-                                className={`px-4 py-2 text-sm font-medium uppercase tracking-wide ${selectedCategory === category.title ? 'bg-black text-white' : 'bg-gray-300 text-gray-700'
+                                className={`px-4 py-2 text-sm font-medium uppercase tracking-wide ${selectedCategory === category.slag ? 'bg-black text-white' : 'bg-gray-300 text-gray-700'
                                     }`}
                             >
                                 {category.title}

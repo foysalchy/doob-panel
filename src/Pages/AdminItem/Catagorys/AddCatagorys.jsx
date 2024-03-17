@@ -73,7 +73,7 @@ const AddCatagorys = () => {
   return (
     <div className="w-full">
 
-      <div className="my-10">
+      <div className="my-8">
         <h1 className="text-2xl font-bold text-center">
           Publish a Category for you and next
         </h1>

@@ -73,7 +73,7 @@ const BlogsCatagoryManagement = () => {
       img: imageUrl,
     };
 
-    fetch(`https://salenow-v2-backend.vercel.app/api/admin/blog-category-details`, {
+    fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/blog-category-details`, {
       method: "PUT",
       headers: {
         "content-type": "application/json",
@@ -90,7 +90,7 @@ const BlogsCatagoryManagement = () => {
     setOpenModal(false)
   }
 
-  
+
   return (
     <div>
 
@@ -223,7 +223,7 @@ const BlogsCatagoryManagement = () => {
                         </div>
 
                         <div className="flex justify-start">
-                          <button type="submit" className="me-2 rounded-sm bg-blue-700 px-8 py-2 text-white">Edit</button>
+                          <button type="submit" className="me-2 rounded-sm bg-blue-700 px-8 py-2 text-white">Save</button>
                         </div>
                       </form>
                     </div>
