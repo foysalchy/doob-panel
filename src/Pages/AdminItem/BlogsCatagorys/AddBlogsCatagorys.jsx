@@ -92,6 +92,19 @@ const AddBlogsCatagorys = () => {
                 name="categoryName"
               />
             </div>
+            {/* <div>
+              <label className="sr-only text-black" htmlFor="title">
+                Category Slag
+              </label>
+              <input
+                required
+                className="w-full rounded-lg border border-gray-900 p-3 text-sm"
+                placeholder="Category S"
+                type="text"
+                id="title"
+                name="categoryName"
+              />
+            </div> */}
             <div>
               <label
                 htmlFor="dropzone-file"

@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 const MainService = () => {
 
@@ -26,7 +26,9 @@ const MainService = () => {
 
 
     const blnkData = [{}, {}, {}];
-    const [selectedCategory, setSelectedCategory] = useState(null);
+    // const [selectedCategory, setSelectedCategory] = useState(null);
+    const [selectedCategory, setSelectedCategory] = useState('all')
+    const [searchTerm, setSearchTerm] = useState('')
 
     const filterServices = (category) => {
         setSelectedCategory(category);
@@ -37,6 +39,26 @@ const MainService = () => {
         refetch();
     }, [categories, refetch]);
 
+
+    const location = useLocation();
+    const path = location.hash.replace("#", "")
+
+    useEffect(() => {
+        // Update selected category based on path
+        setSelectedCategory(path);
+    }, [path]);
+
+    // Filter blogs based on selected category
+    const filteredBlogs = services.filter(blog => {
+        // Check if the blog matches the selected category or if the category is 'all'
+        const categoryMatch = selectedCategory === 'all' || blog.category === selectedCategory;
+        // Check if the blog title contains the search term
+        const titleMatch = blog.title.toLowerCase().includes(searchTerm.toLowerCase());
+        return categoryMatch && titleMatch;
+    });
+
+
+
     return (
 
         <section>
@@ -45,7 +67,7 @@ const MainService = () => {
                     <h2 className="text-xl font-bold text-gray-900 sm:text-3xl">
                         Our Service
                     </h2>
-
+                    <input type="text" onChange={(e) => setSearchTerm(e.target.value)} className='border border-gray-600 md:w-[500px] w-full p-2 rounded mt-4' placeholder='Search...' />
                     <p className="max-w-2xl mx-auto mt-4 text-gray-500">
                         Empower Your Sales with Sale Now: Your Ultimate SAS-Based Web App, Providing Sellers a Robust Platform and Exceptional Services for Unmatched Success!
                     </p>
@@ -53,23 +75,23 @@ const MainService = () => {
 
                 <div className="mt-4">
                     <div className="flex flex-wrap gap-4">
-                        <button
-                            onClick={() => filterServices(null)}
+                        <a
+                            href={`#all`}
                             className={`px-4 py-2 text-sm font-medium uppercase tracking-wide ${selectedCategory === null ? 'bg-black text-white' : 'bg-gray-300 text-gray-700'
                                 }`}
                         >
                             All
-                        </button>
+                        </a>
                         {!isCategoriesLoading &&
                             categories.map((category) => (
-                                <button
+                                <a
                                     key={category.id}
-                                    onClick={() => filterServices(category.title)}
+                                    href={`#${category?.slag}`}
                                     className={`px-4 py-2 text-sm font-medium uppercase tracking-wide ${selectedCategory === category.title ? 'bg-black text-white' : 'bg-gray-300 text-gray-700'
                                         }`}
                                 >
                                     {category.title}
-                                </button>
+                                </a>
                             ))}
                     </div>
                 </div>
@@ -79,36 +101,34 @@ const MainService = () => {
                     !isLoading ? <div>
                         <ul className="grid grid-cols-1 gap-4 mt-8 lg:grid-cols-3">
 
-                            {services
-                                ?.filter((service) => selectedCategory === null || service.category === selectedCategory)
-                                .map((service) => (
-                                    <div key={service._id} className={!service.status && 'hidden'}>
-                                        {service?.status && (
-                                            <li>
-                                                <Link
-                                                    to={`/service/${service._id}`} className="relative block group">
-                                                    <img
-                                                        src={service?.img}
-                                                        srcSet={service?.img}
-                                                        alt=""
-                                                        className="object-cover border border-black rounded-md w-full transition duration-500 aspect-square"
-                                                    />
+                            {filteredBlogs?.map((service) => (
+                                <div key={service._id} className={!service.status && 'hidden'}>
+                                    {service?.status && (
+                                        <li>
+                                            <Link
+                                                to={`/service/${service._id}`} className="relative block group">
+                                                <img
+                                                    src={service?.img}
+                                                    srcSet={service?.img}
+                                                    alt=""
+                                                    className="object-cover border border-black rounded-md w-full transition duration-500 aspect-square"
+                                                />
 
-                                                    <div className="absolute group-hover:bg-gray-900 group-hover:bg-opacity-90 bg-gray-900 bg-opacity-50 inset-0 flex flex-col items-start justify-end p-6">
-                                                        <h3 className="text-xl font-semibold text-white">{service?.title}</h3>
+                                                <div className="absolute group-hover:bg-gray-900 group-hover:bg-opacity-90 bg-gray-900 bg-opacity-50 inset-0 flex flex-col items-start justify-end p-6">
+                                                    <h3 className="text-xl font-semibold text-white">{service?.title}</h3>
 
-                                                        <Link
-                                                            to={`/service/${service._id}`}
-                                                            className="mt-1.5 inline-block bg-black px-5 py-3 text-xs font-medium uppercase tracking-wide text-white"
-                                                        >
-                                                            Show Details
-                                                        </Link>
-                                                    </div>
-                                                </Link>
-                                            </li>
-                                        )}
-                                    </div>
-                                ))}
+                                                    <Link
+                                                        to={`/service/${service._id}`}
+                                                        className="mt-1.5 inline-block bg-black px-5 py-3 text-xs font-medium uppercase tracking-wide text-white"
+                                                    >
+                                                        Show Details
+                                                    </Link>
+                                                </div>
+                                            </Link>
+                                        </li>
+                                    )}
+                                </div>
+                            ))}
 
                         </ul>
                     </div> :

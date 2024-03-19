@@ -320,7 +320,7 @@ console.log(categories, 'checkkkkkkkkkk')
                                                                     aria-expanded="false"
                                                                     data-te-ripple-init
                                                                     data-te-ripple-color="light">
-                                                                        mn
+                                                                    
                                                                     <span className="flex items-center gap-2 text-black">
                                                                         <img src={subCategory?.img} alt="" className="w-8 h-8 rounded-full ring-1 ring-gray-200" />
 

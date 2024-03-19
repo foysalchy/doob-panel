@@ -9,8 +9,6 @@ const EditDelivery = () => {
                     <span className='font-bold'>Delivery Information</span>
                     <small>Please ensure you have entered the right package weight (kg) and dimensions (cm) for accurate shipping fee calculations.</small>
                 </div>
-
-
                 <div>
                     <label className='text-sm ' >Package Width (kg) </label>
                     <input className="flex-grow w-full h-10 px-4 mt-1 mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-purple-400 focus:outline-none focus:shadow-outline" placeholder="Input Quantity" type="number" name="packageWidth" id="" />

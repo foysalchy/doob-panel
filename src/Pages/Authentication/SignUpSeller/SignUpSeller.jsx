@@ -21,6 +21,7 @@ const SignUpSeller = () => {
   const [phone, setPhone] = useState('');
 
   const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [passError, setPassError] = useState(false);
   const [loading, setLoading] = useState(false);
   const { RegistrationInEmail } = useContext(AuthContext);
@@ -31,6 +32,10 @@ const SignUpSeller = () => {
   const [phoneNumber, setPhoneNumber] = useState('+880');
 
 
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [error, setError] = useState('');
+
   // otp number form
 
 
@@ -38,15 +43,109 @@ const SignUpSeller = () => {
     setShowPassword(!showPassword);
   };
 
-  const signUpData = (event) => {
-    event.preventDefault();
+  const togglePasswordVisibility2 = () => {
+    setShowConfirmPassword(!showConfirmPassword);
+  };
 
+
+
+  // const signUpData = (event) => {
+  //   event.preventDefault();
+
+
+  //   const form = event.target;
+  //   const name = form.name.value;
+
+  //   const email = form.email.value;
+  //   const password = form.password.value;
+  //   const confirmPassword = form.password.value;
+  //   const shopName = form?.shopName?.value
+  //   const referCode = form?.referCode?.value;
+  //   let role = "user";
+  //   const createdAt = new Date()
+
+  //   setUserEmail(email)
+
+  //   console.log(form?.shopName?.value);
+
+  //   const userId = email.replace(/[@.]/g, '')
+
+
+  //   setLoading(true);
+  //   let user = { name, email, password, userId, phoneNumber, role, createdAt, referCode }
+  //   if (password.length >= 6) {
+
+  //     if (password.toLowerCase() === confirmPassword.toLowerCase()){  
+
+  // if (shop) {
+  //   role = "seller";
+  //   user.role = role;
+  //   user.shopName = shopName;
+
+  // }
+
+
+  //     // Update user
+
+  //     setPassError("");
+  //   console.log(user);
+
+  // fetch("https://salenow-v2-backend.vercel.app/api/v1/auth/sign-up", {
+  //     method: "post",
+  //     headers: {
+  //       "content-type": "application/json",
+  //     },
+  //     body: JSON.stringify(user),
+  //   })
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       const result = data.result;
+  //       if (result) {
+  //         if (shop) {
+  //           handleSubmit(referCode, email);
+  //         }
+  //         setLoading(false);
+  //         BrightAlert(`${data.message}`, '', 'success');
+  //         form.reset();
+  //         navigate('/sign-in');
+  //       } else {
+  //         setPassError(data.message);
+  //       }
+  //       setLoading(false);
+
+  //       form.reset();
+  //     });
+  //   }
+  //   else{
+  //       setPassError("Password not matched")
+  //       setLoading(false);
+  //     }
+
+  //   }
+  //    else {
+  //     setPassError("Please enter six digit password");
+  //     setLoading(false);
+  //   }
+  // };
+
+
+
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value);
+  };
+
+  const handleConfirmPasswordChange = (e) => {
+    setConfirmPassword(e.target.value);
+  };
+
+  const signUpData = (event) => {
+    event.preventDefault()
 
     const form = event.target;
     const name = form.name.value;
-
     const email = form.email.value;
-    const password = form.password.value;
+    // const password = form.password.value;
+    // const confirmPassword = form.password.value;
     const shopName = form?.shopName?.value
     const referCode = form?.referCode?.value;
     let role = "user";
@@ -60,8 +159,17 @@ const SignUpSeller = () => {
 
 
     setLoading(true);
-    let user = { name, email, password, userId, phoneNumber, role, createdAt, referCode }
-    if (password.length >= 6) {
+
+    let user = { name, email, userId, phoneNumber, role, createdAt, referCode }
+
+
+    if (password.toLocaleLowerCase() !== confirmPassword.toLocaleLowerCase()) {
+      setError("Passwords don't match");
+    } else if (password.length <= 5 || confirmPassword.length <= 5) {
+      setError('Passwords must be at least 6 characters long');
+    } else {
+      setError('');
+      // Handle form submission here
       if (shop) {
         role = "seller";
         user.role = role;
@@ -69,10 +177,6 @@ const SignUpSeller = () => {
 
       }
 
-
-      // Update user
-
-      setPassError("");
       console.log(user);
 
       fetch("https://salenow-v2-backend.vercel.app/api/v1/auth/sign-up", {
@@ -85,6 +189,7 @@ const SignUpSeller = () => {
         .then((res) => res.json())
         .then((data) => {
           const result = data.result;
+          console.log(result, 'result');
           if (result) {
             if (shop) {
               handleSubmit(referCode, email);
@@ -94,17 +199,20 @@ const SignUpSeller = () => {
             form.reset();
             navigate('/sign-in');
           } else {
-            setPassError(data.message);
+            setError(data.message);
           }
           setLoading(false);
 
           form.reset();
         });
-    } else {
-      setPassError("Please enter six digit password");
-      setLoading(false);
     }
   };
+
+
+
+
+
+
 
   const handleSubmit = (referCode, email) => {
     const code = referCode
@@ -418,22 +526,6 @@ const SignUpSeller = () => {
                       </div>
 
                       <div className="grid grid-cols-2 gap-3 items-center">
-                        <div className="order-last">
-                          <label
-                            htmlFor="email"
-                            className="inline-block mb-1 font-medium"
-                          >
-                            Refer Code
-                          </label>
-                          <input
-                            placeholder="refer code"
-                            type="text"
-                            className="flex-grow w-full h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
-                            id="referCode"
-                            name="referCode"
-                          />
-                        </div>
-
                         <div className="mb-1 sm:mb-2">
                           <label
                             htmlFor="email"
@@ -446,7 +538,8 @@ const SignUpSeller = () => {
 
                               placeholder="*******"
                               required
-
+                              value={password}
+                              onChange={handlePasswordChange}
                               type={showPassword ? "text" : "password"}
                               className="flex-grow w-full re h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
                               id="password"
@@ -469,8 +562,61 @@ const SignUpSeller = () => {
                             )}
                           </div>
                         </div>
+
+                        <div className="mb-1 sm:mb-2">
+                          <label
+                            htmlFor="email"
+                            className="inline-block mb-1 font-medium"
+                          >
+                            Confirm Password
+                          </label>
+                          <div className="relative">
+                            <input
+
+                              placeholder="*******"
+                              required
+                              value={confirmPassword}
+                              onChange={handleConfirmPasswordChange}
+                              type={showConfirmPassword ? "text" : "password"}
+                              className="flex-grow w-full re h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
+                              id="confirmPassword"
+                              name="confirmPassword"
+                            />
+                            {showConfirmPassword ? (
+                              <span
+                                className="absolute inset-y-0 end-0 grid place-content-center px-4"
+                                onClick={togglePasswordVisibility2}
+                              >
+                                <AiFillEyeInvisible />
+                              </span>
+                            ) : (
+                              <span
+                                className="absolute inset-y-0 end-0 grid place-content-center px-4"
+                                onClick={togglePasswordVisibility2}
+                              >
+                                <AiFillEye />
+                              </span>
+                            )}
+                          </div>
+                        </div>
                       </div>
 
+
+                      <div className="order-last">
+                        <label
+                          htmlFor="email"
+                          className="inline-block mb-1 font-medium"
+                        >
+                          Refer Code
+                        </label>
+                        <input
+                          placeholder="refer code"
+                          type="text"
+                          className="flex-grow w-full h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
+                          id="referCode"
+                          name="referCode"
+                        />
+                      </div>
 
                       {/* <div className="text-xs text-gray-600 text-center sm:text-sm"> {!shop ? (
                         <div
@@ -492,7 +638,10 @@ const SignUpSeller = () => {
                       )}</div> */}
 
 
-                      <p className="text-sm text-red-500">{passError}</p>
+
+                      <p className="text-sm text-red-500">{error}</p>
+
+
                       <div className="mt-4 mb-2 sm:mb-4">
                         {!loading ? (
                           <button
@@ -539,7 +688,7 @@ const SignUpSeller = () => {
         <Modal email={userEmail} setModalOpen={setModalOpen} modalOpen={modalOpen} />
       </div>
     </div>
-  );
+  )
 };
 
 export default SignUpSeller;

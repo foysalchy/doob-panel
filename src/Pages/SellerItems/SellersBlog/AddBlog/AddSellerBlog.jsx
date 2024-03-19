@@ -3,7 +3,7 @@ import React from 'react';
 import { useContext } from 'react';
 import { useState } from 'react';
 import { BsArrowRight } from 'react-icons/bs';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { AuthContext } from '../../../../AuthProvider/UserProvider';
 import { useQuery } from '@tanstack/react-query';
@@ -15,6 +15,7 @@ const AddSellerBlog = () => {
     const [loading, setLoading] = useState(false);
     const { shopInfo, user } = useContext(AuthContext)
 
+    const navigate = useNavigate();
 
     const { data: category = [], refetch } = useQuery({
         queryKey: ["blog-category"],
@@ -127,6 +128,7 @@ const AddSellerBlog = () => {
                 form.reset();
                 setPreviewUrl("");
                 setFileName("");
+                navigate(`/seller/manage-blogs`)
             });
     };
 

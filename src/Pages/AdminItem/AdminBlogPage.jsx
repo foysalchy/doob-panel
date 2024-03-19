@@ -1,10 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const AdminBlogPage = () => {
   const [blogs, setBlogs] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState('all')
 
   useEffect(() => {
     fetch("https://salenow-v2-backend.vercel.app/api/v1/admin/all-blogs")
@@ -17,9 +18,9 @@ const AdminBlogPage = () => {
       });
   }, []);
 
-  const filteredBlogs = blogs.filter((blog) =>
-    blog.title.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  // const filteredBlogs = blogs.filter((blog) =>
+  //   blog.title.toLowerCase().includes(searchTerm.toLowerCase())
+  // );
 
 
 
@@ -35,7 +36,6 @@ const AdminBlogPage = () => {
 
 
   const blnkData = [{}, {}, {}];
-  const [selectedCategory, setSelectedCategory] = useState(null);
 
   const filterServices = (category) => {
     setSelectedCategory(category);
@@ -46,6 +46,25 @@ const AdminBlogPage = () => {
     // Trigger a refetch of services when categories change
     refetch();
   }, [categories, refetch]);
+
+
+  const location = useLocation();
+  const path = location.hash.replace("#", "")
+
+  useEffect(() => {
+    // Update selected category based on path
+    setSelectedCategory(path);
+  }, [path]);
+
+  // Filter blogs based on selected category
+  const filteredBlogs = blogs.filter(blog => {
+    // Check if the blog matches the selected category or if the category is 'all'
+    const categoryMatch = selectedCategory === 'all' || blog.category === selectedCategory;
+    // Check if the blog title contains the search term
+    const titleMatch = blog.title.toLowerCase().includes(searchTerm.toLowerCase());
+    return categoryMatch && titleMatch;
+  });
+
 
 
   console.log(categories);
@@ -110,23 +129,23 @@ const AdminBlogPage = () => {
 
               <div className=" mb-8">
                 <div className="flex flex-wrap gap-4">
-                  <button
-                    onClick={() => filterServices(null)}
+                  <a
+                    href={`#all`}
                     className={`px-4 py-2 text-sm font-medium uppercase tracking-wide ${selectedCategory === null ? 'bg-black text-white' : 'bg-gray-300 text-gray-700'
                       }`}
                   >
                     All
-                  </button>
+                  </a>
                   {!isCategoriesLoading &&
                     categories?.map((category) => (
-                      <button
+                      <a
                         key={category.id}
-                        onClick={() => filterServices(category.title)}
+                        href={`#${category?.slag}`}
                         className={`px-4 py-2 text-sm font-medium uppercase tracking-wide ${selectedCategory === category.title ? 'bg-black text-white' : 'bg-gray-300 text-gray-700'
                           }`}
                       >
                         {category.title}
-                      </button>
+                      </a>
                     ))}
                 </div>
               </div>
@@ -135,8 +154,7 @@ const AdminBlogPage = () => {
 
 
             <div className="grid grid-cols-1 gap-x-4 gap-y-8 md:grid-cols-2 lg:grid-cols-4">
-              {filteredBlogs
-                ?.filter((service) => selectedCategory === null || service.category === selectedCategory).map((blog, index) => {
+              {filteredBlogs?.map((blog, index) => {
                   console.log(blog)
                   return (<BlogCard
                     date={blog.date}
