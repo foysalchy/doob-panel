@@ -9,7 +9,7 @@ const AdminBlogComment = () => {
     const { data: adminBlogsComments = [], refetch } = useQuery({
         queryKey: ["adminblogsComments"],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5001/api/v1/admin/blog-comments`);
+            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/blog-comments`);
             const data = await res.json();
             return data.data;
         },
@@ -41,7 +41,7 @@ const AdminBlogComment = () => {
 
 
     const publishBlogComment = (id, timestamp, status) => {
-        fetch(`http://localhost:5001/api/v1/admin/blog-comments-update-status?blogId=${id}&commentId=${timestamp}&status=${status}`, {
+        fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/blog-comments-update-status?blogId=${id}&commentId=${timestamp}&status=${status}`, {
             method: "PUT",
             headers: {
                 'Content-Type': 'application/json'

@@ -43,7 +43,7 @@ function App() {
   const { data: seller_facebook_pixel = {}, refetch } = useQuery({
     queryKey: ["seller-facebook-pixel"],
     queryFn: async () => {
-      const res = await fetch(`http://localhost:5001/api/v1/seller/get-facebook-id?shopId=${idMatch[1]}`);
+      const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/get-facebook-id?shopId=${idMatch[1]}`);
       const data = await res.json();
       return data.data;
     },

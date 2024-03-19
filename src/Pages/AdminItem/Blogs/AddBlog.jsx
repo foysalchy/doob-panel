@@ -60,19 +60,18 @@ const AddBlog = () => {
       setFileName(file.name);
     }
   };
+  const [message, setMessage] = useState('')
 
   const dataSubmit = (event) => {
-    setLoading(true);
+    // setLoading(true);
     event.preventDefault();
     const form = event.target;
     const title = form.title.value;
     const category = form.category.value;
     const image = form.photo.files[0];
-    const message = form.message.value;
     const MetaImage = upload;
     const MetaTag = form.MetaTag.value;
     const MetaDescription = form.MetaDescription.value;
-
     const formData = new FormData();
     formData.append("image", image);
     const url = `https://salenow-v2-backend.vercel.app/api/v1/image/upload-image`;
@@ -119,6 +118,9 @@ const AddBlog = () => {
       });
   };
 
+  const handleChange = (content) => {
+    setMessage(content);
+  };
 
   const modules = {
     toolbar: [
@@ -219,9 +221,10 @@ const AddBlog = () => {
             <div>
               <div>
                 <ReactQuill
-                  name="message" id="message"
+                  name="message"
+                  id="message"
                   className="h-36"
-                  // value={message}
+                  onChange={handleChange}
                   modules={modules}
                   placeholder="Enter description here..."
                 />
@@ -271,7 +274,7 @@ const AddBlog = () => {
                 id="MetaImage'"
                 name="MetaImage'"
               />
-              {uplodOk && "done"}
+
             </div>
 
             <div className="mt-4">

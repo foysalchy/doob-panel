@@ -26,7 +26,7 @@ const ManageOrder = () => {
     const [details, setDetails] = useState();
 
 
-    console.log(orderCounts, 'pps')
+
 
     const { shopInfo } = useContext(AuthContext);
 
