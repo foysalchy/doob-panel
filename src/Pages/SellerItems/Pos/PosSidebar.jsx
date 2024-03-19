@@ -8,7 +8,7 @@ import PosProductsDetails from './PosProductsDetails';
 import { AuthContext } from '../../../AuthProvider/UserProvider';
 
 const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
-    const {shopInfo} = useContext(AuthContext)
+    const { shopInfo } = useContext(AuthContext)
     const [open, setOpen] = useState(false);
     const [invoice, setInvoice] = useState({});
     const [isChecked, setIsChecked] = useState(false);
@@ -161,7 +161,7 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
         setUser(data)
         setIsChecked(false)
     }
-    
+
     console.log(user, '........')
     return (
         <div className=' h-full '>
@@ -312,7 +312,7 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
 
                             <div onClick={() => setIsChecked(false)} className={`fixed z-[100] flex items-center justify-center ${isChecked ? 'visible opacity-100' : 'invisible opacity-0'} inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}>
 
-                                
+
                                 <div onClick={(e_) => e_.stopPropagation()} className={`text- absolute w-[500px] rounded-sm bg-white p-6 drop-shadow-lg  ${isChecked ? 'scale-1 opacity-1 duration-300' : 'scale-0 opacity-0 duration-150'}`}>
 
                                     <h1 className='flex gap-2'> <input onClick={() => { setExisting(!existing), setUser(false) }} type="checkbox" />New User ?</h1>
@@ -337,7 +337,7 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
                                         error && <p className='text-sm text-red-500'>Error: {error}</p>
                                     }
 
-                                    
+
 
                                     {!existing &&
                                         <form onSubmit={handleFormSubmit}>
@@ -403,9 +403,9 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
 
                                             <div className="flex justify-between">
                                                 <button type='submit' className="me-2 rounded-sm bg-green-700 px-6 py-[6px] text-white">Submit</button>
-                                             
-                                             
-                                             
+
+
+
                                                 <button onClick={() => setIsChecked(false)} className="rounded-sm border border-red-600 px-6 py-[6px] text-red-600 duration-150 hover:bg-red-600 hover:text-white">Cancel</button>
                                             </div>
                                         </form>

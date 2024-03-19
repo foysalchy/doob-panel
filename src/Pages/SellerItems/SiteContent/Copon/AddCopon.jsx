@@ -7,13 +7,158 @@ import groovyWalkAnimation from "./Upload.json";
 import { FaLongArrowAltLeft, FaLongArrowAltRight } from 'react-icons/fa';
 import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
+import Select from 'react-select';
 
 const AddCopon = () => {
+
+    // const { shopInfo } = useContext(AuthContext);
+    // const [uniq, setUniq] = useState(false);
+    // const [loading, setLoading] = useState(false);
+    // const navigate = useNavigate();
+
+    // const { data: your_shop_users = [] } = useQuery({
+    //     queryKey: ["your_shop_users"],
+    //     queryFn: async () => {
+    //         const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/get-all-shop-user?shopId=${shopInfo.shopId}`);
+    //         const data = await res.json();
+    //         return data.users;
+    //     },
+    // });
+
+    // const options = your_shop_users?.map(user => ({
+    //     value: user.email,
+    //     label: user.email
+    // }));
+
+
+    // const handleGoBack = () => {
+    //     navigate(-1);
+    // };
+
+    // const [formData, setFormData] = useState({
+    //     code: '',
+    //     name: '',
+    //     type: 'percentage',
+    //     price: 10,
+    //     usageLimitPerUser: 1,
+    //     userLimit: 100,
+    //     shopId: shopInfo._id,
+    //     selectedGmails: [],
+    //     startDateTime: '',
+    //     endDateTime: '',
+    //     status: true
+    // });
+
+    // console.log(formData);
+
+    // const handleChange = (e) => {
+    //     const { name, value } = e.target;
+
+    //     const updatedValue = name === 'code' ? value.replace(/\s+/g, '').toUpperCase() : value;
+
+    //     if (updatedValue.length > 3) {
+    //         fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/uniq-promo/${shopInfo._id}/${updatedValue}`)
+    //             .then((res) => res.json())
+    //             .then((data) => setUniq(data));
+    //     } else {
+    //         setUniq(false);
+    //     }
+
+    //     setFormData((prevData) => ({
+    //         ...prevData,
+    //         [name]: updatedValue,
+    //     }));
+    // };
+
+    // const handleSubmit = (e) => {
+    //     e.preventDefault();
+
+    //     // Add selected Gmails to formData
+    //     setFormData((prevData) => ({
+    //         ...prevData,
+    //         selectedGmails: selectedGmails,
+    //     }));
+
+    //     fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/promo-code/add`, {
+    //         method: 'POST',
+    //         headers: {
+    //             'content-type': 'application/json',
+    //         },
+    //         body: JSON.stringify(formData),
+    //     })
+    //         .then((res) => res.json())
+    //         .then((data) => {
+    //             Swal.fire('Your Promo Code Published Successfully', '', 'success');
+    //             setLoading(false);
+    //             setFormData({
+    //                 code: '',
+    //                 name: '',
+    //                 type: 'percentage',
+    //                 price: 10,
+    //                 usageLimitPerUser: 1,
+    //                 userLimit: 100,
+    //                 shopId: shopInfo._id,
+    //                 selectedGmails: [],
+
+    //             });
+    //             handleGoBack();
+    //         });
+    // };
+
+    // const [inputValue, setInputValue] = useState('');
+    const [selectedGmails, setSelectedGmails] = useState([]);
+
+    // const handleInputChange = (e) => {
+    //     setInputValue(e.target.value);
+    // };
+
+    // const handleInputKeyDown = (e) => {
+    //     if (e.key === 'Enter') {
+    //         e.preventDefault();
+    //         handleAddGmail();
+    //     }
+    // };
+
+    // const handleAddGmail = () => {
+    //     if (inputValue.trim() !== '') {
+    //         setSelectedGmails([...selectedGmails, inputValue.trim()]);
+    //         setFormData((prevData) => ({
+    //             ...prevData,
+    //             SelectGamails: [...selectedGmails, inputValue.trim()]
+    //         }));
+    //         setInputValue('');
+    //     }
+    // };
+
+    // const handleRemoveGmail = (gmail) => {
+    //     const updatedGmails = selectedGmails.filter((item) => item !== gmail);
+    //     setSelectedGmails(updatedGmails);
+    //     setFormData((prevData) => ({
+    //         ...prevData,
+    //         SelectGamails: updatedGmails,
+    //     }));
+    // };
 
     const { shopInfo } = useContext(AuthContext);
     const [uniq, setUniq] = useState(false);
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
+
+    const { data: your_shop_users = [] } = useQuery({
+        queryKey: ["your_shop_users"],
+        queryFn: async () => {
+            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/get-all-shop-user?shopId=${shopInfo.shopId}`);
+            const data = await res.json();
+            return data.users;
+        },
+    });
+
+    const options = your_shop_users?.map(user => ({
+        value: user.email,
+        label: user.email
+    }));
+
 
     const handleGoBack = () => {
         navigate(-1);
@@ -56,12 +201,7 @@ const AddCopon = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-
-        // Add selected Gmails to formData
-        setFormData((prevData) => ({
-            ...prevData,
-            selectedGmails: selectedGmails,
-        }));
+        console.log(formData);
 
         fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/promo-code/add`, {
             method: 'POST',
@@ -89,37 +229,11 @@ const AddCopon = () => {
             });
     };
 
-    const [inputValue, setInputValue] = useState('');
-    const [selectedGmails, setSelectedGmails] = useState([]);
-
-    const handleInputChange = (e) => {
-        setInputValue(e.target.value);
-    };
-
-    const handleInputKeyDown = (e) => {
-        if (e.key === 'Enter') {
-            e.preventDefault();
-            handleAddGmail();
-        }
-    };
-
-    const handleAddGmail = () => {
-        if (inputValue.trim() !== '') {
-            setSelectedGmails([...selectedGmails, inputValue.trim()]);
-            setFormData((prevData) => ({
-                ...prevData,
-                SelectGamails: [...selectedGmails, inputValue.trim()]
-            }));
-            setInputValue('');
-        }
-    };
-
-    const handleRemoveGmail = (gmail) => {
-        const updatedGmails = selectedGmails.filter((item) => item !== gmail);
-        setSelectedGmails(updatedGmails);
-        setFormData((prevData) => ({
+    const handleSelectChange = (selectedOptions) => {
+        const selectedValues = selectedOptions.map(option => option.value);
+        setFormData(prevData => ({
             ...prevData,
-            SelectGamails: updatedGmails,
+            selectedGmails: selectedValues
         }));
     };
 
@@ -294,14 +408,31 @@ const AddCopon = () => {
                                     </div>
                                 ))}
                             </div>
-                            <input
+                            {/* <select className="border border-gray-300 rounded px-3 py-2 
+                            w-full focus:outline-none" name=""
+                                id="">
+                                {your_shop_users?.map((user) => (
+                                    <option value="">{user?.email}</option>
+                                ))}
+
+
+                            </select> */}
+                            <Select
+                                name="selectedGmails"
+                                className="border border-gray-300 rounded px-3 py-2 w-full focus:outline-none"
+                                options={options}
+                                isMulti
+                                value={options.filter(option => formData.selectedGmails.includes(option.value))}
+                                onChange={handleSelectChange}
+                            />
+                            {/* <input
                                 type="text"
                                 className="border border-gray-300 rounded px-3 py-2 w-full focus:outline-none"
                                 placeholder={selectedGmails.length === 0 ? 'Enter Gmail address' : ''}
                                 value={inputValue}
                                 onChange={handleInputChange}
                                 onKeyDown={handleInputKeyDown}
-                            />
+                            /> */}
                         </div>
 
                         <button type='submit' className="group mt-4 relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 w-full justify-center py-3 text-white focus:outline-none focus:ring active:bg-gray-500">

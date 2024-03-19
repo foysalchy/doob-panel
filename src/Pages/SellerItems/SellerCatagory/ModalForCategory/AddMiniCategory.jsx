@@ -85,12 +85,12 @@ const AddMiniCategory = () => {
             darazCategory_id = JSON.parse(darazMiniCategory).child.category_id
         }
 
-           const imageFormData = new FormData();
+        const imageFormData = new FormData();
         imageFormData.append("image", image.files[0]);
         const imageUrl = await uploadImage(imageFormData);
 
         const data = {
-            img : imageUrl,
+            img: imageUrl,
             megaCategory,
             darazMiniCategory,
             wooMiniCategory,

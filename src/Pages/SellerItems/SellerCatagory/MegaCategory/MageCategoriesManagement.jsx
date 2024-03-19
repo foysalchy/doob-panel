@@ -17,7 +17,7 @@ import { Link } from 'react-router-dom';
 const MageCategoriesManagement = () => {
     const [editOn, setEditOn] = useState(false);
     const { shopInfo } = useContext(AuthContext)
-
+    const [newImage, setNewImage] = useState(false)
 
     const { data: categories = [], refetch } = useQuery({
         queryKey: ["categories"],
@@ -27,7 +27,7 @@ const MageCategoriesManagement = () => {
             return data;
         },
     });
-    console.log(categories, 'category');
+
     const [searchQuery, setSearchQuery] = useState("");
 
     const handleSearch = (event) => {
@@ -39,7 +39,7 @@ const MageCategoriesManagement = () => {
         try {
             parsedDarazCategory = JSON.parse(filteredItem?.darazCategory);
         } catch (error) {
-            console.error('Error parsing JSON:', error);
+
             // Handle invalid JSON by leaving it unchanged or handle it accordingly.
         }
 
@@ -183,7 +183,7 @@ const MageCategoriesManagement = () => {
 
                     })
                     .catch((error) => {
-                        console.error('Error deleting seller:', error);
+
                         Swal.fire('Error Deleting Seller', 'An error occurred', 'error');
                     });
             }
@@ -199,7 +199,7 @@ const MageCategoriesManagement = () => {
 
 
     const futuresUpdate = (id, status) => {
-        console.log(id, status, 'dsfa');
+
         fetch(`https://salenow-v2-backend.vercel.app/api/v1/category/seller/category/updateStatus?id=${id}`, {
             method: "PUT",
 
@@ -209,7 +209,7 @@ const MageCategoriesManagement = () => {
             body: JSON.stringify({ feature: status }),
 
         }).then((res) => res.json()).then((data) => {
-            console.log(data);
+
             Swal.fire(`Category  feature ${status} `, '', 'success');
             refetch()
         })
@@ -244,14 +244,17 @@ const MageCategoriesManagement = () => {
         return imageData.imageUrl;
     };
 
+
+    const [loading, setLoading] = useState(false)
     const handleEdit = async (e, id) => {
         e.preventDefault();
+        setLoading(true)
         const form = e.target;
         const image = form.image;
         const name = form.name.value;
 
         const imageFormData = new FormData();
-        imageFormData.append("img", image.files[0]);
+        imageFormData.append("image", image.files[0]);
         const imageUrl = await uploadImage(imageFormData);
 
 
@@ -261,20 +264,22 @@ const MageCategoriesManagement = () => {
 
         }
 
-        console.log(data, id);
+        console.log(data, id, 'update');
 
-        // fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/feature-image-update?id=${id}`, {
-        //     method: "PUT",
-        //     headers: {
-        //         "Content-Type": "application/json",
-        //     },
-        //     body: JSON.stringify(data),
-        // }).then((res) => res.json()).then((data) => {
-        //     Swal.fire(`Category update `, '', 'success');
-        //     refetch()
-        // })
+        fetch(`https://salenow-v2-backend.vercel.app/api/v1/category/seller-update-megaCategory?id=${id}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+        }).then((res) => res.json()).then((data) => {
+            setLoading(false)
+            Swal.fire(`Category update `, '', 'success');
+            refetch()
+            setEditOn(false);
+            form.reset()
+        })
 
-        setEditOn(false);
     }
 
 
@@ -442,6 +447,7 @@ const MageCategoriesManagement = () => {
                                                     <div className="flex flex-col items-start gap-1">
                                                         <label className='text-start' htmlFor="photo">Photo</label>
                                                         <input
+                                                            onChange={() => setNewImage(true)}
                                                             type="file" name="image" className='border border-gray-500 p-1 rounded mb-3 w-full' />
                                                     </div>
 
@@ -454,7 +460,7 @@ const MageCategoriesManagement = () => {
 
                                                     <br />
                                                     <div className="flex justify-start">
-                                                        <button type='submit' className="me-2 rounded bg-green-700 px-6 py-1 text-white">Sibmit</button>
+                                                        <button type='submit' className="me-2 rounded bg-green-700 px-6 py-1 text-white">Submit</button>
                                                     </div>
                                                 </form>
 

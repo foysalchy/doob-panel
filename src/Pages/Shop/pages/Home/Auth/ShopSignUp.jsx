@@ -96,7 +96,7 @@ const ShopSignUp = () => {
                                 type='submit'
                                 className="w-full px-4 text-white font-medium bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-600 duration-150 mt-[3px] py-[9px]"
                             >
-                                Sign in
+                                Sign Up
                             </button>
                             {shopCredential?.service?.google && <button type='button' onClick={() => Google()} className=" w-full px-8 text-black font-medium bg-gray-300 hover:bg-gray-400 active:bg-red-600 duration-150 mt-[3px] py-[9px] flex gap-8 items-center">
                                 <svg className="w-5 h-5" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">

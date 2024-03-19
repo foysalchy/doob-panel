@@ -7,6 +7,16 @@ import Swal from 'sweetalert2';
 const EditBlog = ({ OpenModal, setOpenModal, BlogInfo, refetch }) => {
     const [previewUrl, setPreviewUrl] = useState(BlogInfo.img);
 
+    const modules = {
+        toolbar: [
+            [{ 'header': '1' }, { 'header': '2' }, { 'font': [] }],
+            [{ 'size': [] }],
+            ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+            [{ 'list': 'ordered' }, { 'list': 'bullet' }, { 'indent': '-1' }, { 'indent': '+1' }],
+            ['link', 'image', 'video'],
+            ['clean']
+        ],
+    };
     const handleFileChange = async (event) => {
         const image = event.target.files[0];
         const formData = new FormData();
@@ -78,7 +88,16 @@ const EditBlog = ({ OpenModal, setOpenModal, BlogInfo, refetch }) => {
 
                     <div>
                         <div>
-                            <JoditEditor value={BlogInfo.message} name="message" id="message" />
+                            <ReactQuill
+                                name="message" id="message"
+                                className="h-36"
+                                // value={message}
+                                modules={modules}
+                                placeholder="Enter description here..."
+                            />
+                            <br />
+                            <br />
+                            {/* <JoditEditor value={BlogInfo.message} /> */}
                         </div>
                     </div>
 

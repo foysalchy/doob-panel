@@ -74,7 +74,16 @@ const InputProductName = ({ brandName, setBrandName }) => {
 
                 <div className='mt-2'>
                     <label htmlFor="megaCategory">Provide SKU</label>
-                    <input defaultValue={`${shopInfo.shopId}_${Math.random().toString(36).substr(2, 6)}`} className="flex-grow w-full h-10 px-4 mb-3 transition duration-200 bg-white text-black border border-gray-300 rounded-r shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-purple-400 focus:outline-none focus:shadow-outline" type="text" required name="ProductSKU" id="" />
+                    <input
+                        defaultValue={`${shopInfo.shopId}_${Math.floor(Math.random() * 100000000)}`}
+                        className="flex-grow w-full h-10 px-4 mb-3 transition duration-200 bg-white text-black border border-gray-300 rounded-r shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-purple-400 focus:outline-none focus:shadow-outline"
+                        type="text"
+                        pattern="[0-9]{8}"
+                        title="Please enter an 8-digit number."
+                        required
+                        name="ProductSKU"
+                        id=""
+                    />
                 </div>
 
             </div>

@@ -68,7 +68,7 @@ const UpdatePage = ({ OpenModal, setOpenModal, FAQInfo, refetch }) => {
                             <option value="marketing">Marketing</option>
                         </select>
                     </div>
-<br />
+                    <br />
                     <div>
                         <div>
                             <JoditEditor value={FAQInfo.description} name="description" id="answer" />

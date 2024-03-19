@@ -67,7 +67,7 @@ const AddContact = () => {
             .then((res) => res.json())
             .then((data) => {
                 setLoading(false);
-                Swal.fire("success","", "success");
+                Swal.fire("success", "", "success");
 
                 form.reset();
                 setPreDeleteUrl("");

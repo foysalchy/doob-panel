@@ -93,8 +93,13 @@ const SellerEditVariants = ({ adminWare, multiVendor, setMultiVendor, inputField
 
     const handleAddField = () => {
         setInputFields([...inputFields, {
-
-            name: '', image: null, quantity: "", SKU: "", price: '', offerPrice: '', ability: false, vendor: false, variantImag: null
+            name: '',
+            image: null,
+            quantity: "",
+            SKU: `${shopInfo.shopId}_${Math.random().toString().slice(2, 10)}`,
+            price: '',
+            offerPrice: '',
+            ability: false
         }]);
     };
 
@@ -128,7 +133,7 @@ const SellerEditVariants = ({ adminWare, multiVendor, setMultiVendor, inputField
             <div className='min-w-fit mb-4'>
 
                 <label className='text-sm ' htmlFor="Video url ">Sale Multi Vendor</label> <br />
-              
+
                 <select
                     onChange={(e) => {
                         setMultiVendor(e.target.value === 'true' && true || e.target.value === 'false' && false);

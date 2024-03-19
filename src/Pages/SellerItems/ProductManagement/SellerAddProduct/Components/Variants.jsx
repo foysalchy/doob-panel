@@ -150,7 +150,12 @@ const Variants = ({ adminWare, multiVendor, setMultiVendor, inputFields, setInpu
                             value={field.name}
                             onChange={(e) => {
                                 const newInputFields = [...inputFields];
-                                newInputFields[index].name = e.target.value;
+                                const newName = e.target.value;
+                                const newSKU = `${shopInfo.shopId}_${newName}_${Math.floor(Math.random() * 100000000)}`;
+
+                                newInputFields[index].name = newName;
+                                newInputFields[index].SKU = newSKU;
+
                                 setInputFields(newInputFields);
                             }}
                         />

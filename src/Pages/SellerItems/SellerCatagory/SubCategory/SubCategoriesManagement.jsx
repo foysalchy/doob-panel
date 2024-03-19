@@ -216,25 +216,37 @@ const SubCategoriesManagement = () => {
         const imageData = await response.json();
         return imageData.imageUrl;
     };
-
+    const [loading, setLoading] = useState(false)
     const handleEdit = async (e, id) => {
         e.preventDefault();
         const form = e.target;
         const image = form.image;
         const name = form.name.value;
-
         const imageFormData = new FormData();
-        imageFormData.append("img", image.files[0]);
+        imageFormData.append("image", image.files[0]);
         const imageUrl = await uploadImage(imageFormData);
 
 
         const data = {
             img: imageUrl ? imageUrl : editOn?.img,
             name: name
-
         }
 
-        console.log(data, id, 'Testing.....');
+        console.log(data, id, 'update');
+
+        fetch(`https://salenow-v2-backend.vercel.app/api/v1/category/seller-update-subCategory?id=${id}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+        }).then((res) => res.json()).then((data) => {
+            setLoading(false)
+            Swal.fire(`Sub Category update `, '', 'success');
+            refetch()
+            setEditOn(false);
+            form.reset()
+        })
 
         // fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/feature-image-update?id=${id}`, {
         //     method: "PUT",
@@ -247,8 +259,26 @@ const SubCategoriesManagement = () => {
         //     refetch()
         // })
 
-        setEditOn(false);
     }
+
+    const futuresUpdate = (id, status) => {
+
+        fetch(`https://salenow-v2-backend.vercel.app/api/v1/category/seller-update-subCategory-feature?id=${id}&status=${status}`, {
+            method: "PUT",
+
+            headers: {
+                "Content-Type": "application/json",
+            },
+
+
+        }).then((res) => res.json()).then((data) => {
+
+            Swal.fire(`Category  feature ${status} `, '', 'success');
+            refetch()
+        })
+    }
+
+
 
 
 
@@ -325,8 +355,8 @@ const SubCategoriesManagement = () => {
                                 <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-800  rounded-tl ">
                                     Photo
                                 </th>
-                                
-                                   <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-800  rounded-tl ">
+
+                                <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-800   ">
                                     Category Name
                                 </th>
 
@@ -339,8 +369,11 @@ const SubCategoriesManagement = () => {
                                 <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-800 ">
                                     Status
                                 </th>
-                                <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-800  rounded-tr ">
+                                <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-800  ">
                                     Action
+                                </th>
+                                <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-800  rounded-tr ">
+
                                 </th>
 
                             </tr>
@@ -445,6 +478,16 @@ const SubCategoriesManagement = () => {
 
                                             />
 
+                                        </td>
+                                        <td>
+                                            {/* <button onClick={() => futuresUpdate(warehouse?._id, warehouse?.feature ? false : true)} className={` ${warehouse?.feature ? "bg-green-500 hover:bg-green-400" : "bg-red-500 hover:bg-red-400"}inline-flex items-center justify-center py-1 px-4  rounded shadow-md  focus:shadow-outline focus:outline-none`}>Feature</button> */}
+
+                                            <button
+                                                onClick={() => futuresUpdate(warehouse?._id, warehouse && warehouse.feature === 'true' ? false : true)}
+                                                className={`${warehouse && warehouse.feature === 'true' ? 'bg-green-500' : 'bg-red-500'} text-white ml-2 rounded capitalize px-3 py-1`}
+                                            >
+                                                futures
+                                            </button>
                                         </td>
 
 

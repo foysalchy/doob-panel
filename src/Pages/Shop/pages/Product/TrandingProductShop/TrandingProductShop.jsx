@@ -38,7 +38,7 @@ const TrandingProductShop = () => {
 
                                 <h3 className="whitespace-nowrap ml-2 font-medium">Trading Products</h3>
                             </div>
-                            
+
                         </div>
                     </div>
                     <div className="border-b border-gray-200 mx-5 mt-2"></div>

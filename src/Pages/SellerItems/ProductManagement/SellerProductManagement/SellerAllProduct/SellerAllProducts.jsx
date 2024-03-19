@@ -21,7 +21,7 @@ const SellerAllProducts = () => {
     const [printProduct, setPrintProduct] = useState([]);
     const [priceOn, setPriceOn] = useState(false);
     const [stockOn, setStockOn] = useState(false);
-  
+
     const { data: products = [], refetch } = useQuery({
         queryKey: ["products"],
         queryFn: async () => {

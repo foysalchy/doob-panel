@@ -78,7 +78,7 @@ const BlogCategorySeller = () => {
             slag
         };
 
-        fetch(`http://localhost:5001/api/v1/seller/update-blog-category`, {
+        fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/update-blog-category`, {
             method: "PUT",
             headers: {
                 "content-type": "application/json",
@@ -176,7 +176,7 @@ const BlogCategorySeller = () => {
 
                         <tbody className="divide-y divide-gray-200">
                             {filteredData.map((cate, index) => (
-                                <tr>
+                                <tr key={index}>
                                     <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
                                         <img
                                             className="w-10 h-10 rounded object-fill"
@@ -207,10 +207,10 @@ const BlogCategorySeller = () => {
 
 
                                             <Link
-                                                to={`/shop/${shopInfo.shopId}/blog#${cate.slag}`}
+                                                to={`/shop/${shopInfo.shopId}/blog#${cate.slag}`}>
                                                 <BsEye className="transition-colors text-xl duration-200 cursor-pointer text-green-500 hover:text-green-700 focus:outline-none" />
                                             </Link>
-                                           
+
                                         </div>
                                     </td>
 

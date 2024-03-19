@@ -69,7 +69,18 @@ const AdminBlogs = () => {
   };
 
 
-  console.log(blogs, 'blogs..........');
+  const blogStash = (id, status) => {
+
+    console.log(status);
+    fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/blog-trash?id=${id}&status=${status}`,
+      {
+        method: "PUT",
+      }).then(() => {
+        Swal.fire("success");
+        refetch()
+      })
+  }
+
 
   return (
 
@@ -166,6 +177,15 @@ const AdminBlogs = () => {
                         </button>
                       </th>
 
+                      <th
+                        scope="col"
+                        className="px-12 py-3.5 text-sm font-normal text-left rtl:text-right  text-gray-400"
+                      >
+                        <button className="flex items-center gap-x-2">
+                          <span>Trash</span>
+                        </button>
+                      </th>
+
 
                       <th scope="col"
                         className="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 text-gray-400">
@@ -217,10 +237,22 @@ const AdminBlogs = () => {
                               </h2>
                             </button>}
 
-                        
+
                         </td>
 
+                        <td className="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
 
+                          {blog.trash ? <button onClick={() => blogStash(blog._id, false)} className="inline-flex items-center px-3 py-1 rounded gap-x-2 bg-emerald-100/60 text-white bg-green-600">
+                            <h2 className="text-sm font-normal ">
+                              ON
+                            </h2>
+                          </button> :
+                            <button onClick={() => blogStash(blog._id, true)} className="inline-flex items-center px-3 py-1 rounded gap-x-2 bg-emerald-100/60 bg-red-600">
+                              <h2 className="text-sm font-normal text-white">
+                                OFF
+                              </h2>
+                            </button>}
+                        </td>
 
                         <td className="px-4 py-4 text-sm whitespace-nowrap">
                           <div className="flex px-8  items-center gap-2">

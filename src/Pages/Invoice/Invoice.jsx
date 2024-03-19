@@ -81,7 +81,7 @@ const Invoice = () => {
                         <div id="invoice">
                             <h1>INVOICE</h1>
                             <div className="wrap-2 mt-[-57px] ml-[40px]">
-                                <Barcode value={info._id} />
+                                <Barcode value={info?.orderNumber} />
                             </div>
                             <div className="date">Date of Invoice: {formattedDate(info?.timestamp)}</div>
                         </div>

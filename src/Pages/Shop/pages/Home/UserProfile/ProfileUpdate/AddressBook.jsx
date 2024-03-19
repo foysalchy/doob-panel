@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { AuthContext } from '../../../../../../AuthProvider/UserProvider';
 import { PiPlus } from 'react-icons/pi';
 import { useState } from 'react';
@@ -31,8 +31,6 @@ const AddressBook = () => {
             }
         },
     });
-
-
 
     return (
         <div>

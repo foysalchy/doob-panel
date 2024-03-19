@@ -3,6 +3,7 @@ import React, { useContext, useState } from 'react';
 import Select from 'react-select';
 import { AuthContext } from '../../../AuthProvider/UserProvider';
 import BrightAlert from 'bright-alert';
+import { useNavigate } from 'react-router-dom';
 
 const AddNewStaff = () => {
     const { shopInfo } = useContext(AuthContext)
@@ -29,7 +30,7 @@ const AddNewStaff = () => {
         { name: 'Manage Blogs', route: 'manage-blogs' },
         { name: 'Manage Contact', route: 'manage-contact' },
         { name: 'Manage Pages', route: 'manage-pages' },
-        { name: 'Staf Account', route: 'staf-account' },
+        { name: 'Staff Account', route: 'staff-account' },
         { name: 'Support Tickets', route: 'support-tickets' },
         { name: 'User Tickets', route: 'user-tickets' },
         { name: 'Shop Profile', route: 'shop-profile' },
@@ -48,6 +49,8 @@ const AddNewStaff = () => {
         setSelectedValue(selectedOption);
 
     };
+
+    const navigate = useNavigate()
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -68,6 +71,7 @@ const AddNewStaff = () => {
             .then(data => {
                 if (data.status) {
                     BrightAlert(`${data.message}`, '', "success")
+                    navigate('/seller/staff-account')
                 }
                 else {
                     BrightAlert(`Something went wrong`, '', "error")

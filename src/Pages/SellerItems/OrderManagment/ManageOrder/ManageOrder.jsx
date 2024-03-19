@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { ordersNav } from './ManageOrderNavData';
 import OrderTable from './OrderTable';
 import ExportModal from './ExportModal';
 import DarazOrderTable from '../DarazOrder/DarazOrderTable';
+import { AuthContext } from '../../../../AuthProvider/UserProvider';
+import { useQuery } from '@tanstack/react-query';
 
 // import OrderTable from './OrderTable';
 
@@ -26,11 +28,54 @@ const ManageOrder = () => {
 
     console.log(orderCounts, 'pps')
 
+    const { shopInfo } = useContext(AuthContext);
+
+    const { data: tData = [], refetch } = useQuery({
+        queryKey: ["sellerOrder"],
+        queryFn: async () => {
+            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/order?shopId=${shopInfo._id}`);
+            const data = await res.json();
+            return data.data;
+        },
+    });
+
+    const { data: darazOrder = [], } = useQuery({
+        queryKey: ["sellerDaraz"],
+        queryFn: async () => {
+            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/daraz-order?id=${shopInfo._id}&status=All`);
+
+            const data = await res.json();
+            return data.data;
+        },
+    });
+
+    const getOrderCount = (status) => {
+        // Filter orders based on the selected status
+        const filteredOrders = tData.filter((order) => {
+            if (status === 'All' || (status === 'pending' && !order.status) || order.status === status) {
+                return true;
+            }
+            return false;
+        });
+        return filteredOrders.length;
+    };
+    const getDarazOrderCount = (status) => {
+        // Filter orders based on the selected status
+        const filteredOrders = darazOrder.orders.filter((order) => {
+            if (status === 'All' || (status === 'pending' && !order.statuses[0]) || order.statuses[0] === status) {
+                return true;
+            }
+            return false;
+        });
+        return filteredOrders.length;
+    };
+
+
     return (
         <div>
             <ExportModal openModal={openModal} details={details} setOpenModal={setOpenModal} />
             <h3 className="font-bold text-xl">Orders Overview</h3>
-            <div className="flex flex-wrap justify-start  items-center gap-4">
+            <div className="flex flex-wrap justify-start  items-center gap-4 ">
 
                 <button onClick={() => setDaraz(false)} className={`px-4 py-1 border text-white ${daraz ? "bg-gray-500 " : "bg-gray-900"}`}>
                     Web Order
@@ -43,7 +88,7 @@ const ManageOrder = () => {
                 </button>
             </div>
 
-            <nav className='flex md:gap-4 gap-2 overflow-x-auto mt-6'>
+            <nav className='flex md:gap-4 gap-2  mt-6'>
                 {ordersNav?.map((itm) =>
                     itm?.status === 'dropdown' ? (
                         <select
@@ -62,10 +107,11 @@ const ManageOrder = () => {
                         <button
                             className={`px-4 border-r md:bg-transparent bg-gray-50 border-gray-300 flex  items-center ${selectedValue === itm.value ? 'text-red-500' : '' // Change to your desired color
                                 }`}
+                            style={{ whiteSpace: 'nowrap' }}
                             key={itm.name}
                             onClick={() => setSelectedValue(itm.value)}
                         >
-                            {itm.name}
+                            {itm.name} {!daraz ? `(${getOrderCount(itm.value)})` : getDarazOrderCount(itm.value)}
                             {/* {selectedValue === itm.value && porductQuantity} */}
                         </button>
                     )
@@ -73,7 +119,7 @@ const ManageOrder = () => {
             </nav>
 
             {/* filter */}
-            <div className="flex md:flex-row flex-col items-center justify-between mt-4">
+            <div className="flex md:flex-row flex-col items-center gap-4 mt-4">
                 <button className='px-4 bg-white py-1 border'>Print</button>
                 <button onClick={() => setOpenModal(!openModal)} className='px-4 py-1 bg-transparent border'>
                     Export orders
@@ -96,7 +142,7 @@ const ManageOrder = () => {
             </div>
 
 
-            <div className='mt-12'>
+            <div className='mt-12 overflow-auto'>
                 {/* table */}
                 {
                     !daraz ?

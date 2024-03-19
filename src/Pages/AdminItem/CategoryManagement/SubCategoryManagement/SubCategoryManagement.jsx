@@ -57,7 +57,7 @@ const SubCategoryManagement = () => {
         const form = e.target;
         const image = form.image;
         const name = form.name.value;
- 
+
         const imageFormData = new FormData();
         imageFormData.append("image", image.files[0]);
         const imageUrl = await uploadImage(imageFormData);
@@ -66,7 +66,7 @@ const SubCategoryManagement = () => {
         const data = {
             img: imageUrl ? imageUrl : editOn?.img,
             subCategory: name,
- 
+
         }
 
         console.log(data, id);
@@ -147,7 +147,7 @@ const SubCategoryManagement = () => {
                                                                     defaultValue={item?.subCategory}
                                                                     type="text" name="name" className='border border-gray-500 p-1 rounded mb-3 w-full' />
                                                             </div>
-                                                          
+
                                                             <br />
                                                             <div className="flex justify-start">
                                                                 <button type='submit' className="me-2 rounded bg-green-700 px-6 py-1 text-white">Sibmit</button>

@@ -4,6 +4,7 @@ import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
 import { BsArrowRight } from "react-icons/bs";
 import { useQuery } from "@tanstack/react-query";
+import ReactQuill from "react-quill";
 
 const AddBlog = () => {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -94,7 +95,7 @@ const AddBlog = () => {
           MetaTag,
         };
         postBlog(blog, form);
-      
+
       });
   };
 
@@ -116,6 +117,19 @@ const AddBlog = () => {
         setFileName("");
         window.location.href = '/admin/blog';
       });
+  };
+
+
+  const modules = {
+    toolbar: [
+      [{ 'header': '1' }, { 'header': '2' }, { 'font': [] }],
+      [{ 'size': [] }],
+      ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+      [{ 'list': 'ordered' }, { 'list': 'bullet' }, { 'indent': '-1' }, { 'indent': '+1' }],
+      ['link', 'image', 'video'],
+      ['color'],
+      ['clean']
+    ],
   };
 
   return (
@@ -204,8 +218,17 @@ const AddBlog = () => {
 
             <div>
               <div>
-                <JoditEditor name="message" id="message"></JoditEditor>
+                <ReactQuill
+                  name="message" id="message"
+                  className="h-36"
+                  // value={message}
+                  modules={modules}
+                  placeholder="Enter description here..."
+                />
+                {/* <JoditEditor ></JoditEditor> */}
               </div>
+              <br />
+              <br />
             </div>
 
             <div>

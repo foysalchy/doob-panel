@@ -15,7 +15,7 @@ const OrderCheckup = () => {
 
         setFormattedDate(formattedDate);
     }, [originalValue]);
-    console.log(checkUpData, '+++++');
+  
     return (
         <div className="bg-gray-100">
             <div className=' p-2 grid grid-cols-2 gap-6'>

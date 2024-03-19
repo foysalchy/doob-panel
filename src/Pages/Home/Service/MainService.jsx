@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 const MainService = () => {
 
@@ -27,7 +27,8 @@ const MainService = () => {
 
     const blnkData = [{}, {}, {}];
     const [selectedCategory, setSelectedCategory] = useState(null);
-
+    const location = useLocation()
+    const slag = decodeURIComponent(location.hash).substr(1)
     const filterServices = (category) => {
         setSelectedCategory(category);
     };
@@ -36,6 +37,14 @@ const MainService = () => {
         // Trigger a refetch of services when categories change
         refetch();
     }, [categories, refetch]);
+
+    const filterService = services.filter((service) => {
+        const slagMatch = slag === '' || service.title.toLowerCase().includes(slag.toLowerCase());
+
+        // Return true if both conditions are met
+        return slagMatch;
+
+    })
 
     return (
 
@@ -62,14 +71,14 @@ const MainService = () => {
                         </button>
                         {!isCategoriesLoading &&
                             categories.map((category) => (
-                                <button
+                                <a href={`#${category.title}`}
                                     key={category.id}
                                     onClick={() => filterServices(category.title)}
                                     className={`px-4 py-2 text-sm font-medium uppercase tracking-wide ${selectedCategory === category.title ? 'bg-black text-white' : 'bg-gray-300 text-gray-700'
                                         }`}
                                 >
                                     {category.title}
-                                </button>
+                                </a>
                             ))}
                     </div>
                 </div>
@@ -80,7 +89,7 @@ const MainService = () => {
                         <ul className="grid grid-cols-1 gap-4 mt-8 lg:grid-cols-3">
 
                             {services
-                                ?.filter((service) => selectedCategory === null || service.category === selectedCategory)
+                                ?.filter((service) => selectedCategory === null || service.category === slag)
                                 .map((service) => (
                                     <div key={service._id} className={!service.status && 'hidden'}>
                                         {service?.status && (

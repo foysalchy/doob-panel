@@ -1333,7 +1333,7 @@ const SideNavAdmin = () => {
 
 
               {/* Posts */}
-              {
+              {/* {
                 user?.staffRole ? (
                   user?.permissions.find((itm) => itm?.name === "Faq") ? (
                     <>
@@ -1468,10 +1468,11 @@ const SideNavAdmin = () => {
                       </li>
                     }
                   </>
-                )}
+                )
+              } */}
 
 
-              {/* Pages */}
+             
               {
                 user?.staffRole ? (
                   user?.permissions.find((itm) => itm?.name === "Faq") ? (

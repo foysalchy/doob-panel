@@ -162,7 +162,7 @@ const AddPage = () => {
                     </span>
 
                     <span className="text-sm font-medium transition-all group-hover:me-4">
-                     Add Page
+                      Add Page
                     </span>
                   </button>
               }

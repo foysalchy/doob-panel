@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react';
 import Select from 'react-select';
 import BrightAlert from 'bright-alert';
 import { AuthContext } from '../../../AuthProvider/UserProvider';
+import { useNavigate } from 'react-router-dom';
 
 const AdminNewStaff = () => {
 
@@ -14,6 +15,7 @@ const AdminNewStaff = () => {
     const [value, setValue] = useState("");
     const [filteredItems, setFilteredItems] = useState([]);
     const [isNewUser, setIsNewUser] = useState(false)
+    const navigate = useNavigate()
 
     const handleSearch = () => {
         fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/seller-allUser?email=${searchValue}`)
@@ -108,52 +110,15 @@ const AdminNewStaff = () => {
 
             const staffRoleData = await staffRoleResponse.json();
             console.log(staffRoleData);
+            BrightAlert()
+            navigate('/admin/staff-management')
 
-            if (staffRoleData.status) {
-                sendEmail(user.email, userData.email, userData.name, userData?.password);
-                BrightAlert(`${staffRoleData.message}`, '', "success");
-            } else {
-                BrightAlert(`Something went wrong`, '', "error");
-            }
+
         } catch (error) {
             console.error("An error occurred:", error);
             BrightAlert(`An error occurred: ${error.message}`, '', "error");
         }
     };
-
-    const sendEmail = async (senderEmail, receiverEmail, name, password) => {
-        const emailData = {
-            senderEmail,
-            receiverEmail,
-            subject: 'Staff permission on our website',
-            body: {
-                logo: 'https://salenow.vercel.app/assets/Logo-7314a69b.png',
-                password,
-                name
-            }
-        };
-
-        try {
-            const response = await fetch(`${API_BASE_URL}/api/v1/site-user/send-email`, {
-                method: 'POST',  // Assuming it should be a POST request
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(emailData),
-            });
-
-            const responseData = await response.json();
-
-            if (!responseData.success) {
-                console.error("Email sending failed:", responseData.message);
-                // Handle the failure as needed
-            }
-        } catch (error) {
-            console.error("An error occurred while sending email:", error);
-            // Handle the error as needed
-        }
-    };
-
 
 
 

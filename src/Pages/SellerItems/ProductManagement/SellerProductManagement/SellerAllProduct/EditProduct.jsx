@@ -16,21 +16,21 @@ import { AuthContext } from '../../../../../AuthProvider/UserProvider';
 import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
 
-const EditProductForm = ({product}) => {
+const EditProductForm = ({ product }) => {
 
-//     const { shopInfo } = useContext(AuthContext)
-//     const id = useParams().id;
-//     const { data: products = [], refetch } = useQuery({
-//         queryKey: ["products"],
-//         queryFn: async () => {
-//             const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/all-products/${shopInfo._id}`);
-//             const data = await res.json();
-//             return data;
-//         },
-//     });
-  
-//     const product = products.find(product => product?._id === id && product != null);
-// console.log(product, '...');
+    //     const { shopInfo } = useContext(AuthContext)
+    //     const id = useParams().id;
+    //     const { data: products = [], refetch } = useQuery({
+    //         queryKey: ["products"],
+    //         queryFn: async () => {
+    //             const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/all-products/${shopInfo._id}`);
+    //             const data = await res.json();
+    //             return data;
+    //         },
+    //     });
+
+    //     const product = products.find(product => product?._id === id && product != null);
+    // console.log(product, '...');
 
     delete product._id
     delete product.id
@@ -40,9 +40,37 @@ const EditProductForm = ({product}) => {
     const [editedProduct, setEditedProduct] = useState({ ...product });
     const [brandName, setBrandName] = useState('')
     const [isChecked, setIsChecked] = useState(true);
-    const [inputFields, setInputFields] = useState([
-        { name: '', image: null, quantity: "", SKU: "", price: '', offerPrice: '', ability: false },
-    ]);
+    const [inputFields, setInputFields] = useState(() => {
+        const random8Digit = Math.random().toString().slice(2, 10);
+        return [
+            {
+                name: '',
+                image: null,
+                quantity: "",
+                SKU: `${shopInfo.shopId}_mathrendom_${random8Digit}`, // Using 'mathrendom' as a placeholder for name
+                price: '',
+                offerPrice: '',
+                ability: false
+            }
+        ];
+    });
+
+    // Update the SKU with the actual name when 'name' changes
+    useEffect(() => {
+        setInputFields(prevState => {
+            return prevState.map((field, index) => {
+                const newName = field.name || 'default'; // Use a default value if name is not set
+                const random8Digit = Math.random().toString().slice(2, 10);
+                return {
+                    ...field,
+                    SKU: `${shopInfo.shopId}_${newName}_${random8Digit}`
+                };
+            });
+        });
+    }, [inputFields, shopInfo.shopId]);
+
+    // JSX rendering and other logic...
+
     const handleChange = (e) => {
         const { name, value } = e.target;
         setEditedProduct((prevProduct) => ({
@@ -223,14 +251,14 @@ const EditProductForm = ({product}) => {
 
 
     return (
-        
-                <form
-                    // onSubmit={formSubmit}
-                    className='h-[600px] overflow-x-hidden  px-10 text-start overflow-y-auto'>
 
-                     <ImageUploadSeller product={product} />
+        <form
+            // onSubmit={formSubmit}
+            className='h-[600px] overflow-x-hidden  px-10 text-start overflow-y-auto'>
 
-                    {/* <ProductInfoSeller product={product} brandName={brandName} setBrandName={setBrandName} />
+            <ImageUploadSeller product={product} />
+
+            {/* <ProductInfoSeller product={product} brandName={brandName} setBrandName={setBrandName} />
 
                     <EditSincronusCategory />
 
@@ -271,12 +299,12 @@ const EditProductForm = ({product}) => {
                     <EditDelivery />
 
                     <EditMetaProduct /> */}
-                    <br />
-                    <button
-                        className='bg-gray-800 text-white px-8 py-2 rounded-md mt-4'
-                        type="submit">Submit</button>
-                </form>
-          
+            <br />
+            <button
+                className='bg-gray-800 text-white px-8 py-2 rounded-md mt-4'
+                type="submit">Submit</button>
+        </form>
+
 
     );
 };

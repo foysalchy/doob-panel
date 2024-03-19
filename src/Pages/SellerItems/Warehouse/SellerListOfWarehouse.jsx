@@ -23,6 +23,14 @@ const SellerListOfWarehouse = () => {
             return data;
         },
     });
+    const { data: wareLength = [], refetch: reload } = useQuery({
+        queryKey: ["wareLength"],
+        queryFn: async () => {
+            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/warehouse/seller-all-warehouse-area-rack-cell-self?shopId=${shopInfo._id}`);
+            const data = await res.json();
+            return data;
+        },
+    });
 
     const [searchQuery, setSearchQuery] = useState("");
 
@@ -229,6 +237,9 @@ const SellerListOfWarehouse = () => {
                                 <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-800  rounded-tl ">
                                     Warehouse Name
                                 </th>
+                                <th className=" py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-800 ">
+                                    Details
+                                </th>
                                 <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-800 ">
                                     Address
                                 </th>
@@ -261,7 +272,18 @@ const SellerListOfWarehouse = () => {
                                                         {warehouse.slag}
                                                     </p>
                                                 </div>
+
+
                                             </div>
+                                        </td>
+                                        <td className='grid grid-cols-2 gap-1'>
+                                            <span>  Area:   {wareLength?.find(item => item.warehouse === warehouse.name)?.areas?.length}</span>
+
+                                            <span> Racks:  {wareLength?.find(item => item.warehouse === warehouse.name)?.racks?.length}</span>
+
+                                            <span>  Selfs: {wareLength?.find(item => item.warehouse === warehouse.name)?.selfs?.length}</span>
+
+                                            <span> Cells: {wareLength?.find(item => item.warehouse === warehouse.name)?.cells?.length}</span>
                                         </td>
                                         <td className="px-4 py-3">{warehouse.address}</td>
                                         <td className="px-4 py-3">{!warehouse.status ? (

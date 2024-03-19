@@ -68,7 +68,7 @@ const UserProvider = ({ children }) => {
     useEffect(() => {
         const unsubscribe = () => {
             checkUserCookie();
-            checkShopCookie();
+            checkShopCookie(); 
         };
 
         unsubscribe();

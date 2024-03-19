@@ -212,12 +212,12 @@ const AddDarazProduct = () => {
                         </button>
 
                         {/* Dropdown with Search */}
-                        {!selectedOption && Products.length && (
+                        {!selectedOption && Products.length ? (
                             <div className="mt-1 p-2 max-h-40 overflow-y-scroll bg-white border rounded-md">
                                 {filteredProducts.length ?
                                     (
                                         <span>{
-                                        filteredProducts.map((product, i) => (
+                                            filteredProducts.map((product, i) => (
                                                 <div
                                                     key={i}
                                                     onClick={() => handleSelectChange(product)}
@@ -238,7 +238,7 @@ const AddDarazProduct = () => {
                                     : "No product found"}
                             </div>
 
-                        )}
+                        ) : ''}
                     </div>
                     <WareHouse shopInfo={shopInfo} adminWare={adminWare} setAdminWare={setAdminWare} />
                     <Variants adminWare={adminWare} multiVendor={multiVendor} setMultiVendor={setMultiVendor} inputFields={inputFields} daraz={true} variantInput={variantInput} setVariantInput={setVariantInput} />

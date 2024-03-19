@@ -10,6 +10,8 @@ import { useEffect } from 'react';
 
 
 const OrderTable = ({ setPassData, ordersNav, orderCounts, searchValue, selectedValue, setDetails, setOpenModal, selectedDate }) => {
+
+
     const [modalOn, setModalOn] = useState(false);
 
     const { shopInfo, setCheckUpData } = useContext(AuthContext);
@@ -27,19 +29,6 @@ const OrderTable = ({ setPassData, ordersNav, orderCounts, searchValue, selected
     const [currentPage, setCurrentPage] = useState(1);
 
 
-    // const filteredData = tData?.filter((item) => {
-    //     if (searchValue === '' && selectedValue === "All") {
-    //         return true; // Include all items when searchValue is empty and selectedValue is "All"
-    //     } else if (selectedValue === "Pending") {
-    //         return !item?.status;
-    //     } else if (searchValue) {
-    //         return item?._id?.toLowerCase().includes(searchValue.toLowerCase()); // Filter by _id
-    //     } else if (selectedValue) {
-    //         return item?.status === selectedValue; // Filter by status
-    //     }
-
-    //     return false; // Exclude items that don't meet any condition
-    // });
 
     const filteredData = tData?.filter((item) => {
         if (
@@ -60,28 +49,6 @@ const OrderTable = ({ setPassData, ordersNav, orderCounts, searchValue, selected
     });
 
 
-    // const filteredData = tData?.filter((item) => {
-    //     if (
-    //         searchValue === '' &&
-    //         selectedValue === 'All' &&
-    //         (!selectedDate || new Date(item?.timestamp) >= selectedDate)
-    //     ) {
-    //         return true; // Include all items when searchValue is empty and selectedValue is "All" and timestamp is greater than or equal to selectedDate
-    //     } else if (selectedValue === 'pending' && (!selectedDate || new Date(item?.timestamp) >= selectedDate)) {
-    //         return !item?.status;
-    //     } else if (searchValue && (!selectedDate || new Date(item?.timestamp) >= selectedDate)) {
-    //         return item?._id?.toLowerCase().includes(searchValue.toLowerCase()); // Filter by _id
-    //     } else if (selectedValue && (!selectedDate || new Date(item?.timestamp) >= selectedDate)) {
-    //         return item?.status === selectedValue;
-    //     } else if (selectedValue && (!selectedDate || new Date(item?.timestamp) >= selectedDate)) {
-    //         // Filter by ordersNav name
-    //         return ordersNav.some(navItem => navItem.name.toLowerCase() == selectedValue.toLowerCase());
-    //     }
-
-    //     return false; // Exclude items that don't meet any condition
-    // });
-
-
 
 
 
@@ -97,7 +64,7 @@ const OrderTable = ({ setPassData, ordersNav, orderCounts, searchValue, selected
         }), 'msg-------')
     }, [tData])
 
-    console.log(orderCounts, 'orderCounts')
+
 
     // Calculate the range of items to display based on pagination
     const startIndex = (currentPage - 1) * itemsPerPage;
@@ -125,16 +92,24 @@ const OrderTable = ({ setPassData, ordersNav, orderCounts, searchValue, selected
 
 
 
-    const productStatusUpdate = (status, orderId) => {
-        fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/order-status-update?orderId=${orderId}&status=${status}`, {
-            method: "PUT",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ status, orderId })
-        }).then((res) => res.json()).then((data) => {
-            refetch()
 
-        });
+    const productStatusUpdate = (status, orderId) => {
+        // Open modal dialog to confirm action
+        if (confirm("Are you sure you want to update the status?")) {
+            fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/order-status-update?orderId=${orderId}&status=${status}`, {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ status, orderId })
+            }).then((res) => res.json()).then((data) => {
+                // Assuming refetch is defined somewhere
+                refetch();
+            });
+        } else {
+            // Action cancelled
+            console.log("Status update cancelled.");
+        }
     }
+
 
     const { data: ships = [] } = useQuery({
         queryKey: ["getaway"],
@@ -220,25 +195,6 @@ const OrderTable = ({ setPassData, ordersNav, orderCounts, searchValue, selected
     const [refundCheck, setRefundCheck] = useState(false);
 
 
-    // useEffect(() => {
-    //     if (showAlert) {
-    //         fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/order-status-update?orderId=${orderId}`, {
-    //             method: "PUT",
-    //             headers: { "Content-Type": "application/json" },
-    //             body: JSON.stringify({ status, orderId })
-    //         }).then((res) => res.json()).then((data) => {
-    //             console.log(data);
-    //             if (!data.error) {
-    //                 alert("Successfully Updated");
-    //                 refetch()
-    //             } else {
-    //                 alert("Failed to Update")
-    //             }
-
-    //         });
-    //     }
-    // })
-
 
     const viewDetails = (order) => {
         console.log(order);
@@ -299,15 +255,6 @@ const OrderTable = ({ setPassData, ordersNav, orderCounts, searchValue, selected
             updateOrderInfo(note, file, showAlert._id)
             setShowAlert(false)
         }
-
-
-        // Perform your submit logic here, such as sending data to an API
-
-        // After submission, you might want to reset the state or close the modal
-        // setIsChecked(false);
-        // setRefundCheck(false);
-        // setNote('');
-        // setShowAlert(false);
     };
 
 
@@ -390,7 +337,8 @@ const OrderTable = ({ setPassData, ordersNav, orderCounts, searchValue, selected
                                                 <Link to={`/invoice/${item?._id}`} onClick={handlePrint} className="text-blue-600 font-[500]">Invoice</Link>
                                             </td>
                                             <td className="border-r px-6 py-4">
-                                                <Link to="order-checkup" onClick={() => setCheckUpData(item)} className="text-blue-500 font-[400]">{item?._id}</Link>
+                                                <Link to="order-checkup" onClick={() => setCheckUpData(item)}
+                                                    style={{ whiteSpace: 'nowrap' }} className="text-blue-500  font-[400]">{item?.orderNumber}</Link>
                                             </td>
                                             <td className="border-r px-6 py-4">{formattedDate(item?.timestamp)}</td>
                                             <td className="border-r w-[200px] px-6 py-4">{getTimeAgo(item?.timestamp)}</td>

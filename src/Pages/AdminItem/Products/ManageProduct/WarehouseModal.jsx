@@ -129,6 +129,7 @@ const WarehouseModal = ({ modalOpen, setModalOpen, product, doobProduct }) => {
         }).then((res) => res.json()).then((data) => {
             console.log(data);
             BrightAlert()
+            setModalOpen(false)
         })
     }
 
