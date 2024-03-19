@@ -316,3 +316,10 @@ font-google {
   color : black!important;
   background : transparent!important; 
 }
+
+/* font size li */
+
+.text-control > li {
+  height : 20px!important;
+  
+}

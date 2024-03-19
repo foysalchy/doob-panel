@@ -126,7 +126,7 @@ const Header = () => {
                 <div className="w-full hover:text-blue-500 duration-200 mb-2">SMS Marketing</div>
               </Link>
             </li>
-           
+
           </ul>
         </div>
       </li>
@@ -189,7 +189,7 @@ const Header = () => {
           learn
         </NavLink>
       </li>
-{/* 
+      {/* 
       <li>
         <NavLink
           to="/blogs"
@@ -220,7 +220,7 @@ const Header = () => {
         </NavLink>
       </li>
        */}
-      
+
 
     </>
   );
@@ -369,12 +369,12 @@ const Header = () => {
           <div className="lg:hidden flex items-center gap-1">
             {!user ? (
               <Link
-                to="/sign-up"
+                to="/sign-in"
                 className="inline-flex items-center justify-center py-1.5 px-4  tracking-wide text-white transition duration-200 rounded shadow-md bg-black hover:bg-black focus:shadow-outline focus:outline-none"
                 aria-label="Sign up"
                 title="Sign up"
               >
-                Sign up
+                Sign in
               </Link>
             ) : (
 

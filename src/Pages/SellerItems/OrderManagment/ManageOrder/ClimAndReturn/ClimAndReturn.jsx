@@ -288,7 +288,6 @@ const ClimAndReturn = () => {
 
 
 
-
     return (
         <div className="flex flex-col overflow-hidden mt-4">
             <form
@@ -297,6 +296,7 @@ const ClimAndReturn = () => {
                 <BiSearch className='text-gray-600 text-lg' />
                 <input name='search' type="text" className="outline-none bg-transparent w-full px-2" placeholder='Search...' />
             </form>
+            <button className='bg-gray-800 w-[200px] mt-4 mb-6 text-white px-3 py-2 rounded'>Update Status</button>
             <div className="overflow-x-auto transparent-scroll sm:-mx-6 lg:-mx-8">
                 <div className="inline-block  min-w-full py-2 sm:px-6 lg:px-8">
                     <div className="overflow-hidden">

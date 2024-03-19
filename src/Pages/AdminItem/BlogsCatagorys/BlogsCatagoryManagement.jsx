@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import BrightAlert from "bright-alert";
 import React from "react";
 import { useState } from "react";
+import { RxEyeOpen } from "react-icons/rx";
 import { Link } from "react-router-dom";
 
 const BlogsCatagoryManagement = () => {
@@ -90,7 +91,7 @@ const BlogsCatagoryManagement = () => {
     setOpenModal(false)
   }
 
-  
+
   return (
     <div>
 
@@ -186,19 +187,26 @@ const BlogsCatagoryManagement = () => {
                     {cate.title}
                   </td>
                   <td className="whitespace-nowrap px-4 py-2">
-                    <button
-                      onClick={() => DeleteCategory(cate._id)}
-                      className="inline-block rounded  bg-red-600 px-4 py-2 text-xs font-medium text-white hover:bg-red-700"
-                    >
-                      Delete
-                    </button>
+                    <div className="flex items-center gap-4">
+                      <button
+                        onClick={() => DeleteCategory(cate._id)}
+                        className="inline-block rounded  bg-red-600 px-4 py-2 text-xs font-medium text-white hover:bg-red-700"
+                      >
+                        Delete
+                      </button>
 
-                    <button
-                      onClick={() => setOpenModal(cate)}
-                      className="inline-block rounded ml-4 bg-blue-600 px-4 py-2 text-xs font-medium text-white hover:bg-blue-700"
-                    >
-                      Edit
-                    </button>
+                      <button
+                        onClick={() => setOpenModal(cate)}
+                        className="inline-block rounded ml-4 bg-blue-600 px-4 py-2 text-xs font-medium text-white hover:bg-blue-700"
+                      >
+                        Edit
+                      </button>
+                      <Link to={`/blog#${cate?.title}`}
+                        className="inline-block rounded px-4 text-xs font-medium text-green-600  "
+                      >
+                        <RxEyeOpen className="text-xl" />
+                      </Link>
+                    </div>
                   </td>
 
 
