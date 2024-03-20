@@ -20,6 +20,15 @@ const AddAddress = ({ open, setOpen, address, refetch }) => {
         setDefaultAddress(selectedAddress)
     }, [selectedAddress])
 
+
+
+    // const selectFunction = (add) => {
+    //     setSelectedAddress(add)
+    //     setOpen(false)
+
+
+    // }
+
     return (
         <div>
             <div className={`fixed z-50 top-0 left-0 flex  h-full min-h-screen w-full items-center justify-center bg-black bg-opacity-90 px-4 py-5 ${setOpen ? "block" : "hidden"}`}>
@@ -34,7 +43,7 @@ const AddAddress = ({ open, setOpen, address, refetch }) => {
                         <div className='w-full mt-4'>
                             {newAddress || editAddress ? <div className='z-50'> <EditAddress setEditAddress={setEditAddress} setNewAddress={setNewAddress} refetch={refetch} data={newAddress ? true : editAddress} /></div> : <div className='grid md:grid-cols-2 grid-cols-1 md:gap-8 gap-3'>
                                 {address.map((add) => (
-                                    <div onClick={() => { setSelectedAddress(add), setOpen(false) }} className={selectedAddress._id === add._id ? " bg-gray-300 capitalize p-4 rounded hover:shadow-xl border relative" : 'bg-gray-100 capitalize p-4 rounded hover:shadow-xl border relative'}>
+                                    <div onClick={() => setSelectedAddress(add)} className={selectedAddress._id === add._id ? " bg-green-100 capitalize p-4 rounded hover:shadow-xl border relative" : 'bg-gray-100 capitalize p-4 rounded hover:shadow-xl border relative'}>
                                         <h1 >{add?.fullName}</h1>
                                         <h1>{add?.mobileNumber}</h1>
                                         <small><span>{add?.address},</span> <span>{add?.province} - </span> <span>{add?.city}</span> <span>{add?.area}</span></small>

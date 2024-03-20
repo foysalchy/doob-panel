@@ -69,7 +69,7 @@ const ProductCheckout = ({ setNext, product, quantity, sellingPrice, userInfo, s
                     </div>
                     <div>
                         <div className="border-b pb-4 mb-4">
-                            <h2 className="text-lg font-semibold mb-4">Shipping Details</h2>
+                            {/* <h2 className="text-lg font-semibold mb-4">Shipping Details</h2> */}
 
                             <div>
                                 <h2 className="text-lg font-semibold mb-4">Shipping Details</h2>
@@ -118,6 +118,11 @@ const ProductCheckout = ({ setNext, product, quantity, sellingPrice, userInfo, s
                                         value={userInfo.area}
                                         onChange={handleChange}
                                     />
+                                    <select className="border p-2 rounded-md" name="" id="">
+                                        <option value="customer">customer</option>
+                                        <option value="doob_warehouse">Doob Warehouse</option>
+                                        <option value="seller_warehouse">seller warehouse</option>
+                                    </select>
                                 </div>
 
 

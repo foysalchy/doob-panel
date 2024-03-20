@@ -33,6 +33,7 @@ const Payment = () => {
         data.timestamp = new Date().getTime()
         data.userId = shopUser._id
         data.shopId = shop_id.shop_id
+        data.shopUid = shopId
         if (!fileName && payment.Getaway == ! 'CashOnDelivery') {
             BrightAlert("Please add your bank transaction", "Bank transaction Image Mandatory", 'info')
         }

@@ -4,6 +4,7 @@ import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
 import { BsArrowRight } from "react-icons/bs";
 import { useQuery } from "@tanstack/react-query";
+import ReactQuill from "react-quill";
 
 const AddBlog = () => {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -59,6 +60,7 @@ const AddBlog = () => {
       setFileName(file.name);
     }
   };
+  const [message, setMessage] = useState('')
 
   const dataSubmit = (event) => {
     setLoading(true);
@@ -67,11 +69,9 @@ const AddBlog = () => {
     const title = form.title.value;
     const category = form.category.value;
     const image = form.photo.files[0];
-    const message = form.message.value;
     const MetaImage = upload;
     const MetaTag = form.MetaTag.value;
     const MetaDescription = form.MetaDescription.value;
-
     const formData = new FormData();
     formData.append("image", image);
     const url = `https://salenow-v2-backend.vercel.app/api/v1/image/upload-image`;
@@ -94,12 +94,12 @@ const AddBlog = () => {
           MetaTag,
         };
         postBlog(blog, form);
-      
+
       });
   };
 
   const postBlog = (blog, form) => {
-    fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/new-blog`, {
+    fetch(`http://localhost:5001/api/v1/admin/new-blog`, {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -108,14 +108,31 @@ const AddBlog = () => {
     })
       .then((res) => res.json())
       .then((data) => {
+        console.log(data);
         setLoading(false);
-        Swal.fire("Your Blog Publish Successfully", "", "success");
+        // Swal.fire("Your Blog Publish Successfully", "", "success");
 
-        form.reset();
-        setPreviewUrl("");
-        setFileName("");
-        window.location.href = '/admin/blog';
+        // form.reset();
+        // setPreviewUrl("");
+        // setFileName("");
+        // window.location.href = '/admin/blog';
       });
+  };
+
+  const handleChange = (content) => {
+    setMessage(content);
+  };
+
+  const modules = {
+    toolbar: [
+      [{ 'header': '1' }, { 'header': '2' }, { 'font': [] }],
+      [{ 'size': [] }],
+      ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+      [{ 'list': 'ordered' }, { 'list': 'bullet' }, { 'indent': '-1' }, { 'indent': '+1' }],
+      ['link', 'image', 'video'],
+      ['color'],
+      ['clean']
+    ],
   };
 
   return (
@@ -204,8 +221,18 @@ const AddBlog = () => {
 
             <div>
               <div>
-                <JoditEditor name="message" id="message"></JoditEditor>
+                <ReactQuill
+                  name="message"
+                  id="message"
+                  className="h-36"
+                  onChange={handleChange}
+                  modules={modules}
+                  placeholder="Enter description here..."
+                />
+                {/* <JoditEditor ></JoditEditor> */}
               </div>
+              <br />
+              <br />
             </div>
 
             <div>
@@ -248,7 +275,7 @@ const AddBlog = () => {
                 id="MetaImage'"
                 name="MetaImage'"
               />
-              {uplodOk && "done"}
+
             </div>
 
             <div className="mt-4">

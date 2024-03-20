@@ -6,7 +6,16 @@ import Swal from 'sweetalert2';
 
 const UpdateFAQ = ({ OpenModal, setOpenModal, FAQInfo, refetch }) => {
 
-
+    const modules = {
+        toolbar: [
+            [{ 'header': '1' }, { 'header': '2' }, { 'font': [] }],
+            [{ 'size': [] }],
+            ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+            [{ 'list': 'ordered' }, { 'list': 'bullet' }, { 'indent': '-1' }, { 'indent': '+1' }],
+            ['link', 'image', 'video'],
+            ['clean']
+        ],
+    };
     const handleFAQUpdate = async (e) => {
         e.preventDefault();
 
@@ -58,7 +67,16 @@ const UpdateFAQ = ({ OpenModal, setOpenModal, FAQInfo, refetch }) => {
 
                     <div>
                         <div>
-                            <JoditEditor value={FAQInfo.description} name="description" id="answer" />
+                            <ReactQuill
+                                value={FAQInfo.description}
+                                className="h-36"
+                                name="description" id="answer"
+                                modules={modules}
+                                placeholder="Enter description here..."
+                            />
+                            <br />
+                            <br />
+                            <JoditEditor />÷
                         </div>
                     </div>
                     <div>

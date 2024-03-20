@@ -1,12 +1,22 @@
 import JoditEditor from "jodit-react";
 import React, { useState } from "react";
 import { BsArrowRight } from "react-icons/bs";
+import ReactQuill from "react-quill";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 
 const AddFaq = () => {
   const [loading, setLoading] = useState(false);
-
+  const modules = {
+    toolbar: [
+      [{ 'header': '1' }, { 'header': '2' }, { 'font': [] }],
+      [{ 'size': [] }],
+      ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+      [{ 'list': 'ordered' }, { 'list': 'bullet' }, { 'indent': '-1' }, { 'indent': '+1' }],
+      ['link', 'image', 'video'],
+      ['clean']
+    ],
+  };
   const dataSubmit = (event) => {
     setLoading(true);
     event.preventDefault();
@@ -58,7 +68,16 @@ const AddFaq = () => {
             </div>
             <div>
               <div>
-                <JoditEditor name="description" id="message"></JoditEditor>
+                <ReactQuill
+
+                  className="h-36"
+                  name="description" id="message"
+                  modules={modules}
+                  placeholder="Enter description here..."
+                />
+                <br />
+                <br />
+                {/* <JoditEditor></JoditEditor> */}
               </div>
             </div>
             <div>

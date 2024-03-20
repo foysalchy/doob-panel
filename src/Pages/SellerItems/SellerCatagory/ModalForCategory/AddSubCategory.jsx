@@ -95,7 +95,7 @@ const AddSubCategory = () => {
             megaCategoryId: megaCategoryId
         }
 
- 
+
         const url = `https://salenow-v2-backend.vercel.app/api/v1/category/seller/sub/add`;
 
         const response = await fetch(url, {

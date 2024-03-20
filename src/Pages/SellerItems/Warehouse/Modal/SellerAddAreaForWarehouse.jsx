@@ -7,8 +7,15 @@ import Select from 'react-select';
 import Swal from 'sweetalert2';
 import { AuthContext } from '../../../../AuthProvider/UserProvider';
 
-const SellerAddAreaForWarehouse = ({ setNewData, recall, setOpenModal }) => {
+const SellerAddAreaForWarehouse = ({
+    setNewData,
+    recall,
+    setOpenModal,
+    preSelectWarehouse,
+    setWareHouses
+}) => {
     const [nextStae, setNextState] = useState(false)
+
     const { shopInfo } = useContext(AuthContext)
     const { data: warehouses = [], refetch } = useQuery({
         queryKey: ["warehouses"],
@@ -22,16 +29,45 @@ const SellerAddAreaForWarehouse = ({ setNewData, recall, setOpenModal }) => {
     const filteredWarehouses = warehouses.filter(warehouse => warehouse.status === true);
     const sortedWarehouses = filteredWarehouses.filter(warehouse => warehouse.status).sort((a, b) => a?.name?.localeCompare(b.name));
 
-    const warehouseOptions = sortedWarehouses.map((warehouse) => ({
+    // const warehouseOptions = sortedWarehouses.map((warehouse) => ({
+    //     value: warehouse.name,
+    //     label: warehouse.name,
+    // }));
+
+
+    const defaultWarehouse = preSelectWarehouse.warehouse && sortedWarehouses.find(warehouse => preSelectWarehouse.warehouse.includes(warehouse.name));
+
+    // Map warehouse options
+    let warehouseOptions = defaultWarehouse ? [{
+        value: preSelectWarehouse.warehouse,
+        label: preSelectWarehouse.warehouse,
+    }] : sortedWarehouses.map((warehouse) => ({
         value: warehouse.name,
         label: warehouse.name,
     }));
+
+    // Add the default option if it exists
+    if (defaultWarehouse) {
+        warehouseOptions = [
+            // {
+            //     value: '', // Provide a value for the default option if needed
+            //     label: 'Please select', // Label for the default option
+            //     isDisabled: true, // Disable the default option
+            // },
+            ...warehouseOptions, // Spread the existing warehouse options
+        ];
+    }
 
 
     const UploadArea = (e) => {
         e.preventDefault()
         const warehouse = e.target.warehouse.value
         const area = e.target.area.value
+        setWareHouses(prevState => ({
+            ...prevState,
+            area: area,
+            warehouse: warehouse
+        }));
         const data = {
             warehouse,
             area,
@@ -57,27 +93,25 @@ const SellerAddAreaForWarehouse = ({ setNewData, recall, setOpenModal }) => {
             }
         })
     }
+
+    // const defaultWarehouse = preSelectWarehouse.warehouse && sortedWarehouses.find(warehouse => preSelectWarehouse.warehouse.includes(warehouse.name));
+
+
+
     return (
         <div>
             <form onSubmit={UploadArea} action="">
                 <div className="mt-10">
                     <label className="text-sm">Select WareHouse</label>
-                    <Select
-                        styles={{
-                            control: (provided) => ({
-                                ...provided,
-                                cursor: 'pointer',
-                            }),
-                            option: (provided) => ({
-                                ...provided,
-                                cursor: 'pointer',
-                            }),
-                        }}
+                    <select
                         name='warehouse'
-                        required
-                        options={warehouseOptions}
-                        placeholder="Please select"
-                    />
+                        className="w-full p-2 border border-black rounded-md  text-gray-900"
+                    >
+                        {warehouseOptions.map((ware) => (
+                            <option value={ware.value}>{ware.label}</option>
+                        ))}
+
+                    </select>
                 </div>
 
                 <div className=" mt-4">

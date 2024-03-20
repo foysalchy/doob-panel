@@ -98,7 +98,7 @@ const AddMagaCategory = () => {
                 darazCategory_id,
                 status: true
             };
- 
+
             console.log(categoryData);
             await postCategory(categoryData);
 

@@ -14,7 +14,7 @@ const ShopAuth = ({ children }) => {
     const [defaultAddress, setDefaultAddress] = useState()
     const shopId = idMatch ? idMatch[1] : null;
     const [selectProductData, setSelectProductData] = useState([])
-   
+
     const { data: shopCredential = {}, isLoading, isError, refetch } = useQuery({
         queryKey: ["firebase"],
         queryFn: async () => {

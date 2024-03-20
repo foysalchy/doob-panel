@@ -323,7 +323,7 @@ const UserMyOrder = () => {
                             return (
                                 <div className=' p-4 rounded border-[0.5px] border-opacity-40 gap-4 border-gray-500 bg-white'>
                                     <div className='pb-4 flex md:flex-row flex-col items-center justify-between'>
-                                        <h1 className="md:text-xl font-bold ">Order Id : {order._id}</h1>
+                                        <h1 className="md:text-xl font-bold ">Order Id : {order?.orderNumber}</h1>
                                         <p className='md:hidden block'>Order placed {formatTimestamp(order.timestamp)}</p>
                                         <div className="flex items-center justify-between md:w-auto gap-2 md:mt-0 mt-3 w-full">
                                             <div className='flex items-center gap-4'>

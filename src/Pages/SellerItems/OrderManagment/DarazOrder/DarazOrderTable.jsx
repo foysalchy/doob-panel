@@ -14,7 +14,7 @@ const DarazOrderTable = ({ selectedValue, searchValue }) => {
     const { shopInfo } = useContext(AuthContext);
 
 
-    console.log(`https://salenow-v2-backend.vercel.app/api/v1/seller/daraz-order?id=${shopInfo._id}`);
+
     const { data: tData = [], refetch, isLoading } = useQuery({
         queryKey: ["sellerDarazOrder"],
         queryFn: async () => {
@@ -157,7 +157,7 @@ const DarazOrderTable = ({ selectedValue, searchValue }) => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {currentData?.map((itm, index) => (
+                                {currentData.map && currentData?.map((itm, index) => (
                                     <DarazTableRow data={itm} index={index} key={index} />
                                 ))}
                             </tbody>

@@ -13,14 +13,14 @@ const WooCommerceOrderTable = ({ searchValue }) => {
     const { shopInfo } = useContext(AuthContext);
 
     const { data: tData = [], refetch } = useQuery({
-        queryKey: ["sellerOrder"],
+        queryKey: ["sellerWooOrder"],
         queryFn: async () => {
-            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/order?shopId=${shopInfo._id}`);
+            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/woo-commerce-order?shopId=${shopInfo._id}`);
             const data = await res.json();
-            return data.data;
+            return data.orders;
         },
     });
-
+    console.log(tData, 'woo-order');
     const itemsPerPage = 4; // Number of items to display per page
     const [currentPage, setCurrentPage] = useState(1);
 
@@ -31,7 +31,7 @@ const WooCommerceOrderTable = ({ searchValue }) => {
     // Calculate the range of items to display based on pagination
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
-    const currentItems = filteredData?.slice(startIndex, endIndex);
+    const currentItems = tData?.slice(startIndex, endIndex);
 
 
     console.log(filteredData);

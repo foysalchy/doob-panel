@@ -7,6 +7,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { AuthContext } from '../../../../AuthProvider/UserProvider';
 import { useQuery } from '@tanstack/react-query';
+import ReactQuill from 'react-quill';
+import { quillModules } from '../../../quillModule';
 
 const AddSellerBlog = () => {
     const [selectedFile, setSelectedFile] = useState(null);
@@ -78,7 +80,7 @@ const AddSellerBlog = () => {
         const title = form.title.value;
         const category = form.category.value;
         const image = form.photo.files[0];
-        const message = form.message.value;
+        const message = form?.message?.value;
         const shop = shopInfo?.shopId
         const MetaImage = upload
         const MetaTag = form.MetaTag.value
@@ -205,7 +207,15 @@ const AddSellerBlog = () => {
 
                     <div>
                         <div>
-                            <JoditEditor name="message" id="message"></JoditEditor>
+                            <ReactQuill
+                                name="message" id="message"
+                                className="h-36"
+                                // value={message}
+                                modules={quillModules}
+                                placeholder="Enter description here..."
+                            />
+                            <br />
+                            <br />
                         </div>
                     </div>
 

@@ -53,10 +53,10 @@ const SellerManageBlog = () => {
 
     const blogStash = (id, status) => {
 
-        fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/blog-trash?id=${id}`,
+        console.log(status);
+        fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/blog-trash?id=${id}&status=${status}`,
             {
                 method: "PUT",
-                body: JSON.stringify({ status: status })
             }).then(() => {
                 Swal.fire("success");
                 refetch()
@@ -163,11 +163,18 @@ const SellerManageBlog = () => {
 
 
 
-            <div className="flex items-center gap-x-3">
-                <h2 className="text-lg font-medium text-gray-800 ">All Blog</h2>
-                <span className="px-3 py-1 text-xs  bg-blue-100 rounded-full d text-blue-400">
-                    {blogs?.length}
-                </span>
+            <div className='flex justify-between '>
+                <div className="flex items-center gap-x-3">
+                    <h2 className="text-lg font-medium text-gray-800 ">All Blog</h2>
+                    <span className="px-3 py-1 text-xs  bg-blue-100 rounded-full d text-blue-400">
+                        {blogs?.length}
+                    </span>
+
+                </div>
+
+                <div className='bg-gray-900 rounded cursor-pointer text-white px-4 py-2'>
+                    Trash
+                </div>
             </div>
             <div >
                 <div >
@@ -255,7 +262,7 @@ const SellerManageBlog = () => {
                                             </td>
                                             <td className="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
 
-                                                {!blog.trash ? <button onClick={() => blogStash(blog._id, false)} className="inline-flex items-center px-3 py-1 rounded gap-x-2 bg-emerald-100/60 text-white bg-green-600">
+                                                {blog.trash === 'true' ? <button onClick={() => blogStash(blog._id, false)} className="inline-flex items-center px-3 py-1 rounded gap-x-2 bg-emerald-100/60 text-white bg-green-600">
                                                     <h2 className="text-sm font-normal ">
                                                         ON
                                                     </h2>
@@ -302,7 +309,7 @@ const SellerManageBlog = () => {
                         </div>
                     </div>
                 </div>
-            </div >
+            </div>
 
 
 

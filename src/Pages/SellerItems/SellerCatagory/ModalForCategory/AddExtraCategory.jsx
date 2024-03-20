@@ -79,12 +79,12 @@ const AddExtraCategory = () => {
             darazCategory_id = JSON.parse(darazExtraCategory).data.category_id
         }
 
-           const imageFormData = new FormData();
+        const imageFormData = new FormData();
         imageFormData.append("image", image.files[0]);
         const imageUrl = await uploadImage(imageFormData);
 
         const data = {
-            img : imageUrl,
+            img: imageUrl,
             megaCategory,
             darazExtraCategory,
             wooMiniCategory,
@@ -96,7 +96,7 @@ const AddExtraCategory = () => {
             darazCategory_id,
             status: true
         }
-       
+
 
         const url = `https://salenow-v2-backend.vercel.app/api/v1/category/seller/extra/add`;
 

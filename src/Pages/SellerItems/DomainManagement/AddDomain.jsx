@@ -139,7 +139,7 @@ const AddDomain = () => {
         <div className=' font-poppins'>
             <div className="md:my-10">
                 <div
-
+                    className='text_editor'
                     dangerouslySetInnerHTML={{
                         __html: domainDoc?.data,
                     }}
@@ -147,7 +147,7 @@ const AddDomain = () => {
                 {
                     !isLoading && domainVideo &&
                     <div
-                        className="flex items-center justify-center "
+                        className="flex text_editor items-center justify-center "
                         dangerouslySetInnerHTML={{ __html: domainVideo.DomainUrl }}
                     />
                 }

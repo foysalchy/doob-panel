@@ -40,7 +40,7 @@ const SellerPopUp = ({ showModal, setShowModal, handleClose, data }) => {
                     <a href={currentData?.link} >
                         <div className='h-[400px] overflow-y-auto'>
                             <h3 className={style.title}>{currentData?.title}</h3>
-                            <div dangerouslySetInnerHTML={{ __html: currentData?.message }}></div>
+                            <div className="text_editor" dangerouslySetInnerHTML={{ __html: currentData?.message }}></div>
 
                             <img className={style.img} src={currentData?.image} alt="" />
                             <div className="flex items-center gap-2">

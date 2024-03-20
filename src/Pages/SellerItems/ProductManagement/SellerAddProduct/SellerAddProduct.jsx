@@ -37,7 +37,15 @@ const SellerAddProduct = () => {
     const [multiVendor, setMultiVendor] = useState(adminWare);
 
     const [inputFields, setInputFields] = useState([
-        { name: '', image: null, quantity: "", SKU: "", price: '', offerPrice: '', ability: false },
+        {
+            name: '',
+            image: null,
+            quantity: "",
+            SKU: `${shopInfo.shopId}_${Math.random().toString().slice(2, 10)}`, // Generate random 8-digit number
+            price: '',
+            offerPrice: '',
+            ability: false
+        }
     ]);
 
     const [variantInput, setVariantInput] = useState([

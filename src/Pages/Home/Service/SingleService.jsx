@@ -190,7 +190,7 @@ const SingleService = () => {
               Description:
             </p>
             <div
-              className=" "
+              className=" text_editor"
               dangerouslySetInnerHTML={{
                 __html: service.message,
               }}

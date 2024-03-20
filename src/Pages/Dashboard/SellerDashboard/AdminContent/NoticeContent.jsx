@@ -31,7 +31,7 @@ const NoticeModal = ({ setOpen, open, modalData, index }) => {
                     <h3 className={style.title}>Notice</h3>
                     <button onClick={() => setOpen(false)} className={style.close}><RxCross2 /></button>
                 </div>
-                <div className='h-[400px] overflow-y-auto'>
+                <div className='h-[400px] text_editor overflow-y-auto'>
                     <h3 className={style.title}>{currentData?.title}</h3>
                     <div dangerouslySetInnerHTML={{ __html: currentData?.message }}></div>
 
@@ -79,7 +79,7 @@ const Carousel = ({ data }) => {
                 <div className={style?.flexBox}>
                     <div className="flex gap-2">
                         <IoWarning className='text-xl mt-1' />
-                        <div>
+                        <div className='text_editor'>
                             <div className="flex items-center gap-2">
                                 <h2 className={`${currentData?.title}, text-xl font-semibold`}>Notice</h2>
                             </div>

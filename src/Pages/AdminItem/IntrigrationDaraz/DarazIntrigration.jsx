@@ -28,6 +28,7 @@ const DarazIntegration = () => {
         const urlParams = new URLSearchParams(new URL(currentUrl).search);
         const code = urlParams.get('code');
         setCode(code)
+        refetch()
 
     }, [])
 
@@ -74,6 +75,7 @@ const DarazIntegration = () => {
                         const jsonData = JSON.stringify(data);
                         document.cookie = `SellerShop=${encodeURIComponent(jsonData)}; expires=Thu, 01 Jan 2030 00:00:00 UTC; path=/seller`;
                         Swal.fire('Daraz Login Successful', '', 'success')
+                        refetch()
                     })
             })
         }

@@ -3,6 +3,7 @@ import JoditEditor from 'jodit-react';
 import React from 'react';
 import { useState } from 'react';
 import { BsArrowRight } from 'react-icons/bs';
+import ReactQuill from 'react-quill';
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
@@ -12,7 +13,16 @@ const AddService = () => {
     const [fileName, setFileName] = useState("");
     const [loading, setLoading] = useState(false);
 
-
+    const modules = {
+        toolbar: [
+            [{ 'header': '1' }, { 'header': '2' }, { 'font': [] }],
+            [{ 'size': [] }],
+            ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+            [{ 'list': 'ordered' }, { 'list': 'bullet' }, { 'indent': '-1' }, { 'indent': '+1' }],
+            ['link', 'image', 'video'],
+            ['clean']
+        ],
+    };
 
     const { data: categories = [], refetch } = useQuery({
         queryKey: ["category"],
@@ -246,7 +256,16 @@ const AddService = () => {
 
                         <div>
                             <div>
-                                <JoditEditor name="message" id="message"></JoditEditor>
+                                <ReactQuill
+                                    name="message" id="message"
+                                    className="h-36"
+                                    // value={message}
+                                    modules={modules}
+                                    placeholder="Enter description here..."
+                                />
+                                <br />
+                                <br />
+                                {/* <JoditEditor name="message" id="message"></JoditEditor> */}
                             </div>
                         </div>
 

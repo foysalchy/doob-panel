@@ -14,14 +14,14 @@ const ShopProductCategory = () => {
 
     console.log('Shop ID:', shopId);
     const { data: categories = [], isLoading, refetch } = useQuery({
-        queryKey: ["categories"],
+        queryKey: ["feature_category"],
         queryFn: async () => {
-            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/category/get/${shopId}`);
+            const res = await fetch(`http://localhost:5001/api/v1/shop/feature-category?shopId=${shop_id.shop_id}`);
             const data = await res.json();
             return data;
         },
     });
-
+    console.log(categories, 'feature-category');
     const slidesPerViewDesktop = 9;
     const slidesPerViewTablet = 6;
     const slidesPerViewMobile = 4;
@@ -33,7 +33,7 @@ const ShopProductCategory = () => {
 
                 <Swiper slidesPerView={window.innerWidth >= 1024 ? slidesPerViewDesktop : (window.innerWidth >= 768 ? slidesPerViewTablet : slidesPerViewMobile)}
                     className="mySwiper">
-                    {categories?.filter(itm => itm?.body?.feature === true).map((i, index) => (
+                    {categories?.map((i, index) => (
                         <SwiperSlide key={index}>
 
                             <Link to={`categories/${shop_id.shop_id}/${i?.name}`} className=' flex flex-col items-center justify-center w-full'>

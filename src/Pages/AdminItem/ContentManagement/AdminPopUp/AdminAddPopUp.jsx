@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../../../AuthProvider/UserProvider';
 import Swal from 'sweetalert2';
 import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 
 const AdminAddPopUp = () => {
     const [selectedFile, setSelectedFile] = useState(null);
@@ -12,6 +13,8 @@ const AdminAddPopUp = () => {
     const [message, setMessage] = useState('');
     const [fileName, setFileName] = useState("");
     const { shopInfo } = useContext(AuthContext)
+
+
 
 
     const handleFileChange = (event) => {
@@ -94,6 +97,18 @@ const AdminAddPopUp = () => {
 
     const handleDescriptionChange = (value) => {
         setMessage(value);
+        setEditorState(editorState);
+    };
+
+    const modules = {
+        toolbar: [
+            [{ 'header': '1' }, { 'header': '2' }, { 'font': [] }],
+            [{ 'size': [] }],
+            ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+            [{ 'list': 'ordered' }, { 'list': 'bullet' }, { 'indent': '-1' }, { 'indent': '+1' }],
+            ['link', 'image', 'video'],
+            ['clean']
+        ],
     };
 
     return (
@@ -183,9 +198,12 @@ const AdminAddPopUp = () => {
                                 </label>
                                 <ReactQuill
                                     onChange={handleDescriptionChange}
-                                    className=" h-36"
+                                    className="h-36"
                                     value={message}
+                                    modules={modules}
+                                    placeholder="Enter description here..."
                                 />
+
                             </div>
                         </div>
 

@@ -15,6 +15,13 @@ const SellerModalForWarehouse = ({ setOpenModal, OpenModal, data, refetch }) => 
         const ans = a + b;
         console.log(ans)
     }
+    const [warehouses, setWareHouses] = useState({
+        warehouse: '',
+        area: '',
+        reck: '',
+        cell: '',
+        self: ''
+    })
     return (
         <div className={`fixed z-50 top-0 left-0 flex h-full min-h-screen w-full items-center justify-center bg-black bg-opacity-90 px-4 py-5 ${OpenModal ? "block" : "hidden"}`}>
             <div className="w-full max-w-[800px]  rounded-[20px] bg-white pb-10 text-center ">
@@ -27,11 +34,15 @@ const SellerModalForWarehouse = ({ setOpenModal, OpenModal, data, refetch }) => 
 
                 <div className='max-h-[500px] px-10 text-start overflow-y-scroll custom-scroll' >
                     {
-                        (newData == 'Add New Warehouse' && <SellerAddNewWarehouse setNewData={setNewData} setOpenModal={setOpenModal} refetch={refetch} />) ||
-                        (newData == 'Add Area' && <SellerAddAreaForWarehouse setNewData={setNewData} setOpenModal={setOpenModal} recall={refetch} />) ||
-                        (newData == 'Add Rack' && <SellerAddRackModal setNewData={setNewData} setOpenModal={setOpenModal} recall={refetch} />) ||
+                        (newData == 'Add New Warehouse' && <SellerAddNewWarehouse
+                            warehouses={warehouses} setWareHouses={setWareHouses} setNewData={setNewData} setOpenModal={setOpenModal} refetch={refetch} />) ||
+                        (newData == 'Add Area' && <SellerAddAreaForWarehouse
+                            setNewData={setNewData} setOpenModal={setOpenModal}
+                            preSelectWarehouse={warehouses} setWareHouses={setWareHouses} recall={refetch} />) ||
+                        (newData == 'Add Rack' && <SellerAddRackModal
+                            preSelectWarehouse={warehouses} setWareHouses={setWareHouses} setNewData={setNewData} setOpenModal={setOpenModal} recall={refetch} />) ||
                         (newData == 'Add Self' && <SellerAddSelfModal setNewData={setNewData} setOpenModal={setOpenModal} recall={refetch} />) ||
-                        (newData == 'Add Cell' && <SellerAddCellModal  setOpenModal={setOpenModal} recall={refetch} />)
+                        (newData == 'Add Cell' && <SellerAddCellModal setOpenModal={setOpenModal} recall={refetch} />)
                     }
 
                 </div>

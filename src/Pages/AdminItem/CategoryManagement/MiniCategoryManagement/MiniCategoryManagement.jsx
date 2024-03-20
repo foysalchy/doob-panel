@@ -119,7 +119,7 @@ const MiniCategoryManagement = () => {
                                                 {
                                                     item.status == 'true' ? <button onClick={() => statusUpdate(item?._id, false)} className="">Active</button> : <button onClick={() => statusUpdate(item?._id, true)} className=''>Deactivate</button>
                                                 }
-                                            </td>  <td className="px-6 py-4 whitespace-nowrap"> 
+                                            </td>  <td className="px-6 py-4 whitespace-nowrap">
                                                 <button
                                                     onClick={() => setEditOn(item)}
                                                     className='text-xl p-1 ml-6'>

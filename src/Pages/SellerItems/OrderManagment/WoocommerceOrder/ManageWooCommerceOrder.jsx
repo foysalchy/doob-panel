@@ -63,7 +63,7 @@ const ManageWooCommerceOrder = () => {
             {/* table area */}
             <div className='mt-12'>
                 {/* table */}
-                <WooCommerceOrderTable searchValue={searchValue} />
+              
             </div>
         </div>
     );

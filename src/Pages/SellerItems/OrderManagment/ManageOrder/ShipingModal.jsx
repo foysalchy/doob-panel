@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { RxCross2 } from 'react-icons/rx';
 import BrightAlert from 'bright-alert';
+import { AuthContext } from '../../../../AuthProvider/UserProvider';
 
 const ShippingModal = ({ readyToShip, setReadyToShip, orderInfo, refetch, ships, productStatusUpdate }) => {
     console.log(orderInfo);
@@ -9,7 +10,7 @@ const ShippingModal = ({ readyToShip, setReadyToShip, orderInfo, refetch, ships,
     let shipInfo = ships[0]
     console.log(shipInfo);
 
-
+    const { shopInfo } = useContext(AuthContext)
     const [loading, setLoading] = useState(false)
 
     const [selectedDelivery, setSelectedDelivery] = useState('Other');
@@ -36,9 +37,7 @@ const ShippingModal = ({ readyToShip, setReadyToShip, orderInfo, refetch, ships,
             recipient_phone,
             recipient_address,
             note,
-            ApiKey: shipInfo?.key,
-            SecretKey: shipInfo?.secretKey,
-            BaseUrl: shipInfo?.api
+            shopId: shopInfo._id
         }
         if (selectedDelivery === "Other" || selectedDelivery === undefined) {
             productStatusUpdate("ready_to_ship", orderInfo._id)
@@ -49,7 +48,7 @@ const ShippingModal = ({ readyToShip, setReadyToShip, orderInfo, refetch, ships,
             console.log(uploadData);
 
             try {
-                await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/order-submit-steadfast`, {
+                await fetch(`http://localhost:5001/api/v1/seller/order-submit-steadfast`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -90,7 +89,7 @@ const ShippingModal = ({ readyToShip, setReadyToShip, orderInfo, refetch, ships,
 
                         <div className="w-full max-w-[800px] h-[90%]  rounded-[20px]  bg-white  pb-10 px-8 text-center md:px-[30px] overflow-scroll">
                             <div className='flex justify-between z-50 pt-4 items-start w-full sticky top-0 bg-white border-b'>
-                                <div className='pb-2 text-xl font-bold text-dark text-center sm:text-2xl'>Order id: {orderInfo._id}</div>
+                                <div className='pb-2 text-xl font-bold text-dark text-center sm:text-2xl'>Order id: {orderInfo.orderNumber}</div>
                                 <div onClick={() => setReadyToShip(false)} className='cursor-pointer bg-gray-500 rounded-full px-2.5 mb-2 p-1 text-2xl hover:text-red-500'>
                                     <button> <RxCross2 className='text-xl' /></button>
                                 </div>

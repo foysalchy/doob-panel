@@ -81,6 +81,8 @@ import BlogCategorySeller from "../Pages/SellerItems/SellersBlog/BlogCategorySel
 import EditProductForm from "../Pages/SellerItems/ProductManagement/SellerProductManagement/SellerAllProduct/EditProduct";
 import ClimAndReturn from "../Pages/SellerItems/OrderManagment/ManageOrder/ClimAndReturn/ClimAndReturn";
 import AddBlogCategory from "../Pages/SellerItems/SellersBlog/AddBlogCategory/AddBlogCategory";
+import FacebookPixel from "../Pages/SellerItems/Sittings/FacebookPixel/FacebookPixel";
+import SellerBlogComment from "../Pages/SellerItems/SellersBlog/SellerBlogComment/SellerBlogComment";
 import CategoryEditPage from "../Pages/SellerItems/ProductManagement/SellerProductManagement/SellerAllProduct/CategoryEditPage/CategoryEditPage";
 
 
@@ -395,6 +397,13 @@ const SellerPath = [
         // </PrivateRoute>
     },
     {
+        path: "facebook-pixel",
+        element:
+            // <PrivateRoute>
+            <FacebookPixel />
+        // </PrivateRoute>
+    },
+    {
         path: "report-management/sales-report",
         element: <SalesHistory />
     },
@@ -436,6 +445,10 @@ const SellerPath = [
     }, {
         path: "inventory-management",
         element: <InventoryManagement />
+    },
+    {
+        path: "blog-comments",
+        element: <SellerBlogComment />
     },
 
 

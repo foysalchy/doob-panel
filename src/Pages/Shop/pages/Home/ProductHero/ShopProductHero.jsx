@@ -32,7 +32,7 @@ const ShopProductHero = () => {
         },
     });
 
-console.log(categories, 'checkkkkkkkkkk')
+    console.log(categories, 'checkkkkkkkkkk')
 
     const { shop_id } = useContext(ShopAuthProvider)
 
@@ -286,18 +286,18 @@ console.log(categories, 'checkkkkkkkkkk')
                                                 </span>
                                               {subCategoryData.length ? <FaAngleRight className="absolute right-2" /> : ''}
                                             </button>
-                                                // :
+                                            // :
 
-                                                // <Link to={``}
-                                                //     // onClick={() => subCategoryHandler(item, index)}
-                                                //     className={`flex  items-center  w-full justify-between px-2 py-2 text-sm font-normal  hover:bg-black hover:text-white  relative  ${openDropdownIndex === index ? 'bg-gray-100 text-black' : 'text-black'} rounded`}
-                                                // >
-                                                //     <span className="flex items-center gap-2">
-                                                //         {/* <img src={item?.image} alt="" className="w-8 h-8 rounded-full ring-1 ring-gray-200" /> */}
-                                                //         {item?.name}
-                                                //     </span>
-                                                //     {/* <FaAngleRight className="absolute right-2" /> */}
-                                                // </Link>
+                                            // <Link to={``}
+                                            //     // onClick={() => subCategoryHandler(item, index)}
+                                            //     className={`flex  items-center  w-full justify-between px-2 py-2 text-sm font-normal  hover:bg-black hover:text-white  relative  ${openDropdownIndex === index ? 'bg-gray-100 text-black' : 'text-black'} rounded`}
+                                            // >
+                                            //     <span className="flex items-center gap-2">
+                                            //         {/* <img src={item?.image} alt="" className="w-8 h-8 rounded-full ring-1 ring-gray-200" /> */}
+                                            //         {item?.name}
+                                            //     </span>
+                                            //     {/* <FaAngleRight className="absolute right-2" /> */}
+                                            // </Link>
 
                                         }
                                     </div>
@@ -320,7 +320,6 @@ console.log(categories, 'checkkkkkkkkkk')
                                                                     aria-expanded="false"
                                                                     data-te-ripple-init
                                                                     data-te-ripple-color="light">
-                                                                    
                                                                     <span className="flex items-center gap-2 text-black">
                                                                         <img src={subCategory?.img} alt="" className="w-8 h-8 rounded-full ring-1 ring-gray-200" />
 

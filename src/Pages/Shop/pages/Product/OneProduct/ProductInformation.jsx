@@ -304,7 +304,7 @@ const ProductInformation = () => {
                             </div>
 
                             <div
-                                className="mb-2  "
+                                className="mb-2 text_editor "
                                 dangerouslySetInnerHTML={{
                                     __html: product.data.shortDescription,
                                 }}

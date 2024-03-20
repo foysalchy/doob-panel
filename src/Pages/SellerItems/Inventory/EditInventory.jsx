@@ -10,9 +10,7 @@ const EditInventory = ({ refetch, open, setOpen, data }) => {
 
 
     const handleDecrease = () => {
-        if (count > 0) {
-            setCount(parseInt(count) - 1);
-        }
+        setCount(parseInt(count) - 1);
     };
 
     const handleSubmit = () => {

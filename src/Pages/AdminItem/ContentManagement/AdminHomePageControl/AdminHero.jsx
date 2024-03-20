@@ -2,16 +2,31 @@ import { useState } from 'react';
 import JoditEditor from 'jodit-react';
 import { FaAngleUp, FaAngleDown } from "react-icons/fa6";
 import CmsTitle from './CmsTitle';
+import Swal from 'sweetalert2';
 
-const AdminHero = ({ setHomeContent }) => {
+const AdminHero = () => {
     const [content, setContent] = useState('');
     const [on, setOn] = useState(false);
 
-    // Function to handle content change
-    const handleContentChange = (newContent) => {
-        setContent(newContent);
-        setHomeContent(newContent); // Update the parent component's state
-    };
+    const upload_hero_section = (e) => {
+        e.preventDefault()
+        const data = e.target.hero.value
+        const name = 'hero_section'
+        const upload = {
+            data,
+            name
+        }
+        console.log(upload);
+        fetch('https://salenow-v2-backend.vercel.app/api/v1/admin/upload-content', {
+            method: "POST",
+            headers: {
+                "content-type": "application/json",
+            },
+            body: JSON.stringify(upload),
+        }).then((res) => res.json()).then((data) => {
+            Swal.fire("success", '', 'success')
+        })
+    }
 
     return (
         <>
@@ -29,7 +44,8 @@ const AdminHero = ({ setHomeContent }) => {
                         {!on ? <FaAngleDown /> : <FaAngleUp />}
                     </span>
                 </header>
-                <figure
+                <form
+                    onSubmit={upload_hero_section}
                     className='bg-gray-50 p-3'
                 >
                     <div>
@@ -38,10 +54,10 @@ const AdminHero = ({ setHomeContent }) => {
 
 
                             <JoditEditor
-                                id="heroContent1"
-                                name="heroContent"
-                                value={content} // Set the value prop
-                                onChange={handleContentChange} // Use the function to handle change
+                                id="hero"
+                                name="hero"
+                                // Set the value prop
+                                // Use the function to handle change
                                 tabIndex={1}
                                 config={{
                                     readonly: false,
@@ -52,7 +68,10 @@ const AdminHero = ({ setHomeContent }) => {
                             />
                         </div>
                     </div>
-                </figure>
+                    <br />
+
+                    <button className='bg-gray-900 text-white px-4 w-full py-2'>Submit</button>
+                </form>
             </section>
 
         </>

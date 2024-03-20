@@ -11,7 +11,7 @@ const Trams = () => {
 
             <h1 className='text-2xl text-center font-bold py-10'>{page?.title}</h1>
             <div
-                className="mb-2  "
+                className="mb-2 text_editor "
                 dangerouslySetInnerHTML={{
                     __html: page?.description,
                 }}

@@ -10,7 +10,7 @@ const SingleFaq = () => {
 
             <div className="mx-auto mt-4 ">
                 <div
-                    className="mb-2  "
+                    className="mb-2 text_editor "
                     dangerouslySetInnerHTML={{
                         __html: description.description,
                     }}

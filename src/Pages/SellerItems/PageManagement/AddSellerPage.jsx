@@ -28,7 +28,7 @@ const AddSellerPage = () => {
             metaTag,
             metaDescription
 
-            
+
         };
 
         fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/page`, {
@@ -48,7 +48,7 @@ const AddSellerPage = () => {
     };
 
 
-     return (
+    return (
 
         <div className=" mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8">
             <h1 className="text-2xl font-bold text-center">
@@ -71,11 +71,11 @@ const AddSellerPage = () => {
                     </div>
                     <div>
                         <label className="sr-only text-black" htmlFor="title">
-                           Select Page
+                            Select Page
                         </label>
-                        <select 
-                        name='page'
-                         className="w-full rounded-lg border bg-white border-gray-900 p-3 text-sm">
+                        <select
+                            name='page'
+                            className="w-full rounded-lg border bg-white border-gray-900 p-3 text-sm">
                             <option value="footer1">Footer 1</option>
                             <option value="footer2">Footer 2</option>
                             <option value="solution">Solution</option>

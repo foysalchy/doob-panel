@@ -9,55 +9,55 @@ import WooCommerceOrderAllinfoModal from './WooCommerceOrderAllinfoModal';
 
 const WooCommerceTableRow = ({ data }) => {
 
-    if (!data) {
-        return null
-    }
-    const { _id, method, ReadytoShip, price, ShipOnTimeSLA, Status, document, documentLink, orderDate, orderNumber, pendingSince, quantity, product, sellerSku, sendTo, timestamp, productList } = data;
+    // if (!data) {
+    //     return null
+    // }
+    // const { _id, method, ReadytoShip, price, ShipOnTimeSLA, Status, document, documentLink, orderDate, orderNumber, pendingSince, quantity, product, sellerSku, sendTo, timestamp, productList } = data;
 
-    const [formattedDate, setFormattedDate] = useState('');
-    const [emptyAction, setEmptyAction] = useState(true);
-    const { checkUpData, setCheckUpData } = useContext(AuthContext);
+    // const [formattedDate, setFormattedDate] = useState('');
+    // const [emptyAction, setEmptyAction] = useState(true);
+    // const { checkUpData, setCheckUpData } = useContext(AuthContext);
     const [modalOn, setModalOn] = useState(false);
-    useEffect(() => {
-        const Timestamp = timestamp;
-        const date = new Date(Timestamp);
+    // useEffect(() => {
+    //     const Timestamp = timestamp;
+    //     const date = new Date(Timestamp);
 
-        // Format the date and time as per your requirements
-        const options = { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', timeZoneName: 'short' };
-        const formatted = date.toLocaleDateString('en-US', options);
+    //     // Format the date and time as per your requirements
+    //     const options = { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', timeZoneName: 'short' };
+    //     const formatted = date.toLocaleDateString('en-US', options);
 
-        setFormattedDate(formatted);
-    }, []);
-
-
-    //? summation productList product total price
-    let ratial_price = 0;
-    for (let i = 0; i < productList.length; i++) {
-        const price = parseFloat(productList[i]?.price);
-        ratial_price += price
-
-    }
+    //     setFormattedDate(formatted);
+    // }, []);
 
 
-    function getTimeAgo(timestamp) {
-        const currentTime = new Date().getTime();
-        const timeDifference = currentTime - timestamp;
+    // //? summation productList product total price
+    // let ratial_price = 0;
+    // for (let i = 0; i < productList.length; i++) {
+    //     const price = parseFloat(productList[i]?.price);
+    //     ratial_price += price
 
-        const hours = Math.floor(timeDifference / (1000 * 60 * 60));
-        const days = Math.floor(hours / 24);
+    // }
 
-        if (hours < 24) {
-            return `${hours} hour${hours !== 1 ? 's' : ''} ago`;
-        } else {
-            return `${days} day${days !== 1 ? 's' : ''} ago`;
-        }
-    }
 
-    // ? download invoice
-    const componentRef = useRef();
-    const handlePrint = useReactToPrint({
-        content: () => componentRef.current,
-    });
+    // function getTimeAgo(timestamp) {
+    //     const currentTime = new Date().getTime();
+    //     const timeDifference = currentTime - timestamp;
+
+    //     const hours = Math.floor(timeDifference / (1000 * 60 * 60));
+    //     const days = Math.floor(hours / 24);
+
+    //     if (hours < 24) {
+    //         return `${hours} hour${hours !== 1 ? 's' : ''} ago`;
+    //     } else {
+    //         return `${days} day${days !== 1 ? 's' : ''} ago`;
+    //     }
+    // }
+
+    // // ? download invoice
+    // const componentRef = useRef();
+    // const handlePrint = useReactToPrint({
+    //     content: () => componentRef.current,
+    // });
 
     return (
         <tr className="border-b ">
@@ -69,32 +69,35 @@ const WooCommerceTableRow = ({ data }) => {
             </td>
             <td className="whitespace-nowrap border-r text-2xl">
                 <button onClick={() => setModalOn(!modalOn)} className=' px-4 py-4'>+</button>
-                <WooCommerceOrderAllinfoModal status={Status ? Status : 'Process'} setModalOn={setModalOn} modalOn={modalOn} productList={productList} />
+                {/* {data.order_key} */}
+                {/* <WooCommerceOrderAllinfoModal status={Status ? Status : 'Process'} setModalOn={setModalOn} modalOn={modalOn} productList={productList} /> */}
             </td>
             <td className="whitespace-nowrap border-r px-6 py-4 ">
-                <Link to={`/invoice/${data?._id}`} onClick={handlePrint} className='text-blue-600 font-[500] text-[16px]'>Invoice</Link>
+                <Link to={`/invoice/${data?._id}`} className='text-blue-600 font-[500] text-[16px]'></Link>
             </td>
             <td className="whitespace-nowrap border-r px-6 py-4 text-[16px] font-[400]">
-                <Link onClick={() => setCheckUpData(data)} to="woocommerce-order-checkup" className='text-blue-500 font-[400]'>{_id}</Link>
+                {data?.id}
+                {/* <Link onClick={() => setCheckUpData(data)} to="woocommerce-order-checkup" className='text-blue-500 font-[400]'>{_id}</Link> */}
             </td>
             <td className="whitespace-nowrap border-r px-6 py-4 text-[16px] font-[400]">
-                {formattedDate}
+                {/* {formattedDate} */}
+                {data?.date_created}
             </td>
             <td className="whitespace-nowrap border-r px-6 py-4 text-[16px] font-[400]">
-                {getTimeAgo(timestamp)}
+                {/* {getTimeAgo(timestamp)} */}
             </td>
             <td className="whitespace-nowrap border-r px-6 py-4 text-[16px] font-[400]">
-                {method.Getaway}
+                {/* {method.Getaway} */}
             </td>
             <td className="whitespace-nowrap border-r px-6 py-4 text-[16px] font-[400]">
-                {ratial_price}
+                {/* {ratial_price} */}
             </td>
             <td className="whitespace-nowrap border-r px-6 py-4 text-[16px] font-[400]">
-                {Status ? <>{status}</> : <>Process</>}
+                {/* {Status ? <>{status}</> : <>Process</>} */}
             </td>
             <td className="whitespace-nowrap border-r px-6 py-4 text-[16px] font-[400] flex flex-col gap-2">
-                {emptyAction && <> <button onClick={() => setEmptyAction(!emptyAction)} className='text-[16px] font-[400] text-blue-700' >Ready to Ship</button>
-                    <button onClick={() => setEmptyAction(!emptyAction)} className='text-[16px] font-[400] text-blue-700' >Cancel</button> </>}
+                {/* {emptyAction && <> <button onClick={() => setEmptyAction(!emptyAction)} className='text-[16px] font-[400] text-blue-700' >Ready to Ship</button>
+                    <button onClick={() => setEmptyAction(!emptyAction)} className='text-[16px] font-[400] text-blue-700' >Cancel</button> </>} */}
             </td>
         </tr>
     );

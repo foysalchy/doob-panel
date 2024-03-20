@@ -33,13 +33,15 @@ const ProductListCartSm = ({
             });
     }
 
+    const { shopUser } = useContext(ShopAuthProvider)
+
     return (
         <li className="flex gap-4 relative flex-col py-6 sm:flex-row sm:justify-between">
 
             <input
                 className='absolute top-[10px] left-0'
                 type="checkbox"
-                checked={selectAll || allProducts.some((p) => p._id === product._id)}
+                checked={selectAll || allProducts.some((p) => p._id === product.productId)}
                 onChange={() => selectOne(product)}
             />
             <div className="flex mt-2 w-full space-x-2 sm:space-x-4">
@@ -50,27 +52,27 @@ const ProductListCartSm = ({
                             <h3 className="text-sm font-semibold leadi sm:pr-8">{product.productName.slice(0, 14)}..</h3>
                             <div>
 
-                                <label htmlFor={`Quantity-${product._id}`} className="sr-only">
+                                <label htmlFor={`Quantity-${product.productId}`} className="sr-only">
                                     Quantity
                                 </label>
                                 <div className="flex overflow-hidden h-[24px] items-center products-center gap-1 rounded">
                                     <button
                                         type="button"
-                                        onClick={() => handleDecrease(product._id)}
+                                        onClick={() => handleDecrease(product.productId)}
                                         className="w-10 h-10 leading-10 text-gray-600 transition hover:opacity-75"
                                     >
                                         -
                                     </button>
                                     <input
                                         type="number"
-                                        id={`Quantity-${product._id}`}
+                                        id={`Quantity-${product.productId}`}
                                         value={product.quantity}
-                                        onChange={(e) => handleManualInput(product._id, parseInt(e.target.value, 10))}
+                                        onChange={(e) => handleManualInput(product.productId, parseInt(e.target.value, 10))}
                                         className="py-0 h-[22px] w-12 rounded border px-4 border-gray-900 [-moz-appearance:_textfield] sm:text-sm [&::-webkit-outer-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button]:appearance-none"
                                     />
                                     <button
                                         type="button"
-                                        onClick={() => handleIncrease(product._id)}
+                                        onClick={() => handleIncrease(product.productId)}
                                         className="w-10 h-10 leading-10 text-gray-600 transition hover:opacity-75 "
                                     >
                                         +
@@ -84,7 +86,7 @@ const ProductListCartSm = ({
                         </div>
                     </div>
                     <div className="flex text-sm divide-x ">
-                        <button type="button" className="flex items-center px-2 py-0 space-x-1" onClick={() => handleRemove(product._id)}>
+                        <button type="button" className="flex items-center px-2 py-0 space-x-1" onClick={() => handleRemove(product.productId)}>
                             <MdDelete className="w-4 h-4 " />
                             <span className='text-[12px]'>Remove</span>
                         </button>
@@ -124,14 +126,14 @@ const ProductListCartLg = ({
                 console.log(data);
             });
     }
-
+    const { shopUser } = useContext(ShopAuthProvider)
 
 
     return (
         <li className="flex gap-4 flex-col py-6 sm:flex-row sm:justify-between">
             <input
                 type="checkbox"
-                checked={selectAll || allProducts.some((p) => p._id === product._id)}
+                checked={selectAll || allProducts.some((p) => p._id === product.productId)}
                 onChange={() => selectOne(product)}
             />
             <div className="flex w-full space-x-2 sm:space-x-4">
@@ -142,27 +144,27 @@ const ProductListCartLg = ({
                             <h3 className="text-lg font-semibold leadi sm:pr-8">{product.productName}</h3>
                             <div>
 
-                                <label htmlFor={`Quantity-${product._id}`} className="sr-only">
+                                <label htmlFor={`Quantity-${product.productId}`} className="sr-only">
                                     Quantity
                                 </label>
                                 <div className="flex products-center gap-1">
                                     <button
                                         type="button"
-                                        onClick={() => handleDecrease(product._id)}
+                                        onClick={() => handleDecrease(product.productId)}
                                         className="w-10 h-10 leading-10 text-gray-600 transition hover:opacity-75"
                                     >
                                         -
                                     </button>
                                     <input
                                         type="number"
-                                        id={`Quantity-${product._id}`}
+                                        id={`Quantity-${product.productId}`}
                                         value={product.quantity}
-                                        onChange={(e) => handleManualInput(product._id, parseInt(e.target.value, 10))}
+                                        onChange={(e) => handleManualInput(product.productId, parseInt(e.target.value, 10))}
                                         className="py-1 w-16 rounded border px-4 border-gray-900 [-moz-appearance:_textfield] sm:text-sm [&::-webkit-outer-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button]:appearance-none"
                                     />
                                     <button
                                         type="button"
-                                        onClick={() => handleIncrease(product._id)}
+                                        onClick={() => handleIncrease(product.productId)}
                                         className="w-10 h-10 leading-10 text-gray-600 transition hover:opacity-75 "
                                     >
                                         +
@@ -176,7 +178,10 @@ const ProductListCartLg = ({
                         </div>
                     </div>
                     <div className="flex text-sm divide-x">
-                        <button type="button" className="flex items-center px-2 py-1 space-x-1" onClick={() => handleRemove(product._id)}>
+                        <button type="button" className="flex items-center px-2 py-1 space-x-1" onClick={() =>
+                            handleRemove(!shopUser ? product.productId : product._id)
+                            // console.log(product)
+                        }>
                             <MdDelete className="w-5 h-5 " />
                             <span>Remove</span>
                         </button>
@@ -221,11 +226,11 @@ const AddToCard = () => {
     const selectOne = (newProduct) => {
         setSelectAll(false)
         setAllProducts((prevProducts) => {
-            const isProductSelected = prevProducts.some((product) => product._id === newProduct._id);
+            const isProductSelected = prevProducts.some((product) => product.productId === newproduct.productId);
 
             if (isProductSelected) {
 
-                return prevProducts.filter((product) => product._id !== newProduct._id);
+                return prevProducts.filter((product) => product.productId !== newproduct.productId);
             } else {
 
                 return [...prevProducts, newProduct];
@@ -248,14 +253,14 @@ const AddToCard = () => {
     const handleDecrease = (productId) => {
         setAllProducts((prevProducts) =>
             prevProducts.map((product) =>
-                product._id === productId && product.quantity > 1
+                product.productId === productId && product.quantity > 1
                     ? { ...product, quantity: product.quantity - 1 }
                     : product
             )
         );
         setCartProducts((prevProducts) =>
             prevProducts.map((product) =>
-                product._id === productId && product.quantity > 1
+                product.productId === productId && product.quantity > 1
                     ? { ...product, quantity: product.quantity - 1 }
                     : product
             )
@@ -265,12 +270,12 @@ const AddToCard = () => {
     const handleIncrease = (productId) => {
         setAllProducts((prevProducts) =>
             prevProducts.map((product) =>
-                product._id === productId ? { ...product, quantity: product.quantity + 1 } : product
+                product.productId === productId ? { ...product, quantity: product.quantity + 1 } : product
             )
         );
         setCartProducts((prevProducts) =>
             prevProducts.map((product) =>
-                product._id === productId ? { ...product, quantity: product.quantity + 1 } : product
+                product.productId === productId ? { ...product, quantity: product.quantity + 1 } : product
             )
         );
     };
@@ -279,32 +284,48 @@ const AddToCard = () => {
         if (!isNaN(quantity) && quantity > 0) {
             setAllProducts((prevProducts) =>
                 prevProducts.map((product) =>
-                    product._id === productId ? { ...product, quantity: Math.max(quantity, 1) } : product
+                    product.productId === productId ? { ...product, quantity: Math.max(quantity, 1) } : product
                 )
             );
             setCartProducts((prevProducts) =>
                 prevProducts.map((product) =>
-                    product._id === productId ? { ...product, quantity: Math.max(quantity, 1) } : product
+                    product.productId === productId ? { ...product, quantity: Math.max(quantity, 1) } : product
                 )
             );
         }
     };
 
     const handleRemove = (productId) => {
-        setCartProducts((prevProducts) =>
-            prevProducts.filter((product) => product._id !== productId)
-        );
-        setAllProducts((prevProducts) =>
-            prevProducts.filter((product) => product._id !== productId)
-        );
+        console.log(productId, 'remove data');
+
+        // Remove the product from the cartProducts state
+        setCartProducts((prevProducts) => prevProducts.filter((product) => product.productId !== productId));
+
+        // Remove the product from local storage
+        const updatedCartProducts = JSON.parse(localStorage.getItem('addToCart')).filter(product => product.productId !== productId);
+        localStorage.setItem('addToCart', JSON.stringify(updatedCartProducts));
+
+        // If needed, remove the product from the allProducts state
+        setAllProducts((prevProducts) => prevProducts.filter((product) => product.productId !== productId));
+
+        // Make a DELETE request to remove the product from the backend
         fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/user/add-to-cart?productId=${productId}&token=${shopUser._id}`, {
             method: "DELETE",
-            headers: { "Content-Type": "application/json", "ngrok-skip-browser-warning": "69420", }
-
-        }).then((res) => res.json()).then((data) => {
-            console.log(data);
+            headers: { "Content-Type": "application/json" }
         })
+            .then((res) => res.json())
+            .then((data) => {
+                console.log(data);
+                // If refetch is a function, you need to call it here
+                // refetch();
+            })
+            .catch((error) => {
+                console.error("Error removing product:", error);
+            });
     };
+
+
+
 
     const navigator = () => {
         navigate(`/shop/${shopId}/sign-in`, { replace: true, state: { from: location?.pathname } });
@@ -332,15 +353,15 @@ const AddToCard = () => {
                             headers: { 'Content-Type': 'application/json', "ngrok-skip-browser-warning": "69420", },
                             body: JSON.stringify(element)
                         }).then((res) => res.json()).then((data) => {
-                            // Delete data from localStorage
-                            localStorage.removeItem('addToCart');
+
+                            // localStorage.removeItem('addToCart');
                         })
                     }
                 })
         }
     }, [shopUser]);
 
- 
+
 
     // const [promoPrice, setPromoPrice] = useState(false)
     // const [promoDiscount, setPromoDiscount] = useState(false)

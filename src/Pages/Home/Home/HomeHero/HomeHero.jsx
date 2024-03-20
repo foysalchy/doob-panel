@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { MdPlayCircleFilled } from "react-icons/md";
 import Bg from './Group 1000005940.png'
 import YoutubeModal from '../YoutubeModal';
@@ -11,7 +11,19 @@ import BrightAlert from 'bright-alert';
 const HomeHero = () => {
 
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [hero, setHero] = useState([]);
 
+    useEffect(() => {
+        fetch("https://salenow-v2-backend.vercel.app/api/v1/admin/get-content?name=hero_section")
+            .then((response) => response.json())
+            .then((data) => {
+                setHero(data.data);
+            })
+            .catch((error) => {
+                console.error("Error fetching data:", error);
+            });
+    }, []);
+    console.log(hero, 'home control');
     const openModal = () => {
         setIsModalOpen(true);
     };
@@ -28,7 +40,13 @@ const HomeHero = () => {
                     <div className="flex flex-col mb-16 sm:text-center sm:mb-0">
 
                         <div className="max-w-xl mb-6 md:mx-auto sm:text-center lg:max-w-2xl md:mb-10">
-                            <h1 className='font-inner text-xl font-semibold'>
+                            <div
+                                className="mb-2  text_editor"
+                                dangerouslySetInnerHTML={{
+                                    __html: hero?.data,
+                                }}
+                            />
+                            {/* <h1 className='font-inner text-xl font-semibold'>
                                 Start Business Right Now!!
                             </h1>
 
@@ -41,7 +59,7 @@ const HomeHero = () => {
                             </h1>
                             <p className="text-base text-gray-700 md:text-lg mt-4">
                                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.
-                            </p>
+                            </p> */}
                         </div>
                         <div className='flex gap-4 md:justify-center'>
                             <button
@@ -62,7 +80,19 @@ const HomeHero = () => {
                 </div>
             </div>
         </section>
+
+
     );
 };
 
 export default HomeHero;
+
+
+// <div className="px-4 py-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-20">
+//     <div
+//         className="mb-2  text_editor"
+//         dangerouslySetInnerHTML={{
+//             __html: hero?.data,
+//         }}
+//     />
+// </div>

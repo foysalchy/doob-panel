@@ -226,13 +226,13 @@ const ManageProduct = () => {
                         scope="col"
                         className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right "
                       >
-                        Email address
+                        Warehouse
                       </th>
                       <th
                         scope="col"
                         className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right "
                       >
-                        Teams
+                        commission
                       </th>
                       <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left  ">
                         <span >Action</span>
@@ -302,15 +302,16 @@ const ManageProduct = () => {
                         </td>
 
                         <td className="px-4 py-4 text-sm text-white  whitespace-nowrap">
-                          <button className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 cursor-pointer bg-emerald-100/60 bg-gray-800" onClick={() => setModalOpen(product?._id)}> Select Warehouse</button>
+                          <button className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 cursor-pointer bg-emerald-100/60 bg-gray-800" onClick={() => setModalOpen(product?._id)}> {"Select Warehouse"}</button>
                         </td>
                         <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
-                          authurmelo@example.com
+                          {product?.warehouse.map((ware) => ware.name)}
                         </td>
                         <td className="px-4 py-4 text-sm whitespace-nowrap">
                           <div className="flex items-center gap-x-2">
                             <p className="px-3 py-1 text-xs text-indigo-500 rounded-full bg-gray-800 bg-indigo-100/60">
-                              Design
+                              {
+                                product?.commission}
                             </p>
                           </div>
                         </td>

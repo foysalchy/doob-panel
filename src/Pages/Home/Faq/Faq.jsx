@@ -21,7 +21,7 @@ const Faq = () => {
     <div >
 
       <div
-        className="mb-2  "
+        className="mb-2 text_editor "
         dangerouslySetInnerHTML={{
           __html: faqs[0]?.description,
         }}

@@ -4,7 +4,7 @@ import { FaLongArrowAltRight } from 'react-icons/fa';
 import Swal from 'sweetalert2';
 import { AuthContext } from '../../../../AuthProvider/UserProvider';
 
-const SellerAddNewWarehouse = ({ setNewData, refetch, setOpenModal }) => {
+const SellerAddNewWarehouse = ({ setNewData, refetch, setOpenModal, warehouses, setWareHouses }) => {
     const [nextStae, setNextState] = useState(false)
     const { shopInfo } = useContext(AuthContext)
     const UploadArea = (e) => {
@@ -14,7 +14,10 @@ const SellerAddNewWarehouse = ({ setNewData, refetch, setOpenModal }) => {
         const address = e.target.address.value
         const description = e.target.description.value
         const image = e.target.image.files[0]
-
+        setWareHouses(prevState => ({
+            ...prevState,
+            warehouse: name
+        }));
         const formData = new FormData();
         formData.append("image", image);
         const url = `https://salenow-v2-backend.vercel.app/api/v1/image/upload-image`;

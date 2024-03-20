@@ -3,6 +3,7 @@ import React from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 const MainService = () => {
 
@@ -26,10 +27,9 @@ const MainService = () => {
 
 
     const blnkData = [{}, {}, {}];
-    // const [selectedCategory, setSelectedCategory] = useState(null);
-    const [selectedCategory, setSelectedCategory] = useState('all')
-    const [searchTerm, setSearchTerm] = useState('')
-
+    const [selectedCategory, setSelectedCategory] = useState(null);
+    const location = useLocation()
+    const slag = decodeURIComponent(location.hash).substr(1)
     const filterServices = (category) => {
         setSelectedCategory(category);
     };
@@ -39,25 +39,11 @@ const MainService = () => {
         refetch();
     }, [categories, refetch]);
 
+    const filterService = services.filter((service) => {
+        const slagMatch = slag === '' || service.title.toLowerCase().includes(slag.toLowerCase());
+        return slagMatch;
 
-    const location = useLocation();
-    const path = location.hash.replace("#", "")
-
-    useEffect(() => {
-        // Update selected category based on path
-        setSelectedCategory(path);
-    }, [path]);
-
-    // Filter blogs based on selected category
-    const filteredBlogs = services.filter(blog => {
-        // Check if the blog matches the selected category or if the category is 'all'
-        const categoryMatch = selectedCategory === 'all' || blog.category === selectedCategory;
-        // Check if the blog title contains the search term
-        const titleMatch = blog.title.toLowerCase().includes(searchTerm.toLowerCase());
-        return categoryMatch && titleMatch;
-    });
-
-
+    })
 
     return (
 
@@ -84,9 +70,8 @@ const MainService = () => {
                         </a>
                         {!isCategoriesLoading &&
                             categories.map((category) => (
-                                <a
+                                <a href={`#${category.title}`}
                                     key={category.id}
-                                    href={`#${category?.slag}`}
                                     className={`px-4 py-2 text-sm font-medium uppercase tracking-wide ${selectedCategory === category.title ? 'bg-black text-white' : 'bg-gray-300 text-gray-700'
                                         }`}
                                 >
@@ -101,18 +86,20 @@ const MainService = () => {
                     !isLoading ? <div>
                         <ul className="grid grid-cols-1 gap-4 mt-8 lg:grid-cols-3">
 
-                            {filteredBlogs?.map((service) => (
-                                <div key={service._id} className={!service.status && 'hidden'}>
-                                    {service?.status && (
-                                        <li>
-                                            <Link
-                                                to={`/service/${service._id}`} className="relative block group">
-                                                <img
-                                                    src={service?.img}
-                                                    srcSet={service?.img}
-                                                    alt=""
-                                                    className="object-cover border border-black rounded-md w-full transition duration-500 aspect-square"
-                                                />
+                            {services
+                                ?.filter((service) => selectedCategory === null || service.category === slag)
+                                .map((service) => (
+                                    <div key={service._id} className={!service.status && 'hidden'}>
+                                        {service?.status && (
+                                            <li>
+                                                <Link
+                                                    to={`/service/${service._id}`} className="relative block group">
+                                                    <img
+                                                        src={service?.img}
+                                                        srcSet={service?.img}
+                                                        alt=""
+                                                        className="object-cover border border-black rounded-md w-full transition duration-500 aspect-square"
+                                                    />
 
                                                 <div className="absolute group-hover:bg-gray-900 group-hover:bg-opacity-90 bg-gray-900 bg-opacity-50 inset-0 flex flex-col items-start justify-end p-6">
                                                     <h3 className="text-xl font-semibold text-white">{service?.title}</h3>

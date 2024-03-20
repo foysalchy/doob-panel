@@ -6,7 +6,7 @@ import { AuthContext } from "../../../../AuthProvider/UserProvider";
 const TrendingProducts = () => {
 
 
-  
+
   const { user } = useContext(AuthContext)
 
   const { shop_id } = useContext(ShopAuthProvider)

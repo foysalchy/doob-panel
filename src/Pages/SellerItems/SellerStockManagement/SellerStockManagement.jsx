@@ -7,7 +7,8 @@ import { BiSearch } from 'react-icons/bi';
 
 const SellerStockManagement = () => {
     const [on, setOn] = useState(false);
-    const [searchValue, setSearchValue] = useState('');
+    const [searchQuery, setSearchQuery] = useState(""); // State to store search query
+
     const { shopInfo } = useContext(AuthContext)
     const { data: stockRequest = [], refetch } = useQuery({
         queryKey: ["stockRequest"],
@@ -18,6 +19,11 @@ const SellerStockManagement = () => {
             return data?.data;
         },
     });
+    const filteredStockRequest = searchQuery
+        ? stockRequest.filter(item =>
+            item._id.toLowerCase().includes(searchQuery.toLowerCase())
+        )
+        : stockRequest;
 
     const filterData = stockRequest.filter(itm => itm?._id.toLowerCase().includes(searchValue.toLowerCase()));
 
@@ -33,6 +39,13 @@ const SellerStockManagement = () => {
                     </div>
 
                 </div>
+                <input
+                    type="text"
+                    placeholder="Search by Product Id"
+                    value={searchQuery}
+                    onChange={e => setSearchQuery(e.target.value)}
+                    className="px-3 py-1 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
+                />
 
                 <div className="overflow-hidden border border-gray-200 border-gray-700 md:rounded-lg">
                     <table className="min-w-full divide-y divide-gray-200 divide-gray-700">
@@ -64,13 +77,14 @@ const SellerStockManagement = () => {
                             </tr>
                         </thead>
                         <tbody className="bg-white divide-y divide-gray-200 ">
-                            {filterData?.map((itm, index) => (
+                            {filteredStockRequest?.map((itm, index) => (
+
                                 <tr>
                                     <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                                         <div className="inline-flex items-center gap-x-3">
                                             <div className="w-5/12">
                                                 <h2 className="font-medium text-gray-800  ">
-                                                    <button onClick={() => setOn(itm)} className='  text-blue-500'>{itm?.productId}</button>
+                                                    <button onClick={() => setOn(itm)} className='  text-blue-500'>{itm?._id}</button>
                                                 </h2>
                                             </div>
                                         </div>

@@ -23,6 +23,8 @@ const CustomerHistory = () => {
         },
     });
 
+    console.log(customerData);
+
 
 
     const [currentPage, setCurrentPage] = useState(1);
@@ -119,10 +121,11 @@ const CustomerHistory = () => {
 
 
     const handleExportToExcel = () => {
-        const headers = ["Name", "Email", "Provider", "Added Products", "Orders", "Wishlist"];
+        const headers = ["Name", "Email", "Mobile Number", "Provider", "Added Products", "Orders", "Wishlist"];
         const rows = customerData.map(customer => [
             customer.name,
             customer.email,
+            customer.phoneNumber,
             customer.provider,
             customer.addToCart.length,
             customer.orderList.length,
@@ -176,6 +179,12 @@ const CustomerHistory = () => {
                                                 scope="col"
                                                 className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
                                             >
+                                                Phone Number
+                                            </th>
+                                            <th
+                                                scope="col"
+                                                className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                                            >
                                                 Provider
                                             </th>
                                             <th
@@ -216,6 +225,9 @@ const CustomerHistory = () => {
                                                 <td className="px-4 py-4 text-sm text-gray-300 dark:text-gray-300 whitespace-nowrap">
                                                     {customer?.email}
                                                 </td>
+                                                <td className="px-4 py-4 text-sm text-gray-300 dark:text-gray-300 whitespace-nowrap">
+                                                    {customer?.phoneNumber}
+                                                </td>
                                                 <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                                                     {customer?.provider}
                                                 </td>
@@ -237,12 +249,7 @@ const CustomerHistory = () => {
                                             </tr>)
                                         }
 
-                                        <tr>
-                                            <td colSpan={6}>
 
-                                                Loader.......
-                                            </td>
-                                        </tr>
 
                                     </tbody>
                                 </table>

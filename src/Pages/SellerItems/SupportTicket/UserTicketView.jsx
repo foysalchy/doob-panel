@@ -155,7 +155,7 @@ const UserTicketView = ({ viewTicket, setViewTicket, ticketDetails, refetch }) =
                                 <div className='border text-start bg-gray-200 rounded pt-1 px-4 pb-2 mb-4'>
                                     <p className='text-lg font-semibold'>  Message:</p>
                                     <div
-                                        className=" "
+                                        className=" text_editor"
                                         dangerouslySetInnerHTML={{
                                             __html: ticketDetails.description,
                                         }}
