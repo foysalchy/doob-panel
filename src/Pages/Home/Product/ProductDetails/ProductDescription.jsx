@@ -10,7 +10,7 @@ const ProductDescription = ({ metaTitle, description }) => {
         </span>
       </h2>
       <div
-        className="mt-4  "
+        className="mt-4  text_editor"
         dangerouslySetInnerHTML={{
           __html: description,
         }}

@@ -5,7 +5,7 @@ import { useContext, useState } from "react";
 import { useEffect } from "react";
 import { AuthContext } from "./AuthProvider/UserProvider";
 import ScrollToTop from "./SrollTop";
-import Logo from '../Logo.png';
+import ReactPixel from 'react-facebook-pixel';
 import { useQuery } from "@tanstack/react-query";
 
 
@@ -49,37 +49,19 @@ function App() {
     },
   });
 
+  const shopId = idMatch && seller_facebook_pixel.pixel && seller_facebook_pixel.pixel;
+  ReactPixel.init('asduygfweubuasgdf', {}, { debug: true, autoConfig: false });
+  ReactPixel.pageView();
+  ReactPixel.fbq('track', 'PageView');
+  // useEffect(() => {
 
+  // }, [shopId]);
 
-  const shopId = idMatch && seller_facebook_pixel.pixel ? seller_facebook_pixel.
-    pixel : 1451744009007471;
 
   return (
     <div >
 
-      <script type="text/javascript">
-        {`
-                !function(f,b,e,v,n,t,s)
-                {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-                n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-                if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-                n.queue=[];t=b.createElement(e);t.async=!0;
-                t.src=v;s=b.getElementsByTagName(e)[0];
-                s.parentNode.insertBefore(t,s)}(window, document,'script',
-                'https://connect.facebook.net/en_US/fbevents.js');
-                fbq('init', '${shopId}');
-                fbq('track', 'PageView');
-                `}
-      </script>
-      {/* Your Facebook Pixel script is rendered after the MetaHelmet component */}
-      <noscript>
-        <img height="1" width="1" style={{ display: 'none' }} src="https://www.facebook.com/tr?id=1451744009007471&ev=PageView&noscript=1" />
-      </noscript>
 
-
-      <noscript>
-        <img height="1" width="1" style={{ display: 'none' }} src="https://www.facebook.com/tr?id=1451744009007471&ev=PageView&noscript=1" />
-      </noscript>
       {isOnline ? <RouterProvider router={Router} /> : <div className="grid h-screen px-4 bg-white place-content-center">
         <h1 className="tracking-widest text-gray-500 uppercase text-2xl"><span className="text-red-500 ">503</span> | You are currently offline </h1>
       </div>

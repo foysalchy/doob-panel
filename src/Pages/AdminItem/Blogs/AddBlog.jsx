@@ -63,7 +63,7 @@ const AddBlog = () => {
   const [message, setMessage] = useState('')
 
   const dataSubmit = (event) => {
-    // setLoading(true);
+    setLoading(true);
     event.preventDefault();
     const form = event.target;
     const title = form.title.value;
@@ -99,7 +99,7 @@ const AddBlog = () => {
   };
 
   const postBlog = (blog, form) => {
-    fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/new-blog`, {
+    fetch(`http://localhost:5001/api/v1/admin/new-blog`, {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -108,13 +108,14 @@ const AddBlog = () => {
     })
       .then((res) => res.json())
       .then((data) => {
+        console.log(data);
         setLoading(false);
-        Swal.fire("Your Blog Publish Successfully", "", "success");
+        // Swal.fire("Your Blog Publish Successfully", "", "success");
 
-        form.reset();
-        setPreviewUrl("");
-        setFileName("");
-        window.location.href = '/admin/blog';
+        // form.reset();
+        // setPreviewUrl("");
+        // setFileName("");
+        // window.location.href = '/admin/blog';
       });
   };
 

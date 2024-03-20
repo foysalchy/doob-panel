@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 import { BsEye } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 const AdminBlogComment = () => {
 
@@ -15,28 +16,48 @@ const AdminBlogComment = () => {
         },
     });
 
-    const DeleteBlog = (id) => {
+    // const DeleteBlog = (id) => {
+    //     confirm()
+    //     fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/blog-comments-delete?commentId=${id}`, {
+    //         method: "DELETE",
+    //         headers: {
+    //             "content-type": "application/json",
+    //         },
+    //     })
+    //         .then((res) => res.json())
+    //         .then((data) => {
 
-        fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/blog/${id}`, {
-            method: "DELETE",
-            headers: {
-                "content-type": "application/json",
-            },
-        })
-            .then((res) => res.json())
-            .then((data) => {
+    //             if (data.message) {
+    //                 Swal.fire(`${data.message}`, "", "success");
 
-                if (data.message) {
-                    Swal.fire(`${data.message}`, "", "success");
+    //             }
+    //             else {
+    //                 Swal.fire("Your Blog Deleted Successfully", "", "success");
+    //             }
 
-                }
-                else {
-                    Swal.fire("Your Blog Deleted Successfully", "", "success");
-                }
+    //             refetch()
 
-                refetch()
-
-            });
+    //         });
+    // };
+    const DeleteBlog = (blogId, commentId,) => {
+        if (confirm("Are you sure you want to delete this blog?")) {
+            fetch(`http://localhost:5001/api/v1/admin/blog-comments-delete?commentId=${commentId}&blogId=${blogId}`, {
+                method: "DELETE",
+                headers: {
+                    "content-type": "application/json",
+                },
+            })
+                .then((res) => res.json())
+                .then((data) => {
+                    if (data.message) {
+                        Swal.fire(`${data.message}`, "", "success");
+                    }
+                    else {
+                        Swal.fire("Your Blog Deleted Successfully", "", "success");
+                    }
+                    refetch();
+                });
+        }
     };
 
 
@@ -120,7 +141,7 @@ const AdminBlogComment = () => {
 
                             <td className="px-4 py-4 text-sm whitespace-nowrap">
                                 <div className="flex gap-4 justify-center">
-                                    <button onClick={() => DeleteBlog(blog.blogId)} className=" transition-colors duration-200 text-red-500 hover:text-red-700 focus:outline-none">
+                                    <button onClick={() => DeleteBlog(blog.blogId, blog.timeStamp)} className=" transition-colors duration-200 text-red-500 hover:text-red-700 focus:outline-none">
                                         <svg
                                             xmlns="http://www.w3.org/2000/svg"
                                             fill="none"

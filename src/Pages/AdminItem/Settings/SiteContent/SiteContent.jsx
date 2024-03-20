@@ -177,7 +177,7 @@ const SiteContent = () => {
                     onMouseLeave={() => setIsHovered(false)}
                 >
                     <div
-                        className="flex items-center justify-center "
+                        className="flex items-center text_editor justify-center "
                         dangerouslySetInnerHTML={{ __html: domainVideo.DomainUrl }}
                     />
                     {isHovered && (
@@ -221,7 +221,7 @@ const SiteContent = () => {
             <hr className="my-4 border-gray-500" />
 
             <div
-
+                className='text_editor'
                 dangerouslySetInnerHTML={{
                     __html: domainDoc?.data,
                 }}

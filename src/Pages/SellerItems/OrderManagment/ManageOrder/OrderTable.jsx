@@ -278,7 +278,7 @@ const OrderTable = ({ setPassData, ordersNav, orderCounts, searchValue, selected
     }
 
     const updateCourier_status = (id, courier_id) => {
-        fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/courier_status?orderId=${id}&id=${courier_id}`, {
+        fetch(`http://localhost:5001/api/v1/admin/courier_status?orderId=${id}&id=${courier_id}&`, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
         }).then((res) => res.json()).then((data) => {

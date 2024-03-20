@@ -156,7 +156,7 @@ const AddCopon = () => {
 
     const options = your_shop_users?.map(user => ({
         value: user.email,
-        label: user.email
+        label: `${user.email}   (${user.name})`
     }));
 
 

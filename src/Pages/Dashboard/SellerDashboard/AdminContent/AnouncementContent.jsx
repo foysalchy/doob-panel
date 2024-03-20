@@ -32,7 +32,7 @@ const AnouncementModal = ({ setOpen, modalData, index }) => {
                 </div>
                 <div className='h-[400px] overflow-y-auto'>
                     <h3 className={style.title}>{currentData?.title}</h3>
-                    <div dangerouslySetInnerHTML={{ __html: currentData?.message }}></div>
+                    <div className='text_editor' dangerouslySetInnerHTML={{ __html: currentData?.message }}></div>
 
                     <img className={style.img} src={currentData?.image} alt="" />
                     <div className="flex items-center gap-2">
@@ -79,7 +79,7 @@ const Carousel = ({ data }) => {
                 <div className={style.flexBox}>
                     <div className="flex items-start gap-2">
                         <TfiAnnouncement className='text-xl mt-1' />
-                        <div>
+                        <div className='text_editor'>
                             <div className="flex items-center gap-2">
                                 <h2 className={style.title}>Announcements</h2>
                             </div>

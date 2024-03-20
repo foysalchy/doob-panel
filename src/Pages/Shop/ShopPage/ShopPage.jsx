@@ -9,7 +9,7 @@ const ShopPage = () => {
 
             <h1 className='text-2xl text-start font-bold py-5'>{page?.title}</h1>
             <div
-                className="mb-2  "
+                className="mb-2 text_editor "
                 dangerouslySetInnerHTML={{
                     __html: page?.description,
                 }}

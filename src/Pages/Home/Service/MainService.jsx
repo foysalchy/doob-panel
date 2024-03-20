@@ -40,8 +40,6 @@ const MainService = () => {
 
     const filterService = services.filter((service) => {
         const slagMatch = slag === '' || service.title.toLowerCase().includes(slag.toLowerCase());
-
-        // Return true if both conditions are met
         return slagMatch;
 
     })

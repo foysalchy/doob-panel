@@ -221,8 +221,8 @@ const AdminPopupManagement = () => {
                             <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 ">
                                 {itm?.title}
                             </td>
-                            <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 ">
-                                <div dangerouslySetInnerHTML={{
+                            <td className="px-4 py-4 text_editor text-sm text-gray-500 dark:text-gray-300 ">
+                                <div  dangerouslySetInnerHTML={{
                                     __html: itm?.message,
                                 }}>
 

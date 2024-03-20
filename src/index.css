@@ -316,3 +316,8 @@ font-google {
   color : black!important;
   background : transparent!important; 
 }
+
+.text_editor ul, .text_editor ol{
+  list-style: inherit!important;
+
+}

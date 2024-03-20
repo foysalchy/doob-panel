@@ -123,7 +123,7 @@ const SingleBlog = () => {
           <h1 className=" mt-4 md:text-4xl text-2xl">{blogInfo?.title}</h1>
           <div className="mt-5 ">
             <div
-              className="mb-2  "
+              className="mb-2 text_editor"
               dangerouslySetInnerHTML={{
                 __html: blogInfo.message,
               }}

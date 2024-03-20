@@ -129,7 +129,7 @@ const ReleventProduct = ({ productFind }) => {
                                             <h3 className="text-md mb-1 font-medium">
                                                 {product?.name}
                                             </h3>
-                                            <div className="text-sm text-gray-600"
+                                            <div className="text-sm text_editor text-gray-600"
                                                 dangerouslySetInnerHTML={{
                                                     __html: product?.shortDescription?.slice(0, 150) + "...",
                                                 }}
