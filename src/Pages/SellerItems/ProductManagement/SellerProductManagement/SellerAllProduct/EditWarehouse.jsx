@@ -1,11 +1,9 @@
 import { useQuery } from '@tanstack/react-query';
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import Select from 'react-select';
-import { AuthContext } from '../../../../../AuthProvider/UserProvider';
 
-const EditWareHouse = ({ product, adminWare, setAdminWare }) => {
+const EditWareHouse = ({ adminWare, setAdminWare, shopInfo }) => {
 
-    const { shopInfo } = useContext(AuthContext);
 
     const [areas, setAreas] = useState([]);
     const [racks, setRacks] = useState([]);
@@ -138,7 +136,7 @@ const EditWareHouse = ({ product, adminWare, setAdminWare }) => {
                                 onChange={handleWarehouseChange}
                                 name='warehouse'
                                 // required
-                                options={isRefetching ? [{ label: 'Loading...', value: null }] : product?.warehouse
+                                options={isRefetching ? [{ label: 'Loading...', value: null }] : warehouses
                                     .filter((warehouse) => warehouse.status) // Filter based on status
                                     .map((warehouse) => ({
                                         value: warehouse.name,
@@ -148,7 +146,6 @@ const EditWareHouse = ({ product, adminWare, setAdminWare }) => {
                                 placeholder="Please select"
                             />
                         </div>
-                       
                         {selectedWarehouse && !adminWare && <div className="">
                             <label className="text-sm">Select Area</label>
                             <Select

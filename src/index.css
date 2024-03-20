@@ -317,7 +317,12 @@ font-google {
   background : transparent!important; 
 }
 
+
 .text_editor ul, .text_editor ol{
   list-style: inherit!important;
+}
 
+.text-control > li {
+  height : 20px!important;
+  
 }

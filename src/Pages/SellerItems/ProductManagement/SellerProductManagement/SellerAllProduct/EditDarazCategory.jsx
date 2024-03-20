@@ -2,7 +2,7 @@ import React from 'react';
 import Select from 'react-select';
 import CreatableSelect from 'react-select/creatable';
 
-const DarazOption = ({ datazCategory }) => {
+const EditDarazCategory = ({ datazCategory }) => {
 
     const ourData = [
         "Product Description",
@@ -30,13 +30,11 @@ const DarazOption = ({ datazCategory }) => {
     ]
 
     const filteredData = datazCategory && datazCategory.filter(item => !ourData.includes(item.label))
-
     const renderInput = (category) => {
         switch (category.input_type) {
             case 'numeric':
                 return (
                     <input
-                        required={category?.is_mandatory === 1}
                         type="number"
                         id={category.label}
                         name={category.name}
@@ -47,7 +45,6 @@ const DarazOption = ({ datazCategory }) => {
             case 'richText':
                 return (
                     <textarea
-                        required={category?.is_mandatory === 1}
                         id={category.label}
                         name={category.name}
                         className="flex-grow w-full h-10 px-4 mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-purple-400 focus:outline-none focus:shadow-outline"
@@ -57,7 +54,6 @@ const DarazOption = ({ datazCategory }) => {
             case 'singleSelect':
                 return (
                     <select
-                        required={category?.is_mandatory === 1}
                         id={category.label}
                         name={category.name}
                         className="flex-grow w-full h-10 px-4 mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-purple-400 focus:outline-none focus:shadow-outline"
@@ -75,7 +71,6 @@ const DarazOption = ({ datazCategory }) => {
                     // Render a CreatableSelect for multiple values
                     return (
                         <CreatableSelect
-                            required={category?.is_mandatory === 1}
                             id={category.label}
                             name={category.name}
                             isMulti
@@ -88,7 +83,6 @@ const DarazOption = ({ datazCategory }) => {
                 // Render the CreatableSelect using category.options
                 return (
                     <CreatableSelect
-                        required={category?.is_mandatory === 1}
                         id={category.label}
                         name={category.name}
                         isMulti
@@ -101,7 +95,6 @@ const DarazOption = ({ datazCategory }) => {
             default:
                 return (
                     <input
-                        required={category?.is_mandatory === 1}
                         type={category?.input_type}
                         id={category?.label}
                         name={category?.name}
@@ -111,14 +104,12 @@ const DarazOption = ({ datazCategory }) => {
                 );
         }
     };
-
-    console.log(filteredData[0], 'check-------');
     return (
-        <div className="grid grid-cols-3 gap-2 mt-6 border  rounded p-4">
+        <div className="grid grid-cols-2 gap-8 mt-4 border  rounded p-4">
             {filteredData?.map((category) => (
                 <div key={category?.label} className="flex w-full items-center space-x-4">
                     <div className='w-full'>
-                        <label className='text-sm' htmlFor={category?.label}>{category?.label} {category?.is_mandatory === 1 && <span className="text-red-500 text-lg mt-1">*</span>}</label>
+                        <label className='text-sm' htmlFor={category?.label}>{category?.label}</label>
                         {renderInput(category)}
                     </div>
                 </div>
@@ -127,4 +118,4 @@ const DarazOption = ({ datazCategory }) => {
     );
 };
 
-export default DarazOption;
+export default EditDarazCategory;

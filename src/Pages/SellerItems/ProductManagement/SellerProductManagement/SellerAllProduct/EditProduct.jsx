@@ -17,6 +17,40 @@ import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
 
 const EditProductForm = ({ product }) => {
+    const [loading, setLoading] = useState(false)
+
+    const { shopInfo } = useContext(AuthContext)
+    const [isChecked, setIsChecked] = useState(true);
+    const [datazCategory, setDarazOption] = useState([]);
+    const [daraz, setDaraz] = useState(false)
+    const [woo, setWoo] = useState(false)
+    const [adminWare, setAdminWare] = useState(true)
+    const [coverPhoto, setCoverPhoto] = useState('');
+    const [description, setDescription] = useState('')
+    const [shortDescription, setShortDescription] = useState('')
+    const [youtube, setYoutube] = useState('')
+    const [multiVendor, setMultiVendor] = useState(adminWare);
+
+
+
+
+    const imageUpload = (image) => {
+        const formData = new FormData();
+        formData.append("image", image);
+
+        const url = `https://salenow-v2-backend.vercel.app/api/v1/image/upload-image`;
+
+        return fetch(url, {
+            method: "POST",
+            body: formData,
+        })
+            .then((res) => res.json())
+            .then((imageData) => {
+                const imageUrl = imageData.imageUrl;
+                return imageUrl;
+            });
+    };
+
 
     //     const { shopInfo } = useContext(AuthContext)
     //     const id = useParams().id;
@@ -39,38 +73,9 @@ const EditProductForm = ({ product }) => {
     delete product.menu_order
     const [editedProduct, setEditedProduct] = useState({ ...product });
     const [brandName, setBrandName] = useState('')
-    const [isChecked, setIsChecked] = useState(true);
-    const [inputFields, setInputFields] = useState(() => {
-        const random8Digit = Math.random().toString().slice(2, 10);
-        return [
-            {
-                name: '',
-                image: null,
-                quantity: "",
-                SKU: `${shopInfo.shopId}_mathrendom_${random8Digit}`, // Using 'mathrendom' as a placeholder for name
-                price: '',
-                offerPrice: '',
-                ability: false
-            }
-        ];
-    });
-
-    // Update the SKU with the actual name when 'name' changes
-    useEffect(() => {
-        setInputFields(prevState => {
-            return prevState.map((field, index) => {
-                const newName = field.name || 'default'; // Use a default value if name is not set
-                const random8Digit = Math.random().toString().slice(2, 10);
-                return {
-                    ...field,
-                    SKU: `${shopInfo.shopId}_${newName}_${random8Digit}`
-                };
-            });
-        });
-    }, [inputFields, shopInfo.shopId]);
-
-    // JSX rendering and other logic...
-
+    const [inputFields, setInputFields] = useState([
+        { name: '', image: null, quantity: "", SKU: "", price: '', offerPrice: '', ability: false },
+    ]);
     const handleChange = (e) => {
         const { name, value } = e.target;
         setEditedProduct((prevProduct) => ({
@@ -86,9 +91,9 @@ const EditProductForm = ({ product }) => {
         e.preventDefault();
         setLoading(true)
         const form = e.target;
-        const BnName = form.productNameBn.value
-        const sku = form.ProductSKU.value
-        const EnName = form.productNameEn.value
+        // const BnName = form.productNameBn.value
+        // const sku = form.ProductSKU.value
+        // const EnName = form.productNameEn.value
         const megaCategory = form?.megaCategory?.value
         const Subcategory = form?.subCategory?.value || null
         const miniCategory = form?.miniCategory?.value || null
@@ -180,30 +185,30 @@ const EditProductForm = ({ product }) => {
 
         const data = {
 
-            videoUrl: youtube,
+            // videoUrl: youtube,
             // brandName,
-            BnName,
-            name: EnName,
-            daraz,
-            woo,
-            categories,
-            warehouse: warehouseValue,
-            shortDescription: shortDescription,
-            description: description,
-            sku: sku,
-            regular_price: inputFields[0].price,
-            stock_quantity: inputFields[0].quantity,
-            price: inputFields[0].offerPrice,
-            purchasable: true,
-            total_sales: 0,
-            // productType,
-            weight: packageWidth,
-            length: productLength,
-            width: productWidth,
-            height: productHight,
-            multiVendor: multiVendor,
-            adminCategory,
-            variantData: variantInput[0],
+            // BnName,
+            // name: EnName,
+            // daraz,
+            // woo,
+            // categories,
+            // warehouse: warehouseValue,
+            // shortDescription: shortDescription,
+            // description: description,
+            // sku: sku,
+            // regular_price: inputFields[0].price,
+            // stock_quantity: inputFields[0].quantity,
+            // price: inputFields[0].offerPrice,
+            // purchasable: true,
+            // total_sales: 0,
+            // // productType,
+            // weight: packageWidth,
+            // length: productLength,
+            // width: productWidth,
+            // height: productHight,
+            // multiVendor: multiVendor,
+            // adminCategory,
+            // variantData: variantInput[0],
             // color,
             // size,
             // material,
@@ -216,29 +221,29 @@ const EditProductForm = ({ product }) => {
             // returnPolicy,
             // refundPolicy,
             // otherDetails,
-            metaTitle: MetaTag,
+            // metaTitle: MetaTag,
             // metaKeywords,
-            metaDescription: MetaTagMetaDescription,
-            MetaImage,
+            // metaDescription: MetaTagMetaDescription,
+            // MetaImage,
             // barcode,
             // taxClassId,
 
             // shortDescription,
             // longDescription,
-            status: false,
-            createdAt: Date.now(),
+            // status: false,
+            // createdAt: Date.now(),
             // updatedAt,
-            featuredImage: uploadedImageUrls[0],
+            // featuredImage: uploadedImageUrls[0],
             images: uploadedImageUrls.filter(image => image !== null),
-            videos: youtube,
+            // videos: youtube,
             // attributes,
-            variations: inputFields,
-            warrantyTypes,
-            rating_count: 0,
+            // variations: inputFields,
+            // warrantyTypes,
+            // rating_count: 0,
             // shopId: shopInfo._id,
-            adminWare,
-            darazOptionData,
-            upcoming: isChecked
+            // adminWare,
+            // darazOptionData,
+            // upcoming: isChecked
 
 
         }
@@ -253,18 +258,18 @@ const EditProductForm = ({ product }) => {
     return (
 
         <form
-            // onSubmit={formSubmit}
+            onSubmit={formSubmit}
             className='h-[600px] overflow-x-hidden  px-10 text-start overflow-y-auto'>
 
-            <ImageUploadSeller product={product} />
+            {/* <ImageUploadSeller product={product} /> */}
+            <ImageUploadSeller youtube={youtube} setYoutube={setYoutube} coverPhoto={coverPhoto} setCoverPhoto={setCoverPhoto} />
+            {/* * <ProductInfoSeller product={product} brandName={brandName} setBrandName={setBrandName} /> */}
 
-            {/* <ProductInfoSeller product={product} brandName={brandName} setBrandName={setBrandName} />
+            {/* <EditSincronusCategory /> */}
 
-                    <EditSincronusCategory />
-
-                    <EditWareHouse />
-
-                    <label
+            {/* <EditWareHouse /> */}
+            <EditWareHouse shopInfo={shopInfo} adminWare={adminWare} setAdminWare={setAdminWare} />
+            {/* <label
                         htmlFor="Toggle3"
                         className={`inline-flex items-center py-4 rounded-md cursor-pointer ${isChecked ? 'text-gray-800' : ''
                             }`}>
@@ -287,18 +292,18 @@ const EditProductForm = ({ product }) => {
                         >
                             For You Product
                         </span>
-                    </label>
+                    </label> */}
 
 
-                    <SellerEditDiscription />
+            {/* <SellerEditDiscription /> */}
 
-                    <SellerEditVariants inputFields={inputFields} setInputFields={setInputFields} />
+            {/* <SellerEditVariants inputFields={inputFields} setInputFields={setInputFields} /> */}
 
-                    <EditServiceWarranty />
+            {/* <EditServiceWarranty /> */}
 
-                    <EditDelivery />
+            {/* <EditDelivery /> */}
 
-                    <EditMetaProduct /> */}
+            {/* <EditMetaProduct />   */}
             <br />
             <button
                 className='bg-gray-800 text-white px-8 py-2 rounded-md mt-4'

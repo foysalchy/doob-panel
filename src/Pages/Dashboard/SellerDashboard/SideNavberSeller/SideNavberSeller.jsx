@@ -154,37 +154,37 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                             </span>
                                                                         </summary>
 
-                                                                        <ul className="mt-2 space-y-1 px-4">
+                                                                        <ul className="mt-2 space-y-1 px-4 text-control">
                                                                             <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
                                                                                 <Link
                                                                                     to={'/seller/product-management/add-product'}
-                                                                                    className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                                                                    className=" text-gray-50 flex gap-2 items-center px-4 p-2 text-[10px] space-x-3 text-xs rounded-md"
                                                                                 >
-                                                                                    <CgAdd className='w-5 h-5 fill-current text-gray-400 ' /> Add Product
+                                                                                    Add Product
                                                                                 </Link>
                                                                             </li>
                                                                             <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
                                                                                 <Link
                                                                                     to={'/seller/product-management/add-daraz-product'}
-                                                                                    className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                                                                    className=" text-[15px] text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-xs rounded-md"
                                                                                 >
-                                                                                    <CgAdd className='w-5 h-5 fill-current text-gray-400 ' /> Add Daraz Product
+                                                                                    Add Daraz Product
                                                                                 </Link>
                                                                             </li>
-                                                                            <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
+                                                                            <li className='flex cursor-pointer items-center justify-between  text-[15px] rounded-sm hover:bg-gray-800 text-gray-50'>
                                                                                 <Link
                                                                                     to={'/seller/product-management/add-woo-product'}
-                                                                                    className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                                                                    className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-xs rounded-md"
                                                                                 >
-                                                                                    <CgAdd className='w-5 h-5 fill-current text-gray-400 ' /> Woo Product
+                                                                                    Woo Product
                                                                                 </Link>
                                                                             </li>
                                                                             <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
                                                                                 <Link
                                                                                     to={'/seller/product-management/manage'}
-                                                                                    className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                                                                    className=" text-gray-50 text-[15px] flex gap-2 items-center px-4 p-2 space-x-3 text-xs rounded-md"
                                                                                 >
-                                                                                    <MdProductionQuantityLimits className='w-5 h-5 fill-current text-gray-400 ' /> Product Management
+                                                                                    Product Management
                                                                                 </Link>
                                                                             </li>
 
@@ -211,7 +211,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                         </span>
                                                                     </summary>
 
-                                                                    <ul className="mt-2 space-y-1 px-4">
+                                                                        <ul className="mt-2 space-y-1 px-4 text-control">
                                                                         <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
                                                                             <Link
                                                                                 to={'/seller/product-management/add-product'}
@@ -271,38 +271,37 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                             </span>
                                                                         </summary>
 
-                                                                        <ul className="mt-2 space-y-1 px-4">
+                                                                        <ul className="mt-2 space-y-1 px-4 text-control">
                                                                             <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
                                                                                 <Link
                                                                                     to={'/seller/categories-management/mega-categories-management'}
-                                                                                    className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
-                                                                                >
-                                                                                    <TbCategory className='w-5 h-5 fill-current text-gray-400 ' />  Mega Category
+                                                                                    className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-xs rounded-md"
+                                                                                >   Mega Category
                                                                                 </Link>
                                                                             </li>
                                                                             <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
                                                                                 <Link
                                                                                     to={'/seller/categories-management/sub-categories-management'}
-                                                                                    className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                                                                    className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-xs rounded-md"
                                                                                 >
-                                                                                    <TbCategory className='w-5 h-5 fill-current text-gray-400 ' />  Sub Category
+                                                                                    Sub Category
                                                                                 </Link>
                                                                             </li>
                                                                             <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
                                                                                 <Link
                                                                                     to={'/seller/categories-management/mini-categories-management'}
-                                                                                    className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                                                                    className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-xs rounded-md"
                                                                                 >
-                                                                                    <TbCategory className='w-5 h-5 fill-current text-gray-400 ' />  Mini Category
+                                                                                    Mini Category
                                                                                 </Link>
                                                                             </li>
 
                                                                             <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
                                                                                 <Link
                                                                                     to={'/seller/categories-management/extra-categories-management'}
-                                                                                    className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                                                                    className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-xs rounded-md"
                                                                                 >
-                                                                                    <TbCategory className='w-5 h-5 fill-current text-gray-400 ' />
+
                                                                                     Extra Category
                                                                                 </Link>
                                                                             </li>
@@ -333,38 +332,38 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                         </span>
                                                                     </summary>
 
-                                                                    <ul className="mt-2 space-y-1 px-4">
+                                                                        <ul className="mt-2 space-y-1 px-4 text-control">
                                                                         <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
                                                                             <Link
                                                                                 to={'/seller/categories-management/mega-categories-management'}
-                                                                                className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                                                                className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-xs rounded-md"
                                                                             >
-                                                                                <TbCategory className='w-5 h-5 fill-current text-gray-400 ' />  Mega Category
+                                                                                Mega Category
                                                                             </Link>
                                                                         </li>
                                                                         <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
                                                                             <Link
                                                                                 to={'/seller/categories-management/sub-categories-management'}
-                                                                                className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                                                                className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-xs rounded-md"
                                                                             >
-                                                                                <TbCategory className='w-5 h-5 fill-current text-gray-400 ' />  Sub Category
+                                                                                Sub Category
                                                                             </Link>
                                                                         </li>
                                                                         <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
                                                                             <Link
                                                                                 to={'/seller/categories-management/mini-categories-management'}
-                                                                                className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                                                                className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3text-xs  rounded-md"
                                                                             >
-                                                                                <TbCategory className='w-5 h-5 fill-current text-gray-400 ' />  Mini Category
+                                                                                Mini Category
                                                                             </Link>
                                                                         </li>
 
                                                                         <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
                                                                             <Link
                                                                                 to={'/seller/categories-management/extra-categories-management'}
-                                                                                className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                                                                className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-xs rounded-md"
                                                                             >
-                                                                                <TbCategory className='w-5 h-5 fill-current text-gray-400 ' />
+
                                                                                 Extra Category
                                                                             </Link>
                                                                         </li>
@@ -396,7 +395,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                             </span>
                                                                         </summary>
 
-                                                                        <ul className="mt-2 space-y-1 px-4">
+                                                                            <ul className="mt-2 space-y-1 px-4 text-control">
                                                                             <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
                                                                                 <Link
                                                                                     to={'/seller/warehouse/warehouse-management'}
@@ -463,7 +462,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                         </span>
                                                                     </summary>
 
-                                                                    <ul className="mt-2 space-y-1 px-4">
+                                                                            <ul className="mt-2 space-y-1 px-4 text-control">
                                                                         <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
                                                                             <Link
                                                                                 to={'/seller/warehouse/warehouse-management'}
@@ -555,37 +554,37 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                         </span>
                                                                     </summary>
 
-                                                                    <ul className="mt-2 space-y-1 px-4">
+                                                                        <ul className="mt-2 space-y-1 px-4 text-control">
                                                                         <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
                                                                             <Link
                                                                                 to={'/seller/product-management/add-product'}
-                                                                                className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                                                                className="text-[10px] text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
                                                                             >
-                                                                                <CgAdd className='w-5 h-5 fill-current text-gray-400 ' /> Add Product
+                                                                                Add Product
                                                                             </Link>
                                                                         </li>
                                                                         <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
                                                                             <Link
                                                                                 to={'/seller/product-management/add-daraz-product'}
-                                                                                className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                                                                className=" text-[10px] text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
                                                                             >
-                                                                                <CgAdd className='w-5 h-5 fill-current text-gray-400 ' /> Add Daraz Product
+                                                                                Add Daraz Product
                                                                             </Link>
                                                                         </li>
                                                                         <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
                                                                             <Link
                                                                                 to={'/seller/product-management/add-woo-product'}
-                                                                                className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                                                                className="text-[10px] text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
                                                                             >
-                                                                                <CgAdd className='w-5 h-5 fill-current text-gray-400 ' /> Woo Product
+                                                                                Woo Product
                                                                             </Link>
                                                                         </li>
                                                                         <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
                                                                             <Link
                                                                                 to={'/seller/product-management/manage'}
-                                                                                className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                                                                className="text-[10px] text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
                                                                             >
-                                                                                <MdProductionQuantityLimits className='w-5 h-5 fill-current text-gray-400 ' /> Product Management
+                                                                                Product Management
                                                                             </Link>
                                                                         </li>
 
@@ -612,37 +611,37 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                     </span>
                                                                 </summary>
 
-                                                                <ul className="mt-2 space-y-1 px-4">
+                                                                        <ul className="mt-2 space-y-1 px-4 text-control">
                                                                     <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
                                                                         <Link
                                                                             to={'/seller/product-management/add-product'}
-                                                                            className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                                                            className=" text-[10px] text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
                                                                         >
-                                                                            <CgAdd className='w-5 h-5 fill-current text-gray-400 ' /> Add Product
+                                                                            Add Product
                                                                         </Link>
                                                                     </li>
                                                                     <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
                                                                         <Link
                                                                             to={'/seller/product-management/add-daraz-product'}
-                                                                            className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                                                            className="text-[10px]  text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
                                                                         >
-                                                                            <CgAdd className='w-5 h-5 fill-current text-gray-400 ' /> Add Daraz Product
+                                                                            Add Daraz Product
                                                                         </Link>
                                                                     </li>
                                                                     <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
                                                                         <Link
                                                                             to={'/seller/product-management/add-woo-product'}
-                                                                            className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                                                            className=" text-[10px] text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
                                                                         >
-                                                                            <CgAdd className='w-5 h-5 fill-current text-gray-400 ' /> Woo Product
+                                                                            Woo Product
                                                                         </Link>
                                                                     </li>
                                                                     <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
                                                                         <Link
                                                                             to={'/seller/product-management/manage'}
-                                                                            className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                                                            className="text-[10px]  text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
                                                                         >
-                                                                            <MdProductionQuantityLimits className='w-5 h-5 fill-current text-gray-400 ' /> Product Management
+                                                                            Product Management
                                                                         </Link>
                                                                     </li>
 
@@ -672,38 +671,38 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                         </span>
                                                                     </summary>
 
-                                                                    <ul className="mt-2 space-y-1 px-4">
+                                                                        <ul className="mt-2 space-y-1 px-4 text-control">
                                                                         <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
                                                                             <Link
                                                                                 to={'/seller/categories-management/mega-categories-management'}
-                                                                                className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                                                                className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-xs rounded-md"
                                                                             >
-                                                                                <TbCategory className='w-5 h-5 fill-current text-gray-400 ' />  Mega Category
+                                                                                Mega Category
                                                                             </Link>
                                                                         </li>
                                                                         <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
                                                                             <Link
                                                                                 to={'/seller/categories-management/sub-categories-management'}
-                                                                                className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                                                                className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-xs rounded-md"
                                                                             >
-                                                                                <TbCategory className='w-5 h-5 fill-current text-gray-400 ' />  Sub Category
+                                                                                Sub Category
                                                                             </Link>
                                                                         </li>
                                                                         <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
                                                                             <Link
                                                                                 to={'/seller/categories-management/mini-categories-management'}
-                                                                                className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                                                                className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-xs rounded-md"
                                                                             >
-                                                                                <TbCategory className='w-5 h-5 fill-current text-gray-400 ' />  Mini Category
+                                                                                Mini Category
                                                                             </Link>
                                                                         </li>
 
                                                                         <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
                                                                             <Link
                                                                                 to={'/seller/categories-management/extra-categories-management'}
-                                                                                className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                                                                className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-xs rounded-md"
                                                                             >
-                                                                                <TbCategory className='w-5 h-5 fill-current text-gray-400 ' />
+
                                                                                 Extra Category
                                                                             </Link>
                                                                         </li>
@@ -734,38 +733,38 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                     </span>
                                                                 </summary>
 
-                                                                <ul className="mt-2 space-y-1 px-4">
+                                                                        <ul className="mt-2 space-y-1 px-4 text-control">
                                                                     <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
                                                                         <Link
                                                                             to={'/seller/categories-management/mega-categories-management'}
-                                                                            className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                                                            className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-xs rounded-md"
                                                                         >
-                                                                            <TbCategory className='w-5 h-5 fill-current text-gray-400 ' />  Mega Category
+                                                                            Mega Category
                                                                         </Link>
                                                                     </li>
                                                                     <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
                                                                         <Link
                                                                             to={'/seller/categories-management/sub-categories-management'}
-                                                                            className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                                                            className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-xs rounded-md"
                                                                         >
-                                                                            <TbCategory className='w-5 h-5 fill-current text-gray-400 ' />  Sub Category
+                                                                            Sub Category
                                                                         </Link>
                                                                     </li>
                                                                     <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
                                                                         <Link
                                                                             to={'/seller/categories-management/mini-categories-management'}
-                                                                            className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                                                            className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-xs rounded-md"
                                                                         >
-                                                                            <TbCategory className='w-5 h-5 fill-current text-gray-400 ' />  Mini Category
+                                                                            Mini Category
                                                                         </Link>
                                                                     </li>
 
                                                                     <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
                                                                         <Link
                                                                             to={'/seller/categories-management/extra-categories-management'}
-                                                                            className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                                                            className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-xs rounded-md"
                                                                         >
-                                                                            <TbCategory className='w-5 h-5 fill-current text-gray-400 ' />
+
                                                                             Extra Category
                                                                         </Link>
                                                                     </li>
@@ -797,45 +796,45 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                         </span>
                                                                     </summary>
 
-                                                                    <ul className="mt-2 space-y-1 px-4">
+                                                                    <ul className="mt-2 space-y-1 px-4 text-control">
                                                                         <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
                                                                             <Link
                                                                                 to={'/seller/warehouse/warehouse-management'}
-                                                                                className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                                                                className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-xs rounded-md"
                                                                             >
-                                                                                <PiWarehouseThin className='w-5 h-5 fill-current text-gray-400 ' /> Manage Warehouse
+                                                                                Manage Warehouse
                                                                             </Link>
                                                                         </li>
                                                                         <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
                                                                             <Link
                                                                                 to={'/seller/warehouse/area-management'}
-                                                                                className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                                                                className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-xs rounded-md"
                                                                             >
-                                                                                <BiArea className='w-5 h-5 fill-current text-gray-400 ' /> Area Management
+                                                                                Area Management
                                                                             </Link>
                                                                         </li>
                                                                         <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
                                                                             <Link
                                                                                 to={'/seller/warehouse/rack-management'}
-                                                                                className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                                                                className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-xs rounded-md"
                                                                             >
-                                                                                <BsHddRack className='w-5 h-5 fill-current text-gray-400 ' /> Rack Management
+                                                                                Rack Management
                                                                             </Link>
                                                                         </li>
                                                                         <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
                                                                             <Link
                                                                                 to={'/seller/warehouse/self-management'}
-                                                                                className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                                                                className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-xs rounded-md"
                                                                             >
-                                                                                <MdSelfImprovement className='w-5 h-5 fill-current text-gray-400 ' /> Self Management
+                                                                                Self Management
                                                                             </Link>
                                                                         </li>
                                                                         <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
                                                                             <Link
                                                                                 to={'/seller/warehouse/cell-management'}
-                                                                                className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                                                                className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-xs rounded-md"
                                                                             >
-                                                                                <BiSolidBellRing className='w-5 h-5 fill-current text-gray-400 ' /> Cell Management
+                                                                                Cell Management
                                                                             </Link>
                                                                         </li>
 
@@ -864,45 +863,45 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                     </span>
                                                                 </summary>
 
-                                                                <ul className="mt-2 space-y-1 px-4">
+                                                                            <ul className="mt-2 space-y-1 px-4 text-control">
                                                                     <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
                                                                         <Link
                                                                             to={'/seller/warehouse/warehouse-management'}
-                                                                            className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                                                            className=" text-gray-50 flex gap-2 items-center px-4 p-1 space-x-3 text-xs rounded-md"
                                                                         >
-                                                                            <PiWarehouseThin className='w-5 h-5 fill-current text-gray-400 ' /> Manage Warehouse
+                                                                            Manage Warehouse
                                                                         </Link>
                                                                     </li>
                                                                     <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
                                                                         <Link
                                                                             to={'/seller/warehouse/area-management'}
-                                                                            className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                                                            className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-xs rounded-md"
                                                                         >
-                                                                            <BiArea className='w-5 h-5 fill-current text-gray-400 ' /> Area Management
+                                                                            Area Management
                                                                         </Link>
                                                                     </li>
                                                                     <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
                                                                         <Link
                                                                             to={'/seller/warehouse/rack-management'}
-                                                                            className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                                                            className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-xs rounded-md"
                                                                         >
-                                                                            <BsHddRack className='w-5 h-5 fill-current text-gray-400 ' /> Rack Management
+                                                                            Rack Management
                                                                         </Link>
                                                                     </li>
                                                                     <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
                                                                         <Link
                                                                             to={'/seller/warehouse/self-management'}
-                                                                            className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                                                            className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-xs rounded-md"
                                                                         >
-                                                                            <MdSelfImprovement className='w-5 h-5 fill-current text-gray-400 ' /> Self Management
+                                                                            Self Management
                                                                         </Link>
                                                                     </li>
                                                                     <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
                                                                         <Link
                                                                             to={'/seller/warehouse/cell-management'}
-                                                                            className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                                                            className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-xs rounded-md"
                                                                         >
-                                                                            <BiSolidBellRing className='w-5 h-5 fill-current text-gray-400 ' /> Cell Management
+                                                                            Cell Management
                                                                         </Link>
                                                                     </li>
 

@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useContext, useState } from 'react';
 import { AuthContext } from '../../../AuthProvider/UserProvider';
 import SellerStockInvoice from './SellerStockInvoice';
+import { BiSearch } from 'react-icons/bi';
 
 
 const SellerStockManagement = () => {
@@ -24,14 +25,18 @@ const SellerStockManagement = () => {
         )
         : stockRequest;
 
+    const filterData = stockRequest.filter(itm => itm?._id.toLowerCase().includes(searchValue.toLowerCase()));
 
-    console.log(stockRequest, 'invoice data.....');
+    console.log(getP, 'invoice data.....');
     return (
         <div className='relative'>
             <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
                 <div className="flex pb-4 items-center justify-between">
                     <h2 className="text-xl font-semibold pb-4">Stock Quantity Management</h2>
-
+                    <div className="flex px-2 items-center p-1 rounded bg-white">
+                        <BiSearch />
+                        <input onChange={(e) => setSearchValue(e.target.value)} type="text" className='px-1 py-1 outline-none' placeholder='search...' />
+                    </div>
 
                 </div>
                 <input
@@ -73,6 +78,7 @@ const SellerStockManagement = () => {
                         </thead>
                         <tbody className="bg-white divide-y divide-gray-200 ">
                             {filteredStockRequest?.map((itm, index) => (
+
                                 <tr>
                                     <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                                         <div className="inline-flex items-center gap-x-3">

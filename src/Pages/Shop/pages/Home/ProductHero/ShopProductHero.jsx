@@ -284,7 +284,7 @@ const ShopProductHero = () => {
                                                     {/* <img src={item?.image} alt="" className="w-8 h-8 rounded-full ring-1 ring-gray-200" /> */}
                                                     {item?.name}
                                                 </span>
-                                                <FaAngleRight className="absolute right-2" />
+                                              {subCategoryData.length ? <FaAngleRight className="absolute right-2" /> : ''}
                                             </button>
                                             // :
 
@@ -320,7 +320,6 @@ const ShopProductHero = () => {
                                                                     aria-expanded="false"
                                                                     data-te-ripple-init
                                                                     data-te-ripple-color="light">
-                                                                    mn
                                                                     <span className="flex items-center gap-2 text-black">
                                                                         <img src={subCategory?.img} alt="" className="w-8 h-8 rounded-full ring-1 ring-gray-200" />
 

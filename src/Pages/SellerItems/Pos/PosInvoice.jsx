@@ -1,52 +1,48 @@
-import html2canvas from 'html2canvas';
-import jsPDF from 'jspdf'; // Import jsPDF library
-import React, { useContext, useState } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import { AuthContext } from '../../../AuthProvider/UserProvider';
 // import localImg from '../../../assets/Logo.png'
-
+import ReactToPrint from 'react-to-print';
 const PosInvoice = ({ setOpen, invoiceData, setInvoiceOpen, invoiceOpen }) => {
     const [loader, setLoader] = useState(false);
     const { shopInfo } = useContext(AuthContext)
 
+    const componentRef = useRef();
 
 
 
-    const downloadPDF = () => {
-        setLoader(true);
-        const capture = document.getElementById('invoice');
-
-        html2canvas(capture).then((canvas) => {
-            const imgData = canvas.toDataURL('image/png');
-            const pdf = new jsPDF('p', 'mm', 'a4');
-            const width = pdf.internal.pageSize.getWidth();
-            const height = pdf.internal.pageSize.getHeight();
-            pdf.addImage(imgData, 'PNG', 0, 0, width, height);
-            pdf.save('Invoice.pdf');
-            setLoader(false);
-        });
-    };
 
     console.log(invoiceData, '****');
     return (
         <>
+        
             {
                 invoiceOpen && <div className="bg-gray-100 p-12  w-screen h-screen overflow-x-hidden overflow-h-auto fixed top-0 left-0 bottom-0 right-0">
                     <div className="flex justify-between gap-3 items-center border-b pb-3">
                         <h1 className="text-xl font-semibold">
-                            {/* Invoice */}
+                            . {/* Invoice */}
                         </h1>
-                        <div className="flex gap-3 items-center">
-                            <button onClick={() => { setInvoiceOpen(!invoiceOpen), setOpen(false) }} className='px-4 py-2 text-white rounded-md bg-red-600'>Close</button>
+
+                        <div className="flex items-center gap-2">
                             <button
-                                onClick={downloadPDF}
-                                disabled={!(loader === false)}
-                                className='px-4 py-2 text-white rounded-md bg-blue-600'>{
-                                    loader ? (<span>Downloading...</span>) : (<span>Download</span>)
-                                }</button>
+                                onClick={() => { setOpen(false) }}
+                                className='px-4 py-2 text-white rounded-md bg-red-600'>
+                                Close
+                            </button>
+
+                            <ReactToPrint
+                                trigger={() => (
+                                    <button
+                                        disabled={!(loader === false)}
+                                        className='px-4 py-2 text-white rounded-md bg-blue-600'>
+                                        {loader ? (<span>Printing...</span>) : (<span>Print</span>)}
+                                    </button>
+                                )}
+                                content={() => componentRef.current}
+                            />
                         </div>
                     </div><br />
                     <div className="w-screen flex justify-center">
-                        <div id='invoice' className="w-full h-full p-8 m-auto bg-white" style={{ width: '210mm', height: '297mm' }}>
+                        <div id='invoice' ref={componentRef} className="w-full h-full p-8 m-auto bg-white" style={{ width: '812px', height: '1218px' }}>
                             <div className="flex items-center justify-between pb-3   border-blue-700">
                                 <div className="">
                                     {shopInfo?.logo && <img src={shopInfo?.logo} className='w-[120px]' alt="" />}

@@ -83,6 +83,7 @@ import ClimAndReturn from "../Pages/SellerItems/OrderManagment/ManageOrder/ClimA
 import AddBlogCategory from "../Pages/SellerItems/SellersBlog/AddBlogCategory/AddBlogCategory";
 import FacebookPixel from "../Pages/SellerItems/Sittings/FacebookPixel/FacebookPixel";
 import SellerBlogComment from "../Pages/SellerItems/SellersBlog/SellerBlogComment/SellerBlogComment";
+import CategoryEditPage from "../Pages/SellerItems/ProductManagement/SellerProductManagement/SellerAllProduct/CategoryEditPage/CategoryEditPage";
 
 
 const SellerPath = [
@@ -260,7 +261,7 @@ const SellerPath = [
     },
     {
         path: "product-management/edit/:id",
-        element: <EditProductForm />
+        element: <CategoryEditPage />
     },
     {
         path: "product-management/add-daraz-product",

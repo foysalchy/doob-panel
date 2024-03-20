@@ -1178,7 +1178,7 @@ const SideNavAdmin = () => {
                                     }}
                                   >
                                     <FaUsersGear className="w-5 h-5 fill-current text-gray-400" />
-                                    {menu && <span>Category </span>}
+                                    {menu && <span>Category ..</span>}
                                   </NavLink>
                                 ) : null
                               ) : (
@@ -1193,7 +1193,7 @@ const SideNavAdmin = () => {
                                   }}
                                 >
                                   <FaUsersGear className="w-5 h-5 fill-current text-gray-400" />
-                                  {menu && <span>Category </span>}
+                                  {menu && <span>Category **</span>}
                                 </NavLink>
                               )}
                             </ul>
@@ -1258,38 +1258,7 @@ const SideNavAdmin = () => {
                                 {menu && <span>Service Management</span>}
                               </NavLink>
                             )}
-
-                            {user?.staffRole ? (
-                              user?.permissions.find((itm) => itm?.name === "Services") ? (
-                                <NavLink
-                                  onMouseMove={() => setMenu(true)}
-                                  rel="noopener noreferrer"
-                                  to={"/admin/services"}
-                                  className={({ isActive }) => {
-                                    return isActive
-                                      ? "flex items-center p-2 space-x-3 rounded-sm bg-gray-800 text-white "
-                                      : "flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
-                                  }}
-                                >
-                                  <BsTicketDetailed className="w-5 h-5 fill-current text-gray-400" />
-                                  {menu && <span>Packages</span>}
-                                </NavLink>
-                              ) : null
-                            ) : (
-                              <NavLink
-                                onMouseMove={() => setMenu(true)}
-                                rel="noopener noreferrer"
-                                to={"/admin/services"}
-                                className={({ isActive }) => {
-                                  return isActive
-                                    ? "flex items-center p-2 space-x-3 rounded-sm bg-gray-800 text-white "
-                                    : "flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
-                                }}
-                              >
-                                <BsTicketDetailed className="w-5 h-5 fill-current text-gray-400" />
-                                {menu && <span>Packages</span>}
-                              </NavLink>
-                            )}
+ 
 
                             {user?.staffRole ? (
                               user?.permissions.find(

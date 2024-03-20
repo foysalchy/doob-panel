@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import BrightAlert from "bright-alert";
 import React from "react";
 import { useState } from "react";
+import { BsEye } from "react-icons/bs";
 import { Link } from "react-router-dom";
 
 const CatagoryManagement = () => {
@@ -196,6 +197,12 @@ const CatagoryManagement = () => {
                     >
                       Edit
                     </button>
+                    <Link
+                      to={`/services`}
+                      className="inline-block rounded ml-3 text-blue-600 px-3 text-lg font-medium  "
+                    >
+                      <BsEye />
+                    </Link>
                   </td>
 
                   <div>

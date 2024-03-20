@@ -3,6 +3,7 @@ import React from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 const MainService = () => {
 
@@ -52,7 +53,7 @@ const MainService = () => {
                     <h2 className="text-xl font-bold text-gray-900 sm:text-3xl">
                         Our Service
                     </h2>
-
+                    <input type="text" onChange={(e) => setSearchTerm(e.target.value)} className='border border-gray-600 md:w-[500px] w-full p-2 rounded mt-4' placeholder='Search...' />
                     <p className="max-w-2xl mx-auto mt-4 text-gray-500">
                         Empower Your Sales with Sale Now: Your Ultimate SAS-Based Web App, Providing Sellers a Robust Platform and Exceptional Services for Unmatched Success!
                     </p>
@@ -60,18 +61,17 @@ const MainService = () => {
 
                 <div className="mt-4">
                     <div className="flex flex-wrap gap-4">
-                        <button
-                            onClick={() => filterServices(null)}
+                        <a
+                            href={`#all`}
                             className={`px-4 py-2 text-sm font-medium uppercase tracking-wide ${selectedCategory === null ? 'bg-black text-white' : 'bg-gray-300 text-gray-700'
                                 }`}
                         >
                             All
-                        </button>
+                        </a>
                         {!isCategoriesLoading &&
                             categories.map((category) => (
                                 <a href={`#${category.title}`}
                                     key={category.id}
-                                    onClick={() => filterServices(category.title)}
                                     className={`px-4 py-2 text-sm font-medium uppercase tracking-wide ${selectedCategory === category.title ? 'bg-black text-white' : 'bg-gray-300 text-gray-700'
                                         }`}
                                 >
@@ -101,21 +101,21 @@ const MainService = () => {
                                                         className="object-cover border border-black rounded-md w-full transition duration-500 aspect-square"
                                                     />
 
-                                                    <div className="absolute group-hover:bg-gray-900 group-hover:bg-opacity-90 bg-gray-900 bg-opacity-50 inset-0 flex flex-col items-start justify-end p-6">
-                                                        <h3 className="text-xl font-semibold text-white">{service?.title}</h3>
+                                                <div className="absolute group-hover:bg-gray-900 group-hover:bg-opacity-90 bg-gray-900 bg-opacity-50 inset-0 flex flex-col items-start justify-end p-6">
+                                                    <h3 className="text-xl font-semibold text-white">{service?.title}</h3>
 
-                                                        <Link
-                                                            to={`/service/${service._id}`}
-                                                            className="mt-1.5 inline-block bg-black px-5 py-3 text-xs font-medium uppercase tracking-wide text-white"
-                                                        >
-                                                            Show Details
-                                                        </Link>
-                                                    </div>
-                                                </Link>
-                                            </li>
-                                        )}
-                                    </div>
-                                ))}
+                                                    <Link
+                                                        to={`/service/${service._id}`}
+                                                        className="mt-1.5 inline-block bg-black px-5 py-3 text-xs font-medium uppercase tracking-wide text-white"
+                                                    >
+                                                        Show Details
+                                                    </Link>
+                                                </div>
+                                            </Link>
+                                        </li>
+                                    )}
+                                </div>
+                            ))}
 
                         </ul>
                     </div> :

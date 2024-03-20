@@ -94,7 +94,7 @@ const Variants = ({ adminWare, multiVendor, setMultiVendor, inputFields, setInpu
     const handleAddField = () => {
         setInputFields([...inputFields, {
 
-            name: '', image: null, quantity: "", SKU: "", price: '', offerPrice: '', ability: false, vendor: false, variantImag: null
+            name: '', image: null, quantity: "", SKU: "hello js", price: '', offerPrice: '', ability: false, vendor: false, variantImag: null
         }]);
     };
 

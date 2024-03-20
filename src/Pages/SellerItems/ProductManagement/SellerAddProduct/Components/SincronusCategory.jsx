@@ -170,6 +170,7 @@ const SincronusCategory = ({ daraz, setDaraz, woo, setWoo, setInputFields, setDa
         reExtra();
     }, [selectedMinicategory]);
 
+    console.log(selectedSubcategory, 'sub categories........');
 
     return (
         <div>
