@@ -50,7 +50,7 @@ const AddProduct = () => {
         <div className="p-10 border-2 rounded m-10">
           <form onSubmit={handleUpload} className="space-y-4  ">
             <div className="border border-collapse p-4">
-              <h1>Product Commission : {Commission?.Commission}</h1>
+              <h1>ProductCommission : {Commission?.Commission}</h1>
               <div className="mt-4">
                 <label className=" text-black text-sm " htmlFor="Commission">
                   Commission

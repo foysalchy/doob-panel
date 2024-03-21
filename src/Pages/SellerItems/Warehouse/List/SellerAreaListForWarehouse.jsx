@@ -315,10 +315,13 @@ const SellerAreaListForWarehouse = () => {
                             }
 
                         </tbody>
+
+
                     </table>
+
                 </div>
             </div>
-
+           
 
         </div>
     );

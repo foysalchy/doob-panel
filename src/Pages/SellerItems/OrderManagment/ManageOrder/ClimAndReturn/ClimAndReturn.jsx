@@ -26,10 +26,10 @@ const ClimAndReturn = () => {
     const handleSearch = (e) => {
         e.preventDefault();
         const searchValue = e.target.search.value;
-        const findProduct = tData.find((itm) => itm._id.includes(searchValue));
+        const findProduct = tData.find((itm) => itm.orderNumber.includes(searchValue));
 
         if (findProduct) {
-            const existingProductIndex = cartProducts.findIndex(item => item._id === findProduct._id);
+            const existingProductIndex = cartProducts.findIndex(item => item.orderNumber === findProduct.orderNumber);
 
             if (existingProductIndex === -1) {
 
@@ -292,11 +292,14 @@ const ClimAndReturn = () => {
         <div className="flex flex-col overflow-hidden mt-4">
             <form
                 onSubmit={handleSearch}
-                className="flex items-center bg-gray-100 ring-1 ring-gray-300 p-2 rounded-md w-full">
+                className="flex items-center border w-[70%] bg-gray-100 ring-1 border-gray-900 p-2 rounded-md ">
                 <BiSearch className='text-gray-600 text-lg' />
-                <input name='search' type="text" className="outline-none bg-transparent w-full px-2" placeholder='Search...' />
+                <input name='search' type="text" className="outline-none  bg-transparent w-full px-2" placeholder='Search...' />
             </form>
-            <button className='bg-gray-800 w-[200px] mt-4 mb-6 text-white px-3 py-2 rounded'>Update Status</button>
+            {selectAll && <div className='flex items-center gap-8'>
+                <button className='bg-gray-800 w-[200px] mt-4 mb-6 text-white px-3 py-2 rounded'>Approve</button>
+                <button className='bg-gray-800 w-[200px] mt-4 mb-6 text-white px-3 py-2 rounded'>Reject</button>
+            </div>}
             <div className="overflow-x-auto transparent-scroll sm:-mx-6 lg:-mx-8">
                 <div className="inline-block  min-w-full py-2 sm:px-6 lg:px-8">
                     <div className="overflow-hidden">

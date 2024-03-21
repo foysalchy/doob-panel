@@ -9,6 +9,7 @@ import SellerModalForWarehouse from './Modal/SellerModalForWarehouse';
 import SellerEditWareHouse from './SellerEditWareHouse';
 import { useContext } from 'react';
 import { AuthContext } from '../../../AuthProvider/UserProvider';
+import SellerShowPrivew from './SellerShowPrivew';
 
 
 
@@ -26,7 +27,7 @@ const SellerListOfWarehouse = () => {
     const { data: wareLength = [], refetch: reload } = useQuery({
         queryKey: ["wareLength"],
         queryFn: async () => {
-            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/warehouse/seller-all-warehouse-area-rack-cell-self?shopId=${shopInfo._id}`);
+            const res = await fetch(`http://localhost:5001/api/v1/seller/warehouse/seller-all-warehouse-area-rack-cell-self?shopId=${shopInfo._id}`);
             const data = await res.json();
             return data;
         },
@@ -75,7 +76,7 @@ const SellerListOfWarehouse = () => {
                 {startPage > 1 && (
                     <li>
                         <button
-                            className={`block h-8 w-8 rounded border border-gray-900 bg-white text-center leading-8 text-gray-900`}
+                            className={`block h-8  w-8 rounded border border-gray-900 bg-white text-center leading-8 text-gray-900`}
                             onClick={() => handleChangePage(1)}
                         >
                             1
@@ -120,6 +121,7 @@ const SellerListOfWarehouse = () => {
         );
     };
 
+    const [status, setStatus] = useState(false)
 
 
     const updateStatus = (id, status) => {
@@ -246,8 +248,11 @@ const SellerListOfWarehouse = () => {
                                 <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-800 ">
                                     Status
                                 </th>
-                                <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-800  rounded-tr ">
+                                <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-800   ">
                                     Action
+                                </th>
+                                <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-800  rounded-tr ">
+
                                 </th>
 
                             </tr>
@@ -312,13 +317,19 @@ const SellerListOfWarehouse = () => {
                                             />
 
                                         </td>
+                                        <td className="">
+
+                                            <button onClick={() => setStatus({ data: wareLength?.find(item => item.warehouse === warehouse.name), id: warehouse._id })} className='bg-yellow-600 p-2 rounded'>Show Preview</button>
+
+
+                                        </td>
 
 
                                         {OpenModal === warehouse._id && <div className="h-0 w-0">
                                             <SellerEditWareHouse OpenModal={OpenModal} refetch={refetch} setOpenModal={setOpenModal} data={warehouse} />
                                         </div>}
-
-
+                                        {
+                                            status.id === warehouse._id && <SellerShowPrivew status={status} setStatus={setStatus} />}
 
                                     </tr>
                                 ))
@@ -327,10 +338,38 @@ const SellerListOfWarehouse = () => {
                         </tbody>
                     </table>
                 </div>
+                <nav >
+                    <ul className="flex items-center gap-2 justify-center mt-8">
+                        {/* Previous Page */}
+                        <li>
+                            <button
+                                className="pagination-btn"
+                                onClick={() => handleChangePage(currentPage - 1)}
+                                disabled={currentPage === 1}
+                            >
+                                Previous
+                            </button>
+                        </li>
+
+                        {/* Page Numbers */}
+                        {renderPageNumbers()}
+
+                        {/* Next Page */}
+                        <li>
+                            <button
+                                className="pagination-btn"
+                                onClick={() => handleChangePage(currentPage + 1)}
+                                disabled={currentPage === totalPages}
+                            >
+                                Next
+                            </button>
+                        </li>
+                    </ul>
+                </nav>
             </div>
 
 
-        </div>
+        </div >
     );
 };
 

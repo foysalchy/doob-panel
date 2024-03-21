@@ -57,11 +57,13 @@ const SellerAddCellModal = ({ recall, setOpenModal }) => {
         setSelectedRack(selectedRack);
 
         const selfRes = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/warehouse/self/${selectedWarehouse}/${selectedArea}/${selectedRack}/${shopInfo._id}`);
-        console.log(selfRes);
+        console.log(selfRes, 'self');
         const selfData = await selfRes.json();
         setSelfs(selfData);
         refetch();
     };
+
+    console.log(selfs);
 
 
     const UploadArea = (e) => {

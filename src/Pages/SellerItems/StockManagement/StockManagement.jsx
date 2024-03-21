@@ -33,9 +33,49 @@ const StockManagement = () => {
             refetch()
         })
     }
+
+    const [searchQuery, setSearchQuery] = useState('');
+
+    const filteredStockRequestData = searchQuery ? stockRequest.filter(item =>
+        item._id.toLowerCase().includes(searchQuery.toLowerCase())
+    ) : stockRequest;
+
     return (
         <div>
             <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
+
+                <div className="relative my-4">
+                    <label htmlFor="Search" className="sr-only"> Search </label>
+
+                    <input
+                        type="text"
+                        id="Search"
+                        value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)}
+                        placeholder="Search for..."
+                        className="w-full rounded-md border px-4 border-gray-900 py-2.5 pe-10 shadow-sm sm:text-sm"
+                    />
+
+                    <span className="absolute inset-y-0 end-0 grid w-10 place-content-center">
+                        <button type="button" className="text-gray-600 hover:text-gray-700">
+                            <span className="sr-only">Search</span>
+
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                strokeWidth="1.5"
+                                stroke="currentColor"
+                                className="h-4 w-4"
+                            >
+                                <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
+                                />
+                            </svg>
+                        </button>
+                    </span>
+                </div>
                 <div className="overflow-hidden border border-gray-200 border-gray-700 md:rounded-lg">
                     <table className="min-w-full divide-y divide-gray-200 divide-gray-700">
                         <thead className="bg-gray-50 ">
@@ -72,7 +112,7 @@ const StockManagement = () => {
                             </tr>
                         </thead>
                         <tbody className="bg-white divide-y divide-gray-200 ">
-                            {stockRequest?.map((itm, index) => (
+                            {filteredStockRequestData?.map((itm, index) => (
                                 <tr>
                                     <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                                         <div className="inline-flex items-center gap-x-3">
@@ -112,6 +152,7 @@ const StockManagement = () => {
                             ))}
                         </tbody>
                     </table>
+
                 </div>
             </div>
         </div>
@@ -119,3 +160,4 @@ const StockManagement = () => {
 };
 
 export default StockManagement;
+

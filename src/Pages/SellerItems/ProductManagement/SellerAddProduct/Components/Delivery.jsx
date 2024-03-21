@@ -32,6 +32,10 @@ const Delivery = () => {
                         <label className='text-sm ' >Delivery Charge</label>
                         <input className="flex-grow w-full h-10 px-4 mt-1 mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-purple-400 focus:outline-none focus:shadow-outline" placeholder="Input Quantity" type="number" name="DeliveryCharge" id="" />
                     </div>
+                    <div>
+                        <label className='text-sm ' >Low Stock Warning</label>
+                        <input className="flex-grow w-full h-10 px-4 mt-1 mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-purple-400 focus:outline-none focus:shadow-outline" placeholder="Input Low Stock Warning" type="number" name="low_stock_warning" id="" />
+                    </div>
                 </div>
 
             </div>

@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import PriceModal from '../../Home/Price/PriceModal';
 
-const SubscriptionInvoice = ({ commissionHistory, invoice, setInvoice, due, pricesData, id }) => {
+const SubscriptionInvoice = ({ CommissionHistory, invoice, setInvoice, due, pricesData, id }) => {
     const [open, setOpen] = useState(false);
 
-    const allCommissions = commissionHistory.reduce((total, commission) => total + commission.commission, 0);
+    const allCommissions = CommissionHistory.reduce((total, Commission) => total + Commission.commission, 0);
     let selectedObject = pricesData.find(item => item._id === id);
     console.log(selectedObject);
     const handleSubmit = () => {
@@ -18,7 +18,7 @@ const SubscriptionInvoice = ({ commissionHistory, invoice, setInvoice, due, pric
             }`}>
             <div className="w-full max-w-[570px] rounded-[20px] bg-white opacity-100 px-8 py-12 text-center dark:bg-dark-2 md:px-[70px] md:py-[60px]">
                 <h3 className="pb-[18px] text-xl font-semibold text-dark dark:text-back sm:text-2xl">
-                    Your Total Commission : {parseInt(allCommissions).toFixed()}
+                    Your TotalCommission : {parseInt(allCommissions).toFixed()}
                     Your Due =  {parseInt(allCommissions) + parseInt(selectedObject?.price)}
                 </h3>
                 <span

@@ -21,9 +21,15 @@ const ProductGallery = () => {
 
   const blankImg = 'https://i.ibb.co/7p2CvzT/empty.jpg';
   return (
-    <div className='my-12 p-6 bg-white'>
-      <h2 className="text- py-4">Feature Images</h2>
-      <Swiper
+    <div >
+
+      <div className='my-12 grid grid-cols-2 gap-4 lg:grid-cols-4 '>
+        {featureImageData?.map(itm => (<div className="">
+          <img src={itm?.image} alt="" className="w-full border rounded-xl h-full object-cover" />
+
+        </div>))}
+      </div>
+      {/* <Swiper
         pagination={true}
         autoplay={true}
         modules={[Pagination, Autoplay]}
@@ -37,7 +43,7 @@ const ProductGallery = () => {
           </SwiperSlide>)
         }
 
-      </Swiper>
+      </Swiper> */}
     </div>
   );
 };

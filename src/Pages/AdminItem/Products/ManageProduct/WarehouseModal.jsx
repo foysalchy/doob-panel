@@ -108,13 +108,13 @@ const WarehouseModal = ({ modalOpen, setModalOpen, product, doobProduct }) => {
     const updateInfo = (e) => {
         e.preventDefault()
         const handling = e.target.handling.value
-        const commission = e.target.commission.value
+        constCommission = e.target.commission.value
 
         const adminCategory = [{ name: selectedWarehouse }, { name: selectedArea }, { name: selectedRack }, { name: selectedSelf }, { name: selectedCell }]
 
         const data = {
             handling,
-            commission,
+            Commission,
             warehouse: doobProduct ? adminCategory : product.warehouse
         }
 
@@ -153,16 +153,16 @@ const WarehouseModal = ({ modalOpen, setModalOpen, product, doobProduct }) => {
                     ></span>
                     <div className='flex flex-col mt-3'>
 
-                        <div className="flex gap-4 justify-center">
+                        {product.multiVendor && <div className="flex gap-4 justify-center">
                             <div className="mb-4">
-                                <h1 className="text-xl font-bold mb-2">Commission</h1>
-                                <input type="text" name='commission' className="border border-gray-300 px-3 py-2 rounded-md w-full focus:outline-none focus:border-blue-500" placeholder="Enter commission" />
+                                <h1 className="text-xl font-bold mb-2">Packaging Cost</h1>
+                                <input type="text" required name='commission' className="border border-gray-300 px-3 py-2 rounded-md w-full focus:outline-none focus:border-blue-500" placeholder="Enter Packaging Cost" />
                             </div>
                             <div>
                                 <h1 className="text-xl font-bold mb-2">Handling Free</h1>
-                                <input type="text" className="border border-gray-300 px-3 py-2 rounded-md w-full focus:outline-none focus:border-blue-500" name='handling' placeholder="Enter handling free" />
+                                <input required type="text" className="border border-gray-300 px-3 py-2 rounded-md w-full focus:outline-none focus:border-blue-500" name='handling' placeholder="Enter handling free" />
                             </div>
-                        </div>
+                        </div>}
                         {doobProduct && <div>
                             <div className='grid md:grid-cols-5 mt-3 gap-4'>
                                 <div className="">
@@ -325,8 +325,8 @@ const WarehouseModal = ({ modalOpen, setModalOpen, product, doobProduct }) => {
                         </div>
                     </div>
                 </form>
-            </div>
-        </div>
+            </div >
+        </div >
     );
 };
 

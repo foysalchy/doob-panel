@@ -7,15 +7,25 @@ import { MdDelete } from 'react-icons/md';
 import Swal from 'sweetalert2';
 import EditWareHouse from './EditWareHouse';
 import ModalForWarehouse from './Modal/ModalForWarehouse';
+import ShowPreview from './ShowPreview';
 
 
 const ListOfWarehouse = () => {
 
-
+    const [status, setStatus] = useState(false)
     const { data: warehouses = [], refetch } = useQuery({
         queryKey: ["warehouses"],
         queryFn: async () => {
             const res = await fetch("https://salenow-v2-backend.vercel.app/api/v1/admin/warehouse");
+            const data = await res.json();
+            return data;
+        },
+    });
+
+    const { data: wareLength = [] } = useQuery({
+        queryKey: ["wareLengthAdmin"],
+        queryFn: async () => {
+            const res = await fetch("http://localhost:5001/api/v1/admin/warehouse/admin-all-warehouse-length");
             const data = await res.json();
             return data;
         },
@@ -228,14 +238,21 @@ const ListOfWarehouse = () => {
                                 Warehouse Name
                             </th>
                             <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-800 ">
+                                List of warehouse
+                            </th>
+                            <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-800 ">
                                 Address
                             </th>
                             <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-800 ">
                                 Status
                             </th>
-                            <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-800  rounded-tr ">
+                            <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-800   ">
                                 Action
                             </th>
+                            <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-800  rounded-tr ">
+
+                            </th>
+
 
                         </tr>
                     </thead>
@@ -260,6 +277,15 @@ const ListOfWarehouse = () => {
                                                 </p>
                                             </div>
                                         </div>
+                                    </td>
+                                    <td className='grid grid-cols-2 gap-1'>
+                                        <span>  Area:   {wareLength?.find(item => item.warehouse === warehouse.name)?.areas?.length}</span>
+
+                                        <span> Racks:  {wareLength?.find(item => item.warehouse === warehouse.name)?.racks?.length}</span>
+
+                                        <span>  Selfs: {wareLength?.find(item => item.warehouse === warehouse.name)?.selfs?.length}</span>
+
+                                        <span> Cells: {wareLength?.find(item => item.warehouse === warehouse.name)?.cells?.length}</span>
                                     </td>
                                     <td className="px-4 py-3">{warehouse.address}</td>
                                     <td className="px-4 py-3">{!warehouse.status ? (
@@ -289,11 +315,18 @@ const ListOfWarehouse = () => {
 
                                     </td>
 
+                                    <td className="">
+
+                                        <button onClick={() => setStatus({ data: wareLength?.find(item => item.warehouse === warehouse.name), id: warehouse._id })} className='bg-yellow-600 p-2 rounded'>Show Preview</button>
+
+
+                                    </td>
 
                                     {OpenModal === warehouse._id && <div className="h-0 w-0">
                                         <EditWareHouse OpenModal={OpenModal} refetch={refetch} setOpenModal={setOpenModal} data={warehouse} />
                                     </div>}
-
+                                    {
+                                        status.id === warehouse._id && <ShowPreview status={status} setStatus={setStatus} />}
 
 
                                 </tr>

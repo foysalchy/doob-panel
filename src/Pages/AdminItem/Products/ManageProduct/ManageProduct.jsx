@@ -15,7 +15,15 @@ const ManageProduct = () => {
   const { data: products = [], refetch } = useQuery({
     queryKey: ["products"],
     queryFn: async () => {
-      const res = await fetch("https://salenow-v2-backend.vercel.app/api/v1/admin/products");
+      const res = await fetch("http://localhost:5001/api/v1/admin/products");
+      const data = await res.json();
+      return data;
+    },
+  });
+  const { data: all_products = [], refetch: reload } = useQuery({
+    queryKey: ["all_products"],
+    queryFn: async () => {
+      const res = await fetch("http://localhost:5001/api/v1/admin/get-all-products");
       const data = await res.json();
       return data;
     },
@@ -30,7 +38,7 @@ const ManageProduct = () => {
     },
   });
 
-
+  const [all, setAll] = useState(true)
   const [searchQuery, setSearchQuery] = useState("");
 
   const [modalOpen, setModalOpen] = useState(false)
@@ -39,14 +47,20 @@ const ManageProduct = () => {
     setSearchQuery(event.target.value);
   };
 
-  const filteredData = doobProduct
-    ? products?.filter((item) =>
-      (item.name && item.name.toLowerCase().includes(searchQuery?.toLowerCase())) ||
+  const filteredData = all ?
+    all_products.filter(item =>
+      (item.name && item.name.toLowerCase().includes(searchQuery.toLowerCase())) ||
       (item._id && item._id.toString().includes(searchQuery))
-    )
-    : othersProduct.length && othersProduct?.filter((item) =>
-      (item.name && item.name.toLowerCase().includes(searchQuery?.toLowerCase())) ||
-      (item._id && item._id.toString().includes(searchQuery))
+    ) :
+    (doobProduct ?
+      products.filter(item =>
+        (item.name && item.name.toLowerCase().includes(searchQuery.toLowerCase())) ||
+        (item._id && item._id.toString().includes(searchQuery))
+      ) :
+      othersProduct.filter(item =>
+        (item.name && item.name.toLowerCase().includes(searchQuery.toLowerCase())) ||
+        (item._id && item._id.toString().includes(searchQuery))
+      )
     );
 
   const updateProductStatus = (id, status) => {
@@ -103,7 +117,7 @@ const ManageProduct = () => {
 
 
 
-  console.log(products, '+++++++');
+
 
   return (
     <div className="">
@@ -131,7 +145,7 @@ const ManageProduct = () => {
         </span>
 
         <span className="text-sm font-medium transition-all group-hover:ms-4">
-          Add Commission
+          AddCommission
         </span>
       </Link>
 
@@ -172,13 +186,15 @@ const ManageProduct = () => {
           <div className="flex items-center gap-2">
             <h2 className="text-lg font-medium text-gray-800 ">All Product</h2>
             <span className="px-3 py-1 text-xs  bg-blue-100 rounded-full d text-blue-400">
-              {products?.length}
+              {filteredData?.length}
             </span>
           </div>
 
           <div className='flex gap-2 items-center'>
             <button onClick={logSelectedProducts} disabled={!selectProducts.length} className='bg-blue-500 px-8 py-2 rounded text-white'> Print</button>
-            <button onClick={() => setDoobProduct(!doobProduct)} className='bg-blue-500 px-8 py-2 rounded text-white'>{!doobProduct ? "Your product" : " Others Product"}</button>
+            <button onClick={() => setAll(true)} className={`${all ? 'bg-blue-700' : " bg-blue-500"} px-8 py-2 rounded text-white`}>All Warehouse </button>
+            <button onClick={() => { setDoobProduct(true), setAll(false) }} className={`${doobProduct ? 'bg-blue-700' : " bg-blue-500"} px-8 py-2 rounded text-white`}>Doob Warehouse </button>
+            <button onClick={() => { setDoobProduct(false), setAll(false) }} className={`${!doobProduct ? 'bg-blue-700' : " bg-blue-500"} px-8 py-2 rounded text-white`}>Seller Warehouse </button>
           </div>
         </div>
         <div className="flex flex-col mt-6">
@@ -232,7 +248,7 @@ const ManageProduct = () => {
                         scope="col"
                         className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right "
                       >
-                        commission
+                        Commission
                       </th>
                       <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left  ">
                         <span >Action</span>
@@ -240,100 +256,111 @@ const ManageProduct = () => {
                     </tr>
                   </thead>
                   <tbody className="bg-white divide-y  divide-gray-200 ">
-                    {filteredData.length ? filteredData?.map((product) => (
-                      <tr>
+                    {filteredData.length ? filteredData?.map((product, i) => {
 
-                        <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                          <div className="inline-flex items-center gap-x-3">
-                            <label>
-                              <input
-                                type="checkbox"
-                                checked={selectProducts.includes(product._id)}
-                                onChange={() => handleUpdateCheck(product._id)}
-                              />
-                            </label>
+                      return (
+                        <tr >
 
-                          </div>
-                        </td>
-                        <td>
-                          <div className="flex  duration-150 items-center gap-x-2 relative">
-                            <div className="imgSm bg-red-400">
-                              <img
-                                className="object-cover  w-10 h-10 rounded hover:cursor-pointer"
-                                srcSet={product?.featuredImage && product?.featuredImage?.src}
-                                src={product?.featuredImage && product?.featuredImage?.src}
-                                alt=""
-                              />
-                              <div
-                                style={{
-                                  backgroundImage: `url(${product?.featuredImage?.src})`,
-                                }}
-                                className="absolute top-[-40px] duration-150 abs hidden bg-[url(${product?.featuredImage?.src})] left-[43px] object-cover bg-cover bg-white shadow-xl w-[150px] h-[150px] ring-1 ring-gray-500"
-                              >
+                          <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
+                            <div className="inline-flex items-center gap-x-3">
+                              <label>
+                                <input
+                                  type="checkbox"
+                                  checked={selectProducts.includes(product._id)}
+                                  onChange={() => handleUpdateCheck(product._id)}
+                                />
+                              </label>
+
+                            </div>
+                          </td>
+                          <td>
+                            <div className="flex  duration-150 items-center gap-x-2 relative">
+                              <div className="imgSm bg-red-400">
+                                <img
+                                  className="object-cover  w-10 h-10 rounded hover:cursor-pointer"
+                                  srcSet={product?.featuredImage && product?.featuredImage?.src}
+                                  src={product?.featuredImage && product?.featuredImage?.src}
+                                  alt=""
+                                />
+                                <div
+                                  style={{
+                                    backgroundImage: `url(${product?.featuredImage?.src})`,
+                                  }}
+                                  className="absolute top-[-40px] duration-150 abs hidden bg-[url(${product?.featuredImage?.src})] left-[43px] object-cover bg-cover bg-white shadow-xl w-[150px] h-[150px] ring-1 ring-gray-500"
+                                >
+                                </div>
+                              </div>
+
+                              <div>
+                                <h2 className="font-medium text-gray-800 ">
+                                  {product.name && product?.name.split(" ").slice(0, 5).join(" ")}
+                                </h2>
+                                <p className="text-sm font-normal text-gray-600 text-gray-400">{product && product?._id}</p>
                               </div>
                             </div>
+                          </td>
+                          <td className="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
+                            {
+                              product.status === true ? (
+                                <button
+                                  onClick={() => updateProductStatus(product._id, false)}
+                                  className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 cursor-pointer bg-emerald-100/60 bg-gray-800"
+                                >
+                                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                                  <h2 className="text-sm font-normal text-emerald-500">Active</h2>
+                                </button>
+                              ) : (
+                                (() => {
+                                  const filteredWarehouses = product?.warehouse?.filter(ware => ware.name !== '');
+                                  return (
+                                    <button
+                                      disabled={filteredWarehouses.length < 2}
+                                      onClick={() => updateProductStatus(product._id, true)}
+                                      className="inline-flex items-center px-3 py-1 rounded-full cursor-pointer gap-x-2 bg-emerald-100/60 bg-gray-800"
+                                    >
+                                      <span className="h-1.5 w-1.5 rounded-full bg-red-500" />
+                                      <h2 className="text-sm font-normal text-red-500">Pending</h2>
+                                    </button>
+                                  );
+                                })()
+                              )
+                            }
 
-                            <div>
-                              <h2 className="font-medium text-gray-800 ">
-                                {product.name && product?.name.split(" ").slice(0, 5).join(" ")}
-                              </h2>
-                              <p className="text-sm font-normal text-gray-600 text-gray-400">{product && product?._id}</p>
+                          </td>
+
+                          <td className="px-4 py-4 text-sm text-white  whitespace-nowrap">
+                            <button className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 cursor-pointer bg-emerald-100/60 bg-gray-800" onClick={() => setModalOpen(product?._id)}> {"Select Warehouse"}</button>
+                          </td>
+                          <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
+                            {product?.warehouse.map((ware) => ware.name)}
+                          </td>
+                          <td className="px-4 py-4 text-sm whitespace-nowrap">
+                            <div className="flex items-center gap-x-2">
+                              <p className="px-3 py-1 text-xs text-indigo-500 rounded-full bg-gray-800 bg-indigo-100/60">
+                                {
+                                  product?.commission}
+                              </p>
                             </div>
-                          </div>
-                        </td>
-                        <td className="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                          {product.status === true ?
-                            <div
-                              onClick={() => updateProductStatus(product._id, false)}
-                              className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 cursor-pointer bg-emerald-100/60 bg-gray-800">
-                              <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-                              <h2 className="text-sm font-normal text-emerald-500">
-                                Active
-                              </h2>
-                            </div> :
-                            <div
-                              onClick={() => updateProductStatus(product?._id, true)}
-                              className="inline-flex items-center px-3 py-1 rounded-full  cursor-pointer gap-x-2 bg-emerald-100/60 bg-gray-800">
-                              <span className="h-1.5 w-1.5 rounded-full bg-red-500" />
-                              <h2 className="text-sm font-normal text-red-500">
-                                Pending
-                              </h2>
-                            </div>}
-                        </td>
-
-                        <td className="px-4 py-4 text-sm text-white  whitespace-nowrap">
-                          <button className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 cursor-pointer bg-emerald-100/60 bg-gray-800" onClick={() => setModalOpen(product?._id)}> {"Select Warehouse"}</button>
-                        </td>
-                        <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
-                          {product?.warehouse.map((ware) => ware.name)}
-                        </td>
-                        <td className="px-4 py-4 text-sm whitespace-nowrap">
-                          <div className="flex items-center gap-x-2">
-                            <p className="px-3 py-1 text-xs text-indigo-500 rounded-full bg-gray-800 bg-indigo-100/60">
-                              {
-                                product?.commission}
-                            </p>
-                          </div>
-                        </td>
-                        <td className="px-4 py-4 text-sm whitespace-nowrap">
-                          <div className="flex items-center gap-x-6">
-                            <button className=" transition-colors duration-200 text-red-500 hover:text-red-700 focus:outline-none">
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                strokeWidth="1.5"
-                                stroke="currentColor"
-                                className="w-5 h-5"
-                              >
-                                <path
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                  d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
-                                />
-                              </svg>
-                            </button>
-                            {/* <button
+                          </td>
+                          <td className="px-4 py-4 text-sm whitespace-nowrap">
+                            <div className="flex items-center gap-x-6">
+                              <button className=" transition-colors duration-200 text-red-500 hover:text-red-700 focus:outline-none">
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  fill="none"
+                                  viewBox="0 0 24 24"
+                                  strokeWidth="1.5"
+                                  stroke="currentColor"
+                                  className="w-5 h-5"
+                                >
+                                  <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
+                                  />
+                                </svg>
+                              </button>
+                              {/* <button
                               onClick={() => setOpenModal(product)}
                               className=" transition-colors duration-200 hover:text-yellow-500  text-yellow-700 focus:outline-none">
                               <svg
@@ -352,28 +379,29 @@ const ManageProduct = () => {
                               </svg>
                             </button> */}
 
-                            {/* modal */}
-                            {/* <EditProduct openModal={openModal} setOpenModal={setOpenModal} product={product} /> */}
-                            {/* modal end */}
+                              {/* modal */}
+                              {/* <EditProduct openModal={openModal} setOpenModal={setOpenModal} product={product} /> */}
+                              {/* modal end */}
 
 
+                            </div>
+                          </td>
+                          <div className="h-0 w-0">
+                            {modalOpen == product?._id && <WarehouseModal doobProduct={doobProduct} modalOpen={modalOpen} product={product} setModalOpen={setModalOpen} />}
                           </div>
-                        </td>
-                        <div className="h-0 w-0">
-                          {modalOpen == product?._id && <WarehouseModal doobProduct={doobProduct} modalOpen={modalOpen} product={product} setModalOpen={setModalOpen} />}
-                        </div>
 
 
-                      </tr>
-                    )) : ''}
+                        </tr>
+                      )
+                    }) : ''}
                   </tbody>
                 </table>
               </div>
             </div>
           </div>
         </div>
-      </section>
-    </div>
+      </section >
+    </div >
   );
 };
 

@@ -25,27 +25,22 @@ const SellerStockManagement = () => {
         )
         : stockRequest;
 
-    const filterData = stockRequest.filter(itm => itm?._id.toLowerCase().includes(searchValue.toLowerCase()));
+    // const filterData = stockRequest.filter(itm => itm?._id.toLowerCase().includes(searchValue.toLowerCase()));
 
-    console.log(getP, 'invoice data.....');
+
     return (
         <div className='relative'>
             <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
                 <div className="flex pb-4 items-center justify-between">
                     <h2 className="text-xl font-semibold pb-4">Stock Quantity Management</h2>
-                    <div className="flex px-2 items-center p-1 rounded bg-white">
+                    <div className="flex px-2 items-center p-1  w-[60%] rounded bg-white">
                         <BiSearch />
-                        <input onChange={(e) => setSearchValue(e.target.value)} type="text" className='px-1 py-1 outline-none' placeholder='search...' />
+                        <input value={searchQuery}
+                            onChange={e => setSearchQuery(e.target.value)} type="text" className='px-1 py-1 outline-none w-full' placeholder='search...' />
                     </div>
 
                 </div>
-                <input
-                    type="text"
-                    placeholder="Search by Product Id"
-                    value={searchQuery}
-                    onChange={e => setSearchQuery(e.target.value)}
-                    className="px-3 py-1 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
-                />
+
 
                 <div className="overflow-hidden border border-gray-200 border-gray-700 md:rounded-lg">
                     <table className="min-w-full divide-y divide-gray-200 divide-gray-700">
