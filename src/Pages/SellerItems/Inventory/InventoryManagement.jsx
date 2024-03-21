@@ -25,17 +25,33 @@ const InventoryManagement = () => {
 
 
 
-    const getStatus = (quantity) => {
+    // const getStatus = (quantity, product_Low_alert) => {
+    //     console.log(product_Low_alert);
+    //     if (quantity <= 0) {
+    //         return { text: 'Stock Out', color: 'text-red-500', icon: <FaExclamationCircle /> };
+    //     } else if (quantity <= product_Low_alert ? parseInt(product_Low_alert) : 10) {
+    //         return { text: 'Lowest Stock', color: 'text-orange-500', icon: <FaArrowDown /> };
+    //     } else if (quantity <= product_Low_alert ? parseInt(product_Low_alert) : 50) {
+    //         return { text: 'Average Stock', color: 'text-yellow-500', icon: <FaEquals /> };
+    //     } else {
+    //         return { text: 'Good Stock', color: 'text-green-500', icon: <FaCheckCircle /> };
+    //     }
+    // };
+    const getStatus = (quantity, product_Low_alert) => {
+        console.log(product_Low_alert, quantity);
+        const lowAlert = product_Low_alert ? parseInt(product_Low_alert) : null;
+
         if (quantity <= 0) {
             return { text: 'Stock Out', color: 'text-red-500', icon: <FaExclamationCircle /> };
-        } else if (quantity <= 10) {
+        } else if (quantity <= (lowAlert !== null ? lowAlert : 10)) {
             return { text: 'Lowest Stock', color: 'text-orange-500', icon: <FaArrowDown /> };
-        } else if (quantity <= 50) {
+        } else if (quantity <= (lowAlert !== null ? lowAlert : 50)) {
             return { text: 'Average Stock', color: 'text-yellow-500', icon: <FaEquals /> };
         } else {
             return { text: 'Good Stock', color: 'text-green-500', icon: <FaCheckCircle /> };
         }
     };
+
 
     const handleSearchChange = (e) => {
         setSearchTerm(e.target.value);
@@ -44,19 +60,43 @@ const InventoryManagement = () => {
     const handleFilterChange = (e) => {
         setSelectedFilter(e.target.value);
     };
-    const filteredProducts = productData.filter((product) => {
-        if (selectedFilter === "all") {
-            return product;
-        } else if (selectedFilter === "Good Stock") {
-            return product.stock_quantity > 50;
-        } else if (selectedFilter === "Average Stock") {
-            return product.stock_quantity <= 50 && product.stock_quantity > 10;
-        } else if (selectedFilter === "Lowest Stock") {
-            return product.stock_quantity <= 10 && product.stock_quantity > 0;
-        } else if (selectedFilter === "Stock Out") {
-            return product.stock_quantity <= 0;
+    // const filteredProducts = productData.filter((product) => {
+    //     if (selectedFilter === "all") {
+    //         return product;
+    //     } else if (selectedFilter === "Good Stock") {
+    //         return product.stock_quantity > 50;
+    //     } else if (selectedFilter === "Average Stock") {
+    //         return product.stock_quantity <= 50 && product.stock_quantity > 10;
+    //     } else if (selectedFilter === "Lowest Stock") {
+    //         return product.stock_quantity <= 10 && product.stock_quantity > 0;
+    //     } else if (selectedFilter === "Stock Out") {
+    //         return product.stock_quantity <= 0;
+    //     }
+    // })
+
+    const filteredProducts = productData.filter(product => {
+        const lowStockWarning = product?.low_stock_warning ? parseInt(product.low_stock_warning) : null;
+        const stockQuantity = product.stock_quantity;
+
+        switch (selectedFilter) {
+            case "all":
+                return true; // Include all products
+            case "Good Stock":
+                return stockQuantity > (lowStockWarning ? lowStockWarning + 50 : 50);
+            case "Average Stock":
+                return stockQuantity <= (lowStockWarning ? lowStockWarning + 50 : 50) &&
+                    (lowStockWarning && lowStockWarning > 10);
+            case "Lowest Stock":
+                return stockQuantity <= (lowStockWarning ? lowStockWarning : 10) && stockQuantity > 0;
+            case "Stock Out":
+                return stockQuantity <= 0;
+            default:
+                return true; // Default to include all products
         }
-    })
+    });
+
+
+
 
     const searchProduct = filteredProducts.filter((product) => {
         if (searchTerm === "") {
@@ -136,7 +176,7 @@ const InventoryManagement = () => {
                             </thead>
                             <tbody>
                                 {searchProduct?.map(product => {
-                                    const status = getStatus(product?.stock_quantity);
+                                    const status = getStatus(product?.stock_quantity, product?.low_stock_warning);
                                     return (
                                         <tr className="border-b ">
 
@@ -145,6 +185,8 @@ const InventoryManagement = () => {
                                             </td>
                                             <td className="whitespace-wrap text-sm text-start w-[300px] border-r px-6 py-4 font-medium ">
                                                 {product?.name}
+                                                <br />
+                                                <span className='text-xs text-gray-500'>  {product?.sku}</span>
                                             </td>
                                             <td className="whitespace-nowrap border-r px-6 py-4 font-medium ">
                                                 {product?.price}
@@ -157,7 +199,7 @@ const InventoryManagement = () => {
                                             </td>
 
                                             <td className="whitespace-nowrap border-r px-6 py-4 font-medium ">
-                                                {product?.stock_quantity}
+                                                {product?.stock_quantity},{product?.low_stock_warning}
                                             </td>
 
                                             <td className="whitespace-nowrap border-r px-6 py-4 font-medium ">

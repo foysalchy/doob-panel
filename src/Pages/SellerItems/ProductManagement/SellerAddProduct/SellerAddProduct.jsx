@@ -161,6 +161,8 @@ const SellerAddProduct = () => {
         const productLength = form?.productLength?.value
         const productWidth = form?.productWidth?.value
         const productHight = form?.productHight?.value
+        const low_stock_warning = form?.low_stock_warning?.value
+        const DeliveryCharge = form?.DeliveryCharge?.value
 
 
 
@@ -278,8 +280,8 @@ const SellerAddProduct = () => {
             status: false,
             createdAt: Date.now(),
             // updatedAt,
-            featuredImage: 
-            [0],
+            featuredImage:
+                [0],
             images: uploadedImageUrls.filter(image => image !== null),
             videos: youtube,
             // attributes,
@@ -289,8 +291,9 @@ const SellerAddProduct = () => {
             shopId: shopInfo._id,
             adminWare,
             darazOptionData,
-            upcoming: isChecked
-
+            upcoming: isChecked,
+            low_stock_warning,
+            DeliveryCharge
 
         }
 

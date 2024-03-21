@@ -7,8 +7,7 @@ import Swal from 'sweetalert2';
 import { AuthContext } from '../../../../AuthProvider/UserProvider';
 import { useContext } from 'react';
 
-const SellerAddRackModal = ({ setNewData, recall, setOpenModal, preSelectWarehouse,
-    setWareHouses }) => {
+const SellerAddRackModal = ({ setNewData, recall, setOpenModal }) => {
     const [nextStae, setNextState] = useState(false)
     const { shopInfo } = useContext(AuthContext)
     const { data: warehouses = [], refetch } = useQuery({
@@ -23,25 +22,12 @@ const SellerAddRackModal = ({ setNewData, recall, setOpenModal, preSelectWarehou
     const filteredWarehouses = warehouses.length && warehouses.filter(warehouse => warehouse.status === true);
     const sortedWarehouses = filteredWarehouses && filteredWarehouses.sort((a, b) => a?.name?.localeCompare(b.name));
     console.log(sortedWarehouses, 'riks');
-
-
-    const defaultWarehouse = preSelectWarehouse.warehouse && sortedWarehouses.find(warehouse => preSelectWarehouse.warehouse.includes(warehouse.name));
-
-    // Map warehouse options
-    let warehouseOptions = defaultWarehouse ? [{
-        value: preSelectWarehouse.warehouse,
-        label: preSelectWarehouse.warehouse,
-    }] : sortedWarehouses.map((warehouse) => ({
+    const warehouseOptions = sortedWarehouses && sortedWarehouses.filter((rack) => rack.status).map((warehouse) => ({
         value: warehouse.name,
         label: warehouse.name,
     }));
 
-    const [getArea, setAreas] = useState([]);
-    console.log(preSelectWarehouse.area, 'are of rack');
-    const areas = !preSelectWarehouse.area ? getArea.find(warehouse => preSelectWarehouse.area.includes(warehouse.area)) : [{
-        label: preSelectWarehouse,
-        value: preSelectWarehouse
-    }];
+    const [areas, setAreas] = useState([]);
 
     const handleWarehouseChange = async (selectedOption) => {
         const selectedWarehouse = selectedOption.value;
@@ -57,16 +43,12 @@ const SellerAddRackModal = ({ setNewData, recall, setOpenModal, preSelectWarehou
         const warehouse = e.target.warehouse.value
         const area = e.target.area.value
         const rack = e.target.rack.value
-        setWareHouses(prevState => ({
-            ...prevState,
-            rack: rack
-        }));
         const data = {
             warehouse,
             area,
             rack,
             shopId: shopInfo._id,
-            status: true
+            status: nextStae
         }
         fetch('https://salenow-v2-backend.vercel.app/api/v1/seller/warehouse/rack', {
             method: 'post',
@@ -129,7 +111,7 @@ const SellerAddRackModal = ({ setNewData, recall, setOpenModal, preSelectWarehou
                         }}
                         name='area'
                         required
-                        options={areas.map((area) => ({
+                        options={areas.filter((rack) => rack.status).map((area) => ({
                             value: area.area,
                             label: area.area,
                         }))}

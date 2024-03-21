@@ -240,7 +240,7 @@ const SellerDashboard = () => {
                                 </div>
                             </div>
                             <p className="text-sm text-gray-400">
-                                Commission in approval
+                               Commission in approval
                             </p>
                         </div>
                     </div>

@@ -3,7 +3,7 @@ import React from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Link, useLocation } from 'react-router-dom';
+
 
 const MainService = () => {
 
@@ -101,21 +101,21 @@ const MainService = () => {
                                                         className="object-cover border border-black rounded-md w-full transition duration-500 aspect-square"
                                                     />
 
-                                                <div className="absolute group-hover:bg-gray-900 group-hover:bg-opacity-90 bg-gray-900 bg-opacity-50 inset-0 flex flex-col items-start justify-end p-6">
-                                                    <h3 className="text-xl font-semibold text-white">{service?.title}</h3>
+                                                    <div className="absolute group-hover:bg-gray-900 group-hover:bg-opacity-90 bg-gray-900 bg-opacity-50 inset-0 flex flex-col items-start justify-end p-6">
+                                                        <h3 className="text-xl font-semibold text-white">{service?.title}</h3>
 
-                                                    <Link
-                                                        to={`/service/${service._id}`}
-                                                        className="mt-1.5 inline-block bg-black px-5 py-3 text-xs font-medium uppercase tracking-wide text-white"
-                                                    >
-                                                        Show Details
-                                                    </Link>
-                                                </div>
-                                            </Link>
-                                        </li>
-                                    )}
-                                </div>
-                            ))}
+                                                        <Link
+                                                            to={`/service/${service._id}`}
+                                                            className="mt-1.5 inline-block bg-black px-5 py-3 text-xs font-medium uppercase tracking-wide text-white"
+                                                        >
+                                                            Show Details
+                                                        </Link>
+                                                    </div>
+                                                </Link>
+                                            </li>
+                                        )}
+                                    </div>
+                                ))}
 
                         </ul>
                     </div> :

@@ -1258,7 +1258,7 @@ const SideNavAdmin = () => {
                                 {menu && <span>Service Management</span>}
                               </NavLink>
                             )}
- 
+
 
                             {user?.staffRole ? (
                               user?.permissions.find(
@@ -1441,7 +1441,7 @@ const SideNavAdmin = () => {
               } */}
 
 
-             
+
               {
                 user?.staffRole ? (
                   user?.permissions.find((itm) => itm?.name === "Faq") ? (
@@ -2191,7 +2191,7 @@ const SideNavAdmin = () => {
                             //     ? "flex items-center p-2 space-x-3 rounded-sm bg-gray-800 text-white "
                             //     : "flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
                             // }}
-                              className="flex cursor-pointer items-center gap-2 px-4 py-2 rounded-sm hover:bg-gray-800 hover:text-gray-50"
+                            className="flex cursor-pointer items-center gap-2 px-4 py-2 rounded-sm hover:bg-gray-800 hover:text-gray-50"
                           >
                             <FaUsersGear className="w-5 h-5 fill-current text-gray-400" />
                             {menu && <span>FAQ Management</span>}
@@ -2710,7 +2710,7 @@ const SideNavAdmin = () => {
                                 to={'/admin/report-management/commission-history-admin'}
                                 className="  flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
                               >
-                                <BiHistory className='w-5 h-5 fill-current text-gray-400 ' /> Commission History
+                                <BiHistory className='w-5 h-5 fill-current text-gray-400 ' />Commission History
                               </Link>
                             </li>
 
@@ -2790,7 +2790,7 @@ const SideNavAdmin = () => {
                               to={'/admin/report-management/commission-history-admin'}
                               className="  flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
                             >
-                              <BiHistory className='w-5 h-5 fill-current text-gray-400 ' /> Commission History
+                              <BiHistory className='w-5 h-5 fill-current text-gray-400 ' />Commission History
                             </Link>
                           </li>
 

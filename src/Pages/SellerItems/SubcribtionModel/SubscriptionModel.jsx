@@ -27,7 +27,7 @@ const SubscriptionModel = () => {
     console.log(`https://salenow-v2-backend.vercel.app/api/v1/seller/subscription-model?priceId=${shopInfo?.priceId}&shopId=${shopInfo._id}`, 'services time prices ====={}');
 
 
-    const { data: commissionHistory = [], } = useQuery({
+    const { data: CommissionHistory = [], } = useQuery({
         queryKey: ["commissionHistory"],
         queryFn: async () => {
             const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/get-commission?shopId=${shopInfo._id}`);
@@ -117,7 +117,7 @@ const SubscriptionModel = () => {
                         </button>
                     </p>
                     <div className='h-0 w-0'>
-                        {invoice && <SubscriptionInvoice pricesData={pricesData} id={prices} commissionHistory={commissionHistory} setInvoice={setInvoice} invoice={invoice} />}
+                        {invoice && <SubscriptionInvoice pricesData={pricesData} id={prices} CommissionHistory={commissionHistory} setInvoice={setInvoice} invoice={invoice} />}
                     </div>
                 </div>
             )}
@@ -131,7 +131,7 @@ const SubscriptionModel = () => {
                         </button>
                     </p>
                     <div className='h-0 w-0'>
-                        {invoice && <SubscriptionInvoice pricesData={pricesData} id={prices?._id} commissionHistory={commissionHistory} setInvoice={setInvoice} invoice={invoice} />}
+                        {invoice && <SubscriptionInvoice pricesData={pricesData} id={prices?._id} CommissionHistory={commissionHistory} setInvoice={setInvoice} invoice={invoice} />}
                     </div>
                 </div>
             )}

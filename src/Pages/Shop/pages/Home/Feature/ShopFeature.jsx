@@ -33,9 +33,12 @@ const ShopFeature = () => {
     });
 
     return (
-        <div className='my-12'>
+        <div className='my-12 grid grid-cols-2 gap-4 lg:grid-cols-4 '>
+            {features?.map(itm => (<div className="">
+                <img src={itm?.image} alt="" className="w-full border rounded-xl h-full object-cover" />
 
-            <Swiper
+            </div>))}
+            {/* <Swiper
                 pagination={true}
                 autoplay={true}
                 slidesPerView={2}
@@ -43,15 +46,12 @@ const ShopFeature = () => {
                 modules={[Pagination, Autoplay]}
                 className="mySwiper">
                 {
-                    features?.map(itm => <SwiperSlide>
-                        <div className="md:h-[500px] h-[170px]">
-                            <img src={itm?.image} alt="" className="w-full border rounded-xl h-full object-cover" />
-
-                        </div>
+                   <SwiperSlide>
+                       
                     </SwiperSlide>)
                 }
 
-            </Swiper>
+            </Swiper> */}
         </div>
     );
 };

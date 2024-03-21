@@ -211,7 +211,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                         </span>
                                                                     </summary>
 
-                                                                        <ul className="mt-2 space-y-1 px-4 text-control">
+                                                                    <ul className="mt-2 space-y-1 px-4 text-control">
                                                                         <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
                                                                             <Link
                                                                                 to={'/seller/product-management/add-product'}
@@ -332,7 +332,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                         </span>
                                                                     </summary>
 
-                                                                        <ul className="mt-2 space-y-1 px-4 text-control">
+                                                                    <ul className="mt-2 space-y-1 px-4 text-control">
                                                                         <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
                                                                             <Link
                                                                                 to={'/seller/categories-management/mega-categories-management'}
@@ -395,7 +395,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                             </span>
                                                                         </summary>
 
-                                                                            <ul className="mt-2 space-y-1 px-4 text-control">
+                                                                        <ul className="mt-2 space-y-1 px-4 text-control">
                                                                             <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
                                                                                 <Link
                                                                                     to={'/seller/warehouse/warehouse-management'}
@@ -462,7 +462,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                         </span>
                                                                     </summary>
 
-                                                                            <ul className="mt-2 space-y-1 px-4 text-control">
+                                                                    <ul className="mt-2 space-y-1 px-4 text-control">
                                                                         <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
                                                                             <Link
                                                                                 to={'/seller/warehouse/warehouse-management'}
@@ -554,7 +554,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                         </span>
                                                                     </summary>
 
-                                                                        <ul className="mt-2 space-y-1 px-4 text-control">
+                                                                    <ul className="mt-2 space-y-1 px-4 text-control">
                                                                         <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
                                                                             <Link
                                                                                 to={'/seller/product-management/add-product'}
@@ -611,7 +611,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                     </span>
                                                                 </summary>
 
-                                                                        <ul className="mt-2 space-y-1 px-4 text-control">
+                                                                <ul className="mt-2 space-y-1 px-4 text-control">
                                                                     <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
                                                                         <Link
                                                                             to={'/seller/product-management/add-product'}
@@ -671,7 +671,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                         </span>
                                                                     </summary>
 
-                                                                        <ul className="mt-2 space-y-1 px-4 text-control">
+                                                                    <ul className="mt-2 space-y-1 px-4 text-control">
                                                                         <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
                                                                             <Link
                                                                                 to={'/seller/categories-management/mega-categories-management'}
@@ -733,7 +733,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                     </span>
                                                                 </summary>
 
-                                                                        <ul className="mt-2 space-y-1 px-4 text-control">
+                                                                <ul className="mt-2 space-y-1 px-4 text-control">
                                                                     <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
                                                                         <Link
                                                                             to={'/seller/categories-management/mega-categories-management'}
@@ -863,7 +863,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                     </span>
                                                                 </summary>
 
-                                                                            <ul className="mt-2 space-y-1 px-4 text-control">
+                                                                <ul className="mt-2 space-y-1 px-4 text-control">
                                                                     <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
                                                                         <Link
                                                                             to={'/seller/warehouse/warehouse-management'}
@@ -1189,10 +1189,10 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                     <ul className="mt-2 space-y-1 px-2 bg-[#1b202ea1] border">
                                                         <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
                                                             <Link
-                                                                to={'/seller/report-management/commission-report'}
+                                                                to={'/seller/report-management/packaging-cost-report'}
                                                                 className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
                                                             >
-                                                                <TbReportAnalytics className='w-5 h-5 fill-current text-gray-400 ' /> Commission Report
+                                                                <TbReportAnalytics className='w-5 h-5 fill-current text-gray-400 ' />Commission Report
                                                             </Link>
                                                         </li>
                                                         <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
@@ -1272,10 +1272,10 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                 <ul className="mt-2 space-y-1 px-2 bg-[#1b202ea1] border ">
                                                     <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
                                                         <Link
-                                                            to={'/seller/report-management/commission-report'}
+                                                            to={'/seller/report-management/packaging-cost-report'}
                                                             className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
                                                         >
-                                                            <TbReportAnalytics className='w-5 h-5 fill-current text-gray-400 ' /> Commission Report
+                                                            <TbReportAnalytics className='w-5 h-5 fill-current text-gray-400 ' />Packaging Cost Report
                                                         </Link>
                                                     </li>
                                                     <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>

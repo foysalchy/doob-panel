@@ -428,9 +428,13 @@ const SellerPath = [
         element: <SubscriberHisroy />
     },
     {
-        path: "report-management/commission-report",
+        path: "report-management/packaging-cost-report",
         element: <CommissionHistory />
     },
+    // {
+    //     path: "report-management/packaging-cost-report",
+    //     element: <CommissionHistory />
+    // },
     {
         path: "report-management/user-search-report",
         element: <UserSearchHistory />
