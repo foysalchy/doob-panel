@@ -10,10 +10,18 @@ const PriceModal = ({ open, setOpen }) => {
   const [paymentMode, setPaymentMode] = useState(false);
   const [selectGetWay, setSelectGetWay] = useState(false);
   const navigate = useNavigate()
+  const [time, setTime] = useState('one,1')
+
+  const resetForm = () => {
+    // setPaymentMode(false);
+    setSelectGetWay(false);
+    setTime('one,1'); // Reset time to default value
+  };
 
   const handleNextClick = (e) => {
     e.stopPropagation();
     setPaymentMode(!paymentMode);
+    resetForm()
   };
 
   const {
@@ -45,9 +53,11 @@ const PriceModal = ({ open, setOpen }) => {
     },
   });
 
-  const [time, setTime] = useState('one,1')
+
 
   const handleSubmit = () => {
+
+
     console.log({
       paymentId: open?._id,
       shopId: shopInfo._id,
@@ -55,6 +65,7 @@ const PriceModal = ({ open, setOpen }) => {
       amount: open?.price,
       priceName: open?.name,
       time,
+
     }
     );
 
@@ -87,6 +98,10 @@ const PriceModal = ({ open, setOpen }) => {
             BrightAlert("service selected successfully", "", "success");
             setShopInfo(data.shopInfo);
             setCookie("SellerShop", JSON.stringify(data.shopInfo));
+            setSelectGetWay(false);
+            setTime(
+              'one,1'
+            )
           }
         });
     }
@@ -205,24 +220,26 @@ const PriceModal = ({ open, setOpen }) => {
         <div>
           <label htmlFor="HeadlineAct" className="block text-sm font-medium text-gray-900">Select Period </label>
 
-          <select
+          {/* <select
             name="HeadlineAct"
             id="HeadlineAct"
             onChange={(e) => setTime(e.target.value)}
-            className="mt-1.5 w-full py-2 my-4 border rounded-lg border-gray-300 text-gray-700 sm:text-sm"
-          >
+            className="mt-1.5 w-full py-2 my-4 border rounded-lg border-gray-300 text-gray-700 sm:text-sm">
             <option value={`${open.one},1`}>One Month</option>
             <option value={`${open.six},6`}>Six Month</option>
             <option value={`${open.twelve},12`}>One Year</option>
             <option value={`${open.twenty},24`}>Two Year</option>
 
-          </select>
+          </select> */}
         </div>
 
         <div className="-mx-3 flex flex-wrap  ">
           <div className="w-1/2 px-3">
             <button
-              onClick={() => setOpen(false)}
+              onClick={() => {
+                setOpen(false),
+                  resetForm()
+              }}
               className="block w-full rounded-md border border-red-500 p-3 text-center text-base font-medium text-black transition hover:border-red-600 hover:bg-red-600"
             >
               Cancel
