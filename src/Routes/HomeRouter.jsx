@@ -17,6 +17,8 @@ import CommonCategory from "../Pages/Home/Product/CommonCategory/CommonCategory"
 import Product from "../Pages/Home/Product/Product"
 import ProductDetails from "../Pages/Home/Product/ProductDetails/ProductDetails"
 import MainService from "../Pages/Home/Service/MainService"
+import ServicePaymentFailed from "../Pages/Home/Service/ServicePaymentFailed"
+import ServicePaymentSuccess from "../Pages/Home/Service/ServicePaymentSuccess"
 import SingleService from "../Pages/Home/Service/SingleService"
 import Profile from "../Pages/Profile/Profile"
 import SellerShopInfo from "../Pages/SellerItems/SellerShopInfo/SellerShopInfo"
@@ -64,6 +66,19 @@ const homePath = [
     {
         path: "/services",
         element: <MainService />,
+    },
+    {
+        path: "/services-payment-successful",
+        loader: () =>
+            fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/getaway`),
+        element: <ServicePaymentSuccess />,
+
+
+    }
+    , {
+        path: "/services-payment-failed",
+        element: <ServicePaymentFailed />,
+
     },
     {
         path: "/service/:id",

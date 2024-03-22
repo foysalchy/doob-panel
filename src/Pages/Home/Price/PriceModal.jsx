@@ -104,7 +104,7 @@ const PriceModal = ({ open, setOpen }) => {
     >
       <div className="w-full max-w-[570px] rounded-[20px] bg-white px-8 py-12 text-center dark:bg-dark-2 md:px-[70px] md:py-[60px]">
         <h3 className="pb-[18px] text-xl font-semibold text-dark text-black sm:text-2xl">
-          Your Message Sent Successfully {possibility && '[ 7 Days Free Trial ]'}
+          Provide your payment system {possibility && '[ 7 Days Free Trial ]'}
         </h3>
         <span
           className={`mx-auto mb-6 inline-block h-1 w-[90px] rounded bg-blue-500`}
@@ -185,19 +185,19 @@ const PriceModal = ({ open, setOpen }) => {
                   clipRule="evenodd"
                 />
               </svg>
-              <h2 className="text-lg font-medium text-gray-700 sm:text-xl ">
+              <h2 className=" font-medium text-gray-700 sm:text-xl ">
                 {open?.name}
               </h2>
             </div>
-            <div className="flex flex-col items-center space-y-1">
-              <h2 className="text-2xl font-semibold text-blue-600  sm:text-3xl">
-                ৳
-                {parseInt(open?.price) * parseInt(time?.split(',')[1]) - parseInt(time?.split(',')[0])}
-                <span className="text-base font-medium">
-                  /{open?.timeDuration}
+            <div className="flex items-center justify-center">
+              <h2 className="text-2xl font-semibold text-blue-600 flex sm:text-3xl">
+                ৳{parseInt(open?.price) * parseInt(time?.split(',')[1]) - parseInt(time?.split(',')[0])}
+                <span className="text-base flex-nowrap font-medium ml-1">
+                  /{time.split(',').slice(1, 2)} Month
                 </span>
               </h2>
             </div>
+
           </div>
         )}
         <br />
@@ -234,7 +234,7 @@ const PriceModal = ({ open, setOpen }) => {
                 onClick={handleSubmit}
                 className="block w-full rounded-md border border-blue-500 bg-blue-500 p-3 text-center text-base font-medium text-white transition hover:bg-blue-500"
               >
-                Next..
+                Next
               </button>
             ) : (
               <button

@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../../../AuthProvider/UserProvider';
 import Swal from 'sweetalert2';
 import ReactQuill from 'react-quill';
+import { quillModules } from '../../../quillModule';
 
 const AddAnouncement = () => {
     const [selectedFile, setSelectedFile] = useState(null);
@@ -182,6 +183,7 @@ const AddAnouncement = () => {
                                     Describe the issue:
                                 </label>
                                 <ReactQuill
+                                    modules={quillModules}
                                     onChange={handleDescriptionChange}
                                     className=" h-36"
                                     value={message}

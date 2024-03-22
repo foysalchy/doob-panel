@@ -181,6 +181,7 @@ const AddNotice = () => {
                                     Describe the issue:
                                 </label>
                                 <ReactQuill
+                                    modules={quillModules}
                                     onChange={handleDescriptionChange}
                                     className=" h-36"
                                     value={message}

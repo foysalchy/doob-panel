@@ -84,6 +84,7 @@ import AddBlogCategory from "../Pages/SellerItems/SellersBlog/AddBlogCategory/Ad
 import FacebookPixel from "../Pages/SellerItems/Sittings/FacebookPixel/FacebookPixel";
 import SellerBlogComment from "../Pages/SellerItems/SellersBlog/SellerBlogComment/SellerBlogComment";
 import CategoryEditPage from "../Pages/SellerItems/ProductManagement/SellerProductManagement/SellerAllProduct/CategoryEditPage/CategoryEditPage";
+import ListOfClaimOrder from "../Pages/SellerItems/OrderManagment/ManageOrder/ClimAndReturn/ListOfClaimOrder";
 
 
 const SellerPath = [
@@ -343,6 +344,10 @@ const SellerPath = [
     {
         path: "orders/claim-return",
         element: <ClimAndReturn />
+    },
+    {
+        path: "orders/claim-order-list",
+        element: <ListOfClaimOrder />
     },
     {
         path: "orders/manage-order/order-checkup",

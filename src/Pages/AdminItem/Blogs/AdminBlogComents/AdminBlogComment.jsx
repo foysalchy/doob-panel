@@ -41,7 +41,7 @@ const AdminBlogComment = () => {
     // };
     const DeleteBlog = (blogId, commentId,) => {
         if (confirm("Are you sure you want to delete this blog?")) {
-            fetch(`http://localhost:5001/api/v1/admin/blog-comments-delete?commentId=${commentId}&blogId=${blogId}`, {
+            fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/blog-comments-delete?commentId=${commentId}&blogId=${blogId}`, {
                 method: "DELETE",
                 headers: {
                     "content-type": "application/json",

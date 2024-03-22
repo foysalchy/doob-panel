@@ -8,6 +8,7 @@ import { useQuery } from '@tanstack/react-query';
 import ReactQuill from 'react-quill';
 // import 'react-quill/dist/quill.snow.css';
 import Swal from 'sweetalert2';
+import { quillModules } from '../../quillModule';
 
 const AddSupportTicket = ({ OpenSupport, setOpenSupport, refetch }) => {
     const { user } = useContext(AuthContext);
@@ -163,6 +164,7 @@ const AddSupportTicket = ({ OpenSupport, setOpenSupport, refetch }) => {
                                 Describe the issue:
                             </label>
                             <ReactQuill
+                                modules={quillModules}
                                 value={description}
                                 onChange={handleDescriptionChange}
                                 className="border rounded"

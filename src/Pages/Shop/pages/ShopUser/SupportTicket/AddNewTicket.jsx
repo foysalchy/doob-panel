@@ -8,6 +8,7 @@ import ReactQuill from 'react-quill';
 // import 'react-quill/dist/quill.snow.css';
 import Swal from 'sweetalert2';
 import { ShopAuthProvider } from '../../../../../AuthProvider/ShopAuthProvide';
+import { quillModules } from '../../../../quillModule';
 
 const AddNewTicket = ({ OpenSupport, setOpenSupport, refetch }) => {
 
@@ -121,6 +122,7 @@ const AddNewTicket = ({ OpenSupport, setOpenSupport, refetch }) => {
                                     Describe the issue:
                                 </label>
                                 <ReactQuill
+                                    modules={quillModulesF}
                                     value={description}
                                     onChange={handleDescriptionChange}
                                     className=" h-36"

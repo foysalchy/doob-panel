@@ -29,6 +29,8 @@ const DarazOption = ({ datazCategory }) => {
 
     ]
 
+    console.log(datazCategory, 'daraz-category');
+
     const filteredData = datazCategory && datazCategory.filter(item => !ourData.includes(item.label))
 
     const renderInput = (category) => {

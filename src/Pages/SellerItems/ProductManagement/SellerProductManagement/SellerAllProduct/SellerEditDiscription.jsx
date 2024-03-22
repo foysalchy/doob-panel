@@ -2,6 +2,7 @@ import React from 'react';
 import { useState } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+import { quillModules } from '../../../../quillModule';
 
 const SellerEditDiscription = ({ product, description, setDescription, shortDescription, setShortDescription, categories }) => {
 
@@ -30,6 +31,7 @@ const SellerEditDiscription = ({ product, description, setDescription, shortDesc
                 </div>
 
                 <ReactQuill
+                    modules={quillModules}
                     name='shortDescription'
                     className="rounded"
                     value={product.description}
@@ -47,6 +49,7 @@ const SellerEditDiscription = ({ product, description, setDescription, shortDesc
 
                 </div>
                 <ReactQuill
+                    modules={quillModules}
                     onChange={handleDescriptionChange}
                     name='description'
                     value={product?.shortDescription}
