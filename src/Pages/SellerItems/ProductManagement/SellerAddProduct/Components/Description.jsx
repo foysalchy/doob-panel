@@ -2,6 +2,7 @@ import React from 'react';
 import { useState } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+import { quillModules } from '../../../../quillModule';
 
 const Description = ({ description, setDescription, shortDescription, setShortDescription, categories }) => {
 
@@ -34,6 +35,7 @@ const Description = ({ description, setDescription, shortDescription, setShortDe
                     className="rounded"
                     value={shortDescription}
                     onChange={handleShortDescriptionChange}
+                    modules={quillModules}
                     placeholder="Enter your description here..."
                     style={{
                         height: '100px', // Set your desired height
@@ -49,6 +51,7 @@ const Description = ({ description, setDescription, shortDescription, setShortDe
                 <ReactQuill
                     onChange={handleDescriptionChange}
                     name='description'
+                    modules={quillModules}
                     value={description}
                     className=" rounded h-[150px]"
                     placeholder="Enter your description here..."

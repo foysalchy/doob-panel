@@ -373,7 +373,7 @@ const SellerAddProduct = () => {
                 <div className='my-4 mt-10'>
                     <Variants setVariantInput={setVariantInput} variantInput={variantInput} multiVendor={multiVendor} setMultiVendor={setMultiVendor} adminWare={adminWare} daraz={daraz} inputFields={inputFields} setInputFields={setInputFields} />
                 </div>
-                {daraz && datazCategory.length && <DarazOption datazCategory={datazCategory} />}
+                {daraz && datazCategory?.length ? <DarazOption datazCategory={datazCategory} /> : ''}
 
                 <ServiceWarranty />
                 <Delivery />

@@ -15,7 +15,7 @@ const ManageProduct = () => {
   const { data: products = [], refetch } = useQuery({
     queryKey: ["products"],
     queryFn: async () => {
-      const res = await fetch("http://localhost:5001/api/v1/admin/products");
+      const res = await fetch("https://salenow-v2-backend.vercel.app/api/v1/admin/products");
       const data = await res.json();
       return data;
     },
@@ -23,7 +23,7 @@ const ManageProduct = () => {
   const { data: all_products = [], refetch: reload } = useQuery({
     queryKey: ["all_products"],
     queryFn: async () => {
-      const res = await fetch("http://localhost:5001/api/v1/admin/get-all-products");
+      const res = await fetch("https://salenow-v2-backend.vercel.app/api/v1/admin/get-all-products");
       const data = await res.json();
       return data;
     },

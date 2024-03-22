@@ -99,7 +99,7 @@ const AddBlog = () => {
   };
 
   const postBlog = (blog, form) => {
-    fetch(`http://localhost:5001/api/v1/admin/new-blog`, {
+    fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/new-blog`, {
       method: "POST",
       headers: {
         "content-type": "application/json",

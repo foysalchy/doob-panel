@@ -151,7 +151,7 @@ const ClimAndReturn = () => {
         }).then((res) => res.json()).then((data) => {
             console.log(data);
             if (data.success) {
-                productStatusUpdate('Refund', orders._id)
+                productStatusUpdate('claim', orders._id)
             } else {
                 alert("Failed to Update")
             }
@@ -281,10 +281,72 @@ const ClimAndReturn = () => {
 
     const [selectAll, setSelectAll] = useState(false);
 
+    const [ordersList, setOrderList] = useState([])
+
     // Function to handle "Select All" action
     const handleSelectAll = () => {
         setSelectAll(!selectAll);
+        if (!selectAll) {
+            // If selectAll is false, set ordersList to currentItems
+            setOrderList(currentItems);
+        } else {
+            // If selectAll is true, set ordersList to an empty array
+            setOrderList([]);
+        }
     };
+
+    // const update_all_status_claim = () => {
+    //     // Ask for confirmation to update status
+    //     const isConfirmedUpdate = confirm('Are you sure you want to update the status?');
+    //     ordersList.forEach
+    //     if (isConfirmedUpdate) {
+    //         // If confirmed to update status, ask for confirmation to update stock
+    //         const isConfirmedStockUpdate = confirm('Would you like to update the stock as well?');
+
+    //         if (isConfirmedStockUpdate) {
+    //             // If confirmed to update stock, call handleProductStatusUpdate
+    //             handleProductStatusUpdate(order);
+    //         } else {
+    //             // If not confirmed to update stock, call productStatusUpdate for claim
+    //             productStatusUpdate("claim", order?._id);
+    //         }
+    //     } else {
+    //         // If not confirmed to update status, do nothing
+    //         console.log('Update cancelled');
+    //     }
+    // };
+
+
+    const update_all_status_claim = () => {
+        // Ask for confirmation to update status
+        const isConfirmedUpdate = confirm('Are you sure you want to update the status?');
+
+        if (isConfirmedUpdate) {
+            const isConfirmedStockUpdate = confirm('Would you like to update the stock as well for order ?');
+            // Iterate over each order in the ordersList array
+            ordersList.forEach(order => {
+                // Ask for confirmation to update stock for each order
+
+
+                if (isConfirmedStockUpdate) {
+                    // If confirmed to update stock, call handleProductStatusUpdate
+                    handleProductStatusUpdate(order);
+                    refetch()
+                } else {
+                    // If not confirmed to update stock, call productStatusUpdate for claim
+                    productStatusUpdate("claim", order?._id);
+                }
+            });
+            refetch();
+        } else {
+            // If not confirmed to update status, do nothing
+            console.log('Update cancelled');
+        }
+    };
+
+    const update_all_status_failed = () => {
+
+    }
 
 
 
@@ -297,7 +359,7 @@ const ClimAndReturn = () => {
                 <input name='search' type="text" className="outline-none  bg-transparent w-full px-2" placeholder='Search...' />
             </form>
             {selectAll && <div className='flex items-center gap-8'>
-                <button className='bg-gray-800 w-[200px] mt-4 mb-6 text-white px-3 py-2 rounded'>Approve</button>
+                <button onClick={update_all_status_claim} className='bg-gray-800 w-[200px] mt-4 mb-6 text-white px-3 py-2 rounded'>Approve</button>
                 <button className='bg-gray-800 w-[200px] mt-4 mb-6 text-white px-3 py-2 rounded'>Reject</button>
             </div>}
             <div className="overflow-x-auto transparent-scroll sm:-mx-6 lg:-mx-8">
@@ -352,29 +414,11 @@ const ClimAndReturn = () => {
                                             </td>
                                             <td className="border-r px-6 py-4 flex items-center gap-2">
                                                 <td className="whitespace-nowrap  px-6 py-4 text-[16px] font-[400] flex flex-col gap-2">
-                                                    {!item?.status && (
-                                                        <>
-                                                            <button onClick={() => setReadyToShip(item)} className="text-[16px] font-[400] text-blue-700">Ready to Ship</button>
-                                                            <button onClick={() => productStatusUpdate("Cancel", item?._id)} className="text-[16px] font-[400] text-blue-700">Cancel</button>
-                                                        </>
-                                                    ) || item?.status === 'ready_to_ship' && (
-                                                        <button onClick={() => productStatusUpdate("shipped", item?._id)} className="text-[16px] font-[400] text-blue-700">Shipped</button>
-                                                    ) || item?.status === 'shipped' && (
-                                                        <div className="flex flex-col gap-2">
-                                                            <button onClick={() => productStatusUpdate("delivered", item?._id)} className="text-[16px] font-[400] text-blue-700">Delivered</button>
-                                                            <button onClick={() => productStatusUpdate("failed", item?._id)} className="text-[16px] font-[400] text-blue-700">Failed Delivery</button>
-                                                        </div>
-                                                    ) || item?.status === 'delivered' && (
-                                                        <button onClick={() => productStatusUpdate("returned", item?._id)} className="text-[16px] font-[400] text-blue-700">Returned</button>
-                                                    ) || item?.status === 'return' && (
+                                                    {item?.status === 'return' && (
                                                         <div className="flex flex-col justify-center">
-                                                            <button onClick={() => { setShowAlert(item), checkBox(item._id) }} className="text-[16px] font-[400] text-blue-700">Approve</button>
+                                                            <button onClick={() => { setShowAlert(item), checkBox(item._id) }} className="text-[16px] font-[400] text-blue-700">Claim</button>
                                                             <button onClick={() => productStatusUpdate("failed", item?._id)} className="text-[16px] font-[400] text-blue-700">Reject</button>
                                                         </div>
-                                                    ) || item?.status === 'returned' && (
-                                                        <button onClick={() => productStatusUpdate("RefoundOnly", item?._id)} className="text-[16px] font-[400] text-blue-700">Refund Data</button>
-                                                    ) || item?.status === 'Refund' && (
-                                                        <button onClick={() => viewDetails(item)} className="text-[16px] font-[400] text-blue-700">View Details</button>
                                                     )}
                                                 </td>
 

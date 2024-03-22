@@ -69,7 +69,6 @@ const AddFaq = () => {
             <div>
               <div>
                 <ReactQuill
-
                   className="h-36"
                   name="description" id="message"
                   modules={modules}

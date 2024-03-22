@@ -24,9 +24,9 @@ const UserPayment = () => {
 
 
 
-    // useEffect(() => {
-    //     if (!selectProductData.length) { window.history.back(); }
-    // }, [selectProductData]);
+    useEffect(() => {
+        if (!orderStage) { window.history.back(); }
+    }, [orderStage]);
 
     const orderSubmit = () => {
         const data = orderStage
@@ -64,17 +64,25 @@ const UserPayment = () => {
 
 
     const payWithBkash = async () => {
+
+        const order = orderStage
+        order.method = payment
+        order.timestamp = new Date().getTime()
+        order.userId = shopInfo._id ? shopInfo._id : user?._id
+        order.callback = 'http://localhost:5173/services-payment-successful'
         try {
             const response = await fetch('https://salenow-v2-backend.vercel.app/api/v1/seller/bkash/payment/create', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ amount: orderStage?.productPrice, orderId: 1, userId: 'asdhfbuyagsdf' }),
+                body: JSON.stringify(order),
             });
             const data = await response.json();
             console.log(data.bkashURL);
+
             window.location.href = data.bkashURL;
+            console.log(data);
         } catch (error) {
             console.log(error);
         }
@@ -82,14 +90,18 @@ const UserPayment = () => {
 
 
     const payWithAmarPay = async () => {
-        console.log(orderStage.productPrice);
+        const order = orderStage
+        order.method = payment
+        order.timestamp = new Date().getTime()
+        order.userId = shopInfo._id ? shopInfo._id : user?._id
+        order.callback = 'http://localhost:5173/services-payment-successful'
         try {
             const response = await fetch('https://salenow-v2-backend.vercel.app/api/v1/seller/amarpay/payment/create', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ amount: orderStage?.productPrice, orderId: 1 }),
+                body: JSON.stringify(order),
             });
             const data = await response.json();
             console.log(data);
