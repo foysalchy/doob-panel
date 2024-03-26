@@ -85,6 +85,8 @@ import FacebookPixel from "../Pages/SellerItems/Sittings/FacebookPixel/FacebookP
 import SellerBlogComment from "../Pages/SellerItems/SellersBlog/SellerBlogComment/SellerBlogComment";
 import CategoryEditPage from "../Pages/SellerItems/ProductManagement/SellerProductManagement/SellerAllProduct/CategoryEditPage/CategoryEditPage";
 import ListOfClaimOrder from "../Pages/SellerItems/OrderManagment/ManageOrder/ClimAndReturn/ListOfClaimOrder";
+import MediaManager from "../Pages/SellerItems/MeadManager/MediaManager";
+import Withdrow from "../Pages/SellerItems/Withdrow/Withdrow";
 
 
 const SellerPath = [
@@ -365,7 +367,10 @@ const SellerPath = [
         path: "orders/manage-review",
         element: <ManageReviews />
     },
-    // ? pos path
+    {
+        path: 'daraz-invoice/:id',
+        
+    },
 
 
     {
@@ -458,6 +463,14 @@ const SellerPath = [
     {
         path: "blog-comments",
         element: <SellerBlogComment />
+    },
+    {
+        path: "media-manager",
+        element: <MediaManager />
+    },
+    {
+        path: "withdraw",
+        element: <Withdrow />
     },
 
 

@@ -208,6 +208,25 @@ const SellerAllProducts = () => {
         setStockOn(false)
     }
 
+
+    const update_product_multi_vendor = (id, status) => {
+        fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/update-product-multivendor`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                id,
+                status
+            })
+
+        }).then((res) => res.json()).then((data) => {
+            Swal.fire(`Success`, '', 'success')
+            refetch()
+        })
+    }
+
+
     return (
         <div className="">
             <div className='h-0 w-0'>   <DeleteModal setOpenModal={setDeletePopUp} OpenModal={deletePopUp} setIsDelete={setIsDelete} /></div>
@@ -407,7 +426,7 @@ const SellerAllProducts = () => {
                                                         </div>
                                                     </div>
                                                 </td>
-                                                <td className="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
+                                                <td className="px-12 py-4 text-sm font-medium text-gray-700 flex gap-4 items-start  whitespace-nowrap">
                                                     {!product.adminWare ? <div>
                                                         {product.status === true ? <div
                                                             onClick={() => updateProductStatus(product._id, false)}
@@ -448,7 +467,25 @@ const SellerAllProducts = () => {
                                                             }
                                                         </div>
                                                     }
+
+                                                    {product?.multiVendor === true ? <div
+                                                        onClick={() => update_product_multi_vendor(product._id, false)}
+                                                        className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 cursor-pointer bg-emerald-100/60 bg-gray-800">
+                                                        <span className="h-1.5 w-1.5 rounded-full bg-yellow-500" />
+                                                        <h2 className="text-sm font-normal text-yellow-500">
+                                                            Multi Vendor
+                                                        </h2>
+                                                    </div> :
+                                                        <div
+                                                            onClick={() => update_product_multi_vendor(product._id, true)}
+                                                            className="inline-flex items-center px-3 py-1 rounded-full  cursor-pointer gap-x-2 bg-emerald-100/60 bg-gray-800">
+                                                            <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                                                            <h2 className="text-sm font-normal text-emerald-500">
+                                                                Single Vendor
+                                                            </h2>
+                                                        </div>}
                                                 </td>
+
                                                 <td className="px-4 py-4 text-sm border-2 text-gray-500  whitespace-nowrap">
                                                     {product?.categories
                                                         .filter((category) => category !== null && category !== '')
@@ -517,7 +554,7 @@ const SellerAllProducts = () => {
                                                             <MdDelete className="w-5 h-5" />
 
                                                         </button>
-                                                        
+
                                                         <Link to={`/seller/product-management/edit/${product?._id}`} onClick={() => setOnModal(product)} className=" transition-colors duration-200 hover:text-green-500  text-green-700 focus:outline-none mr-4">
                                                             <BiEdit className="w-5 h-5" />
                                                         </Link>
@@ -567,7 +604,7 @@ const SellerAllProducts = () => {
                     </div>
 
 
-                    <div className="flex items-center justify-between mt-6">
+                    <div className="flex items-center gap-4 mt-6">
                         <button
                             onClick={() => setCurrentPage((prevPage) => Math.max(prevPage - 1, 1))}
                             disabled={currentPage === 1}

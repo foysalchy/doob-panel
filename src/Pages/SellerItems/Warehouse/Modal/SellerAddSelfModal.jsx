@@ -8,8 +8,8 @@ import Select from 'react-select';
 import Swal from 'sweetalert2';
 import { AuthContext } from '../../../../AuthProvider/UserProvider';
 
-const SellerAddSelfModal = ({ setNewData, recall, setOpenModal }) => {
-    const [nextStae, setNextState] = useState(false);
+const SellerAddSelfModal = ({ setNewData, recall, setOpenModal, setWareHouses, preSelectWarehouse, setNext, next }) => {
+    const [nextState, setNextState] = useState(false);
     const { shopInfo } = useContext(AuthContext)
     const [areas, setAreas] = useState([]);
     const [racks, setRacks] = useState([]);
@@ -51,10 +51,18 @@ const SellerAddSelfModal = ({ setNewData, recall, setOpenModal }) => {
 
     const UploadArea = (e) => {
         e.preventDefault();
-        const warehouse = e.target.warehouse.value;
-        const area = e.target.area.value;
-        const rack = e.target.rack.value;
+        const warehouse = next ? preSelectWarehouse.warehouse : e.target.warehouse.value;
+        const area = next ? preSelectWarehouse.area : e.target.area.value;
+        const rack = next ? preSelectWarehouse.rack : e.target.rack.value;
         const self = e.target.self.value;
+        setWareHouses(prevState => ({
+            ...prevState,
+            self: self,
+            rack: rack,
+            area: area,
+            warehouse: warehouse,
+
+        }));
         const data = {
             warehouse,
             area,
@@ -74,7 +82,8 @@ const SellerAddSelfModal = ({ setNewData, recall, setOpenModal }) => {
             Swal.fire('Upload Successful', '', 'success');
             recall();
             refetch();
-            if (nextStae) {
+            if (nextState) {
+                setNext(true)
                 setNewData('Add Cell')
             } else {
                 setOpenModal(false)
@@ -85,74 +94,76 @@ const SellerAddSelfModal = ({ setNewData, recall, setOpenModal }) => {
     return (
         <div>
             <form onSubmit={UploadArea} action="">
-                <div className="mt-10">
-                    <label className="text-sm">Select Warehouse</label>
-                    <Select
-                        styles={{
-                            control: (provided) => ({
-                                ...provided,
-                                cursor: 'pointer',
-                            }),
-                            option: (provided) => ({
-                                ...provided,
-                                cursor: 'pointer',
-                            }),
-                        }}
-                        onChange={handleWarehouseChange}
-                        name='warehouse'
-                        required
-                        options={warehouses.filter((rack) => rack.status).map((warehouse) => ({
-                            value: warehouse.name,
-                            label: warehouse.name,
-                        }))}
-                        placeholder="Please select"
-                    />
-                </div>
-                <div className="mt-4">
-                    <label className="text-sm">Select Area</label>
-                    <Select
-                        styles={{
-                            control: (provided) => ({
-                                ...provided,
-                                cursor: 'pointer',
-                            }),
-                            option: (provided) => ({
-                                ...provided,
-                                cursor: 'pointer',
-                            }),
-                        }}
-                        onChange={handleAreaChange}
-                        name='area'
-                        required
-                        options={areas.filter((rack) => rack.status).map((area) => ({
-                            value: area.area,
-                            label: area.area,
-                        }))}
-                        placeholder="Please select"
-                    />
-                </div>
-                <div className="mt-4">
-                    <label className="text-sm">Select Rack</label>
-                    <Select
-                        styles={{
-                            control: (provided) => ({
-                                ...provided,
-                                cursor: 'pointer',
-                            }),
-                            option: (provided) => ({
-                                ...provided,
-                                cursor: 'pointer',
-                            }),
-                        }}
-                        name='rack'
-                        required
-                        options={racks?.filter((rack) => rack.status).map((rack) => ({
-                            value: rack.rack,
-                            label: rack.rack,
-                        }))}
-                        placeholder="Please select"
-                    />
-                </div>
+                {!next && <div className="">
+                    <div className="mt-10">
+                        <label className="text-sm">Select Warehouse</label>
+                        <Select
+                            styles={{
+                                control: (provided) => ({
+                                    ...provided,
+                                    cursor: 'pointer',
+                                }),
+                                option: (provided) => ({
+                                    ...provided,
+                                    cursor: 'pointer',
+                                }),
+                            }}
+                            onChange={handleWarehouseChange}
+                            name='warehouse'
+                            required
+                            options={warehouses.filter((rack) => rack.status).map((warehouse) => ({
+                                value: warehouse.name,
+                                label: warehouse.name,
+                            }))}
+                            placeholder="Please select"
+                        />
+                    </div>
+                    <div className="mt-4">
+                        <label className="text-sm">Select Area</label>
+                        <Select
+                            styles={{
+                                control: (provided) => ({
+                                    ...provided,
+                                    cursor: 'pointer',
+                                }),
+                                option: (provided) => ({
+                                    ...provided,
+                                    cursor: 'pointer',
+                                }),
+                            }}
+                            onChange={handleAreaChange}
+                            name='area'
+                            required
+                            options={areas.filter((rack) => rack.status).map((area) => ({
+                                value: area.area,
+                                label: area.area,
+                            }))}
+                            placeholder="Please select"
+                        />
+                    </div>
+                    <div className="mt-4">
+                        <label className="text-sm">Select Rack</label>
+                        <Select
+                            styles={{
+                                control: (provided) => ({
+                                    ...provided,
+                                    cursor: 'pointer',
+                                }),
+                                option: (provided) => ({
+                                    ...provided,
+                                    cursor: 'pointer',
+                                }),
+                            }}
+                            name='rack'
+                            required
+                            options={racks?.filter((rack) => rack.status).map((rack) => ({
+                                value: rack.rack,
+                                label: rack.rack,
+                            }))}
+                            placeholder="Please select"
+                        />
+                    </div>
+                </div>}
 
                 <div className=" mt-4">
                     <label className="text-sm">Add Self</label>

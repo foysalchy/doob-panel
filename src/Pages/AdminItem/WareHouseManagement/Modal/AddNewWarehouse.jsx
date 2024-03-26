@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { FaLongArrowAltRight } from 'react-icons/fa';
 import Swal from 'sweetalert2';
 
-const AddNewWarehouse = ({ setNewData, refetch, setOpenModal }) => {
+const AddNewWarehouse = ({ setNewData, refetch, setOpenModal, warehouses, setWareHouses, setNew }) => {
     const [nextStae, setNextState] = useState(false)
     const UploadArea = (e) => {
         e.preventDefault()
@@ -52,6 +52,7 @@ const AddNewWarehouse = ({ setNewData, refetch, setOpenModal }) => {
                 // setOpenModal(false)
                 if (nextStae) {
                     setNewData('Add Area')
+                    setNew(true)
                 } else {
                     setOpenModal(false)
                 }
@@ -81,7 +82,7 @@ const AddNewWarehouse = ({ setNewData, refetch, setOpenModal }) => {
                 </div>
                 <div className=" mt-4">
                     <label className="text-sm">Upload Image</label>
-                    <input required name='image' type="file" placeholder="Description" className="w-full p-2 border border-black rounded-md  text-gray-900" />
+                    <input name='image' type="file" placeholder="Description" className="w-full p-2 border border-black rounded-md  text-gray-900" />
                 </div>
 
                 <div className="flex items-center justify-between mt-10">

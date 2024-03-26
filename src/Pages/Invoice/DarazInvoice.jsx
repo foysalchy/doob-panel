@@ -35,7 +35,7 @@ const DarazInvoice = () => {
 
     function formatDate(timestamp) {
         // Check if the timestamp is in seconds, and convert it to milliseconds if needed
-        if (timestamp.toString().length === 10) {
+        if (timestamp?.toString().length === 10) {
             timestamp *= 1000;
         }
         console.log(timestamp);
@@ -47,7 +47,8 @@ const DarazInvoice = () => {
         const formattedTime = date.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
 
         return `${formattedDate} `;
-    } return (
+    }
+    return (
         <div className="bg-gray-100 p-12">
             <button onClick={handlePrint} className='bg-blue-500 px-6 py-2 rounded-2 text-white rounded-md'>Print</button>
             <div ref={componentRef} className="w-full h-full p-8 m-auto bg-white" style={{ width: '210mm', height: '297mm' }}>

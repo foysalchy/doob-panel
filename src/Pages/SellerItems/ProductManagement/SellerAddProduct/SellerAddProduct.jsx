@@ -61,7 +61,7 @@ const SellerAddProduct = () => {
         const formData = new FormData();
         formData.append("image", image);
 
-        const url = `https://salenow-v2-backend.vercel.app/api/v1/image/upload-image`;
+        const url = `https://salenow-v2-backend.vercel.app/api/v1/image/upload-image?shopId=${shopInfo._id}`;
 
         return fetch(url, {
             method: "POST",

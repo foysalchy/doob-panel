@@ -1,28 +1,29 @@
 import { useEffect, useState } from 'react';
 import ProductCheckout from './ProductCheckout';
+import { useQuery } from '@tanstack/react-query';
 
 const ModalForPayment = ({ invoice, setInvoice, sellingPrice, handleStore, seller, product, quantity }) => {
     const [selectedPayment, setSelectedPayment] = useState('');
     const [selectedInvoice, setSelectedInvoice] = useState('');
-    const [getaways, setGetaways] = useState([]);
+    // const [getaways, setGetaways] = useState([]);
     const [payment, setPayment] = useState(false);
     const [userInfo, setUserInfo] = useState([])
 
 
-    useEffect(() => {
-        // Fetch payment gateways
-        const fetchPaymentGetways = async () => {
-            try {
-                const response = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/payment-getaway/${seller}`);
-                const data = await response.json();
-                setGetaways(data);
-            } catch (error) {
-                console.error('Error fetching payment gateways:', error);
-            }
-        };
-
-        fetchPaymentGetways();
-    }, [seller]);
+    const {
+        data: getaways = [],
+        refetch,
+        isLoading,
+    } = useQuery({
+        queryKey: ["getawayData"],
+        queryFn: async () => {
+            const res = await fetch(
+                "https://salenow-v2-backend.vercel.app/api/v1/admin/getaway"
+            );
+            const data = await res.json();
+            return data;
+        },
+    });
 
     const handleSubmit = (event) => {
         event.preventDefault();

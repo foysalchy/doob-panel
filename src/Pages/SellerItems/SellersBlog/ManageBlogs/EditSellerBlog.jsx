@@ -13,7 +13,7 @@ const EditSellerBlog = ({ OpenModal, setOpenModal, BlogInfo, refetch }) => {
         formData.append("image", image);
 
         try {
-            const response = await fetch("https://salenow-v2-backend.vercel.app/api/v1/image/upload-image", {
+            const response = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/image/upload-image?shopId=${shopInfo._id}`, {
                 method: "POST",
                 body: formData,
             });

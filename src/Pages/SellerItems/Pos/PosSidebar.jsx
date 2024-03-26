@@ -274,6 +274,8 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
                                 className="bg-transparent px-2 text-right ring-1 w-[80px] ring-gray-300 rounded-md text-lg"
                             />
                         </div>
+
+
                         <div className="bg-white p-2  rounded-md mt-2">
 
                             <div className="flex justify-between flex-wrap mt-3 gap-2">
@@ -297,16 +299,42 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
                             <div className={`text-end`}>
                                 {parseInt(changeAmount)}
                             </div>
-                        </div> <br />
+                        </div>
+
+                        <br />
+                        {<div>
+                            <div className='flex justify-between'>
+                                <label> Search User</label>
+                                <div>
+                                    <label htmlFor='user' className=''>New User</label>
+                                    <input
+                                        className='ml-2'
+                                        type="checkbox"
+                                        name="user"
+                                        id="user"
+                                        checked={user}
+                                        onChange={toggleCheckbox}
+                                    />
+                                </div>
+                            </div>
+
+                            <div className='flex gap-2 items-center'>
+                                <select onChange={(e) => setSearchType(e.target.value)} className='mt-1 p-2 border  focus:outline-none focus:border-gray-500  focus:ring-0' name="" id="">
+                                    <option value="userNumber">Phone Number</option>
+                                    <option value="userEmail">Email</option>
+                                </select>
+                                <input onChange={(e) => setSearchValue(e.target.value)} className='mt-1 ml-2 w-full p-2 border  focus:outline-none focus:border-gray-500  focus:ring-0' type="text" name="" id="" />
+                                <button onClick={() => fetchData()} className='p-2  px-4 bg-gray-900 text-white'>
+                                    Search
+                                </button>
+                            </div>
+                        </div>}
+                        {
+                            error && <p className='text-sm text-red-500'>Error: {error}</p>
+                            || user && <p className='text-sm text-green-500'>{user?.name}</p>
+                        }
                         <div>
-                            <label htmlFor='user' className=''>User information</label>
-                            <input
-                                type="checkbox"
-                                name="user"
-                                id="user"
-                                checked={user}
-                                onChange={toggleCheckbox}
-                            />
+
 
 
 
@@ -315,7 +343,7 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
 
                                 <div onClick={(e_) => e_.stopPropagation()} className={`text- absolute w-[500px] rounded-sm bg-white p-6 drop-shadow-lg  ${isChecked ? 'scale-1 opacity-1 duration-300' : 'scale-0 opacity-0 duration-150'}`}>
 
-                                    <h1 className='flex gap-2'> <input onClick={() => { setExisting(!existing), setUser(false) }} type="checkbox" />New User ?</h1>
+                                    {/* <h1 className='flex gap-2'> <input onClick={() => { setExisting(!existing), setUser(false) }} type="checkbox" />Existing User ?</h1> */}
 
                                     <h1 className="text-2xl font-bold mb-2 mt-4">User Info</h1>
 
@@ -431,7 +459,7 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
 
 
 
-            <PosProductsDetails passUser={{ name: name, email: email, phoneNumber: phoneNumber, address: address }} invoice={invoice} open={open} setOpen={setOpen} />
+            <PosProductsDetails setCartProducts={setCartProducts} passUser={{ name: user?.name, email: user?.email, phoneNumber: user?.phoneNumber, address: user?.address }} invoice={invoice} open={open} setOpen={setOpen} />
         </div>
     );
 };

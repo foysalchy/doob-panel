@@ -4,7 +4,7 @@ import { FaLongArrowAltRight } from 'react-icons/fa';
 import Swal from 'sweetalert2';
 import { AuthContext } from '../../../../AuthProvider/UserProvider';
 
-const SellerAddNewWarehouse = ({ setNewData, refetch, setOpenModal, warehouses, setWareHouses }) => {
+const SellerAddNewWarehouse = ({ setNewData, refetch, setOpenModal, warehouses, setWareHouses, setNext }) => {
     const [nextStae, setNextState] = useState(false)
     const { shopInfo } = useContext(AuthContext)
     const UploadArea = (e) => {
@@ -53,7 +53,9 @@ const SellerAddNewWarehouse = ({ setNewData, refetch, setOpenModal, warehouses, 
             .then((res) => res.json())
             .then((data) => {
                 if (nextStae) {
+                    setNext(true)
                     setNewData('Add Area')
+
                 } else {
                     setOpenModal(false)
                 }
@@ -85,7 +87,7 @@ const SellerAddNewWarehouse = ({ setNewData, refetch, setOpenModal, warehouses, 
                 </div>
                 <div className=" mt-4">
                     <label className="text-sm">Upload Image</label>
-                    <input accept='image/*' required name='image' type="file" placeholder="Description" className="w-full p-2 border border-black rounded-md  text-gray-900" />
+                    <input accept='image/*' name='image' type="file" placeholder="Description" className="w-full p-2 border border-black rounded-md  text-gray-900" />
                 </div>
                 <div className="flex items-center w-full justify-between mt-10">
                     <button type='submit' className="group   relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500">
