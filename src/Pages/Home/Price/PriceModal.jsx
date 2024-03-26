@@ -10,12 +10,13 @@ const PriceModal = ({ open, setOpen }) => {
   const [paymentMode, setPaymentMode] = useState(false);
   const [selectGetWay, setSelectGetWay] = useState(false);
   const navigate = useNavigate()
-  const [time, setTime] = useState('one,1')
+  const [time, setTime] = useState(`${open.six},6`)
+  console.log(time);
 
   const resetForm = () => {
     // setPaymentMode(false);
     setSelectGetWay(false);
-    setTime('one,1'); // Reset time to default value
+    setTime('20,6'); // Reset time to default value
   };
 
   const handleNextClick = (e) => {
@@ -110,6 +111,41 @@ const PriceModal = ({ open, setOpen }) => {
     }
   };
 
+  const pay_on_amar_pay = async (getway) => {
+    let data = {
+      paymentId: open?._id,
+      shopId: shopInfo._id,
+      getway: getway,
+      amount: open?.price,
+      normalPrice: open?.price,
+      priceName: open?.name,
+      collection: 'price',
+      time,
+      buyingPrice: parseInt(open?.price) * parseInt(time?.split(',')[1]) - parseInt(time?.split(',')[0])
+    };
+
+    if (shopInfo) {
+      data.callback = 'http://localhost:5173/services-payment-successful';
+      try {
+        const response = await fetch('https://salenow-v2-backend.vercel.app/api/v1/seller/amarpay/payment/create', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data), // Corrected from 'order' to 'data'
+        });
+        const responseData = await response.json();
+        console.log(responseData);
+        if (responseData.payment_url) {
+          window.location.href = responseData.payment_url;
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
+
+
   console.log(time.split(',')[0], 'price', open);
 
   return (
@@ -131,7 +167,7 @@ const PriceModal = ({ open, setOpen }) => {
               <div key={get._id}>
                 {get.Getaway === "Bkash" && (
                   <button
-                    onClick={() => setSelectGetWay(get)}
+
                     className={`group relative block border  ${selectGetWay._id === get._id
                       ? "border-blue-500"
                       : "border-gray-100"
@@ -143,7 +179,7 @@ const PriceModal = ({ open, setOpen }) => {
                       srcSet="https://logos-download.com/wp-content/uploads/2022/01/BKash_Logo_icon-1536x1452.png"
                       className={`p-4 object-cover  transition-opacity ${selectGetWay._id === get._id
                         ? "opacity-20"
-                        : "bg-gray-700"
+                        : ""
                         }`}
                     />
                   </button>
@@ -169,7 +205,7 @@ const PriceModal = ({ open, setOpen }) => {
                 )}
                 {get.Getaway === "AmarPay" && (
                   <button
-                    onClick={() => setSelectGetWay(get)}
+                    onClick={() => pay_on_amar_pay(get)}
                     className={`group relative block border  ${selectGetWay._id === get._id
                       ? "border-blue-500"
                       : "border-gray-100"
@@ -217,8 +253,21 @@ const PriceModal = ({ open, setOpen }) => {
         )}
         <br />
 
-        <div>
+        {!paymentMode ? <div>
           <label htmlFor="HeadlineAct" className="block text-sm font-medium text-gray-900">Select Period </label>
+
+          <select
+            name="HeadlineAct"
+            id="HeadlineAct"
+            defaultValue={`${open.six},6`} // Set the value attribute to match the option for six months
+            onChange={(e) => setTime(e.target.value)}
+            className="mt-1.5 w-full py-2 my-4 border rounded-lg border-gray-300 text-gray-700 sm:text-sm"
+          >
+            <option value={`${open.one},1`}>One Month</option>
+            <option value={`${open.six},6`}>Six Month</option>
+            <option value={`${open.twelve},12`}>One Year</option>
+            <option value={`${open.twenty},24`}>Two Year</option>
+          </select>
 
           {/* <select
             name="HeadlineAct"
@@ -231,14 +280,21 @@ const PriceModal = ({ open, setOpen }) => {
             <option value={`${open.twenty},24`}>Two Year</option>
 
           </select> */}
-        </div>
+        </div> :
+          <div>
+            <br />
+            <br />
+          </div>
+        }
 
         <div className="-mx-3 flex flex-wrap  ">
           <div className="w-1/2 px-3">
             <button
               onClick={() => {
+                setTime(`${open.six},6`)
                 setOpen(false),
                   resetForm()
+                setPaymentMode(false)
               }}
               className="block w-full rounded-md border border-red-500 p-3 text-center text-base font-medium text-black transition hover:border-red-600 hover:bg-red-600"
             >
@@ -246,14 +302,7 @@ const PriceModal = ({ open, setOpen }) => {
             </button>
           </div>
           <div className="w-1/2 px-3">
-            {selectGetWay ? (
-              <button
-                onClick={handleSubmit}
-                className="block w-full rounded-md border border-blue-500 bg-blue-500 p-3 text-center text-base font-medium text-white transition hover:bg-blue-500"
-              >
-                Next
-              </button>
-            ) : (
+            {!paymentMode && (
               <button
                 onClick={handleNextClick}
                 className="block w-full rounded-md border border-blue-500 bg-blue-500 p-3 text-center text-base font-medium text-white transition hover:bg-blue-500"
@@ -264,7 +313,7 @@ const PriceModal = ({ open, setOpen }) => {
           </div>
         </div>
       </div>
-    </div>
+    </div >
   );
 };
 

@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import { AuthContext } from '../../../AuthProvider/UserProvider';
 import BrightAlert from 'bright-alert';
 
-const PosProductsDetails = ({ passUser, invoice, open, setOpen }) => {
+const PosProductsDetails = ({ passUser, invoice, open, setOpen, setCartProducts }) => {
 
 
     const { shopInfo } = useContext(AuthContext)
@@ -51,6 +51,7 @@ const PosProductsDetails = ({ passUser, invoice, open, setOpen }) => {
                     setExisting(false)
                     // setOpen(false)
                     setError(false)
+                    setCartProducts([])
 
                 }
                 else {
@@ -64,6 +65,8 @@ const PosProductsDetails = ({ passUser, invoice, open, setOpen }) => {
 
 
     }
+
+
 
 
     return (
@@ -128,10 +131,10 @@ const PosProductsDetails = ({ passUser, invoice, open, setOpen }) => {
                             disabled={postData ? true : false}
                             className={`${postData ? 'bg-gray-500 cursor-not-allowed' : "bg-gray-900"} b text-white rounded-md p-2 w-full mt-3`}
                             onClick={handleInvoiceSubmit} >
-                            Submit ..
+                            Submit
                         </button>
 
-                        {postData && <PosInvoice setOpen={setOpen} invoiceData={postData} setInvoiceOpen={setInvoiceOpen} invoiceOpen={invoiceOpen} />}
+                        {postData && <PosInvoice setCartProducts={setCartProducts} setUser={setUser} setOpen={setOpen} invoiceData={postData} setInvoiceOpen={setInvoiceOpen} invoiceOpen={invoiceOpen} />}
 
 
                         {/* <button onClick={handleInvoiceSubmit} className='bg-gray-900 text-white px-2 w-full py-2 rounded-md mt-5'>Submit</button>

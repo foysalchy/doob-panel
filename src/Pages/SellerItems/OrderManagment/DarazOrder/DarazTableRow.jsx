@@ -107,10 +107,10 @@ const DarazTableRow = ({ data }) => {
             </td>
             <td className="whitespace-nowrap border-r text-2xl">
                 <button onClick={() => setModalOn(!modalOn)} className=' px-4 py-4'>+</button>
-                {/* <DarazOrderAllinfoModal status={Status ? Status : 'Process'} setModalOn={setModalOn} modalOn={modalOn} productList={productList} /> */}
+                <DarazOrderAllinfoModal setModalOn={setModalOn} modalOn={modalOn} productList={productList} />
             </td>
             <td className="whitespace-nowrap border-r px-6 py-4 ">
-                <Link to={`invoice/${order_number}`} onClick="" className='text-blue-600 font-[500] text-[16px]'>Invoice</Link>
+                <Link to={`/darazinvoice/${order_number}`} onClick="" className='text-blue-600 font-[500] text-[16px]'>Invoice</Link>
             </td>
             <td className="whitespace-nowrap border-r px-6 py-4 text-[16px] font-[400]">
                 <Link to={`${order_number}`} className='text-blue-500 font-[400]'>{order_number}</Link>

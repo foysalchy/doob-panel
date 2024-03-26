@@ -68,6 +68,7 @@ import StockManagement from "../Pages/SellerItems/StockManagement/StockManagemen
 import AdminHomePageControl from "../Pages/AdminItem/ContentManagement/AdminHomePageControl/AdminHomePageControl";
 import AllOrderManage from "../Pages/AdminItem/Order/AllOrderManage";
 import AdminBlogComment from "../Pages/AdminItem/Blogs/AdminBlogComents/AdminBlogComment";
+import AdminWithdrow from "../Pages/AdminItem/Withdrow/AdminWithdrow";
 
 const SupperAdminPath = [
     {
@@ -468,6 +469,11 @@ const SupperAdminPath = [
     {
         path: 'blog-comments',
         element: <AdminBlogComment />
+
+    },
+    {
+        path: 'withdraw-history',
+        element: <AdminWithdrow />
 
     },
 

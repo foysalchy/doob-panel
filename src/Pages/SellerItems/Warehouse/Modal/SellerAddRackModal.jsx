@@ -7,7 +7,15 @@ import Swal from 'sweetalert2';
 import { AuthContext } from '../../../../AuthProvider/UserProvider';
 import { useContext } from 'react';
 
-const SellerAddRackModal = ({ setNewData, recall, setOpenModal }) => {
+const SellerAddRackModal = ({
+    setNewData,
+    recall,
+    setOpenModal,
+    preSelectWarehouse,
+    setWareHouses,
+    next,
+    setNext
+}) => {
     const [nextStae, setNextState] = useState(false)
     const { shopInfo } = useContext(AuthContext)
     const { data: warehouses = [], refetch } = useQuery({
@@ -28,6 +36,7 @@ const SellerAddRackModal = ({ setNewData, recall, setOpenModal }) => {
     }));
 
     const [areas, setAreas] = useState([]);
+    console.log(next, 'next');
 
     const handleWarehouseChange = async (selectedOption) => {
         const selectedWarehouse = selectedOption.value;
@@ -40,16 +49,25 @@ const SellerAddRackModal = ({ setNewData, recall, setOpenModal }) => {
 
     const UploadArea = (e) => {
         e.preventDefault()
-        const warehouse = e.target.warehouse.value
-        const area = e.target.area.value
+        const warehouse = next ? preSelectWarehouse.warehouse : e.target?.warehouse?.value;
+        const area = next ? preSelectWarehouse.area : e?.target?.area?.value;
         const rack = e.target.rack.value
+        setWareHouses(prevState => ({
+            ...prevState,
+            rack: rack,
+            area: area,
+            warehouse: warehouse,
+
+        }));
+
         const data = {
             warehouse,
             area,
             rack,
             shopId: shopInfo._id,
-            status: nextStae
+            status: true
         }
+        console.log(data);
         fetch('https://salenow-v2-backend.vercel.app/api/v1/seller/warehouse/rack', {
             method: 'post',
             headers: {
@@ -63,6 +81,7 @@ const SellerAddRackModal = ({ setNewData, recall, setOpenModal }) => {
             recall()
             refetch()
             if (nextStae) {
+                setNext(true)
                 setNewData('Add Self')
             } else {
                 setOpenModal(false)
@@ -76,48 +95,50 @@ const SellerAddRackModal = ({ setNewData, recall, setOpenModal }) => {
     return (
         <div>
             <form onSubmit={UploadArea} action="">
-                <div className="mt-10">
-                    <label className="text-sm">Select WareHouse</label>
-                    <Select
-                        styles={{
-                            control: (provided) => ({
-                                ...provided,
-                                cursor: 'pointer',
-                            }),
-                            option: (provided) => ({
-                                ...provided,
-                                cursor: 'pointer',
-                            }),
-                        }}
-                        onChange={handleWarehouseChange}
-                        name='warehouse'
-                        required
-                        options={warehouseOptions}
-                        placeholder="Please select"
-                    />
-                </div>
-                <div className="mt-4">
-                    <label className="text-sm">Select Area</label>
-                    <Select
-                        styles={{
-                            control: (provided) => ({
-                                ...provided,
-                                cursor: 'pointer',
-                            }),
-                            option: (provided) => ({
-                                ...provided,
-                                cursor: 'pointer',
-                            }),
-                        }}
-                        name='area'
-                        required
-                        options={areas.filter((rack) => rack.status).map((area) => ({
-                            value: area.area,
-                            label: area.area,
-                        }))}
-                        placeholder="Please select"
-                    />
-                </div>
+                {!next && <div >
+                    <div className="mt-10">
+                        <label className="text-sm">Select WareHouse</label>
+                        <Select
+                            styles={{
+                                control: (provided) => ({
+                                    ...provided,
+                                    cursor: 'pointer',
+                                }),
+                                option: (provided) => ({
+                                    ...provided,
+                                    cursor: 'pointer',
+                                }),
+                            }}
+                            onChange={handleWarehouseChange}
+                            name='warehouse'
+                            required
+                            options={warehouseOptions}
+                            placeholder="Please select"
+                        />
+                    </div>
+                    <div className="mt-4">
+                        <label className="text-sm">Select Area</label>
+                        <Select
+                            styles={{
+                                control: (provided) => ({
+                                    ...provided,
+                                    cursor: 'pointer',
+                                }),
+                                option: (provided) => ({
+                                    ...provided,
+                                    cursor: 'pointer',
+                                }),
+                            }}
+                            name='area'
+                            required
+                            options={areas.filter((rack) => rack.status).map((area) => ({
+                                value: area.area,
+                                label: area.area,
+                            }))}
+                            placeholder="Please select"
+                        />
+                    </div>
+                </div>}
 
                 <div className=" mt-4">
                     <label className="text-sm">Add Rack</label>
@@ -133,8 +154,8 @@ const SellerAddRackModal = ({ setNewData, recall, setOpenModal }) => {
                     </button>
                     <button type='submit' onClick={() => setNextState(true)} className="group text-sm relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500">Next</button>
                 </div>
-            </form>
-        </div>
+            </form >
+        </div >
     );
 };
 

@@ -226,7 +226,7 @@ const AddToCard = () => {
     const selectOne = (newProduct) => {
         setSelectAll(false)
         setAllProducts((prevProducts) => {
-            const isProductSelected = prevProducts.some((product) => product.productId === newproduct.productId);
+            const isProductSelected = prevProducts.some((product) => product.productId === newProduct.productId);
 
             if (isProductSelected) {
 
@@ -296,19 +296,24 @@ const AddToCard = () => {
     };
 
     const handleRemove = (productId) => {
-        console.log(productId, 'remove data');
+        console.log(`Removing product ${productId} from the cart`);
 
         // Remove the product from the cartProducts state
         setCartProducts((prevProducts) => prevProducts.filter((product) => product.productId !== productId));
 
-        // Remove the product from local storage
-        const updatedCartProducts = JSON.parse(localStorage.getItem('addToCart')).filter(product => product.productId !== productId);
-        localStorage.setItem('addToCart', JSON.stringify(updatedCartProducts));
+        // Retrieve cart data from localStorage
+        const cartData = JSON.parse(localStorage.getItem('addToCart')) || [];
+
+        // Filter out the product to be removed
+        const updatedCartData = cartData.filter(product => product.productId !== productId);
+
+        // Update localStorage with the updated cart data
+        localStorage.setItem('addToCart', JSON.stringify(updatedCartData));
 
         // If needed, remove the product from the allProducts state
         setAllProducts((prevProducts) => prevProducts.filter((product) => product.productId !== productId));
 
-        // Make a DELETE request to remove the product from the backend
+        // If you want to remove the product from the backend as well, you can make a DELETE request here
         fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/user/add-to-cart?productId=${productId}&token=${shopUser._id}`, {
             method: "DELETE",
             headers: { "Content-Type": "application/json" }

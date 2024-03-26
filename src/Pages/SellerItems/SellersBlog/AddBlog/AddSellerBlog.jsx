@@ -36,7 +36,7 @@ const AddSellerBlog = () => {
         const selectedFile = e.target.files[0];
         const formData = new FormData();
         formData.append("image", selectedFile);
-        const url = `https://salenow-v2-backend.vercel.app/api/v1/image/upload-image`;
+        const url = `https://salenow-v2-backend.vercel.app/api/v1/image/upload-image?shopId=${shopInfo._id}`;
         fetch(url, {
             method: "POST",
             body: formData,
@@ -88,7 +88,7 @@ const AddSellerBlog = () => {
 
         const formData = new FormData();
         formData.append("image", image);
-        const url = `https://salenow-v2-backend.vercel.app/api/v1/image/upload-image`;
+        const url = `https://salenow-v2-backend.vercel.app/api/v1/image/upload-image?shopId=${shopInfo._id}`;
         fetch(url, {
             method: "POST",
             body: formData,

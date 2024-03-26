@@ -12,9 +12,13 @@ const SellerAddAreaForWarehouse = ({
     recall,
     setOpenModal,
     preSelectWarehouse,
-    setWareHouses
+    setWareHouses,
+    next,
+    setNext
 }) => {
     const [nextStae, setNextState] = useState(false)
+
+    console.log(preSelectWarehouse.warehouse, 'data-for-warehouse');
 
     const { shopInfo } = useContext(AuthContext)
     const { data: warehouses = [], refetch } = useQuery({
@@ -29,40 +33,19 @@ const SellerAddAreaForWarehouse = ({
     const filteredWarehouses = warehouses.filter(warehouse => warehouse.status === true);
     const sortedWarehouses = filteredWarehouses.filter(warehouse => warehouse.status).sort((a, b) => a?.name?.localeCompare(b.name));
 
-    // const warehouseOptions = sortedWarehouses.map((warehouse) => ({
-    //     value: warehouse.name,
-    //     label: warehouse.name,
-    // }));
-
-
-    const defaultWarehouse = preSelectWarehouse.warehouse && sortedWarehouses.find(warehouse => preSelectWarehouse.warehouse.includes(warehouse.name));
-
-    // Map warehouse options
-    let warehouseOptions = defaultWarehouse ? [{
-        value: preSelectWarehouse.warehouse,
-        label: preSelectWarehouse.warehouse,
-    }] : sortedWarehouses.map((warehouse) => ({
+    const warehouseOptions = sortedWarehouses.map((warehouse) => ({
         value: warehouse.name,
         label: warehouse.name,
     }));
 
-    // Add the default option if it exists
-    if (defaultWarehouse) {
-        warehouseOptions = [
-            // {
-            //     value: '', // Provide a value for the default option if needed
-            //     label: 'Please select', // Label for the default option
-            //     isDisabled: true, // Disable the default option
-            // },
-            ...warehouseOptions, // Spread the existing warehouse options
-        ];
-    }
+
 
 
     const UploadArea = (e) => {
-        e.preventDefault()
-        const warehouse = e.target.warehouse.value
-        const area = e.target.area.value
+        e.preventDefault();
+        console.log(next);
+        const warehouse = next ? preSelectWarehouse.warehouse : e.target?.warehouse?.value;
+        const area = e.target.area.value;
         setWareHouses(prevState => ({
             ...prevState,
             area: area,
@@ -73,7 +56,9 @@ const SellerAddAreaForWarehouse = ({
             area,
             shopId: shopInfo._id,
             status: true
-        }
+        };
+
+        console.log(data, 'data is found');
         fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/warehouse/area/`, {
             method: 'post',
             headers: {
@@ -87,6 +72,7 @@ const SellerAddAreaForWarehouse = ({
             recall()
             refetch()
             if (nextStae) {
+                setNext(true)
                 setNewData('Add Rack')
             } else {
                 setOpenModal(false)
@@ -101,7 +87,7 @@ const SellerAddAreaForWarehouse = ({
     return (
         <div>
             <form onSubmit={UploadArea} action="">
-                <div className="mt-10">
+                {!next && <div className="mt-10">
                     <label className="text-sm">Select WareHouse</label>
                     <select
                         name='warehouse'
@@ -113,7 +99,7 @@ const SellerAddAreaForWarehouse = ({
 
                     </select>
                 </div>
-
+                }
                 <div className=" mt-4">
                     <label className="text-sm">Add Area</label>
                     <input required name='area' type="text" placeholder="Description" className="w-full p-2 border border-black rounded-md  text-gray-900" />

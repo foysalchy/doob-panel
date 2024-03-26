@@ -1033,6 +1033,14 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                     </li>
                                                     <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
                                                         <Link
+                                                            to={'/seller/orders/claim-order-list'}
+                                                            className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                                        >
+                                                            <MdManageAccounts className='w-5 h-5 fill-current text-gray-400 ' /> Claim List
+                                                        </Link>
+                                                    </li>
+                                                    <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
+                                                        <Link
                                                             to={'/seller/orders/web-store-order'}
                                                             className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
                                                         >
@@ -2180,6 +2188,26 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                             <Link to={'/seller/inventory-management'} rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
                                                 <BiArchive className="w-5 h-5 text-gray-400" />
                                                 <span>Inventory Management</span>
+                                            </Link>
+                                        </li>
+
+                                    )}
+
+                                    {user?.staffRole ? (
+                                        user?.permissions.find(itm => itm?.name === "Media Manager") ? (
+                                            managementPermission('SubscriptionModel') && <li className="rounded-sm hover:bg-gray-800">
+                                                <Link to={'/seller/media-manager'} rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
+                                                    <BiArchive className="w-5 h-5 text-gray-400" />
+                                                    <span>Media Manager</span>
+                                                </Link>
+                                            </li>
+
+                                        ) : null
+                                    ) : (
+                                        <li className="rounded-sm hover:bg-gray-800">
+                                            <Link to={'/seller/media-manager'} rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
+                                                <BiArchive className="w-5 h-5 text-gray-400" />
+                                                <span>Media Manager</span>
                                             </Link>
                                         </li>
 
