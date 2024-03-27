@@ -9,9 +9,11 @@ import DarazTableRow from './DarazTableRow';
 import { useEffect } from 'react';
 
 
-const DarazOrderTable = ({ selectedValue, searchValue }) => {
+const DarazOrderTable = ({ selectedValue, searchValue, selected, setSelected }) => {
 
     const { shopInfo } = useContext(AuthContext);
+
+
 
 
 
@@ -114,18 +116,34 @@ const DarazOrderTable = ({ selectedValue, searchValue }) => {
         );
     };
 
-    console.log(tData);
+
+
 
     return (
-        <div className="flex flex-col overflow-hidden mt-4">
-            {!isLoading ? <div className="overflow-x-auto transparent-scroll sm:-mx-6 lg:-mx-8">
-                <div className="inline-block  min-w-full py-2 sm:px-6 lg:px-8">
-                    <div className="overflow-hidden">
-                        <table className="min-w-full  bg-white border text-center text-sm font-light">
+        <div className="">
+            {!isLoading ? <div className=" sm:-mx-6 lg:-mx-8">
+                <div className=" py-2 sm:px-6 lg:px-8">
+                    <div className="">
+                        <table className="overflow-x-scroll  bg-white border text-center text-sm font-light">
                             <thead className="border-b  font-medium  ">
                                 <tr>
                                     <th scope="col" className="border-r px-2 py-4 font-[500]">
-                                        <input type="checkbox" className="shrink-0 mt-0.5 border-gray-200 rounded text-blue-600 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800" id="hs-checkbox-group-1" />
+                                        <input
+                                            checked={selected.length === currentData.length}
+                                            onChange={() => {
+                                                if (!selected.length) {
+                                                    console.log('Filtered Data:', currentData);
+                                                    setSelected(currentData.map(item => item.order_id));
+                                                } else {
+                                                    // If selected is true, deselect all items
+                                                    console.log('Deselect All');
+                                                    setSelected([]);
+                                                }
+                                            }}
+                                            type="checkbox"
+                                            className="shrink-0 mt-0.5 border-gray-200 rounded text-blue-600 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800"
+                                            id="hs-checkbox-group-1"
+                                        />
                                     </th>
                                     <th scope="col" className="border-r px-2 py-4 font-[500]">
 
@@ -158,7 +176,7 @@ const DarazOrderTable = ({ selectedValue, searchValue }) => {
                             </thead>
                             <tbody>
                                 {currentData.map && currentData?.map((itm, index) => (
-                                    <DarazTableRow data={itm} index={index} key={index} />
+                                    <DarazTableRow select={selected} setSelect={setSelected} data={itm} index={index} key={index} />
                                 ))}
                             </tbody>
                         </table>

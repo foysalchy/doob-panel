@@ -8,9 +8,10 @@ import { AuthContext } from '../../../../AuthProvider/UserProvider';
 import DarazOrderAllinfoModal from './DarazOrderAllinfoModal';
 import { useQuery } from '@tanstack/react-query';
 
-const DarazTableRow = ({ data }) => {
+const DarazTableRow = ({ data, select, setSelect }) => {
 
-    const { _id, order_number, created_at, payment_method, method, ReadytoShip, price, ShipOnTimeSLA, statuses, document, documentLink, orderDate, orderNumber, pendingSince, quantity, product, sellerSku, sendTo, timestamp, productList } = data;
+    const { _id, order_number, order_id
+        , created_at, payment_method, method, ReadytoShip, price, ShipOnTimeSLA, statuses, document, documentLink, orderDate, orderNumber, pendingSince, quantity, product, sellerSku, sendTo, timestamp, productList } = data;
     const [formattedDate, setFormattedDate] = useState('');
     const [emptyAction, setEmptyAction] = useState(true);
     const [modalOn, setModalOn] = useState(false);
@@ -27,6 +28,7 @@ const DarazTableRow = ({ data }) => {
 
 
     const { shopInfo } = useContext(AuthContext)
+    const [isChecked, setIsChecked] = useState(false);
 
 
 
@@ -38,11 +40,6 @@ const DarazTableRow = ({ data }) => {
         return `${daysAgo} day${daysAgo !== 1 ? 's' : ''} ago`;
     };
 
-    // ? download invoice
-    // const componentRef = useRef();
-    // const handlePrint = useReactToPrint({
-    //     content: () => componentRef.current,
-    // });
 
     const [orderCancel, setOrderCancel] = useState(false)
 
@@ -69,6 +66,8 @@ const DarazTableRow = ({ data }) => {
 
 
     };
+
+
     const { data: issues = [], refetch } = useQuery({
         queryKey: ["sellerDarazCancelIssue"],
         queryFn: async () => {
@@ -97,11 +96,33 @@ const DarazTableRow = ({ data }) => {
     }
 
 
+    const handleCheckboxChange = (order) => {
+        if (select.includes(order)) {
+            setSelect(select.filter((item) => item !== order));
+            return;
+        }
+        else {
+            setSelect([...select, order]);
+        }
+
+
+    };
+
+    console.log(select, 'selected items');
+    console.log(select.includes(order_number), order_number, 'selected items');
+
     return (
         <tr className="border-b ">
             <td className="whitespace-nowrap border-r px-6 py-4 font-medium ">
                 <div class="flex">
-                    <input type="checkbox" class="shrink-0 mt-0.5 border-gray-200 rounded text-blue-600 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800" id="hs-checkbox-group-1" />
+                    <input
+                        type="checkbox"
+                        checked={select.includes(order_id)}
+                        onChange={() => handleCheckboxChange(order_id)} // Pass order_id to handleCheckboxChange
+                        className="shrink-0 mt-0.5 
+                        cursor-pointer border-gray-200 rounded text-blue-600 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800"
+                        id={`checkbox-${order_number}`} // Use unique IDs for each checkbox
+                    />
 
                 </div>
             </td>

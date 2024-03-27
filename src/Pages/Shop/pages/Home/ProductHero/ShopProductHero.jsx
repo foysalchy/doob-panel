@@ -117,7 +117,7 @@ const ShopProductHero = () => {
         },
     });
 
-    const blankImg = 'https://i.ibb.co/7p2CvzT/empty.jpg';
+    // const blankImg = 'https://backend.doob.com.bd/api/v1/image/66036ed3df13bd9930ac229c.jpg';
     const bannerFind = heroBanner?.filter((item) => item.status === 'true');
     // https://salenow-v2-backend.vercel.app/api65e8a0a2e04a44a47ce186c3
     useEffect(() => {
@@ -231,7 +231,7 @@ const ShopProductHero = () => {
         <div>
             <div className='flex gap-4 '>
 
-                <div className='hidden  bg-white w-[20%] h-[350px]   rounded-xl lg:flex flex-col gap-2  text-sm'>
+                <div className='hidden overflow-y-hidden   bg-white w-[20%] h-[350px]   rounded-xl lg:flex flex-col gap-2  text-sm'>
                     {/* {showModal && adds && (
                         <div className="fixed top-0 left-0 flex items-center justify-center w-full h-full bg-black bg-opacity-90 z-50">
                             <div className="relative max-w-screen-lg mx-auto">
@@ -284,7 +284,7 @@ const ShopProductHero = () => {
                                                     {/* <img src={item?.image} alt="" className="w-8 h-8 rounded-full ring-1 ring-gray-200" /> */}
                                                     {item?.name}
                                                 </span>
-                                              {subCategoryData.length ? <FaAngleRight className="absolute right-2" /> : ''}
+                                                {subCategoryData.length ? <FaAngleRight className="absolute right-2" /> : ''}
                                             </button>
                                             // :
 

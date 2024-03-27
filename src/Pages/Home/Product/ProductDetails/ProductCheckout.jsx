@@ -122,6 +122,7 @@ const ProductCheckout = ({ setNext, product, quantity, sellingPrice, userInfo, s
                                     <select
                                         value={userInfo.for_product}
                                         onChange={handleChange} className="border p-2 rounded-md" name="for_product" id="">
+                                        <option value="">Order Type</option>
                                         <option value="customer">customer</option>
                                         <option value="doob_warehouse">Doob Warehouse</option>
                                         <option value="seller_warehouse">seller warehouse</option>

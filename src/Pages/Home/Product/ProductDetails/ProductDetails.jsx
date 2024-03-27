@@ -145,9 +145,9 @@ const ProductDetails = () => {
     setSelectedImage(imageUrl);
   };
 
-  const blankImg = 'https://i.ibb.co/7p2CvzT/empty.jpg';
+  // const blankImg = 'https://backend.doob.com.bd/api/v1/image/66036ed3df13bd9930ac229c.jpg';
 
-  const [selectedImage, setSelectedImage] = useState(imageList.length > 0 ? imageList[0]?.src : blankImg);
+  const [selectedImage, setSelectedImage] = useState(imageList[0]?.src);
 
   const path = useLocation();
 
@@ -159,7 +159,7 @@ const ProductDetails = () => {
       setSelectedImage(imageList[0]?.src);
     }
     else {
-      productFind?.featuredImage?.src ? productFind?.featuredImage?.src : blankImg
+      productFind?.featuredImage?.src
     }
 
 
@@ -376,8 +376,8 @@ const ProductDetails = () => {
                     {
                       selectedImage ? <img
                         className="w-94 h-full"
-                        src={selectedImage ? selectedImage : blankImg}
-                        srcSet={selectedImage ? selectedImage : blankImg}
+                        src={selectedImage}
+                        srcSet={selectedImage}
                         alt="product image"
                       /> : <h2>Loading...</h2>
                     }

@@ -76,7 +76,7 @@ const ForYouProducts = () => {
                 {
                   newProducts?.slice(0, displayedProducts)?.map((product, idx) => {
                     let name = product?.name?.slice(0, 60);
-                    const blankImg = 'https://i.ibb.co/7p2CvzT/empty.jpg';
+                    {/* const blankImg = 'https://backend.doob.com.bd/api/v1/image/66036ed3df13bd9930ac229c.jpg'; */ }
                     console.log(product);
                     return (
                       <Link to={`${product._id}`} className="group block overflow-hidden">
@@ -88,7 +88,7 @@ const ForYouProducts = () => {
                           />
 
                           <img
-                            src={product?.images[1]?.src ? product?.images[1]?.src : blankImg}
+                            src={product?.images[1]?.src}
                             alt=""
                             className="absolute inset-0 h-full w-full object-cover opacity-0 group-hover:opacity-100"
                           />
