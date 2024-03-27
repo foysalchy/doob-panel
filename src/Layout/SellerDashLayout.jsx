@@ -102,12 +102,12 @@ const SellerDashLayout = () => {
     }
 
     return (
-        <div className='flex  bg-[#f0f2f5]'>
+        <div className='flex w-screen h-screen bg-[#f0f2f5]'>
 
-            <div className="sticky z-50 top-0 h-full min-h-screen  text-white">
+            <div className=" h-full min-h-screen  text-white">
                 <SideNavberSeller responsive={responsive} setResponsive={setResponsive} />
             </div>
-            <div className="px-4 py-8 w-full   sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-10">
+            <div className="px-4 py-8 w-full overflow-y-scroll ">
                 <div>
                     <nav
                         aria-label="breadcrumb"
@@ -165,7 +165,7 @@ const SellerDashLayout = () => {
                         </ol>
                     </nav>
                 </div>
-                <div className={`bg-[#f0f2f5] flex-1  p-4 sm:p-0`}>
+                <div className={`bg-[#f0f2f5] flex-1  sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-10  p-4 sm:p-0`}>
                     <Outlet />
                 </div>
             </div>

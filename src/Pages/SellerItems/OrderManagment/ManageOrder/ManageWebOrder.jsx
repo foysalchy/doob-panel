@@ -118,7 +118,7 @@ const ManageWebOrder = () => {
                                     <SellerPrintPage setOn={setOn} products={printProduct} />
                                 </div>
                             )}
-                            <div className="overflow-hidden border border-gray-700 md:rounded-lg">
+                            <div className=" border border-gray-700 md:rounded-lg">
                                 <table className="divide-y w-full divide-gray-700">
                                     <thead className="bg-gray-900 text-white">
                                         <tr>

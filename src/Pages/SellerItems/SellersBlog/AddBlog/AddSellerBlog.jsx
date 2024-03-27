@@ -16,6 +16,7 @@ const AddSellerBlog = () => {
     const [fileName, setFileName] = useState("");
     const [loading, setLoading] = useState(false);
     const { shopInfo, user } = useContext(AuthContext)
+    const [messageData, setMessage] = useState('')
 
     const navigate = useNavigate();
 
@@ -28,34 +29,36 @@ const AddSellerBlog = () => {
         },
     });
 
-    const [upload, setUpload] = useState('')
-    const [uplodOk, setUploadOk] = useState(false)
+    // const [upload, setUpload] = useState('')
+    // const [uplodOk, setUploadOk] = useState(false)
 
-    const imageUploading = (e) => {
-        e.preventDefault();
-        const selectedFile = e.target.files[0];
-        const formData = new FormData();
-        formData.append("image", selectedFile);
-        const url = `https://salenow-v2-backend.vercel.app/api/v1/image/upload-image?shopId=${shopInfo._id}`;
-        fetch(url, {
-            method: "POST",
-            body: formData,
-        })
-            .then((res) => res.json())
-            .then((imageData) => {
+    // const imageUploading = (e) => {
+    //     e.preventDefault();
+    //     const selectedFile = e.target.files[0];
+    //     const formData = new FormData();
+    //     formData.append("image", selectedFile);
+    //     const url = `https://salenow-v2-backend.vercel.app/api/v1/image/upload-image?shopId=${shopInfo._id}`;
+    //     fetch(url, {
+    //         method: "POST",
+    //         body: formData,
+    //     })
+    //         .then((res) => res.json())
+    //         .then((imageData) => {
 
-                if (imageData.imageUrl) {
-                    setUpload(imageData.imageUrl)
-                    setUploadOk(true)
-                }
-                else {
-                    setUpload('')
-                }
+    //             if (imageData.imageUrl) {
+    //                 setUpload(imageData.imageUrl)
+    //                 setUploadOk(true)
+    //             }
+    //             else {
+    //                 setUpload('')
+    //             }
 
-            });
-    }
+    //         });
+    // }
 
-
+    const handleChange = (content) => {
+        setMessage(content);
+    };
 
 
 
@@ -210,7 +213,8 @@ const AddSellerBlog = () => {
                             <ReactQuill
                                 name="message" id="message"
                                 className="h-36"
-                                // value={message}
+                                handleChange
+                                value={messageData}
                                 modules={quillModules}
                                 placeholder="Enter description here..."
                             />
@@ -251,7 +255,7 @@ const AddSellerBlog = () => {
                             Meta Image'
                         </label>
                         <input
-                            onChange={imageUploading}
+                            // onChange={imageUploading}
                             required
                             className="w-full rounded-lg border border-gray-900 p-3 text-sm"
                             placeholder="Meta Description"
@@ -259,7 +263,7 @@ const AddSellerBlog = () => {
                             id="MetaImage'"
                             name="MetaImage'"
                         />
-                        {uplodOk && 'done'}
+
                     </div>
 
                     <div className="mt-4">

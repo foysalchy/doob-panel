@@ -160,11 +160,12 @@ const SignUpSeller = () => {
 
     setLoading(true);
 
-    let user = { name, email, userId, phoneNumber, role, createdAt, referCode }
+    let user = { name, email, userId, phoneNumber, role, createdAt, referCode, password }
 
 
     if (password.toLocaleLowerCase() !== confirmPassword.toLocaleLowerCase()) {
       setError("Passwords don't match");
+      setLoading(false);
     } else if (password.length <= 5 || confirmPassword.length <= 5) {
       setError('Passwords must be at least 6 characters long');
     } else {

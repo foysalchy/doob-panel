@@ -123,9 +123,9 @@ const SubCategoryProductDetails = () => {
     const handleImageClick = (imageUrl) => {
         setSelectedImage(imageUrl);
     };
-    const blankImg = 'https://i.ibb.co/7p2CvzT/empty.jpg';
+    // const blankImg = 'https://backend.doob.com.bd/api/v1/image/66036ed3df13bd9930ac229c.jpg';
     const [selectedImage, setSelectedImage] = useState(
-        productFind?.images[0]?.src ? productFind?.images[0]?.src : blankImg
+        productFind?.images[0]?.src
     );
 
 
@@ -229,8 +229,8 @@ const SubCategoryProductDetails = () => {
                                         {
                                             selectedImage ? <img
                                                 className="w-94 h-full"
-                                                src={selectedImage ? selectedImage : blankImg}
-                                                srcSet={selectedImage ? selectedImage : blankImg}
+                                                src={selectedImage}
+                                                srcSet={selectedImage}
                                                 alt="product image"
                                             /> : <h2>Loading...</h2>
                                         }

@@ -53,7 +53,7 @@ export default function CategorieItems({ setIsMenuOpen }) {
         },
     });
 
-    const blankImg = 'https://i.ibb.co/7p2CvzT/empty.jpg';
+    // const blankImg = 'https://backend.doob.com.bd/api/v1/image/66036ed3df13bd9930ac229c.jpg';
     const bannerFind = heroBanner?.filter((item) => item.status === 'true');
 
     useEffect(() => {
