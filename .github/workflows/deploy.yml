@@ -1,0 +1,20 @@
+version: 1
+
+stages:
+  - build
+  - deploy
+
+jobs:
+  build:
+    stage: build
+    script: npm run build
+
+  deploy:
+    stage: deploy
+    depends_on: build
+    script: |
+      scp -r dist root@152.42.184.243:/var/www/SaleNow-Frontend
+      echo "Password: mAhadi624234a"  # This line is for informational purposes only, password should not be stored in the config file.
+
+    secrets:
+      - password: mAhadi624234a  # This line is recommended but commented out for security reasons. Store password securely using a secrets manager.
