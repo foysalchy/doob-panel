@@ -7,9 +7,9 @@ import { useReactToPrint } from 'react-to-print';
 import OrderAllinfoModal from './OrderAllinfoModal';
 import ShippingModal from './ShipingModal';
 import { useEffect } from 'react';
+import {saveInvoice} from './StoreInvoiceData';
 
-
-const OrderTable = ({ setPassData, ordersNav, orderCounts, searchValue, selectedValue, setDetails, setOpenModal, selectedDate }) => {
+const OrderTable = ({ setSelectedItems, selectedItems, setPassData, ordersNav, orderCounts, searchValue, selectedValue, setDetails, setOpenModal, selectedDate }) => {
 
 
     const [modalOn, setModalOn] = useState(false);
@@ -294,7 +294,28 @@ const OrderTable = ({ setPassData, ordersNav, orderCounts, searchValue, selected
     }
 
 
-    console.log(currentItems, 'orderssssss')
+    const [openInvoice, setOpenInvoice] = useState(false);
+
+    const handleSelectAll = (e, data) => {
+        const isChecked = e.target.checked;
+        if (isChecked) {
+            setSelectedItems(data)
+        } else {
+            setSelectedItems([])
+        }
+    }
+
+    const handleCheckboxChange = (event, item) => {
+        const isChecked = event.target.checked;
+        if (isChecked) {
+            // If checkbox is checked, add item to selectedItems array
+            setSelectedItems(prevSelectedItems => [...prevSelectedItems, item]);
+        } else {
+            // If checkbox is unchecked, remove item from selectedItems array
+            setSelectedItems(prevSelectedItems => prevSelectedItems.filter(selectedItem => selectedItem._id !== item._id));
+        }
+    };
+    
 
 
     return (
@@ -306,7 +327,14 @@ const OrderTable = ({ setPassData, ordersNav, orderCounts, searchValue, selected
                         <table className="w-full bg-white border text-center text-sm font-light">
                             <thead className="border-b font-medium">
                                 <tr>
-                                    <th scope="col" className="border-r px-2 py-4 font-[500]">#</th>
+                                    <th scope="col" className="border-r px-2 py-4 font-[500]">
+                                        <input
+                                            type="checkbox"
+                                            onChange={(e) => {handleSelectAll(e, currentItems)
+                                                handleStoreInvoice(e, selectedItems)
+                                            }}
+                                        />
+                                    </th>
                                     <th scope="col" className="border-r px-2 py-4 font-[500]">Details</th>
                                     <th scope="col" className="border-r px-2 py-4 font-[500]">Document</th>
                                     <th scope="col" className="border-r px-2 py-4 font-[500]">Order No.</th>
@@ -325,7 +353,13 @@ const OrderTable = ({ setPassData, ordersNav, orderCounts, searchValue, selected
                                 {currentItems?.map((item, index) => (
                                     <React.Fragment key={item._id}>
                                         <tr className={index % 2 === 0 ? "bg-gray-100" : ""}>
-                                            <td className="border-r px-6 py-4 font-medium">{index + 1}</td>
+                                            <td className="border-r px-6 py-4 font-medium">
+                                                <input
+                                                    type="checkbox"
+                                                    onChange={(e) => handleCheckboxChange(e, item)}
+                                                    checked={selectedItems.some(selectedItem => selectedItem._id === item._id)}
+                                                />
+                                            </td>
                                             <td className="border-r px-6 py-4">
                                                 {!modalOn ? (
                                                     <button onClick={() => setModalOn(item._id)} className="px-4 py-2">Details</button>
