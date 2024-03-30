@@ -81,7 +81,7 @@ const ManageOrder = () => {
                 }
             })
             .catch(error => {
-                console.error('Error fetching HTML content:', error);
+                alert(error)
             });
     }
 
@@ -98,7 +98,7 @@ const ManageOrder = () => {
                 newWindow.document.write(invoiceHTML);
             })
             .catch(error => {
-                console.error('Error fetching HTML content:', error);
+                alert(error)
             });
 
     }
@@ -219,7 +219,7 @@ const ManageOrder = () => {
             newWindow.document.write(combinedInvoicesHTML);
 
         } catch (error) {
-            console.error('Error fetching order details:', error);
+            alert(error)
         }
     };
 
@@ -358,7 +358,7 @@ const ManageOrder = () => {
                     <button onClick={toggleDropdown} className="px-4 bg-white py-1 border" id="dropdown-button" aria-haspopup="true" aria-expanded={isOpen ? "true" : "false"}>
                         Print
                     </button>
-                    {isOpen && (
+                    {isOpen && !daraz && (
                         <div className="origin-top-right absolute  mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="dropdown-button" tabIndex="-1">
                             <div className="py-1" role="none">
                                 <button onClick={() => setShowPrintModal1(true)} className="block text-start px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem" tabIndex="-1" id="dropdown-item-1">Print Stock Checklist For Selected Items</button>
@@ -366,6 +366,15 @@ const ManageOrder = () => {
                                 <button
                                     onClick={() => setShowInvoice(true)}
                                     className="block px-4 py-2 text-sm text-gray-700 text-start hover:bg-gray-100" role="menuitem" tabIndex="-1" id="dropdown-item-3">Print Shipping Label For Selected Items</button>
+                            </div>
+                        </div>
+                    )}
+                    {isOpen && daraz && (
+                        <div className="origin-top-right absolute  mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="dropdown-button" tabIndex="-1">
+                            <div className="py-1" role="none">
+                                <button onClick={get_daraz_sleeted_order_invoice} className="block text-start px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem" tabIndex="-1" id="dropdown-item-1">Print Stock Checklist For Selected Items</button>
+                                <button onClick={getPrintForSelectedEveryItems} className="block px-4 py-2 text-sm text-gray-700 text-start hover:bg-gray-100" role="menuitem" tabIndex="-1" id="dropdown-item-2">Print Invoice For Selected Items</button>
+                                <button onClick={() => get_print_for_selected_items()} className="block px-4 py-2 text-sm text-gray-700 text-start hover:bg-gray-100" role="menuitem" tabIndex="-1" id="dropdown-item-3">Print Shipping Label For Selected Items</button>
                             </div>
                         </div>
                     )}
