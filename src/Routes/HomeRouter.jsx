@@ -13,6 +13,7 @@ import FaqLayout from "../Pages/Home/Faq/FaqLayout"
 import SingleFaq from "../Pages/Home/Faq/SingleFaq"
 import Home from "../Pages/Home/Home/Home"
 import Price from "../Pages/Home/Price/Price"
+import CardProduct from "../Pages/Home/Product/CardProduct/CardProduct"
 import CommonCategory from "../Pages/Home/Product/CommonCategory/CommonCategory"
 import Product from "../Pages/Home/Product/Product"
 import ProductDetails from "../Pages/Home/Product/ProductDetails/ProductDetails"
@@ -141,6 +142,10 @@ const homePath = [
         path: "/profile",
         element: <Profile />,
     },
+    // {
+    //     path: "/my-cart",
+    //     element: <CardProduct />,
+    // },
 
 ]
 

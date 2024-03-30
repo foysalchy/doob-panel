@@ -202,7 +202,7 @@ const Variants = ({ adminWare, multiVendor, setMultiVendor, inputFields, setInpu
                         </div>
 
 
-                        <Stock field={field} index={index} inputFields={inputFields} setInputFields={setInputFields} />
+                        <Stock field={field} daraz={daraz} index={index} inputFields={inputFields} setInputFields={setInputFields} />
                     </div>
 
                 ))}

@@ -69,7 +69,7 @@ const UserPayment = () => {
         order.method = payment
         order.timestamp = new Date().getTime()
         order.userId = shopInfo._id ? shopInfo._id : user?._id
-        order.callback = 'http://localhost:5173/services-payment-successful'
+        order.callback = 'https://doob.com.bd/services-payment-successful'
         try {
             const response = await fetch('https://salenow-v2-backend.vercel.app/api/v1/seller/bkash/payment/create', {
                 method: 'POST',
@@ -94,7 +94,7 @@ const UserPayment = () => {
         order.method = payment
         order.timestamp = new Date().getTime()
         order.userId = shopInfo._id ? shopInfo._id : user?._id
-        order.callback = 'http://localhost:5173/services-payment-successful'
+        order.callback = 'https://doob.com.bd/services-payment-successful'
         try {
             const response = await fetch('https://salenow-v2-backend.vercel.app/api/v1/seller/amarpay/payment/create', {
                 method: 'POST',
@@ -143,7 +143,22 @@ const UserPayment = () => {
         return imageData.imageUrl;
     }
 
-    console.log(previewUrl);
+    const pay_with_doob = () => {
+        console.log('hit');
+        if (shopInfo) {
+            fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/get-shop-balance?shopId=${shopInfo._id}`).then(res => res.json()).then(data => {
+                console.log(data, 'data');
+                if (data.balance < orderStage.normalPrice) {
+                    BrightAlert({ icon: 'error', text: 'Insufficient Balance' })
+                } else {
+                    orderSubmit()
+                }
+            })
+        }
+        else {
+            navigate('/login')
+        }
+    }
 
 
     return (
@@ -204,6 +219,7 @@ const UserPayment = () => {
                                         </div>
                                     </a>
                                 }
+
                             </div>
                         ))
                     }
@@ -219,6 +235,13 @@ const UserPayment = () => {
                             <h4 className="mt-2  md:font-bold md:text-lg">Cash On Delivery</h4>
                         </div>
                     </a>
+                    <a href="#scrollDestination">
+                        <div onClick={() => setPayment({ Getaway: "Doob_Payment" })} className={`${payment?.Getaway === 'Doob_Payment' && 'shadow-lg shadow-gray-700'}  border border-gray-600 flex md:flex-col flex-row items-center justify-center  gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] overflow-hidden`}>
+
+                            <h4 className="mt-2  md:font-bold md:text-lg">Doob Payment</h4>
+                        </div>
+                    </a>
+
                 </div>
 
                 <div className="">
@@ -336,7 +359,7 @@ const UserPayment = () => {
                                 (
                                     <div>
                                         <button
-                                            onClick={() => paymentHandler(payment)}
+                                            onClick={() => pay_with_doob()}
                                             className="group relative inline-flex m-auto items-center overflow-hidden rounded bg-gray-900  px-10 py-2 text-white focus:outline-none focus:ring active:bg-gray-900"
                                         >
                                             <span className="absolute -start-full transition-all group-hover:start-4">
@@ -360,6 +383,7 @@ const UserPayment = () => {
                                         </button>
                                     </div>
                                 )
+
                     }
 
 

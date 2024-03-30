@@ -46,7 +46,7 @@ const SideNavAdmin = () => {
   const [menu, setMenu] = useState(true);
 
   return (
-    <div className="py-6 bg-red sticky">
+    <div className="py-6 bg-red ">
       <button onClick={() => setMenu(!menu)} className={`absolute bg-gray-900 right-[-10px] w-[25px] h-[25px] flex items-center justify-center rounded-full text-white top-20 z-[1000]`}>
         {menu ? <FaAngleLeft /> : <FaAngleRight />}
       </button>
@@ -929,7 +929,7 @@ const SideNavAdmin = () => {
                                   {menu && <span>  Clam and return</span>}
                                 </NavLink>
                               )}
-  {user?.staffRole ? (
+                              {user?.staffRole ? (
                                 user?.permissions.find(
                                   (itm) => itm?.name === "Seller Order Management"
                                 ) ? (

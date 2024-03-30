@@ -142,7 +142,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                             className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50"
                                                                         >
                                                                             <div className='flex cursor-pointer items-center gap-2'>
-                                                                                <CgProductHunt className="w-5 h-5 fill-current text-gray-400" />
+                                                                                {/* <CgProductHunt className="w-5 h-5 fill-current text-gray-400" /> */}
                                                                                 <span> Management Product</span>
                                                                             </div>
 
@@ -199,7 +199,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                         className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50"
                                                                     >
                                                                         <div className='flex cursor-pointer items-center gap-2'>
-                                                                            <CgProductHunt className="w-5 h-5 fill-current text-gray-400" />
+                                                                            {/* <CgProductHunt className="w-5 h-5 fill-current text-gray-400" /> */}
                                                                             <span> Management Product</span>
                                                                         </div>
 
@@ -383,7 +383,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                             className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50"
                                                                         >
                                                                             <div className='flex cursor-pointer items-center gap-2'>
-                                                                                <MdWarehouse className="w-5 h-5 fill-current text-gray-400" />
+                                                                                {/* <MdWarehouse className="w-5 h-5 fill-current text-gray-400" /> */}
                                                                                 <span>Warehouse </span>
                                                                             </div>
 
@@ -401,7 +401,8 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                     to={'/seller/warehouse/warehouse-management'}
                                                                                     className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
                                                                                 >
-                                                                                    <PiWarehouseThin className='w-5 h-5 fill-current text-gray-400 ' /> Manage Warehouse
+                                                                                    {/* <PiWarehouseThin className='w-5 h-5 fill-current text-gray-400 ' /> */}
+                                                                                    Manage Warehouse
                                                                                 </Link>
                                                                             </li>
                                                                             <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
@@ -409,7 +410,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                     to={'/seller/warehouse/area-management'}
                                                                                     className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
                                                                                 >
-                                                                                    <BiArea className='w-5 h-5 fill-current text-gray-400 ' /> Area Management
+                                                                                    {/* <BiArea className='w-5 h-5 fill-current text-gray-400 ' /> */}Area Management
                                                                                 </Link>
                                                                             </li>
                                                                             <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
@@ -417,7 +418,8 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                     to={'/seller/warehouse/rack-management'}
                                                                                     className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
                                                                                 >
-                                                                                    <BsHddRack className='w-5 h-5 fill-current text-gray-400 ' /> Rack Management
+                                                                                    {/* <BsHddRack className='w-5 h-5 fill-current text-gray-400 ' /> */}
+                                                                                    Rack Management
                                                                                 </Link>
                                                                             </li>
                                                                             <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
@@ -425,7 +427,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                     to={'/seller/warehouse/self-management'}
                                                                                     className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
                                                                                 >
-                                                                                    <MdSelfImprovement className='w-5 h-5 fill-current text-gray-400 ' /> Self Management
+                                                                                    {/* <MdSelfImprovement className='w-5 h-5 fill-current text-gray-400 ' />  */}Self Management
                                                                                 </Link>
                                                                             </li>
                                                                             <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
@@ -450,7 +452,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                         className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50"
                                                                     >
                                                                         <div className='flex cursor-pointer items-center gap-2'>
-                                                                            <MdWarehouse className="w-5 h-5 fill-current text-gray-400" />
+                                                                            {/* <MdWarehouse className="w-5 h-5 fill-current text-gray-400" /> */}
                                                                             <span>Warehouse</span>
                                                                         </div>
 
@@ -468,7 +470,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                 to={'/seller/warehouse/warehouse-management'}
                                                                                 className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
                                                                             >
-                                                                                <PiWarehouseThin className='w-5 h-5 fill-current text-gray-400 ' /> Manage Warehouse
+                                                                                {/* <PiWarehouseThin className='w-5 h-5 fill-current text-gray-400 ' /> */}Manage Warehouse
                                                                             </Link>
                                                                         </li>
                                                                         <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
@@ -476,7 +478,8 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                 to={'/seller/warehouse/area-management'}
                                                                                 className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
                                                                             >
-                                                                                <BiArea className='w-5 h-5 fill-current text-gray-400 ' /> Area Management
+                                                                                {/* <BiArea className='w-5 h-5 fill-current text-gray-400 ' /> */}
+                                                                                Area Management
                                                                             </Link>
                                                                         </li>
                                                                         <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
@@ -484,7 +487,8 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                 to={'/seller/warehouse/rack-management'}
                                                                                 className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
                                                                             >
-                                                                                <BsHddRack className='w-5 h-5 fill-current text-gray-400 ' /> Rack Management
+                                                                                {/* <BsHddRack className='w-5 h-5 fill-current text-gray-400 ' /> */}
+                                                                                Rack Management
                                                                             </Link>
                                                                         </li>
                                                                         <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
@@ -492,7 +496,8 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                 to={'/seller/warehouse/self-management'}
                                                                                 className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
                                                                             >
-                                                                                <MdSelfImprovement className='w-5 h-5 fill-current text-gray-400 ' /> Self Management
+                                                                                {/* <MdSelfImprovement className='w-5 h-5 fill-current text-gray-400 ' /> */}
+                                                                                Self Management
                                                                             </Link>
                                                                         </li>
                                                                         <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
@@ -500,7 +505,8 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                 to={'/seller/warehouse/cell-management'}
                                                                                 className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
                                                                             >
-                                                                                <BiSolidBellRing className='w-5 h-5 fill-current text-gray-400 ' /> Cell Management
+                                                                                {/* <BiSolidBellRing className='w-5 h-5 fill-current text-gray-400 ' /> */}
+                                                                                Cell Management
                                                                             </Link>
                                                                         </li>
 
@@ -542,7 +548,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                         className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50"
                                                                     >
                                                                         <div className='flex cursor-pointer items-center gap-2'>
-                                                                            <CgProductHunt className="w-5 h-5 fill-current text-gray-400" />
+                                                                            {/* <CgProductHunt className="w-5 h-5 fill-current text-gray-400" /> */}
                                                                             <span> Management Product</span>
                                                                         </div>
 
@@ -599,7 +605,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                     className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50"
                                                                 >
                                                                     <div className='flex cursor-pointer items-center gap-2'>
-                                                                        <CgProductHunt className="w-5 h-5 fill-current text-gray-400" />
+                                                                        {/* <CgProductHunt className="w-5 h-5 fill-current text-gray-400" /> */}
                                                                         <span> Management Product</span>
                                                                     </div>
 
@@ -658,7 +664,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                         className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50"
                                                                     >
                                                                         <div className='flex cursor-pointer items-center gap-2'>
-                                                                            <TbCategory className="w-5 h-5 fill-current text-gray-400" />
+                                                                            {/* <TbCategory className="w-5 h-5 fill-current text-gray-400" /> */}
 
                                                                             <span>Category</span>
                                                                         </div>
@@ -720,7 +726,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                     className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50"
                                                                 >
                                                                     <div className='flex cursor-pointer items-center gap-2'>
-                                                                        <TbCategory className="w-5 h-5 fill-current text-gray-400" />
+                                                                        {/* <TbCategory className="w-5 h-5 fill-current text-gray-400" /> */}
 
                                                                         <span>Category</span>
                                                                     </div>
@@ -784,7 +790,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                         className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50"
                                                                     >
                                                                         <div className='flex cursor-pointer items-center gap-2'>
-                                                                            <MdWarehouse className="w-5 h-5 fill-current text-gray-400" />
+                                                                            {/* <MdWarehouse className="w-5 h-5 fill-current text-gray-400" /> */}
                                                                             <span>Warehouse </span>
                                                                         </div>
 
@@ -851,7 +857,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                     className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50"
                                                                 >
                                                                     <div className='flex cursor-pointer items-center gap-2'>
-                                                                        <MdWarehouse className="w-5 h-5 fill-current text-gray-400" />
+                                                                        {/* <MdWarehouse className="w-5 h-5 fill-current text-gray-400" /> */}
                                                                         <span>Warehouse</span>
                                                                     </div>
 
@@ -961,13 +967,14 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                         </span>
                                                     </summary>
 
-                                                    <ul className="mt-2 space-y-1 px-2 bg-[#1b202ea1] border">
+                                                    <ul className="mt-2 space-y-1   px-2 bg-[#1b202ea1] border border-gray-500 py-2 border-opacity-50">
                                                         <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
                                                             <Link
                                                                 to={'/seller/orders/manage-order'}
                                                                 className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
                                                             >
-                                                                <MdManageAccounts className='w-5 h-5 fill-current text-gray-400 ' /> Manage Orders
+                                                                {/* <MdManageAccounts className='w-5 h-5 fill-current text-gray-400 ' /> */}
+                                                                Manage Orders
                                                             </Link>
                                                         </li>
                                                         <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
@@ -975,7 +982,8 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                 to={'/seller/orders/web-store-order'}
                                                                 className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
                                                             >
-                                                                <MdManageAccounts className='w-5 h-5 fill-current text-gray-400 ' /> Manage Web Orders
+                                                                {/* <MdManageAccounts className='w-5 h-5 fill-current text-gray-400 ' /> */}
+                                                                Manage Web Orders
                                                             </Link>
                                                         </li>
                                                         <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
@@ -983,7 +991,8 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                 to={'/seller/orders/manage-review'}
                                                                 className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
                                                             >
-                                                                <MdOutlineReviews className='w-5 h-5 fill-current text-gray-400 ' /> Manage Review
+                                                                {/* <MdOutlineReviews className='w-5 h-5 fill-current text-gray-400 ' /> */}
+                                                                Manage Review
                                                             </Link>
                                                         </li>
                                                     </ul>
@@ -1020,7 +1029,8 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                             to={'/seller/orders/manage-order'}
                                                             className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
                                                         >
-                                                            <MdManageAccounts className='w-5 h-5 fill-current text-gray-400 ' /> Manage Orders
+                                                            {/* <MdManageAccounts className='w-5 h-5 fill-current text-gray-400 ' /> */}
+                                                            Manage Orders
                                                         </Link>
                                                     </li>
                                                     <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
@@ -1028,7 +1038,8 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                             to={'/seller/orders/claim-return'}
                                                             className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
                                                         >
-                                                            <MdManageAccounts className='w-5 h-5 fill-current text-gray-400 ' /> Claim Return
+                                                            {/* <MdManageAccounts className='w-5 h-5 fill-current text-gray-400 ' /> */}
+                                                            Claim Return
                                                         </Link>
                                                     </li>
                                                     <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
@@ -1036,7 +1047,8 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                             to={'/seller/orders/claim-order-list'}
                                                             className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
                                                         >
-                                                            <MdManageAccounts className='w-5 h-5 fill-current text-gray-400 ' /> Claim List
+                                                            {/* <MdManageAccounts className='w-5 h-5 fill-current text-gray-400 ' /> */}
+                                                            Claim List
                                                         </Link>
                                                     </li>
                                                     <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
@@ -1044,7 +1056,8 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                             to={'/seller/orders/web-store-order'}
                                                             className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
                                                         >
-                                                            <MdManageAccounts className='w-5 h-5 fill-current text-gray-400 ' /> Manage Web Orders
+                                                            {/* <MdManageAccounts className='w-5 h-5 fill-current text-gray-400 ' /> */}
+                                                            Manage Web Orders
                                                         </Link>
                                                     </li>
                                                     <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
@@ -1052,7 +1065,8 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                             to={'/seller/orders/manage-review'}
                                                             className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
                                                         >
-                                                            <MdOutlineReviews className='w-5 h-5 fill-current text-gray-400 ' /> Manage Review
+                                                            {/* <MdOutlineReviews className='w-5 h-5 fill-current text-gray-400 ' /> */}
+                                                            Manage Review
                                                         </Link>
                                                     </li>
                                                 </ul>
@@ -1084,13 +1098,14 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                         </span>
                                                     </summary>
 
-                                                    <ul className="mt-2 space-y-1 px-2 bg-[#1b202ea1] border">
+                                                    <ul className="mt-2 space-y-1   px-2 bg-[#1b202ea1] border border-gray-500 py-2 border-opacity-50">
                                                         <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
                                                             <Link
                                                                 to={'/seller/manage-pages'}
                                                                 className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 rounded-md"
                                                             >
-                                                                <SiPagekit className='w-5 h-5 fill-current text-gray-400' />  Manage Pages
+                                                                {/* <SiPagekit className='w-5 h-5 fill-current text-gray-400' /> */}
+                                                                Manage Pages
                                                             </Link>
                                                         </li>
                                                         <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
@@ -1098,7 +1113,8 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                 to={'/seller/manage-pages/add-page'}
                                                                 className="  text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 rounded-md"
                                                             >
-                                                                <AiFillFileAdd className='w-5 h-5 fill-current text-gray-400' />   Add Page
+                                                                {/* <AiFillFileAdd className='w-5 h-5 fill-current text-gray-400' /> */}
+                                                                Add Page
                                                             </Link>
                                                         </li>
 
@@ -1127,13 +1143,14 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                     </span>
                                                 </summary>
 
-                                                <ul className="mt-2 space-y-1 px-2 bg-[#1b202ea1] border">
+                                                <ul className="mt-2 space-y-1   px-2 bg-[#1b202ea1] border border-gray-500 py-2 border-opacity-50">
                                                     <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
                                                         <Link
                                                             to={'/seller/manage-pages'}
                                                             className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 rounded-md"
                                                         >
-                                                            <SiPagekit className='w-5 h-5 fill-current text-gray-400' />  Manage Pages
+                                                            {/* <SiPagekit className='w-5 h-5 fill-current text-gray-400' /> */}
+                                                            Manage Pages
                                                         </Link>
                                                     </li>
                                                     <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
@@ -1141,7 +1158,8 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                             to={'/seller/manage-pages/add-page'}
                                                             className="  text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 rounded-md"
                                                         >
-                                                            <AiFillFileAdd className='w-5 h-5 fill-current text-gray-400' />   Add Page
+                                                            {/* <AiFillFileAdd className='w-5 h-5 fill-current text-gray-400' /> */}
+                                                            Add Page
                                                         </Link>
                                                     </li>
 
@@ -1194,7 +1212,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
 
                                                         </span>
                                                     </summary>
-                                                    <ul className="mt-2 space-y-1 px-2 bg-[#1b202ea1] border">
+                                                    <ul className="mt-2 space-y-1   px-2 bg-[#1b202ea1] border border-gray-500 py-2 border-opacity-50">
                                                         <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
                                                             <Link
                                                                 to={'/seller/report-management/packaging-cost-report'}
@@ -1277,13 +1295,14 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                     </span>
                                                 </summary>
 
-                                                <ul className="mt-2 space-y-1 px-2 bg-[#1b202ea1] border ">
+                                                <ul className="mt-2 space-y-1   px-2 bg-[#1b202ea1] border border-gray-500 py-2 border-opacity-50 ">
                                                     <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
                                                         <Link
                                                             to={'/seller/report-management/packaging-cost-report'}
                                                             className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
                                                         >
-                                                            <TbReportAnalytics className='w-5 h-5 fill-current text-gray-400 ' />Packaging Cost Report
+                                                            {/* <TbReportAnalytics className='w-5 h-5 fill-current text-gray-400 ' /> */}
+                                                            Packaging Cost Report
                                                         </Link>
                                                     </li>
                                                     <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
@@ -1291,7 +1310,8 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                             to={'/seller/report-management/customer-report'}
                                                             className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
                                                         >
-                                                            <MdReportOff className='w-5 h-5 fill-current text-gray-400 ' /> Customer Report
+                                                            {/* <MdReportOff className='w-5 h-5 fill-current text-gray-400 ' /> */}
+                                                            Customer Report
                                                         </Link>
                                                     </li>
                                                     <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
@@ -1299,7 +1319,8 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                             to={'/seller/report-management/pos-report'}
                                                             className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
                                                         >
-                                                            <BsPostage className='w-5 h-5 fill-current text-gray-400 ' /> Pos Report
+                                                            {/* <BsPostage className='w-5 h-5 fill-current text-gray-400 ' /> */}
+                                                            Pos Report
                                                         </Link>
                                                     </li>
                                                     <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
@@ -1307,7 +1328,8 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                             to={'/seller/report-management/sales-report'}
                                                             className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
                                                         >
-                                                            <IoScale className='w-5 h-5 fill-current text-gray-400 ' /> Sales Report
+                                                            {/* <IoScale className='w-5 h-5 fill-current text-gray-400 ' /> */}
+                                                            Sales Report
                                                         </Link>
                                                     </li>
                                                     <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
@@ -1315,7 +1337,8 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                             to={'/seller/report-management/subscriber-report'}
                                                             className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
                                                         >
-                                                            <BsSubscript className='w-5 h-5 fill-current text-gray-400 ' /> Subscriber Report
+                                                            {/* <BsSubscript className='w-5 h-5 fill-current text-gray-400 ' /> */}
+                                                            Subscriber Report
                                                         </Link>
                                                     </li>
                                                     <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
@@ -1323,14 +1346,16 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                             to={'/seller/report-management/user-search-report'}
                                                             className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
                                                         >
-                                                            <BiSearchAlt className='w-5 h-5 fill-current text-gray-400 ' /> Search Report
+                                                            {/* <BiSearchAlt className='w-5 h-5 fill-current text-gray-400 ' /> */}
+                                                            Search Report
                                                         </Link>
                                                     </li>
                                                     <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
                                                         <Link
                                                             to={'/seller/report-management/warehouse-report'}
                                                             className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md">
-                                                            <FaWarehouse className='w-5 h-5 fill-current text-gray-400 ' /> Warehouse Report
+                                                            {/* <FaWarehouse className='w-5 h-5 fill-current text-gray-400 ' /> */}
+                                                            Warehouse Report
                                                         </Link>
                                                     </li>
 
@@ -1361,7 +1386,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                         </span>
                                                     </summary>
 
-                                                    <ul className="mt-2 space-y-1 px-2 bg-[#1b202ea1] border">
+                                                    <ul className="mt-2 space-y-1   px-2 bg-[#1b202ea1] border border-gray-500 py-2 border-opacity-50">
                                                         {user?.staffRole ? (
                                                             user?.permissions.find(itm => itm?.name === "Subscription Management") ? (
                                                                 managementPermission('SubscriptionModel') && <li className="rounded-sm hover:bg-gray-800">
@@ -1404,12 +1429,12 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                     </span>
                                                 </summary>
 
-                                                <ul className="mt-2 space-y-1 px-2 bg-[#1b202ea1] border">
+                                                <ul className="mt-2 space-y-1   px-2 bg-[#1b202ea1] border border-gray-500 py-2 border-opacity-50">
                                                     {user?.staffRole ? (
                                                         user?.permissions.find(itm => itm?.name === "Subscription Management") ? (
                                                             managementPermission('SubscriptionModel') && <li className="rounded-sm hover:bg-gray-800">
                                                                 <Link to={'/seller/subscription-management'} rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
-                                                                    <BiArchive className="w-5 h-5 text-gray-400" />
+                                                                    {/* <BiArchive className="w-5 h-5 text-gray-400" /> */}
                                                                     <span>Subscription</span>
                                                                 </Link>
                                                             </li>
@@ -1418,7 +1443,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                     ) : (
                                                         <li className="rounded-sm hover:bg-gray-800">
                                                             <Link to={'/seller/subscription-management'} rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
-                                                                <BiArchive className="w-5 h-5 text-gray-400" />
+                                                                {/* <BiArchive className="w-5 h-5 text-gray-400" /> */}
                                                                 <span>Subscription </span>
                                                             </Link>
                                                         </li>
@@ -1452,13 +1477,13 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                         </span>
                                                     </summary>
 
-                                                    <ul className="mt-2 space-y-1 px-2 bg-[#1b202ea1] border">
+                                                    <ul className="mt-2 space-y-1   px-2 bg-[#1b202ea1] border border-gray-500 py-2 border-opacity-50">
 
                                                         {user?.staffRole ? (
                                                             user?.permissions.find(itm => itm?.name === "Support Ticket") ? (
                                                                 <li className="rounded-sm  hover:bg-gray-800">
                                                                     <Link to={'/seller/support-tickets'} rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
-                                                                        <BsTicket className="w-5 h-5 fill-current text-gray-400" />
+                                                                        {/* <BsTicket className="w-5 h-5 fill-current text-gray-400" /> */}
 
                                                                         <span>Support Ticket</span>
                                                                     </Link>
@@ -1467,7 +1492,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                         ) : (
                                                             <li className="rounded-sm  hover:bg-gray-800">
                                                                 <Link to={'/seller/support-tickets'} rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
-                                                                    <BsTicket className="w-5 h-5 fill-current text-gray-400" />
+                                                                    {/* <BsTicket className="w-5 h-5 fill-current text-gray-400" /> */}
 
                                                                     <span>Support Ticket</span>
                                                                 </Link>
@@ -1480,7 +1505,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                             user?.permissions.find(itm => itm?.name === "User Support Ticket") ? (
                                                                 <li className="rounded-sm  hover:bg-gray-800">
                                                                     <Link to={'/seller/user-tickets'} rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
-                                                                        <BsTicket className="w-5 h-5 fill-current text-gray-400" />
+                                                                        {/* <BsTicket className="w-5 h-5 fill-current text-gray-400" /> */}
 
                                                                         <span> User Support Ticket</span>
                                                                     </Link>
@@ -1490,7 +1515,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                         ) : (
                                                             <li className="rounded-sm  hover:bg-gray-800">
                                                                 <Link to={'/seller/user-tickets'} rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
-                                                                    <BsTicket className="w-5 h-5 fill-current text-gray-400" />
+                                                                    {/* <BsTicket className="w-5 h-5 fill-current text-gray-400" /> */}
 
                                                                     <span> User Support Ticket</span>
                                                                 </Link>
@@ -1520,13 +1545,13 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                     </span>
                                                 </summary>
 
-                                                <ul className="mt-2 space-y-1 px-2 bg-[#1b202ea1] border">
+                                                <ul className="mt-2 space-y-1   px-2 bg-[#1b202ea1] border border-gray-500 py-2 border-opacity-50">
 
                                                     {user?.staffRole ? (
                                                         user?.permissions.find(itm => itm?.name === "Support Ticket") ? (
                                                             <li className="rounded-sm  hover:bg-gray-800">
                                                                 <Link to={'/seller/support-tickets'} rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
-                                                                    <BsTicket className="w-5 h-5 fill-current text-gray-400" />
+                                                                    {/* <BsTicket className="w-5 h-5 fill-current text-gray-400" /> */}
 
                                                                     <span>Support Ticket</span>
                                                                 </Link>
@@ -1535,7 +1560,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                     ) : (
                                                         <li className="rounded-sm  hover:bg-gray-800">
                                                             <Link to={'/seller/support-tickets'} rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
-                                                                <BsTicket className="w-5 h-5 fill-current text-gray-400" />
+                                                                {/* <BsTicket className="w-5 h-5 fill-current text-gray-400" /> */}
 
                                                                 <span>Support Ticket</span>
                                                             </Link>
@@ -1548,7 +1573,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                         user?.permissions.find(itm => itm?.name === "User Support Ticket") ? (
                                                             <li className="rounded-sm  hover:bg-gray-800">
                                                                 <Link to={'/seller/user-tickets'} rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
-                                                                    <BsTicket className="w-5 h-5 fill-current text-gray-400" />
+                                                                    {/* <BsTicket className="w-5 h-5 fill-current text-gray-400" /> */}
 
                                                                     <span> User Support Ticket</span>
                                                                 </Link>
@@ -1558,7 +1583,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                     ) : (
                                                         <li className="rounded-sm  hover:bg-gray-800">
                                                             <Link to={'/seller/user-tickets'} rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
-                                                                <BsTicket className="w-5 h-5 fill-current text-gray-400" />
+                                                                {/* <BsTicket className="w-5 h-5 fill-current text-gray-400" /> */}
 
                                                                 <span> User Support Ticket</span>
                                                             </Link>
@@ -1595,13 +1620,13 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                         </span>
                                                     </summary>
 
-                                                    <ul className="mt-2 space-y-1 px-2 bg-[#1b202ea1] border">
+                                                    <ul className="mt-2 space-y-1   px-2 bg-[#1b202ea1] border border-gray-500 py-2 border-opacity-50">
                                                         <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
                                                             <Link
                                                                 to={'/seller/manage-blogs'}
                                                                 className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 rounded-md"
                                                             >
-                                                                <MdOutlineManageSearch className='w-5 h-5 fill-current text-gray-400' />  Manage Blogs
+                                                                {/* <MdOutlineManageSearch className='w-5 h-5 fill-current text-gray-400' />  Manage Blogs */}
                                                             </Link>
                                                         </li>
                                                         <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
@@ -1609,7 +1634,8 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                 to={'/seller/manage-blogs/add-blog'}
                                                                 className="  text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 rounded-md"
                                                             >
-                                                                <MdOutlineAddCircleOutline className='w-5 h-5 fill-current text-gray-400' />   Add Blog
+                                                                {/* <MdOutlineAddCircleOutline className='w-5 h-5 fill-current text-gray-400' /> */}
+                                                                Add Blog
                                                             </Link>
                                                         </li>
                                                         <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
@@ -1617,7 +1643,8 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                 to={'/seller/manage-blogs/blog-category'}
                                                                 className="  text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 rounded-md"
                                                             >
-                                                                <MdOutlineAddCircleOutline className='w-5 h-5 fill-current text-gray-400' />   Blog Category
+                                                                {/* <MdOutlineAddCircleOutline className='w-5 h-5 fill-current text-gray-400' /> */}
+                                                                Blog Category
                                                             </Link>
                                                         </li>
 
@@ -1645,13 +1672,14 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                     </span>
                                                 </summary>
 
-                                                <ul className="mt-2 space-y-1 px-2 bg-[#1b202ea1] border">
+                                                <ul className="mt-2 space-y-1   px-2 bg-[#1b202ea1] border border-gray-500 py-2 border-opacity-50">
                                                     <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
                                                         <Link
                                                             to={'/seller/manage-blogs'}
                                                             className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 rounded-md"
                                                         >
-                                                            <MdOutlineManageSearch className='w-5 h-5 fill-current text-gray-400' />  Manage Blogs
+                                                            {/* <MdOutlineManageSearch className='w-5 h-5 fill-current text-gray-400' /> */}
+                                                            Manage Blogs
                                                         </Link>
                                                     </li>
                                                     <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
@@ -1659,7 +1687,8 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                             to={'/seller/manage-blogs/add-blog'}
                                                             className="  text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 rounded-md"
                                                         >
-                                                            <MdOutlineAddCircleOutline className='w-5 h-5 fill-current text-gray-400' />   Add Blog
+                                                            {/* <MdOutlineAddCircleOutline className='w-5 h-5 fill-current text-gray-400' /> */}
+                                                            Add Blog
                                                         </Link>
                                                     </li>
                                                     <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
@@ -1667,7 +1696,8 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                             to={'/seller/manage-blogs/blog-category'}
                                                             className="  text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 rounded-md"
                                                         >
-                                                            <MdOutlineAddCircleOutline className='w-5 h-5 fill-current text-gray-400' />   Blog Category
+                                                            {/* <MdOutlineAddCircleOutline className='w-5 h-5 fill-current text-gray-400' /> */}
+                                                            Blog Category
                                                         </Link>
                                                     </li>
 
@@ -1702,13 +1732,14 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                         </span>
                                                     </summary>
 
-                                                    <ul className="mt-2 space-y-1 px-2 bg-[#1b202ea1] border">
+                                                    <ul className="mt-2 space-y-1   px-2 bg-[#1b202ea1] border border-gray-500 py-2 border-opacity-50">
                                                         <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
                                                             <Link
                                                                 to={'/seller/manage-contact'}
                                                                 className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 rounded-md"
                                                             >
-                                                                <MdContactSupport className='w-5 h-5 fill-current text-gray-400' />  Contact
+                                                                {/* <MdContactSupport className='w-5 h-5 fill-current text-gray-400' /> */}
+                                                                Contact
                                                             </Link>
                                                         </li>
                                                         <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
@@ -1716,7 +1747,8 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                 to={'/seller/manage-contact/add-contact'}
                                                                 className="  text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 rounded-md"
                                                             >
-                                                                <MdOutlineAddCircleOutline className='w-5 h-5 fill-current text-gray-400' />   Add Contact
+                                                                {/* <MdOutlineAddCircleOutline className='w-5 h-5 fill-current text-gray-400' /> */}
+                                                                Add Contact
                                                             </Link>
                                                         </li>
 
@@ -1745,13 +1777,14 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                     </span>
                                                 </summary>
 
-                                                <ul className="mt-2 space-y-1 px-2 bg-[#1b202ea1] border">
+                                                <ul className="mt-2 space-y-1   px-2 bg-[#1b202ea1] border border-gray-500 py-2 border-opacity-50">
                                                     <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
                                                         <Link
                                                             to={'/seller/manage-contact'}
                                                             className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 rounded-md"
                                                         >
-                                                            <MdContactSupport className='w-5 h-5 fill-current text-gray-400' />  Contact
+                                                            {/* <MdContactSupport className='w-5 h-5 fill-current text-gray-400' /> */}
+                                                            Contact
                                                         </Link>
                                                     </li>
                                                     <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
@@ -1759,7 +1792,8 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                             to={'/seller/manage-contact/add-contact'}
                                                             className="  text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 rounded-md"
                                                         >
-                                                            <MdOutlineAddCircleOutline className='w-5 h-5 fill-current text-gray-400' />   Add Contact
+                                                            {/* <MdOutlineAddCircleOutline className='w-5 h-5 fill-current text-gray-400' /> */}
+                                                            Add Contact
                                                         </Link>
                                                     </li>
 
@@ -1839,7 +1873,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                         </span>
                                                     </summary>
 
-                                                    <ul className="mt-2 space-y-1 px-2 bg-[#1b202ea1] border">
+                                                    <ul className="mt-2 space-y-1   px-2 bg-[#1b202ea1] border border-gray-500 py-2 border-opacity-50">
                                                         <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
                                                             <Link
                                                                 to={'/seller/settings/payment-management'}
@@ -1883,13 +1917,14 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                     </span>
                                                 </summary>
 
-                                                <ul className="mt-2 space-y-1   px-2 bg-[#1b202ea1] border">
+                                                <ul className="mt-2 space-y-1   px-2 bg-[#1b202ea1] border border-gray-500 py-2 border-opacity-50">
                                                     <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
                                                         <Link
                                                             to={'/seller/content-management/popup-management'}
                                                             className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
                                                         >
-                                                            <FaPage4 className='w-5 h-5 fill-current text-gray-400 ' /> Popup Management
+                                                            {/* <FaPage4 className='w-5 h-5 fill-current text-gray-400 ' /> */}
+                                                            Popup Management
                                                         </Link>
                                                     </li>
                                                     <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
@@ -1897,7 +1932,8 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                             to={'/seller/content-management/slider-management'}
                                                             className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
                                                         >
-                                                            <BiSlider className='w-5 h-5 fill-current text-gray-400 ' /> Slider Management
+                                                            {/* <BiSlider className='w-5 h-5 fill-current text-gray-400 ' /> */}
+                                                            Slider Management
                                                         </Link>
                                                     </li>
 
@@ -1906,7 +1942,8 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                             to={'/seller/content-management/feature-management'}
                                                             className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
                                                         >
-                                                            <MdPhotoSizeSelectActual className='w-5 h-5 fill-current text-gray-400 ' /> Feature Image
+                                                            {/* <MdPhotoSizeSelectActual className='w-5 h-5 fill-current text-gray-400 ' /> */}
+                                                            Feature Image
                                                         </Link>
                                                     </li>
                                                     <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
@@ -1914,7 +1951,8 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                             to={'/seller/settings/payment-management'}
                                                             className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
                                                         >
-                                                            <MdPayment className='w-5 h-5 fill-current text-gray-400 ' /> Payment Getaway
+                                                            {/* <MdPayment className='w-5 h-5 fill-current text-gray-400 ' /> */}
+                                                            Payment Getaway
                                                         </Link>
                                                     </li>
                                                     <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
@@ -1922,7 +1960,8 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                             to={'/seller/settings/send-email'}
                                                             className="  text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 rounded-md"
                                                         >
-                                                            <BiEnvelope className='w-5 h-5 fill-current text-gray-400' />   Send Email
+                                                            {/* <BiEnvelope className='w-5 h-5 fill-current text-gray-400' /> */}
+                                                            Send Email
                                                         </Link>
                                                     </li>
                                                     <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
@@ -1930,7 +1969,8 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                             to={'/seller/settings/shipping'}
                                                             className="  text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 rounded-md"
                                                         >
-                                                            <MdOutlineLocalShipping className='w-5 h-5 fill-current text-gray-400' />   Shipping
+                                                            {/* <MdOutlineLocalShipping className='w-5 h-5 fill-current text-gray-400' /> */}
+                                                            Shipping
                                                         </Link>
                                                     </li>
                                                     <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
@@ -1938,7 +1978,8 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                             to={'/seller/settings/auth-credential'}
                                                             className="  text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 rounded-md"
                                                         >
-                                                            <MdOutlineSecurity className='w-5 h-5 fill-current text-gray-400' />   Auth Credential
+                                                            {/* <MdOutlineSecurity className='w-5 h-5 fill-current text-gray-400' /> */}
+                                                            Auth Credential
                                                         </Link>
                                                     </li>
                                                     <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
@@ -1946,7 +1987,8 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                             to={'/seller/settings/price-role'}
                                                             className="  text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 rounded-md"
                                                         >
-                                                            <MdOutlinePriceChange className='w-5 h-5 fill-current text-gray-400' />   Price Role
+                                                            {/* <MdOutlinePriceChange className='w-5 h-5 fill-current text-gray-400' /> */}
+                                                            Price Role
                                                         </Link>
                                                     </li>
 
@@ -1997,13 +2039,14 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                         </span>
                                                     </summary>
 
-                                                    <ul className="mt-2 space-y-1 px-2 bg-[#1b202ea1] border">
+                                                    <ul className="mt-2 space-y-1   px-2 bg-[#1b202ea1] border border-gray-500 py-2 border-opacity-50">
                                                         <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
                                                             <Link
                                                                 to={'/seller/content-management/brand-management'}
                                                                 className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
                                                             >
-                                                                <PiBrandy className='w-5 h-5 fill-current text-gray-400 ' /> Brand Name
+                                                                {/* <PiBrandy className='w-5 h-5 fill-current text-gray-400 ' /> */}
+                                                                Brand Name
                                                             </Link>
                                                         </li>
                                                         <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
@@ -2011,7 +2054,8 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                 to={'/seller/content-management/promo-code-management'}
                                                                 className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
                                                             >
-                                                                <PiNumberFourFill className='w-5 h-5 fill-current text-gray-400 ' /> Promo Code
+                                                                {/* <PiNumberFourFill className='w-5 h-5 fill-current text-gray-400 ' /> */}
+                                                                Promo Code
                                                             </Link>
                                                         </li>
 
@@ -2020,7 +2064,8 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                 to={'/seller/content-management/campaign-management'}
                                                                 className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
                                                             >
-                                                                <MdCampaign className='w-5 h-5 fill-current text-gray-400 ' /> Campaign Management
+                                                                {/* <MdCampaign className='w-5 h-5 fill-current text-gray-400 ' /> */}
+                                                                Campaign Management
                                                             </Link>
                                                         </li>
 
@@ -2049,13 +2094,14 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                     </span>
                                                 </summary>
 
-                                                <ul className="mt-2 space-y-1 px-2 bg-[#1b202ea1] border">
+                                                <ul className="mt-2 space-y-1   px-2 bg-[#1b202ea1] border border-gray-500 py-2 border-opacity-50">
                                                     <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
                                                         <Link
                                                             to={'/seller/content-management/brand-management'}
                                                             className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
                                                         >
-                                                            <PiBrandy className='w-5 h-5 fill-current text-gray-400 ' /> Brand Name
+                                                            {/* <PiBrandy className='w-5 h-5 fill-current text-gray-400 ' /> */}
+                                                            Brand Name
                                                         </Link>
                                                     </li>
                                                     <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
@@ -2063,7 +2109,8 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                             to={'/seller/content-management/promo-code-management'}
                                                             className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
                                                         >
-                                                            <PiNumberFourFill className='w-5 h-5 fill-current text-gray-400 ' /> Promo Code
+                                                            {/* <PiNumberFourFill className='w-5 h-5 fill-current text-gray-400 ' /> */}
+                                                            Promo Code
                                                         </Link>
                                                     </li>
 
@@ -2073,7 +2120,8 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                             to={'/seller/content-management/campaign-management'}
                                                             className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
                                                         >
-                                                            <MdCampaign className='w-5 h-5 fill-current text-gray-400 ' /> Campaign Management
+                                                            {/* <MdCampaign className='w-5 h-5 fill-current text-gray-400 ' /> */}
+                                                            Campaign Management
                                                         </Link>
                                                     </li>
 
@@ -2109,13 +2157,14 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                         </span>
                                                     </summary>
 
-                                                    <ul className="mt-2 space-y-1 px-2 bg-[#1b202ea1] border">
+                                                    <ul className="mt-2 space-y-1   px-2 bg-[#1b202ea1] border border-gray-500 py-2 border-opacity-50">
                                                         <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
                                                             <Link
                                                                 to={'/seller/service/manage-service'}
                                                                 className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
                                                             >
-                                                                <MdManageAccounts className='w-5 h-5 fill-current text-gray-400 ' /> My Service
+                                                                {/* <MdManageAccounts className='w-5 h-5 fill-current text-gray-400 ' /> */}
+                                                                My Service
                                                             </Link>
                                                         </li>
 
@@ -2146,13 +2195,14 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                     </span>
                                                 </summary>
 
-                                                <ul className="mt-2 space-y-1 px-2 bg-[#1b202ea1] border">
+                                                <ul className="mt-2 space-y-1   px-2 bg-[#1b202ea1] border border-gray-500 py-2 border-opacity-50">
                                                     <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
                                                         <Link
                                                             to={'/seller/service/manage-service'}
                                                             className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
                                                         >
-                                                            <MdManageAccounts className='w-5 h-5 fill-current text-gray-400 ' /> My Service
+                                                            {/* <MdManageAccounts className='w-5 h-5 fill-current text-gray-400 ' /> */}
+                                                            My Service
                                                         </Link>
                                                     </li>
 
@@ -2177,7 +2227,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                         user?.permissions.find(itm => itm?.name === "Inventory Management") ? (
                                             managementPermission('SubscriptionModel') && <li className="rounded-sm hover:bg-gray-800">
                                                 <Link to={'/seller/inventory-management'} rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
-                                                    <BiArchive className="w-5 h-5 text-gray-400" />
+                                                    {/* <BiArchive className="w-5 h-5 text-gray-400" /> */}
                                                     <span>Inventory Management</span>
                                                 </Link>
                                             </li>

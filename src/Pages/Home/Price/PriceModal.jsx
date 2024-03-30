@@ -125,7 +125,7 @@ const PriceModal = ({ open, setOpen }) => {
     };
 
     if (shopInfo) {
-      data.callback = 'http://localhost:5173/services-payment-successful';
+      data.callback = 'https://doob.com.bd/services-payment-successful';
       try {
         const response = await fetch('https://salenow-v2-backend.vercel.app/api/v1/seller/amarpay/payment/create', {
           method: 'POST',

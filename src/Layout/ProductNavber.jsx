@@ -1,8 +1,9 @@
 import { Link, NavLink } from "react-router-dom";
 import Logo from "../../Logo.png";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../AuthProvider/UserProvider";
 import { MdDashboard } from "react-icons/md";
+import { BiCart } from "react-icons/bi";
 
 export default function Component() {
     const { search, user, setSearch } = useContext(AuthContext);
@@ -40,9 +41,30 @@ export default function Component() {
         setSearch(input)
         fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/search-history?term=${encodeURIComponent(input)}`).then((response) => response.json()).then((data) => setSearchHistory(data))
     };
+    const [cardItem, setCardItem] = useState([]);
 
+    useEffect(() => {
+        // Function to update the cart from localStorage
+        const updateCartFromLocalStorage = () => {
+            const myCard = localStorage.getItem('cart-product');
+            if (myCard) {
+                const parsedCart = JSON.parse(myCard);
+                setCardItem(parsedCart);
+            }
+        };
 
-    console.log(value, "searchResult....... ");
+        // Initial call to update the cart
+        updateCartFromLocalStorage();
+
+        // Set interval to check for updates every millisecond (not recommended for performance reasons)
+        const interval = setInterval(() => {
+            updateCartFromLocalStorage();
+        }, 1);
+
+        // Cleanup function to clear the interval
+        return () => clearInterval(interval);
+    }, []);
+
     return (
         <div className="bg-white shadow-md">
             <div className="flex items-center justify-between max-w-7xl mx-auto py-4 px-8">
@@ -91,6 +113,11 @@ export default function Component() {
                     <a className="text-black hover:text-gray-700" href="#">
                         Track Order
                     </a>
+
+                    <Link to={'/products/my-card'} className="relative mx-auto bg-white border hover:bg-gray-200 p-2 rounded-md w-fit h-fit">
+                        <BiCart className="text-2xl" />
+                        <span className="absolute -right-2 -top-2 flex h-[24px] w-[24px] items-center justify-center rounded-full bg-red-500 text-center text-[12px] text-white ">{cardItem.length}</span>
+                    </Link>
 
                     {!user ? (
                         <Link

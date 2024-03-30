@@ -104,7 +104,7 @@ const ShopProductHero = () => {
         queryFn: async () => {
             const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/category/get/${shopId}`);
             const data = await res.json();
-            return data;
+            return data.slice(0, 7);
         },
     });
 
@@ -229,9 +229,9 @@ const ShopProductHero = () => {
     //end copy
     return (
         <div>
-            <div className='flex gap-4 '>
+            <div className='flex gap-4 overflow-y-hidden  '>
 
-                <div className='hidden overflow-y-hidden   bg-white w-[20%] h-[350px]   rounded-xl lg:flex flex-col gap-2  text-sm'>
+                <div className='hidden   bg-white w-[20%] h-[350px]   rounded-xl lg:flex flex-col gap-2  text-sm'>
                     {/* {showModal && adds && (
                         <div className="fixed top-0 left-0 flex items-center justify-center w-full h-full bg-black bg-opacity-90 z-50">
                             <div className="relative max-w-screen-lg mx-auto">

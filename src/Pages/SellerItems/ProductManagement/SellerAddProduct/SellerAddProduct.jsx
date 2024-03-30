@@ -133,7 +133,7 @@ const SellerAddProduct = () => {
 
 
     const formSubmit = async (e) => {
-        setLoading(true)
+        // setLoading(true)
         e.preventDefault();
         const form = e.target;
         const BnName = form.productNameBn.value
@@ -296,7 +296,7 @@ const SellerAddProduct = () => {
             DeliveryCharge
 
         }
-
+        console.log(data, 'product_ready');
 
 
         fetch('https://salenow-v2-backend.vercel.app/api/v1/seller/normal-product/', {
@@ -328,7 +328,7 @@ const SellerAddProduct = () => {
     return (
         <div>
 
-            <form className='border md:p-10 p-2' onSubmit={formSubmit} action="">
+            <form className='border p-2' onSubmit={formSubmit} action="">
 
                 <div className='mt-10'>
                     <UploadImage youtube={youtube} setYoutube={setYoutube} coverPhoto={coverPhoto} setCoverPhoto={setCoverPhoto} />

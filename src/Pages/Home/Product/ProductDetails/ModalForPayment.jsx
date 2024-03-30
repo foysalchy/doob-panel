@@ -1,6 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import ProductCheckout from './ProductCheckout';
 import { useQuery } from '@tanstack/react-query';
+import BrightAlert from 'bright-alert';
+import { AuthContext } from '../../../../AuthProvider/UserProvider';
 
 const ModalForPayment = ({ invoice, setInvoice, sellingPrice, handleStore, seller, product, quantity }) => {
     const [selectedPayment, setSelectedPayment] = useState('');
@@ -8,6 +10,8 @@ const ModalForPayment = ({ invoice, setInvoice, sellingPrice, handleStore, selle
     // const [getaways, setGetaways] = useState([]);
     const [payment, setPayment] = useState(false);
     const [userInfo, setUserInfo] = useState([])
+    const { shopInfo } = useContext(AuthContext)
+    const [payment_done, setPaymentDone] = useState(false)
 
 
     const {
@@ -57,7 +61,7 @@ const ModalForPayment = ({ invoice, setInvoice, sellingPrice, handleStore, selle
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ amount: orderStage?.promoHistory?.promoPrice ? orderStage?.promoHistory?.promoPrice : orderStage?.promoHistory?.normalPrice, userId: 'asdhfbuyagsdf' }),
+                body: JSON.stringify({ amount: sellingPrice, userId: shopInfo._id }),
             });
             const data = await response.json();
             console.log(data.bkashURL);
@@ -69,14 +73,14 @@ const ModalForPayment = ({ invoice, setInvoice, sellingPrice, handleStore, selle
 
 
     const payWithAmarPay = async () => {
-        console.log(orderStage.productPrice);
+
         try {
             const response = await fetch('https://salenow-v2-backend.vercel.app/api/v1/seller/amarpay/payment/create', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ amount: orderStage?.promoHistory?.promoPrice ? orderStage?.promoHistory?.promoPrice : orderStage?.promoHistory?.normalPrice, orderId: 1 }),
+                body: JSON.stringify({ amount: sellingPrice, orderId: 1 }),
             });
             const data = await response.json();
             console.log(data);
@@ -87,6 +91,34 @@ const ModalForPayment = ({ invoice, setInvoice, sellingPrice, handleStore, selle
         } catch (error) {
             console.log(error);
         }
+    }
+
+
+    const pay_with_doob = () => {
+        console.log('hit');
+        if (shopInfo) {
+            fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/get-shop-balance?shopId=${shopInfo._id}`).then(res => res.json()).then(data => {
+                console.log(data, 'data');
+                if (data.balance < sellingPrice) {
+
+                    BrightAlert({ icon: 'error', text: 'Insufficient Balance' })
+                } else {
+                    setPaymentDone(true)
+                    handleSubmit()
+                }
+            })
+        }
+        else {
+            navigate('/login')
+        }
+    }
+
+    const setPaymentMethod = () => {
+        setPayment({ Getaway: "Doob_Payment" })
+        pay_with_doob()
+
+
+
     }
 
 
@@ -136,7 +168,7 @@ const ModalForPayment = ({ invoice, setInvoice, sellingPrice, handleStore, selle
                                             }
                                             {get.Getaway === 'AmarPay' &&
                                                 <a href="#scrollDestination">
-                                                    <div onClick={payWithAmarPay()} className={`${payment?.Getaway === 'AmarPay' && 'shadow-lg shadow-gray-700'}  border border-gray-600 flex md:flex-col flex-row items-center justify-center gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] overflow-hidden`}>
+                                                    <div onClick={() => payWithAmarPay()} className={`${payment?.Getaway === 'AmarPay' && 'shadow-lg shadow-gray-700'}  border border-gray-600 flex md:flex-col flex-row items-center justify-center gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] overflow-hidden`}>
                                                         <img
                                                             alt="Developer"
                                                             src="https://play-lh.googleusercontent.com/xA5zXoyQrqDjgz8bef64gAvnBpofTELWWWXYkuF3t5WnPADHv5Y91A8x51Z0RHJnLzM"
@@ -159,6 +191,13 @@ const ModalForPayment = ({ invoice, setInvoice, sellingPrice, handleStore, selle
                                             }
                                         </div>
                                     ))}
+
+                                    <a href="#scrollDestination">
+                                        <button type='button' disabled={payment_done} onClick={setPaymentMethod} className={`${payment?.Getaway === 'Doob_Payment' && 'shadow-lg shadow-gray-700'}  border border-gray-600 flex md:flex-col flex-row items-center justify-center  gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] overflow-hidden`}>
+
+                                            <h4 className="mt-2  md:font-bold md:text-lg">Doob Payment</h4>
+                                        </button>
+                                    </a>
 
                                 </div>
                             </div>

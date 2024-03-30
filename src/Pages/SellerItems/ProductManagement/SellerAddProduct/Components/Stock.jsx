@@ -1,7 +1,7 @@
 import React from 'react';
 import Select from 'react-select';
 
-const Stock = ({ field, index, inputFields, setInputFields }) => {
+const Stock = ({ field, index, inputFields, setInputFields, daraz }) => {
     return (
         <div>
             <div className='border mt-4 border-gray-400 md:px-10 px-2 py-5 w-full bg-gray-100 rounded'>
@@ -58,6 +58,30 @@ const Stock = ({ field, index, inputFields, setInputFields }) => {
                             value={field.offerPrice}
                             className="flex-grow w-full h-10 px-4 mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-purple-400 focus:outline-none focus:shadow-outline" placeholder="Input Offer Price" type="number" name="offerPrice" id="" />
                     </div>
+                    {daraz && <div>
+                        <label className='text-sm ' htmlFor="Video url ">Spacial Price Start Date</label>
+                        <input
+                            onChange={(e) => {
+                                const newInputFields = [...inputFields];
+                                newInputFields[index].offerDate = e.target.value;
+                                setInputFields(newInputFields);
+                            }}
+                            value={field.offerDate}
+                            className="flex-grow w-full h-10 px-4 mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-purple-400 focus:outline-none focus:shadow-outline" placeholder="Input Offer Price" type="date" name="offerPrice" id="" />
+                    </div>}
+                    {
+                        daraz && <div>
+                            <label className='text-sm ' htmlFor="Video url ">Spacial Price End Date</label>
+                            <input
+                                onChange={(e) => {
+                                    const newInputFields = [...inputFields];
+                                    newInputFields[index].offerEndDate = e.target.value;
+                                    setInputFields(newInputFields);
+                                }}
+                                value={field.offerEndDate}
+                                className="flex-grow w-full h-10 px-4 mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-purple-400 focus:outline-none focus:shadow-outline" placeholder="Input Offer Price" type="date" name="offerPrice" id="" />
+                        </div>
+                    }
                     <div className='min-w-fit'>
                         <label className='text-sm ' htmlFor="Video url ">Product Ability</label>
                         <select
