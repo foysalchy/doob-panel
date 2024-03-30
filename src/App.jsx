@@ -4,9 +4,9 @@ import Router from "./Routes/Router";
 import { useContext, useState } from "react";
 import { useEffect } from "react";
 import { AuthContext } from "./AuthProvider/UserProvider";
-import ScrollToTop from "./SrollTop";
-import ReactPixel from 'react-facebook-pixel';
-import { useQuery } from "@tanstack/react-query";
+// import ScrollToTop from "./SrollTop";
+// import ReactPixel from 'react-facebook-pixel';
+// import { useQuery } from "@tanstack/react-query";
 
 
 function App() {
@@ -35,24 +35,24 @@ function App() {
     };
   }, []);
 
-  const pathname = window.location.pathname;
-  const idMatch = pathname.match(/\/shop\/([^/]+)/);
+  // const pathname = window.location.pathname;
+  // const idMatch = pathname.match(/\/shop\/([^/]+)/);
 
-  console.log(idMatch, 'what is id');
+  // console.log(idMatch, 'what is id');
 
-  const { data: seller_facebook_pixel = {}, refetch } = useQuery({
-    queryKey: ["seller-facebook-pixel"],
-    queryFn: async () => {
-      const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/get-facebook-id?shopId=${idMatch[1]}`);
-      const data = await res.json();
-      return data.data;
-    },
-  });
+  // const { data: seller_facebook_pixel = {}, refetch } = useQuery({
+  //   queryKey: ["seller-facebook-pixel"],
+  //   queryFn: async () => {
+  //     const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/get-facebook-id?shopId=${idMatch[1]}`);
+  //     const data = await res.json();
+  //     return data.data;
+  //   },
+  // });
 
-  const shopId = idMatch && seller_facebook_pixel.pixel && seller_facebook_pixel.pixel;
-  ReactPixel.init('asduygfweubuasgdf', {}, { debug: true, autoConfig: false });
-  ReactPixel.pageView();
-  ReactPixel.fbq('track', 'PageView');
+  // const shopId = idMatch && seller_facebook_pixel.pixel && seller_facebook_pixel.pixel;
+  // ReactPixel.init('asduygfweubuasgdf', {}, { debug: true, autoConfig: false });
+  // ReactPixel.pageView();
+  // ReactPixel.fbq('track', 'PageView');
   // useEffect(() => {
 
   // }, [shopId]);

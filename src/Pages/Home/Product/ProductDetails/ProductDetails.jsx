@@ -313,6 +313,35 @@ const ProductDetails = () => {
 
   console.log(banifit.productCost === isNaN);
 
+
+  const add_to_cart = (product) => {
+    const productData = {
+      product_name: product?.name,
+      product_id: product?._id,
+      product_price: product?.price,
+      product_quantity: quantity,
+      product_image: product?.images[0]?.src,
+      product_seller: product?.shopId,
+      sellingPrice: banifit.sellingPrice,
+    }
+
+    // need to save on localStorage  
+
+    const getCart = JSON.parse(localStorage.getItem('cart-product')) || [];
+    const productFind = getCart.find((item) => item.product_id === productData.product_id);
+    if (productFind) {
+      productFind.product_quantity = productFind.product_quantity + productData.product_quantity;
+      localStorage.setItem('cart-product', JSON.stringify(getCart));
+    } else {
+      getCart.push(productData);
+      localStorage.setItem('cart-product', JSON.stringify(getCart));
+    }
+
+
+
+    console.log(productData, 'productData');
+  }
+
   // console.log(productFind, 'comment');
   return (
     <section>
@@ -590,6 +619,13 @@ const ProductDetails = () => {
                   className="h-10 px-6 py-2 text-sm rounded bg-indigo-600 hover:bg-indigo-500 text-white"
                 >
                   Buy Now
+                </button>
+                <button
+                  onClick={() => add_to_cart(productFind)}
+                  type="button"
+                  className="h-10 px-6 py-2 text-sm rounded bg-gray-600 hover:bg-gray-500 text-white"
+                >
+                  Add to Cart
                 </button>
 
                 {invoice && <ModalForPayment quantity={quantity} seller={productFind.shopId} product={productFind} handleStore={handleStore} invoice={invoice} setInvoice={setInvoice} sellingPrice={banifit.sellingPrice} />}

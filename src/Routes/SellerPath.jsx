@@ -87,6 +87,7 @@ import CategoryEditPage from "../Pages/SellerItems/ProductManagement/SellerProdu
 import ListOfClaimOrder from "../Pages/SellerItems/OrderManagment/ManageOrder/ClimAndReturn/ListOfClaimOrder";
 import MediaManager from "../Pages/SellerItems/MeadManager/MediaManager";
 import Withdrow from "../Pages/SellerItems/Withdrow/Withdrow";
+import FinanceReport from "../Pages/SellerItems/Finance/FinanceReport";
 
 
 const SellerPath = [
@@ -369,7 +370,7 @@ const SellerPath = [
     },
     {
         path: 'daraz-invoice/:id',
-        
+
     },
 
 
@@ -472,6 +473,10 @@ const SellerPath = [
         path: "withdraw",
         element: <Withdrow />
     },
+    {
+        path: "finance",
+        element: <FinanceReport />
+    }
 
 
 
