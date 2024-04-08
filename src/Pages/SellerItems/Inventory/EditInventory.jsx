@@ -33,6 +33,7 @@ const EditInventory = ({ refetch, open, setOpen, data }) => {
             date: new Date().getTime(),
             quantity: count,
             shopId: data.shopId,
+            shopName: shopInfo.shopName
         }
 
         {

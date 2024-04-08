@@ -192,8 +192,8 @@ const SellerOrderManagement = () => {
         );
     };
 
+    
 
-    console.log(currentData, 'pagensadsfasd')
     return (
         <div>
             <section className=" mx-auto">
@@ -265,8 +265,9 @@ const SellerOrderManagement = () => {
                                 <table className="divide-y w-full divide-gray-700">
                                     <thead className="bg-gray-900 text-white">
                                         <tr>
+
                                             <th className="px-2 text-start ">
-                                                Product Info
+                                                <input type="checkbox" name="" id="" />  Product Info
                                             </th>
                                             <th scope="col" className="px-12 py-3.5 text-sm font-normal text-left rtl:text-right">
                                                 <button className="flex items-center gap-x-2">
@@ -300,7 +301,7 @@ const SellerOrderManagement = () => {
                                                 <tr key={product._id}>
                                                     <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                                                         <div className="inline-flex items-center gap-x-3">
-
+                                                            <input type="checkbox" />
                                                             <div className="flex gap-x-2 relative">
                                                                 <div className=" w-10 h-10 overflow-hidden rounded-full">
                                                                     <img
