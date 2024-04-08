@@ -7,6 +7,8 @@ import { useQuery } from '@tanstack/react-query';
 import { data } from 'autoprefixer';
 import Swal from 'sweetalert2';
 import ModalForWoo from './ModalForWoo';
+import { LuSwitchCamera } from 'react-icons/lu';
+import { MdEmail } from 'react-icons/md';
 
 const DarazIntegration = () => {
 
@@ -122,22 +124,22 @@ const DarazIntegration = () => {
     };
 
 
-
+    console.log('prev:', priviousAccount, 'daraz:', darazShop);
 
     return (
+        <div>
+            <div className='grid md:grid-cols-2 justify-between md:gap-10 gap-3 md:mt-10'>
 
-        <div className='grid md:grid-cols-2 justify-between md:gap-10 gap-3 md:mt-10'>
-
-            <div className={"bg-gray-300  py-6 text-center  rounded-md "}>
+                <div className={"bg-gray-300  py-6 text-center  rounded-md "}>
 
 
-                {<a
-                    href='https://api.daraz.com.bd/oauth/authorize?response_type=code&force_auth=true&redirect_uri=https://doob.com.bd/seller/channel-integration/&client_id=501436'
-                    className="text-blue-500 hover:underline mb-4 inline-block"
-                >
-                    Login Daraz
-                </a>}
-                {/* 
+                    {<a
+                        href='https://api.daraz.com.bd/oauth/authorize?response_type=code&force_auth=true&redirect_uri=https://doob.com.bd/seller/channel-integration/&client_id=501436'
+                        className="text-blue-500 hover:underline mb-4 inline-block"
+                    >
+                        Login Daraz
+                    </a>}
+                    {/* 
                 {shopInfo.darazLogin && (
                     <div className="bg-green-100 border-l-4 border-green-500  py-6 text-center  rounded-md">
                         <h1 className="text-green-700 font-bold">Your daraz account is connected</h1>
@@ -145,48 +147,46 @@ const DarazIntegration = () => {
                 )} */}
 
 
+                </div>
+                <div className={!shopInfo.wooLogin && "bg-gray-300  flex items-center justify-center text-center rounded-md "}>
+
+
+                    {!shopInfo.wooLogin &&
+                        <button
+                            onClick={() => setWoModal(true)}
+                            className="text-blue-500 hover:underline mb-4 inline-block"
+                        >
+                            Woo comarce Loin
+                        </button>
+                    }
+
+                    {shopInfo.wooLogin && (
+                        <div className="bg-green-100 border-l-4 border-green-500  py-6 text-center  rounded-md">
+                            <h1 className="text-green-700 font-bold">Your woo Commerce account is connected</h1>
+                        </div>
+                    )}
+                </div>
             </div>
-            <div className={!shopInfo.wooLogin && "bg-gray-300  flex items-center justify-center text-center rounded-md "}>
 
+            <div className="flex items-center gap-12 mt-8 w-full">
+                <div className='w-full px-4 py-2 bg-gray-50 rounded text-blue-500 flex items-center gap-2'>
+                    <MdEmail />
+                    {
 
-                {!shopInfo.wooLogin &&
-                    <button
-                        onClick={() => setWoModal(true)}
-                        className="text-blue-500 hover:underline mb-4 inline-block"
-                    >
-                        Woo comarce Loin
-                    </button>
-                }
+                        <h1 className="w-full"> {darazShop?.result?.account}</h1>
 
-                {shopInfo.wooLogin && (
-                    <div className="bg-green-100 border-l-4 border-green-500  py-6 text-center  rounded-md">
-                        <h1 className="text-green-700 font-bold">Your woo Commerce account is connected</h1>
-                    </div>
-                )}
+                    }
+                </div>
 
-
-            </div>
-
-            <div className='text-2xl px-4 py-2 rounded bg-gray-500'>
-                {
-
-                    <h1>{darazShop?.result?.account}</h1>
-
-                }
-            </div>
-            <br />
-            <br />
-            <div>
-                <h1>Previous Login</h1>
-                <hr />
-                {
-                    priviousAccount.filter(shop => shop.result.account !== darazShop?.result?.account).map(shop =>
-                        <h1 className='text-2xl px-4 py-2 border rounded bg-gray-500'>{shop.result.account} <span onClick={() => switchAccount(shop._id, shop.oldId)} className='cursor-pointer'>Switch</span></h1>
-                    )
-                }
-            </div>
-            <div className='h-0 w-0'>
-                <ModalForWoo setOpenModal={setWoModal} OpenModal={wooModal} shopId={shopInfo._id} setShopInfo={setShopInfo} />
+                <div className="w-full">
+                    <h1>Previous Login</h1>
+                    <hr />
+                    {
+                        priviousAccount.filter(shop => shop.result.account !== darazShop?.result?.account).map(shop =>
+                            <div className='  px-4 py-2 border flex items-center justify-between rounded bg-[#d2d2d2] text-sm'>{shop.result.account} <button onClick={() => switchAccount(shop._id, shop.oldId)} className='cursor-pointer bg-blue-500 text-white  px-4 py-1 rounded flex items-center gap-2 '><LuSwitchCamera /> Switch</button></div>
+                        )
+                    }
+                </div>
             </div>
         </div>
     );

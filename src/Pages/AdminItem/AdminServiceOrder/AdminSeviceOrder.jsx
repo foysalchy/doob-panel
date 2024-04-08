@@ -1,11 +1,13 @@
 import { useQuery } from '@tanstack/react-query';
 import BrightAlert from 'bright-alert';
-import React from 'react';
+import React, { useContext } from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import { BiLeftArrow, BiRightArrow } from 'react-icons/bi';
+import { AuthContext } from '../../../AuthProvider/UserProvider';
 
 const AdminSeviceOrder = () => {
+   
     const { data: serviceOrder = [], refetch } = useQuery({
         queryKey: ["serviceOrder"],
         queryFn: async () => {
@@ -70,6 +72,7 @@ const AdminSeviceOrder = () => {
     };
 
 
+    console.log(serviceOrder, '.......')
 
     const renderPageNumbers = () => {
         const startPage = Math.max(1, currentPage - Math.floor(pageSize / 2));
@@ -250,14 +253,14 @@ const AdminSeviceOrder = () => {
                                             scope="col"
                                             className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
                                         >
-                                            Service Category
+                                            Category
                                         </th>
 
                                         <th
                                             scope="col"
                                             className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
                                         >
-                                            Payment Getway
+                                            Subscription Type
                                         </th>
                                         <th
                                             scope="col"

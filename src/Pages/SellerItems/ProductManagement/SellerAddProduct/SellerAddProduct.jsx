@@ -137,6 +137,9 @@ const SellerAddProduct = () => {
         e.preventDefault();
         const form = e.target;
         const BnName = form.productNameBn.value
+        BnName.focus();
+        const variation_selector = form.variation_selector.value;
+        variation_selector.focus();
         const sku = form.ProductSKU.value
         const EnName = form.productNameEn.value
         const megaCategory = form?.megaCategory?.value
@@ -170,6 +173,8 @@ const SellerAddProduct = () => {
         const MetaTagMetaDescription = form?.MetaDescription?.value
         const MetaImageFile = form?.MetaImage?.files[0]
         const MetaImage = await imageUpload(MetaImageFile)
+
+
 
         const darazOptionData = filteredData.length && filteredData?.map((item) => {
             const fieldName = item.name;
@@ -296,29 +301,32 @@ const SellerAddProduct = () => {
             DeliveryCharge
 
         }
-        console.log(data, 'product_ready');
+        console.log(variation_selector, 'product_ready');
 
+        if (warehouse === '') {
+            alert('warehouse is must be selected');
+        } else {
+            fetch('https://salenow-v2-backend.vercel.app/api/v1/seller/normal-product/', {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+                , body: JSON.stringify({ data })
+            }).then((res) => res.json()).then((data) => {
 
-        fetch('https://salenow-v2-backend.vercel.app/api/v1/seller/normal-product/', {
-            method: "POST",
-            headers: {
-                'Content-Type': 'application/json'
-            }
-            , body: JSON.stringify({ data })
-        }).then((res) => res.json()).then((data) => {
+                if (
+                    data.error
+                ) {
+                    Swal.fire(`${data.message}`, '', 'warning')
+                    setLoading(false)
+                }
+                else {
+                    Swal.fire('', '', 'success')
+                    setLoading(false)
+                }
 
-            if (
-                data.error
-            ) {
-                Swal.fire(`${data.message}`, '', 'warning')
-                setLoading(false)
-            }
-            else {
-                Swal.fire('', '', 'success')
-                setLoading(false)
-            }
-
-        })
+            })
+        }
     };
 
 
@@ -342,7 +350,8 @@ const SellerAddProduct = () => {
 
                 <WareHouse shopInfo={shopInfo} adminWare={adminWare} setAdminWare={setAdminWare} />
 
-                <label
+                {/* upcoming selectee */}
+                {/* <label
                     htmlFor="Toggle3"
                     className={`inline-flex items-center py-4 rounded-md cursor-pointer ${isChecked ? 'text-gray-800' : ''
                         }`}>
@@ -365,7 +374,7 @@ const SellerAddProduct = () => {
                     >
                         For You Product
                     </span>
-                </label>
+                </label> */}
 
                 <div id='description'>
                     <Description shortDescription={shortDescription} setShortDescription={setShortDescription} description={description} setDescription={setDescription} />

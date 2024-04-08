@@ -177,7 +177,7 @@ const EditSincronusCategory = ({product, daraz, setDaraz, woo, setWoo, setInputF
 
                 <div className='flex md:flex-row flex-col justify-start gap-10'>
                     {(shopInfo.darazLogin) && <div className='flex flex-col '>
-                        <span className='font-bold'>Are you want Sinuous with Daraz </span>
+                        <span className='font-bold'>Are you want Sync with Daraz </span>
 
                         <button type='button' className='flex justify-start mt-2' >
                             <span onClick={() => {
@@ -196,7 +196,7 @@ const EditSincronusCategory = ({product, daraz, setDaraz, woo, setWoo, setInputF
                     </div>}
                     {(shopInfo.wooLogin) && <div className='flex flex-col '>
                         <div className='flex flex-col justify-start'>
-                            <span className='font-bold'>Are you want Sinuous with WooCommerce </span>
+                            <span className='font-bold'>Are you want Sync with WooCommerce </span>
 
                             <button type='button' className='flex justify-start mt-2' >
                                 <span onClick={() => setWoo(false)} className={woo ? "px-4 py-2 bg-gray-600 text-white " : "px-4 py-2 bg-violet-400"}>NO</span>

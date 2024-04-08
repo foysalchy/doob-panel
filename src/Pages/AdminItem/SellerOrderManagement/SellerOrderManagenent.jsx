@@ -135,7 +135,15 @@ const SellerOrderManagement = () => {
         setCurrentPage(newPage);
     };
 
+    const calculateProfit = (sale) => {
+        const revenue = sale.quantity * sale.price;
+        const totalCosts = parseFloat(sale.handling) + (parseFloat(sale.commission) / 100 * revenue);
+        const profit = revenue - totalCosts;
 
+        return profit;
+    };
+
+    console.log(products, '--------->>>>>>')
 
     const renderPageNumbers = () => {
         const startPage = Math.max(1, currentPage - Math.floor(pageSize / 2));
@@ -268,6 +276,12 @@ const SellerOrderManagement = () => {
                                             <th className="px-2 text-start ">
                                                 Product Info
                                             </th>
+                                            <th className="px-2 text-start ">
+                                                Seller Name
+                                            </th>
+                                            <th className="px-2 text-start ">
+                                                Profit
+                                            </th>
                                             <th scope="col" className="px-12 py-3.5 text-sm font-normal text-left rtl:text-right">
                                                 <button className="flex items-center gap-x-2">
                                                     <span>Status</span>
@@ -317,6 +331,14 @@ const SellerOrderManagement = () => {
                                                                 </div>
                                                             </div>
                                                         </div>
+                                                    </td>
+                                                    <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
+                                                        {product?.userInfo?.name}
+                                                    </td>
+                                                    <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
+                                                        {
+                                                            calculateProfit(product)
+                                                        }
                                                     </td>
                                                     <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                                                         <div className="border-r px-6 py-4 whitespace-nowrap text-[16px] font-[400] flex flex-col gap-2">

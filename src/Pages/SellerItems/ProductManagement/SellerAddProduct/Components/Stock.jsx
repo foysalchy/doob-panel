@@ -22,8 +22,9 @@ const Stock = ({ field, index, inputFields, setInputFields, daraz }) => {
                                 setInputFields(newInputFields);
                             }}
                             value={field.quantity}
-                            className="flex-grow w-full h-10 px-4 mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-purple-400 focus:outline-none focus:shadow-outline" placeholder="Input Quantity" type="number" name="quantity" id="" />
+                            className="flex-grow w-full h-10 px-4 mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-purple-400 focus:outline-none focus:shadow-outline" placeholder="Input Quantity" type="text" name="quantity" id="" />
                     </div>
+
                     <div>
                         <label className='text-sm ' htmlFor="Video url ">SKU</label>
                         <input
@@ -45,7 +46,7 @@ const Stock = ({ field, index, inputFields, setInputFields, daraz }) => {
                                 setInputFields(newInputFields);
                             }}
                             value={field.price}
-                            className="flex-grow w-full h-10 px-4 mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-purple-400 focus:outline-none focus:shadow-outline" placeholder="Input Normal Price" type="number" name="price" id="" />
+                            className="flex-grow w-full h-10 px-4 mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-purple-400 focus:outline-none focus:shadow-outline" placeholder="Input Normal Price" type="text" name="price" id="" />
                     </div>
                     <div>
                         <label className='text-sm ' htmlFor="Video url ">Offer Price BDT</label>
@@ -56,7 +57,7 @@ const Stock = ({ field, index, inputFields, setInputFields, daraz }) => {
                                 setInputFields(newInputFields);
                             }}
                             value={field.offerPrice}
-                            className="flex-grow w-full h-10 px-4 mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-purple-400 focus:outline-none focus:shadow-outline" placeholder="Input Offer Price" type="number" name="offerPrice" id="" />
+                            className="flex-grow w-full h-10 px-4 mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-purple-400 focus:outline-none focus:shadow-outline" placeholder="Input Offer Price" type="text" name="offerPrice" id="" />
                     </div>
                     {daraz && <div>
                         <label className='text-sm ' htmlFor="Video url ">Spacial Price Start Date</label>
