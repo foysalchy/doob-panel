@@ -1389,22 +1389,34 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                     <ul className="mt-2 space-y-1   px-2 bg-[#1b202ea1] border border-gray-500 py-2 border-opacity-50">
                                                         {user?.staffRole ? (
                                                             user?.permissions.find(itm => itm?.name === "Subscription Management") ? (
-                                                                managementPermission('SubscriptionModel') && <li className="rounded-sm hover:bg-gray-800">
+                                                                managementPermission('SubscriptionModel') && <><li className="rounded-sm hover:bg-gray-800">
                                                                     <Link to={'/seller/subscription-management'} rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
                                                                         <BiArchive className="w-5 h-5 text-gray-400" />
                                                                         <span>Subscription</span>
                                                                     </Link>
                                                                 </li>
-
+                                                                    <li className="rounded-sm hover:bg-gray-800">
+                                                                        <Link to={'/seller/finance'} rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
+                                                                            <BiArchive className="w-5 h-5 text-gray-400" />
+                                                                            <span>Finance Report</span>
+                                                                        </Link>
+                                                                    </li>
+                                                                </>
                                                             ) : null
                                                         ) : (
-                                                            <li className="rounded-sm hover:bg-gray-800">
+                                                            <>  <li className="rounded-sm hover:bg-gray-800">
                                                                 <Link to={'/seller/subscription-management'} rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
                                                                     <BiArchive className="w-5 h-5 text-gray-400" />
                                                                     <span>Subscription </span>
                                                                 </Link>
                                                             </li>
-
+                                                                <li className="rounded-sm hover:bg-gray-800">
+                                                                    <Link to={'/seller/finance'} rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
+                                                                        <BiArchive className="w-5 h-5 text-gray-400" />
+                                                                        <span>Finance Report</span>
+                                                                    </Link>
+                                                                </li>
+                                                            </>
                                                         )}
                                                     </ul>
                                                 </details>
@@ -1432,21 +1444,37 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                 <ul className="mt-2 space-y-1   px-2 bg-[#1b202ea1] border border-gray-500 py-2 border-opacity-50">
                                                     {user?.staffRole ? (
                                                         user?.permissions.find(itm => itm?.name === "Subscription Management") ? (
-                                                            managementPermission('SubscriptionModel') && <li className="rounded-sm hover:bg-gray-800">
-                                                                <Link to={'/seller/subscription-management'} rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
-                                                                    {/* <BiArchive className="w-5 h-5 text-gray-400" /> */}
-                                                                    <span>Subscription</span>
-                                                                </Link>
-                                                            </li>
+                                                            managementPermission('SubscriptionModel') && <>
+                                                                <li className="rounded-sm hover:bg-gray-800">
+                                                                    <Link to={'/seller/subscription-management'} rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
+                                                                        {/* <BiArchive className="w-5 h-5 text-gray-400" /> */}
+                                                                        <span>Subscription</span>
+                                                                    </Link>
+                                                                </li>
+                                                                <li className="rounded-sm hover:bg-gray-800">
+                                                                    <Link to={'/seller/finance'} rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
+                                                                        {/* <BiArchive className="w-5 h-5 text-gray-400" /> */}
+                                                                        <span>Finance Report</span>
+                                                                    </Link>
+                                                                </li>
+                                                            </>
 
                                                         ) : null
                                                     ) : (
-                                                        <li className="rounded-sm hover:bg-gray-800">
-                                                            <Link to={'/seller/subscription-management'} rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
-                                                                {/* <BiArchive className="w-5 h-5 text-gray-400" /> */}
-                                                                <span>Subscription </span>
-                                                            </Link>
-                                                        </li>
+                                                        <>
+                                                            <li className="rounded-sm hover:bg-gray-800">
+                                                                <Link to={'/seller/subscription-management'} rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
+                                                                    {/* <BiArchive className="w-5 h-5 text-gray-400" /> */}
+                                                                    <span>Subscription </span>
+                                                                </Link>
+                                                            </li>
+                                                            <li className="rounded-sm hover:bg-gray-800">
+                                                                <Link to={'/seller/finance'} rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
+                                                                    {/* <BiArchive className="w-5 h-5 text-gray-400" /> */}
+                                                                    <span>Finance Report </span>
+                                                                </Link>
+                                                            </li>
+                                                        </>
 
                                                     )}
                                                 </ul>
@@ -2217,6 +2245,13 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                         <Link to={`stock-management`} className="flex items-center p-2 space-x-3 rounded-md gap-3">
                                             <BiArchive className="w-5 h-5 text-gray-400" />
                                             Stock Management
+                                        </Link>
+                                    </li>
+
+                                    <li className="rounded-sm hover:bg-gray-800">
+                                        <Link to={`omni-chat`} className="flex items-center p-2 space-x-3 rounded-md gap-3">
+                                            <BiArchive className="w-5 h-5 text-gray-400" />
+                                            Omni Chat
                                         </Link>
                                     </li>
 

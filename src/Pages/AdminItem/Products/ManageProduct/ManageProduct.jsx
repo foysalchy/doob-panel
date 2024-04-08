@@ -7,6 +7,8 @@ import BrightAlert from "bright-alert";
 import SellerPrintPage from "../../../SellerItems/ProductManagement/SellerProductManagement/SellerAllProduct/SellerPrintPage";
 import WarehouseModal from "./WarehouseModal";
 import EditProduct from "./EditProduct";
+import jsPDF from 'jspdf';
+import Barcode from 'react-barcode';
 
 const ManageProduct = () => {
   const [openModal, setOpenModal] = useState(false);
@@ -117,7 +119,44 @@ const ManageProduct = () => {
 
 
 
+  console.log(selectProducts);
 
+
+  const createBarcodePDF = (selectedProducts) => {
+    const pdf = new jsPDF();
+
+    // Loop through selected product IDs
+    selectedProducts.forEach((productId, index) => {
+      // Create a barcode for each product ID
+      const barcode = new Barcode({
+        data: productId,
+        width: 2, // Adjust as needed
+        height: 100, // Adjust as needed
+      }).renderSVG();
+
+      // Convert SVG barcode to base64 image
+      const svgString = new XMLSerializer().serializeToString(barcode);
+      const imgData = 'data:image/svg+xml;base64,' + btoa(svgString);
+
+      // Add barcode image to PDF
+      if (index !== 0) {
+        pdf.addPage();
+      }
+      pdf.addImage(imgData, 'JPEG', 10, 10 + (index % 2) * 100, 100, 50); // Adjust position and size as needed
+      pdf.text(10, 80 + (index % 2) * 100, `Product ID: ${productId}`);
+    });
+
+    // Save or navigate to the PDF page
+    pdf.save('barcodes.pdf'); // Save PDF
+    // Alternatively, you can navigate to another page and display the PDF using a suitable method
+  };
+
+
+  const create_barcode = () => {
+    createBarcodePDF(selectProducts);
+    // need to selected productId as a pdf and barcode 
+    // and navigate anoter page 
+  }
 
   return (
     <div className="">
@@ -191,6 +230,7 @@ const ManageProduct = () => {
           </div>
 
           <div className='flex gap-2 items-center'>
+            <button className='bg-blue-500 px-8 py-2 rounded text-white' onClick={create_barcode}>Barcode Generate</button>
             <button onClick={logSelectedProducts} disabled={!selectProducts.length} className='bg-blue-500 px-8 py-2 rounded text-white'> Print</button>
             <button onClick={() => setAll(true)} className={`${all ? 'bg-blue-700' : " bg-blue-500"} px-8 py-2 rounded text-white`}>All Warehouse </button>
             <button onClick={() => { setDoobProduct(true), setAll(false) }} className={`${doobProduct ? 'bg-blue-700' : " bg-blue-500"} px-8 py-2 rounded text-white`}>Doob Warehouse </button>
@@ -203,7 +243,7 @@ const ManageProduct = () => {
               {on &&
                 <div className='absolute top-0 left-0 right-0 bottom-0 m-auto z-[3000]'> <SellerPrintPage setOn={setOn} products={printProduct} /></div>
               }
-              <div className="overflow-hidden border border-gray-200 border-gray-700 md:rounded-lg">
+              <div className="overflow-hidden border  border-gray-700 md:rounded-lg">
                 <table className=" divide-y w-full divide-gray-700">
                   <thead className="bg-gray-900 text-white ">
                     <tr>
@@ -295,7 +335,7 @@ const ManageProduct = () => {
                                 <h2 className="font-medium text-gray-800 ">
                                   {product.name && product?.name.split(" ").slice(0, 5).join(" ")}
                                 </h2>
-                                <p className="text-sm font-normal text-gray-600 text-gray-400">{product && product?._id}</p>
+                                <p className="text-sm font-normal  text-gray-400">{product && product?._id}</p>
                               </div>
                             </div>
                           </td>
@@ -406,3 +446,4 @@ const ManageProduct = () => {
 };
 
 export default ManageProduct;
+

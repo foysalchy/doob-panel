@@ -55,6 +55,8 @@ const AddService = () => {
         }
     };
 
+    const [message, setMessage] = useState('')
+
     const dataSubmit = async (event) => {
         setLoading(true);
         event.preventDefault();
@@ -62,7 +64,6 @@ const AddService = () => {
         const title = form.title.value;
         const price = form.price.value;
         const image = form.photo.files[0];
-        const message = form.message.value;
         const category = form.category.value;
         const subscriptionPeriod = form.subscriptionPeriod.value;
         const MetaImage = form.MetaImage.files[0]
@@ -131,7 +132,9 @@ const AddService = () => {
     };
 
 
-
+    const handleChange = (content) => {
+        setMessage(content);
+    };
 
 
 
@@ -259,7 +262,8 @@ const AddService = () => {
                                 <ReactQuill
                                     name="message" id="message"
                                     className="h-36"
-                                    // value={message}
+                                    value={message}
+                                    onChange={handleChange}
                                     modules={modules}
                                     placeholder="Enter description here..."
                                 />

@@ -34,11 +34,15 @@ const UploadImage = ({ coverPhoto, setCoverPhoto, youtube, setYoutube }) => {
     }
     const handleImageChange = (setter, event) => {
         const file = event.target.files[0];
+        console.log(file);
         setter(URL.createObjectURL(file));
     };
 
+    const [activeId, setActiveId] = useState(null);
+
     const handleDragStart = (event) => {
         setDeletItem(event.target.id);
+        setActiveId(event.target.src)
         event.dataTransfer.setData("index", event.target.id);
     };
 
@@ -49,6 +53,7 @@ const UploadImage = ({ coverPhoto, setCoverPhoto, youtube, setYoutube }) => {
     const handleDrop = (setter1, setter2, event) => {
         const draggedIndex = event.dataTransfer.getData("index");
         const draggedPhoto = document.getElementById(draggedIndex).src;
+        console.log(activeId, draggedPhoto, event);
 
         if (draggedPhoto) {
             if ('coverPhoto' === deletItem) {

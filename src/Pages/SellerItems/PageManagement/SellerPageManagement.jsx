@@ -12,6 +12,7 @@ import { BsEye } from 'react-icons/bs';
 
 const SellerPageManagement = () => {
     const [loading, setLoading] = useState(false);
+    const [trash_status, setTrash_status] = useState(false);
 
     const { shopInfo } = useContext(AuthContext)
 
@@ -69,6 +70,22 @@ const SellerPageManagement = () => {
             });
     };
 
+    const trash = (id, status) => {
+
+        fetch(`http://localhost:5001/api/v1/seller/page/trash-status`, {
+            method: "PUT",
+            headers: {
+                "content-type": "application/json",
+            },
+            body: JSON.stringify({ id, status: status }),
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                Swal.fire(`Your Page Trash ${status} Successfully`, "", "success");
+                refetch();
+            });
+    }
+
 
 
     const [OpenModal, setOpenModal] = useState(false)
@@ -77,23 +94,41 @@ const SellerPageManagement = () => {
         setOpenModal(ticketId);
     };
 
+
+    console.log(faqs.filter((faq) => faq?.trash !== trash_status));
+
     return (
         <div>
 
-            <Link
-                className="group relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
-                to="/seller/manage-pages/add-page"
-            >
-                <span className="absolute -start-full transition-all group-hover:start-4">
+            <div className='flex gap-4'>
+                <Link
+                    className="group relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
+                    to="/seller/manage-pages/add-page"
+                >
+                    <span className="absolute -start-full transition-all group-hover:start-4">
 
-                    <FaArrowRightLong className="h-5 w-5 rtl:rotate-180" />
-                </span>
+                        <FaArrowRightLong className="h-5 w-5 rtl:rotate-180" />
+                    </span>
 
-                <span className="text-sm font-medium transition-all group-hover:ms-4">
-                    Add New Page
-                </span>
-            </Link>
+                    <span className="text-sm font-medium transition-all group-hover:ms-4">
+                        Add New Page
+                    </span>
+                </Link>
+                <button
+                    className="group relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
+                    onClick={() => setTrash_status(!trash_status)}
+                >
+                    <span className="absolute -start-full transition-all group-hover:start-4">
 
+                        <FaArrowRightLong className="h-5 w-5 rtl:rotate-180" />
+                    </span>
+
+                    <span className="text-sm font-medium transition-all group-hover:ms-4">
+                        Trash Page
+                    </span>
+                </button>
+
+            </div>
             <section className=" px-4 mx-auto">
                 <h1 className="text-center my-10 font-bold text-2xl">
                     This is Page List
@@ -101,13 +136,13 @@ const SellerPageManagement = () => {
                 <div className="flex flex-col mt-6">
                     <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                         <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
-                            <div className="overflow-hidden border border-gray-200 border-gray-700 md:rounded-lg">
-                                <table className="min-w-full divide-y divide-gray-200 divide-gray-700">
+                            <div className="overflow-hidden border b border-gray-700 md:rounded-lg">
+                                <table className="min-w-full divide-y divide-gray-700">
                                     <thead className="bg-gray-50 ">
                                         <tr>
                                             <th
                                                 scope="col"
-                                                className="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500 text-gray-400"
+                                                className="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500 "
                                             >
                                                 <div className="flex items-center gap-x-3">
                                                     <span>Page Name</span>
@@ -115,7 +150,7 @@ const SellerPageManagement = () => {
                                             </th>
                                             <th
                                                 scope="col"
-                                                className="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 text-gray-400"
+                                                className="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 "
                                             >
                                                 <button className="flex items-center gap-x-2">
                                                     <span>Status</span>
@@ -124,14 +159,14 @@ const SellerPageManagement = () => {
 
                                             <th
                                                 scope="col"
-                                                className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 text-gray-400"
+                                                className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 "
                                             >
                                                 Action
                                             </th>
                                         </tr>
                                     </thead>
                                     <tbody className="bg-white divide-y divide-gray-200 ">
-                                        {faqs?.map((faq, index) => (
+                                        {faqs.filter((faq) => faq?.trash !== trash_status)?.map((faq, index) => (
                                             <tr>
                                                 <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                                                     <div className="inline-flex items-center gap-x-3">
@@ -169,7 +204,7 @@ const SellerPageManagement = () => {
                                                 <td className="px-4 py-4 text-sm whitespace-nowrap">
                                                     <div className="flex items-center gap-x-6">
                                                         <button
-                                                            onClick={() => DeleteHandle(faq?._id)}
+                                                            onClick={() => trash_status ? DeleteHandle(faq?._id) : trash(faq?._id, faq?.trash ? false : true)}
                                                             className=" transition-colors duration-200 text-red-500 hover:text-red-700 focus:outline-none"
                                                         >
                                                             <svg

@@ -33,6 +33,7 @@ const UserPayment = () => {
         data.method = payment
         data.timestamp = new Date().getTime()
         data.userId = shopInfo._id ? shopInfo._id : user?._id
+        console.log(data, 'service order');
 
         if (fileName) {
             data.file = fileName
