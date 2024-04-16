@@ -88,6 +88,7 @@ import ListOfClaimOrder from "../Pages/SellerItems/OrderManagment/ManageOrder/Cl
 import MediaManager from "../Pages/SellerItems/MeadManager/MediaManager";
 import Withdrow from "../Pages/SellerItems/Withdrow/Withdrow";
 import FinanceReport from "../Pages/SellerItems/Finance/FinanceReport";
+import OmniChat from "../Pages/SellerItems/OmniChat/OmniChat";
 
 
 const SellerPath = [
@@ -476,8 +477,11 @@ const SellerPath = [
     {
         path: "finance",
         element: <FinanceReport />
+    },
+    {
+        path: 'omni-chat',
+        element: <OmniChat />
     }
-
 
 
 

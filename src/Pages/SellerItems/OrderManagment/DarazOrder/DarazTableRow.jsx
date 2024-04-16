@@ -32,13 +32,23 @@ const DarazTableRow = ({ data, select, setSelect }) => {
 
 
 
-    const getTimeAgo = (createdAt) => {
-        const currentDate = new Date();
-        const createdDate = new Date(createdAt);
-        const timeDifference = currentDate - createdDate;
-        const daysAgo = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
-        return `${daysAgo} day${daysAgo !== 1 ? 's' : ''} ago`;
-    };
+    function getTimeAgo(dateString) {
+        const timestamp = new Date(dateString).getTime()
+        const currentTime = new Date().getTime();
+        const timeDifference = currentTime - timestamp;
+
+        const minutes = Math.floor(timeDifference / (1000 * 60));
+        const hours = Math.floor(minutes / 60);
+        const days = Math.floor(hours / 24);
+
+        if (minutes < 60) {
+            return `${minutes} min${minutes !== 1 ? 's' : ''} ago`;
+        } else if (hours < 24) {
+            return `${hours} hour${hours !== 1 ? 's' : ''} ago`;
+        } else {
+            return `${days} day ${days !== 1 ? 's' : ''} ago`;
+        }
+    }
 
 
     const [orderCancel, setOrderCancel] = useState(false)

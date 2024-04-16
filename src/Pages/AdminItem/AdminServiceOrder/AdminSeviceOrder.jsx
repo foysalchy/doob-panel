@@ -59,7 +59,7 @@ const AdminSeviceOrder = () => {
 
     const [currentPage, setCurrentPage] = useState(1);
 
-    const pageSize = 6;
+    const pageSize = 10;
     const startIndex = (currentPage - 1) * pageSize;
     const endIndex = startIndex + pageSize;
     const totalPages = Math.ceil(filteredData?.length / pageSize);
@@ -73,6 +73,8 @@ const AdminSeviceOrder = () => {
 
 
     console.log(serviceOrder, '.......')
+
+
 
     const renderPageNumbers = () => {
         const startPage = Math.max(1, currentPage - Math.floor(pageSize / 2));
@@ -146,6 +148,33 @@ const AdminSeviceOrder = () => {
             })
     }
 
+    function calculateEndDate(orderDate, timeDuration) {
+        let endDate;
+        switch (timeDuration) {
+            case 'Monthly':
+                endDate = new Date(new Date(orderDate).getFullYear(), new Date(orderDate).getMonth() + 1, new Date(orderDate).getDate());
+                break;
+            case 'Yearly':
+                endDate = new Date(new Date(orderDate).getFullYear() + 1, new Date(orderDate).getMonth(), new Date(orderDate).getDate());
+                break;
+            case 'OneTime':
+                endDate = new Date(orderDate);
+                break;
+            default:
+                endDate = null;
+        }
+        return endDate;
+    }
+
+
+
+
+    function calculateReminderDate(endDateString) {
+        const endDate = new Date(endDateString);
+        const reminderDate = new Date(endDate);
+        reminderDate.setDate(reminderDate.getDate() - 5);
+        return reminderDate.toDateString();
+    }
     return (
         <section className="container  mx-auto">
 
@@ -255,6 +284,24 @@ const AdminSeviceOrder = () => {
                                         >
                                             Category
                                         </th>
+                                        <th
+                                            scope="col"
+                                            className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                                        >
+                                            Time Duration
+                                        </th>
+                                        <th
+                                            scope="col"
+                                            className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                                        >
+                                            Days Duration
+                                        </th>
+                                        {/* <th
+                                            scope="col"
+                                            className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                                        >
+                                            Reminder
+                                        </th> */}
 
                                         <th
                                             scope="col"
@@ -308,6 +355,15 @@ const AdminSeviceOrder = () => {
                                             <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
                                                 {order?.productCategory}
                                             </td>
+                                            <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                                                {order?.time_duration}
+                                            </td>
+                                            <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                                                {calculateEndDate(order.timestamp, order?.time_duration)?.toDateString() ?? 'N/A'}
+                                            </td>
+                                            {/* <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                                                {calculateReminderDate(calculateEndDate(order.timestamp, order?.time_duration)?.toDateString() ?? 'N/A')}
+                                            </td> */}
                                             <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
                                                 {order?.method?.Getaway}
                                             </td>

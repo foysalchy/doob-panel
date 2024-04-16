@@ -185,10 +185,7 @@ const ManageOrder = () => {
         return html;
     }
 
-    //selected item.lop => {
-    // get_daraz_sleeted_order_invoice
-    // constructInvoiceHTML
-    // }
+   
     const getPrintForSelectedEveryItems = async () => {
         try {
             // Initialize an array to store all invoice HTML content

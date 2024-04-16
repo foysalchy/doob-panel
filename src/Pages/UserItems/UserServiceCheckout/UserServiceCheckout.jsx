@@ -35,7 +35,7 @@ const UserServiceCheckout = () => {
             discount,
             shippingFee,
             shippingFeeDiscount,
-
+            time_duration: findService.subscriptionPeriod
 
         }
 
