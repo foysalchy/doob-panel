@@ -214,7 +214,7 @@ const Starts = () => {
                 {/* card 2 */}
                 <div className="bg-[#f3b121] p-4 h-[140px] rounded-md flex items-center justify-between">
                     <div>
-                        <h1 className="text-gray-100 ">Total Amount</h1>
+                        <h1 className="text-gray-100 ">Total Amount Sold</h1>
                         <h1 className="text-white font-bold text-4xl ">{totalAmount}</h1>
                     </div>
                     <div>
@@ -341,7 +341,7 @@ const Starts = () => {
 
 
                                     {
-                                        sellerData && sellerData?.slice(0, 20).map((item, index) => (
+                                        sellerData && products?.slice(0, 20).map((item, index) => (
                                             <tr>
                                                 <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left text-blueGray-700">
                                                     {index + 1} {/* Assuming there's a name property in your data */}

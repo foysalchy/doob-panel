@@ -4,6 +4,7 @@ import { AuthContext } from '../../../AuthProvider/UserProvider';
 import { useQuery } from '@tanstack/react-query';
 import PosSidebar from './PosSidebar';
 import clickAudio from '../../../../src/assets/sound_beep-29.mp3'
+import { Link } from 'react-router-dom';
 const Pos = () => {
     const { shopInfo, setCheckUpData } = useContext(AuthContext);
     const [cartProducts, setCartProducts] = useState([]);
@@ -103,7 +104,7 @@ const Pos = () => {
 
     return (
         <div>
-
+            <Link className='text-blue-500 underline flex justify-end px-4' to={'/seller'}>Go to dashboard</Link>
             <main className=' md:p-4 mt-3 rounded-md h-screen overflow-y-auto'>
                 <div className="grid md:grid-cols-3 gap-2 ">
                     <div className="md:col-span-2">
@@ -119,7 +120,7 @@ const Pos = () => {
                                 <small className="text-sm absolute bg-[#ff0059] text-white py-0 px-1 text-[8px] rounded-full right-[-9px] top-[-3px]">{cartProducts?.length}</small>
                             </button>
                         </div>
-                        <div className="bg-gray-100 p-4 rounded-lg mt-3  overflow-y-auto grid md:grid-cols-5 grid-cols-2 gap-3 h-[90vh]">
+                        <div className="bg-gray-100 p-4 rounded-lg mt-3  overflow-y-auto grid md:grid-cols-3 grid-cols-2 gap-3 h-[90vh]">
                             {
                                 filteredData.length ? filteredData?.map((itm, index) => (
                                     <div key={itm?._id}>

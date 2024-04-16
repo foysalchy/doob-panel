@@ -7,7 +7,7 @@ import { BiLeftArrow, BiRightArrow } from 'react-icons/bi';
 import { AuthContext } from '../../../AuthProvider/UserProvider';
 
 const AdminSeviceOrder = () => {
-   
+
     const { data: serviceOrder = [], refetch } = useQuery({
         queryKey: ["serviceOrder"],
         queryFn: async () => {
@@ -72,7 +72,6 @@ const AdminSeviceOrder = () => {
     };
 
 
-    console.log(serviceOrder, '.......')
 
 
 
@@ -319,73 +318,74 @@ const AdminSeviceOrder = () => {
                                     </tr>
                                 </thead>
                                 <tbody className="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
-                                    {currentData.map((order, idx) => (
-                                        <tr>
-                                            <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                                <img className='h-10 w-10 rounded-sm' src={order.productImg} alt="" />
-                                            </td>
-                                            <td className="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
-                                                <div className="inline-flex items-center gap-x-3">
-                                                    <span># {order._id}</span>
-                                                </div>
-                                            </td>
-                                            <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                                {order.productTitle}
-                                            </td>
-                                            <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                                {order.productPrice}
-                                            </td>
-                                            <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                                {order.normalPrice}
-                                            </td>
-                                            <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                                {new Date(order.timestamp).toDateString()}
-                                            </td>
-
-                                            <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                                <div className="flex items-center gap-x-2">
-
-                                                    <div>
-                                                        <p className="text-xs font-normal text-gray-600 dark:text-gray-400">
-                                                            {order?.userEmail}
-                                                        </p>
+                                    {currentData.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp)) // Sort orders by timestamp
+                                        .map((order, idx) => (
+                                            <tr>
+                                                <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                                                    <img className='h-10 w-10 rounded-sm' src={order.productImg} alt="" />
+                                                </td>
+                                                <td className="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
+                                                    <div className="inline-flex items-center gap-x-3">
+                                                        <span># {order._id}</span>
                                                     </div>
-                                                </div>
-                                            </td>
-                                            <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                                {order?.productCategory}
-                                            </td>
-                                            <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                                {order?.time_duration}
-                                            </td>
-                                            <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                                {calculateEndDate(order.timestamp, order?.time_duration)?.toDateString() ?? 'N/A'}
-                                            </td>
-                                            {/* <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                                                </td>
+                                                <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                                                    {order.productTitle}
+                                                </td>
+                                                <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                                                    {order.productPrice}
+                                                </td>
+                                                <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                                                    {order.normalPrice}
+                                                </td>
+                                                <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                                                    {new Date(order.timestamp).toDateString()}
+                                                </td>
+
+                                                <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                                                    <div className="flex items-center gap-x-2">
+
+                                                        <div>
+                                                            <p className="text-xs font-normal text-gray-600 dark:text-gray-400">
+                                                                {order?.userEmail}
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                                                    {order?.productCategory}
+                                                </td>
+                                                <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                                                    {order?.time_duration}
+                                                </td>
+                                                <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                                                    {calculateEndDate(order.timestamp, order?.time_duration)?.toDateString() ?? 'N/A'}
+                                                </td>
+                                                {/* <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
                                                 {calculateReminderDate(calculateEndDate(order.timestamp, order?.time_duration)?.toDateString() ?? 'N/A')}
                                             </td> */}
-                                            <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                                {order?.method?.Getaway}
-                                            </td>
-                                            <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                                <button
-                                                    onClick={() => handleStateUpdate(order?._id, order?.status ? false : true)}
-                                                    rel="noopener noreferrer" className="inline-flex items-center px-3 py-1 my-1 space-x-2 text-sm border rounded-full group hover:bg-gray-700 dark:border-gray-700">
-                                                    <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full dark:bg-violet-400"></span>
-                                                    <span className=" dark:text-gray-100">
-                                                        {
-                                                            order?.status ? <span>
-                                                                {
-                                                                    order?.status === true ? <span className='text-green-500'>Active</span> : <span className='text-red-500'>Inactive</span>
-                                                                }
-                                                            </span> : <span className='text-yellow-500'>Pending</span>
-                                                        }
-                                                    </span>
-                                                </button>
-                                            </td>
+                                                <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                                                    {order?.method?.Getaway}
+                                                </td>
+                                                <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                                                    <button
+                                                        onClick={() => handleStateUpdate(order?._id, order?.status ? false : true)}
+                                                        rel="noopener noreferrer" className="inline-flex items-center px-3 py-1 my-1 space-x-2 text-sm border rounded-full group hover:bg-gray-700 dark:border-gray-700">
+                                                        <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full dark:bg-violet-400"></span>
+                                                        <span className=" dark:text-gray-100">
+                                                            {
+                                                                order?.status ? <span>
+                                                                    {
+                                                                        order?.status === true ? <span className='text-green-500'>Active</span> : <span className='text-red-500'>Inactive</span>
+                                                                    }
+                                                                </span> : <span className='text-yellow-500'>Pending</span>
+                                                            }
+                                                        </span>
+                                                    </button>
+                                                </td>
 
-                                        </tr>
-                                    ))}
+                                            </tr>
+                                        ))}
 
                                 </tbody>
                             </table>

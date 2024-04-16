@@ -16,42 +16,63 @@ const SellerReport = () => {
     });
 
     const [input, setInput] = useState('');
-    const [filteredData, setFilteredData] = useState([]);
     const [startDate, setStartDate] = useState('');
+    const [filteredData, setFilteredData] = useState([]);
     const [endDate, setEndDate] = useState('');
-
-    const searchItem = () => {
-        if (input === '' && startDate === '' && endDate === '') {
-            setFilteredData(serviceOrder);
-        } else {
-            const filteredServiceOrder = serviceOrder.filter(order => {
-                const matchesSearch = Object.values(order).some(value =>
-                    typeof value === 'string' && value.toLowerCase().includes(input.toLowerCase())
-                );
-
-                const matchesDateRange = startDate && endDate
-                    ? new Date(order.timestamp) >= new Date(startDate) && new Date(order.timestamp) <= new Date(endDate)
-                    : true;
-
-                return matchesSearch && matchesDateRange;
-            });
-
-            setFilteredData(filteredServiceOrder);
-        }
-    };
-
-    const handleDateRangeChange = (e) => {
-        e.preventDefault()
-        const start = e.target.startDate.value
-        const end = e.target.endDate.value
-        setStartDate(start);
-        setEndDate(end);
-        searchItem();
-    };
+    const [currentPage, setCurrentPage] = useState(1);
+    const pageSize = 6;
 
     useEffect(() => {
         setFilteredData(serviceOrder);
     }, [serviceOrder]);
+
+
+    const searchItem = () => {
+        const filteredServiceOrder = serviceOrder.filter(order => {
+            const matchesSearch = Object.values(order).some(value =>
+                typeof value === 'string' && value.toLowerCase().includes(input.toLowerCase())
+            );
+
+            const matchesDateRange = startDate && endDate
+                ? new Date(order.timestamp) >= new Date(startDate) && new Date(order.timestamp) <= new Date(endDate)
+                : true;
+
+            return matchesSearch && matchesDateRange;
+        });
+
+        setFilteredData(filteredServiceOrder);
+    };
+
+    useEffect(() => {
+        searchItem();
+    }, [input, startDate, endDate]);
+
+    useEffect(() => {
+        const filteredServiceOrder = serviceOrder.filter(order => {
+            const matchesSearch = Object.values(order).some(value =>
+                typeof value === 'string' && value.toLowerCase().includes(input.toLowerCase())
+            );
+
+            const matchesDateRange = startDate && endDate
+                ? new Date(order.timestamp) >= new Date(startDate) && new Date(order.timestamp) <= new Date(endDate)
+                : true;
+
+            return matchesSearch && matchesDateRange;
+        });
+
+        setFilteredData(filteredServiceOrder);
+    }, [input, startDate, endDate, serviceOrder]);
+
+    const handleChangePage = (newPage) => {
+        setCurrentPage(newPage);
+    };
+
+    const startIndex = (currentPage - 1) * pageSize;
+    const endIndex = startIndex + pageSize;
+    const totalPages = Math.ceil(filteredData?.length / pageSize);
+    const currentData = filteredData.slice(startIndex, endIndex);
+
+
 
 
     const calculateRemainingDays = (paymentDate, timeDuration) => {
@@ -81,29 +102,10 @@ const SellerReport = () => {
 
         return remainingDays >= 0 ? remainingDays : 0;
     };
-
-
-
-
-    const [currentPage, setCurrentPage] = useState(1);
-
-    const pageSize = 6;
-    const startIndex = (currentPage - 1) * pageSize;
-    const endIndex = startIndex + pageSize;
-    const totalPages = Math.ceil(filteredData?.length / pageSize);
-
-    const currentData = filteredData.slice(startIndex, endIndex);
-
-    const handleChangePage = (newPage) => {
-
-        setCurrentPage(newPage);
-    };
-
-
-
     const renderPageNumbers = () => {
         const startPage = Math.max(1, currentPage - Math.floor(pageSize / 2));
         const endPage = Math.min(totalPages, startPage + pageSize - 1);
+
 
         return (
             <React.Fragment>
@@ -166,7 +168,7 @@ const SellerReport = () => {
                             Customers
                         </h2>
                         <span className="px-3 py-1 text-xs text-blue-600 bg-blue-100 rounded-full  ">
-                            240 vendors
+                            {serviceOrder.length} vendors
                         </span>
                     </div>
 
@@ -174,17 +176,7 @@ const SellerReport = () => {
 
             </div>
             <div className="mt-6 md:flex md:items-center md:justify-between">
-                <div className="inline-flex overflow-hidden bg-white border divide-x rounded-lg  rtl:flex-row-reverse  ">
-                    <button className="px-5 py-2 text-xs font-medium text-gray-600 transition-colors duration-200 bg-gray-100 sm:text-sm  ">
-                        View all
-                    </button>
-                    <button className="px-5 py-2 text-xs font-medium text-gray-600 transition-colors duration-200 sm:text-sm   hover:bg-gray-100">
-                        Monitored
-                    </button>
-                    <button className="px-5 py-2 text-xs font-medium text-gray-600 transition-colors duration-200 sm:text-sm   hover:bg-gray-100">
-                        Unmonitored
-                    </button>
-                </div>
+
                 <div className="relative flex items-center mt-4 md:mt-0">
                     <span className="absolute">
                         <svg

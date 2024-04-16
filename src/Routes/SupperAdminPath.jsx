@@ -290,6 +290,11 @@ const SupperAdminPath = [
         element: <CheckStaff>
             <SellerManagement />
         </CheckStaff>
+    }, {
+        path: "shop-management",
+        element: <CheckStaff>
+            <SellerDomainManagement />
+        </CheckStaff>
     },
     {
         path: "warehouse",

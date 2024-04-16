@@ -127,6 +127,7 @@ const PosInvoice = ({ setOpen, setUser, invoiceData, setInvoiceOpen, invoiceOpen
         setOpen(false)
 
     }
+    console.log(invoiceData, 'invoiceData');
 
     return (
         <>
@@ -159,11 +160,11 @@ const PosInvoice = ({ setOpen, setUser, invoiceData, setInvoiceOpen, invoiceOpen
                             <div id='invoice' ref={componentRef} className="w-full p-4 bg-white" style={{ width: '300px' }}>
                                 <div className="flex  pb-2 border-b border-gray-700 text-start">
                                     <div className="">
-                                        {shopInfo?.logo && <img src={shopInfo?.logo} className='w-[80px]' alt="" />}
+                                        {shopInfo?.logo && <img src={shopInfo?.logo} className='' alt="" />}
                                         <h3 className="text-lg font-semibold">Name: {shopInfo?.shopName}</h3>
-                                        <p className="text text-gray-500">Email: {shopInfo?.shopEmail}</p>
-                                        <p className="text text-gray-500">Phone: {shopInfo?.shopNumber}</p>
-                                        <p className="text text-gray-500">Address: {shopInfo?.address}</p>
+                                        <p className="text-xs text-gray-500">Email: {shopInfo?.shopEmail}</p>
+                                        <p className="text-xs text-gray-500">Phone: {shopInfo?.shopNumber}</p>
+                                        <p className="text-xs text-gray-500">Address: {shopInfo?.address}</p>
                                     </div>
                                     <div>
                                         <p className='text-xl text-blue-500'>Receipt</p>
@@ -202,6 +203,14 @@ const PosInvoice = ({ setOpen, setUser, invoiceData, setInvoiceOpen, invoiceOpen
                                         <div className="flex justify-between">
                                             <h2 className="text-sm font-semibold">Pay Amount:</h2>
                                             <h2 className="text-sm">৳ {invoiceData?.invoice?.cash}</h2>
+                                        </div>
+                                    </li>
+                                    <li className="py-2 border-b border-gray-700">
+                                        <div className="flex justify-between">
+                                            <h2 className="text-sm font-semibold">Payment Getaway:</h2>
+                                            <h2 className="text-sm">{invoiceData?.invoice?.
+                                                getaway
+                                            }</h2>
                                         </div>
                                     </li>
                                 </ul>

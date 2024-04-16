@@ -36,8 +36,8 @@ const SellerOrderManagement = () => {
             (!selectedDate || new Date(item?.timestamp) >= selectedDate)
         ) {
             return true; // Include all items when searchValue is empty and selectedValue is "All" and timestamp is greater than or equal to selectedDate
-        } else if (selectedValue === 'pending' && (!selectedDate || new Date(item?.timestamp) >= selectedDate)) {
-            return !item?.status;
+        } else if (selectedValue === 'Pending' && (!selectedDate || new Date(item?.timestamp) >= selectedDate)) {
+            return !item?.status || item?.status === '';
         } else if (searchQuery && (!selectedDate || new Date(item?.timestamp) >= selectedDate)) {
             return item?._id?.toLowerCase().includes(searchQuery.toLowerCase()); // Filter by _id
         } else if (selectedValue && (!selectedDate || new Date(item?.timestamp) >= selectedDate)) {
@@ -143,7 +143,21 @@ const SellerOrderManagement = () => {
         return profit;
     };
 
-    console.log(products, '--------->>>>>>')
+    let statusCounts = {};
+
+    // Calculate counts for each status
+    products.forEach((product) => {
+        if (product.status) {
+            if (!statusCounts[product.status]) {
+                statusCounts[product.status] = 1;
+            } else {
+                statusCounts[product.status]++;
+            }
+        }
+    });
+
+    let totalProductCount = products.length;
+
 
     const renderPageNumbers = () => {
         const startPage = Math.max(1, currentPage - Math.floor(pageSize / 2));
@@ -200,7 +214,7 @@ const SellerOrderManagement = () => {
         );
     };
 
-    
+
 
     return (
         <div>
@@ -230,33 +244,40 @@ const SellerOrderManagement = () => {
                     </div>
                 </div>
 
+
                 <nav className='flex md:gap-4 gap-2 overflow-x-auto mt-6'>
-                    {ordersNav?.map((itm) =>
-                        itm?.status === 'dropdown' ? (
+
+                    {ordersNav?.map((itm) => {
+                        let statusCount = 0;
+
+                        if (itm.name === 'all') {
+                            statusCount = totalProductCount;
+                        } else {
+                            statusCount = statusCounts[itm.value] || 0;
+                        }
+
+                        return itm?.status === 'dropdown' ? (
                             <select
                                 key={itm.name}
-                                className={`px-4 border-r bg-transparent relative border-gray-300 flex items-center gap-2 justify-center ${selectedValue === 'pending' ? ' ' : '' // Change to your desired color
-                                    }`}
+                                className={`px-4 border-r bg-transparent relative border-gray-300 flex items-center gap-2 justify-center ${selectedValue === 'pending' ? '' : ''}`}
                                 value={selectedValue}
                                 onChange={handleSelectChange}
                             >
-                                <option selected value="pending">Pending </option>
+                                <option selected value="pending">Pending</option>
                                 {itm?.dropdownLink?.map((option) => (
-                                    <option key={option}>{option}  </option>
+                                    <option key={option}>{option}</option>
                                 ))}
                             </select>
                         ) : (
                             <button
-                                className={`px-4 border-r md:bg-transparent bg-gray-50 border-gray-300 flex  items-center ${selectedValue === itm.value ? 'text-red-500' : '' // Change to your desired color
-                                    }`}
+                                className={`px-4 border-r md:bg-transparent bg-gray-50 border-gray-300 flex  items-center ${selectedValue === itm.value ? 'text-red-500' : ''}`}
                                 key={itm.name}
                                 onClick={() => setSelectedValue(itm.value)}
                             >
-                                {itm.name}
-                                {/* {selectedValue === itm.value && porductQuantity} */}
+                                {itm.name === 'All' ? 'All' : `${itm.name} (${statusCount})`}
                             </button>
-                        )
-                    )}
+                        );
+                    })}
                 </nav>
 
 
@@ -278,7 +299,7 @@ const SellerOrderManagement = () => {
                                                 <input type="checkbox" name="" id="" />  Product Info
                                             </th>
                                             <th className="px-2 text-start ">
-                                                Seller Name
+                                                Customer Name
                                             </th>
                                             <th className="px-2 text-start ">
                                                 Profit
@@ -295,7 +316,7 @@ const SellerOrderManagement = () => {
                                             </th>
                                             <th scope="col" className="py-3.5 px-4 text-sm font-normal text-left rtl:text-right">
                                                 <div className="flex items-center gap-x-3">
-                                                    <span>Customer Name</span>
+                                                    <span>Shop Name</span>
                                                 </div>
                                             </th>
                                             <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right">
