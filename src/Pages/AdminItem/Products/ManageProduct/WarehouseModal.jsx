@@ -108,7 +108,8 @@ const WarehouseModal = ({ modalOpen, setModalOpen, product, doobProduct }) => {
     const updateInfo = (e) => {
         e.preventDefault()
         const handling = e.target.handling.value
-        constCommission = e.target.commission.value
+         const Commission = e.target.commission.value
+         const Packaging_cost = e.target.commission.value
 
         const adminCategory = [{ name: selectedWarehouse }, { name: selectedArea }, { name: selectedRack }, { name: selectedSelf }, { name: selectedCell }]
 

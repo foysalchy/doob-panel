@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import { AuthContext } from '../../../../../AuthProvider/UserProvider';
 import { useQuery } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
-import { BsViewList } from 'react-icons/bs';
+import { BsEye, BsViewList } from 'react-icons/bs';
 import { MdDelete, MdOutlineViewInAr } from 'react-icons/md';
 import EditProductForm from './EditProduct';
 import DemoImage from './woocommerce-placeholder-600x600.png';
@@ -559,6 +559,10 @@ const SellerAllProducts = () => {
                                                             <BiEdit className="w-5 h-5" />
                                                         </Link>
 
+                                                        <a target="_blank" href={`/shop/doob/product/${product._id}`}>
+                                                            <BsEye />
+                                                        </a>
+
                                                         {/* <button product={product} onClick={() => setOnModal(product)} className=" transition-colors duration-200 hover:text-green-500  text-green-700 focus:outline-none mr-4">
                                                             <BiEdit className="w-5 h-5" />
                                                         </button> */}
@@ -576,6 +580,8 @@ const SellerAllProducts = () => {
                                                             <EditProductForm product={onModal} />
                                                         </div>}
 
+
+
                                                         {/* <div onClick={() => setOnModal(false)} className={`fixed z-[100] overflow-hidden flex items-center justify-center ${onModal?._id == product?._id ? 'visible opacity-100' : 'invisible opacity-0'} inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}>
 
                                                             <div onClick={(e_) => e_.stopPropagation()} className={`text- absolute w-[90%] rounded-sm bg-white p-6 drop-shadow-lg  ${onModal?._id == product?._id ? 'scale-1 opacity-1 duration-300' : 'scale-0 opacity-0 duration-150'}`}>
@@ -590,6 +596,8 @@ const SellerAllProducts = () => {
                                                         </div> */}
 
                                                         {/* end */}
+
+
                                                     </div>
                                                     <div>
 

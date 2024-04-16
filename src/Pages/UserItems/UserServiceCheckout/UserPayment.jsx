@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from 'react';
-
 import UserPaymentAlert from './UserPaymentAlert';
 import { useLoaderData, useNavigate } from 'react-router-dom';
 import { ShopAuthProvider } from '../../../AuthProvider/ShopAuthProvide';
@@ -28,6 +27,7 @@ const UserPayment = () => {
         if (!orderStage) { window.history.back(); }
     }, [orderStage]);
 
+ 
     const orderSubmit = () => {
         const data = orderStage
         data.method = payment

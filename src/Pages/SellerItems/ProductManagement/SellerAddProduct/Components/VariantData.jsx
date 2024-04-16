@@ -16,7 +16,7 @@ const VariantData = ({ variantInput, setVariantInput }) => {
         <div>
             <div className="grid grid-cols-3 gap-2">
                 <div className={` border p-2 border-gray-300 bg-orange-100`}>
-                    <h4 className='text-center pb-2 border-b font-semibold text-black border-gray-500 mb-2'>Slot 1</h4>
+                    <h4 className='text-center pb-2 border-b font-semibold text-black border-gray-500 mb-2'>Slot...... 1</h4>
 
                     <div className={`flex gap-3 `}>
                         <div>
@@ -26,7 +26,7 @@ const VariantData = ({ variantInput, setVariantInput }) => {
                                 console.log(newInputFields, '>>>>>>');
                                 newInputFields[0].product1.quantity = e.target.value;
                                 setVariantInput(newInputFields);
-                            }} type="number" defaultValue={1} className={style.input} />
+                            }} type="text" defaultValue={1} className={style.input} />
                         </div>
 
                         <div>
@@ -35,7 +35,7 @@ const VariantData = ({ variantInput, setVariantInput }) => {
                                 const newInputFields = [...variantInput];
                                 newInputFields[0].product1.quantityPrice = e.target.value;
                                 setVariantInput(newInputFields);
-                            }} type="number" defaultValue={1} className={style.input} />
+                            }} type="text" defaultValue={1} className={style.input} />
                         </div>
                     </div>
                 </div>
@@ -49,7 +49,7 @@ const VariantData = ({ variantInput, setVariantInput }) => {
                                 const newInputFields = [...variantInput];
                                 newInputFields[0].product2.quantity = e.target.value;
                                 setVariantInput(newInputFields);
-                            }} type="number" defaultValue={50} className={style.input} />
+                            }} type="text" defaultValue={50} className={style.input} />
                         </div>
 
                         <div>
@@ -58,7 +58,7 @@ const VariantData = ({ variantInput, setVariantInput }) => {
                                 const newInputFields = [...variantInput];
                                 newInputFields[0].product2.quantityPrice = e.target.value;
                                 setVariantInput(newInputFields);
-                            }} type="number" defaultValue={1} className={style.input} />
+                            }} type="text" defaultValue={1} className={style.input} />
                         </div>
                     </div>
 
@@ -67,25 +67,25 @@ const VariantData = ({ variantInput, setVariantInput }) => {
                 <div className={`border p-2 border-gray-300 bg-orange-100`}>
                     <h4 className='text-center pb-2 border-b font-semibold text-black border-gray-500 mb-2'>Slot 3</h4>
                     <div className="flex gap-3">
-                          <div>
-                        <label className={style.label} htmlFor=""> Quantity</label>
-                        <input onChange={(e) => {
-                            const newInputFields = [...variantInput];
-                            newInputFields[0].product3.quantity = e.target.value;
-                            setVariantInput(newInputFields);
-                        }} type="number" defaultValue={50} className={style.input} />
+                        <div>
+                            <label className={style.label} htmlFor=""> Quantity</label>
+                            <input onChange={(e) => {
+                                const newInputFields = [...variantInput];
+                                newInputFields[0].product3.quantity = e.target.value;
+                                setVariantInput(newInputFields);
+                            }} type="text" defaultValue={50} className={style.input} />
+                        </div>
+
+                        <div>
+                            <label className={style.label} htmlFor="">  Price</label>
+                            <input onChange={(e) => {
+                                const newInputFields = [...variantInput];
+                                newInputFields[0].product3.quantityPrice = e.target.value;
+                                setVariantInput(newInputFields);
+                            }} type="text" defaultValue={1} className={style.input} />
+                        </div>
                     </div>
 
-                    <div>
-                        <label className={style.label} htmlFor="">  Price</label>
-                        <input onChange={(e) => {
-                            const newInputFields = [...variantInput];
-                            newInputFields[0].product3.quantityPrice = e.target.value;
-                            setVariantInput(newInputFields);
-                        }} type="number" defaultValue={1} className={style.input} />
-                    </div>
-                    </div>
-                  
                 </div>
 
                 <div className={style.cart}>
@@ -95,7 +95,7 @@ const VariantData = ({ variantInput, setVariantInput }) => {
                             const newInputFields = [...variantInput];
                             newInputFields[0].sellingPrice = e.target.value;
                             setVariantInput(newInputFields);
-                        }} type="number" defaultValue={1} className={style.input} />
+                        }} type="text" defaultValue={1} className={style.input} />
                     </div>
                 </div>
 
@@ -106,7 +106,7 @@ const VariantData = ({ variantInput, setVariantInput }) => {
                             const newInputFields = [...variantInput];
                             newInputFields[0].ProductCost = e.target.value;
                             setVariantInput(newInputFields);
-                        }} type="number" defaultValue={1} className={style.input} />
+                        }} type="text" defaultValue={1} className={style.input} />
                     </div>
                 </div>
 

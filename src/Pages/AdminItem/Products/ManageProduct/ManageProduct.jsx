@@ -6,14 +6,17 @@ import { useQuery } from "@tanstack/react-query";
 import BrightAlert from "bright-alert";
 import SellerPrintPage from "../../../SellerItems/ProductManagement/SellerProductManagement/SellerAllProduct/SellerPrintPage";
 import WarehouseModal from "./WarehouseModal";
+import { FaAngleRight } from "react-icons/fa6";
 import EditProduct from "./EditProduct";
 import jsPDF from 'jspdf';
 import Barcode from 'react-barcode';
 
+
 const ManageProduct = () => {
   const [openModal, setOpenModal] = useState(false);
-  const [doobProduct, setDoobProduct] = useState(false)
 
+  const [doobProduct, setDoobProduct] = useState(false)
+  const [itemsPerPage, setItemsPerPage] = useState(10)
   const { data: products = [], refetch } = useQuery({
     queryKey: ["products"],
     queryFn: async () => {
@@ -49,21 +52,24 @@ const ManageProduct = () => {
     setSearchQuery(event.target.value);
   };
 
-  const filteredData = all ?
-    all_products.filter(item =>
-      (item.name && item.name.toLowerCase().includes(searchQuery.toLowerCase())) ||
-      (item._id && item._id.toString().includes(searchQuery))
-    ) :
-    (doobProduct ?
-      products.filter(item =>
+
+  const filteredData = all
+    ? all_products.filter(item =>
+      (item?.name && item.name.toLowerCase().includes(searchQuery.toLowerCase())) ||
+      (item?._id && item._id.toString().includes(searchQuery.toLowerCase()))
+    )
+    : doobProduct
+      ? products.filter(item =>
         (item.name && item.name.toLowerCase().includes(searchQuery.toLowerCase())) ||
-        (item._id && item._id.toString().includes(searchQuery))
-      ) :
-      othersProduct.filter(item =>
-        (item.name && item.name.toLowerCase().includes(searchQuery.toLowerCase())) ||
-        (item._id && item._id.toString().includes(searchQuery))
+        (item._id && item._id.toString().includes(searchQuery.toLowerCase()))
       )
-    );
+      : othersProduct.filter(item =>
+        (item.name && item.name.toLowerCase().includes(searchQuery.toLowerCase())) ||
+        (item._id && item._id.toString().includes(searchQuery.toLowerCase()))
+      );
+
+  console.log(filteredData); // Log filtered data to check if it contains the expected results
+
 
   const updateProductStatus = (id, status) => {
     console.log(id);
@@ -117,10 +123,21 @@ const ManageProduct = () => {
     setOn(!on)
   };
 
+  const [currentPage, setCurrentPage] = useState(1);
 
+
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const currentItems = filteredData?.slice(startIndex, endIndex);
 
   console.log(selectProducts);
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const message = e.target.message.value;
+
+    console.log(message, 'rejected message......')
+  }
 
   const createBarcodePDF = (selectedProducts) => {
     const pdf = new jsPDF();
@@ -243,7 +260,8 @@ const ManageProduct = () => {
               {on &&
                 <div className='absolute top-0 left-0 right-0 bottom-0 m-auto z-[3000]'> <SellerPrintPage setOn={setOn} products={printProduct} /></div>
               }
-              <div className="overflow-hidden border  border-gray-700 md:rounded-lg">
+              <div className=" overflow-x-auto border border-gray-200 border-gray-700 md:rounded-lg">
+
                 <table className=" divide-y w-full divide-gray-700">
                   <thead className="bg-gray-900 text-white ">
                     <tr>
@@ -290,13 +308,19 @@ const ManageProduct = () => {
                       >
                         Commission
                       </th>
+                      <th
+                        scope="col"
+                        className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right "
+                      >
+                        Handling
+                      </th>
                       <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left  ">
                         <span >Action</span>
                       </th>
                     </tr>
                   </thead>
                   <tbody className="bg-white divide-y  divide-gray-200 ">
-                    {filteredData.length ? filteredData?.map((product, i) => {
+                    {currentItems.length ? currentItems?.map((product, i) => {
 
                       return (
                         <tr >
@@ -368,8 +392,16 @@ const ManageProduct = () => {
 
                           </td>
 
-                          <td className="px-4 py-4 text-sm text-white  whitespace-nowrap">
-                            <button className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 cursor-pointer bg-emerald-100/60 bg-gray-800" onClick={() => setModalOpen(product?._id)}> {"Select Warehouse"}</button>
+                          <td className="px-4 py-4 text-sm text-black whitespace-nowrap flex gap-1">
+                            {
+                              product?.categories?.map((itm, index) => (
+                                <div className="text-sm rounded-full flex items-center gap-1" key={index}>
+                                  {itm?.name}
+                                  {index !== product.categories.length - 1 || !itm?.name === '' && <FaAngleRight />}
+                                </div>
+                              ))
+                            }
+
                           </td>
                           <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
                             {product?.warehouse.map((ware) => ware.name)}
@@ -383,7 +415,17 @@ const ManageProduct = () => {
                             </div>
                           </td>
                           <td className="px-4 py-4 text-sm whitespace-nowrap">
-                            <div className="flex items-center gap-x-6">
+                            <div className="flex items-center gap-x-2">
+                              <p className="px-3 py-1 text-xs text-indigo-500 rounded-full bg-gray-800 bg-indigo-100/60">
+                                {
+                                  product?.handling}
+                              </p>
+                            </div>
+                          </td>
+                          <td className="px-4 py-4 text-sm whitespace-nowrap">
+
+                            <div className="flex items-center gap-x-2">
+                              <button className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 cursor-pointer bg-emerald-100/60 bg-gray-800 text-white" onClick={() => setModalOpen(product?._id)}> {"Select Warehouse"}</button>
                               <button className=" transition-colors duration-200 text-red-500 hover:text-red-700 focus:outline-none">
                                 <svg
                                   xmlns="http://www.w3.org/2000/svg"
@@ -400,6 +442,13 @@ const ManageProduct = () => {
                                   />
                                 </svg>
                               </button>
+                              <button
+                                onClick={() => setOpenModal(product)}
+                                className=" transition-colors duration-200 text-white rounded px-3 py-1 bg-red-500 hover:text-red-700 focus:outline-none">
+                                Reject
+                              </button>
+
+
                               {/* <button
                               onClick={() => setOpenModal(product)}
                               className=" transition-colors duration-200 hover:text-yellow-500  text-yellow-700 focus:outline-none">
@@ -429,17 +478,73 @@ const ManageProduct = () => {
                           <div className="h-0 w-0">
                             {modalOpen == product?._id && <WarehouseModal doobProduct={doobProduct} modalOpen={modalOpen} product={product} setModalOpen={setModalOpen} />}
                           </div>
-
-
+                          {/* reject modal */}
+                          <div>
+                            <div onClick={() => setOpenModal(false)} className={`fixed z-[100] flex items-center justify-center ${openModal._id == product?._id ? 'visible opacity-100' : 'invisible opacity-0'} inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}>
+                              <div onClick={(e_) => e_.stopPropagation()} className={`text- absolute w-[400px] rounded-sm bg-white p-6 drop-shadow-lg dark:bg-white dark:text-black ${openModal._id == product?._id ? 'scale-1 opacity-1 duration-300' : 'scale-0 opacity-0 duration-150'}`}>
+                                <form onSubmit={handleSubmit}>
+                                  <h1 className="mb-2 text-2xl font-semibold">Rejected Message!</h1>
+                                  <textarea name="message" className="w-full border mb-6 p-2" placeholder="typer rejected message" />
+                                  <div className="flex justify-between">
+                                    <button type="submit" onClick={() => setOpenModal(false)} className="me-2 rounded-sm bg-green-700 px-6 py-[6px] text-white">Submit</button>
+                                    <button type="button" onClick={() => setOpenModal(false)} className="rounded-sm border border-red-600 px-6 py-[6px] text-red-600 duration-150 hover:bg-red-600 hover:text-white">Cancel</button>
+                                  </div>
+                                </form>
+                              </div>
+                            </div>
+                          </div>
                         </tr>
                       )
                     }) : ''}
                   </tbody>
+
+
+
+
+
                 </table>
               </div>
             </div>
           </div>
         </div>
+        <div className="mx-auto flex justify-center">
+          <nav aria-label="Page navigation example">
+            <ul className="inline-flex -space-x-px">
+              <li>
+                <button
+                  onClick={() => setCurrentPage(currentPage - 1)}
+                  disabled={currentPage === 1}
+                  className="bg-white border text-gray-500 hover:bg-gray-100 hover:text-gray-700 border-gray-300 leading-tight py-2 px-3 rounded-l-lg"
+                >
+                  Prev
+                </button>
+              </li>
+              {Array.from({ length: Math.ceil(filteredData.length / itemsPerPage) }, (_, i) => (
+                <li key={i}>
+                  <button
+                    onClick={() => setCurrentPage(i + 1)}
+                    className={`bg-white border ${currentPage === i + 1
+                      ? 'text-blue-600'
+                      : 'text-gray-500 hover:bg-gray-100 hover:text-gray-700'
+                      } border-gray-300 leading-tight py-2 px-3 rounded`}
+                  >
+                    {i + 1}
+                  </button>
+                </li>
+              ))}
+              <li>
+                <button
+                  onClick={() => setCurrentPage(currentPage + 1)}
+                  disabled={currentPage === Math.ceil(filteredData.length / itemsPerPage)}
+                  className="bg-white border text-gray-500 hover:bg-gray-100 hover:text-gray-700 border-gray-300 leading-tight py-2 px-3 rounded-r-lg"
+                >
+                  Next
+                </button>
+              </li>
+            </ul>
+          </nav>
+        </div>
+
       </section >
     </div >
   );

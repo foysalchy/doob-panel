@@ -45,6 +45,12 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
     console.log(managementPermission('POS') && prices.permissions);
 
 
+    const [openDropdownIndex, setOpenDropdownIndex] = useState(false);
+
+    const handleToggle = (idx) => {
+        setOpenDropdownIndex((prevIdx) => (prevIdx === idx ? false : idx));
+    };
+
 
     return (
 
@@ -521,9 +527,10 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                         ) : null
                                     ) : (
                                         <li className="rounded-sm">
-                                            <details className="group [&_summary::-webkit-details-marker]:hidden flex items-center rounded-sm  ">
-                                                <summary
-                                                    className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50"
+                                            <div className="group [&_summary::-webkit-details-marker]:hidden flex-col flex items-center rounded-sm  ">
+                                                <div
+                                                onClick={()=> handleToggle(1)}
+                                                    className="flex cursor-pointer w-full items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50"
                                                 >
                                                     <div className='flex cursor-pointer items-center gap-2'>
                                                         <ImBlog className="w-5 h-5 fill-current text-gray-400" />
@@ -537,9 +544,9 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                         <IoIosArrowDown className="h-5 w-5" />
 
                                                     </span>
-                                                </summary>
+                                                </div>
 
-                                                <ul className="mt-2 space-y-1 px-2 py-2 border border-[#80808043]">
+                                             {openDropdownIndex === 1 &&  <ul className="mt-2 space-y-1 px-2 py-2 border border-[#80808043]">
                                                     {user?.staffRole ? (
                                                         user?.permissions.find(itm => itm?.name === "Product Management") ? (
                                                             <li className="">
@@ -916,8 +923,8 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                             </details>
                                                         </li>
                                                     )}
-                                                </ul>
-                                            </details>
+                                                </ul>}
+                                            </div>
                                         </li>
                                     )}
 
@@ -950,7 +957,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                     <BiArchive className="w-5 h-5 text-gray-400" />
                                                     <span>Order Management</span>
                                                 </Link> */}
-                                                <details className="group [&_summary::-webkit-details-marker]:hidden flex items-center rounded-sm  ">
+                                                <div className="group [&_summary::-webkit-details-marker]:hidden flex items-center rounded-sm  ">
                                                     <summary
                                                         className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50"
                                                     >
@@ -996,7 +1003,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                             </Link>
                                                         </li>
                                                     </ul>
-                                                </details>
+                                                </div>
                                             </li>
 
                                         ) : null

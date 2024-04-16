@@ -12,6 +12,9 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import SellerPopUp from './SellerPopUp';
 import { Link } from 'react-router-dom';
+import { LuSwitchCamera } from 'react-icons/lu';
+import { MdEmail } from 'react-icons/md';
+import Swal from 'sweetalert2';
 
 
 
@@ -120,6 +123,58 @@ const SellerDashboard = () => {
         }, 4 * 60 * 60 * 1000); // 4 hours in milliseconds
     };
 
+
+
+    const { data: orderData = [] } = useQuery({
+        queryKey: ["orderData"],
+        queryFn: async () => {
+            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/order?shopId=${shopInfo._id}`);
+            const data = await res.json();
+            refetch();
+            return data.data;
+        },
+    });
+
+
+
+    const { data: darazShop = {}, isLoading: check, refetch: check_reload } = useQuery({
+        queryKey: ["darazShopBd"],
+        queryFn: async () => {
+            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/seller-daraz-accounts?id=${shopInfo._id}`);
+            const data = await res.json();
+            return data.data[0];
+        },
+    })
+
+    console.log(darazShop, '.......')
+
+    const { data: priviousAccount = [], isLoading: loading, refetch: reload } = useQuery({
+        queryKey: ["priviousAccount"],
+        queryFn: async () => {
+            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/daraz/get-privious-account?shopId=${shopInfo._id}`);
+            const data = await res.json();
+            return data.data;
+        },
+    });
+
+    const switchAccount = (_id, id) => {
+        fetch(`https://salenow-v2-backend.vercel.app/api/v1/daraz/switching-your-daraz?id=${id}&loginId=${_id}`, {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                console.log(data); // Log response data
+                Swal.fire("Success", "", "success"); // Show success message (assuming you're using SweetAlert)
+                refetch(); // Refetch data
+                reload(); // Reload data
+            })
+
+    };
+
+
     return (
         <div className="h-screen    ">
             {/* {isLoading || showModal && (
@@ -180,9 +235,9 @@ const SellerDashboard = () => {
                                     </p>
                                 </div>
                                 <div className="mt-3 text-xl md:font-bold text-black border-b border-gray-200 md:mt-0 ">
-                                    $44,453.39
+                                    ৳44,453.39
                                     <span className="text-xs text-gray-400">
-                                        /$100K
+                                        /৳100K
                                     </span>
                                 </div>
                             </div>
@@ -378,13 +433,13 @@ const SellerDashboard = () => {
                         }}
                         className="relative rounded-lg ring-1 ring-gray-100 w-full px-4 h-[120px] bg-white shadow-lg ">
                         <p className="text-sm font-semibold text-gray-700 border-b border-gray-200 w-max ">
-                            Sign in
+                            Users
                         </p>
                         <div className="flex items-end my-6 space-x-2">
                             <p className="md:text-5xl text-3xl font-bold text-black ">
-                                16
+                                {orderData.length}
                             </p>
-                            <span className="flex items-center text-xl font-bold text-red-500">
+                            {/* <span className="flex items-center text-xl font-bold text-red-500">
                                 <svg width="20" fill="currentColor" height="20" className="h-3 transform rotate-180"
                                     viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg">
                                     <path
@@ -392,7 +447,7 @@ const SellerDashboard = () => {
                                     </path>
                                 </svg>
                                 14%
-                            </span>
+                            </span> */}
                         </div>
 
                     </div>
@@ -449,8 +504,27 @@ const SellerDashboard = () => {
 
                     </div>
                 </div>
-            </div>
 
+            </div>
+            <div className="flex items-center gap-8  w-full">
+                <div className='w-full px-4 py-2 bg-gray-50 rounded text-blue-500 flex items-center gap-2'>
+                    <MdEmail />
+                    {
+
+                        <h1 className="w-full"> {darazShop?.result?.account}</h1>
+
+                    }
+                </div>
+                <div className="w-full">
+                    <h1>Previous Login</h1>
+                    <hr />
+                    {
+                        priviousAccount.filter(shop => shop.result.account !== darazShop?.result?.account).map(shop =>
+                            <div className='  px-4 py-2 border flex items-center justify-between rounded bg-[#d2d2d2] text-sm'>{shop.result.account} <button onClick={() => switchAccount(shop._id, shop.oldId)} className='cursor-pointer bg-blue-500 text-white  px-4 py-1 rounded flex items-center gap-2 '><LuSwitchCamera /> Switch</button></div>
+                        )
+                    }
+                </div>
+            </div>
         </div>
     );
 };

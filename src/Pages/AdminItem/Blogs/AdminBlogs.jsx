@@ -35,7 +35,7 @@ const AdminBlogs = () => {
 
 
   const [searchQuery, setSearchQuery] = useState("");
-
+ 
   const handleSearch = (event) => {
     setSearchQuery(event.target.value);
   };
