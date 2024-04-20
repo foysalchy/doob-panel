@@ -249,7 +249,7 @@ const AddBlog = () => {
   }, [draftSaved, blocker]);
 
   console.log(formData);
-  console.log(draftSaved);
+  console.log(draftsBlogData);
   // console.log(blocker);
 
   return (
@@ -347,20 +347,20 @@ const AddBlog = () => {
                 type="text"
                 id="Category"
                 name="category"
-                onChange={(e) => handleInputChange("category", e.target.value)} // for drafts
+                onChange={(e) => handleInputChange("category", e.target.value)}
                 className="w-full mt-1 rounded-lg border border-gray-900 px-3 py-2 text-sm"
                 placeholder="Select a category"
-                // defaultValue={
-                //   restoreDrafts && draftsBlogData?.category
-                //     ? draftsBlogData?.category
-                //     : ""
-                // }
+                defaultValue={
+                  (restoreDrafts && draftsBlogData?.category)
+                    ? draftsBlogData?.category
+                    : ""
+                }
               >
-                <option selected disabled value="Select Blog Category">
-                  Select Blog Category
-                </option>
+                <option disabled>Select Blog Category</option>
                 {blogCategories?.map((category, i) => (
-                  <option value={category?.title}>{category?.title}</option>
+                  <option key={category.title} value={category.title}>
+                    {category.title}
+                  </option>
                 ))}
               </select>
             </div>
@@ -374,11 +374,12 @@ const AddBlog = () => {
                   onChange={handleChange}
                   modules={modules}
                   placeholder="Enter description here..."
-                  defaultValue={
-                    restoreDrafts && draftsBlogData?.message
-                      ? draftsBlogData?.message
-                      : ""
-                  }
+                  value={message}
+                  // defaultValue={
+                  //   restoreDrafts && draftsBlogData?.message
+                  //     ? draftsBlogData?.message
+                  //     : ""
+                  // }
                 />
                 {/* <JoditEditor ></JoditEditor> */}
               </div>
