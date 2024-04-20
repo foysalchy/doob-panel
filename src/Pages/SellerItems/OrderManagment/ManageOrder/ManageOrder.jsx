@@ -338,7 +338,6 @@ const ManageOrder = () => {
             </nav>
 
             <div>
-
                 <div onClick={() => setShowInvoice(false)} className={`fixed z-[100] flex items-center justify-center ${showInvoice ? 'visible opacity-100' : 'invisible opacity-0'} inset-0   backdrop-blur-sm duration-100 dark:bg-white/10`}>
 
                     <div onClick={(e_) => e_.stopPropagation()} className={`text- absolute w-[98%] rounded-sm bg-white p-6 drop-shadow-lg dark:bg-gray-50 h-full  overflow-y-auto dark:text-black ${showInvoice ? 'scale-1 opacity-1 duration-300' : 'scale-0 opacity-0 duration-150'}`}>
@@ -360,7 +359,7 @@ const ManageOrder = () => {
                         <div className="origin-top-right absolute  mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="dropdown-button" tabIndex="-1">
                             <div className="py-1" role="none">
 
-                                
+
                                 <button onClick={() => setShowPrintModal1(true)} className="block text-start px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem" tabIndex="-1" id="dropdown-item-1">Print Stock Checklist For Selected Items</button>
 
 
