@@ -7,6 +7,8 @@ import SellerOrderInvoice from "./SellerOrderInvoice";
 import OrderInvoice from "./OrderInvoice";
 import { ordersNav } from "./ManageOrderNavData";
 import { BiLeftArrow, BiRightArrow } from "react-icons/bi";
+import AllOrderInvoice from "../../SellerItems/OrderManagment/ManageOrder/AllOrderInvoice";
+import AllAdminOrderInvoice from "./AllAdminOrderInvoice";
 
 const SellerOrderManagement = () => {
   const [selectedValue, setSelectedValue] = useState("All");
@@ -114,7 +116,7 @@ const SellerOrderManagement = () => {
     }
   };
 
-  console.log(selectProducts);
+  console.log(selectProducts.length);
 
   const logSelectedProducts = () => {
     const selectedProductData = products.filter((product) =>
@@ -123,6 +125,13 @@ const SellerOrderManagement = () => {
     setPrintProduct(selectedProductData);
     console.log(selectedProductData, "selected products");
     setOn(!on);
+  };
+
+  //   ! all selected item updated
+  const handleUpdateStatusForSelectedProducts = (status) => {
+    selectProducts.forEach((product) => {
+      productStatusUpdate(status, product.orderId);
+    });
   };
 
   const [readyToShip, setReadyToShip] = useState(false);
@@ -234,11 +243,9 @@ const SellerOrderManagement = () => {
     );
   };
 
-// !  for print
+  // !  for print
 
-    const [showPrintModal1, setShowPrintModal1] = useState(false);
-
-    
+  const [showPrintModal1, setShowPrintModal1] = useState(false);
 
   return (
     <div>
@@ -285,7 +292,43 @@ const SellerOrderManagement = () => {
           )}
         </nav>
 
+        {showPrintModal1 && (
+          <div>
+            <div
+              onClick={() => setShowPrintModal1(false)}
+              className={`fixed z-[100] flex items-center justify-center ${
+                showPrintModal1 ? "visible opacity-100" : "invisible opacity-0"
+              } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
+            >
+              <div
+                onClick={(e_) => e_.stopPropagation()}
+                className={`text- absolute overflow-y-auto w-[96%] h-[98%] rounded-sm bg-gray-50 p-6 drop-shadow-lg text-black ${
+                  showPrintModal1
+                    ? "scale-1 opacity-1 duration-300"
+                    : "scale-0 opacity-0 duration-150"
+                }`}
+              >
+                <AllAdminOrderInvoice
+                  data={selectProducts}
+                  setShowPrintModal1={setShowPrintModal1}
+                  showPrintModal1={showPrintModal1}
+                />
+              </div>
+            </div>
+          </div>
+        )}
         <div className="md:flex items-center gap-3 mt-3">
+          <button
+            //   onClick={toggleDropdown}
+            className="px-4 bg-white py-[9px] border "
+            id="dropdown-button"
+            aria-haspopup="true"
+            onClick={() => setShowPrintModal1(true)}
+            //   aria-expanded={isOpen ? "true" : "false"}
+          >
+            Print
+          </button>
+
           <button
             //   onClick={toggleDropdown}
             className="px-4 bg-white py-[9px] border "
@@ -293,7 +336,7 @@ const SellerOrderManagement = () => {
             aria-haspopup="true"
             //   aria-expanded={isOpen ? "true" : "false"}
           >
-            Print
+            Status
           </button>
           <input
             className="w-[260px] md:mt-0 mt-3 rounded border-gray-400 focus:outline-none p-2 border"
@@ -322,6 +365,7 @@ const SellerOrderManagement = () => {
                   <SellerOrderInvoice setOn={setOn} products={printProduct} />
                 </div>
               )}
+
               <div className="overflow-hidden border border-gray-700 md:rounded-lg">
                 <table className="divide-y w-full divide-gray-700">
                   <thead className="bg-gray-900 text-white">
@@ -333,7 +377,7 @@ const SellerOrderManagement = () => {
                           id=""
                           onChange={(e) => {
                             handleSelectAll(e, currentData);
-                            // handleStoreInvoice(e, selectedItems);
+                            handleStoreInvoice(e, currentData);
                           }}
                         />{" "}
                         Product Info

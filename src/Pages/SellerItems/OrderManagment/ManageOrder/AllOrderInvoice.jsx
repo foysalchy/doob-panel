@@ -2,6 +2,8 @@ import React, { useRef, useState, useEffect } from 'react';
 import { useReactToPrint } from 'react-to-print';
 
 const AllOrderInvoice = ({ data, showPrintModal1, setShowPrintModal1 }) => {
+
+    console.log(data);
     const componentRef = useRef();
     const handlePrint = useReactToPrint({
         content: () => componentRef.current,
@@ -12,8 +14,8 @@ const AllOrderInvoice = ({ data, showPrintModal1, setShowPrintModal1 }) => {
 
     useEffect(() => {
         let products = []; // Temporary array to store all products
-        data.forEach(element => {
-            element?.productList.forEach(product => {
+        data?.forEach(element => {
+            element?.productList?.forEach(product => {
                 products.push(product); // Add each product to the temporary array
             });
         });
@@ -45,7 +47,7 @@ const AllOrderInvoice = ({ data, showPrintModal1, setShowPrintModal1 }) => {
                         </tr>
                         <tbody>
                             {data?.map(order => (
-                                order.productList.map(item => (
+                                order.productList?.map(item => (
                                     <tr key={item?._id}>
                                         <td className="border-b bg-gray-50  text-sm text-start p-2">
                                             {item?._id}
