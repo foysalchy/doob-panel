@@ -1,10 +1,11 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import JoditEditor from "jodit-react";
 import Swal from "sweetalert2";
 import { Link, useBlocker } from "react-router-dom";
 import { BsArrowRight } from "react-icons/bs";
 import { useQuery } from "@tanstack/react-query";
 import ReactQuill from "react-quill";
+import { AuthContext } from "../../../AuthProvider/UserProvider";
 
 const AddBlog = () => {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -26,6 +27,9 @@ const AddBlog = () => {
     MetaImage: "", //done
   });
   const [draftSaved, setDraftSaved] = useState(false);
+
+  const { user } = useContext(AuthContext);
+  console.log(user);
 
   const { data: blogCategories = [], refetch } = useQuery({
     queryKey: ["blogcategory"],
@@ -183,12 +187,14 @@ const AddBlog = () => {
       if (confirmed) {
         Swal.fire("Your Blog Publish Successfully", "", "success");
 
-        const blogsData = {
+        const draftsBlogData = {
           ...formData,
           status: "drafts",
+          email: user?.email,
+          date: new Date(),
         };
-        postBlog(blogsData, "");
-        console.log(blogsData);
+        postBlog(draftsBlogData, "");
+        console.log(draftsBlogData);
 
         // blocker.proceed();
       } else {
