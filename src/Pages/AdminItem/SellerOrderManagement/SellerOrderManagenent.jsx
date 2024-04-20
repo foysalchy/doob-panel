@@ -234,6 +234,12 @@ const SellerOrderManagement = () => {
     );
   };
 
+// !  for print
+
+    const [showPrintModal1, setShowPrintModal1] = useState(false);
+
+    
+
   return (
     <div>
       <section className=" mx-auto">
