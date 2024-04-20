@@ -244,26 +244,6 @@ const SellerOrderManagement = () => {
               {products?.length}
             </span>
           </div>
-
-          <div className="md:flex items-center gap-3">
-            <input
-              className="w-[260px] md:mt-0 mt-3 rounded border-gray-400 focus:outline-none p-2 border"
-              type="date"
-              // value={selectedDate}
-              onChange={(e) => setSelectedDate(new Date(e.target.value))}
-            />
-
-            <input
-              className="border p-2 rounded"
-              placeholder="search..."
-              onChange={(e) => setSearchQuery(e.target.value)}
-              type="text"
-            />
-            {/* <button
-                            disabled={printProduct.length < 1 ? false : true}
-                            onClick={logSelectedProducts}
-                            className='bg-blue-500 px-8 py-2 rounded text-white'> Invoice</button> */}
-          </div>
         </div>
 
         <nav className="flex md:gap-4 gap-2 overflow-x-auto mt-6">
@@ -298,6 +278,35 @@ const SellerOrderManagement = () => {
             )
           )}
         </nav>
+
+        <div className="md:flex items-center gap-3 mt-3">
+          <button
+            //   onClick={toggleDropdown}
+            className="px-4 bg-white py-[9px] border "
+            id="dropdown-button"
+            aria-haspopup="true"
+            //   aria-expanded={isOpen ? "true" : "false"}
+          >
+            Print
+          </button>
+          <input
+            className="w-[260px] md:mt-0 mt-3 rounded border-gray-400 focus:outline-none p-2 border"
+            type="date"
+            // value={selectedDate}
+            onChange={(e) => setSelectedDate(new Date(e.target.value))}
+          />
+
+          <input
+            className="border p-2 rounded"
+            placeholder="search..."
+            onChange={(e) => setSearchQuery(e.target.value)}
+            type="text"
+          />
+          {/* <button
+                            disabled={printProduct.length < 1 ? false : true}
+                            onClick={logSelectedProducts}
+                            className='bg-blue-500 px-8 py-2 rounded text-white'> Invoice</button> */}
+        </div>
 
         <div className="flex flex-col mt-6">
           <div className="overflow-x-auto">

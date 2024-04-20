@@ -178,7 +178,7 @@ const OrderTable = ({
     content: () => componentRef.current,
   });
 
-  console.log(filteredData);
+//   console.log(filteredData);
 
   const [readyToShip, setReadyToShip] = useState(false);
 
