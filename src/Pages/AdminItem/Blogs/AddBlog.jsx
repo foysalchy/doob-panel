@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import JoditEditor from "jodit-react";
 import Swal from "sweetalert2";
-import { Link } from "react-router-dom";
+import { Link, useBlocker } from "react-router-dom";
 import { BsArrowRight } from "react-icons/bs";
 import { useQuery } from "@tanstack/react-query";
 import ReactQuill from "react-quill";
@@ -14,6 +14,18 @@ const AddBlog = () => {
 
   const [upload, setUpload] = useState("");
   const [uplodOk, setUploadOk] = useState(false);
+
+  // ! for drafts
+  const [formData, setFormData] = useState({
+    title: "", ///done
+    category: "", //done
+    MetaTag: "", //done
+    message: "", //done
+    MetaDescription: "", //done
+    img: "", //done
+    MetaImage: "", //done
+  });
+  const [draftSaved, setDraftSaved] = useState(false);
 
   const { data: blogCategories = [], refetch } = useQuery({
     queryKey: ["blogcategory"],
@@ -40,6 +52,7 @@ const AddBlog = () => {
       .then((imageData) => {
         if (imageData.imageUrl) {
           setUpload(imageData.imageUrl);
+          setFormData({ ...formData, MetaImage: imageData.imageUrl });
           setUploadOk(true);
         } else {
           setUpload("");
@@ -55,12 +68,13 @@ const AddBlog = () => {
       const reader = new FileReader();
       reader.onloadend = () => {
         setPreviewUrl(reader.result);
+        setFormData({ ...formData, img: imageData.imageUrl });
       };
       reader.readAsDataURL(file);
       setFileName(file.name);
     }
   };
-  const [message, setMessage] = useState('')
+  const [message, setMessage] = useState("");
 
   const dataSubmit = (event) => {
     setLoading(true);
@@ -94,7 +108,6 @@ const AddBlog = () => {
           MetaTag,
         };
         postBlog(blog, form);
-
       });
   };
 
@@ -111,7 +124,7 @@ const AddBlog = () => {
         console.log(data);
         setLoading(false);
         // Swal.fire("Your Blog Publish Successfully", "", "success");
-
+        blocker.proceed();
         // form.reset();
         // setPreviewUrl("");
         // setFileName("");
@@ -121,26 +134,95 @@ const AddBlog = () => {
 
   const handleChange = (content) => {
     setMessage(content);
+    handleInputChange("message", content); // for drafts
   };
 
   const modules = {
     toolbar: [
-      [{ 'header': '1' }, { 'header': '2' }, { 'font': [] }],
-      [{ 'size': [] }],
-      ['bold', 'italic', 'underline', 'strike', 'blockquote'],
-      [{ 'list': 'ordered' }, { 'list': 'bullet' }, { 'indent': '-1' }, { 'indent': '+1' }],
-      ['link', 'image', 'video'],
-      ['color'],
-      ['clean']
+      [{ header: "1" }, { header: "2" }, { font: [] }],
+      [{ size: [] }],
+      ["bold", "italic", "underline", "strike", "blockquote"],
+      [
+        { list: "ordered" },
+        { list: "bullet" },
+        { indent: "-1" },
+        { indent: "+1" },
+      ],
+      ["link", "image", "video"],
+      ["color"],
+      ["clean"],
     ],
   };
+
+  //! for drafts
+  const handleInputChange = (field, value) => {
+    setFormData({ ...formData, [field]: value });
+  };
+
+  // Block navigating elsewhere when data has been entered into the input
+  let blocker = useBlocker(
+    ({ currentLocation, nextLocation }) =>
+      draftSaved && currentLocation.pathname !== nextLocation.pathname
+  );
+
+  useEffect(() => {
+    const isFormDataEmpty = Object.values(formData).every(
+      (value) => value === ""
+    );
+    setDraftSaved(!isFormDataEmpty);
+  }, [formData]);
+
+  useEffect(() => {
+    if (blocker.state === "blocked") {
+      console.log("yess");
+      // event.preventDefault();
+      // event.returnValue = ""; // Required for some browsers
+      const confirmed = window.confirm(
+        "Are you sure you want to leave? Your changes may not be saved."
+      );
+      if (confirmed) {
+        Swal.fire("Your Blog Publish Successfully", "", "success");
+
+        const blogsData = {
+          ...formData,
+          status: "drafts",
+        };
+        postBlog(blogsData, "");
+        console.log(blogsData);
+
+        // blocker.proceed();
+      } else {
+      }
+    }
+  }, [draftSaved, blocker]);
+
+  console.log(formData);
+  console.log(draftSaved);
+  // console.log(blocker);
 
   return (
     <div>
       <div className=" mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8">
+        {/* Your form inputs */}
         <h1 className="text-2xl font-bold text-center">
-          Publish a blog for you and next ...
+          Publish a blog for your and next ...
         </h1>
+
+        <br />
+        <br />
+        {/* <input
+          type="text"
+          value={value}
+          onChange={(e) => setValue(e.target.value)}
+        /> */}
+        {/* {blocker.state === "blocked" ? (
+          <div>
+            <p>Are you sure you want to leave?</p>
+            <button onClick={() => blocker.proceed()}>Proceed</button>
+            <br />
+            <button onClick={() => blocker.reset()}>Cancel</button>
+          </div>
+        ) : null} */}
         <div className="py-10 md:px-10 px-0 border-2 rounded m-10">
           <form onSubmit={dataSubmit} className="space-y-4 ">
             <div>
@@ -154,6 +236,7 @@ const AddBlog = () => {
                 type="text"
                 id="title"
                 name="title"
+                onChange={(e) => handleInputChange("title", e.target.value)} // for drafts
               />
             </div>
             <div>
@@ -207,6 +290,7 @@ const AddBlog = () => {
                 type="text"
                 id="Category"
                 name="category"
+                onChange={(e) => handleInputChange("category", e.target.value)} // for drafts
                 className="w-full mt-1 rounded-lg border border-gray-900 px-3 py-2 text-sm"
                 placeholder="Select a category"
               >
@@ -243,6 +327,7 @@ const AddBlog = () => {
                 required
                 className="w-full rounded-lg border border-gray-900 p-3 text-sm"
                 placeholder="Meta Tag"
+                onChange={(e) => handleInputChange("MetaTag", e.target.value)} // for drafts
                 type="text"
                 id="MetaTag"
                 name="MetaTag"
@@ -260,11 +345,14 @@ const AddBlog = () => {
                 type="text"
                 id="MetaDescription"
                 name="MetaDescription"
+                onChange={(e) =>
+                  handleInputChange("MetaDescription", e.target.value)
+                } // for drafts
               />
             </div>
             <div>
               <label className="sr-only text-black" htmlFor="title">
-                Meta Image'
+                Meta Image
               </label>
               <input
                 onChange={imageUploading}
@@ -275,7 +363,6 @@ const AddBlog = () => {
                 id="MetaImage'"
                 name="MetaImage'"
               />
-
             </div>
 
             <div className="mt-4">
