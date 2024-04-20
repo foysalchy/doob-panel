@@ -131,6 +131,7 @@ const SellerOrderManagement = () => {
   const handleUpdateStatusForSelectedProducts = (status) => {
     selectProducts.forEach((product) => {
       productStatusUpdate(status, product.orderId);
+      console.log(product);
     });
   };
 
