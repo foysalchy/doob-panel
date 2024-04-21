@@ -33,6 +33,7 @@ const SellerAddProduct = () => {
     const [coverPhoto, setCoverPhoto] = useState('');
     const [description, setDescription] = useState('')
     const [shortDescription, setShortDescription] = useState('')
+    const [banglaDescription, setBanglaDescription] = useState('')
     const [youtube, setYoutube] = useState('')
     const [multiVendor, setMultiVendor] = useState(adminWare);
 
@@ -247,6 +248,7 @@ const SellerAddProduct = () => {
             warehouse: warehouseValue,
             shortDescription: shortDescription,
             description: description,
+            banglaDescription: banglaDescription,
             sku: sku,
             regular_price: inputFields[0].price,
             stock_quantity: inputFields[0].quantity,
@@ -377,7 +379,7 @@ const SellerAddProduct = () => {
                 </label> */}
 
                 <div id='description'>
-                    <Description shortDescription={shortDescription} setShortDescription={setShortDescription} description={description} setDescription={setDescription} />
+                    <Description setBanglaDescription={setBanglaDescription} banglaDescription={banglaDescription} shortDescription={shortDescription} setShortDescription={setShortDescription} description={description} setDescription={setDescription} />
                 </div>
                 <div className='my-4 mt-10'>
                     <Variants setVariantInput={setVariantInput} variantInput={variantInput} multiVendor={multiVendor} setMultiVendor={setMultiVendor} adminWare={adminWare} daraz={daraz} inputFields={inputFields} setInputFields={setInputFields} />

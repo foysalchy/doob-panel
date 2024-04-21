@@ -287,7 +287,7 @@ const AdminSeviceOrder = () => {
                                             scope="col"
                                             className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
                                         >
-                                            Time Duration
+                                            Service Type
                                         </th>
                                         <th
                                             scope="col"
@@ -306,7 +306,7 @@ const AdminSeviceOrder = () => {
                                             scope="col"
                                             className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
                                         >
-                                            Subscription Type
+                                            Payment Method
                                         </th>
                                         <th
                                             scope="col"
@@ -317,32 +317,32 @@ const AdminSeviceOrder = () => {
 
                                     </tr>
                                 </thead>
-                                <tbody className="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
+                                <tbody className="bg-white divide-y divide-gray-200 dark:divide-gray-700">
                                     {currentData.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp)) // Sort orders by timestamp
                                         .map((order, idx) => (
                                             <tr>
-                                                <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                                                <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
                                                     <img className='h-10 w-10 rounded-sm' src={order.productImg} alt="" />
                                                 </td>
-                                                <td className="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
+                                                <td className="px-4 py-4 text-sm font-medium text-gray-900  whitespace-nowrap">
                                                     <div className="inline-flex items-center gap-x-3">
                                                         <span># {order._id}</span>
                                                     </div>
                                                 </td>
-                                                <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                                                <td className="px-4 py-4 text-sm text-gray-900  whitespace-nowrap">
                                                     {order.productTitle}
                                                 </td>
-                                                <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                                                <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
                                                     {order.productPrice}
                                                 </td>
-                                                <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                                                <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
                                                     {order.normalPrice}
                                                 </td>
-                                                <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                                                <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
                                                     {new Date(order.timestamp).toDateString()}
                                                 </td>
 
-                                                <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                                                <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
                                                     <div className="flex items-center gap-x-2">
 
                                                         <div>
@@ -352,22 +352,22 @@ const AdminSeviceOrder = () => {
                                                         </div>
                                                     </div>
                                                 </td>
-                                                <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                                                <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
                                                     {order?.productCategory}
                                                 </td>
-                                                <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                                                <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
                                                     {order?.time_duration}
                                                 </td>
-                                                <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                                                <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
                                                     {calculateEndDate(order.timestamp, order?.time_duration)?.toDateString() ?? 'N/A'}
                                                 </td>
-                                                {/* <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                                                {/* <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
                                                 {calculateReminderDate(calculateEndDate(order.timestamp, order?.time_duration)?.toDateString() ?? 'N/A')}
                                             </td> */}
-                                                <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                                                <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
                                                     {order?.method?.Getaway}
                                                 </td>
-                                                <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                                                <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
                                                     <button
                                                         onClick={() => handleStateUpdate(order?._id, order?.status ? false : true)}
                                                         rel="noopener noreferrer" className="inline-flex items-center px-3 py-1 my-1 space-x-2 text-sm border rounded-full group hover:bg-gray-700 dark:border-gray-700">

@@ -4,7 +4,7 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { quillModules } from '../../../../quillModule';
 
-const Description = ({ description, setDescription, shortDescription, setShortDescription, categories }) => {
+const Description = ({ description, setDescription, shortDescription, setShortDescription, categories, setBanglaDescription, banglaDescription }) => {
 
 
 
@@ -17,6 +17,10 @@ const Description = ({ description, setDescription, shortDescription, setShortDe
         setShortDescription(value);
     };
 
+    const bangla_description = (value) => {
+        setBanglaDescription(value);
+    }
+
 
     return (
         <div className=' border mt-4 border-gray-400 md:px-10 px-3 py-5 md:pb-16 pb-20 w-full bg-gray-100 rounded'>
@@ -27,7 +31,7 @@ const Description = ({ description, setDescription, shortDescription, setShortDe
 
             <div>
                 <div className='flex flex-col mt-3'>
-                    <span>Product Short Description <span className='text-red-500'> *</span></span>
+                    <span>Product Highlight <span className='text-red-500'> *</span></span>
                 </div>
 
                 <ReactQuill
@@ -43,7 +47,7 @@ const Description = ({ description, setDescription, shortDescription, setShortDe
                     }}
                 />
             </div>
-            <div className='mt-16 py-2'>
+            <div className='mt-10 py-2'>
                 <div className='flex flex-col mt-3'>
                     <span>Product  Description <span className='text-red-500'> *</span></span>
 
@@ -53,6 +57,21 @@ const Description = ({ description, setDescription, shortDescription, setShortDe
                     name='description'
                     modules={quillModules}
                     value={description}
+                    className=" rounded h-[150px]"
+                    placeholder="Enter your description here..."
+
+                />
+            </div>
+            <div className='mt-10 py-2'>
+                <div className='flex flex-col mt-3'>
+                    <span>Product Bangla  Description <span className='text-red-500'> *</span></span>
+
+                </div>
+                <ReactQuill
+                    onChange={banglaDescription}
+                    name='description'
+                    modules={quillModules}
+                    value={bangla_description}
                     className=" rounded h-[150px]"
                     placeholder="Enter your description here..."
 

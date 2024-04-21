@@ -1,17 +1,39 @@
-import JoditEditor from 'jodit-react';
-import React from 'react';
-import { useContext } from 'react';
-import { useState } from 'react';
+import React, { useState, useContext, useRef, useEffect } from 'react';
 import { BsArrowRight } from 'react-icons/bs';
-import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import JoditEditor from 'jodit-react';
 import { AuthContext } from '../../../AuthProvider/UserProvider';
+import { useLocation } from 'react-router-dom';
 
 const AddSellerPage = () => {
     const [loading, setLoading] = useState(false);
-    const { shopInfo } = useContext(AuthContext)
+    const { shopInfo } = useContext(AuthContext);
+    const formRef = useRef(null);
+    const [formDirty, setFormDirty] = useState(false);
+    const location = useLocation();
 
-    const dataSubmit = (event) => {
+    // Flag to track if user has interacted with the form
+    let hasInteracted = false;
+
+    useEffect(() => {
+        // Check if form is dirty and user has interacted
+        const handleBeforeUnload = (event) => {
+            if (formDirty && hasInteracted) {
+                event.preventDefault();
+                event.returnValue = ''; // Necessary for Chrome
+                return 'Are you sure you want to leave? You may lose unsaved data.';
+            }
+        };
+
+        window.addEventListener('beforeunload', handleBeforeUnload); // Before unload event
+
+        // Cleanup function to remove event listener
+        return () => {
+            window.removeEventListener('beforeunload', handleBeforeUnload);
+        };
+    }, [formDirty, location]);
+
+    const dataSubmit = (event, draft = false) => {
         setLoading(true);
         event.preventDefault();
         const form = event.target;
@@ -26,36 +48,44 @@ const AddSellerPage = () => {
             shop: shopInfo.shopId,
             page,
             metaTag,
-            metaDescription
-
-
+            metaDescription,
+            draft, // Add draft flag
         };
 
         fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/page`, {
-            method: "POST",
+            method: 'POST',
             headers: {
-                "content-type": "application/json",
+                'content-type': 'application/json',
             },
             body: JSON.stringify(faq),
         })
             .then((res) => res.json())
             .then((data) => {
                 setLoading(false);
-                Swal.fire("success", "Your page Publish Successfully", "success");
-
+                Swal.fire('success', 'Your page Publish Successfully', 'success');
                 form.reset();
+                setFormDirty(false); // Reset form dirty state
+                window.location.href = '/'; // Redirect to home or any other page after successful submission
             });
     };
 
+    const handleInputChange = () => {
+        // Set form dirty when any input field changes
+        setFormDirty(true);
+    };
 
+    const handleDraftSubmission = (event) => {
+        event.preventDefault();
+        const confirmDraft = window.confirm('Do you want to save this as a draft?');
+        if (confirmDraft) {
+            dataSubmit(event, true); // Submit with draft=true
+        }
+    };
     return (
-
-        <div className=" mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8">
-            <h1 className="text-2xl font-bold text-center">
-                Publish a Page for you
-            </h1>
+        <div className="mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8">
+            <h1 className="text-2xl font-bold text-center">Publish a Page for you</h1>
             <div className="md:p-10 p-2 border-2 rounded md:m-10 mt-3">
-                <form onSubmit={dataSubmit} className="space-y-4 ">
+                <form ref={formRef} onSubmit={handleDraftSubmission} onChange={handleInputChange} className="space-y-4">
                     <div>
                         <label className="sr-only text-black" htmlFor="title">
                             Page Title
@@ -82,7 +112,6 @@ const AddSellerPage = () => {
                             <option value="marketing">Marketing</option>
                         </select>
                     </div>
-
                     <div>
                         <div>
                             <JoditEditor name="description" id="message"></JoditEditor>
@@ -114,39 +143,30 @@ const AddSellerPage = () => {
                             name="metaDescription"
                         />
                     </div>
-
                     <div className="mt-4">
-                        {
-                            loading ?
-                                <button disabled className="group relative cursor-not-allowed inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none mt-4">
-                                    <span className="text-sm font-medium">
-                                        Loading...
-                                    </span>
-                                    <svg className="animate-spin h-4 w-4 ml-3 text-white" viewBox="0 0 24 24">
-
-                                        <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                                    </svg>
-                                </button>
-
-                                :
-                                <button type='submit'
-                                    className="group relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none mt-4 "
-
-                                >
-                                    <span className="absolute -end-full transition-all group-hover:end-4">
-                                        <BsArrowRight />
-                                    </span>
-
-                                    <span className="text-sm font-medium transition-all group-hover:me-4">
-                                        Upload Page
-                                    </span>
-                                </button>
-                        }
+                        {loading ? (
+                            <button disabled className="group relative cursor-not-allowed inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none mt-4">
+                                <span className="text-sm font-medium">
+                                    Loading...
+                                </span>
+                                <svg className="animate-spin h-4 w-4 ml-3 text-white" viewBox="0 0 24 24">
+                                    <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                                </svg>
+                            </button>
+                        ) : (
+                            <button type='submit' className="group relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none mt-4 ">
+                                <span className="absolute -end-full transition-all group-hover:end-4">
+                                    <BsArrowRight />
+                                </span>
+                                <span className="text-sm font-medium transition-all group-hover:me-4">
+                                    Upload Page
+                                </span>
+                            </button>
+                        )}
                     </div>
                 </form>
             </div>
         </div>
-
     );
 };
 

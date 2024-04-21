@@ -15,6 +15,8 @@ import { Link } from 'react-router-dom';
 import { LuSwitchCamera } from 'react-icons/lu';
 import { MdEmail } from 'react-icons/md';
 import Swal from 'sweetalert2';
+import { SwiperSlide, Swiper } from 'swiper/react';
+import { Autoplay, Navigation, Pagination } from 'swiper/modules';
 
 
 
@@ -88,6 +90,14 @@ const SellerDashboard = () => {
     });
 
 
+    const { data: noticeInfo = [], } = useQuery({
+        queryKey: "noticeInfo",
+        queryFn: async () => {
+            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/seller-notice`);
+            const data = await res.json();
+            return data?.data;
+        },
+    });
 
 
     const [showModal, setShowModal] = useState(false);
@@ -176,12 +186,30 @@ const SellerDashboard = () => {
 
 
     return (
-        <div className="h-screen    ">
-            {/* {isLoading || showModal && (
-                <div className="fixed top-0 left-0 flex items-center justify-center w-full h-full bg-black bg-opacity-90 z-50">
-                    <SellerPopUp onClose={onClose} showModal={showModal} setShowModal={setShowModal} data={sellerPopupData} handleClose={handleClose} />
-                </div>
-            )} */}
+        <div className="h-screen  mt-[-40px]   ">
+            <div>
+                <Swiper
+                    autoplay={{ delay: 3000 }}
+                    loop={true}
+                    slidesPerView={1}
+                    spaceBetween={10}
+                    pagination={{ clickable: true }}
+                    navigation={true}
+                    modules={[Autoplay, Pagination, Navigation]}
+                    className="mySwiper"
+                >
+                    {noticeInfo?.map((item, i) => (
+                        <SwiperSlide>
+                            <a href={'https://example.com/link1'} >
+                                <img src={item.image} alt="Description of image 1" className='h-32 object-cover rounded w-full' />
+                            </a>
+                        </SwiperSlide>
+                    ))}
+
+                </Swiper>
+            </div>
+
+
 
             {sellerPopupData.length ? popup && (
                 <div className="fixed top-0 left-0 flex items-center justify-center w-full h-full bg-black bg-opacity-90 z-50">

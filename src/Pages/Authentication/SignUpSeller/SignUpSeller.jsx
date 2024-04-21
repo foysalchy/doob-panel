@@ -420,7 +420,7 @@ const SignUpSeller = () => {
                       </h3>
                       <p className="text-xs text-start">
                         We have already send you  4 digit
-                        <br />verification code on your number *********{phoneNumber.slice(-3)}
+                        <br />verification code on your number :  {phoneNumber}
                       </p>
                       <span
                         htmlFor="otp"

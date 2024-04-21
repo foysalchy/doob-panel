@@ -90,7 +90,7 @@ const VariantData = ({ variantInput, setVariantInput }) => {
 
                 <div className={style.cart}>
                     <div>
-                        <label className={style.label} htmlFor="">Selling Price</label>
+                        <label className={style.label} htmlFor="">Selling Recommended  Price</label>
                         <input onChange={(e) => {
                             const newInputFields = [...variantInput];
                             newInputFields[0].sellingPrice = e.target.value;

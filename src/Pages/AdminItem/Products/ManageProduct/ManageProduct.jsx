@@ -10,6 +10,8 @@ import { FaAngleRight } from "react-icons/fa6";
 import EditProduct from "./EditProduct";
 import jsPDF from 'jspdf';
 import Barcode from 'react-barcode';
+import { BiEdit, BiSave } from "react-icons/bi";
+import { BsEye } from "react-icons/bs";
 
 
 const ManageProduct = () => {
@@ -68,11 +70,9 @@ const ManageProduct = () => {
         (item._id && item._id.toString().includes(searchQuery.toLowerCase()))
       );
 
-  console.log(filteredData); // Log filtered data to check if it contains the expected results
-
 
   const updateProductStatus = (id, status) => {
-    console.log(id);
+
     fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/update-product-status`, {
       method: "PUT",
       headers: {
@@ -130,37 +130,66 @@ const ManageProduct = () => {
   const endIndex = startIndex + itemsPerPage;
   const currentItems = filteredData?.slice(startIndex, endIndex);
 
-  console.log(selectProducts);
 
+  const [loading, setLoading] = useState(false)
   const handleSubmit = (e) => {
     e.preventDefault();
-    const message = e.target.message.value;
 
-    console.log(message, 'rejected message......')
+    const message = e.target.message.value;
+    console.log(message, openModal._id, 'message');
+    setLoading(true)
+
+    fetch(`http://localhost:5001/api/v1/admin/product-reject-message?id=${openModal._id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        id: openModal._id,
+        message
+      })
+
+    }).then((res) => res.json()).then((data) => {
+      setModalOpen(false)
+      setLoading(false)
+      BrightAlert()
+      refetch()
+    })
+
   }
+
+
+
 
   const createBarcodePDF = (selectedProducts) => {
     const pdf = new jsPDF();
+    const barcodesPerPage = 4; // Number of barcodes per page
+    let pageIndex = 0; // Current page index
+    let yPos = 10; // Initial y position
 
     // Loop through selected product IDs
     selectedProducts.forEach((productId, index) => {
-      // Create a barcode for each product ID
-      const barcode = new Barcode({
-        data: productId,
-        width: 2, // Adjust as needed
-        height: 100, // Adjust as needed
-      }).renderSVG();
+      // Create a barcode for each product ID using JsBarcode
+      const canvas = document.createElement('canvas');
+      JsBarcode(canvas, productId, {
+        format: 'CODE128', // You can specify the barcode format here
+        displayValue: false // Hide the text beneath the barcode
+      });
 
-      // Convert SVG barcode to base64 image
-      const svgString = new XMLSerializer().serializeToString(barcode);
-      const imgData = 'data:image/svg+xml;base64,' + btoa(svgString);
+      // Convert canvas to base64 image
+      const imgData = canvas.toDataURL('image/png');
 
       // Add barcode image to PDF
-      if (index !== 0) {
+      if (index % barcodesPerPage === 0 && index !== 0) {
         pdf.addPage();
+        pageIndex++; // Increment page index
+        yPos = 10; // Reset y position for new page
       }
-      pdf.addImage(imgData, 'JPEG', 10, 10 + (index % 2) * 100, 100, 50); // Adjust position and size as needed
-      pdf.text(10, 80 + (index % 2) * 100, `Product ID: ${productId}`);
+
+      pdf.addImage(imgData, 'PNG', 10, yPos, 100, 50); // Adjust position and size as needed
+      pdf.text(10, yPos + 60, `Product ID: ${productId}`);
+
+      yPos += 70; // Increase y position for next barcode
     });
 
     // Save or navigate to the PDF page
@@ -169,11 +198,65 @@ const ManageProduct = () => {
   };
 
 
+  const [loading_start, setLoading_start] = useState(false)
   const create_barcode = () => {
+    setLoading_start(true)
     createBarcodePDF(selectProducts);
+    setLoading_start(false)
     // need to selected productId as a pdf and barcode 
     // and navigate anoter page 
   }
+
+
+
+  const [editMode, setEditMode] = useState(false);
+  const [editedCommission, setEditedCommission] = useState('');
+  const [editedHandling, setEditedHandling] = useState('');
+  const [editedValues, setEditedValues] = useState([]);
+  const [ware, setWare] = useState([]);
+  const [oldprice, setOldPrice] = useState({})
+
+  const check_input = (product_id, commission, handling, warehouse, pice) => {
+
+    setEditMode(product_id)
+    setEditedCommission(commission)
+    setEditedHandling(handling)
+    setWare(warehouse)
+    setOldPrice(pice)
+
+  }
+
+  const save_input = () => {
+
+    const handling = editedValues.handling ? editedValues.handling : oldprice.handling
+    const commission = editedValues.commission ? editedValues.commission : oldprice.commission
+    const warehouse = ware
+    const data = {
+      handling,
+      commission,
+      warehouse
+    }
+    fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/update-product-info?productId=${editMode}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data),
+    }).then((res) => res.json()).then((data) => {
+
+      refetch()
+      reload()
+      BrightAlert()
+      setEditMode(false)
+      setEditedCommission('')
+      setEditedHandling('')
+      setWare([])
+      setOldPrice({})
+    })
+
+  }
+
+
 
   return (
     <div className="">
@@ -247,7 +330,7 @@ const ManageProduct = () => {
           </div>
 
           <div className='flex gap-2 items-center'>
-            <button className='bg-blue-500 px-8 py-2 rounded text-white' onClick={create_barcode}>Barcode Generate</button>
+            <button className='bg-blue-500 px-8 py-2 rounded text-white' onClick={create_barcode}>{loading_start ? 'Loading' : 'Barcode Generate'}</button>
             <button onClick={logSelectedProducts} disabled={!selectProducts.length} className='bg-blue-500 px-8 py-2 rounded text-white'> Print</button>
             <button onClick={() => setAll(true)} className={`${all ? 'bg-blue-700' : " bg-blue-500"} px-8 py-2 rounded text-white`}>All Warehouse </button>
             <button onClick={() => { setDoobProduct(true), setAll(false) }} className={`${doobProduct ? 'bg-blue-700' : " bg-blue-500"} px-8 py-2 rounded text-white`}>Doob Warehouse </button>
@@ -260,7 +343,7 @@ const ManageProduct = () => {
               {on &&
                 <div className='absolute top-0 left-0 right-0 bottom-0 m-auto z-[3000]'> <SellerPrintPage setOn={setOn} products={printProduct} /></div>
               }
-              <div className=" overflow-x-auto border border-gray-200 border-gray-700 md:rounded-lg">
+              <div className=" overflow-x-auto border  border-gray-700 md:rounded-lg">
 
                 <table className=" divide-y w-full divide-gray-700">
                   <thead className="bg-gray-900 text-white ">
@@ -339,7 +422,7 @@ const ManageProduct = () => {
                           </td>
                           <td>
                             <div className="flex  duration-150 items-center gap-x-2 relative">
-                              <div className="imgSm bg-red-400">
+                              <div className="imgSm w-10 h-10 bg-red-400">
                                 <img
                                   className="object-cover  w-10 h-10 rounded hover:cursor-pointer"
                                   srcSet={product?.featuredImage && product?.featuredImage?.src}
@@ -350,7 +433,7 @@ const ManageProduct = () => {
                                   style={{
                                     backgroundImage: `url(${product?.featuredImage?.src})`,
                                   }}
-                                  className="absolute top-[-40px] duration-150 abs hidden bg-[url(${product?.featuredImage?.src})] left-[43px] object-cover bg-cover bg-white shadow-xl w-[150px] h-[150px] ring-1 ring-gray-500"
+                                  className="absolute top-[-40px] z-50 duration-150 abs hidden bg-[url(${product?.featuredImage?.src})] left-[43px] object-cover bg-cover bg-white shadow-xl w-[150px] h-[150px] ring-1 ring-gray-500"
                                 >
                                 </div>
                               </div>
@@ -378,7 +461,7 @@ const ManageProduct = () => {
                                   const filteredWarehouses = product?.warehouse?.filter(ware => ware.name !== '');
                                   return (
                                     <button
-                                      disabled={filteredWarehouses.length < 2}
+                                      disabled={filteredWarehouses?.length < 2}
                                       onClick={() => updateProductStatus(product._id, true)}
                                       className="inline-flex items-center px-3 py-1 rounded-full cursor-pointer gap-x-2 bg-emerald-100/60 bg-gray-800"
                                     >
@@ -404,22 +487,44 @@ const ManageProduct = () => {
 
                           </td>
                           <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
-                            {product?.warehouse.map((ware) => ware.name)}
+                            {product?.warehouse?.map((ware) => ware?.name)}
                           </td>
                           <td className="px-4 py-4 text-sm whitespace-nowrap">
                             <div className="flex items-center gap-x-2">
-                              <p className="px-3 py-1 text-xs text-indigo-500 rounded-full bg-gray-800 bg-indigo-100/60">
-                                {
-                                  product?.commission}
-                              </p>
+                              {(editMode === product._id && editedCommission) ?
+                                <div className="flex gap-2 " >
+                                  <input
+                                    type="text"
+                                    defaultValue={product?.commission}
+                                    onChange={(e) => setEditedValues({ commission: e.target.value })}
+                                    className="px-3 w-12 py-1 text-sm border rounded bg-gray-100"
+                                  />
+                                  <button><BiSave onClick={save_input} /></button>
+                                </div> : <button onClick={() => check_input(product._id, true, false, product.warehouse, { commission: product?.commission, handling: product?.handling })} className="px-3 py-1 flex items-center gap-2 text-xs text-indigo-500 rounded-full bg-gray-800 bg-indigo-100/60">
+                                  {
+                                    product?.commission
+                                  }
+                                  <BiEdit />
+                                </button>}
                             </div>
                           </td>
                           <td className="px-4 py-4 text-sm whitespace-nowrap">
                             <div className="flex items-center gap-x-2">
-                              <p className="px-3 py-1 text-xs text-indigo-500 rounded-full bg-gray-800 bg-indigo-100/60">
-                                {
-                                  product?.handling}
-                              </p>
+                              {(editMode === product._id && editedHandling) ?
+                                <div className="flex gap-2 ">
+                                  <input
+                                    type="text"
+                                    defaultValue={product.handling}
+                                    onChange={(e) => setEditedValues({ handling: e.target.value })}
+                                    className="px-3 py-1 w-12 text-sm border rounded bg-gray-100"
+                                  />
+                                  <button><BiSave onClick={save_input} /></button>
+                                </div> : <button onClick={() => check_input(product._id, false, true, product.warehouse, { commission: product?.commission, handling: product?.handling })} className="px-3 py-1 text-xs text-indigo-500 flex items-center gap-2  rounded-full bg-gray-800 bg-indigo-100/60">
+                                  {
+                                    product?.handling
+                                  }
+                                  <BiEdit />
+                                </button>}
                             </div>
                           </td>
                           <td className="px-4 py-4 text-sm whitespace-nowrap">
@@ -442,11 +547,11 @@ const ManageProduct = () => {
                                   />
                                 </svg>
                               </button>
-                              <button
+                              {product.product_status == 'reject' ? <p className="px-2">Rejected</p> : <button
                                 onClick={() => setOpenModal(product)}
                                 className=" transition-colors duration-200 text-white rounded px-3 py-1 bg-red-500 hover:text-red-700 focus:outline-none">
                                 Reject
-                              </button>
+                              </button>}
 
 
                               {/* <button
@@ -486,12 +591,16 @@ const ManageProduct = () => {
                                   <h1 className="mb-2 text-2xl font-semibold">Rejected Message!</h1>
                                   <textarea name="message" className="w-full border mb-6 p-2" placeholder="typer rejected message" />
                                   <div className="flex justify-between">
-                                    <button type="submit" onClick={() => setOpenModal(false)} className="me-2 rounded-sm bg-green-700 px-6 py-[6px] text-white">Submit</button>
+                                    <button type="submit" className="me-2 rounded-sm bg-green-700 px-6 py-[6px] text-white">{loading ? 'Loading...' : 'Submit'}</button>
                                     <button type="button" onClick={() => setOpenModal(false)} className="rounded-sm border border-red-600 px-6 py-[6px] text-red-600 duration-150 hover:bg-red-600 hover:text-white">Cancel</button>
                                   </div>
                                 </form>
                               </div>
                             </div>
+                          </div>
+
+                          <div>
+                            <Link className="mx-4" to={`/products/${product._id}`}><BsEye /></Link>
                           </div>
                         </tr>
                       )
@@ -519,7 +628,7 @@ const ManageProduct = () => {
                   Prev
                 </button>
               </li>
-              {Array.from({ length: Math.ceil(filteredData.length / itemsPerPage) }, (_, i) => (
+              {Array.from({ length: Math.ceil(filteredData?.length / itemsPerPage) }, (_, i) => (
                 <li key={i}>
                   <button
                     onClick={() => setCurrentPage(i + 1)}
@@ -535,7 +644,7 @@ const ManageProduct = () => {
               <li>
                 <button
                   onClick={() => setCurrentPage(currentPage + 1)}
-                  disabled={currentPage === Math.ceil(filteredData.length / itemsPerPage)}
+                  disabled={currentPage === Math.ceil(filteredData?.length / itemsPerPage)}
                   className="bg-white border text-gray-500 hover:bg-gray-100 hover:text-gray-700 border-gray-300 leading-tight py-2 px-3 rounded-r-lg"
                 >
                   Next

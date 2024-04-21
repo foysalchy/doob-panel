@@ -89,7 +89,7 @@ const ManageService = () => {
     };
 
 
-
+    console.log(services);
 
     return (
         <div className="">
@@ -183,6 +183,24 @@ const ManageService = () => {
                                                     className="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 text-gray-400"
                                                 >
                                                     <button className="flex items-center gap-x-2">
+                                                        <span>Category</span>
+                                                    </button>
+                                                </th>
+
+                                                <th
+                                                    scope="col"
+                                                    className="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 text-gray-400"
+                                                >
+                                                    <button className="flex items-center gap-x-2">
+                                                        <span>Type</span>
+                                                    </button>
+                                                </th>
+
+                                                <th
+                                                    scope="col"
+                                                    className="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 text-gray-400"
+                                                >
+                                                    <button className="flex items-center gap-x-2">
                                                         <span>Price</span>
                                                     </button>
                                                 </th>
@@ -229,6 +247,12 @@ const ManageService = () => {
                                                                 </div>
                                                             </div>
                                                         </div>
+                                                    </td>
+                                                    <td className="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 text-gray-400">
+                                                        {service.category}
+                                                    </td>
+                                                    <td className="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 text-gray-400">
+                                                        {service.subscriptionPeriod}
                                                     </td>
 
                                                     <td className="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 text-gray-400">

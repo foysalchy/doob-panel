@@ -27,7 +27,7 @@ const SellerEditDiscription = ({ product, description, setDescription, shortDesc
 
             <div>
                 <div className='flex flex-col mt-3'>
-                    <span>Product Short Description <span className='text-red-500'> *</span></span>
+                    <span>Product Highlight <span className='text-red-500'> *</span></span>
                 </div>
 
                 <ReactQuill

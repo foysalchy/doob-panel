@@ -13,6 +13,8 @@ import WebStoreproduct from './WebStoreProducts';
 import PrintPage from './SellerPrintPage';
 import SellerPrintPage from './SellerPrintPage';
 import { RxCross2 } from 'react-icons/rx';
+import jsPDF from 'jspdf';
+import Barcode from 'react-barcode';
 
 
 const SellerAllProducts = () => {
@@ -48,7 +50,7 @@ const SellerAllProducts = () => {
         setSearchQuery(event.target.value);
     };
 
-    const filteredData = products?.filter(
+    const filteredData = products.length && products?.filter(
         (item) =>
 
             item.name?.toLowerCase().includes(searchQuery?.toLowerCase()) ||
@@ -62,7 +64,7 @@ const SellerAllProducts = () => {
     const endIndex = startIndex + pageSize;
 
     // Get the current page data
-    const currentData = filteredData.slice(startIndex, endIndex);
+    const currentData = filteredData && filteredData?.slice(startIndex, endIndex);
 
 
 
@@ -161,6 +163,7 @@ const SellerAllProducts = () => {
     });
 
 
+
     // select product
     const [selectProducts, setSelectProducts] = useState([]);
     const [on, setOn] = useState(null);
@@ -226,6 +229,63 @@ const SellerAllProducts = () => {
         })
     }
 
+    const barcode_generate = () => {
+        console.log(selectProducts);
+        const pdf = new jsPDF();
+        const barcodesPerPage = 4; // Number of barcodes per page
+        let pageIndex = 0; // Current page index
+        let yPos = 10; // Initial y position
+
+        // Loop through selected product IDs
+        selectProducts.forEach((productId, index) => {
+            // Create a barcode for each product ID using JsBarcode
+            const canvas = document.createElement('canvas');
+            JsBarcode(canvas, productId, {
+                format: 'CODE128', // You can specify the barcode format here
+                displayValue: false // Hide the text beneath the barcode
+            });
+
+            // Convert canvas to base64 image
+            const imgData = canvas.toDataURL('image/png');
+
+            // Add barcode image to PDF
+            if (index % barcodesPerPage === 0 && index !== 0) {
+                pdf.addPage();
+                pageIndex++; // Increment page index
+                yPos = 10; // Reset y position for new page
+            }
+
+            pdf.addImage(imgData, 'PNG', 10, yPos, 100, 50); // Adjust position and size as needed
+            pdf.text(10, yPos + 60, `Product ID: ${productId}`);
+
+            yPos += 70; // Increase y position for next barcode
+        });
+
+        // Save or navigate to the PDF page
+        pdf.save('barcodes.pdf'); // Save PDF
+    }
+
+
+    const update_product_sorting = (e) => {
+        console.log(e.target.value);
+        fetch(`http://localhost:5001/api/v1/seller/update-product-upcoming`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                status: e.target.value,
+                ids: selectProducts
+            })
+        }).then((res) => res.json()).then((data) => {
+            Swal.fire(`Success`, '', 'success')
+            refetch()
+            // meed to reset e  console.log(e.target.value);
+            setSelectProducts([])
+
+
+        })
+    }
 
     return (
         <div className="">
@@ -302,9 +362,16 @@ const SellerAllProducts = () => {
                             {products?.length}
                         </span>
                     </div>
+                    <div className="flex items-center gap-2">
+                        {selectProducts.length ? <select onChange={update_product_sorting} className='px-8 py-2' name="" id="">
+                            <option >Select Status</option>
+                            <option value={false}>For Your Product</option>
+                            <option value={true}>Upcoming Product</option>
+                        </select> : ''}
+                        <button onClick={barcode_generate} className='bg-blue-500 px-8 py-2 rounded text-white'> Barcode Generate</button>
+                        <button onClick={logSelectedProducts} disabled={!selectProducts.length} className='bg-blue-500 px-8 py-2 rounded text-white'> Print</button>
 
-                    <button onClick={logSelectedProducts} disabled={!selectProducts.length} className='bg-blue-500 px-8 py-2 rounded text-white'> Print</button>
-                </div>
+                    </div>  </div>
                 {webStoreProduct ? <WebStoreproduct priceRole={priceRole} searchQuery={searchQuery} /> : <div className="flex flex-col mt-6">
                     <div style={{
                         overflowY: 'scroll', // Always show the scrollbar
@@ -313,9 +380,11 @@ const SellerAllProducts = () => {
                         msOverflowStyle: 'scrollbar', // For Internet Explorer and Edge
                     }} className="overflow-x-scroll  ">
                         <div className=" w-[1700px]">
+
                             {on &&
                                 <div className='absolute top-0 left-0 right-0 bottom-0 m-auto z-[3000]'> <SellerPrintPage setOn={setOn} products={printProduct} /></div>
                             }
+
                             <div className="overflow-hidden border  border-gray-700 md:rounded-lg">
                                 <table className="w-full">
                                     <thead className="bg-gray-900 text-white ">
@@ -376,7 +445,7 @@ const SellerAllProducts = () => {
                                         </tr>
                                     </thead>
                                     <tbody className="bg-white divide-y  divide-gray-200 ">
-                                        {currentData.map((product) => (
+                                        {currentData && currentData?.sort((a, b) => b.createdAt - a.createdAt).map((product) => (
                                             <tr>
                                                 <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap   flex items-center justify-center">
                                                     <label>
@@ -632,16 +701,18 @@ const SellerAllProducts = () => {
                                     d="M6.75 15.75L3 12m0 0l3.75-3.75M3 12h18"
                                 />
                             </svg>
-                            <span>previous</span>
+                            <span>Previous</span>
                         </button>
-                        <div className="items-center hidden lg:flex gap-x-3">
 
-                            <div className='px-2 py-1 text-sm text-blue-500 rounded-md  bg-blue-100/60'>
-
-                                <span> {currentPage}</span>
-                            </div>
-
+                        {/* Show all pages */}
+                        <div className="flex items-center gap-x-3">
+                            {Array.from({ length: Math.ceil(filteredData?.length / pageSize) }, (_, index) => (
+                                <div key={index} className={`px-2 py-1 text-sm rounded-md ${currentPage === index + 1 ? 'bg-blue-500 text-white' : 'bg-blue-100/60 text-blue-500'}`}>
+                                    <span>{index + 1}</span>
+                                </div>
+                            ))}
                         </div>
+
                         <button
                             onClick={() => setCurrentPage((prevPage) => Math.min(prevPage + 1, Math.ceil(filteredData?.length / pageSize)))}
                             disabled={currentPage === Math.ceil(filteredData?.length / pageSize)}
@@ -664,6 +735,7 @@ const SellerAllProducts = () => {
                             </svg>
                         </button>
                     </div>
+
 
                 </div>}
             </section>
