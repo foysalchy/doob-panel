@@ -1,33 +1,59 @@
-import { useQuery } from '@tanstack/react-query';
-import React, { useState } from 'react';
-import ReadyToShipModal from './ReadyToShipModal';
-import BrightAlert from 'bright-alert';
-import BarCode from 'react-barcode';
-import SellerOrderInvoice from './SellerOrderInvoice';
-import OrderInvoice from './OrderInvoice'
-import { ordersNav } from './ManageOrderNavData';
-import { BiLeftArrow, BiRightArrow } from 'react-icons/bi';
-
+import { useQuery } from "@tanstack/react-query";
+import React, { useState } from "react";
+import ReadyToShipModal from "./ReadyToShipModal";
+import BrightAlert from "bright-alert";
+import BarCode from "react-barcode";
+import SellerOrderInvoice from "./SellerOrderInvoice";
+import OrderInvoice from "./OrderInvoice";
+import { ordersNav } from "./ManageOrderNavData";
+import { BiLeftArrow, BiRightArrow } from "react-icons/bi";
+import AllOrderInvoice from "../../SellerItems/OrderManagment/ManageOrder/AllOrderInvoice";
+import AllAdminOrderInvoice from "./AllAdminOrderInvoice";
 
 const SellerOrderManagement = () => {
-    const [selectedValue, setSelectedValue] = useState('All');
-    const [searchQuery, setSearchQuery] = useState("");
-    const [selectedDate, setSelectedDate] = useState(null)
-    const [modalOpen, setModalOpen] = useState(false)
+  const [selectedValue, setSelectedValue] = useState("All");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedDate, setSelectedDate] = useState(null);
+  const [modalOpen, setModalOpen] = useState(false);
 
-    const handleSelectChange = (event) => {
-        setSelectedValue(event.target.value);
-    };
+  const handleSelectChange = (event) => {
+    setSelectedValue(event.target.value);
+  };
 
-    const { data: products = [], refetch } = useQuery({
-        queryKey: ["sellerAllOrder"],
-        queryFn: async () => {
-            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/get-shop-all-order`);
-            const data = await res.json();
-            return data.data;
-        },
-    });
+  const { data: products = [], refetch } = useQuery({
+    queryKey: ["sellerAllOrder"],
+    queryFn: async () => {
+      const res = await fetch(
+        `https://salenow-v2-backend.vercel.app/api/v1/admin/get-shop-all-order`
+      );
+      const data = await res.json();
+      return data.data;
+    },
+  });
 
+  const filteredData = products?.filter((item) => {
+    if (
+      searchQuery === "" &&
+      selectedValue === "All" &&
+      (!selectedDate || new Date(item?.timestamp) >= selectedDate)
+    ) {
+      return true; // Include all items when searchValue is empty and selectedValue is "All" and timestamp is greater than or equal to selectedDate
+    } else if (
+      selectedValue === "pending" &&
+      (!selectedDate || new Date(item?.timestamp) >= selectedDate)
+    ) {
+      return !item?.status;
+    } else if (
+      searchQuery &&
+      (!selectedDate || new Date(item?.timestamp) >= selectedDate)
+    ) {
+      return item?._id?.toLowerCase().includes(searchQuery.toLowerCase()); // Filter by _id
+    } else if (
+      selectedValue &&
+      (!selectedDate || new Date(item?.timestamp) >= selectedDate)
+    ) {
+      return item?.status === selectedValue;
+    }
 
     const filteredData = products?.filter((item) => {
         if (
@@ -45,103 +71,67 @@ const SellerOrderManagement = () => {
         }
 
         return false; // Exclude items that don't meet any condition
+  });
+
+  console.log(filteredData, "filteredData....");
+
+  // const filteredData = products?.length && products?.filter(
+  //     (product) =>
+  //         product.product.name?.toLowerCase().includes(searchQuery?.toLowerCase()) ||
+  //         product._id?.toLowerCase().includes(searchQuery?.toLowerCase()) ||
+  //         product.customerName?.toLowerCase().includes(searchQuery?.toLowerCase()) ||
+  //         product.product.productId.toString().includes(searchQuery)
+  // );
+
+  // select product
+  const [selectProducts, setSelectProducts] = useState([]);
+  const [on, setOn] = useState(null);
+  const [printProduct, setPrintProduct] = useState([]);
+
+  const handleUpdateCheck = (productId) => {
+    setSelectProducts((prevSelectedProducts) => {
+      if (prevSelectedProducts.includes(productId)) {
+        return prevSelectedProducts.filter((id) => id !== productId);
+      } else {
+        return [...prevSelectedProducts, productId];
+      }
     });
+  };
 
-    console.log(filteredData, 'filteredData....')
-
-
-
-
-    // const filteredData = products?.length && products?.filter(
-    //     (product) =>
-    //         product.product.name?.toLowerCase().includes(searchQuery?.toLowerCase()) ||
-    //         product._id?.toLowerCase().includes(searchQuery?.toLowerCase()) ||
-    //         product.customerName?.toLowerCase().includes(searchQuery?.toLowerCase()) ||
-    //         product.product.productId.toString().includes(searchQuery)
-    // );
-
-
-
-    // select product
-    const [selectProducts, setSelectProducts] = useState([]);
-    const [on, setOn] = useState(null);
-    const [printProduct, setPrintProduct] = useState([]);
-
-    const handleUpdateCheck = (productId) => {
-        setSelectProducts(prevSelectedProducts => {
-            if (prevSelectedProducts.includes(productId)) {
-                return prevSelectedProducts.filter(id => id !== productId);
-            } else {
-                return [...prevSelectedProducts, productId];
-            }
-        });
-    };
-
-    const handleSelectAll = () => {
-        if (selectProducts.length === products.length) {
-            // If all products are already selected, deselect all
-            setSelectProducts([]);
-        } else {
-            // Otherwise, select all products
-            const allProductIds = products.map(product => product._id);
-            setSelectProducts(allProductIds);
-        }
-    };
-
-    const logSelectedProducts = () => {
-        const selectedProductData = products.filter(product => selectProducts.includes(product._id));
-        setPrintProduct(selectedProductData)
-        console.log(selectedProductData, 'selected products');
-        setOn(!on)
-    };
-
-
-    const [readyToShip, setReadyToShip] = useState(false)
-
-    const productStatusUpdate = (status, orderId) => {
-        console.log(status, orderId);
-        fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/update-seller-order-status?orderId=${orderId}&status=${status}`, {
-            method: "PUT",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ status, orderId })
-        }).then((res) => res.json()).then((data) => {
-            refetch()
-
-        });
+  //   !  all select
+  const handleSelectAll = (e, data) => {
+    // if (selectProducts.length === products.length) {
+    //   // If all products are already selected, deselect all
+    //   setSelectProducts([]);
+    // } else {
+    //   // Otherwise, select all products
+    //   const allProductIds = products.map((product) => product._id);
+    //   setSelectProducts(allProductIds);
+    // }
+    const isChecked = e.target.checked;
+    if (isChecked) {
+      setSelectProducts(data);
+    } else {
+      setSelectProducts([]);
     }
+  };
 
-    const deleteMethod = (orderId) => {
-        fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/delete-seller-order?orderId=${orderId}`, {
-            method: "DELETE",
-            headers: { "Content-Type": "application/json" },
-        }).then((res) => res.json()).then((data) => {
-            BrightAlert()
-            refetch()
-
-        });
+  const handleCheckboxChange = (event, item) => {
+    const isChecked = event.target.checked;
+    if (isChecked) {
+      // If checkbox is checked, add item to selectedItems array
+      setSelectProducts((prevSelectedItems) => [...prevSelectedItems, item]);
+    } else {
+      // If checkbox is unchecked, remove item from selectedItems array
+      setSelectProducts((prevSelectedItems) =>
+        prevSelectedItems.filter(
+          (selectedItem) => selectedItem._id !== item._id
+        )
+      );
     }
+  };
 
-    const [currentPage, setCurrentPage] = useState(1);
-
-    const pageSize = 10;
-    const startIndex = (currentPage - 1) * pageSize;
-    const endIndex = startIndex + pageSize;
-    const totalPages = Math.ceil(filteredData?.length / pageSize);
-
-    const currentData = filteredData.slice(startIndex, endIndex);
-
-    const handleChangePage = (newPage) => {
-
-        setCurrentPage(newPage);
-    };
-
-    const calculateProfit = (sale) => {
-        const revenue = sale.quantity * sale.price;
-        const totalCosts = parseFloat(sale.handling) + (parseFloat(sale.commission) / 100 * revenue);
-        const profit = revenue - totalCosts;
-
-        return profit;
-    };
+  console.log(selectProducts.length);
 
     let statusCounts = {};
 
@@ -215,29 +205,241 @@ const SellerOrderManagement = () => {
     };
 
 
+  const logSelectedProducts = () => {
+    const selectedProductData = products.filter((product) =>
+      selectProducts.includes(product._id)
+    );
+    setPrintProduct(selectedProductData);
+    console.log(selectedProductData, "selected products");
+    setOn(!on);
+  };
+
+  //   ! all selected item updated
+  const handleUpdateStatusForSelectedProducts = (status) => {
+    selectProducts.forEach((product) => {
+      productStatusUpdate(status, product.orderId);
+      console.log(product);
+    });
+  };
+
+  const [readyToShip, setReadyToShip] = useState(false);
+
+  const productStatusUpdate = (status, orderId) => {
+    console.log(status, orderId);
+    fetch(
+      `https://salenow-v2-backend.vercel.app/api/v1/seller/update-seller-order-status?orderId=${orderId}&status=${status}`,
+      {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ status, orderId }),
+      }
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        refetch();
+      });
+  };
+
+  const deleteMethod = (orderId) => {
+    fetch(
+      `https://salenow-v2-backend.vercel.app/api/v1/seller/delete-seller-order?orderId=${orderId}`,
+      {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+      }
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        BrightAlert();
+        refetch();
+      });
+  };
+
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const pageSize = 10;
+  const startIndex = (currentPage - 1) * pageSize;
+  const endIndex = startIndex + pageSize;
+  const totalPages = Math.ceil(filteredData?.length / pageSize);
+
+  const currentData = filteredData.slice(startIndex, endIndex);
+
+  const handleChangePage = (newPage) => {
+    setCurrentPage(newPage);
+  };
+
+  const calculateProfit = (sale) => {
+    const revenue = sale.quantity * sale.price;
+    const totalCosts =
+      parseFloat(sale.handling) + (parseFloat(sale.commission) / 100) * revenue;
+    const profit = revenue - totalCosts;
+
+    return profit;
+  };
+
+  console.log(products, "--------->>>>>>");
+
+  const renderPageNumbers = () => {
+    const startPage = Math.max(1, currentPage - Math.floor(pageSize / 2));
+    const endPage = Math.min(totalPages, startPage + pageSize - 1);
 
     return (
-        <div>
-            <section className=" mx-auto">
-                <div className="flex products-center justify-between gap-x-3">
-                    <div className="flex products-center gap-2">
-                        <h2 className="text-lg font-medium text-gray-800 ">All Product</h2>
-                        <span className="px-2 flex items-center  py-1 text-xs h-[22px] bg-blue-100 rounded-full d text-blue-400">
-                            {products?.length}
-                        </span>
-                    </div>
+      <React.Fragment>
+        {/* First Page */}
+        {startPage > 1 && (
+          <li>
+            <button
+              className={`block h-8 w-8 rounded border border-gray-900 bg-white text-center leading-8 text-gray-900`}
+              onClick={() => handleChangePage(1)}
+            >
+              1
+            </button>
+          </li>
+        )}
 
-                    <div className="md:flex items-center gap-3">
-                        <input
-                            className="w-[260px] md:mt-0 mt-3 rounded border-gray-400 focus:outline-none p-2 border"
-                            type="date"
+        {/* Current Page */}
+        {Array.from({ length: endPage - startPage + 1 }).map((_, index) => {
+          const pageNumber = startPage + index;
+          return (
+            <li key={pageNumber}>
+              <button
+                className={`block h-8 w-8 rounded border ${
+                  pageNumber === currentPage
+                    ? "border-blue-600 bg-blue-600 text-white"
+                    : "border-gray-900 bg-white text-center leading-8 text-gray-900"
+                }`}
+                onClick={() => handleChangePage(pageNumber)}
+              >
+                {pageNumber}
+              </button>
+            </li>
+          );
+        })}
 
-                            // value={selectedDate}
-                            onChange={(e) => setSelectedDate(new Date(e.target.value))}
-                        />
+        {/* Last Page */}
+        {endPage < totalPages && (
+          <li>
+            <button
+              className={`block h-8 w-8 rounded border border-gray-100 bg-white text-center leading-8 text-gray-100`}
+              onClick={() => handleChangePage(totalPages)}
+            >
+              {totalPages}
+            </button>
+          </li>
+        )}
+      </React.Fragment>
+    );
+  };
 
-                        <input className='border p-2 rounded' placeholder="search..." onChange={(e) => setSearchQuery(e.target.value)} type="text" />
-                        {/* <button
+  // !  for print
+
+  const [showPrintModal1, setShowPrintModal1] = useState(false);
+
+  return (
+    <div>
+      <section className=" mx-auto">
+        <div className="flex products-center justify-between gap-x-3">
+          <div className="flex products-center gap-2">
+            <h2 className="text-lg font-medium text-gray-800 ">All Products</h2>
+            <span className="px-2 flex items-center  py-1 text-xs h-[22px] bg-blue-100 rounded-full d text-blue-400">
+              {products?.length}
+            </span>
+          </div>
+        </div>
+
+        <nav className="flex md:gap-4 gap-2 overflow-x-auto mt-6">
+          {ordersNav?.map((itm) =>
+            itm?.status === "dropdown" ? (
+              <select
+                key={itm.name}
+                className={`px-4 border-r bg-transparent relative border-gray-300 flex items-center gap-2 justify-center ${
+                  selectedValue === "pending" ? " " : "" // Change to your desired color
+                }`}
+                value={selectedValue}
+                onChange={handleSelectChange}
+              >
+                <option selected value="pending">
+                  Pending{" "}
+                </option>
+                {itm?.dropdownLink?.map((option) => (
+                  <option key={option}>{option} </option>
+                ))}
+              </select>
+            ) : (
+              <button
+                className={`px-4 border-r md:bg-transparent bg-gray-50 border-gray-300 flex  items-center ${
+                  selectedValue === itm.value ? "text-red-500" : "" // Change to your desired color
+                }`}
+                key={itm.name}
+                onClick={() => setSelectedValue(itm.value)}
+              >
+                {itm.name}
+                {/* {selectedValue === itm.value && porductQuantity} */}
+              </button>
+            )
+          )}
+        </nav>
+
+        {showPrintModal1 && (
+          <div>
+            <div
+              onClick={() => setShowPrintModal1(false)}
+              className={`fixed z-[100] flex items-center justify-center ${
+                showPrintModal1 ? "visible opacity-100" : "invisible opacity-0"
+              } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
+            >
+              <div
+                onClick={(e_) => e_.stopPropagation()}
+                className={`text- absolute overflow-y-auto w-[96%] h-[98%] rounded-sm bg-gray-50 p-6 drop-shadow-lg text-black ${
+                  showPrintModal1
+                    ? "scale-1 opacity-1 duration-300"
+                    : "scale-0 opacity-0 duration-150"
+                }`}
+              >
+                <AllAdminOrderInvoice
+                  data={selectProducts}
+                  setShowPrintModal1={setShowPrintModal1}
+                  showPrintModal1={showPrintModal1}
+                />
+              </div>
+            </div>
+          </div>
+        )}
+        <div className="md:flex items-center gap-3 mt-3">
+          <button
+            //   onClick={toggleDropdown}
+            className="px-4 bg-white py-[9px] border "
+            id="dropdown-button"
+            aria-haspopup="true"
+            onClick={() => setShowPrintModal1(true)}
+            //   aria-expanded={isOpen ? "true" : "false"}
+          >
+            Print
+          </button>
+
+          <button
+            //   onClick={toggleDropdown}
+            className="px-4 bg-white py-[9px] border "
+            id="dropdown-button"
+            aria-haspopup="true"
+            //   aria-expanded={isOpen ? "true" : "false"}
+          >
+            Status
+          </button>
+          <input
+            className="w-[260px] md:mt-0 mt-3 rounded border-gray-400 focus:outline-none p-2 border"
+            type="date"
+            // value={selectedDate}
+            onChange={(e) => setSelectedDate(new Date(e.target.value))}
+          />
+
+          <input
+            className="border p-2 rounded"
+            placeholder="search..."
+            onChange={(e) => setSearchQuery(e.target.value)}
+            type="text"
+          />
+          {/* <button
                             disabled={printProduct.length < 1 ? false : true}
                             onClick={logSelectedProducts}
                             className='bg-blue-500 px-8 py-2 rounded text-white'> Invoice</button> */}
@@ -496,11 +698,402 @@ const SellerOrderManagement = () => {
                             </div>
                         </div>
                     </div>
-                </div>
-
-            </section>
         </div>
-    );
+
+        <div className="flex flex-col mt-6">
+          <div className="overflow-x-auto">
+            <div className="py-2">
+              {on && (
+                <div className="absolute top-0 left-0 right-0 bottom-0 m-auto z-[3000]">
+                  <SellerOrderInvoice setOn={setOn} products={printProduct} />
+
+                </div>
+              )}
+
+              <div className="overflow-hidden border border-gray-700 md:rounded-lg">
+                <table className="divide-y w-full divide-gray-700">
+                  <thead className="bg-gray-900 text-white">
+                    <tr>
+                      <th className="px-2 text-start ">
+                        <input
+                          type="checkbox"
+                          name=""
+                          id=""
+                          onChange={(e) => {
+                            handleSelectAll(e, currentData);
+                            handleStoreInvoice(e, currentData);
+                          }}
+                        />{" "}
+                        Product Info
+                      </th>
+                      <th className="px-2 text-start ">Seller Name</th>
+                      <th className="px-2 text-start ">Profit</th>
+                      <th
+                        scope="col"
+                        className="px-12 py-3.5 text-sm font-normal text-left rtl:text-right"
+                      >
+                        <button className="flex items-center gap-x-2">
+                          <span>Status</span>
+                        </button>
+                      </th>
+                      <th
+                        scope="col"
+                        className="py-3.5 px-4 text-sm font-normal text-left rtl:text-right"
+                      >
+                        <div className="flex items-center gap-x-3">
+                          <span>Date and time</span>
+                        </div>
+                      </th>
+                      <th
+                        scope="col"
+                        className="py-3.5 px-4 text-sm font-normal text-left rtl:text-right"
+                      >
+                        <div className="flex items-center gap-x-3">
+                          <span>Customer Name</span>
+                        </div>
+                      </th>
+                      <th
+                        scope="col"
+                        className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right"
+                      >
+                        Order Quantity
+                      </th>
+                      <th
+                        scope="col"
+                        className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right"
+                      >
+                        Order Price
+                      </th>
+                      <th
+                        scope="col"
+                        className="px-4 py-3.5 text-sm font-normal text-left"
+                      >
+                        <span>Action</span>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody className="bg-white divide-y divide-gray-200">
+                    {currentData.length ? (
+                      currentData?.map((product) => (
+                        <React.Fragment key={product._id}>
+                          <tr key={product._id}>
+                            <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
+                              <div className="inline-flex items-center gap-x-3">
+                                <input
+                                  type="checkbox"
+                                  onChange={(e) =>
+                                    handleCheckboxChange(e, product)
+                                  }
+                                  checked={selectProducts?.some(
+                                    (selectedItem) =>
+                                      selectedItem._id === product._id
+                                  )}
+                                />
+                                <div className="flex gap-x-2 relative">
+                                  <div className=" w-10 h-10 overflow-hidden rounded-full">
+                                    <img
+                                      className="object-cover w-full h-full hover:cursor-pointer"
+                                      src={product.image}
+                                      alt=""
+                                    />
+                                  </div>
+                                  <div>
+                                    <h2 className="font-medium text-gray-800">
+                                      {product.product &&
+                                        product.product.name
+                                          .split(" ")
+                                          .slice(0, 5)
+                                          .join(" ")}
+                                    </h2>
+                                    <p className="text-sm font-normal text-gray-600">
+                                      {product.product.productId}
+                                    </p>
+                                  </div>
+                                </div>
+                              </div>
+                            </td>
+                            <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
+                              {product?.userInfo?.name}
+                            </td>
+                            <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
+                              {calculateProfit(product)}
+                            </td>
+                            <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
+                              <div className="border-r px-6 py-4 whitespace-nowrap text-[16px] font-[400] flex flex-col gap-2">
+                                {product.status === "pending" && (
+                                  <>
+                                    <button
+                                      onClick={() => setReadyToShip(product)}
+                                      className="text-blue-700"
+                                    >
+                                      Ready to Ship
+                                    </button>
+                                    <button
+                                      onClick={() =>
+                                        productStatusUpdate(
+                                          "Cancel",
+                                          product._id
+                                        )
+                                      }
+                                      className="text-blue-700"
+                                    >
+                                      Cancel
+                                    </button>
+                                  </>
+                                )}
+                                {product.status === "ready_to_ship" && (
+                                  <button
+                                    onClick={() =>
+                                      productStatusUpdate(
+                                        "shipped",
+                                        product._id
+                                      )
+                                    }
+                                    className="text-blue-700"
+                                  >
+                                    Shipped
+                                  </button>
+                                )}
+                                {product.status === "shipped" && (
+                                  <div className="flex flex-col gap-2">
+                                    <button
+                                      onClick={() =>
+                                        productStatusUpdate(
+                                          "delivered",
+                                          product._id
+                                        )
+                                      }
+                                      className="text-blue-700"
+                                    >
+                                      Delivered
+                                    </button>
+                                    <button
+                                      onClick={() =>
+                                        productStatusUpdate(
+                                          "failed",
+                                          product._id
+                                        )
+                                      }
+                                      className="text-blue-700"
+                                    >
+                                      Failed Delivery
+                                    </button>
+                                  </div>
+                                )}
+                                {product.status === "delivered" && (
+                                  <button
+                                    onClick={() =>
+                                      productStatusUpdate(
+                                        "returned",
+                                        product._id
+                                      )
+                                    }
+                                    className="text-blue-700"
+                                  >
+                                    Returned
+                                  </button>
+                                )}
+                                {product.status === "return" && (
+                                  <div className="flex flex-col justify-center">
+                                    <button
+                                      onClick={() => {
+                                        setShowAlert(product);
+                                        checkBox(product._id);
+                                      }}
+                                      className="text-blue-700"
+                                    >
+                                      Approve
+                                    </button>
+                                    <button
+                                      onClick={() =>
+                                        productStatusUpdate(
+                                          "failed",
+                                          product._id
+                                        )
+                                      }
+                                      className="text-blue-700"
+                                    >
+                                      Reject
+                                    </button>
+                                  </div>
+                                )}
+                                {product.status === "returned" && (
+                                  <button
+                                    onClick={() =>
+                                      productStatusUpdate(
+                                        "RefoundOnly",
+                                        product._id
+                                      )
+                                    }
+                                    className="text-blue-700"
+                                  >
+                                    Refund Data
+                                  </button>
+                                )}
+                                {product.status === "Refund" && (
+                                  <button
+                                    onClick={() => viewDetails(product)}
+                                    className="text-blue-700"
+                                  >
+                                    View Details
+                                  </button>
+                                )}
+                                {![
+                                  "pending",
+                                  "ready_to_ship",
+                                  "shipped",
+                                  "delivered",
+                                  "return",
+                                  "returned",
+                                  "Refund",
+                                ].includes(product.status) && (
+                                  <button className="text-blue-700">
+                                    {product.status}
+                                  </button>
+                                )}
+                                {product._id === readyToShip._id && (
+                                  <tr>
+                                    <td colSpan="10">
+                                      <ReadyToShipModal
+                                        readyToShip={readyToShip}
+                                        setReadyToShip={setReadyToShip}
+                                        productStatusUpdate={
+                                          productStatusUpdate
+                                        }
+                                        orderInfo={product}
+                                        refetch={refetch}
+                                      />
+                                    </td>
+                                  </tr>
+                                )}
+                              </div>
+                            </td>
+                            <td className="px-4 py-4 text-sm whitespace-nowrap">
+                              <div className="flex items-center gap-x-2">
+                                <p className="px-3 py-1 text-xs text-indigo-500 rounded-full bg-gray-800 bg-indigo-100/60">
+                                  {new Date(product.date).toLocaleString()}
+                                </p>
+                              </div>
+                            </td>
+                            <td className="px-4 py-4 text-sm text-gray-500 whitespace-nowrap">
+                              {product.customerName}
+                            </td>
+                            <td className="px-4 py-4 text-sm whitespace-nowrap">
+                              <div className="flex items-center gap-x-2">
+                                <p className="px-3 py-1 text-xs text-indigo-500 rounded-full bg-gray-800 bg-indigo-100/60">
+                                  {product.quantity}
+                                </p>
+                              </div>
+                            </td>
+                            <td className="px-4 py-4 text-sm whitespace-nowrap">
+                              <div className="flex items-center gap-x-2">
+                                <p className="px-3 py-1 text-xs text-indigo-500 rounded-full bg-gray-800 bg-indigo-100/60">
+                                  {product.price}
+                                </p>
+                              </div>
+                            </td>
+                            <td className="px-4  py-4 flex items-center gap-4 text-sm whitespace-nowrap">
+                              <button
+                                onClick={() => deleteMethod(product._id)}
+                                className="transition-colors duration-200 text-red-500 hover:text-red-700 focus:outline-none"
+                              >
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  fill="none"
+                                  viewBox="0 0 24 24"
+                                  strokeWidth="1.5"
+                                  stroke="currentColor"
+                                  className="w-5 h-5"
+                                >
+                                  <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
+                                  />
+                                </svg>
+                              </button>
+                              <button
+                                onClick={() => setModalOpen(product)}
+                                className="group relative inline-block overflow-hidden border border-indigo-600 px-8 py-3 focus:outline-none focus:ring"
+                              >
+                                <span className="absolute inset-y-0 left-0 w-[2px] bg-indigo-600 transition-all group-hover:w-full group-active:bg-indigo-500"></span>
+                                <span className="relative text-sm font-medium text-indigo-600 transition-colors group-hover:text-white">
+                                  {modalOpen._id === product._id
+                                    ? "Close Details"
+                                    : "View Details"}
+                                </span>
+                              </button>
+                            </td>
+                          </tr>
+
+                          {modalOpen?._id === product._id && (
+                            <OrderInvoice
+                              openModal={modalOpen}
+                              setOpenModal={setModalOpen}
+                              product={product}
+                            />
+                          )}
+                        </React.Fragment>
+                      ))
+                    ) : (
+                      <tr className="text-[gray] py-4 font-seminold  text-center w-full">
+                        <td colSpan={7}>No items metch</td>
+                      </tr>
+                    )}
+                  </tbody>
+                </table>
+              </div>
+              <div className="flex justify-center mt-8">
+                <ol className="flex justify-center gap-1 text-xs font-medium">
+                  <li>
+                    <button
+                      className="inline-flex h-8 w-8 items-center justify-center rounded border border-gray-900 bg-white text-gray-900 rtl:rotate-180"
+                      onClick={() =>
+                        handleChangePage(Math.max(1, currentPage - 1))
+                      }
+                      disabled={currentPage === 1}
+                    >
+                      <span className="sr-only">Prev Page</span>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-3 w-3"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                      >
+                        <BiLeftArrow className="text-xl" />
+                      </svg>
+                    </button>
+                  </li>
+
+                  {renderPageNumbers()}
+
+                  <li>
+                    <button
+                      className="inline-flex h-8 w-8 items-center justify-center rounded border border-gray-900 disabled:cursor-not-allowed bg-white text-gray-900 rtl:rotate-180"
+                      onClick={() =>
+                        handleChangePage(Math.min(totalPages, currentPage + 1))
+                      }
+                      disabled={currentPage === totalPages}
+                    >
+                      <span className="sr-only">Next Page</span>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-3 w-3"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                      >
+                        <BiRightArrow className="text-xl" />
+                      </svg>
+                    </button>
+                  </li>
+                </ol>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  );
 };
 
 export default SellerOrderManagement;
