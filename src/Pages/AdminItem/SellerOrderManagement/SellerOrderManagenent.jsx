@@ -9,6 +9,7 @@ import { ordersNav } from "./ManageOrderNavData";
 import { BiLeftArrow, BiRightArrow } from "react-icons/bi";
 import AllOrderInvoice from "../../SellerItems/OrderManagment/ManageOrder/AllOrderInvoice";
 import AllAdminOrderInvoice from "./AllAdminOrderInvoice";
+import Swal from "sweetalert2";
 
 const SellerOrderManagement = () => {
   const [selectedValue, setSelectedValue] = useState("All");
@@ -193,30 +194,71 @@ const SellerOrderManagement = () => {
     setOn(!on);
   };
 
-  //   ! all selected item updated
+  // ! for status update
+
+  const allStatus = [
+    "pending",
+    "ready_to_ship",
+    "shipped",
+    "delivered",
+    "return",
+    "returned",
+    "Refund",
+  ];
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleDropdown = () => {
+    setIsOpen(!isOpen);
+  };
+
+
+  // ! all selected item updated
   const handleUpdateStatusForSelectedProducts = (status) => {
-    selectProducts.forEach((product) => {
-      productStatusUpdate(status, product.orderId);
-      console.log(product);
+    if (selectProducts?.length < 1) {
+      return Swal.fire("Please select product", "", "error");
+    }
+
+    let updatedCount = 0; // Counter for successfully updated products
+
+    Swal.fire({
+      title: `Change Status ${status} ?`,
+      showCancelButton: true,
+      confirmButtonText: "Change",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        selectProducts.forEach((product) => {
+          productStatusUpdate(status, product?._id)
+            .then(() => {
+              updatedCount++;
+              if (updatedCount === selectProducts.length) {
+                // Display success message when all products are updated
+                Swal.fire("Status Changed!", "", "success");
+                setIsOpen(false);
+              }
+            })
+            .catch((error) => {
+              console.error("Error updating product status:", error);
+            });
+        });
+      }
     });
   };
+  console.log(selectProducts);
 
   const [readyToShip, setReadyToShip] = useState(false);
 
-  const productStatusUpdate = (status, orderId) => {
+  const productStatusUpdate = async (status, orderId) => {
     console.log(status, orderId);
-    fetch(
+    const res = await fetch(
       `https://salenow-v2-backend.vercel.app/api/v1/seller/update-seller-order-status?orderId=${orderId}&status=${status}`,
       {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ status, orderId }),
       }
-    )
-      .then((res) => res.json())
-      .then((data) => {
-        refetch();
-      });
+    );
+    const data = await res.json();
+    refetch();
   };
 
   const deleteMethod = (orderId) => {
@@ -314,7 +356,7 @@ const SellerOrderManagement = () => {
 
   const [showPrintModal1, setShowPrintModal1] = useState(false);
 
-  console.log(products?.length, "select==", selectProducts?.length);
+  // console.log(products?.length, "select==", selectProducts?.length);
 
   return (
     <div>
@@ -368,15 +410,45 @@ const SellerOrderManagement = () => {
             Print
           </button>
 
-          <button
-            //   onClick={toggleDropdown}
-            className="px-4 bg-white py-[9px] border "
-            id="dropdown-button"
-            aria-haspopup="true"
-            //   aria-expanded={isOpen ? "true" : "false"}
-          >
-            Status
-          </button>
+          {/* for status update dropdown */}
+          <div className="relative inline-block text-left">
+            <button
+              onClick={toggleDropdown}
+              className="px-4 bg-white py-[9px] border "
+              id="dropdown-button"
+              aria-haspopup="true"
+              aria-expanded={isOpen ? "true" : "false"}
+            >
+              Status
+            </button>
+            {isOpen && (
+              <div
+                className="origin-top-right absolute  mt-2 w-56 rounded-md shadow-lg bg-white z-[100] ring-1 ring-black ring-opacity-5 focus:outline-none"
+                role="menu"
+                aria-orientation="vertical"
+                aria-labelledby="dropdown-button"
+                tabIndex="-1"
+              >
+                <div className="flex flex-col gap-2 py-2 " role="none">
+                  {allStatus?.map((item) => (
+                    <button
+                      key={item}
+                      className="block text-start px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                      onClick={() =>
+                        handleUpdateStatusForSelectedProducts(item)
+                      }
+                      role="menuitem"
+                      tabIndex="-1"
+                      id="dropdown-item-1"
+                    >
+                      {item}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+
           <input
             className="w-[260px] md:mt-0 mt-3 rounded border-gray-400 focus:outline-none p-2 border"
             type="date"
@@ -685,15 +757,7 @@ const SellerOrderManagement = () => {
                                     View Details
                                   </button>
                                 )}
-                                {![
-                                  "pending",
-                                  "ready_to_ship",
-                                  "shipped",
-                                  "delivered",
-                                  "return",
-                                  "returned",
-                                  "Refund",
-                                ].includes(product.status) && (
+                                {!allStatus.includes(product.status) && (
                                   <button className="text-blue-700">
                                     {product.status}
                                   </button>
