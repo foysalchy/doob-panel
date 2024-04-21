@@ -529,7 +529,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                         <li className="rounded-sm">
                                             <div className="group [&_summary::-webkit-details-marker]:hidden flex-col flex items-center rounded-sm  ">
                                                 <div
-                                                onClick={()=> handleToggle(1)}
+                                                    onClick={() => handleToggle(1)}
                                                     className="flex cursor-pointer w-full items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50"
                                                 >
                                                     <div className='flex cursor-pointer items-center gap-2'>
@@ -546,7 +546,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                     </span>
                                                 </div>
 
-                                             {openDropdownIndex === 1 &&  <ul className="mt-2 space-y-1 px-2 py-2 border border-[#80808043]">
+                                                {openDropdownIndex === 1 && <ul className="mt-2 space-y-1 px-2 py-2 border border-[#80808043]">
                                                     {user?.staffRole ? (
                                                         user?.permissions.find(itm => itm?.name === "Product Management") ? (
                                                             <li className="">
@@ -574,6 +574,14 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                                 className="text-[10px] text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
                                                                             >
                                                                                 Add Product
+                                                                            </Link>
+                                                                        </li>
+                                                                        <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
+                                                                            <Link
+                                                                                to={'/products'}
+                                                                                className="text-[10px] text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                                                            >
+                                                                                Add Doob Product
                                                                             </Link>
                                                                         </li>
                                                                         <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
@@ -631,6 +639,14 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                                             className=" text-[10px] text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
                                                                         >
                                                                             Add Product
+                                                                        </Link>
+                                                                    </li>
+                                                                    <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>
+                                                                        <Link
+                                                                            to={'/products'}
+                                                                            className="text-[10px] text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                                                        >
+                                                                            Add Doob Product
                                                                         </Link>
                                                                     </li>
                                                                     <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50'>

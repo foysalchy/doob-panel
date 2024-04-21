@@ -6,6 +6,7 @@ import Swal from 'sweetalert2';
 import Stock from './Stock';
 import VariantData from './VariantData';
 import VariantSelector from './VariantSelector';
+import CreatableSelect from 'react-select/creatable';
 
 const Variants = ({ adminWare, multiVendor, setMultiVendor, inputFields, setInputFields, daraz, variantInput, setVariantInput }) => {
 
@@ -120,6 +121,20 @@ const Variants = ({ adminWare, multiVendor, setMultiVendor, inputFields, setInpu
         setInputFields(newInputFields);
     }
 
+
+
+    const colourOptions = [
+        { value: 'black', label: 'Black', color: '#0000', isFixed: true },
+        { value: 'matte black', label: 'Matte Black', color: '#0000', },
+        { value: 'jet black', label: 'Jet Black', color: '#000' },
+        { value: 'wither black', label: 'Wither Black', color: '#FF5630', isFixed: true },
+        { value: 'glitter black', label: 'Glitter Black', color: '#FF8B00' },
+        { value: 'light black', label: 'Light Black', color: '#FFC400' },
+        { value: 'Deep Black', label: 'GDeep black', color: '#36B37E' },
+        { value: 'Red and Black', label: 'Red and Black', color: '#00875A' },
+        { value: 'Anther Black', label: 'Anther Black', color: '#253858' }
+    ];
+
     return (
         <div className=' border mt-4 border-gray-400 md:px-10 px-3 py-5 pb-16 w-full bg-gray-100 rounded'>
             <div className='flex flex-col mb-4'>
@@ -147,27 +162,38 @@ const Variants = ({ adminWare, multiVendor, setMultiVendor, inputFields, setInpu
 
                     <div>
                         <div key={index} className=' border border-green-300 rounded px-4 py-2  w-full'>   <div className='flex gap-10 justify-between items-center'  >
-                            {/* <input
-                                type="text"
-                                name={`name-${index}`}
-                                required
-                                id={`name-${index}`}
-                                className="flex-grow w-1/3 h-10 px-4 mb-3 transition duration-200 bg-white border rounded shadow-sm appearance-none md:mr-2 md:mb-0 border-purple-400 focus:outline-none focus:shadow-outline"
-                                value={field.name}
-                                onChange={(e) => {
-                                    const newInputFields = [...inputFields];
-                                    const newName = e.target.value;
-                                    const newSKU = `${shopInfo.shopId}_${newName}_${Math.floor(Math.random() * 100000000)}`;
 
-                                    newInputFields[index].name = newName;
-                                    newInputFields[index].SKU = newSKU;
-
-                                    setInputFields(newInputFields);
-                                }}
-                            /> */}
                             <div className="w-full">
-                                <VariantSelector />
+                                <CreatableSelect
+                                    name={`name-${index}`}
+                                    onChange={(newValue) => {
+                                        // Clone the inputFields array
+                                        const newInputFields = [...inputFields];
+
+                                        // Get the new name from the selected option
+                                        const newName = newValue ? newValue.value : ''; // Assuming value property holds the name
+
+                                        // Check if a name is selected
+                                        if (newName) {
+                                            // Generate a unique SKU
+                                            const newSKU = `${shopInfo.shopId}_${newName}_${Math.floor(Math.random() * 100000000)}`;
+
+                                            // Update the name and SKU in the inputFields array
+                                            newInputFields[index].name = newName;
+                                            newInputFields[index].SKU = newSKU;
+
+                                            // Update the state with the modified inputFields array
+                                            setInputFields(newInputFields);
+                                        } else {
+                                            // Handle case when no name is selected
+                                            console.error("No name selected");
+                                        }
+                                    }}
+                                    isClearable
+                                    options={colourOptions} // Assuming colourOptions is defined elsewhere
+                                />
                             </div>
+
 
                             <div>
                                 <label htmlFor={`coverPhoto-${index}`} className='bg-gray-300 w-20 h-20 flex justify-center items-center border border-black'>

@@ -1903,7 +1903,19 @@ const SideNavAdmin = () => {
                                 {menu && <span>Seller Management</span>}
                               </NavLink>
                             )}
-
+                            <NavLink
+                              onMouseMove={() => setMenu(true)}
+                              rel="noopener noreferrer"
+                              to={"/admin/shop-management"}
+                              className={({ isActive }) => {
+                                return isActive
+                                  ? "flex items-center p-2 space-x-3 rounded-sm bg-gray-800 text-white "
+                                  : "flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
+                              }}
+                            >
+                              <HiOutlineUserGroup className="w-5 h-5 fill-current text-gray-400" />
+                              {menu && <span>Shop manage</span>}
+                            </NavLink>
                             <NavLink
                               onMouseMove={() => setMenu(true)}
                               rel="noopener noreferrer"

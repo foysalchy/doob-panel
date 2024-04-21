@@ -158,6 +158,215 @@ const SupperAdminPath = [
     element: <AddPrice />,
   },
 
+                <Daraz />
+            </CheckStaff>
+    },
+    {
+        path: "support-ticket",
+        element: <CheckStaff>
+            <SupportTicketManagement />
+        </CheckStaff>
+    },
+    {
+        path: "settings/site-content",
+        element: <SiteContent />
+    },
+    {
+        path: "seller-management",
+        element: <CheckStaff>
+            <SellerManagement />
+        </CheckStaff>
+    }, {
+        path: "shop-management",
+        element: <CheckStaff>
+            <SellerDomainManagement />
+        </CheckStaff>
+    },
+    {
+        path: "warehouse",
+        element: <CheckStaff>
+            <WareHouseManagement />
+        </CheckStaff>
+    },
+    {
+        path: "report-management",
+        element: <CheckStaff>
+            <ReportManagement />
+        </CheckStaff>
+    },
+    {
+        path: "report-management/admin-sales",
+        element: <AdminSalesReport />
+    },
+    {
+        path: "report-management/seller-admin",
+        element: <SellerReport />
+    },
+    {
+        path: "report-management/customer-admin",
+        element: <SellerReport />
+    },
+    {
+        path: "report-management/warehouse-admin",
+        element: <SellerReport />
+    },
+    {
+        path: "report-management/subscriber-admin",
+        element: <SellerReport />
+    },
+    {
+        path: "report-management/commission-history-admin",
+        element: <SellerReport />
+    },
+    {
+        path: "warehouse/warehouse-management",
+        element: <ListOfWarehouse />
+    },
+    {
+        path: "warehouse/area-management",
+        element: <AreaListForWarehouse />
+    },
+    {
+        path: "warehouse/rack-management",
+        element: <ManageRack />
+    },
+    {
+        path: "warehouse/self-management",
+        element: <ManageSelf />
+    },
+    {
+        path: "warehouse/cell-management",
+        element: <ManageCell />
+    },
+    {
+        path: "add-daraz",
+        element: <CheckStaff>
+            <DarazIntrigration />
+        </CheckStaff>
+    },
+
+    {
+        path: 'content-management/home-control',
+        element: <CheckStaff>
+            <AdminHomePageControl />
+        </CheckStaff>
+    },
+    {
+        path: 'content-management/admin-popup',
+        element: <CheckStaff>
+            <AdminPopupManagement />
+        </CheckStaff>
+    },
+    {
+        path: 'content-management/admin-popup/add',
+        element: <CheckStaff>
+            <AdminAddPopUp />
+        </CheckStaff>
+    },
+    {
+        path: 'content-management/seller-notice',
+        element: <CheckStaff>
+            <AdminNoticeManager />
+        </CheckStaff>
+    },
+    {
+        path: 'content-management/seller-notice/add',
+        element: <CheckStaff>
+            <AddNotice />
+        </CheckStaff>
+    },
+    {
+        path: 'content-management/admin-anouncement',
+        element: <CheckStaff>
+            <AdminAnouncement />
+        </CheckStaff>
+    },
+    {
+        path: 'content-management/admin-anouncement/add',
+        element: <CheckStaff>
+            <AddAnouncement />
+        </CheckStaff>
+    },
+    {
+        path: 'content-management/feature-image',
+        element: <CheckStaff>
+            <AdminFeatureImage />
+        </CheckStaff>
+    },
+    {
+        path: 'content-management/feature-image/add',
+        element: <CheckStaff>
+            <AdminFeatureImageAdd />
+        </CheckStaff>
+    },
+    {
+        path: 'content-management/slider',
+        element: <CheckStaff>
+            <AdminSliderManagement />
+        </CheckStaff>
+    },
+    {
+        path: 'content-management/slider/add',
+        element: <CheckStaff>
+            <AdminSliderAdd />
+        </CheckStaff>
+    },
+    {
+        path: 'staff-management',
+        element: <CheckStaff>
+            <AdminStaffManagement />
+        </CheckStaff>
+    },
+    {
+        path: 'staff-management/new-staff',
+        element: <AdminNewStaff />
+    },
+    {
+        path: 'admin-pos',
+        element: <CheckStaff>
+            <AdminPos />
+        </CheckStaff>
+    },
+    {
+        path: 'referral-program',
+        element: <CheckStaff>
+            <AdminReeferProgram />
+        </CheckStaff>
+    },
+    {
+        path: 'customer-manage',
+        element: <CheckStaff>
+            <AdminCustomerManage />
+        </CheckStaff>
+    },
+    {
+        path: 'service-order',
+        element: <CheckStaff>
+            <AdminSeviceOrder />
+        </CheckStaff>
+    },
+    {
+        path: 'seller-order-management',
+        element: <CheckStaff>
+            <SellerOrderManagement />
+        </CheckStaff>
+    },
+    {
+        path: 'seller-order',
+        element: <CheckStaff>
+            <AllOrderManage />
+        </CheckStaff>
+    },
+    {
+        path: 'blog-comments',
+        element: <AdminBlogComment />
+
+    },
+    {
+        path: 'withdraw-history',
+        element: <AdminWithdrow />
+
+    },
   {
     path: "category-management/mega-category-management",
     element: (

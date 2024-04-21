@@ -47,6 +47,7 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
     }, [audio]);
 
     const [cash, setCash] = useState(0);
+    const [getaway, setGetaway] = useState('Cash')
     const [discount, setDiscount] = useState(0);
     const [presents, setPresents] = useState(false);
 
@@ -126,7 +127,8 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
             cash,
             change,
             discount,
-            present
+            present,
+            getaway
         }
         setInvoice(data)
         setOpen(true)
@@ -157,6 +159,7 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
             email,
             number,
             address
+
         }
         setUser(data)
         setIsChecked(false)
@@ -273,6 +276,40 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
                                 type="number"
                                 className="bg-transparent px-2 text-right ring-1 w-[80px] ring-gray-300 rounded-md text-lg"
                             />
+                        </div>
+
+                        <div className='flex justify-between bg-green-400 px-4 py-2  mt-4  items-start'>
+                            <div className="">
+                                <h3 className="text-lg">Payment Gateway</h3>
+                            </div>
+                            <label>
+                                <input
+                                    name="paymentMethod"
+                                    value="Cash"
+                                    defaultChecked
+                                    onChange={(e) => setGetaway(e.target.value)}
+                                    type="radio"
+                                    className=""
+                                /> Cash
+                            </label>
+                            <label>
+                                <input
+                                    name="paymentMethod"
+                                    value="mobile_bank"
+                                    onChange={(e) => setGetaway(e.target.value)}
+                                    type="radio"
+                                    className=""
+                                /> Mobile Bank
+                            </label>
+                            <label>
+                                <input
+                                    name="paymentMethod"
+                                    value="card"
+                                    onChange={(e) => setGetaway(e.target.value)}
+                                    type="radio"
+                                    className=""
+                                /> Card
+                            </label>
                         </div>
 
 
@@ -396,7 +433,7 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
                                                     name="email"
                                                     defaultValue={(user && !existing) ? user?.email : ''}
                                                     className="mt-1 p-2 w-full border rounded-md"
-                                                    required
+                                                    
                                                     onChange={(e) => setEmail(e.target.value)}
                                                 />
                                             </div>
@@ -411,7 +448,7 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
                                                     name="phoneNumber"
                                                     defaultValue={(user && !existing) ? user?.phoneNumber : ''}
                                                     className="mt-1 p-2 w-full border rounded-md"
-                                                    required
+                                                    
                                                     onChange={(e) => setPhoneNumber(e.target.value)}
                                                 />
                                             </div>
@@ -424,7 +461,7 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
                                                     id="address"
                                                     name="address"
                                                     className="mt-1 p-2 w-full border rounded-md"
-                                                    required
+                                                    
                                                     onChange={(e) => setAddress(e.target.value)}
                                                 ></textarea>
                                             </div>
