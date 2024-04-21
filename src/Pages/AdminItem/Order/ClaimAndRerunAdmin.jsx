@@ -398,6 +398,7 @@ const ClaimAndRerunAdmin = () => {
                       name=""
                       id=""
                       onChange={handleSelectAll}
+                      
                       checked={selectAll}
                     />
                   </th>

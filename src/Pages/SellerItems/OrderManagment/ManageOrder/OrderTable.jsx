@@ -360,6 +360,11 @@ const OrderTable = ({
                         handleSelectAll(e, currentItems);
                         handleStoreInvoice(e, selectedItems);
                       }}
+                      checked={
+                        currentItems?.length === selectedItems?.length
+                          ? true
+                          : false
+                      }
                     />
                   </th>
                   <th scope="col" className="border-r px-2 py-4 font-[500]">
