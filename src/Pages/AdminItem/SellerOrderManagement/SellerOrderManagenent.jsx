@@ -233,6 +233,7 @@ const SellerOrderManagement = () => {
                 // Display success message when all products are updated
                 Swal.fire("Status Changed!", "", "success");
                 setIsOpen(false);
+                setSelectProducts([])
               }
             })
             .catch((error) => {
@@ -247,7 +248,7 @@ const SellerOrderManagement = () => {
   const [readyToShip, setReadyToShip] = useState(false);
 
   const productStatusUpdate = async (status, orderId) => {
-    console.log(status, orderId);
+    // console.log(status, orderId);
     const res = await fetch(
       `https://salenow-v2-backend.vercel.app/api/v1/seller/update-seller-order-status?orderId=${orderId}&status=${status}`,
       {
