@@ -211,8 +211,7 @@ const SellerOrderManagement = () => {
     setIsOpen(!isOpen);
   };
 
-
-  // ! all selected item updated
+  // ! updated status all selected item
   const handleUpdateStatusForSelectedProducts = (status) => {
     if (selectProducts?.length < 1) {
       return Swal.fire("Please select product", "", "error");
@@ -243,7 +242,7 @@ const SellerOrderManagement = () => {
       }
     });
   };
-  console.log(selectProducts);
+  // console.log(selectProducts);
 
   const [readyToShip, setReadyToShip] = useState(false);
 
