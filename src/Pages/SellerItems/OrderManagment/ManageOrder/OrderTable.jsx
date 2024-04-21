@@ -178,7 +178,7 @@ const OrderTable = ({
     content: () => componentRef.current,
   });
 
-//   console.log(filteredData);
+  //   console.log(filteredData);
 
   const [readyToShip, setReadyToShip] = useState(false);
 
@@ -328,7 +328,7 @@ const OrderTable = ({
     } else {
       setSelectedItems([]);
     }
-  }
+  };
 
   const handleCheckboxChange = (event, item) => {
     const isChecked = event.target.checked;
@@ -358,7 +358,7 @@ const OrderTable = ({
                       type="checkbox"
                       onChange={(e) => {
                         handleSelectAll(e, currentItems);
-                        handleStoreInvoice(e, selectedItems)
+                        handleStoreInvoice(e, selectedItems);
                       }}
                     />
                   </th>
@@ -473,7 +473,13 @@ const OrderTable = ({
                           {(!item?.status && (
                             <>
                               <button
-                                onClick={() => setReadyToShip(item)}
+                                // onClick={() => setReadyToShip(item)}
+                                onClick={() =>
+                                  productStatusUpdate(
+                                    "ready_to_ship",
+                                    item?._id
+                                  )
+                                }
                                 className="text-[16px] font-[400] text-blue-700"
                               >
                                 Ready to Ship

@@ -32,6 +32,7 @@ const SellerOrderManagement = () => {
     },
   });
 
+  console.log(selectedValue);
   const filteredData = products?.filter((item) => {
     if (
       searchQuery === "" &&
@@ -40,10 +41,16 @@ const SellerOrderManagement = () => {
     ) {
       return true; // Include all items when searchValue is empty and selectedValue is "All" and timestamp is greater than or equal to selectedDate
     } else if (
-      selectedValue === "Pending" &&
+      (selectedValue === "Pending" ||
+        selectedValue === "Return" ||
+        selectedValue === "returned") &&
       (!selectedDate || new Date(item?.timestamp) >= selectedDate)
     ) {
-      return !item?.status || item?.status === "";
+      if (selectedValue === "Pending") {
+        return !item?.status || item?.status === "";
+      } else if (selectedValue === "Return" || selectedValue === "returned") {
+        return item?.status === "Return" || item?.status === "returned";
+      }
     } else if (
       searchQuery &&
       (!selectedDate || new Date(item?.timestamp) >= selectedDate)
@@ -59,7 +66,10 @@ const SellerOrderManagement = () => {
     return false; // Exclude items that don't meet any condition
   });
 
-  console.log(filteredData, "filteredData....");
+  if (selectedValue === "Return" || selectedValue === "returned") {
+    filteredData?.reverse();
+  }
+  // console.log(filteredData[0]?.date, "filteredData....");
 
   // const filteredData = products?.length && products?.filter(
   //     (product) =>
@@ -233,7 +243,7 @@ const SellerOrderManagement = () => {
                 // Display success message when all products are updated
                 Swal.fire("Status Changed!", "", "success");
                 setIsOpen(false);
-                setSelectProducts([])
+                setSelectProducts([]);
               }
             })
             .catch((error) => {
@@ -642,7 +652,13 @@ const SellerOrderManagement = () => {
                                 {product.status === "pending" && (
                                   <>
                                     <button
-                                      onClick={() => setReadyToShip(product)}
+                                      // onClick={() => setReadyToShip(product)}
+                                      onClick={() =>
+                                        productStatusUpdate(
+                                          "ready_to_ship",
+                                          product._id
+                                        )
+                                      }
                                       className="text-blue-700"
                                     >
                                       Ready to Ship
