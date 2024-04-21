@@ -1107,7 +1107,7 @@ const SideNavAdmin = () => {
                             >
                               {menu && <span> Claim Return</span>}
                             </NavLink>
-                          )}89
+                          )}
                         </ul>
 
                         {/* <ul className="mt-2 space-y-1  p-2 border border-[gray] bg-[#1b202ea1]">
@@ -1122,8 +1122,6 @@ const SideNavAdmin = () => {
                           </li>
                         </ul> */}
                       </details>
-
-                     
                     </li>
                   )}
                 </>
