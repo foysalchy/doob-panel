@@ -5,8 +5,7 @@ import { AuthContext } from '../../../../../AuthProvider/UserProvider';
 
 const EditWareHouse = ({ product, adminWare, setAdminWare }) => {
 
-    const { shopInfo } = useContext(AuthContext);
-
+    const { shopInfo } = useContext(AuthContext); 
     const [areas, setAreas] = useState([]);
     const [racks, setRacks] = useState([]);
     const [selfs, setSelfs] = useState([]);
@@ -16,8 +15,6 @@ const EditWareHouse = ({ product, adminWare, setAdminWare }) => {
     const [selectedRack, setSelectedRack] = useState('');
     const [selectedSelf, setSelectedSelf] = useState('');
     const [selectedCell, setSelectedCell] = useState('');
-
-
 
     const { data: warehouses = [], refetch, isRefetching } = useQuery({
         queryKey: ["warehouses"],
@@ -103,6 +100,7 @@ const EditWareHouse = ({ product, adminWare, setAdminWare }) => {
         setSelectedCell(cell)
     }
 
+    console.log(product?.warehouse);
 
     return (
         <div>

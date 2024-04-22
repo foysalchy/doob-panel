@@ -5,19 +5,19 @@ import { AuthContext } from "../../../../../AuthProvider/UserProvider";
 import { useQuery } from "@tanstack/react-query";
 
 const SellerInputProductName = ({ product, brandName, setBrandName }) => {
-  console.log(
-    "🚀 ~ file: SellerInputProductName.jsx:8 ~ SellerInputProductName ~ product:",
-    product
-  );
-
-  useEffect(() => {
-    if (product && product?.brandName) {
-      setBrandName(product.brandName);
-    }
-  }, [product]);
+  console.log(product);
+  // Function to handle brand selection
+  const handleBrand = (value) => {
+    console.log(value);
+    setBrandName(value);
+  };
 
   const { shopInfo } = useContext(AuthContext);
-  const { data: AllBrand = [], refetch } = useQuery({
+  const {
+    data: AllBrand = [],
+    refetch,
+    isLoading,
+  } = useQuery({
     queryKey: ["allBrand"],
     queryFn: async () => {
       const res = await fetch(
@@ -28,10 +28,16 @@ const SellerInputProductName = ({ product, brandName, setBrandName }) => {
     },
   });
 
-  const handleBrand = (value) => {
-    console.log(value);
-    setBrandName(value);
-  };
+  // Set the default brand name when the product changes
+  useEffect(() => {
+    if (!isLoading && product && product.brandName) {
+      setBrandName(product.brandName);
+    }
+  }, [product, isLoading, setBrandName]);
+
+  console.log(isLoading, AllBrand);
+
+  console.log(product?.brandName);
 
   return (
     <div>
@@ -88,11 +94,15 @@ const SellerInputProductName = ({ product, brandName, setBrandName }) => {
           <Select
             id="megaCategory"
             placeholder="Select your Brand"
-            defaultValue={product?.brandName}
+            // Set the value prop to the selected brand name
+            value={{
+              value: product?.brandName || "",
+              label: product?.brandName || "Select your Brand",
+            }}
             onChange={(selectedOption) => handleBrand(selectedOption.value)}
-            options={AllBrand?.map((warehouse) => ({
-              value: warehouse.name,
-              label: warehouse.name,
+            options={AllBrand?.map((brand) => ({
+              value: brand.name,
+              label: brand.name,
             }))}
           />
         </div>
