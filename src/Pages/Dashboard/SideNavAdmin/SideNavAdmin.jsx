@@ -12,6 +12,7 @@ import {
   BiSolidShoppingBags,
 } from "react-icons/bi";
 import { HiOutlineMenu } from "react-icons/hi";
+import { CgAdd, CgClose, CgProductHunt } from "react-icons/cg";
 import {
   FaAngleDown,
   FaAngleLeft,
@@ -61,7 +62,7 @@ import { FiSettings } from "react-icons/fi";
 import { GrDomain } from "react-icons/gr";
 import { PiWarehouseThin } from "react-icons/pi";
 import { VscFileMedia } from "react-icons/vsc";
-const SideNavAdmin = () => {
+const SideNavAdmin = ({ responsive, setResponsive }) => {
   const { user, logOut } = useContext(AuthContext);
   const [menu, setMenu] = useState(true);
 
@@ -72,23 +73,24 @@ const SideNavAdmin = () => {
   };
 
   return (
-    <div className="py-6 bg-red ">
-      <button
+    <div className="py-6  ">
+      {/* <button
         onClick={() => setMenu(!menu)}
         className={`absolute bg-gray-900 right-[-10px] w-[25px] h-[25px] flex items-center justify-center rounded-full text-white top-20 z-[1000]`}
       >
         {menu ? <FaAngleLeft /> : <FaAngleRight />}
-      </button>
+      </button> */}
+
       <div
-        className={
-          menu
-            ? "flex flex-col h-screen py-2 duration-300  px-2 w-60 text-gray-900 overflow-y-auto transparent-scroll relative"
-            : "flex  flex-col h-screen py-3 duration-300 px-2 w-14 text-gray-900 overflow-y-auto transparent-scroll relative"
-        }
+        className={`${
+          responsive
+            ? "flex  h-screen  overflow-y-auto  flex-col  md:p-3 p-0 lg:w-[70px] md:w-[70px] w-0  border-r-2  "
+            : "flex flex-col  p-6 md:w-64 w-[300px]  h-screen  overflow-y-auto"
+        } md:relative fixed  z-[4000] bg-[#111827] top-0 left-0 bottom-0`}
       >
         <div className="space-y-3">
           <div className="flex items-center justify-between">
-            {menu ? (
+            {!responsive && (
               <Link
                 to="/"
                 aria-label="Company"
@@ -97,15 +99,16 @@ const SideNavAdmin = () => {
               >
                 <img className="w-32" src={Logo} srcSet={Logo} alt="" />
               </Link>
-            ) : (
-              <Link
-                to="/"
+            )}
+            {responsive ? (
+              <button
+                onClick={() => setResponsive(false)}
                 aria-label="Company"
                 title="Company"
-                className="inline-flex items-center"
+                className="inline-flex items-center "
               >
                 <svg
-                  className="w-8 text-black"
+                  className="w-8 text-white"
                   viewBox="0 0 24 24"
                   strokeLinejoin="round"
                   strokeWidth="2"
@@ -119,23 +122,12 @@ const SideNavAdmin = () => {
                   <rect x="14" y="1" width="7" height="6" />
                   <rect x="14" y="11" width="7" height="12" />
                 </svg>
-              </Link>
-            )}
-            {/* {!menu ? (
-              <button className="p-2">
-                <HiOutlineMenu
-                  onClick={() => setMenu(true)}
-                  className="w-5 h-5 fill-current text-gray-900"
-                />
               </button>
             ) : (
-              <button className="p-2">
-                <AiOutlineClose
-                  onClick={() => setMenu(false)}
-                  className="w-5 h-5 fill-current text-gray-900"
-                />
+              <button onClick={() => setResponsive(true)} className="p-2">
+                <CgClose />
               </button>
-            )} */}
+            )}
           </div>
 
           <div className="flex-1">
@@ -151,7 +143,7 @@ const SideNavAdmin = () => {
                 }}
               >
                 <BiHomeAlt className="w-5 h-5 fill-current text-gray-400" />
-                {menu && <span>Home</span>}
+                {!responsive && <span>Home</span>}
               </NavLink>
 
               {/* product */}
