@@ -20,7 +20,7 @@ const ImageUploadSeller = ({
   const [photo7, setPhoto7] = useState(product?.images?.[6]?.src ?? "");
   const [deletItem, setDeletItem] = useState("");
 
-  console.log(youtube);
+  //   console.log(youtube);
   const [youtubeError, setYoutubeError] = useState("");
 
   useEffect(() => {
