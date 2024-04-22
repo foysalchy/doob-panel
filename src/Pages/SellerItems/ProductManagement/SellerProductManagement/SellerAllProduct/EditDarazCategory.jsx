@@ -2,7 +2,8 @@ import React from "react";
 import Select from "react-select";
 import CreatableSelect from "react-select/creatable";
 
-const EditDarazCategory = ({ datazCategory }) => {
+const EditDarazCategory = ({ product, datazCategory }) => {
+  console.log(product);
   const ourData = [
     "Product Description",
     "Video URL",
@@ -123,8 +124,6 @@ const EditDarazCategory = ({ datazCategory }) => {
           </div>
         </div>
       ))}
-
-    
     </div>
   );
 };

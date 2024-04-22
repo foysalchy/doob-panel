@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import React, { useContext, useState } from "react";
 import { AuthContext } from "../../../../../../AuthProvider/UserProvider";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import ImageUploadSeller from "../ImageUploadSeller";
 import SellerInputProductName from "../../../SellerAddProduct/Components/SellerInputProductName";
 import EditSincronusCategory from "../EditSincronusCategory";
@@ -14,13 +14,17 @@ import EditDelivery from "../EditDelavery";
 import EditMeta from "../EditMeta";
 import { BsArrowRight } from "react-icons/bs";
 import Swal from "sweetalert2";
+import EditAdminCategoryforSeller from "../EditAdminCategoryforSeller";
 
 const CategoryEditPage = () => {
   const id = useParams().id;
+
+  const { state } = useLocation();
+  console.log(state);
   const { shopInfo } = useContext(AuthContext);
 
   //   console.log(shopInfo, "shopInfo==");
-  //   console.log(id);
+  // console.log(id);
 
   const {
     data: getProduct = [],
@@ -44,10 +48,11 @@ const CategoryEditPage = () => {
 
   //   console.log(getProduct);
 
-  const product =
-    getProduct?.find((itm) => (itm._id === id ? itm._id === id : {})) || [];
+  // const product =
+  //   getProduct?.find((itm) => (itm._id === id ? itm._id === id : {})) || [];
 
-  //   console.log(product);
+  const product = state;
+  console.log(product);
 
   const [isChecked, setIsChecked] = useState(true);
   const [datazCategory, setDarazOption] = useState([]);
@@ -131,9 +136,34 @@ const CategoryEditPage = () => {
     }
   };
 
+  const ourData = [
+    "Product Description",
+    "Video URL",
+    "Name",
+    "Price",
+    "Color Family",
+    "Images",
+    "Warranty Type",
+    "SellerSKU",
+    "Quantity",
+    "Special Price",
+    "Package Weight(kg)",
+    "Package Weight (kg)",
+    "Option",
+    "adminWare",
+    "Package Length (cm)",
+    "English description",
+    "Package Width (cm)",
+    "Package Height (cm)",
+    "Name in English language",
+    "Short Description En",
+    "Brand",
+  ];
+
   const filteredData =
     datazCategory?.length &&
-    datazCategory?.filter((item) => !ourData.includes(item.label));
+    datazCategory?.filter((item) => !ourData?.includes(item.label));
+
   const formSubmit = async (e) => {
     setLoading(true);
     e.preventDefault();
@@ -180,7 +210,7 @@ const CategoryEditPage = () => {
     const MetaImage = await imageUpload(MetaImageFile);
 
     const darazOptionData =
-      filteredData.length &&
+      filteredData?.length &&
       filteredData?.map((item) => {
         const fieldName = item.name;
         const fieldValue = form?.[fieldName]?.value;
@@ -257,6 +287,7 @@ const CategoryEditPage = () => {
       warehouse: warehouseValue,
       shortDescription: shortDescription,
       description: description,
+      banglaDescription,
       sku: sku,
       regular_price: inputFields[0].price,
       stock_quantity: inputFields[0].quantity,
@@ -406,7 +437,6 @@ const CategoryEditPage = () => {
             setDescription={setDescription}
           />
         </div>
-
         <div className="my-4 mt-10">
           <SellerEditVariantData
             product={product}
@@ -420,9 +450,10 @@ const CategoryEditPage = () => {
             setInputFields={setInputFields}
           />
         </div>
+        <EditAdminCategoryforSeller product={product} />
 
         {daraz && datazCategory.length && (
-          <EditDarazCategory datazCategory={datazCategory} />
+          <EditDarazCategory product={product} datazCategory={datazCategory} />
         )}
 
         <ServiceWarranty />

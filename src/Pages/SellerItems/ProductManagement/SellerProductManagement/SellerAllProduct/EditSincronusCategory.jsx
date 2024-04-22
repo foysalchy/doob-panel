@@ -15,6 +15,7 @@ const EditSincronusCategory = ({
   setDarazOption,
 }) => {
   const { shopInfo } = useContext(AuthContext);
+  console.log(product);
 
   console.log(product?.categories, "product", product?.categories?.[0]?.name);
 
@@ -41,6 +42,8 @@ const EditSincronusCategory = ({
     setDaraz(product?.daraz);
   }, [product]);
 
+  console.log(selectedCategory);
+
   const { data: megaCategories = [], refetch } = useQuery({
     queryKey: ["megaCategory"],
     queryFn: async () => {
@@ -65,6 +68,7 @@ const EditSincronusCategory = ({
         label: megaCategory.name,
       })) || [];
 
+  console.log(selectedCategory, "and", option);
   const { data: subCategories = [], refetch: reload } = useQuery({
     queryKey: ["subCategories"],
     queryFn: async () => {
@@ -205,6 +209,7 @@ const EditSincronusCategory = ({
   }, [selectedMinicategory]);
 
   console.log(product);
+  console.log(selectedSubcategory);
   return (
     <div>
       <div className="border mt-4 border-gray-400 px-10 py-5 w-full bg-gray-100 rounded">
@@ -319,8 +324,8 @@ const EditSincronusCategory = ({
               placeholder="Select Category"
               options={option}
               defaultValue={{
-                label: selectedCategory?.name,
-                value: selectedCategory?.name,
+                value: product?.categories?.[0]?.name,
+                label: product?.categories?.[0]?.name,
               }}
               className=""
             />
@@ -330,6 +335,10 @@ const EditSincronusCategory = ({
                 onChange={(e) => handleSubcategoryChange(e.value)}
                 placeholder="Select SubCategory"
                 options={SubOption ? SubOption : "Please Select"}
+                defaultValue={{
+                  value: product?.categories?.[1]?.name,
+                  label: product?.categories?.[1]?.name,
+                }}
               />
             )}
             {selectedSubcategory && (
@@ -338,6 +347,10 @@ const EditSincronusCategory = ({
                 placeholder="Select MiniCategory"
                 onChange={(e) => handleMinicategoryChange(e.value)}
                 options={MiniOption ? MiniOption : "Please Select"}
+                defaultValue={{
+                  value: product?.categories?.[2]?.name,
+                  label: product?.categories?.[2]?.name,
+                }}
               />
             )}
             {selectedMinicategory && (
@@ -346,6 +359,10 @@ const EditSincronusCategory = ({
                 placeholder="Select ExtraCategory"
                 onChange={(e) => handleExtracategoryChange(e.value)}
                 options={ExtraOption ?? "Please Select"}
+                defaultValue={{
+                  value: product?.categories?.[3]?.name,
+                  label: product?.categories?.[3]?.name,
+                }}
               />
             )}
           </div>
