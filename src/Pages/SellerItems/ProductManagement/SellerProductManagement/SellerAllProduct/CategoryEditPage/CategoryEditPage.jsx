@@ -13,13 +13,14 @@ import ServiceWarranty from "../EditServiceWaranty";
 import EditDelivery from "../EditDelavery";
 import EditMeta from "../EditMeta";
 import { BsArrowRight } from "react-icons/bs";
+import Swal from "sweetalert2";
 
 const CategoryEditPage = () => {
   const id = useParams().id;
   const { shopInfo } = useContext(AuthContext);
 
-  console.log(shopInfo, "shopInfo==");
-
+  //   console.log(shopInfo, "shopInfo==");
+  //   console.log(id);
 
   const {
     data: getProduct = [],
@@ -31,7 +32,8 @@ const CategoryEditPage = () => {
     queryFn: async () => {
       try {
         const res = await fetch(
-          `https://salenow-v2-backend.vercel.app/api/v1/seller/all-products/${shopInfo._id}`)
+          `https://salenow-v2-backend.vercel.app/api/v1/seller/all-products/${shopInfo._id}`
+        );
         const data = await res.json();
         return data;
       } catch (error) {
@@ -40,12 +42,12 @@ const CategoryEditPage = () => {
     },
   });
 
-  console.log(getProduct);
+  //   console.log(getProduct);
 
   const product =
     getProduct?.find((itm) => (itm._id === id ? itm._id === id : {})) || [];
 
-  console.log(product);
+  //   console.log(product);
 
   const [isChecked, setIsChecked] = useState(true);
   const [datazCategory, setDarazOption] = useState([]);
@@ -304,29 +306,30 @@ const CategoryEditPage = () => {
       darazOptionData,
       upcoming: isChecked,
     };
+    console.log(data, "edit --------------------------->");
 
-    // console.log(data, 'edit --------------------------->');
-
-    // fetch('https://salenow-v2-backend.vercel.app/api/v1/seller/normal-product/', {
-    //     method: "POST",
-    //     headers: {
-    //         'Content-Type': 'application/json'
-    //     }
-    //     , body: JSON.stringify({ data })
-    // }).then((res) => res.json()).then((data) => {
-
-    //     if (
-    //         data.error
-    //     ) {
-    //         Swal.fire(`${data.message}`, '', 'warning')
-    //         setLoading(false)
-    //     }
-    //     else {
-    //         Swal.fire('', '', 'success')
-    //         setLoading(false)
-    //     }
-
-    // })
+    fetch(
+      //   "https://salenow-v2-backend.vercel.app/api/v1/seller/normal-product",
+      `http://localhost:5001/api/v1/seller/normal-product?id=${product?._id}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ data }),
+      }
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data, "=====product update");
+        if (data.error) {
+          Swal.fire(`${data.message}`, "", "warning");
+          setLoading(false);
+        } else {
+          Swal.fire("product updated", "success");
+          setLoading(false);
+        }
+      });
   };
 
   //   console.log(product, ">>>>>>>>>>>>>>>>>");
@@ -344,13 +347,11 @@ const CategoryEditPage = () => {
             setCoverPhoto={setCoverPhoto}
           />
         </div>
-
         <SellerInputProductName
           product={product}
           brandName={brandName}
           setBrandName={setBrandName}
         />
-
         <EditSincronusCategory
           product={product}
           datazCategory={datazCategory}
@@ -361,14 +362,12 @@ const CategoryEditPage = () => {
           woo={woo}
           setWoo={setWoo}
         />
-
         <EditWareHouse
           product={product}
           shopInfo={shopInfo}
           adminWare={adminWare}
           setAdminWare={setAdminWare}
         />
-
         <label
           htmlFor="Toggle3"
           className={`inline-flex items-center py-4 rounded-md cursor-pointer ${
@@ -397,7 +396,6 @@ const CategoryEditPage = () => {
             For You Product
           </span>
         </label>
-
         <div id="description">
           <SellerEditDiscription
             product={product}
@@ -427,11 +425,8 @@ const CategoryEditPage = () => {
         )}
 
         <ServiceWarranty />
-
         <EditDelivery />
-
         <EditMeta />
-
         <div className="mt-4">
           {loading ? (
             <button
@@ -455,7 +450,6 @@ const CategoryEditPage = () => {
           ) : (
             <button
               type="submit"
-        
               className={
                 loading || coverPhoto
                   ? "group relative cursor-pointer inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none mt-4 "

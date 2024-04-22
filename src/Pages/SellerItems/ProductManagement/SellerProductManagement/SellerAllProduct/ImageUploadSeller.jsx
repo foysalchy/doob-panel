@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 
 const ImageUploadSeller = ({
@@ -8,6 +8,9 @@ const ImageUploadSeller = ({
   youtube,
   setYoutube,
 }) => {
+  //   console.log(product);
+  console.log(product);
+  //   console.log(product?.images?.[0]?.src);
   const [photo1, setPhoto1] = useState(product?.images?.[0]?.src ?? "");
   const [photo2, setPhoto2] = useState(product?.images?.[1]?.src ?? "");
   const [photo3, setPhoto3] = useState(product?.images?.[2]?.src ?? "");
@@ -17,7 +20,24 @@ const ImageUploadSeller = ({
   const [photo7, setPhoto7] = useState(product?.images?.[6]?.src ?? "");
   const [deletItem, setDeletItem] = useState("");
 
+  console.log(youtube);
   const [youtubeError, setYoutubeError] = useState("");
+
+  useEffect(() => {
+    if (product?.images) {
+      setPhoto1(product?.images?.[0]?.src ?? "");
+      setPhoto2(product?.images?.[1]?.src ?? "");
+      setPhoto3(product?.images?.[2]?.src ?? "");
+      setPhoto4(product?.images?.[3]?.src ?? "");
+      setPhoto5(product?.images?.[4]?.src ?? "");
+      setPhoto6(product?.images?.[5]?.src ?? "");
+      setPhoto7(product?.images?.[6]?.src ?? "");
+    }
+
+    if (product?.videoUrl) {
+      setYoutube(product?.videoUrl);
+    }
+  }, [product]);
 
   // console.log(p1, 'p11111111111');
 
@@ -78,6 +98,7 @@ const ImageUploadSeller = ({
     }
   };
 
+  console.log(product);
   //    <div >
   return (
     <div>
@@ -451,6 +472,7 @@ const ImageUploadSeller = ({
           </label>
           <input
             onChange={(e) => handleCheck(e.target.value)}
+            defaultValue={product?.videoUrl ? product?.videoUrl : ""}
             className="flex-grow w-full h-10 px-4 mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-purple-400 focus:outline-none focus:shadow-outline"
             placeholder="Input YouTube video link here"
             type="text"
