@@ -58,6 +58,7 @@ const CategoryEditPage = () => {
   const [coverPhoto, setCoverPhoto] = useState("");
   const [description, setDescription] = useState("");
   const [shortDescription, setShortDescription] = useState("");
+  const [banglaDescription, setBanglaDescription] = useState("");
   const [youtube, setYoutube] = useState("");
   const [multiVendor, setMultiVendor] = useState(adminWare);
 

@@ -38,6 +38,7 @@ const EditSincronusCategory = ({
       setSelectedMinicategory(product.categories[2]?.name ?? null);
       setSelectedExtracategory(product.categories[3]?.name ?? null);
     }
+    setDaraz(product?.daraz);
   }, [product]);
 
   const { data: megaCategories = [], refetch } = useQuery({
@@ -203,6 +204,7 @@ const EditSincronusCategory = ({
     reExtra();
   }, [selectedMinicategory]);
 
+  console.log(product);
   return (
     <div>
       <div className="border mt-4 border-gray-400 px-10 py-5 w-full bg-gray-100 rounded">
@@ -210,7 +212,6 @@ const EditSincronusCategory = ({
           {shopInfo.darazLogin && (
             <div className="flex flex-col ">
               <span className="font-bold">Are you want Sync with Daraz </span>
-
               <button type="button" className="flex justify-start mt-2">
                 <span
                   onClick={() => {
@@ -317,6 +318,10 @@ const EditSincronusCategory = ({
               onChange={(e) => handleCategoryChange(e.label)}
               placeholder="Select Category"
               options={option}
+              defaultValue={{
+                label: selectedCategory?.name,
+                value: selectedCategory?.name,
+              }}
               className=""
             />
             {selectedCategory && (
