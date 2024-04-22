@@ -66,6 +66,11 @@ const CategoryEditPage = () => {
   const [banglaDescription, setBanglaDescription] = useState("");
   const [youtube, setYoutube] = useState("");
   const [multiVendor, setMultiVendor] = useState(adminWare);
+  // ! for admin category
+  // const [adminMegaCategory, setAdminMegaCategory] = useState("");
+  // const [adminSubCategory, setAdminSubCategory] = useState("");
+  // const [adminMiniCategory, setAdminMiniCategory] = useState("");
+  // const [adminExtraCategory, setAdminExtraCategory] = useState("");
 
   const [inputFields, setInputFields] = useState([
     {
@@ -449,13 +454,13 @@ const CategoryEditPage = () => {
             inputFields={inputFields}
             setInputFields={setInputFields}
           />
+          
         </div>
         <EditAdminCategoryforSeller product={product} />
 
         {daraz && datazCategory.length && (
           <EditDarazCategory product={product} datazCategory={datazCategory} />
         )}
-
         <ServiceWarranty />
         <EditDelivery />
         <EditMeta />

@@ -8,10 +8,20 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 const EditAdminCategoryforSeller = ({ product }) => {
+  console.log("🚀 ~ file: product:", product);
+
+  
   const navigate = useNavigate();
   const handleGoBack = () => {
     navigate(-1); // This will go back to the previous page
   };
+
+   const [subCategorys, setSubCategorys] = useState([]);
+     const [miniCategorys, setMiniCategorys] = useState([]);
+       const [extraCategorys, setExtraCategorys] = useState([]);
+
+       console.log(subCategorys);
+       console.log(miniCategorys);
 
   let megaCategoryUrl = `https://salenow-v2-backend.vercel.app/api/v1/admin/category/megacategory`;
 
@@ -33,7 +43,7 @@ const EditAdminCategoryforSeller = ({ product }) => {
       label: itm.name,
     }));
 
-  const [subCategorys, setSubCategorys] = useState([]);
+ 
 
   const handleSelectChange = (selectedOption) => {
     setSubCategorys([]);
@@ -58,7 +68,7 @@ const EditAdminCategoryforSeller = ({ product }) => {
     label: warehouse.subCategory,
   }));
 
-  const [miniCategorys, setMiniCategorys] = useState([]);
+
   const onHandleMiniCategorys = (selectedOption) => {
     setMiniCategorys([]);
     const optionId = selectedOption.value;
@@ -83,7 +93,7 @@ const EditAdminCategoryforSeller = ({ product }) => {
     }));
 
   // extra category
-  const [extraCategorys, setExtraCategorys] = useState([]);
+
   const onHandleExtraCategorys = (selectedOption) => {
     setExtraCategorys([]);
     const optionId = selectedOption.value;
