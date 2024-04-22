@@ -73,7 +73,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
   };
 
   return (
-    <div className="py-6  ">
+    <div className="py-  bg-red-400">
       {/* <button
         onClick={() => setMenu(!menu)}
         className={`absolute bg-gray-900 right-[-10px] w-[25px] h-[25px] flex items-center justify-center rounded-full text-white top-20 z-[1000]`}
@@ -86,7 +86,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
           responsive
             ? "flex  h-screen  overflow-y-auto  flex-col  md:p-3 p-0 lg:w-[70px] md:w-[70px] w-0  border-r-2  "
             : "flex flex-col  p-6 md:w-64 w-[300px]  h-screen  overflow-y-auto"
-        } md:relative fixed  z-[4000] bg-[#111827] top-0 left-0 bottom-0`}
+        } md:relative fixed  z-[4000] bg-[#111827] text-white   top-0 left-0 bottom-0`}
       >
         <div className="space-y-3">
           <div className="flex items-center justify-between">
@@ -156,15 +156,15 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                         onMouseMove={() => setMenu(true)}
                         className="relative"
                       >
-                        <div className="group w-full [&_summary::-webkit-details-marker]:hidden flex flex-col items-center rounded-sm  ">
+                        <div className="group w-full [&_summary::-webkit-details-marker]:hidden flex flex-col items-center rounded-sm ">
                           <div
                             onClick={() => handleToggle(1)}
-                            className="flex cursor-pointer w-full items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-black hover:text-gray-50"
+                            className="flex cursor-pointer w-full items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-white hover:text-gray-50"
                           >
-                            <div className="flex cursor-pointer items-center gap-2">
+                            <div className="flex cursor-pointer text-white items-center gap-2">
                               <TbCategory className="w-5 h-5 fill-current text-gray-400" />
 
-                              <span>Products</span>
+                              <span>Product</span>
                             </div>
 
                             <span className="shrink-0 transition duration-300 group-open:-rotate-180">
@@ -522,7 +522,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                       <div className="group w-full [&_summary::-webkit-details-marker]:hidden flex flex-col items-center rounded-sm  ">
                         <div
                           onClick={() => handleToggle(1)}
-                          className="flex cursor-pointer w-full items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-black hover:text-gray-50"
+                          className="flex cursor-pointer w-full items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-white hover:text-gray-50"
                         >
                           <div className="flex cursor-pointer items-center gap-2">
                             <TbCategory className="w-5 h-5 fill-current text-gray-400" />
@@ -560,7 +560,9 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                         <details className="group [&_summary::-webkit-details-marker]:hidden flex items-center rounded-sm  ">
                                           <summary className="flex cursor-pointer items-center justify-between px-4 py-2 rounded-sm hover:bg-gray-800 text-black hover:text-gray-50">
                                             <div className="flex cursor-pointer items-center gap-2">
-                                              <span>Category</span>
+                                              <span className="text-white">
+                                                Category
+                                              </span>
                                             </div>
 
                                             <span className="shrink-0 transition duration-300 ">
@@ -568,7 +570,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                             </span>
                                           </summary>
 
-                                          <ul className=" space-y-1 bg-gray-100 p-2">
+                                          <ul className=" space-y-1 bg-gray-00 p-2">
                                             <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50">
                                               <Link
                                                 to={
