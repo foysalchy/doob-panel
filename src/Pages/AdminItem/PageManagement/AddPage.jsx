@@ -10,7 +10,7 @@ const AddPage = () => {
 
   //! for save Drafts
   const [formData, setFormData] = useState({
-    title: "", 
+    title: "",
     page: "",
     message: "",
     MetaTag: "",
@@ -54,8 +54,9 @@ const AddPage = () => {
       if (confirmed) {
         const draftsAddPageData = {
           ...formData,
-          status: "drafts",
+          // status: "drafts",
           email: user?.email,
+          drafts: true,
         };
         // postPage(draftsAddPageData, "");
         console.log(draftsAddPageData);

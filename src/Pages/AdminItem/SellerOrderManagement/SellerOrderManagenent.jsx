@@ -635,7 +635,7 @@ const SellerOrderManagement = () => {
                                           .join(" ")}
                                     </h2>
                                     <p className="text-sm font-normal text-gray-600">
-                                      {product.product.productId}
+                                      {product?._id}
                                     </p>
                                   </div>
                                 </div>

@@ -11,27 +11,30 @@ import { FaArrowRightLong, FaDeleteLeft } from "react-icons/fa6";
 import { MdOutlineDeleteOutline, MdOutlineFolderDelete } from "react-icons/md";
 
 const PageManagement = () => {
-  const { shopInfo } = useContext(AuthContext)
+  const { shopInfo } = useContext(AuthContext);
   const [trash_status, setTrash_status] = useState(false);
 
   const { data: faqs = [], refetch } = useQuery({
     queryKey: ["faqs"],
     queryFn: async () => {
-      const res = await fetch("https://salenow-v2-backend.vercel.app/api/v1/admin/pages");
+      const res = await fetch(
+        "https://salenow-v2-backend.vercel.app/api/v1/admin/pages"
+      );
       const data = await res.json();
       return data;
     },
   });
 
   const ActiveHandle = (id) => {
-
-
-    fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/page/status/${id}`, {
-      method: "PUT",
-      headers: {
-        "content-type": "application/json",
-      },
-    })
+    fetch(
+      `https://salenow-v2-backend.vercel.app/api/v1/admin/page/status/${id}`,
+      {
+        method: "PUT",
+        headers: {
+          "content-type": "application/json",
+        },
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
         Swal.fire("success", "Your Faq Publish Successfully", "success");
@@ -40,13 +43,15 @@ const PageManagement = () => {
   };
 
   const DeactiveHandle = (id) => {
-
-    fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/page/unstatus/${id}`, {
-      method: "PUT",
-      headers: {
-        "content-type": "application/json",
-      },
-    })
+    fetch(
+      `https://salenow-v2-backend.vercel.app/api/v1/admin/page/unstatus/${id}`,
+      {
+        method: "PUT",
+        headers: {
+          "content-type": "application/json",
+        },
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
         Swal.fire("success", "Your FAQ Unpublish Successfully", "success");
@@ -54,15 +59,16 @@ const PageManagement = () => {
       });
   };
 
-
   const DeleteHandle = (id) => {
-
-    fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/page/delete?id=${id}`, {
-      method: "Delete",
-      headers: {
-        "content-type": "application/json",
-      },
-    })
+    fetch(
+      `https://salenow-v2-backend.vercel.app/api/v1/admin/page/delete?id=${id}`,
+      {
+        method: "Delete",
+        headers: {
+          "content-type": "application/json",
+        },
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
@@ -71,9 +77,7 @@ const PageManagement = () => {
       });
   };
 
-
   const trash = (id, status) => {
-
     fetch(`http://localhost:5001/api/v1/admin/page/update-trash`, {
       method: "PUT",
       headers: {
@@ -87,26 +91,19 @@ const PageManagement = () => {
         Swal.fire(`Your Page Trash ${status} Successfully`, "", "success");
         refetch();
       });
-  }
+  };
 
-
-
-
-
-  const [OpenModal, setOpenModal] = useState(false)
+  const [OpenModal, setOpenModal] = useState(false);
 
   const handleViewDetails = (ticketId) => {
     setOpenModal(ticketId);
   };
 
-
   console.log(faqs?.filter((faq) => faq?.trash !== trash_status));
 
   return (
     <div>
-
-
-      <div className='flex gap-4'>
+      <div className="flex gap-4">
         <Link
           className="group relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
           to="/admin/page-management/add-page"
@@ -137,7 +134,6 @@ const PageManagement = () => {
           onClick={() => setTrash_status(!trash_status)}
         >
           <span className="absolute -start-full transition-all group-hover:start-4">
-
             <FaArrowRightLong className="h-5 w-5 rtl:rotate-180" />
           </span>
 
@@ -145,7 +141,6 @@ const PageManagement = () => {
             Trash Page
           </span>
         </button>
-
       </div>
       <section className=" px-4 mx-auto">
         <h1 className="text-center my-10 font-bold text-2xl">
@@ -184,82 +179,98 @@ const PageManagement = () => {
                     </tr>
                   </thead>
                   <tbody className="bg-white divide-y divide-gray-200 ">
-                    {faqs?.filter((faq) => faq?.trash !== trash_status)?.map((faq, index) => (
-                      <tr>
-                        <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                          <div className="inline-flex items-center gap-x-3">
-                            <div className="w-5/12">
-                              <h2 className="font-medium text-gray-800  ">
-                                {faq?.title}
-                              </h2>
+                    {faqs
+                      ?.filter((faq) => faq?.trash !== trash_status)
+                      ?.map((faq, index) => (
+                        <tr>
+                          <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
+                            <div className="inline-flex items-center gap-x-3">
+                              <div className="w-5/12">
+                                <h2 className="font-medium text-gray-800  ">
+                                  {faq?.title}
+                                  <span className="text-yellow-600">
+                                    {faq?.drafts && <>(draft)</>}
+                                  </span>
+                                </h2>
+                              </div>
                             </div>
-                          </div>
-                        </td>
-                        <td className="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                          {faq.status ? (
-                            <button
-                              onClick={() => DeactiveHandle(faq?._id)}
-                              className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-emerald-100/60 bg-gray-800"
-                            >
-                              <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-                              <h2 className="text-sm font-normal text-emerald-500">
-                                Active
-                              </h2>
-                            </button>
-                          ) : (
-                            <button
-                              onClick={() => ActiveHandle(faq?._id)}
-                              className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-emerald-100/60 bg-gray-800"
-                            >
-                              <span className="h-1.5 w-1.5 rounded-full bg-red-500" />
-                              <h2 className="text-sm font-normal text-red-500">
-                                Deactive
-                              </h2>
-                            </button>
+                          </td>
+                          <td className="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
+                            {faq.status ? (
+                              <button
+                                onClick={() => DeactiveHandle(faq?._id)}
+                                className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-emerald-100/60 bg-gray-800"
+                              >
+                                <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                                <h2 className="text-sm font-normal text-emerald-500">
+                                  Active
+                                </h2>
+                              </button>
+                            ) : (
+                              <button
+                                onClick={() => ActiveHandle(faq?._id)}
+                                className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-emerald-100/60 bg-gray-800"
+                              >
+                                <span className="h-1.5 w-1.5 rounded-full bg-red-500" />
+                                <h2 className="text-sm font-normal text-red-500">
+                                  Deactive
+                                </h2>
+                              </button>
+                            )}
+                          </td>
+
+                          <td className="px-4 py-4 text-sm whitespace-nowrap">
+                            <div className="flex items-center gap-x-6">
+                              {trash_status && (
+                                <button
+                                  onClick={() => DeleteHandle(faq?._id)}
+                                  className=" transition-colors duration-200 text-xl text-red-500 hover:text-red-700 focus:outline-none"
+                                >
+                                  <MdOutlineDeleteOutline />
+                                </button>
+                              )}
+                              <button
+                                onClick={() =>
+                                  trash(faq?._id, faq?.trash ? false : true)
+                                }
+                                className=" transition-colors duration-200  text-xl text-red-500 hover:text-red-700 focus:outline-none"
+                              >
+                                <MdOutlineFolderDelete />
+                              </button>
+                              <button
+                                onClick={() => handleViewDetails(faq?._id)}
+                              >
+                                <BiEdit className=" transition-colors text-xl duration-200 text-yellow-500 hover:text-yellow-700 focus:outline-none" />
+                              </button>
+
+                              <Link
+                                to={`/pages/${faq?._id}`}
+                                onClick={() => handleViewDetails(faq?._id)}
+                              >
+                                <BsEye className=" transition-colors text-xl duration-200 text-green-500 hover:text-green-700 focus:outline-none" />
+                              </Link>
+                            </div>
+                          </td>
+                          {OpenModal === faq?._id && (
+                            <div className="h-0 w-0">
+                              <UpdatePage
+                                OpenModal={OpenModal}
+                                refetch={refetch}
+                                setOpenModal={setOpenModal}
+                                FAQInfo={faq}
+                              />
+                            </div>
                           )}
-                        </td>
-
-                        <td className="px-4 py-4 text-sm whitespace-nowrap">
-                          <div className="flex items-center gap-x-6">
-
-                            {trash_status && <button
-                              onClick={() => DeleteHandle(faq?._id)}
-                              className=" transition-colors duration-200 text-xl text-red-500 hover:text-red-700 focus:outline-none"
-                            >
-                              <MdOutlineDeleteOutline />
-                            </button>}
-                            <button
-                              onClick={() => trash(faq?._id, faq?.trash ? false : true)}
-                              className=" transition-colors duration-200  text-xl text-red-500 hover:text-red-700 focus:outline-none"
-                            >
-                              <MdOutlineFolderDelete />
-                            </button>
-                            <button onClick={() => handleViewDetails(faq?._id)}>
-                              <BiEdit className=" transition-colors text-xl duration-200 text-yellow-500 hover:text-yellow-700 focus:outline-none" />
-                            </button>
-
-                            <Link
-                              to={`/pages/${faq?._id}`}
-                              onClick={() => handleViewDetails(faq?._id)}>
-                              <BsEye className=" transition-colors text-xl duration-200 text-green-500 hover:text-green-700 focus:outline-none" />
-                            </Link>
-
-
-                          </div>
-                        </td>
-                        {OpenModal === faq?._id && <div className="h-0 w-0">
-                          <UpdatePage OpenModal={OpenModal} refetch={refetch} setOpenModal={setOpenModal} FAQInfo={faq} />
-                        </div>}
-                      </tr>
-                    ))}
+                        </tr>
+                      ))}
                   </tbody>
                 </table>
               </div>
             </div>
           </div>
         </div>
-      </section >
-    </div >
+      </section>
+    </div>
   );
 };
 

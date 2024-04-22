@@ -139,7 +139,7 @@ const EditWareHouse = ({ product, adminWare, setAdminWare }) => {
                                 name='warehouse'
                                 // required
                                 options={isRefetching ? [{ label: 'Loading...', value: null }] : product?.warehouse
-                                    .filter((warehouse) => warehouse.status) // Filter based on status
+                                    ?.filter((warehouse) => warehouse.status) // Filter based on status
                                     .map((warehouse) => ({
                                         value: warehouse.name,
                                         label: warehouse.name,
@@ -166,7 +166,7 @@ const EditWareHouse = ({ product, adminWare, setAdminWare }) => {
                                 name='area'
                                 // required
                                 options={areas
-                                    .filter((area) => area.status) // Filter based on status
+                                    ?.filter((area) => area.status) // Filter based on status
                                     .map((area) => ({
                                         value: area.area,
                                         label: area.area,

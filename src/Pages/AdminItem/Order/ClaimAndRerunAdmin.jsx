@@ -9,30 +9,36 @@ import { BiSearch } from "react-icons/bi";
 import { AuthContext } from "../../../AuthProvider/UserProvider";
 import OrderAllinfoModal from "../../SellerItems/OrderManagment/ManageOrder/OrderAllinfoModal";
 
-
 const ClaimAndRerunAdmin = () => {
   const [modalOn, setModalOn] = useState(false);
 
   const { shopInfo, setCheckUpData } = useContext(AuthContext);
 
   const { data: tData = [], refetch } = useQuery({
-    queryKey: ["sellerOrder"],
+    queryKey: ["adminOrder"],
     queryFn: async () => {
       const res = await fetch(
-        `https://salenow-v2-backend.vercel.app/api/v1/admin/order?shopId=${shopInfo._id}`
+        `https://salenow-v2-backend.vercel.app/api/v1/admin/get-shop-all-order`
       );
       const data = await res.json();
       return data.data;
     },
   });
 
+  console.log(tData);
   const [cartProducts, setCartProducts] = useState([]);
 
   const handleSearch = (e) => {
     e.preventDefault();
     const searchValue = e.target.search.value;
+    console.log(searchValue);
     const findProduct = tData.find((itm) =>
-      itm.orderNumber.includes(searchValue)
+      // itm.orderNumber.includes(searchValue) ||
+      itm._id.includes(searchValue)
+    );
+    console.log(
+      "🚀 ~ file: Claim:",
+      findProduct
     );
 
     if (findProduct) {
@@ -110,7 +116,7 @@ const ClaimAndRerunAdmin = () => {
 
   const ratial_price = (productList) => {
     let ratial_price = 0;
-    for (let i = 0; i < productList.length; i++) {
+    for (let i = 0; i < productList?.length; i++) {
       const price =
         parseFloat(productList[i]?.price) *
         parseFloat(productList[i]?.quantity);
@@ -398,7 +404,6 @@ const ClaimAndRerunAdmin = () => {
                       name=""
                       id=""
                       onChange={handleSelectAll}
-                      
                       checked={selectAll}
                     />
                   </th>
@@ -491,7 +496,7 @@ const ClaimAndRerunAdmin = () => {
                         {getTimeAgo(item?.timestamp)}
                       </td>
                       <td className="border-r px-6 py-4">
-                        {item?.method.Getaway}
+                        {item?.method?.Getaway}
                       </td>
                       <td className="border-r px-6 py-4">
                         {ratial_price(item?.productList)}
@@ -568,7 +573,7 @@ const ClaimAndRerunAdmin = () => {
                         </div>
                       </td>
                     </tr>
-                
+
                     {item._id === modalOn && (
                       <tr>
                         <td colSpan="10">
@@ -592,6 +597,4 @@ const ClaimAndRerunAdmin = () => {
   );
 };
 
-export default ClaimAndRerunAdmin
-;
-
+export default ClaimAndRerunAdmin;
