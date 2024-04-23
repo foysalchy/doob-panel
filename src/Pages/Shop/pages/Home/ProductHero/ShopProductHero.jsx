@@ -288,10 +288,12 @@ const ShopProductHero = () => {
                                                 </span>
 
 
-                                                {subCategoryData.length ? <FaAngleRight className="absolute right-2" /> : ''}
+                                                {allCategory?.subCategorys.filter(
+                                                    (subCategory) => subCategory.megaCategoryId === item?._id
+                                                ).length >= 1 && <FaAngleRight className="absolute right-2" />}
                                             </Link>
 
-                                          
+
 
                                             // <Link to={``}
                                             //     // onClick={() => subCategoryHandler(item, index)}

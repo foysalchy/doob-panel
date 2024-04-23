@@ -1,4 +1,5 @@
 import AdminBlogPage from "../Pages/AdminItem/AdminBlogPage"
+import AdminTrackOrder from "../Pages/AdminItem/AdminTrackOrder/AdminTrackOrder"
 import Contract from "../Pages/AdminItem/Contract/Contract"
 import ForgetPass from "../Pages/Authentication/ForgetPass/ForgetPass"
 import ResetPass from "../Pages/Authentication/ForgetPass/ResetPass"
@@ -146,6 +147,11 @@ const homePath = [
     //     path: "/my-cart",
     //     element: <CardProduct />,
     // },
+    {
+        path: '/admin-track-order',
+        element: <AdminTrackOrder />
+
+    },
 
 ]
 

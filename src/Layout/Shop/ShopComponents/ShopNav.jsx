@@ -172,7 +172,7 @@ const ShopNav = () => {
                                 <div className="inline-flex items-center bg-gray-900 w-[30px] h-[30px] p-2 rounded-full justify-center ">
                                     <BsFillPinMapFill className='text-white ' />
                                 </div>
-                                Track Order
+                                Track Order...
                             </Link>
                         </li>
                         <li>
