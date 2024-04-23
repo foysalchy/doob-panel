@@ -28,9 +28,8 @@ const StarRating = ({ rating, onRatingChange }) => {
         <span
           key={star}
           onClick={() => onRatingChange(star)}
-          className={`cursor-pointer text-2xl ${
-            star <= rating ? "text-yellow-500" : "text-gray-300"
-          }`}
+          className={`cursor-pointer text-2xl ${star <= rating ? "text-yellow-500" : "text-gray-300"
+            }`}
         >
           ★
         </span>
@@ -66,7 +65,7 @@ const ProductDetails = () => {
     profitPercent: 0,
   });
 
-  useEffect(() => {}, [variationData]);
+  useEffect(() => { }, [variationData]);
   const allUpdateInfo = () => {
     const price = parseInt(productFind?.variantData?.sellingPrice);
     const quantityPars = parseInt(quantity);
@@ -342,8 +341,26 @@ const ProductDetails = () => {
     const product = productFind
     const newData = {
       product_id: product?._id,
+      product_seller: product?.shopId,
+      shopId: shopInfo?.shopId,
+      shopName: shopInfo?.shopName,
+      shopUid: shopInfo?._id,
+      quantity: 0,
+      sellingPrice: banifit.sellingPrice,
+
     }
-    console.log(product, 'product');
+    fetch(`http://localhost:5001/api/v1/seller/balk-order-update`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newData),
+
+    }).then((res) => res.json()).then((data) => {
+      BrightAlert()
+
+    })
+    console.log(newData);
 
   }
 
@@ -654,7 +671,7 @@ const ProductDetails = () => {
                     </button>
                   </div>
                 </div>
-                  <button onClick={balk_buy} className="h-10 px-6 py-2 text-sm rounded bg-orange-600 hover:bg-orange-500 text-white" type="button">Add Store</button>
+                <button onClick={balk_buy} className="h-10 px-6 py-2 text-sm rounded bg-orange-600 hover:bg-orange-500 text-white" type="button">Add Store</button>
 
                 {/* 
                 <button
@@ -665,7 +682,7 @@ const ProductDetails = () => {
                   Buy Now
                 </button> */}
 
-              
+
 
 
                 <div className="flex flex-wrap gap-2">
