@@ -178,7 +178,7 @@ const OrderTable = ({
     content: () => componentRef.current,
   });
 
-//   console.log(filteredData);
+  //   console.log(filteredData);
 
   const [readyToShip, setReadyToShip] = useState(false);
 
@@ -328,7 +328,7 @@ const OrderTable = ({
     } else {
       setSelectedItems([]);
     }
-  }
+  };
 
   const handleCheckboxChange = (event, item) => {
     const isChecked = event.target.checked;
@@ -358,8 +358,13 @@ const OrderTable = ({
                       type="checkbox"
                       onChange={(e) => {
                         handleSelectAll(e, currentItems);
-                        handleStoreInvoice(e, selectedItems)
+                        handleStoreInvoice(e, selectedItems);
                       }}
+                      checked={
+                        currentItems?.length === selectedItems?.length
+                          ? true
+                          : false
+                      }
                     />
                   </th>
                   <th scope="col" className="border-r px-2 py-4 font-[500]">
@@ -473,7 +478,13 @@ const OrderTable = ({
                           {(!item?.status && (
                             <>
                               <button
-                                onClick={() => setReadyToShip(item)}
+                                // onClick={() => setReadyToShip(item)}
+                                onClick={() =>
+                                  productStatusUpdate(
+                                    "ready_to_ship",
+                                    item?._id
+                                  )
+                                }
                                 className="text-[16px] font-[400] text-blue-700"
                               >
                                 Ready to Ship

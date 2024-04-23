@@ -119,7 +119,7 @@ const ShopFooter = () => {
 
                     <div className="flex items-center mt-4 space-x-4 sm:mt-0">
                         {
-                            contacts.map((cont) => (
+                            contacts.length && contacts?.map((cont) => (
                                 <div key={cont._id}>
 
                                     {

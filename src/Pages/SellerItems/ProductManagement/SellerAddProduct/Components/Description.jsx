@@ -65,7 +65,6 @@ const Description = ({ description, setDescription, shortDescription, setShortDe
             <div className='mt-10 py-2'>
                 <div className='flex flex-col mt-3'>
                     <span>Product Bangla  Description <span className='text-red-500'> *</span></span>
-
                 </div>
                 <ReactQuill
                     onChange={banglaDescription}

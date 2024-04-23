@@ -30,7 +30,7 @@ const AddBlog = () => {
   const [restoreDrafts, setRestoreDrafts] = useState(false);
 
   const { user } = useContext(AuthContext);
-  console.log(user);
+  // console.log(user);
 
   // all blogs data
   const { data: blogsData = [], refetch: reftechDraft } = useQuery({
@@ -45,24 +45,24 @@ const AddBlog = () => {
   });
 
   // console.log(blogsData);
-  const draftsAllBlogData = blogsData?.filter(
-    (item) => item.status === "drafts"
-  );
+  // const draftsAllBlogData = blogsData?.filter(
+  //   (item) => item.status === "drafts"
+  // );
   // ! get latest draft data
-  const draftsBlogData = blogsData?.reduce((latestDraft, currentBlog) => {
-    if (currentBlog.status === "drafts") {
-      // Check if there is no latest draft yet or if the current blog has a later date
-      if (
-        !latestDraft ||
-        new Date(currentBlog.date) > new Date(latestDraft.date)
-      ) {
-        return currentBlog; // Set the current blog as the latest draft
-      }
-    }
-    return latestDraft; // Return the existing latest draft if no update is needed
-  }, null);
+  // const draftsBlogData = blogsData?.reduce((latestDraft, currentBlog) => {
+  //   if (currentBlog.status === "drafts") {
+  //     // Check if there is no latest draft yet or if the current blog has a later date
+  //     if (
+  //       !latestDraft ||
+  //       new Date(currentBlog.date) > new Date(latestDraft.date)
+  //     ) {
+  //       return currentBlog; // Set the current blog as the latest draft
+  //     }
+  //   }
+  //   return latestDraft; // Return the existing latest draft if no update is needed
+  // }, null);
 
-  console.log(draftsBlogData, "draftsBlogData");
+  // console.log(draftsBlogData, "draftsBlogData");
   const { data: blogCategories = [], refetch } = useQuery({
     queryKey: ["blogcategory"],
     queryFn: async () => {
@@ -209,18 +209,18 @@ const AddBlog = () => {
     setDraftSaved(!isFormDataEmpty);
   }, [formData]);
 
-  useEffect(() => {
-    if (draftsAllBlogData?.length && !restoreDrafts) {
-      // Check if restoreDrafts is false
-      const confirmedRestore = window.confirm("Restore your drafts");
-      if (confirmedRestore) {
-        setRestoreDrafts(true);
-        if (draftsBlogData?.message) {
-          setMessage(draftsBlogData?.message);
-        }
-      }
-    }
-  }, [draftsAllBlogData, restoreDrafts]);
+  // useEffect(() => {
+  //   if (draftsAllBlogData?.length && !restoreDrafts) {
+  //     // Check if restoreDrafts is false
+  //     const confirmedRestore = window.confirm("Restore your drafts");
+  //     if (confirmedRestore) {
+  //       setRestoreDrafts(true);
+  //       if (draftsBlogData?.message) {
+  //         setMessage(draftsBlogData?.message);
+  //       }
+  //     }
+  //   }
+  // }, [draftsAllBlogData, restoreDrafts]);
 
   useEffect(() => {
     if (blocker.state === "blocked") {
@@ -233,14 +233,14 @@ const AddBlog = () => {
       if (confirmed) {
         Swal.fire("Drafts Saved", "", "success");
 
-        const draftsBlogData = {
+        const draftsAddBlogData = {
           ...formData,
           status: "drafts",
           email: user?.email,
           date: new Date(),
         };
-        postBlog(draftsBlogData, "");
-        console.log(draftsBlogData);
+        postBlog(draftsAddBlogData, "");
+        console.log(draftsAddBlogData);
 
         // blocker.proceed();
       } else {
@@ -249,7 +249,7 @@ const AddBlog = () => {
   }, [draftSaved, blocker]);
 
   console.log(formData);
-  console.log(draftsBlogData);
+  // console.log(draftsBlogData);
   // console.log(blocker);
 
   return (
@@ -288,11 +288,11 @@ const AddBlog = () => {
                 type="text"
                 id="title"
                 name="title"
-                defaultValue={
-                  restoreDrafts && draftsBlogData?.title
-                    ? draftsBlogData?.title
-                    : ""
-                }
+                // defaultValue={
+                //   restoreDrafts && draftsBlogData?.title
+                //     ? draftsBlogData?.title
+                //     : ""
+                // }
                 onChange={(e) => handleInputChange("title", e.target.value)} // for drafts
               />
             </div>
@@ -350,14 +350,14 @@ const AddBlog = () => {
                 onChange={(e) => handleInputChange("category", e.target.value)}
                 className="w-full mt-1 rounded-lg border border-gray-900 px-3 py-2 text-sm"
                 placeholder="Select a category"
-                defaultValue={
-                  (restoreDrafts && draftsBlogData?.category)
-                    ? draftsBlogData?.category
-                    : ""
-                }
+                // defaultValue={
+                //   (restoreDrafts && draftsBlogData?.category)
+                //     ? draftsBlogData?.category
+                //     : ""
+                // }
               >
                 <option disabled>Select Blog Category</option>
-                {blogCategories?.map((category, i) => (
+                {blogcategories.length && categories?.map((category, i) => (
                   <option key={category.title} value={category.title}>
                     {category.title}
                   </option>
@@ -375,11 +375,11 @@ const AddBlog = () => {
                   modules={modules}
                   placeholder="Enter description here..."
                   value={message}
-                  // defaultValue={
-                  //   restoreDrafts && draftsBlogData?.message
-                  //     ? draftsBlogData?.message
-                  //     : ""
-                  // }
+                // defaultValue={
+                //   restoreDrafts && draftsBlogData?.message
+                //     ? draftsBlogData?.message
+                //     : ""
+                // }
                 />
                 {/* <JoditEditor ></JoditEditor> */}
               </div>
@@ -399,11 +399,11 @@ const AddBlog = () => {
                 type="text"
                 id="MetaTag"
                 name="MetaTag"
-                defaultValue={
-                  restoreDrafts && draftsBlogData?.MetaTag
-                    ? draftsBlogData?.MetaTag
-                    : ""
-                }
+                // defaultValue={
+                //   restoreDrafts && draftsBlogData?.MetaTag
+                //     ? draftsBlogData?.MetaTag
+                //     : ""
+                // }
               />
             </div>
 
@@ -421,11 +421,11 @@ const AddBlog = () => {
                 onChange={(e) =>
                   handleInputChange("MetaDescription", e.target.value)
                 } // for drafts
-                defaultValue={
-                  restoreDrafts && draftsBlogData?.MetaDescription
-                    ? draftsBlogData?.MetaDescription
-                    : ""
-                }
+                // defaultValue={
+                //   restoreDrafts && draftsBlogData?.MetaDescription
+                //     ? draftsBlogData?.MetaDescription
+                //     : ""
+                // }
               />
             </div>
             <div>
@@ -440,11 +440,11 @@ const AddBlog = () => {
                 type="file"
                 id="MetaImage'"
                 name="MetaImage'"
-                defaultValue={
-                  restoreDrafts && draftsBlogData?.MetaImage
-                    ? draftsBlogData?.MetaImage
-                    : ""
-                }
+                // defaultValue={
+                //   restoreDrafts && draftsBlogData?.MetaImage
+                //     ? draftsBlogData?.MetaImage
+                //     : ""
+                // }
               />
             </div>
 

@@ -278,17 +278,20 @@ const ShopProductHero = () => {
                                     {/* Dropdown toggle button */}
                                     <div>
                                         {
-                                            <button
-                                                onClick={() => subCategoryHandler(item, index)}
+                                            <Link to={`/shop/${shopId}/product/catagory/${item?._id}`}
+                                                onMouseEnter={() => subCategoryHandler(item, index)}
                                                 className={`flex  items-center  w-full justify-between px-2 py-1 capitalize text-sm font-normal  hover:bg-gray-100   relative  ${openDropdownIndex === index ? 'bg-gray-100 text-black' : 'text-black'} rounded`}
                                             >
                                                 <span className="flex items-center ">
-                                                    {/* <img src={item?.image} alt="" className="w-8 h-8 rounded-full ring-1 ring-gray-200" /> */}
+                                                    <img src={item?.image} alt="" className="w-8 h-8 rounded-full ring-1 ring-gray-200" />
                                                     {item?.name}
                                                 </span>
-                                                {openDropdownIndex === index ? <FaAngleRight className="absolute right-2" /> : ''}
-                                            </button>
-                                            // :
+
+
+                                                {subCategoryData.length ? <FaAngleRight className="absolute right-2" /> : ''}
+                                            </Link>
+
+                                          
 
                                             // <Link to={``}
                                             //     // onClick={() => subCategoryHandler(item, index)}

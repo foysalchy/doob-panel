@@ -33,7 +33,7 @@ const SubCategoriesManagement = () => {
 
     console.log(categories);
 
-    const filteredData = categories?.map((filteredItem) => {
+    const filteredData = categories.length && categories?.map((filteredItem) => {
         console.log(filteredItem);
         let parsedDarazCategory = filteredItem?.darazCategory;
 

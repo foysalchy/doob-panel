@@ -190,7 +190,7 @@ const AddService = () => {
                                 placeholder="Select a category"
                             >
                                 <option selected disabled value="Select Service Category">Select Service Category</option>
-                                {categories?.map((category, i) => (
+                                {categories.length && categories?.map((category, i) => (
                                     <option value={category?.title}>{category?.title}</option>
                                 ))}
                             </select>

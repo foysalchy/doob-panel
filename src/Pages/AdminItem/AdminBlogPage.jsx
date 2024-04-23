@@ -137,7 +137,7 @@ const AdminBlogPage = () => {
                     All
                   </a>
                   {!isCategoriesLoading &&
-                    categories?.map((category) => (
+                    categories.length && categories?.map((category) => (
                       <a
                         key={category.id}
                         href={`#${category?.slag}`}
@@ -155,17 +155,17 @@ const AdminBlogPage = () => {
 
             <div className="grid grid-cols-1 gap-x-4 gap-y-8 md:grid-cols-2 lg:grid-cols-4">
               {filteredBlogs?.map((blog, index) => {
-                  console.log(blog)
-                  return (<BlogCard
-                    date={blog.date}
-                    to={`/blogs/${blog._id}`}
-                    CardTitle={blog.title}
-                    CardDescription={blog.message}
-                    image={blog.img}
-                    id={blog._id}
-                  />)
-                }
-                )}
+                console.log(blog)
+                return (<BlogCard
+                  date={blog.date}
+                  to={`/blogs/${blog._id}`}
+                  CardTitle={blog.title}
+                  CardDescription={blog.message}
+                  image={blog.img}
+                  id={blog._id}
+                />)
+              }
+              )}
 
             </div>
           </div>
