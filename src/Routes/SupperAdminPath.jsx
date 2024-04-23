@@ -71,7 +71,8 @@ import AdminBlogComment from "../Pages/AdminItem/Blogs/AdminBlogComents/AdminBlo
 import AdminWithdrow from "../Pages/AdminItem/Withdrow/AdminWithdrow";
 import ClaimAndRerunAdmin from "../Pages/AdminItem/Order/ClaimAndRerunAdmin";
 import AdminTrackOrder from "../Pages/AdminItem/AdminTrackOrder/AdminTrackOrder";
-
+import PackageManagement from "../Pages/AdminItem/PriceMangement/PackageHandle";
+import AddPackage from "../Pages/AdminItem/PriceMangement/AddPackage";
 
 const SupperAdminPath = [
     {
@@ -488,12 +489,17 @@ const SupperAdminPath = [
         element: <ClaimAndRerunAdmin />
     },
     {
-        path: ':id/admin-track-order',
-        element: <AdminTrackOrder />
-
-    },
-
-
+    path: "package-management",
+    element: (
+      <CheckStaff>
+        <PackageManagement />
+      </CheckStaff>
+    ),
+  },
+  {
+    path: "package-management/add-package",
+    element: <AddPackage />,
+  },
 ]
 
 export { SupperAdminPath }

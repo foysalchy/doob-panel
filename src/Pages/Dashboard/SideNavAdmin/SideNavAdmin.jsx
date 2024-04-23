@@ -2085,8 +2085,9 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                 // }}
                                 className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50"
                               >
-                                <FaUsersGear className="w-5 h-5 fill-current text-gray-400" />
-                                {menu && <span>FAQ </span>}
+                                {/* <FaUsersGear className="w-5 h-5 fill-current text-gray-400" /> */}
+                                {/* // */}
+                                {menu && <span>FAQ</span>}
                               </NavLink>
                             ) : null
                           ) : (
@@ -2101,7 +2102,8 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                               // }}
                               className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50"
                             >
-                              <FaUsersGear className="w-5 h-5 fill-current text-gray-400" />
+                              {/* <FaUsersGear className="w-5 h-5 fill-current text-gray-400" /> */}
+
                               {menu && <span>FAQ </span>}
                             </NavLink>
                           )}
@@ -2278,8 +2280,9 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                 // }}
                                 className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50"
                               >
-                                <FaUsersGear className="w-5 h-5 fill-current text-gray-400" />
-                                {menu && <span>FAQ </span>}
+                                {/* <FaUsersGear className="w-5 h-5 fill-current text-gray-400" /> */}
+
+                                {menu && <span>FAQ</span>}
                               </NavLink>
                             ) : null
                           ) : (
@@ -2292,7 +2295,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                               //     ? "flex items-center p-2 space-x-3 rounded-sm bg-gray-800 text-white "
                               //     : "flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
                               // }}
-                              className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50"
+                              className="flex cursor-pointer items-center  gap-3 rounded-sm hover:bg-gray-800 hover:text-gray-50"
                             >
                               <FaUsersGear className="w-5 h-5 fill-current text-gray-400" />
                               {menu && <span>FAQ </span>}
@@ -2548,40 +2551,164 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                 </NavLink>
               )}
 
+              {/* //! price */}
               {user?.staffRole ? (
-                user?.permissions.find(
-                  (itm) => itm?.name === "Price Management"
-                ) ? (
-                  <NavLink
-                    onMouseMove={() => setMenu(true)}
-                    rel="noopener noreferrer"
-                    to={"/admin/price-management"}
-                    className={({ isActive }) => {
-                      return isActive
-                        ? "flex items-center p-2 space-x-3 rounded-sm bg-gray-800 text-white "
-                        : "flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
-                    }}
-                  >
-                    <AiOutlineAlert className="w-5 h-5 fill-current text-gray-400" />
-                    {menu && <span> Price Management</span>}
-                  </NavLink>
+                user?.permissions.find((itm) => itm?.name === "Faq") ? (
+                  <>
+                    {menu && (
+                      <li
+                        onMouseMove={() => setMenu(true)}
+                        className="relative"
+                      >
+                        <div className="group [&_summary::-webkit-details-marker]:hidden flex flex-col w-full items-center rounded-sm  ">
+                          <div
+                            onClick={() => handleToggle(2)}
+                            className="flex cursor-pointer items-center w-full justify-between  p-2 rounded-sm hover:bg-gray-800 text-white hover:text-gray-50"
+                          >
+                            <div className="flex cursor-pointer items-center gap-2">
+                              <TbCategory className="w-5 h-5 fill-current text-gray-400" />
+
+                              <span>Pricing And Package</span>
+                            </div>
+
+                            <span className="shrink-0 transition duration-300 group-open:-rotate-180">
+                              <IoIosArrowDown className="h-5 w-5" />
+                            </span>
+                          </div>
+                          {openDropdownIndex == 2 && (
+                            <ul className="mt-2 space-y-1 px-4">
+                              {user?.staffRole ? (
+                                user?.permissions.find(
+                                  (itm) => itm?.name === "Price Management"
+                                ) ? (
+                                  <NavLink
+                                    onMouseMove={() => setMenu(true)}
+                                    rel="noopener noreferrer"
+                                    to={"/admin/price-management"}
+                                    className={({ isActive }) => {
+                                      return isActive
+                                        ? "flex items-center p-2 space-x-3 rounded-sm bg-gray-800 text-white "
+                                        : "flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
+                                    }}
+                                  >
+                                    <BiCategory className="w-5 h-5 fill-current text-gray-400" />
+                                    {menu && <span>Price Management</span>}
+                                  </NavLink>
+                                ) : null
+                              ) : (
+                                <NavLink
+                                  onMouseMove={() => setMenu(true)}
+                                  rel="noopener noreferrer"
+                                  to={"/admin/price-management"}
+                                  className={({ isActive }) => {
+                                    return isActive
+                                      ? "flex items-center p-2 space-x-1 rounded-sm bg-gray-800 text-white "
+                                      : "flex items-center p-2 space-x-1 rounded-sm hover:bg-gray-800 hover:text-white";
+                                  }}
+                                >
+                                  <BiCategory className="w-5 h-5 fill-current text-gray-400" />
+                                  {menu && <span> Price Management</span>}
+                                </NavLink>
+                              )}
+                            </ul>
+                          )}
+                        </div>
+                      </li>
+                    )}
+                  </>
                 ) : null
               ) : (
-                <NavLink
-                  onMouseMove={() => setMenu(true)}
-                  rel="noopener noreferrer"
-                  to={"/admin/price-management"}
-                  className={({ isActive }) => {
-                    return isActive
-                      ? "flex items-center p-2 space-x-3 rounded-sm bg-gray-800 text-white "
-                      : "flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
-                  }}
-                >
-                  <AiOutlineAlert className="w-5 h-5 fill-current text-gray-400" />
-                  {menu && <span> Price Management</span>}
-                </NavLink>
+                <>
+                  {menu && (
+                    <li onMouseMove={() => setMenu(true)} className="relative">
+                      {/* start //! */}
+                      <details className="group [&_summary::-webkit-details-marker]:hidden flex items-center rounded-sm  ">
+                        <summary className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-white hover:text-gray-50">
+                          <div className="flex cursor-pointer items-center gap-2">
+                            <BiShoppingBag className="w-5 h-5 fill-current text-gray-400" />
+                            <span>Pricing And Package</span>
+                          </div>
+                          <span className="shrink-0 transition duration-300 group-open:-rotate-180">
+                            <IoIosArrowDown className="h-5 w-5" />
+                          </span>
+                        </summary>
+                        <ul className="mt-2 space-y-1 px-4">
+                          {user?.staffRole ? (
+                            user?.permissions.find(
+                              (itm) => itm?.name === "Price Management"
+                            ) ? (
+                              <NavLink
+                                onMouseMove={() => setMenu(true)}
+                                rel="noopener noreferrer"
+                                to={"/admin/price-management"}
+                                className={({ isActive }) => {
+                                  return isActive
+                                    ? "flex items-center p-2 space-x-3 rounded-sm bg-gray-800 text-white "
+                                    : "flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
+                                }}
+                              >
+                                {/* <BiCategory className="w-5 h-5 fill-current text-gray-400" /> */}
+                                {menu && <span>Price Management</span>}
+                              </NavLink>
+                            ) : null
+                          ) : (
+                            <NavLink
+                              onMouseMove={() => setMenu(true)}
+                              rel="noopener noreferrer"
+                              to={"/admin/price-management"}
+                              className={({ isActive }) => {
+                                return isActive
+                                  ? "flex items-center p-2 space-x-1 rounded-sm bg-gray-800 text-white "
+                                  : "flex items-center p-2 space-x-1 rounded-sm hover:bg-gray-800 hover:text-white";
+                              }}
+                            >
+                              {menu && <span> Price Management</span>}
+                            </NavLink>
+                          )}
+                        </ul>
+
+                        {/* //// ! package  */}
+                        <ul className="mt-2 space-y-1 px-4">
+                          {user?.staffRole ? (
+                            user?.permissions.find(
+                              (itm) => itm?.name === "Package Handle"
+                            ) ? (
+                              <NavLink
+                                onMouseMove={() => setMenu(true)}
+                                rel="noopener noreferrer"
+                                to={"/admin/package-management"}
+                                className={({ isActive }) => {
+                                  return isActive
+                                    ? "flex items-center p-2 space-x-3 rounded-sm bg-gray-800 text-white "
+                                    : "flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
+                                }}
+                              >
+                                {/* <BiCategory className="w-5 h-5 fill-current text-gray-400" /> */}
+                                {menu && <span>Package Handle</span>}
+                              </NavLink>
+                            ) : null
+                          ) : (
+                            <NavLink
+                              onMouseMove={() => setMenu(true)}
+                              rel="noopener noreferrer"
+                              to={"/admin/package-management"}
+                              className={({ isActive }) => {
+                                return isActive
+                                  ? "flex items-center p-2 space-x-1 rounded-sm bg-gray-800 text-white "
+                                  : "flex items-center p-2 space-x-1 rounded-sm hover:bg-gray-800 hover:text-white";
+                              }}
+                            >
+                              {menu && <span> Package Handle</span>}
+                            </NavLink>
+                          )}
+                        </ul>
+                      </details>
+                    </li>
+                  )}
+                </>
               )}
 
+              {/* //!  close price management */}
               {user?.staffRole ? (
                 user?.permissions.find((itm) => itm?.name === "Contact") ? (
                   <NavLink
