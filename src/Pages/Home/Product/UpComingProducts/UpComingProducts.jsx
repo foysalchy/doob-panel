@@ -76,7 +76,7 @@ const UpComingProducts = () => {
                 {AdminNewProducts?.map((product, idx) => (
                   <SwiperSlide key={idx} className="border my-2 border-gray-500 border-opacity-90 p-3 rounded">
                     <Link to={`${product._id}`} className="group block overflow-hidden">
-                      <div className="relative h-[250px] sm:h-[250px]">
+                      <div className="relative h-[180px] sm:h-[250px]">
                         <img
                           src={product?.featuredImage?.src}
                           alt=""

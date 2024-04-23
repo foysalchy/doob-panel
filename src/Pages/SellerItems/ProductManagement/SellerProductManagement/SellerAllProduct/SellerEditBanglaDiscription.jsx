@@ -4,7 +4,7 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { quillModules } from "../../../../quillModule";
 
-const SellerEditDiscription = ({
+const SellerEditBanglaDescription = ({
   product,
   description,
   setDescription,
@@ -40,7 +40,7 @@ const SellerEditDiscription = ({
           modules={quillModules}
           name="shortDescription"
           className="rounded"
-          value={product?.description}
+          value={product.description}
           onChange={handleShortDescriptionChange}
           placeholder="Enter your description here..."
           style={{
@@ -64,23 +64,8 @@ const SellerEditDiscription = ({
           placeholder="Enter your description here..."
         />
       </div>
-      <div className="mt-16 py-2">
-        <div className="flex flex-col mt-3">
-          <span>
-            Product Bangla Description <span className="text-red-500"> *</span>
-          </span>
-        </div>
-        <ReactQuill
-          modules={quillModules}
-          onChange={handleDescriptionChange}
-          name="banglaDescription"
-          value={product?.banglaDescription}
-          className=" rounded h-[150px]"
-          placeholder="Enter your Bangla description here..."
-        />
-      </div>
     </div>
   );
 };
 
-export default SellerEditDiscription;
+export default SellerEditBanglaDescription;

@@ -69,7 +69,7 @@ import AdminHomePageControl from "../Pages/AdminItem/ContentManagement/AdminHome
 import AllOrderManage from "../Pages/AdminItem/Order/AllOrderManage";
 import AdminBlogComment from "../Pages/AdminItem/Blogs/AdminBlogComents/AdminBlogComment";
 import AdminWithdrow from "../Pages/AdminItem/Withdrow/AdminWithdrow";
-import ClaimAndRerun from "../Pages/AdminItem/Order/ClaimAndRerun";
+import ClaimAndRerunAdmin from "../Pages/AdminItem/Order/ClaimAndRerunAdmin";
 
 
 const SupperAdminPath = [
@@ -484,7 +484,7 @@ const SupperAdminPath = [
     },
     {
         path: 'claim-return',
-        element: <ClaimAndRerun />
+        element: <ClaimAndRerunAdmin />
     }
 
 
