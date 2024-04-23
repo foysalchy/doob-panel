@@ -342,6 +342,10 @@ const ProductDetails = () => {
     console.log(productData, 'productData');
   }
 
+  const balk_buy = () => {
+    const product = productFind 
+  }
+
   // console.log(productFind, 'comment');
   return (
     <section>
@@ -612,7 +616,7 @@ const ProductDetails = () => {
                 >
                   Buy Now
                 </button> */}
-
+                <button className="h-10 px-6 py-2 text-sm rounded bg-orange-600 hover:bg-orange-500 text-white" type="button">Bulk Buy</button>
                 <button
                   onClick={() => setInvoice(productFind?._id)}
                   type="button"
