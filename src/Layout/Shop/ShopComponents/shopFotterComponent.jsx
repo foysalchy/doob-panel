@@ -237,7 +237,7 @@ export const Footer = () => {
                             </svg>
                         </a> */}
                         {
-                            contacts.map((cont) => (
+                            contacts.length && contacts?.map((cont) => (
                                 <div key={cont._id}>
 
                                     {

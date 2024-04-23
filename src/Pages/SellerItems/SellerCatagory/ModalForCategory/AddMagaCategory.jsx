@@ -217,7 +217,7 @@ const AddMagaCategory = () => {
                             }}
                             name='wocomarceCategory'
                             required
-                            options={wooCategory.categories?.map((warehouse) => ({
+                            options={wooCategory.categories.length && categories?.map((warehouse) => ({
                                 value: JSON.stringify(warehouse),
                                 label: warehouse.name,
                             }))}

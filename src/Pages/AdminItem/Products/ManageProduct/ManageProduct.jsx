@@ -489,7 +489,7 @@ const ManageProduct = () => {
 
                           <td className="px-4 py-4 text-sm text-black whitespace-nowrap flex gap-1">
                             {
-                              product?.categories?.map((itm, index) => (
+                              product?.categories.length && product?.categories?.map((itm, index) => (
                                 <div className="text-sm rounded-full flex items-center gap-1" key={index}>
                                   {itm?.name}
                                   {index !== product.categories.length - 1 || !itm?.name === '' && <FaAngleRight />}

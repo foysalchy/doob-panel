@@ -357,7 +357,7 @@ const AddBlog = () => {
                 // }
               >
                 <option disabled>Select Blog Category</option>
-                {blogCategories?.map((category, i) => (
+                {blogcategories.length && categories?.map((category, i) => (
                   <option key={category.title} value={category.title}>
                     {category.title}
                   </option>
@@ -375,11 +375,11 @@ const AddBlog = () => {
                   modules={modules}
                   placeholder="Enter description here..."
                   value={message}
-                  // defaultValue={
-                  //   restoreDrafts && draftsBlogData?.message
-                  //     ? draftsBlogData?.message
-                  //     : ""
-                  // }
+                // defaultValue={
+                //   restoreDrafts && draftsBlogData?.message
+                //     ? draftsBlogData?.message
+                //     : ""
+                // }
                 />
                 {/* <JoditEditor ></JoditEditor> */}
               </div>

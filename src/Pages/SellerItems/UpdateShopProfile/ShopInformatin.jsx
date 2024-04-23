@@ -68,7 +68,7 @@ const ShopInformation = () => {
                 <li className="flex items-center border-b py-2 space-x-2">
                     <span className="font-bold w-24">Elsewhere:</span>
                     {
-                        contacts.map((cont) => (
+                        contacts.length && contacts?.map((cont) => (
                             <div key={cont._id}>
 
                                 {

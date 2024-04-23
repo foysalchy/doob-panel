@@ -339,7 +339,12 @@ const ProductDetails = () => {
   };
 
   const balk_buy = () => {
-    const product = productFind 
+    const product = productFind
+    const newData = {
+      product_id: product?._id,
+    }
+    console.log(product, 'product');
+
   }
 
   // console.log(productFind, 'comment');
@@ -649,6 +654,8 @@ const ProductDetails = () => {
                     </button>
                   </div>
                 </div>
+                  <button onClick={balk_buy} className="h-10 px-6 py-2 text-sm rounded bg-orange-600 hover:bg-orange-500 text-white" type="button">Add Store</button>
+
                 {/* 
                 <button
                   onClick={() => handleStore(productFind?._id)}
@@ -657,6 +664,8 @@ const ProductDetails = () => {
                 >
                   Buy Now
                 </button> */}
+
+              
 
 
                 <div className="flex flex-wrap gap-2">

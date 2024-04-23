@@ -176,8 +176,8 @@ const ProductHero = () => {
                                 onClick={() => subCategoryHandler(item, index)}
                                 className={`flex  items-center  w-full justify-between px-2 py-1 capitalize text-sm font-normal  hover:bg-black hover:text-white  relative  ${openDropdownIndex === index ? 'bg-gray-100 text-black' : 'text-black'} rounded`}
                             >
-                                <span className="flex items-center ">
-                                    <img src={item?.image} alt="" className="w-8 h-8 rounded-full ring-1 ring-gray-200" /> {item?.name}
+                                <span className="flex gap-2 items-center ">
+                                    <img src={item?.image} alt="" className="w-8 h-8  ring-1 ring-gray-200 ml-2" /> {item?.name}
                                 </span>
                                 <FaAngleRight className="absolute right-2" />
                             </button>
@@ -196,7 +196,7 @@ const ProductHero = () => {
                                                     >
                                                         <div
                                                             onMouseMove={() => miniCategoryHandler(subCategory, index)}
-                                                            className={`flex items-center hover:bg-gray-100 w-full justify-between px-2 py-1 capitalize text-sm font-normal cursor-pointer mb-1 rounded relative  ${active?.step1 === subCategory?._id ? 'text-black bg-gray-100' : 'text-black'}`}
+                                                            className={`flex  items-center hover:bg-gray-100 w-full justify-between px-2 py-1 capitalize text-sm font-normal cursor-pointer mb-1 rounded relative  ${active?.step1 === subCategory?._id ? 'text-black bg-gray-100' : 'text-black'}`}
                                                             type="button"
                                                             id={item?._id}
                                                             data-te-dropdown-toggle-ref

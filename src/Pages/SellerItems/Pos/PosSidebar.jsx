@@ -16,13 +16,34 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
     const [user, setUser] = useState(false)
     const [error, setError] = useState(false)
 
-    const [name, setName] = useState(user.name ? user.name : '');
-    const [email, setEmail] = useState(user.email ? user.email : '');
-    const [phoneNumber, setPhoneNumber] = useState(user.phoneNumber ? user.phoneNumber : '');
-    const [address, setAddress] = useState(user.address ? user.address : '');
+    // const [name, setName] = useState(user.name);
+    // const [email, setEmail] = useState(user.email);
+    // const [phoneNumber, setPhoneNumber] = useState(user.phoneNumber);
+    // const [address, setAddress] = useState(user.address);
 
     const [searchValue, setSearchValue] = useState('')
     const [searchType, setSearchType] = useState("userNumber")
+    const [gest, setGest] = useState(false)
+
+
+    const gust_update = (status) => {
+        setGest(status)
+        if (status) {
+            const data = {
+                name: 'Gust User',
+                email: ' ',
+                phoneNumber: ' ',
+                address: ' ',
+            }
+            console.log(data);
+
+            setUser(data)
+        } else {
+            setUser(false)
+        }
+    }
+
+    console.log(user, 'update user');
 
     const toggleCheckbox = () => {
         setIsChecked(!isChecked);
@@ -149,23 +170,23 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
     const handleFormSubmit = (e) => {
         e.preventDefault();
         const form = e.target
-        const name = form?.name.value;
-        const email = form?.email.value;
-        const number = form?.phoneNumber.value;
-        const address = form?.phoneNumber.value;
+        const name = gust ? 'Gest User' : form?.name.value;
+        const email = gust ? ' ' : form?.email.value;
+        const number = gust ? ' ' : form?.phoneNumber.value;
+        const address = gust ? ' ' : form?.phoneNumber.value;
 
         const data = {
             name,
             email,
             number,
             address
-
         }
+        console.log(data);
         setUser(data)
         setIsChecked(false)
     }
 
-    console.log(user, '........')
+    console.log(user, 'check user....')
     return (
         <div className=' h-full '>
 
@@ -249,34 +270,39 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
                 </div>
                 <div class="">
                     <div className="">
-                        <div className="flex items-center bg-gray-500 px-4 py-2  rounded justify-between">
-                            <h2 className="text-lg">Total</h2>
-                            <h2 className="text-lg">{totalPrice()}</h2>
-                        </div>
-                        <div className='flex bg-gray-400 justify-between px-4 py-2  mt-4 items-center'>
-                            <h1> Discount</h1>
-                            <label className='flex gap-2' htmlFor="percents">
-                                <input
-                                    id='percents'
-                                    type="checkbox"
-                                    checked={presents}
-                                    onChange={() => setPresents(!presents)}
-                                />
-                                Persentise
-                            </label>
-                            <input onChange={(e) => setDiscount(e.target.value)} className="bg-transparent text-right ring-1 px-2 w-[80px] ring-gray-300 rounded-md text-lg" type="text px-2" />
-                        </div>
-                        <div className="flex justify-between bg-green-400 px-4 py-2  mt-4  items-start">
-                            <div className="">
-                                <h3 className="text-lg">Cash</h3>
+                        <div className='grid grid-cols-3 gap-2'>
+                            <div className="bg-gray-500  mt-4 px-4 py-2  rounded ">
+                                <h3 className="text-lg">Total</h3>
+                                <hr />
+                                <h2 className="text-lg">{totalPrice()}</h2>
                             </div>
-                            <input
-                                value={cash}
-                                onChange={(e) => setCash(e.target.value)}
-                                type="number"
-                                className="bg-transparent px-2 text-right ring-1 w-[80px] ring-gray-300 rounded-md text-lg"
-                            />
+                            <div className=' bg-gray-400 rounded px-4 py-2  mt-4 '>
+
+                                <label className='flex gap-2' htmlFor="percents">
+                                    <input
+                                        id='percents'
+                                        type="checkbox"
+                                        checked={presents}
+                                        onChange={() => setPresents(!presents)}
+                                    />
+                                    Percentage
+                                </label>
+
+                                <input onChange={(e) => setDiscount(e.target.value)} className="bg-transparent text-right ring-1 px-2 w-[80px] ring-gray-300 rounded-md text-lg" type="text px-2" />
+                            </div>
+                            <div className=" bg-green-400 rounded px-4 py-2  mt-4  items-start">
+                                <div className="">
+                                    <h3 className="text-lg">Paid</h3>
+                                </div>
+                                <input
+                                    value={cash}
+                                    onChange={(e) => setCash(e.target.value)}
+                                    type="number"
+                                    className="bg-transparent px-2 text-right ring-1 w-[80px] ring-gray-300 rounded-md text-lg"
+                                />
+                            </div>
                         </div>
+
 
                         <div className='flex justify-between bg-green-400 px-4 py-2  mt-4  items-start'>
                             <div className="">
@@ -332,7 +358,7 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
                         </div>
 
                         <div className={` ring-1 font-bold flex items-center justify-between ring-gray-300 text-black rounded p-2 w-full mt-3  ${changeAmount > 0 ? "bg-green-500" : changeAmount < 0 ? "bg-red-500" : ""}`}>
-                            <div>Change</div>
+                            <div>Due</div>
                             <div className={`text-end`}>
                                 {parseInt(changeAmount)}
                             </div>
@@ -342,17 +368,29 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
                         {<div>
                             <div className='flex justify-between'>
                                 <label> Search User</label>
-                                <div>
+                                <div className='flex items-center gap-2'>
                                     <label htmlFor='user' className=''>New User</label>
                                     <input
                                         className='ml-2'
                                         type="checkbox"
                                         name="user"
                                         id="user"
-                                        checked={user}
+                                        checked={isChecked}
                                         onChange={toggleCheckbox}
                                     />
+                                    <div>
+                                        <label htmlFor='gest' className=''>Gest User</label>
+                                        <input
+                                            className='ml-2'
+                                            type="checkbox"
+                                            name="gest"
+                                            id="gest"
+                                            checked={gest}
+                                            onChange={() => gust_update(!gest)}
+                                        />
+                                    </div>
                                 </div>
+
                             </div>
 
                             <div className='flex gap-2 items-center'>
@@ -433,7 +471,7 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
                                                     name="email"
                                                     defaultValue={(user && !existing) ? user?.email : ''}
                                                     className="mt-1 p-2 w-full border rounded-md"
-                                                    
+
                                                     onChange={(e) => setEmail(e.target.value)}
                                                 />
                                             </div>
@@ -448,7 +486,7 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
                                                     name="phoneNumber"
                                                     defaultValue={(user && !existing) ? user?.phoneNumber : ''}
                                                     className="mt-1 p-2 w-full border rounded-md"
-                                                    
+
                                                     onChange={(e) => setPhoneNumber(e.target.value)}
                                                 />
                                             </div>
@@ -461,7 +499,7 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
                                                     id="address"
                                                     name="address"
                                                     className="mt-1 p-2 w-full border rounded-md"
-                                                    
+
                                                     onChange={(e) => setAddress(e.target.value)}
                                                 ></textarea>
                                             </div>

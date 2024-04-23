@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import PosInvoice from './PosInvoice';
 import { useQuery } from '@tanstack/react-query';
 import { AuthContext } from '../../../AuthProvider/UserProvider';
@@ -12,7 +12,7 @@ const PosProductsDetails = ({ passUser, invoice, open, setOpen, setCartProducts 
     const [error, setError] = useState(false)
 
     const { name, email, phoneNumber, address } = passUser
-
+    console.log(passUser);
 
 
     const [invoiceOpen, setInvoiceOpen] = useState(false);
@@ -29,6 +29,7 @@ const PosProductsDetails = ({ passUser, invoice, open, setOpen, setCartProducts 
                 phoneNumber,
                 address
             },
+
             shopId: shopInfo._id,
             date: new Date().getTime(),
         }
@@ -45,7 +46,7 @@ const PosProductsDetails = ({ passUser, invoice, open, setOpen, setCartProducts 
                 body: JSON.stringify(data),
             }).then((res) => res.json()).then((data) => {
                 if (data.status) {
-                    BrightAlert()
+                    // BrightAlert()
                     setInvoiceOpen(true)
                     setUser(false)
                     setExisting(false)
@@ -67,11 +68,18 @@ const PosProductsDetails = ({ passUser, invoice, open, setOpen, setCartProducts 
     }
 
 
+    useEffect(() => {
+        if (open) {
+            handleInvoiceSubmit()
+        }
+    }, [open])
+
+
 
 
     return (
         <div>
-            {
+            {/* {
                 open && <div className='bg-[#050505bc]  w-screen  fixed top-0 bottom-0 left-0 right-0 flex items-center justify-center z-[1000]'>
                     <div className="w-[600px] max-h-[90%] overflow-y-auto p-6 bg-white rounded-lg">
                         <button onClick={() => setOpen(!open)} className='p-2 float-right text-lg'>x</button>
@@ -125,7 +133,7 @@ const PosProductsDetails = ({ passUser, invoice, open, setOpen, setCartProducts 
                         </div>}
                         {
                             error && <p className='text-sm text-red-500'>Error: {error}</p>
-                        } */}
+                        } 
 
                         <button
                             disabled={postData ? true : false}
@@ -134,14 +142,15 @@ const PosProductsDetails = ({ passUser, invoice, open, setOpen, setCartProducts 
                             Submit
                         </button>
 
-                        {postData && <PosInvoice setCartProducts={setCartProducts} setUser={setUser} setOpen={setOpen} invoiceData={postData} setInvoiceOpen={setInvoiceOpen} invoiceOpen={invoiceOpen} />}
+                     
 
 
                         {/* <button onClick={handleInvoiceSubmit} className='bg-gray-900 text-white px-2 w-full py-2 rounded-md mt-5'>Submit</button>
-                        {postData && <PosInvoice setOpen={setOpen} invoiceData={postData} setInvoiceOpen={setInvoiceOpen} invoiceOpen={invoiceOpen} />} */}
+                        {postData && <PosInvoice setOpen={setOpen} invoiceData={postData} setInvoiceOpen={setInvoiceOpen} invoiceOpen={invoiceOpen} />} 
                     </div>
                 </div>
-            }
+            } */}
+            {postData && <PosInvoice setCartProducts={setCartProducts} setUser={setUser} setOpen={setOpen} invoiceData={postData} setInvoiceOpen={setInvoiceOpen} invoiceOpen={invoiceOpen} />}
         </div>
     );
 };

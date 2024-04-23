@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../../../AuthProvider/UserProvider';
 import Swal from 'sweetalert2';
 import ReactQuill from 'react-quill';
+import { quillModules } from '../../../quillModule';
 
 const AddNotice = () => {
     const [selectedFile, setSelectedFile] = useState(null);

@@ -30,7 +30,7 @@ const MiniCategoriesManagement = () => {
         setSearchQuery(event.target.value);
     };
 
-    const filteredData = categories?.map((filteredItem) => {
+    const filteredData = categories.length && categories?.map((filteredItem) => {
         let parsedDarazCategory = filteredItem?.darazCategory;
 
         try {
