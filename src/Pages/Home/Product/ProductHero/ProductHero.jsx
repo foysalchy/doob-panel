@@ -156,8 +156,7 @@ const ProductHero = () => {
         console.log(filteredSubCategory, 'filteredSubCategory');
     };
 
-
-    console.log(megaSideCategoryData, 'megaSideCategoryData');
+    console.log(allCategory, 'megaSideCategoryData');
     return (
         <div className='flex gap-4 '>
             <div className="bg-white  w-[340px] relative lg:flex hidden flex-col  rounded-lg p-4 ">
@@ -173,19 +172,25 @@ const ProductHero = () => {
                         <div key={index} className="  inline-block">
                             {/* Dropdown toggle button */}
                             <button
+                                disabled={!allCategory?.subCategorys.filter(
+                                    (subCategory) => subCategory.megaCategoryId === item?._id
+                                ).length >= 1}
+
                                 onClick={() => subCategoryHandler(item, index)}
                                 className={`flex  items-center  w-full justify-between px-2 py-1 capitalize text-sm font-normal  hover:bg-black hover:text-white  relative  ${openDropdownIndex === index ? 'bg-gray-100 text-black' : 'text-black'} rounded`}
                             >
                                 <span className="flex items-center ">
                                     <img src={item?.image} alt="" className="w-8 h-8 rounded-full ring-1 ring-gray-200" /> {item?.name}
                                 </span>
-                                <FaAngleRight className="absolute right-2" />
+                                {allCategory?.subCategorys.filter(
+                                    (subCategory) => subCategory.megaCategoryId === item?._id
+                                ).length >= 1 && <FaAngleRight className="absolute right-2" />}
+                                {/* {<FaAngleRight className="absolute right-2" />} */}
                             </button>
 
                             {/* Dropdown menu */}
                             {openDropdownIndex === index && (
-                                <div
-                                    onClick={() => setOpenDropdownIndex(null)}
+                                <div onClick={() => setOpenDropdownIndex(null)}
                                     className="absolute right-[-196px] top-0 z-20 w-48 h-full py-1 capitalize mt-2 px-2 origin-top-right bg-white">
                                     {
                                         subCategoryData.map((subCategory, index) => <div key={index}>

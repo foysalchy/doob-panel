@@ -195,6 +195,8 @@ const ShopProductHero = () => {
             (subCategory) => subCategory.megaCategoryId === category?._id
         );
 
+        console.log(allCategory, '++++');
+
         setSubCategoryData(filteredSubCategory);
         setminiCategoryData([]);
         setExtraCategoryData([]);
@@ -284,7 +286,7 @@ const ShopProductHero = () => {
                                                     {/* <img src={item?.image} alt="" className="w-8 h-8 rounded-full ring-1 ring-gray-200" /> */}
                                                     {item?.name}
                                                 </span>
-                                                {subCategoryData.length ? <FaAngleRight className="absolute right-2" /> : ''}
+                                                {openDropdownIndex === index ? <FaAngleRight className="absolute right-2" /> : ''}
                                             </button>
                                             // :
 

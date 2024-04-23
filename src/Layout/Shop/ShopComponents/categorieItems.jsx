@@ -7,24 +7,79 @@ import { SwiperSlide } from "swiper/react";
 import { ShopAuthProvider } from "../../../AuthProvider/ShopAuthProvide";
 
 export default function CategorieItems({ setIsMenuOpen }) {
-    const [allCategory, setAllCategory] = useState({
-        subCategorys: [],
-        miniCategorys: [],
-        extraCategorys: [],
-    });
-    const { shop_id } = useContext(ShopAuthProvider)
-
     const pathname = window.location.pathname;
     const idMatch = pathname.match(/\/shop\/([^/]+)/);
 
     const shopId = idMatch ? idMatch[1] : null;
 
-    const [open, setOpen] = useState(false);
+    console.log('Shop ID:', shopId);
+    const { data: categories = [], isLoading, refetch } = useQuery({
+        queryKey: ["categories"],
+        queryFn: async () => {
+            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/category/get/${shopId}`);
+            const data = await res.json();
+            return data;
+        },
+    });
+
+    console.log(categories, 'checkkkkkkkkkk')
+
+    const { shop_id } = useContext(ShopAuthProvider)
+
+    const { data: Banar = [] } = useQuery({
+        queryKey: ["banar"],
+        queryFn: async () => {
+            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/slider/get/${shopId}`);
+            const data = await res.json();
+            return data;
+        },
+    });
+
+
+    const { data: adds } = useQuery({
+        queryKey: ["adds"],
+        queryFn: async () => {
+            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/popup/get/${shopId}`);
+            const data = await res.json();
+            return data;
+        },
+    });
+
+    console.log(adds);
+
+    const [showModal, setShowModal] = useState(false);
+    useEffect(() => {
+        const lastModalShownTimestamp = localStorage.getItem('lastModalShownTimestamp');
+
+        // Check if the modal hasn't been shown in the last 24 hours for this device
+        if (
+            (!lastModalShownTimestamp ||
+                Date.now() - parseInt(lastModalShownTimestamp, 10) >= 5 * 60 * 60 * 1000) &&
+            window.location.pathname === `/shop/${shopId}`
+        ) {
+            // Show the modal after 5 seconds
+            const timeoutId = setTimeout(() => {
+                setShowModal(true);
+
+                // Update the timestamp to the current time
+                localStorage.setItem('lastModalShownTimestamp', Date.now().toString());
+            }, 5000);
+
+            // Cleanup the timeout to avoid memory leaks
+            return () => clearTimeout(timeoutId);
+        }
+    }, [shopId]);
+
+    // copy
+    const [allCategory, setAllCategory] = useState({
+        subCategorys: [],
+        miniCategorys: [],
+        extraCategorys: [],
+    });
     const [subCategoryData, setSubCategoryData] = useState([]);
     const [miniCategoryData, setminiCategoryData] = useState([]);
     const [extraCategoryData, setExtraCategoryData] = useState([]);
     const [openDropdownIndex, setOpenDropdownIndex] = useState(null);
-
     const [active, setActive] = useState(
         {
             step1: null,
@@ -35,12 +90,11 @@ export default function CategorieItems({ setIsMenuOpen }) {
     const { user, shopInfo } = useContext(AuthContext);
 
     const { data: megaSideCategoryData = [], refetch: refetchMegaCategory } = useQuery({
-        queryKey: ['megaSideCategoryDataForSaller'],
+        queryKey: ['megaSideCategoryDataSaller'],
         queryFn: async () => {
             const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/category/get/${shopId}`);
             const data = await res.json();
-            console.log(data, 'data');
-            return data;
+            return data.slice(0, 7);
         },
     });
 
@@ -55,16 +109,17 @@ export default function CategorieItems({ setIsMenuOpen }) {
 
     // const blankImg = 'https://backend.doob.com.bd/api/v1/image/66036ed3df13bd9930ac229c.jpg';
     const bannerFind = heroBanner?.filter((item) => item.status === 'true');
-
+    // https://salenow-v2-backend.vercel.app/api65e8a0a2e04a44a47ce186c3
     useEffect(() => {
         const fetchData = async () => {
-            const subCategoryPromises = megaSideCategoryData?.filter(itm => itm?.body.menu === true).map(async (item) => {
+            const subCategoryPromises = megaSideCategoryData?.filter(itm => itm?.menu === true).map(async (item) => {
                 try {
                     const response = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/category/seller/sub-category-by-id?shopId=${shop_id?.shop_id}&id=${item?._id}`);
                     const data = await response.json();
-                    console.log(data, '------->')
+                    console.log(data, 'data..............**');
                     return data;
                 } catch (error) {
+                    console.error('Error:', error);
                     return [];
                 }
             });
@@ -81,11 +136,13 @@ export default function CategorieItems({ setIsMenuOpen }) {
     useEffect(() => {
         const fetchData = async () => {
             const miniCategoryPromises = allCategory.subCategorys.map(async (itm) => {
+                // console.log(`https://salenow-v2-backend.vercel.app/api/v1/category/seller/mini-category-by-id?shopId=${shop_id?.shop_id}&id=${itm?._id}`, '**********')
                 try {
                     const response = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/category/seller/mini-category-by-id?shopId=${shop_id?.shop_id}&id=${itm?._id}`);
                     const data = await response.json();
                     return data;
                 } catch (error) {
+                    console.error('Error:', error);
                     return [];
                 }
             });
@@ -100,13 +157,16 @@ export default function CategorieItems({ setIsMenuOpen }) {
     }, [allCategory.subCategorys]);
 
     useEffect(() => {
+
         const fetchData = async () => {
             const extraCategoryPromises = allCategory.miniCategorys.map(async (itm) => {
+                // console.log(`https://salenow-v2-backend.vercel.app/api/v1/category/seller/extra-category-by-id?shopId=${shop_id?.shop_id}&id=${itm?._id}`, '************---->')
                 try {
                     const response = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/category/seller/extra-category-by-id?shopId=${shop_id?.shop_id}&id=${itm?._id}`);
                     const data = await response.json();
                     return data;
                 } catch (error) {
+                    console.error('Error:', error);
                     return [];
                 }
             });
@@ -121,41 +181,50 @@ export default function CategorieItems({ setIsMenuOpen }) {
     }, [allCategory.miniCategorys]);
 
     const subCategoryHandler = async (category, index) => {
-        setOpenDropdownIndex(prevIndex => prevIndex === index ? null : index);
         const filteredSubCategory = allCategory?.subCategorys.filter(
             (subCategory) => subCategory.megaCategoryId === category?._id
         );
 
+        console.log(allCategory, '++++');
+
         setSubCategoryData(filteredSubCategory);
-        // Reset miniCategoryData to an empty array when a subCategory is clicked
         setminiCategoryData([]);
         setExtraCategoryData([]);
+        setOpenDropdownIndex(openDropdownIndex === index ? null : index);
+
     };
 
     const miniCategoryHandler = async (category, index) => {
-        const filteredMiniCategory = allCategory?.miniCategorys.filter(
+        const filteredSubCategory = allCategory?.miniCategorys.filter(
             (miniCategory) => miniCategory.subCategoryId === category?._id
         );
-        setminiCategoryData(filteredMiniCategory);
+
+        setminiCategoryData(filteredSubCategory);
         setActive({ ...active, step1: category?._id })
+
     };
 
     const extraCategoryHandler = async (category, index) => {
+        // console.log(allCategory.extraCategorys[0].miniCategoryId, 'dd');
         const filteredSubCategory = allCategory?.extraCategorys.filter(
             (extraCategory) => extraCategory?.miniCategoryId === category?._id
         );
+
         setExtraCategoryData(filteredSubCategory);
         setActive({ ...active, step2: category?._id })
+
+        console.log(filteredSubCategory, 'filteredSubCategory');
     };
-    const [activeMiniCategory, setActiveMiniCategory] = useState(null);
 
 
-    console.log(activeMiniCategory, 'data......');
+    console.log(allCategory, 'test....======');
+
     return (
         <div className='bg-[white] h-[90vh] fixed p-2 z-[3000] overflow-y-auto  w-full top-0'>
             <button onClick={() => setIsMenuOpen(false)}>
                 x
             </button>
+
             <div className="grid grid-cols-4 gap-2 pt-2 h-full overflow-y-">
                 {/* mega category */}
                 <div className="">
@@ -168,7 +237,7 @@ export default function CategorieItems({ setIsMenuOpen }) {
                                         onClick={() => subCategoryHandler(item, index)}
                                         className={`flex flex-col gap-2 bg-gray-100 w-full h-auto rounded  items-center justify-center mb-2 px-2 py-2 text-sm font-normal   relative  ${openDropdownIndex === index ? '' : 'text-black'}`}>
                                         <img src={item?.image} alt="" className="w-[70px]  h-[60px] object-cover ring-1 ring-gray-400" />
-                                        <p className="text-sm text-center">{item?.name}</p>
+                                        <p className="text-sm text-center">{item?.name}++</p>
 
                                     </div>
                                 </Link> :
@@ -178,7 +247,7 @@ export default function CategorieItems({ setIsMenuOpen }) {
                                         className={`${openDropdownIndex === index ? 'bg-gray-800 text-white' : 'bg-gray-100 text-black'} flex flex-col gap-2 w-full h-auto rounded  items-center justify-center mb-2 px-2 py-2 text-sm font-normal   relative `}
                                     >
                                         <img src={item?.image} alt="" className="w-[60px]  h-[60px] object-cover ring-1 ring-gray-400" />
-                                        <p className="text-sm">{item?.name}</p>
+                                        <p className="text-sm">{item?.name}..</p>
                                     </button>
                                 </div>
                             }
@@ -187,7 +256,7 @@ export default function CategorieItems({ setIsMenuOpen }) {
                 </div>
                 {/* Sub category */}
                 <div className="col-span-3">
-                    {subCategoryData.map((item, index) => (
+                    {allCategory?.subCategorys.map((item, index) => (
                         <div className="space-y-2 mb-2">
                             <details
                                 onClick={() => miniCategoryHandler(item, index)}

@@ -11,10 +11,12 @@ import { useEffect } from 'react';
 import ShopAuth from '../../AuthProvider/ShopAuthProvide';
 import { Footer } from './ShopComponents/shopFotterComponent';
 
-import { BiSupport } from 'react-icons/bi'
+import { BiSearch, BiSupport } from 'react-icons/bi'
 import { AiOutlineWhatsApp } from 'react-icons/ai';
 import { BsMessenger } from 'react-icons/bs';
 import { MdEmail } from 'react-icons/md';
+import { CgClose } from 'react-icons/cg';
+import CategorieItems from './ShopComponents/categorieItems';
 
 const ShopLayout = () => {
     const [modalShop, setModalShop] = useState(false)
@@ -51,6 +53,7 @@ const ShopLayout = () => {
 
     return (
         <div >
+
 
             {isLoading ?
                 <div className="grid h-screen px-4 bg-black place-content-center">
