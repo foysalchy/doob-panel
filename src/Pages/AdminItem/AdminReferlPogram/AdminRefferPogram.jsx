@@ -19,9 +19,9 @@ const AdminReeferProgram = () => {
     const pageSize = 6;
     const startIndex = (currentPage - 1) * pageSize;
     const endIndex = startIndex + pageSize;
-    const totalPages = Math.ceil(referUsers?.length / pageSize);
+    const totalPages = Math.ceil(referUsers?.filter(user => user.code !== "")?.length / pageSize);
 
-    const currentData = referUsers.slice(startIndex, endIndex);
+    const currentData = referUsers.filter(user => user.code !== "").slice(startIndex, endIndex);
 
     const handleChangePage = (newPage) => {
 
@@ -85,6 +85,8 @@ const AdminReeferProgram = () => {
         );
     };
 
+
+    console.log(currentData);
 
 
     return (
@@ -150,12 +152,17 @@ const AdminReeferProgram = () => {
                                             className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
                                         >
                                             Refer Code
+                                        </th><th
+                                            scope="col"
+                                            className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                                        >
+                                            Due
                                         </th>
 
                                     </tr>
                                 </thead>
                                 <tbody className="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
-                                    {currentData.map((users, idx) => (
+                                    {currentData.filter(user => user.code !== "").map((users, idx) => (
                                         <tr>
                                             <td className="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
                                                 <div className="inline-flex items-center gap-x-3">
@@ -170,7 +177,7 @@ const AdminReeferProgram = () => {
                                                 <div className="flex items-center gap-x-2">
 
                                                     <div>
-                                                        <p className="text-xs font-normal text-gray-600 dark:text-gray-400">
+                                                        <p className="text-xs font-normal text-gray-400">
                                                             {users?.email}
                                                         </p>
                                                     </div>
@@ -179,7 +186,7 @@ const AdminReeferProgram = () => {
                                             <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
                                                 {users?.code}
                                             </td>
-
+                                            <td className='px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap'> ৳ {users.due ? users.due : 2500}</td>
                                         </tr>
                                     ))}
 
