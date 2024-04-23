@@ -16,9 +16,6 @@ import { BsArrowRight } from "react-icons/bs";
 import Swal from "sweetalert2";
 import EditAdminCategoryforSeller from "../EditAdminCategoryforSeller";
 
-
-
-
 const CategoryEditPage = () => {
   const id = useParams().id;
 
@@ -349,8 +346,8 @@ const CategoryEditPage = () => {
     console.log(data, "edit --------------------------->");
 
     fetch(
-      //   "https://salenow-v2-backend.vercel.app/api/v1/seller/normal-product",
-      `http://localhost:5001/api/v1/seller/normal-product?id=${product?._id}`,
+      `https://salenow-v2-backend.vercel.app/api/v1/seller/normal-product?id=${product?._id}`,
+      // `http://localhost:5001/api/v1/seller/normal-product?id=${product?._id}`,
       {
         method: "PUT",
         headers: {
@@ -457,7 +454,6 @@ const CategoryEditPage = () => {
             inputFields={inputFields}
             setInputFields={setInputFields}
           />
-          
         </div>
         <EditAdminCategoryforSeller product={product} />
 

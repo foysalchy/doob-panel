@@ -80,7 +80,7 @@ const ForYouProducts = () => {
                     console.log(product);
                     return (
                       <Link to={`${product._id}`} className="group block overflow-hidden">
-                        <div className="relative h-[250px] sm:h-[250px]">
+                        <div className="relative h-[180px] sm:h-[250px]">
                           <img
                             src={product?.featuredImage?.src}
                             alt=""
