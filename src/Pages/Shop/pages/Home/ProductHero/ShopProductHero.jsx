@@ -231,7 +231,7 @@ const ShopProductHero = () => {
         <div>
             <div className='flex gap-4 overflow-y-hidden  '>
 
-                <div className='hidden   bg-white w-[20%] h-[350px]   rounded-xl lg:flex flex-col gap-2  text-sm'>
+                <div className='hidden   bg-white w-[20%] h-[350px]   rounded-xl lg:flex flex-col   text-sm'>
                     {/* {showModal && adds && (
                         <div className="fixed top-0 left-0 flex items-center justify-center w-full h-full bg-black bg-opacity-90 z-50">
                             <div className="relative max-w-screen-lg mx-auto">
@@ -254,7 +254,7 @@ const ShopProductHero = () => {
                             ?.filter((item) => item.status)
                             ?.map((item, index) => (
                                 <div className='mt-2' key={index + 1}>
-                                    <Link className='flex items-center gap-2' to={`categories/${shop_id.shop_id}/${item?.name}`}>
+                                    <Link className='flex items-center ' to={`categories/${shop_id.shop_id}/${item?.name}`}>
                                         <img
                                             className="h-4 w-4 rounded text-gray-400 filter grayscale brightness-90 object-cover"
                                             src={item?.img}
@@ -266,7 +266,7 @@ const ShopProductHero = () => {
                                 </div>
                             ))}
                     </div> */}
-                    <div className=" w-full relative lg:flex hidden flex-col gap-2 rounded-lg p-4">
+                    <div className=" w-full relative lg:flex hidden flex-col  rounded-lg p-4">
                         {!megaSideCategoryData ? <>
 
                             loading......
@@ -278,9 +278,9 @@ const ShopProductHero = () => {
                                         {
                                             <button
                                                 onClick={() => subCategoryHandler(item, index)}
-                                                className={`flex  items-center  w-full justify-between px-2 py-2 text-sm font-normal  hover:bg-black hover:text-white  relative  ${openDropdownIndex === index ? 'bg-gray-100 text-black' : 'text-black'} rounded`}
+                                                className={`flex  items-center  w-full justify-between px-2 py-1 capitalize text-sm font-normal  hover:bg-gray-100   relative  ${openDropdownIndex === index ? 'bg-gray-100 text-black' : 'text-black'} rounded`}
                                             >
-                                                <span className="flex items-center gap-2">
+                                                <span className="flex items-center ">
                                                     {/* <img src={item?.image} alt="" className="w-8 h-8 rounded-full ring-1 ring-gray-200" /> */}
                                                     {item?.name}
                                                 </span>
@@ -292,7 +292,7 @@ const ShopProductHero = () => {
                                             //     // onClick={() => subCategoryHandler(item, index)}
                                             //     className={`flex  items-center  w-full justify-between px-2 py-2 text-sm font-normal  hover:bg-black hover:text-white  relative  ${openDropdownIndex === index ? 'bg-gray-100 text-black' : 'text-black'} rounded`}
                                             // >
-                                            //     <span className="flex items-center gap-2">
+                                            //     <span className="flex items-center ">
                                             //         {/* <img src={item?.image} alt="" className="w-8 h-8 rounded-full ring-1 ring-gray-200" /> */}
                                             //         {item?.name}
                                             //     </span>
@@ -305,7 +305,7 @@ const ShopProductHero = () => {
                                     {openDropdownIndex === index || subCategoryData.length > 0 && (
                                         <div
                                             onClick={() => setOpenDropdownIndex(null)}
-                                            className="absolute  right-[-196px] top-0 z-20 w-48 h-full py-2 mt-2 px-2 origin-top-right bg-white">
+                                            className="absolute  right-[-196px] top-0 z-20 w-48 h-full py-1 capitalize mt-2 px-2 origin-top-right bg-white">
                                             {
                                                 subCategoryData.map((subCategory, index) => <div key={index}>
                                                     {
@@ -313,14 +313,14 @@ const ShopProductHero = () => {
                                                             <div>
                                                                 <div
                                                                     onMouseMove={() => miniCategoryHandler(subCategory, index)}
-                                                                    className={`flex items-center hover:bg-gray-100 w-full justify-between px-2 py-2 text-sm font-normal cursor-pointer mb-1 rounded relative  ${active?.step1 === subCategory?._id ? 'text-black bg-gray-100' : 'text-black'}`}
+                                                                    className={`flex items-center hover:bg-gray-100 w-full justify-between px-2 py-1 capitalize text-sm font-normal cursor-pointer mb-1 rounded relative  ${active?.step1 === subCategory?._id ? 'text-black bg-gray-100' : 'text-black'}`}
                                                                     type="button"
                                                                     id={item?._id}
                                                                     data-te-dropdown-toggle-ref
                                                                     aria-expanded="false"
                                                                     data-te-ripple-init
                                                                     data-te-ripple-color="light">
-                                                                    <span className="flex items-center gap-2 text-black">
+                                                                    <span className="flex items-center  text-black">
                                                                         <img src={subCategory?.img} alt="" className="w-8 h-8 rounded-full ring-1 ring-gray-200" />
 
                                                                         {subCategory?.subCategoryName}
@@ -333,12 +333,12 @@ const ShopProductHero = () => {
                                                                         <div key={index}>
                                                                             {
                                                                                 !megaSideCategoryData.length == 0 ? <Link to={`/products/catagory/${miniCategory?._id}`}>
-                                                                                    <div onMouseMove={(() => extraCategoryHandler(miniCategory, index))} className={`flex mt-2 items-center  w-full justify-between px-2 py-2 text-sm font-normal rounded hover:bg-gray-100 hover:text-black  relative  ${active?.step2 === miniCategory?._id ? 'bg-gray-100 text-black' : 'text-black'}`}>
-                                                                                        <span className="flex items-center gap-2">
+                                                                                    <div onMouseMove={(() => extraCategoryHandler(miniCategory, index))} className={`flex mt-2 items-center  w-full justify-between px-2 py-1 capitalize text-sm font-normal rounded hover:bg-gray-100 hover:text-black  relative  ${active?.step2 === miniCategory?._id ? 'bg-gray-100 text-black' : 'text-black'}`}>
+                                                                                        <span className="flex items-center ">
                                                                                             <img src={miniCategory?.img} alt="" className="w-8 h-8 rounded-full ring-1 ring-gray-200" /> {miniCategory?.miniCategoryName}
                                                                                         </span>
                                                                                     </div>
-                                                                                </Link> : <div onMouseMove={(() => extraCategoryHandler(miniCategory, index))} className="flex justify-between items-center px-2 py-2 text-sm font-normal hover:text-white  hover:bg-black   ">
+                                                                                </Link> : <div onMouseMove={(() => extraCategoryHandler(miniCategory, index))} className="flex justify-between items-center px-2 py-1 capitalize text-sm font-normal hover:text-white  hover:bg-black   ">
                                                                                     {miniCategory?.miniCategoryName}
                                                                                 </div>
                                                                             }
@@ -349,7 +349,7 @@ const ShopProductHero = () => {
                                                                             marginTop: '-56px',
                                                                             marginLeft: '180px'
                                                                         }}
-                                                                        className="  w-[500px] p-2   bg-white right-[-500px] grid grid-cols-5 gap-2   top-0 h-auto">
+                                                                        className="  w-[500px] p-2   bg-white right-[-500px] grid grid-cols-5    top-0 h-auto">
                                                                         {
                                                                             extraCategoryData?.map((extraCategory, index) => <div key={index}>
                                                                                 {
@@ -357,8 +357,8 @@ const ShopProductHero = () => {
                                                                                         {extraCategory?.extraCategoryName}
 
                                                                                     </div> : <Link to={`${extraCategory?._id}/categories/${shopId}/${item?.categoryId}`}>
-                                                                                        <div className='py-2 px-2'>
-                                                                                            <span className="flex flex-col hover:bg-gray-100 items-center gap-2 w-[90px] p-2 rounded-lg ">
+                                                                                        <div className='py-1 capitalize px-2'>
+                                                                                            <span className="flex flex-col hover:bg-gray-100 items-center  w-[90px] p-2 rounded-lg ">
                                                                                                 <img src={extraCategory?.img} alt="" className="w-14 h-14 object-cover rounded-full ring-1 ring-gray-200" />
                                                                                                 <p className="text-xs font-semibold text-center">
                                                                                                     {extraCategory?.extraCategoryName} ..
@@ -378,7 +378,7 @@ const ShopProductHero = () => {
                                                             <Link to={`${item?._id}/categories/${shopId}/${item?.categoryId}`}>
                                                                 <div
                                                                     onMouseMove={() => miniCategoryHandler(subCategory, index)}
-                                                                    className={`flex items-center  w-full justify-between hover:bg-gray-100 px-2 py-2 text-sm font-normal  mb-1 rounded relative  ${active?.step2 === subCategory?._id ? 'black-black ' : 'text-black'}`}
+                                                                    className={`flex items-center  w-full justify-between hover:bg-gray-100 px-2 py-1 capitalize text-sm font-normal  mb-1 rounded relative  ${active?.step2 === subCategory?._id ? 'black-black ' : 'text-black'}`}
                                                                     type="button"
                                                                     id={item?._id}
                                                                     data-te-dropdown-toggle-ref
@@ -386,7 +386,7 @@ const ShopProductHero = () => {
                                                                     data-te-ripple-init
                                                                     data-te-ripple-color="light"
                                                                 >
-                                                                    <span className="flex items-center gap-2">
+                                                                    <span className="flex items-center ">
                                                                         <img src={subCategory?.img} alt="" className="w-8 h-8 rounded-full ring-1 ring-gray-200" /> {subCategory?.subCategoryName}
                                                                     </span>
                                                                 </div>
