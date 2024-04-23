@@ -4,15 +4,15 @@ import { BsWindowDock } from 'react-icons/bs'
 
 const HomePopularFeatures = () => {
     return (
-        <div className='bg-gray-200'>
+        <div className='bg-indigo-50'>
             <div className='px-4 py-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-20'>
                 <h1 className='text-2xl text-center mb-2'>Check out Our</h1>
                 <h1 className='text-4xl font-extrabold text-center font-inner'>Most Popular Features</h1>
                 <div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-1 py-10 gap-5">
-                    <div className="group md:h-72 h-56  scroll-smooth relative block overflow-hidden rounded hover:text-black text-black  bg-indigo-50">
+                    <div className="group md:h-72 h-56  scroll-smooth relative block overflow-hidden rounded hover:text-black text-black  bg-white">
 
                         <div className="relative p-4 sm:p-6 lg:p-8 group">
-                            <div className="flex items-center justify-center w-16  group-hover:hidden h-16 mb-4 rounded-full bg-white border">
+                            <div className="flex items-center justify-center w-16  group-hover:hidden h-16 mb-4 rounded bg-indigo-50 ">
                                 <svg
                                     className="w-12 h-12 text-black"
                                     stroke="currentColor"
@@ -52,10 +52,10 @@ const HomePopularFeatures = () => {
                         </div>
 
                     </div>
-                    <div className="group  md:h-72 h-56  scroll-smooth relative block overflow-hidden rounded hover:text-black text-black  bg-indigo-50">
+                    <div className="group  md:h-72 h-56  scroll-smooth relative block overflow-hidden rounded hover:text-black text-black  bg-white">
 
                         <div className="relative p-4 sm:p-6 lg:p-8 group">
-                            <div className="flex items-center justify-center w-16  group-hover:hidden h-16 mb-4 rounded-full bg-white border">
+                            <div className="flex items-center justify-center w-16  group-hover:hidden h-16 mb-4 rounded bg-indigo-50 ">
                                 <svg
                                     className="w-12 h-12 text-black"
                                     stroke="currentColor"
@@ -92,10 +92,10 @@ const HomePopularFeatures = () => {
                         </div>
 
                     </div>
-                    <div className="group  md:h-72 h-56  scroll-smooth relative block overflow-hidden rounded hover:text-black text-black  bg-indigo-50">
+                    <div className="group  md:h-72 h-56  scroll-smooth relative block overflow-hidden rounded hover:text-black text-black  bg-white">
 
                         <div className="relative p-4 sm:p-6 lg:p-8 group">
-                            <div className="flex items-center justify-center w-16  group-hover:hidden h-16 mb-4 rounded-full bg-white ">
+                            <div className="flex items-center justify-center w-16  group-hover:hidden h-16 mb-4 rounded bg-indigo-50 ">
                                 <svg
                                     className="w-12 h-12 text-black"
                                     stroke="currentColor"
@@ -132,12 +132,12 @@ const HomePopularFeatures = () => {
 
                     </div>
                     <div
-                        className="group md:h-72 h-56  scroll-smooth relative block overflow-hidden rounded hover:text-black text-black bg-indigo-50"
+                        className="group md:h-72 h-56  scroll-smooth relative block overflow-hidden rounded hover:text-black text-black bg-white"
 
                     >
 
                         <div className="relative p-4 sm:p-6 lg:p-8 group">
-                            <div className="flex items-center justify-center w-16  group-hover:hidden h-16 mb-4 rounded-full bg-white border">
+                            <div className="flex items-center justify-center w-16  group-hover:hidden h-16 mb-4 rounded bg-indigo-50 ">
                                 <svg
                                     className="w-12 h-12 text-black"
                                     stroke="currentColor"
@@ -175,12 +175,12 @@ const HomePopularFeatures = () => {
                     </div>
 
                     <div
-                        className="group md:h-72 h-56  hover:overflow-y-scroll scroll-smooth relative block overflow-hidden rounded hover:text-black text-black bg-indigo-50"
+                        className="group md:h-72 h-56  hover:overflow-y-scroll scroll-smooth relative block overflow-hidden rounded hover:text-black text-black bg-white"
 
                     >
 
                         <div className="relative p-4 sm:p-6 lg:p-8 group">
-                            <div className="flex items-center justify-center w-16  group-hover:hidden h-16 mb-4 rounded-full bg-white border">
+                            <div className="flex items-center justify-center w-16  group-hover:hidden h-16 mb-4 rounded bg-indigo-50 ">
                                 <svg
                                     className="w-12 h-12 text-black"
                                     stroke="currentColor"
@@ -217,10 +217,10 @@ const HomePopularFeatures = () => {
                         </div>
 
                     </div>
-                    <div className="group  md:h-72 h-56  scroll-smooth relative block overflow-hidden rounded hover:text-black text-black  bg-indigo-50">
+                    <div className="group  md:h-72 h-56  scroll-smooth relative block overflow-hidden rounded hover:text-black text-black  bg-white">
 
                         <div className="relative p-4 sm:p-6 lg:p-8 group">
-                            <div className="flex items-center justify-center w-16  group-hover:hidden h-16 mb-4 rounded-full bg-white border">
+                            <div className="flex items-center justify-center w-16  group-hover:hidden h-16 mb-4 rounded bg-indigo-50 ">
                                 <svg
                                     className="w-12 h-12 text-black"
                                     stroke="currentColor"
@@ -256,10 +256,10 @@ const HomePopularFeatures = () => {
                         </div>
 
                     </div>
-                    <div className="group  md:h-72 h-56  scroll-smooth relative block overflow-hidden rounded hover:text-black text-black  bg-indigo-50">
+                    <div className="group  md:h-72 h-56  scroll-smooth relative block overflow-hidden rounded hover:text-black text-black  bg-white">
 
                         <div className="relative p-4 sm:p-6 lg:p-8 group">
-                            <div className="flex items-center justify-center  w-16  group-hover:hidden h-16 mb-4 rounded-full bg-white border">
+                            <div className="flex items-center justify-center  w-16  group-hover:hidden h-16 mb-4 rounded bg-indigo-50 ">
                                 <svg
                                     className="w-12 h-12 text-black"
                                     stroke="currentColor"
@@ -294,10 +294,10 @@ const HomePopularFeatures = () => {
                         </div>
 
                     </div>
-                    <div className="group   h-72  scroll-smooth relative block overflow-hidden rounded hover:text-black text-black   bg-indigo-50">
+                    <div className="group   h-72  scroll-smooth relative block overflow-hidden rounded hover:text-black text-black   bg-white">
 
                         <div className="relative p-4 sm:p-6 lg:p-8 group">
-                            <div className="flex items-center justify-center w-16  group-hover:hidden h-16 mb-4 rounded-full bg-white border">
+                            <div className="flex items-center justify-center w-16  group-hover:hidden h-16 mb-4 rounded bg-indigo-50 ">
                                 <svg
                                     className="w-12 h-12 text-black"
                                     stroke="currentColor"

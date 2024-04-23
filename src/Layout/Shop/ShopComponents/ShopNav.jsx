@@ -135,7 +135,7 @@ const ShopNav = () => {
                                 type="text"
                                 id="Search"
                                 placeholder="Search for..."
-                                className="w-full rounded-md border px-4 border-gray-900 py-2.5 pe-10 shadow-sm sm:text-sm"
+                                className="w-full rounded-md  px-4 bg-gray-100 py-2.5 pe-10 shadow-sm sm:text-sm"
                             />
 
                             <span className="absolute inset-y-0 end-0 grid w-10 place-content-center">

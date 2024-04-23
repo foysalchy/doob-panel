@@ -31,7 +31,7 @@ const ProductCatagory = () => {
                     <SwiperSlide key={index}>
 
                         <Link to={`/products/catagory/${itm._id}`} className=' flex flex-col items-center justify-center w-full'>
-                            <img className='w-16 h-16 rounded-2xl object-cover shadow shadow-gray-700' src={itm?.image} srcSet={itm.image} alt={itm.name} />
+                            <img className='w-16 h-16 rounded-2xl object-cover ' src={itm?.image} srcSet={itm.image} alt={itm.name} />
                             <p className='text-sm text-center'>{itm.name}</p>
                         </Link>
 

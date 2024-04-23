@@ -6,10 +6,10 @@ import { AiFillCloud } from 'react-icons/ai';
 
 const Benefits = () => {
     return (
-        <div className="px-4 py-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-20">
+        <div  style={{ background: "#f2f0fa" }} className="px-4 py-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-20">
             <div className="grid gap-8 grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
                 <div className="text-center">
-                    <div className="flex items-center justify-center w-16 h-16 gap-3 mx-auto mb-3 rounded-xl bg-gray-100 ">
+                    <div className="flex items-center justify-center w-16 h-16 gap-3 mx-auto mb-3 rounded-xl bg-white ">
                         <MdSupportAgent className='text-5xl text-black' />
                     </div>
 
@@ -19,7 +19,7 @@ const Benefits = () => {
                     </p>
                 </div>
                 <div className="text-center">
-                    <div className="flex items-center justify-center w-16 h-16 gap-3 mx-auto mb-3 rounded-xl bg-gray-100 ">
+                    <div className="flex items-center justify-center w-16 h-16 gap-3 mx-auto mb-3 rounded-xl bg-white ">
                         <FaPeopleGroup className='text-5xl text-black' />
                     </div>
 
@@ -29,7 +29,7 @@ const Benefits = () => {
                     </p>
                 </div>
                 <div className="text-center">
-                    <div className="flex items-center justify-center w-16 h-16 gap-3 mx-auto mb-3 rounded-xl bg-gray-100 ">
+                    <div className="flex items-center justify-center w-16 h-16 gap-3 mx-auto mb-3 rounded-xl bg-white ">
                         <HiComputerDesktop className='text-5xl text-black' />
                     </div>
 
@@ -39,7 +39,7 @@ const Benefits = () => {
                     </p>
                 </div>
                 <div className="text-center">
-                    <div className="flex items-center justify-center w-16 h-16 gap-3 mx-auto mb-3 rounded-xl bg-gray-100 ">
+                    <div className="flex items-center justify-center w-16 h-16 gap-3 mx-auto mb-3 rounded-xl bg-white ">
                         <MdEnhancedEncryption className='text-5xl text-black' />
                     </div>
 
@@ -49,7 +49,7 @@ const Benefits = () => {
                     </p>
                 </div>
                 <div className="text-center">
-                    <div className="flex items-center justify-center w-16 h-16 gap-3 mx-auto mb-3 rounded-xl bg-gray-100 ">
+                    <div className="flex items-center justify-center w-16 h-16 gap-3 mx-auto mb-3 rounded-xl bg-white ">
                         <AiFillCloud className='text-5xl text-black' />
                     </div>
 
