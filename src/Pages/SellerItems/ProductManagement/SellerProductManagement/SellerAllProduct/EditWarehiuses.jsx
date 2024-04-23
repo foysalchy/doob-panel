@@ -5,8 +5,7 @@ import { AuthContext } from '../../../../../AuthProvider/UserProvider';
 
 const EditWareHouse = ({ product, adminWare, setAdminWare }) => {
 
-    const { shopInfo } = useContext(AuthContext);
-
+    const { shopInfo } = useContext(AuthContext); 
     const [areas, setAreas] = useState([]);
     const [racks, setRacks] = useState([]);
     const [selfs, setSelfs] = useState([]);
@@ -16,8 +15,6 @@ const EditWareHouse = ({ product, adminWare, setAdminWare }) => {
     const [selectedRack, setSelectedRack] = useState('');
     const [selectedSelf, setSelectedSelf] = useState('');
     const [selectedCell, setSelectedCell] = useState('');
-
-
 
     const { data: warehouses = [], refetch, isRefetching } = useQuery({
         queryKey: ["warehouses"],
@@ -103,6 +100,7 @@ const EditWareHouse = ({ product, adminWare, setAdminWare }) => {
         setSelectedCell(cell)
     }
 
+    console.log(product?.warehouse);
 
     return (
         <div>
@@ -139,7 +137,7 @@ const EditWareHouse = ({ product, adminWare, setAdminWare }) => {
                                 name='warehouse'
                                 // required
                                 options={isRefetching ? [{ label: 'Loading...', value: null }] : product?.warehouse
-                                    .filter((warehouse) => warehouse.status) // Filter based on status
+                                    ?.filter((warehouse) => warehouse.status) // Filter based on status
                                     .map((warehouse) => ({
                                         value: warehouse.name,
                                         label: warehouse.name,
@@ -166,7 +164,7 @@ const EditWareHouse = ({ product, adminWare, setAdminWare }) => {
                                 name='area'
                                 // required
                                 options={areas
-                                    .filter((area) => area.status) // Filter based on status
+                                    ?.filter((area) => area.status) // Filter based on status
                                     .map((area) => ({
                                         value: area.area,
                                         label: area.area,

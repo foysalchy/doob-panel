@@ -709,7 +709,7 @@ const ManageOrder = () => {
           onClick={() => setOpenModal(!openModal)}
           className="px-4 py-1 bg-transparent border"
         >
-          Export orders
+          Export order
         </button>
         <input
           className="w-[260px] md:mt-0 mt-3 rounded border-gray-400 focus:outline-none p-2 border"
@@ -721,6 +721,7 @@ const ManageOrder = () => {
             <input
               onChange={(e) => setSearchValue(e.target.value)}
               type="text"
+              
               placeholder="Search"
               className="w-[260px] rounded border-gray-400 focus:outline-none p-2 border"
             />
