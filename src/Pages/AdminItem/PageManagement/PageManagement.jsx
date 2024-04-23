@@ -78,13 +78,16 @@ const PageManagement = () => {
   };
 
   const trash = (id, status) => {
-    fetch(`http://localhost:5001/api/v1/admin/page/update-trash`, {
-      method: "PUT",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify({ id, status: status }),
-    })
+    fetch(
+      `https://salenow-v2-backend.vercel.app/api/v1/admin/page/update-trash`,
+      {
+        method: "PUT",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify({ id, status: status }),
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
         console.log(data);

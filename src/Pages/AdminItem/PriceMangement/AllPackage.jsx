@@ -13,7 +13,7 @@ const AllPackage = () => {
     queryKey: ["prices"],
     queryFn: async () => {
       const res = await fetch(
-        `http://localhost:5001/api/v1/admin/package`
+        `https://salenow-v2-backend.vercel.app/api/v1/admin/package`
         // "https://salenow-v2-backend.vercel.app/api/v1/admin/pricing"
       );
       const data = await res.json();

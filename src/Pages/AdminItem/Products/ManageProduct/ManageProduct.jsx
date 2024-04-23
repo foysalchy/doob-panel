@@ -150,7 +150,7 @@ const ManageProduct = () => {
     setLoading(true);
 
     fetch(
-      `http://localhost:5001/api/v1/admin/product-reject-message?id=${openModal._id}`,
+      `https://salenow-v2-backend.vercel.app/api/v1/admin/product-reject-message?id=${openModal._id}`,
       {
         method: "PUT",
         headers: {

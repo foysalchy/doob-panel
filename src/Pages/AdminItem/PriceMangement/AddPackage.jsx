@@ -19,7 +19,7 @@ const AddPackage = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     fetch(
-      `http://localhost:5001/api/v1/admin/package`,
+      `https://salenow-v2-backend.vercel.app/api/v1/admin/package`,
       //   `https://salenow-v2-backend.vercel.app/api/v1/admin/pricing`,
       {
         method: "POST",
@@ -43,7 +43,7 @@ const AddPackage = () => {
     console.log(formData, "update.......");
   };
 
-//   console.log(formData);
+  //   console.log(formData);
   return (
     <div>
       <div className="border border-collapse flex justify-center py-20 rounded">

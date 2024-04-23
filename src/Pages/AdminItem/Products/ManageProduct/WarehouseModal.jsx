@@ -18,7 +18,8 @@ const WarehouseModal = ({ modalOpen, setModalOpen, product, doobProduct }) => {
   const { data: packageData = [] } = useQuery({
     queryKey: ["package"],
     queryFn: async () => {
-      const getPackage = "http://localhost:5001/api/v1/admin/package";
+      const getPackage =
+        "https://salenow-v2-backend.vercel.app/api/v1/admin/package";
 
       const res = await fetch(getPackage);
       if (!res.ok) {
