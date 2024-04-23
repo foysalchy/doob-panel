@@ -161,14 +161,15 @@ const ManageProduct = () => {
 
 
 
-  const createBarcodePDF = (selectedProducts) => {
+  const barcode_generate = () => {
     const pdf = new jsPDF();
-    const barcodesPerPage = 4; // Number of barcodes per page
-    let pageIndex = 0; // Current page index
-    let yPos = 10; // Initial y position
+    const barcodesPerRow = 3;
+    const maxProductsPerPage = 15;
+    let productsDisplayed = 0;
+    let pageIndex = 0;
+    let yPos = 10;
 
-    // Loop through selected product IDs
-    selectedProducts.forEach((productId, index) => {
+    selectProducts.forEach((productId, index) => {
       // Create a barcode for each product ID using JsBarcode
       const canvas = document.createElement('canvas');
       JsBarcode(canvas, productId, {
@@ -180,28 +181,39 @@ const ManageProduct = () => {
       const imgData = canvas.toDataURL('image/png');
 
       // Add barcode image to PDF
-      if (index % barcodesPerPage === 0 && index !== 0) {
+      if (productsDisplayed >= maxProductsPerPage) {
         pdf.addPage();
         pageIndex++; // Increment page index
         yPos = 10; // Reset y position for new page
+        productsDisplayed = 0; // Reset products displayed counter
       }
 
-      pdf.addImage(imgData, 'PNG', 10, yPos, 100, 50); // Adjust position and size as needed
-      pdf.text(10, yPos + 60, `Product ID: ${productId}`);
+      const rowIndex = Math.floor(productsDisplayed / barcodesPerRow);
+      const colIndex = productsDisplayed % barcodesPerRow;
 
-      yPos += 70; // Increase y position for next barcode
+      const xPos = 10 + colIndex * 70; // Adjust position for each column
+
+      pdf.addImage(imgData, 'PNG', xPos, yPos, 50, 25); // Adjust position and size as needed
+      pdf.setFontSize(11); // Adjust font size for product ID
+      pdf.text(xPos, yPos + 30, `${productId}`); // Adjust position for product ID
+
+      productsDisplayed++;
+
+      if (colIndex === barcodesPerRow - 1) {
+        yPos += 60; // Increase y position for next row
+      }
     });
 
     // Save or navigate to the PDF page
     pdf.save('barcodes.pdf'); // Save PDF
-    // Alternatively, you can navigate to another page and display the PDF using a suitable method
-  };
+  }
+
 
 
   const [loading_start, setLoading_start] = useState(false)
   const create_barcode = () => {
     setLoading_start(true)
-    createBarcodePDF(selectProducts);
+    barcode_generate();
     setLoading_start(false)
     // need to selected productId as a pdf and barcode 
     // and navigate anoter page 
