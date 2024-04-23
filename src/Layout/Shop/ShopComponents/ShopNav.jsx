@@ -261,7 +261,7 @@ const ShopNav = () => {
 
                 </div>
             </div>
-            {
+            {/* {
                 searchOpen && <div className=" fixed left-0 right-0 flex flex-col items-center justify-center top-0 h-screen bg-[#0c0c0cd6] z-[800]">
                     <form className="bg-white p-2 shadow-xl flex  items-center gap-2 w-[90%] mx-auto shadow-[#8080805c] rounded ring-1 ring-gray-100">
                         <BiSearch className='text-lg' />
@@ -269,7 +269,7 @@ const ShopNav = () => {
                         <CgClose onClick={() => setSearchOpen(!searchOpen)} className='text-lg' />
                     </form>
                 </div>
-            }
+            } */}
             {isMenuOpen && <CategorieItems setIsMenuOpen={setIsMenuOpen} shopId={shopId} categories={categories} />}
             <div className='block lg:hidden'>
                 <div className="fixed  left-0 right-0 bottom-0  px-4 py-3 flex items-center justify-between   bg-gray-900 shadow-3xl text-gray-400 cursor-pointer z-[2000]">
@@ -281,6 +281,7 @@ const ShopNav = () => {
                             </div>
                         </Link>
                     </div>
+
                     <div className="relative group">
                         {/* categories */}
                         <button onClick={() => setIsMenuOpen(!isMenuOpen)}>
@@ -299,7 +300,7 @@ const ShopNav = () => {
                                         d="M17 14v6m-3-3h6M6 10h2a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v2a2 2 0 002 2zm10 0h2a2 2 0 002-2V6a2 2 0 00-2-2h-2a2 2 0 00-2 2v2a2 2 0 002 2zM6 20h2a2 2 0 002-2v-2a2 2 0 00-2-2H6a2 2 0 00-2 2v2a2 2 0 002 2z"
                                     ></path>
                                 </svg>
-                                <div className="text-xs text-gray-400">Category..</div>
+                                <div className="text-xs text-gray-400">Category</div>
                             </div>
                         </button>
                     </div>
