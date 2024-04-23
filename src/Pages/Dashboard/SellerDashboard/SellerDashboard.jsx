@@ -232,7 +232,7 @@ const SellerDashboard = () => {
                 >
                     {noticeInfo?.map((item, i) => (
                         <SwiperSlide>
-                            <a href={'https://example.com/link1'} >
+                            <a href={item.link} >
                                 <img src={item.image} alt="Description of image 1" className='h-32 object-cover rounded w-full' />
                             </a>
                         </SwiperSlide>

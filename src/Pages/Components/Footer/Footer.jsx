@@ -14,8 +14,8 @@ const Footer = () => {
   });
 
 
-  const page1 = pages.filter(itm => itm?.page == 'footer1');
-  const page2 = pages.filter(itm => itm?.page == 'footer2');
+  const page1 = pages.length && pages?.filter(itm => itm?.page == 'footer1');
+  const page2 = pages.length && pages?.filter(itm => itm?.page == 'footer2');
   console.log(page1, 'pages///////');
 
   return (

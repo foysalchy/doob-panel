@@ -19,7 +19,6 @@ const AdminLayout = () => {
 
     return (
         <div>
-
             <div className='flex w-screen h-screen bg-[#f0f2f5]'>
 
                 <div className=" h-full px-6 z-50 min-h-screen  text-white">
@@ -67,7 +66,7 @@ const AdminLayout = () => {
                             </ol>
                         </nav>
                     </div>
-                    <div className='flex-1 h-screen    sm:p-0'>
+                    <div className='flex-1 h-screen  pb-10   sm:p-0'>
                         <Outlet />
                     </div>
                 </div>

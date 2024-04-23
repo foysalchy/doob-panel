@@ -112,7 +112,7 @@ const ShopNav = () => {
                             </div>
                             <div className="group-hover:block hidden absolute top-full left-0 bg-white px-4 py-2 rounded-lg border z-30 shadow w-[240px]">
                                 <ul className="flex items-start flex-col gap-3">
-                                    {categories?.map((i, index) => (
+                                    {categories.length && categories?.map((i, index) => (
                                         <li key={index} className="">
                                             <Link className="flex items-center gap-2 break-words" to={`/shop/${shopId}/categories/${shop_id.shop_id}/${i?.name}`}>
                                                 <img

@@ -72,7 +72,7 @@ const SideNavAdmin = () => {
   };
 
   return (
-    <div className="py-6 bg-red ">
+    <div className="py-6 h-screen overflow-hidden bg-red ">
       <button
         onClick={() => setMenu(!menu)}
         className={`absolute bg-gray-900 right-[-10px] w-[25px] h-[25px] flex items-center justify-center rounded-full text-white top-20 z-[1000]`}
@@ -82,8 +82,8 @@ const SideNavAdmin = () => {
       <div
         className={
           menu
-            ? "flex flex-col h-screen py-2 duration-300  px-2 w-60 text-gray-900 overflow-y-auto transparent-scroll relative"
-            : "flex  flex-col h-screen py-3 duration-300 px-2 w-14 text-gray-900 overflow-y-auto transparent-scroll relative"
+            ? "flex flex-col h-screen  py-2 duration-300  px-2 w-60 text-gray-900 overflow-y-scroll transparent-scroll relative"
+            : "flex  flex-col h-screen py-3 duration-300 px-2 w-14 text-gray-900 overflow-y-scroll transparent-scroll relative"
         }
       >
         <div className="space-y-3">
@@ -1123,7 +1123,7 @@ const SideNavAdmin = () => {
                         </ul> */}
                       </details>
 
-                     
+
                     </li>
                   )}
                 </>
