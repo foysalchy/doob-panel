@@ -1,16 +1,17 @@
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import { useState } from "react";
-import { BiEdit, BiEditAlt } from "react-icons/bi";
-import { FiDelete } from "react-icons/fi";
+import { BiEdit } from "react-icons/bi";
+
 import { MdDelete } from "react-icons/md";
 import Swal from "sweetalert2";
-import EditPrice from "./EditPrice";
+
+import EditPackage from "./EditPackage";
 
 const AllPackage = () => {
   const [loading, setLoading] = useState(false);
-  const { data: prices = [], refetch } = useQuery({
-    queryKey: ["prices"],
+  const { data: packages = [], refetch } = useQuery({
+    queryKey: ["packages"],
     queryFn: async () => {
       const res = await fetch(
         `https://salenow-v2-backend.vercel.app/api/v1/admin/package`
@@ -35,7 +36,7 @@ const AllPackage = () => {
     )
       .then((res) => res.json())
       .then((data) => {
-        Swal.fire("success", "Your Price Publish Successfully", "success");
+        Swal.fire("success", "Your Package Publish Successfully", "success");
         refetch();
       });
   };
@@ -52,13 +53,13 @@ const AllPackage = () => {
     )
       .then((res) => res.json())
       .then((data) => {
-        Swal.fire("success", "Your Price Publish Successfully", "success");
+        Swal.fire("success", "Your Package Publish Successfully", "success");
         refetch();
       });
   };
-  const DeletePrice = (id) => {
+  const DeletePackage = (id) => {
     fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/admin/pricing/delete/${id}`,
+      `https://salenow-v2-backend.vercel.app/api/v1/admin/package/delete/${id}`,
       {
         method: "Delete",
         headers: {
@@ -68,7 +69,7 @@ const AllPackage = () => {
     )
       .then((res) => res.json())
       .then((data) => {
-        Swal.fire("success", "Your Price Delete Successfully", "success");
+        Swal.fire("success", "Your Package Delete Successfully", "success");
         refetch();
       });
   };
@@ -92,55 +93,37 @@ const AllPackage = () => {
                 <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm ">
                   Package AMount
                 </th>
-                <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm ">
-                  Status
-                </th>
+
                 <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm ">
                   Action
                 </th>
               </tr>
             </thead>
             <tbody>
-              {prices.length &&
-                prices?.map((price) => (
-                  <tr key={price?.name}>
-                    <td className="px-4 py-3">{price?.packageName}</td>
-                    <td className="px-4 py-3">{price?.amount}</td>
-                    <td className="px-4 py-3">
-                      {!price?.status ? (
-                        <button
-                          onClick={() => publishHandle(price?._id)}
-                          className="inline-flex items-center justify-center py-1 px-4 bg-red-500 rounded shadow-md hover:bg-red-700 focus:shadow-outline focus:outline-none"
-                        >
-                          Publish
-                        </button>
-                      ) : (
-                        <button
-                          onClick={() => unpublishHandle(price?._id)}
-                          className="inline-flex items-center justify-center py-1 px-4 bg-green-500 rounded shadow-md hover:bg-green-700 focus:shadow-outline focus:outline-none"
-                        >
-                          Un Publish
-                        </button>
-                      )}{" "}
-                    </td>
-                    <td className="px-4 py-3 text-xl flex gap-2 items-center text-gray-900">
+              {packages.length &&
+                packages?.map((pack) => (
+                  <tr key={pack?.name}>
+                    <td className="px-4 py-3">{pack?.packageName}</td>
+                    <td className="px-4 py-3">{pack?.amount}</td>
+
+                    <td className="px-4 py-3 text-xl flex gap-4 items-center text-gray-900">
                       <MdDelete
-                        onClick={() => DeletePrice(price?._id)}
+                        onClick={() => DeletePackage(pack?._id)}
                         className="text-red-500 cursor-pointer"
                       />
                       <BiEdit
                         className="text-yellow-500 cursor-pointer"
-                        onClick={() => handleViewDetails(price?._id)}
+                        onClick={() => handleViewDetails(pack?._id)}
                       />
                     </td>
 
-                    {OpenModal === price?._id && (
+                    {OpenModal === pack?._id && (
                       <div className="h-0 w-0">
-                        <EditPrice
+                        <EditPackage
                           OpenModal={OpenModal}
                           refetch={refetch}
                           setOpenModal={setOpenModal}
-                          FAQInfo={price}
+                          packageInfo={pack}
                         />
                       </div>
                     )}
