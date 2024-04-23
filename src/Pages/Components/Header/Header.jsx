@@ -225,6 +225,7 @@ const Header = () => {
     </>
   );
 
+  console.log(user, 'user.......');
   return (
     <div className="fixed top-0 border-b right-0 left-0 z-50 bg-white">
       <div className=" sm:max-w-xl mx-auto md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8">
@@ -269,7 +270,9 @@ const Header = () => {
                               <p className="text-2xl text-center">{user?.name.charAt(0)}</p>
                             </div>
 
-                            <span className="h-2.5 w-2.5 rounded-full bg-emerald-500 absolute right-0.5 ring-1 ring-white bottom-0"></span>
+                            <span className="h-2.5 w-2.5 rounded-full bg-emerald-500 absolute right-0.5 ring-1 ring-white bottom-0">
+
+                            </span>
                           </button>
 
                           {userDash && (
@@ -540,7 +543,6 @@ const Header = () => {
                       {
                         on ? <CategoryListSm setOn={setIsMenuOpen} /> : <ul className="space-y-4 pt-3 border-r px-2  ">{menuData}</ul>
                       }
-
                     </div>
                   </nav>
                 </div>

@@ -70,6 +70,7 @@ import AllOrderManage from "../Pages/AdminItem/Order/AllOrderManage";
 import AdminBlogComment from "../Pages/AdminItem/Blogs/AdminBlogComents/AdminBlogComment";
 import AdminWithdrow from "../Pages/AdminItem/Withdrow/AdminWithdrow";
 import ClaimAndRerunAdmin from "../Pages/AdminItem/Order/ClaimAndRerunAdmin";
+import AdminTrackOrder from "../Pages/AdminItem/AdminTrackOrder/AdminTrackOrder";
 
 
 const SupperAdminPath = [
@@ -485,7 +486,12 @@ const SupperAdminPath = [
     {
         path: 'claim-return',
         element: <ClaimAndRerunAdmin />
-    }
+    },
+    {
+        path: ':id/admin-track-order',
+        element: <AdminTrackOrder />
+
+    },
 
 
 ]
