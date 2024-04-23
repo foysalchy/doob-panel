@@ -16,6 +16,9 @@ import { BsArrowRight } from "react-icons/bs";
 import Swal from "sweetalert2";
 import EditAdminCategoryforSeller from "../EditAdminCategoryforSeller";
 
+
+
+
 const CategoryEditPage = () => {
   const id = useParams().id;
 

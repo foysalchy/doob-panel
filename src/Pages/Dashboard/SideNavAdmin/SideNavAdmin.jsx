@@ -196,7 +196,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                           className="relative"
                                         >
                                           <details className="group [&_summary::-webkit-details-marker]:hidden flex items-center rounded-sm  ">
-                                            <summary className="flex cursor-pointer items-center justify-between px-4 py-2 rounded-sm hover:bg-gray-800 text-black hover:text-gray-50">
+                                            <summary className="flex cursor-pointer items-center justify-between px-4 py-2 rounded-sm hover:bg-gray-800 text-white hover:text-gray-50">
                                               <div className="flex cursor-pointer items-center gap-2">
                                                 <TbCategory className="w-5 h-5 fill-current text-gray-400" />
 
@@ -209,7 +209,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                             </summary>
 
                                             <ul className=" space-y-1 bg-gray-100 p-2">
-                                              <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50">
+                                              <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 :text-gray-50">
                                                 <Link
                                                   to={
                                                     "/admin/category-management/mega-category-management"
@@ -268,7 +268,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                         className="relative"
                                       >
                                         <details className="group [&_summary::-webkit-details-marker]:hidden flex items-center rounded-sm  ">
-                                          <summary className="flex cursor-pointer items-center justify-between px-4 py-2 rounded-sm hover:bg-gray-800 text-black hover:text-gray-50">
+                                          <summary className="flex cursor-pointer items-center justify-between px-4 py-2 rounded-sm hover:bg-gray-800 text-white hover:text-gray-50">
                                             <div className="flex cursor-pointer items-center gap-2">
                                               <TbCategory className="w-5 h-5 fill-current text-gray-400" />
 
@@ -345,7 +345,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                         className=""
                                       >
                                         <details className="group [&_summary::-webkit-details-marker]:hidden flex items-center rounded-sm  ">
-                                          <summary className="flex cursor-pointer items-center justify-between text-black  py-2 px-4 rounded-sm hover:bg-gray-800  hover:text-gray-50">
+                                          <summary className="flex cursor-pointer items-center justify-between text-white  py-2 px-4 rounded-sm hover:bg-gray-800  hover:text-gray-50">
                                             <div className="flex cursor-pointer items-center gap-2">
                                               <MdWarehouse className="w-5 h-5 fill-current text-gray-400" />
                                               <span>Warehouse... </span>
@@ -357,7 +357,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                           </summary>
 
                                           <ul className="mt-2 space-y-1 px-4">
-                                            <li className="flex cursor-pointer items-center justify-between text-black  p-2 rounded-sm hover:bg-gray-800  hover:text-gray-50">
+                                            <li className="flex cursor-pointer items-center justify-between text-white  p-2 rounded-sm hover:bg-gray-800  hover:text-gray-50">
                                               <Link
                                                 to={
                                                   "/admin/warehouse/warehouse-management"
@@ -368,7 +368,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                                 Manage Warehouse
                                               </Link>
                                             </li>
-                                            <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-black">
+                                            <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
                                               <Link
                                                 to={
                                                   "/admin/warehouse/area-management"
@@ -379,7 +379,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                                 Area Management
                                               </Link>
                                             </li>
-                                            <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-black">
+                                            <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
                                               <Link
                                                 to={
                                                   "/admin/warehouse/rack-management"
@@ -390,7 +390,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                                 Rack Management
                                               </Link>
                                             </li>
-                                            <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-black">
+                                            <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
                                               <Link
                                                 to={
                                                   "/admin/warehouse/self-management"
@@ -401,7 +401,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                                 Self Management
                                               </Link>
                                             </li>
-                                            <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-black">
+                                            <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
                                               <Link
                                                 to={
                                                   "/admin/warehouse/cell-management"
@@ -426,7 +426,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                       className=""
                                     >
                                       <details className="group [&_summary::-webkit-details-marker]:hidden flex items-center rounded-sm  ">
-                                        <summary className="flex cursor-pointer items-center justify-between text-black  py-2 px-4 rounded-sm hover:bg-gray-800  hover:text-gray-50">
+                                        <summary className="flex cursor-pointer items-center justify-between text-white  py-2 px-4 rounded-sm hover:bg-gray-800  hover:text-gray-50">
                                           <div className="flex cursor-pointer items-center gap-2">
                                             <MdWarehouse className="w-5 h-5 fill-current text-gray-400" />
                                             <span>Warehouse... </span>
@@ -438,7 +438,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                         </summary>
 
                                         <ul className="mt-2 space-y-1 px-4">
-                                          <li className="flex cursor-pointer items-center justify-between text-black  p-2 rounded-sm hover:bg-gray-800  hover:text-gray-50">
+                                          <li className="flex cursor-pointer items-center justify-between text-white  p-2 rounded-sm hover:bg-gray-800  hover:text-gray-50">
                                             <Link
                                               to={
                                                 "/admin/warehouse/warehouse-management"
@@ -449,7 +449,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                               Manage Warehouse
                                             </Link>
                                           </li>
-                                          <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-black">
+                                          <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
                                             <Link
                                               to={
                                                 "/admin/warehouse/area-management"
@@ -460,7 +460,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                               Area Management
                                             </Link>
                                           </li>
-                                          <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-black">
+                                          <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
                                             <Link
                                               to={
                                                 "/admin/warehouse/rack-management"
@@ -471,7 +471,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                               Rack Management
                                             </Link>
                                           </li>
-                                          <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-black">
+                                          <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
                                             <Link
                                               to={
                                                 "/admin/warehouse/self-management"
@@ -482,7 +482,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                               Self Management
                                             </Link>
                                           </li>
-                                          <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-black">
+                                          <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
                                             <Link
                                               to={
                                                 "/admin/warehouse/cell-management"
@@ -558,7 +558,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                         className="relative"
                                       >
                                         <details className="group [&_summary::-webkit-details-marker]:hidden flex items-center rounded-sm  ">
-                                          <summary className="flex cursor-pointer items-center justify-between px-4 py-2 rounded-sm hover:bg-gray-800 text-black hover:text-gray-50">
+                                          <summary className="flex cursor-pointer items-center justify-between px-4 py-2 rounded-sm hover:bg-gray-800 text-white hover:text-gray-50">
                                             <div className="flex cursor-pointer items-center gap-2">
                                               <span className="text-white">
                                                 Category
@@ -630,7 +630,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                       className="relative"
                                     >
                                       <details className="group [&_summary::-webkit-details-marker]:hidden flex items-center rounded-sm  ">
-                                        <summary className="flex cursor-pointer items-center justify-between px-4 py-2 rounded-sm hover:bg-gray-800 text-black hover:text-gray-50">
+                                        <summary className="flex cursor-pointer items-center justify-between px-4 py-2 rounded-sm hover:bg-gray-800 text-white hover:text-gray-50">
                                           <div className="flex cursor-pointer items-center gap-2">
                                             <TbCategory className="w-5 h-5 fill-current text-gray-400" />
 
@@ -642,7 +642,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                           </span>
                                         </summary>
 
-                                        <ul className=" space-y-1 bg-gray-100 p-2">
+                                        <ul className=" space-y-1 bg-gray-700 p-2">
                                           <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50">
                                             <Link
                                               to={
@@ -707,7 +707,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                       className=""
                                     >
                                       <details className="group [&_summary::-webkit-details-marker]:hidden flex items-center rounded-sm  ">
-                                        <summary className="flex cursor-pointer items-center justify-between text-black  py-2 px-4 rounded-sm hover:bg-gray-800  hover:text-gray-50">
+                                        <summary className="flex cursor-pointer items-center justify-between text-white  py-2 px-4 rounded-sm hover:bg-gray-800  hover:text-gray-50">
                                           <div className="flex cursor-pointer items-center gap-2">
                                             <MdWarehouse className="w-5 h-5 fill-current text-gray-400" />
                                             <span>Warehouse... </span>
@@ -719,7 +719,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                         </summary>
 
                                         <ul className="mt-2 space-y-1 px-4">
-                                          <li className="flex cursor-pointer items-center justify-between text-black  p-2 rounded-sm hover:bg-gray-800  hover:text-gray-50">
+                                          <li className="flex cursor-pointer items-center justify-between text-white  p-2 rounded-sm hover:bg-gray-800  hover:text-gray-50">
                                             <Link
                                               to={
                                                 "/admin/warehouse/warehouse-management"
@@ -730,7 +730,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                               Manage Warehouse
                                             </Link>
                                           </li>
-                                          <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-black">
+                                          <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
                                             <Link
                                               to={
                                                 "/admin/warehouse/area-management"
@@ -741,7 +741,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                               Area Management
                                             </Link>
                                           </li>
-                                          <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-black">
+                                          <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
                                             <Link
                                               to={
                                                 "/admin/warehouse/rack-management"
@@ -752,7 +752,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                               Rack Management
                                             </Link>
                                           </li>
-                                          <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-black">
+                                          <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
                                             <Link
                                               to={
                                                 "/admin/warehouse/self-management"
@@ -763,7 +763,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                               Self Management
                                             </Link>
                                           </li>
-                                          <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-black">
+                                          <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
                                             <Link
                                               to={
                                                 "/admin/warehouse/cell-management"
@@ -788,7 +788,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                     className=""
                                   >
                                     <details className="group [&_summary::-webkit-details-marker]:hidden flex items-center rounded-sm  ">
-                                      <summary className="flex cursor-pointer items-center justify-between text-black  py-2 px-4 rounded-sm hover:bg-gray-800  hover:text-gray-50">
+                                      <summary className="flex cursor-pointer items-center justify-between text-white  py-2 px-4 rounded-sm hover:bg-gray-800  hover:text-gray-50">
                                         <div className="flex cursor-pointer items-center gap-2">
                                           <MdWarehouse className="w-5 h-5 fill-current text-gray-400" />
                                           <span>Warehouse... </span>
@@ -800,7 +800,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                       </summary>
 
                                       <ul className="mt-2 space-y-1 px-4">
-                                        <li className="flex cursor-pointer items-center justify-between text-black  p-2 rounded-sm hover:bg-gray-800  hover:text-gray-50">
+                                        <li className="flex cursor-pointer items-center justify-between text-white  p-2 rounded-sm hover:bg-gray-800  hover:text-gray-50">
                                           <Link
                                             to={
                                               "/admin/warehouse/warehouse-management"
@@ -811,7 +811,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                             Manage Warehouse
                                           </Link>
                                         </li>
-                                        <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-black">
+                                        <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
                                           <Link
                                             to={
                                               "/admin/warehouse/area-management"
@@ -822,7 +822,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                             Area Management
                                           </Link>
                                         </li>
-                                        <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-black">
+                                        <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
                                           <Link
                                             to={
                                               "/admin/warehouse/rack-management"
@@ -833,7 +833,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                             Rack Management
                                           </Link>
                                         </li>
-                                        <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-black">
+                                        <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
                                           <Link
                                             to={
                                               "/admin/warehouse/self-management"
@@ -844,7 +844,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                             Self Management
                                           </Link>
                                         </li>
-                                        <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-black">
+                                        <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
                                           <Link
                                             to={
                                               "/admin/warehouse/cell-management"
@@ -890,12 +890,12 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                         <div className="group [&_summary::-webkit-details-marker]:hidden flex flex-col w-full items-center rounded-sm  ">
                           <div
                             onClick={() => handleToggle(2)}
-                            className="flex cursor-pointer items-center w-full justify-between  p-2 rounded-sm hover:bg-gray-800 text-black hover:text-gray-50"
+                            className="flex cursor-pointer items-center w-full justify-between  p-2 rounded-sm hover:bg-gray-800 text-white hover:text-gray-50"
                           >
                             <div className="flex cursor-pointer items-center gap-2">
                               <TbCategory className="w-5 h-5 fill-current text-gray-400" />
 
-                              <span>Orders2</span>
+                              <span>Orders</span>
                             </div>
 
                             <span className="shrink-0 transition duration-300 group-open:-rotate-180">
@@ -1024,7 +1024,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                     <li onMouseMove={() => setMenu(true)} className="relative">
                       {/* start //! */}
                       <details className="group [&_summary::-webkit-details-marker]:hidden flex items-center rounded-sm  ">
-                        <summary className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-black hover:text-gray-50">
+                        <summary className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-white hover:text-gray-50">
                           <div className="flex cursor-pointer items-center gap-2">
                             <BiShoppingBag className="w-5 h-5 fill-current text-gray-400" />
                             <span>Orders</span>
@@ -1134,7 +1134,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                           onClick={() => handleToggle(3)}
                           className="group [&_summary::-webkit-details-marker]:hidden flex flex-col items-center rounded-sm  "
                         >
-                          <div className="flex w-full cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-black hover:text-gray-50">
+                          <div className="flex w-full cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-white hover:text-gray-50">
                             <div className="flex cursor-pointer items-center gap-2">
                               <TbCategory className="w-5 h-5 fill-current text-gray-400" />
 
@@ -1263,7 +1263,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                         onClick={() => handleToggle(3)}
                         className="group [&_summary::-webkit-details-marker]:hidden flex flex-col items-center rounded-sm  "
                       >
-                        <div className="flex w-full cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-black hover:text-gray-50">
+                        <div className="flex w-full cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-white hover:text-gray-50">
                           <div className="flex cursor-pointer items-center gap-2">
                             <TbCategory className="w-5 h-5 fill-current text-gray-400" />
 
@@ -1396,7 +1396,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
 
                           <details className="group [&_summary::-webkit-details-marker]:hidden flex items-center rounded-sm  ">
                             <summary
-                              className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-black hover:text-gray-50"
+                              className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-white hover:text-gray-50"
                             >
                               <div className='flex cursor-pointer items-center gap-2'>
                                 <TbCategory className="w-5 h-5 fill-current text-gray-400" />
@@ -1463,7 +1463,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
 
                         <details className="group [&_summary::-webkit-details-marker]:hidden flex items-center rounded-sm  ">
                           <summary
-                            className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-black hover:text-gray-50"
+                            className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-white hover:text-gray-50"
                           >
                             <div className='flex cursor-pointer items-center gap-2'>
                               <TbCategory className="w-5 h-5 fill-current text-gray-400" />
@@ -1535,7 +1535,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                         <div className="group [&_summary::-webkit-details-marker]:hidden w-full flex flex-col items-center rounded-sm  ">
                           <div
                             onClick={() => handleToggle(4)}
-                            className="flex cursor-pointer items-center w-full justify-between  p-2 rounded-sm hover:bg-gray-800 text-black hover:text-gray-50"
+                            className="flex cursor-pointer items-center w-full justify-between  p-2 rounded-sm hover:bg-gray-800 text-white hover:text-gray-50"
                           >
                             <div className="flex cursor-pointer items-center gap-2">
                               <TbCategory className="w-5 h-5 fill-current text-gray-400" />
@@ -1633,7 +1633,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                       <div className="group [&_summary::-webkit-details-marker]:hidden w-full flex flex-col items-center rounded-sm  ">
                         <div
                           onClick={() => handleToggle(4)}
-                          className="flex cursor-pointer items-center w-full justify-between  p-2 rounded-sm hover:bg-gray-800 text-black hover:text-gray-50"
+                          className="flex cursor-pointer items-center w-full justify-between  p-2 rounded-sm hover:bg-gray-800 text-white hover:text-gray-50"
                         >
                           <div className="flex cursor-pointer items-center gap-2">
                             <TbCategory className="w-5 h-5 fill-current text-gray-400" />
@@ -1737,7 +1737,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                         <div className="group [&_summary::-webkit-details-marker]:hidden w-full flex flex-col items-center rounded-sm  ">
                           <div
                             onClick={() => handleToggle(5)}
-                            className="flex cursor-pointer w-full items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-black hover:text-gray-50"
+                            className="flex cursor-pointer w-full items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-white hover:text-gray-50"
                           >
                             <div className="flex cursor-pointer items-center gap-2">
                               <TbCategory className="w-5 h-5 fill-current text-gray-400" />
@@ -1847,7 +1847,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                       <div className="group [&_summary::-webkit-details-marker]:hidden w-full flex flex-col items-center rounded-sm  ">
                         <div
                           onClick={() => handleToggle(5)}
-                          className="flex cursor-pointer w-full items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-black hover:text-gray-50"
+                          className="flex cursor-pointer w-full items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-white hover:text-gray-50"
                         >
                           <div className="flex cursor-pointer items-center gap-2">
                             <TbCategory className="w-5 h-5 fill-current text-gray-400" />
@@ -1971,7 +1971,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                       onClick={() => handleToggle(6)}
                       className="group [&_summary::-webkit-details-marker]:hidden w-full flex flex-col items-center rounded-sm  "
                     >
-                      <div className="flex cursor-pointer items-center justify-between w-full  p-2 rounded-sm hover:bg-gray-800 text-black hover:text-gray-50">
+                      <div className="flex cursor-pointer items-center justify-between w-full  p-2 rounded-sm hover:bg-gray-800 text-white hover:text-gray-50">
                         <div className="flex cursor-pointer items-center gap-2">
                           <MdSettings className="w-5 h-5 fill-current text-gray-400" />
 
@@ -1995,7 +1995,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                             </Link>
                           </li>
 
-                          <li className="flex cursor-pointer items-center justify-between text-black  p-2 rounded-sm hover:bg-gray-800  hover:text-gray-50">
+                          <li className="flex cursor-pointer items-center justify-between text-white  p-2 rounded-sm hover:bg-gray-800  hover:text-gray-50">
                             <Link
                               to={"/admin/content-management/home-control"}
                               className="  flex gap-2 items-center px-1 p-1   rounded-md"
@@ -2005,7 +2005,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                             </Link>
                           </li>
 
-                          <li className="flex cursor-pointer items-center justify-between text-black  p-2 rounded-sm hover:bg-gray-800  hover:text-gray-50">
+                          <li className="flex cursor-pointer items-center justify-between text-white  p-2 rounded-sm hover:bg-gray-800  hover:text-gray-50">
                             <Link
                               to={"/admin/content-management/admin-popup"}
                               className="  flex gap-2 items-center px-1 p-1 space-x-3  rounded-md"
@@ -2014,7 +2014,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                               Pop UP
                             </Link>
                           </li>
-                          <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-black">
+                          <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
                             <Link
                               to={"/admin/content-management/seller-notice"}
                               className="  flex gap-2 items-center px-1 p-1 space-x-3  rounded-md"
@@ -2023,7 +2023,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                               Notice
                             </Link>
                           </li>
-                          <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-black">
+                          <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
                             <Link
                               to={"/admin/content-management/admin-anouncement"}
                               className="  flex gap-2 items-center px-1 p-1 space-x-3  rounded-md"
@@ -2032,7 +2032,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                               Announcement
                             </Link>
                           </li>
-                          <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-black">
+                          <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
                             <Link
                               to={"/admin/content-management/feature-image"}
                               className="  flex gap-2 items-center px-1 p-1 space-x-3  rounded-md"
@@ -2041,7 +2041,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                               Feature Management
                             </Link>
                           </li>
-                          <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-black">
+                          <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
                             <Link
                               to={"/admin/content-management/slider"}
                               className="  flex gap-2 items-center px-1 p-1 space-x-3  rounded-md"
@@ -2051,7 +2051,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                             </Link>
                           </li>
 
-                          <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-black">
+                          <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
                             <Link
                               to={"/admin/content-management/slider"}
                               className="  flex gap-2 items-center px-1 p-1 space-x-3  rounded-md"
@@ -2061,7 +2061,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                             </Link>
                           </li>
 
-                          <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-black">
+                          <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
                             <Link
                               to={""}
                               className="  flex gap-2 items-center px-1 p-1 space-x-3  rounded-md"
@@ -2164,7 +2164,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                       onClick={() => handleToggle(6)}
                       className="group [&_summary::-webkit-details-marker]:hidden w-full flex  flex-col items-center rounded-sm  "
                     >
-                      <div className="flex cursor-pointer items-center justify-between w-full  p-2 rounded-sm hover:bg-gray-800 text-black hover:text-gray-50">
+                      <div className="flex cursor-pointer items-center justify-between w-full  p-2 rounded-sm hover:bg-gray-800 text-white hover:text-gray-50">
                         <div className="flex cursor-pointer items-center gap-2">
                           <MdSettings className="w-5 h-5 fill-current text-gray-400" />
 
@@ -2188,7 +2188,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                             </Link>
                           </li>
 
-                          <li className="flex cursor-pointer items-center justify-between text-black  p-2 rounded-sm hover:bg-gray-800  hover:text-gray-50">
+                          <li className="flex cursor-pointer items-center justify-between text-white  p-2 rounded-sm hover:bg-gray-800  hover:text-gray-50">
                             <Link
                               to={"/admin/content-management/home-control"}
                               className="  flex gap-2 items-center px-1 p-1   rounded-md"
@@ -2198,7 +2198,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                             </Link>
                           </li>
 
-                          <li className="flex cursor-pointer items-center justify-between text-black  p-2 rounded-sm hover:bg-gray-800  hover:text-gray-50">
+                          <li className="flex cursor-pointer items-center justify-between text-white  p-2 rounded-sm hover:bg-gray-800  hover:text-gray-50">
                             <Link
                               to={"/admin/content-management/admin-popup"}
                               className="  flex gap-2 items-center px-1 p-1 space-x-3  rounded-md"
@@ -2207,7 +2207,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                               Pop UP
                             </Link>
                           </li>
-                          <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-black">
+                          <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
                             <Link
                               to={"/admin/content-management/seller-notice"}
                               className="  flex gap-2 items-center px-1 p-1 space-x-3  rounded-md"
@@ -2216,7 +2216,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                               Notice
                             </Link>
                           </li>
-                          <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-black">
+                          <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
                             <Link
                               to={"/admin/content-management/admin-anouncement"}
                               className="  flex gap-2 items-center px-1 p-1 space-x-3  rounded-md"
@@ -2225,7 +2225,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                               Announcement
                             </Link>
                           </li>
-                          <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-black">
+                          <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
                             <Link
                               to={"/admin/content-management/feature-image"}
                               className="  flex gap-2 items-center px-1 p-1 space-x-3  rounded-md"
@@ -2234,7 +2234,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                               Feature Management
                             </Link>
                           </li>
-                          <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-black">
+                          <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
                             <Link
                               to={"/admin/content-management/slider"}
                               className="  flex gap-2 items-center px-1 p-1 space-x-3  rounded-md"
@@ -2244,7 +2244,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                             </Link>
                           </li>
 
-                          <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-black">
+                          <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
                             <Link
                               to={"/admin/content-management/slider"}
                               className="  flex gap-2 items-center px-1 p-1 space-x-3  rounded-md"
@@ -2254,7 +2254,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                             </Link>
                           </li>
 
-                          <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-black">
+                          <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
                             <Link
                               to={""}
                               className="  flex gap-2 items-center px-1 p-1 space-x-3  rounded-md"
@@ -2389,7 +2389,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
 
                 <details className="group [&_summary::-webkit-details-marker]:hidden flex items-center rounded-sm  ">
                   <summary
-                    className="flex cursor-pointer items-center justify-between text-black  py-2 px-4 rounded-sm hover:bg-gray-800  hover:text-gray-50"
+                    className="flex cursor-pointer items-center justify-between text-white  py-2 px-4 rounded-sm hover:bg-gray-800  hover:text-gray-50"
                   >
                     <div className='flex cursor-pointer items-center gap-2'>
                       <MdWarehouse className="w-5 h-5 fill-current text-gray-400" />
@@ -2407,7 +2407,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                   <ul className="mt-2 space-y-1 px-4">
 
                 
-                    <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-black'>
+                    <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white'>
                       <Link
                         to={'/admin/warehouse/area-management'}
                         className="  flex gap-2 items-center px-4 p-2 space-x-1  rounded-md"
@@ -2415,7 +2415,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                         <BiArea className='w-5 h-5 fill-current text-gray-400 ' /> Area Management
                       </Link>
                     </li>
-                    <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-black'>
+                    <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white'>
                       <Link
                         to={'/admin/warehouse/rack-management'}
                         className="  flex gap-2 items-center px-4 p-2 space-x-1  rounded-md"
@@ -2423,7 +2423,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                         <BsHddRack className='w-5 h-5 fill-current text-gray-400 ' /> Rack Management
                       </Link>
                     </li>
-                    <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-black'>
+                    <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white'>
                       <Link
                         to={'/admin/warehouse/self-management'}
                         className="  flex gap-2 items-center px-4 p-2 space-x-1  rounded-md"
@@ -2431,7 +2431,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                         <MdSelfImprovement className='w-5 h-5 fill-current text-gray-400 ' /> Self Management
                       </Link>
                     </li>
-                    <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-black'>
+                    <li className='flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white'>
                       <Link
                         to={'/admin/warehouse/cell-management'}
                         className="  flex gap-2 items-center px-4 p-2 space-x-1  rounded-md"
@@ -2660,7 +2660,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                           onClick={() => handleToggle(8)}
                           className="group [&_summary::-webkit-details-marker]:hidden w-full flex flex-col items-center rounded-sm  "
                         >
-                          <div className="flex cursor-pointer w-full items-center justify-between text-black  p-2 rounded-sm hover:bg-gray-800  hover:text-gray-50">
+                          <div className="flex cursor-pointer w-full items-center justify-between text-white  p-2 rounded-sm hover:bg-gray-800  hover:text-gray-50">
                             <div className="flex cursor-pointer items-center gap-2">
                               <IoMdPhotos className="w-5 h-5 fill-current text-gray-400" />
                               <span>Content Management </span>
@@ -2673,7 +2673,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
 
                           {openDropdownIndex == 8 && (
                             <ul className="mt-2 space-y-1 px-4">
-                              <li className="flex cursor-pointer items-center justify-between text-black  p-2 rounded-sm hover:bg-gray-800  hover:text-gray-50">
+                              <li className="flex cursor-pointer items-center justify-between text-white  p-2 rounded-sm hover:bg-gray-800  hover:text-gray-50">
                                 <Link
                                   to={"/admin/content-management/home-control"}
                                   className="  flex gap-2 items-center px-1 p-1   rounded-md"
@@ -2697,7 +2697,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                         onClick={() => handleToggle(8)}
                         className="group [&_summary::-webkit-details-marker]:hidden w-full flex flex-col items-center rounded-sm  "
                       >
-                        <div className="flex cursor-pointer w-full items-center justify-between text-black  p-2 rounded-sm hover:bg-gray-800  hover:text-gray-50">
+                        <div className="flex cursor-pointer w-full items-center justify-between text-white  p-2 rounded-sm hover:bg-gray-800  hover:text-gray-50">
                           <div className="flex cursor-pointer items-center gap-2">
                             <IoMdPhotos className="w-5 h-5 fill-current text-gray-400" />
                             <span>Content Management </span>
@@ -2710,7 +2710,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
 
                         {openDropdownIndex == 8 && (
                           <ul className="mt-2 space-y-1 px-4">
-                            <li className="flex cursor-pointer items-center justify-between text-black  p-2 rounded-sm hover:bg-gray-800  hover:text-gray-50">
+                            <li className="flex cursor-pointer items-center justify-between text-white  p-2 rounded-sm hover:bg-gray-800  hover:text-gray-50">
                               <Link
                                 to={"/admin/content-management/home-control"}
                                 className="  flex gap-2 items-center px-1 p-1   rounded-md"
@@ -2738,7 +2738,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                           onClick={() => handleToggle(9)}
                           className="group [&_summary::-webkit-details-marker]:hidden flex flex-col items-center w-full rounded-sm  "
                         >
-                          <div className="flex cursor-pointer items-center justify-between text-black  p-2 rounded-sm hover:bg-gray-800 w-full hover:text-gray-50">
+                          <div className="flex cursor-pointer items-center justify-between text-white  p-2 rounded-sm hover:bg-gray-800 w-full hover:text-gray-50">
                             <div className="flex cursor-pointer items-center gap-2">
                               <MdReport className="w-5 h-5 fill-current text-gray-400" />
                               <span>Report Management </span>
@@ -2751,7 +2751,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
 
                           {openDropdownIndex == 9 && (
                             <ul className="mt-2 space-y-1 px-4">
-                              <li className="flex cursor-pointer items-center justify-between text-black  p-2 rounded-sm hover:bg-gray-800  hover:text-gray-50">
+                              <li className="flex cursor-pointer items-center justify-between text-white  p-2 rounded-sm hover:bg-gray-800  hover:text-gray-50">
                                 <Link
                                   to={"/admin/report-management/admin-sales"}
                                   className="  flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
@@ -2760,7 +2760,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                   Sales
                                 </Link>
                               </li>
-                              <li className="flex cursor-pointer items-center justify-between text-black  p-2 rounded-sm hover:bg-gray-800  hover:text-gray-50">
+                              <li className="flex cursor-pointer items-center justify-between text-white  p-2 rounded-sm hover:bg-gray-800  hover:text-gray-50">
                                 <Link
                                   to={"/admin/report-management/seller-admin"}
                                   className="  flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
@@ -2769,7 +2769,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                   Seller
                                 </Link>
                               </li>
-                              <li className="flex cursor-pointer items-center justify-between text-black  p-2 rounded-sm hover:bg-gray-800  hover:text-gray-50">
+                              <li className="flex cursor-pointer items-center justify-between text-white  p-2 rounded-sm hover:bg-gray-800  hover:text-gray-50">
                                 <Link
                                   to={"/admin/report-management/customer-admin"}
                                   className="  flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
@@ -2778,7 +2778,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                   Cusotmer
                                 </Link>
                               </li>
-                              <li className="flex cursor-pointer items-center justify-between text-black  p-2 rounded-sm hover:bg-gray-800  hover:text-gray-50">
+                              <li className="flex cursor-pointer items-center justify-between text-white  p-2 rounded-sm hover:bg-gray-800  hover:text-gray-50">
                                 <Link
                                   to={
                                     "/admin/report-management/warehouse-admin"
@@ -2789,7 +2789,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                   Warehouse
                                 </Link>
                               </li>
-                              <li className="flex cursor-pointer items-center justify-between text-black  p-2 rounded-sm hover:bg-gray-800  hover:text-gray-50">
+                              <li className="flex cursor-pointer items-center justify-between text-white  p-2 rounded-sm hover:bg-gray-800  hover:text-gray-50">
                                 <Link
                                   to={
                                     "/admin/report-management/subscriber-admin"
@@ -2800,7 +2800,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                   Subscriber
                                 </Link>
                               </li>
-                              <li className="flex cursor-pointer items-center justify-between text-black  p-2 rounded-sm hover:bg-gray-800  hover:text-gray-50">
+                              <li className="flex cursor-pointer items-center justify-between text-white  p-2 rounded-sm hover:bg-gray-800  hover:text-gray-50">
                                 <Link
                                   to={
                                     "/admin/report-management/commission-history-admin"
@@ -2826,7 +2826,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                         onClick={() => handleToggle(9)}
                         className="group [&_summary::-webkit-details-marker]:hidden flex flex-col items-center w-full rounded-sm  "
                       >
-                        <div className="flex cursor-pointer items-center justify-between w-full text-black  p-2 rounded-sm hover:bg-gray-800  hover:text-gray-50">
+                        <div className="flex cursor-pointer items-center justify-between w-full text-white  p-2 rounded-sm hover:bg-gray-800  hover:text-gray-50">
                           <div className="flex cursor-pointer items-center gap-2">
                             <MdReport className="w-5 h-5 fill-current text-gray-400" />
                             <span>Report Management </span>
@@ -2839,7 +2839,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
 
                         {openDropdownIndex == 9 && (
                           <ul className="mt-2 space-y-1 px-4">
-                            <li className="flex cursor-pointer items-center justify-between text-black  p-2 rounded-sm hover:bg-gray-800  hover:text-gray-50">
+                            <li className="flex cursor-pointer items-center justify-between text-white  p-2 rounded-sm hover:bg-gray-800  hover:text-gray-50">
                               <Link
                                 to={"/admin/report-management/admin-sales"}
                                 className="  flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
@@ -2848,7 +2848,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                 Sales
                               </Link>
                             </li>
-                            <li className="flex cursor-pointer items-center justify-between text-black  p-2 rounded-sm hover:bg-gray-800  hover:text-gray-50">
+                            <li className="flex cursor-pointer items-center justify-between text-white  p-2 rounded-sm hover:bg-gray-800  hover:text-gray-50">
                               <Link
                                 to={"/admin/report-management/seller-admin"}
                                 className="  flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
@@ -2857,7 +2857,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                 Seller
                               </Link>
                             </li>
-                            <li className="flex cursor-pointer items-center justify-between text-black  p-2 rounded-sm hover:bg-gray-800  hover:text-gray-50">
+                            <li className="flex cursor-pointer items-center justify-between text-white  p-2 rounded-sm hover:bg-gray-800  hover:text-gray-50">
                               <Link
                                 to={"/admin/report-management/customer-admin"}
                                 className="  flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
@@ -2866,7 +2866,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                 Cusotmer
                               </Link>
                             </li>
-                            <li className="flex cursor-pointer items-center justify-between text-black  p-2 rounded-sm hover:bg-gray-800  hover:text-gray-50">
+                            <li className="flex cursor-pointer items-center justify-between text-white  p-2 rounded-sm hover:bg-gray-800  hover:text-gray-50">
                               <Link
                                 to={"/admin/report-management/warehouse-admin"}
                                 className="  flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
@@ -2875,7 +2875,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                 Warehouse
                               </Link>
                             </li>
-                            <li className="flex cursor-pointer items-center justify-between text-black  p-2 rounded-sm hover:bg-gray-800  hover:text-gray-50">
+                            <li className="flex cursor-pointer items-center justify-between text-white  p-2 rounded-sm hover:bg-gray-800  hover:text-gray-50">
                               <Link
                                 to={"/admin/report-management/subscriber-admin"}
                                 className="  flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
@@ -2884,7 +2884,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                 Subscriber
                               </Link>
                             </li>
-                            <li className="flex cursor-pointer items-center justify-between text-black  p-2 rounded-sm hover:bg-gray-800  hover:text-gray-50">
+                            <li className="flex cursor-pointer items-center justify-between text-white  p-2 rounded-sm hover:bg-gray-800  hover:text-gray-50">
                               <Link
                                 to={
                                   "/admin/report-management/commission-history-admin"
