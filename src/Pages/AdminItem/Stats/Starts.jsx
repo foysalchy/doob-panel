@@ -73,7 +73,7 @@ const Starts = () => {
       <div className="hidden ">
         <div className=" pt-6 2xl:container">
           <div>
-            <div className="flex flex-wrap">
+            <div className="block lg:flex  p-5 flex-wrap">
               <div className="w-full lg:w-6/12 xl:w-3/12 px-4">
                 <div className="relative flex flex-col min-w-0 break-words bg-white rounded-lg mb-6 xl:mb-0 shadow-lg">
                   <div className="flex-auto p-4">
@@ -231,7 +231,9 @@ const Starts = () => {
                         <i className="fas fa-arrow-down" />{" "}
                         {newUsers?.percentageChange}%
                       </span>
-                      <span className="whitespace-nowrap">Since last week</span>
+                      <span className="whitespace-nowrap">
+                        Since last weeks
+                      </span>
                     </p>
                   </div>
                 </div>
@@ -241,7 +243,7 @@ const Starts = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {/* card 1 */}
         <div className="bg-[#1caf12] p-4 h-[140px] rounded-md flex items-center justify-between">
           <div>
