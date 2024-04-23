@@ -338,6 +338,10 @@ const ProductDetails = () => {
     console.log(productData, "productData");
   };
 
+  const balk_buy = () => {
+    const product = productFind 
+  }
+
   // console.log(productFind, 'comment');
   return (
     <section>
@@ -654,6 +658,7 @@ const ProductDetails = () => {
                   Buy Now
                 </button> */}
 
+
                 <div className="flex flex-wrap gap-2">
                   <button
                     onClick={() => setInvoice(productFind?._id)}
@@ -670,6 +675,7 @@ const ProductDetails = () => {
                     Add to Cart
                   </button>
                 </div>
+
 
                 {invoice && (
                   <ModalForPayment

@@ -187,27 +187,7 @@ const SellerDashboard = () => {
 
     return (
         <div className="h-screen  mt-[-40px]   ">
-            <div>
-                <Swiper
-                    autoplay={{ delay: 3000 }}
-                    loop={true}
-                    slidesPerView={1}
-                    spaceBetween={10}
-                    pagination={{ clickable: true }}
-                    navigation={true}
-                    modules={[Autoplay, Pagination, Navigation]}
-                    className="mySwiper"
-                >
-                    {noticeInfo?.map((item, i) => (
-                        <SwiperSlide>
-                            <a href={'https://example.com/link1'} >
-                                <img src={item.image} alt="Description of image 1" className='h-32 object-cover rounded w-full' />
-                            </a>
-                        </SwiperSlide>
-                    ))}
 
-                </Swiper>
-            </div>
 
 
 
@@ -238,6 +218,28 @@ const SellerDashboard = () => {
                     </span>
                 </div>
             </div>}
+
+            <div className="mt-4">
+                <Swiper
+                    autoplay={{ delay: 3000 }}
+                    loop={true}
+                    slidesPerView={1}
+                    spaceBetween={10}
+                    pagination={{ clickable: true }}
+                    navigation={true}
+                    modules={[Autoplay, Pagination, Navigation]}
+                    className="mySwiper"
+                >
+                    {noticeInfo?.map((item, i) => (
+                        <SwiperSlide>
+                            <a href={'https://example.com/link1'} >
+                                <img src={item.image} alt="Description of image 1" className='h-32 object-cover rounded w-full' />
+                            </a>
+                        </SwiperSlide>
+                    ))}
+
+                </Swiper>
+            </div>
             <div className="flex flex-col items-start w-full my-6 space-y-4 md:space-x-4 md:space-y-0 md:flex-row">
                 <div className="w-full md:w-6/12">
                     <div
@@ -534,7 +536,7 @@ const SellerDashboard = () => {
                 </div>
 
             </div>
-            <div className="flex items-center gap-8  w-full">
+            <div className="grid grid-cols-1 gap-4 my-4 md:grid-cols-2 lg:grid-cols-2">
                 <div className='w-full px-4 py-2 bg-gray-50 rounded text-blue-500 flex items-center gap-2'>
                     <MdEmail />
                     {

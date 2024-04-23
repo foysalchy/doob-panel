@@ -160,7 +160,7 @@ const ProductHero = () => {
     console.log(megaSideCategoryData, 'megaSideCategoryData');
     return (
         <div className='flex gap-4 '>
-            <div className="bg-white  w-[340px] relative lg:flex hidden flex-col gap-2 rounded-lg p-4">
+            <div className="bg-white  w-[340px] relative lg:flex hidden flex-col  rounded-lg p-4 ">
                 {!megaSideCategoryData ? <>
 
                     <Skeleton
@@ -174,9 +174,9 @@ const ProductHero = () => {
                             {/* Dropdown toggle button */}
                             <button
                                 onClick={() => subCategoryHandler(item, index)}
-                                className={`flex  items-center  w-full justify-between px-2 py-2 text-sm font-normal  hover:bg-black hover:text-white  relative  ${openDropdownIndex === index ? 'bg-gray-100 text-black' : 'text-black'} rounded`}
+                                className={`flex  items-center  w-full justify-between px-2 py-1 capitalize text-sm font-normal  hover:bg-black hover:text-white  relative  ${openDropdownIndex === index ? 'bg-gray-100 text-black' : 'text-black'} rounded`}
                             >
-                                <span className="flex items-center gap-2">
+                                <span className="flex items-center ">
                                     <img src={item?.image} alt="" className="w-8 h-8 rounded-full ring-1 ring-gray-200" /> {item?.name}
                                 </span>
                                 <FaAngleRight className="absolute right-2" />
@@ -186,7 +186,7 @@ const ProductHero = () => {
                             {openDropdownIndex === index && (
                                 <div
                                     onClick={() => setOpenDropdownIndex(null)}
-                                    className="absolute right-[-196px] top-0 z-20 w-48 h-full py-2 mt-2 px-2 origin-top-right bg-white">
+                                    className="absolute right-[-196px] top-0 z-20 w-48 h-full py-1 capitalize mt-2 px-2 origin-top-right bg-white">
                                     {
                                         subCategoryData.map((subCategory, index) => <div key={index}>
                                             {
@@ -196,14 +196,14 @@ const ProductHero = () => {
                                                     >
                                                         <div
                                                             onMouseMove={() => miniCategoryHandler(subCategory, index)}
-                                                            className={`flex items-center hover:bg-gray-100 w-full justify-between px-2 py-2 text-sm font-normal cursor-pointer mb-1 rounded relative  ${active?.step1 === subCategory?._id ? 'text-black bg-gray-100' : 'text-black'}`}
+                                                            className={`flex items-center hover:bg-gray-100 w-full justify-between px-2 py-1 capitalize text-sm font-normal cursor-pointer mb-1 rounded relative  ${active?.step1 === subCategory?._id ? 'text-black bg-gray-100' : 'text-black'}`}
                                                             type="button"
                                                             id={item?._id}
                                                             data-te-dropdown-toggle-ref
                                                             aria-expanded="false"
                                                             data-te-ripple-init
                                                             data-te-ripple-color="light">
-                                                            <span className="flex items-center gap-2">
+                                                            <span className="flex items-center ">
                                                                 <img src={subCategory?.img} alt="" className="w-8 h-8 rounded-full ring-1 ring-gray-200" /> {subCategory?.subCategory}
                                                             </span>
 
@@ -214,26 +214,26 @@ const ProductHero = () => {
                                                                 <div key={index}>
                                                                     {
                                                                         !megaSideCategoryData.length == 0 ? <Link to={`/products/catagory/${miniCategory?._id}`}>
-                                                                            <div onMouseMove={(() => extraCategoryHandler(miniCategory, index))} className={`flex mt-2 items-center  w-full justify-between px-2 py-2 text-sm font-normal rounded hover:bg-gray-100 hover:text-black  relative  ${active?.step2 === miniCategory?._id ? 'bg-gray-100 text-black' : 'text-black'}`}>
-                                                                                <span className="flex items-center gap-2">
+                                                                            <div onMouseMove={(() => extraCategoryHandler(miniCategory, index))} className={`flex mt-2 items-center  w-full justify-between px-2 py-1 capitalize text-sm font-normal rounded hover:bg-gray-100 hover:text-black  relative  ${active?.step2 === miniCategory?._id ? 'bg-gray-100 text-black' : 'text-black'}`}>
+                                                                                <span className="flex items-center ">
                                                                                     <img src={miniCategory?.img} alt="" className="w-8 h-8 rounded-full ring-1 ring-gray-200" /> {miniCategory?.miniCategoryName}
                                                                                 </span>
                                                                             </div>
-                                                                        </Link> : <div onMouseMove={(() => extraCategoryHandler(miniCategory, index))} className="flex justify-between items-center px-2 py-2 text-sm font-normal hover:text-white  hover:bg-black   ">
+                                                                        </Link> : <div onMouseMove={(() => extraCategoryHandler(miniCategory, index))} className="flex justify-between items-center px-2 py-1 capitalize text-sm font-normal hover:text-white  hover:bg-black   ">
                                                                             {miniCategory?.miniCategoryName}
                                                                         </div>
                                                                     }
                                                                 </div>
                                                             )}
-                                                            {extraCategoryData.length == 0 ? '' : <div className="absolute w-[500px] p-2 bg-white right-[-500px] grid grid-cols-5 gap-2 top-0 h-full">
+                                                            {extraCategoryData.length == 0 ? '' : <div className="absolute w-[500px] p-2 bg-white right-[-500px] grid grid-cols-5  top-0 h-full">
                                                                 {
                                                                     extraCategoryData?.map((extraCategory, index) => <div key={index}>
                                                                         {
                                                                             extraCategoryData.length == 0 ? <div>
                                                                                 {extraCategory?.extraCategoryName}
                                                                             </div> : <Link to={`/products/catagory/${extraCategory?._id}`}>
-                                                                                <div className='py-2 px-2'>
-                                                                                    <span className="flex flex-col hover:bg-gray-100 items-center gap-2 w-[90px] p-2 rounded-lg ">
+                                                                                <div className='py-1 capitalize px-2'>
+                                                                                    <span className="flex flex-col hover:bg-gray-100 items-center  w-[90px] p-2 rounded-lg ">
                                                                                         <img src={extraCategory?.img} alt="" className="w-14 h-14 object-cover rounded-full ring-1 ring-gray-200" />
                                                                                         <p className="text-xs font-semibold text-center">
                                                                                             {extraCategory?.extraCategoryName}
@@ -253,7 +253,7 @@ const ProductHero = () => {
                                                     <button>
                                                         <div
                                                             onMouseMove={() => miniCategoryHandler(subCategory, index)}
-                                                            className={`flex items-center  w-full justify-between hover:bg-gray-100 px-2 py-2 text-sm font-normal  mb-1 rounded relative  ${active?.step2 === subCategory?._id ? 'black-black ' : 'text-black'}`}
+                                                            className={`flex items-center  w-full justify-between hover:bg-gray-100 px-2 py-1 capitalize text-sm font-normal  mb-1 rounded relative  ${active?.step2 === subCategory?._id ? 'black-black ' : 'text-black'}`}
                                                             type="button"
                                                             id={item?._id}
                                                             data-te-dropdown-toggle-ref
@@ -261,7 +261,7 @@ const ProductHero = () => {
                                                             data-te-ripple-init
                                                             data-te-ripple-color="light"
                                                         >
-                                                            <span className="flex items-center gap-2">
+                                                            <span className="flex items-center ">
                                                                 <img src={subCategory?.img} alt="" className="w-8 h-8 rounded-full ring-1 ring-gray-200" /> {subCategory?.subCategory}
                                                             </span>
                                                         </div>

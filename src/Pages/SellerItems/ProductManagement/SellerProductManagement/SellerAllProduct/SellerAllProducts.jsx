@@ -229,43 +229,56 @@ const SellerAllProducts = () => {
         refetch();
       });
   };
+  
 
-  const barcode_generate = () => {
-    console.log(selectProducts);
-    const pdf = new jsPDF();
-    const barcodesPerPage = 4; // Number of barcodes per page
-    let pageIndex = 0; // Current page index
-    let yPos = 10; // Initial y position
+ const barcode_generate = () => {
+        const pdf = new jsPDF();
+        const barcodesPerRow = 3;
+        const maxProductsPerPage = 15;
+        let productsDisplayed = 0;
+        let pageIndex = 0;
+        let yPos = 10;
 
-    // Loop through selected product IDs
-    selectProducts.forEach((productId, index) => {
-      // Create a barcode for each product ID using JsBarcode
-      const canvas = document.createElement("canvas");
-      JsBarcode(canvas, productId, {
-        format: "CODE128", // You can specify the barcode format here
-        displayValue: false, // Hide the text beneath the barcode
-      });
+        selectProducts.forEach((productId, index) => {
+            // Create a barcode for each product ID using JsBarcode
+            const canvas = document.createElement('canvas');
+            JsBarcode(canvas, productId, {
+                format: 'CODE128', // You can specify the barcode format here
+                displayValue: false // Hide the text beneath the barcode
+            });
 
-      // Convert canvas to base64 image
-      const imgData = canvas.toDataURL("image/png");
+            // Convert canvas to base64 image
+            const imgData = canvas.toDataURL('image/png');
 
-      // Add barcode image to PDF
-      if (index % barcodesPerPage === 0 && index !== 0) {
-        pdf.addPage();
-        pageIndex++; // Increment page index
-        yPos = 10; // Reset y position for new page
-      }
+            // Add barcode image to PDF
+            if (productsDisplayed >= maxProductsPerPage) {
+                pdf.addPage();
+                pageIndex++; // Increment page index
+                yPos = 10; // Reset y position for new page
+                productsDisplayed = 0; // Reset products displayed counter
+            }
 
-      pdf.addImage(imgData, "PNG", 10, yPos, 100, 50); // Adjust position and size as needed
-      pdf.text(10, yPos + 60, `Product ID: ${productId}`);
+            const rowIndex = Math.floor(productsDisplayed / barcodesPerRow);
+            const colIndex = productsDisplayed % barcodesPerRow;
 
-      yPos += 70; // Increase y position for next barcode
-    });
+            const xPos = 10 + colIndex * 70; // Adjust position for each column
 
-    // Save or navigate to the PDF page
-    pdf.save("barcodes.pdf"); // Save PDF
-  };
+            pdf.addImage(imgData, 'PNG', xPos, yPos, 50, 25); // Adjust position and size as needed
+            pdf.setFontSize(11); // Adjust font size for product ID
+            pdf.text(xPos, yPos + 30, `${productId}`); // Adjust position for product ID
 
+            productsDisplayed++;
+
+            if (colIndex === barcodesPerRow - 1) {
+                yPos += 60; // Increase y position for next row
+            }
+        });
+
+        // Save or navigate to the PDF page
+        pdf.save('barcodes.pdf'); // Save PDF
+    }
+ 
+ 
   const update_product_sorting = (e) => {
     console.log(e.target.value);
     fetch(`http://localhost:5001/api/v1/seller/update-product-upcoming`, {
@@ -392,15 +405,16 @@ const SellerAllProducts = () => {
               onClick={barcode_generate}
               className="bg-blue-500 px-8 py-2 rounded text-white"
             >
-              {" "}
+              
               Barcode Generate
             </button>
+
             <button
               onClick={logSelectedProducts}
               disabled={!selectProducts.length}
               className="bg-blue-500 px-8 py-2 rounded text-white"
             >
-              {" "}
+              
               Print
             </button>
           </div>{" "}

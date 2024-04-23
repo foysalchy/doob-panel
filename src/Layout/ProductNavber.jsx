@@ -77,8 +77,8 @@ export default function Component() {
                     <img className="w-32 text-black" src={Logo} srcSet={Logo} alt="" />
 
                 </NavLink>
-                <div className=" mx-4 relative w-[500px] md:flex hidden items-center px-1 py-1 border rounded-md">
-                    <input value={searchTerm} onChange={handleInputChange} className="w-full pl-4 outline-none h-full" placeholder="Khoj the Search........" type="search" />
+                <div className=" mx-4 relative w-[500px] md:flex hidden items-center px-1 py-1 border bg-gray-100 rounded-md">
+                    <input value={searchTerm} onChange={handleInputChange} className="w-full pl-4  bg-gray-100 outline-none h-full" placeholder="Search........" type="search" />
                     <button
                         className="bg-black text-white px-4 py-2 rounded-md hover:bg-gray-800"
                         onClick={searchData}>Search</button>

@@ -56,6 +56,7 @@ const ProductCatagory = () => {
       </Swiper>
     </div>
   );
+
 };
 
 export default ProductCatagory;
