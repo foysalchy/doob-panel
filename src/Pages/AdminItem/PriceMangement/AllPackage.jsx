@@ -104,7 +104,7 @@ const AllPackage = () => {
               {prices.length &&
                 prices?.map((price) => (
                   <tr key={price?.name}>
-                    <td className="px-4 py-3">{price?.name}</td>
+                    <td className="px-4 py-3">{price?.packageName}</td>
                     <td className="px-4 py-3">{price?.amount}</td>
                     <td className="px-4 py-3">
                       {!price?.status ? (

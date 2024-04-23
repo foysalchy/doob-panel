@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Select from "react-select";
 import BrightAlert from "bright-alert";
 
@@ -36,6 +36,12 @@ const WarehouseModal = ({ modalOpen, setModalOpen, product, doobProduct }) => {
   //   console.log(packageData);
   console.log(selectedPackage);
 
+  useEffect(() => {
+    if (product?.handling) {
+      setSelectedPackage(product?.handling);
+    }
+  }, []);
+
   const {
     data: warehouses = [],
     refetch,
@@ -54,6 +60,8 @@ const WarehouseModal = ({ modalOpen, setModalOpen, product, doobProduct }) => {
       return data;
     },
   });
+
+  //   console.log(product);
 
   const handleWarehouseChange = async (selectedOption) => {
     const selectedWarehouse = selectedOption.value;
@@ -137,10 +145,10 @@ const WarehouseModal = ({ modalOpen, setModalOpen, product, doobProduct }) => {
 
     const data = {
       handling: selectedPackage,
-      Commission,
+      commission: Commission,
       warehouse: doobProduct ? adminCategory : product.warehouse,
     };
-    // console.log(data);
+    console.log(data);
 
     fetch(
       `https://salenow-v2-backend.vercel.app/api/v1/admin/update-product-info?productId=${product._id}`,
@@ -183,9 +191,10 @@ const WarehouseModal = ({ modalOpen, setModalOpen, product, doobProduct }) => {
                 <div className="mb-4">
                   <h1 className="text-xl font-bold mb-2">Packaging Cost</h1>
                   <input
-                    type="text"
+                    type="number"
                     required
                     name="commission"
+                    defaultValue={product?.commission}
                     className="border border-gray-300 px-3 py-2 rounded-md w-full focus:outline-none focus:border-blue-500"
                     placeholder="Enter Packaging Cost"
                   />
@@ -203,9 +212,20 @@ const WarehouseModal = ({ modalOpen, setModalOpen, product, doobProduct }) => {
                     Select Package
                   </label>
                   <select
+                    defaultValue={"300"}
                     id="package"
+                    // styles={{
+                    //   control: (provided) => ({
+                    //     ...provided,
+                    //     cursor: "pointer",
+                    //   }),
+                    //   option: (provided) => ({
+                    //     ...provided,
+                    //     cursor: "pointer",
+                    //   }),
+                    // }}
                     value={selectedPackage}
-                    className="border border-gray-300 px-3 py-2 rounded-md w-full focus:outline-none focus:border-blue-500 text-black"
+                    className="mt-2 border border-gray-300 px-3 py-3 rounded-md w-full focus:outline-none focus:border-blue-500 text-black"
                     onChange={handlePackageChange}
                   >
                     <option value="">Select Package</option>
@@ -215,6 +235,31 @@ const WarehouseModal = ({ modalOpen, setModalOpen, product, doobProduct }) => {
                       </option>
                     ))}
                   </select>
+                  {/* 
+                  <Select
+                    className=""
+                    styles={{
+                      control: (provided) => ({
+                        ...provided,
+                        cursor: "pointer",
+                      }),
+                      option: (provided) => ({
+                        ...provided,
+                        cursor: "pointer",
+                      }),
+                    }}
+                    onChange={handlePackageChange}
+                    name="package"
+                    // required
+                    options={packageData?.map((pack) => ({
+                      value: pack.amount, // Assuming each package object has a 'name' property
+                      label: pack.packageName,
+                    }))}
+                    placeholder="Please select"
+                    defaultValue={packageData?.find(
+                      (pack) => pack.packageName === product?.handling
+                    )}
+                  /> */}
                 </div>
               </div>
             )}
