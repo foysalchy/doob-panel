@@ -266,7 +266,7 @@ export default function Component() {
 
         </>
     );
-    console.log(user, 'user.....');
+
 
     return (
         <div className="bg-white shadow-md">

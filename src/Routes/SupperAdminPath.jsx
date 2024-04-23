@@ -487,13 +487,6 @@ const SupperAdminPath = [
         path: 'claim-return',
         element: <ClaimAndRerunAdmin />
     },
-    {
-        path: ':id/admin-track-order',
-        element: <AdminTrackOrder />
-
-    },
-
-
 ]
 
 export { SupperAdminPath }

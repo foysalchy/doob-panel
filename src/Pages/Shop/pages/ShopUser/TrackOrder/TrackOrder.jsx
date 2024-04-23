@@ -1,8 +1,11 @@
 import React from 'react';
+import { useContext } from 'react';
+import { ShopAuthProvider } from '../../../../../AuthProvider/ShopAuthProvide';
 import { useState } from 'react';
 
 const TrackOrder = () => {
 
+    const { shopUser } = useContext(ShopAuthProvider)
     const [steps, setSteps] = useState({
         stepsItems: ["Order", "Processing", "Shipped", "Delivered"],
         // currentStep: 5
@@ -15,11 +18,10 @@ const TrackOrder = () => {
         e.preventDefault();
         setLoading(true)
         const orderId = e.target.orderId.value
-        fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/order-track?orderId=${orderId}`)
-            .then((res) => res.json()).then((data) => {
-                setOrder(data.data)
-                setLoading(false)
-            })
+        fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/order-track?token=${shopUser._id}&orderId=${orderId}`).then((res) => res.json()).then((data) => {
+            setOrder(data.data)
+            setLoading(false)
+        })
     }
 
 

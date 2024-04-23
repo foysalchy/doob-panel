@@ -17,8 +17,8 @@ const AdminLayout = () => {
 
     return (
         <div>
-            <div className="flex w-screen h-screen bg-[#f0f2f5]">
-                <div className=" h-full  z-50 min-h-screen  text-white ">
+            <div className="flex fixed w-screen overflow-hidden h-full bg-[#f0f2f5]">
+                <div className=" h-full  z-50   text-white ">
                     <SideNavAdmin responsive={responsive} setResponsive={setResponsive} />
                 </div>
                 <div className="px-4 py-8 w-full overflow-y-scroll  ">
@@ -81,7 +81,7 @@ const AdminLayout = () => {
                             </ol>
                         </nav>
                     </div>
-                    <div className="flex-1 h-screen    sm:p-0">
+                    <div className="flex-1 sm:p-0">
                         <Outlet />
                     </div>
                 </div>

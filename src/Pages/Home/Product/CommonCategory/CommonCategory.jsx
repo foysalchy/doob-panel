@@ -47,7 +47,7 @@ export default function CommonCategory() {
         console.log(categories, 'filtered');
     }
 
-    console.log(products, 'products');
+    console.log(products, 'products', shopInfo);
 
     return (
         <section className="text-gray-600 body-font">
