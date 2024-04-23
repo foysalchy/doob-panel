@@ -1,3 +1,5 @@
+
+
 import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 import { IoCall } from 'react-icons/io5';
@@ -32,14 +34,17 @@ const ShopSmallNav = () => {
 
     return (
         <>
-            <nav className='mx-auto flex items-center justify-between py-3 px-4 sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8'>
+            <nav className='mx-auto lg:hidden flex items-center justify-between py-3 px-4 sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8'>
                 <div>
                     <img src={shopInfo?.logo} alt="" className="" />
                 </div>
 
-                <button className='text-lg'>
-                    <BiSearch />
-                </button>
+                <div className="flex items-center border p-1 rounded">
+                    <input type="text" placeholder='Search...' className="w-full outline-none focus:outline-none h-full" />
+                    <button className='text-lg'>
+                        <BiSearch />
+                    </button>
+                </div>
             </nav>
             <div className='bg-black'>
                 <div className=' mx-auto py-3 px-4 sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8'>

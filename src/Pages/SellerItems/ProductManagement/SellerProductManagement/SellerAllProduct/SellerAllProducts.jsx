@@ -880,20 +880,7 @@ const SellerAllProducts = () => {
                                     </div>
                                   )}
 
-                                  {/* <div onClick={() => setOnModal(false)} className={`fixed z-[100] overflow-hidden flex items-center justify-center ${onModal?._id == product?._id ? 'visible opacity-100' : 'invisible opacity-0'} inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}>
-
-                                                            <div onClick={(e_) => e_.stopPropagation()} className={`text- absolute w-[90%] rounded-sm bg-white p-6 drop-shadow-lg  ${onModal?._id == product?._id ? 'scale-1 opacity-1 duration-300' : 'scale-0 opacity-0 duration-150'}`}>
-
-                                                              
-
-                                                                <div className="flex justify-between">
-
-                                                                    <button type='button' onClick={() => setOnModal(false)} className="absolute top-0 right-2 bg-red-500 text-white w-[30px] h-[30px] rounded-full flex items-center justify-center">x</button>
-                                                                </div>
-                                                            </div>
-                                                        </div> */}
-
-                                  {/* end */}
+                                 
                                 </div>
                                 <div></div>
                               </td>

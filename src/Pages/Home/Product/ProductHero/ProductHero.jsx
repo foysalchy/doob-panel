@@ -185,7 +185,6 @@ const ProductHero = () => {
                                 {allCategory?.subCategorys.filter(
                                     (subCategory) => subCategory.megaCategoryId === item?._id
                                 ).length >= 1 && <FaAngleRight className="absolute right-2" />}
-                                {/* {<FaAngleRight className="absolute right-2" />} */}
                             </button>
 
                             {/* Dropdown menu */}

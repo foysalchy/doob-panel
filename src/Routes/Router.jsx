@@ -31,6 +31,7 @@ import CommonCategory from "../Pages/Home/Product/CommonCategory/CommonCategory"
 import ProductDetails from "../Pages/Home/Product/ProductDetails/ProductDetails";
 import EmailVerify from "../Common/EmailVerify";
 import CardProduct from "../Pages/Home/Product/CardProduct/CardProduct";
+import AdminTrackOrder from "../Pages/AdminItem/AdminTrackOrder/AdminTrackOrder";
 
 
 
@@ -168,7 +169,12 @@ const Router = createBrowserRouter([
       {
         path: 'my-card',
         element: <CardProduct />
-      }
+      },
+      {
+        path: 'admin-track-order',
+        element: <AdminTrackOrder />
+
+      },
     ]
   }
 
