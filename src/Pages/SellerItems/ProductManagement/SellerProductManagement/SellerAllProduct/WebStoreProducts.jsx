@@ -107,6 +107,27 @@ export default function WebStoreproduct({ priceRole, searchQuery }) {
         // Return the calculated data
         return data;
     };
+
+
+    const update_status = (product_id, status) => {
+        fetch(`http://localhost:5001/api/v1/seller/update-product-status`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                id: product_id,
+                status: status,
+            }),
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                Swal.fire(`Success`, "", "success");
+                refetch();
+            });
+    }
+
+
     return (
         <div className="flex flex-col mt-6">
 
@@ -211,7 +232,7 @@ export default function WebStoreproduct({ priceRole, searchQuery }) {
                                         <td className="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                                             {!product.adminWare ? <div>
                                                 {product.status === true ? <div
-                                                    onClick={() => updateProductStatus(product._id, false)}
+                                                    onClick={() => update_status(product._id, false)}
                                                     className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 cursor-pointer bg-emerald-100/60 bg-gray-800">
                                                     <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
                                                     <h2 className="text-sm font-normal text-emerald-500">
@@ -219,7 +240,7 @@ export default function WebStoreproduct({ priceRole, searchQuery }) {
                                                     </h2>
                                                 </div> :
                                                     <div
-                                                        onClick={() => updateProductStatus(product?._id, true)}
+                                                        onClick={() => update_status(product?._id, true)}
                                                         className="inline-flex items-center px-3 py-1 rounded-full  cursor-pointer gap-x-2 bg-emerald-100/60 bg-gray-800">
                                                         <span className="h-1.5 w-1.5 rounded-full bg-red-500" />
                                                         <h2 className="text-sm font-normal text-red-500">
@@ -311,13 +332,20 @@ export default function WebStoreproduct({ priceRole, searchQuery }) {
                     </svg>
                     <span>previous</span>
                 </button>
-                <div className="items-center hidden lg:flex gap-x-3">
+                {/* <div className="items-center hidden lg:flex gap-x-3">
 
                     <div className='px-2 py-1 text-sm text-blue-500 rounded-md  bg-blue-100/60'>
 
                         <span> {currentPage}</span>
                     </div>
 
+                </div> */}
+                <div className="items-center hidden lg:flex gap-x-3">
+                    {Array.from({ length: Math.ceil(filteredData?.length / pageSize) }, (_, index) => (
+                        <div key={index} className={`px-2 py-1 text-sm rounded-md ${currentPage === index + 1 ? 'bg-blue-500 text-white' : 'text-blue-500 bg-blue-100/60'}`}>
+                            <span>{index + 1}</span>
+                        </div>
+                    ))}
                 </div>
                 <button
                     onClick={() => setCurrentPage((prevPage) => Math.min(prevPage + 1, Math.ceil(filteredData?.length / pageSize)))}
