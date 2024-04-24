@@ -32,9 +32,10 @@ const SellerAddProduct = () => {
     const [adminWare, setAdminWare] = useState(true)
     const [coverPhoto, setCoverPhoto] = useState('');
     const [description, setDescription] = useState('')
-    const [shortDescription, setShortDescription] = useState('')
     const [banglaDescription, setBanglaDescription] = useState('')
+    const [shortDescription, setShortDescription] = useState('')
     const [youtube, setYoutube] = useState('')
+
     const [multiVendor, setMultiVendor] = useState(adminWare);
 
     const [inputFields, setInputFields] = useState([
@@ -134,13 +135,10 @@ const SellerAddProduct = () => {
 
 
     const formSubmit = async (e) => {
-        // setLoading(true)
+        setLoading(true)
         e.preventDefault();
         const form = e.target;
         const BnName = form.productNameBn.value
-        BnName.focus();
-        const variation_selector = form.variation_selector.value;
-        variation_selector.focus();
         const sku = form.ProductSKU.value
         const EnName = form.productNameEn.value
         const megaCategory = form?.megaCategory?.value
@@ -175,9 +173,7 @@ const SellerAddProduct = () => {
         const MetaImageFile = form?.MetaImage?.files[0]
         const MetaImage = await imageUpload(MetaImageFile)
 
-
-
-        const darazOptionData = filteredData.length && filteredData?.map((item) => {
+        const darazOptionData = filteredData?.length && filteredData?.map((item) => {
             const fieldName = item.name;
             const fieldValue = form?.[fieldName]?.value;
             return { [fieldName]: fieldValue };
@@ -303,32 +299,29 @@ const SellerAddProduct = () => {
             DeliveryCharge
 
         }
-        console.log(variation_selector, 'product_ready');
+        console.log(data, 'product_ready');
 
-        if (warehouse === '') {
-            alert('warehouse is must be selected');
-        } else {
-            fetch('https://salenow-v2-backend.vercel.app/api/v1/seller/normal-product/', {
-                method: "POST",
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-                , body: JSON.stringify({ data })
-            }).then((res) => res.json()).then((data) => {
 
-                if (
-                    data.error
-                ) {
-                    Swal.fire(`${data.message}`, '', 'warning')
-                    setLoading(false)
-                }
-                else {
-                    Swal.fire('', '', 'success')
-                    setLoading(false)
-                }
+        fetch('https://salenow-v2-backend.vercel.app/api/v1/seller/normal-product/', {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json'
+            }
+            , body: JSON.stringify({ data })
+        }).then((res) => res.json()).then((data) => {
 
-            })
-        }
+            if (
+                data.error
+            ) {
+                Swal.fire(`${data.message}`, '', 'warning')
+                setLoading(false)
+            }
+            else {
+                Swal.fire('', '', 'success')
+                setLoading(false)
+            }
+
+        })
     };
 
 
@@ -352,7 +345,6 @@ const SellerAddProduct = () => {
 
                 <WareHouse shopInfo={shopInfo} adminWare={adminWare} setAdminWare={setAdminWare} />
 
-                {/* upcoming selectee */}
                 {/* <label
                     htmlFor="Toggle3"
                     className={`inline-flex items-center py-4 rounded-md cursor-pointer ${isChecked ? 'text-gray-800' : ''
@@ -379,7 +371,7 @@ const SellerAddProduct = () => {
                 </label> */}
 
                 <div id='description'>
-                    <Description setBanglaDescription={setBanglaDescription} banglaDescription={banglaDescription} shortDescription={shortDescription} setShortDescription={setShortDescription} description={description} setDescription={setDescription} />
+                    <Description banglaDescription={banglaDescription} setBanglaDescription={setBanglaDescription} shortDescription={shortDescription} setShortDescription={setShortDescription} description={description} setDescription={setDescription} />
                 </div>
                 <div className='my-4 mt-10'>
                     <Variants setVariantInput={setVariantInput} variantInput={variantInput} multiVendor={multiVendor} setMultiVendor={setMultiVendor} adminWare={adminWare} daraz={daraz} inputFields={inputFields} setInputFields={setInputFields} />

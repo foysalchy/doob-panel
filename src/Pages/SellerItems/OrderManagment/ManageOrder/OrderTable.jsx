@@ -116,7 +116,7 @@ const OrderTable = ({
     // Open modal dialog to confirm action
     if (confirm("Are you sure you want to update the status?")) {
       fetch(
-        `http://localhost:5001/api/v1/seller/order-status-update?orderId=${orderId}&status=${status}`,
+        `https://salenow-v2-backend.vercel.app/api/v1/seller/order-status-update?orderId=${orderId}&status=${status}`,
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },

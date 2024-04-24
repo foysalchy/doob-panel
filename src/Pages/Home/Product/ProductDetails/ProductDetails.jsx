@@ -349,7 +349,7 @@ const ProductDetails = () => {
       sellingPrice: banifit.sellingPrice,
 
     }
-    fetch(`http://localhost:5001/api/v1/seller/balk-order-update`, {
+    fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/balk-order-update`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

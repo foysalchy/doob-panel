@@ -42,7 +42,7 @@ export default function WebStoreproduct({ priceRole, searchQuery }) {
     const endIndex = startIndex + pageSize;
 
     // Get the current page data
-    const currentData = filteredData.slice(startIndex, endIndex);
+    const currentData = filteredData?.slice(startIndex, endIndex);
 
 
 
@@ -110,7 +110,7 @@ export default function WebStoreproduct({ priceRole, searchQuery }) {
 
 
     const update_status = (product_id, status) => {
-        fetch(`http://localhost:5001/api/v1/seller/update-product-status`, {
+        fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/update-product-status`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",

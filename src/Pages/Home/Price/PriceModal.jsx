@@ -62,7 +62,7 @@ const PriceModal = ({ open, setOpen }) => {
     console.log({
       paymentId: open?._id,
       shopId: shopInfo._id,
-      getway: selectGetWay?.Getaway,
+      getway: 'Cash',
       amount: open?.price,
       priceName: open?.name,
       time,
@@ -81,7 +81,7 @@ const PriceModal = ({ open, setOpen }) => {
           body: JSON.stringify({
             paymentId: open?._id,
             shopId: shopInfo._id,
-            getway: selectGetWay?.Getaway,
+            getway: 'Cash',
             amount: open?.price,
             priceName: open?.name,
             time,
@@ -96,7 +96,7 @@ const PriceModal = ({ open, setOpen }) => {
           setOpen(false);
           if (data.success) {
             // data.shopInfo
-            BrightAlert("service selected successfully", "", "success");
+            BrightAlert("Payment Successful", "", "success");
             setShopInfo(data.shopInfo);
             setCookie("SellerShop", JSON.stringify(data.shopInfo));
             setSelectGetWay(false);
@@ -218,8 +218,22 @@ const PriceModal = ({ open, setOpen }) => {
                     />
                   </button>
                 )}
+
+
               </div>
+
             ))}
+            {
+              <button
+                onClick={() => handleSubmit()}
+                className={`group relative block border  ${selectGetWay === 'Cash'
+                  ? "border-blue-500"
+                  : "border-gray-100"
+                  }`}
+              >
+                Cash
+              </button>
+            }
           </div>
         ) : (
           <div className="flex items-center justify-between px-8 py-4 border border-blue-500 cursor-pointer rounded-xl">

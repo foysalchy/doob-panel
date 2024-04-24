@@ -66,7 +66,7 @@ const MageCategoriesManagement = () => {
     const endIndex = startIndex + pageSize;
     const totalPages = Math.ceil(filteredData?.length / pageSize);
 
-    const currentData = filteredData.slice(startIndex, endIndex);
+    const currentData = filteredData.length && filteredData?.slice(startIndex, endIndex);
 
     const handleChangePage = (newPage) => {
 
@@ -350,7 +350,7 @@ const MageCategoriesManagement = () => {
                 </div>
 
                 <div className="overflow-x-scroll overflow-hidden">
-                    <table className="table-auto overflow-x-auto w-full text-left whitespace-wrap">
+                    <table className="table-auto overflow-x-scroll w-full text-left whitespace-wrap">
                         <thead>
                             <tr>
                                 <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-800 whitespace-wrap rounded-tl ">
@@ -373,7 +373,7 @@ const MageCategoriesManagement = () => {
                         </thead>
                         <tbody>
                             {
-                                currentData.map((warehouse, index) => (
+                                currentData?.length && currentData?.map((warehouse, index) => (
 
                                     <tr key={index + warehouse?._id + 1} className=''>
                                         <td className="px-4 py-3">
@@ -425,18 +425,22 @@ const MageCategoriesManagement = () => {
                                         {/* <td>
 
                                         </td> */}
-                                        <td className="px-4  text-2xl flex gap-2 py-6 items-center text-gray-100">
-                                            <MdDelete
-                                                className="text-red-500 cursor-pointer"
-                                                onClick={() => DeleteWarehouse(warehouse?._id)}
-                                            />
-                                            <BiEdit className="text-yellow-500 cursor-pointer"
-                                                onClick={() => setEditOn(warehouse)}
 
-                                            />
+                                        <td className=" ">
+                                            <div className='flex  gap-2 items-center text-2xl'>
+                                                <MdDelete
+                                                    className="text-red-500 cursor-pointer"
+                                                    onClick={() => DeleteWarehouse(warehouse?._id)}
+                                                />
+                                                <BiEdit className="text-yellow-500 cursor-pointer"
+                                                    onClick={() => setEditOn(warehouse)}
+
+                                                />
+                                            </div>
+
+
 
                                         </td>
-
 
                                         <div className={`fixed z-[100] flex items-center justify-center ${editOn?._id === warehouse?._id ? 'opacity-1 visible' : 'invisible opacity-0'} inset-0 bg-black/20 backdrop-blur-sm duration-100`}>
                                             <div className={`absolute md:w-[500px] w-full rounded-sm bg-white p-3 pb-5 text-center drop-shadow-2xl ${editOn?._id === warehouse?._id ? 'scale-1 opacity-1 duration-300' : 'scale-0 opacity-0 duration-150'} `}>
