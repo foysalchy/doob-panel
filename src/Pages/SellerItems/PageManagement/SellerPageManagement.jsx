@@ -14,6 +14,8 @@ const SellerPageManagement = () => {
   const [loading, setLoading] = useState(false);
   const [trash_status, setTrash_status] = useState(false);
 
+  console.log(trash_status);
+
   const { shopInfo } = useContext(AuthContext);
 
   const { data: faqs = [], refetch } = useQuery({
@@ -131,13 +133,13 @@ const SellerPageManagement = () => {
           </span>
 
           <span className="text-sm font-medium transition-all group-hover:ms-4">
-            Trash Page
+            {trash_status ? "Manage Page" : "  Trash Page"}
           </span>
         </button>
       </div>
       <section className=" px-4 mx-auto">
         <h1 className="text-center my-10 font-bold text-2xl">
-          This is Page List
+          {trash_status ? "Trash Page List" : " Page List"}
         </h1>
         <div className="flex flex-col mt-6">
           <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
