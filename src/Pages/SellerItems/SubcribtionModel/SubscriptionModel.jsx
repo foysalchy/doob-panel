@@ -1,168 +1,203 @@
-import { useQuery } from '@tanstack/react-query';
-import React, { useContext, useEffect, useState } from 'react';
-import { AuthContext } from '../../../AuthProvider/UserProvider';
-import { Link } from 'react-router-dom';
-import { CgClose } from 'react-icons/cg';
-import PriceModal from '../../Home/Price/PriceModal';
-import SubscriptionInvoice from './SubscriptionInvoice';
+import { useQuery } from "@tanstack/react-query";
+import React, { useContext, useEffect, useState } from "react";
+import { AuthContext } from "../../../AuthProvider/UserProvider";
+import { Link } from "react-router-dom";
+import { CgClose } from "react-icons/cg";
+import PriceModal from "../../Home/Price/PriceModal";
+import SubscriptionInvoice from "./SubscriptionInvoice";
 
 const SubscriptionModel = () => {
-    const [open, setOpen] = useState(false);
-    const { user, shopInfo } = useContext(AuthContext)
-    const [services, setServices] = useState([])
-    const [showWarning, setShowWarning] = useState(false)
+  const [open, setOpen] = useState(false);
+  const { user, shopInfo } = useContext(AuthContext);
+  const [services, setServices] = useState([]);
+  const [showWarning, setShowWarning] = useState(false);
 
+  const { data: prices = {}, loader } = useQuery({
+    queryKey: ["subscriptionModal"],
+    queryFn: async () => {
+      const res = await fetch(
+        `https://salenow-v2-backend.vercel.app/api/v1/seller/subscription-model?priceId=${shopInfo?.priceId}&shopId=${shopInfo._id}`
+      );
+      const data = await res.json();
+      return data?.data;
+    },
+  });
 
+  console.log(open);
 
+  console.log("prices", prices);
 
-    const { data: prices = {}, loader } = useQuery({
-        queryKey: ["subscriptionModal"],
-        queryFn: async () => {
-            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/subscription-model?priceId=${shopInfo?.priceId}&shopId=${shopInfo._id}`);
-            const data = await res.json();
-            return data?.data;
-        },
-    });
+  console.log(
+    `https://salenow-v2-backend.vercel.app/api/v1/seller/subscription-model?priceId=${shopInfo?.priceId}&shopId=${shopInfo._id}`,
+    "services time prices ====={}"
+  );
 
-    console.log(`https://salenow-v2-backend.vercel.app/api/v1/seller/subscription-model?priceId=${shopInfo?.priceId}&shopId=${shopInfo._id}`, 'services time prices ====={}');
+  const { data: CommissionHistory = [] } = useQuery({
+    queryKey: ["commissionHistory"],
+    queryFn: async () => {
+      const res = await fetch(
+        `https://salenow-v2-backend.vercel.app/api/v1/seller/get-commission?shopId=${shopInfo._id}`
+      );
+      const data = await res.json();
+      console.log(data);
+      return data.history;
+    },
+  });
 
+  const { data: pricesData = [], refetch } = useQuery({
+    queryKey: ["pricesData"],
+    queryFn: async () => {
+      const res = await fetch(
+        "https://salenow-v2-backend.vercel.app/api/v1/admin/pricing"
+      );
+      const data = await res.json();
+      return data;
+    },
+  });
 
-    const { data: CommissionHistory = [], } = useQuery({
-        queryKey: ["commissionHistory"],
-        queryFn: async () => {
-            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/get-commission?shopId=${shopInfo._id}`);
-            const data = await res.json();
-            console.log(data)
-            return data.history;
-        },
-    });
+  const { data: possibility } = useQuery({
+    queryKey: "possibility",
+    queryFn: async () => {
+      const res = await fetch(
+        `https://salenow-v2-backend.vercel.app/api/v1/seller/check-free-trail?shopId=${shopInfo._id}`
+      );
+      const data = await res.json();
+      console.log(data);
+      return data.freeTrialActive;
+    },
+  });
 
+  // console.log(`https://salenow-v2-backend.vercel.app/api/v1/seller/check-free-trail?shopId=${shopInfo._id}`, 'posible');
 
-    const { data: pricesData = [], refetch } = useQuery({
-        queryKey: ["pricesData"],
-        queryFn: async () => {
-            const res = await fetch("https://salenow-v2-backend.vercel.app/api/v1/admin/pricing");
-            const data = await res.json();
-            return data;
-        },
-    });
+  const originalDate = shopInfo?.paymentDate;
+  const formattedDate = new Date(originalDate);
 
+  // Calculate the time difference in milliseconds
+  const timeDifference = new Date() - formattedDate;
 
-    const {
-        data: possibility,
-    } = useQuery({
-        queryKey: "possibility",
-        queryFn: async () => {
-            const res = await fetch(
-                `https://salenow-v2-backend.vercel.app/api/v1/seller/check-free-trail?shopId=${shopInfo._id}`
-            );
-            const data = await res.json();
-            console.log(data);
-            return data.freeTrialActive
-        },
-    });
+  // Convert milliseconds to days
+  const daysPassed = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
 
-    // console.log(`https://salenow-v2-backend.vercel.app/api/v1/seller/check-free-trail?shopId=${shopInfo._id}`, 'posible');
+  const time =
+    (prices?.timeDuration === "Monthly" && 30) ||
+    (prices?.timeDuration === "Yearly" && 365) ||
+    (prices?.timeDuration === "Weekly" && 7) ||
+    (prices?.timeDuration === "Daily" && 1) ||
+    (prices?.timeDuration === "Lifetime" &&
+      10000000000000000000000000000000000);
 
+  // if (daysPassed >= time) {
+  //     alert('your ads;fj');
+  // }
 
-    const originalDate = shopInfo?.paymentDate;
-    const formattedDate = new Date(originalDate);
+  const showWarningIfNeeded = () => {
+    if (daysPassed > 0 && daysPassed <= 5) {
+      setShowWarning(true);
+    } else {
+      setShowWarning(false);
+    }
+  };
 
-    // Calculate the time difference in milliseconds
-    const timeDifference = new Date() - formattedDate;
+  // Use useEffect to trigger the warning check on component mount and when daysPassed changes
+  useEffect(() => {
+    showWarningIfNeeded();
+  }, [daysPassed]);
 
-    // Convert milliseconds to days
-    const daysPassed = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+  console.log(daysPassed, "services time");
 
-    const time = prices?.timeDuration === 'Monthly' && 30 || prices?.timeDuration === 'Yearly' && 365 || prices?.timeDuration === 'Weekly' && 7 || prices?.timeDuration === 'Daily' && 1 || prices?.timeDuration === 'Lifetime' && 10000000000000000000000000000000000;
+  const [invoice, setInvoice] = useState(false);
 
+  // const buyTi
+  const showBuyingPrice = parseInt(prices?.orderInfo?.buyingPrice);
 
+  console.log(prices, "--------*************");
 
-    // if (daysPassed >= time) {
-    //     alert('your ads;fj');
-    // }
-
-    const showWarningIfNeeded = () => {
-        if (daysPassed > 0 && daysPassed <= 5) {
-            setShowWarning(true);
-        } else {
-            setShowWarning(false);
-        }
-    };
-
-    // Use useEffect to trigger the warning check on component mount and when daysPassed changes
-    useEffect(() => {
-        showWarningIfNeeded();
-    }, [daysPassed]);
-
-    console.log(daysPassed, 'services time');
-
-
-    const [invoice, setInvoice] = useState(false)
-
-
-    // const buyTi
-    const showBuyingPrice = parseInt(prices?.orderInfo?.buyingPrice)
-
-    console.log(prices, '--------*************');
-
-    return (
-        <div className="bg-white text-black">
-            {showWarning && (
-                <div className="bg-orange-100 px-2 py-3 rounded- flex justify-between items-center">
-                    <p className="text-sm text-orange-800 capitalize ">
-                        Hi dear, only 5 days left for your service. Please renew{' '}
-                        <button onClick={() => setInvoice(true)} className="bg-orange-500 px-4 ml-2 py-1 text-xs rounded text-black">
-                            Renew
-                        </button>
-                    </p>
-                    <div className='h-0 w-0'>
-                        {invoice && <SubscriptionInvoice pricesData={pricesData} id={prices} CommissionHistory={commissionHistory} setInvoice={setInvoice} invoice={invoice} />}
-                    </div>
-                </div>
+  return (
+    <div className="bg-white text-black">
+      {showWarning && (
+        <div className="bg-orange-100 px-2 py-3 rounded- flex justify-between items-center">
+          <p className="text-sm text-orange-800 capitalize ">
+            Hi dear, only 5 days left for your service. Please renew{" "}
+            <button
+              onClick={() => setInvoice(true)}
+              className="bg-orange-500 px-4 ml-2 py-1 text-xs rounded text-black"
+            >
+              Renew
+            </button>
+          </p>
+          <div className="h-0 w-0">
+            {invoice && (
+              <SubscriptionInvoice
+                pricesData={pricesData}
+                id={prices}
+                CommissionHistory={commissionHistory}
+                setInvoice={setInvoice}
+                invoice={invoice}
+              />
             )}
+          </div>
+        </div>
+      )}
 
-            {possibility && (
-                <div className="bg-orange-100 px-2 py-3 rounded- flex justify-between items-center">
-                    <p className="text-sm text-orange-800 capitalize ">
-                        Hi dear, Your free trial is end. Please renew{' '}
-                        <button onClick={() => setInvoice(true)} className="bg-orange-500 px-4 ml-2 py-1 text-xs rounded text-black">
-                            Renew
-                        </button>
-                    </p>
-                    <div className='h-0 w-0'>
-                        {invoice && <SubscriptionInvoice pricesData={pricesData} id={prices?._id} CommissionHistory={commissionHistory} setInvoice={setInvoice} invoice={invoice} />}
-                    </div>
-                </div>
+      {possibility && (
+        <div className="bg-orange-100 px-2 py-3 rounded- flex justify-between items-center">
+          <p className="text-sm text-orange-800 capitalize ">
+            Hi dear, Your free trial is end. Please renew{" "}
+            <button
+              onClick={() => setInvoice(true)}
+              className="bg-orange-500 px-4 ml-2 py-1 text-xs rounded text-black"
+            >
+              Renew
+            </button>
+          </p>
+          <div className="h-0 w-0">
+            {invoice && (
+              <SubscriptionInvoice
+                pricesData={pricesData}
+                id={prices?._id}
+                CommissionHistory={commissionHistory}
+                setInvoice={setInvoice}
+                invoice={invoice}
+              />
             )}
-            <div className="container px-6 py-8 mx-auto">
-                <h1 className="text-2xl font-semibold text-center text-gray-800 capitalize lg:text-3xl ">
-                    {`${daysPassed} days have passed since the user was created.`}
-                </h1>
+          </div>
+        </div>
+      )}
+      <div className="container px-6 py-8 mx-auto">
+        <h1 className="text-2xl font-semibold text-center text-gray-800 capitalize lg:text-3xl ">
+          {`${daysPassed} days have passed since the user was created.`}
+        </h1>
 
-                <h1 className="text-2xl font-semibold text-center text-red-800 capitalize lg:text-3xl ">
-                    {`${time == 10000000000000000000000000000000000 ? 'Unlimited' : time} days you use this service.`}
-                </h1>
+        <h1 className="text-2xl font-semibold text-center text-red-800 capitalize lg:text-3xl ">
+          {`${
+            time == 10000000000000000000000000000000000 ? "Unlimited" : time
+          } days you use this service.`}
+        </h1>
 
-                <div className="flex justify-center mt-3">
-                    <div className="w-[300px] bg-[#0000ff08] text-center border-2 border-blue-400 p-3 rounded">
-                        <h2 className="font-semibold pb-2">Order Information:</h2>
-                        <ul>
-                            <li className='text-sm text-gray-500'>
-                                {/* parseInt(open?.price) * parseInt(time?.split(',')[1]) - parseInt(time?.split(',')[0]) */}
-                                <span className=" text-black">Amount :</span> {parseInt(prices?.orderInfo?.amount) * parseInt(prices?.orderInfo?.time?.split(',')[1])} ৳
-                            </li>
-                            <li className='text-sm text-gray-500 '>
-                                <span className=" text-black">Buying Price :</span> {prices?.orderInfo?.buyingPrice} ৳
-                            </li>
-                            <li className='text-sm text-gray-500 '>
-                                <span className=" text-black">Discount Price :</span> {prices?.orderInfo?.time?.split(',')[0]} ৳
-                            </li>
-                        </ul>
-                    </div>
-                </div>
+        <div className="flex justify-center mt-3">
+          <div className="w-[300px] bg-[#0000ff08] text-center border-2 border-blue-400 p-3 rounded">
+            <h2 className="font-semibold pb-2">Order Information:</h2>
+            <ul>
+              <li className="text-sm text-gray-500">
+                {/* parseInt(open?.price) * parseInt(time?.split(',')[1]) - parseInt(time?.split(',')[0]) */}
+                <span className=" text-black">Amount :</span>{" "}
+                {parseInt(prices?.orderInfo?.amount) *
+                  parseInt(prices?.orderInfo?.time?.split(",")[1])}{" "}
+                ৳
+              </li>
+              <li className="text-sm text-gray-500 ">
+                <span className=" text-black">Buying Price :</span>{" "}
+                {prices?.orderInfo?.buyingPrice} ৳
+              </li>
+              <li className="text-sm text-gray-500 ">
+                <span className=" text-black">Discount Price :</span>{" "}
+                {prices?.orderInfo?.time?.split(",")[0]} ৳
+              </li>
+            </ul>
+          </div>
+        </div>
 
-                {/* <div className="grid grid-cols-1 gap-8 mt-6 lg:grid-cols-3 xl:mt-12">
+        {/* <div className="grid grid-cols-1 gap-8 mt-6 lg:grid-cols-3 xl:mt-12">
 
                     {
                         pricesData?.map(data => {
@@ -206,8 +241,8 @@ const SubscriptionModel = () => {
                     }
                 </div> */}
 
-                {/* list */}
-                {/* <div className="p-8 mt-8 space-y-8 bg-gray-100  rounded-xl">
+        {/* list */}
+        {/* <div className="p-8 mt-8 space-y-8 bg-gray-100  rounded-xl">
                     {
                         prices?.benefits?.map(benefit => <div className="flex items-center justify-between text-gray-800 ">
                             <p className="text-lg sm:text-xl">{benefit}</p>
@@ -244,36 +279,37 @@ const SubscriptionModel = () => {
                         </div>)
                     }
                 </div> */}
-                <div className="flex gap-3 justify-center mt-8">
-                    {/* <Link to={`/price`} className="px-8 py-2 tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-600 rounded-md hover:bg-blue-500 focus:outline-none focus:bg-blue-500 focus:ring focus:ring-blue-300 focus:ring-opacity-80">
+        <div className="flex gap-3 justify-center mt-8">
+          {/* <Link to={`/price`} className="px-8 py-2 tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-600 rounded-md hover:bg-blue-500 focus:outline-none focus:bg-blue-500 focus:ring focus:ring-blue-300 focus:ring-opacity-80">
                         Renew
                     </Link> */}
-                    <PriceModal open={open} setOpen={setOpen} />
+          <PriceModal open={open} setOpen={setOpen} />
 
-                    <Link to={`/price`}>
-                        <div
-                            className="flex items-center mt-auto text-white bg-indigo-500 border-0 py-2 px-4  focus:outline-none hover:bg-indigo-600 rounded">
-                            Update
-
-                        </div>
-                    </Link>
-                    <button onClick={() => setOpen(prices)} className="flex items-center mt-auto text-white bg-indigo-500 border-0 py-2 px-4  focus:outline-none hover:bg-indigo-600 rounded">
-                        Renew
-                        <svg
-                            fill="none"
-                            stroke="currentColor"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            className="w-4 h-4 ml-auto"
-                            viewBox="0 0 24 24">
-                            <path d="M5 12h14M12 5l7 7-7 7" />
-                        </svg>
-                    </button>
-                </div>
+          <Link to={`/price`}>
+            <div className="flex items-center mt-auto text-white bg-indigo-500 border-0 py-2 px-4  focus:outline-none hover:bg-indigo-600 rounded">
+              Update
             </div>
+          </Link>
+          <button
+            onClick={() => setOpen(prices?.result)}
+            className="flex items-center mt-auto text-white bg-indigo-500 border-0 py-2 px-4  focus:outline-none hover:bg-indigo-600 rounded"
+          >
+            Renew
+            <svg
+              fill="none"
+              stroke="currentColor"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              className="w-4 h-4 ml-auto"
+              viewBox="0 0 24 24"
+            >
+              <path d="M5 12h14M12 5l7 7-7 7" />
+            </svg>
+          </button>
         </div>
-
-    )
-}
+      </div>
+    </div>
+  );
+};
 export default SubscriptionModel;
