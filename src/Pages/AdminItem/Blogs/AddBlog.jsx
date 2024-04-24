@@ -1,7 +1,7 @@
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import JoditEditor from "jodit-react";
 import Swal from "sweetalert2";
-import { Link, useBlocker } from "react-router-dom";
+import { useBlocker } from 'react-router-dom';
 import { BsArrowRight } from "react-icons/bs";
 import { useQuery } from "@tanstack/react-query";
 import ReactQuill from "react-quill";
@@ -350,11 +350,11 @@ const AddBlog = () => {
                 onChange={(e) => handleInputChange("category", e.target.value)}
                 className="w-full mt-1 rounded-lg border border-gray-900 px-3 py-2 text-sm"
                 placeholder="Select a category"
-                // defaultValue={
-                //   (restoreDrafts && draftsBlogData?.category)
-                //     ? draftsBlogData?.category
-                //     : ""
-                // }
+              // defaultValue={
+              //   (restoreDrafts && draftsBlogData?.category)
+              //     ? draftsBlogData?.category
+              //     : ""
+              // }
               >
                 <option disabled>Select Blog Category</option>
                 {blogcategories.length && categories?.map((category, i) => (
@@ -399,11 +399,11 @@ const AddBlog = () => {
                 type="text"
                 id="MetaTag"
                 name="MetaTag"
-                // defaultValue={
-                //   restoreDrafts && draftsBlogData?.MetaTag
-                //     ? draftsBlogData?.MetaTag
-                //     : ""
-                // }
+              // defaultValue={
+              //   restoreDrafts && draftsBlogData?.MetaTag
+              //     ? draftsBlogData?.MetaTag
+              //     : ""
+              // }
               />
             </div>
 
@@ -421,11 +421,11 @@ const AddBlog = () => {
                 onChange={(e) =>
                   handleInputChange("MetaDescription", e.target.value)
                 } // for drafts
-                // defaultValue={
-                //   restoreDrafts && draftsBlogData?.MetaDescription
-                //     ? draftsBlogData?.MetaDescription
-                //     : ""
-                // }
+              // defaultValue={
+              //   restoreDrafts && draftsBlogData?.MetaDescription
+              //     ? draftsBlogData?.MetaDescription
+              //     : ""
+              // }
               />
             </div>
             <div>
@@ -440,11 +440,11 @@ const AddBlog = () => {
                 type="file"
                 id="MetaImage'"
                 name="MetaImage'"
-                // defaultValue={
-                //   restoreDrafts && draftsBlogData?.MetaImage
-                //     ? draftsBlogData?.MetaImage
-                //     : ""
-                // }
+              // defaultValue={
+              //   restoreDrafts && draftsBlogData?.MetaImage
+              //     ? draftsBlogData?.MetaImage
+              //     : ""
+              // }
               />
             </div>
 
