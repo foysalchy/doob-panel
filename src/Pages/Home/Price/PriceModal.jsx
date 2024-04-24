@@ -148,6 +148,8 @@ const PriceModal = ({ open, setOpen }) => {
 
   console.log(time.split(',')[0], 'price', open);
 
+  console.log(open?.price);
+
   return (
     <div
       className={`fixed left-0 top-0 right-0 bottom-0 flex h-full min-h-screen w-full z-[1000] bg-[#0000005b] items-center justify-center bg-dark/90 px-4 py-5 ${open ? "block" : "hidden"
