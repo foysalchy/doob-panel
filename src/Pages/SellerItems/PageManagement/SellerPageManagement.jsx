@@ -108,7 +108,8 @@ const SellerPageManagement = () => {
     setOpenModal(ticketId);
   };
 
-  console.log(faqs.filter((faq) => faq?.trash !== trash_status));
+  // console.log(faqs.filter((faq) => faq?.trash !== trash_status));
+  console.log(faqs);
 
   return (
     <div>
@@ -178,12 +179,15 @@ const SellerPageManagement = () => {
                     {faqs
                       .filter((faq) => faq?.trash !== trash_status)
                       ?.map((faq, index) => (
-                        <tr>
+                        <tr key={faq?.title}>
                           <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                             <div className="inline-flex items-center gap-x-3">
                               <div className="w-5/12">
                                 <h2 className="font-medium text-gray-800  ">
                                   {faq?.title}
+                                  <span className="text-yellow-500">
+                                    {faq?.draft && " (Drafts)"}
+                                  </span>
                                 </h2>
                               </div>
                             </div>
