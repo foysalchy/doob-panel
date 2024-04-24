@@ -140,7 +140,6 @@ const UploadImage = ({ coverPhoto, setCoverPhoto, youtube, setYoutube }) => {
                         <input
                             type="file"
                             id="coverPhoto"
-
                             className=''
                             name="coverPhoto"
                             accept="image/*"

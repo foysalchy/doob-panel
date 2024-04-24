@@ -71,7 +71,7 @@ const SellerSupportTicket = () => {
     const endIndex = startIndex + pageSize;
 
     // Get the current page data
-    const currentData = filteredData.slice(startIndex, endIndex);
+    const currentData = filteredData?.slice(startIndex, endIndex);
 
 
     const [viewComment, setViewComment] = useState(false)

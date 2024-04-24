@@ -207,7 +207,7 @@ const Variants = ({ adminWare, multiVendor, setMultiVendor, inputFields, setInpu
                                 </label>
                                 <input
                                     type="file"
-                                    required
+
                                     id={`coverPhoto-${index}`}
                                     name={`coverPhoto-${index}`}
                                     multiple

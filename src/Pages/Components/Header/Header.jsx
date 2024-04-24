@@ -225,7 +225,6 @@ const Header = () => {
     </>
   );
 
-  console.log(user, 'user.......');
   return (
     <div className="fixed top-0 border-b right-0 left-0 z-50 bg-white">
       <div className=" sm:max-w-xl mx-auto md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8">

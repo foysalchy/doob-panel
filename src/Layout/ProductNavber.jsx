@@ -52,7 +52,7 @@ export default function Component() {
     useEffect(() => {
         // Function to update the cart from localStorage
         const updateCartFromLocalStorage = () => {
-            const myCard = localStorage.getItem('cart-product');
+            const myCard = localStorage.getItem(`cart-product-${user._id}`);
             if (myCard) {
                 const parsedCart = JSON.parse(myCard);
                 setCardItem(parsedCart);

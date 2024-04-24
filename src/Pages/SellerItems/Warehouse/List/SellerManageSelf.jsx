@@ -49,7 +49,7 @@ const SellerManageSelf = () => {
     const endIndex = startIndex + pageSize;
     const totalPages = filteredData.length && Math.ceil(filteredData?.length / pageSize);
 
-    const currentData = filteredData && filteredData.slice(startIndex, endIndex);
+    const currentData = filteredData && filteredData?.slice(startIndex, endIndex);
 
     const handleChangePage = (newPage) => {
 

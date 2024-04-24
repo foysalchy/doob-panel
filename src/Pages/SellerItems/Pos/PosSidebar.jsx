@@ -186,7 +186,6 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
         setIsChecked(false)
     }
 
-    console.log(user, 'check user....')
     return (
         <div className=' h-full '>
 

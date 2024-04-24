@@ -478,13 +478,13 @@ const OrderTable = ({
                           {(!item?.status && (
                             <>
                               <button
-                                // onClick={() => setReadyToShip(item)}
-                                onClick={() =>
-                                  productStatusUpdate(
-                                    "ready_to_ship",
-                                    item?._id
-                                  )
-                                }
+                                onClick={() => setReadyToShip(item)}
+                                // onClick={() =>
+                                //   productStatusUpdate(
+                                //     "ready_to_ship",
+                                //     item?._id
+                                //   )
+                                // }
                                 className="text-[16px] font-[400] text-blue-700"
                               >
                                 Ready to Ship

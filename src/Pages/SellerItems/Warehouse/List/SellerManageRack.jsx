@@ -47,7 +47,7 @@ const SellerManageRack = () => {
     const endIndex = startIndex + pageSize;
     const totalPages = Math.ceil(filteredData?.length / pageSize);
 
-    const currentData = filteredData.slice(startIndex, endIndex);
+    const currentData = filteredData?.slice(startIndex, endIndex);
 
     const handleChangePage = (newPage) => {
 

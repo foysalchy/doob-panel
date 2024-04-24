@@ -51,7 +51,7 @@ const SellerManageCell = () => {
     const endIndex = startIndex + pageSize;
     const totalPages = Math.ceil(filteredData?.length / pageSize);
 
-    const currentData = filteredData.length && filteredData.slice(startIndex, endIndex);
+    const currentData = filteredData.length && filteredData?.slice(startIndex, endIndex);
 
     const handleChangePage = (newPage) => {
 

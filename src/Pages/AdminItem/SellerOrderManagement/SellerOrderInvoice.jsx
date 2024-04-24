@@ -4,7 +4,7 @@ import { AuthContext } from "../../../AuthProvider/UserProvider";
 
 const SellerOrderInvoice = ({ setOn, products }) => {
     const { user } = useContext(AuthContext)
-    console.log(user, 'products');
+   
 
     const subtotal = products.reduce((acc, curr) => acc + (curr.quantity * curr.price), 0);
     const taxRate = 0.1;
