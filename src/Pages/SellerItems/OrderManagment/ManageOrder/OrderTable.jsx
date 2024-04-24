@@ -349,7 +349,7 @@ const OrderTable = ({
     <div className="flex flex-col overflow-hidden mt-4">
       <div className="overflow-x-auto transparent-scroll sm:-mx-6 lg:-mx-8">
         <div className="inline-block  min-w-full py-2 sm:px-6 lg:px-8">
-          <div className="overflow-hidden">
+          <div className="overflow-y-hidden overflow-x-auto">
             <table className="w-full bg-white border text-center text-sm font-light">
               <thead className="border-b font-medium">
                 <tr>

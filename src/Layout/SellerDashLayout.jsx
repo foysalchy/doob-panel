@@ -102,9 +102,9 @@ const SellerDashLayout = () => {
     }
 
     return (
-        <div className='flex w-screen h-screen bg-[#f0f2f5]'>
+        <div className='flex w-screen bg-[#f1f5f0]'>
 
-            <div className=" h-full z-50 min-h-screen  text-white">
+            <div className=" h-full z-50  text-white">
                 <SideNavberSeller responsive={responsive} setResponsive={setResponsive} />
             </div>
             <div className="px-4 py-8 w-full overflow-y-scroll ">

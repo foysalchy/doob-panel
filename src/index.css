@@ -326,3 +326,44 @@ font-google {
   height : 20px!important;
   
 }
+
+.multi-range-slider {
+    display: flex;
+    position: relative;
+    border: none!important;
+    border-radius: 10px;
+    padding: 20px 10px;
+    box-shadow: none!important;
+    flex-direction: column;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+}
+
+.multi-range-slider .bar-left {
+    width: 25%;
+    background-color: #b3d5f9!important;
+    border-radius: 0px -10px -10px 0px;
+    box-shadow: none!important;
+}.multi-range-slider .bar-right {
+    width: 25%;
+    background-color: #b3d5f9!important;
+    border-radius: 0px 10px 10px 0px;
+    box-shadow: none!important;
+}
+
+
+.multi-range-slider .thumb::before {
+    content: '';
+    background-color: white!important;
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border: solid 1px #005dff!important;
+    box-shadow: none!important;
+    border-radius: 50%;
+    z-index: 1;
+    margin: -8px -12px;
+    cursor: pointer;
+}

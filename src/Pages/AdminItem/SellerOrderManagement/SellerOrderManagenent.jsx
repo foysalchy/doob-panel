@@ -334,7 +334,7 @@ const SellerOrderManagement = () => {
           return (
             <li key={pageNumber}>
               <button
-                className={`block h-8 w-8 rounded border ${pageNumber === currentPage
+               className={`block h-8 w-8 rounded border ${pageNumber === currentPage
                     ? "border-blue-600 bg-blue-600 text-white"
                     : "border-gray-900 bg-white text-center leading-8 text-gray-900"
                   }`}
@@ -524,7 +524,7 @@ const SellerOrderManagement = () => {
                 </div>
               )}
 
-              <div className="overflow-hidden border border-gray-700 md:rounded-lg">
+              <div className="overflow-x-auto border border-gray-700 md:rounded-lg">
                 <table className="divide-y w-full divide-gray-700">
                   <thead className="bg-gray-900 text-white">
                     <tr>
