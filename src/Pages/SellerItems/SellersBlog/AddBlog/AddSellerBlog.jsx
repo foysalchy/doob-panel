@@ -1,9 +1,9 @@
 import JoditEditor from "jodit-react";
-import React from "react";
+import React, { useEffect } from "react";
 import { useContext } from "react";
 import { useState } from "react";
 import { BsArrowRight } from "react-icons/bs";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useBlocker, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../../../AuthProvider/UserProvider";
 import { useQuery } from "@tanstack/react-query";
@@ -31,32 +31,41 @@ const AddSellerBlog = () => {
     },
   });
 
-  // const [upload, setUpload] = useState('')
-  // const [uplodOk, setUploadOk] = useState(false)
+  // ! for drafts
+  const [formData, setFormData] = useState({
+    title: "", ///done
+    category: "", //done
+    MetaTag: "", //done
+    message: "", //done
+    MetaDescription: "", //done
+    img: "", //done
+    MetaImage: "", //done
+  });
+  const [draftSaved, setDraftSaved] = useState(false);
 
-  // const imageUploading = (e) => {
-  //     e.preventDefault();
-  //     const selectedFile = e.target.files[0];
-  //     const formData = new FormData();
-  //     formData.append("image", selectedFile);
-  //     const url = `https://salenow-v2-backend.vercel.app/api/v1/image/upload-image?shopId=${shopInfo._id}`;
-  //     fetch(url, {
-  //         method: "POST",
-  //         body: formData,
-  //     })
-  //         .then((res) => res.json())
-  //         .then((imageData) => {
+  const [upload, setUpload] = useState("");
+  const [uplodOk, setUploadOk] = useState(false);
 
-  //             if (imageData.imageUrl) {
-  //                 setUpload(imageData.imageUrl)
-  //                 setUploadOk(true)
-  //             }
-  //             else {
-  //                 setUpload('')
-  //             }
-
-  //         });
-  // }
+  const imageUploading = (e) => {
+    e.preventDefault();
+    const selectedFile = e.target.files[0];
+    const formData = new FormData();
+    formData.append("image", selectedFile);
+    const url = `https://salenow-v2-backend.vercel.app/api/v1/image/upload-image?shopId=${shopInfo._id}`;
+    fetch(url, {
+      method: "POST",
+      body: formData,
+    })
+      .then((res) => res.json())
+      .then((imageData) => {
+        if (imageData.imageUrl) {
+          setUpload(imageData.imageUrl);
+          setUploadOk(true);
+        } else {
+          setUpload("");
+        }
+      });
+  };
 
   const handleChange = (content) => {
     setMessage(content);
@@ -76,6 +85,64 @@ const AddSellerBlog = () => {
     }
   };
 
+  //! for drafts
+  const handleInputChange = (field, value) => {
+    setFormData({ ...formData, [field]: value });
+  };
+
+  // Block navigating elsewhere when data has been entered into the input
+  let blocker = useBlocker(
+    ({ currentLocation, nextLocation }) =>
+      draftSaved && currentLocation.pathname !== nextLocation.pathname
+  );
+
+  useEffect(() => {
+    const isFormDataEmpty = Object.values(formData).every(
+      (value) => value === ""
+    );
+    setDraftSaved(!isFormDataEmpty);
+  }, [formData]);
+
+  useEffect(() => {
+    if (blocker.state === "blocked") {
+      console.log("yess");
+      // event.preventDefault();
+      // event.returnValue = ""; // Required for some browsers
+      const confirmed = window.confirm(
+        "Are you sure you want to leave? Your changes may not be saved."
+      );
+      if (confirmed) {
+        const draftsAddBlogData = {
+          ...formData,
+          // status: "drafts",
+          email: user?.email,
+          draft: true,
+        };
+        // postPage(draftsAddBlogData, "");
+        // console.log(draftsAddBlogData);
+        fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/blog`, {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify(draftsAddBlogData),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            console.log(data);
+
+            setLoading(false);
+            Swal.fire("Drafts Saved", "", "success");
+            blocker.proceed();
+          });
+
+        // blocker.proceed();
+      } else {
+        blocker.proceed();
+      }
+    }
+  }, [draftSaved, blocker]);
+
   const dataSubmit = (event) => {
     setLoading(true);
     event.preventDefault();
@@ -85,7 +152,7 @@ const AddSellerBlog = () => {
     const image = form.photo.files[0];
     const message = form?.message?.value;
     const shop = shopInfo?.shopId;
-    const MetaImage = upload;
+    // const MetaImage = upload;
     const MetaTag = form.MetaTag.value;
     const MetaDescription = form.MetaDescription.value;
 
@@ -106,7 +173,7 @@ const AddSellerBlog = () => {
           shop,
           category,
           date: new Date(),
-          MetaImage,
+          MetaImage: image,
           MetaTag,
           status: true,
           MetaDescription,
@@ -131,7 +198,7 @@ const AddSellerBlog = () => {
         form.reset();
         setPreviewUrl("");
         setFileName("");
-        navigate(`/seller/manage-blogs`);
+        // navigate(`/seller/manage-blogs`);
       });
   };
 
@@ -153,6 +220,7 @@ const AddSellerBlog = () => {
               type="text"
               id="title"
               name="title"
+              onChange={(e) => handleInputChange("title", e.target.value)} // for drafts
             />
           </div>
           <div>
@@ -204,6 +272,7 @@ const AddSellerBlog = () => {
             <select
               className="w-full rounded-lg border border-gray-900 p-3 text-sm"
               name="category"
+              onChange={(e) => handleInputChange("category", e.target.value)}
               id=""
             >
               {category?.map((cat) => (
@@ -236,11 +305,12 @@ const AddSellerBlog = () => {
             </label>
             <input
               required
-              className="w-full rounded-lg border border-gray-900 p-3 text-sm"
+              className="w-full mt-[2.5rem] rounded-lg border border-gray-900 p-3 text-sm"
               placeholder="Meta Tag"
               type="text"
               id="MetaTag"
               name="MetaTag"
+              onChange={(e) => handleInputChange("MetaTag", e.target.value)} // for drafts
             />
           </div>
 
@@ -250,6 +320,9 @@ const AddSellerBlog = () => {
             </label>
             <textarea
               required
+              onChange={(e) =>
+                handleInputChange("MetaDescription", e.target.value)
+              } // for drafts
               className="w-full rounded-lg border border-gray-900 p-3 text-sm"
               placeholder="Meta Description"
               type="text"
@@ -257,7 +330,7 @@ const AddSellerBlog = () => {
               name="MetaDescription"
             />
           </div>
-          <div>
+          {/* <div>
             <label className="sr-only text-black" htmlFor="title">
               Meta Image'
             </label>
@@ -270,7 +343,7 @@ const AddSellerBlog = () => {
               id="MetaImage'"
               name="MetaImage'"
             />
-          </div>
+          </div> */}
 
           <div className="mt-4">
             {loading ? (
