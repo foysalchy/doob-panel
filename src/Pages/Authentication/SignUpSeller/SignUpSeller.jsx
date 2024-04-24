@@ -178,7 +178,7 @@ const SignUpSeller = () => {
 
       }
 
-      console.log(user);
+
 
       fetch("https://salenow-v2-backend.vercel.app/api/v1/auth/sign-up", {
         method: "post",

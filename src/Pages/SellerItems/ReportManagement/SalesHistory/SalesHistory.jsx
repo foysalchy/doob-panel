@@ -165,7 +165,7 @@ const SalesHistory = () => {
     const PaymentGetWay = ["Bkash", "Nogod", "AmarPay"]
 
     const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 5;
+    const itemsPerPage = 10;
 
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
@@ -265,7 +265,7 @@ const SalesHistory = () => {
                                 <div className=' p-4 rounded border-[0.5px] border-opacity-40 gap-4 border-gray-500 bg-white'>
                                     {on?._id === order?._id && <SalesInvoice products={order} setModalOpen={setOn} />}
                                     <div className='pb-4 flex md:flex-row flex-col items-center justify-between'>
-                                        <h1 className="md:text-xl font-bold ">Order Id : {order.orderNumber}</h1>
+                                        <h1 className="md:text-xl font-bold ">Order Id : {order._id}</h1>
                                         <p className='md:hidden block'>Order placed {formatTimestamp(order.date)}</p>
                                         <div className="flex items-center justify-between md:w-auto gap-2 md:mt-0 mt-3 w-full">
                                             <div className='flex items-center gap-4'>
@@ -559,7 +559,7 @@ const SalesHistory = () => {
                             )
                         })}
                 </div>
-                {/* {renderPaginationControls()} */}
+                {renderPaginationControls()}
             </div>
         </div >
     );

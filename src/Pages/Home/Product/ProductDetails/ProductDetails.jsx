@@ -46,7 +46,7 @@ const ProductDetails = () => {
   const [userName, setUserName] = useState(user?.name);
   const [variationData, setVariationData] = useState(null);
 
-  console.log(variationData, "variationData...................");
+
 
   const myData = useLoaderData();
   const productFind = myData?.data;
@@ -168,7 +168,6 @@ const ProductDetails = () => {
   const handleIncrease = () => {
     setQuantity(quantity + 1);
 
-    console.log(userInfo);
   };
 
   const handleManualInput = (e) => {
@@ -306,7 +305,7 @@ const ProductDetails = () => {
     },
   });
 
-  console.log(banifit.productCost === isNaN);
+
 
   const add_to_cart = (product) => {
     const productData = {
@@ -317,21 +316,22 @@ const ProductDetails = () => {
       product_image: product?.images[0]?.src,
       product_seller: product?.shopId,
       sellingPrice: banifit.sellingPrice,
+      delivery: product.DeliveryCharge
     };
 
     // need to save on localStorage
 
-    const getCart = JSON.parse(localStorage.getItem("cart-product")) || [];
+    const getCart = JSON.parse(localStorage.getItem(`cart-product-${user._id}`)) || [];
     const productFind = getCart.find(
       (item) => item.product_id === productData.product_id
     );
     if (productFind) {
       productFind.product_quantity =
         productFind.product_quantity + productData.product_quantity;
-      localStorage.setItem("cart-product", JSON.stringify(getCart));
+      localStorage.setItem((`cart-product-${user._id}`), JSON.stringify(getCart));
     } else {
       getCart.push(productData);
-      localStorage.setItem("cart-product", JSON.stringify(getCart));
+      localStorage.setItem((`cart-product-${user._id}`), JSON.stringify(getCart));
     }
 
     console.log(productData, "productData");

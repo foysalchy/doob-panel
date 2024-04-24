@@ -1,14 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import { AuthContext } from '../../../../AuthProvider/UserProvider';
+import CardPayment from './CardPayment';
 
 const CardProduct = () => {
-    const get_cart_product = localStorage.getItem('cart-product');
+    const { user, shopInfo } = useContext(AuthContext)
+    const get_cart_product = localStorage.getItem(`cart-product-${user._id}`);
     const initialCartProduct = JSON.parse(get_cart_product) || []; // Ensure cart_product is initialized as an array
     const [cartProduct, setCartProduct] = useState(initialCartProduct);
     const [selectAll, setSelectAll] = useState(false);
 
     useEffect(() => {
         // Update localStorage whenever cartProduct changes
-        localStorage.setItem('cart-product', JSON.stringify(cartProduct));
+        localStorage.setItem((`cart-product-${user._id}`), JSON.stringify(cartProduct));
     }, [cartProduct]);
 
     // Function to handle quantity update
@@ -49,8 +52,59 @@ const CardProduct = () => {
     };
 
     // Function to calculate total
+
+
+    const deliveryFees = {};
+
+    // Calculate total delivery fee
+    cartProduct.filter(product => product.selected).forEach(item => {
+        const productId = item.product_id;
+        const deliveryFee = parseFloat(item.delivery ? item.delivery : 0);
+
+        // If the product ID is not in the deliveryFees object, add it with its delivery fee
+        if (!(productId in deliveryFees)) {
+            deliveryFees[productId] = deliveryFee;
+        }
+    });
+
+    // Sum the delivery fees
+    const totalDeliveryFee = Object.values(deliveryFees).reduce((acc, curr) => acc + curr, 0);
     const calculateTotal = () => {
-        return cartProduct.reduce((total, product) => total + (parseInt(product.sellingPrice ? product.sellingPrice : product.product_price) * parseInt(product.product_quantity)), 0);
+        return cartProduct.filter(product => product.selected).reduce((total, product) => total + (parseInt(product.sellingPrice ? product.sellingPrice : product.product_price) * parseInt(product.product_quantity)), 0);
+    };
+
+
+    const [openPayment, setOpenPayment] = useState(false);
+
+    const handleStore = (id, getway, userInfo, product) => {
+        if (shopInfo) {
+            const data = {
+                shopId: shopInfo?.shopId,
+                shopName: shopInfo?.shopName,
+                shopUid: shopInfo?._id,
+                quantity: product.product_quantity,
+                sellingPrice: product.product_price,
+                getway: getway,
+                userInfo,
+            };
+            console.log(data);
+            fetch(
+                `https://salenow-v2-backend.vercel.app/api/v1/seller/web-store?id=${id}`,
+                {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(data),
+                }
+            )
+                .then((res) => res.json())
+                .then((data) => {
+
+                });
+        } else {
+            navigate("/sign-in");
+        }
     };
 
     return (
@@ -160,31 +214,35 @@ const CardProduct = () => {
                         </div>
                         <div className="flex justify-between mb-2">
                             <span>Delivery</span>
-                            <span>$14.00</span>
+                            <span>{totalDeliveryFee}</span>
                         </div>
                         <div className="flex justify-between mb-2">
                             <span>Discount</span>
-                            <span>-$0</span>
+                            <span>-৳0</span>
                         </div>
                         <div className="flex justify-between mb-4 font-bold">
                             <span>Subtotal</span>
-                            <span>{calculateTotal()}</span>
+                            <span>{calculateTotal() + totalDeliveryFee}</span>
                         </div>
-                        <button className="w-full bg-blue-600 text-white px-4 py-2 rounded shadow mb-4">Checkout</button>
-                        <div className="text-center">
-                            <span>We Accept:</span>
-                            <div className="flex justify-center gap-2 mt-2">
-                                <CreditCardIcon className="h-6 w-6" />
-                                <ViewIcon className="h-6 w-6" />
-                                <CreditCardIcon className="h-6 w-6" />
-                            </div>
-                        </div>
+                        <button onClick={() => setOpenPayment(cartProduct.filter(product => product.selected))} className="w-full bg-blue-600 text-white px-4 py-2 rounded shadow mb-4">Checkout</button>
+
                     </div>
                 </div>
             </div>
+            {
+                openPayment && (
+                    <CardPayment
+                        openPayment={openPayment}
+                        setOpenPayment={setOpenPayment}
+                        handleStore={handleStore}
+                    />
+                )
+            }
         </div>
     );
 };
+
+
 
 function CreditCardIcon(props) {
     return (

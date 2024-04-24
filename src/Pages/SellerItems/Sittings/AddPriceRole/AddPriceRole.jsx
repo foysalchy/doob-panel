@@ -40,12 +40,11 @@ const AddPriceRole = () => {
 
 
 
-    console.log(priceRole);
 
     return (
         <div className="flex flex-col  h-screen">
             <div className='flex gap-2 items-center justify-center'>
-                <p>Your Price role</p>  <span className='kalpurush'> : ৳</span> <span>{priceRole.data}</span>
+                <p>Your Price role</p>  <span className='kalpurush'> : ৳</span> <span>{priceRole?.data}</span>
             </div>
             <form className="bg-white shadow-md w-full rounded px-8 pt-6 pb-8 mb-4" onSubmit={handleSubmit}>
                 <div className="grid grid-cols-2 gap-3">

@@ -8,7 +8,7 @@ const UseShop = () => {
     const [shopInfo, setShopInfo] = useState(false);
     const [isShopInfoLoading, setIsShopInfoLoading] = useState(true);
     const { user, loading } = useContext(AuthContext);
-    console.log(user);
+  
 
 
     useEffect(() => {

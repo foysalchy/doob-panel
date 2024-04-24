@@ -32,7 +32,7 @@ const IsUserRegistration = ({ children }) => {
     const location = useLocation();
     const navigate = useNavigate();
 
-    console.log(user?.role !== "user");
+   
     useEffect(() => {
         // Check if the user is not logged in and not loading
         if (user == '' && user?.role !== "user" && !loading) {
