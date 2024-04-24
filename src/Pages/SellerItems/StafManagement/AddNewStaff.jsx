@@ -12,6 +12,7 @@ const AddNewStaff = () => {
     const [role, setRole] = useState('')
     const [error, setError] = useState('')
     const [value, setValue] = useState("");
+    console.log(value);
     const [isNewUser, setIsNewUser] = useState(false)
 
     const handleSearch = () => {
@@ -79,6 +80,63 @@ const AddNewStaff = () => {
 
             })
     }
+
+
+    // const handleSubmit = async (e) => {
+    //     e.preventDefault();
+
+    //     try {
+    //         let userData = value;
+
+    //         if (isNewUser) {
+    //             const name = e.target.name.value;
+    //             const email = e.target.email.value;
+    //             const password = e.target.password.value;
+    //             const userId = email.replace(/[@.]/g, '');
+    //             const createdAt = new Date();
+
+    //             const signUpResponse = await fetch(`${API_BASE_URL}/api/v1/auth/sign-up`, {
+    //                 method: "post",
+    //                 headers: {
+    //                     "content-type": "application/json",
+    //                 },
+    //                 body: JSON.stringify({ name, email, password, role, userId, createdAt }),
+    //             });
+
+    //             const signUpData = await signUpResponse.json();
+    //             console.log(signUpData);
+
+    //             if (signUpData.result) {
+    //                 userData = { name, email, password, userId, role, createdAt };
+    //             } else {
+    //                 BrightAlert(`${signUpData.message}`, '', 'warning');
+    //                 return;
+    //             }
+    //         }
+
+    //         console.log('hit');
+    //         const permissions = selectedValue;
+    //         const data = { userData, permissions, role };
+
+    //         const staffRoleResponse = await fetch(`${API_BASE_URL}/api/v1/admin/staff-role`, {
+    //             method: 'PATCH',
+    //             headers: {
+    //                 'Content-Type': 'application/json'
+    //             },
+    //             body: JSON.stringify(data),
+    //         });
+
+    //         const staffRoleData = await staffRoleResponse.json();
+    //         console.log(staffRoleData);
+    //         BrightAlert()
+    //         navigate('/admin/staff-management')
+
+
+    //     } catch (error) {
+    //         console.error("An error occurred:", error);
+    //         BrightAlert(`An error occurred: ${error.message}`, '', "error");
+    //     }
+    // };
 
 
 

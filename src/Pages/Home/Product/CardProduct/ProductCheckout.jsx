@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ProductCheckout = ({ setNext, product, quantity, sellingPrice, userInfo, setUserInfo }) => {
+const ProductCheckout = ({ setNext, products, userInfo, setUserInfo }) => {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -10,7 +10,25 @@ const ProductCheckout = ({ setNext, product, quantity, sellingPrice, userInfo, s
         }));
     };
 
- 
+
+    const deliveryFees = {};
+
+    // Calculate total delivery fee
+    products.forEach(item => {
+        const productId = item?.product_id;
+        const deliveryFee = parseFloat(item.delivery ? item.delivery : 0);
+
+        // If the product ID is not in the deliveryFees object, add it with its delivery fee
+        if (!(productId in deliveryFees)) {
+            deliveryFees[productId] = deliveryFee;
+        }
+    });
+    const totalDeliveryFee = Object.values(deliveryFees).reduce((acc, curr) => acc + curr, 0);
+
+
+    const calculateTotal = () => {
+        return products.filter(product => product.selected).reduce((total, product) => total + (parseInt(product.sellingPrice ? product.sellingPrice : product.product_price) * parseInt(product.product_quantity)), 0);
+    };
 
     return (
         <div>
@@ -18,29 +36,37 @@ const ProductCheckout = ({ setNext, product, quantity, sellingPrice, userInfo, s
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <div>
                         <h2 className="text-lg font-semibold mb-4">Shopping Cart</h2>
-                        <p className="text-sm text-gray-600 mb-4">You have 3 items in your cart</p>
-                        <div className="space-y-4">
-                            <div className="flex justify-between">
-                                <div className='flex gap-4'>
-                                    <img className='h-12 w-12' src={product?.featuredImage?.src} alt="" />
-                                    <div>
-                                        <h3 className="font-semibold">{product?.name}</h3>
-                                        <p className="text-sm text-gray-500">Quantity: {quantity}</p>
+                        <p className="text-sm text-gray-600 mb-4">You have {products.length} items in your cart</p>
+                        <div className='flex flex-col gap-2'>
+                            {products?.map((product) => (
+                                <div className="space-y-4">
+                                    <div className="flex justify-between">
+                                        <div className='flex gap-4'>
+                                            <img className='h-12 w-12' src={product?.product_image} alt="" />
+                                            <div>
+                                                <h3 className="font-semibold">{product?.product_name.slice(0, 20)}</h3>
+                                                <p className="text-sm text-gray-500">Quantity: {product.product_quantity}</p>
+                                            </div>
+                                        </div>
+                                        <span className="font-semibold">৳{product.product_price} </span>
                                     </div>
-                                </div>
-                                <span className="font-semibold">৳{product.price} </span>
-                            </div>
 
+                                </div>
+                            ))}
                         </div>
                         <div className="mt-6">
                             <div className="flex justify-between">
                                 <span>Subtotal</span>
-                                <span>৳{parseInt(product.price) * parseInt(quantity)}</span>
+                                <span>৳{calculateTotal()}</span>
+                            </div>
+                            <div className="flex justify-between">
+                                <span>Delivery Fee</span>
+                                <span>৳{totalDeliveryFee}</span>
                             </div>
                             <hr className='my-2' />
                             <div className="flex justify-between">
                                 <span>All</span>
-                                <span>৳{sellingPrice}</span>
+                                <span>৳{calculateTotal() + totalDeliveryFee}</span>
                             </div>
 
                             {/* <button className="w-full mt-4 bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition-colors">

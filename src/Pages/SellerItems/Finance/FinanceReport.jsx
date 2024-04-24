@@ -21,7 +21,7 @@ const FinanceReport = () => {
 
 
     const fetchFinancialReport = async () => {
-        const apiUrl = 'https://salenow-v2-backend.vercel.app/api/v1/seller/my-financial-report';
+        const apiUrl = 'http://localhost:5001/api/v1/seller/my-financial-report';
         try {
             const response = await fetch(apiUrl, {
                 method: 'POST',
