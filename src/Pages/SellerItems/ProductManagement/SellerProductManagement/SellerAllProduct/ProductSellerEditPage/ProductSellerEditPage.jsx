@@ -98,7 +98,7 @@ const CategoryEditPage = () => {
       ProductCost: "",
     },
   ]);
-  console.log(variantInput);
+  // console.log(variantInput);
 
   useEffect(() => {
     setInputFields(product?.variations);
@@ -363,7 +363,7 @@ const CategoryEditPage = () => {
     console.log(data, "edit --------------------------->");
 
     fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/seller/normal-product?id=${product?._id}`,
+      `http://localhost:5001/api/v1/seller/normal-product?id=${product?._id}`,
       // `https://salenow-v2-backend.vercel.app/api/v1/seller/normal-product?id=${product?._id}`,
       {
         method: "PUT",
@@ -380,7 +380,7 @@ const CategoryEditPage = () => {
           Swal.fire(`${data.message}`, "", "warning");
           setLoading(false);
         } else {
-          Swal.fire("product updated", "success");
+          Swal.fire("Product updated", "success");
           setLoading(false);
         }
       });
