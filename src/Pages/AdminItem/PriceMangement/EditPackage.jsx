@@ -21,7 +21,7 @@ const EditPackage = ({ OpenModal, setOpenModal, packageInfo, refetch }) => {
     setIsLoading(true);
     try {
       fetch(
-        `https://salenow-v2-backend.vercel.app/api/v1/admin/package/update-package/${packageInfo._id}`,
+        `https://backend.doob.com.bd/api/v1/admin/package/update-package/${packageInfo._id}`,
         // `http://localhost:5001/api/v1/admin/package/update-package/${packageInfo._id}`,
         {
           method: "PUT",

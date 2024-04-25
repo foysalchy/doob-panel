@@ -11,7 +11,7 @@ const ShopNewProduct = () => {
   const { shop_id } = useContext(ShopAuthProvider);
 
   console.log(
-    `https://salenow-v2-backend.vercel.app/api/v1/shop/product/${shop_id.shop_id}/new-product`
+    `https://backend.doob.com.bd/api/v1/shop/product/${shop_id.shop_id}/new-product`
   );
   const {
     data: products = [],
@@ -21,7 +21,7 @@ const ShopNewProduct = () => {
     queryKey: ["products"],
     queryFn: async () => {
       const res = await fetch(
-        `https://salenow-v2-backend.vercel.app/api/v1/shop/product/${shop_id.shop_id}/new-product`
+        `https://backend.doob.com.bd/api/v1/shop/product/${shop_id.shop_id}/new-product`
       );
       const data = await res.json();
       return data;

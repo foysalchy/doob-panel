@@ -10,7 +10,7 @@ const HomeHero = () => {
 
   useEffect(() => {
     fetch(
-      "https://salenow-v2-backend.vercel.app/api/v1/admin/get-content?name=hero_section"
+      "https://backend.doob.com.bd/api/v1/admin/get-content?name=hero_section"
     )
       .then((response) => response.json())
       .then((data) => {

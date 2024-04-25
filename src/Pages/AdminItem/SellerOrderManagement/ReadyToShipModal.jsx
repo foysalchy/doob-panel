@@ -49,7 +49,7 @@ const ReadyToShipModal = ({
 
       try {
         const res = await fetch(
-          `https://salenow-v2-backend.vercel.app/api/v1/seller/order-submit-steadfast`,
+          `https://backend.doob.com.bd/api/v1/seller/order-submit-steadfast`,
           {
             method: "POST",
             headers: {

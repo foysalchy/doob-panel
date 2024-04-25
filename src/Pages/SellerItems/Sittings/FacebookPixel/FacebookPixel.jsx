@@ -11,7 +11,7 @@ const FacebookPixel = () => {
     queryKey: ["seller-facebook-pixel"],
     queryFn: async () => {
       const res = await fetch(
-        `https://salenow-v2-backend.vercel.app/api/v1/seller/get-facebook-id?shopId=${shopInfo.shopId}`
+        `https://backend.doob.com.bd/api/v1/seller/get-facebook-id?shopId=${shopInfo.shopId}`
       );
       const data = await res.json();
       return data.data;
@@ -25,16 +25,13 @@ const FacebookPixel = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const data = { pixel: pixel, shopId: shopInfo.shopId };
-    fetch(
-      "https://salenow-v2-backend.vercel.app/api/v1/seller/update-facebook-id",
-      {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      }
-    )
+    fetch("https://backend.doob.com.bd/api/v1/seller/update-facebook-id", {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
       .then((res) => res.json())
       .then((data) => {
         Swal.fire("success", "", "success");

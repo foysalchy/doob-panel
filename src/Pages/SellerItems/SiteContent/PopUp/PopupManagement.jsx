@@ -17,7 +17,7 @@ const PopupManagement = () => {
     queryKey: "faqs",
     queryFn: async () => {
       const res = await fetch(
-        `https://salenow-v2-backend.vercel.app/api/v1/seller/popup/${shopInfo._id}`
+        `https://backend.doob.com.bd/api/v1/seller/popup/${shopInfo._id}`
       );
       const data = await res.json();
       return data;
@@ -27,16 +27,13 @@ const PopupManagement = () => {
   console.log(faqs);
 
   const updateStatus = (id, status) => {
-    fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/seller/popup/status/${id}`,
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ status }),
-      }
-    )
+    fetch(`https://backend.doob.com.bd/api/v1/seller/popup/status/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ status }),
+    })
       .then((res) => res.json())
       .then((data) => {
         Swal.fire(`Seller disable ${status} `, "", "success");
@@ -55,7 +52,7 @@ const PopupManagement = () => {
 
   if (isDelete) {
     fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/seller/popup/delete/${deleteId}`,
+      `https://backend.doob.com.bd/api/v1/seller/popup/delete/${deleteId}`,
       {
         method: "DELETE",
         headers: {

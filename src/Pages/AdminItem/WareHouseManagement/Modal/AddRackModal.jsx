@@ -10,7 +10,7 @@ const AddRackModal = ({ setNewData, recall, setOpenModal }) => {
     queryKey: ["warehouses"],
     queryFn: async () => {
       const res = await fetch(
-        "https://salenow-v2-backend.vercel.app/api/v1/admin/warehouse"
+        "https://backend.doob.com.bd/api/v1/admin/warehouse"
       );
       const data = await res.json();
       return data;
@@ -38,7 +38,7 @@ const AddRackModal = ({ setNewData, recall, setOpenModal }) => {
     const selectedWarehouse = selectedOption.value;
     console.log(selectedWarehouse);
     const res = await fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/admin/warehouse/area/${selectedWarehouse}`
+      `https://backend.doob.com.bd/api/v1/admin/warehouse/area/${selectedWarehouse}`
     );
     const data = await res.json();
     setAreas(data);
@@ -55,7 +55,7 @@ const AddRackModal = ({ setNewData, recall, setOpenModal }) => {
       rack,
       status: true,
     };
-    fetch("https://salenow-v2-backend.vercel.app/api/v1/admin/warehouse/rack", {
+    fetch("https://backend.doob.com.bd/api/v1/admin/warehouse/rack", {
       method: "post",
       headers: {
         "Content-Type": "application/json",

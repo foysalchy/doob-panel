@@ -15,7 +15,7 @@ const SellerAreaListForWarehouse = () => {
     queryKey: ["areas"],
     queryFn: async () => {
       const res = await fetch(
-        `https://salenow-v2-backend.vercel.app/api/v1/seller/warehouse/area/get/${shopInfo._id}`
+        `https://backend.doob.com.bd/api/v1/seller/warehouse/area/get/${shopInfo._id}`
       );
       const data = await res.json();
       return data;
@@ -104,7 +104,7 @@ const SellerAreaListForWarehouse = () => {
 
   const updateStatus = (id, status) => {
     fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/seller/warehouse/area/status/${id}`,
+      `https://backend.doob.com.bd/api/v1/seller/warehouse/area/status/${id}`,
       {
         method: "PUT",
         headers: {
@@ -142,7 +142,7 @@ const SellerAreaListForWarehouse = () => {
     }).then((result) => {
       if (result.dismiss === Swal.DismissReason.timer) {
         fetch(
-          `https://salenow-v2-backend.vercel.app/api/v1/seller/warehouse/area/delete/${id}`,
+          `https://backend.doob.com.bd/api/v1/seller/warehouse/area/delete/${id}`,
           {
             method: "DELETE",
             headers: {

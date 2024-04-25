@@ -17,24 +17,19 @@ const PageManagement = () => {
   const { data: faqs = [], refetch } = useQuery({
     queryKey: ["faqs"],
     queryFn: async () => {
-      const res = await fetch(
-        "https://salenow-v2-backend.vercel.app/api/v1/admin/pages"
-      );
+      const res = await fetch("https://backend.doob.com.bd/api/v1/admin/pages");
       const data = await res.json();
       return data;
     },
   });
 
   const ActiveHandle = (id) => {
-    fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/admin/page/status/${id}`,
-      {
-        method: "PUT",
-        headers: {
-          "content-type": "application/json",
-        },
-      }
-    )
+    fetch(`https://backend.doob.com.bd/api/v1/admin/page/status/${id}`, {
+      method: "PUT",
+      headers: {
+        "content-type": "application/json",
+      },
+    })
       .then((res) => res.json())
       .then((data) => {
         Swal.fire("success", "Your Faq Publish Successfully", "success");
@@ -43,15 +38,12 @@ const PageManagement = () => {
   };
 
   const DeactiveHandle = (id) => {
-    fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/admin/page/unstatus/${id}`,
-      {
-        method: "PUT",
-        headers: {
-          "content-type": "application/json",
-        },
-      }
-    )
+    fetch(`https://backend.doob.com.bd/api/v1/admin/page/unstatus/${id}`, {
+      method: "PUT",
+      headers: {
+        "content-type": "application/json",
+      },
+    })
       .then((res) => res.json())
       .then((data) => {
         Swal.fire("success", "Your FAQ Unpublish Successfully", "success");
@@ -60,15 +52,12 @@ const PageManagement = () => {
   };
 
   const DeleteHandle = (id) => {
-    fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/admin/page/delete?id=${id}`,
-      {
-        method: "Delete",
-        headers: {
-          "content-type": "application/json",
-        },
-      }
-    )
+    fetch(`https://backend.doob.com.bd/api/v1/admin/page/delete?id=${id}`, {
+      method: "Delete",
+      headers: {
+        "content-type": "application/json",
+      },
+    })
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
@@ -78,16 +67,13 @@ const PageManagement = () => {
   };
 
   const trash = (id, status) => {
-    fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/admin/page/update-trash`,
-      {
-        method: "PUT",
-        headers: {
-          "content-type": "application/json",
-        },
-        body: JSON.stringify({ id, status: status }),
-      }
-    )
+    fetch(`https://backend.doob.com.bd/api/v1/admin/page/update-trash`, {
+      method: "PUT",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({ id, status: status }),
+    })
       .then((res) => res.json())
       .then((data) => {
         console.log(data);

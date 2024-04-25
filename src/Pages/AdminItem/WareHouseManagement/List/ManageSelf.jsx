@@ -11,7 +11,7 @@ const ManageSelf = () => {
     queryKey: ["selfs"],
     queryFn: async () => {
       const res = await fetch(
-        "https://salenow-v2-backend.vercel.app/api/v1/admin/warehouse/self"
+        "https://backend.doob.com.bd/api/v1/admin/warehouse/self"
       );
       const data = await res.json();
       return data;
@@ -102,7 +102,7 @@ const ManageSelf = () => {
 
   const updateStatus = (id, status) => {
     fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/admin/warehouse/self/status/${id}`,
+      `https://backend.doob.com.bd/api/v1/admin/warehouse/self/status/${id}`,
       {
         method: "PUT",
         headers: {
@@ -141,7 +141,7 @@ const ManageSelf = () => {
       if (result.dismiss === Swal.DismissReason.timer) {
         // Timer completed, initiate the fetch for deletion
         fetch(
-          `https://salenow-v2-backend.vercel.app/api/v1/admin/warehouse/self/delete/${id}`,
+          `https://backend.doob.com.bd/api/v1/admin/warehouse/self/delete/${id}`,
           {
             method: "DELETE",
             headers: {

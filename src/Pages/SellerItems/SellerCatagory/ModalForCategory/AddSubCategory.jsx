@@ -23,7 +23,7 @@ const AddSubCategory = () => {
     queryKey: ["category"],
     queryFn: async () => {
       const res = await fetch(
-        `https://salenow-v2-backend.vercel.app/api/v1/category/seller/${shopInfo._id}`
+        `https://backend.doob.com.bd/api/v1/category/seller/${shopInfo._id}`
       );
       const data = await res.json();
       return data;
@@ -31,7 +31,7 @@ const AddSubCategory = () => {
   });
 
   console.log(
-    `https://salenow-v2-backend.vercel.app/api/v1/category/seller/${shopInfo._id}`
+    `https://backend.doob.com.bd/api/v1/category/seller/${shopInfo._id}`
   );
 
   const option = darazData
@@ -54,7 +54,7 @@ const AddSubCategory = () => {
   };
 
   const uploadImage = async (formData) => {
-    const url = `https://salenow-v2-backend.vercel.app/api/v1/image/upload-image`;
+    const url = `https://backend.doob.com.bd/api/v1/image/upload-image`;
     const response = await fetch(url, {
       method: "POST",
       body: formData,
@@ -92,7 +92,7 @@ const AddSubCategory = () => {
       megaCategoryId: megaCategoryId,
     };
 
-    const url = `https://salenow-v2-backend.vercel.app/api/v1/category/seller/sub/add`;
+    const url = `https://backend.doob.com.bd/api/v1/category/seller/sub/add`;
 
     const response = await fetch(url, {
       method: "POST",

@@ -34,7 +34,7 @@ const UpdateShopProfile = () => {
     const selectedFile = e.target.files[0];
     const formData = new FormData();
     formData.append("image", selectedFile);
-    const url = `https://salenow-v2-backend.vercel.app/api/v1/image/upload-image`;
+    const url = `https://backend.doob.com.bd/api/v1/image/upload-image`;
     fetch(url, {
       method: "POST",
       body: formData,
@@ -45,7 +45,7 @@ const UpdateShopProfile = () => {
           const image = imageData.imageUrl;
 
           fetch(
-            `https://salenow-v2-backend.vercel.app/api/v1/shop/update-cover/${shopInfo._id}`,
+            `https://backend.doob.com.bd/api/v1/shop/update-cover/${shopInfo._id}`,
             {
               method: "PUt",
 
@@ -74,7 +74,7 @@ const UpdateShopProfile = () => {
     const selectedFile = e.target.files[0];
     const formData = new FormData();
     formData.append("image", selectedFile);
-    const url = `https://salenow-v2-backend.vercel.app/api/v1/image/upload-image`;
+    const url = `https://backend.doob.com.bd/api/v1/image/upload-image`;
     fetch(url, {
       method: "POST",
       body: formData,
@@ -85,7 +85,7 @@ const UpdateShopProfile = () => {
           const image = imageData.imageUrl;
 
           fetch(
-            `https://salenow-v2-backend.vercel.app/api/v1/shop/update-logo/${shopInfo._id}`,
+            `https://backend.doob.com.bd/api/v1/shop/update-logo/${shopInfo._id}`,
             {
               method: "PUt",
               headers: {

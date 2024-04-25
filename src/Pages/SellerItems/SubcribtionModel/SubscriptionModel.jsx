@@ -16,7 +16,7 @@ const SubscriptionModel = () => {
     queryKey: ["subscriptionModal"],
     queryFn: async () => {
       const res = await fetch(
-        `https://salenow-v2-backend.vercel.app/api/v1/seller/subscription-model?priceId=${shopInfo?.priceId}&shopId=${shopInfo._id}`
+        `https://backend.doob.com.bd/api/v1/seller/subscription-model?priceId=${shopInfo?.priceId}&shopId=${shopInfo._id}`
       );
       const data = await res.json();
       return data?.data;
@@ -28,7 +28,7 @@ const SubscriptionModel = () => {
   console.log("prices", prices);
 
   console.log(
-    `https://salenow-v2-backend.vercel.app/api/v1/seller/subscription-model?priceId=${shopInfo?.priceId}&shopId=${shopInfo._id}`,
+    `https://backend.doob.com.bd/api/v1/seller/subscription-model?priceId=${shopInfo?.priceId}&shopId=${shopInfo._id}`,
     "services time prices ====={}"
   );
 
@@ -36,7 +36,7 @@ const SubscriptionModel = () => {
     queryKey: ["commissionHistory"],
     queryFn: async () => {
       const res = await fetch(
-        `https://salenow-v2-backend.vercel.app/api/v1/seller/get-commission?shopId=${shopInfo._id}`
+        `https://backend.doob.com.bd/api/v1/seller/get-commission?shopId=${shopInfo._id}`
       );
       const data = await res.json();
       console.log(data);
@@ -48,7 +48,7 @@ const SubscriptionModel = () => {
     queryKey: ["pricesData"],
     queryFn: async () => {
       const res = await fetch(
-        "https://salenow-v2-backend.vercel.app/api/v1/admin/pricing"
+        "https://backend.doob.com.bd/api/v1/admin/pricing"
       );
       const data = await res.json();
       return data;
@@ -59,7 +59,7 @@ const SubscriptionModel = () => {
     queryKey: "possibility",
     queryFn: async () => {
       const res = await fetch(
-        `https://salenow-v2-backend.vercel.app/api/v1/seller/check-free-trail?shopId=${shopInfo._id}`
+        `https://backend.doob.com.bd/api/v1/seller/check-free-trail?shopId=${shopInfo._id}`
       );
       const data = await res.json();
       console.log(data);
@@ -67,7 +67,7 @@ const SubscriptionModel = () => {
     },
   });
 
-  // console.log(`https://salenow-v2-backend.vercel.app/api/v1/seller/check-free-trail?shopId=${shopInfo._id}`, 'posible');
+  // console.log(`https://backend.doob.com.bd/api/v1/seller/check-free-trail?shopId=${shopInfo._id}`, 'posible');
 
   const originalDate = shopInfo?.paymentDate;
   const formattedDate = new Date(originalDate);

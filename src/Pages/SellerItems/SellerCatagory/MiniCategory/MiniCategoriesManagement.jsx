@@ -17,7 +17,7 @@ const MiniCategoriesManagement = () => {
     queryKey: ["categories"],
     queryFn: async () => {
       const res = await fetch(
-        `https://salenow-v2-backend.vercel.app/api/v1/category/seller/mini/${shopInfo._id}`
+        `https://backend.doob.com.bd/api/v1/category/seller/mini/${shopInfo._id}`
       );
       const data = await res.json();
       return data;
@@ -117,7 +117,7 @@ const MiniCategoriesManagement = () => {
 
   const updateStatus = (id, status) => {
     fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/category/seller/mini/status/${id}`,
+      `https://backend.doob.com.bd/api/v1/category/seller/mini/status/${id}`,
       {
         method: "PUT",
         headers: {
@@ -156,7 +156,7 @@ const MiniCategoriesManagement = () => {
       if (result.dismiss === Swal.DismissReason.timer) {
         // Timer completed, initiate the fetch for deletion
         fetch(
-          `https://salenow-v2-backend.vercel.app/api/v1/category/seller/mini/delete/${id}`,
+          `https://backend.doob.com.bd/api/v1/category/seller/mini/delete/${id}`,
           {
             method: "DELETE",
             headers: {
@@ -186,7 +186,7 @@ const MiniCategoriesManagement = () => {
 
   const [editOn, setEditOn] = useState(false);
   const uploadImage = async (formData) => {
-    const url = `https://salenow-v2-backend.vercel.app/api/v1/image/upload-image`;
+    const url = `https://backend.doob.com.bd/api/v1/image/upload-image`;
     const response = await fetch(url, {
       method: "POST",
       body: formData,
@@ -214,7 +214,7 @@ const MiniCategoriesManagement = () => {
     console.log(data, id, "update");
 
     fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/category/seller-update-miniCategory?id=${id}`,
+      `https://backend.doob.com.bd/api/v1/category/seller-update-miniCategory?id=${id}`,
       {
         method: "PUT",
         headers: {
@@ -235,7 +235,7 @@ const MiniCategoriesManagement = () => {
 
   const futuresUpdate = (id, status) => {
     fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/category/seller-update-miniCategory-feature?id=${id}&status=${status}`,
+      `https://backend.doob.com.bd/api/v1/category/seller-update-miniCategory-feature?id=${id}&status=${status}`,
       {
         method: "PUT",
 

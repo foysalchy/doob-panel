@@ -15,16 +15,13 @@ export default function ({ setOpen, itm }) {
       shopId: shopInfo?.shopId,
     };
 
-    fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/seller/edit-price-role`,
-      {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      }
-    )
+    fetch(`https://backend.doob.com.bd/api/v1/seller/edit-price-role`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
       .then((res) => res.json())
       .then((data) => {
         console.log(data);

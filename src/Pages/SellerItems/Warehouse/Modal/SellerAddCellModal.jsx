@@ -27,7 +27,7 @@ const SellerAddCellModal = ({
     queryKey: ["warehouses"],
     queryFn: async () => {
       const res = await fetch(
-        `https://salenow-v2-backend.vercel.app/api/v1/seller/warehouse/get/${shopInfo._id}`
+        `https://backend.doob.com.bd/api/v1/seller/warehouse/get/${shopInfo._id}`
       );
       const data = await res.json();
       return data;
@@ -39,7 +39,7 @@ const SellerAddCellModal = ({
     setSelectedWarehouse(selectedWarehouse);
 
     const areaRes = await fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/seller/warehouse/area/${selectedWarehouse}/${shopInfo._id}`
+      `https://backend.doob.com.bd/api/v1/seller/warehouse/area/${selectedWarehouse}/${shopInfo._id}`
     );
     const areaData = await areaRes.json();
     setAreas(areaData);
@@ -53,7 +53,7 @@ const SellerAddCellModal = ({
     setSelectedArea(selectedArea);
 
     const rackRes = await fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/seller/warehouse/rack/${selectedWarehouse}/${selectedArea}/${shopInfo._id}`
+      `https://backend.doob.com.bd/api/v1/seller/warehouse/rack/${selectedWarehouse}/${selectedArea}/${shopInfo._id}`
     );
     const rackData = await rackRes.json();
     setRacks(rackData);
@@ -66,7 +66,7 @@ const SellerAddCellModal = ({
     setSelectedRack(selectedRack);
 
     const selfRes = await fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/seller/warehouse/self/${selectedWarehouse}/${selectedArea}/${selectedRack}/${shopInfo._id}`
+      `https://backend.doob.com.bd/api/v1/seller/warehouse/self/${selectedWarehouse}/${selectedArea}/${selectedRack}/${shopInfo._id}`
     );
     console.log(selfRes, "self");
     const selfData = await selfRes.json();
@@ -96,16 +96,13 @@ const SellerAddCellModal = ({
       status: true,
     };
 
-    fetch(
-      "https://salenow-v2-backend.vercel.app/api/v1/seller/warehouse/cell",
-      {
-        method: "post",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      }
-    )
+    fetch("https://backend.doob.com.bd/api/v1/seller/warehouse/cell", {
+      method: "post",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
       .then((res) => res.json())
       .then((data) => {
         Swal.fire("Upload Successful", "", "success");

@@ -15,7 +15,7 @@ const SalesHistory = () => {
     queryKey: ["myWebstoreOrder"],
     queryFn: async () => {
       const res = await fetch(
-        `https://salenow-v2-backend.vercel.app/api/v1/seller/get-my-perches?shopId=${shopInfo?._id}`
+        `https://backend.doob.com.bd/api/v1/seller/get-my-perches?shopId=${shopInfo?._id}`
       );
       const data = await res.json();
       return data;
@@ -44,7 +44,7 @@ const SalesHistory = () => {
   const userProductCancel = (orderId, status) => {
     console.log(orderId, status);
     fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/seller/update-seller-order-status?orderId=${orderId}&status=${status}`,
+      `https://backend.doob.com.bd/api/v1/seller/update-seller-order-status?orderId=${orderId}&status=${status}`,
       {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
@@ -70,7 +70,7 @@ const SalesHistory = () => {
   // ? update status
   const updateStatus = (status, orderId) => {
     fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/seller/update-seller-order-status?orderId=${orderId}&status=${status}`,
+      `https://backend.doob.com.bd/api/v1/seller/update-seller-order-status?orderId=${orderId}&status=${status}`,
       {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
@@ -125,7 +125,7 @@ const SalesHistory = () => {
 
     console.log(data);
     fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/shop/refund-Order?token=${shopInfo._id}`,
+      `https://backend.doob.com.bd/api/v1/shop/refund-Order?token=${shopInfo._id}`,
       {
         method: "POST",
         headers: {
@@ -245,7 +245,7 @@ const SalesHistory = () => {
 
   const cancelNoteSubmit = () => {
     fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/shop/user/order-cancel-reason?token=${shopInfo._id}`,
+      `https://backend.doob.com.bd/api/v1/shop/user/order-cancel-reason?token=${shopInfo._id}`,
       {
         method: "PUT",
         headers: { "Content-Type": "application/json" },

@@ -37,7 +37,7 @@ const ShopAuth = ({ children }) => {
     queryFn: async () => {
       try {
         const res = await fetch(
-          `https://salenow-v2-backend.vercel.app/api/v1/shop/firebase/${shopId}`,
+          `https://backend.doob.com.bd/api/v1/shop/firebase/${shopId}`,
           {
             headers: {
               "ngrok-skip-browser-warning": "69420",
@@ -62,7 +62,7 @@ const ShopAuth = ({ children }) => {
     queryFn: async () => {
       try {
         const res = await fetch(
-          `https://salenow-v2-backend.vercel.app/api/v1/shop/shopId/${shopId}`
+          `https://backend.doob.com.bd/api/v1/shop/shopId/${shopId}`
         );
         const data = await res.json();
         return data;
@@ -144,7 +144,7 @@ const ShopAuth = ({ children }) => {
 
   const saveUser = (name, email, provider) => {
     const user = { name, email, provider, shopId: shopId };
-    fetch("https://salenow-v2-backend.vercel.app/api/v1/shop/auth", {
+    fetch("https://backend.doob.com.bd/api/v1/shop/auth", {
       method: "post",
       headers: {
         "content-type": "application/json",

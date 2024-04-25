@@ -59,7 +59,7 @@ const SellerDashboard = () => {
     queryKey: "sellerPopupData",
     queryFn: async () => {
       const res = await fetch(
-        `https://salenow-v2-backend.vercel.app/api/v1/admin/pop-up`
+        `https://backend.doob.com.bd/api/v1/admin/pop-up`
       );
       const data = await res.json();
       return data?.data;
@@ -77,7 +77,7 @@ const SellerDashboard = () => {
     queryFn: async () => {
       try {
         const res = await fetch(
-          `https://salenow-v2-backend.vercel.app/api/v1/shop/firebase/${shopInfo.shopId}`
+          `https://backend.doob.com.bd/api/v1/shop/firebase/${shopInfo.shopId}`
         );
         const data = await res.json();
         return data;
@@ -91,7 +91,7 @@ const SellerDashboard = () => {
     queryKey: "noticeInfo",
     queryFn: async () => {
       const res = await fetch(
-        `https://salenow-v2-backend.vercel.app/api/v1/admin/seller-notice`
+        `https://backend.doob.com.bd/api/v1/admin/seller-notice`
       );
       const data = await res.json();
       return data?.data;
@@ -134,7 +134,7 @@ const SellerDashboard = () => {
     queryKey: ["orderData"],
     queryFn: async () => {
       const res = await fetch(
-        `https://salenow-v2-backend.vercel.app/api/v1/seller/order?shopId=${shopInfo._id}`
+        `https://backend.doob.com.bd/api/v1/seller/order?shopId=${shopInfo._id}`
       );
       const data = await res.json();
       refetch();
@@ -150,7 +150,7 @@ const SellerDashboard = () => {
     queryKey: ["darazShopBd"],
     queryFn: async () => {
       const res = await fetch(
-        `https://salenow-v2-backend.vercel.app/api/v1/seller/seller-daraz-accounts?id=${shopInfo._id}`
+        `https://backend.doob.com.bd/api/v1/seller/seller-daraz-accounts?id=${shopInfo._id}`
       );
       const data = await res.json();
       return data.data[0];
@@ -167,7 +167,7 @@ const SellerDashboard = () => {
     queryKey: ["priviousAccount"],
     queryFn: async () => {
       const res = await fetch(
-        `https://salenow-v2-backend.vercel.app/api/v1/daraz/get-privious-account?shopId=${shopInfo._id}`
+        `https://backend.doob.com.bd/api/v1/daraz/get-privious-account?shopId=${shopInfo._id}`
       );
       const data = await res.json();
       return data.data;
@@ -176,7 +176,7 @@ const SellerDashboard = () => {
 
   const switchAccount = (_id, id) => {
     fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/daraz/switching-your-daraz?id=${id}&loginId=${_id}`,
+      `https://backend.doob.com.bd/api/v1/daraz/switching-your-daraz?id=${id}&loginId=${_id}`,
       {
         method: "PATCH",
         headers: {

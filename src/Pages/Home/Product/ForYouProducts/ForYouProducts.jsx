@@ -12,7 +12,7 @@ const ForYouProducts = () => {
     queryKey: ["newProducts"],
     queryFn: async () => {
       const res = await fetch(
-        "https://salenow-v2-backend.vercel.app/api/v1/admin/products"
+        "https://backend.doob.com.bd/api/v1/admin/products"
       );
       const data = await res.json();
       return data;
@@ -83,7 +83,7 @@ const ForYouProducts = () => {
                   ?.map((product, idx) => {
                     let name = product?.name?.slice(0, 60);
                     {
-                      /* const blankImg = 'https://salenow-v2-backend.vercel.app/api/v1/image/66036ed3df13bd9930ac229c.jpg'; */
+                      /* const blankImg = 'https://backend.doob.com.bd/api/v1/image/66036ed3df13bd9930ac229c.jpg'; */
                     }
                     console.log(product);
                     return (

@@ -23,7 +23,7 @@ const ProfileUpdate = () => {
     console.log(data);
 
     fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/shop/update/userInfo?token=${shopUser._id}`,
+      `https://backend.doob.com.bd/api/v1/shop/update/userInfo?token=${shopUser._id}`,
       {
         method: "PATCH",
         headers: {

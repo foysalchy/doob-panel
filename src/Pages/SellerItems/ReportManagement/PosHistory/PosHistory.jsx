@@ -15,7 +15,7 @@ const PosHistory = () => {
     queryKey: ["posData"],
     queryFn: async () => {
       const res = await fetch(
-        `https://salenow-v2-backend.vercel.app/api/v1/seller/pos-report?shopId=${shopInfo?._id}`
+        `https://backend.doob.com.bd/api/v1/seller/pos-report?shopId=${shopInfo?._id}`
       );
       const data = await res.json();
       return data.data;

@@ -17,7 +17,7 @@ const AdminPopupManagement = () => {
     queryKey: "popupData",
     queryFn: async () => {
       const res = await fetch(
-        `https://salenow-v2-backend.vercel.app/api/v1/admin/pop-up`
+        `https://backend.doob.com.bd/api/v1/admin/pop-up`
       );
       const data = await res.json();
       return data?.data;
@@ -27,7 +27,7 @@ const AdminPopupManagement = () => {
   // const { data: popupData, reload } = useQuery({
   //     queryKey: "popupData",
   //     queryFn: async () => {
-  //         const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/pop-up`);
+  //         const res = await fetch(`https://backend.doob.com.bd/api/v1/admin/pop-up`);
   //         const data = await res.json();
   //         return data?.data;
   //     },
@@ -44,7 +44,7 @@ const AdminPopupManagement = () => {
 
   if (isDelete) {
     fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/seller/popup/delete/${deleteId}`,
+      `https://backend.doob.com.bd/api/v1/seller/popup/delete/${deleteId}`,
       {
         method: "DELETE",
         headers: {
@@ -75,16 +75,13 @@ const AdminPopupManagement = () => {
   const EditStatus = (id, status) => {
     console.log(id, status);
     setLoading(true);
-    fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/admin/pop-up?popUpId=${id}`,
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ status }),
-      }
-    )
+    fetch(`https://backend.doob.com.bd/api/v1/admin/pop-up?popUpId=${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ status }),
+    })
       .then((res) => res.json())
       .then((data) => {
         setLoading(false);
@@ -97,7 +94,7 @@ const AdminPopupManagement = () => {
     console.log(id, status);
     setLoading(true);
     fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/admin/user-pop-up?popUpId=${id}`,
+      `https://backend.doob.com.bd/api/v1/admin/user-pop-up?popUpId=${id}`,
       {
         method: "PUT",
         headers: {
@@ -116,15 +113,12 @@ const AdminPopupManagement = () => {
 
   const onDelete = (id) => {
     setLoading(true);
-    fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/admin/pop-up?popUpId=${id}`,
-      {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    )
+    fetch(`https://backend.doob.com.bd/api/v1/admin/pop-up?popUpId=${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
       .then((res) => res.json())
       .then((data) => {
         setLoading(false);

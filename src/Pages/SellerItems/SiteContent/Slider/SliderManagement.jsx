@@ -19,7 +19,7 @@ const SliderManagement = () => {
     queryKey: ["faqs"],
     queryFn: async () => {
       const res = await fetch(
-        `https://salenow-v2-backend.vercel.app/api/v1/seller/slider/${shopInfo._id}`
+        `https://backend.doob.com.bd/api/v1/seller/slider/${shopInfo._id}`
       );
       const data = await res.json();
       return data;
@@ -28,16 +28,13 @@ const SliderManagement = () => {
 
   const updateStatus = (id, status) => {
     console.log(id, status);
-    fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/seller/slider/status/${id}`,
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ status }),
-      }
-    )
+    fetch(`https://backend.doob.com.bd/api/v1/seller/slider/status/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ status }),
+    })
       .then((res) => res.json())
       .then((data) => {
         Swal.fire(`Update status success`);
@@ -56,7 +53,7 @@ const SliderManagement = () => {
 
   if (isDelete) {
     fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/seller/slider/delete/${deleteId}`,
+      `https://backend.doob.com.bd/api/v1/seller/slider/delete/${deleteId}`,
       {
         method: "DELETE",
         headers: {

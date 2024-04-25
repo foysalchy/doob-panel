@@ -82,7 +82,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
     queryKey: ["prices"],
     queryFn: async () => {
       const res = await fetch(
-        `https://salenow-v2-backend.vercel.app/api/v1/seller/subscription-model?priceId=${shopInfo?.priceId}&shopId=${shopInfo?._id}`
+        `https://backend.doob.com.bd/api/v1/seller/subscription-model?priceId=${shopInfo?.priceId}&shopId=${shopInfo?._id}`
       );
       const data = await res.json();
       console.log(data?.data?.result);

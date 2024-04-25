@@ -24,7 +24,7 @@ const DarazOrderTable = ({
     queryKey: ["sellerDarazOrder"],
     queryFn: async () => {
       const res = await fetch(
-        `https://salenow-v2-backend.vercel.app/api/v1/seller/daraz-order?id=${shopInfo._id}&status=${selectedValue}`
+        `https://backend.doob.com.bd/api/v1/seller/daraz-order?id=${shopInfo._id}&status=${selectedValue}`
       );
 
       const data = await res.json();

@@ -17,7 +17,7 @@ const AddProduct = () => {
     queryKey: ["Commission"],
     queryFn: async () => {
       const res = await fetch(
-        "https://salenow-v2-backend.vercel.app/api/v1/admin/get-commission-percent"
+        "https://backend.doob.com.bd/api/v1/admin/get-commission-percent"
       );
       const data = await res.json();
       console.log(data);
@@ -32,16 +32,13 @@ const AddProduct = () => {
     setLoading(true);
     const newProduct = e.target.Commission.value;
     const body = { Commission: newProduct };
-    fetch(
-      "https://salenow-v2-backend.vercel.app/api/v1/admin/add-commission-percent",
-      {
-        method: "PATCH",
-        body: JSON.stringify(body),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    )
+    fetch("https://backend.doob.com.bd/api/v1/admin/add-commission-percent", {
+      method: "PATCH",
+      body: JSON.stringify(body),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
       .then((res) => res.json())
       .then((data) => {
         BrightAlert();

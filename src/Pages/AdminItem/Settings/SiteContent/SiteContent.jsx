@@ -14,7 +14,7 @@ const SiteContent = () => {
     queryKey: ["category"],
     queryFn: async () => {
       const res = await fetch(
-        "https://salenow-v2-backend.vercel.app/api/v1/admin/domain-video"
+        "https://backend.doob.com.bd/api/v1/admin/domain-video"
       );
       const data = await res.json();
       return data;
@@ -29,7 +29,7 @@ const SiteContent = () => {
     queryKey: ["domainDoc"],
     queryFn: async () => {
       const res = await fetch(
-        "https://salenow-v2-backend.vercel.app/api/v1/admin/domain-document"
+        "https://backend.doob.com.bd/api/v1/admin/domain-document"
       );
       const data = await res.json();
       return data.result;
@@ -44,7 +44,7 @@ const SiteContent = () => {
     queryKey: ["buyDomain"],
     queryFn: async () => {
       const res = await fetch(
-        "https://salenow-v2-backend.vercel.app/api/v1/admin/buy-domain"
+        "https://backend.doob.com.bd/api/v1/admin/buy-domain"
       );
       const data = await res.json();
       return data;
@@ -57,7 +57,7 @@ const SiteContent = () => {
     e.preventDefault();
     const url = e.target.url.value;
 
-    fetch("https://salenow-v2-backend.vercel.app/api/v1/admin/add-domain-url", {
+    fetch("https://backend.doob.com.bd/api/v1/admin/add-domain-url", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -74,16 +74,13 @@ const SiteContent = () => {
   const [isHovered, setIsHovered] = useState(false);
 
   const deleteVideo = (id) => {
-    fetch(
-      "https://salenow-v2-backend.vercel.app/api/v1/admin/delete-domain-url",
-      {
-        method: "delete",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ id }),
-      }
-    )
+    fetch("https://backend.doob.com.bd/api/v1/admin/delete-domain-url", {
+      method: "delete",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ id }),
+    })
       .then((res) => res.json())
       .then((data) => {
         refetch();
@@ -102,7 +99,7 @@ const SiteContent = () => {
 
     try {
       const response = await fetch(
-        "https://salenow-v2-backend.vercel.app/api/v1/admin/domain-document",
+        "https://backend.doob.com.bd/api/v1/admin/domain-document",
         {
           method: "PUT",
           headers: {
@@ -131,7 +128,7 @@ const SiteContent = () => {
     const url = e.target.url.value;
     try {
       const response = await fetch(
-        "https://salenow-v2-backend.vercel.app/api/v1/admin/buy-domain",
+        "https://backend.doob.com.bd/api/v1/admin/buy-domain",
         {
           method: "PUT",
           headers: {

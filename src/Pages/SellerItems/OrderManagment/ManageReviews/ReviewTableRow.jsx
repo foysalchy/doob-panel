@@ -12,7 +12,7 @@ const ReviewTableRow = ({ refetch, itm }) => {
 
   const handleDelete = () => {
     fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/seller/delete-comment?id=${itm?._id}`,
+      `https://backend.doob.com.bd/api/v1/seller/delete-comment?id=${itm?._id}`,
       {
         method: "DELETE",
       }

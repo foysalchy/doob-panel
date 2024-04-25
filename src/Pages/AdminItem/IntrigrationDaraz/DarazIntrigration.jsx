@@ -29,7 +29,7 @@ const DarazIntegration = () => {
 
   useEffect(() => {
     if (code) {
-      fetch("https://salenow-v2-backend.vercel.app/api/v1/daraz/get-key")
+      fetch("https://backend.doob.com.bd/api/v1/daraz/get-key")
         .then((res) => res.json())
         .then((data) => {
           const { appkey, secretkey } = data[0];
@@ -54,7 +54,7 @@ const DarazIntegration = () => {
           };
 
           fetch(
-            `https://salenow-v2-backend.vercel.app/api/v1/daraz/addCode/${shopInfo._id}`,
+            `https://backend.doob.com.bd/api/v1/daraz/addCode/${shopInfo._id}`,
             {
               method: "PUT",
               headers: {
@@ -85,7 +85,7 @@ const DarazIntegration = () => {
     queryKey: ["darazShopBd"],
     queryFn: async () => {
       const res = await fetch(
-        `https://salenow-v2-backend.vercel.app/api/v1/seller/seller-daraz-accounts?id=${shopInfo._id}`
+        `https://backend.doob.com.bd/api/v1/seller/seller-daraz-accounts?id=${shopInfo._id}`
       );
       const data = await res.json();
       return data.data[0];
@@ -93,7 +93,7 @@ const DarazIntegration = () => {
   });
 
   console.log(
-    `https://salenow-v2-backend.vercel.app/api/v1/seller/get-privious-account?shopId=${shopInfo._id}`
+    `https://backend.doob.com.bd/api/v1/seller/get-privious-account?shopId=${shopInfo._id}`
   );
 
   const {
@@ -104,7 +104,7 @@ const DarazIntegration = () => {
     queryKey: ["priviousAccount"],
     queryFn: async () => {
       const res = await fetch(
-        `https://salenow-v2-backend.vercel.app/api/v1/daraz/get-privious-account?shopId=${shopInfo._id}`
+        `https://backend.doob.com.bd/api/v1/daraz/get-privious-account?shopId=${shopInfo._id}`
       );
       const data = await res.json();
       return data.data;
@@ -113,7 +113,7 @@ const DarazIntegration = () => {
 
   const switchAccount = (_id, id) => {
     fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/daraz/switching-your-daraz?id=${id}&loginId=${_id}`,
+      `https://backend.doob.com.bd/api/v1/daraz/switching-your-daraz?id=${id}&loginId=${_id}`,
       {
         method: "PATCH",
         headers: {

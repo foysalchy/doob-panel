@@ -19,7 +19,7 @@ const FeatureManagement = () => {
     queryKey: ["faqs"],
     queryFn: async () => {
       const res = await fetch(
-        `https://salenow-v2-backend.vercel.app/api/v1/seller/feature/${shopInfo._id}`
+        `https://backend.doob.com.bd/api/v1/seller/feature/${shopInfo._id}`
       );
       const data = await res.json();
       return data;
@@ -27,16 +27,13 @@ const FeatureManagement = () => {
   });
 
   const updateStatus = (id, status) => {
-    fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/seller/feature/status/${id}`,
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ status }),
-      }
-    )
+    fetch(`https://backend.doob.com.bd/api/v1/seller/feature/status/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ status }),
+    })
       .then((res) => res.json())
       .then((data) => {
         Swal.fire(`Seller disable ${status} `, "", "success");
@@ -55,7 +52,7 @@ const FeatureManagement = () => {
 
   if (isDelete) {
     fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/seller/feature/delete/${deleteId}`,
+      `https://backend.doob.com.bd/api/v1/seller/feature/delete/${deleteId}`,
       {
         method: "DELETE",
         headers: {
@@ -80,7 +77,7 @@ const FeatureManagement = () => {
   const [selectIndex, setSelectIndex] = useState("");
 
   const uploadImage = async (formData) => {
-    const url = `https://salenow-v2-backend.vercel.app/api/v1/image/upload-image`;
+    const url = `https://backend.doob.com.bd/api/v1/image/upload-image`;
     const response = await fetch(url, {
       method: "POST",
       body: formData,
@@ -109,16 +106,13 @@ const FeatureManagement = () => {
 
     console.log(data, id);
 
-    fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/seller/feature/update?id=${id}`,
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      }
-    )
+    fetch(`https://backend.doob.com.bd/api/v1/seller/feature/update?id=${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
       .then((res) => res.json())
       .then((data) => {
         Swal.fire(`image update`, "", "success");

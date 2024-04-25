@@ -8,7 +8,7 @@ const useAdmin = () => {
   useEffect(() => {
     if (user?.email) {
       fetch(
-        `https://salenow-v2-backend.vercel.app/api/v1/users/supperadmin/${user?.email}`
+        `https://backend.doob.com.bd/api/v1/users/supperadmin/${user?.email}`
       )
         .then((res) => res.json())
         .then((data) => {

@@ -43,7 +43,7 @@ const UserPayment = () => {
       data.file = fileName;
     }
     setPassData(data);
-    fetch(`https://salenow-v2-backend.vercel.app/api/v1/site-user/order`, {
+    fetch(`https://backend.doob.com.bd/api/v1/site-user/order`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
@@ -73,7 +73,7 @@ const UserPayment = () => {
     order.callback = "https://doob.com.bd/services-payment-successful";
     try {
       const response = await fetch(
-        "https://salenow-v2-backend.vercel.app/api/v1/seller/bkash/payment/create",
+        "https://backend.doob.com.bd/api/v1/seller/bkash/payment/create",
         {
           method: "POST",
           headers: {
@@ -100,7 +100,7 @@ const UserPayment = () => {
     order.callback = "https://doob.com.bd/services-payment-successful";
     try {
       const response = await fetch(
-        "https://salenow-v2-backend.vercel.app/api/v1/seller/amarpay/payment/create",
+        "https://backend.doob.com.bd/api/v1/seller/amarpay/payment/create",
         {
           method: "POST",
           headers: {
@@ -136,8 +136,7 @@ const UserPayment = () => {
   };
 
   async function uploadImage(formData) {
-    const url =
-      "https://salenow-v2-backend.vercel.app/api/v1/image/upload-image";
+    const url = "https://backend.doob.com.bd/api/v1/image/upload-image";
     const response = await fetch(url, {
       method: "POST",
       body: formData,
@@ -150,7 +149,7 @@ const UserPayment = () => {
     console.log("hit");
     if (shopInfo) {
       fetch(
-        `https://salenow-v2-backend.vercel.app/api/v1/seller/get-shop-balance?shopId=${shopInfo._id}`
+        `https://backend.doob.com.bd/api/v1/seller/get-shop-balance?shopId=${shopInfo._id}`
       )
         .then((res) => res.json())
         .then((data) => {
@@ -263,8 +262,8 @@ const UserPayment = () => {
             >
               <img
                 alt="Developer"
-                src="https://salenow-v2-backend.vercel.app/api/v1/image/658ec416b689ffabf15d9fb6.jpg"
-                srcSet="https://salenow-v2-backend.vercel.app/api/v1/image/658ec416b689ffabf15d9fb6.jpg"
+                src="https://backend.doob.com.bd/api/v1/image/658ec416b689ffabf15d9fb6.jpg"
+                srcSet="https://backend.doob.com.bd/api/v1/image/658ec416b689ffabf15d9fb6.jpg"
                 className="md:h-[120px] md:w-[120px] w-[30px] h-[40px] object-cover"
               />
               <h4 className="mt-2  md:font-bold md:text-lg">

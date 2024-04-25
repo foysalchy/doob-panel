@@ -40,7 +40,7 @@ const PosProductsDetails = ({
 
     if (user.name || name) {
       setPostData(data);
-      fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/pos-report`, {
+      fetch(`https://backend.doob.com.bd/api/v1/seller/pos-report`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

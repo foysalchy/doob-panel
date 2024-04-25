@@ -12,7 +12,7 @@ const ExtraCategoryManagement = () => {
     queryKey: ["extraCategory"],
     queryFn: async () => {
       const res = await fetch(
-        "https://salenow-v2-backend.vercel.app/api/v1/admin/category/extraCategories"
+        "https://backend.doob.com.bd/api/v1/admin/category/extraCategories"
       );
       const data = await res.json();
       return data.rows;
@@ -22,7 +22,7 @@ const ExtraCategoryManagement = () => {
   // status update
   const statusUpdate = (id, status) => {
     fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/admin/category/extraCategory?id=${id}&status=${status}`,
+      `https://backend.doob.com.bd/api/v1/admin/category/extraCategory?id=${id}&status=${status}`,
       {
         method: "PUT",
         headers: {
@@ -41,7 +41,7 @@ const ExtraCategoryManagement = () => {
   // status update
   const onDelete = (id) => {
     fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/admin/category/extraCategory?id=${id}`,
+      `https://backend.doob.com.bd/api/v1/admin/category/extraCategory?id=${id}`,
       {
         method: "DELETE",
         headers: {
@@ -60,7 +60,7 @@ const ExtraCategoryManagement = () => {
   const [editOn, setEditOn] = useState(false);
 
   const uploadImage = async (formData) => {
-    const url = `https://salenow-v2-backend.vercel.app/api/v1/image/upload-image`;
+    const url = `https://backend.doob.com.bd/api/v1/image/upload-image`;
     const response = await fetch(url, {
       method: "POST",
       body: formData,
@@ -87,7 +87,7 @@ const ExtraCategoryManagement = () => {
 
     console.log(data, id);
 
-    // fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/feature-image-update?id=${id}`, {
+    // fetch(`https://backend.doob.com.bd/api/v1/admin/feature-image-update?id=${id}`, {
     //     method: "PUT",
     //     headers: {
     //         "Content-Type": "application/json",

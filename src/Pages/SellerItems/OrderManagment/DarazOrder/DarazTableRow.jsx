@@ -88,16 +88,13 @@ const DarazTableRow = ({ data, select, setSelect }) => {
       cancellation_reason: cancel,
     };
     console.log(cancel);
-    fetch(
-      "https://salenow-v2-backend.vercel.app/api/v1/seller/darazOrderCancel",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      }
-    )
+    fetch("https://backend.doob.com.bd/api/v1/seller/darazOrderCancel", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
       .then((res) => res.json())
       .then((data) => console.log(data));
   };
@@ -106,7 +103,7 @@ const DarazTableRow = ({ data, select, setSelect }) => {
     queryKey: ["sellerDarazCancelIssue"],
     queryFn: async () => {
       const res = await fetch(
-        `https://salenow-v2-backend.vercel.app/api/v1/seller/daraz-cancel-reason?id=${shopInfo._id}`
+        `https://backend.doob.com.bd/api/v1/seller/daraz-cancel-reason?id=${shopInfo._id}`
       );
 
       const data = await res.json();
@@ -120,16 +117,13 @@ const DarazTableRow = ({ data, select, setSelect }) => {
       id,
       orderNumber: order,
     };
-    fetch(
-      "https://salenow-v2-backend.vercel.app/api/v1/seller/daraz-ready-to-ship",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      }
-    )
+    fetch("https://backend.doob.com.bd/api/v1/seller/daraz-ready-to-ship", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
       .then((res) => res.json())
       .then((data) => console.log(data));
   };

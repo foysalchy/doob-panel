@@ -12,14 +12,14 @@ const ProductGallery = () => {
     queryKey: ["featureImageData"],
     queryFn: async () => {
       const res = await fetch(
-        `https://salenow-v2-backend.vercel.app/api/v1/admin/feature-images`
+        `https://backend.doob.com.bd/api/v1/admin/feature-images`
       );
       const data = await res.json();
       return data?.data ? data?.data : [];
     },
   });
 
-  // const blankImg = 'https://salenow-v2-backend.vercel.app/api/v1/image/66036ed3df13bd9930ac229c.jpg';
+  // const blankImg = 'https://backend.doob.com.bd/api/v1/image/66036ed3df13bd9930ac229c.jpg';
   return (
     <div>
       <div className="my-12 grid grid-cols-2 gap-4 lg:grid-cols-4 ">

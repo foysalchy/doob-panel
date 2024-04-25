@@ -11,7 +11,7 @@ const AddAreaForWarehouse = ({ setNewData, recall, setOpenModal }) => {
     queryKey: ["warehouses"],
     queryFn: async () => {
       const res = await fetch(
-        "https://salenow-v2-backend.vercel.app/api/v1/admin/warehouse"
+        "https://backend.doob.com.bd/api/v1/admin/warehouse"
       );
       const data = await res.json();
       return data;
@@ -39,7 +39,7 @@ const AddAreaForWarehouse = ({ setNewData, recall, setOpenModal }) => {
       area,
       status: true,
     };
-    fetch("https://salenow-v2-backend.vercel.app/api/v1/admin/warehouse/area", {
+    fetch("https://backend.doob.com.bd/api/v1/admin/warehouse/area", {
       method: "post",
       headers: {
         "Content-Type": "application/json",

@@ -13,7 +13,7 @@ const EditWareHouse = ({ setOpenModal, OpenModal, data, refetch }) => {
     const selectedImage = e.target.files[0];
     const formData = new FormData();
     formData.append("image", selectedImage);
-    const url = `https://salenow-v2-backend.vercel.app/api/v1/image/upload-image`;
+    const url = `https://backend.doob.com.bd/api/v1/image/upload-image`;
     fetch(url, {
       method: "POST",
       body: formData,
@@ -40,16 +40,13 @@ const EditWareHouse = ({ setOpenModal, OpenModal, data, refetch }) => {
       img,
     };
 
-    fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/admin/warehouse/${data._id}`,
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(uploadData),
-      }
-    )
+    fetch(`https://backend.doob.com.bd/api/v1/admin/warehouse/${data._id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(uploadData),
+    })
       .then((res) => res.json())
       .then((data) => {
         Swal.fire("Update Successful", "", "success");

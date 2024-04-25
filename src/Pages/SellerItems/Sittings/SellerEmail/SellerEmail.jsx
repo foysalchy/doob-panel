@@ -14,7 +14,7 @@ const SellerEmail = () => {
     queryKey: ["options"],
     queryFn: async () => {
       const res = await fetch(
-        `https://salenow-v2-backend.vercel.app/api/v1/seller/get-seller-user?id=${shopInfo?.shopId}`
+        `https://backend.doob.com.bd/api/v1/seller/get-seller-user?id=${shopInfo?.shopId}`
       );
       const data = await res.json();
       console.log(data.data);
@@ -23,7 +23,7 @@ const SellerEmail = () => {
   });
 
   console.log(
-    `https://salenow-v2-backend.vercel.app/api/v1/seller/get-seller-user?id=${shopInfo?.shopId}`,
+    `https://backend.doob.com.bd/api/v1/seller/get-seller-user?id=${shopInfo?.shopId}`,
     options.data
   );
 
@@ -88,7 +88,7 @@ const SellerEmail = () => {
         select,
       };
     }
-    fetch("https://salenow-v2-backend.vercel.app/api/v1/admin/send-email", {
+    fetch("https://backend.doob.com.bd/api/v1/admin/send-email", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

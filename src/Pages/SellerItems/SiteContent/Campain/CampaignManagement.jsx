@@ -16,7 +16,7 @@ const CampaignManagement = () => {
     queryKey: ["faqs"],
     queryFn: async () => {
       const res = await fetch(
-        `https://salenow-v2-backend.vercel.app/api/v1/seller/get-campaign/${shopInfo._id}`
+        `https://backend.doob.com.bd/api/v1/seller/get-campaign/${shopInfo._id}`
       );
       const data = await res.json();
       return data;
@@ -30,16 +30,13 @@ const CampaignManagement = () => {
       id,
       status,
     };
-    fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/seller/update-status-campaign`,
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      }
-    )
+    fetch(`https://backend.doob.com.bd/api/v1/seller/update-status-campaign`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
@@ -59,7 +56,7 @@ const CampaignManagement = () => {
 
   if (isDelete) {
     fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/seller/delete-campaign/${deleteId}`,
+      `https://backend.doob.com.bd/api/v1/seller/delete-campaign/${deleteId}`,
       {
         method: "DELETE",
         headers: {

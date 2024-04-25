@@ -10,7 +10,7 @@ const UseSupperAdmin = () => {
     if (!loading) {
       if (user?.email) {
         fetch(
-          `https://salenow-v2-backend.vercel.app/api/v1/users/supper-admin/${user?.email}`
+          `https://backend.doob.com.bd/api/v1/users/supper-admin/${user?.email}`
         )
           .then((res) => res.json())
           .then(async (data) => {

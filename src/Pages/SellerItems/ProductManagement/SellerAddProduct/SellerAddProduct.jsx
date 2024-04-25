@@ -61,7 +61,7 @@ const SellerAddProduct = () => {
     const formData = new FormData();
     formData.append("image", image);
 
-    const url = `https://salenow-v2-backend.vercel.app/api/v1/image/upload-image?shopId=${shopInfo._id}`;
+    const url = `https://backend.doob.com.bd/api/v1/image/upload-image?shopId=${shopInfo._id}`;
 
     return fetch(url, {
       method: "POST",
@@ -80,7 +80,7 @@ const SellerAddProduct = () => {
     const formData = new FormData();
     formData.append("image", imageBlob);
 
-    const url = `https://salenow-v2-backend.vercel.app/api/v1/daraz/daraz-image/${shopInfo._id}`;
+    const url = `https://backend.doob.com.bd/api/v1/daraz/daraz-image/${shopInfo._id}`;
 
     try {
       const response = await fetch(url, {
@@ -198,7 +198,6 @@ const SellerAddProduct = () => {
       adminMiniCategory,
       adminExtraCategory,
     ];
-  
 
     const formData = new FormData();
 
@@ -313,16 +312,13 @@ const SellerAddProduct = () => {
     };
     console.log(data, "product_ready");
 
-    fetch(
-      "https://salenow-v2-backend.vercel.app/api/v1/seller/normal-product/",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ data }),
-      }
-    )
+    fetch("https://backend.doob.com.bd/api/v1/seller/normal-product/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ data }),
+    })
       .then((res) => res.json())
       .then((data) => {
         if (data.error) {
@@ -344,7 +340,6 @@ const SellerAddProduct = () => {
             setYoutube={setYoutube}
             coverPhoto={coverPhoto}
             setCoverPhoto={setCoverPhoto}
-        
           />
         </div>
 

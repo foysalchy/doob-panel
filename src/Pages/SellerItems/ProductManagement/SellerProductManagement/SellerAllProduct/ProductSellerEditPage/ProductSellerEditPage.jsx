@@ -38,7 +38,7 @@ const CategoryEditPage = () => {
     queryFn: async () => {
       try {
         const res = await fetch(
-          `https://salenow-v2-backend.vercel.app/api/v1/seller/all-products/${shopInfo._id}`
+          `https://backend.doob.com.bd/api/v1/seller/all-products/${shopInfo._id}`
         );
         const data = await res.json();
         return data;
@@ -115,7 +115,7 @@ const CategoryEditPage = () => {
     const formData = new FormData();
     formData.append("image", image);
 
-    const url = `https://salenow-v2-backend.vercel.app/api/v1/image/upload-image`;
+    const url = `https://backend.doob.com.bd/api/v1/image/upload-image`;
 
     const res = await fetch(url, {
       method: "POST",
@@ -132,7 +132,7 @@ const CategoryEditPage = () => {
     const formData = new FormData();
     formData.append("image", imageBlob);
 
-    const url = `https://salenow-v2-backend.vercel.app/api/v1/daraz/daraz-image/${shopInfo._id}`;
+    const url = `https://backend.doob.com.bd/api/v1/daraz/daraz-image/${shopInfo._id}`;
 
     try {
       const response = await fetch(url, {
@@ -374,8 +374,8 @@ const CategoryEditPage = () => {
     console.log(data, "edit --------------------------->");
 
     fetch(
-      `http://localhost:5001/api/v1/seller/normal-product?id=${product?._id}`,
-      // `https://salenow-v2-backend.vercel.app/api/v1/seller/normal-product?id=${product?._id}`,
+      // `http://localhost:5001/api/v1/seller/normal-product?id=${product?._id}`,
+      `https://backend.doob.com.bd/api/v1/seller/normal-product?id=${product?._id}`,
       {
         method: "PUT",
         headers: {

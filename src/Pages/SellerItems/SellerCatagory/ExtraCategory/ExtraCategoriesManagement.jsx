@@ -17,7 +17,7 @@ const ExtraCategoriesManagement = () => {
     queryKey: ["categoriesData"],
     queryFn: async () => {
       const res = await fetch(
-        `https://salenow-v2-backend.vercel.app/api/v1/category/seller/extra/${shopInfo._id}`
+        `https://backend.doob.com.bd/api/v1/category/seller/extra/${shopInfo._id}`
       );
       const data = await res.json();
       return data;
@@ -121,7 +121,7 @@ const ExtraCategoriesManagement = () => {
 
   const updateStatus = (id, status) => {
     fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/category/seller/extra/status/${id}`,
+      `https://backend.doob.com.bd/api/v1/category/seller/extra/status/${id}`,
       {
         method: "PUT",
         headers: {
@@ -160,7 +160,7 @@ const ExtraCategoriesManagement = () => {
       if (result.dismiss === Swal.DismissReason.timer) {
         // Timer completed, initiate the fetch for deletion
         fetch(
-          `https://salenow-v2-backend.vercel.app/api/v1/category/seller/extra/delete/${id}`,
+          `https://backend.doob.com.bd/api/v1/category/seller/extra/delete/${id}`,
           {
             method: "DELETE",
             headers: {
@@ -190,7 +190,7 @@ const ExtraCategoriesManagement = () => {
   };
 
   const uploadImage = async (formData) => {
-    const url = `https://salenow-v2-backend.vercel.app/api/v1/image/upload-image`;
+    const url = `https://backend.doob.com.bd/api/v1/image/upload-image`;
     const response = await fetch(url, {
       method: "POST",
       body: formData,
@@ -217,7 +217,7 @@ const ExtraCategoriesManagement = () => {
     console.log(data, id, "update");
 
     fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/category/seller-update-extraCategory?id=${id}`,
+      `https://backend.doob.com.bd/api/v1/category/seller-update-extraCategory?id=${id}`,
       {
         method: "PUT",
         headers: {
@@ -238,7 +238,7 @@ const ExtraCategoriesManagement = () => {
 
   const futuresUpdate = (id, status) => {
     fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/category/seller-update-extraCategory-feature?id=${id}&status=${status}`,
+      `https://backend.doob.com.bd/api/v1/category/seller-update-extraCategory-feature?id=${id}&status=${status}`,
       {
         method: "PUT",
 

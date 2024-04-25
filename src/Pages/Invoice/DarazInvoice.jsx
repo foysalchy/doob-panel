@@ -22,7 +22,7 @@ const DarazInvoice = () => {
     queryFn: async () => {
       if (shopInfo) {
         const res = await fetch(
-          `https://salenow-v2-backend.vercel.app/api/v1/seller/daraz-single-order?id=${shopInfo?._id}&orderId=${id}`
+          `https://backend.doob.com.bd/api/v1/seller/daraz-single-order?id=${shopInfo?._id}&orderId=${id}`
         );
         const data = await res.json();
         return data.data;

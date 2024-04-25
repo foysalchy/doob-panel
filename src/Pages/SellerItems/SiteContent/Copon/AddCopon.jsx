@@ -19,7 +19,7 @@ const AddCopon = () => {
   // const { data: your_shop_users = [] } = useQuery({
   //     queryKey: ["your_shop_users"],
   //     queryFn: async () => {
-  //         const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/get-all-shop-user?shopId=${shopInfo.shopId}`);
+  //         const res = await fetch(`https://backend.doob.com.bd/api/v1/seller/get-all-shop-user?shopId=${shopInfo.shopId}`);
   //         const data = await res.json();
   //         return data.users;
   //     },
@@ -56,7 +56,7 @@ const AddCopon = () => {
   //     const updatedValue = name === 'code' ? value.replace(/\s+/g, '').toUpperCase() : value;
 
   //     if (updatedValue.length > 3) {
-  //         fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/uniq-promo/${shopInfo._id}/${updatedValue}`)
+  //         fetch(`https://backend.doob.com.bd/api/v1/seller/uniq-promo/${shopInfo._id}/${updatedValue}`)
   //             .then((res) => res.json())
   //             .then((data) => setUniq(data));
   //     } else {
@@ -78,7 +78,7 @@ const AddCopon = () => {
   //         selectedGmails: selectedGmails,
   //     }));
 
-  //     fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/promo-code/add`, {
+  //     fetch(`https://backend.doob.com.bd/api/v1/seller/promo-code/add`, {
   //         method: 'POST',
   //         headers: {
   //             'content-type': 'application/json',
@@ -147,7 +147,7 @@ const AddCopon = () => {
     queryKey: ["your_shop_users"],
     queryFn: async () => {
       const res = await fetch(
-        `https://salenow-v2-backend.vercel.app/api/v1/seller/get-all-shop-user?shopId=${shopInfo.shopId}`
+        `https://backend.doob.com.bd/api/v1/seller/get-all-shop-user?shopId=${shopInfo.shopId}`
       );
       const data = await res.json();
       return data.users;
@@ -187,7 +187,7 @@ const AddCopon = () => {
 
     if (updatedValue.length > 3) {
       fetch(
-        `https://salenow-v2-backend.vercel.app/api/v1/seller/uniq-promo/${shopInfo._id}/${updatedValue}`
+        `https://backend.doob.com.bd/api/v1/seller/uniq-promo/${shopInfo._id}/${updatedValue}`
       )
         .then((res) => res.json())
         .then((data) => setUniq(data));
@@ -205,16 +205,13 @@ const AddCopon = () => {
     e.preventDefault();
     console.log(formData);
 
-    fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/seller/promo-code/add`,
-      {
-        method: "POST",
-        headers: {
-          "content-type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      }
-    )
+    fetch(`https://backend.doob.com.bd/api/v1/seller/promo-code/add`, {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    })
       .then((res) => res.json())
       .then((data) => {
         Swal.fire("Your Promo Code Published Successfully", "", "success");

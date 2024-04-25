@@ -25,7 +25,7 @@ const SellerOrderManagement = () => {
     queryKey: ["sellerAllOrder"],
     queryFn: async () => {
       const res = await fetch(
-        `https://salenow-v2-backend.vercel.app/api/v1/admin/get-shop-all-order`
+        `https://backend.doob.com.bd/api/v1/admin/get-shop-all-order`
       );
       const data = await res.json();
       return data.data;
@@ -260,7 +260,7 @@ const SellerOrderManagement = () => {
   const productStatusUpdate = async (status, orderId) => {
     // console.log(status, orderId);
     const res = await fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/seller/update-seller-order-status?orderId=${orderId}&status=${status}`,
+      `https://backend.doob.com.bd/api/v1/seller/update-seller-order-status?orderId=${orderId}&status=${status}`,
       {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
@@ -273,7 +273,7 @@ const SellerOrderManagement = () => {
 
   const deleteMethod = (orderId) => {
     fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/seller/delete-seller-order?orderId=${orderId}`,
+      `https://backend.doob.com.bd/api/v1/seller/delete-seller-order?orderId=${orderId}`,
       {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },

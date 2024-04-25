@@ -4,7 +4,7 @@ import { AuthContext } from "../../../AuthProvider/UserProvider";
 import { RxCross2 } from "react-icons/rx";
 
 const MediaManager = () => {
-  // https://salenow-v2-backend.vercel.app/api/v1/image/upload-image?
+  // https://backend.doob.com.bd/api/v1/image/upload-image?
   const { shopInfo } = useContext(AuthContext);
   const [hoverIndex, setHoverIndex] = useState(null);
 
@@ -19,7 +19,7 @@ const MediaManager = () => {
     queryKey: ["seller-images"],
     queryFn: async () => {
       const res = await fetch(
-        `https://salenow-v2-backend.vercel.app/api/v1/image/get-image-for-seller?shopId=${shopInfo._id}`
+        `https://backend.doob.com.bd/api/v1/image/get-image-for-seller?shopId=${shopInfo._id}`
       );
       const data = await res.json();
       return data.imageUrls;
@@ -30,12 +30,9 @@ const MediaManager = () => {
     const id = img;
     const parts = id.split("/");
     const i = parts[parts.length - 1].split(".")[0];
-    fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/image/delete-image?id=${i}`,
-      {
-        method: "DELETE",
-      }
-    )
+    fetch(`https://backend.doob.com.bd/api/v1/image/delete-image?id=${i}`, {
+      method: "DELETE",
+    })
       .then((res) => res.json())
       .then(() => {
         refetch();

@@ -23,7 +23,7 @@ const SubCategoryProductDetails = () => {
   // const { data: productInfo = [], refetch } = useQuery({
   //   queryKey: ["productInfo"],
   //   queryFn: async () => {
-  //     const res = await fetch("https://salenow-v2-backend.vercel.app/api/v1/admin/products");
+  //     const res = await fetch("https://backend.doob.com.bd/api/v1/admin/products");
   //     const data = await res.json();
   //     return data;
   //   },
@@ -32,7 +32,7 @@ const SubCategoryProductDetails = () => {
   // const { data: productFind = [], refetch } = useQuery({
   //   queryKey: ["productFind"],
   //   queryFn: async () => {
-  //     const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/single-product?id=${location.id}`);
+  //     const res = await fetch(`https://backend.doob.com.bd/api/v1/admin/single-product?id=${location.id}`);
   //     const data = await res.json();
   //     return data;
   //   },
@@ -117,7 +117,7 @@ const SubCategoryProductDetails = () => {
   const handleImageClick = (imageUrl) => {
     setSelectedImage(imageUrl);
   };
-  // const blankImg = 'https://salenow-v2-backend.vercel.app/api/v1/image/66036ed3df13bd9930ac229c.jpg';
+  // const blankImg = 'https://backend.doob.com.bd/api/v1/image/66036ed3df13bd9930ac229c.jpg';
   const [selectedImage, setSelectedImage] = useState(
     productFind?.images[0]?.src
   );
@@ -156,16 +156,13 @@ const SubCategoryProductDetails = () => {
         shopUid: shopInfo?._id,
         quantity: quantity,
       };
-      fetch(
-        `https://salenow-v2-backend.vercel.app/api/v1/seller/web-store?id=${id}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
-        }
-      )
+      fetch(`https://backend.doob.com.bd/api/v1/seller/web-store?id=${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      })
         .then((res) => res.json())
         .then((data) => {
           BrightAlert();

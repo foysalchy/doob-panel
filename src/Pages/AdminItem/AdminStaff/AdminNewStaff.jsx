@@ -18,7 +18,7 @@ const AdminNewStaff = () => {
 
   const handleSearch = () => {
     fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/seller/seller-allUser?email=${searchValue}`
+      `https://backend.doob.com.bd/api/v1/seller/seller-allUser?email=${searchValue}`
     )
       .then((res) => res.json())
       .then((data) => {
@@ -56,7 +56,7 @@ const AdminNewStaff = () => {
     setSelectedValue(selectedOption);
   };
 
-  const API_BASE_URL = "https://salenow-v2-backend.vercel.app";
+  const API_BASE_URL = "https://backend.doob.com.bd";
 
   const handleSubmit = async (e) => {
     e.preventDefault();

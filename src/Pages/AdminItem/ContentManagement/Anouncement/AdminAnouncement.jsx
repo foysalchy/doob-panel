@@ -17,7 +17,7 @@ const AdminAnouncement = () => {
     queryKey: "announcement",
     queryFn: async () => {
       const res = await fetch(
-        `https://salenow-v2-backend.vercel.app/api/v1/admin/announcement`
+        `https://backend.doob.com.bd/api/v1/admin/announcement`
       );
       const data = await res.json();
       return data?.data;
@@ -35,7 +35,7 @@ const AdminAnouncement = () => {
 
   if (isDelete) {
     fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/seller/popup/delete/${deleteId}`,
+      `https://backend.doob.com.bd/api/v1/seller/popup/delete/${deleteId}`,
       {
         method: "DELETE",
         headers: {
@@ -67,7 +67,7 @@ const AdminAnouncement = () => {
     console.log(id, status);
     setLoading(true);
     fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/admin/announcement?AnointmentId=${id}`,
+      `https://backend.doob.com.bd/api/v1/admin/announcement?AnointmentId=${id}`,
       {
         method: "PUT",
         headers: {
@@ -87,7 +87,7 @@ const AdminAnouncement = () => {
   const onDelete = (id) => {
     setLoading(true);
     fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/admin/announcement?AnointmentId=${id}`,
+      `https://backend.doob.com.bd/api/v1/admin/announcement?AnointmentId=${id}`,
       {
         method: "DELETE",
         headers: {
@@ -99,7 +99,7 @@ const AdminAnouncement = () => {
       .then((data) => {
         console.log(
           data,
-          `https://salenow-v2-backend.vercel.app/api/v1/admin/announcement?AnointmentId=${id}`
+          `https://backend.doob.com.bd/api/v1/admin/announcement?AnointmentId=${id}`
         );
         setLoading(false);
         Swal.fire(`Seller disable ${status} `, "", "success");

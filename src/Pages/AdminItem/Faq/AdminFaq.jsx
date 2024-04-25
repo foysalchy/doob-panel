@@ -11,9 +11,7 @@ const AdminFaq = () => {
   const { data: faqs = [], refetch } = useQuery({
     queryKey: ["faqs"],
     queryFn: async () => {
-      const res = await fetch(
-        "https://salenow-v2-backend.vercel.app/api/v1/admin/faq"
-      );
+      const res = await fetch("https://backend.doob.com.bd/api/v1/admin/faq");
       const data = await res.json();
       return data;
     },
@@ -22,15 +20,12 @@ const AdminFaq = () => {
   const ActiveHandle = (id) => {
     setLoading(true);
 
-    fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/admin/faq/status/${id}`,
-      {
-        method: "PUT",
-        headers: {
-          "content-type": "application/json",
-        },
-      }
-    )
+    fetch(`https://backend.doob.com.bd/api/v1/admin/faq/status/${id}`, {
+      method: "PUT",
+      headers: {
+        "content-type": "application/json",
+      },
+    })
       .then((res) => res.json())
       .then((data) => {
         Swal.fire("success", "Your Faq Publish Successfully", "success");
@@ -39,15 +34,12 @@ const AdminFaq = () => {
   };
 
   const DeactiveHandle = (id) => {
-    fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/admin/faq/unstatus/${id}`,
-      {
-        method: "PUT",
-        headers: {
-          "content-type": "application/json",
-        },
-      }
-    )
+    fetch(`https://backend.doob.com.bd/api/v1/admin/faq/unstatus/${id}`, {
+      method: "PUT",
+      headers: {
+        "content-type": "application/json",
+      },
+    })
       .then((res) => res.json())
       .then((data) => {
         Swal.fire("success", "Your FAQ Unpublish Successfully", "success");
@@ -55,15 +47,12 @@ const AdminFaq = () => {
       });
   };
   const DeleteHandle = (id) => {
-    fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/admin/faq/delete/${id}`,
-      {
-        method: "Delete",
-        headers: {
-          "content-type": "application/json",
-        },
-      }
-    )
+    fetch(`https://backend.doob.com.bd/api/v1/admin/faq/delete/${id}`, {
+      method: "Delete",
+      headers: {
+        "content-type": "application/json",
+      },
+    })
       .then((res) => res.json())
       .then((data) => {
         Swal.fire("success", "Your Price Delete Successfully", "success");

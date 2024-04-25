@@ -10,7 +10,7 @@ const Starts = () => {
     queryKey: ["newUser"],
     queryFn: async () => {
       const res = await fetch(
-        "https://salenow-v2-backend.vercel.app/api/v1/admin/previous-week-users"
+        "https://backend.doob.com.bd/api/v1/admin/previous-week-users"
       );
       const data = await res.json();
       return data;
@@ -21,7 +21,7 @@ const Starts = () => {
     queryKey: ["orderData"],
     queryFn: async () => {
       const res = await fetch(
-        `https://salenow-v2-backend.vercel.app/api/v1/admin/get-shop-all-order`
+        `https://backend.doob.com.bd/api/v1/admin/get-shop-all-order`
       );
       const data = await res.json();
       return data.data;
@@ -34,7 +34,7 @@ const Starts = () => {
     queryKey: ["sellerData"],
     queryFn: async () => {
       const res = await fetch(
-        "https://salenow-v2-backend.vercel.app/api/v1/admin/seller"
+        "https://backend.doob.com.bd/api/v1/admin/seller"
       );
       const data = await res.json();
       return data;
@@ -55,7 +55,7 @@ const Starts = () => {
     queryKey: ["products"],
     queryFn: async () => {
       const res = await fetch(
-        "https://salenow-v2-backend.vercel.app/api/v1/admin/products"
+        "https://backend.doob.com.bd/api/v1/admin/products"
       );
       const data = await res.json();
       return data;

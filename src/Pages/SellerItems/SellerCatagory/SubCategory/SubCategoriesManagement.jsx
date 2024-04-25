@@ -14,14 +14,14 @@ import { Link } from "react-router-dom";
 const SubCategoriesManagement = () => {
   const { shopInfo } = useContext(AuthContext);
   console.log(
-    `https://salenow-v2-backend.vercel.app/api/v1/category/seller/sub/${shopInfo._id}`
+    `https://backend.doob.com.bd/api/v1/category/seller/sub/${shopInfo._id}`
   );
 
   const { data: categories = [], refetch } = useQuery({
     queryKey: ["categories"],
     queryFn: async () => {
       const res = await fetch(
-        `https://salenow-v2-backend.vercel.app/api/v1/category/seller/sub/${shopInfo._id}`
+        `https://backend.doob.com.bd/api/v1/category/seller/sub/${shopInfo._id}`
       );
       const data = await res.json();
       return data;
@@ -130,7 +130,7 @@ const SubCategoriesManagement = () => {
 
   const updateStatus = (id, status) => {
     fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/category/seller/sub/status/${id}`,
+      `https://backend.doob.com.bd/api/v1/category/seller/sub/status/${id}`,
       {
         method: "PUT",
         headers: {
@@ -169,7 +169,7 @@ const SubCategoriesManagement = () => {
       if (result.dismiss === Swal.DismissReason.timer) {
         // Timer completed, initiate the fetch for deletion
         fetch(
-          `https://salenow-v2-backend.vercel.app/api/v1/category/seller/sub/delete/${id}`,
+          `https://backend.doob.com.bd/api/v1/category/seller/sub/delete/${id}`,
           {
             method: "DELETE",
             headers: {
@@ -201,7 +201,7 @@ const SubCategoriesManagement = () => {
   const [editOn, setEditOn] = useState(false);
 
   const uploadImage = async (formData) => {
-    const url = `https://salenow-v2-backend.vercel.app/api/v1/image/upload-image`;
+    const url = `https://backend.doob.com.bd/api/v1/image/upload-image`;
     const response = await fetch(url, {
       method: "POST",
       body: formData,
@@ -228,7 +228,7 @@ const SubCategoriesManagement = () => {
     console.log(data, id, "update");
 
     fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/category/seller-update-subCategory?id=${id}`,
+      `https://backend.doob.com.bd/api/v1/category/seller-update-subCategory?id=${id}`,
       {
         method: "PUT",
         headers: {
@@ -246,7 +246,7 @@ const SubCategoriesManagement = () => {
         form.reset();
       });
 
-    // fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/feature-image-update?id=${id}`, {
+    // fetch(`https://backend.doob.com.bd/api/v1/admin/feature-image-update?id=${id}`, {
     //     method: "PUT",
     //     headers: {
     //         "Content-Type": "application/json",
@@ -260,7 +260,7 @@ const SubCategoriesManagement = () => {
 
   const futuresUpdate = (id, status) => {
     fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/category/seller-update-subCategory-feature?id=${id}&status=${status}`,
+      `https://backend.doob.com.bd/api/v1/category/seller-update-subCategory-feature?id=${id}&status=${status}`,
       {
         method: "PUT",
 

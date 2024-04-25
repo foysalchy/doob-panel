@@ -31,7 +31,7 @@ const ShopNav = () => {
     queryKey: ["categories"],
     queryFn: async () => {
       const res = await fetch(
-        `https://salenow-v2-backend.vercel.app/api/v1/shop/category/get/${shopId}`
+        `https://backend.doob.com.bd/api/v1/shop/category/get/${shopId}`
       );
       const data = await res.json();
       return data;
@@ -46,7 +46,7 @@ const ShopNav = () => {
     queryKey: ["shop"],
     queryFn: async () => {
       const res = await fetch(
-        `https://salenow-v2-backend.vercel.app/api/v1/shop/${shopId}`
+        `https://backend.doob.com.bd/api/v1/shop/${shopId}`
       );
       const data = await res.json();
       return data;
@@ -66,7 +66,7 @@ const ShopNav = () => {
         setCartProducts(JSON.parse(productData));
       } else {
         fetch(
-          `https://salenow-v2-backend.vercel.app/api/v1/shop/user/add-to-cart?userId=${shopUser?._id}&shopId=${shop_id?.shop_id}&token=${shopUser?._id}`
+          `https://backend.doob.com.bd/api/v1/shop/user/add-to-cart?userId=${shopUser?._id}&shopId=${shop_id?.shop_id}&token=${shopUser?._id}`
         )
           .then((res) => res.json())
           .then((data) => {

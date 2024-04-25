@@ -70,7 +70,7 @@ const ReleventProduct = ({ productFind }) => {
     queryKey: ["releventProduct"],
     queryFn: async () => {
       const res = await fetch(
-        "https://salenow-v2-backend.vercel.app/api/v1/admin/products"
+        "https://backend.doob.com.bd/api/v1/admin/products"
       );
       const data = await res.json();
       return data;

@@ -11,7 +11,7 @@ const AdminSeviceOrder = () => {
     queryKey: ["serviceOrder"],
     queryFn: async () => {
       const res = await fetch(
-        "https://salenow-v2-backend.vercel.app/api/v1/admin/get-all-service-order"
+        "https://backend.doob.com.bd/api/v1/admin/get-all-service-order"
       );
       const data = await res.json();
       return data.data;
@@ -128,7 +128,7 @@ const AdminSeviceOrder = () => {
   const handleStateUpdate = (id, status) => {
     console.log(status, "state update");
     fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/admin/get-all-service-order?id=${id}`,
+      `https://backend.doob.com.bd/api/v1/admin/get-all-service-order?id=${id}`,
       {
         method: "PUT",
         headers: {

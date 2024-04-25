@@ -14,7 +14,7 @@ const AddMegaCategory = () => {
 
     const formData = new FormData();
     formData.append("image", image);
-    const url = `https://salenow-v2-backend.vercel.app/api/v1/image/upload-image`;
+    const url = `https://backend.doob.com.bd/api/v1/image/upload-image`;
     fetch(url, {
       method: "POST",
       body: formData,
@@ -34,17 +34,14 @@ const AddMegaCategory = () => {
   };
 
   const postCategory = (categoryData, form) => {
-    fetch(
-      "https://salenow-v2-backend.vercel.app/api/v1/admin/category/megacategory",
-      {
-        method: "post",
-        headers: {
-          "content-type": "application/json",
-          // "ngrok-skip-browser-warning": "69420",
-        },
-        body: JSON.stringify(categoryData),
-      }
-    )
+    fetch("https://backend.doob.com.bd/api/v1/admin/category/megacategory", {
+      method: "post",
+      headers: {
+        "content-type": "application/json",
+        // "ngrok-skip-browser-warning": "69420",
+      },
+      body: JSON.stringify(categoryData),
+    })
       .then((res) => res.json())
       .then((data) => {
         Swal.fire("Mega category added");

@@ -90,7 +90,7 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
 
   const fetchData = () => {
     fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/seller/seller-user?shopId=${shopInfo.shopId}&${searchType}=${searchValue}`
+      `https://backend.doob.com.bd/api/v1/seller/seller-user?shopId=${shopInfo.shopId}&${searchType}=${searchValue}`
     )
       .then((res) => res.json())
       .then((data) => {

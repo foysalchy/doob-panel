@@ -6,7 +6,7 @@ const AdminWithdrow = () => {
     queryKey: ["my-withdrawHistory"],
     queryFn: async () => {
       const res = await fetch(
-        `https://salenow-v2-backend.vercel.app/api/v1/admin/withdraw-for-admin`
+        `https://backend.doob.com.bd/api/v1/admin/withdraw-for-admin`
       );
       const data = await res.json();
       return data.data;
@@ -14,7 +14,7 @@ const AdminWithdrow = () => {
   });
 
   const update_status = (id) => {
-    fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/withdraw`, {
+    fetch(`https://backend.doob.com.bd/api/v1/admin/withdraw`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

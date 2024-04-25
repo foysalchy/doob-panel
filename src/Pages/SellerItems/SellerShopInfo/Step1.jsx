@@ -27,7 +27,7 @@ const Step1 = ({ nextStep, handleChange, values }) => {
     const selectedFile = e.target.files[0];
     const formData = new FormData();
     formData.append("image", selectedFile);
-    const url = `https://salenow-v2-backend.vercel.app/api/v1/image/upload-image`;
+    const url = `https://backend.doob.com.bd/api/v1/image/upload-image`;
     fetch(url, {
       method: "POST",
       body: formData,
@@ -59,7 +59,7 @@ const Step1 = ({ nextStep, handleChange, values }) => {
     if (name.length > 3) {
       try {
         const response = await fetch(
-          `https://salenow-v2-backend.vercel.app/api/v1/shop/info/${name}`
+          `https://backend.doob.com.bd/api/v1/shop/info/${name}`
         );
         const data = await response.json();
 

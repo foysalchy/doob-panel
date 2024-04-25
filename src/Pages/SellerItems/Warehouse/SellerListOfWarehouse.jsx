@@ -18,7 +18,7 @@ const SellerListOfWarehouse = () => {
     queryKey: ["warehouses"],
     queryFn: async () => {
       const res = await fetch(
-        `https://salenow-v2-backend.vercel.app/api/v1/seller/warehouse/get/${shopInfo._id}`
+        `https://backend.doob.com.bd/api/v1/seller/warehouse/get/${shopInfo._id}`
       );
       const data = await res.json();
       return data;
@@ -28,7 +28,7 @@ const SellerListOfWarehouse = () => {
     queryKey: ["wareLength"],
     queryFn: async () => {
       const res = await fetch(
-        `https://salenow-v2-backend.vercel.app/api/v1/seller/warehouse/seller-all-warehouse-area-rack-cell-self?shopId=${shopInfo._id}`
+        `https://backend.doob.com.bd/api/v1/seller/warehouse/seller-all-warehouse-area-rack-cell-self?shopId=${shopInfo._id}`
       );
       const data = await res.json();
       return data;
@@ -119,16 +119,13 @@ const SellerListOfWarehouse = () => {
   const [status, setStatus] = useState(false);
 
   const updateStatus = (id, status) => {
-    fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/seller/warehouse/status/${id}`,
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ status }),
-      }
-    )
+    fetch(`https://backend.doob.com.bd/api/v1/seller/warehouse/status/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ status }),
+    })
       .then((res) => res.json())
       .then((data) => {
         Swal.fire(`Seller disable ${status} `, "", "success");
@@ -138,7 +135,7 @@ const SellerListOfWarehouse = () => {
 
   const DeleteWarehouse = async (id) => {
     const response = await fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/seller/warehouse/delete/${id}`,
+      `https://backend.doob.com.bd/api/v1/seller/warehouse/delete/${id}`,
       {
         method: "DELETE",
         headers: {

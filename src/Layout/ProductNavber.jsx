@@ -21,10 +21,10 @@ export default function Component() {
 
   const searchData = async () => {
     const term = searchTerm;
-    // console.log(`https://salenow-v2-backend.vercel.app/api/v1/admin/search?term=${encodeURIComponent(term)}`);
+    // console.log(`https://backend.doob.com.bd/api/v1/admin/search?term=${encodeURIComponent(term)}`);
     try {
       const response = await fetch(
-        `https://salenow-v2-backend.vercel.app/api/v1/admin/search?term=${encodeURIComponent(
+        `https://backend.doob.com.bd/api/v1/admin/search?term=${encodeURIComponent(
           term
         )}`
       );
@@ -49,7 +49,7 @@ export default function Component() {
     setSearchResults();
     setSearch(input);
     fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/admin/search-history?term=${encodeURIComponent(
+      `https://backend.doob.com.bd/api/v1/admin/search-history?term=${encodeURIComponent(
         input
       )}`
     )

@@ -42,7 +42,7 @@ const PriceModal = ({ open, setOpen }) => {
     queryKey: ["getawayData"],
     queryFn: async () => {
       const res = await fetch(
-        "https://salenow-v2-backend.vercel.app/api/v1/admin/getaway"
+        "https://backend.doob.com.bd/api/v1/admin/getaway"
       );
       const data = await res.json();
       return data;
@@ -53,7 +53,7 @@ const PriceModal = ({ open, setOpen }) => {
     queryKey: ["possibility"],
     queryFn: async () => {
       const res = await fetch(
-        `https://salenow-v2-backend.vercel.app/api/v1/seller/check-free-trail?shopId=${shopInfo._id}`
+        `https://backend.doob.com.bd/api/v1/seller/check-free-trail?shopId=${shopInfo._id}`
       );
       const data = await res.json();
       return data.possible;
@@ -72,7 +72,7 @@ const PriceModal = ({ open, setOpen }) => {
 
     if (shopInfo) {
       fetch(
-        `https://salenow-v2-backend.vercel.app/api/v1/seller/update-payment?shopId=${shopInfo._id}&paymentId=${open?._id}`,
+        `https://backend.doob.com.bd/api/v1/seller/update-payment?shopId=${shopInfo._id}&paymentId=${open?._id}`,
         {
           method: "PATCH",
           headers: {
@@ -128,7 +128,7 @@ const PriceModal = ({ open, setOpen }) => {
       data.callback = "https://doob.com.bd/services-payment-successful";
       try {
         const response = await fetch(
-          "https://salenow-v2-backend.vercel.app/api/v1/seller/amarpay/payment/create",
+          "https://backend.doob.com.bd/api/v1/seller/amarpay/payment/create",
           {
             method: "POST",
             headers: {

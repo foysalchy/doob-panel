@@ -22,7 +22,7 @@ const SellerAddRackModal = ({
     queryKey: ["salerWarehouse"],
     queryFn: async () => {
       const res = await fetch(
-        `https://salenow-v2-backend.vercel.app/api/v1/seller/warehouse/get/${shopInfo._id}`
+        `https://backend.doob.com.bd/api/v1/seller/warehouse/get/${shopInfo._id}`
       );
       const data = await res.json();
       return data;
@@ -52,7 +52,7 @@ const SellerAddRackModal = ({
     const selectedWarehouse = selectedOption.value;
     console.log(selectedWarehouse);
     const res = await fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/seller/warehouse/area/${selectedWarehouse}/${shopInfo._id}`
+      `https://backend.doob.com.bd/api/v1/seller/warehouse/area/${selectedWarehouse}/${shopInfo._id}`
     );
     const data = await res.json();
     setAreas(data);
@@ -80,16 +80,13 @@ const SellerAddRackModal = ({
       status: true,
     };
     console.log(data);
-    fetch(
-      "https://salenow-v2-backend.vercel.app/api/v1/seller/warehouse/rack",
-      {
-        method: "post",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      }
-    )
+    fetch("https://backend.doob.com.bd/api/v1/seller/warehouse/rack", {
+      method: "post",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
       .then((res) => res.json())
       .then((data) => {
         Swal.fire("Upload Successful", "", "success");

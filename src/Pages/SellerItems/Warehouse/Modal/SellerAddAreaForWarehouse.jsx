@@ -25,7 +25,7 @@ const SellerAddAreaForWarehouse = ({
     queryKey: ["warehouses"],
     queryFn: async () => {
       const res = await fetch(
-        `https://salenow-v2-backend.vercel.app/api/v1/seller/warehouse/get/${shopInfo._id}`
+        `https://backend.doob.com.bd/api/v1/seller/warehouse/get/${shopInfo._id}`
       );
       const data = await res.json();
       return data;
@@ -64,16 +64,13 @@ const SellerAddAreaForWarehouse = ({
     };
 
     console.log(data, "data is found");
-    fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/seller/warehouse/area/`,
-      {
-        method: "post",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      }
-    )
+    fetch(`https://backend.doob.com.bd/api/v1/seller/warehouse/area/`, {
+      method: "post",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
       .then((res) => res.json())
       .then((data) => {
         Swal.fire("Upload Successful", "", "success");

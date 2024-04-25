@@ -11,7 +11,7 @@ const EmailVerify = () => {
     const verifyEmail = async () => {
       try {
         const response = await fetch(
-          "https://salenow-v2-backend.vercel.app/api/v1/auth/verify-email",
+          "https://backend.doob.com.bd/api/v1/auth/verify-email",
           {
             method: "PUT",
             headers: {

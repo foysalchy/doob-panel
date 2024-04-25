@@ -41,7 +41,7 @@ const SupportTicketManagement = () => {
     queryKey: ["contact"],
     queryFn: async () => {
       const res = await fetch(
-        `https://salenow-v2-backend.vercel.app/api/v1/admin/supportTicketRequest`
+        `https://backend.doob.com.bd/api/v1/admin/supportTicketRequest`
       );
       const data = await res.json();
       return data;
@@ -390,7 +390,7 @@ const SupportTicketManagement = () => {
                             <button
                               onClick={() =>
                                 fetch(
-                                  `https://salenow-v2-backend.vercel.app/api/v1/support/support-ticket/status/${ticket.ticketId}`,
+                                  `https://backend.doob.com.bd/api/v1/support/support-ticket/status/${ticket.ticketId}`,
                                   {
                                     method: "PUT",
                                     headers: {
@@ -418,7 +418,7 @@ const SupportTicketManagement = () => {
                             <button
                               onClick={() =>
                                 fetch(
-                                  `https://salenow-v2-backend.vercel.app/api/v1/support/support-ticket/status/${ticket.ticketId}`,
+                                  `https://backend.doob.com.bd/api/v1/support/support-ticket/status/${ticket.ticketId}`,
                                   {
                                     method: "PUT",
                                     headers: {
@@ -472,7 +472,7 @@ const SupportTicketManagement = () => {
                         <button
                           onClick={() =>
                             fetch(
-                              `https://salenow-v2-backend.vercel.app/api/v1/admin/support-ticket/${ticket._id}`,
+                              `https://backend.doob.com.bd/api/v1/admin/support-ticket/${ticket._id}`,
                               {
                                 method: "delete",
                                 headers: { "Content-Type": "application/json" },

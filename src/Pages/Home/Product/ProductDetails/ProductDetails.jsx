@@ -140,7 +140,7 @@ const ProductDetails = () => {
     setSelectedImage(imageUrl);
   };
 
-  // const blankImg = 'https://salenow-v2-backend.vercel.app/api/v1/image/66036ed3df13bd9930ac229c.jpg';
+  // const blankImg = 'https://backend.doob.com.bd/api/v1/image/66036ed3df13bd9930ac229c.jpg';
 
   const [selectedImage, setSelectedImage] = useState(imageList[0]?.src);
 
@@ -194,16 +194,13 @@ const ProductDetails = () => {
         userInfo,
       };
       console.log(data);
-      fetch(
-        `https://salenow-v2-backend.vercel.app/api/v1/seller/web-store?id=${id}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
-        }
-      )
+      fetch(`https://backend.doob.com.bd/api/v1/seller/web-store?id=${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      })
         .then((res) => res.json())
         .then((data) => {
           BrightAlert();
@@ -260,7 +257,7 @@ const ProductDetails = () => {
 
       // Post the comment data to the backend
       const response = await fetch(
-        "https://salenow-v2-backend.vercel.app/api/v1/seller/add-new-comment",
+        "https://backend.doob.com.bd/api/v1/seller/add-new-comment",
         {
           method: "post",
           headers: {
@@ -282,8 +279,7 @@ const ProductDetails = () => {
   };
 
   async function uploadImage(formData) {
-    const url =
-      "https://salenow-v2-backend.vercel.app/api/v1/image/upload-image";
+    const url = "https://backend.doob.com.bd/api/v1/image/upload-image";
     const response = await fetch(url, {
       method: "POST",
       body: formData,
@@ -296,7 +292,7 @@ const ProductDetails = () => {
     queryKey: ["comments"],
     queryFn: async () => {
       const res = await fetch(
-        `https://salenow-v2-backend.vercel.app/api/v1/seller/product-comment?id=${productFind?._id}`
+        `https://backend.doob.com.bd/api/v1/seller/product-comment?id=${productFind?._id}`
       );
       const data = await res.json();
       return data?.comments;
@@ -345,16 +341,13 @@ const ProductDetails = () => {
       quantity: 0,
       sellingPrice: banifit.sellingPrice,
     };
-    fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/seller/balk-order-update`,
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(newData),
-      }
-    )
+    fetch(`https://backend.doob.com.bd/api/v1/seller/balk-order-update`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newData),
+    })
       .then((res) => res.json())
       .then((data) => {
         BrightAlert();

@@ -35,7 +35,7 @@ const ProductHero = () => {
       queryKey: ["megaSideCategoryData"],
       queryFn: async () => {
         const res = await fetch(
-          "https://salenow-v2-backend.vercel.app/api/v1/admin/category/megacategory"
+          "https://backend.doob.com.bd/api/v1/admin/category/megacategory"
         );
         const data = await res.json();
         return data.rows.slice(0, 6);
@@ -46,7 +46,7 @@ const ProductHero = () => {
     queryKey: "heroBanner",
     queryFn: async () => {
       const res = await fetch(
-        "https://salenow-v2-backend.vercel.app/api/v1/admin/slider"
+        "https://backend.doob.com.bd/api/v1/admin/slider"
       );
       const data = await res.json();
       return data?.data;
@@ -54,7 +54,7 @@ const ProductHero = () => {
   });
 
   const blankImg =
-    "https://salenow-v2-backend.vercel.app/api/v1/image/66036ed3df13bd9930ac229c.jpg";
+    "https://backend.doob.com.bd/api/v1/image/66036ed3df13bd9930ac229c.jpg";
   const bannerFind = heroBanner?.filter((item) => item.status === "true");
 
   useEffect(() => {
@@ -62,7 +62,7 @@ const ProductHero = () => {
       const subCategoryPromises = megaSideCategoryData.map(async (item) => {
         try {
           const response = await fetch(
-            `https://salenow-v2-backend.vercel.app/api/v1/admin/category/subcategory?id=${item?._id}`
+            `https://backend.doob.com.bd/api/v1/admin/category/subcategory?id=${item?._id}`
           );
           const data = await response.json();
           return data.subCategory;
@@ -89,7 +89,7 @@ const ProductHero = () => {
       const miniCategoryPromises = allCategory.subCategorys.map(async (itm) => {
         try {
           const response = await fetch(
-            `https://salenow-v2-backend.vercel.app/api/v1/admin/category/miniCategory?id=${itm?._id}`
+            `https://backend.doob.com.bd/api/v1/admin/category/miniCategory?id=${itm?._id}`
           );
           const data = await response.json();
           return data.row;
@@ -117,7 +117,7 @@ const ProductHero = () => {
         async (itm) => {
           try {
             const response = await fetch(
-              `https://salenow-v2-backend.vercel.app/api/v1/admin/category/extraCategory?id=${itm?._id}`
+              `https://backend.doob.com.bd/api/v1/admin/category/extraCategory?id=${itm?._id}`
             );
             const data = await response.json();
             return data.rows;

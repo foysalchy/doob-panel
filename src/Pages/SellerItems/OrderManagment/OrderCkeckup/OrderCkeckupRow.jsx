@@ -8,7 +8,7 @@ const OrderCkeckupRow = ({ itm, orderId }) => {
     console.log(orderId, productId, status);
 
     fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/seller/order-single-product-status-update?orderId=${orderId}&productId=${productId}&status=${status}`,
+      `https://backend.doob.com.bd/api/v1/seller/order-single-product-status-update?orderId=${orderId}&productId=${productId}&status=${status}`,
       {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
@@ -30,7 +30,7 @@ const OrderCkeckupRow = ({ itm, orderId }) => {
     queryKey: ["sellerOrder"],
     queryFn: async () => {
       const res = await fetch(
-        `https://salenow-v2-backend.vercel.app/api/v1/seller/order?shopId=${shopInfo._id}`
+        `https://backend.doob.com.bd/api/v1/seller/order?shopId=${shopInfo._id}`
       );
       const data = await res.json();
       return data.data;

@@ -12,7 +12,7 @@ const ManageDepartment = ({ ManageDepartment, setManageDepartment }) => {
     queryKey: ["departments"],
     queryFn: async () => {
       const res = await fetch(
-        "https://salenow-v2-backend.vercel.app/api/v1/admin/departments"
+        "https://backend.doob.com.bd/api/v1/admin/departments"
       );
       const data = await res.json();
       return data;
@@ -20,12 +20,9 @@ const ManageDepartment = ({ ManageDepartment, setManageDepartment }) => {
   });
 
   const DeleteHandle = (id) => {
-    fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/admin/delete_department/${id}`,
-      {
-        method: "DELETE",
-      }
-    ).then(() => {
+    fetch(`https://backend.doob.com.bd/api/v1/admin/delete_department/${id}`, {
+      method: "DELETE",
+    }).then(() => {
       refetch();
       Swal.fire({
         icon: "success",

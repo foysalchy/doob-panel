@@ -49,7 +49,7 @@ const ProductInformation = () => {
     imageList.length > 0 ? imageList[0].src : ""
   );
 
-  // const blankImg = 'https://salenow-v2-backend.vercel.app/api/v1/image/66036ed3df13bd9930ac229c.jpg';
+  // const blankImg = 'https://backend.doob.com.bd/api/v1/image/66036ed3df13bd9930ac229c.jpg';
 
   const path = useLocation();
 
@@ -142,7 +142,7 @@ const ProductInformation = () => {
       setLoader(false);
     } else {
       fetch(
-        `https://salenow-v2-backend.vercel.app/api/v1/shop/user/add-to-cart?token=${shopUser._id}`,
+        `https://backend.doob.com.bd/api/v1/shop/user/add-to-cart?token=${shopUser._id}`,
         {
           method: "POST",
           headers: {
@@ -200,7 +200,7 @@ const ProductInformation = () => {
     queryKey: ["comments"],
     queryFn: async () => {
       const res = await fetch(
-        `https://salenow-v2-backend.vercel.app/api/v1/seller/product-comment?id=${product?._id}`
+        `https://backend.doob.com.bd/api/v1/seller/product-comment?id=${product?._id}`
       );
       const data = await res.json();
       return data?.comments;

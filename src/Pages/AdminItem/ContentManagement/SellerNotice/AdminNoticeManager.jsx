@@ -17,7 +17,7 @@ const AdminNoticeManager = () => {
     queryKey: "noticeData",
     queryFn: async () => {
       const res = await fetch(
-        `https://salenow-v2-backend.vercel.app/api/v1/admin/seller-notice`
+        `https://backend.doob.com.bd/api/v1/admin/seller-notice`
       );
       const data = await res.json();
       return data?.data;
@@ -27,7 +27,7 @@ const AdminNoticeManager = () => {
   // const { data: popupData, reload } = useQuery({
   //     queryKey: "popupData",
   //     queryFn: async () => {
-  //         const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/seller-notice`);
+  //         const res = await fetch(`https://backend.doob.com.bd/api/v1/admin/seller-notice`);
   //         const data = await res.json();
   //         return data?.data;
   //     },
@@ -44,7 +44,7 @@ const AdminNoticeManager = () => {
 
   if (isDelete) {
     fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/seller/popup/delete/${deleteId}`,
+      `https://backend.doob.com.bd/api/v1/seller/popup/delete/${deleteId}`,
       {
         method: "DELETE",
         headers: {
@@ -76,7 +76,7 @@ const AdminNoticeManager = () => {
     console.log(id, status);
     setLoading(true);
     fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/admin/seller-notice?NoticeId=${id}`,
+      `https://backend.doob.com.bd/api/v1/admin/seller-notice?NoticeId=${id}`,
       {
         method: "PUT",
         headers: {
@@ -96,7 +96,7 @@ const AdminNoticeManager = () => {
   const onDelete = (id) => {
     setLoading(true);
     fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/admin/seller-notice?NoticeId=${id}`,
+      `https://backend.doob.com.bd/api/v1/admin/seller-notice?NoticeId=${id}`,
       {
         method: "DELETE",
         headers: {
@@ -108,7 +108,7 @@ const AdminNoticeManager = () => {
       .then((data) => {
         console.log(
           data,
-          `https://salenow-v2-backend.vercel.app/api/v1/admin/seller-notice?NoticeId=${id}`
+          `https://backend.doob.com.bd/api/v1/admin/seller-notice?NoticeId=${id}`
         );
         setLoading(false);
         Swal.fire(`Seller disable ${status} `, "", "success");

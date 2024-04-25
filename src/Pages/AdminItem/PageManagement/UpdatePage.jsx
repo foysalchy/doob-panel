@@ -20,7 +20,7 @@ const UpdatePage = ({ OpenModal, setOpenModal, FAQInfo, refetch }) => {
 
     try {
       fetch(
-        `https://salenow-v2-backend.vercel.app/api/v1/admin/page/update-page/${FAQInfo._id}`,
+        `https://backend.doob.com.bd/api/v1/admin/page/update-page/${FAQInfo._id}`,
         {
           method: "PUT",
           headers: {

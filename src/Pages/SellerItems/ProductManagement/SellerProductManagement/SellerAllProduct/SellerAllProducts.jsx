@@ -28,7 +28,7 @@ const SellerAllProducts = () => {
     queryKey: ["products"],
     queryFn: async () => {
       const res = await fetch(
-        `https://salenow-v2-backend.vercel.app/api/v1/seller/all-products/${shopInfo._id}`
+        `https://backend.doob.com.bd/api/v1/seller/all-products/${shopInfo._id}`
       );
       const data = await res.json();
       return data;
@@ -65,19 +65,16 @@ const SellerAllProducts = () => {
 
   const updateProductStatus = (id, status) => {
     console.log(id);
-    fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/seller/update-product-status`,
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          id,
-          status,
-        }),
-      }
-    )
+    fetch(`https://backend.doob.com.bd/api/v1/seller/update-product-status`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        id,
+        status,
+      }),
+    })
       .then((res) => res.json())
       .then((data) => {
         Swal.fire(`Success`, "", "success");
@@ -95,18 +92,15 @@ const SellerAllProducts = () => {
     setDeletePopUp(true);
   };
   if (isDelete) {
-    fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/seller/delete-product`,
-      {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          id: deleteId,
-        }),
-      }
-    )
+    fetch(`https://backend.doob.com.bd/api/v1/seller/delete-product`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        id: deleteId,
+      }),
+    })
       .then((res) => res.json())
       .then((data) => {
         setIsDelete(false);
@@ -123,16 +117,13 @@ const SellerAllProducts = () => {
       [id]: true,
     }));
     const data = { category, item_id, sku, id, shopId: shopInfo._id };
-    fetch(
-      "https://salenow-v2-backend.vercel.app/api/v1/seller/update-product",
-      {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      }
-    )
+    fetch("https://backend.doob.com.bd/api/v1/seller/update-product", {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
@@ -153,7 +144,7 @@ const SellerAllProducts = () => {
     queryKey: ["priceRole"],
     queryFn: async () => {
       const res = await fetch(
-        `https://salenow-v2-backend.vercel.app/api/v1/seller/get-price-role/${shopInfo?._id}`
+        `https://backend.doob.com.bd/api/v1/seller/get-price-role/${shopInfo?._id}`
       );
       const data = await res.json();
       return data?.data;
@@ -211,7 +202,7 @@ const SellerAllProducts = () => {
 
   const update_product_multi_vendor = (id, status) => {
     fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/seller/update-product-multivendor`,
+      `https://backend.doob.com.bd/api/v1/seller/update-product-multivendor`,
       {
         method: "PUT",
         headers: {
@@ -279,19 +270,16 @@ const SellerAllProducts = () => {
 
   const update_product_sorting = (e) => {
     console.log(e.target.value);
-    fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/seller/update-product-upcoming`,
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          status: e.target.value,
-          ids: selectProducts,
-        }),
-      }
-    )
+    fetch(`https://backend.doob.com.bd/api/v1/seller/update-product-upcoming`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        status: e.target.value,
+        ids: selectProducts,
+      }),
+    })
       .then((res) => res.json())
       .then((data) => {
         Swal.fire(`Success`, "", "success");

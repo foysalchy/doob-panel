@@ -22,7 +22,7 @@ const ManageProduct = () => {
     queryKey: ["products"],
     queryFn: async () => {
       const res = await fetch(
-        "https://salenow-v2-backend.vercel.app/api/v1/admin/products"
+        "https://backend.doob.com.bd/api/v1/admin/products"
       );
       const data = await res.json();
       return data;
@@ -32,7 +32,7 @@ const ManageProduct = () => {
     queryKey: ["all_products"],
     queryFn: async () => {
       const res = await fetch(
-        "https://salenow-v2-backend.vercel.app/api/v1/admin/get-all-products"
+        "https://backend.doob.com.bd/api/v1/admin/get-all-products"
       );
       const data = await res.json();
       return data;
@@ -43,7 +43,7 @@ const ManageProduct = () => {
     queryKey: ["othersProducts"],
     queryFn: async () => {
       const res = await fetch(
-        "https://salenow-v2-backend.vercel.app/api/v1/admin/others-products"
+        "https://backend.doob.com.bd/api/v1/admin/others-products"
       );
       const data = await res.json();
       return data;
@@ -81,19 +81,16 @@ const ManageProduct = () => {
       );
 
   const updateProductStatus = (id, status) => {
-    fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/seller/update-product-status`,
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          id,
-          status,
-        }),
-      }
-    )
+    fetch(`https://backend.doob.com.bd/api/v1/seller/update-product-status`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        id,
+        status,
+      }),
+    })
       .then((res) => res.json())
       .then((data) => {
         BrightAlert();
@@ -150,7 +147,7 @@ const ManageProduct = () => {
     setLoading(true);
 
     fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/admin/product-reject-message?id=${openModal._id}`,
+      `https://backend.doob.com.bd/api/v1/admin/product-reject-message?id=${openModal._id}`,
       {
         method: "PUT",
         headers: {
@@ -256,7 +253,7 @@ const ManageProduct = () => {
       warehouse,
     };
     fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/admin/update-product-info?productId=${editMode}`,
+      `https://backend.doob.com.bd/api/v1/admin/update-product-info?productId=${editMode}`,
       {
         method: "PUT",
         headers: {

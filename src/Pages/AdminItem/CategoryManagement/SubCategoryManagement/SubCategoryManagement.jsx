@@ -9,7 +9,7 @@ const SubCategoryManagement = () => {
     queryKey: ["subCategory"],
     queryFn: async () => {
       const res = await fetch(
-        "https://salenow-v2-backend.vercel.app/api/v1/admin/category/subcategories"
+        "https://backend.doob.com.bd/api/v1/admin/category/subcategories"
       );
       const data = await res.json();
       return data.rows;
@@ -19,7 +19,7 @@ const SubCategoryManagement = () => {
   // status update
   const statusUpdate = (id, status) => {
     fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/admin/category/subcategory?id=${id}&status=${status}`,
+      `https://backend.doob.com.bd/api/v1/admin/category/subcategory?id=${id}&status=${status}`,
       {
         method: "PUT",
         headers: {
@@ -42,7 +42,7 @@ const SubCategoryManagement = () => {
   const [editOn, setEditOn] = useState(false);
 
   const uploadImage = async (formData) => {
-    const url = `https://salenow-v2-backend.vercel.app/api/v1/image/upload-image`;
+    const url = `https://backend.doob.com.bd/api/v1/image/upload-image`;
     const response = await fetch(url, {
       method: "POST",
       body: formData,
@@ -70,7 +70,7 @@ const SubCategoryManagement = () => {
     console.log(data, id);
 
     fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/admin/feature-image-update?id=${id}`,
+      `https://backend.doob.com.bd/api/v1/admin/feature-image-update?id=${id}`,
       {
         method: "PUT",
         headers: {

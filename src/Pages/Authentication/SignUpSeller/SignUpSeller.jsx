@@ -83,7 +83,7 @@ const SignUpSeller = () => {
   //     setPassError("");
   //   console.log(user);
 
-  // fetch("https://salenow-v2-backend.vercel.app/api/v1/auth/sign-up", {
+  // fetch("https://backend.doob.com.bd/api/v1/auth/sign-up", {
   //     method: "post",
   //     headers: {
   //       "content-type": "application/json",
@@ -175,7 +175,7 @@ const SignUpSeller = () => {
         user.shopName = shopName;
       }
 
-      fetch("https://salenow-v2-backend.vercel.app/api/v1/auth/sign-up", {
+      fetch("https://backend.doob.com.bd/api/v1/auth/sign-up", {
         method: "post",
         headers: {
           "content-type": "application/json",
@@ -209,7 +209,7 @@ const SignUpSeller = () => {
     const time = new Date().getTime();
     const data = { email, code, time };
 
-    fetch("https://salenow-v2-backend.vercel.app/api/v1/admin/refer-code", {
+    fetch("https://backend.doob.com.bd/api/v1/admin/refer-code", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
@@ -254,7 +254,7 @@ const SignUpSeller = () => {
   const handleNumberForm = (e) => {
     e.preventDefault();
     fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/auth/send-otp?number=${phoneNumber}`
+      `https://backend.doob.com.bd/api/v1/auth/send-otp?number=${phoneNumber}`
     )
       .then((response) => response.json())
       .then((data) => {
@@ -273,7 +273,7 @@ const SignUpSeller = () => {
   const handleResendOtp = () => {
     setTimeRemaining(120);
     fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/auth/send-otp?number=${phoneNumber}`
+      `https://backend.doob.com.bd/api/v1/auth/send-otp?number=${phoneNumber}`
     )
       .then((response) => response.json())
       .then((data) => {
@@ -290,7 +290,7 @@ const SignUpSeller = () => {
     const otp = form.otp.value;
 
     fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/auth/verify-otp?number=${phoneNumber}&otp=${otp}`
+      `https://backend.doob.com.bd/api/v1/auth/verify-otp?number=${phoneNumber}&otp=${otp}`
     )
       .then((response) => response.json())
       .then((data) => {

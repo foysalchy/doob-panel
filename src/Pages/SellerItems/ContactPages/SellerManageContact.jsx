@@ -14,7 +14,7 @@ const SellerManageContact = () => {
     queryKey: ["contact"],
     queryFn: async () => {
       const res = await fetch(
-        `https://salenow-v2-backend.vercel.app/api/v1/shop/contact/${shopInfo?.shopId}`
+        `https://backend.doob.com.bd/api/v1/shop/contact/${shopInfo?.shopId}`
       );
       const data = await res.json();
       return data;
@@ -23,7 +23,7 @@ const SellerManageContact = () => {
 
   const DeleteCategory = (id) => {
     fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/shop/contact/${shopInfo.shopId}?id=${id}`,
+      `https://backend.doob.com.bd/api/v1/shop/contact/${shopInfo.shopId}?id=${id}`,
       {
         method: "DELETE",
         headers: {

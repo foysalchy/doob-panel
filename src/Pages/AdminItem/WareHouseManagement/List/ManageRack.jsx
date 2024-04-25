@@ -11,7 +11,7 @@ const ManageRack = () => {
     queryKey: ["racks"],
     queryFn: async () => {
       const res = await fetch(
-        "https://salenow-v2-backend.vercel.app/api/v1/admin/warehouse/rack"
+        "https://backend.doob.com.bd/api/v1/admin/warehouse/rack"
       );
       const data = await res.json();
       return data;
@@ -101,7 +101,7 @@ const ManageRack = () => {
 
   const updateStatus = (id, status) => {
     fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/admin/warehouse/rack/status/${id}`,
+      `https://backend.doob.com.bd/api/v1/admin/warehouse/rack/status/${id}`,
       {
         method: "PUT",
         headers: {
@@ -140,7 +140,7 @@ const ManageRack = () => {
       if (result.dismiss === Swal.DismissReason.timer) {
         // Timer completed, initiate the fetch for deletion
         fetch(
-          `https://salenow-v2-backend.vercel.app/api/v1/admin/warehouse/rack/delete/${id}`,
+          `https://backend.doob.com.bd/api/v1/admin/warehouse/rack/delete/${id}`,
           {
             method: "DELETE",
             headers: {

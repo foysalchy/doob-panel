@@ -13,7 +13,7 @@ const AllPrice = () => {
     queryKey: ["prices"],
     queryFn: async () => {
       const res = await fetch(
-        "https://salenow-v2-backend.vercel.app/api/v1/admin/pricing"
+        "https://backend.doob.com.bd/api/v1/admin/pricing"
       );
       const data = await res.json();
       return data;
@@ -23,15 +23,12 @@ const AllPrice = () => {
   const publishHandle = (id) => {
     setLoading(true);
 
-    fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/admin/pricing/status/${id}`,
-      {
-        method: "PUT",
-        headers: {
-          "content-type": "application/json",
-        },
-      }
-    )
+    fetch(`https://backend.doob.com.bd/api/v1/admin/pricing/status/${id}`, {
+      method: "PUT",
+      headers: {
+        "content-type": "application/json",
+      },
+    })
       .then((res) => res.json())
       .then((data) => {
         Swal.fire("success", "Your Price Publish Successfully", "success");
@@ -40,15 +37,12 @@ const AllPrice = () => {
   };
 
   const unpublishHandle = (id) => {
-    fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/admin/pricing/unstatus/${id}`,
-      {
-        method: "PUT",
-        headers: {
-          "content-type": "application/json",
-        },
-      }
-    )
+    fetch(`https://backend.doob.com.bd/api/v1/admin/pricing/unstatus/${id}`, {
+      method: "PUT",
+      headers: {
+        "content-type": "application/json",
+      },
+    })
       .then((res) => res.json())
       .then((data) => {
         Swal.fire("success", "Your Price Publish Successfully", "success");
@@ -56,15 +50,12 @@ const AllPrice = () => {
       });
   };
   const DeletePrice = (id) => {
-    fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/admin/pricing/delete/${id}`,
-      {
-        method: "Delete",
-        headers: {
-          "content-type": "application/json",
-        },
-      }
-    )
+    fetch(`https://backend.doob.com.bd/api/v1/admin/pricing/delete/${id}`, {
+      method: "Delete",
+      headers: {
+        "content-type": "application/json",
+      },
+    })
       .then((res) => res.json())
       .then((data) => {
         Swal.fire("success", "Your Price Delete Successfully", "success");

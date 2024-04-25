@@ -12,7 +12,7 @@ export default function WebStoreproduct({ priceRole, searchQuery }) {
   const pageSize = 10;
 
   console.log(
-    `https://salenow-v2-backend.vercel.app/api/v1/seller/web-store?id=${shopInfo._id}`
+    `https://backend.doob.com.bd/api/v1/seller/web-store?id=${shopInfo._id}`
   );
 
   const { data: productData = [], refetch } = useQuery({
@@ -20,7 +20,7 @@ export default function WebStoreproduct({ priceRole, searchQuery }) {
     queryFn: async () => {
       try {
         const res = await fetch(
-          `https://salenow-v2-backend.vercel.app/api/v1/seller/web-store?id=${shopInfo._id}`
+          `https://backend.doob.com.bd/api/v1/seller/web-store?id=${shopInfo._id}`
         );
         const data = await res.json();
         return data?.products;
@@ -52,18 +52,15 @@ export default function WebStoreproduct({ priceRole, searchQuery }) {
     setDeletePopUp(true);
   };
   if (isDelete) {
-    fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/seller/delete-product`,
-      {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          id: deleteId,
-        }),
-      }
-    )
+    fetch(`https://backend.doob.com.bd/api/v1/seller/delete-product`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        id: deleteId,
+      }),
+    })
       .then((res) => res.json())
       .then((data) => {
         setIsDelete(false);
@@ -108,19 +105,16 @@ export default function WebStoreproduct({ priceRole, searchQuery }) {
   };
 
   const update_status = (product_id, status) => {
-    fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/seller/update-product-status`,
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          id: product_id,
-          status: status,
-        }),
-      }
-    )
+    fetch(`https://backend.doob.com.bd/api/v1/seller/update-product-status`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        id: product_id,
+        status: status,
+      }),
+    })
       .then((res) => res.json())
       .then((data) => {
         Swal.fire(`Success`, "", "success");

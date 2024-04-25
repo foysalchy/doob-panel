@@ -34,7 +34,7 @@ export const Footer = () => {
     queryKey: ["sellerPages"],
     queryFn: async () => {
       const res = await fetch(
-        `https://salenow-v2-backend.vercel.app/api/v1/seller/pages/${shopId}`
+        `https://backend.doob.com.bd/api/v1/seller/pages/${shopId}`
       );
       const data = await res.json();
       return data;
@@ -45,7 +45,7 @@ export const Footer = () => {
     queryKey: ["buyer"],
     queryFn: async () => {
       const res = await fetch(
-        `https://salenow-v2-backend.vercel.app/api/v1/shop/${shopId}`
+        `https://backend.doob.com.bd/api/v1/shop/${shopId}`
       );
       const data = await res.json();
       return data;
@@ -56,14 +56,14 @@ export const Footer = () => {
     queryKey: ["contact"],
     queryFn: async () => {
       const res = await fetch(
-        `https://salenow-v2-backend.vercel.app/api/v1/shop/contact/${shopId}`
+        `https://backend.doob.com.bd/api/v1/shop/contact/${shopId}`
       );
       const data = await res.json();
       return data;
     },
   });
   console.log(
-    `https://salenow-v2-backend.vercel.app/api/v1/shop/contact/${shopId}`,
+    `https://backend.doob.com.bd/api/v1/shop/contact/${shopId}`,
     "footer"
   );
 
@@ -78,20 +78,17 @@ export const Footer = () => {
 
     if (email && email.match(emailRegex)) {
       setError(false);
-      fetch(
-        "https://salenow-v2-backend.vercel.app/api/v1/seller/subscriber-report",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            email: email,
-            date: new Date(),
-            shopId: shopId,
-          }),
-        }
-      )
+      fetch("https://backend.doob.com.bd/api/v1/seller/subscriber-report", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: email,
+          date: new Date(),
+          shopId: shopId,
+        }),
+      })
         .then((res) => res.json())
         .then((data) => {
           setLoading(false);

@@ -22,7 +22,7 @@ const AddExtraCategory = () => {
     queryKey: ["category"],
     queryFn: async () => {
       const res = await fetch(
-        `https://salenow-v2-backend.vercel.app/api/v1/category/seller/${shopInfo._id}`
+        `https://backend.doob.com.bd/api/v1/category/seller/${shopInfo._id}`
       );
       const data = await res.json();
       return data;
@@ -39,7 +39,7 @@ const AddExtraCategory = () => {
   console.log(
     darazData,
     "testing....",
-    `https://salenow-v2-backend.vercel.app/api/v1/category/seller/${shopInfo._id}`
+    `https://backend.doob.com.bd/api/v1/category/seller/${shopInfo._id}`
   );
 
   const [daraz, setDaraz] = useState(false);
@@ -57,7 +57,7 @@ const AddExtraCategory = () => {
   const [miniCategoryName, setMiniCategoryName] = useState("");
 
   const uploadImage = async (formData) => {
-    const url = `https://salenow-v2-backend.vercel.app/api/v1/image/upload-image`;
+    const url = `https://backend.doob.com.bd/api/v1/image/upload-image`;
     const response = await fetch(url, {
       method: "POST",
       body: formData,
@@ -98,7 +98,7 @@ const AddExtraCategory = () => {
       status: true,
     };
 
-    const url = `https://salenow-v2-backend.vercel.app/api/v1/category/seller/extra/add`;
+    const url = `https://backend.doob.com.bd/api/v1/category/seller/extra/add`;
 
     fetch(url, {
       method: "POST",
@@ -128,7 +128,7 @@ const AddExtraCategory = () => {
       megaCategory: selectedOption.value,
     };
 
-    fetch(`https://salenow-v2-backend.vercel.app/api/v1/category/seller/sub`, {
+    fetch(`https://backend.doob.com.bd/api/v1/category/seller/sub`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -164,7 +164,7 @@ const AddExtraCategory = () => {
       subCategoryName: value.value,
       megaCategory,
     };
-    fetch(`https://salenow-v2-backend.vercel.app/api/v1/category/seller/mini`, {
+    fetch(`https://backend.doob.com.bd/api/v1/category/seller/mini`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

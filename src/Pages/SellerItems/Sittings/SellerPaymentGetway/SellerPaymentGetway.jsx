@@ -16,7 +16,7 @@ const SellerPaymentGetaway = () => {
     queryKey: ["getaway"],
     queryFn: async () => {
       const res = await fetch(
-        `https://salenow-v2-backend.vercel.app/api/v1/seller/payment-getaway/${shopInfo._id}`
+        `https://backend.doob.com.bd/api/v1/seller/payment-getaway/${shopInfo._id}`
       );
       const data = await res.json();
       return data;
@@ -60,16 +60,13 @@ const SellerPaymentGetaway = () => {
       shopId: shopInfo.shopId,
     };
 
-    fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/seller/payment-getaway`,
-      {
-        method: "POST",
-        headers: {
-          "content-type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      }
-    )
+    fetch(`https://backend.doob.com.bd/api/v1/seller/payment-getaway`, {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    })
       .then((res) => res.json())
       .then((data) => {
         if (data.message === false) {
@@ -105,15 +102,12 @@ const SellerPaymentGetaway = () => {
   };
 
   const deleteHandel = (id) => {
-    fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/seller/payment-getaway/${id}`,
-      {
-        method: "Delete",
-        headers: {
-          "content-type": "application/json",
-        },
-      }
-    )
+    fetch(`https://backend.doob.com.bd/api/v1/seller/payment-getaway/${id}`, {
+      method: "Delete",
+      headers: {
+        "content-type": "application/json",
+      },
+    })
       .then((res) => res.json())
       .then((data) => {
         Swal.fire("Your Getaway Delete Successfully", "", "success");

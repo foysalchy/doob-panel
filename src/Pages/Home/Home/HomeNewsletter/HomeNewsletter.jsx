@@ -9,15 +9,12 @@ const HomeNewsletter = () => {
 
   const fromNewsLetter = (event) => {
     event.preventDefault();
-    fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/admin/subscriber/${email}`,
-      {
-        method: "POST",
-        headers: {
-          "content-type": "application/json",
-        },
-      }
-    )
+    fetch(`https://backend.doob.com.bd/api/v1/admin/subscriber/${email}`, {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+    })
       .then((res) => res.json())
       .then((data) => {
         if (data.message) {

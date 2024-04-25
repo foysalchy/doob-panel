@@ -9,7 +9,7 @@ const MegaCategoryManagement = () => {
     queryKey: ["megaCategory"],
     queryFn: async () => {
       const res = await fetch(
-        "https://salenow-v2-backend.vercel.app/api/v1/admin/category/megacategory"
+        "https://backend.doob.com.bd/api/v1/admin/category/megacategory"
       );
       const data = await res.json();
       return data.rows;
@@ -19,7 +19,7 @@ const MegaCategoryManagement = () => {
   // status update
   const statusUpdate = (id, status) => {
     fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/admin/category/megacategory?id=${id}&status=${status}`,
+      `https://backend.doob.com.bd/api/v1/admin/category/megacategory?id=${id}&status=${status}`,
       {
         method: "PUT",
         headers: {
@@ -37,7 +37,7 @@ const MegaCategoryManagement = () => {
 
   const featureStatus = (id, status) => {
     fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/admin/category/feature?id=${id}&feature=${status}`,
+      `https://backend.doob.com.bd/api/v1/admin/category/feature?id=${id}&feature=${status}`,
       {
         method: "PUT",
         headers: {
@@ -60,7 +60,7 @@ const MegaCategoryManagement = () => {
   const [editOn, setEditOn] = useState(false);
 
   const uploadImage = async (formData) => {
-    const url = `https://salenow-v2-backend.vercel.app/api/v1/image/upload-image`;
+    const url = `https://backend.doob.com.bd/api/v1/image/upload-image`;
     const response = await fetch(url, {
       method: "POST",
       body: formData,
@@ -90,7 +90,7 @@ const MegaCategoryManagement = () => {
     console.log(data, id);
 
     fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/admin/feature-image-update?id=${id}`,
+      `https://backend.doob.com.bd/api/v1/admin/feature-image-update?id=${id}`,
       {
         method: "PUT",
         headers: {

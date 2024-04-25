@@ -19,7 +19,7 @@ const ModalForWoo = ({ setOpenModal, OpenModal, shopId, setShopInfo }) => {
       consumer_secret,
       shopId,
     };
-    fetch(`https://salenow-v2-backend.vercel.app/api/v1/woo/login`, {
+    fetch(`https://backend.doob.com.bd/api/v1/woo/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -14,7 +14,7 @@ const DarazOrderCheckup = () => {
     queryKey: ["darazData"],
     queryFn: async () => {
       const res = await fetch(
-        `https://salenow-v2-backend.vercel.app/api/v1/seller/daraz-order?id=${shopInfo._id}`
+        `https://backend.doob.com.bd/api/v1/seller/daraz-order?id=${shopInfo._id}`
       );
       const data = await res.json();
       return data.data;
@@ -26,7 +26,7 @@ const DarazOrderCheckup = () => {
   const shippingAddress = findData?.address_shipping;
 
   // useEffect(() => {
-  //     fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/daraz-single-order?id=${shopInfo._id}&orderId=${findData?.order_number}`)
+  //     fetch(`https://backend.doob.com.bd/api/v1/seller/daraz-single-order?id=${shopInfo._id}&orderId=${findData?.order_number}`)
   //         .then(res => res.json())
   //         .then(data => console.log(data, 'productssssssssssssssssss'))
   // }, []);
@@ -35,7 +35,7 @@ const DarazOrderCheckup = () => {
     queryKey: ["darazSingleOrderProduct"],
     queryFn: async () => {
       const res = await fetch(
-        `https://salenow-v2-backend.vercel.app/api/v1/seller/daraz-single-order?id=${shopInfo._id}&orderId=${findData?.order_number}`
+        `https://backend.doob.com.bd/api/v1/seller/daraz-single-order?id=${shopInfo._id}&orderId=${findData?.order_number}`
       );
       const data = await res.json();
       return data.data;

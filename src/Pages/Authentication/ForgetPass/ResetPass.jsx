@@ -17,16 +17,13 @@ const ResetPass = () => {
     const pass1 = form.password1.value;
     const pass2 = form.password2.value;
     if (pass1 === pass2) {
-      fetch(
-        `https://salenow-v2-backend.vercel.app/api/v1/auth/reset-pass/${id}`,
-        {
-          method: "put",
-          headers: {
-            "content-type": "application/json",
-          },
-          body: JSON.stringify({ pass1 }),
-        }
-      )
+      fetch(`https://backend.doob.com.bd/api/v1/auth/reset-pass/${id}`, {
+        method: "put",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify({ pass1 }),
+      })
         .then((res) => res.json())
         .then((data) => {
           setLoading(false);

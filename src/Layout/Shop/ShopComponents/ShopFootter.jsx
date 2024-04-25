@@ -37,7 +37,7 @@ const ShopFooter = () => {
     queryKey: ["sellerPages"],
     queryFn: async () => {
       const res = await fetch(
-        `https://salenow-v2-backend.vercel.app/api/v1/seller/pages/${shopId}`
+        `https://backend.doob.com.bd/api/v1/seller/pages/${shopId}`
       );
       const data = await res.json();
       return data;
@@ -55,20 +55,17 @@ const ShopFooter = () => {
 
     if (email && email.match(emailRegex)) {
       setError(false);
-      fetch(
-        "https://salenow-v2-backend.vercel.app/api/v1/seller/subscriber-report",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            email: email,
-            date: new Date(),
-            shopId: shopId,
-          }),
-        }
-      )
+      fetch("https://backend.doob.com.bd/api/v1/seller/subscriber-report", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: email,
+          date: new Date(),
+          shopId: shopId,
+        }),
+      })
         .then((res) => res.json())
         .then((data) => {
           setLoading(false);
@@ -84,7 +81,7 @@ const ShopFooter = () => {
     queryKey: ["contact"],
     queryFn: async () => {
       const res = await fetch(
-        `https://salenow-v2-backend.vercel.app/api/v1/shop/contact/${shop_id?._id}`
+        `https://backend.doob.com.bd/api/v1/shop/contact/${shop_id?._id}`
       );
       const data = await res.json();
       return data;

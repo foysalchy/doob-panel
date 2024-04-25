@@ -69,7 +69,7 @@ const AddPrice = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/pricing`, {
+    fetch(`https://backend.doob.com.bd/api/v1/admin/pricing`, {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -96,7 +96,7 @@ const AddPrice = () => {
 
   // const handleSubmit = (e) => {
   //   e.preventDefault();
-  //   fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/pricing`, {
+  //   fetch(`https://backend.doob.com.bd/api/v1/admin/pricing`, {
   //     method: "POST",
   //     headers: {
   //       "content-type": "application/json",

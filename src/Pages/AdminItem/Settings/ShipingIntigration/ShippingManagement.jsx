@@ -14,7 +14,7 @@ const ShippingManagement = () => {
     queryKey: ["getaway"],
     queryFn: async () => {
       const res = await fetch(
-        "https://salenow-v2-backend.vercel.app/api/v1/admin/allShippings"
+        "https://backend.doob.com.bd/api/v1/admin/allShippings"
       );
       const data = await res.json();
       return data;
@@ -48,16 +48,13 @@ const ShippingManagement = () => {
       secretKey,
     };
 
-    fetch(
-      "https://salenow-v2-backend.vercel.app/api/v1/admin/shipping-interrogation",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      }
-    )
+    fetch("https://backend.doob.com.bd/api/v1/admin/shipping-interrogation", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
       .then((res) => res.json())
       .then((data) => {
         if (data.message === true) {
@@ -74,15 +71,12 @@ const ShippingManagement = () => {
   };
 
   const deleteHandel = (id) => {
-    fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/admin/removeShipping/${id}`,
-      {
-        method: "Delete",
-        headers: {
-          "content-type": "application/json",
-        },
-      }
-    )
+    fetch(`https://backend.doob.com.bd/api/v1/admin/removeShipping/${id}`, {
+      method: "Delete",
+      headers: {
+        "content-type": "application/json",
+      },
+    })
       .then((res) => res.json())
       .then((data) => {
         Swal.fire("Your Getaway Delete Successfully", "", "success");

@@ -31,7 +31,7 @@ const ManageOrder = () => {
     queryKey: ["sellerOrder"],
     queryFn: async () => {
       const res = await fetch(
-        `https://salenow-v2-backend.vercel.app/api/v1/seller/order?shopId=${shopInfo._id}`
+        `https://backend.doob.com.bd/api/v1/seller/order?shopId=${shopInfo._id}`
       );
       const data = await res.json();
       return data.data;
@@ -42,7 +42,7 @@ const ManageOrder = () => {
     queryKey: ["sellerDaraz"],
     queryFn: async () => {
       const res = await fetch(
-        `https://salenow-v2-backend.vercel.app/api/v1/seller/daraz-order?id=${shopInfo._id}&status=All`
+        `https://backend.doob.com.bd/api/v1/seller/daraz-order?id=${shopInfo._id}&status=All`
       );
       const data = await res.json();
       return data.data;
@@ -75,7 +75,7 @@ const ManageOrder = () => {
 
   const get_print_for_selected_items = () => {
     fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/seller/daraz-get-order-invoice?id=${shopInfo._id}&orderId=[${selected}]`
+      `https://backend.doob.com.bd/api/v1/seller/daraz-get-order-invoice?id=${shopInfo._id}&orderId=[${selected}]`
     )
       .then((res) => res.text())
       .then((html) => {
@@ -101,7 +101,7 @@ const ManageOrder = () => {
 
   const get_daraz_sleeted_order_invoice = () => {
     fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/seller/daraz-get-order-items?id=${shopInfo._id}&orderId=[${selected}]`
+      `https://backend.doob.com.bd/api/v1/seller/daraz-get-order-items?id=${shopInfo._id}&orderId=[${selected}]`
     )
       .then((res) => res.json())
       .then((data) => {
@@ -209,7 +209,7 @@ const ManageOrder = () => {
       for (const orderId of selected) {
         // Fetch the order details (including invoice data) for the current order ID
         const response = await fetch(
-          `https://salenow-v2-backend.vercel.app/api/v1/seller/daraz-get-order-items?id=${shopInfo._id}&orderId=[${orderId}]`
+          `https://backend.doob.com.bd/api/v1/seller/daraz-get-order-items?id=${shopInfo._id}&orderId=[${orderId}]`
         );
         const data = await response.json();
 

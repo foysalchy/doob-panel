@@ -11,7 +11,7 @@ const AddSubCategory = () => {
     const selectedFile = e.target.files[0];
     const formData = new FormData();
     formData.append("image", selectedFile);
-    const url = `https://salenow-v2-backend.vercel.app/api/v1/image/upload-image`;
+    const url = `https://backend.doob.com.bd/api/v1/image/upload-image`;
     fetch(url, {
       method: "POST",
       body: formData,
@@ -31,7 +31,7 @@ const AddSubCategory = () => {
     queryKey: ["subCategory"],
     queryFn: async () => {
       const res = await fetch(
-        "https://salenow-v2-backend.vercel.app/api/v1/admin/category/megacategory"
+        "https://backend.doob.com.bd/api/v1/admin/category/megacategory"
       );
       const data = await res.json();
       return data.rows;
@@ -57,17 +57,14 @@ const AddSubCategory = () => {
       status: "true",
     };
 
-    fetch(
-      "https://salenow-v2-backend.vercel.app/api/v1/admin/category/subcategory",
-      {
-        method: "post",
-        headers: {
-          "content-type": "application/json",
-          // "ngrok-skip-browser-warning": "69420",
-        },
-        body: JSON.stringify(data),
-      }
-    )
+    fetch("https://backend.doob.com.bd/api/v1/admin/category/subcategory", {
+      method: "post",
+      headers: {
+        "content-type": "application/json",
+        // "ngrok-skip-browser-warning": "69420",
+      },
+      body: JSON.stringify(data),
+    })
       .then((res) => res.json())
       .then((data) => {
         Swal.fire("Mega category added");

@@ -16,7 +16,7 @@ const AddPriceRole = () => {
     queryKey: ["getaway"],
     queryFn: async () => {
       const res = await fetch(
-        `https://salenow-v2-backend.vercel.app/api/v1/seller/get-price-role/${shopInfo._id}`
+        `https://backend.doob.com.bd/api/v1/seller/get-price-role/${shopInfo._id}`
       );
       const data = await res.json();
       return data;
@@ -32,14 +32,11 @@ const AddPriceRole = () => {
     const shopId = shopInfo._id;
     const data = { to, from, priceRange, shopId, percentage };
 
-    fetch(
-      "https://salenow-v2-backend.vercel.app/api/v1/seller/add-price-role",
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      }
-    )
+    fetch("https://backend.doob.com.bd/api/v1/seller/add-price-role", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    })
       .then((res) => res.json())
       .then((data) => {
         refetch();

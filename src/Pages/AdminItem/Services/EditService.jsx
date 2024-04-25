@@ -13,7 +13,7 @@ const EditService = ({ OpenModal, setOpenModal, BlogInfo, refetch }) => {
 
     try {
       const response = await fetch(
-        "https://salenow-v2-backend.vercel.app/api/v1/image/upload-image",
+        "https://backend.doob.com.bd/api/v1/image/upload-image",
         {
           method: "POST",
           body: formData,
@@ -40,7 +40,7 @@ const EditService = ({ OpenModal, setOpenModal, BlogInfo, refetch }) => {
 
     try {
       const response = await fetch(
-        `https://salenow-v2-backend.vercel.app/api/v1/admin/service/update-service/${BlogInfo._id}`,
+        `https://backend.doob.com.bd/api/v1/admin/service/update-service/${BlogInfo._id}`,
         {
           method: "PUT",
           headers: {

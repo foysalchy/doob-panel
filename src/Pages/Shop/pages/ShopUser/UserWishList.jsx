@@ -16,7 +16,7 @@ const UserWishList = () => {
     queryKey: ["wishlist"],
     queryFn: async () => {
       const res = await fetch(
-        `https://salenow-v2-backend.vercel.app/api/v1/shop/user/wishlist?userId=${shopUser._id}&shopId=${shop_id.shop_id}`
+        `https://backend.doob.com.bd/api/v1/shop/user/wishlist?userId=${shopUser._id}&shopId=${shop_id.shop_id}`
       );
       const data = await res.json();
       return data;
@@ -25,7 +25,7 @@ const UserWishList = () => {
 
   const removeWishlist = (wishListId) => {
     fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/shop/user/wishlist?wishlistId=${wishListId}`,
+      `https://backend.doob.com.bd/api/v1/shop/user/wishlist?wishlistId=${wishListId}`,
       {
         method: "DELETE",
         headers: {

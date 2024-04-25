@@ -168,7 +168,7 @@ const Router = createBrowserRouter([
         loader: async ({ params }) => {
           const categoryName = params.categoryId;
           const response = await fetch(
-            `https://salenow-v2-backend.vercel.app/api/v1/seller/admin-category-item?id=${categoryName}`
+            `https://backend.doob.com.bd/api/v1/seller/admin-category-item?id=${categoryName}`
           );
           const data = await response.json();
           return data?.data;
@@ -178,7 +178,7 @@ const Router = createBrowserRouter([
         path: ":id",
         loader: ({ params }) =>
           fetch(
-            `https://salenow-v2-backend.vercel.app/api/v1/admin/single-product?id=${params?.id}`
+            `https://backend.doob.com.bd/api/v1/admin/single-product?id=${params?.id}`
           ),
         element: (
           <>

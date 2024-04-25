@@ -15,7 +15,7 @@ const SellerManageCell = () => {
     queryKey: ["cells"],
     queryFn: async () => {
       const res = await fetch(
-        `https://salenow-v2-backend.vercel.app/api/v1/seller/warehouse/cell/${shopInfo._id}`
+        `https://backend.doob.com.bd/api/v1/seller/warehouse/cell/${shopInfo._id}`
       );
       const data = await res.json();
       return data;
@@ -110,7 +110,7 @@ const SellerManageCell = () => {
 
   const updateStatus = (id, status) => {
     fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/seller/warehouse/cell/status/${id}`,
+      `https://backend.doob.com.bd/api/v1/seller/warehouse/cell/status/${id}`,
       {
         method: "PUT",
         headers: {
@@ -149,7 +149,7 @@ const SellerManageCell = () => {
       if (result.dismiss === Swal.DismissReason.timer) {
         // Timer completed, initiate the fetch for deletion
         fetch(
-          `https://salenow-v2-backend.vercel.app/api/v1/seller/warehouse/cell/delete/${id}`,
+          `https://backend.doob.com.bd/api/v1/seller/warehouse/cell/delete/${id}`,
           {
             method: "DELETE",
             headers: {

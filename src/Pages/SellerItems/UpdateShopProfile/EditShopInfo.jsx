@@ -26,7 +26,7 @@ const EditShopInfo = ({ Edit, setEdit }) => {
     if (name.length > 2) {
       try {
         const response = await fetch(
-          `https://salenow-v2-backend.vercel.app/api/v1/shop/info/${name}`
+          `https://backend.doob.com.bd/api/v1/shop/info/${name}`
         );
         const data = await response.json();
 
@@ -68,7 +68,7 @@ const EditShopInfo = ({ Edit, setEdit }) => {
     try {
       if (shopID) {
         shopInfo.shopId = shopUnicName;
-        fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/updateInfo`, {
+        fetch(`https://backend.doob.com.bd/api/v1/shop/updateInfo`, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(shopInfo),
@@ -84,7 +84,7 @@ const EditShopInfo = ({ Edit, setEdit }) => {
             Swal.fire("Updated!", "", "success");
           });
       } else {
-        fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/updateInfo`, {
+        fetch(`https://backend.doob.com.bd/api/v1/shop/updateInfo`, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(shopInfo),
@@ -118,7 +118,7 @@ const EditShopInfo = ({ Edit, setEdit }) => {
   // const createNewShopInfo = async (updatedShopInfo) => {
   //     // Make a POST request to create new shopInfo on the server
   //     try {
-  //         fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/updateInfo`, {
+  //         fetch(`https://backend.doob.com.bd/api/v1/shop/updateInfo`, {
   //             method: 'PUT',
   //             headers: { 'Content-Type': 'application/json' },
   //             body: JSON.stringify(updatedShopInfo)

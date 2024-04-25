@@ -22,7 +22,7 @@ const AddDomain = () => {
     queryKey: ["domainDoc"],
     queryFn: async () => {
       const res = await fetch(
-        "https://salenow-v2-backend.vercel.app/api/v1/admin/domain-document"
+        "https://backend.doob.com.bd/api/v1/admin/domain-document"
       );
       const data = await res.json();
       return data.result;
@@ -33,7 +33,7 @@ const AddDomain = () => {
     queryKey: ["buyDomain"],
     queryFn: async () => {
       const res = await fetch(
-        "https://salenow-v2-backend.vercel.app/api/v1/admin/buy-domain"
+        "https://backend.doob.com.bd/api/v1/admin/buy-domain"
       );
       const data = await res.json();
       return data;
@@ -46,21 +46,18 @@ const AddDomain = () => {
     shopInfo.domain = domain;
 
     fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/api/dns?domain=${domain}&txtValue=doob.com.bd/shop/${txtValue}`
+      `https://backend.doob.com.bd/api/v1/api/dns?domain=${domain}&txtValue=doob.com.bd/shop/${txtValue}`
     )
       .then((res) => res.json())
       .then((data) => {
         if (data.isValuePresent === true) {
-          fetch(
-            "https://salenow-v2-backend.vercel.app/api/v1/seller/addDomain",
-            {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({ shopInfo }),
-            }
-          )
+          fetch("https://backend.doob.com.bd/api/v1/seller/addDomain", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ shopInfo }),
+          })
             .then((res) => res.json())
             .then((data) => {
               Swal.fire("Domain Add Success!", ``, "success");
@@ -119,7 +116,7 @@ const AddDomain = () => {
     queryKey: ["category"],
     queryFn: async () => {
       const res = await fetch(
-        "https://salenow-v2-backend.vercel.app/api/v1/admin/domain-video"
+        "https://backend.doob.com.bd/api/v1/admin/domain-video"
       );
       const data = await res.json();
       return data;
