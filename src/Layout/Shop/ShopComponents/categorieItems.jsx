@@ -16,7 +16,7 @@ export default function CategorieItems({ setIsMenuOpen }) {
     const { data: categories = [], isLoading, refetch } = useQuery({
         queryKey: ["categories"],
         queryFn: async () => {
-            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/category/get/${shopId}`);
+            const res = await fetch(`https://backend.doob.com.bd/api/v1/shop/category/get/${shopId}`);
             const data = await res.json();
             return data;
         },
@@ -29,7 +29,7 @@ export default function CategorieItems({ setIsMenuOpen }) {
     const { data: Banar = [] } = useQuery({
         queryKey: ["banar"],
         queryFn: async () => {
-            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/slider/get/${shopId}`);
+            const res = await fetch(`https://backend.doob.com.bd/api/v1/shop/slider/get/${shopId}`);
             const data = await res.json();
             return data;
         },
@@ -39,7 +39,7 @@ export default function CategorieItems({ setIsMenuOpen }) {
     const { data: adds } = useQuery({
         queryKey: ["adds"],
         queryFn: async () => {
-            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/popup/get/${shopId}`);
+            const res = await fetch(`https://backend.doob.com.bd/api/v1/shop/popup/get/${shopId}`);
             const data = await res.json();
             return data;
         },
@@ -92,7 +92,7 @@ export default function CategorieItems({ setIsMenuOpen }) {
     const { data: megaSideCategoryData = [], refetch: refetchMegaCategory } = useQuery({
         queryKey: ['megaSideCategoryDataSaller'],
         queryFn: async () => {
-            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/category/get/${shopId}`);
+            const res = await fetch(`https://backend.doob.com.bd/api/v1/shop/category/get/${shopId}`);
             const data = await res.json();
             return data.slice(0, 7);
         },
@@ -101,7 +101,7 @@ export default function CategorieItems({ setIsMenuOpen }) {
     const { data: heroBanner = [] } = useQuery({
         queryKey: 'heroBanner',
         queryFn: async () => {
-            const res = await fetch('https://salenow-v2-backend.vercel.app/api/v1/admin/slider');
+            const res = await fetch('https://backend.doob.com.bd/api/v1/admin/slider');
             const data = await res.json();
             return data?.data;
         },
@@ -109,12 +109,12 @@ export default function CategorieItems({ setIsMenuOpen }) {
 
     // const blankImg = 'https://backend.doob.com.bd/api/v1/image/66036ed3df13bd9930ac229c.jpg';
     const bannerFind = heroBanner?.filter((item) => item.status === 'true');
-    // https://salenow-v2-backend.vercel.app/api65e8a0a2e04a44a47ce186c3
+    // https://backend.doob.com.bd/api65e8a0a2e04a44a47ce186c3
     useEffect(() => {
         const fetchData = async () => {
             const subCategoryPromises = megaSideCategoryData?.filter(itm => itm?.menu === true).map(async (item) => {
                 try {
-                    const response = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/category/seller/sub-category-by-id?shopId=${shop_id?.shop_id}&id=${item?._id}`);
+                    const response = await fetch(`https://backend.doob.com.bd/api/v1/category/seller/sub-category-by-id?shopId=${shop_id?.shop_id}&id=${item?._id}`);
                     const data = await response.json();
                     console.log(data, 'data..............**');
                     return data;
@@ -136,9 +136,9 @@ export default function CategorieItems({ setIsMenuOpen }) {
     useEffect(() => {
         const fetchData = async () => {
             const miniCategoryPromises = allCategory.subCategorys.map(async (itm) => {
-                // console.log(`https://salenow-v2-backend.vercel.app/api/v1/category/seller/mini-category-by-id?shopId=${shop_id?.shop_id}&id=${itm?._id}`, '**********')
+                // console.log(`https://backend.doob.com.bd/api/v1/category/seller/mini-category-by-id?shopId=${shop_id?.shop_id}&id=${itm?._id}`, '**********')
                 try {
-                    const response = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/category/seller/mini-category-by-id?shopId=${shop_id?.shop_id}&id=${itm?._id}`);
+                    const response = await fetch(`https://backend.doob.com.bd/api/v1/category/seller/mini-category-by-id?shopId=${shop_id?.shop_id}&id=${itm?._id}`);
                     const data = await response.json();
                     return data;
                 } catch (error) {
@@ -160,9 +160,9 @@ export default function CategorieItems({ setIsMenuOpen }) {
 
         const fetchData = async () => {
             const extraCategoryPromises = allCategory.miniCategorys.map(async (itm) => {
-                // console.log(`https://salenow-v2-backend.vercel.app/api/v1/category/seller/extra-category-by-id?shopId=${shop_id?.shop_id}&id=${itm?._id}`, '************---->')
+                // console.log(`https://backend.doob.com.bd/api/v1/category/seller/extra-category-by-id?shopId=${shop_id?.shop_id}&id=${itm?._id}`, '************---->')
                 try {
-                    const response = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/category/seller/extra-category-by-id?shopId=${shop_id?.shop_id}&id=${itm?._id}`);
+                    const response = await fetch(`https://backend.doob.com.bd/api/v1/category/seller/extra-category-by-id?shopId=${shop_id?.shop_id}&id=${itm?._id}`);
                     const data = await response.json();
                     return data;
                 } catch (error) {

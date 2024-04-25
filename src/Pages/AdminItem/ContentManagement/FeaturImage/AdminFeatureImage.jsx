@@ -14,7 +14,7 @@ const AdminFeatureImage = () => {
     const { data: featureImage = [], refetch } = useQuery({
         queryKey: ["featureImage"],
         queryFn: async () => {
-            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/feature-images`);
+            const res = await fetch(`https://backend.doob.com.bd/api/v1/admin/feature-images`);
             const data = await res.json();
             return data?.data ? data?.data : [];
         },
@@ -34,7 +34,7 @@ const AdminFeatureImage = () => {
 
     // if (isDelete) {
 
-    //     fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/popup/delete/${deleteId}`, {
+    //     fetch(`https://backend.doob.com.bd/api/v1/seller/popup/delete/${deleteId}`, {
     //         method: "DELETE",
     //         headers: {
     //             "Content-Type": "application/json",
@@ -67,7 +67,7 @@ const AdminFeatureImage = () => {
     const EditStatus = (id, status) => {
         console.log(id, status);
         setLoading(true)
-        fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/feature-image?id=${id}&status=${status}`, {
+        fetch(`https://backend.doob.com.bd/api/v1/admin/feature-image?id=${id}&status=${status}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
@@ -82,7 +82,7 @@ const AdminFeatureImage = () => {
 
     const onDelete = (id) => {
         setLoading(true)
-        fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/feature-image?id=${id}`, {
+        fetch(`https://backend.doob.com.bd/api/v1/admin/feature-image?id=${id}`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
@@ -101,7 +101,7 @@ const AdminFeatureImage = () => {
     const [selectIndex, setSelectIndex] = useState('')
 
     const uploadImage = async (formData) => {
-        const url = `https://salenow-v2-backend.vercel.app/api/v1/image/upload-image`;
+        const url = `https://backend.doob.com.bd/api/v1/image/upload-image`;
         const response = await fetch(url, {
             method: "POST",
             body: formData,
@@ -131,7 +131,7 @@ const AdminFeatureImage = () => {
 
         console.log(data, id);
 
-        fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/feature-image-update?id=${id}`, {
+        fetch(`https://backend.doob.com.bd/api/v1/admin/feature-image-update?id=${id}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",

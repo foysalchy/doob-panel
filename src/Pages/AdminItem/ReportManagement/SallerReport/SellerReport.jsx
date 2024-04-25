@@ -9,7 +9,7 @@ const SellerReport = () => {
     const { data: serviceOrder = [], refetch, isLoading } = useQuery({
         queryKey: ["sellerReport"],
         queryFn: async () => {
-            const res = await fetch("https://salenow-v2-backend.vercel.app/api/v1/admin/seller-report");
+            const res = await fetch("https://backend.doob.com.bd/api/v1/admin/seller-report");
             const data = await res.json();
             return data.data;
         },

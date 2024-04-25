@@ -37,7 +37,7 @@ const ShopFooter = () => {
     queryKey: ["sellerPages"],
     queryFn: async () => {
       const res = await fetch(
-        `https://salenow-v2-backend.vercel.app/api/v1/seller/pages/${shopId}`
+        `https://backend.doob.com.bd/api/v1/seller/pages/${shopId}`
       );
       const data = await res.json();
       return data;
@@ -56,7 +56,7 @@ const ShopFooter = () => {
     if (email && email.match(emailRegex)) {
       setError(false);
       fetch(
-        "https://salenow-v2-backend.vercel.app/api/v1/seller/subscriber-report",
+        "https://backend.doob.com.bd/api/v1/seller/subscriber-report",
         {
           method: "POST",
           headers: {
@@ -84,7 +84,7 @@ const ShopFooter = () => {
     queryKey: ["contact"],
     queryFn: async () => {
       const res = await fetch(
-        `https://salenow-v2-backend.vercel.app/api/v1/shop/contact/${shop_id?._id}`
+        `https://backend.doob.com.bd/api/v1/shop/contact/${shop_id?._id}`
       );
       const data = await res.json();
       return data;
@@ -133,19 +133,19 @@ const ShopFooter = () => {
             </div>
             {pages.length
               ? pages
-                  ?.filter((item) => !item?.trash)
-                  ?.map((page, i) => (
-                    <div key={page._id}>
-                      {page?.status && (
-                        <Link
-                          to={`/shop/${shopId}/pages/${page._id}`}
-                          className="text-sm text-white transition-colors duration-300 hover:text-purple-400"
-                        >
-                          {page?.title}
-                        </Link>
-                      )}
-                    </div>
-                  ))
+                ?.filter((item) => !item?.trash)
+                ?.map((page, i) => (
+                  <div key={page._id}>
+                    {page?.status && (
+                      <Link
+                        to={`/shop/${shopId}/pages/${page._id}`}
+                        className="text-sm text-white transition-colors duration-300 hover:text-purple-400"
+                      >
+                        {page?.title}
+                      </Link>
+                    )}
+                  </div>
+                ))
               : ""}
           </div>
         </div>

@@ -88,13 +88,13 @@ const UserMyOrder = () => {
     const { data: myOrders = [], refetch, isLoading } = useQuery({
         queryKey: ["my-order"],
         queryFn: async () => {
-            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/user/order?shopId=${shop_id.shop_id}&&token=${shopUser._id}`);
+            const res = await fetch(`https://backend.doob.com.bd/api/v1/shop/user/order?shopId=${shop_id.shop_id}&&token=${shopUser._id}`);
             const data = await res.json();
             return data;
         },
     });
 
-   
+
     function formatTimestamp(timestamp) {
         const date = new Date(timestamp);
         const options = { year: 'numeric', month: 'long', day: 'numeric' };
@@ -104,7 +104,7 @@ const UserMyOrder = () => {
 
     const userProductCancel = (orderId, productId, status) => {
         console.log(orderId, productId, status);
-        fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/user/order-product-status-update?orderId=${orderId}&productId=${productId}&status=${status}&token=${shopUser._id}`, {
+        fetch(`https://backend.doob.com.bd/api/v1/shop/user/order-product-status-update?orderId=${orderId}&productId=${productId}&status=${status}&token=${shopUser._id}`, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
         }).then((res) => res.json()).then((data) => {
@@ -128,7 +128,7 @@ const UserMyOrder = () => {
 
     // ? update status
     const updateStatus = (status, orderId) => {
-        fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/order-status-update?orderId=${orderId}&status=${status}`, {
+        fetch(`https://backend.doob.com.bd/api/v1/seller/order-status-update?orderId=${orderId}&status=${status}`, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ status, orderId })
@@ -182,7 +182,7 @@ const UserMyOrder = () => {
 
         console.log(data);
         fetch(
-            `https://salenow-v2-backend.vercel.app/api/v1/shop/refund-Order?token=${shopUser._id}`,
+            `https://backend.doob.com.bd/api/v1/shop/refund-Order?token=${shopUser._id}`,
             {
                 method: "POST",
                 headers: {
@@ -281,7 +281,7 @@ const UserMyOrder = () => {
 
 
     const cancelNoteSubmit = () => {
-        fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/user/order-cancel-reason?token=${shopUser._id}`, {
+        fetch(`https://backend.doob.com.bd/api/v1/shop/user/order-cancel-reason?token=${shopUser._id}`, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ note, orderId: showAlert })

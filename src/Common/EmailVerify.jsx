@@ -11,7 +11,7 @@ const EmailVerify = () => {
     useEffect(() => {
         const verifyEmail = async () => {
             try {
-                const response = await fetch('https://salenow-v2-backend.vercel.app/api/v1/auth/verify-email', {
+                const response = await fetch('https://backend.doob.com.bd/api/v1/auth/verify-email', {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json',

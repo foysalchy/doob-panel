@@ -8,7 +8,7 @@ const Daraz = () => {
     const { data: keys = [], refetch } = useQuery({
         queryKey: ["key"],
         queryFn: async () => {
-            const res = await fetch("https://salenow-v2-backend.vercel.app/api/v1/daraz/get-key");
+            const res = await fetch("https://backend.doob.com.bd/api/v1/daraz/get-key");
             const data = await res.json();
             return data;
         },
@@ -24,7 +24,7 @@ const Daraz = () => {
             secretkey
         }
         console.log(data);
-        fetch('https://salenow-v2-backend.vercel.app/api/v1/daraz/add-key', {
+        fetch('https://backend.doob.com.bd/api/v1/daraz/add-key', {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json"

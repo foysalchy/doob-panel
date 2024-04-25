@@ -12,7 +12,7 @@ const ViewTicket = ({ viewTicket, setViewTicket, ticketDetails, refetch }) => {
     const [openModal, setOpenModal] = useState(false);
 
     const uploadImage = async (formData) => {
-        const url = `https://salenow-v2-backend.vercel.app/api/v1/image/upload-image`;
+        const url = `https://backend.doob.com.bd/api/v1/image/upload-image`;
         const response = await fetch(url, {
             method: "POST",
             body: formData,
@@ -57,7 +57,7 @@ const ViewTicket = ({ viewTicket, setViewTicket, ticketDetails, refetch }) => {
 
         }
 
-        fetch(`https://salenow-v2-backend.vercel.app/api/v1/support/support-ticket/${id}`, {
+        fetch(`https://backend.doob.com.bd/api/v1/support/support-ticket/${id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'

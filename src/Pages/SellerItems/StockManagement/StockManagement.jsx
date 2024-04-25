@@ -12,7 +12,7 @@ const StockManagement = () => {
     const { data: stockRequest = [], refetch } = useQuery({
         queryKey: ["stockRequest"],
         queryFn: async () => {
-            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/stock-request`);
+            const res = await fetch(`https://backend.doob.com.bd/api/v1/admin/stock-request`);
             const data = await res.json();
             console.log(data, 'data');
             return data?.data;
@@ -21,7 +21,7 @@ const StockManagement = () => {
 
     const handleUpdate = (data) => {
         console.log(data?.productId);
-        fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/stock-request-update?productId=${data?.productId}&orderId=${data?._id}&quantity=${data?.quantity}`, {
+        fetch(`https://backend.doob.com.bd/api/v1/admin/stock-request-update?productId=${data?.productId}&orderId=${data?._id}&quantity=${data?.quantity}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",

@@ -8,7 +8,7 @@ const AdminBlogPage = () => {
   const [selectedCategory, setSelectedCategory] = useState('all')
 
   useEffect(() => {
-    fetch("https://salenow-v2-backend.vercel.app/api/v1/admin/all-blogs")
+    fetch("https://backend.doob.com.bd/api/v1/admin/all-blogs")
       .then((response) => response.json())
       .then((data) => {
         setBlogs(data);
@@ -27,7 +27,7 @@ const AdminBlogPage = () => {
   const { data: categories = [], isLoading: isCategoriesLoading, refetch } = useQuery({
     queryKey: ['categories'],
     queryFn: async () => {
-      const res = await fetch('https://salenow-v2-backend.vercel.app/api/v1/admin/blog-category');
+      const res = await fetch('https://backend.doob.com.bd/api/v1/admin/blog-category');
       const data = await res.json();
       console.log(data);
       return data;

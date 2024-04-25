@@ -11,13 +11,13 @@ const ServiceManagementSaller = () => {
     const { data: serviceOrder = [], refetch } = useQuery({
         queryKey: ["serviceOrderSaller"],
         queryFn: async () => {
-            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/my-service?shopId=${shopInfo._id}`);
+            const res = await fetch(`https://backend.doob.com.bd/api/v1/seller/my-service?shopId=${shopInfo._id}`);
             const data = await res.json();
             return data.data;
         },
     });
 
-    console.log(`https://salenow-v2-backend.vercel.app/api/v1/seller/my-service?shopId=${shopInfo._id}`);
+    console.log(`https://backend.doob.com.bd/api/v1/seller/my-service?shopId=${shopInfo._id}`);
 
     const [input, setInput] = useState('');
     const [filteredData, setFilteredData] = useState([]);
@@ -133,7 +133,7 @@ const ServiceManagementSaller = () => {
 
     const handleStateUpdate = (id, status) => {
         console.log(status, 'state update');
-        fetch(`"https://salenow-v2-backend.vercel.app/api/v1/admin/get-all-service-order?id=${id}`, {
+        fetch(`"https://backend.doob.com.bd/api/v1/admin/get-all-service-order?id=${id}`, {
             method: "PUT",
             headers: {
                 "content-type": "application/json",

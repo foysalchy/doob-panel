@@ -15,7 +15,7 @@ const ListOfClaimOrder = () => {
     const { data: tData = [], refetch } = useQuery({
         queryKey: ["sellerOrder"],
         queryFn: async () => {
-            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/order?shopId=${shopInfo._id}`);
+            const res = await fetch(`https://backend.doob.com.bd/api/v1/seller/order?shopId=${shopInfo._id}`);
             const data = await res.json();
             return data.data;
         },
@@ -56,7 +56,7 @@ const ListOfClaimOrder = () => {
 
 
     const productStatusUpdate = (status, orderId) => {
-        fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/order-status-update?orderId=${orderId}&status=${status}`, {
+        fetch(`https://backend.doob.com.bd/api/v1/seller/order-status-update?orderId=${orderId}&status=${status}`, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ status, orderId })
@@ -69,7 +69,7 @@ const ListOfClaimOrder = () => {
     const { data: ships = [] } = useQuery({
         queryKey: ["getaway"],
         queryFn: async () => {
-            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/shipping-interrogation/${shopInfo._id}`);
+            const res = await fetch(`https://backend.doob.com.bd/api/v1/seller/shipping-interrogation/${shopInfo._id}`);
             const data = await res.json();
             return data;
         },
@@ -123,7 +123,7 @@ const ListOfClaimOrder = () => {
 
 
     const handleProductStatusUpdate = (orders) => {
-        fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/order-quantity-update`, {
+        fetch(`https://backend.doob.com.bd/api/v1/seller/order-quantity-update`, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(orders)
@@ -156,7 +156,7 @@ const ListOfClaimOrder = () => {
         console.log(order);
         setOpenModal(true)
 
-        fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/refound-order-info?shopId=${shopInfo._id}&orderId=${order._id}`).then((res) => res.json()).then((data) => {
+        fetch(`https://backend.doob.com.bd/api/v1/seller/refound-order-info?shopId=${shopInfo._id}&orderId=${order._id}`).then((res) => res.json()).then((data) => {
             console.log(data);
             const refund = { refund: data.data, order }
             console.log(refund);
@@ -166,7 +166,7 @@ const ListOfClaimOrder = () => {
     }
     const [refundData, setRefundData] = useState(true)
     const checkBox = (orderId) => {
-        fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/refound-order-info?shopId=${shopInfo._id}&orderId=${orderId}`).then((res) => res.json()).then((data) => {
+        fetch(`https://backend.doob.com.bd/api/v1/seller/refound-order-info?shopId=${shopInfo._id}&orderId=${orderId}`).then((res) => res.json()).then((data) => {
             console.log(data);
             setRefundData(data)
         })
@@ -175,7 +175,7 @@ const ListOfClaimOrder = () => {
 
     const updateOrderInfo = (note, file, id) => {
         const noteData = { note, file, orderId: id }
-        fetch("https://salenow-v2-backend.vercel.app/api/v1/seller/refound-order-info", {
+        fetch("https://backend.doob.com.bd/api/v1/seller/refound-order-info", {
             method: 'PUT',
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(noteData),
@@ -233,7 +233,7 @@ const ListOfClaimOrder = () => {
 
 
     async function uploadImage(formData) {
-        const url = "https://salenow-v2-backend.vercel.app/api/v1/image/upload-image";
+        const url = "https://backend.doob.com.bd/api/v1/image/upload-image";
         const response = await fetch(url, {
             method: "POST",
             body: formData,
@@ -243,7 +243,7 @@ const ListOfClaimOrder = () => {
     }
 
     const updateCourier_status = (id, courier_id) => {
-        fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/courier_status?orderId=${id}&id=${courier_id}`, {
+        fetch(`https://backend.doob.com.bd/api/v1/admin/courier_status?orderId=${id}&id=${courier_id}`, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
         }).then((res) => res.json()).then((data) => {

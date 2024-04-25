@@ -29,7 +29,7 @@ const ShopLayout = () => {
     const { data: shop = {}, isLoading, refetch } = useQuery({
         queryKey: ["shop"],
         queryFn: async () => {
-            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/${shopId}`);
+            const res = await fetch(`https://backend.doob.com.bd/api/v1/shop/${shopId}`);
             const data = await res.json();
             return data;
         },
@@ -41,7 +41,7 @@ const ShopLayout = () => {
     const { data: contacts = [] } = useQuery({
         queryKey: ["contact"],
         queryFn: async () => {
-            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/contact/${shopId}`);
+            const res = await fetch(`https://backend.doob.com.bd/api/v1/shop/contact/${shopId}`);
             const data = await res.json();
             return data;
         },

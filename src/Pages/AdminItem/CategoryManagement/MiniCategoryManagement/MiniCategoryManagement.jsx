@@ -14,7 +14,7 @@ const MiniCategoryManagement = () => {
     const { data: miniCategory = [], refetch } = useQuery({
         queryKey: ["miniCategory"],
         queryFn: async () => {
-            const res = await fetch("https://salenow-v2-backend.vercel.app/api/v1/admin/category/miniCategories");
+            const res = await fetch("https://backend.doob.com.bd/api/v1/admin/category/miniCategories");
             const data = await res.json();
             return data.rows;
         },
@@ -22,7 +22,7 @@ const MiniCategoryManagement = () => {
 
     // status update
     const statusUpdate = (id, status) => {
-        fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/category/miniCategory?id=${id}&status=${status}`, {
+        fetch(`https://backend.doob.com.bd/api/v1/admin/category/miniCategory?id=${id}&status=${status}`, {
             method: "PUT",
             headers: {
                 "content-type": "application/json",
@@ -40,7 +40,7 @@ const MiniCategoryManagement = () => {
     const [editOn, setEditOn] = useState(false);
 
     const uploadImage = async (formData) => {
-        const url = `https://salenow-v2-backend.vercel.app/api/v1/image/upload-image`;
+        const url = `https://backend.doob.com.bd/api/v1/image/upload-image`;
         const response = await fetch(url, {
             method: "POST",
             body: formData,
@@ -69,7 +69,7 @@ const MiniCategoryManagement = () => {
 
         console.log(data, id);
 
-        // fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/feature-image-update?id=${id}`, {
+        // fetch(`https://backend.doob.com.bd/api/v1/admin/feature-image-update?id=${id}`, {
         //     method: "PUT",
         //     headers: {
         //         "Content-Type": "application/json",

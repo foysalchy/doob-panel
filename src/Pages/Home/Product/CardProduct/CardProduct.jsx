@@ -89,7 +89,7 @@ const CardProduct = () => {
             };
             console.log(data);
             fetch(
-                `https://salenow-v2-backend.vercel.app/api/v1/seller/web-store?id=${id}`,
+                `https://backend.doob.com.bd/api/v1/seller/web-store?id=${id}`,
                 {
                     method: "PUT",
                     headers: {

@@ -16,7 +16,7 @@ const AddNewStaff = () => {
     const [isNewUser, setIsNewUser] = useState(false)
 
     const handleSearch = () => {
-        fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/seller-allUser?email=${searchValue}`)
+        fetch(`https://backend.doob.com.bd/api/v1/seller/seller-allUser?email=${searchValue}`)
             .then(res => res.json())
             .then(data => {
                 if (data?.status) {
@@ -60,7 +60,7 @@ const AddNewStaff = () => {
         const permissions = selectedValue
 
         const data = { user, shopEmail, permissions, role }
-        fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/staff-add`, {
+        fetch(`https://backend.doob.com.bd/api/v1/seller/staff-add`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json'

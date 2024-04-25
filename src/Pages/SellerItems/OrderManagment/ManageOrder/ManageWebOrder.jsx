@@ -12,7 +12,7 @@ const ManageWebOrder = () => {
     queryKey: ["sellerAllOrder"],
     queryFn: async () => {
       const res = await fetch(
-        `https://salenow-v2-backend.vercel.app/api/v1/seller/get-my-order?shopId=${shopInfo?._id}`
+        `https://backend.doob.com.bd/api/v1/seller/get-my-order?shopId=${shopInfo?._id}`
       );
       const data = await res.json();
       return data.data;
@@ -20,7 +20,7 @@ const ManageWebOrder = () => {
   });
 
   console.log(
-    `https://salenow-v2-backend.vercel.app/api/v1/seller/get-my-order?shopId=${shopInfo?._id}`
+    `https://backend.doob.com.bd/api/v1/seller/get-my-order?shopId=${shopInfo?._id}`
   );
 
   const [searchQuery, setSearchQuery] = useState("");
@@ -80,7 +80,7 @@ const ManageWebOrder = () => {
   const productStatusUpdate = (status, orderId) => {
     console.log(status, orderId);
     fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/seller/update-seller-order-status?orderId=${orderId}&status=${status}`,
+      `https://backend.doob.com.bd/api/v1/seller/update-seller-order-status?orderId=${orderId}&status=${status}`,
       {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
@@ -95,7 +95,7 @@ const ManageWebOrder = () => {
 
   const deleteMethod = (orderId) => {
     fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/seller/delete-seller-order?orderId=${orderId}`,
+      `https://backend.doob.com.bd/api/v1/seller/delete-seller-order?orderId=${orderId}`,
       {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
@@ -367,10 +367,10 @@ const ManageWebOrder = () => {
                                   "returned",
                                   "Refund",
                                 ].includes(product.status) && (
-                                  <button className="text-blue-700">
-                                    {product.status}
-                                  </button>
-                                )}
+                                    <button className="text-blue-700">
+                                      {product.status}
+                                    </button>
+                                  )}
                                 {product._id === readyToShip._id && (
                                   <tr>
                                     <td colSpan="10">

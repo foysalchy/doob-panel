@@ -10,7 +10,7 @@ const Step3 = ({ prevStep, submitForm, handleChange, values }) => {
     const { data: prices = [], refetch } = useQuery({
         queryKey: ["prices"],
         queryFn: async () => {
-            const res = await fetch("https://salenow-v2-backend.vercel.app/api/v1/admin/pricing");
+            const res = await fetch("https://backend.doob.com.bd/api/v1/admin/pricing");
             const data = await res.json();
             return data;
         },
@@ -19,7 +19,7 @@ const Step3 = ({ prevStep, submitForm, handleChange, values }) => {
     const { data: permission = {}, loader } = useQuery({
         queryKey: ["prices"],
         queryFn: async () => {
-            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/subscription-model?priceId=${shopInfo?.priceId}&shopId=${shopInfo?._id}`);
+            const res = await fetch(`https://backend.doob.com.bd/api/v1/seller/subscription-model?priceId=${shopInfo?.priceId}&shopId=${shopInfo?._id}`);
             const data = await res.json();
 
             return data?.data?.result;

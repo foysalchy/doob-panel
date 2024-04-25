@@ -32,7 +32,7 @@ const AdminHomePageControl = () => {
         console.log(formData)
 
 
-        fetch("https://salenow-v2-backend.vercel.app/api/v1/admin/upload-content", {
+        fetch("https://backend.doob.com.bd/api/v1/admin/upload-content", {
             method: 'post',
             headers: {
                 'content-type': 'application/json',

@@ -14,14 +14,14 @@ const SellerEmail = () => {
     const { data: options = [], refetch } = useQuery({
         queryKey: ["options"],
         queryFn: async () => {
-            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/get-seller-user?id=${shopInfo?.shopId}`);
+            const res = await fetch(`https://backend.doob.com.bd/api/v1/seller/get-seller-user?id=${shopInfo?.shopId}`);
             const data = await res.json();
             console.log(data.data);
             return data?.data;
         },
     });
 
-    console.log(`https://salenow-v2-backend.vercel.app/api/v1/seller/get-seller-user?id=${shopInfo?.shopId}`, options.data
+    console.log(`https://backend.doob.com.bd/api/v1/seller/get-seller-user?id=${shopInfo?.shopId}`, options.data
     );
 
 
@@ -94,7 +94,7 @@ const SellerEmail = () => {
 
             }
         }
-        fetch('https://salenow-v2-backend.vercel.app/api/v1/admin/send-email', {
+        fetch('https://backend.doob.com.bd/api/v1/admin/send-email', {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"

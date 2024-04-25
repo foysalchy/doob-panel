@@ -15,7 +15,7 @@ const WooCommerceOrderTable = ({ searchValue }) => {
     const { data: tData = [], refetch } = useQuery({
         queryKey: ["sellerWooOrder"],
         queryFn: async () => {
-            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/woo-commerce-order?shopId=${shopInfo._id}`);
+            const res = await fetch(`https://backend.doob.com.bd/api/v1/seller/woo-commerce-order?shopId=${shopInfo._id}`);
             const data = await res.json();
             return data.orders;
         },

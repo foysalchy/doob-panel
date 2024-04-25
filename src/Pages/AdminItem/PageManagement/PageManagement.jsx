@@ -18,7 +18,7 @@ const PageManagement = () => {
     queryKey: ["faqs"],
     queryFn: async () => {
       const res = await fetch(
-        "https://salenow-v2-backend.vercel.app/api/v1/admin/pages"
+        "https://backend.doob.com.bd/api/v1/admin/pages"
       );
       const data = await res.json();
       return data;
@@ -27,7 +27,7 @@ const PageManagement = () => {
 
   const ActiveHandle = (id) => {
     fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/admin/page/status/${id}`,
+      `https://backend.doob.com.bd/api/v1/admin/page/status/${id}`,
       {
         method: "PUT",
         headers: {
@@ -44,7 +44,7 @@ const PageManagement = () => {
 
   const DeactiveHandle = (id) => {
     fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/admin/page/unstatus/${id}`,
+      `https://backend.doob.com.bd/api/v1/admin/page/unstatus/${id}`,
       {
         method: "PUT",
         headers: {
@@ -61,7 +61,7 @@ const PageManagement = () => {
 
   const DeleteHandle = (id) => {
     fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/admin/page/delete?id=${id}`,
+      `https://backend.doob.com.bd/api/v1/admin/page/delete?id=${id}`,
       {
         method: "Delete",
         headers: {
@@ -79,7 +79,7 @@ const PageManagement = () => {
 
   const trash = (id, status) => {
     fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/admin/page/update-trash`,
+      `https://backend.doob.com.bd/api/v1/admin/page/update-trash`,
       {
         method: "PUT",
         headers: {

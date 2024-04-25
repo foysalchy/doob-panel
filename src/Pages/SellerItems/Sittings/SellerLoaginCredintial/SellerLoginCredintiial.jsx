@@ -58,7 +58,7 @@ const SellerLoginCredintiial = () => {
             service: { email: emailActive, google: googleActive, facebook: facebookActive }
         };
 
-        fetch('https://salenow-v2-backend.vercel.app/api/v1/shop/firebase/add', {
+        fetch('https://backend.doob.com.bd/api/v1/shop/firebase/add', {
             method: 'PATCH',
             body: JSON.stringify(data),
             headers: {
@@ -85,7 +85,7 @@ const SellerLoginCredintiial = () => {
         queryKey: ["sellerCredential"],
         queryFn: async () => {
             try {
-                const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/firebase/${shopInfo?.shopId}`, {
+                const res = await fetch(`https://backend.doob.com.bd/api/v1/shop/firebase/${shopInfo?.shopId}`, {
                     headers: {
                         "ngrok-skip-browser-warning": "69420",
                     }

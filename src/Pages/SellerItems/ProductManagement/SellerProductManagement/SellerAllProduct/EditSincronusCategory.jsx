@@ -48,7 +48,7 @@ const EditSincronusCategory = ({
     queryKey: ["megaCategory"],
     queryFn: async () => {
       const res = await fetch(
-        `https://salenow-v2-backend.vercel.app/api/v1/category/seller/mega-category/get/${shopInfo._id}`
+        `https://backend.doob.com.bd/api/v1/category/seller/mega-category/get/${shopInfo._id}`
       );
       const data = await res.json();
       if (data) {
@@ -74,7 +74,7 @@ const EditSincronusCategory = ({
     queryFn: async () => {
       if (selectedCategory) {
         const res = await fetch(
-          `https://salenow-v2-backend.vercel.app/api/v1/category/seller/sub-category/get/${shopInfo._id}/${selectedCategory}`
+          `https://backend.doob.com.bd/api/v1/category/seller/sub-category/get/${shopInfo._id}/${selectedCategory}`
         );
         const data = await res.json();
         if (data) {
@@ -106,7 +106,7 @@ const EditSincronusCategory = ({
     queryFn: async () => {
       if (selectedSubcategory) {
         const res = await fetch(
-          `https://salenow-v2-backend.vercel.app/api/v1/category/seller/mini-category/get/${shopInfo._id}/${selectedSubcategory}`
+          `https://backend.doob.com.bd/api/v1/category/seller/mini-category/get/${shopInfo._id}/${selectedSubcategory}`
         );
         const data = await res.json();
         if (data) {
@@ -138,7 +138,7 @@ const EditSincronusCategory = ({
     queryFn: async () => {
       if (selectedMinicategory) {
         const res = await fetch(
-          `https://salenow-v2-backend.vercel.app/api/v1/category/seller/extra-category/get/${shopInfo._id}/${selectedMinicategory}`
+          `https://backend.doob.com.bd/api/v1/category/seller/extra-category/get/${shopInfo._id}/${selectedMinicategory}`
         );
         const data = await res.json();
         if (data) {

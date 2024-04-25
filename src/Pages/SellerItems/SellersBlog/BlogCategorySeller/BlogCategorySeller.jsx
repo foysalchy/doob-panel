@@ -11,7 +11,7 @@ const BlogCategorySeller = () => {
     const { data: category = [], refetch } = useQuery({
         queryKey: ["blog-category"],
         queryFn: async () => {
-            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/blog-category?shopId=${shopInfo.shopId}`);
+            const res = await fetch(`https://backend.doob.com.bd/api/v1/seller/blog-category?shopId=${shopInfo.shopId}`);
             const data = await res.json();
             return data.data;
         },
@@ -19,7 +19,7 @@ const BlogCategorySeller = () => {
 
     const DeleteCategory = (id) => {
 
-        fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/DeleteBlogCategoryById?id=${id}`, {
+        fetch(`https://backend.doob.com.bd/api/v1/seller/DeleteBlogCategoryById?id=${id}`, {
             method: "DELETE",
             headers: {
                 "content-type": "application/json",
@@ -47,7 +47,7 @@ const BlogCategorySeller = () => {
 
 
     const uploadImage = async (formData) => {
-        const url = `https://salenow-v2-backend.vercel.app/api/v1/image/upload-image`;
+        const url = `https://backend.doob.com.bd/api/v1/image/upload-image`;
         const response = await fetch(url, {
             method: "POST",
             body: formData,
@@ -78,7 +78,7 @@ const BlogCategorySeller = () => {
             slag
         };
 
-        fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/update-blog-category`, {
+        fetch(`https://backend.doob.com.bd/api/v1/seller/update-blog-category`, {
             method: "PUT",
             headers: {
                 "content-type": "application/json",

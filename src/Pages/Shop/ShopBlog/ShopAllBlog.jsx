@@ -24,7 +24,7 @@ const ShopAllBlog = () => {
     const { data: category = [], refetch, isLoading } = useQuery({
         queryKey: ["blog-category"],
         queryFn: async () => {
-            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/blog-category?shopId=${shopId}`);
+            const res = await fetch(`https://backend.doob.com.bd/api/v1/seller/blog-category?shopId=${shopId}`);
             const data = await res.json();
             return data.data;
         },

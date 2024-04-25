@@ -14,7 +14,7 @@ const HomeHero = () => {
     const [hero, setHero] = useState([]);
 
     useEffect(() => {
-        fetch("https://salenow-v2-backend.vercel.app/api/v1/admin/get-content?name=hero_section")
+        fetch("https://backend.doob.com.bd/api/v1/admin/get-content?name=hero_section")
             .then((response) => response.json())
             .then((data) => {
                 setHero(data.data);

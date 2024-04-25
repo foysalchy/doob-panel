@@ -10,7 +10,7 @@ const AdminBlogComment = () => {
     const { data: adminBlogsComments = [], refetch } = useQuery({
         queryKey: ["adminblogsComments"],
         queryFn: async () => {
-            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/blog-comments`);
+            const res = await fetch(`https://backend.doob.com.bd/api/v1/admin/blog-comments`);
             const data = await res.json();
             return data.data;
         },
@@ -18,7 +18,7 @@ const AdminBlogComment = () => {
 
     // const DeleteBlog = (id) => {
     //     confirm()
-    //     fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/blog-comments-delete?commentId=${id}`, {
+    //     fetch(`https://backend.doob.com.bd/api/v1/admin/blog-comments-delete?commentId=${id}`, {
     //         method: "DELETE",
     //         headers: {
     //             "content-type": "application/json",
@@ -41,7 +41,7 @@ const AdminBlogComment = () => {
     // };
     const DeleteBlog = (blogId, commentId,) => {
         if (confirm("Are you sure you want to delete this blog?")) {
-            fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/blog-comments-delete?commentId=${commentId}&blogId=${blogId}`, {
+            fetch(`https://backend.doob.com.bd/api/v1/admin/blog-comments-delete?commentId=${commentId}&blogId=${blogId}`, {
                 method: "DELETE",
                 headers: {
                     "content-type": "application/json",
@@ -62,7 +62,7 @@ const AdminBlogComment = () => {
 
 
     const publishBlogComment = (id, timestamp, status) => {
-        fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/blog-comments-update-status?blogId=${id}&commentId=${timestamp}&status=${status}`, {
+        fetch(`https://backend.doob.com.bd/api/v1/admin/blog-comments-update-status?blogId=${id}&commentId=${timestamp}&status=${status}`, {
             method: "PUT",
             headers: {
                 'Content-Type': 'application/json'

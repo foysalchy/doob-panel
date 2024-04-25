@@ -22,7 +22,7 @@ const MageCategoriesManagement = () => {
     const { data: categories = [], refetch } = useQuery({
         queryKey: ["categories"],
         queryFn: async () => {
-            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/category/seller/${shopInfo._id}`);
+            const res = await fetch(`https://backend.doob.com.bd/api/v1/category/seller/${shopInfo._id}`);
             const data = await res.json();
             return data;
         },
@@ -132,7 +132,7 @@ const MageCategoriesManagement = () => {
 
 
     const updateStatus = (id, status) => {
-        fetch(`https://salenow-v2-backend.vercel.app/api/v1/category/seller/status/${id}`, {
+        fetch(`https://backend.doob.com.bd/api/v1/category/seller/status/${id}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
@@ -169,7 +169,7 @@ const MageCategoriesManagement = () => {
         }).then((result) => {
             if (result.dismiss === Swal.DismissReason.timer) {
                 // Timer completed, initiate the fetch for deletion
-                fetch(`https://salenow-v2-backend.vercel.app/api/v1/category/seller/delete/${id}`, {
+                fetch(`https://backend.doob.com.bd/api/v1/category/seller/delete/${id}`, {
                     method: "DELETE",
                     headers: {
                         "Content-Type": "application/json",
@@ -200,7 +200,7 @@ const MageCategoriesManagement = () => {
 
     const futuresUpdate = (id, status) => {
 
-        fetch(`https://salenow-v2-backend.vercel.app/api/v1/category/seller/category/updateStatus?id=${id}`, {
+        fetch(`https://backend.doob.com.bd/api/v1/category/seller/category/updateStatus?id=${id}`, {
             method: "PUT",
 
             headers: {
@@ -217,7 +217,7 @@ const MageCategoriesManagement = () => {
 
     const menuUpdate = (id, status) => {
         console.log(id, status, 'dsfa');
-        fetch(`https://salenow-v2-backend.vercel.app/api/v1/category/seller/category/updateStatus?id=${id}`, {
+        fetch(`https://backend.doob.com.bd/api/v1/category/seller/category/updateStatus?id=${id}`, {
             method: "PUT",
 
             headers: {
@@ -234,7 +234,7 @@ const MageCategoriesManagement = () => {
 
 
     const uploadImage = async (formData) => {
-        const url = `https://salenow-v2-backend.vercel.app/api/v1/image/upload-image`;
+        const url = `https://backend.doob.com.bd/api/v1/image/upload-image`;
         const response = await fetch(url, {
             method: "POST",
             body: formData,
@@ -266,7 +266,7 @@ const MageCategoriesManagement = () => {
 
         console.log(data, id, 'update');
 
-        fetch(`https://salenow-v2-backend.vercel.app/api/v1/category/seller-update-megaCategory?id=${id}`, {
+        fetch(`https://backend.doob.com.bd/api/v1/category/seller-update-megaCategory?id=${id}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",

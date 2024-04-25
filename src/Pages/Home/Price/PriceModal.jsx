@@ -17,7 +17,7 @@ const PriceModal = ({ open, setOpen }) => {
 
   console.log("open.six", open?.price ? open?.price : open?.result?.price);
   console.log(parseInt(open?.price) * parseInt(time?.split(",")[1]));
-  
+
   useEffect(() => {
     setOpen(open);
   }, [open]);
@@ -43,7 +43,7 @@ const PriceModal = ({ open, setOpen }) => {
     queryKey: ["getawayData"],
     queryFn: async () => {
       const res = await fetch(
-        "https://salenow-v2-backend.vercel.app/api/v1/admin/getaway"
+        "https://backend.doob.com.bd/api/v1/admin/getaway"
       );
       const data = await res.json();
       return data;
@@ -54,7 +54,7 @@ const PriceModal = ({ open, setOpen }) => {
     queryKey: ["possibility"],
     queryFn: async () => {
       const res = await fetch(
-        `https://salenow-v2-backend.vercel.app/api/v1/seller/check-free-trail?shopId=${shopInfo._id}`
+        `https://backend.doob.com.bd/api/v1/seller/check-free-trail?shopId=${shopInfo._id}`
       );
       const data = await res.json();
       return data.possible;
@@ -73,7 +73,7 @@ const PriceModal = ({ open, setOpen }) => {
 
     if (shopInfo) {
       fetch(
-        `https://salenow-v2-backend.vercel.app/api/v1/seller/update-payment?shopId=${shopInfo._id}&paymentId=${open?._id}`,
+        `https://backend.doob.com.bd/api/v1/seller/update-payment?shopId=${shopInfo._id}&paymentId=${open?._id}`,
         {
           method: "PATCH",
           headers: {
@@ -129,7 +129,7 @@ const PriceModal = ({ open, setOpen }) => {
       data.callback = "https://doob.com.bd/services-payment-successful";
       try {
         const response = await fetch(
-          "https://salenow-v2-backend.vercel.app/api/v1/seller/amarpay/payment/create",
+          "https://backend.doob.com.bd/api/v1/seller/amarpay/payment/create",
           {
             method: "POST",
             headers: {
@@ -155,9 +155,8 @@ const PriceModal = ({ open, setOpen }) => {
 
   return (
     <div
-      className={`fixed left-0 top-0 right-0 bottom-0 flex h-full min-h-screen w-full z-[1000] bg-[#0000005b] items-center justify-center bg-dark/90 px-4 py-5 ${
-        open ? "block" : "hidden"
-      }`}
+      className={`fixed left-0 top-0 right-0 bottom-0 flex h-full min-h-screen w-full z-[1000] bg-[#0000005b] items-center justify-center bg-dark/90 px-4 py-5 ${open ? "block" : "hidden"
+        }`}
     >
       <div className="w-full max-w-[570px] rounded-[20px] bg-white px-8 py-12 text-center dark:bg-dark-2 md:px-[70px] md:py-[60px]">
         <h3 className="pb-[18px] text-xl font-semibold text-dark text-black sm:text-2xl">
@@ -173,51 +172,46 @@ const PriceModal = ({ open, setOpen }) => {
               <div key={get._id}>
                 {get.Getaway === "Bkash" && (
                   <button
-                    className={`group relative block border  ${
-                      selectGetWay._id === get._id
+                    className={`group relative block border  ${selectGetWay._id === get._id
                         ? "border-blue-500"
                         : "border-gray-100"
-                    }`}
+                      }`}
                   >
                     <img
                       alt="Developer"
                       src="https://logos-download.com/wp-content/uploads/2022/01/BKash_Logo_icon-1536x1452.png"
                       srcSet="https://logos-download.com/wp-content/uploads/2022/01/BKash_Logo_icon-1536x1452.png"
-                      className={`p-4 object-cover  transition-opacity ${
-                        selectGetWay._id === get._id ? "opacity-20" : ""
-                      }`}
+                      className={`p-4 object-cover  transition-opacity ${selectGetWay._id === get._id ? "opacity-20" : ""
+                        }`}
                     />
                   </button>
                 )}
                 {get.Getaway === "Nogod" && (
                   <button
                     onClick={() => setSelectGetWay(get)}
-                    className={`group relative block border  ${
-                      selectGetWay._id === get._id
+                    className={`group relative block border  ${selectGetWay._id === get._id
                         ? "border-blue-500"
                         : "border-gray-100"
-                    }`}
+                      }`}
                   >
                     <img
                       alt="Developer"
                       src="https://download.logo.wine/logo/Nagad/Nagad-Vertical-Logo.wine.png"
                       srcSet="https://download.logo.wine/logo/Nagad/Nagad-Vertical-Logo.wine.png"
-                      className={`p-4 object-cover  transition-opacity ${
-                        selectGetWay._id === get._id
+                      className={`p-4 object-cover  transition-opacity ${selectGetWay._id === get._id
                           ? "opacity-20"
                           : "bg-gray-700"
-                      }`}
+                        }`}
                     />
                   </button>
                 )}
                 {get.Getaway === "AmarPay" && (
                   <button
                     onClick={() => pay_on_amar_pay(get)}
-                    className={`group relative block border  ${
-                      selectGetWay._id === get._id
+                    className={`group relative block border  ${selectGetWay._id === get._id
                         ? "border-blue-500"
                         : "border-gray-100"
-                    }`}
+                      }`}
                   >
                     <img
                       alt="Developer"
@@ -231,11 +225,10 @@ const PriceModal = ({ open, setOpen }) => {
             {
               <button
                 onClick={() => handleSubmit()}
-                className={`group relative block border  ${
-                  selectGetWay === "Cash"
+                className={`group relative block border  ${selectGetWay === "Cash"
                     ? "border-blue-500"
                     : "border-gray-100"
-                }`}
+                  }`}
               >
                 Cash
               </button>

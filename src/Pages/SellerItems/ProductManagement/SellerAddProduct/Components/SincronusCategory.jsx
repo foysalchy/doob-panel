@@ -19,7 +19,7 @@
 //     const { data: megaCategories = [], refetch } = useQuery({
 //         queryKey: ["megaCategory"],
 //         queryFn: async () => {
-//             const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/category/seller/mega-category/get/${shopInfo._id}`);
+//             const res = await fetch(`https://backend.doob.com.bd/api/v1/category/seller/mega-category/get/${shopInfo._id}`);
 //             const data = await res.json();
 //             if (data) {
 //                 return data;
@@ -43,7 +43,7 @@
 //         queryKey: ["subCategories"],
 //         queryFn: async () => {
 //             if (selectedCategory) {
-//                 const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/category/seller/sub-category/get/${shopInfo._id}/${selectedCategory}`);
+//                 const res = await fetch(`https://backend.doob.com.bd/api/v1/category/seller/sub-category/get/${shopInfo._id}/${selectedCategory}`);
 //                 const data = await res.json();
 //                 if (data) {
 //                     if (data?.daraz) {
@@ -70,7 +70,7 @@
 //         queryKey: ["miniCategories"],
 //         queryFn: async () => {
 //             if (selectedSubcategory) {
-//                 const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/category/seller/mini-category/get/${shopInfo._id}/${selectedSubcategory}`);
+//                 const res = await fetch(`https://backend.doob.com.bd/api/v1/category/seller/mini-category/get/${shopInfo._id}/${selectedSubcategory}`);
 //                 const data = await res.json();
 //                 if (data) {
 //                     if (data?.daraz) {
@@ -98,7 +98,7 @@
 //         queryKey: ["extraCategories"],
 //         queryFn: async () => {
 //             if (selectedMinicategory) {
-//                 const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/category/seller/extra-category/get/${shopInfo._id}/${selectedMinicategory}`);
+//                 const res = await fetch(`https://backend.doob.com.bd/api/v1/category/seller/extra-category/get/${shopInfo._id}/${selectedMinicategory}`);
 //                 const data = await res.json();
 //                 if (data) {
 //                     if (data?.daraz) {
@@ -294,7 +294,7 @@
 //     const { data: megaCategories = [], refetch: reloadMega } = useQuery({
 //         queryKey: ["megaCategory"],
 //         queryFn: async () => {
-//             const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/category/seller/mega-category/get/${shopInfo._id}`);
+//             const res = await fetch(`https://backend.doob.com.bd/api/v1/category/seller/mega-category/get/${shopInfo._id}`);
 //             const data = await res.json();
 //             return data || [];
 //         },
@@ -305,7 +305,7 @@
 //         queryKey: ["subCategories"],
 //         queryFn: async () => {
 //             if (selectedCategory) {
-//                 const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/category/seller/sub-category/get/${shopInfo._id}/${selectedCategory}`);
+//                 const res = await fetch(`https://backend.doob.com.bd/api/v1/category/seller/sub-category/get/${shopInfo._id}/${selectedCategory}`);
 //                 const data = await res.json();
 //                 return data?.data || [];
 //             }
@@ -318,7 +318,7 @@
 //         queryKey: ["miniCategories"],
 //         queryFn: async () => {
 //             if (selectedSubcategory) {
-//                 const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/category/seller/mini-category/get/${shopInfo._id}/${selectedSubcategory}`);
+//                 const res = await fetch(`https://backend.doob.com.bd/api/v1/category/seller/mini-category/get/${shopInfo._id}/${selectedSubcategory}`);
 //                 const data = await res.json();
 //                 return data?.data || [];
 //             }
@@ -331,7 +331,7 @@
 //         queryKey: ["extraCategories"],
 //         queryFn: async () => {
 //             if (selectedMinicategory) {
-//                 const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/category/seller/extra-category/get/${shopInfo._id}/${selectedMinicategory}`);
+//                 const res = await fetch(`https://backend.doob.com.bd/api/v1/category/seller/extra-category/get/${shopInfo._id}/${selectedMinicategory}`);
 //                 const data = await res.json();
 //                 return data?.data || [];
 //             }
@@ -432,7 +432,7 @@ const SincronusCategory = ({ daraz, setDaraz, woo, setWoo, setInputFields, setDa
     const { data: megaCategories = [], refetch: refetchMegaCategories } = useQuery({
         queryKey: ["megaCategory"],
         queryFn: async () => {
-            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/category/seller/mega-category/get/${shopInfo._id}`);
+            const res = await fetch(`https://backend.doob.com.bd/api/v1/category/seller/mega-category/get/${shopInfo._id}`);
             const data = await res.json();
             setDarazOption(data?.daraz);
             return data || [];
@@ -444,7 +444,7 @@ const SincronusCategory = ({ daraz, setDaraz, woo, setWoo, setInputFields, setDa
         queryKey: ["subCategories", selectedCategory],
         enabled: !!selectedCategory,
         queryFn: async () => {
-            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/category/seller/sub-category/get/${shopInfo._id}/${selectedCategory}`);
+            const res = await fetch(`https://backend.doob.com.bd/api/v1/category/seller/sub-category/get/${shopInfo._id}/${selectedCategory}`);
             const data = await res.json();
             setDarazOption(data?.daraz);
             return data?.data || [];
@@ -456,7 +456,7 @@ const SincronusCategory = ({ daraz, setDaraz, woo, setWoo, setInputFields, setDa
         queryKey: ["miniCategories", selectedSubcategory],
         enabled: !!selectedSubcategory,
         queryFn: async () => {
-            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/category/seller/mini-category/get/${shopInfo._id}/${selectedSubcategory}`);
+            const res = await fetch(`https://backend.doob.com.bd/api/v1/category/seller/mini-category/get/${shopInfo._id}/${selectedSubcategory}`);
             const data = await res.json();
             return data?.data || [];
         },
@@ -467,7 +467,7 @@ const SincronusCategory = ({ daraz, setDaraz, woo, setWoo, setInputFields, setDa
         queryKey: ["extraCategories", selectedMinicategory],
         enabled: !!selectedMinicategory,
         queryFn: async () => {
-            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/category/seller/extra-category/get/${shopInfo._id}/${selectedMinicategory}`);
+            const res = await fetch(`https://backend.doob.com.bd/api/v1/category/seller/extra-category/get/${shopInfo._id}/${selectedMinicategory}`);
             const data = await res.json();
             return data?.data || [];
         },

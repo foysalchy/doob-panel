@@ -15,7 +15,7 @@ const ProductCheckout = () => {
         queryKey: ["userAddress"],
         queryFn: async () => {
             try {
-                const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/user-address?userId=${shopUser?._id}&shopId=${shop_id?.shop_id}`, {
+                const res = await fetch(`https://backend.doob.com.bd/api/v1/shop/user-address?userId=${shopUser?._id}&shopId=${shop_id?.shop_id}`, {
                     headers: {
                         "ngrok-skip-browser-warning": "69420",
                     }
@@ -59,7 +59,7 @@ const ProductCheckout = () => {
         const shopId = shop_id.shop_id;
         const userEmail = shopUser.email
         console.log(price);
-        fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/user/promocode?shopId=${shopId}&code=${code}&email=${userEmail}&token=${shopUser._id}&price=${price}`, {
+        fetch(`https://backend.doob.com.bd/api/v1/shop/user/promocode?shopId=${shopId}&code=${code}&email=${userEmail}&token=${shopUser._id}&price=${price}`, {
             headers: {
                 "ngrok-skip-browser-warning": "69420",
             }

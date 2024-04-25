@@ -16,7 +16,7 @@ const ViewUserSupportTicket = ({ viewComment, setViewComment, ticketDetails, ref
 
 
     const uploadImage = async (formData) => {
-        const url = `https://salenow-v2-backend.vercel.app/api/v1/image/upload-image`;
+        const url = `https://backend.doob.com.bd/api/v1/image/upload-image`;
         const response = await fetch(url, {
             method: "POST",
             body: formData,
@@ -57,7 +57,7 @@ const ViewUserSupportTicket = ({ viewComment, setViewComment, ticketDetails, ref
             'name': shopUser?.name
         }
         // / support - ticket /: id
-        fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/user-support-comment/${id}`, {
+        fetch(`https://backend.doob.com.bd/api/v1/seller/user-support-comment/${id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'

@@ -7,10 +7,10 @@
 //     // const bkashInfo = paymentGetWays.filter((get) => get.Getaway === "Bkash")[0]
 //     // console.log(bkashInfo);
 //     // const location = useLocation()
-//     // console.log(`https://salenow-v2-backend.vercel.app/api/v1/seller/bkash/payment/callback${location.search}`);
+//     // console.log(`https://backend.doob.com.bd/api/v1/seller/bkash/payment/callback${location.search}`);
 
 //     // useEffect(() => {
-//     //     fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/bkash/payment/callback${location.search}`, {
+//     //     fetch(`https://backend.doob.com.bd/api/v1/seller/bkash/payment/callback${location.search}`, {
 //     //         method: "GET",
 //     //         body: JSON.stringify({ method: bkashInfo })
 //     //     })
@@ -29,7 +29,7 @@
 //     // console.log(bkashInfo);
 
 //     // const location = useLocation();
-//     // const callbackURL = `https://salenow-v2-backend.vercel.app/api/v1/seller/bkash/payment/callback${location.search}?collection=service`;
+//     // const callbackURL = `https://backend.doob.com.bd/api/v1/seller/bkash/payment/callback${location.search}?collection=service`;
 //     // console.log(callbackURL);
 
 //     // useEffect(() => {
@@ -65,7 +65,7 @@
 //     const [error, setError] = useState(null);
 
 //     useEffect(() => {
-//         const callbackURL = `https://salenow-v2-backend.vercel.app/api/v1/seller/bkash/payment/callback${location.search}?collection=service`;
+//         const callbackURL = `https://backend.doob.com.bd/api/v1/seller/bkash/payment/callback${location.search}?collection=service`;
 
 //         const fetchData = async () => {
 //             try {
@@ -144,10 +144,10 @@ const ServicePaymentSuccess = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const [error, setError] = useState(null);
-    console.log(`https://salenow-v2-backend.vercel.app/api/v1/seller/bkash/payment/callback${location.search}?collection=service`);
+    console.log(`https://backend.doob.com.bd/api/v1/seller/bkash/payment/callback${location.search}?collection=service`);
 
     useEffect(() => {
-        const callbackURL = `https://salenow-v2-backend.vercel.app/api/v1/seller/bkash/payment/callback${location.search}?collection=service`;
+        const callbackURL = `https://backend.doob.com.bd/api/v1/seller/bkash/payment/callback${location.search}?collection=service`;
 
         const fetchData = async () => {
             try {

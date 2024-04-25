@@ -29,7 +29,7 @@ const OrderTable = ({
     queryKey: ["sellerOrder"],
     queryFn: async () => {
       const res = await fetch(
-        `https://salenow-v2-backend.vercel.app/api/v1/seller/order?shopId=${shopInfo._id}`
+        `https://backend.doob.com.bd/api/v1/seller/order?shopId=${shopInfo._id}`
       );
       const data = await res.json();
       return data.data;
@@ -116,7 +116,7 @@ const OrderTable = ({
     // Open modal dialog to confirm action
     if (confirm("Are you sure you want to update the status?")) {
       fetch(
-        `https://salenow-v2-backend.vercel.app/api/v1/seller/order-status-update?orderId=${orderId}&status=${status}`,
+        `https://backend.doob.com.bd/api/v1/seller/order-status-update?orderId=${orderId}&status=${status}`,
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
@@ -138,7 +138,7 @@ const OrderTable = ({
     queryKey: ["getaway"],
     queryFn: async () => {
       const res = await fetch(
-        `https://salenow-v2-backend.vercel.app/api/v1/seller/shipping-interrogation/${shopInfo._id}`
+        `https://backend.doob.com.bd/api/v1/seller/shipping-interrogation/${shopInfo._id}`
       );
       const data = await res.json();
       return data;
@@ -192,7 +192,7 @@ const OrderTable = ({
 
   const handleProductStatusUpdate = (orders) => {
     fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/seller/order-quantity-update`,
+      `https://backend.doob.com.bd/api/v1/seller/order-quantity-update`,
       {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
@@ -221,7 +221,7 @@ const OrderTable = ({
     setOpenModal(true);
 
     fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/seller/refound-order-info?shopId=${shopInfo._id}&orderId=${order._id}`
+      `https://backend.doob.com.bd/api/v1/seller/refound-order-info?shopId=${shopInfo._id}&orderId=${order._id}`
     )
       .then((res) => res.json())
       .then((data) => {
@@ -234,7 +234,7 @@ const OrderTable = ({
   const [refundData, setRefundData] = useState(true);
   const checkBox = (orderId) => {
     fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/seller/refound-order-info?shopId=${shopInfo._id}&orderId=${orderId}`
+      `https://backend.doob.com.bd/api/v1/seller/refound-order-info?shopId=${shopInfo._id}&orderId=${orderId}`
     )
       .then((res) => res.json())
       .then((data) => {
@@ -246,7 +246,7 @@ const OrderTable = ({
   const updateOrderInfo = (note, file, id) => {
     const noteData = { note, file, orderId: id };
     fetch(
-      "https://salenow-v2-backend.vercel.app/api/v1/seller/refound-order-info",
+      "https://backend.doob.com.bd/api/v1/seller/refound-order-info",
       {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
@@ -290,7 +290,7 @@ const OrderTable = ({
 
   async function uploadImage(formData) {
     const url =
-      "https://salenow-v2-backend.vercel.app/api/v1/image/upload-image";
+      "https://backend.doob.com.bd/api/v1/image/upload-image";
     const response = await fetch(url, {
       method: "POST",
       body: formData,
@@ -301,7 +301,7 @@ const OrderTable = ({
 
   const updateCourier_status = (id, courier_id) => {
     fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/admin/courier_status?orderId=${id}&id=${courier_id}&shopId=${shopInfo._id}`,
+      `https://backend.doob.com.bd/api/v1/admin/courier_status?orderId=${id}&id=${courier_id}&shopId=${shopInfo._id}`,
       {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
