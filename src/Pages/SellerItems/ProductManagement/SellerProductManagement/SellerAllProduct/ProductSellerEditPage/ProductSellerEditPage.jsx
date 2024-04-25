@@ -74,6 +74,7 @@ const CategoryEditPage = () => {
   // const [adminMiniCategory, setAdminMiniCategory] = useState("");
   // const [adminExtraCategory, setAdminExtraCategory] = useState("");
 
+  console.log(coverPhoto, "coverPhoto", product?.featuredImage);
   const [inputFields, setInputFields] = useState([
     {
       name: "",
@@ -262,6 +263,7 @@ const CategoryEditPage = () => {
       form.photo7,
     ];
     console.log(additionalPhotos[0][0].files[0]);
+    
     const firstFile =
       additionalPhotos.length > 0 &&
       additionalPhotos[0].length > 0 &&

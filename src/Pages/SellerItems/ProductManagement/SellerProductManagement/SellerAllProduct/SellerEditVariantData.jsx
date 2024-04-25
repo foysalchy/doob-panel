@@ -159,7 +159,7 @@ const SellerEditVariantData = ({
     { value: "Anther Black", label: "Anther Black", color: "#253858" },
   ];
 
-  console.log(product?.multiVendor);
+  console.log(inputFields);
 
   return (
     <div className=" border mt-4 border-gray-400 md:px-10 px-3 py-5 pb-16 w-full bg-gray-100 rounded">
@@ -180,7 +180,6 @@ const SellerEditVariantData = ({
             label: product?.multiVendor,
             value: product?.multiVendor,
           }}
-          
           onChange={(e) => {
             setMultiVendor(
               (e.target.value === "true" && true) ||
@@ -209,6 +208,11 @@ const SellerEditVariantData = ({
                   <div className="w-full">
                     <CreatableSelect
                       name={`name-${index}`}
+                      defaultValue={{
+                        label: field?.name,
+                        value: field?.name,
+                      }}
+                      
                       onChange={(newValue) => {
                         // Clone the inputFields array
                         const newInputFields = [...inputFields];
@@ -324,7 +328,7 @@ const SellerEditVariantData = ({
                       newInputFields[0].product1.quantity = e.target.value;
                       setVariantInput(newInputFields);
                     }}
-                    type="text"
+                    type="number"
                     defaultValue={1}
                     className={style.input}
                   />
