@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../../../../../AuthProvider/UserProvider";
 import { useLocation, useParams } from "react-router-dom";
 import ImageUploadSeller from "../ImageUploadSeller";
@@ -66,7 +66,7 @@ const CategoryEditPage = () => {
   const [banglaDescription, setBanglaDescription] = useState("");
   const [youtube, setYoutube] = useState("");
 
-  console.log(youtube);
+  // console.log(youtube);
   const [multiVendor, setMultiVendor] = useState(adminWare);
   // ! for admin category
   // const [adminMegaCategory, setAdminMegaCategory] = useState("");
@@ -86,6 +86,9 @@ const CategoryEditPage = () => {
     },
   ]);
 
+  console.log(product?.variantData);
+
+  // console.log(product?.variations);
   const [variantInput, setVariantInput] = useState([
     {
       product1: {},
@@ -95,7 +98,14 @@ const CategoryEditPage = () => {
       ProductCost: "",
     },
   ]);
+  console.log(variantInput);
 
+  useEffect(() => {
+    setInputFields(product?.variations);
+    setVariantInput(product?.variantData);
+    setMultiVendor(product?.multiVendor);
+    setCoverPhoto(product?.featuredImage?.src);
+  }, [product]);
   const [brandName, setBrandName] = useState();
 
   const imageUpload = async (image) => {
@@ -412,7 +422,7 @@ const CategoryEditPage = () => {
           adminWare={adminWare}
           setAdminWare={setAdminWare}
         />
-        <label
+        {/* <label
           htmlFor="Toggle3"
           className={`inline-flex items-center py-4 rounded-md cursor-pointer ${
             isChecked ? "text-gray-800" : ""
@@ -439,7 +449,7 @@ const CategoryEditPage = () => {
           >
             For You Product
           </span>
-        </label>
+        </label> */}
         <div id="description">
           <SellerEditDiscription
             product={product}

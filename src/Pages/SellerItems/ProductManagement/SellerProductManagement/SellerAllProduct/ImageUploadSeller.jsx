@@ -9,7 +9,7 @@ const ImageUploadSeller = ({
   setYoutube,
 }) => {
   //   console.log(product);
-  console.log(product);
+  console.log(product?.featuredImage);
   //   console.log(product?.images?.[0]?.src);
   const [photo1, setPhoto1] = useState(product?.images?.[0]?.src ?? "");
   const [photo2, setPhoto2] = useState(product?.images?.[1]?.src ?? "");
