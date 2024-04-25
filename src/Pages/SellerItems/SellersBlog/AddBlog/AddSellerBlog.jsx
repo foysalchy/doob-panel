@@ -24,7 +24,7 @@ const AddSellerBlog = () => {
     queryKey: ["blog-category"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/seller/blog-category?shopId=${shopInfo.shopId}`
+        `https://salenow-v2-backend.vercel.app/api/v1/seller/blog-category?shopId=${shopInfo.shopId}`
       );
       const data = await res.json();
       return data.data;
@@ -51,7 +51,7 @@ const AddSellerBlog = () => {
     const selectedFile = e.target.files[0];
     const formData = new FormData();
     formData.append("image", selectedFile);
-    const url = `https://backend.doob.com.bd/api/v1/image/upload-image?shopId=${shopInfo._id}`;
+    const url = `https://salenow-v2-backend.vercel.app/api/v1/image/upload-image?shopId=${shopInfo._id}`;
     fetch(url, {
       method: "POST",
       body: formData,
@@ -120,7 +120,7 @@ const AddSellerBlog = () => {
         };
         // postPage(draftsAddBlogData, "");
         // console.log(draftsAddBlogData);
-        fetch(`https://backend.doob.com.bd/api/v1/seller/blog`, {
+        fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/blog`, {
           method: "POST",
           headers: {
             "content-type": "application/json",
@@ -158,7 +158,7 @@ const AddSellerBlog = () => {
 
     const formData = new FormData();
     formData.append("image", image);
-    const url = `https://backend.doob.com.bd/api/v1/image/upload-image?shopId=${shopInfo._id}`;
+    const url = `https://salenow-v2-backend.vercel.app/api/v1/image/upload-image?shopId=${shopInfo._id}`;
     fetch(url, {
       method: "POST",
       body: formData,
@@ -183,7 +183,7 @@ const AddSellerBlog = () => {
   };
 
   const postBlog = (blog, form) => {
-    fetch(`https://backend.doob.com.bd/api/v1/seller/blog`, {
+    fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/blog`, {
       method: "POST",
       headers: {
         "content-type": "application/json",

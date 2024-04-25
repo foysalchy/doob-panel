@@ -6,7 +6,7 @@ const FaqLayout = () => {
   const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
-    fetch("https://backend.doob.com.bd/api/v1/admin/faq")
+    fetch("https://salenow-v2-backend.vercel.app/api/v1/admin/faq")
       .then((response) => response.json())
       .then((data) => {
         setFaqs(data);
@@ -41,25 +41,25 @@ const FaqLayout = () => {
                     placeholder="Search FAQs..."
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
                   />
-                  {filteredFaqs.sort((a, b) => a.sortIndex
-                    - b.sortIndex
-                  ).map((faq, index) => (
-                    <div
-                      key={index}
-                      className="overflow-hidden transition-shadow duration-300 bg-white rounded shadow-sm"
-                    >
-                      <div className="">
-                        <Link
-                          to={`/faq/${faq._id}`}
-                          aria-label="Category"
-                          title="Visit the East"
-                          className="block text-blue-500 text-blue-400 hover:underline"
-                        >
-                          {faq.title}
-                        </Link>
+                  {filteredFaqs
+                    .sort((a, b) => a.sortIndex - b.sortIndex)
+                    .map((faq, index) => (
+                      <div
+                        key={index}
+                        className="overflow-hidden transition-shadow duration-300 bg-white rounded shadow-sm"
+                      >
+                        <div className="">
+                          <Link
+                            to={`/faq/${faq._id}`}
+                            aria-label="Category"
+                            title="Visit the East"
+                            className="block text-blue-500 text-blue-400 hover:underline"
+                          >
+                            {faq.title}
+                          </Link>
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    ))}
                 </div>
               </div>
               <div className="ml-4 mt-4 col-span-9 flex">

@@ -9,15 +9,16 @@ const BlogsCatagoryManagement = () => {
   const { data: category = [], refetch } = useQuery({
     queryKey: ["category"],
     queryFn: async () => {
-      const res = await fetch("https://backend.doob.com.bd/api/v1/admin/blog-category");
+      const res = await fetch(
+        "https://salenow-v2-backend.vercel.app/api/v1/admin/blog-category"
+      );
       const data = await res.json();
       return data;
     },
   });
 
   const DeleteCategory = (id) => {
-
-    fetch(`https://backend.doob.com.bd/api/v1/admin/blog-category`, {
+    fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/blog-category`, {
       method: "DELETE",
       headers: {
         "content-type": "application/json",
@@ -37,15 +38,16 @@ const BlogsCatagoryManagement = () => {
     setSearchQuery(event?.target?.value || "");
   };
 
-  const filteredData = category && category?.filter((item) =>
-    item?.title?.toLowerCase().includes(searchQuery?.toLowerCase())
-  );
+  const filteredData =
+    category &&
+    category?.filter((item) =>
+      item?.title?.toLowerCase().includes(searchQuery?.toLowerCase())
+    );
 
   const [openModal, setOpenModal] = useState(false);
 
-
   const uploadImage = async (formData) => {
-    const url = `https://backend.doob.com.bd/api/v1/image/upload-image`;
+    const url = `https://salenow-v2-backend.vercel.app/api/v1/image/upload-image`;
     const response = await fetch(url, {
       method: "POST",
       body: formData,
@@ -54,7 +56,6 @@ const BlogsCatagoryManagement = () => {
     const imageData = await response.json();
     return imageData.imageUrl;
   };
-
 
   const handleUpdate = async (e) => {
     e.preventDefault();
@@ -67,34 +68,34 @@ const BlogsCatagoryManagement = () => {
     imageFormData.append("image", image.files[0]);
     const imageUrl = await uploadImage(imageFormData);
 
-
     const data = {
       id: openModal._id,
       title: title,
       img: imageUrl,
     };
 
-    fetch(`https://backend.doob.com.bd/api/v1/admin/blog-category-details`, {
-      method: "PUT",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(data),
-    })
+    fetch(
+      `https://salenow-v2-backend.vercel.app/api/v1/admin/blog-category-details`,
+      {
+        method: "PUT",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(data),
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
-        BrightAlert()
+        BrightAlert();
         refetch();
-      })
+      });
 
     console.log(data, category);
-    setOpenModal(false)
-  }
-
+    setOpenModal(false);
+  };
 
   return (
     <div>
-
       <Link
         className="group relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
         to="/admin/add-blog-category"
@@ -165,9 +166,7 @@ const BlogsCatagoryManagement = () => {
                 <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
                   Category Name
                 </th>
-                <th className="px-4 py-2">
-                  Action
-                </th>
+                <th className="px-4 py-2">Action</th>
               </tr>
             </thead>
 
@@ -201,7 +200,8 @@ const BlogsCatagoryManagement = () => {
                       >
                         Edit
                       </button>
-                      <Link to={`/blog#${cate?.title}`}
+                      <Link
+                        to={`/blog#${cate?.title}`}
                         className="inline-block rounded px-4 text-xs font-medium text-green-600  "
                       >
                         <RxEyeOpen className="text-xl" />
@@ -209,34 +209,73 @@ const BlogsCatagoryManagement = () => {
                     </div>
                   </td>
 
-
                   <div>
-                    <div className={`fixed z-[100] flex items-center justify-center ${openModal ? 'opacity-1 visible' : 'invisible opacity-0'} inset-0 bg-black/20 backdrop-blur-sm duration-100`}>
+                    <div
+                      className={`fixed z-[100] flex items-center justify-center ${
+                        openModal ? "opacity-1 visible" : "invisible opacity-0"
+                      } inset-0 bg-black/20 backdrop-blur-sm duration-100`}
+                    >
                       <form
                         onSubmit={handleUpdate}
-                        className={`absolute w-[500px] rounded-sm bg-white p-3 pb-5 text-center drop-shadow-2xl ${openModal ? 'scale-1 opacity-1 duration-300' : 'scale-0 opacity-0 duration-150'} `}>
-                        <svg onClick={() => setOpenModal(false)} className="mx-auto mr-0 w-8 cursor-pointer" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g strokeWidth="0"></g><g strokeLinecap="round" strokeLinejoin="round"></g><g><path d="M6.99486 7.00636C6.60433 7.39689 6.60433 8.03005 6.99486 8.42058L10.58 12.0057L6.99486 15.5909C6.60433 15.9814 6.60433 16.6146 6.99486 17.0051C7.38538 17.3956 8.01855 17.3956 8.40907 17.0051L11.9942 13.4199L15.5794 17.0051C15.9699 17.3956 16.6031 17.3956 16.9936 17.0051C17.3841 16.6146 17.3841 15.9814 16.9936 15.5909L13.4084 12.0057L16.9936 8.42059C17.3841 8.03007 17.3841 7.3969 16.9936 7.00638C16.603 6.61585 15.9699 6.61585 15.5794 7.00638L11.9942 10.5915L8.40907 7.00636C8.01855 6.61584 7.38538 6.61584 6.99486 7.00636Z" fill="#000"></path></g></svg>
-                        <h1 className="mb-2 text-xl font-semibold">Edit Blog Category</h1>
+                        className={`absolute w-[500px] rounded-sm bg-white p-3 pb-5 text-center drop-shadow-2xl ${
+                          openModal
+                            ? "scale-1 opacity-1 duration-300"
+                            : "scale-0 opacity-0 duration-150"
+                        } `}
+                      >
+                        <svg
+                          onClick={() => setOpenModal(false)}
+                          className="mx-auto mr-0 w-8 cursor-pointer"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <g strokeWidth="0"></g>
+                          <g strokeLinecap="round" strokeLinejoin="round"></g>
+                          <g>
+                            <path
+                              d="M6.99486 7.00636C6.60433 7.39689 6.60433 8.03005 6.99486 8.42058L10.58 12.0057L6.99486 15.5909C6.60433 15.9814 6.60433 16.6146 6.99486 17.0051C7.38538 17.3956 8.01855 17.3956 8.40907 17.0051L11.9942 13.4199L15.5794 17.0051C15.9699 17.3956 16.6031 17.3956 16.9936 17.0051C17.3841 16.6146 17.3841 15.9814 16.9936 15.5909L13.4084 12.0057L16.9936 8.42059C17.3841 8.03007 17.3841 7.3969 16.9936 7.00638C16.603 6.61585 15.9699 6.61585 15.5794 7.00638L11.9942 10.5915L8.40907 7.00636C8.01855 6.61584 7.38538 6.61584 6.99486 7.00636Z"
+                              fill="#000"
+                            ></path>
+                          </g>
+                        </svg>
+                        <h1 className="mb-2 text-xl font-semibold">
+                          Edit Blog Category
+                        </h1>
                         <br />
                         <div className="flex flex-col">
-                          <label className="text-start" htmlFor="name">Name</label>
-                          <input className="w-full px-2 py-2 border border-gray-200 rounded-sm" type="text"
+                          <label className="text-start" htmlFor="name">
+                            Name
+                          </label>
+                          <input
+                            className="w-full px-2 py-2 border border-gray-200 rounded-sm"
+                            type="text"
                             name="name"
-                            defaultValue={openModal?.title} />
+                            defaultValue={openModal?.title}
+                          />
                         </div>
                         <div className="flex flex-col mt-2">
-                          <labe className="text-start" htmlFor="image">Photo</labe>
-                          <input className="w-full px-2 py-2 mt-2 mb-4 border border-gray-200 rounded-sm" type="file"
-                            name="image" />
+                          <labe className="text-start" htmlFor="image">
+                            Photo
+                          </labe>
+                          <input
+                            className="w-full px-2 py-2 mt-2 mb-4 border border-gray-200 rounded-sm"
+                            type="file"
+                            name="image"
+                          />
                         </div>
 
                         <div className="flex justify-start">
-                          <button type="submit" className="me-2 rounded-sm bg-blue-700 px-8 py-2 text-white">Save</button>
+                          <button
+                            type="submit"
+                            className="me-2 rounded-sm bg-blue-700 px-8 py-2 text-white"
+                          >
+                            Save
+                          </button>
                         </div>
                       </form>
                     </div>
                   </div>
-
                 </tr>
               ))}
             </tbody>

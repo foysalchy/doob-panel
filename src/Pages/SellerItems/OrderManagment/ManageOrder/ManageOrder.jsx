@@ -31,7 +31,7 @@ const ManageOrder = () => {
     queryKey: ["sellerOrder"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/seller/order?shopId=${shopInfo._id}`
+        `https://salenow-v2-backend.vercel.app/api/v1/seller/order?shopId=${shopInfo._id}`
       );
       const data = await res.json();
       return data.data;
@@ -42,7 +42,7 @@ const ManageOrder = () => {
     queryKey: ["sellerDaraz"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/seller/daraz-order?id=${shopInfo._id}&status=All`
+        `https://salenow-v2-backend.vercel.app/api/v1/seller/daraz-order?id=${shopInfo._id}&status=All`
       );
       const data = await res.json();
       return data.data;
@@ -75,7 +75,7 @@ const ManageOrder = () => {
 
   const get_print_for_selected_items = () => {
     fetch(
-      `https://backend.doob.com.bd/api/v1/seller/daraz-get-order-invoice?id=${shopInfo._id}&orderId=[${selected}]`
+      `https://salenow-v2-backend.vercel.app/api/v1/seller/daraz-get-order-invoice?id=${shopInfo._id}&orderId=[${selected}]`
     )
       .then((res) => res.text())
       .then((html) => {
@@ -101,7 +101,7 @@ const ManageOrder = () => {
 
   const get_daraz_sleeted_order_invoice = () => {
     fetch(
-      `https://backend.doob.com.bd/api/v1/seller/daraz-get-order-items?id=${shopInfo._id}&orderId=[${selected}]`
+      `https://salenow-v2-backend.vercel.app/api/v1/seller/daraz-get-order-items?id=${shopInfo._id}&orderId=[${selected}]`
     )
       .then((res) => res.json())
       .then((data) => {
@@ -174,8 +174,9 @@ const ManageOrder = () => {
     invoiceData.forEach((item) => {
       html += `
             <tr>
-                <td class="py-2"><img src="${item.product_main_image
-        }" alt="Product Image" class="w-16 h-16 object-cover"></td>
+                <td class="py-2"><img src="${
+                  item.product_main_image
+                }" alt="Product Image" class="w-16 h-16 object-cover"></td>
                 <td class="py-2">${item.name}</td>
                 <td class="py-2">${item.sku}</td>
                 <td class="py-2">${item.item_price}</td>
@@ -208,7 +209,7 @@ const ManageOrder = () => {
       for (const orderId of selected) {
         // Fetch the order details (including invoice data) for the current order ID
         const response = await fetch(
-          `https://backend.doob.com.bd/api/v1/seller/daraz-get-order-items?id=${shopInfo._id}&orderId=[${orderId}]`
+          `https://salenow-v2-backend.vercel.app/api/v1/seller/daraz-get-order-items?id=${shopInfo._id}&orderId=[${orderId}]`
         );
         const data = await response.json();
 
@@ -279,8 +280,9 @@ const ManageOrder = () => {
       invoiceData.order_items.forEach((item) => {
         html += `
                 <tr>
-                    <td class="py-2"><img src="${item.product_main_image
-          }" alt="Product Image" class="product-image"></td>
+                    <td class="py-2"><img src="${
+                      item.product_main_image
+                    }" alt="Product Image" class="product-image"></td>
                     <td class="py-2">${item.name}</td>
                     <td class="py-2">${item.sku}</td>
                     <td class="py-2">${item.item_price}</td>
@@ -321,15 +323,17 @@ const ManageOrder = () => {
       <div className="flex flex-wrap justify-start  items-center gap-4 ">
         <button
           onClick={() => setDaraz(false)}
-          className={`px-4 py-1 border text-white ${!daraz ? "bg-gray-900" : "bg-gray-500"
-            }`}
+          className={`px-4 py-1 border text-white ${
+            !daraz ? "bg-gray-900" : "bg-gray-500"
+          }`}
         >
           Web Order
         </button>
         <button
           onClick={() => setDaraz(true)}
-          className={`px-4 py-1 border text-white ${daraz ? "bg-gray-900" : "bg-gray-500"
-            }`}
+          className={`px-4 py-1 border text-white ${
+            daraz ? "bg-gray-900" : "bg-gray-500"
+          }`}
         >
           Daraz Order
         </button>
@@ -346,8 +350,9 @@ const ManageOrder = () => {
           itm?.status === "dropdown" ? (
             <select
               key={itm.name}
-              className={`px-4 border-r bg-transparent relative border-gray-300 flex items-center gap-2 justify-center ${selectedValue === "pending" ? "text-red-500" : ""
-                }`}
+              className={`px-4 border-r bg-transparent relative border-gray-300 flex items-center gap-2 justify-center ${
+                selectedValue === "pending" ? "text-red-500" : ""
+              }`}
               value={selectedValue}
               onChange={(e) => setSelectedValue(e.target.value)}
             >
@@ -359,8 +364,9 @@ const ManageOrder = () => {
           ) : (
             <button
               key={itm.name}
-              className={`px-4 border-r md:bg-transparent bg-gray-50 border-gray-300 flex  items-center ${selectedValue === itm.value ? "text-red-500" : ""
-                }`}
+              className={`px-4 border-r md:bg-transparent bg-gray-50 border-gray-300 flex  items-center ${
+                selectedValue === itm.value ? "text-red-500" : ""
+              }`}
               style={{ whiteSpace: "nowrap" }}
               onClick={() => setSelectedValue(itm.value)}
             >
@@ -376,15 +382,17 @@ const ManageOrder = () => {
       <div>
         <div
           onClick={() => setShowInvoice(false)}
-          className={`fixed z-[100] flex items-center justify-center ${showInvoice ? "visible opacity-100" : "invisible opacity-0"
-            } inset-0   backdrop-blur-sm duration-100 dark:bg-white/10`}
+          className={`fixed z-[100] flex items-center justify-center ${
+            showInvoice ? "visible opacity-100" : "invisible opacity-0"
+          } inset-0   backdrop-blur-sm duration-100 dark:bg-white/10`}
         >
           <div
             onClick={(e_) => e_.stopPropagation()}
-            className={`text- absolute w-[98%] rounded-sm bg-white p-6 drop-shadow-lg dark:bg-gray-50 h-full  overflow-y-auto dark:text-black ${showInvoice
+            className={`text- absolute w-[98%] rounded-sm bg-white p-6 drop-shadow-lg dark:bg-gray-50 h-full  overflow-y-auto dark:text-black ${
+              showInvoice
                 ? "scale-1 opacity-1 duration-300"
                 : "scale-0 opacity-0 duration-150"
-              }`}
+            }`}
           >
             <button
               onClick={() => setShowInvoice(false)}
@@ -494,15 +502,17 @@ const ManageOrder = () => {
         <div>
           <div
             onClick={() => setShowInvoiceSm(false)}
-            className={`fixed z-[100] flex items-center justify-center ${showInvoiceSm ? "visible opacity-100" : "invisible opacity-0"
-              } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
+            className={`fixed z-[100] flex items-center justify-center ${
+              showInvoiceSm ? "visible opacity-100" : "invisible opacity-0"
+            } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
           >
             <div
               onClick={(e_) => e_.stopPropagation()}
-              className={`text- absolute w-[95%] h-[96%] overflow-y-auto rounded-sm bg-gray-50 p-6 drop-shadow-lg     ${showInvoiceSm
+              className={`text- absolute w-[95%] h-[96%] overflow-y-auto rounded-sm bg-gray-50 p-6 drop-shadow-lg     ${
+                showInvoiceSm
                   ? "scale-1 opacity-1 duration-300"
                   : "scale-0 opacity-0 duration-150"
-                }`}
+              }`}
             >
               <div ref={componentRef}>
                 {selectedItems?.map((itm) => (
@@ -622,7 +632,7 @@ const ManageOrder = () => {
                                 (acc, list) =>
                                   acc +
                                   parseInt(list?.price) *
-                                  parseInt(list?.quantity),
+                                    parseInt(list?.quantity),
                                 0
                               )}
                             </td>
@@ -640,7 +650,7 @@ const ManageOrder = () => {
                                 (acc, list) =>
                                   acc +
                                   parseInt(list?.price) *
-                                  parseInt(list?.quantity),
+                                    parseInt(list?.quantity),
                                 0
                               )}
                             </td>
@@ -674,15 +684,17 @@ const ManageOrder = () => {
         <div>
           <div
             onClick={() => setShowPrintModal1(false)}
-            className={`fixed z-[100] flex items-center justify-center ${showPrintModal1 ? "visible opacity-100" : "invisible opacity-0"
-              } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
+            className={`fixed z-[100] flex items-center justify-center ${
+              showPrintModal1 ? "visible opacity-100" : "invisible opacity-0"
+            } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
           >
             <div
               onClick={(e_) => e_.stopPropagation()}
-              className={`text- absolute overflow-y-auto w-[96%] h-[98%] rounded-sm bg-gray-50 p-6 drop-shadow-lg text-black ${showPrintModal1
+              className={`text- absolute overflow-y-auto w-[96%] h-[98%] rounded-sm bg-gray-50 p-6 drop-shadow-lg text-black ${
+                showPrintModal1
                   ? "scale-1 opacity-1 duration-300"
                   : "scale-0 opacity-0 duration-150"
-                }`}
+              }`}
             >
               <AllOrderInvoice
                 data={selectedItems}
@@ -709,7 +721,6 @@ const ManageOrder = () => {
             <input
               onChange={(e) => setSearchValue(e.target.value)}
               type="text"
-
               placeholder="Search"
               className="w-[260px] rounded border-gray-400 focus:outline-none p-2 border"
             />

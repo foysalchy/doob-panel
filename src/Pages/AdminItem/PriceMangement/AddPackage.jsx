@@ -19,8 +19,8 @@ const AddPackage = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     fetch(
-      `https://backend.doob.com.bd/api/v1/admin/package`,
-      //   `https://backend.doob.com.bd/api/v1/admin/pricing`,
+      `https://salenow-v2-backend.vercel.app/api/v1/admin/package`,
+      //   `https://salenow-v2-backend.vercel.app/api/v1/admin/pricing`,
       {
         method: "POST",
         headers: {

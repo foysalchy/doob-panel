@@ -2,13 +2,13 @@ import React from "react";
 import { useState } from "react";
 import { BsArrowRight } from "react-icons/bs";
 import { Link } from "react-router-dom";
-import Select from 'react-select';
+import Select from "react-select";
 import Swal from "sweetalert2";
 
 const AddPrice = () => {
   const [sellerRoutes, setSellerRoutes] = useState(null);
   const [selectLimit, setSelectLimit] = useState(false);
-  const [limitValue, setLimitValue] = useState('');
+  const [limitValue, setLimitValue] = useState("");
   const [formData, setFormData] = useState({
     name: "",
     price: "",
@@ -16,32 +16,30 @@ const AddPrice = () => {
     best: "",
     timeDuration: "",
     benefits: [""],
-    permissions: []
+    permissions: [],
   });
   const [loading, setLoading] = useState(false);
   // react selector
   const options = [
-    { name: 'Domain Management', route: 'domain-management' },
-    { name: 'Channel Integration', route: 'channel-integration' },
-    { name: 'Warehouse', route: 'warehouse' },
-    { name: 'Staff Account', route: 'staff-account' },
-    { name: 'POS', route: 'pos' },
+    { name: "Domain Management", route: "domain-management" },
+    { name: "Channel Integration", route: "channel-integration" },
+    { name: "Warehouse", route: "warehouse" },
+    { name: "Staff Account", route: "staff-account" },
+    { name: "POS", route: "pos" },
     // Add more options as needed
   ];
 
   const handleChange = (selectedOption) => {
-    setSellerRoutes(selectedOption)
-    console.log('Selected Option:', sellerRoutes);
+    setSellerRoutes(selectedOption);
+    console.log("Selected Option:", sellerRoutes);
     setFormData({
       ...formData,
-      permissions: selectedOption
+      permissions: selectedOption,
     });
   };
 
-
   const handleInputChange = (field, value) => {
     setFormData({ ...formData, [field]: value });
-
   };
 
   const handleBenefitChange = (index, value) => {
@@ -71,7 +69,7 @@ const AddPrice = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    fetch(`https://backend.doob.com.bd/api/v1/admin/pricing`, {
+    fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/pricing`, {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -89,9 +87,8 @@ const AddPrice = () => {
           best: "",
           timeDuration: "",
           benefits: [""],
-          permissions: [""]
+          permissions: [""],
         });
-
       });
 
     console.log(formData, "update.......");
@@ -99,7 +96,7 @@ const AddPrice = () => {
 
   // const handleSubmit = (e) => {
   //   e.preventDefault();
-  //   fetch(`https://backend.doob.com.bd/api/v1/admin/pricing`, {
+  //   fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/pricing`, {
   //     method: "POST",
   //     headers: {
   //       "content-type": "application/json",
@@ -129,7 +126,6 @@ const AddPrice = () => {
 
   return (
     <div>
-
       <div className="border border-collapse flex justify-center py-20 rounded">
         <div className="w-3/5">
           <form onSubmit={handleSubmit}>
@@ -186,21 +182,21 @@ const AddPrice = () => {
               >
                 Time Duration
               </label>
-              <select onChange={(e) =>
-                handleInputChange("timeDuration", e.target.value)
-              }
+              <select
+                onChange={(e) =>
+                  handleInputChange("timeDuration", e.target.value)
+                }
                 type="text"
                 list="HeadlineActArtist"
                 id="HeadlineAct"
-                className="flex-grow w-full h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-purple-400 focus:outline-none focus:shadow-outline" name="HeadlineAct" >
+                className="flex-grow w-full h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-purple-400 focus:outline-none focus:shadow-outline"
+                name="HeadlineAct"
+              >
                 <option value="10Days">10 days</option>
                 <option value="Monthly">Monthly</option>
                 <option value="Yearly">Yearly</option>
                 <option value="Lifetime">Lifetime</option>
               </select>
-
-
-
             </div>
 
             <label
@@ -317,16 +313,38 @@ const AddPrice = () => {
                 ))}
               </label>
             </div>
-            <div className="my-4" >
+            <div className="my-4">
               <label>Daraz Limit:</label>
-              <input onChange={(e) => setLimitValue(e.target.value)} name="darazLimit" type="number" className="border px-2 py-1 rounded" placeholder="daraz limit" />
+              <input
+                onChange={(e) => setLimitValue(e.target.value)}
+                name="darazLimit"
+                type="number"
+                className="border px-2 py-1 rounded"
+                placeholder="daraz limit"
+              />
             </div>
 
             <label>Product Limit:</label>
-            <input onChange={(e) => handleInputChange("product_limit", e.target.value)} name="product_limit" type="number" className="border px-2 py-1 rounded" placeholder="product_limit" /><br />
+            <input
+              onChange={(e) =>
+                handleInputChange("product_limit", e.target.value)
+              }
+              name="product_limit"
+              type="number"
+              className="border px-2 py-1 rounded"
+              placeholder="product_limit"
+            />
+            <br />
             <div className="flex items-center mt-3 gap-3">
-              <label htmlFor="ck"><input checked={selectLimit} onChange={() => setSelectLimit(!selectLimit)} type="checkbox" id="ck" /> Life Time</label>
-
+              <label htmlFor="ck">
+                <input
+                  checked={selectLimit}
+                  onChange={() => setSelectLimit(!selectLimit)}
+                  type="checkbox"
+                  id="ck"
+                />{" "}
+                Life Time
+              </label>
             </div>
             <div className="flex gap-5 items-start mt-10">
               <button
@@ -337,32 +355,39 @@ const AddPrice = () => {
                 Add New Benefit Option
               </button>
 
-              {
-                loading ?
-                  <button disabled className="group relative cursor-not-allowed inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none ">
-                    <span className="text-sm font-medium">
-                      Loading...
-                    </span>
-                    <svg className="animate-spin h-4 w-4 ml-3 text-white" viewBox="0 0 24 24">
-
-                      <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                    </svg>
-                  </button>
-
-                  :
-                  <button type='submit'
-                    className="group relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none "
-
+              {loading ? (
+                <button
+                  disabled
+                  className="group relative cursor-not-allowed inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none "
+                >
+                  <span className="text-sm font-medium">Loading...</span>
+                  <svg
+                    className="animate-spin h-4 w-4 ml-3 text-white"
+                    viewBox="0 0 24 24"
                   >
-                    <span className="absolute -end-full transition-all group-hover:end-4">
-                      <BsArrowRight />
-                    </span>
+                    <circle
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      strokeWidth="4"
+                    />
+                  </svg>
+                </button>
+              ) : (
+                <button
+                  type="submit"
+                  className="group relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none "
+                >
+                  <span className="absolute -end-full transition-all group-hover:end-4">
+                    <BsArrowRight />
+                  </span>
 
-                    <span className="text-sm font-medium transition-all group-hover:me-4">
-                      Upload Price
-                    </span>
-                  </button>
-              }
+                  <span className="text-sm font-medium transition-all group-hover:me-4">
+                    Upload Price
+                  </span>
+                </button>
+              )}
             </div>
           </form>
         </div>

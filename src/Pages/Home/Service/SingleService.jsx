@@ -20,7 +20,7 @@ const SingleService = () => {
     queryKey: ["services"],
     queryFn: async () => {
       const res = await fetch(
-        "https://backend.doob.com.bd/api/v1/admin/services"
+        "https://salenow-v2-backend.vercel.app/api/v1/admin/services"
       );
       const data = await res.json();
       return data;
@@ -62,7 +62,7 @@ const SingleService = () => {
 
       console.log(order);
 
-      fetch(`https://backend.doob.com.bd/api/v1/site-user/wishlist`, {
+      fetch(`https://salenow-v2-backend.vercel.app/api/v1/site-user/wishlist`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -78,27 +78,28 @@ const SingleService = () => {
     }
   };
 
-
   const uploadReview = (e) => {
     e.preventDefault();
-    const reviews = e.target.reviews.value
-    const userData = { name: user.name, userId: user._id }
-    const timestamp = new Date().getTime()
-    let data = { text: reviews, user: userData, timeStamp: timestamp, }
-    fetch(`https://backend.doob.com.bd/api/v1/admin/service/reviews?id=${service._id}`, {
-      method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(data),
-    })
-      .then(response => response.json())
-      .catch(error => console.log(error))
+    const reviews = e.target.reviews.value;
+    const userData = { name: user.name, userId: user._id };
+    const timestamp = new Date().getTime();
+    let data = { text: reviews, user: userData, timeStamp: timestamp };
+    fetch(
+      `https://salenow-v2-backend.vercel.app/api/v1/admin/service/reviews?id=${service._id}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      }
+    )
+      .then((response) => response.json())
+      .catch((error) => console.log(error))
       .finally(() => {
-        window.location.reload()
+        window.location.reload();
       });
-
-  }
+  };
 
   function timeAgo(timestamp) {
     const date = new Date(timestamp);
@@ -106,24 +107,25 @@ const SingleService = () => {
     const difference = now - date.getTime();
 
     const units = [
-      { value: 365 * 24 * 60 * 60 * 1000, label: 'year' },
-      { value: 30 * 24 * 60 * 60 * 1000, label: 'month' },
-      { value: 7 * 24 * 60 * 60 * 1000, label: 'week' },
-      { value: 24 * 60 * 60 * 1000, label: 'day' },
-      { value: 60 * 60 * 1000, label: 'hour' },
-      { value: 60 * 1000, label: 'minute' }
+      { value: 365 * 24 * 60 * 60 * 1000, label: "year" },
+      { value: 30 * 24 * 60 * 60 * 1000, label: "month" },
+      { value: 7 * 24 * 60 * 60 * 1000, label: "week" },
+      { value: 24 * 60 * 60 * 1000, label: "day" },
+      { value: 60 * 60 * 1000, label: "hour" },
+      { value: 60 * 1000, label: "minute" },
     ];
 
     for (const unit of units) {
       const count = Math.floor(difference / unit.value);
       if (count >= 1) {
-        return count === 1 ? `1 ${unit.label} ago` : `${count} ${unit.label}s ago`;
+        return count === 1
+          ? `1 ${unit.label} ago`
+          : `${count} ${unit.label}s ago`;
       }
     }
 
-    return 'just now';
+    return "just now";
   }
-
 
   return (
     <div className="px-4 pt-16 relative mx-auto sm:max-w-xl md:max-w-full  lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-20">
@@ -144,7 +146,7 @@ const SingleService = () => {
                 {service.title}
               </h1>
               <div className="py-3 font-semibold">
-                Total Views :  {service?.views}
+                Total Views : {service?.views}
               </div>
 
               <div className="flex items-center pb-5 border-b-2 border-gray-100 mb-5">
@@ -285,7 +287,6 @@ const SingleService = () => {
                     </svg>
                   </button>
                 </div>
-
 
                 <div className="px-5 py-3">
                   <h3 className="text-gray-700 uppercase">{service.title}</h3>

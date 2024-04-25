@@ -33,42 +33,51 @@ import EmailVerify from "../Common/EmailVerify";
 import CardProduct from "../Pages/Home/Product/CardProduct/CardProduct";
 import AdminTrackOrder from "../Pages/AdminItem/AdminTrackOrder/AdminTrackOrder";
 
-
-
 const Router = createBrowserRouter([
-
-  // Main Layout 
+  // Main Layout
   {
     path: "/",
-    element: <>
-      <ScrollToTop />
-      <MainLayout />
-    </>,
-    children: homePath
+    element: (
+      <>
+        <ScrollToTop />
+        <MainLayout />
+      </>
+    ),
+    children: homePath,
   },
   {
-    path: '/email-verify',
-    element: <EmailVerify />
+    path: "/email-verify",
+    element: <EmailVerify />,
   },
   // Invoice Routes
   {
     path: "/userinvoice/:id",
-    element: <>    <ScrollToTop /> <UserInvoice />
-    </>
+    element: (
+      <>
+        {" "}
+        <ScrollToTop /> <UserInvoice />
+      </>
+    ),
   },
   {
     path: "/darazinvoice/:id",
-    element: <>
-      <ScrollToTop /><DarazInvoice />
-    </>
+    element: (
+      <>
+        <ScrollToTop />
+        <DarazInvoice />
+      </>
+    ),
   },
   {
     path: "/invoice/:id",
-    element: <>
-      <ScrollToTop /><Invoice />
-    </>
+    element: (
+      <>
+        <ScrollToTop />
+        <Invoice />
+      </>
+    ),
   },
-  // Seller Route 
+  // Seller Route
   {
     path: "/seller",
     element: (
@@ -79,14 +88,16 @@ const Router = createBrowserRouter([
         </IsSelllerRegistration>
       </>
     ),
-    children: SellerPath
+    children: SellerPath,
   },
 
   {
     path: "/seller/pos",
-    element: <PrivateRoute>
-      <Pos />
-    </PrivateRoute>
+    element: (
+      <PrivateRoute>
+        <Pos />
+      </PrivateRoute>
+    ),
   },
   {
     path: "/user",
@@ -98,18 +109,19 @@ const Router = createBrowserRouter([
         </IsUserRegistration>
       </>
     ),
-    children: UserPath
+    children: UserPath,
   },
 
-
-  // Shop Route 
+  // Shop Route
   {
     path: "/shop",
-    element: <>
-      <ScrollToTop />
-      <ShopLayout />
-    </>,
-    children: ShopPath
+    element: (
+      <>
+        <ScrollToTop />
+        <ShopLayout />
+      </>
+    ),
+    children: ShopPath,
   },
   // order and review Route  ,
 
@@ -117,14 +129,15 @@ const Router = createBrowserRouter([
 
   {
     path: "/admin",
-    element:
-      (<>
+    element: (
+      <>
         <ScrollToTop />
         <SupperAdminRouter>
           <AdminLayout />
         </SupperAdminRouter>
-      </>),
-    children: SupperAdminPath
+      </>
+    ),
+    children: SupperAdminPath,
   },
 
   {
@@ -137,22 +150,26 @@ const Router = createBrowserRouter([
   },
 
   {
-    path: '/products',
+    path: "/products",
     element: <PoroductLayout />,
     children: [
       {
         path: "",
-        element: <>
-          {/* <ScrollToTop /> */}
-          <Product />
-        </>,
+        element: (
+          <>
+            {/* <ScrollToTop /> */}
+            <Product />
+          </>
+        ),
       },
       {
-        path: 'catagory/:categoryId',
+        path: "catagory/:categoryId",
         element: <CommonCategory />,
         loader: async ({ params }) => {
           const categoryName = params.categoryId;
-          const response = await fetch(`https://backend.doob.com.bd/api/v1/seller/admin-category-item?id=${categoryName}`);
+          const response = await fetch(
+            `https://salenow-v2-backend.vercel.app/api/v1/seller/admin-category-item?id=${categoryName}`
+          );
           const data = await response.json();
           return data?.data;
         },
@@ -160,24 +177,25 @@ const Router = createBrowserRouter([
       {
         path: ":id",
         loader: ({ params }) =>
-          fetch(`https://backend.doob.com.bd/api/v1/admin/single-product?id=${params?.id}`),
-        element: <>
-          {/* <ScrollToTop /> */}
-          <ProductDetails />
-        </>,
+          fetch(
+            `https://salenow-v2-backend.vercel.app/api/v1/admin/single-product?id=${params?.id}`
+          ),
+        element: (
+          <>
+            {/* <ScrollToTop /> */}
+            <ProductDetails />
+          </>
+        ),
       },
       {
-        path: 'my-card',
-        element: <CardProduct />
+        path: "my-card",
+        element: <CardProduct />,
       },
       {
-        path: 'admin-track-order',
-        element: <AdminTrackOrder />
-
+        path: "admin-track-order",
+        element: <AdminTrackOrder />,
       },
-    ]
-  }
-
-
+    ],
+  },
 ]);
 export default Router;

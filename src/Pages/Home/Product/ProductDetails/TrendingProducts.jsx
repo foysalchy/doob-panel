@@ -2,25 +2,21 @@ import React from "react";
 import { useContext } from "react";
 import { AuthContext } from "../../../../AuthProvider/UserProvider";
 
-
 const TrendingProducts = () => {
+  const { user } = useContext(AuthContext);
 
-
-
-  const { user } = useContext(AuthContext)
-
-  const { shop_id } = useContext(ShopAuthProvider)
-  // console.log(`https://backend.doob.com.bd/api/v1/shop/product/${shop_id.shop_id}/all-product?limit=20`);
+  const { shop_id } = useContext(ShopAuthProvider);
+  // console.log(`https://salenow-v2-backend.vercel.app/api/v1/shop/product/${shop_id.shop_id}/all-product?limit=20`);
   const { data: newProducts = [], refetch } = useQuery({
     queryKey: ["allProduct"],
     queryFn: async () => {
-      const res = await fetch(`https://backend.doob.com.bd/api/v1/shop/product/${shop_id.shop_id}/all-product?limit=20`);
+      const res = await fetch(
+        `https://salenow-v2-backend.vercel.app/api/v1/shop/product/${shop_id.shop_id}/all-product?limit=20`
+      );
       const data = await res.json();
       return data;
     },
   });
-
-
 
   const TrendingProducts = [
     {
@@ -136,7 +132,9 @@ const TrendingProducts = () => {
                         type="button"
                         className="px-3 py-2  font-semibold rounded bg-black text-white text-xs "
                       >
-                        {user.role === 'seller' ? 'Add My Store' : "Add to card"}
+                        {user.role === "seller"
+                          ? "Add My Store"
+                          : "Add to card"}
                       </button>
                     </div>
                   </div>

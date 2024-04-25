@@ -10,15 +10,16 @@ const AdminBlogs = () => {
   const { data: blogs = [], refetch } = useQuery({
     queryKey: ["blogs"],
     queryFn: async () => {
-      const res = await fetch("https://backend.doob.com.bd/api/v1/admin/all-blogs");
+      const res = await fetch(
+        "https://salenow-v2-backend.vercel.app/api/v1/admin/all-blogs"
+      );
       const data = await res.json();
       return data;
     },
   });
 
   const DeleteBlog = (id) => {
-
-    fetch(`https://backend.doob.com.bd/api/v1/admin/blog`, {
+    fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/blog`, {
       method: "DELETE",
       headers: {
         "content-type": "application/json",
@@ -28,11 +29,9 @@ const AdminBlogs = () => {
       .then((res) => res.json())
       .then((data) => {
         Swal.fire("Blog Delete Successful", "", "success");
-        refetch()
-
+        refetch();
       });
   };
-
 
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -47,7 +46,7 @@ const AdminBlogs = () => {
   );
 
   const statusUpdate = (id, status) => {
-    fetch(`https://backend.doob.com.bd/api/v1/admin/blog`, {
+    fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/blog`, {
       method: "PUT",
       headers: {
         "content-type": "application/json",
@@ -57,35 +56,31 @@ const AdminBlogs = () => {
       .then((res) => res.json())
       .then((data) => {
         Swal.fire("Blog Status Updated", "", "success");
-        refetch()
+        refetch();
       });
-  }
+  };
 
-
-  const [OpenModal, setOpenModal] = useState(false)
+  const [OpenModal, setOpenModal] = useState(false);
 
   const handleViewDetails = (ticketId) => {
     setOpenModal(ticketId);
   };
 
-
   const blogStash = (id, status) => {
-
     console.log(status);
-    fetch(`https://backend.doob.com.bd/api/v1/admin/blog-trash?id=${id}&status=${status}`,
+    fetch(
+      `https://salenow-v2-backend.vercel.app/api/v1/admin/blog-trash?id=${id}&status=${status}`,
       {
         method: "PUT",
-      }).then(() => {
-        Swal.fire("success");
-        refetch()
-      })
-  }
-
+      }
+    ).then(() => {
+      Swal.fire("success");
+      refetch();
+    });
+  };
 
   return (
-
     <div className=" w-full h-full">
-
       <Link
         className="group relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
         to="/admin/blog/new-blog"
@@ -144,7 +139,6 @@ const AdminBlogs = () => {
         </span>
       </div>
 
-
       <section className=" px-4 mx-auto">
         <div className="flex items-center gap-x-3">
           <h2 className="text-lg font-medium text-gray-800 ">All Blog</h2>
@@ -164,7 +158,6 @@ const AdminBlogs = () => {
                         className="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500 text-gray-400"
                       >
                         <div className="flex items-center gap-x-3">
-
                           <span>Name</span>
                         </div>
                       </th>
@@ -186,10 +179,13 @@ const AdminBlogs = () => {
                         </button>
                       </th>
 
-
-                      <th scope="col"
-                        className="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 text-gray-400">
-                        <span className="flex items-center gap-x-2">Action</span>
+                      <th
+                        scope="col"
+                        className="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 text-gray-400"
+                      >
+                        <span className="flex items-center gap-x-2">
+                          Action
+                        </span>
                       </th>
                     </tr>
                   </thead>
@@ -198,7 +194,6 @@ const AdminBlogs = () => {
                       <tr key={blog._id + 1}>
                         <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                           <div className="inline-flex items-center gap-x-3">
-
                             <div className="flex items-center gap-x-2">
                               <img
                                 className="object-cover w-10 h-10 rounded"
@@ -208,14 +203,12 @@ const AdminBlogs = () => {
                               />
                               <div>
                                 <h2 className="font-medium text-gray-800  ">
-                                  {blog?.title
-                                    .split(" ")
-                                    .slice(0, 5)
-                                    .join(" ")}
+                                  {blog?.title.split(" ").slice(0, 5).join(" ")}
                                 </h2>
-                                <p
-                                  className="text-sm font-normal text-gray-600 text-gray-400">
-                                  {new DOMParser().parseFromString(blog.message, 'text/html').body.textContent.split(" ")
+                                <p className="text-sm font-normal text-gray-600 text-gray-400">
+                                  {new DOMParser()
+                                    .parseFromString(blog.message, "text/html")
+                                    .body.textContent.split(" ")
                                     .slice(0, 5)
                                     .join(" ")}
                                 </p>
@@ -224,39 +217,55 @@ const AdminBlogs = () => {
                           </div>
                         </td>
                         <td className="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                          {blog.status ? <button onClick={() => statusUpdate(blog._id, false)} className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-emerald-100/60 bg-gray-800">
-                            <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-                            <h2 className="text-sm font-normal text-emerald-500">
-                              Active
-                            </h2>
-                          </button> :
-                            <button onClick={() => statusUpdate(blog._id, true)} className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-emerald-100/60 bg-gray-800">
+                          {blog.status ? (
+                            <button
+                              onClick={() => statusUpdate(blog._id, false)}
+                              className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-emerald-100/60 bg-gray-800"
+                            >
+                              <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                              <h2 className="text-sm font-normal text-emerald-500">
+                                Active
+                              </h2>
+                            </button>
+                          ) : (
+                            <button
+                              onClick={() => statusUpdate(blog._id, true)}
+                              className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-emerald-100/60 bg-gray-800"
+                            >
                               <span className="h-1.5 w-1.5 rounded-full bg-red-500" />
                               <h2 className="text-sm font-normal text-red-500">
                                 Inactive
                               </h2>
-                            </button>}
-
-
+                            </button>
+                          )}
                         </td>
 
                         <td className="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-
-                          {blog.trash ? <button onClick={() => blogStash(blog._id, false)} className="inline-flex items-center px-3 py-1 rounded gap-x-2 bg-emerald-100/60 text-white bg-green-600">
-                            <h2 className="text-sm font-normal ">
-                              ON
-                            </h2>
-                          </button> :
-                            <button onClick={() => blogStash(blog._id, true)} className="inline-flex items-center px-3 py-1 rounded gap-x-2 bg-emerald-100/60 bg-red-600">
+                          {blog.trash ? (
+                            <button
+                              onClick={() => blogStash(blog._id, false)}
+                              className="inline-flex items-center px-3 py-1 rounded gap-x-2 bg-emerald-100/60 text-white bg-green-600"
+                            >
+                              <h2 className="text-sm font-normal ">ON</h2>
+                            </button>
+                          ) : (
+                            <button
+                              onClick={() => blogStash(blog._id, true)}
+                              className="inline-flex items-center px-3 py-1 rounded gap-x-2 bg-emerald-100/60 bg-red-600"
+                            >
                               <h2 className="text-sm font-normal text-white">
                                 OFF
                               </h2>
-                            </button>}
+                            </button>
+                          )}
                         </td>
 
                         <td className="px-4 py-4 text-sm whitespace-nowrap">
                           <div className="flex px-8  items-center gap-2">
-                            <button onClick={() => DeleteBlog(blog._id)} className=" transition-colors duration-200 text-red-500 hover:text-red-700 focus:outline-none">
+                            <button
+                              onClick={() => DeleteBlog(blog._id)}
+                              className=" transition-colors duration-200 text-red-500 hover:text-red-700 focus:outline-none"
+                            >
                               <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 fill="none"
@@ -272,30 +281,41 @@ const AdminBlogs = () => {
                                 />
                               </svg>
                             </button>
-                            <BiEdit onClick={() => handleViewDetails(blog._id)} className="transition-colors text-xl duration-200 cursor-pointer text-yellow-500 hover:text-yellow-700 focus:outline-none" />
+                            <BiEdit
+                              onClick={() => handleViewDetails(blog._id)}
+                              className="transition-colors text-xl duration-200 cursor-pointer text-yellow-500 hover:text-yellow-700 focus:outline-none"
+                            />
 
                             <Link to={`/blogs/${blog._id}`}>
                               <BsEye className="transition-colors text-xl duration-200 cursor-pointer text-green-500 hover:text-green-700 focus:outline-none" />
                             </Link>
-
                           </div>
-
                         </td>
-                        {OpenModal === blog._id && <div className="h-0 w-0">
-                          <EditBlog OpenModal={OpenModal} refetch={refetch} setOpenModal={setOpenModal} BlogInfo={blog} />
-                        </div>}
+                        {OpenModal === blog._id && (
+                          <div className="h-0 w-0">
+                            <EditBlog
+                              OpenModal={OpenModal}
+                              refetch={refetch}
+                              setOpenModal={setOpenModal}
+                              BlogInfo={blog}
+                            />
+                          </div>
+                        )}
                       </tr>
                     ))}
                   </tbody>
                 </table>
-                {filteredData.length < 1 && <div className="bg-gray-100 text-center py-4 text-gray-500 text-xl">Empty</div>}
+                {filteredData.length < 1 && (
+                  <div className="bg-gray-100 text-center py-4 text-gray-500 text-xl">
+                    Empty
+                  </div>
+                )}
               </div>
             </div>
           </div>
         </div>
       </section>
     </div>
-
   );
 };
 

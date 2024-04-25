@@ -112,7 +112,6 @@ const VariantData = ({ variantInput, setVariantInput }) => {
 
             </div>
 
-
             <AdminCategoryforSeller />
         </div>
     );

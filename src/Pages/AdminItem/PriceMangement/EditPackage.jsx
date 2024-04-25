@@ -21,7 +21,7 @@ const EditPackage = ({ OpenModal, setOpenModal, packageInfo, refetch }) => {
     setIsLoading(true);
     try {
       fetch(
-        `https://backend.doob.com.bd/api/v1/admin/package/update-package/${packageInfo._id}`,
+        `https://salenow-v2-backend.vercel.app/api/v1/admin/package/update-package/${packageInfo._id}`,
         // `http://localhost:5001/api/v1/admin/package/update-package/${packageInfo._id}`,
         {
           method: "PUT",
@@ -46,8 +46,9 @@ const EditPackage = ({ OpenModal, setOpenModal, packageInfo, refetch }) => {
 
   return (
     <div
-      className={`fixed z-50 top-0 left-0 flex h-full min-h-screen w-full items-center justify-center bg-black bg-opacity-90  px-4 text-start py-5 ${OpenModal ? "block" : "hidden"
-        }`}
+      className={`fixed z-50 top-0 left-0 flex h-full min-h-screen w-full items-center justify-center bg-black bg-opacity-90  px-4 text-start py-5 ${
+        OpenModal ? "block" : "hidden"
+      }`}
     >
       <div className="w-full max-w-[800px]  rounded-[20px] bg-white pb-10 px-8 text-center md:px-[30px] ">
         <div className="flex justify-between z-50 pt-4 items-start w-full sticky top-0 bg-white border border-black-b">
@@ -117,8 +118,9 @@ const EditPackage = ({ OpenModal, setOpenModal, packageInfo, refetch }) => {
                 </svg>
               </span>
               <span
-                className={`"text-sm ${loading && "animate-pulse"
-                  } font-medium transition-all group-hover:ms-4"`}
+                className={`"text-sm ${
+                  loading && "animate-pulse"
+                } font-medium transition-all group-hover:ms-4"`}
               >
                 Update Package
               </span>

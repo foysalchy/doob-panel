@@ -14,14 +14,14 @@ import { Link } from "react-router-dom";
 const SubCategoriesManagement = () => {
   const { shopInfo } = useContext(AuthContext);
   console.log(
-    `https://backend.doob.com.bd/api/v1/category/seller/sub/${shopInfo._id}`
+    `https://salenow-v2-backend.vercel.app/api/v1/category/seller/sub/${shopInfo._id}`
   );
 
   const { data: categories = [], refetch } = useQuery({
     queryKey: ["categories"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/category/seller/sub/${shopInfo._id}`
+        `https://salenow-v2-backend.vercel.app/api/v1/category/seller/sub/${shopInfo._id}`
       );
       const data = await res.json();
       return data;
@@ -101,10 +101,11 @@ const SubCategoriesManagement = () => {
           return (
             <li key={pageNumber}>
               <button
-                className={`block h-8 w-8 rounded border ${pageNumber === currentPage
+                className={`block h-8 w-8 rounded border ${
+                  pageNumber === currentPage
                     ? "border-blue-600 bg-blue-600 text-white"
                     : "border-gray-900 bg-white text-center leading-8 text-gray-900"
-                  }`}
+                }`}
                 onClick={() => handleChangePage(pageNumber)}
               >
                 {pageNumber}
@@ -129,7 +130,7 @@ const SubCategoriesManagement = () => {
 
   const updateStatus = (id, status) => {
     fetch(
-      `https://backend.doob.com.bd/api/v1/category/seller/sub/status/${id}`,
+      `https://salenow-v2-backend.vercel.app/api/v1/category/seller/sub/status/${id}`,
       {
         method: "PUT",
         headers: {
@@ -168,7 +169,7 @@ const SubCategoriesManagement = () => {
       if (result.dismiss === Swal.DismissReason.timer) {
         // Timer completed, initiate the fetch for deletion
         fetch(
-          `https://backend.doob.com.bd/api/v1/category/seller/sub/delete/${id}`,
+          `https://salenow-v2-backend.vercel.app/api/v1/category/seller/sub/delete/${id}`,
           {
             method: "DELETE",
             headers: {
@@ -200,7 +201,7 @@ const SubCategoriesManagement = () => {
   const [editOn, setEditOn] = useState(false);
 
   const uploadImage = async (formData) => {
-    const url = `https://backend.doob.com.bd/api/v1/image/upload-image`;
+    const url = `https://salenow-v2-backend.vercel.app/api/v1/image/upload-image`;
     const response = await fetch(url, {
       method: "POST",
       body: formData,
@@ -227,7 +228,7 @@ const SubCategoriesManagement = () => {
     console.log(data, id, "update");
 
     fetch(
-      `https://backend.doob.com.bd/api/v1/category/seller-update-subCategory?id=${id}`,
+      `https://salenow-v2-backend.vercel.app/api/v1/category/seller-update-subCategory?id=${id}`,
       {
         method: "PUT",
         headers: {
@@ -245,7 +246,7 @@ const SubCategoriesManagement = () => {
         form.reset();
       });
 
-    // fetch(`https://backend.doob.com.bd/api/v1/admin/feature-image-update?id=${id}`, {
+    // fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/feature-image-update?id=${id}`, {
     //     method: "PUT",
     //     headers: {
     //         "Content-Type": "application/json",
@@ -259,7 +260,7 @@ const SubCategoriesManagement = () => {
 
   const futuresUpdate = (id, status) => {
     fetch(
-      `https://backend.doob.com.bd/api/v1/category/seller-update-subCategory-feature?id=${id}&status=${status}`,
+      `https://salenow-v2-backend.vercel.app/api/v1/category/seller-update-subCategory-feature?id=${id}&status=${status}`,
       {
         method: "PUT",
 
@@ -413,10 +414,10 @@ const SubCategoriesManagement = () => {
                                   );
                                   const darazCategoryName =
                                     parsedMegaCategory &&
-                                      parsedMegaCategory.darazCategory
+                                    parsedMegaCategory.darazCategory
                                       ? JSON.parse(
-                                        parsedMegaCategory.darazCategory
-                                      ).name
+                                          parsedMegaCategory.darazCategory
+                                        ).name
                                       : null;
 
                                   return darazCategoryName;
@@ -452,10 +453,10 @@ const SubCategoriesManagement = () => {
                               );
                               const darazCategoryName =
                                 parsedMegaCategory &&
-                                  parsedMegaCategory.wocomarceCategory
+                                parsedMegaCategory.wocomarceCategory
                                   ? JSON.parse(
-                                    parsedMegaCategory.wocomarceCategory
-                                  ).name
+                                      parsedMegaCategory.wocomarceCategory
+                                    ).name
                                   : "Invalidate";
 
                               return darazCategoryName;
@@ -508,26 +509,29 @@ const SubCategoriesManagement = () => {
                               : true
                           )
                         }
-                        className={`${warehouse && warehouse.feature === "true"
+                        className={`${
+                          warehouse && warehouse.feature === "true"
                             ? "bg-green-500"
                             : "bg-red-500"
-                          } text-white ml-2 rounded capitalize px-3 py-1`}
+                        } text-white ml-2 rounded capitalize px-3 py-1`}
                       >
                         futures
                       </button>
                     </td>
 
                     <div
-                      className={`fixed z-[100] flex items-center justify-center ${editOn?._id === warehouse?._id
+                      className={`fixed z-[100] flex items-center justify-center ${
+                        editOn?._id === warehouse?._id
                           ? "opacity-1 visible"
                           : "invisible opacity-0"
-                        } inset-0 bg-black/20 backdrop-blur-sm duration-100`}
+                      } inset-0 bg-black/20 backdrop-blur-sm duration-100`}
                     >
                       <div
-                        className={`absolute md:w-[500px] w-full rounded-sm bg-white p-3 pb-5 text-center drop-shadow-2xl ${editOn?._id === warehouse?._id
+                        className={`absolute md:w-[500px] w-full rounded-sm bg-white p-3 pb-5 text-center drop-shadow-2xl ${
+                          editOn?._id === warehouse?._id
                             ? "scale-1 opacity-1 duration-300"
                             : "scale-0 opacity-0 duration-150"
-                          } `}
+                        } `}
                       >
                         <svg
                           onClick={() => setEditOn(false)}

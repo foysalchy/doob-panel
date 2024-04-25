@@ -19,7 +19,7 @@ const WarehouseModal = ({ modalOpen, setModalOpen, product, doobProduct }) => {
     queryKey: ["package"],
     queryFn: async () => {
       const getPackage =
-        "https://backend.doob.com.bd/api/v1/admin/package";
+        "https://salenow-v2-backend.vercel.app/api/v1/admin/package";
 
       const res = await fetch(getPackage);
       if (!res.ok) {
@@ -51,7 +51,7 @@ const WarehouseModal = ({ modalOpen, setModalOpen, product, doobProduct }) => {
     queryKey: ["warehouses"],
     queryFn: async () => {
       const getWarehouseApiUrl =
-        "https://backend.doob.com.bd/api/v1/admin/warehouse";
+        "https://salenow-v2-backend.vercel.app/api/v1/admin/warehouse";
 
       const res = await fetch(getWarehouseApiUrl);
       if (!res.ok) {
@@ -71,7 +71,7 @@ const WarehouseModal = ({ modalOpen, setModalOpen, product, doobProduct }) => {
     setSelfs([]);
     setCells([]);
 
-    const getAreaApiUrl = `https://backend.doob.com.bd/api/v1/admin/warehouse/area/${selectedWarehouse}`;
+    const getAreaApiUrl = `https://salenow-v2-backend.vercel.app/api/v1/admin/warehouse/area/${selectedWarehouse}`;
 
     const areaRes = await fetch(getAreaApiUrl);
     const areaData = await areaRes.json();
@@ -88,7 +88,7 @@ const WarehouseModal = ({ modalOpen, setModalOpen, product, doobProduct }) => {
     setSelfs([]);
     setCells([]);
 
-    const getRackApiUrl = `https://backend.doob.com.bd/api/v1/admin/warehouse/rack/${selectedWarehouse}/${selectedArea}`;
+    const getRackApiUrl = `https://salenow-v2-backend.vercel.app/api/v1/admin/warehouse/rack/${selectedWarehouse}/${selectedArea}`;
 
     const rackRes = await fetch(getRackApiUrl);
     const rackData = await rackRes.json();
@@ -103,7 +103,7 @@ const WarehouseModal = ({ modalOpen, setModalOpen, product, doobProduct }) => {
     setSelectedRack(selectedRack);
     setCells([]);
 
-    const getSelfApiUrl = `https://backend.doob.com.bd/api/v1/admin/warehouse/self/${selectedWarehouse}/${selectedArea}/${selectedRack}`;
+    const getSelfApiUrl = `https://salenow-v2-backend.vercel.app/api/v1/admin/warehouse/self/${selectedWarehouse}/${selectedArea}/${selectedRack}`;
 
     const selfRes = await fetch(getSelfApiUrl);
     const selfData = await selfRes.json();
@@ -117,7 +117,7 @@ const WarehouseModal = ({ modalOpen, setModalOpen, product, doobProduct }) => {
     const selectedSelfs = selectedOption.value;
     setSelectedSelf(selectedSelfs);
 
-    const getCellApiUrl = `https://backend.doob.com.bd/api/v1/admin/warehouse/cell/${selectedWarehouse}/${selectedArea}/${selectedRack}/${selectedSelf}`;
+    const getCellApiUrl = `https://salenow-v2-backend.vercel.app/api/v1/admin/warehouse/cell/${selectedWarehouse}/${selectedArea}/${selectedRack}/${selectedSelf}`;
 
     const cellsRes = await fetch(getCellApiUrl);
     const cellData = await cellsRes.json();
@@ -152,7 +152,7 @@ const WarehouseModal = ({ modalOpen, setModalOpen, product, doobProduct }) => {
     console.log(data);
 
     fetch(
-      `https://backend.doob.com.bd/api/v1/admin/update-product-info?productId=${product._id}`,
+      `https://salenow-v2-backend.vercel.app/api/v1/admin/update-product-info?productId=${product._id}`,
       {
         method: "PUT",
         headers: {
@@ -172,8 +172,9 @@ const WarehouseModal = ({ modalOpen, setModalOpen, product, doobProduct }) => {
   return (
     <div>
       <div
-        className={`fixed left-0 top-0 flex z-50 h-full min-h-screen w-full items-center justify-center bg-black/90 px-4 py-5 ${modalOpen ? "block" : "hidden"
-          }`}
+        className={`fixed left-0 top-0 flex z-50 h-full min-h-screen w-full items-center justify-center bg-black/90 px-4 py-5 ${
+          modalOpen ? "block" : "hidden"
+        }`}
       >
         <form
           onSubmit={updateInfo}
@@ -287,11 +288,11 @@ const WarehouseModal = ({ modalOpen, setModalOpen, product, doobProduct }) => {
                         isRefetching
                           ? [{ label: "Loading...", value: null }]
                           : warehouses
-                            .filter((warehouse) => warehouse.status) // Filter based on status
-                            .map((warehouse) => ({
-                              value: warehouse.name,
-                              label: warehouse.name,
-                            }))
+                              .filter((warehouse) => warehouse.status) // Filter based on status
+                              .map((warehouse) => ({
+                                value: warehouse.name,
+                                label: warehouse.name,
+                              }))
                       }
                       placeholder="Please select"
                     />

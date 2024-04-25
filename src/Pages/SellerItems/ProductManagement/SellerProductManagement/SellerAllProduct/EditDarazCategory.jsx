@@ -111,6 +111,7 @@ const EditDarazCategory = ({ product, datazCategory }) => {
   };
   return (
     <div className="grid grid-cols-2 gap-8 mt-4 border rounded p-4">
+    
       {filteredData?.map((category) => (
         <div
           key={category?.label}

@@ -29,7 +29,7 @@ const SignInSeller = () => {
       password,
     };
     setLoading(true);
-    fetch("https://backend.doob.com.bd/api/v1/auth/sign-in", {
+    fetch("https://salenow-v2-backend.vercel.app/api/v1/auth/sign-in", {
       method: "post",
       headers: {
         "content-type": "application/json",
@@ -43,20 +43,23 @@ const SignInSeller = () => {
           setCookie("DoobUser", JSON.stringify(data.user));
           setLoading(false);
           setPassError("");
-          if (data.user.role === 'seller') {
-            fetch(`https://backend.doob.com.bd/api/v1/shop/checkshop?shopEmail=${data?.user?.shopEmail}`)
+          if (data.user.role === "seller") {
+            fetch(
+              `https://salenow-v2-backend.vercel.app/api/v1/shop/checkshop?shopEmail=${data?.user?.shopEmail}`
+            )
               .then((response) => response.json())
               .then((result) => {
                 console.log(result);
                 if (result?.seller) {
-                  setShopInfo(result.information[0])
-                  setCookie("SellerShop", JSON.stringify(result.information[0]));
+                  setShopInfo(result.information[0]);
+                  setCookie(
+                    "SellerShop",
+                    JSON.stringify(result.information[0])
+                  );
                   navigate("/seller/dashboard");
-                }
-                else {
+                } else {
                   navigate("/shop-register");
                 }
-
               });
           }
 
@@ -64,11 +67,10 @@ const SignInSeller = () => {
             navigate("/admin/dashboard");
           }
           if (data.user.role === "user") {
-            navigate('/')
+            navigate("/");
           }
           setLoading(false);
         }
-
 
         setPassError(data.message);
 
@@ -116,14 +118,12 @@ const SignInSeller = () => {
             </div>
             <div className="w-full max-w-xl xl:px-8 xl:w-5/12">
               <div className="bg-white rounded shadow-2xl p-7 sm:p-10">
-
                 <h3 className="mb-4 text-xl font-semibold sm:text-center sm:mb-6 sm:text-2xl">
                   Sign In with Doob account
                 </h3>
 
                 <>
-
-                  <form onChange={() => setPassError('')} onSubmit={loginUser}>
+                  <form onChange={() => setPassError("")} onSubmit={loginUser}>
                     <div className="mb-1 sm:mb-2">
                       <label
                         htmlFor="Email"
@@ -132,7 +132,6 @@ const SignInSeller = () => {
                         Email
                       </label>
                       <input
-
                         placeholder="john.doe@example.org"
                         required
                         type="email"
@@ -150,7 +149,6 @@ const SignInSeller = () => {
                       </label>
                       <div className="relative">
                         <input
-
                           placeholder="*******"
                           required
                           type={showPassword ? "text" : "password"}

@@ -17,7 +17,7 @@ const ExtraCategoriesManagement = () => {
     queryKey: ["categoriesData"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/category/seller/extra/${shopInfo._id}`
+        `https://salenow-v2-backend.vercel.app/api/v1/category/seller/extra/${shopInfo._id}`
       );
       const data = await res.json();
       return data;
@@ -39,7 +39,7 @@ const ExtraCategoriesManagement = () => {
 
         try {
           parsedDarazCategory = JSON.parse(filteredItem?.darazCategory);
-        } catch (error) { }
+        } catch (error) {}
 
         return {
           ...filteredItem,
@@ -92,10 +92,11 @@ const ExtraCategoriesManagement = () => {
           return (
             <li key={pageNumber}>
               <button
-                className={`block h-8 w-8 rounded border ${pageNumber === currentPage
+                className={`block h-8 w-8 rounded border ${
+                  pageNumber === currentPage
                     ? "border-blue-600 bg-blue-600 text-white"
                     : "border-gray-900 bg-white text-center leading-8 text-gray-900"
-                  }`}
+                }`}
                 onClick={() => handleChangePage(pageNumber)}
               >
                 {pageNumber}
@@ -120,7 +121,7 @@ const ExtraCategoriesManagement = () => {
 
   const updateStatus = (id, status) => {
     fetch(
-      `https://backend.doob.com.bd/api/v1/category/seller/extra/status/${id}`,
+      `https://salenow-v2-backend.vercel.app/api/v1/category/seller/extra/status/${id}`,
       {
         method: "PUT",
         headers: {
@@ -159,7 +160,7 @@ const ExtraCategoriesManagement = () => {
       if (result.dismiss === Swal.DismissReason.timer) {
         // Timer completed, initiate the fetch for deletion
         fetch(
-          `https://backend.doob.com.bd/api/v1/category/seller/extra/delete/${id}`,
+          `https://salenow-v2-backend.vercel.app/api/v1/category/seller/extra/delete/${id}`,
           {
             method: "DELETE",
             headers: {
@@ -189,7 +190,7 @@ const ExtraCategoriesManagement = () => {
   };
 
   const uploadImage = async (formData) => {
-    const url = `https://backend.doob.com.bd/api/v1/image/upload-image`;
+    const url = `https://salenow-v2-backend.vercel.app/api/v1/image/upload-image`;
     const response = await fetch(url, {
       method: "POST",
       body: formData,
@@ -216,7 +217,7 @@ const ExtraCategoriesManagement = () => {
     console.log(data, id, "update");
 
     fetch(
-      `https://backend.doob.com.bd/api/v1/category/seller-update-extraCategory?id=${id}`,
+      `https://salenow-v2-backend.vercel.app/api/v1/category/seller-update-extraCategory?id=${id}`,
       {
         method: "PUT",
         headers: {
@@ -237,7 +238,7 @@ const ExtraCategoriesManagement = () => {
 
   const futuresUpdate = (id, status) => {
     fetch(
-      `https://backend.doob.com.bd/api/v1/category/seller-update-extraCategory-feature?id=${id}&status=${status}`,
+      `https://salenow-v2-backend.vercel.app/api/v1/category/seller-update-extraCategory-feature?id=${id}&status=${status}`,
       {
         method: "PUT",
 
@@ -421,10 +422,10 @@ const ExtraCategoriesManagement = () => {
                                         );
                                         const darazCategoryName =
                                           parsedMegaCategory &&
-                                            parsedMegaCategory.darazCategory
+                                          parsedMegaCategory.darazCategory
                                             ? JSON.parse(
-                                              parsedMegaCategory.darazCategory
-                                            ).name
+                                                parsedMegaCategory.darazCategory
+                                              ).name
                                             : "Invalidate";
 
                                         return darazCategoryName;
@@ -485,10 +486,10 @@ const ExtraCategoriesManagement = () => {
                                     );
                                     const darazCategoryName =
                                       parsedMegaCategory &&
-                                        parsedMegaCategory.wocomarceCategory
+                                      parsedMegaCategory.wocomarceCategory
                                         ? JSON.parse(
-                                          parsedMegaCategory.wocomarceCategory
-                                        ).name
+                                            parsedMegaCategory.wocomarceCategory
+                                          ).name
                                         : "Invalidate";
 
                                     return darazCategoryName;
@@ -541,26 +542,29 @@ const ExtraCategoriesManagement = () => {
                                     : true
                                 )
                               }
-                              className={`${warehouse && warehouse.feature === "true"
+                              className={`${
+                                warehouse && warehouse.feature === "true"
                                   ? "bg-green-500"
                                   : "bg-red-500"
-                                } text-white ml-2 rounded capitalize px-3 py-1`}
+                              } text-white ml-2 rounded capitalize px-3 py-1`}
                             >
                               futures
                             </button>
                           </td>
 
                           <div
-                            className={`fixed z-[100] flex items-center justify-center ${editOn?._id === warehouse?._id
+                            className={`fixed z-[100] flex items-center justify-center ${
+                              editOn?._id === warehouse?._id
                                 ? "opacity-1 visible"
                                 : "invisible opacity-0"
-                              } inset-0 bg-black/20 backdrop-blur-sm duration-100`}
+                            } inset-0 bg-black/20 backdrop-blur-sm duration-100`}
                           >
                             <div
-                              className={`absolute md:w-[500px] w-full rounded-sm bg-white p-3 pb-5 text-center drop-shadow-2xl ${editOn?._id === warehouse?._id
+                              className={`absolute md:w-[500px] w-full rounded-sm bg-white p-3 pb-5 text-center drop-shadow-2xl ${
+                                editOn?._id === warehouse?._id
                                   ? "scale-1 opacity-1 duration-300"
                                   : "scale-0 opacity-0 duration-150"
-                                } `}
+                              } `}
                             >
                               <svg
                                 onClick={() => setEditOn(false)}

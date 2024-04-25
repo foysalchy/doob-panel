@@ -60,7 +60,7 @@ const AddPage = () => {
         };
         // postPage(draftsAddPageData, "");
         console.log(draftsAddPageData);
-        fetch(`https://backend.doob.com.bd/api/v1/admin/addpage`, {
+        fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/addpage`, {
           method: "POST",
           headers: {
             "content-type": "application/json",
@@ -107,7 +107,7 @@ const AddPage = () => {
     };
 
     console.log(faq);
-    fetch(`https://backend.doob.com.bd/api/v1/admin/addpage`, {
+    fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/addpage`, {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -125,7 +125,7 @@ const AddPage = () => {
 
   async function uploadImage(formData) {
     const url =
-      "https://backend.doob.com.bd/api/v1/image/upload-image";
+      "https://salenow-v2-backend.vercel.app/api/v1/image/upload-image";
     const response = await fetch(url, {
       method: "POST",
       body: formData,

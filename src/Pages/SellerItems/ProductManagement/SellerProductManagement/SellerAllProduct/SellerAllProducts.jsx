@@ -28,7 +28,7 @@ const SellerAllProducts = () => {
     queryKey: ["products"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/seller/all-products/${shopInfo._id}`
+        `https://salenow-v2-backend.vercel.app/api/v1/seller/all-products/${shopInfo._id}`
       );
       const data = await res.json();
       return data;
@@ -66,7 +66,7 @@ const SellerAllProducts = () => {
   const updateProductStatus = (id, status) => {
     console.log(id);
     fetch(
-      `https://backend.doob.com.bd/api/v1/seller/update-product-status`,
+      `https://salenow-v2-backend.vercel.app/api/v1/seller/update-product-status`,
       {
         method: "PUT",
         headers: {
@@ -96,7 +96,7 @@ const SellerAllProducts = () => {
   };
   if (isDelete) {
     fetch(
-      `https://backend.doob.com.bd/api/v1/seller/delete-product`,
+      `https://salenow-v2-backend.vercel.app/api/v1/seller/delete-product`,
       {
         method: "DELETE",
         headers: {
@@ -124,7 +124,7 @@ const SellerAllProducts = () => {
     }));
     const data = { category, item_id, sku, id, shopId: shopInfo._id };
     fetch(
-      "https://backend.doob.com.bd/api/v1/seller/update-product",
+      "https://salenow-v2-backend.vercel.app/api/v1/seller/update-product",
       {
         method: "PATCH",
         headers: {
@@ -153,7 +153,7 @@ const SellerAllProducts = () => {
     queryKey: ["priceRole"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/seller/get-price-role/${shopInfo?._id}`
+        `https://salenow-v2-backend.vercel.app/api/v1/seller/get-price-role/${shopInfo?._id}`
       );
       const data = await res.json();
       return data?.data;
@@ -211,7 +211,7 @@ const SellerAllProducts = () => {
 
   const update_product_multi_vendor = (id, status) => {
     fetch(
-      `https://backend.doob.com.bd/api/v1/seller/update-product-multivendor`,
+      `https://salenow-v2-backend.vercel.app/api/v1/seller/update-product-multivendor`,
       {
         method: "PUT",
         headers: {
@@ -280,7 +280,7 @@ const SellerAllProducts = () => {
   const update_product_sorting = (e) => {
     console.log(e.target.value);
     fetch(
-      `https://backend.doob.com.bd/api/v1/seller/update-product-upcoming`,
+      `https://salenow-v2-backend.vercel.app/api/v1/seller/update-product-upcoming`,
       {
         method: "PUT",
         headers: {
@@ -688,17 +688,19 @@ const SellerAllProducts = () => {
                                   </button>
                                   <div
                                     onClick={() => setPriceOn(false)}
-                                    className={`fixed z-[100] flex items-center justify-center ${priceOn?._id == product?._id
+                                    className={`fixed z-[100] flex items-center justify-center ${
+                                      priceOn?._id == product?._id
                                         ? "visible opacity-100"
                                         : "invisible opacity-0"
-                                      } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
+                                    } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
                                   >
                                     <div
                                       onClick={(e_) => e_.stopPropagation()}
-                                      className={`text- absolute max-w-md rounded-sm bg-white p-6 drop-shadow-lg dark:bg-white dark:text-black ${priceOn?._id == product?._id
+                                      className={`text- absolute max-w-md rounded-sm bg-white p-6 drop-shadow-lg dark:bg-white dark:text-black ${
+                                        priceOn?._id == product?._id
                                           ? "scale-1 opacity-1 duration-300"
                                           : "scale-0 opacity-0 duration-150"
-                                        }`}
+                                      }`}
                                     >
                                       <form onSubmit={handleEditPrice}>
                                         <h2 className="text-lg font-medium text-gray-800 mb-4">
@@ -743,17 +745,19 @@ const SellerAllProducts = () => {
 
                                     <div
                                       onClick={() => setStockOn(false)}
-                                      className={`fixed z-[100] flex items-center justify-center ${stockOn?._id == product?._id
+                                      className={`fixed z-[100] flex items-center justify-center ${
+                                        stockOn?._id == product?._id
                                           ? "visible opacity-100"
                                           : "invisible opacity-0"
-                                        } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
+                                      } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
                                     >
                                       <div
                                         onClick={(e_) => e_.stopPropagation()}
-                                        className={`text- absolute max-w-md rounded-sm bg-white p-6 drop-shadow-lg dark:bg-white dark:text-black ${stockOn?._id == product?._id
+                                        className={`text- absolute max-w-md rounded-sm bg-white p-6 drop-shadow-lg dark:bg-white dark:text-black ${
+                                          stockOn?._id == product?._id
                                             ? "scale-1 opacity-1 duration-300"
                                             : "scale-0 opacity-0 duration-150"
-                                          }`}
+                                        }`}
                                       >
                                         <form onSubmit={handleEditStock}>
                                           <h2 className="text-lg font-medium text-gray-800 mb-4">
@@ -875,8 +879,6 @@ const SellerAllProducts = () => {
                                       <EditProductForm product={onModal} />
                                     </div>
                                   )}
-
-
                                 </div>
                                 <div></div>
                               </td>
@@ -920,10 +922,11 @@ const SellerAllProducts = () => {
                   (_, index) => (
                     <div
                       key={index}
-                      className={`px-2 py-1 text-sm rounded-md ${currentPage === index + 1
+                      className={`px-2 py-1 text-sm rounded-md ${
+                        currentPage === index + 1
                           ? "bg-blue-500 text-white"
                           : "bg-blue-100/60 text-blue-500"
-                        }`}
+                      }`}
                     >
                       <span>{index + 1}</span>
                     </div>
