@@ -341,6 +341,8 @@ const CategoryEditPage = () => {
       warrantyTypes,
       rating_count: 0,
       shopId: shopInfo._id,
+
+
       adminWare,
       darazOptionData,
       upcoming: isChecked,
@@ -462,7 +464,7 @@ const CategoryEditPage = () => {
         {daraz && datazCategory.length && (
           <EditDarazCategory product={product} datazCategory={datazCategory} />
         )}
-        <ServiceWarranty />
+        <ServiceWarranty  product={product}/>
         <EditDelivery />
         <EditMeta />
         <div className="mt-4">
