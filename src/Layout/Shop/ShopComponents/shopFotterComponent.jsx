@@ -34,7 +34,7 @@ export const Footer = () => {
     queryKey: ["sellerPages"],
     queryFn: async () => {
       const res = await fetch(
-        `https://salenow-v2-backend.vercel.app/api/v1/seller/pages/${shopId}`
+        `https://backend.doob.com.bd/api/v1/seller/pages/${shopId}`
       );
       const data = await res.json();
       return data;
@@ -45,7 +45,7 @@ export const Footer = () => {
     queryKey: ["buyer"],
     queryFn: async () => {
       const res = await fetch(
-        `https://salenow-v2-backend.vercel.app/api/v1/shop/${shopId}`
+        `https://backend.doob.com.bd/api/v1/shop/${shopId}`
       );
       const data = await res.json();
       return data;
@@ -56,14 +56,14 @@ export const Footer = () => {
     queryKey: ["contact"],
     queryFn: async () => {
       const res = await fetch(
-        `https://salenow-v2-backend.vercel.app/api/v1/shop/contact/${shopId}`
+        `https://backend.doob.com.bd/api/v1/shop/contact/${shopId}`
       );
       const data = await res.json();
       return data;
     },
   });
   console.log(
-    `https://salenow-v2-backend.vercel.app/api/v1/shop/contact/${shopId}`,
+    `https://backend.doob.com.bd/api/v1/shop/contact/${shopId}`,
     "footer"
   );
 
@@ -79,7 +79,7 @@ export const Footer = () => {
     if (email && email.match(emailRegex)) {
       setError(false);
       fetch(
-        "https://salenow-v2-backend.vercel.app/api/v1/seller/subscriber-report",
+        "https://backend.doob.com.bd/api/v1/seller/subscriber-report",
         {
           method: "POST",
           headers: {
@@ -150,21 +150,21 @@ export const Footer = () => {
                 </li>
                 {pages.length
                   ? pages
-                      ?.filter((item) => item?.trash)
-                      ?.map((page, i) => (
-                        <div key={page._id}>
-                          {page?.status && (
-                            <li>
-                              <Link
-                                to={`/shop/${shopId}/pages/${page._id}`}
-                                className="text-gray-500 transition-colors duration-300 hover:text-deep-purple-accent-200"
-                              >
-                                {page?.title}
-                              </Link>
-                            </li>
-                          )}
-                        </div>
-                      ))
+                    ?.filter((item) => item?.trash)
+                    ?.map((page, i) => (
+                      <div key={page._id}>
+                        {page?.status && (
+                          <li>
+                            <Link
+                              to={`/shop/${shopId}/pages/${page._id}`}
+                              className="text-gray-500 transition-colors duration-300 hover:text-deep-purple-accent-200"
+                            >
+                              {page?.title}
+                            </Link>
+                          </li>
+                        )}
+                      </div>
+                    ))
                   : ""}
               </ul>
             </div>

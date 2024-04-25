@@ -15,7 +15,7 @@ const SingleBlog = () => {
   const { user } = useContext(AuthContext)
 
   useEffect(() => {
-    fetch("https://salenow-v2-backend.vercel.app/api/v1/admin/all-blogs")
+    fetch("https://backend.doob.com.bd/api/v1/admin/all-blogs")
       .then((res) => res.json())
       .then((data) => setBlogList(data));
   }, []);
@@ -35,7 +35,7 @@ const SingleBlog = () => {
     const userData = { name: user.name, userId: user._id }
     const timestamp = new Date().getTime()
     let data = { text: comment, user: userData, timeStamp: timestamp, }
-    fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/add-blog-comment?id=${blogInfo._id}`, {
+    fetch(`https://backend.doob.com.bd/api/v1/admin/add-blog-comment?id=${blogInfo._id}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json'

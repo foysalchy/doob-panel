@@ -21,7 +21,7 @@ const ReplayModal = ({ refetch, setOpen, itm }) => {
             time: new Date()
         };
 
-        fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/replay-on-comment`, {
+        fetch(`https://backend.doob.com.bd/api/v1/seller/replay-on-comment`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json'
@@ -42,7 +42,7 @@ const ReplayModal = ({ refetch, setOpen, itm }) => {
         const selectedFile = e.target.files[0];
         const formData = new FormData();
         formData.append("image", selectedFile);
-        const url = `https://salenow-v2-backend.vercel.app/api/v1/image/upload-image`;
+        const url = `https://backend.doob.com.bd/api/v1/image/upload-image`;
         fetch(url, {
             method: "POST",
             body: formData,

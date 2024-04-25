@@ -13,7 +13,7 @@ const ProductGallery = () => {
   const { data: featureImageData = [], refetch: isLoading } = useQuery({
     queryKey: ["featureImageData"],
     queryFn: async () => {
-      const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/feature-images`);
+      const res = await fetch(`https://backend.doob.com.bd/api/v1/admin/feature-images`);
       const data = await res.json();
       return data?.data ? data?.data : [];
     },

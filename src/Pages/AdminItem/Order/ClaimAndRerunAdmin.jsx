@@ -18,7 +18,7 @@ const ClaimAndRerunAdmin = () => {
     queryKey: ["adminOrder"],
     queryFn: async () => {
       const res = await fetch(
-        `https://salenow-v2-backend.vercel.app/api/v1/admin/get-shop-all-order`
+        `https://backend.doob.com.bd/api/v1/admin/get-shop-all-order`
       );
       const data = await res.json();
       return data.data;
@@ -90,7 +90,7 @@ const ClaimAndRerunAdmin = () => {
 
   const productStatusUpdate = (status, orderId) => {
     fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/admin/order-status-update?orderId=${orderId}&status=${status}`,
+      `https://backend.doob.com.bd/api/v1/admin/order-status-update?orderId=${orderId}&status=${status}`,
       {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
@@ -107,7 +107,7 @@ const ClaimAndRerunAdmin = () => {
     queryKey: ["getaway"],
     queryFn: async () => {
       const res = await fetch(
-        `https://salenow-v2-backend.vercel.app/api/v1/admin/shipping-interrogation/${shopInfo._id}`
+        `https://backend.doob.com.bd/api/v1/admin/shipping-interrogation/${shopInfo._id}`
       );
       const data = await res.json();
       return data;
@@ -161,7 +161,7 @@ const ClaimAndRerunAdmin = () => {
 
   const handleProductStatusUpdate = (orders) => {
     fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/admin/order-quantity-update`,
+      `https://backend.doob.com.bd/api/v1/admin/order-quantity-update`,
       {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
@@ -190,7 +190,7 @@ const ClaimAndRerunAdmin = () => {
     setOpenModal(true);
 
     fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/admin/refound-order-info?shopId=${shopInfo._id}&orderId=${order._id}`
+      `https://backend.doob.com.bd/api/v1/admin/refound-order-info?shopId=${shopInfo._id}&orderId=${order._id}`
     )
       .then((res) => res.json())
       .then((data) => {
@@ -203,7 +203,7 @@ const ClaimAndRerunAdmin = () => {
   const [refundData, setRefundData] = useState(true);
   const checkBox = (orderId) => {
     fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/admin/refound-order-info?shopId=${shopInfo._id}&orderId=${orderId}`
+      `https://backend.doob.com.bd/api/v1/admin/refound-order-info?shopId=${shopInfo._id}&orderId=${orderId}`
     )
       .then((res) => res.json())
       .then((data) => {
@@ -215,7 +215,7 @@ const ClaimAndRerunAdmin = () => {
   const updateOrderInfo = (note, file, id) => {
     const noteData = { note, file, orderId: id };
     fetch(
-      "https://salenow-v2-backend.vercel.app/api/v1/admin/refound-order-info",
+      "https://backend.doob.com.bd/api/v1/admin/refound-order-info",
       {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
@@ -267,7 +267,7 @@ const ClaimAndRerunAdmin = () => {
 
   async function uploadImage(formData) {
     const url =
-      "https://salenow-v2-backend.vercel.app/api/v1/image/upload-image";
+      "https://backend.doob.com.bd/api/v1/image/upload-image";
     const response = await fetch(url, {
       method: "POST",
       body: formData,
@@ -278,7 +278,7 @@ const ClaimAndRerunAdmin = () => {
 
   const updateCourier_status = (id, courier_id) => {
     fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/admin/courier_status?orderId=${id}&id=${courier_id}`,
+      `https://backend.doob.com.bd/api/v1/admin/courier_status?orderId=${id}&id=${courier_id}`,
       {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
@@ -363,7 +363,7 @@ const ClaimAndRerunAdmin = () => {
     }
   };
 
-  const update_all_status_failed = () => {};
+  const update_all_status_failed = () => { };
 
   return (
     <div className="flex flex-col overflow-hidden mt-4">
@@ -531,22 +531,20 @@ const ClaimAndRerunAdmin = () => {
                         <div>
                           <div
                             onClick={() => setModalOn(false)}
-                            className={`fixed z-[100] flex items-center justify-center ${
-                              modalOn?._id === item?._id
+                            className={`fixed z-[100] flex items-center justify-center ${modalOn?._id === item?._id
                                 ? "visible opacity-100"
                                 : "invisible opacity-0"
-                            } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
+                              } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
                           >
                             <div
                               onClick={(e_) => e_.stopPropagation()}
-                              className={`text- absolute w-[500px] rounded-sm bg-white p-6 drop-shadow-lg dark:bg-black dark:text-white ${
-                                modalOn?._id === item?._id
+                              className={`text- absolute w-[500px] rounded-sm bg-white p-6 drop-shadow-lg dark:bg-black dark:text-white ${modalOn?._id === item?._id
                                   ? "scale-1 opacity-1 duration-300"
                                   : "scale-0 opacity-0 duration-150"
-                              }`}
+                                }`}
                             >
                               <h1 className="mb-2 text-2xl font-semibold">
-                                Edit Order {}
+                                Edit Order { }
                               </h1>
                               <form>
                                 <div className="flex items-start w-full mb-6 flex-col gap-1">

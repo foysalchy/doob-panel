@@ -8,7 +8,7 @@ const Withdraw = () => {
     const { data: orders = [], refetch } = useQuery({
         queryKey: ["my-orders"],
         queryFn: async () => {
-            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/get-my-order?shopId=${shopInfo?._id}`);
+            const res = await fetch(`https://backend.doob.com.bd/api/v1/seller/get-my-order?shopId=${shopInfo?._id}`);
             const data = await res.json();
             return data.data;
         },
@@ -17,7 +17,7 @@ const Withdraw = () => {
     const { data: withdrawHistory = [], refetch: reload } = useQuery({
         queryKey: ["my-withdrawHistory"],
         queryFn: async () => {
-            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/withdraw-for-shop?shopId=${shopInfo?._id}`);
+            const res = await fetch(`https://backend.doob.com.bd/api/v1/admin/withdraw-for-shop?shopId=${shopInfo?._id}`);
             const data = await res.json();
             return data.data;
         },
@@ -59,7 +59,7 @@ const Withdraw = () => {
 
     // Function to handle withdrawal
     const handleWithdraw = () => {
-        fetch('https://salenow-v2-backend.vercel.app/api/v1/admin/withdraw', {
+        fetch('https://backend.doob.com.bd/api/v1/admin/withdraw', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

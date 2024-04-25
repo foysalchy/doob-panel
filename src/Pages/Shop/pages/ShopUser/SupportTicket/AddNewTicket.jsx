@@ -28,7 +28,7 @@ const AddNewTicket = ({ OpenSupport, setOpenSupport, refetch }) => {
     };
 
     const uploadImage = async (formData) => {
-        const url = `https://salenow-v2-backend.vercel.app/api/v1/image/upload-image`;
+        const url = `https://backend.doob.com.bd/api/v1/image/upload-image`;
         const response = await fetch(url, {
             method: "POST",
             body: formData,
@@ -60,7 +60,7 @@ const AddNewTicket = ({ OpenSupport, setOpenSupport, refetch }) => {
         }
 
         fetch(
-            `https://salenow-v2-backend.vercel.app/api/v1/shop/support?token=${shopUser._id}`,
+            `https://backend.doob.com.bd/api/v1/shop/support?token=${shopUser._id}`,
             {
                 method: "POST",
                 headers: {

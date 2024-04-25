@@ -36,7 +36,7 @@ const CategoryEditPage = () => {
     queryFn: async () => {
       try {
         const res = await fetch(
-          `https://salenow-v2-backend.vercel.app/api/v1/seller/all-products/${shopInfo._id}`
+          `https://backend.doob.com.bd/api/v1/seller/all-products/${shopInfo._id}`
         );
         const data = await res.json();
         return data;
@@ -100,7 +100,7 @@ const CategoryEditPage = () => {
     const formData = new FormData();
     formData.append("image", image);
 
-    const url = `https://salenow-v2-backend.vercel.app/api/v1/image/upload-image`;
+    const url = `https://backend.doob.com.bd/api/v1/image/upload-image`;
 
     const res = await fetch(url, {
       method: "POST",
@@ -117,7 +117,7 @@ const CategoryEditPage = () => {
     const formData = new FormData();
     formData.append("image", imageBlob);
 
-    const url = `https://salenow-v2-backend.vercel.app/api/v1/daraz/daraz-image/${shopInfo._id}`;
+    const url = `https://backend.doob.com.bd/api/v1/daraz/daraz-image/${shopInfo._id}`;
 
     try {
       const response = await fetch(url, {
@@ -346,8 +346,8 @@ const CategoryEditPage = () => {
     console.log(data, "edit --------------------------->");
 
     fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/seller/normal-product?id=${product?._id}`,
-      // `https://salenow-v2-backend.vercel.app/api/v1/seller/normal-product?id=${product?._id}`,
+      `https://backend.doob.com.bd/api/v1/seller/normal-product?id=${product?._id}`,
+      // `https://backend.doob.com.bd/api/v1/seller/normal-product?id=${product?._id}`,
       {
         method: "PUT",
         headers: {
@@ -407,9 +407,8 @@ const CategoryEditPage = () => {
         />
         <label
           htmlFor="Toggle3"
-          className={`inline-flex items-center py-4 rounded-md cursor-pointer ${
-            isChecked ? "text-gray-800" : ""
-          }`}
+          className={`inline-flex items-center py-4 rounded-md cursor-pointer ${isChecked ? "text-gray-800" : ""
+            }`}
         >
           <input
             id="Toggle3"
@@ -419,16 +418,14 @@ const CategoryEditPage = () => {
             onClick={() => setIsChecked(!isChecked)}
           />
           <span
-            className={`px-4 py-2 rounded-l-md ${
-              isChecked ? " bg-gray-300" : "bg-violet-400"
-            }`}
+            className={`px-4 py-2 rounded-l-md ${isChecked ? " bg-gray-300" : "bg-violet-400"
+              }`}
           >
             Upcoming Product
           </span>
           <span
-            className={`px-4 py-2 rounded-r-md ${
-              isChecked ? " bg-violet-400" : "bg-gray-300"
-            }`}
+            className={`px-4 py-2 rounded-r-md ${isChecked ? " bg-violet-400" : "bg-gray-300"
+              }`}
           >
             For You Product
           </span>

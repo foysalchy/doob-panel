@@ -22,8 +22,8 @@ const WareHouse = ({ adminWare, setAdminWare, shopInfo }) => {
 
     const fetchData = async () => {
         const apiUrl = adminWare
-            ? "https://salenow-v2-backend.vercel.app/api/v1/admin/warehouse"
-            : `https://salenow-v2-backend.vercel.app/api/v1/seller/warehouse/get/${shopInfo._id}`;
+            ? "https://backend.doob.com.bd/api/v1/admin/warehouse"
+            : `https://backend.doob.com.bd/api/v1/seller/warehouse/get/${shopInfo._id}`;
 
         const res = await fetch(apiUrl);
         if (!res.ok) {
@@ -44,7 +44,7 @@ const WareHouse = ({ adminWare, setAdminWare, shopInfo }) => {
         setSelectedSelf('');
         setSelectedCell('');
 
-        const apiUrl = `https://salenow-v2-backend.vercel.app/api/v1/seller/warehouse/area/${selectedWarehouse}/${shopInfo._id}`;
+        const apiUrl = `https://backend.doob.com.bd/api/v1/seller/warehouse/area/${selectedWarehouse}/${shopInfo._id}`;
         const res = await fetch(apiUrl);
         const areaData = await res.json();
         setOptions((prevOptions) => ({
@@ -63,7 +63,7 @@ const WareHouse = ({ adminWare, setAdminWare, shopInfo }) => {
         setSelectedSelf('');
         setSelectedCell('');
 
-        const apiUrl = `https://salenow-v2-backend.vercel.app/api/v1/seller/warehouse/rack/${selectedWarehouse}/${selectedArea}/${shopInfo._id}`;
+        const apiUrl = `https://backend.doob.com.bd/api/v1/seller/warehouse/rack/${selectedWarehouse}/${selectedArea}/${shopInfo._id}`;
         const res = await fetch(apiUrl);
         const rackData = await res.json();
         setOptions((prevOptions) => ({
@@ -80,7 +80,7 @@ const WareHouse = ({ adminWare, setAdminWare, shopInfo }) => {
         setSelectedSelf('');
         setSelectedCell('');
 
-        const apiUrl = `https://salenow-v2-backend.vercel.app/api/v1/seller/warehouse/self/${selectedWarehouse}/${selectedArea}/${selectedRack}/${shopInfo._id}`;
+        const apiUrl = `https://backend.doob.com.bd/api/v1/seller/warehouse/self/${selectedWarehouse}/${selectedArea}/${selectedRack}/${shopInfo._id}`;
         const res = await fetch(apiUrl);
         const selfData = await res.json();
         setOptions((prevOptions) => ({
@@ -94,7 +94,7 @@ const WareHouse = ({ adminWare, setAdminWare, shopInfo }) => {
         const selectedSelf = selectedOption.value;
         setSelectedSelf(selectedSelf);
 
-        const apiUrl = `https://salenow-v2-backend.vercel.app/api/v1/seller/warehouse/cell/${selectedWarehouse}/${selectedArea}/${selectedRack}/${selectedSelf}/${shopInfo._id}`;
+        const apiUrl = `https://backend.doob.com.bd/api/v1/seller/warehouse/cell/${selectedWarehouse}/${selectedArea}/${selectedRack}/${selectedSelf}/${shopInfo._id}`;
         const res = await fetch(apiUrl);
         const cellData = await res.json();
         setOptions((prevOptions) => ({

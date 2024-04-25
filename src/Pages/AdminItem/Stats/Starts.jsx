@@ -10,7 +10,7 @@ const Starts = () => {
     queryKey: ["newUser"],
     queryFn: async () => {
       const res = await fetch(
-        "https://salenow-v2-backend.vercel.app/api/v1/admin/previous-week-users"
+        "https://backend.doob.com.bd/api/v1/admin/previous-week-users"
       );
       const data = await res.json();
       return data;
@@ -21,7 +21,7 @@ const Starts = () => {
     queryKey: ["orderData"],
     queryFn: async () => {
       const res = await fetch(
-        `https://salenow-v2-backend.vercel.app/api/v1/admin/get-shop-all-order`
+        `https://backend.doob.com.bd/api/v1/admin/get-shop-all-order`
       );
       const data = await res.json();
       return data.data;
@@ -34,7 +34,7 @@ const Starts = () => {
     queryKey: ["sellerData"],
     queryFn: async () => {
       const res = await fetch(
-        "https://salenow-v2-backend.vercel.app/api/v1/admin/seller"
+        "https://backend.doob.com.bd/api/v1/admin/seller"
       );
       const data = await res.json();
       return data;
@@ -55,7 +55,7 @@ const Starts = () => {
     queryKey: ["products"],
     queryFn: async () => {
       const res = await fetch(
-        "https://salenow-v2-backend.vercel.app/api/v1/admin/products"
+        "https://backend.doob.com.bd/api/v1/admin/products"
       );
       const data = await res.json();
       return data;
@@ -131,17 +131,15 @@ const Starts = () => {
               <div>
                 <div
                   onClick={() => setShowSeller(false)}
-                  className={`fixed z-[100] flex items-center justify-center ${
-                    showSeller ? "visible opacity-100" : "invisible opacity-0"
-                  } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
+                  className={`fixed z-[100] flex items-center justify-center ${showSeller ? "visible opacity-100" : "invisible opacity-0"
+                    } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
                 >
                   <div
                     onClick={(e_) => e_.stopPropagation()}
-                    className={`text- absolute w-[600px] rounded-sm bg-white p-6 drop-shadow-lg dark:bg-white dark:text-black ${
-                      showSeller
+                    className={`text- absolute w-[600px] rounded-sm bg-white p-6 drop-shadow-lg dark:bg-white dark:text-black ${showSeller
                         ? "scale-1 opacity-1 duration-300"
                         : "scale-0 opacity-0 duration-150"
-                    }`}
+                      }`}
                   >
                     <main>
                       <h1 className="font-semibold border-b pb-3">

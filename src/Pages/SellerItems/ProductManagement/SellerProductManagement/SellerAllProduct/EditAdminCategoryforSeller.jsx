@@ -10,20 +10,20 @@ import { useState } from "react";
 const EditAdminCategoryforSeller = ({ product }) => {
   console.log("🚀 ~ file: product:", product);
 
-  
+
   const navigate = useNavigate();
   const handleGoBack = () => {
     navigate(-1); // This will go back to the previous page
   };
 
-   const [subCategorys, setSubCategorys] = useState([]);
-     const [miniCategorys, setMiniCategorys] = useState([]);
-       const [extraCategorys, setExtraCategorys] = useState([]);
+  const [subCategorys, setSubCategorys] = useState([]);
+  const [miniCategorys, setMiniCategorys] = useState([]);
+  const [extraCategorys, setExtraCategorys] = useState([]);
 
-       console.log(subCategorys);
-       console.log(miniCategorys);
+  console.log(subCategorys);
+  console.log(miniCategorys);
 
-  let megaCategoryUrl = `https://salenow-v2-backend.vercel.app/api/v1/admin/category/megacategory`;
+  let megaCategoryUrl = `https://backend.doob.com.bd/api/v1/admin/category/megacategory`;
 
   const { data: megaCategories = [], refetch } = useQuery({
     queryKey: ["megaCategories"],
@@ -43,13 +43,13 @@ const EditAdminCategoryforSeller = ({ product }) => {
       label: itm.name,
     }));
 
- 
+
 
   const handleSelectChange = (selectedOption) => {
     setSubCategorys([]);
     const optionId = selectedOption.value;
     fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/admin/category/subcategory?id=${optionId}`
+      `https://backend.doob.com.bd/api/v1/admin/category/subcategory?id=${optionId}`
     )
       .then((res) => res.json())
       .then((data) => {
@@ -73,7 +73,7 @@ const EditAdminCategoryforSeller = ({ product }) => {
     setMiniCategorys([]);
     const optionId = selectedOption.value;
     fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/admin/category/miniCategory?id=${optionId}`
+      `https://backend.doob.com.bd/api/v1/admin/category/miniCategory?id=${optionId}`
     )
       .then((res) => res.json())
       .then((data) => {
@@ -97,9 +97,9 @@ const EditAdminCategoryforSeller = ({ product }) => {
   const onHandleExtraCategorys = (selectedOption) => {
     setExtraCategorys([]);
     const optionId = selectedOption.value;
-    // console.log(`https://salenow-v2-backend.vercel.app/api/v1/admin/category/extraCategory?id=${optionId}`);
+    // console.log(`https://backend.doob.com.bd/api/v1/admin/category/extraCategory?id=${optionId}`);
     fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/admin/category/extraCategory?id=${optionId}`
+      `https://backend.doob.com.bd/api/v1/admin/category/extraCategory?id=${optionId}`
     )
       .then((res) => res.json())
       .then((data) => {

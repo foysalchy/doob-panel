@@ -29,7 +29,7 @@ const SignInSeller = () => {
       password,
     };
     setLoading(true);
-    fetch("https://salenow-v2-backend.vercel.app/api/v1/auth/sign-in", {
+    fetch("https://backend.doob.com.bd/api/v1/auth/sign-in", {
       method: "post",
       headers: {
         "content-type": "application/json",
@@ -44,7 +44,7 @@ const SignInSeller = () => {
           setLoading(false);
           setPassError("");
           if (data.user.role === 'seller') {
-            fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/checkshop?shopEmail=${data?.user?.shopEmail}`)
+            fetch(`https://backend.doob.com.bd/api/v1/shop/checkshop?shopEmail=${data?.user?.shopEmail}`)
               .then((response) => response.json())
               .then((result) => {
                 console.log(result);

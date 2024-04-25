@@ -5,7 +5,7 @@ import { AuthContext } from '../../../../../AuthProvider/UserProvider';
 
 const EditWareHouse = ({ product, adminWare, setAdminWare }) => {
 
-    const { shopInfo } = useContext(AuthContext); 
+    const { shopInfo } = useContext(AuthContext);
     const [areas, setAreas] = useState([]);
     const [racks, setRacks] = useState([]);
     const [selfs, setSelfs] = useState([]);
@@ -19,7 +19,7 @@ const EditWareHouse = ({ product, adminWare, setAdminWare }) => {
     const { data: warehouses = [], refetch, isRefetching } = useQuery({
         queryKey: ["warehouses"],
         queryFn: async () => {
-            const getWarehouseApiUrl = adminWare ? "https://salenow-v2-backend.vercel.app/api/v1/admin/warehouse" : `https://salenow-v2-backend.vercel.app/api/v1/seller/warehouse/get/${shopInfo._id}`;
+            const getWarehouseApiUrl = adminWare ? "https://backend.doob.com.bd/api/v1/admin/warehouse" : `https://backend.doob.com.bd/api/v1/seller/warehouse/get/${shopInfo._id}`;
 
             const res = await fetch(getWarehouseApiUrl);
             if (!res.ok) {
@@ -38,7 +38,7 @@ const EditWareHouse = ({ product, adminWare, setAdminWare }) => {
         setCells([]);
         console.log(selectedWarehouse, adminWare);
 
-        const getAreaApiUrl = `https://salenow-v2-backend.vercel.app/api/v1/seller/warehouse/area/${selectedWarehouse}/${shopInfo._id}`;
+        const getAreaApiUrl = `https://backend.doob.com.bd/api/v1/seller/warehouse/area/${selectedWarehouse}/${shopInfo._id}`;
 
         console.log(getAreaApiUrl);
 
@@ -57,7 +57,7 @@ const EditWareHouse = ({ product, adminWare, setAdminWare }) => {
         setSelfs([]);
         setCells([]);
 
-        const getRackApiUrl = `https://salenow-v2-backend.vercel.app/api/v1/seller/warehouse/rack/${selectedWarehouse}/${selectedArea}/${shopInfo._id}`;
+        const getRackApiUrl = `https://backend.doob.com.bd/api/v1/seller/warehouse/rack/${selectedWarehouse}/${selectedArea}/${shopInfo._id}`;
 
         const rackRes = await fetch(getRackApiUrl);
         const rackData = await rackRes.json();
@@ -72,7 +72,7 @@ const EditWareHouse = ({ product, adminWare, setAdminWare }) => {
         setSelectedRack(selectedRack);
         setCells([]);
 
-        const getSelfApiUrl = `https://salenow-v2-backend.vercel.app/api/v1/seller/warehouse/self/${selectedWarehouse}/${selectedArea}/${selectedRack}/${shopInfo._id}`;
+        const getSelfApiUrl = `https://backend.doob.com.bd/api/v1/seller/warehouse/self/${selectedWarehouse}/${selectedArea}/${selectedRack}/${shopInfo._id}`;
 
         const selfRes = await fetch(getSelfApiUrl);
         const selfData = await selfRes.json();
@@ -86,7 +86,7 @@ const EditWareHouse = ({ product, adminWare, setAdminWare }) => {
         console.log(selectedSelfs);
         setSelectedSelf(selectedSelfs);
 
-        const getCellApiUrl = `https://salenow-v2-backend.vercel.app/api/v1/seller/warehouse/cell/${selectedWarehouse}/${selectedArea}/${selectedRack}/${selectedSelf}/${shopInfo._id}`;
+        const getCellApiUrl = `https://backend.doob.com.bd/api/v1/seller/warehouse/cell/${selectedWarehouse}/${selectedArea}/${selectedRack}/${selectedSelf}/${shopInfo._id}`;
 
         const cellsRes = await fetch(getCellApiUrl);
         const cellData = await cellsRes.json();
@@ -146,7 +146,7 @@ const EditWareHouse = ({ product, adminWare, setAdminWare }) => {
                                 placeholder="Please select"
                             />
                         </div>
-                       
+
                         {selectedWarehouse && !adminWare && <div className="">
                             <label className="text-sm">Select Area</label>
                             <Select

@@ -29,7 +29,7 @@ const SellerDashLayout = () => {
     const { data: prices = {}, refetch } = useQuery({
         queryKey: ["subscriptionModal"],
         queryFn: async () => {
-            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/subscription-model?priceId=${shopInfo?.priceId}&shopId=${shopInfo?._id}`);
+            const res = await fetch(`https://backend.doob.com.bd/api/v1/seller/subscription-model?priceId=${shopInfo?.priceId}&shopId=${shopInfo?._id}`);
             const data = await res.json();
             return data?.data?.result;
         },
@@ -84,7 +84,7 @@ const SellerDashLayout = () => {
 
 
     const updateStatus = (status) => {
-        fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/update-shopInfo-for-status?id=${shopInfo._id}&status=${status}`, {
+        fetch(`https://backend.doob.com.bd/api/v1/seller/update-shopInfo-for-status?id=${shopInfo._id}&status=${status}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
@@ -102,7 +102,7 @@ const SellerDashLayout = () => {
     }
 
     return (
-        <div className='flex w-screen bg-[#f1f5f0]'>
+        <div className='flex w-screen h-screen overflow-y-auto bg-[#f1f5f0]'>
 
             <div className=" h-full z-50  text-white">
                 <SideNavberSeller responsive={responsive} setResponsive={setResponsive} />

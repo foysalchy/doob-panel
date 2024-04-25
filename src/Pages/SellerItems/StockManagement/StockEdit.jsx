@@ -14,7 +14,7 @@ const StockEdit = ({ setOn, itm }) => {
         };
 
         console.log(data);
-        // fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/stock-request?id=${itm?._id}&quantity=${newQuantity}`, {
+        // fetch(`https://backend.doob.com.bd/api/v1/admin/stock-request?id=${itm?._id}&quantity=${newQuantity}`, {
         //     method: "PUT",
         //     headers: {
         //         "Content-Type": "application/json",

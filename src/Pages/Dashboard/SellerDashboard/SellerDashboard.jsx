@@ -62,7 +62,7 @@ const SellerDashboard = () => {
     const { data: sellerPopupData = [], refetch, isLoading } = useQuery({
         queryKey: "sellerPopupData",
         queryFn: async () => {
-            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/pop-up`);
+            const res = await fetch(`https://backend.doob.com.bd/api/v1/admin/pop-up`);
             const data = await res.json();
             return data?.data;
         },
@@ -80,7 +80,7 @@ const SellerDashboard = () => {
         queryKey: ["shopCredential"],
         queryFn: async () => {
             try {
-                const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/firebase/${shopInfo.shopId}`)
+                const res = await fetch(`https://backend.doob.com.bd/api/v1/shop/firebase/${shopInfo.shopId}`)
                 const data = await res.json();
                 return data;
             } catch (error) {
@@ -93,7 +93,7 @@ const SellerDashboard = () => {
     const { data: noticeInfo = [], } = useQuery({
         queryKey: "noticeInfo",
         queryFn: async () => {
-            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/seller-notice`);
+            const res = await fetch(`https://backend.doob.com.bd/api/v1/admin/seller-notice`);
             const data = await res.json();
             return data?.data;
         },
@@ -138,7 +138,7 @@ const SellerDashboard = () => {
     const { data: orderData = [] } = useQuery({
         queryKey: ["orderData"],
         queryFn: async () => {
-            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/order?shopId=${shopInfo._id}`);
+            const res = await fetch(`https://backend.doob.com.bd/api/v1/seller/order?shopId=${shopInfo._id}`);
             const data = await res.json();
             refetch();
             return data.data;
@@ -150,7 +150,7 @@ const SellerDashboard = () => {
     const { data: darazShop = {}, isLoading: check, refetch: check_reload } = useQuery({
         queryKey: ["darazShopBd"],
         queryFn: async () => {
-            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/seller-daraz-accounts?id=${shopInfo._id}`);
+            const res = await fetch(`https://backend.doob.com.bd/api/v1/seller/seller-daraz-accounts?id=${shopInfo._id}`);
             const data = await res.json();
             return data.data[0];
         },
@@ -161,14 +161,14 @@ const SellerDashboard = () => {
     const { data: priviousAccount = [], isLoading: loading, refetch: reload } = useQuery({
         queryKey: ["priviousAccount"],
         queryFn: async () => {
-            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/daraz/get-privious-account?shopId=${shopInfo._id}`);
+            const res = await fetch(`https://backend.doob.com.bd/api/v1/daraz/get-privious-account?shopId=${shopInfo._id}`);
             const data = await res.json();
             return data.data;
         },
     });
 
     const switchAccount = (_id, id) => {
-        fetch(`https://salenow-v2-backend.vercel.app/api/v1/daraz/switching-your-daraz?id=${id}&loginId=${_id}`, {
+        fetch(`https://backend.doob.com.bd/api/v1/daraz/switching-your-daraz?id=${id}&loginId=${_id}`, {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json",
@@ -186,7 +186,7 @@ const SellerDashboard = () => {
 
 
     return (
-        <div className="h-screen  mt-[-40px]   ">
+        <div className="h-screen mb-10 mt-[-40px]   ">
 
 
 
@@ -536,7 +536,7 @@ const SellerDashboard = () => {
                 </div>
 
             </div>
-            <div className="grid grid-cols-1 gap-4 my-4 md:grid-cols-2 lg:grid-cols-2">
+            <div className="grid grid-cols-1 gap-4 my-10 md:grid-cols-2 lg:grid-cols-2">
                 <div className='w-full px-4 py-2 bg-gray-50 rounded text-blue-500 flex items-center gap-2'>
                     <MdEmail />
                     {
@@ -545,7 +545,7 @@ const SellerDashboard = () => {
 
                     }
                 </div>
-                <div className="w-full">
+                <div className="w-full ">
                     <h1>Previous Login</h1>
                     <hr />
                     {

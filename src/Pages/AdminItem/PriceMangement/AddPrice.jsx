@@ -71,7 +71,7 @@ const AddPrice = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/pricing`, {
+    fetch(`https://backend.doob.com.bd/api/v1/admin/pricing`, {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -81,7 +81,7 @@ const AddPrice = () => {
       .then((res) => res.json())
       .then((data) => {
         setLoading(false);
-        Swal.fire("success", "Your Category Publish Successfully", "success");
+        Swal.fire("success", "Your Price Publish Successfully", "success");
         setFormData({
           name: "",
           price: "",
@@ -99,7 +99,7 @@ const AddPrice = () => {
 
   // const handleSubmit = (e) => {
   //   e.preventDefault();
-  //   fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/pricing`, {
+  //   fetch(`https://backend.doob.com.bd/api/v1/admin/pricing`, {
   //     method: "POST",
   //     headers: {
   //       "content-type": "application/json",

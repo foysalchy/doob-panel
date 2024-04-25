@@ -16,7 +16,7 @@ const ListOfWarehouse = () => {
     const { data: warehouses = [], refetch } = useQuery({
         queryKey: ["warehouses"],
         queryFn: async () => {
-            const res = await fetch("https://salenow-v2-backend.vercel.app/api/v1/admin/warehouse");
+            const res = await fetch("https://backend.doob.com.bd/api/v1/admin/warehouse");
             const data = await res.json();
             return data;
         },
@@ -25,7 +25,7 @@ const ListOfWarehouse = () => {
     const { data: wareLength = [] } = useQuery({
         queryKey: ["wareLengthAdmin"],
         queryFn: async () => {
-            const res = await fetch("https://salenow-v2-backend.vercel.app/api/v1/admin/warehouse/admin-all-warehouse-length");
+            const res = await fetch("https://backend.doob.com.bd/api/v1/admin/warehouse/admin-all-warehouse-length");
             const data = await res.json();
             return data;
         },
@@ -122,7 +122,7 @@ const ListOfWarehouse = () => {
 
 
     const updateStatus = (id, status) => {
-        fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/warehouse/status/${id}`, {
+        fetch(`https://backend.doob.com.bd/api/v1/admin/warehouse/status/${id}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
@@ -138,7 +138,7 @@ const ListOfWarehouse = () => {
     const DeleteWarehouse = async (id) => {
 
 
-        const response = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/warehouse/delete/${id}`, {
+        const response = await fetch(`https://backend.doob.com.bd/api/v1/admin/warehouse/delete/${id}`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",

@@ -13,7 +13,7 @@ const Pos = () => {
     const { data: products = [], reload } = useQuery({
         queryKey: ["products"],
         queryFn: async () => {
-            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/all-products/${shopInfo._id}`);
+            const res = await fetch(`https://backend.doob.com.bd/api/v1/seller/all-products/${shopInfo._id}`);
             const data = await res.json();
             return data;
         },
@@ -104,7 +104,7 @@ const Pos = () => {
 
     return (
         <div>
-            <Link className='text-blue-500 underline flex justify-end px-4' to={'/seller'}>Go to dashboard</Link>
+            <Link className='text-blue-500 underline flex justify-end px-4' to={'/seller/dashboard'}>Go to dashboard</Link>
             <main className=' md:p-4 mt-3 rounded-md h-screen overflow-y-auto'>
                 <div className="grid md:grid-cols-3 gap-2 ">
                     <div className="md:col-span-2">

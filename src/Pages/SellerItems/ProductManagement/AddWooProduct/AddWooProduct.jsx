@@ -35,7 +35,7 @@ const AddWooProduct = () => {
     const { data: allProduct = [], refetch } = useQuery({
         queryKey: ["woo-product"],
         queryFn: async () => {
-            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/woo-product/${shopInfo._id}`);
+            const res = await fetch(`https://backend.doob.com.bd/api/v1/seller/woo-product/${shopInfo._id}`);
             const data = await res.json();
             return data;
         },
@@ -59,7 +59,7 @@ const AddWooProduct = () => {
         const formData = new FormData();
         formData.append("image", image);
 
-        const url = `https://salenow-v2-backend.vercel.app/api/v1/image/upload-image`;
+        const url = `https://backend.doob.com.bd/api/v1/image/upload-image`;
 
         const res = await fetch(url, {
             method: "POST",
@@ -111,7 +111,7 @@ const AddWooProduct = () => {
             data.variantData = variantInput[0]
 
         console.log(data);
-        fetch('https://salenow-v2-backend.vercel.app/api/v1/seller/woo-product/', {
+        fetch('https://backend.doob.com.bd/api/v1/seller/woo-product/', {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'

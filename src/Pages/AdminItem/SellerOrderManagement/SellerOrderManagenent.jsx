@@ -25,7 +25,7 @@ const SellerOrderManagement = () => {
     queryKey: ["sellerAllOrder"],
     queryFn: async () => {
       const res = await fetch(
-        `https://salenow-v2-backend.vercel.app/api/v1/admin/get-shop-all-order`
+        `https://backend.doob.com.bd/api/v1/admin/get-shop-all-order`
       );
       const data = await res.json();
       return data.data;
@@ -260,7 +260,7 @@ const SellerOrderManagement = () => {
   const productStatusUpdate = async (status, orderId) => {
     // console.log(status, orderId);
     const res = await fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/seller/update-seller-order-status?orderId=${orderId}&status=${status}`,
+      `https://backend.doob.com.bd/api/v1/seller/update-seller-order-status?orderId=${orderId}&status=${status}`,
       {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
@@ -273,7 +273,7 @@ const SellerOrderManagement = () => {
 
   const deleteMethod = (orderId) => {
     fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/seller/delete-seller-order?orderId=${orderId}`,
+      `https://backend.doob.com.bd/api/v1/seller/delete-seller-order?orderId=${orderId}`,
       {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
@@ -334,9 +334,9 @@ const SellerOrderManagement = () => {
           return (
             <li key={pageNumber}>
               <button
-               className={`block h-8 w-8 rounded border ${pageNumber === currentPage
-                    ? "border-blue-600 bg-blue-600 text-white"
-                    : "border-gray-900 bg-white text-center leading-8 text-gray-900"
+                className={`block h-8 w-8 rounded border ${pageNumber === currentPage
+                  ? "border-blue-600 bg-blue-600 text-white"
+                  : "border-gray-900 bg-white text-center leading-8 text-gray-900"
                   }`}
                 onClick={() => handleChangePage(pageNumber)}
               >
@@ -390,8 +390,8 @@ const SellerOrderManagement = () => {
               <div
                 onClick={(e_) => e_.stopPropagation()}
                 className={`text- absolute overflow-y-auto w-[96%] h-[98%] rounded-sm bg-gray-50 p-6 drop-shadow-lg text-black ${showPrintModal1
-                    ? "scale-1 opacity-1 duration-300"
-                    : "scale-0 opacity-0 duration-150"
+                  ? "scale-1 opacity-1 duration-300"
+                  : "scale-0 opacity-0 duration-150"
                   }`}
               >
                 <AllAdminOrderInvoice

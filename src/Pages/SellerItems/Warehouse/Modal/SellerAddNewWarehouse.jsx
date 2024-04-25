@@ -20,7 +20,7 @@ const SellerAddNewWarehouse = ({ setNewData, refetch, setOpenModal, warehouses, 
         }));
         const formData = new FormData();
         formData.append("image", image);
-        const url = `https://salenow-v2-backend.vercel.app/api/v1/image/upload-image`;
+        const url = `https://backend.doob.com.bd/api/v1/image/upload-image`;
         fetch(url, {
             method: "POST",
             body: formData,
@@ -43,7 +43,7 @@ const SellerAddNewWarehouse = ({ setNewData, refetch, setOpenModal, warehouses, 
 
     const postWareHouse = (data) => {
 
-        fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/warehouse/post`, {
+        fetch(`https://backend.doob.com.bd/api/v1/seller/warehouse/post`, {
             method: "POST",
             headers: {
                 "content-type": "application/json",

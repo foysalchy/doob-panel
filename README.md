@@ -27,7 +27,7 @@ Include screenshots or gifs showing the application's main functionality.
 
 ## Demo
 
-https://salenow.vercel.app/
+https://doob.com.bd/
 
 ## Getting Started
 

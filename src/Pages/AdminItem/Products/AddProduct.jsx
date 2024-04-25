@@ -12,7 +12,7 @@ const AddProduct = () => {
   const { data: Commission = {}, isLoading: isCategoriesLoading, refetch } = useQuery({
     queryKey: ['Commission'],
     queryFn: async () => {
-      const res = await fetch('https://salenow-v2-backend.vercel.app/api/v1/admin/get-commission-percent');
+      const res = await fetch('https://backend.doob.com.bd/api/v1/admin/get-commission-percent');
       const data = await res.json();
       console.log(data);
       return data.data;
@@ -28,7 +28,7 @@ const AddProduct = () => {
     setLoading(true)
     const newProduct = e.target.Commission.value
     const body = { Commission: newProduct }
-    fetch("https://salenow-v2-backend.vercel.app/api/v1/admin/add-commission-percent", {
+    fetch("https://backend.doob.com.bd/api/v1/admin/add-commission-percent", {
       method: "PATCH",
       body: JSON.stringify(body),
       headers: {

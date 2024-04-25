@@ -45,7 +45,7 @@ const SellerSupportTicket = () => {
     const { data: contact = [], refetch } = useQuery({
         queryKey: ["contact"],
         queryFn: async () => {
-            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/support/supportTicketRequest/${user._id}`);
+            const res = await fetch(`https://backend.doob.com.bd/api/v1/support/supportTicketRequest/${user._id}`);
             const data = await res.json();
             return data;
         },

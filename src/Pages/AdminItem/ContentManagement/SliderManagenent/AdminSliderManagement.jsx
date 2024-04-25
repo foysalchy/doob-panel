@@ -14,7 +14,7 @@ const AdminSliderManagement = () => {
     const { data: featureImage = [], refetch } = useQuery({
         queryKey: ["slider"],
         queryFn: async () => {
-            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/slider`);
+            const res = await fetch(`https://backend.doob.com.bd/api/v1/admin/slider`);
             const data = await res.json();
             return data?.data ? data?.data : [];
         },
@@ -36,7 +36,7 @@ const AdminSliderManagement = () => {
 
     // if (isDelete) {
 
-    //     fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/popup/delete/${deleteId}`, {
+    //     fetch(`https://backend.doob.com.bd/api/v1/seller/popup/delete/${deleteId}`, {
     //         method: "DELETE",
     //         headers: {
     //             "Content-Type": "application/json",
@@ -69,7 +69,7 @@ const AdminSliderManagement = () => {
     const EditStatus = (id, status) => {
         console.log(id, status);
         setLoading(true)
-        fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/slider?id=${id}&status=${status}`, {
+        fetch(`https://backend.doob.com.bd/api/v1/admin/slider?id=${id}&status=${status}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
@@ -85,7 +85,7 @@ const AdminSliderManagement = () => {
 
     const onDelete = (id) => {
         setLoading(true)
-        fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/slider?id=${id}`, {
+        fetch(`https://backend.doob.com.bd/api/v1/admin/slider?id=${id}`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",

@@ -16,7 +16,7 @@ const ShopProductCategory = () => {
     const { data: categories = [], isLoading, refetch } = useQuery({
         queryKey: ["feature_category"],
         queryFn: async () => {
-            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/feature-category?shopId=${shop_id.shop_id}`);
+            const res = await fetch(`https://backend.doob.com.bd/api/v1/shop/feature-category?shopId=${shop_id.shop_id}`);
             const data = await res.json();
             return data;
         },
