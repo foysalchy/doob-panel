@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../../../../../AuthProvider/UserProvider";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import ImageUploadSeller from "../ImageUploadSeller";
 import SellerInputProductName from "../../../SellerAddProduct/Components/SellerInputProductName";
 import EditSincronusCategory from "../EditSincronusCategory";
@@ -18,6 +18,8 @@ import EditAdminCategoryforSeller from "../EditAdminCategoryforSeller";
 
 const CategoryEditPage = () => {
   const id = useParams().id;
+
+  const navigate = useNavigate();
 
   const { state } = useLocation();
   console.log(state);
@@ -192,9 +194,9 @@ const CategoryEditPage = () => {
     const sku = form.ProductSKU.value;
     const EnName = form.productNameEn.value;
     const megaCategory = form?.megaCategory?.value;
-    const Subcategory = form?.subCategory?.value || null;
-    const miniCategory = form?.miniCategory?.value || null;
-    const extraCategory = form?.extraCategory?.value || null;
+    const Subcategory = form?.adminSubCategoryName?.value || null;
+    const miniCategory = form?.adminMiniCategoryName?.value || null;
+    const extraCategory = form?.adminExtraCategoryName?.value || null;
 
     const categories = [
       { name: megaCategory },
@@ -203,6 +205,9 @@ const CategoryEditPage = () => {
       extraCategory && { name: extraCategory },
     ];
 
+    // console.log(categories);
+
+    // return
     const warehouse = form?.warehouse.value;
     const area = (form.area && form.area.value) || null;
     const rack = (form.rack && form.rack.value) || null;
@@ -250,6 +255,10 @@ const CategoryEditPage = () => {
       adminExtraCategory,
     ];
 
+    // console.log(adminCategory);
+    // setLoading(false);
+    // return;
+
     const formData = new FormData();
 
     const additionalPhotos = [
@@ -263,7 +272,7 @@ const CategoryEditPage = () => {
       form.photo7,
     ];
     console.log(additionalPhotos[0][0].files[0]);
-    
+
     const firstFile =
       additionalPhotos.length > 0 &&
       additionalPhotos[0].length > 0 &&
@@ -382,8 +391,9 @@ const CategoryEditPage = () => {
           Swal.fire(`${data.message}`, "", "warning");
           setLoading(false);
         } else {
-          Swal.fire("Product updated", "success");
+          Swal.fire("Product updated", "", "success");
           setLoading(false);
+          navigate("/seller/product-management/manage");
         }
       });
   };

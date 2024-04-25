@@ -8,6 +8,8 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 const EditAdminCategoryforSeller = ({ product }) => {
+
+
   console.log("🚀 ~:", product?.categories);
 
   const navigate = useNavigate();
@@ -115,7 +117,7 @@ const EditAdminCategoryforSeller = ({ product }) => {
       label: itm.extraCategoryName,
     }));
 
-  console.log(product?.categories[0]?.name);
+  // console.log(product?.categories);
 
   return (
     <div className="lg:pr-10 mt-4 w-full mx-auto overflow-auto border border-black rounded p-6">
@@ -165,6 +167,7 @@ const EditAdminCategoryforSeller = ({ product }) => {
                 label: product?.categories[1]?.name,
                 value: product?.categories[1]?.name,
               }}
+              // value={subCategorys}
               name="adminSubCategoryName"
               onChange={onHandleMiniCategorys}
               required
@@ -190,6 +193,7 @@ const EditAdminCategoryforSeller = ({ product }) => {
                   cursor: "pointer",
                 }),
               }}
+              // value={miniCategorys}
               defaultValue={{
                 label: product?.categories[2]?.name,
                 value: product?.categories[2]?.name,
@@ -217,6 +221,7 @@ const EditAdminCategoryforSeller = ({ product }) => {
                   cursor: "pointer",
                 }),
               }}
+              // value={extraCategorys}
               defaultValue={{
                 label: product?.categories[3]?.name,
                 value: product?.categories[3]?.name,

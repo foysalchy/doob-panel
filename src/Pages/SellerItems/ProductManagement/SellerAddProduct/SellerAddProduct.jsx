@@ -198,6 +198,7 @@ const SellerAddProduct = () => {
       adminMiniCategory,
       adminExtraCategory,
     ];
+  
 
     const formData = new FormData();
 
