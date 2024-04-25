@@ -83,7 +83,7 @@ const ShopLayout = () => {
                                             >
                                                 <div className="p-2">
                                                     {
-                                                        contacts.length && contacts?.map((con) => (
+                                                        contacts.map((con) => (
                                                             <>
                                                                 {con.media === 'Whatsapp' && (
                                                                     <a
