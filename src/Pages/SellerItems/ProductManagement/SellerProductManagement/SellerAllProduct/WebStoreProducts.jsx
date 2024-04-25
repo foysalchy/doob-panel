@@ -129,7 +129,7 @@ export default function WebStoreproduct({ priceRole, searchQuery }) {
 
 
     return (
-        <div className="flex flex-col mt-6">
+        <div className="flex flex-col ">
 
             <div className='h-0 w-0'>   <DeleteModal setOpenModal={setDeletePopUp} OpenModal={deletePopUp} setIsDelete={setIsDelete} /></div>
 

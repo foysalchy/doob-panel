@@ -44,11 +44,13 @@ const StaffEditModal = ({ OpenModal, setOpenModal, staffInfo, refetch }) => {
         delete user?.staffRole
 
         const shopEmail = shopInfo?.shopEmail
+        user.email = e.target.email.value
+        user.name = e.target.name.value
         const permissions = selectedValue
 
-        const data = { user, shopEmail, permissions, role }
-        console.log(data, permissions, '+++++')
-        fetch(`https://backend.doob.com.bd/api/v1/seller/staff-add`, {
+        const data = { user, shopEmail, permissions, role, oldEmail: staffInfo?.email, email: user.email, name: name }
+
+        fetch(`http://localhost:5001/api/v1/seller/staff-add`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json'
@@ -61,6 +63,7 @@ const StaffEditModal = ({ OpenModal, setOpenModal, staffInfo, refetch }) => {
                 if (data.status) {
                     BrightAlert(`${data.message}`, '', "success");
                     refetch();
+                    setOpenModal(false)
                 }
                 else {
                     BrightAlert(`Something went wrong`, '', "error")
@@ -72,32 +75,45 @@ const StaffEditModal = ({ OpenModal, setOpenModal, staffInfo, refetch }) => {
     return (
         <div className={`fixed z-50 top-0 left-0 flex h-full min-h-screen w-full items-center justify-center bg-black bg-opacity-90  px-4 text-start py-5 ${OpenModal ? "block" : "hidden"}`}>
             <div className="w-full max-w-[800px]  rounded-[20px] bg-white pb-10 px-8 text-center md:px-[30px] ">
-                <div className='flex justify-between z-50 pt-4 items-start w-full sticky top-0 bg-white border border-black-b'>
+                <div className='flex justify-between z-50 pt-4 items-start w-full sticky top-0 bg-white '>
                     <div className='pb-2 text-xl font-bold text-dark text-center sm:text-2xl'>Update Staff</div>
-                    <div onClick={() => setOpenModal(!OpenModal)} className='cursor-pointer bg-gray-500 rounded-full px-2.5 mb-2 p-1 text-2xl hover:text-red-500'>
+                    <div onClick={() => setOpenModal(!OpenModal)} className='cursor-pointer bg-gray-500 rounded-full py-2.5 px-2.5 mb-2 p-1 text-2xl hover:text-red-500'>
                         <RxCross2 className='text-xl' />
                     </div>
+
                 </div>
+                <hr />
+                <form className='h-[500px] px-4 overflow-y-scroll text-start' onSubmit={handleSubmit}>
 
-                <form className='h-[500px] overflow-y-scroll text-start' onSubmit={handleSubmit}>
+                    <div className="flex flex-col gap-3 mt-4">
+                        <div>
+                            <label className='' htmlFor="user">User Name </label>
+                            <input type="text" name="name" defaultValue={staffInfo?.name} className="w-full p-2 rounded-md ring-1  ring-gray-200" placeholder='input user role' />
 
-                    <input type="text" readOnly value={staffInfo?.name} className="w-full p
-                    
-                    -2 rounded-md ring-1 mt-2 text-green-500 ring-gray-200" placeholder='input user role' />
-                    <br /><br />
-                    <label className='' htmlFor="user">Input Role</label>
-                    <input defaultValue={staffInfo.staffRole} onChange={(e) => setRole(e.target.value)} type="text" className="w-full p-2 rounded-md ring-1 mt-2 ring-gray-200" placeholder='input user role' />
-                    <br /><br />
-                    <label className='' htmlFor="user">Select Permissions </label>
-                    <Select
-                        // lassName="w-full p-2 rounded-md ring-1 mt-2 ring-gray-200" placeholder='input user role'
-                        options={options}
-                        isMulti={true}
-                        defaultValue={staffInfo?.permissions}
-                        getOptionLabel={(option) => option.name}
-                        getOptionValue={(option) => option.route}
-                        onChange={handleChange}
-                    />
+                        </div>
+                        <div>
+                            <label className='' htmlFor="user">User Email </label>
+                            <input type="text" name="email" defaultValue={staffInfo?.email} className="w-full p-2 rounded-md ring-1  ring-gray-200" placeholder='input user role' />
+                        </div>
+
+                        <div>
+                            <label className='' htmlFor="user">Role</label>
+                            <input defaultValue={staffInfo.staffRole} onChange={(e) => setRole(e.target.value)} type="text" className="w-full p-2 rounded-md ring-1  ring-gray-200" placeholder='input user role' />
+
+                        </div>
+                        <div>
+                            <label className='' htmlFor="user">Select Permissions </label>
+                            <Select
+                                // lassName="w-full p-2 rounded-md ring-1  ring-gray-200" placeholder='input user role'
+                                options={options}
+                                isMulti={true}
+                                defaultValue={staffInfo?.permissions}
+                                getOptionLabel={(option) => option.name}
+                                getOptionValue={(option) => option.route}
+                                onChange={handleChange}
+                            />
+                        </div>
+                    </div>
 
 
                     <div className='flex justify-start'>

@@ -44,10 +44,11 @@ const Starts = () => {
   function sumObjectPrices(objects) {
     let totalPrice = 0;
     for (let i = 0; i < objects.length; i++) {
-      totalPrice += objects[i].price;
+      totalPrice += parseInt(objects[i].price ? objects[i].price : 0); // Parsing the price to an integer
     }
     return totalPrice;
   }
+
 
   const totalAmount = sumObjectPrices(orderData);
 
@@ -137,8 +138,8 @@ const Starts = () => {
                   <div
                     onClick={(e_) => e_.stopPropagation()}
                     className={`text- absolute w-[600px] rounded-sm bg-white p-6 drop-shadow-lg dark:bg-white dark:text-black ${showSeller
-                        ? "scale-1 opacity-1 duration-300"
-                        : "scale-0 opacity-0 duration-150"
+                      ? "scale-1 opacity-1 duration-300"
+                      : "scale-0 opacity-0 duration-150"
                       }`}
                   >
                     <main>
