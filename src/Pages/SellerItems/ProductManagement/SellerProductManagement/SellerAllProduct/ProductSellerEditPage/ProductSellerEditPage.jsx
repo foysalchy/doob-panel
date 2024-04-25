@@ -210,6 +210,7 @@ const CategoryEditPage = () => {
     const productLength = form?.productLength?.value;
     const productWidth = form?.productWidth?.value;
     const productHight = form?.productHight?.value;
+    const DeliveryCharge = form?.DeliveryCharge?.value;
 
     const MetaTag = form?.MetaTag?.value;
     const MetaTagMetaDescription = form?.MetaDescription?.value;
@@ -342,10 +343,10 @@ const CategoryEditPage = () => {
       rating_count: 0,
       shopId: shopInfo._id,
 
-
       adminWare,
       darazOptionData,
       upcoming: isChecked,
+      DeliveryCharge,
     };
     console.log(data, "edit --------------------------->");
 
@@ -464,8 +465,8 @@ const CategoryEditPage = () => {
         {daraz && datazCategory.length && (
           <EditDarazCategory product={product} datazCategory={datazCategory} />
         )}
-        <ServiceWarranty  product={product}/>
-        <EditDelivery />
+        <ServiceWarranty product={product} />
+        <EditDelivery product={product} />
         <EditMeta />
         <div className="mt-4">
           {loading ? (
