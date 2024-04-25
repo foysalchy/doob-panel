@@ -43,7 +43,7 @@ const StafManagement = () => {
         }).then((res) => res.json()).then((data) => {
             setIsDelete(false)
             setDeletId('')
-            Swal.fire('Shop is Deleted', '', 'success')
+            Swal.fire('Staff account is Deleted', '', 'success')
             refetch('')
         })
 

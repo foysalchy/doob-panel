@@ -63,6 +63,10 @@ If you've contributed to this project and your name is missing, please let us kn
 ````
 scp -r dist  root@152.42.184.243:/var/www/SaleNow-Frontend
 ````
+
+````
+mAhadi624234a
+````
 need also pass: contact with project manager
 
 
