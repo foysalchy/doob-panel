@@ -343,6 +343,7 @@ const SellerAddProduct = () => {
             setYoutube={setYoutube}
             coverPhoto={coverPhoto}
             setCoverPhoto={setCoverPhoto}
+        
           />
         </div>
 

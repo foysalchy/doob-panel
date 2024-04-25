@@ -65,6 +65,8 @@ const CategoryEditPage = () => {
   const [shortDescription, setShortDescription] = useState("");
   const [banglaDescription, setBanglaDescription] = useState("");
   const [youtube, setYoutube] = useState("");
+
+  console.log(youtube);
   const [multiVendor, setMultiVendor] = useState(adminWare);
   // ! for admin category
   // const [adminMegaCategory, setAdminMegaCategory] = useState("");
@@ -467,7 +469,7 @@ const CategoryEditPage = () => {
         )}
         <ServiceWarranty product={product} />
         <EditDelivery product={product} />
-        <EditMeta />
+        <EditMeta product={product} />
         <div className="mt-4">
           {loading ? (
             <button

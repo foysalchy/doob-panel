@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import Select from "react-select";
 
 const WareHouse = ({ adminWare, setAdminWare, shopInfo }) => {
-  const [selectedWarehouse, setSelectedWarehouse] = useState("");
+  const [selectedWarehouse, setSelectedWarehouse] = useState(null);
   const [selectedArea, setSelectedArea] = useState("");
   const [selectedRack, setSelectedRack] = useState("");
   const [selectedSelf, setSelectedSelf] = useState("");
@@ -37,12 +37,14 @@ const WareHouse = ({ adminWare, setAdminWare, shopInfo }) => {
       warehouses: data,
     }));
   };
+  console.log("option", options);
 
   const handleWarehouseChange = async (selectedOption) => {
     console.log(selectedOption);
     setLoading(true);
     const selectedWarehouse = selectedOption.value;
     setSelectedWarehouse(selectedWarehouse);
+    setOptions(options);
     setSelectedArea("");
     setSelectedRack("");
     setSelectedSelf("");
@@ -170,8 +172,11 @@ const WareHouse = ({ adminWare, setAdminWare, shopInfo }) => {
                 <Select
                   required
                   className=""
-                  isLoading={loading}
                   onChange={handleWarehouseChange}
+                  value={{
+                    label: selectedWarehouse || "Select warehouse", // Set a default label if selectedWarehouse is null
+                    value: selectedWarehouse,
+                  }}
                   name="warehouse"
                   options={options.warehouses
                     .filter((warehouse) => warehouse.status) // Filter based on status
@@ -258,12 +263,15 @@ const WareHouse = ({ adminWare, setAdminWare, shopInfo }) => {
             <div>
               <div className="grid md:grid-cols-5 mt-3 gap-4">
                 <div className="">
-                  <label className="text-sm">Select Warehouse</label>
+                  <label className="text-sm">Select Warehouses</label>
                   <Select
                     required
                     className=""
                     onChange={handleWarehouseChange}
-                    value={selectedWarehouse}
+                    value={{
+                      label: selectedWarehouse || "Select warehouse", // Set a default label if selectedWarehouse is null
+                      value: selectedWarehouse,
+                    }}
                     name="warehouse"
                     options={options.warehouses
                       .filter((warehouse) => warehouse.status) // Filter based on status

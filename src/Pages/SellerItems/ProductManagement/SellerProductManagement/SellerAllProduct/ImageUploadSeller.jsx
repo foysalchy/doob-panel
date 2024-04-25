@@ -98,7 +98,7 @@ const ImageUploadSeller = ({
     }
   };
 
-  console.log(product);
+  console.log(product?.videoUrl);
   //    <div >
   return (
     <div>
