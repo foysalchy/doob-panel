@@ -20,7 +20,6 @@ const ForgetPass = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-
         setLoading(false);
         alert(data.message);
       });

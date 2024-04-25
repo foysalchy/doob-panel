@@ -132,15 +132,18 @@ const Starts = () => {
               <div>
                 <div
                   onClick={() => setShowSeller(false)}
-                  className={`fixed z-[100] flex items-center justify-center ${showSeller ? "visible opacity-100" : "invisible opacity-0"
-                    } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
+                  className={`fixed z-[100] flex items-center justify-center ${
+                    showSeller ? "visible opacity-100" : "invisible opacity-0"
+                  } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
                 >
                   <div
                     onClick={(e_) => e_.stopPropagation()}
-                    className={`text- absolute w-[600px] rounded-sm bg-white p-6 drop-shadow-lg dark:bg-white dark:text-black ${showSeller
-                      ? "scale-1 opacity-1 duration-300"
-                      : "scale-0 opacity-0 duration-150"
-                      }`}
+                    className={`text- absolute w-[600px] rounded-sm bg-white p-6 drop-shadow-lg dark:bg-white dark:text-black ${
+                      showSeller
+                        ? "scale-1 opacity-1 duration-300"
+                        : "scale-0 opacity-0 duration-150"
+                    }`}
+
                   >
                     <main>
                       <h1 className="font-semibold border-b pb-3">

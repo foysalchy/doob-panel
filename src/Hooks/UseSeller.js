@@ -14,9 +14,8 @@ const useSeller = () => {
           setIsSeller(data?.isSeller);
           setIsSellerLoading(false);
         });
-    }
-    else {
-      setIsSellerLoading(false)
+    } else {
+      setIsSellerLoading(false);
     }
   }, [user?.email, setIsSeller, loading]);
   return [isSeller, isSellerLoading];

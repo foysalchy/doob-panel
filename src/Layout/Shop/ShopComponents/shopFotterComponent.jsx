@@ -78,20 +78,17 @@ export const Footer = () => {
 
     if (email && email.match(emailRegex)) {
       setError(false);
-      fetch(
-        "https://backend.doob.com.bd/api/v1/seller/subscriber-report",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            email: email,
-            date: new Date(),
-            shopId: shopId,
-          }),
-        }
-      )
+      fetch("https://backend.doob.com.bd/api/v1/seller/subscriber-report", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: email,
+          date: new Date(),
+          shopId: shopId,
+        }),
+      })
         .then((res) => res.json())
         .then((data) => {
           setLoading(false);
@@ -150,21 +147,21 @@ export const Footer = () => {
                 </li>
                 {pages.length
                   ? pages
-                    ?.filter((item) => item?.trash)
-                    ?.map((page, i) => (
-                      <div key={page._id}>
-                        {page?.status && (
-                          <li>
-                            <Link
-                              to={`/shop/${shopId}/pages/${page._id}`}
-                              className="text-gray-500 transition-colors duration-300 hover:text-deep-purple-accent-200"
-                            >
-                              {page?.title}
-                            </Link>
-                          </li>
-                        )}
-                      </div>
-                    ))
+                      ?.filter((item) => item?.trash)
+                      ?.map((page, i) => (
+                        <div key={page._id}>
+                          {page?.status && (
+                            <li>
+                              <Link
+                                to={`/shop/${shopId}/pages/${page._id}`}
+                                className="text-gray-500 transition-colors duration-300 hover:text-deep-purple-accent-200"
+                              >
+                                {page?.title}
+                              </Link>
+                            </li>
+                          )}
+                        </div>
+                      ))
                   : ""}
               </ul>
             </div>

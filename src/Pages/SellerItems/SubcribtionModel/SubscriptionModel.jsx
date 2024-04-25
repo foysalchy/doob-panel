@@ -169,8 +169,9 @@ const SubscriptionModel = () => {
         </h1>
 
         <h1 className="text-2xl font-semibold text-center text-red-800 capitalize lg:text-3xl ">
-          {`${time == 10000000000000000000000000000000000 ? "Unlimited" : time
-            } days you use this service.`}
+          {`${
+            time == 10000000000000000000000000000000000 ? "Unlimited" : time
+          } days you use this service.`}
         </h1>
 
         <div className="flex justify-center mt-3">

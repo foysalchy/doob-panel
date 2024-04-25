@@ -35,15 +35,12 @@ const SellerPageManagement = () => {
   const ActiveHandle = (id) => {
     setLoading(true);
 
-    fetch(
-      `https://backend.doob.com.bd/api/v1/seller/page/status/${id}`,
-      {
-        method: "PUT",
-        headers: {
-          "content-type": "application/json",
-        },
-      }
-    )
+    fetch(`https://backend.doob.com.bd/api/v1/seller/page/status/${id}`, {
+      method: "PUT",
+      headers: {
+        "content-type": "application/json",
+      },
+    })
       .then((res) => res.json())
       .then((data) => {
         Swal.fire("success", "Your Faq Publish Successfully", "success");
@@ -52,15 +49,12 @@ const SellerPageManagement = () => {
   };
 
   const DeactiveHandle = (id) => {
-    fetch(
-      `https://backend.doob.com.bd/api/v1/seller/page/falseStatus/${id}`,
-      {
-        method: "PUT",
-        headers: {
-          "content-type": "application/json",
-        },
-      }
-    )
+    fetch(`https://backend.doob.com.bd/api/v1/seller/page/falseStatus/${id}`, {
+      method: "PUT",
+      headers: {
+        "content-type": "application/json",
+      },
+    })
       .then((res) => res.json())
       .then((data) => {
         Swal.fire("Your Page Unpublish Successfully", "", "success");
@@ -68,15 +62,12 @@ const SellerPageManagement = () => {
       });
   };
   const DeleteHandle = (id) => {
-    fetch(
-      `https://backend.doob.com.bd/api/v1/seller/page/delete/${id}`,
-      {
-        method: "Delete",
-        headers: {
-          "content-type": "application/json",
-        },
-      }
-    )
+    fetch(`https://backend.doob.com.bd/api/v1/seller/page/delete/${id}`, {
+      method: "Delete",
+      headers: {
+        "content-type": "application/json",
+      },
+    })
       .then((res) => res.json())
       .then((data) => {
         Swal.fire("Your Page Delete Successfully", "", "success");
@@ -85,16 +76,13 @@ const SellerPageManagement = () => {
   };
 
   const trash = (id, status) => {
-    fetch(
-      `https://backend.doob.com.bd/api/v1/seller/page/trash-status`,
-      {
-        method: "PUT",
-        headers: {
-          "content-type": "application/json",
-        },
-        body: JSON.stringify({ id, status: status }),
-      }
-    )
+    fetch(`https://backend.doob.com.bd/api/v1/seller/page/trash-status`, {
+      method: "PUT",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({ id, status: status }),
+    })
       .then((res) => res.json())
       .then((data) => {
         Swal.fire(`Your Page Trash ${status} Successfully`, "", "success");

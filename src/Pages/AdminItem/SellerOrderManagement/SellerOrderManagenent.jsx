@@ -334,10 +334,11 @@ const SellerOrderManagement = () => {
           return (
             <li key={pageNumber}>
               <button
-                className={`block h-8 w-8 rounded border ${pageNumber === currentPage
-                  ? "border-blue-600 bg-blue-600 text-white"
-                  : "border-gray-900 bg-white text-center leading-8 text-gray-900"
-                  }`}
+                className={`block h-8 w-8 rounded border ${
+                  pageNumber === currentPage
+                    ? "border-blue-600 bg-blue-600 text-white"
+                    : "border-gray-900 bg-white text-center leading-8 text-gray-900"
+                }`}
                 onClick={() => handleChangePage(pageNumber)}
               >
                 {pageNumber}
@@ -384,15 +385,17 @@ const SellerOrderManagement = () => {
           <div>
             <div
               onClick={() => setShowPrintModal1(false)}
-              className={`fixed z-[100] flex items-center justify-center ${showPrintModal1 ? "visible opacity-100" : "invisible opacity-0"
-                } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
+              className={`fixed z-[100] flex items-center justify-center ${
+                showPrintModal1 ? "visible opacity-100" : "invisible opacity-0"
+              } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
             >
               <div
                 onClick={(e_) => e_.stopPropagation()}
-                className={`text- absolute overflow-y-auto w-[96%] h-[98%] rounded-sm bg-gray-50 p-6 drop-shadow-lg text-black ${showPrintModal1
-                  ? "scale-1 opacity-1 duration-300"
-                  : "scale-0 opacity-0 duration-150"
-                  }`}
+                className={`text- absolute overflow-y-auto w-[96%] h-[98%] rounded-sm bg-gray-50 p-6 drop-shadow-lg text-black ${
+                  showPrintModal1
+                    ? "scale-1 opacity-1 duration-300"
+                    : "scale-0 opacity-0 duration-150"
+                }`}
               >
                 <AllAdminOrderInvoice
                   data={selectProducts}
@@ -412,7 +415,7 @@ const SellerOrderManagement = () => {
             id="dropdown-button"
             aria-haspopup="true"
             onClick={() => setShowPrintModal1(true)}
-          //   aria-expanded={isOpen ? "true" : "false"}
+            //   aria-expanded={isOpen ? "true" : "false"}
           >
             Print
           </button>
@@ -488,8 +491,9 @@ const SellerOrderManagement = () => {
             return itm?.status === "dropdown" ? (
               <select
                 key={itm.name}
-                className={`px-4 border-r bg-transparent relative border-gray-300 flex items-center gap-2 justify-center ${selectedValue === "pending" ? "" : ""
-                  }`}
+                className={`px-4 border-r bg-transparent relative border-gray-300 flex items-center gap-2 justify-center ${
+                  selectedValue === "pending" ? "" : ""
+                }`}
                 value={selectedValue}
                 onChange={handleSelectChange}
               >
@@ -502,8 +506,9 @@ const SellerOrderManagement = () => {
               </select>
             ) : (
               <button
-                className={`px-4 border-r md:bg-transparent bg-gray-50 border-gray-300 flex  items-center ${selectedValue === itm.value ? "text-red-500" : ""
-                  }`}
+                className={`px-4 border-r md:bg-transparent bg-gray-50 border-gray-300 flex  items-center ${
+                  selectedValue === itm.value ? "text-red-500" : ""
+                }`}
                 key={itm.name}
                 onClick={() => setSelectedValue(itm.value)}
               >

@@ -9,12 +9,17 @@ const AddFaq = () => {
   const [loading, setLoading] = useState(false);
   const modules = {
     toolbar: [
-      [{ 'header': '1' }, { 'header': '2' }, { 'font': [] }],
-      [{ 'size': [] }],
-      ['bold', 'italic', 'underline', 'strike', 'blockquote'],
-      [{ 'list': 'ordered' }, { 'list': 'bullet' }, { 'indent': '-1' }, { 'indent': '+1' }],
-      ['link', 'image', 'video'],
-      ['clean']
+      [{ header: "1" }, { header: "2" }, { font: [] }],
+      [{ size: [] }],
+      ["bold", "italic", "underline", "strike", "blockquote"],
+      [
+        { list: "ordered" },
+        { list: "bullet" },
+        { indent: "-1" },
+        { indent: "+1" },
+      ],
+      ["link", "image", "video"],
+      ["clean"],
     ],
   };
   const dataSubmit = (event) => {
@@ -70,7 +75,8 @@ const AddFaq = () => {
               <div>
                 <ReactQuill
                   className="h-36"
-                  name="description" id="message"
+                  name="description"
+                  id="message"
                   modules={modules}
                   placeholder="Enter description here..."
                 />

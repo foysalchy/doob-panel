@@ -18,8 +18,7 @@ const AdminSingleBlog = () => {
     return doc.body.textContent || "";
   };
 
-
-  const [searchTerm, setSearchTerm] = useState('')
+  const [searchTerm, setSearchTerm] = useState("");
 
   const filteredBlogs = blogList.filter((blog) =>
     blog.title.toLowerCase().includes(searchTerm.toLowerCase())
@@ -49,7 +48,10 @@ const AdminSingleBlog = () => {
         </div>
         <div className="border-l px-2 border-[#8080805f]">
           <div className="relative border border-gray-500 rounded">
-            <label for="Search" className="sr-only"> Search </label>
+            <label for="Search" className="sr-only">
+              {" "}
+              Search{" "}
+            </label>
 
             <input
               type="text"
@@ -61,7 +63,10 @@ const AdminSingleBlog = () => {
             />
 
             <span className="absolute border-gray-700 inset-y-0 end-0 grid w-10 place-content-center">
-              <button type="button" className="text-gray-600 hover:text-gray-700">
+              <button
+                type="button"
+                className="text-gray-600 hover:text-gray-700"
+              >
                 <span className="sr-only">Search</span>
 
                 <svg

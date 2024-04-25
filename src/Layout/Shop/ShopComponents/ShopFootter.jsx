@@ -55,20 +55,17 @@ const ShopFooter = () => {
 
     if (email && email.match(emailRegex)) {
       setError(false);
-      fetch(
-        "https://backend.doob.com.bd/api/v1/seller/subscriber-report",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            email: email,
-            date: new Date(),
-            shopId: shopId,
-          }),
-        }
-      )
+      fetch("https://backend.doob.com.bd/api/v1/seller/subscriber-report", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: email,
+          date: new Date(),
+          shopId: shopId,
+        }),
+      })
         .then((res) => res.json())
         .then((data) => {
           setLoading(false);
@@ -133,19 +130,19 @@ const ShopFooter = () => {
             </div>
             {pages.length
               ? pages
-                ?.filter((item) => !item?.trash)
-                ?.map((page, i) => (
-                  <div key={page._id}>
-                    {page?.status && (
-                      <Link
-                        to={`/shop/${shopId}/pages/${page._id}`}
-                        className="text-sm text-white transition-colors duration-300 hover:text-purple-400"
-                      >
-                        {page?.title}
-                      </Link>
-                    )}
-                  </div>
-                ))
+                  ?.filter((item) => !item?.trash)
+                  ?.map((page, i) => (
+                    <div key={page._id}>
+                      {page?.status && (
+                        <Link
+                          to={`/shop/${shopId}/pages/${page._id}`}
+                          className="text-sm text-white transition-colors duration-300 hover:text-purple-400"
+                        >
+                          {page?.title}
+                        </Link>
+                      )}
+                    </div>
+                  ))
               : ""}
           </div>
         </div>

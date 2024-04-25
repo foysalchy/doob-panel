@@ -24,14 +24,13 @@ const ProductCatagory = () => {
 
   return (
     <div className="py-4 bg-white rounded mt-6">
-
       <Swiper
         slidesPerView={
           window.innerWidth >= 1024
             ? slidesPerViewDesktop
             : window.innerWidth >= 768
-              ? slidesPerViewTablet
-              : slidesPerViewMobile
+            ? slidesPerViewTablet
+            : slidesPerViewMobile
         }
         className="mySwiper"
       >
@@ -56,7 +55,6 @@ const ProductCatagory = () => {
       </Swiper>
     </div>
   );
-
 };
 
 export default ProductCatagory;

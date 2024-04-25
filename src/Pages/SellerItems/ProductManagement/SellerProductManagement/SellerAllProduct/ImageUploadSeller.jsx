@@ -9,7 +9,7 @@ const ImageUploadSeller = ({
   setYoutube,
 }) => {
   //   console.log(product);
-  console.log(product);
+  console.log(product?.featuredImage);
   //   console.log(product?.images?.[0]?.src);
   const [photo1, setPhoto1] = useState(product?.images?.[0]?.src ?? "");
   const [photo2, setPhoto2] = useState(product?.images?.[1]?.src ?? "");
@@ -20,6 +20,7 @@ const ImageUploadSeller = ({
   const [photo7, setPhoto7] = useState(product?.images?.[6]?.src ?? "");
   const [deletItem, setDeletItem] = useState("");
 
+  // console.log(photo1);
   //   console.log(youtube);
   const [youtubeError, setYoutubeError] = useState("");
 
@@ -98,7 +99,7 @@ const ImageUploadSeller = ({
     }
   };
 
-  console.log(product);
+  console.log(product?.videoUrl);
   //    <div >
   return (
     <div>
@@ -138,7 +139,7 @@ const ImageUploadSeller = ({
               {coverPhoto ? (
                 <div className="relative">
                   <img
-                    src={product?.images[0].src || ""}
+                    src={coverPhoto || photo1}
                     id="coverPhoto"
                     alt="coverPhoto Preview"
                     className="w-full h-full object-cover cursor-grab"
@@ -184,6 +185,7 @@ const ImageUploadSeller = ({
               {photo1 ? (
                 <img
                   src={photo1}
+                  
                   id="Photo1"
                   alt="Photo 1 Preview"
                   className="w-full h-full object-cover cursor-grab"

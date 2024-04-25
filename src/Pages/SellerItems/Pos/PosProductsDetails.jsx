@@ -1,85 +1,79 @@
-import React, { useContext, useEffect, useState } from 'react';
-import PosInvoice from './PosInvoice';
-import { useQuery } from '@tanstack/react-query';
-import { AuthContext } from '../../../AuthProvider/UserProvider';
-import BrightAlert from 'bright-alert';
+import React, { useContext, useEffect, useState } from "react";
+import PosInvoice from "./PosInvoice";
+import { useQuery } from "@tanstack/react-query";
+import { AuthContext } from "../../../AuthProvider/UserProvider";
+import BrightAlert from "bright-alert";
 
-const PosProductsDetails = ({ passUser, invoice, open, setOpen, setCartProducts }) => {
+const PosProductsDetails = ({
+  passUser,
+  invoice,
+  open,
+  setOpen,
+  setCartProducts,
+}) => {
+  const { shopInfo } = useContext(AuthContext);
+  const [user, setUser] = useState(false);
+  const [error, setError] = useState(false);
 
+  const { name, email, phoneNumber, address } = passUser;
+  console.log(passUser);
 
-    const { shopInfo } = useContext(AuthContext)
-    const [user, setUser] = useState(false)
-    const [error, setError] = useState(false)
+  const [invoiceOpen, setInvoiceOpen] = useState(false);
+  const [postData, setPostData] = useState(false);
+  const [existing, setExisting] = useState(false);
 
-    const { name, email, phoneNumber, address } = passUser
-    console.log(passUser);
+  const handleInvoiceSubmit = () => {
+    const data = {
+      invoice,
+      userInfo: {
+        name,
+        email,
+        phoneNumber,
+        address,
+      },
 
+      shopId: shopInfo._id,
+      date: new Date().getTime(),
+    };
 
-    const [invoiceOpen, setInvoiceOpen] = useState(false);
-    const [postData, setPostData] = useState(false)
-    const [existing, setExisting] = useState(false);
+    console.log(data, "data....");
 
-    const handleInvoiceSubmit = () => {
-
-        const data = {
-            invoice,
-            userInfo: {
-                name,
-                email,
-                phoneNumber,
-                address
-            },
-
-            shopId: shopInfo._id,
-            date: new Date().getTime(),
-        }
-
-        console.log(data, 'data....');
-
-        if (user.name || name) {
-            setPostData(data);
-            fetch(`https://backend.doob.com.bd/api/v1/seller/pos-report`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(data),
-            }).then((res) => res.json()).then((data) => {
-                if (data.status) {
-                    // BrightAlert()
-                    setInvoiceOpen(true)
-                    setUser(false)
-                    setExisting(false)
-                    // setOpen(false)
-                    setError(false)
-                    setCartProducts([])
-
-                }
-                else {
-                    setError('User not found')
-                    setUser(false)
-                }
-            })
-        }
-
-
-
-
+    if (user.name || name) {
+      setPostData(data);
+      fetch(`https://backend.doob.com.bd/api/v1/seller/pos-report`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.status) {
+            // BrightAlert()
+            setInvoiceOpen(true);
+            setUser(false);
+            setExisting(false);
+            // setOpen(false)
+            setError(false);
+            setCartProducts([]);
+          } else {
+            setError("User not found");
+            setUser(false);
+          }
+        });
     }
+  };
 
+  useEffect(() => {
+    if (open) {
+      handleInvoiceSubmit();
+    }
+  }, [open]);
 
-    useEffect(() => {
-        if (open) {
-            handleInvoiceSubmit()
-        }
-    }, [open])
-
-
-
-
-    return (
-        <div>
-            {/* {
+  return (
+    <div>
+      {/* {
                 open && <div className='bg-[#050505bc]  w-screen  fixed top-0 bottom-0 left-0 right-0 flex items-center justify-center z-[1000]'>
                     <div className="w-[600px] max-h-[90%] overflow-y-auto p-6 bg-white rounded-lg">
                         <button onClick={() => setOpen(!open)} className='p-2 float-right text-lg'>x</button>
@@ -150,9 +144,18 @@ const PosProductsDetails = ({ passUser, invoice, open, setOpen, setCartProducts 
                     </div>
                 </div>
             } */}
-            {postData && <PosInvoice setCartProducts={setCartProducts} setUser={setUser} setOpen={setOpen} invoiceData={postData} setInvoiceOpen={setInvoiceOpen} invoiceOpen={invoiceOpen} />}
-        </div>
-    );
+      {postData && (
+        <PosInvoice
+          setCartProducts={setCartProducts}
+          setUser={setUser}
+          setOpen={setOpen}
+          invoiceData={postData}
+          setInvoiceOpen={setInvoiceOpen}
+          invoiceOpen={invoiceOpen}
+        />
+      )}
+    </div>
+  );
 };
 
 export default PosProductsDetails;

@@ -18,8 +18,7 @@ const Faq = () => {
   }, []);
 
   return (
-    <div >
-
+    <div>
       <div
         className="mb-2 text_editor "
         dangerouslySetInnerHTML={{

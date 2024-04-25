@@ -5,15 +5,15 @@ import { Swiper, SwiperSlide } from "swiper/react";
 
 // Import Swiper styles
 import "swiper/css";
-import { Pagination, Autoplay } from 'swiper/modules';
-
+import { Pagination, Autoplay } from "swiper/modules";
 
 const ProductGallery = () => {
-
   const { data: featureImageData = [], refetch: isLoading } = useQuery({
     queryKey: ["featureImageData"],
     queryFn: async () => {
-      const res = await fetch(`https://backend.doob.com.bd/api/v1/admin/feature-images`);
+      const res = await fetch(
+        `https://backend.doob.com.bd/api/v1/admin/feature-images`
+      );
       const data = await res.json();
       return data?.data ? data?.data : [];
     },
@@ -21,13 +21,17 @@ const ProductGallery = () => {
 
   // const blankImg = 'https://backend.doob.com.bd/api/v1/image/66036ed3df13bd9930ac229c.jpg';
   return (
-    <div >
-
-      <div className='my-12 grid grid-cols-2 gap-4 lg:grid-cols-4 '>
-        {featureImageData?.map(itm => (<div className="">
-          <img src={itm?.image} alt="" className="w-full border rounded-xl h-full object-cover" />
-
-        </div>))}
+    <div>
+      <div className="my-12 grid grid-cols-2 gap-4 lg:grid-cols-4 ">
+        {featureImageData?.map((itm) => (
+          <div className="">
+            <img
+              src={itm?.image}
+              alt=""
+              className="w-full border rounded-xl h-full object-cover"
+            />
+          </div>
+        ))}
       </div>
       {/* <Swiper
         pagination={true}

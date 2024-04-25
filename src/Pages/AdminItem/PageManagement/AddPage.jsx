@@ -124,8 +124,7 @@ const AddPage = () => {
   };
 
   async function uploadImage(formData) {
-    const url =
-      "https://backend.doob.com.bd/api/v1/image/upload-image";
+    const url = "https://backend.doob.com.bd/api/v1/image/upload-image";
     const response = await fetch(url, {
       method: "POST",
       body: formData,

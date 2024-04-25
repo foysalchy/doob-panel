@@ -8,8 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 const EditAdminCategoryforSeller = ({ product }) => {
-  console.log("🚀 ~ file: product:", product);
-
+  console.log("🚀 ~:", product?.categories);
 
   const navigate = useNavigate();
   const handleGoBack = () => {
@@ -36,14 +35,14 @@ const EditAdminCategoryforSeller = ({ product }) => {
     },
   });
 
+  console.log(megaCategories);
+
   const option = megaCategories
     ?.filter((itm) => itm.status === "true")
     .map((itm) => ({
       value: itm._id,
       label: itm.name,
     }));
-
-
 
   const handleSelectChange = (selectedOption) => {
     setSubCategorys([]);
@@ -67,7 +66,6 @@ const EditAdminCategoryforSeller = ({ product }) => {
     value: warehouse._id,
     label: warehouse.subCategory,
   }));
-
 
   const onHandleMiniCategorys = (selectedOption) => {
     setMiniCategorys([]);
@@ -117,6 +115,8 @@ const EditAdminCategoryforSeller = ({ product }) => {
       label: itm.extraCategoryName,
     }));
 
+  // console.log(product?.categories);
+
   return (
     <div className="lg:pr-10 mt-4 w-full mx-auto overflow-auto border border-black rounded p-6">
       <div className="grid grid-cols-4 items-center gap-2">
@@ -133,6 +133,10 @@ const EditAdminCategoryforSeller = ({ product }) => {
                 ...provided,
                 cursor: "pointer",
               }),
+            }}
+            defaultValue={{
+              label: product?.categories[0]?.name,
+              value: product?.categories[0]?.name,
             }}
             name="adminMegaCategory"
             required
@@ -157,6 +161,11 @@ const EditAdminCategoryforSeller = ({ product }) => {
                   cursor: "pointer",
                 }),
               }}
+              defaultValue={{
+                label: product?.categories[1]?.name,
+                value: product?.categories[1]?.name,
+              }}
+              // value={subCategorys}
               name="adminSubCategoryName"
               onChange={onHandleMiniCategorys}
               required
@@ -182,6 +191,11 @@ const EditAdminCategoryforSeller = ({ product }) => {
                   cursor: "pointer",
                 }),
               }}
+              // value={miniCategorys}
+              defaultValue={{
+                label: product?.categories[2]?.name,
+                value: product?.categories[2]?.name,
+              }}
               name="adminMiniCategoryName"
               // required
               options={sortedMiniCategorys}
@@ -204,6 +218,11 @@ const EditAdminCategoryforSeller = ({ product }) => {
                   ...provided,
                   cursor: "pointer",
                 }),
+              }}
+              // value={extraCategorys}
+              defaultValue={{
+                label: product?.categories[3]?.name,
+                value: product?.categories[3]?.name,
               }}
               name="adminExtraCategoryName"
               // required

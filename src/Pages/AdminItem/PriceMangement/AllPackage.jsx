@@ -25,15 +25,12 @@ const AllPackage = () => {
   const publishHandle = (id) => {
     setLoading(true);
 
-    fetch(
-      `https://backend.doob.com.bd/api/v1/admin/pricing/status/${id}`,
-      {
-        method: "PUT",
-        headers: {
-          "content-type": "application/json",
-        },
-      }
-    )
+    fetch(`https://backend.doob.com.bd/api/v1/admin/pricing/status/${id}`, {
+      method: "PUT",
+      headers: {
+        "content-type": "application/json",
+      },
+    })
       .then((res) => res.json())
       .then((data) => {
         Swal.fire("success", "Your Package Publish Successfully", "success");
@@ -42,15 +39,12 @@ const AllPackage = () => {
   };
 
   const unpublishHandle = (id) => {
-    fetch(
-      `https://backend.doob.com.bd/api/v1/admin/pricing/unstatus/${id}`,
-      {
-        method: "PUT",
-        headers: {
-          "content-type": "application/json",
-        },
-      }
-    )
+    fetch(`https://backend.doob.com.bd/api/v1/admin/pricing/unstatus/${id}`, {
+      method: "PUT",
+      headers: {
+        "content-type": "application/json",
+      },
+    })
       .then((res) => res.json())
       .then((data) => {
         Swal.fire("success", "Your Package Publish Successfully", "success");
@@ -58,15 +52,12 @@ const AllPackage = () => {
       });
   };
   const DeletePackage = (id) => {
-    fetch(
-      `https://backend.doob.com.bd/api/v1/admin/package/delete/${id}`,
-      {
-        method: "Delete",
-        headers: {
-          "content-type": "application/json",
-        },
-      }
-    )
+    fetch(`https://backend.doob.com.bd/api/v1/admin/package/delete/${id}`, {
+      method: "Delete",
+      headers: {
+        "content-type": "application/json",
+      },
+    })
       .then((res) => res.json())
       .then((data) => {
         Swal.fire("success", "Your Package Delete Successfully", "success");

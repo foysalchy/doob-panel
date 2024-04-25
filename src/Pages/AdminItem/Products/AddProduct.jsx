@@ -9,36 +9,41 @@ import BrightAlert from "bright-alert";
 
 const AddProduct = () => {
   // Define the query for GET request
-  const { data: Commission = {}, isLoading: isCategoriesLoading, refetch } = useQuery({
-    queryKey: ['Commission'],
+  const {
+    data: Commission = {},
+    isLoading: isCategoriesLoading,
+    refetch,
+  } = useQuery({
+    queryKey: ["Commission"],
     queryFn: async () => {
-      const res = await fetch('https://backend.doob.com.bd/api/v1/admin/get-commission-percent');
+      const res = await fetch(
+        "https://backend.doob.com.bd/api/v1/admin/get-commission-percent"
+      );
       const data = await res.json();
       console.log(data);
       return data.data;
     },
   });
 
-
-
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
 
   const handleUpload = (e) => {
     e.preventDefault();
-    setLoading(true)
-    const newProduct = e.target.Commission.value
-    const body = { Commission: newProduct }
+    setLoading(true);
+    const newProduct = e.target.Commission.value;
+    const body = { Commission: newProduct };
     fetch("https://backend.doob.com.bd/api/v1/admin/add-commission-percent", {
       method: "PATCH",
       body: JSON.stringify(body),
       headers: {
         "Content-Type": "application/json",
       },
-    }).then((res) => res.json()).then((data) => {
-      BrightAlert()
-      setLoading(false),
-        refetch()
     })
+      .then((res) => res.json())
+      .then((data) => {
+        BrightAlert();
+        setLoading(false), refetch();
+      });
   };
 
   return (
