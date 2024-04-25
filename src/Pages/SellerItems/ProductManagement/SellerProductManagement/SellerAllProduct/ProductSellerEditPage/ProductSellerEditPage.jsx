@@ -169,6 +169,8 @@ const CategoryEditPage = () => {
     datazCategory?.length &&
     datazCategory?.filter((item) => !ourData?.includes(item.label));
 
+    // console.log(filteredData);
+
   const formSubmit = async (e) => {
     setLoading(true);
     e.preventDefault();
