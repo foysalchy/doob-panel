@@ -44,10 +44,11 @@ const Starts = () => {
   function sumObjectPrices(objects) {
     let totalPrice = 0;
     for (let i = 0; i < objects.length; i++) {
-      totalPrice += objects[i].price;
+      totalPrice += parseInt(objects[i].price ? objects[i].price : 0); // Parsing the price to an integer
     }
     return totalPrice;
   }
+
 
   const totalAmount = sumObjectPrices(orderData);
 
@@ -142,6 +143,7 @@ const Starts = () => {
                         ? "scale-1 opacity-1 duration-300"
                         : "scale-0 opacity-0 duration-150"
                     }`}
+
                   >
                     <main>
                       <h1 className="font-semibold border-b pb-3">
