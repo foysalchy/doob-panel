@@ -171,9 +171,8 @@ const WarehouseModal = ({ modalOpen, setModalOpen, product, doobProduct }) => {
   return (
     <div>
       <div
-        className={`fixed left-0 top-0 flex z-50 h-full min-h-screen w-full items-center justify-center bg-black/90 px-4 py-5 ${
-          modalOpen ? "block" : "hidden"
-        }`}
+        className={`fixed left-0 top-0 flex z-50 h-full min-h-screen w-full items-center justify-center bg-black/90 px-4 py-5 ${modalOpen ? "block" : "hidden"
+          }`}
       >
         <form
           onSubmit={updateInfo}
@@ -287,11 +286,11 @@ const WarehouseModal = ({ modalOpen, setModalOpen, product, doobProduct }) => {
                         isRefetching
                           ? [{ label: "Loading...", value: null }]
                           : warehouses
-                              .filter((warehouse) => warehouse.status) // Filter based on status
-                              .map((warehouse) => ({
-                                value: warehouse.name,
-                                label: warehouse.name,
-                              }))
+                            .filter((warehouse) => warehouse.status) // Filter based on status
+                            .map((warehouse) => ({
+                              value: warehouse.name,
+                              label: warehouse.name,
+                            }))
                       }
                       placeholder="Please select"
                     />

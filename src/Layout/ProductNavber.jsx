@@ -105,9 +105,8 @@ export default function Component() {
           Solution <FaAngleDown />
         </button>
         <div
-          className={`${
-            dropdowns["solution"] ? "h-[auto]" : "h-[0px]"
-          } w-[200px] overflow-hidden duration-300 absolute top-[24px] left-0 ri`}
+          className={`${dropdowns["solution"] ? "h-[auto]" : "h-[0px]"
+            } w-[200px] overflow-hidden duration-300 absolute top-[24px] left-0 ri`}
         >
           <ul className="bg-gray-100 shadow-xl w-[200px] mt-3 p-2">
             <li>
@@ -171,9 +170,8 @@ export default function Component() {
           Marketing <FaAngleDown />
         </button>
         <div
-          className={`${
-            dropdowns["marketing"] ? "h-[auto]" : "h-[0px]"
-          } w-[200px] overflow-hidden duration-300 absolute top-[24px] left-0 ri`}
+          className={`${dropdowns["marketing"] ? "h-[auto]" : "h-[0px]"
+            } w-[200px] overflow-hidden duration-300 absolute top-[24px] left-0 ri`}
         >
           <ul className="bg-gray-100 shadow-xl w-[200px] mt-3 p-2">
             <li>
@@ -480,21 +478,19 @@ export default function Component() {
                           <nav className={``}>
                             <div className="flex items-center justify-between border-b ">
                               <button
-                                className={`${
-                                  on
-                                    ? "bg-white"
-                                    : "bg-gray-100 border-b border-blue-700"
-                                } text-center  p-2  w-full`}
+                                className={`${on
+                                  ? "bg-white"
+                                  : "bg-gray-100 border-b border-blue-700"
+                                  } text-center  p-2  w-full`}
                                 onClick={() => setOn(!on)}
                               >
                                 Menu
                               </button>
                               <button
-                                className={`${
-                                  on
-                                    ? "bg-gray-100 border-b border-blue-700"
-                                    : "bg-white"
-                                } text-center  p-2  w-full`}
+                                className={`${on
+                                  ? "bg-gray-100 border-b border-blue-700"
+                                  : "bg-white"
+                                  } text-center  p-2  w-full`}
                                 onClick={() => setOn(!on)}
                               >
                                 Category

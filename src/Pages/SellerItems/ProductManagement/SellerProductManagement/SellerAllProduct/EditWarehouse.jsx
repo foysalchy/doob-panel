@@ -174,11 +174,11 @@ const EditWareHouse = ({ adminWare, setAdminWare, shopInfo }) => {
                   isRefetching
                     ? [{ label: "Loading...", value: null }]
                     : warehouses
-                        .filter((warehouse) => warehouse.status) // Filter based on status
-                        .map((warehouse) => ({
-                          value: warehouse.name,
-                          label: warehouse.name,
-                        }))
+                      .filter((warehouse) => warehouse.status) // Filter based on status
+                      .map((warehouse) => ({
+                        value: warehouse.name,
+                        label: warehouse.name,
+                      }))
                 }
                 placeholder="Please select"
               />

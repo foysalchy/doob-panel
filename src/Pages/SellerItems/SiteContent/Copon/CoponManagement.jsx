@@ -268,11 +268,10 @@ const CoponManagement = () => {
                                 {faq?.code}
 
                                 <button
-                                  className={` ml-4 ${
-                                    copiedIndex === index
-                                      ? " cursor-not-allowed"
-                                      : ""
-                                  }`}
+                                  className={` ml-4 ${copiedIndex === index
+                                    ? " cursor-not-allowed"
+                                    : ""
+                                    }`}
                                   onClick={() =>
                                     handleCopyClick(faq?.code, index)
                                   }

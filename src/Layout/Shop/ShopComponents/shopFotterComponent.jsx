@@ -147,21 +147,21 @@ export const Footer = () => {
                 </li>
                 {pages.length
                   ? pages
-                      ?.filter((item) => item?.trash)
-                      ?.map((page, i) => (
-                        <div key={page._id}>
-                          {page?.status && (
-                            <li>
-                              <Link
-                                to={`/shop/${shopId}/pages/${page._id}`}
-                                className="text-gray-500 transition-colors duration-300 hover:text-deep-purple-accent-200"
-                              >
-                                {page?.title}
-                              </Link>
-                            </li>
-                          )}
-                        </div>
-                      ))
+                    ?.filter((item) => item?.trash)
+                    ?.map((page, i) => (
+                      <div key={page._id}>
+                        {page?.status && (
+                          <li>
+                            <Link
+                              to={`/shop/${shopId}/pages/${page._id}`}
+                              className="text-gray-500 transition-colors duration-300 hover:text-deep-purple-accent-200"
+                            >
+                              {page?.title}
+                            </Link>
+                          </li>
+                        )}
+                      </div>
+                    ))
                   : ""}
               </ul>
             </div>

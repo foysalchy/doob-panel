@@ -36,9 +36,8 @@ const AdminHero = () => {
         style={{
           transition: "all 0.3s ease-in-out",
         }}
-        className={`border overflow-hidden rounded ${
-          on ? "max-h-[1000px]" : "max-h-[60px]"
-        } cursor-pointer `}
+        className={`border overflow-hidden rounded ${on ? "max-h-[1000px]" : "max-h-[60px]"
+          } cursor-pointer `}
       >
         <header
           onClick={() => setOn(!on)}

@@ -39,9 +39,8 @@ const AddDepartment = ({ ModalOpen, setModalOpen }) => {
     <div className={ModalOpen ? "flex" : "hidden"}>
       <div className="container mx-auto py-20">
         <div
-          className={`fixed  z-50 top-0 left-0 flex h-full min-h-screen w-full items-center justify-center bg-black bg-opacity-90 px-4 py-5 ${
-            ModalOpen ? "block" : "hidden"
-          }`}
+          className={`fixed  z-50 top-0 left-0 flex h-full min-h-screen w-full items-center justify-center bg-black bg-opacity-90 px-4 py-5 ${ModalOpen ? "block" : "hidden"
+            }`}
         >
           <div className="w-full max-w-[570px] rounded-[20px] bg-white py-12 px-8 text-center md:py-[60px] md:px-[70px]">
             <h3 className="pb-2 text-xl font-bold text-dark sm:text-2xl">

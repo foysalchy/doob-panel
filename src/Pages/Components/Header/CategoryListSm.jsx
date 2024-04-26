@@ -172,9 +172,8 @@ export default function CategoryListSm({ setOn }) {
                 <Link to={`/products/catagory/${item?._id}`}>
                   <div
                     onClick={() => subCategoryHandler(item, index)}
-                    className={`flex flex-col gap-2 bg-gray-100 w-full h-auto rounded  items-center justify-center mb-2 px-2 py-2 text-sm font-normal   relative  ${
-                      openDropdownIndex === index ? "" : "text-black"
-                    }`}
+                    className={`flex flex-col gap-2 bg-gray-100 w-full h-auto rounded  items-center justify-center mb-2 px-2 py-2 text-sm font-normal   relative  ${openDropdownIndex === index ? "" : "text-black"
+                      }`}
                   >
                     <img
                       src={item?.image}
@@ -188,11 +187,10 @@ export default function CategoryListSm({ setOn }) {
                 <div className="">
                   <button
                     onClick={() => subCategoryHandler(item, index)}
-                    className={`${
-                      openDropdownIndex === index
-                        ? "bg-gray-800 text-white"
-                        : "bg-gray-100 text-black"
-                    } flex flex-col gap-2 w-full h-auto rounded  items-center justify-center mb-2 px-2 py-2 text-sm font-normal   relative `}
+                    className={`${openDropdownIndex === index
+                      ? "bg-gray-800 text-white"
+                      : "bg-gray-100 text-black"
+                      } flex flex-col gap-2 w-full h-auto rounded  items-center justify-center mb-2 px-2 py-2 text-sm font-normal   relative `}
                   >
                     <img
                       src={item?.image}
@@ -215,11 +213,10 @@ export default function CategoryListSm({ setOn }) {
                 className={` overflow-hidden rounded   [&_summary::-webkit-details-marker]:hidden }`}
               >
                 <summary
-                  className={`${
-                    active.step1 === item._id
-                      ? "bg-gray-900 text-white"
-                      : "bg-white text-black"
-                  } flex cursor-pointer items-center justify-between gap-2 p-4 transition`}
+                  className={`${active.step1 === item._id
+                    ? "bg-gray-900 text-white"
+                    : "bg-white text-black"
+                    } flex cursor-pointer items-center justify-between gap-2 p-4 transition`}
                 >
                   <p className="text-sm">{item.subCategory}</p>
 

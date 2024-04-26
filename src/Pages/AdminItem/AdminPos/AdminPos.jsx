@@ -61,8 +61,8 @@ const AdminPos = () => {
     searchValue == ""
       ? productList
       : productList.filter((itm) =>
-          itm.name.toLowerCase().includes(searchValue.toLowerCase())
-        );
+        itm.name.toLowerCase().includes(searchValue.toLowerCase())
+      );
 
   return (
     <div>
@@ -92,33 +92,32 @@ const AdminPos = () => {
             <div className="bg-gray-100 p-4 rounded-lg mt-3  overflow-y-auto grid md:grid-cols-3 grid-cols-2 gap-3 h-[90vh]">
               {filteredData.length
                 ? filteredData?.map((itm, index) => (
-                    <div key={itm?._id}>
+                  <div key={itm?._id}>
+                    <div
+                      onClick={() => addProductToCart(itm)}
+                      className="card bg-white rounded-xl p-2"
+                    >
                       <div
-                        onClick={() => addProductToCart(itm)}
-                        className="card bg-white rounded-xl p-2"
-                      >
-                        <div
-                          style={{
-                            backgroundImage: `url('${itm?.featuredImage?.src}')`,
-                          }}
-                          className="card-body md:h-[200px] h-[100px] bg-cover object-cover rounded-xl"
-                        ></div>
-                        <div className="card-footer py-2 md:flex justify-between px-3">
-                          {/* <h3 className="md:font-semibold md:text-md text-sm">{itm?.name.slice(0, 18)}...</h3> */}
-                          <div className="flex items-center gap-2">
-                            <h3 className="font-semibold">{itm?.price}</h3>
-                          </div>
+                        style={{
+                          backgroundImage: `url('${itm?.featuredImage?.src}')`,
+                        }}
+                        className="card-body md:h-[200px] h-[100px] bg-cover object-cover rounded-xl"
+                      ></div>
+                      <div className="card-footer py-2 md:flex justify-between px-3">
+                        {/* <h3 className="md:font-semibold md:text-md text-sm">{itm?.name.slice(0, 18)}...</h3> */}
+                        <div className="flex items-center gap-2">
+                          <h3 className="font-semibold">{itm?.price}</h3>
                         </div>
                       </div>
                     </div>
-                  ))
+                  </div>
+                ))
                 : ""}
             </div>
           </div>
           <aside
-            className={`${
-              close ? "md:hidden block" : "md:block hidden"
-            } bg-gray-100 p-4 md:relative fixed rounded-lg top-0 left-0 bottom-0 md:h-auto h-screen w-full`}
+            className={`${close ? "md:hidden block" : "md:block hidden"
+              } bg-gray-100 p-4 md:relative fixed rounded-lg top-0 left-0 bottom-0 md:h-auto h-screen w-full`}
           >
             <AdminPosSidebar
               close={close}

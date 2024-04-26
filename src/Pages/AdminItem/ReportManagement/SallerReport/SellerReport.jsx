@@ -43,7 +43,7 @@ const SellerReport = () => {
       const matchesDateRange =
         startDate && endDate
           ? new Date(order.timestamp) >= new Date(startDate) &&
-            new Date(order.timestamp) <= new Date(endDate)
+          new Date(order.timestamp) <= new Date(endDate)
           : true;
 
       return matchesSearch && matchesDateRange;
@@ -67,7 +67,7 @@ const SellerReport = () => {
       const matchesDateRange =
         startDate && endDate
           ? new Date(order.timestamp) >= new Date(startDate) &&
-            new Date(order.timestamp) <= new Date(endDate)
+          new Date(order.timestamp) <= new Date(endDate)
           : true;
 
       return matchesSearch && matchesDateRange;
@@ -148,11 +148,10 @@ const SellerReport = () => {
           return (
             <li key={pageNumber}>
               <button
-                className={`block h-8 w-8 rounded border ${
-                  pageNumber === currentPage
-                    ? "border-blue-600 bg-blue-600 text-white"
-                    : "border-gray-900 bg-white text-center leading-8 text-gray-900"
-                }`}
+                className={`block h-8 w-8 rounded border ${pageNumber === currentPage
+                  ? "border-blue-600 bg-blue-600 text-white"
+                  : "border-gray-900 bg-white text-center leading-8 text-gray-900"
+                  }`}
                 onClick={() => handleChangePage(pageNumber)}
               >
                 {pageNumber}
@@ -289,64 +288,64 @@ const SellerReport = () => {
                   )}
                   {filteredData.length
                     ? filteredData?.map((shopInfo) => (
-                        <tr>
-                          <td className="px-4 py-4 text-sm font-medium whitespace-nowrap">
-                            <div>
-                              <h2 className="font-medium text-gray-800  ">
-                                {shopInfo.shop.shopName}
-                              </h2>
-                              <p className="text-sm font-normal text-gray-600 ">
-                                {shopInfo.shop.shopEmail}
-                              </p>
-                            </div>
-                          </td>
-                          <td className="px-12 py-4 text-sm font-medium whitespace-nowrap">
-                            <div className="inline px-3 py-1 text-sm font-normal rounded-full text-emerald-500 gap-x-2 bg-emerald-100/60 ">
-                              Customer
-                            </div>
-                          </td>
-                          <td className="px-4 py-4 text-sm whitespace-nowrap">
-                            <div>
-                              <h4 className="text-gray-700 ">
-                                Content curating app
-                              </h4>
-                              <p className="text-gray-500 ">
-                                Brings all your news into one place
-                              </p>
-                            </div>
-                          </td>
-                          <td className="px-4 py-4 text-sm whitespace-nowrap">
-                            <div className="flex items-center">
-                              {shopInfo.shopUsers.slice(0, 3).map((user) => (
-                                <div className="object-cover  w-6 h-6 -mx-1 border-2  flex items-center  justify-center rounded-full  shrink-0">
-                                  <p className="capitalize">
-                                    {user.name.slice(0, 1)}
-                                  </p>
-                                </div>
-                              ))}
-
-                              {shopInfo.shopUsers.length > 4 && (
-                                <p className="flex items-center justify-center w-6 h-6 -mx-1 text-xs text-blue-600 bg-blue-100 border-2 border-white rounded-full">
-                                  +{shopInfo.shopUsers.length - 4}
+                      <tr>
+                        <td className="px-4 py-4 text-sm font-medium whitespace-nowrap">
+                          <div>
+                            <h2 className="font-medium text-gray-800  ">
+                              {shopInfo.shop.shopName}
+                            </h2>
+                            <p className="text-sm font-normal text-gray-600 ">
+                              {shopInfo.shop.shopEmail}
+                            </p>
+                          </div>
+                        </td>
+                        <td className="px-12 py-4 text-sm font-medium whitespace-nowrap">
+                          <div className="inline px-3 py-1 text-sm font-normal rounded-full text-emerald-500 gap-x-2 bg-emerald-100/60 ">
+                            Customer
+                          </div>
+                        </td>
+                        <td className="px-4 py-4 text-sm whitespace-nowrap">
+                          <div>
+                            <h4 className="text-gray-700 ">
+                              Content curating app
+                            </h4>
+                            <p className="text-gray-500 ">
+                              Brings all your news into one place
+                            </p>
+                          </div>
+                        </td>
+                        <td className="px-4 py-4 text-sm whitespace-nowrap">
+                          <div className="flex items-center">
+                            {shopInfo.shopUsers.slice(0, 3).map((user) => (
+                              <div className="object-cover  w-6 h-6 -mx-1 border-2  flex items-center  justify-center rounded-full  shrink-0">
+                                <p className="capitalize">
+                                  {user.name.slice(0, 1)}
                                 </p>
-                              )}
-                            </div>
-                          </td>
-                          <td className="px-4 py-4 text-sm whitespace-nowrap">
-                            <div className="w-48 h-1.5 bg-blue-200 overflow-hidden rounded-full">
-                              <div
-                                className="bg-blue-500"
-                                style={{
-                                  width: `${calculateRemainingDays(
-                                    shopInfo?.shop?.paymentDate,
-                                    shopInfo?.timeDuration
-                                  )}%`,
-                                }}
-                              />
-                            </div>
-                          </td>
-                        </tr>
-                      ))
+                              </div>
+                            ))}
+
+                            {shopInfo.shopUsers.length > 4 && (
+                              <p className="flex items-center justify-center w-6 h-6 -mx-1 text-xs text-blue-600 bg-blue-100 border-2 border-white rounded-full">
+                                +{shopInfo.shopUsers.length - 4}
+                              </p>
+                            )}
+                          </div>
+                        </td>
+                        <td className="px-4 py-4 text-sm whitespace-nowrap">
+                          <div className="w-48 h-1.5 bg-blue-200 overflow-hidden rounded-full">
+                            <div
+                              className="bg-blue-500"
+                              style={{
+                                width: `${calculateRemainingDays(
+                                  shopInfo?.shop?.paymentDate,
+                                  shopInfo?.timeDuration
+                                )}%`,
+                              }}
+                            />
+                          </div>
+                        </td>
+                      </tr>
+                    ))
                     : ""}
                 </tbody>
               </table>

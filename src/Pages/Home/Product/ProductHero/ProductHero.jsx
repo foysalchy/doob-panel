@@ -196,11 +196,10 @@ const ProductHero = () => {
                   ).length >= 1
                 }
                 onClick={() => subCategoryHandler(item, index)}
-                className={`flex  items-center  w-full justify-between px-2 py-1 capitalize text-sm font-normal  hover:bg-black hover:text-white  relative  ${
-                  openDropdownIndex === index
-                    ? "bg-gray-100 text-black"
-                    : "text-black"
-                } rounded`}
+                className={`flex  items-center  w-full justify-between px-2 py-1 capitalize text-sm font-normal  hover:bg-black hover:text-white  relative  ${openDropdownIndex === index
+                  ? "bg-gray-100 text-black"
+                  : "text-black"
+                  } rounded`}
               >
                 <span className="flex gap-2 items-center ">
                   <img
@@ -231,11 +230,10 @@ const ProductHero = () => {
                             onMouseMove={() =>
                               miniCategoryHandler(subCategory, index)
                             }
-                            className={`flex  items-center hover:bg-gray-100 w-full justify-between px-2 py-1 capitalize text-sm font-normal cursor-pointer mb-1 rounded relative  ${
-                              active?.step1 === subCategory?._id
-                                ? "text-black bg-gray-100"
-                                : "text-black"
-                            }`}
+                            className={`flex  items-center hover:bg-gray-100 w-full justify-between px-2 py-1 capitalize text-sm font-normal cursor-pointer mb-1 rounded relative  ${active?.step1 === subCategory?._id
+                              ? "text-black bg-gray-100"
+                              : "text-black"
+                              }`}
                             type="button"
                             id={item?._id}
                             data-te-dropdown-toggle-ref
@@ -270,11 +268,10 @@ const ProductHero = () => {
                                             index
                                           )
                                         }
-                                        className={`flex mt-2 items-center  w-full justify-between px-2 py-1 capitalize text-sm font-normal rounded hover:bg-gray-100 hover:text-black  relative  ${
-                                          active?.step2 === miniCategory?._id
-                                            ? "bg-gray-100 text-black"
-                                            : "text-black"
-                                        }`}
+                                        className={`flex mt-2 items-center  w-full justify-between px-2 py-1 capitalize text-sm font-normal rounded hover:bg-gray-100 hover:text-black  relative  ${active?.step2 === miniCategory?._id
+                                          ? "bg-gray-100 text-black"
+                                          : "text-black"
+                                          }`}
                                       >
                                         <span className="flex items-center ">
                                           <img
@@ -346,11 +343,10 @@ const ProductHero = () => {
                             onMouseMove={() =>
                               miniCategoryHandler(subCategory, index)
                             }
-                            className={`flex items-center  w-full justify-between hover:bg-gray-100 px-2 py-1 capitalize text-sm font-normal  mb-1 rounded relative  ${
-                              active?.step2 === subCategory?._id
-                                ? "black-black "
-                                : "text-black"
-                            }`}
+                            className={`flex items-center  w-full justify-between hover:bg-gray-100 px-2 py-1 capitalize text-sm font-normal  mb-1 rounded relative  ${active?.step2 === subCategory?._id
+                              ? "black-black "
+                              : "text-black"
+                              }`}
                             type="button"
                             id={item?._id}
                             data-te-dropdown-toggle-ref

@@ -26,10 +26,10 @@ const WooCommerceOrderTable = ({ searchValue }) => {
 
   const filteredData = searchValue
     ? tData?.filter((itm) =>
-        itm?.addresses?.fullName
-          .toLowerCase()
-          .includes(searchValue.toLowerCase())
-      )
+      itm?.addresses?.fullName
+        .toLowerCase()
+        .includes(searchValue.toLowerCase())
+    )
     : tData;
 
   // Calculate the range of items to display based on pagination
@@ -123,17 +123,14 @@ const WooCommerceOrderTable = ({ searchValue }) => {
                 <li key={i}>
                   <button
                     onClick={() => setCurrentPage(i + 1)}
-                    className={`bg-white border ${
-                      currentPage === i + 1
-                        ? "text-blue-600"
-                        : "text-gray-500 hover:bg-gray-100 hover:text-gray-700"
-                    } border-gray-300 leading-tight py-2 px-3 rounded ${
-                      i === 0 ? "rounded-l-lg" : ""
-                    } ${
-                      i === Math.ceil(filteredData.length / itemsPerPage) - 1
+                    className={`bg-white border ${currentPage === i + 1
+                      ? "text-blue-600"
+                      : "text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+                      } border-gray-300 leading-tight py-2 px-3 rounded ${i === 0 ? "rounded-l-lg" : ""
+                      } ${i === Math.ceil(filteredData.length / itemsPerPage) - 1
                         ? "rounded-r-lg"
                         : ""
-                    }`}
+                      }`}
                   >
                     {i + 1}
                   </button>

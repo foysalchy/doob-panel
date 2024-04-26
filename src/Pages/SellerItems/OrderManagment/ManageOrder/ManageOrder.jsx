@@ -174,9 +174,8 @@ const ManageOrder = () => {
     invoiceData.forEach((item) => {
       html += `
             <tr>
-                <td class="py-2"><img src="${
-                  item.product_main_image
-                }" alt="Product Image" class="w-16 h-16 object-cover"></td>
+                <td class="py-2"><img src="${item.product_main_image
+        }" alt="Product Image" class="w-16 h-16 object-cover"></td>
                 <td class="py-2">${item.name}</td>
                 <td class="py-2">${item.sku}</td>
                 <td class="py-2">${item.item_price}</td>
@@ -280,9 +279,8 @@ const ManageOrder = () => {
       invoiceData.order_items.forEach((item) => {
         html += `
                 <tr>
-                    <td class="py-2"><img src="${
-                      item.product_main_image
-                    }" alt="Product Image" class="product-image"></td>
+                    <td class="py-2"><img src="${item.product_main_image
+          }" alt="Product Image" class="product-image"></td>
                     <td class="py-2">${item.name}</td>
                     <td class="py-2">${item.sku}</td>
                     <td class="py-2">${item.item_price}</td>
@@ -323,17 +321,15 @@ const ManageOrder = () => {
       <div className="flex flex-wrap justify-start  items-center gap-4 ">
         <button
           onClick={() => setDaraz(false)}
-          className={`px-4 py-1 border text-white ${
-            !daraz ? "bg-gray-900" : "bg-gray-500"
-          }`}
+          className={`px-4 py-1 border text-white ${!daraz ? "bg-gray-900" : "bg-gray-500"
+            }`}
         >
           Web Order
         </button>
         <button
           onClick={() => setDaraz(true)}
-          className={`px-4 py-1 border text-white ${
-            daraz ? "bg-gray-900" : "bg-gray-500"
-          }`}
+          className={`px-4 py-1 border text-white ${daraz ? "bg-gray-900" : "bg-gray-500"
+            }`}
         >
           Daraz Order
         </button>
@@ -350,9 +346,8 @@ const ManageOrder = () => {
           itm?.status === "dropdown" ? (
             <select
               key={itm.name}
-              className={`px-4 border-r bg-transparent relative border-gray-300 flex items-center gap-2 justify-center ${
-                selectedValue === "pending" ? "text-red-500" : ""
-              }`}
+              className={`px-4 border-r bg-transparent relative border-gray-300 flex items-center gap-2 justify-center ${selectedValue === "pending" ? "text-red-500" : ""
+                }`}
               value={selectedValue}
               onChange={(e) => setSelectedValue(e.target.value)}
             >
@@ -364,9 +359,8 @@ const ManageOrder = () => {
           ) : (
             <button
               key={itm.name}
-              className={`px-4 border-r md:bg-transparent bg-gray-50 border-gray-300 flex  items-center ${
-                selectedValue === itm.value ? "text-red-500" : ""
-              }`}
+              className={`px-4 border-r md:bg-transparent bg-gray-50 border-gray-300 flex  items-center ${selectedValue === itm.value ? "text-red-500" : ""
+                }`}
               style={{ whiteSpace: "nowrap" }}
               onClick={() => setSelectedValue(itm.value)}
             >
@@ -382,17 +376,15 @@ const ManageOrder = () => {
       <div>
         <div
           onClick={() => setShowInvoice(false)}
-          className={`fixed z-[100] flex items-center justify-center ${
-            showInvoice ? "visible opacity-100" : "invisible opacity-0"
-          } inset-0   backdrop-blur-sm duration-100 dark:bg-white/10`}
+          className={`fixed z-[100] flex items-center justify-center ${showInvoice ? "visible opacity-100" : "invisible opacity-0"
+            } inset-0   backdrop-blur-sm duration-100 dark:bg-white/10`}
         >
           <div
             onClick={(e_) => e_.stopPropagation()}
-            className={`text- absolute w-[98%] rounded-sm bg-white p-6 drop-shadow-lg dark:bg-gray-50 h-full  overflow-y-auto dark:text-black ${
-              showInvoice
-                ? "scale-1 opacity-1 duration-300"
-                : "scale-0 opacity-0 duration-150"
-            }`}
+            className={`text- absolute w-[98%] rounded-sm bg-white p-6 drop-shadow-lg dark:bg-gray-50 h-full  overflow-y-auto dark:text-black ${showInvoice
+              ? "scale-1 opacity-1 duration-300"
+              : "scale-0 opacity-0 duration-150"
+              }`}
           >
             <button
               onClick={() => setShowInvoice(false)}
@@ -502,17 +494,15 @@ const ManageOrder = () => {
         <div>
           <div
             onClick={() => setShowInvoiceSm(false)}
-            className={`fixed z-[100] flex items-center justify-center ${
-              showInvoiceSm ? "visible opacity-100" : "invisible opacity-0"
-            } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
+            className={`fixed z-[100] flex items-center justify-center ${showInvoiceSm ? "visible opacity-100" : "invisible opacity-0"
+              } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
           >
             <div
               onClick={(e_) => e_.stopPropagation()}
-              className={`text- absolute w-[95%] h-[96%] overflow-y-auto rounded-sm bg-gray-50 p-6 drop-shadow-lg     ${
-                showInvoiceSm
-                  ? "scale-1 opacity-1 duration-300"
-                  : "scale-0 opacity-0 duration-150"
-              }`}
+              className={`text- absolute w-[95%] h-[96%] overflow-y-auto rounded-sm bg-gray-50 p-6 drop-shadow-lg     ${showInvoiceSm
+                ? "scale-1 opacity-1 duration-300"
+                : "scale-0 opacity-0 duration-150"
+                }`}
             >
               <div ref={componentRef}>
                 {selectedItems?.map((itm) => (
@@ -632,7 +622,7 @@ const ManageOrder = () => {
                                 (acc, list) =>
                                   acc +
                                   parseInt(list?.price) *
-                                    parseInt(list?.quantity),
+                                  parseInt(list?.quantity),
                                 0
                               )}
                             </td>
@@ -650,7 +640,7 @@ const ManageOrder = () => {
                                 (acc, list) =>
                                   acc +
                                   parseInt(list?.price) *
-                                    parseInt(list?.quantity),
+                                  parseInt(list?.quantity),
                                 0
                               )}
                             </td>
@@ -684,17 +674,15 @@ const ManageOrder = () => {
         <div>
           <div
             onClick={() => setShowPrintModal1(false)}
-            className={`fixed z-[100] flex items-center justify-center ${
-              showPrintModal1 ? "visible opacity-100" : "invisible opacity-0"
-            } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
+            className={`fixed z-[100] flex items-center justify-center ${showPrintModal1 ? "visible opacity-100" : "invisible opacity-0"
+              } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
           >
             <div
               onClick={(e_) => e_.stopPropagation()}
-              className={`text- absolute overflow-y-auto w-[96%] h-[98%] rounded-sm bg-gray-50 p-6 drop-shadow-lg text-black ${
-                showPrintModal1
-                  ? "scale-1 opacity-1 duration-300"
-                  : "scale-0 opacity-0 duration-150"
-              }`}
+              className={`text- absolute overflow-y-auto w-[96%] h-[98%] rounded-sm bg-gray-50 p-6 drop-shadow-lg text-black ${showPrintModal1
+                ? "scale-1 opacity-1 duration-300"
+                : "scale-0 opacity-0 duration-150"
+                }`}
             >
               <AllOrderInvoice
                 data={selectedItems}

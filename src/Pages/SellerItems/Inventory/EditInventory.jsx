@@ -37,31 +37,31 @@ const EditInventory = ({ refetch, open, setOpen, data }) => {
     {
       data.adminWare
         ? fetch(`https://backend.doob.com.bd/api/v1/admin/stock-request`, {
-            method: "POST",
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(stock),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            refetch();
+            setOpen(!open);
+          })
+        : fetch(
+          `https://backend.doob.com.bd/api/v1/seller/product-stock-update?productId=${data?._id}&quantity=${count}`,
+          {
+            method: "PUT",
             headers: {
               "Content-Type": "application/json",
             },
-            body: JSON.stringify(stock),
-          })
-            .then((res) => res.json())
-            .then((data) => {
-              refetch();
-              setOpen(!open);
-            })
-        : fetch(
-            `https://backend.doob.com.bd/api/v1/seller/product-stock-update?productId=${data?._id}&quantity=${count}`,
-            {
-              method: "PUT",
-              headers: {
-                "Content-Type": "application/json",
-              },
-            }
-          )
-            .then((res) => res.json())
-            .then((data) => {
-              refetch();
-              setOpen(!open);
-            });
+          }
+        )
+          .then((res) => res.json())
+          .then((data) => {
+            refetch();
+            setOpen(!open);
+          });
     }
     console.log(data, ">>>>>>><<<<<<<<<<<<<<<<<<<");
   };

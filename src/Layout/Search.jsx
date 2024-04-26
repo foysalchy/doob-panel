@@ -51,9 +51,8 @@ const Search = () => {
     <div>
       <div>
         <div
-          className={`fixed z-50 left-0 bg-opacity-70 bg-gray-500 top-0 flex h-full min-h-screen w-full items-center justify-center bg-dark/90 px-4 py-5 ${
-            search ? "block" : "hidden"
-          }`}
+          className={`fixed z-50 left-0 bg-opacity-70 bg-gray-500 top-0 flex h-full min-h-screen w-full items-center justify-center bg-dark/90 px-4 py-5 ${search ? "block" : "hidden"
+            }`}
         >
           <div>
             <div className="flex gap-2 justify-center">

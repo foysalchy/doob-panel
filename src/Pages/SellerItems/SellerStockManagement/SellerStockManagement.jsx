@@ -22,8 +22,8 @@ const SellerStockManagement = () => {
   });
   const filteredStockRequest = searchQuery
     ? stockRequest.filter((item) =>
-        item._id.toLowerCase().includes(searchQuery.toLowerCase())
-      )
+      item._id.toLowerCase().includes(searchQuery.toLowerCase())
+    )
     : stockRequest;
 
   // const filterData = stockRequest.filter(itm => itm?._id.toLowerCase().includes(searchValue.toLowerCase()));

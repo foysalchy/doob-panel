@@ -28,9 +28,8 @@ const StarRating = ({ rating, onRatingChange }) => {
         <span
           key={star}
           onClick={() => onRatingChange(star)}
-          className={`cursor-pointer text-2xl ${
-            star <= rating ? "text-yellow-500" : "text-gray-300"
-          }`}
+          className={`cursor-pointer text-2xl ${star <= rating ? "text-yellow-500" : "text-gray-300"
+            }`}
         >
           ★
         </span>
@@ -64,7 +63,7 @@ const ProductDetails = () => {
     profitPercent: 0,
   });
 
-  useEffect(() => {}, [variationData]);
+  useEffect(() => { }, [variationData]);
   const allUpdateInfo = () => {
     const price = parseInt(productFind?.variantData?.sellingPrice);
     const quantityPars = parseInt(quantity);

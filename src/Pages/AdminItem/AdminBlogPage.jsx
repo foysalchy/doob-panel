@@ -137,11 +137,10 @@ const AdminBlogPage = () => {
                 <div className="flex flex-wrap gap-4">
                   <a
                     href={`#all`}
-                    className={`px-4 py-2 text-sm font-medium uppercase tracking-wide ${
-                      selectedCategory === null
-                        ? "bg-black text-white"
-                        : "bg-gray-300 text-gray-700"
-                    }`}
+                    className={`px-4 py-2 text-sm font-medium uppercase tracking-wide ${selectedCategory === null
+                      ? "bg-black text-white"
+                      : "bg-gray-300 text-gray-700"
+                      }`}
                   >
                     All
                   </a>
@@ -151,11 +150,10 @@ const AdminBlogPage = () => {
                       <a
                         key={category.id}
                         href={`#${category?.slag}`}
-                        className={`px-4 py-2 text-sm font-medium uppercase tracking-wide ${
-                          selectedCategory === category.title
-                            ? "bg-black text-white"
-                            : "bg-gray-300 text-gray-700"
-                        }`}
+                        className={`px-4 py-2 text-sm font-medium uppercase tracking-wide ${selectedCategory === category.title
+                          ? "bg-black text-white"
+                          : "bg-gray-300 text-gray-700"
+                          }`}
                       >
                         {category.title}
                       </a>

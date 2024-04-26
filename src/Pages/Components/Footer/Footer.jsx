@@ -168,15 +168,15 @@ const Footer = () => {
                 <ul className="mt-2 space-y-2">
                   {page1.length
                     ? page1.map((page, i) => (
-                        <li key={i}>
-                          <Link
-                            to={`/pages/${page?._id}`}
-                            className="text-sm text-gray-400 transition-colors duration-300 hover:text-deep-purple-accent-400"
-                          >
-                            {page?.title}
-                          </Link>
-                        </li>
-                      ))
+                      <li key={i}>
+                        <Link
+                          to={`/pages/${page?._id}`}
+                          className="text-sm text-gray-400 transition-colors duration-300 hover:text-deep-purple-accent-400"
+                        >
+                          {page?.title}
+                        </Link>
+                      </li>
+                    ))
                     : ""}
                 </ul>
               </div>
@@ -187,17 +187,17 @@ const Footer = () => {
                 <ul className="mt-2 space-y-2">
                   {page2.length
                     ? page2
-                        ?.filter((item) => !item?.trash)
-                        .map((page, i) => (
-                          <li key={i}>
-                            <Link
-                              to={`/pages/${page?._id}`}
-                              className="text-sm text-gray-400 transition-colors duration-300 hover:text-deep-purple-accent-400"
-                            >
-                              {page?.title}
-                            </Link>
-                          </li>
-                        ))
+                      ?.filter((item) => !item?.trash)
+                      .map((page, i) => (
+                        <li key={i}>
+                          <Link
+                            to={`/pages/${page?._id}`}
+                            className="text-sm text-gray-400 transition-colors duration-300 hover:text-deep-purple-accent-400"
+                          >
+                            {page?.title}
+                          </Link>
+                        </li>
+                      ))
                     : ""}
                 </ul>
               </div>

@@ -88,7 +88,7 @@ const CardProduct = () => {
           parseInt(
             product.sellingPrice ? product.sellingPrice : product.product_price
           ) *
-            parseInt(product.product_quantity),
+          parseInt(product.product_quantity),
         0
       );
   };
@@ -115,7 +115,7 @@ const CardProduct = () => {
         body: JSON.stringify(data),
       })
         .then((res) => res.json())
-        .then((data) => {});
+        .then((data) => { });
     } else {
       navigate("/sign-in");
     }

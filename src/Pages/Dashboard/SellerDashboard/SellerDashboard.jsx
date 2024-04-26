@@ -197,16 +197,16 @@ const SellerDashboard = () => {
     <div className="h-screen mb-10 mt-[-40px]   ">
       {sellerPopupData.length
         ? popup && (
-            <div className="fixed top-0 left-0 flex items-center justify-center w-full h-full bg-black bg-opacity-90 z-50">
-              <SellerPopUp
-                onClose={onClose}
-                showModal={popup}
-                setShowModal={setPopUp}
-                data={sellerPopupData}
-                handleClose={onClose}
-              />
-            </div>
-          )
+          <div className="fixed top-0 left-0 flex items-center justify-center w-full h-full bg-black bg-opacity-90 z-50">
+            <SellerPopUp
+              onClose={onClose}
+              showModal={popup}
+              setShowModal={setPopUp}
+              data={sellerPopupData}
+              handleClose={onClose}
+            />
+          </div>
+        )
         : ""}
       <div className=" bg-gradient-to-r from-[#1493f4] to-[#835177] absolute -z-10 -top-12 -right-14 blur-2xl opacity-10"></div>
       <h1 className="text-4xl font-semibold text-gray-800 capitalize">

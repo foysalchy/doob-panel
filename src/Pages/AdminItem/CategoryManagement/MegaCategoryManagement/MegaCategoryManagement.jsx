@@ -187,18 +187,16 @@ const MegaCategoryManagement = () => {
                       </button>
                       <div className="absolute w-full top-0 left-0">
                         <div
-                          className={`fixed z-[100] flex items-center justify-center ${
-                            editOn?._id === item?._id
-                              ? "opacity-1 visible"
-                              : "invisible opacity-0"
-                          } inset-0 bg-black/20 backdrop-blur-sm duration-100`}
+                          className={`fixed z-[100] flex items-center justify-center ${editOn?._id === item?._id
+                            ? "opacity-1 visible"
+                            : "invisible opacity-0"
+                            } inset-0 bg-black/20 backdrop-blur-sm duration-100`}
                         >
                           <div
-                            className={`absolute md:w-[500px] w-full rounded-sm bg-white p-3 pb-5 text-center drop-shadow-2xl ${
-                              editOn?._id === item?._id
-                                ? "scale-1 opacity-1 duration-300"
-                                : "scale-0 opacity-0 duration-150"
-                            } `}
+                            className={`absolute md:w-[500px] w-full rounded-sm bg-white p-3 pb-5 text-center drop-shadow-2xl ${editOn?._id === item?._id
+                              ? "scale-1 opacity-1 duration-300"
+                              : "scale-0 opacity-0 duration-150"
+                              } `}
                           >
                             <svg
                               onClick={() => setEditOn(false)}
