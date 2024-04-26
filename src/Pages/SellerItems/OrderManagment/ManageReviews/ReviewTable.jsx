@@ -16,10 +16,10 @@ const ReviewTable = ({ search }) => {
     queryKey: ["reviewData"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/seller/all-shop-product-comment?shopId=${shopInfo._id}`
+        `http://localhost:5001/api/v1/seller/review?shopId=${shopInfo._id}`
       );
       const data = await res.json();
-      return data?.comments;
+      return data;
     },
   });
 
@@ -60,11 +60,10 @@ const ReviewTable = ({ search }) => {
           return (
             <li key={pageNumber}>
               <button
-                className={`block h-8 w-8 rounded border ${
-                  pageNumber === currentPage
-                    ? "border-blue-600 bg-blue-600 text-white"
-                    : "border-gray-900 bg-white text-center leading-8 text-gray-900"
-                }`}
+                className={`block h-8 w-8 rounded border ${pageNumber === currentPage
+                  ? "border-blue-600 bg-blue-600 text-white"
+                  : "border-gray-900 bg-white text-center leading-8 text-gray-900"
+                  }`}
                 onClick={() => handleChangePage(pageNumber)}
               >
                 {pageNumber}
@@ -100,13 +99,13 @@ const ReviewTable = ({ search }) => {
                     scope="col"
                     className="border-r px-2 py-4 dark:border-neutral-500"
                   >
-                    Order
+                    Product Id
                   </th>
                   <th
                     scope="col"
                     className="border-r border-gray-400 px-2 py-4 dark:border-neutral-500"
                   >
-                    Content
+                    View Review
                   </th>
                   <th
                     scope="col"

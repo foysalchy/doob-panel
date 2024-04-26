@@ -12,14 +12,14 @@ const ReviewTableRow = ({ refetch, itm }) => {
 
   const handleDelete = () => {
     fetch(
-      `https://backend.doob.com.bd/api/v1/seller/delete-comment?id=${itm?._id}`,
+      `http://localhost:5001/api/v1/seller/review?id=${itm?._id}`,
       {
         method: "DELETE",
       }
     )
       .then((res) => res.json())
       .then((data) => {
-        BrightAlert(`${data.message}`, "", "success");
+        BrightAlert();
         refetch();
       });
   };
@@ -29,17 +29,17 @@ const ReviewTableRow = ({ refetch, itm }) => {
 
       <td className="whitespace-wrap border-r w-[170px] px-2 py-4 font-medium dark:border-neutral-500">
         <Link to="" className="text-blue-600">
-          {itm?._id}
+          {itm?.product_id}
         </Link>
       </td>
       <td className="whitespace-wrap w-[320px] border-r px-6 py-4 dark:border-neutral-500">
-        {itm?.comment}
+        {itm?.review}
       </td>
       <td className="whitespace-wrap border-r px-6 py-4 dark:border-neutral-500">
-        {itm?.rating}
+        {itm?.star}
       </td>
       <td className="whitespace-nowrap border-r px-6 py-4 dark:border-neutral-500">
-        <img src={itm?.photo?.image} className="w-20 h-20 mx-auto" alt="" />
+        <img src={itm?.productImage} className="w-20 h-20 mx-auto" alt="" />
       </td>
       <td className="whitespace-nowrap px-6 py-4 dark:border-neutral-500 flex gap-3 justify-center items-center">
         <button onClick={handleDelete} className="text-red-500">

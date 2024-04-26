@@ -367,10 +367,10 @@ const ManageWebOrder = () => {
                                   "returned",
                                   "Refund",
                                 ].includes(product.status) && (
-                                  <button className="text-blue-700">
-                                    {product.status}
-                                  </button>
-                                )}
+                                    <button className="text-blue-700">
+                                      {product.status}
+                                    </button>
+                                  )}
                                 {product._id === readyToShip._id && (
                                   <tr>
                                     <td colSpan="10">

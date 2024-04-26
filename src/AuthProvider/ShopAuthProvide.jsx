@@ -236,7 +236,7 @@ const ShopAuth = ({ children }) => {
         setToken(false);
         setLoading(false);
       })
-      .catch((error) => {});
+      .catch((error) => { });
   };
 
   const ForgetPass = (email) => {

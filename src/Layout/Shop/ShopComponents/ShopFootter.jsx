@@ -130,19 +130,19 @@ const ShopFooter = () => {
             </div>
             {pages.length
               ? pages
-                  ?.filter((item) => !item?.trash)
-                  ?.map((page, i) => (
-                    <div key={page._id}>
-                      {page?.status && (
-                        <Link
-                          to={`/shop/${shopId}/pages/${page._id}`}
-                          className="text-sm text-white transition-colors duration-300 hover:text-purple-400"
-                        >
-                          {page?.title}
-                        </Link>
-                      )}
-                    </div>
-                  ))
+                ?.filter((item) => !item?.trash)
+                ?.map((page, i) => (
+                  <div key={page._id}>
+                    {page?.status && (
+                      <Link
+                        to={`/shop/${shopId}/pages/${page._id}`}
+                        className="text-sm text-white transition-colors duration-300 hover:text-purple-400"
+                      >
+                        {page?.title}
+                      </Link>
+                    )}
+                  </div>
+                ))
               : ""}
           </div>
         </div>

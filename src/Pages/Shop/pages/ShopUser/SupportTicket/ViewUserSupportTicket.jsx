@@ -110,9 +110,8 @@ const ViewUserSupportTicket = ({
       <div className={viewComment ? "flex" : "hidden"}>
         <div className=" mx-auto py-20">
           <div
-            className={`fixed  z-50 top-0 left-0 flex h-full min-h-screen w-full items-center justify-center bg-black bg-opacity-90 px-4 py-5  ${
-              viewComment ? "block" : "hidden"
-            }`}
+            className={`fixed  z-50 top-0 left-0 flex h-full min-h-screen w-full items-center justify-center bg-black bg-opacity-90 px-4 py-5  ${viewComment ? "block" : "hidden"
+              }`}
           >
             <div className="w-full max-w-[800px] h-[90%]  rounded-[20px]  bg-white  pb-10 px-8 text-center md:px-[30px] ">
               <div className="flex  justify-between  pt-4 items-start w-full sticky top-0 bg-white border-b">
@@ -138,9 +137,8 @@ const ViewUserSupportTicket = ({
                   <div className="flex gap-4 my-4 items-stretch relative ">
                     <p className=" text-lg text-gray-600  sm">File</p>
                     <div
-                      className={` cursor-pointer ${
-                        isHovered || isFullscreen ? "hovered" : ""
-                      }`}
+                      className={` cursor-pointer ${isHovered || isFullscreen ? "hovered" : ""
+                        }`}
                       onClick={handleClick}
                       onMouseEnter={handleHover}
                       onMouseLeave={handleHoverLeave}
@@ -153,14 +151,12 @@ const ViewUserSupportTicket = ({
                       />
                       {(isHovered || isFullscreen) && (
                         <div
-                          className={`absolute top-40 left-0 h-full bg-black bg-blur-sm w-full flex items-center justify-center ${
-                            isFullscreen ? "z-50" : ""
-                          }`}
+                          className={`absolute top-40 left-0 h-full bg-black bg-blur-sm w-full flex items-center justify-center ${isFullscreen ? "z-50" : ""
+                            }`}
                         >
                           <img
-                            className={`w-full h-auto bg-black rounded ${
-                              isFullscreen ? "cursor-pointer" : ""
-                            }`}
+                            className={`w-full h-auto bg-black rounded ${isFullscreen ? "cursor-pointer" : ""
+                              }`}
                             src={ticketDetails?.file}
                             srcSet={ticketDetails?.file}
                             alt="Image"
@@ -222,19 +218,17 @@ const ViewUserSupportTicket = ({
                         <div>
                           <div
                             onClick={() => setOpenModal(false)}
-                            className={`fixed z-[100] flex items-center justify-center ${
-                              openModal === comment?.content?.imageUrl
-                                ? "visible opacity-100"
-                                : "invisible opacity-0"
-                            } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
+                            className={`fixed z-[100] flex items-center justify-center ${openModal === comment?.content?.imageUrl
+                              ? "visible opacity-100"
+                              : "invisible opacity-0"
+                              } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
                           >
                             <div
                               onClick={(e_) => e_.stopPropagation()}
-                              className={`text- w-[500px] absolute max-w-md rounded-sm bg-white p-6 drop-shadow-lg dark:bg-black dark:text-white ${
-                                openModal === comment?.content?.imageUrl
-                                  ? "scale-1 opacity-1 duration-300"
-                                  : "scale-0 opacity-0 duration-150"
-                              }`}
+                              className={`text- w-[500px] absolute max-w-md rounded-sm bg-white p-6 drop-shadow-lg dark:bg-black dark:text-white ${openModal === comment?.content?.imageUrl
+                                ? "scale-1 opacity-1 duration-300"
+                                : "scale-0 opacity-0 duration-150"
+                                }`}
                             >
                               <img
                                 src={openModal}

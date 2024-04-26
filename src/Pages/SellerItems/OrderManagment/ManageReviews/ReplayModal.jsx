@@ -18,12 +18,12 @@ const ReplayModal = ({ refetch, setOpen, itm }) => {
       time: new Date(),
     };
 
-    fetch(`https://backend.doob.com.bd/api/v1/seller/replay-on-comment`, {
-      method: "PATCH",
+    fetch(`http://localhost:5001/api/v1/seller/replay-on-review`, {
+      method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(body), // Fix: Changed data to body
+      body: JSON.stringify(body),
     })
       .then((res) => res.json())
       .then((data) => {

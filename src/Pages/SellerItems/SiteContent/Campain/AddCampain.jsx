@@ -205,14 +205,12 @@ const AddCampaign = () => {
                   onChange={() => setIsChecked(!isChecked)}
                 />
                 <div
-                  className={`w-10 h-4 rounded-full shadow ${
-                    isChecked ? "bg-violet-400" : "bg-gray-600"
-                  }`}
+                  className={`w-10 h-4 rounded-full shadow ${isChecked ? "bg-violet-400" : "bg-gray-600"
+                    }`}
                 ></div>
                 <div
-                  className={`absolute w-6 h-6 rounded-full shadow -inset-y-1 ${
-                    isChecked ? "peer-checked:right-0" : "peer-checked:left-0"
-                  } peer-checked:left-auto bg-violet-400`}
+                  className={`absolute w-6 h-6 rounded-full shadow -inset-y-1 ${isChecked ? "peer-checked:right-0" : "peer-checked:left-0"
+                    } peer-checked:left-auto bg-violet-400`}
                 ></div>
               </span>
             </label>

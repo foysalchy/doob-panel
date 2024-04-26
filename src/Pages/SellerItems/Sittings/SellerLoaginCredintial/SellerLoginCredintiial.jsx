@@ -60,7 +60,7 @@ const SellerLoginCredintiial = () => {
       },
     };
 
-    fetch("https://backend.doob.com.bd/api/v1/shop/firebase/add", {
+    fetch("http://localhost:5001/api/v1/shop/firebase/add", {
       method: "PATCH",
       body: JSON.stringify(data),
       headers: {
@@ -87,7 +87,7 @@ const SellerLoginCredintiial = () => {
     queryFn: async () => {
       try {
         const res = await fetch(
-          `https://backend.doob.com.bd/api/v1/shop/firebase/${shopInfo?.shopId}`,
+          `http://localhost:5001/api/v1/shop/firebase/${shopInfo?.shopId}`,
           {
             headers: {
               "ngrok-skip-browser-warning": "69420",
@@ -116,7 +116,7 @@ const SellerLoginCredintiial = () => {
               Email
             </label>
             <input
-              readOnly={shopCredential.email ? true : false}
+             
               defaultValue={shopCredential.email ? shopCredential.email : ""}
               type="email"
               name="email"
@@ -132,7 +132,7 @@ const SellerLoginCredintiial = () => {
               Api Key
             </label>
             <input
-              readOnly={shopCredential.apiKey ? true : false}
+             
               defaultValue={shopCredential.apiKey ? shopCredential.apiKey : ""}
               type="text"
               name="apiKey"
@@ -148,7 +148,7 @@ const SellerLoginCredintiial = () => {
               Auth Domain
             </label>
             <input
-              readOnly={shopCredential.authDomain ? true : false}
+            
               defaultValue={
                 shopCredential.authDomain ? shopCredential.authDomain : ""
               }
@@ -166,7 +166,7 @@ const SellerLoginCredintiial = () => {
               Project Id
             </label>
             <input
-              readOnly={shopCredential.projectId ? true : false}
+             
               defaultValue={
                 shopCredential.email ? shopCredential.projectId : ""
               }
@@ -184,7 +184,7 @@ const SellerLoginCredintiial = () => {
               Storage Bucket
             </label>
             <input
-              readOnly={shopCredential.storageBucket ? true : false}
+             
               defaultValue={
                 shopCredential.storageBucket ? shopCredential.storageBucket : ""
               }
@@ -202,7 +202,7 @@ const SellerLoginCredintiial = () => {
               Messaging Sender ID
             </label>
             <input
-              readOnly={shopCredential.messagingSenderId ? true : false}
+             
               defaultValue={
                 shopCredential.messagingSenderId
                   ? shopCredential.messagingSenderId
@@ -222,7 +222,7 @@ const SellerLoginCredintiial = () => {
               App ID
             </label>
             <input
-              readOnly={shopCredential.appId ? true : false}
+            
               defaultValue={shopCredential.appId ? shopCredential.appId : ""}
               type="text"
               name="appId"
@@ -238,7 +238,7 @@ const SellerLoginCredintiial = () => {
               Measurement ID
             </label>
             <input
-              readOnly={shopCredential.measurementId ? true : false}
+             
               defaultValue={
                 shopCredential.measurementId ? shopCredential.measurementId : ""
               }
@@ -253,9 +253,8 @@ const SellerLoginCredintiial = () => {
             {/* Email Logo */}
             <button
               type="button"
-              className={`p-2 rounded-full ${
-                !emailActive ? "bg-blue-500" : "bg-gray-300"
-              }`}
+              className={`p-2 rounded-full ${!emailActive ? "bg-blue-500" : "bg-gray-300"
+                }`}
               onClick={() => handleToggle("email")}
             >
               <div>
@@ -266,9 +265,8 @@ const SellerLoginCredintiial = () => {
             {/* Google Logo */}
             <button
               type="button"
-              className={`p-2 rounded-full ${
-                !googleActive ? "bg-red-500" : "bg-gray-300"
-              }`}
+              className={`p-2 rounded-full ${!googleActive ? "bg-red-500" : "bg-gray-300"
+                }`}
               onClick={() => handleToggle("google")}
             >
               <BsGoogle />
@@ -277,9 +275,8 @@ const SellerLoginCredintiial = () => {
             {/* Facebook Logo */}
             <button
               type="button"
-              className={`p-2 rounded-full ${
-                !facebookActive ? "bg-blue-800" : "bg-gray-300"
-              }`}
+              className={`p-2 rounded-full ${!facebookActive ? "bg-blue-800" : "bg-gray-300"
+                }`}
               onClick={() => handleToggle("facebook")}
             >
               <FaFacebook />

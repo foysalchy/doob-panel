@@ -189,22 +189,20 @@ const AdminTrackOrder = () => {
                           >
                             <div className="flex items-center flex-col gap-x-2">
                               <div
-                                className={`w-8 h-8 rounded-full border-2 flex-none flex items-center justify-center ${
-                                  currentStep > idx + 1
-                                    ? "bg-indigo-600 border-indigo-600"
-                                    : "" || currentStep == idx + 1
+                                className={`w-8 h-8 rounded-full border-2 flex-none flex items-center justify-center ${currentStep > idx + 1
+                                  ? "bg-indigo-600 border-indigo-600"
+                                  : "" || currentStep == idx + 1
                                     ? "border-indigo-600"
                                     : ""
-                                }`}
+                                  }`}
                               >
                                 <span
-                                  className={` ${
-                                    currentStep > idx + 1
-                                      ? "hidden"
-                                      : "" || currentStep == idx + 1
+                                  className={` ${currentStep > idx + 1
+                                    ? "hidden"
+                                    : "" || currentStep == idx + 1
                                       ? "text-indigo-600"
                                       : ""
-                                  }`}
+                                    }`}
                                 >
                                   {idx + 1}
                                 </span>
@@ -228,34 +226,31 @@ const AdminTrackOrder = () => {
                                 )}
                               </div>
                               <hr
-                                className={`h-12 border md:hidden ${
-                                  idx + 1 == steps.stepsItems.length
-                                    ? "hidden"
-                                    : "" || currentStep > idx + 1
+                                className={`h-12 border md:hidden ${idx + 1 == steps.stepsItems.length
+                                  ? "hidden"
+                                  : "" || currentStep > idx + 1
                                     ? "border-indigo-600"
                                     : ""
-                                }`}
+                                  }`}
                               />
                             </div>
                             <div className="h-8 flex items-center md:h-auto">
                               <h3
-                                className={`text-sm ${
-                                  currentStep === idx + 1
-                                    ? "text-indigo-600"
-                                    : ""
-                                }`}
+                                className={`text-sm ${currentStep === idx + 1
+                                  ? "text-indigo-600"
+                                  : ""
+                                  }`}
                               >
                                 {item}
                               </h3>
                             </div>
                             <hr
-                              className={`hidden mr-2 w-full border md:block ${
-                                idx + 1 == steps.stepsItems.length
-                                  ? "hidden"
-                                  : "" || currentStep > idx + 1
+                              className={`hidden mr-2 w-full border md:block ${idx + 1 == steps.stepsItems.length
+                                ? "hidden"
+                                : "" || currentStep > idx + 1
                                   ? "border-indigo-600"
                                   : ""
-                              }`}
+                                }`}
                             />
                           </li>
                         ))}

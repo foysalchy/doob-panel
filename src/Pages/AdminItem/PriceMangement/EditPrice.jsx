@@ -100,9 +100,8 @@ const EditPrice = ({ OpenModal, setOpenModal, FAQInfo, refetch }) => {
 
   return (
     <div
-      className={`fixed z-50 top-0 left-0 flex h-full min-h-screen w-full items-center justify-center bg-black bg-opacity-90  px-4 text-start py-5 ${
-        OpenModal ? "block" : "hidden"
-      }`}
+      className={`fixed z-50 top-0 left-0 flex h-full min-h-screen w-full items-center justify-center bg-black bg-opacity-90  px-4 text-start py-5 ${OpenModal ? "block" : "hidden"
+        }`}
     >
       <div className="w-full max-w-[800px]  rounded-[20px] bg-white pb-10 px-8 text-center md:px-[30px] ">
         <div className="flex justify-between z-50 pt-4 items-start w-full sticky top-0 bg-white border border-black-b">

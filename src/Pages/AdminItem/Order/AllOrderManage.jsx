@@ -279,9 +279,8 @@ const AllOrderManage = () => {
           itm?.status === "dropdown" ? (
             <select
               key={itm.name}
-              className={`px-4 border-r bg-transparent relative border-gray-300 flex items-center gap-2 justify-center ${
-                selectedValue === "pending" ? "text-red-500" : "" // Change to your desired color
-              }`}
+              className={`px-4 border-r bg-transparent relative border-gray-300 flex items-center gap-2 justify-center ${selectedValue === "pending" ? "text-red-500" : "" // Change to your desired color
+                }`}
               value={selectedValue}
               onChange={handleSelectChange}
             >
@@ -294,9 +293,8 @@ const AllOrderManage = () => {
             </select>
           ) : (
             <button
-              className={`px-4 border-r md:bg-transparent bg-gray-50 border-gray-300 flex  items-center ${
-                selectedValue === itm.value ? "text-red-500" : "" // Change to your desired color
-              }`}
+              className={`px-4 border-r md:bg-transparent bg-gray-50 border-gray-300 flex  items-center ${selectedValue === itm.value ? "text-red-500" : "" // Change to your desired color
+                }`}
               key={itm.name}
               onClick={() => setSelectedValue(itm.value)}
             >
@@ -685,17 +683,14 @@ const AllOrderManage = () => {
                   <li key={i}>
                     <button
                       onClick={() => setCurrentPage(i + 1)}
-                      className={`bg-white border ${
-                        currentPage === i + 1
-                          ? "text-blue-600"
-                          : "text-gray-500 hover:bg-gray-100 hover:text-gray-700"
-                      } border-gray-300 leading-tight py-2 px-3 rounded ${
-                        i === 0 ? "rounded-l-lg" : ""
-                      } ${
-                        i === Math.ceil(filteredData.length / itemsPerPage) - 1
+                      className={`bg-white border ${currentPage === i + 1
+                        ? "text-blue-600"
+                        : "text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+                        } border-gray-300 leading-tight py-2 px-3 rounded ${i === 0 ? "rounded-l-lg" : ""
+                        } ${i === Math.ceil(filteredData.length / itemsPerPage) - 1
                           ? "rounded-r-lg"
                           : ""
-                      }`}
+                        }`}
                     >
                       {i + 1}
                     </button>

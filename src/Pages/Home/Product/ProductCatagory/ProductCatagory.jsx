@@ -29,8 +29,8 @@ const ProductCatagory = () => {
           window.innerWidth >= 1024
             ? slidesPerViewDesktop
             : window.innerWidth >= 768
-            ? slidesPerViewTablet
-            : slidesPerViewMobile
+              ? slidesPerViewTablet
+              : slidesPerViewMobile
         }
         className="mySwiper"
       >

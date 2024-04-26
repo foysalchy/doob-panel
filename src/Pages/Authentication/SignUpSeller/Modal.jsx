@@ -67,9 +67,8 @@ const Modal = ({ email, modalOpen, setModalOpen }) => {
           Open Modal
         </button>
         <div
-          className={`fixed top-0 left-0 flex h-full min-h-screen w-full items-center justify-center bg-black bg-opacity-90 px-4 py-5 ${
-            modalOpen ? "block" : "hidden"
-          }`}
+          className={`fixed top-0 left-0 flex h-full min-h-screen w-full items-center justify-center bg-black bg-opacity-90 px-4 py-5 ${modalOpen ? "block" : "hidden"
+            }`}
         >
           <div
             ref={modal}

@@ -55,9 +55,8 @@ const ManageDepartment = ({ ManageDepartment, setManageDepartment }) => {
     <div className={ManageDepartment ? "flex" : "hidden"}>
       <div className="container mx-auto py-20">
         <div
-          className={`fixed  z-40 top-0 left-0 flex h-full min-h-screen w-full items-center justify-center bg-black bg-opacity-90 px-4 py-5 ${
-            ManageDepartment ? "block" : "hidden"
-          }`}
+          className={`fixed  z-40 top-0 left-0 flex h-full min-h-screen w-full items-center justify-center bg-black bg-opacity-90 px-4 py-5 ${ManageDepartment ? "block" : "hidden"
+            }`}
         >
           <div className="w-full h-[80%] overflow-scroll max-w-[570px] rounded-[20px] bg-white p-8 py-4 text-center ">
             <div className="flex justify-between items-start py-2">
@@ -124,20 +123,20 @@ const ManageDepartment = ({ ManageDepartment, setManageDepartment }) => {
               <tbody>
                 {filteredData.length
                   ? filteredData?.map((department) => (
-                      <tr>
-                        <td className="border-b border-l border-[#E8E8E8] bg-[#F3F6FF] py-5 px-2 text-center text-base font-medium text-dark">
-                          {department.name}
-                        </td>
-                        <td className="border-b border-l border-[#E8E8E8] bg-[#F3F6FF] py-5 px-2 text-center text-base font-medium text-dark">
-                          <button
-                            onClick={() => DeleteHandle(department._id)}
-                            className="px-5 py-2 border-red-500 border text-red-500 rounded transition duration-300 hover:bg-red-700 hover:text-white focus:outline-none"
-                          >
-                            Delete
-                          </button>
-                        </td>
-                      </tr>
-                    ))
+                    <tr>
+                      <td className="border-b border-l border-[#E8E8E8] bg-[#F3F6FF] py-5 px-2 text-center text-base font-medium text-dark">
+                        {department.name}
+                      </td>
+                      <td className="border-b border-l border-[#E8E8E8] bg-[#F3F6FF] py-5 px-2 text-center text-base font-medium text-dark">
+                        <button
+                          onClick={() => DeleteHandle(department._id)}
+                          className="px-5 py-2 border-red-500 border text-red-500 rounded transition duration-300 hover:bg-red-700 hover:text-white focus:outline-none"
+                        >
+                          Delete
+                        </button>
+                      </td>
+                    </tr>
+                  ))
                   : ""}
               </tbody>
             </table>

@@ -125,11 +125,10 @@ const Step3 = ({ prevStep, submitForm, handleChange, values }) => {
             <div key={index}>
               {price.status && (
                 <div
-                  className={`flex cursor-pointer flex-col justify-between p-8 transition-shadow duration-300  border rounded  shadow-sm sm:items-center hover:shadow ${
-                    values.priceId === price._id
-                      ? "border-blue-500 bg-gray-300"
-                      : "" // Add a border if the price is selected
-                  }`}
+                  className={`flex cursor-pointer flex-col justify-between p-8 transition-shadow duration-300  border rounded  shadow-sm sm:items-center hover:shadow ${values.priceId === price._id
+                    ? "border-blue-500 bg-gray-300"
+                    : "" // Add a border if the price is selected
+                    }`}
                   onClick={() => handlePriceClick(price._id)}
                 >
                   <div className="text-center h-[500px]">

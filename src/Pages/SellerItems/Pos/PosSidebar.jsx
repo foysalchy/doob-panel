@@ -412,13 +412,12 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
             </div>
 
             <div
-              className={` ring-1 font-bold flex items-center justify-between ring-gray-300 text-black rounded p-2 w-full mt-3  ${
-                changeAmount > 0
-                  ? "bg-green-500"
-                  : changeAmount < 0
+              className={` ring-1 font-bold flex items-center justify-between ring-gray-300 text-black rounded p-2 w-full mt-3  ${changeAmount > 0
+                ? "bg-green-500"
+                : changeAmount < 0
                   ? "bg-red-500"
                   : ""
-              }`}
+                }`}
             >
               <div>Due</div>
               <div className={`text-end`}>{parseInt(changeAmount)}</div>
@@ -490,17 +489,15 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
             <div>
               <div
                 onClick={() => setIsChecked(false)}
-                className={`fixed z-[100] flex items-center justify-center ${
-                  isChecked ? "visible opacity-100" : "invisible opacity-0"
-                } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
+                className={`fixed z-[100] flex items-center justify-center ${isChecked ? "visible opacity-100" : "invisible opacity-0"
+                  } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
               >
                 <div
                   onClick={(e_) => e_.stopPropagation()}
-                  className={`text- absolute w-[500px] rounded-sm bg-white p-6 drop-shadow-lg  ${
-                    isChecked
-                      ? "scale-1 opacity-1 duration-300"
-                      : "scale-0 opacity-0 duration-150"
-                  }`}
+                  className={`text- absolute w-[500px] rounded-sm bg-white p-6 drop-shadow-lg  ${isChecked
+                    ? "scale-1 opacity-1 duration-300"
+                    : "scale-0 opacity-0 duration-150"
+                    }`}
                 >
                   {/* <h1 className='flex gap-2'> <input onClick={() => { setExisting(!existing), setUser(false) }} type="checkbox" />Existing User ?</h1> */}
 
@@ -637,11 +634,10 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
               disabled={
                 changeAmount < -1 || !cartProducts.length ? true : false
               }
-              className={`${
-                changeAmount < -1 || !cartProducts.length
-                  ? "bg-gray-500 cursor-not-allowed"
-                  : "bg-gray-900"
-              } b text-white rounded-md p-2 w-full mt-3`}
+              className={`${changeAmount < -1 || !cartProducts.length
+                ? "bg-gray-500 cursor-not-allowed"
+                : "bg-gray-900"
+                } b text-white rounded-md p-2 w-full mt-3`}
             >
               Submit
             </button>

@@ -44,8 +44,8 @@ const StockManagement = () => {
 
   const filteredStockRequestData = searchQuery
     ? stockRequest.filter((item) =>
-        item._id.toLowerCase().includes(searchQuery.toLowerCase())
-      )
+      item._id.toLowerCase().includes(searchQuery.toLowerCase())
+    )
     : stockRequest;
 
   return (

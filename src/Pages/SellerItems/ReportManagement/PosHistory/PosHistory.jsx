@@ -156,9 +156,8 @@ const PosHistory = () => {
                           </div>
                         </td>
                         <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                          {`${new Date(itm?.date).getDate()}, ${
-                            new Date(itm?.date).getMonth() + 1
-                          }, ${new Date(itm?.date).getFullYear()}`}
+                          {`${new Date(itm?.date).getDate()}, ${new Date(itm?.date).getMonth() + 1
+                            }, ${new Date(itm?.date).getFullYear()}`}
                         </td>
 
                         <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
