@@ -1,3 +1,4 @@
+
 import { useQuery } from '@tanstack/react-query';
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
@@ -22,51 +23,40 @@ const ShopProductHero = () => {
 
     const shopId = idMatch ? idMatch[1] : null;
 
+    console.log('Shop ID:', shopId);
     const { data: categories = [], isLoading, refetch } = useQuery({
         queryKey: ["categories"],
         queryFn: async () => {
-            const res = await fetch(`https://backend.doob.com.bd/api/v1/shop/category/get/${shopId}`);
+            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/category/get/${shopId}`);
             const data = await res.json();
             return data;
         },
     });
 
+    console.log(categories, 'checkkkkkkkkkk')
 
     const { shop_id } = useContext(ShopAuthProvider)
-    // ==============================
-    //     Banar Loading Start     //
-    // ==============================
+
     const { data: Banar = [] } = useQuery({
         queryKey: ["banar"],
         queryFn: async () => {
-            const res = await fetch(`https://backend.doob.com.bd/api/v1/shop/slider/get/${shopId}`);
+            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/slider/get/${shopId}`);
             const data = await res.json();
             return data;
         },
     });
 
-
-    // ==============================
-    //     Banar Loading End       //
-    // ==============================
-
-
-
-
-    // =================
-    // Load Ads 
-    // =================
 
     const { data: adds } = useQuery({
         queryKey: ["adds"],
         queryFn: async () => {
-            const res = await fetch(`https://backend.doob.com.bd/api/v1/shop/popup/get/${shopId}`);
+            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/popup/get/${shopId}`);
             const data = await res.json();
             return data;
         },
     });
 
-
+    console.log(adds);
 
     const [showModal, setShowModal] = useState(false);
     useEffect(() => {
@@ -91,7 +81,7 @@ const ShopProductHero = () => {
         }
     }, [shopId]);
 
-
+    // copy
     const [allCategory, setAllCategory] = useState({
         subCategorys: [],
         miniCategorys: [],
@@ -110,36 +100,34 @@ const ShopProductHero = () => {
     );
     const { user, shopInfo } = useContext(AuthContext);
 
-    // ===============================
-    //  Mega Category  Loading Start  //
-    // ===============================
     const { data: megaSideCategoryData = [], refetch: refetchMegaCategory } = useQuery({
         queryKey: ['megaSideCategoryDataSaller'],
         queryFn: async () => {
-            const res = await fetch(`https://backend.doob.com.bd/api/v1/shop/category/get/${shopId}`);
+            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/category/get/${shopId}`);
             const data = await res.json();
             return data.slice(0, 7);
         },
     });
 
-    // ==============================
-    //  Mega Category  Loading End  //  
-    // ==============================
+    const { data: heroBanner = [] } = useQuery({
+        queryKey: 'heroBanner',
+        queryFn: async () => {
+            const res = await fetch('https://salenow-v2-backend.vercel.app/api/v1/admin/slider');
+            const data = await res.json();
+            return data?.data;
+        },
+    });
 
-
-
-
-
-    // ==============================
-    //     Category  Loading Start  //
-    // ==============================
-
+    // const blankImg = 'https://backend.doob.com.bd/api/v1/image/66036ed3df13bd9930ac229c.jpg';
+    const bannerFind = heroBanner?.filter((item) => item.status === 'true');
+    // https://salenow-v2-backend.vercel.app/api65e8a0a2e04a44a47ce186c3
     useEffect(() => {
         const fetchData = async () => {
             const subCategoryPromises = megaSideCategoryData?.filter(itm => itm?.menu === true).map(async (item) => {
                 try {
-                    const response = await fetch(`https://backend.doob.com.bd/api/v1/category/seller/sub-category-by-id?shopId=${shop_id?.shop_id}&id=${item?._id}`);
+                    const response = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/category/seller/sub-category-by-id?shopId=${shop_id?.shop_id}&id=${item?._id}`);
                     const data = await response.json();
+                    console.log(data, 'data..............**');
                     return data;
                 } catch (error) {
                     console.error('Error:', error);
@@ -159,9 +147,9 @@ const ShopProductHero = () => {
     useEffect(() => {
         const fetchData = async () => {
             const miniCategoryPromises = allCategory.subCategorys.map(async (itm) => {
-
+                // console.log(`https://salenow-v2-backend.vercel.app/api/v1/category/seller/mini-category-by-id?shopId=${shop_id?.shop_id}&id=${itm?._id}`, '**********')
                 try {
-                    const response = await fetch(`https://backend.doob.com.bd/api/v1/category/seller/mini-category-by-id?shopId=${shop_id?.shop_id}&id=${itm?._id}`);
+                    const response = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/category/seller/mini-category-by-id?shopId=${shop_id?.shop_id}&id=${itm?._id}`);
                     const data = await response.json();
                     return data;
                 } catch (error) {
@@ -183,9 +171,9 @@ const ShopProductHero = () => {
 
         const fetchData = async () => {
             const extraCategoryPromises = allCategory.miniCategorys.map(async (itm) => {
-
+                // console.log(`https://salenow-v2-backend.vercel.app/api/v1/category/seller/extra-category-by-id?shopId=${shop_id?.shop_id}&id=${itm?._id}`, '************---->')
                 try {
-                    const response = await fetch(`https://backend.doob.com.bd/api/v1/category/seller/extra-category-by-id?shopId=${shop_id?.shop_id}&id=${itm?._id}`);
+                    const response = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/category/seller/extra-category-by-id?shopId=${shop_id?.shop_id}&id=${itm?._id}`);
                     const data = await response.json();
                     return data;
                 } catch (error) {
@@ -208,7 +196,7 @@ const ShopProductHero = () => {
             (subCategory) => subCategory.megaCategoryId === category?._id
         );
 
-
+        console.log(allCategory, '++++');
 
         setSubCategoryData(filteredSubCategory);
         setminiCategoryData([]);
@@ -228,23 +216,26 @@ const ShopProductHero = () => {
     };
 
     const extraCategoryHandler = async (category, index) => {
+        // console.log(allCategory.extraCategorys[0].miniCategoryId, 'dd');
         const filteredSubCategory = allCategory?.extraCategorys.filter(
             (extraCategory) => extraCategory?.miniCategoryId === category?._id
         );
 
         setExtraCategoryData(filteredSubCategory);
         setActive({ ...active, step2: category?._id })
-    };
-    // ===========================
-    //     Category  Loading End  //
-    // ===========================
 
+        console.log(filteredSubCategory, 'filteredSubCategory');
+    };
+
+
+    console.log(subCategoryData, 'extraCategoryData======');
+    //end copy
     return (
         <div>
             <div className='flex gap-4 overflow-y-hidden  '>
 
                 <div className='hidden   bg-white w-[20%] h-[350px]   rounded-xl lg:flex flex-col   text-sm'>
-                    {showModal && adds && (
+                    {/* {showModal && adds && (
                         <div className="fixed top-0 left-0 flex items-center justify-center w-full h-full bg-black bg-opacity-90 z-50">
                             <div className="relative max-w-screen-lg mx-auto">
                                 <div onClick={() => setShowModal(false)} className='cursor-pointer bg-gray-300 rounded-full absolute top-4 right-4  mb-2 p-2 text-2xl hover:bg-gray-400'>
@@ -259,7 +250,7 @@ const ShopProductHero = () => {
                                 />
                             </div>
                         </div>
-                    )}
+                    )} */}
 
                     {/* <div>
                         {categories
@@ -278,7 +269,6 @@ const ShopProductHero = () => {
                                 </div>
                             ))}
                     </div> */}
-
                     <div className=" w-full relative lg:flex hidden flex-col  rounded-lg p-4">
                         {!megaSideCategoryData ? <>
 
@@ -289,12 +279,12 @@ const ShopProductHero = () => {
                                     {/* Dropdown toggle button */}
                                     <div>
                                         {
-                                            <Link to={`/shop/${shopId}/categories/${item?._id}`}
+                                            <Link to={`/shop/${shopId}/product/catagory/${item?._id}`}
                                                 onMouseEnter={() => subCategoryHandler(item, index)}
                                                 className={`flex  items-center  w-full justify-between px-2 py-1 capitalize text-sm font-normal  hover:bg-gray-100   relative  ${openDropdownIndex === index ? 'bg-gray-100 text-black' : 'text-black'} rounded`}
                                             >
                                                 <span className="flex gap-2 items-center ">
-                                                    <img src={item?.img} alt="" className="w-8 h-8 rounded-full ring-1 ring-gray-200" />
+                                                    <img src={item?.image} alt="" className="w-8 h-8 rounded-full ring-1 ring-gray-200" />
                                                     {item?.name}
                                                 </span>
 
@@ -331,14 +321,14 @@ const ShopProductHero = () => {
                                                             <div>
                                                                 <div
                                                                     onMouseMove={() => miniCategoryHandler(subCategory, index)}
-                                                                    className={`flex  items-center hover:bg-gray-100 w-full justify-between px-2 py-1 capitalize text-sm font-normal cursor-pointer mb-1 rounded relative  ${active?.step1 === subCategory?._id ? 'text-black bg-gray-100' : 'text-black gap-2'}`}
+                                                                    className={`flex items-center hover:bg-gray-100 w-full justify-between px-2 py-1 capitalize text-sm font-normal cursor-pointer mb-1 rounded relative  ${active?.step1 === subCategory?._id ? 'text-black bg-gray-100' : 'text-black'}`}
                                                                     type="button"
                                                                     id={item?._id}
                                                                     data-te-dropdown-toggle-ref
                                                                     aria-expanded="false"
                                                                     data-te-ripple-init
                                                                     data-te-ripple-color="light">
-                                                                    <span className="flex gap-2 items-center  text-black">
+                                                                    <span className="flex items-center gap-2 text-black">
                                                                         <img src={subCategory?.img} alt="" className="w-8 h-8 rounded-full ring-1 ring-gray-200" />
 
                                                                         {subCategory?.subCategoryName}
@@ -350,13 +340,13 @@ const ShopProductHero = () => {
                                                                     {miniCategoryData.map((miniCategory, index) =>
                                                                         <div key={index}>
                                                                             {
-                                                                                !megaSideCategoryData.length == 0 ? <Link to={`/shop/${shopId}/categories/${miniCategory?._id}`}>
+                                                                                !megaSideCategoryData.length == 0 ? <Link to={`/products/catagory/${miniCategory?._id}`}>
                                                                                     <div onMouseMove={(() => extraCategoryHandler(miniCategory, index))} className={`flex mt-2 items-center  w-full justify-between px-2 py-1 capitalize text-sm font-normal rounded hover:bg-gray-100 hover:text-black  relative  ${active?.step2 === miniCategory?._id ? 'bg-gray-100 text-black' : 'text-black'}`}>
-                                                                                        <span className="flex gap-2 items-center ">
+                                                                                        <span className="flex items-center gap-2">
                                                                                             <img src={miniCategory?.img} alt="" className="w-8 h-8 rounded-full ring-1 ring-gray-200" /> {miniCategory?.miniCategoryName}
                                                                                         </span>
                                                                                     </div>
-                                                                                </Link> : <div onMouseMove={(() => extraCategoryHandler(miniCategory, index))} className="flex justify-between gap-2 items-center px-2 py-1 capitalize text-sm font-normal hover:text-white  hover:bg-black   ">
+                                                                                </Link> : <div onMouseMove={(() => extraCategoryHandler(miniCategory, index))} className="flex justify-between items-center px-2 py-1 capitalize text-sm font-normal hover:text-white  hover:bg-black   ">
                                                                                     {miniCategory?.miniCategoryName}
                                                                                 </div>
                                                                             }
@@ -374,11 +364,11 @@ const ShopProductHero = () => {
                                                                                     extraCategoryData.length == 0 ? <div>
                                                                                         {extraCategory?.extraCategoryName}
 
-                                                                                    </div> : <Link to={`/shop/${shopId}/categories/${item?.categoryId}`}>
+                                                                                    </div> : <Link to={`${extraCategory?._id}/categories/${shopId}/${item?.categoryId}`}>
                                                                                         <div className='py-1 capitalize px-2'>
                                                                                             <span className="flex flex-col hover:bg-gray-100 items-center  w-[90px] p-2 rounded-lg ">
                                                                                                 <img src={extraCategory?.img} alt="" className="w-14 h-14 object-cover rounded-full ring-1 ring-gray-200" />
-                                                                                                <p className="text-xs font-semibold text-center">
+                                                                                                <p className="text-xs font-semibold mt-2 text-center">
                                                                                                     {extraCategory?.extraCategoryName} ..
                                                                                                 </p>
                                                                                             </span>

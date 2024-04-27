@@ -1033,7 +1033,7 @@ export default function CommonCategory() {
                                                                         Add to Cart
                                                                     </div>
                                                                 </Link>
-                                                                <Link>
+                                                                <Link to={`/products/${itm?._id}`}>
                                                                     <div className="bg-blue-500 px-4 py-2 rounded-md text-white">
                                                                         Buy Now
                                                                     </div>
@@ -1110,9 +1110,9 @@ export default function CommonCategory() {
                                                                         Add to Cart
                                                                     </div>
                                                                 </Link>
-                                                                <Link>
+                                                                <Link to={`/products/${itm?._id}`} >
                                                                     <div className="bg-blue-500 px-4 py-2 rounded-md text-white">
-                                                                        Buy Now
+                                                                        Buy Now..
                                                                     </div>
                                                                 </Link>
                                                             </div>

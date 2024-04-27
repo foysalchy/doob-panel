@@ -13,7 +13,6 @@ const ProductCheckout = ({ setNext, products, userInfo, setUserInfo }) => {
 
     const deliveryFees = {};
 
-    // Calculate total delivery fee
     products.forEach(item => {
         const productId = item?.product_id;
         const deliveryFee = parseFloat(item.delivery ? item.delivery : 0);
@@ -26,9 +25,21 @@ const ProductCheckout = ({ setNext, products, userInfo, setUserInfo }) => {
     const totalDeliveryFee = Object.values(deliveryFees).reduce((acc, curr) => acc + curr, 0);
 
 
-    const calculateTotal = () => {
-        return products.filter(product => product.selected).reduce((total, product) => total + (parseInt(product.sellingPrice ? product.sellingPrice : product.product_price) * parseInt(product.product_quantity)), 0);
-    };
+
+    //-------------------------//
+    //         Calculate       //
+    //-------------------------//
+    // Calculate Subtotal
+    const subtotal = products.reduce((acc, item) => acc + (item.product_price * item.product_quantity), 0);
+
+    const totalPrice = subtotal + totalDeliveryFee;
+    console.log(products, '**********---->');
+
+
+    const handleSetData = () => {
+        localStorage.setItem('orderData', JSON.stringify(products))
+        setNext(true)
+    }
 
     return (
         <div>
@@ -48,7 +59,7 @@ const ProductCheckout = ({ setNext, products, userInfo, setUserInfo }) => {
                                                 <p className="text-sm text-gray-500">Quantity: {product.product_quantity}</p>
                                             </div>
                                         </div>
-                                        <span className="font-semibold">৳{product.product_price} </span>
+                                        <span className="font-semibold">৳{product.product_price * parseInt(product?.product_quantity)} </span>
                                     </div>
 
                                 </div>
@@ -57,7 +68,7 @@ const ProductCheckout = ({ setNext, products, userInfo, setUserInfo }) => {
                         <div className="mt-6">
                             <div className="flex justify-between">
                                 <span>Subtotal</span>
-                                <span>৳{calculateTotal()}</span>
+                                <span>৳{subtotal}</span>
                             </div>
                             <div className="flex justify-between">
                                 <span>Delivery Fee</span>
@@ -65,8 +76,8 @@ const ProductCheckout = ({ setNext, products, userInfo, setUserInfo }) => {
                             </div>
                             <hr className='my-2' />
                             <div className="flex justify-between">
-                                <span>All</span>
-                                <span>৳{calculateTotal() + totalDeliveryFee}</span>
+                                <span>Total</span>
+                                <span>৳{totalPrice}</span>
                             </div>
 
                             {/* <button className="w-full mt-4 bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition-colors">
@@ -158,7 +169,7 @@ const ProductCheckout = ({ setNext, products, userInfo, setUserInfo }) => {
 
                             </div>
 
-                            <button onClick={() => setNext(true)} className="w-full mt-4 bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition-colors">
+                            <button onClick={handleSetData} className="w-full mt-4 bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition-colors">
                                 Next Step
                             </button>
                         </div>

@@ -570,6 +570,7 @@ const SupperAdminPath = [
     element: <ClaimAndRerunAdmin />,
   },
 
+
   {
     path: "package-management",
     element: (
@@ -583,5 +584,6 @@ const SupperAdminPath = [
     element: <AddPackage />,
   },
 ];
+
 
 export { SupperAdminPath };

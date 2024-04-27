@@ -32,6 +32,8 @@ import ProductDetails from "../Pages/Home/Product/ProductDetails/ProductDetails"
 import EmailVerify from "../Common/EmailVerify";
 import CardProduct from "../Pages/Home/Product/CardProduct/CardProduct";
 import AdminTrackOrder from "../Pages/AdminItem/AdminTrackOrder/AdminTrackOrder";
+import ConfirmOrder from "../Pages/Shop/pages/ConfirmOrder/ConfirmOrder";
+import SellerConfirmOrder from "../Pages/Shop/pages/ConfirmOrder/SellerConfirmOrder";
 
 const Router = createBrowserRouter([
   // Main Layout
@@ -191,11 +193,17 @@ const Router = createBrowserRouter([
         path: "my-card",
         element: <CardProduct />,
       },
+
       {
         path: "admin-track-order",
         element: <AdminTrackOrder />,
       },
-    ],
-  },
+
+      {
+        path: 'confirm-order',
+        element: <SellerConfirmOrder />
+      },
+    ]
+  }
 ]);
 export default Router;
