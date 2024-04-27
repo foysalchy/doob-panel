@@ -253,7 +253,7 @@ const SellerAllProducts = () => {
       setSelectProducts([]);
     } else {
       // Otherwise, select all products
-      const allProductIds = products.map((product) => product._id);
+      const allProductIds = products?.map((product) => product._id);
       setSelectProducts(allProductIds);
     }
   };

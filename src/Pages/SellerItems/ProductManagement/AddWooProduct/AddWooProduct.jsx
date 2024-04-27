@@ -189,7 +189,7 @@ const AddWooProduct = () => {
             <div className="mt-1 p-2 max-h-40 overflow-y-scroll bg-white border rounded-md">
               {filteredProducts.length ? (
                 <span>
-                  {filteredProducts.map((product, i) => (
+                  {filteredproducts?.map((product, i) => (
                     <div
                       key={i}
                       onClick={() => handleSelectChange(product)}

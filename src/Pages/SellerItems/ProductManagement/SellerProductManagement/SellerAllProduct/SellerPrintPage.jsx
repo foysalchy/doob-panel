@@ -63,7 +63,7 @@ const SellerPrintPage = ({ setOn, products }) => {
                             </tr>
                         </thead>
                         <tbody className="bg-gray-50 divide-y  divide-gray-20 ">
-                            {products.map((product) => (
+                            {products?.map((product) => (
                                 <tr className='bg-red-50'>
 
                                     <td className="px-4 py-4 text-sm  -black font-medium text-gray-700 whitespace-nowrap">

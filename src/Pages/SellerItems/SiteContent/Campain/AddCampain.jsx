@@ -51,7 +51,7 @@ const AddCampaign = () => {
     });
   };
 
-  console.log(selectedProducts);
+
 
   const { shopInfo } = useContext(AuthContext);
 
@@ -67,7 +67,7 @@ const AddCampaign = () => {
     const image = form.image.files[0];
     const MetaImage = form.metaImage.files[0];
     const shopId = shopInfo._id;
-    const products = selectedProducts.map(({ value }) => ({ product: value }));
+    const products = selectedProducts?.map(({ value }) => ({ product: value }));
 
     const imageFormData = new FormData();
     imageFormData.append("image", image);
@@ -309,14 +309,14 @@ const AddCampaign = () => {
               <Select
                 name=""
                 placeholder="Select woo product"
-                options={products.map((data, i) => ({
+                options={products.length && products?.map((data, i) => ({
                   value: data,
                   label: (
                     <div className="flex cursor-pointer gap-4 items-center">
                       <div className="flex gap-2 items-center">
                         <span>{i + 1}</span>
                         <img
-                          src={data.images[0].src}
+                          src={data?.images[0]?.src}
                           className="border border-black rounded-sm"
                           style={{
                             marginRight: "8px",
@@ -337,7 +337,7 @@ const AddCampaign = () => {
             </div>
 
             <div className="flex flex-col gap-2 mt-4">
-              {selectedProducts.map((product, i) => (
+              {selectedProducts?.length ? selectedProducts?.map((product, i) => (
                 <div
                   key={i + 200}
                   className="flex p-2 px-4 rounded border border-black  gap-2 justify-between items-center"
@@ -350,7 +350,7 @@ const AddCampaign = () => {
                         height: "24px",
                         width: "24px",
                       }}
-                      src={product.value.images[0].src}
+                      src={product?.value?.images[0]?.src}
                       alt=""
                     />
                     {product.value.name.split(" ").slice(0, 10).join(" ") +
@@ -377,7 +377,7 @@ const AddCampaign = () => {
                     </button>
                   </div>
                 </div>
-              ))}
+              )) : ''}
             </div>
 
             <button
