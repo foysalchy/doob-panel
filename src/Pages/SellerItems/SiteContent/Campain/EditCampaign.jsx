@@ -47,7 +47,7 @@ export default function EditCampaign() {
     selectedOptions.forEach((option) => {
       console.log(option);
       if (!newPrices) {
-        newPrices.campingPrice = 0;
+        newPrices.campaignPrice = 0;
       }
     });
     setPrices(newPrices);
@@ -55,7 +55,7 @@ export default function EditCampaign() {
 
   const handlePriceChange = (product, newPrice) => {
     console.log(product, newPrice);
-    product.campingPrice = newPrice;
+    product.campaignPrice = newPrice;
 
     setPrices((prevPrices) => ({ ...prevPrices, product }));
   };
@@ -76,7 +76,7 @@ export default function EditCampaign() {
   const handleSubmit = async (e) => {
     setLoading(true);
     e.preventDefault();
-    const form = event.target;
+    const form = e.target;
     const name = form.name.value;
     const MetaTag = form.metaTitle.value;
     const MetaDescription = form.metaDescription.value;
@@ -85,25 +85,29 @@ export default function EditCampaign() {
 
     // console.log("startTime", startTime);
     // return;
-    const image = form.image.files[0];
-    const MetaImage = form.metaImage.files[0];
+    const imageFormData = new FormData();
+    let image = campaignDefaultData?.image ?? form.image.files[0];
+    if (form.image.files[0]) {
+      image = form.image.files[0];
+      imageFormData.append("image", image);
+      image = await uploadImage(imageFormData);
+    }
+    let MetaImage = campaignDefaultData?.MetaImage ?? form.metaImage.files[0];
+    if (form.metaImage.files[0]) {
+      const metaImageFormData = new FormData();
+      metaImageFormData.append("image", MetaImage);
+      MetaImage = await uploadImage(metaImageFormData);
+    }
+
     const shopId = shopInfo._id;
     const products = selectedProducts?.map(({ value }) => ({ product: value }));
 
-    const imageFormData = new FormData();
-    imageFormData.append("image", image);
-    const imageUrl = await uploadImage(imageFormData);
-
-    const metaImageFormData = new FormData();
-    metaImageFormData.append("image", MetaImage);
-    const metaImage = await uploadImage(metaImageFormData);
-
     const formData = {
       name,
-      image: imageUrl,
+      image,
       MetaTag,
       MetaDescription,
-      MetaImage: metaImage,
+      MetaImage: MetaImage,
       // shopId,
       products,
       isFlash: isChecked,
@@ -112,7 +116,7 @@ export default function EditCampaign() {
       shopId: shopInfo._id,
       status: true,
     };
-    postSlider(formData, form);
+    updateCampaign(formData, form);
   };
 
   const { data: products = [], refetch } = useQuery({
@@ -136,21 +140,26 @@ export default function EditCampaign() {
     return imageData.imageUrl;
   }
 
-  const postSlider = (data, form) => {
+  const updateCampaign = (data, form) => {
     console.log(data);
 
-    fetch(`https://backend.doob.com.bd/api/v1/seller/add-campaign`, {
-      method: "PATCH",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(data), // Pass the data object to JSON.stringify
-    })
+    fetch(
+      `http://localhost:5001/api/v1/seller/update-single-campaign?id=${id}`,
+      {
+        method: "PUT",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(data), // Pass the data object to JSON.stringify
+      }
+    )
       .then((res) => res.json())
       .then((responseData) => {
+        console.log("responseData", responseData);
         Swal.fire("success", "Your Brand Publish Successfully", "success");
         setLoading(false);
-        form.reset();
+        reload();
+        // form.reset();
         handleGoBack();
       });
   };
@@ -203,8 +212,9 @@ export default function EditCampaign() {
                 Image Upload
               </label>
               <input
-                required
+                // required
                 type="file"
+                // defaultValue={campaignDefaultData?.image ?? ""}
                 id="image"
                 name="image"
                 className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:ring border-black"
@@ -300,7 +310,7 @@ export default function EditCampaign() {
                 Meta Image
               </label>
               <input
-                required
+                // required
                 type="file"
                 id="metaImage"
                 name="metaImage"
@@ -395,7 +405,7 @@ export default function EditCampaign() {
                           type="number"
                           placeholder="Camping Price"
                           className="py-0.5 px-2 border border-black"
-                          value={product.value.campingPrice || ""}
+                          value={product.value.campaignPrice || ""}
                           onChange={(e) =>
                             handlePriceChange(product.value, e.target.value)
                           }
@@ -422,7 +432,7 @@ export default function EditCampaign() {
                 <FaLongArrowAltRight />
               </span>
               <span className="text-sm font-medium transition-all group-hover:ms-4">
-                {loading ? "Uploading ..." : "Add New Campaign"}
+                {loading ? "Uploading ..." : "Update the campaign"}
               </span>
             </button>
           </form>
