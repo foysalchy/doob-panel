@@ -27,7 +27,7 @@ const AddCampaign = () => {
     selectedOptions.forEach((option) => {
       console.log(option);
       if (!newPrices) {
-        newPrices.campingPrice = 0;
+        newPrices.campaignPrice = 0;
       }
     });
     setPrices(newPrices);
@@ -35,7 +35,7 @@ const AddCampaign = () => {
 
   const handlePriceChange = (product, newPrice) => {
     console.log(product, newPrice);
-    product.campingPrice = newPrice;
+    product.campaignPrice = newPrice;
 
     setPrices((prevPrices) => ({ ...prevPrices, product }));
   };
@@ -363,7 +363,7 @@ const AddCampaign = () => {
                       type="number"
                       placeholder="Camping Price"
                       className="py-0.5 px-2 border border-black"
-                      value={product.value.campingPrice || ""}
+                      value={product.value.campaignPrice || ""}
                       onChange={(e) =>
                         handlePriceChange(product.value, e.target.value)
                       }

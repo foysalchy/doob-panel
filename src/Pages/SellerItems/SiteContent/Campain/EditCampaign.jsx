@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { AuthContext } from "../../../../AuthProvider/UserProvider";
 import { FaLongArrowAltLeft, FaLongArrowAltRight } from "react-icons/fa";
@@ -15,11 +15,29 @@ export default function EditCampaign() {
     navigate(-1);
   };
 
+  const { data: campaignDefaultData = {}, refetch: reload } = useQuery({
+    queryKey: ["campaignData"],
+    queryFn: async () => {
+      const res = await fetch(
+        `https://backend.doob.com.bd/api/v1/seller/get-single-campaign?id=662cfd09e88f0e8549ef70a7`
+      );
+      const data = await res.json();
+      console.log("data", data);
+      return data.data;
+    },
+  });
+
+  console.log(campaignDefaultData);
+
   const [loading, setLoading] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
 
   const [selectedProducts, setSelectedProducts] = useState([]);
   const [prices, setPrices] = useState({});
+
+  useEffect(() => {
+    setIsChecked(campaignDefaultData?.isFlash ?? false);
+  }, [campaignDefaultData]);
 
   const handleProductChange = (selectedOptions) => {
     setSelectedProducts(selectedOptions);
@@ -29,7 +47,7 @@ export default function EditCampaign() {
     selectedOptions.forEach((option) => {
       console.log(option);
       if (!newPrices) {
-        newPrices.campingPrice = 0;
+        newPrices.campaignPrice = 0;
       }
     });
     setPrices(newPrices);
@@ -37,7 +55,7 @@ export default function EditCampaign() {
 
   const handlePriceChange = (product, newPrice) => {
     console.log(product, newPrice);
-    product.campingPrice = newPrice;
+    product.campaignPrice = newPrice;
 
     setPrices((prevPrices) => ({ ...prevPrices, product }));
   };
@@ -58,31 +76,38 @@ export default function EditCampaign() {
   const handleSubmit = async (e) => {
     setLoading(true);
     e.preventDefault();
-    const form = event.target;
+    const form = e.target;
     const name = form.name.value;
     const MetaTag = form.metaTitle.value;
     const MetaDescription = form.metaDescription.value;
     const startTime = form.startTime ? form.startTime.value : "";
     const endTime = form.endTime ? form.endTime.value : "";
-    const image = form.image.files[0];
-    const MetaImage = form.metaImage.files[0];
+
+    // console.log("startTime", startTime);
+    // return;
+    const imageFormData = new FormData();
+    let image = campaignDefaultData?.image ?? form.image.files[0];
+    if (form.image.files[0]) {
+      image = form.image.files[0];
+      imageFormData.append("image", image);
+      image = await uploadImage(imageFormData);
+    }
+    let MetaImage = campaignDefaultData?.MetaImage ?? form.metaImage.files[0];
+    if (form.metaImage.files[0]) {
+      const metaImageFormData = new FormData();
+      metaImageFormData.append("image", MetaImage);
+      MetaImage = await uploadImage(metaImageFormData);
+    }
+
     const shopId = shopInfo._id;
     const products = selectedProducts?.map(({ value }) => ({ product: value }));
 
-    const imageFormData = new FormData();
-    imageFormData.append("image", image);
-    const imageUrl = await uploadImage(imageFormData);
-
-    const metaImageFormData = new FormData();
-    metaImageFormData.append("image", MetaImage);
-    const metaImage = await uploadImage(metaImageFormData);
-
     const formData = {
       name,
-      image: imageUrl,
+      image,
       MetaTag,
       MetaDescription,
-      MetaImage: metaImage,
+      MetaImage: MetaImage,
       // shopId,
       products,
       isFlash: isChecked,
@@ -91,7 +116,7 @@ export default function EditCampaign() {
       shopId: shopInfo._id,
       status: true,
     };
-    postSlider(formData, form);
+    updateCampaign(formData, form);
   };
 
   const { data: products = [], refetch } = useQuery({
@@ -115,21 +140,26 @@ export default function EditCampaign() {
     return imageData.imageUrl;
   }
 
-  const postSlider = (data, form) => {
+  const updateCampaign = (data, form) => {
     console.log(data);
 
-    fetch(`https://backend.doob.com.bd/api/v1/seller/add-campaign`, {
-      method: "PATCH",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(data), // Pass the data object to JSON.stringify
-    })
+    fetch(
+      `https://backend.doob.com.bd/api/v1/seller/update-single-campaign?id=${id}`,
+      {
+        method: "PUT",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(data), // Pass the data object to JSON.stringify
+      }
+    )
       .then((res) => res.json())
       .then((responseData) => {
+        console.log("responseData", responseData);
         Swal.fire("success", "Your Brand Publish Successfully", "success");
         setLoading(false);
-        form.reset();
+        reload();
+        // form.reset();
         handleGoBack();
       });
   };
@@ -150,7 +180,7 @@ export default function EditCampaign() {
       </button>
 
       <h2 className="text-2xl font-semibold text-black mb-6 text-center">
-        Upload a campaign for your shop
+        Update the campaign for your shop
       </h2>
 
       <div>
@@ -166,6 +196,7 @@ export default function EditCampaign() {
               <input
                 required
                 type="text"
+                defaultValue={campaignDefaultData?.name ?? ""}
                 id="name"
                 name="name"
                 className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:ring border-black"
@@ -181,8 +212,9 @@ export default function EditCampaign() {
                 Image Upload
               </label>
               <input
-                required
+                // required
                 type="file"
+                // defaultValue={campaignDefaultData?.image ?? ""}
                 id="image"
                 name="image"
                 className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:ring border-black"
@@ -230,6 +262,7 @@ export default function EditCampaign() {
                     required
                     type="datetime-local"
                     name="startTime"
+                    defaultValue={campaignDefaultData?.startTime ?? ""}
                     className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:ring border-black"
                   />
                 </div>
@@ -243,6 +276,7 @@ export default function EditCampaign() {
                   <input
                     required
                     type="datetime-local"
+                    defaultValue={campaignDefaultData?.endTime ?? ""}
                     name="endTime"
                     className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:ring border-black"
                   />
@@ -262,6 +296,7 @@ export default function EditCampaign() {
                 type="text"
                 id="metaTitle"
                 name="metaTitle"
+                defaultValue={campaignDefaultData?.MetaTag ?? ""}
                 className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:ring border-black"
                 placeholder="Enter meta title"
               />
@@ -275,7 +310,7 @@ export default function EditCampaign() {
                 Meta Image
               </label>
               <input
-                required
+                // required
                 type="file"
                 id="metaImage"
                 name="metaImage"
@@ -294,6 +329,7 @@ export default function EditCampaign() {
                 required
                 id="metaDescription"
                 name="metaDescription"
+                defaultValue={campaignDefaultData?.MetaDescription ?? ""}
                 rows="3"
                 className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:ring border-black"
                 placeholder="Enter meta description"
@@ -369,7 +405,7 @@ export default function EditCampaign() {
                           type="number"
                           placeholder="Camping Price"
                           className="py-0.5 px-2 border border-black"
-                          value={product.value.campingPrice || ""}
+                          value={product.value.campaignPrice || ""}
                           onChange={(e) =>
                             handlePriceChange(product.value, e.target.value)
                           }
@@ -396,7 +432,7 @@ export default function EditCampaign() {
                 <FaLongArrowAltRight />
               </span>
               <span className="text-sm font-medium transition-all group-hover:ms-4">
-                {loading ? "Uploading ..." : "Add New Campaign"}
+                {loading ? "Uploading ..." : "Update the campaign"}
               </span>
             </button>
           </form>
