@@ -178,7 +178,7 @@ const ShopPath = [
     path: ":id/user/payment",
     element: (
       <IsUserRegistration>
-        {" "}
+
         <Payment />
       </IsUserRegistration>
     ),
@@ -250,10 +250,11 @@ const ShopPath = [
       }
     },
 
-    {
-        path: ':id/confirm-order',
-        element: <ConfirmOrder />
-    },
+  },
+  {
+    path: ':id/confirm-order',
+    element: <ConfirmOrder />
+  },
 
 
   // },
