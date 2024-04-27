@@ -313,14 +313,14 @@ const AddToCard = () => {
 
   const handleDecrease = (productId) => {
     setAllProducts((prevProducts) =>
-      prevProducts.map((product) =>
+      prevproducts?.map((product) =>
         product.productId === productId && product.quantity > 1
           ? { ...product, quantity: product.quantity - 1 }
           : product
       )
     );
     setCartProducts((prevProducts) =>
-      prevProducts.map((product) =>
+      prevproducts?.map((product) =>
         product.productId === productId && product.quantity > 1
           ? { ...product, quantity: product.quantity - 1 }
           : product
@@ -330,14 +330,14 @@ const AddToCard = () => {
 
   const handleIncrease = (productId) => {
     setAllProducts((prevProducts) =>
-      prevProducts.map((product) =>
+      prevproducts?.map((product) =>
         product.productId === productId
           ? { ...product, quantity: product.quantity + 1 }
           : product
       )
     );
     setCartProducts((prevProducts) =>
-      prevProducts.map((product) =>
+      prevproducts?.map((product) =>
         product.productId === productId
           ? { ...product, quantity: product.quantity + 1 }
           : product
@@ -348,14 +348,14 @@ const AddToCard = () => {
   const handleManualInput = (productId, quantity) => {
     if (!isNaN(quantity) && quantity > 0) {
       setAllProducts((prevProducts) =>
-        prevProducts.map((product) =>
+        prevproducts?.map((product) =>
           product.productId === productId
             ? { ...product, quantity: Math.max(quantity, 1) }
             : product
         )
       );
       setCartProducts((prevProducts) =>
-        prevProducts.map((product) =>
+        prevproducts?.map((product) =>
           product.productId === productId
             ? { ...product, quantity: Math.max(quantity, 1) }
             : product
