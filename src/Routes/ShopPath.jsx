@@ -7,6 +7,8 @@ import ConfirmOrder from "../Pages/Shop/pages/ConfirmOrder/ConfirmOrder";
 import ShopSignIn from "../Pages/Shop/pages/Home/Auth/ShopSignIn";
 import ShopSignUp from "../Pages/Shop/pages/Home/Auth/ShopSignUp";
 import Home from "../Pages/Shop/pages/Home/Home";
+import SeeShopAllProduct from "../Pages/Shop/pages/Home/SeeShopAllProduct/SeeShopAllProduct";
+import SeeShopUpcomingProduct from "../Pages/Shop/pages/Home/SeeShopAllProduct/SeeShopUpcomingProduct";
 import AddressBook from "../Pages/Shop/pages/Home/UserProfile/ProfileUpdate/AddressBook";
 import ProfileUpdate from "../Pages/Shop/pages/Home/UserProfile/ProfileUpdate/ProfileUpdate";
 import UserProfile from "../Pages/Shop/pages/Home/UserProfile/UserProfile";
@@ -135,6 +137,14 @@ const ShopPath = [
         return null; // or handle it appropriately
       }
     },
+  },
+  {
+    path: ":id/shop-upcoming-product",
+    element: <SeeShopUpcomingProduct />,
+  },
+  {
+    path: ":id/shop-new-product",
+    element: <SeeShopAllProduct />,
   },
   {
     path: ":id/blog", // Use a dynamic route parameter for the product ID

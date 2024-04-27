@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { ShopAuthProvider } from "../../../../../AuthProvider/ShopAuthProvide";
 import TimeCountDown from "./TimeCountDown";
@@ -68,7 +68,8 @@ const ShopCampain = () => {
     },
   ];
 
-  const { data: shopCampainData = [], isLoading } = useQuery({
+  const { data: shopCampainData = [], isLoading, refetch } = useQuery({
+
     queryKey: ["shopCampain"],
     queryFn: async () => {
       const res = await fetch(
@@ -78,7 +79,9 @@ const ShopCampain = () => {
       return data?.data;
     },
   });
-
+  useEffect(() => {
+    refetch();
+  }, [shop_id])
   console.log(shopCampainData, "---------");
 
   return (
@@ -115,7 +118,7 @@ const ShopCampain = () => {
                         type="button"
                         className="px-5 py-2 font-semibold rounded bg-gray-500 text-white text-xs "
                       >
-                        SHOP MORE
+                        SEE MORE
                       </button>
                     </div>
                   </div>

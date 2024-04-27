@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { ShopAuthProvider } from "../../../../../AuthProvider/ShopAuthProvide";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
@@ -17,6 +17,9 @@ const AllProduct = () => {
     },
   });
 
+  useEffect(() => {
+    refetch();
+  }, [shop_id])
   return (
     <div>
       <div className="py-4 bg-white rounded mt-6">
