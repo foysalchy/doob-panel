@@ -234,7 +234,7 @@ const PageManagement = () => {
 
                               <Link
                                 to={`/pages/${faq?._id}`}
-                                onClick={() => handleViewDetails(faq?._id)}
+                                // onClick={() => handleViewDetails(faq?._id)}
                               >
                                 <BsEye className=" transition-colors text-xl duration-200 text-green-500 hover:text-green-700 focus:outline-none" />
                               </Link>

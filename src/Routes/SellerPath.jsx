@@ -89,6 +89,7 @@ import MediaManager from "../Pages/SellerItems/MeadManager/MediaManager";
 import Withdrow from "../Pages/SellerItems/Withdrow/Withdrow";
 import FinanceReport from "../Pages/SellerItems/Finance/FinanceReport";
 import OmniChat from "../Pages/SellerItems/OmniChat/OmniChat";
+import EditCampaign from "../Pages/SellerItems/SiteContent/Campain/EditCampaign";
 
 const SellerPath = [
   {
@@ -261,6 +262,10 @@ const SellerPath = [
   {
     path: "content-management/campaign-management/add",
     element: <AddCampaign />,
+  },
+  {
+    path: "content-management/campaign-management/edit/:id",
+    element: <EditCampaign />,
   },
 
   {

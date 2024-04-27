@@ -3,12 +3,14 @@ import DeleteModal from "../../../../Common/DeleteModal";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { AuthContext } from "../../../../AuthProvider/UserProvider";
 import { useQuery } from "@tanstack/react-query";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { RxCross2 } from "react-icons/rx";
+import { BiEdit } from "react-icons/bi";
 
 const CampaignManagement = () => {
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const { shopInfo } = useContext(AuthContext);
 
@@ -78,8 +80,11 @@ const CampaignManagement = () => {
 
   const [OpenModal, setOpenModal] = useState(false);
 
-  const handleViewDetails = (ticketId) => {
-    setOpenModal(ticketId);
+  const handleViewDetails = (campaign) => {
+    // setOpenModal(ticketId
+    navigate(
+      `/seller/content-management/campaign-management/edit/${campaign?._id}`
+    );
   };
 
   const [selectedImage, setSelectedImage] = useState(null);
@@ -279,9 +284,12 @@ const CampaignManagement = () => {
                               </svg>
                             </button>
 
-                            {/* <button onClick={() => handleViewDetails(faq?._id)}>
-                                                            <BiEdit className=" transition-colors text-xl duration-200 text-yellow-500 hover:text-yellow-700 focus:outline-none" />
-                                                        </button> */}
+                            <button
+                              onClick={() => handleViewDetails(faq)}
+                              // to={`edit/${faq?._id}`}
+                            >
+                              <BiEdit className=" transition-colors text-xl duration-200 text-yellow-500 hover:text-yellow-700 focus:outline-none" />
+                            </button>
                           </div>
                         </td>
                       </tr>
