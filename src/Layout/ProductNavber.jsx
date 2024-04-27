@@ -9,7 +9,7 @@ import { FaAngleDown } from "react-icons/fa6";
 import CategoryListSm from "../Pages/Components/Header/CategoryListSm";
 
 export default function Component() {
-  const { search, user, setSearch } = useContext(AuthContext);
+  const { search, user, setSearch, logOut } = useContext(AuthContext);
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [searchHistory, setSearchHistory] = useState([]);

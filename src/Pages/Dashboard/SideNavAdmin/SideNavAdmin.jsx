@@ -2514,41 +2514,6 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                 </NavLink>
               )}
 
-              {user?.staffRole ? (
-                user?.permissions.find(
-                  (itm) => itm?.name === "Service Order"
-                ) ? (
-                  <NavLink
-                    onMouseMove={() => setMenu(true)}
-                    to="/admin/service-order"
-                    rel="noopener noreferrer"
-                    href="#"
-                    className={({ isActive }) => {
-                      return isActive
-                        ? "flex items-center p-2 space-x-3 rounded-sm bg-gray-800 text-white "
-                        : "flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
-                    }}
-                  >
-                    <FaStore className="w-5 h-5 fill-current text-gray-400" />
-                    {menu && <span> Service Order</span>}
-                  </NavLink>
-                ) : null
-              ) : (
-                <NavLink
-                  onMouseMove={() => setMenu(true)}
-                  to="/admin/service-order"
-                  rel="noopener noreferrer"
-                  href="#"
-                  className={({ isActive }) => {
-                    return isActive
-                      ? "flex items-center p-2 space-x-3 rounded-sm bg-gray-800 text-white "
-                      : "flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
-                  }}
-                >
-                  <FaStore className="w-5 h-5 fill-current text-gray-400" />
-                  {menu && <span> Service Order</span>}
-                </NavLink>
-              )}
 
               {/* //! price */}
               {user?.staffRole ? (
