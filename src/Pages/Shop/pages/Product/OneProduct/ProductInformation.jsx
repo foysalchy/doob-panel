@@ -93,7 +93,7 @@ const ProductInformation = () => {
     }
   };
 
-  const convertedRating = (10 / 10) * 5;
+  const convertedRating = (` ${product?.data?.rating}` / 10) * 5;
 
   const pathname = window.location.pathname;
 
@@ -200,7 +200,7 @@ const ProductInformation = () => {
     queryKey: ["comments"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/seller/product-comment?id=${product?._id}`
+        `http://localhost:5001/api/v1/seller/product-comment?id=${product?.data?._id}`
       );
       const data = await res.json();
       return data?.comments;
@@ -334,25 +334,19 @@ const ProductInformation = () => {
                           </svg>
                         </span>
                       ))}
-                      <span className="text-gray-600 ml-2">9.3</span>
+                      <span className="text-gray-600 ml-2">{product?.data?.rating / 5 || 0}</span>
                     </span>
                   </div>
-                  <div>
-                    <FaCircle className="text-[#DBDBDB] text-[8px] mx-2 md:mx-4" />
-                  </div>
-                  <div className="flex items-center">
-                    <FaMessage className="text-[#DBDBDB] mr-2 text-[15px]" />
-                    <p className="me:text-sm text-[10px]">
-                      32 Answered Questions
-                    </p>
-                  </div>
+
+
                 </div>
                 <div className="flex item-center">
                   <div className="flex items-center">
                     {" "}
                     <FaCircle className="text-[#DBDBDB] text-[8px] mx-2 md:mx-4" />
                     <FaBasketShopping className="text-[#DBDBDB] mr-2 text-[16px]" />
-                    <p className="md:text-sm  text-[10px]">154 Sold</p>
+                    <p className="md:text-sm  text-[10px]">{product?.data?.total_sales + " "
+                    }  Sold</p>
                   </div>
                 </div>
               </div>
@@ -510,7 +504,7 @@ const ProductInformation = () => {
           <TrandingProductShop />
         </div>
       </div>
-    </section>
+    </section >
   );
 };
 

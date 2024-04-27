@@ -18,7 +18,7 @@ const ReplayModal = ({ refetch, setOpen, itm }) => {
       time: new Date(),
     };
 
-    fetch(`http://localhost:5001/api/v1/seller/replay-on-review`, {
+    fetch(`https://backend.doob.com.bd/api/v1/seller/replay-on-review`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

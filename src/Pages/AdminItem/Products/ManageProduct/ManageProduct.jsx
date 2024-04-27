@@ -95,6 +95,7 @@ const ManageProduct = () => {
       .then((data) => {
         BrightAlert();
         refetch();
+        reload()
       });
   };
 
@@ -136,7 +137,7 @@ const ManageProduct = () => {
 
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
-  const currentItems = filteredData?.slice(startIndex, endIndex);
+  const currentItems = filteredData?.length && filteredData?.slice(startIndex, endIndex);
 
   const [loading, setLoading] = useState(false);
   const handleSubmit = (e) => {
@@ -165,6 +166,7 @@ const ManageProduct = () => {
         setLoading(false);
         BrightAlert();
         refetch();
+        reload()
       });
   };
 
@@ -277,6 +279,8 @@ const ManageProduct = () => {
 
   // console.log(products[0]?.warehouse);
   // console.log(currentItems);
+
+  const [reject_message, setRejectMessage] = useState(false);
 
   return (
     <div className="">
@@ -540,16 +544,16 @@ const ManageProduct = () => {
                                 </button>
                               ) : (
                                 (() => {
-                                  const filteredWarehouses =
+                                  {/* const filteredWarehouses =
                                     product?.warehouse?.filter(
                                       (ware) => ware.name !== ""
-                                    );
+                                    ); */}
                                   // console.log(filteredWarehouses);
                                   return (
                                     <button
-                                      disabled={
-                                        filteredWarehouses?.length < 2
-                                      }
+                                      // disabled={
+                                      //   filteredWarehouses?.length < 2
+                                      // }
                                       onClick={() =>
                                         updateProductStatus(product._id, true)
                                       }
@@ -566,7 +570,7 @@ const ManageProduct = () => {
                             </td>
 
                             <td className="px-4 py-4 text-sm text-black whitespace-nowrap flex gap-1">
-                              {product?.categories.length &&
+                              {product?.categories?.length &&
                                 product?.categories?.map((itm, index) => (
                                   <div
                                     className="text-sm rounded-full flex items-center gap-1"
@@ -678,7 +682,7 @@ const ManageProduct = () => {
                                 )}
                               </div>
                             </td>
-                            <td className="px-4 py-4 text-sm whitespace-nowrap">
+                            <td className="px-4 py-4 text-sm flex gap-4 whitespace-nowrap">
                               <div className="flex items-center gap-x-2">
                                 {/* <button
                                     className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 cursor-pointer bg-emerald-100/60 bg-gray-800 text-white"
@@ -704,7 +708,7 @@ const ManageProduct = () => {
                                   </svg>
                                 </button>
                                 {product.product_status == "reject" ? (
-                                  <p className="px-2">Rejected</p>
+                                  <button onClick={() => setRejectMessage(product)} className="px-2 py-1 text-red-500 ">Reject Reason</button>
                                 ) : (
                                   <button
                                     onClick={() => setOpenModal(product)}
@@ -736,6 +740,14 @@ const ManageProduct = () => {
                                 {/* modal */}
                                 {/* <EditProduct openModal={openModal} setOpenModal={setOpenModal} product={product} /> */}
                                 {/* modal end */}
+                              </div>
+                              <div>
+                                <Link
+                                  className="mx-4"
+                                  to={`/products/${product._id}`}
+                                >
+                                  <BsEye />
+                                </Link>
                               </div>
                             </td>
                             <div className="h-0 w-0">
@@ -793,19 +805,18 @@ const ManageProduct = () => {
                               </div>
                             </div>
 
-                            <div>
-                              <Link
-                                className="mx-4"
-                                to={`/products/${product._id}`}
-                              >
-                                <BsEye />
-                              </Link>
-                            </div>
+
                           </tr>
                         );
                       })
                       : ""}
                   </tbody>
+
+                  <div>
+                    {
+                      reject_message && <Show_Reject_Modal openModal={reject_message} setOpenModal={setRejectMessage} />
+                    }
+                  </div>
                 </table>
               </div>
             </div>
@@ -844,7 +855,7 @@ const ManageProduct = () => {
                   onClick={() => setCurrentPage(currentPage + 1)}
                   disabled={
                     currentPage ===
-                    Math.ceil(filteredData?.length / itemsPerPage)
+                    Math.ceil(filteredData?.length && filteredData?.length / itemsPerPage)
                   }
                   className="bg-white border text-gray-500 hover:bg-gray-100 hover:text-gray-700 border-gray-300 leading-tight py-2 px-3 rounded-r-lg"
                 >
@@ -860,3 +871,59 @@ const ManageProduct = () => {
 };
 
 export default ManageProduct;
+
+
+const Show_Reject_Modal = ({ openModal, setOpenModal }) => {
+
+
+
+  return (
+    <div>
+      <div>
+        <div
+          onClick={() => setOpenModal(false)}
+          className={`fixed z-[100] flex items-center justify-center ${openModal._id
+            ? "visible opacity-100"
+            : "invisible opacity-0"
+            } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
+        >
+          <div
+            onClick={(e_) => e_.stopPropagation()}
+            className={`text- absolute w-[400px] rounded-sm bg-white p-6 drop-shadow-lg dark:bg-white dark:text-black ${openModal._id
+              ? "scale-1 opacity-1 duration-300"
+              : "scale-0 opacity-0 duration-150"
+              }`}
+          >
+            <form>
+              <h1 className="mb-2 text-2xl font-semibold">
+                Rejected Message!
+              </h1>
+              <textarea
+                name="message"
+                value={openModal?.message}
+                className="w-full border mb-6 p-2"
+                placeholder=" rejected message"
+              />
+              <div className="flex justify-between">
+                {/* <button
+                  type="submit"
+                  className="me-2 rounded-sm bg-green-700 px-6 py-[6px] text-white"
+                >
+                  {"Submit"}
+                </button> */}
+                <button
+                  type="button"
+                  onClick={() => setOpenModal(false)}
+                  className="rounded-sm border border-red-600 px-6 py-[6px] text-red-600 duration-150 hover:bg-red-600 hover:text-white"
+                >
+                  Cancel
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  )
+}

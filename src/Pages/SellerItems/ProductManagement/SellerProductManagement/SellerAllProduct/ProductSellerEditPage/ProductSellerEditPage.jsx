@@ -374,7 +374,7 @@ const CategoryEditPage = () => {
     console.log(data, "edit --------------------------->");
 
     fetch(
-      // `http://localhost:5001/api/v1/seller/normal-product?id=${product?._id}`,
+      // `https://backend.doob.com.bd/api/v1/seller/normal-product?id=${product?._id}`,
       `https://backend.doob.com.bd/api/v1/seller/normal-product?id=${product?._id}`,
       {
         method: "PUT",
