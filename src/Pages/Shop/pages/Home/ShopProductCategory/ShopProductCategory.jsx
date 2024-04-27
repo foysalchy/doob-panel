@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import "swiper/css";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Link } from "react-router-dom";
@@ -26,6 +26,9 @@ const ShopProductCategory = () => {
       return data;
     },
   });
+  useEffect(() => {
+    refetch();
+  }, [shop_id])
   console.log(categories, "feature-category");
   const slidesPerViewDesktop = 9;
   const slidesPerViewTablet = 6;
@@ -44,7 +47,7 @@ const ShopProductCategory = () => {
           }
           className="mySwiper"
         >
-          {categories.length &&
+          {categories.length ?
             categories?.map((i, index) => (
               <SwiperSlide key={index}>
                 <Link
@@ -60,7 +63,10 @@ const ShopProductCategory = () => {
                   <p className="text-sm text-center">{i.name}</p>
                 </Link>
               </SwiperSlide>
-            ))}
+            ))
+            :
+            ''
+          }
         </Swiper>
       </div>
     </div>

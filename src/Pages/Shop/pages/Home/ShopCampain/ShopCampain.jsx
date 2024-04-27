@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { ShopAuthProvider } from "../../../../../AuthProvider/ShopAuthProvide";
 import TimeCountDown from "./TimeCountDown";
@@ -8,7 +8,6 @@ import { Link } from "react-router-dom";
 
 const ShopCampain = () => {
   const { shop_id } = useContext(ShopAuthProvider);
-
   const { data: shopCampainData = [], isLoading } = useQuery({
     queryKey: ["shopCampain"],
     queryFn: async () => {
@@ -19,7 +18,9 @@ const ShopCampain = () => {
       return data?.data;
     },
   });
-
+  useEffect(() => {
+    refetch();
+  }, [shop_id])
   console.log(shopCampainData, "---------");
 
   return (
@@ -63,6 +64,7 @@ const ShopCampain = () => {
                           SHOP MORE
                         </button>
                       </div>
+
                     </div>
                   </div>
                   <div className="border-b border-gray-500 mx-5 mt-2"></div>

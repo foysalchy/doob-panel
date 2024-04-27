@@ -27,6 +27,7 @@ const NewProducts = () => {
 
   const data = [1, 2, 3, 4];
 
+  console.log(AdminNewProducts, '+');
   return (
     <div>
       {AdminNewProducts?.length ? (
@@ -46,12 +47,12 @@ const NewProducts = () => {
                     New Product
                   </h3>
                 </div>
-                <button
+                <Link to={`/products/new-product`}
                   type="button"
                   className="px-5 py-2 font-semibold rounded bg-gray-500 text-white text-xs "
                 >
-                  SHOP MORE
-                </button>
+                  SEE MORE
+                </Link>
               </div>
             </div>
             <div className="border-b border-gray-500 border-opacity-50 mx-5 mt-2"></div>

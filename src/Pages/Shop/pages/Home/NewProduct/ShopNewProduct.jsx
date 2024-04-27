@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useContext } from "react";
 import { AuthContext } from "../../../../../AuthProvider/UserProvider";
 import { useQuery } from "@tanstack/react-query";
@@ -9,10 +9,10 @@ import { SwiperSlide, Swiper } from "swiper/react";
 
 const ShopNewProduct = () => {
   const { shop_id } = useContext(ShopAuthProvider);
+  const pathname = window.location.pathname;
+  const idMatch = pathname.match(/\/shop\/([^/]+)/);
 
-  console.log(
-    `https://backend.doob.com.bd/api/v1/shop/product/${shop_id.shop_id}/new-product`
-  );
+  const shopId = idMatch ? idMatch[1] : null;
   const {
     data: products = [],
     refetch,
@@ -27,7 +27,9 @@ const ShopNewProduct = () => {
       return data;
     },
   });
-
+  useEffect(() => {
+    refetch();
+  }, [shop_id])
   const data = [1, 2, 3, 4];
   console.log(products);
 
@@ -50,12 +52,12 @@ const ShopNewProduct = () => {
                     New Product
                   </h3>
                 </div>
-                <button
+                <Link to={`/shop/${shopId}/shop-new-product`}
                   type="button"
                   className="px-5 py-2 font-semibold rounded bg-gray-500 text-white text-xs "
                 >
-                  SHOP MORE
-                </button>
+                  SEE MORE
+                </Link>
               </div>
             </div>
             <div className="border-b border-gray-500 border-opacity-50 mx-5 mt-2"></div>

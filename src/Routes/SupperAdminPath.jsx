@@ -583,6 +583,7 @@ const SupperAdminPath = [
     path: "package-management/add-package",
     element: <AddPackage />,
   },
+
 ];
 
 

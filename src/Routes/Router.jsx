@@ -34,6 +34,8 @@ import CardProduct from "../Pages/Home/Product/CardProduct/CardProduct";
 import AdminTrackOrder from "../Pages/AdminItem/AdminTrackOrder/AdminTrackOrder";
 import ConfirmOrder from "../Pages/Shop/pages/ConfirmOrder/ConfirmOrder";
 import SellerConfirmOrder from "../Pages/Shop/pages/ConfirmOrder/SellerConfirmOrder";
+import SeeAllProduct from "../Pages/Home/Product/SeeAllProduct/SeeAllProduct";
+import SeeShopAllProduct from "../Pages/Shop/pages/Home/SeeShopAllProduct/SeeShopAllProduct";
 
 const Router = createBrowserRouter([
   // Main Layout
@@ -203,7 +205,38 @@ const Router = createBrowserRouter([
         path: 'confirm-order',
         element: <SellerConfirmOrder />
       },
-    ]
-  }
+      {
+        path: "new-product",
+        loader: async () => {
+          try {
+            const response = await fetch(`https://backend.doob.com.bd/api/v1/admin/new-products`);
+            const data = await response.json();
+            return data;
+          } catch (error) {
+            console.error('Error fetching new products:', error);
+            return null; // Return null in case of an error
+          }
+        },
+        element: <SeeAllProduct />,
+      },
+      {
+        path: "upcoming-product",
+        loader: async () => {
+          try {
+            const response = await fetch(`https://backend.doob.com.bd/api/v1/admin/upcoming-products`);
+            const data = await response.json();
+            return data;
+          } catch (error) {
+            console.error('Error fetching new products:', error);
+            return null; // Return null in case of an error
+          }
+        },
+        element: <SeeAllProduct />,
+      }
+
+    ],
+  },
+
+
 ]);
 export default Router;

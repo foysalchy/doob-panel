@@ -288,7 +288,6 @@ export default function CommonCategory() {
     // const filterData = filterAllData(categroyValue, selectedBrandValues, products, selectedFeature, selectedRatings);
 
 
-    console.log(filterData, '>>>>>>', parseInt(maxPrice), parseInt(minPrice));
     return (
         <section className="text-gray-600 body-font">
             <div className="px-4 py-4 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8">

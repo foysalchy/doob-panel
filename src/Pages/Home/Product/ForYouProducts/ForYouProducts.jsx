@@ -46,12 +46,7 @@ const ForYouProducts = () => {
 
                 <h3 className="whitespace-nowrap ml-2 font-medium">For You</h3>
               </div>
-              <button
-                type="button"
-                className="px-5 py-2 font-semibold rounded bg-black text-gray-100 text-xs "
-              >
-                SHOP MORE
-              </button>
+
             </div>
           </div>
           <div className="border-b border-gray-200 mx-5 mt-2"></div>
@@ -129,15 +124,17 @@ const ForYouProducts = () => {
           </div>
         </section>
       </div>
-      <div className="mt-6 flex justify-center">
-        <button
-          onClick={handleLoadMore}
-          type="button"
-          className="px-5 py-2  font-semibold rounded bg-black text-white text-xs "
-        >
-          LOAD MORE
-        </button>
-      </div>
+      {newProducts && newProducts.length > displayedProducts && (
+        <div className="mt-6 flex justify-center">
+          <button
+            onClick={handleLoadMore}
+            type="button"
+            className="px-5 py-2 font-semibold rounded bg-black text-white text-xs"
+          >
+            LOAD MORE
+          </button>
+        </div>
+      )}
     </div>
   );
 };

@@ -42,12 +42,12 @@ const UpComingProducts = () => {
               Upcoming Products
             </h3>
           </div>
-          <button
+          <Link to='upcoming-product'
             type="button"
             className="px-5 py-2 font-semibold rounded bg-gray-500 text-white text-xs "
           >
-            SHOP MORE
-          </button>
+            SEE MORE
+          </Link>
         </div>
       </div>
       {AdminNewProducts?.length ? (
