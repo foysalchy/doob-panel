@@ -1,5 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
+import BrightAlert from "bright-alert";
 import { useState } from "react";
+import { FaLongArrowAltRight } from "react-icons/fa";
 import Swal from "sweetalert2";
 
 const AddSubCategory = () => {
@@ -43,12 +45,12 @@ const AddSubCategory = () => {
   });
 
   console.log();
-
+  const [loading, setLoading] = useState(false);
   const handleSubmit = (e) => {
     e.preventDefault();
     const form = e.target;
     const subCategory = form.subCategory.value;
-
+    setLoading(true)
     const data = {
       megaCategoryId: megaCategory.id,
       megaCategoryName: megaCategory.name,
@@ -67,7 +69,8 @@ const AddSubCategory = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        Swal.fire("Mega category added");
+        BrightAlert()
+        setLoading(false)
       });
   };
   return (
@@ -139,12 +142,19 @@ const AddSubCategory = () => {
             className="w-full px-3 py-2 border-2 text-sm text-gray-600 bg-white  shadow-sm outline-none appearance-none  "
           />
         </div>
-        <div className="flex flex-col gap-2">
-          <input
-            value={"Upload"}
+        <div className=" gap-2">
+
+          <button
             type="submit"
-            className=" bg-black text-white border-gray-300 w-[100px] mt-6 duration-200 hover:shadow-lg p-2 rounded-lg mb-2"
-          />
+            className="group mt-4 relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
+          >
+            <span className="absolute -start-full transition-all group-hover:start-4">
+              <FaLongArrowAltRight />
+            </span>
+            <span className="text-sm font-medium transition-all group-hover:ms-4">
+              {loading ? 'Uploading' : 'Upload Sub Category'}
+            </span>
+          </button>
         </div>
       </form>
     </div>

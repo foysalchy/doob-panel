@@ -21,7 +21,7 @@ const FinanceReport = () => {
 
   const fetchFinancialReport = async () => {
     const apiUrl =
-      "https://backend.doob.com.bd/api/v1/seller/my-financial-report";
+      "http://localhost:5001/api/v1/seller/my-financial-report";
     try {
       const response = await fetch(apiUrl, {
         method: "POST",
@@ -47,6 +47,8 @@ const FinanceReport = () => {
       throw error;
     }
   };
+
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     setError(null); // Clear any previous errors
@@ -74,6 +76,9 @@ const FinanceReport = () => {
     }
     setEndDate(selectedEndDate);
   };
+
+
+
 
   return (
     <div className="container mx-auto py-8">
@@ -111,14 +116,14 @@ const FinanceReport = () => {
           </div>
         </div>
         {/* <div>
-                    <button
-                        onClick={handleGenerateReport}
-                        disabled={isLoading}
-                        className={`bg-blue-500 px-4 py-2.5 text-white rounded hover:bg-blue-600 focus:outline-none ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
-                    >
-                        {isLoading ? 'Generating Report...' : 'Generate Report'}
-                    </button>
-                </div> */}
+          <button
+            onClick={ganarate_pdf}
+            disabled={isLoading}
+            className={`bg-blue-500 px-4 py-2.5 text-white rounded hover:bg-blue-600 focus:outline-none ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
+          >
+            {isLoading ? 'Generating Report...' : 'Generate Report'}
+          </button>
+        </div> */}
       </div>
 
       {error && <div className="text-red-500 mt-4">{error}</div>}
