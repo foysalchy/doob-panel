@@ -3,6 +3,7 @@ import Error from "../Pages/Home/Error/Error";
 import ShopAllBlog from "../Pages/Shop/ShopBlog/ShopAllBlog";
 import ShopSingleBlog from "../Pages/Shop/ShopBlog/ShopSingleBlog";
 import ShopPage from "../Pages/Shop/ShopPage/ShopPage";
+import ConfirmOrder from "../Pages/Shop/pages/ConfirmOrder/ConfirmOrder";
 import ShopSignIn from "../Pages/Shop/pages/Home/Auth/ShopSignIn";
 import ShopSignUp from "../Pages/Shop/pages/Home/Auth/ShopSignUp";
 import Home from "../Pages/Shop/pages/Home/Home";
@@ -225,6 +226,10 @@ const ShopPath = [
 
 
         }
+    },
+    {
+        path: ':id/confirm-order',
+        element: <ConfirmOrder />
     },
     // {
     //     path: ":id/user/my-orders",

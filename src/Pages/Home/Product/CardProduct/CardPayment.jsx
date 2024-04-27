@@ -3,6 +3,7 @@ import { AuthContext } from '../../../../AuthProvider/UserProvider';
 import { useQuery } from '@tanstack/react-query';
 import ProductCheckout from './ProductCheckout';
 import BrightAlert from 'bright-alert';
+import { useNavigate } from 'react-router-dom';
 
 const CardPayment = ({ openPayment, setOpenPayment, handleStore }) => {
     const [selectedPayment, setSelectedPayment] = useState('');
@@ -12,7 +13,7 @@ const CardPayment = ({ openPayment, setOpenPayment, handleStore }) => {
     const [userInfo, setUserInfo] = useState([])
     const { shopInfo } = useContext(AuthContext)
     const [payment_done, setPaymentDone] = useState(false)
-
+    const navigate = useNavigate();
 
     const {
         data: getaways = [],
@@ -42,9 +43,10 @@ const CardPayment = ({ openPayment, setOpenPayment, handleStore }) => {
             deliveryFees[productId] = deliveryFee;
         }
     });
+
+
+
     const totalDeliveryFee = Object.values(deliveryFees).reduce((acc, curr) => acc + curr, 0);
-
-
     const calculateTotal = () => {
         return openPayment.filter(product => product.selected).reduce((total, product) => total + (parseInt(product.sellingPrice ? product.sellingPrice : product.product_price) * parseInt(product.product_quantity)), 0);
     };
@@ -59,6 +61,8 @@ const CardPayment = ({ openPayment, setOpenPayment, handleStore }) => {
         });
         setLoading(false)
         BrightAlert()
+
+        navigate(`/products/confirm-order`)
     };
 
 
@@ -154,6 +158,7 @@ const CardPayment = ({ openPayment, setOpenPayment, handleStore }) => {
             <div className="fixed inset-0 bg-gray-900 bg-opacity-50 transition-opacity" aria-hidden="true"></div>
             <div className="relative bg-white rounded-lg w-full max-w-4xl mx-auto px-8 py-6 z-50">
                 <button onClick={() => setOpenPayment(false)}>x</button>
+
                 {!loading ? <div>
                     {!next ? <ProductCheckout userInfo={userInfo} setUserInfo={setUserInfo} products={openPayment} setNext={setNext} /> :
                         <div>

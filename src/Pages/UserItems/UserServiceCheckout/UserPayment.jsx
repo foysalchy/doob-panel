@@ -27,7 +27,7 @@ const UserPayment = () => {
         if (!orderStage) { window.history.back(); }
     }, [orderStage]);
 
- 
+
     const orderSubmit = () => {
         const data = orderStage
         data.method = payment
@@ -46,7 +46,7 @@ const UserPayment = () => {
         }).then((res) => res.json()).then((data) => {
             console.log("data payment", data);
             BrightAlert({ icon: 'success' })
-            navigate(`/services`)
+            navigate(`/service-confirm-order`)
         });
 
 

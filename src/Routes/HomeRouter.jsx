@@ -24,6 +24,7 @@ import ServicePaymentSuccess from "../Pages/Home/Service/ServicePaymentSuccess"
 import SingleService from "../Pages/Home/Service/SingleService"
 import Profile from "../Pages/Profile/Profile"
 import SellerShopInfo from "../Pages/SellerItems/SellerShopInfo/SellerShopInfo"
+import ServiceConfirmOrder from "../Pages/Shop/pages/ConfirmOrder/ServiceConfirmOrder"
 import UserPayment from "../Pages/UserItems/UserServiceCheckout/UserPayment"
 import UserServiceCheckout from "../Pages/UserItems/UserServiceCheckout/UserServiceCheckout"
 import ScrollToTop from "../SrollTop"
@@ -95,7 +96,12 @@ const homePath = [
         element: (
             <UserServiceCheckout />
         )
-    }, {
+    },
+    {
+        path: 'service-confirm-order',
+        element: <ServiceConfirmOrder />
+    },
+    , {
         path: "user-service-payment",
         loader: () =>
             fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/getaway`),

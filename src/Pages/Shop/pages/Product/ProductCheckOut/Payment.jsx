@@ -35,7 +35,8 @@ const Payment = () => {
         data.shopId = shop_id.shop_id
         data.shopUid = shopId
         if (!fileName && payment.Getaway == ! 'CashOnDelivery') {
-            BrightAlert("Please add your bank transaction", "Bank transaction Image Mandatory", 'info')
+            BrightAlert("Please add your bank transaction", "Bank transaction Image Mandatory", 'info');
+            navigate(`/shop/${shopId}/confirm-order`)
         }
         else {
             data.file = fileName
@@ -47,7 +48,7 @@ const Payment = () => {
             }).then((res) => res.json()).then((data) => {
                 console.log("data payment", data);
                 BrightAlert({ icon: 'success' })
-                navigate(`/shop/${shopId}/user/my-orders`)
+                navigate(`/shop/${shopId}/confirm-order`)
             });
         }
 
@@ -55,7 +56,6 @@ const Payment = () => {
     }
 
     const paymentHandler = async (payment) => {
-        console.log(payment.Getaway, '*******');
         if (payment.Getaway === 'Bkash') {
             payWithBkash()
         }

@@ -73,8 +73,12 @@ const CardProduct = () => {
         return cartProduct.filter(product => product.selected).reduce((total, product) => total + (parseInt(product.sellingPrice ? product.sellingPrice : product.product_price) * parseInt(product.product_quantity)), 0);
     };
 
-
     const [openPayment, setOpenPayment] = useState(false);
+    const handleSetData = () => {
+        setOpenPayment(cartProduct.filter(product => product.selected))
+        localStorage.setItem('orderData', JSON.stringify(cartProduct))
+    }
+
 
     const handleStore = (id, getway, userInfo, product) => {
         if (shopInfo) {
@@ -106,6 +110,15 @@ const CardProduct = () => {
             navigate("/sign-in");
         }
     };
+
+    // Calculate Subtotal
+    const subtotal = cartProduct.reduce((acc, item) => acc + (item?.sellingPrice ? item?.sellingPrice : item?.product_price * item.product_quantity), 0);
+
+    // Discount (assuming it's a fixed value or based on some condition)
+    const discount = 0;
+
+    // Total Price
+    const total = subtotal - discount;
 
     return (
         <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
@@ -175,7 +188,10 @@ const CardProduct = () => {
                                                 </div>
                                             </div>
                                         </td>
+                                        {/* <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{product.sellingPrice ? product.sellingPrice : product.product_price}</td>
+                                         */}
                                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{product.sellingPrice ? product.sellingPrice : product.product_price}</td>
+
                                         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                             <div className="flex items-center gap-2">
                                                 <button className="bg-gray-200 text-gray-600 px-2 py-1 rounded" onClick={() => handleQuantityDecrease(index)}>-</button>
@@ -195,7 +211,7 @@ const CardProduct = () => {
                     </div>
                 </div>
                 <div className="w-full lg:w-96">
-                    <div className="mb-4 p-4 bg-white rounded-lg shadow">
+                    {/* <div className="mb-4 p-4 bg-white rounded-lg shadow">
                         <h2 className="text-lg font-medium mb-4">Apply Coupon</h2>
                         <div className="flex gap-2">
                             <input
@@ -205,12 +221,11 @@ const CardProduct = () => {
                             />
                             <button className="bg-blue-600 text-white px-4 py-2 rounded shadow">Apply</button>
                         </div>
-                    </div>
+                    </div> */}
                     <div className="p-4 bg-white rounded-lg shadow">
-                        <h2 className="text-lg font-medium mb-4">Total</h2>
                         <div className="flex justify-between mb-2">
-                            <span>Total</span>
-                            <span>{calculateTotal()}</span>
+                            <span>Subtotal</span>
+                            <span>{subtotal}</span>
                         </div>
                         <div className="flex justify-between mb-2">
                             <span>Delivery</span>
@@ -218,13 +233,13 @@ const CardProduct = () => {
                         </div>
                         <div className="flex justify-between mb-2">
                             <span>Discount</span>
-                            <span>-৳0</span>
+                            <span>-৳{discount}</span>
                         </div>
-                        <div className="flex justify-between mb-4 font-bold">
-                            <span>Subtotal</span>
-                            <span>{calculateTotal() + totalDeliveryFee}</span>
+                        <div className="flex font-bold justify-between mb-2 mt-3">
+                            <span>Total</span>
+                            <span>{total}</span>
                         </div>
-                        <button onClick={() => setOpenPayment(cartProduct.filter(product => product.selected))} className="w-full bg-blue-600 text-white px-4 py-2 rounded shadow mb-4">Checkout</button>
+                        <button onClick={handleSetData} className="w-full bg-blue-600 text-white px-4 py-2 rounded shadow mb-4">Checkout</button>
 
                     </div>
                 </div>

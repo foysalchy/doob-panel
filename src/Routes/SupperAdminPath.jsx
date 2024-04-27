@@ -490,17 +490,17 @@ const SupperAdminPath = [
     },
 
     {
-    path: "package-management",
-    element: (
-      <CheckStaff>
-        <PackageManagement />
-      </CheckStaff>
-    ),
-  },
-  {
-    path: "package-management/add-package",
-    element: <AddPackage />,
-  },
+        path: "package-management",
+        element: (
+            <CheckStaff>
+                <PackageManagement />
+            </CheckStaff>
+        ),
+    },
+    {
+        path: "package-management/add-package",
+        element: <AddPackage />,
+    }
 ]
 
 export { SupperAdminPath }

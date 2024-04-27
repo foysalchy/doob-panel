@@ -108,10 +108,11 @@ const ProductCheckout = () => {
         setOrderStage(newData);
     }
 
+    const handleSetData = () => {
+        localStorage.setItem('orderData', JSON.stringify(selectProductData))
+    }
 
-
-
-    console.log(defaultAddress, "this is default address!! :::");
+    console.log(selectProductData, '>>>>>>');
     return (
         <div>
             <div className='px-4 py-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-10'>
@@ -269,7 +270,7 @@ const ProductCheckout = () => {
                         </div>
                         <div className={`${!promoDiscount ? '' : 'mt-6'}`}>
                             {
-                                addresses?.data ? <Link to={`/shop/${shopId}/user/payment?shop_id=${shop_id?.shop_id}`} type="button" className='w-full'>
+                                addresses?.data ? <Link onClick={handleSetData} to={`/shop/${shopId}/user/payment?shop_id=${shop_id?.shop_id}`} type="button" className='w-full'>
                                     <button onClick={() => sendPlaceOrderData()} className="px-6 py-2 rounded w-full bg-gray-800 text-white" type='button'>
                                         Place Order
                                     </button>

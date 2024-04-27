@@ -282,7 +282,7 @@ const ShopProductHero = () => {
                                                 onMouseEnter={() => subCategoryHandler(item, index)}
                                                 className={`flex  items-center  w-full justify-between px-2 py-1 capitalize text-sm font-normal  hover:bg-gray-100   relative  ${openDropdownIndex === index ? 'bg-gray-100 text-black' : 'text-black'} rounded`}
                                             >
-                                                <span className="flex items-center ">
+                                                <span className="flex gap-2 items-center ">
                                                     <img src={item?.image} alt="" className="w-8 h-8 rounded-full ring-1 ring-gray-200" />
                                                     {item?.name}
                                                 </span>
@@ -327,7 +327,7 @@ const ShopProductHero = () => {
                                                                     aria-expanded="false"
                                                                     data-te-ripple-init
                                                                     data-te-ripple-color="light">
-                                                                    <span className="flex items-center  text-black">
+                                                                    <span className="flex items-center gap-2 text-black">
                                                                         <img src={subCategory?.img} alt="" className="w-8 h-8 rounded-full ring-1 ring-gray-200" />
 
                                                                         {subCategory?.subCategoryName}
@@ -341,7 +341,7 @@ const ShopProductHero = () => {
                                                                             {
                                                                                 !megaSideCategoryData.length == 0 ? <Link to={`/products/catagory/${miniCategory?._id}`}>
                                                                                     <div onMouseMove={(() => extraCategoryHandler(miniCategory, index))} className={`flex mt-2 items-center  w-full justify-between px-2 py-1 capitalize text-sm font-normal rounded hover:bg-gray-100 hover:text-black  relative  ${active?.step2 === miniCategory?._id ? 'bg-gray-100 text-black' : 'text-black'}`}>
-                                                                                        <span className="flex items-center ">
+                                                                                        <span className="flex items-center gap-2">
                                                                                             <img src={miniCategory?.img} alt="" className="w-8 h-8 rounded-full ring-1 ring-gray-200" /> {miniCategory?.miniCategoryName}
                                                                                         </span>
                                                                                     </div>
@@ -367,7 +367,7 @@ const ShopProductHero = () => {
                                                                                         <div className='py-1 capitalize px-2'>
                                                                                             <span className="flex flex-col hover:bg-gray-100 items-center  w-[90px] p-2 rounded-lg ">
                                                                                                 <img src={extraCategory?.img} alt="" className="w-14 h-14 object-cover rounded-full ring-1 ring-gray-200" />
-                                                                                                <p className="text-xs font-semibold text-center">
+                                                                                                <p className="text-xs font-semibold mt-2 text-center">
                                                                                                     {extraCategory?.extraCategoryName} ..
                                                                                                 </p>
                                                                                             </span>

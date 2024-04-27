@@ -1034,7 +1034,7 @@ const CategoryByProduct = () => {
                                                                         Add to Cart
                                                                     </div>
                                                                 </Link>
-                                                                <Link>
+                                                                <Link to={`product/${itm?._id}`} >
                                                                     <div className="bg-blue-500 px-4 py-2 rounded-md text-white">
                                                                         Buy Now
                                                                     </div>

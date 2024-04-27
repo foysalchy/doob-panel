@@ -38,6 +38,8 @@ const ModalForPayment = ({ invoice, setInvoice, sellingPrice, handleStore, selle
         }
         handleStore(invoice, getway, userInfo);
         paymentHandler(payment)
+
+        navigate(`/admin/confirm-order`)
     };
 
     const [next, setNext] = useState(false)
