@@ -42,43 +42,39 @@ const AllProduct = () => {
             </div>
           </div>
           <div className="border-b border-gray-200 mx-5 mt-2"></div>
-          <div className="container px-5 py-8 mx-auto">
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-2 -m-4 text-black">
+          <div className="container px-10 py-8 mx-auto">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 -m-4 text-black">
               {newProducts?.data?.map((product, idx) => {
                 return (
-                  <Link
-                    to={`product/${product?._id}`}
-                    key={idx}
-                    className="p-4 w-full md:w-11/12 border lg:mx-2 text-black rounded"
-                  >
-                    <a className="block relative h-32 rounded overflow-hidden">
+                  <Link key={product?._id} to={`product/${product?._id}`}>
+                    <a className="block relative rounded overflow-hidden">
                       <img
                         alt="ecommerce"
-                        className="object-cover h-full block"
+                        className="object-cover object-center w-full md:h-[160px] h-[130px] block"
                         src={product?.featuredImage?.src}
-                        srcSet={product?.featuredImage?.src}
                       />
                     </a>
-                    <div className="mt-4 text-center">
-                      <h3 className="text-xs mb-1 font-medium">
-                        {product?.name.slice(0, 20)}..
-                      </h3>
-
-                      <div className="flex justify-evenly">
-                        <p className="py-0 font-medium">
-                          {" "}
+                    <div className="mt-2">
+                      <h2 className="text-black title-font md:text-lg text-sm font-medium">
+                        {product?.name.slice(0, 18)}..
+                      </h2>
+                      <div className="flex items-center gap-10 text-black">
+                        <del className="flex items-center ">
+                          <span className="kalpurush">৳ </span>
                           {product?.regular_price}
+                        </del>
+                        <p className="">
+                          <span className="kalpurush">৳</span>
+                          {product?.price}
                         </p>
-                        <del> {product?.price}</del>
                       </div>
-                      <div className="mt-2">
-                        <button
-                          type="button"
-                          className="px-5 py-2  font-semibold rounded bg-black text-white text-xs "
-                        >
-                          Add to card
-                        </button>
-                      </div>
+
+                      <button
+                        type="button"
+                        className="px-5 py-2  font-semibold rounded bg-black text-white w-full mt-3 text-xs "
+                      >
+                        Add to card
+                      </button>
                     </div>
                   </Link>
                 );

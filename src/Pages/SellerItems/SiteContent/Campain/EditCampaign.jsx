@@ -19,7 +19,7 @@ export default function EditCampaign() {
     queryKey: ["campaignData"],
     queryFn: async () => {
       const res = await fetch(
-        `http://localhost:5001/api/v1/seller/get-single-campaign?id=662cfd09e88f0e8549ef70a7`
+        `https://backend.doob.com.bd/api/v1/seller/get-single-campaign?id=662cfd09e88f0e8549ef70a7`
       );
       const data = await res.json();
       console.log("data", data);
@@ -144,7 +144,7 @@ export default function EditCampaign() {
     console.log(data);
 
     fetch(
-      `http://localhost:5001/api/v1/seller/update-single-campaign?id=${id}`,
+      `https://backend.doob.com.bd/api/v1/seller/update-single-campaign?id=${id}`,
       {
         method: "PUT",
         headers: {
