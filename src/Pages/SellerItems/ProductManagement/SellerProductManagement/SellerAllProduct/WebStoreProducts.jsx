@@ -11,13 +11,13 @@ export default function WebStoreproduct({ priceRole, searchQuery }) {
     const [currentPage, setCurrentPage] = useState(1);
     const pageSize = 10
 
-    console.log(`https://salenow-v2-backend.vercel.app/api/v1/seller/web-store?id=${shopInfo._id}`);
+    console.log(`https://backend.doob.com.bd/api/v1/seller/web-store?id=${shopInfo._id}`);
 
     const { data: productData = [], refetch } = useQuery({
         queryKey: ["productData"],
         queryFn: async () => {
             try {
-                const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/web-store?id=${shopInfo._id}`);
+                const res = await fetch(`https://backend.doob.com.bd/api/v1/seller/web-store?id=${shopInfo._id}`);
                 const data = await res.json();
                 return data?.products;
             } catch (error) {
@@ -58,7 +58,7 @@ export default function WebStoreproduct({ priceRole, searchQuery }) {
     };
     if (isDelete) {
 
-        fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/delete-product`, {
+        fetch(`https://backend.doob.com.bd/api/v1/seller/delete-product`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json"
@@ -110,7 +110,7 @@ export default function WebStoreproduct({ priceRole, searchQuery }) {
 
 
     const update_status = (product_id, status) => {
-        fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/update-product-status`, {
+        fetch(`https://backend.doob.com.bd/api/v1/seller/update-product-status`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
@@ -129,7 +129,7 @@ export default function WebStoreproduct({ priceRole, searchQuery }) {
 
 
     return (
-        <div className="flex flex-col mt-6">
+        <div className="flex flex-col ">
 
             <div className='h-0 w-0'>   <DeleteModal setOpenModal={setDeletePopUp} OpenModal={deletePopUp} setIsDelete={setIsDelete} /></div>
 

@@ -27,7 +27,7 @@ Include screenshots or gifs showing the application's main functionality.
 
 ## Demo
 
-https://salenow.vercel.app/
+https://doob.com.bd/
 
 ## Getting Started
 
@@ -62,6 +62,10 @@ If you've contributed to this project and your name is missing, please let us kn
 ## Deploy on vps 
 ````
 scp -r dist  root@152.42.184.243:/var/www/SaleNow-Frontend
+````
+
+````
+mAhadi624234a
 ````
 need also pass: contact with project manager
 

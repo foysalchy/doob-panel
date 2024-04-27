@@ -19,228 +19,249 @@ import ProductCheckout from "../Pages/Shop/pages/Product/ProductCheckOut/Product
 import UserSupportTicket from "../Pages/Shop/pages/ShopUser/SupportTicket/SupportTicket";
 import TrackOrder from "../Pages/Shop/pages/ShopUser/TrackOrder/TrackOrder";
 import UserWishList from "../Pages/Shop/pages/ShopUser/UserWishList";
-import Product from './../Pages/Home/Product/Product';
+import Product from "./../Pages/Home/Product/Product";
 import NavigateToLogin from "./NavigateToLogin";
 import IsUserRegistration from "./isUserRegistration";
 
 const ShopPath = [
-    {
-        path: ':id/',
-        element: <Home />,
-        loader: async ({ params }) => {
-            const id = params.id;
-            return fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/${id}`);
-        },
+  {
+    path: ":id/",
+    element: <Home />,
+    loader: async ({ params }) => {
+      const id = params.id;
+      return fetch(`https://backend.doob.com.bd/api/v1/shop/${id}`);
     },
-    {
-        path: ':id/sign-in',
-        element: <ShopSignIn />,
-        loader: async ({ params }) => {
-            const id = params.id;
-            return fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/${id}`);
-        },
+  },
+  {
+    path: ":id/sign-in",
+    element: <ShopSignIn />,
+    loader: async ({ params }) => {
+      const id = params.id;
+      return fetch(`https://backend.doob.com.bd/api/v1/shop/${id}`);
     },
-    {
-        path: ':id/sign-up',
-        element: <ShopSignUp />,
-        loader: async ({ params }) => {
-            const id = params.id;
-            return fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/${id}`);
-        },
+  },
+  {
+    path: ":id/sign-up",
+    element: <ShopSignUp />,
+    loader: async ({ params }) => {
+      const id = params.id;
+      return fetch(`https://backend.doob.com.bd/api/v1/shop/${id}`);
     },
-    {
-        path: ':id/track-order',
-        element: <NavigateToLogin>
-            <TrackOrder />
-        </NavigateToLogin>,
+  },
+  {
+    path: ":id/track-order",
+    element: (
+      <NavigateToLogin>
+        <TrackOrder />
+      </NavigateToLogin>
+    ),
+  },
+  {
+    path: "categories",
+    element: (
+      <NavigateToLogin>
+        <CategorieItems />
+      </NavigateToLogin>
+    ),
+  },
 
+  {
+    path: ":id/user",
+    element: (
+      <IsUserRegistration>
+        <UserProfile />
+      </IsUserRegistration>
+    ),
+    children: [
+      {
+        path: "my-profile",
+        element: <ProfileUpdate />,
+      },
+      {
+        path: "my-address",
+        element: <AddressBook />,
+      },
+      {
+        path: "my-orders",
+        element: <UserMyOrder />,
+      },
+      {
+        path: "my-support",
+        element: <UserSupportTicket />,
+      },
+      {
+        path: "my-wish-list",
+        element: <UserWishList />,
+      },
+    ],
+  },
+
+  {
+    path: ":id/product/:productID", // Use a dynamic route parameter for the product ID
+    element: <ProductInformation />,
+    loader: async ({ params }) => {
+      const id = params.id;
+      const productID = params.productID;
+      return fetch(
+        `https://backend.doob.com.bd/api/v1/shop/product/${id}/product/${productID}`
+      );
     },
-    {
-        path: 'categories',
-        element: <NavigateToLogin>
-            <CategorieItems />
-        </NavigateToLogin>,
+  },
+  {
+    path: ":id/categories/:shopId/:categoryId",
+    element: <CategoryByProduct />,
+    loader: async ({ params }) => {
+      console.log("params:", params); // Log params to the console
 
+      const shopId = params.shopId;
+      const categoryName = params.categoryId;
+
+      if (categoryName !== null) {
+        console.log("Fetching data for categoryName:", categoryName);
+
+        const response = await fetch(
+          `https://backend.doob.com.bd/api/v1/shop/product/${shopId}/categories?category=${encodeURIComponent(
+            categoryName
+          )}`
+        );
+        const data = await response.json();
+
+        console.log("Fetched data:", data);
+
+        return data;
+      } else {
+        // Handle the case when categoryName is not present
+        console.error("categoryName is not defined in the query parameters");
+        return null; // or handle it appropriately
+      }
     },
-
-    {
-        path: ':id/user',
-        element: <IsUserRegistration><UserProfile /></IsUserRegistration>,
-        children: [
-            {
-                path: 'my-profile',
-                element: <ProfileUpdate />,
-            },
-            {
-                path: 'my-address',
-                element: <AddressBook />,
-            },
-            {
-                path: 'my-orders',
-                element: <UserMyOrder />,
-            },
-            {
-                path: 'my-support',
-                element: <UserSupportTicket />,
-            },
-            {
-                path: 'my-wish-list',
-                element: <UserWishList />,
-            }
-        ]
+  },
+  {
+    path: ":id/blog", // Use a dynamic route parameter for the product ID
+    element: <ShopAllBlog />,
+    loader: async ({ params }) => {
+      const id = params.id;
+      return fetch(`https://backend.doob.com.bd/api/v1/seller/blog/${id}`);
     },
-
-    {
-        path: ':id/product/:productID',  // Use a dynamic route parameter for the product ID
-        element: <ProductInformation />,
-        loader: async ({ params }) => {
-            const id = params.id;
-            const productID = params.productID;
-            return fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/product/${id}/product/${productID}`);
-        },
+  },
+  {
+    path: ":id/blog/:blogId",
+    element: <ShopSingleBlog />,
+    loader: async ({ params }) => {
+      const id = params.id;
+      const blogId = params.blogId;
+      const response = await fetch(
+        `https://backend.doob.com.bd/api/v1/seller/blog/${id}/${blogId}`
+      );
+      const data = await response.json();
+      return data;
     },
-    {
-        path: ':id/categories/:shopId/:categoryId',
-        element: <CategoryByProduct />,
-        loader: async ({ params }) => {
-            console.log('params:', params); // Log params to the console
-
-            const shopId = params.shopId;
-            const categoryName = params.categoryId
-
-            if (categoryName !== null) {
-                console.log('Fetching data for categoryName:', categoryName);
-
-                const response = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/product/${shopId}/categories?category=${encodeURIComponent(categoryName)}`);
-                const data = await response.json();
-
-                console.log('Fetched data:', data);
-
-                return data;
-            } else {
-                // Handle the case when categoryName is not present
-                console.error('categoryName is not defined in the query parameters');
-                return null; // or handle it appropriately
-            }
-        },
+  },
+  {
+    path: ":id/pages/:pageId",
+    element: <ShopPage />,
+    loader: async ({ params }) => {
+      const pageId = params.pageId;
+      const shopId = params.id;
+      const response = await fetch(
+        `https://backend.doob.com.bd/api/v1/seller/page/${shopId}/${pageId}`
+      );
+      const data = await response.json();
+      return data;
     },
-    {
-        path: ':id/blog',  // Use a dynamic route parameter for the product ID
-        element: <ShopAllBlog />,
-        loader: async ({ params }) => {
-            const id = params.id;
-            return fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/blog/${id}`);
-        },
-    },
-    {
-        path: ':id/blog/:blogId',
-        element: <ShopSingleBlog />,
-        loader: async ({ params }) => {
-            const id = params.id;
-            const blogId = params.blogId;
-            const response = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/blog/${id}/${blogId}`);
-            const data = await response.json();
-            return data;
-        },
-    },
-    {
-        path: ':id/pages/:pageId',
-        element: <ShopPage />,
-        loader: async ({ params }) => {
-            const pageId = params.pageId
-            const shopId = params.id
-            const response = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/page/${shopId}/${pageId}`);
-            const data = await response.json();
-            return data;
-        },
-    },
-    {
-        path: ":id/user/cart",
-        element: <AddToCard />,
-    },
-    {
-        path: ":id/user/payment",
-        element: <IsUserRegistration> <Payment /></IsUserRegistration>,
-        loader: async (params) => {
-            const urlObj = new URL(params.request.url)
-            const url = urlObj.href
-            const shopIdRegex = /shop_id=([^&]+)/;
+  },
+  {
+    path: ":id/user/cart",
+    element: <AddToCard />,
+  },
+  {
+    path: ":id/user/payment",
+    element: (
+      <IsUserRegistration>
+        {" "}
+        <Payment />
+      </IsUserRegistration>
+    ),
+    loader: async (params) => {
+      const urlObj = new URL(params.request.url);
+      const url = urlObj.href;
+      const shopIdRegex = /shop_id=([^&]+)/;
 
-            const shopIdMatch = url.match(shopIdRegex);
+      const shopIdMatch = url.match(shopIdRegex);
 
-            if (shopIdMatch) {
-                const shopId = shopIdMatch[1];
+      if (shopIdMatch) {
+        const shopId = shopIdMatch[1];
 
-                try {
-                    const response = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/payment-getaway/${shopId}`);
-                    const data = await response.json();
-                    console.log(data, 'dtata');
-                    return data;
-                } catch (error) {
-                    console.error("Error fetching data:", error);
+        try {
+          const response = await fetch(
+            `https://backend.doob.com.bd/api/v1/seller/payment-getaway/${shopId}`
+          );
+          const data = await response.json();
+          console.log(data, "dtata");
+          return data;
+        } catch (error) {
+          console.error("Error fetching data:", error);
 
-                    return null;
-                }
-
-            } else {
-                console.log("shop_id or userId not found in the URL");
-            }
-
-
+          return null;
         }
+      } else {
+        console.log("shop_id or userId not found in the URL");
+      }
     },
-    {
-        path: ":id/user/order",
-        element: <NavigateToLogin><ProductCheckout /></NavigateToLogin>,
-        loader: async (params) => {
-            const urlObj = new URL(params.request.url)
+  },
+  {
+    path: ":id/user/order",
+    element: (
+      <NavigateToLogin>
+        <ProductCheckout />
+      </NavigateToLogin>
+    ),
+    loader: async (params) => {
+      const urlObj = new URL(params.request.url);
 
+      const url = urlObj.href;
+      const shopIdRegex = /shop_id=([^&]+)/;
+      const userIdRegex = /userId=([^&]+)/;
 
-            const url = urlObj.href
-            const shopIdRegex = /shop_id=([^&]+)/;
-            const userIdRegex = /userId=([^&]+)/;
+      const shopIdMatch = url.match(shopIdRegex);
+      const userIdMatch = url.match(userIdRegex);
 
-            const shopIdMatch = url.match(shopIdRegex);
-            const userIdMatch = url.match(userIdRegex);
-
-            if (shopIdMatch && userIdMatch) {
-                const shopId = shopIdMatch[1];
-                const userId = userIdMatch[1];
-                try {
-                    const response = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/shop/user-address?userId=${userId}&shopId=${shopId}&token=${userId}`, {
-                        headers: {
-                            "ngrok-skip-browser-warning": "69420",
-                        }
-                    });
-                    const data = await response.json();
-                    return data;
-                } catch (error) {
-                    console.error("Error fetching data:", error);
-
-                    return null;
-                }
-
-            } else {
-                console.log("shop_id or userId not found in the URL");
+      if (shopIdMatch && userIdMatch) {
+        const shopId = shopIdMatch[1];
+        const userId = userIdMatch[1];
+        try {
+          const response = await fetch(
+            `https://backend.doob.com.bd/api/v1/shop/user-address?userId=${userId}&shopId=${shopId}&token=${userId}`,
+            {
+              headers: {
+                "ngrok-skip-browser-warning": "69420",
+              },
             }
+          );
+          const data = await response.json();
+          return data;
+        } catch (error) {
+          console.error("Error fetching data:", error);
 
-
+          return null;
         }
+      } else {
+        console.log("shop_id or userId not found in the URL");
+      }
     },
+
     {
         path: ':id/confirm-order',
         element: <ConfirmOrder />
     },
-    // {
-    //     path: ":id/user/my-orders",
-    //     element: <IsUserRegistration><UserMyOrder /></IsUserRegistration>,
 
-    // },
 
-    {
-        path: '*',
-        element: <Error />
-    },
-]
+  // },
 
-export { ShopPath }
+  {
+    path: "*",
+    element: <Error />,
+  },
+];
+
+export { ShopPath };

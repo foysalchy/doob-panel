@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../../../../../AuthProvider/UserProvider";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import ImageUploadSeller from "../ImageUploadSeller";
 import SellerInputProductName from "../../../SellerAddProduct/Components/SellerInputProductName";
 import EditSincronusCategory from "../EditSincronusCategory";
@@ -18,6 +18,8 @@ import EditAdminCategoryforSeller from "../EditAdminCategoryforSeller";
 
 const CategoryEditPage = () => {
   const id = useParams().id;
+
+  const navigate = useNavigate();
 
   const { state } = useLocation();
   console.log(state);
@@ -36,7 +38,7 @@ const CategoryEditPage = () => {
     queryFn: async () => {
       try {
         const res = await fetch(
-          `https://salenow-v2-backend.vercel.app/api/v1/seller/all-products/${shopInfo._id}`
+          `https://backend.doob.com.bd/api/v1/seller/all-products/${shopInfo._id}`
         );
         const data = await res.json();
         return data;
@@ -65,6 +67,8 @@ const CategoryEditPage = () => {
   const [shortDescription, setShortDescription] = useState("");
   const [banglaDescription, setBanglaDescription] = useState("");
   const [youtube, setYoutube] = useState("");
+
+  // console.log(youtube);
   const [multiVendor, setMultiVendor] = useState(adminWare);
   // ! for admin category
   // const [adminMegaCategory, setAdminMegaCategory] = useState("");
@@ -72,6 +76,7 @@ const CategoryEditPage = () => {
   // const [adminMiniCategory, setAdminMiniCategory] = useState("");
   // const [adminExtraCategory, setAdminExtraCategory] = useState("");
 
+  console.log(coverPhoto, "coverPhoto", product?.featuredImage);
   const [inputFields, setInputFields] = useState([
     {
       name: "",
@@ -84,6 +89,9 @@ const CategoryEditPage = () => {
     },
   ]);
 
+  console.log(product?.variantData);
+
+  // console.log(product?.variations);
   const [variantInput, setVariantInput] = useState([
     {
       product1: {},
@@ -93,14 +101,21 @@ const CategoryEditPage = () => {
       ProductCost: "",
     },
   ]);
+  // console.log(variantInput);
 
+  useEffect(() => {
+    setInputFields(product?.variations);
+    setVariantInput(product?.variantData);
+    setMultiVendor(product?.multiVendor);
+    setCoverPhoto(product?.featuredImage?.src);
+  }, [product]);
   const [brandName, setBrandName] = useState();
 
   const imageUpload = async (image) => {
     const formData = new FormData();
     formData.append("image", image);
 
-    const url = `https://salenow-v2-backend.vercel.app/api/v1/image/upload-image`;
+    const url = `https://backend.doob.com.bd/api/v1/image/upload-image`;
 
     const res = await fetch(url, {
       method: "POST",
@@ -117,7 +132,7 @@ const CategoryEditPage = () => {
     const formData = new FormData();
     formData.append("image", imageBlob);
 
-    const url = `https://salenow-v2-backend.vercel.app/api/v1/daraz/daraz-image/${shopInfo._id}`;
+    const url = `https://backend.doob.com.bd/api/v1/daraz/daraz-image/${shopInfo._id}`;
 
     try {
       const response = await fetch(url, {
@@ -169,6 +184,8 @@ const CategoryEditPage = () => {
     datazCategory?.length &&
     datazCategory?.filter((item) => !ourData?.includes(item.label));
 
+  // console.log(filteredData);
+
   const formSubmit = async (e) => {
     setLoading(true);
     e.preventDefault();
@@ -177,9 +194,9 @@ const CategoryEditPage = () => {
     const sku = form.ProductSKU.value;
     const EnName = form.productNameEn.value;
     const megaCategory = form?.megaCategory?.value;
-    const Subcategory = form?.subCategory?.value || null;
-    const miniCategory = form?.miniCategory?.value || null;
-    const extraCategory = form?.extraCategory?.value || null;
+    const Subcategory = form?.adminSubCategoryName?.value || null;
+    const miniCategory = form?.adminMiniCategoryName?.value || null;
+    const extraCategory = form?.adminExtraCategoryName?.value || null;
 
     const categories = [
       { name: megaCategory },
@@ -188,6 +205,9 @@ const CategoryEditPage = () => {
       extraCategory && { name: extraCategory },
     ];
 
+    // console.log(categories);
+
+    // return
     const warehouse = form?.warehouse.value;
     const area = (form.area && form.area.value) || null;
     const rack = (form.rack && form.rack.value) || null;
@@ -208,6 +228,7 @@ const CategoryEditPage = () => {
     const productLength = form?.productLength?.value;
     const productWidth = form?.productWidth?.value;
     const productHight = form?.productHight?.value;
+    const DeliveryCharge = form?.DeliveryCharge?.value;
 
     const MetaTag = form?.MetaTag?.value;
     const MetaTagMetaDescription = form?.MetaDescription?.value;
@@ -234,6 +255,10 @@ const CategoryEditPage = () => {
       adminExtraCategory,
     ];
 
+    // console.log(adminCategory);
+    // setLoading(false);
+    // return;
+
     const formData = new FormData();
 
     const additionalPhotos = [
@@ -247,6 +272,7 @@ const CategoryEditPage = () => {
       form.photo7,
     ];
     console.log(additionalPhotos[0][0].files[0]);
+
     const firstFile =
       additionalPhotos.length > 0 &&
       additionalPhotos[0].length > 0 &&
@@ -339,15 +365,17 @@ const CategoryEditPage = () => {
       warrantyTypes,
       rating_count: 0,
       shopId: shopInfo._id,
+
       adminWare,
       darazOptionData,
       upcoming: isChecked,
+      DeliveryCharge,
     };
     console.log(data, "edit --------------------------->");
 
     fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/seller/normal-product?id=${product?._id}`,
-      // `https://salenow-v2-backend.vercel.app/api/v1/seller/normal-product?id=${product?._id}`,
+      // `https://backend.doob.com.bd/api/v1/seller/normal-product?id=${product?._id}`,
+      `https://backend.doob.com.bd/api/v1/seller/normal-product?id=${product?._id}`,
       {
         method: "PUT",
         headers: {
@@ -363,8 +391,9 @@ const CategoryEditPage = () => {
           Swal.fire(`${data.message}`, "", "warning");
           setLoading(false);
         } else {
-          Swal.fire("product updated", "success");
+          Swal.fire("Product updated", "", "success");
           setLoading(false);
+          navigate("/seller/product-management/manage");
         }
       });
   };
@@ -405,7 +434,7 @@ const CategoryEditPage = () => {
           adminWare={adminWare}
           setAdminWare={setAdminWare}
         />
-        <label
+        {/* <label
           htmlFor="Toggle3"
           className={`inline-flex items-center py-4 rounded-md cursor-pointer ${
             isChecked ? "text-gray-800" : ""
@@ -432,7 +461,7 @@ const CategoryEditPage = () => {
           >
             For You Product
           </span>
-        </label>
+        </label> */}
         <div id="description">
           <SellerEditDiscription
             product={product}
@@ -460,9 +489,9 @@ const CategoryEditPage = () => {
         {daraz && datazCategory.length && (
           <EditDarazCategory product={product} datazCategory={datazCategory} />
         )}
-        <ServiceWarranty />
-        <EditDelivery />
-        <EditMeta />
+        <ServiceWarranty product={product} />
+        <EditDelivery product={product} />
+        <EditMeta product={product} />
         <div className="mt-4">
           {loading ? (
             <button

@@ -67,7 +67,7 @@ const AddSellerPage = () => {
         };
         // postPage(draftsAddPageData, "");
         console.log(draftsAddPageData);
-        fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/page`, {
+        fetch(`https://backend.doob.com.bd/api/v1/seller/page`, {
           method: "POST",
           headers: {
             "content-type": "application/json",
@@ -106,7 +106,7 @@ const AddSellerPage = () => {
       draft, // Add draft flag
     };
 
-    fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/page`, {
+    fetch(`https://backend.doob.com.bd/api/v1/seller/page`, {
       method: "POST",
       headers: {
         "content-type": "application/json",

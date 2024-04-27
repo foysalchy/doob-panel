@@ -11,7 +11,7 @@ const ProductCatagory = () => {
     queryKey: ["megaCategoryData"],
     queryFn: async () => {
       const res = await fetch(
-        "https://salenow-v2-backend.vercel.app/api/v1/admin/category/megacategory"
+        "https://backend.doob.com.bd/api/v1/admin/category/megacategory"
       );
       const data = await res.json();
       return data.rows;
@@ -24,14 +24,13 @@ const ProductCatagory = () => {
 
   return (
     <div className="py-4 bg-white rounded mt-6">
-  
       <Swiper
         slidesPerView={
           window.innerWidth >= 1024
             ? slidesPerViewDesktop
             : window.innerWidth >= 768
-            ? slidesPerViewTablet
-            : slidesPerViewMobile
+              ? slidesPerViewTablet
+              : slidesPerViewMobile
         }
         className="mySwiper"
       >
@@ -56,7 +55,6 @@ const ProductCatagory = () => {
       </Swiper>
     </div>
   );
-
 };
 
 export default ProductCatagory;

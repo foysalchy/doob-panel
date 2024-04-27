@@ -7,7 +7,7 @@ const Faq = () => {
   const [faqs, setFaq] = useState([]);
 
   useEffect(() => {
-    fetch("https://salenow-v2-backend.vercel.app/api/v1/admin/faq")
+    fetch("https://backend.doob.com.bd/api/v1/admin/faq")
       .then((response) => response.json())
       .then((data) => {
         setFaq(data);
@@ -18,8 +18,7 @@ const Faq = () => {
   }, []);
 
   return (
-    <div >
-
+    <div>
       <div
         className="mb-2 text_editor "
         dangerouslySetInnerHTML={{

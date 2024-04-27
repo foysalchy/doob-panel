@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { AuthContext } from '../../../../AuthProvider/UserProvider';
 import { useQuery } from '@tanstack/react-query';
 import BrightAlert from 'bright-alert';
+import { useNavigate } from 'react-router-dom';
 
 const AddPriceRole = () => {
 
@@ -12,11 +13,13 @@ const AddPriceRole = () => {
     const { data: priceRole = {}, refetch, isLoading } = useQuery({
         queryKey: ["getaway"],
         queryFn: async () => {
-            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/get-price-role/${shopInfo._id}`);
+            const res = await fetch(`https://backend.doob.com.bd/api/v1/seller/get-price-role/${shopInfo._id}`);
             const data = await res.json();
             return data;
         },
     });
+
+    const navigate = useNavigate()
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -27,24 +30,25 @@ const AddPriceRole = () => {
         const shopId = shopInfo._id;
         const data = { to, from, priceRange, shopId, percentage }
 
-        fetch('https://salenow-v2-backend.vercel.app/api/v1/seller/add-price-role', {
+        fetch('https://backend.doob.com.bd/api/v1/seller/add-price-role', {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(data)
         }).then((res) => res.json()).then((data) => {
             refetch()
+            navigate('/seller/settings/price-role')
             BrightAlert("")
         })
     }
 
-
+    // console.log(priceRole?.data);
 
 
 
     return (
         <div className="flex flex-col  h-screen">
             <div className='flex gap-2 items-center justify-center'>
-                <p>Your Price role</p>  <span className='kalpurush'> : ৳</span> <span>{priceRole?.data}</span>
+                {/* <p>Your Price role</p>  <span className='kalpurush'> : ৳</span> <span>{ }</span> */}
             </div>
             <form className="bg-white shadow-md w-full rounded px-8 pt-6 pb-8 mb-4" onSubmit={handleSubmit}>
                 <div className="grid grid-cols-2 gap-3">

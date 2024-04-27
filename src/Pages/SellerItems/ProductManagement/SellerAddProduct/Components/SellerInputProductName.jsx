@@ -5,7 +5,7 @@ import { AuthContext } from "../../../../../AuthProvider/UserProvider";
 import { useQuery } from "@tanstack/react-query";
 
 const SellerInputProductName = ({ product, brandName, setBrandName }) => {
-  console.log(product);
+  console.log(brandName);
   // Function to handle brand selection
   const handleBrand = (value) => {
     console.log(value);
@@ -21,7 +21,7 @@ const SellerInputProductName = ({ product, brandName, setBrandName }) => {
     queryKey: ["allBrand"],
     queryFn: async () => {
       const res = await fetch(
-        `https://salenow-v2-backend.vercel.app/api/v1/seller/brand/${shopInfo._id}`
+        `https://backend.doob.com.bd/api/v1/seller/brand/${shopInfo._id}`
       );
       const data = await res.json();
       return data;
@@ -36,14 +36,14 @@ const SellerInputProductName = ({ product, brandName, setBrandName }) => {
   }, [product, isLoading, setBrandName]);
 
   console.log(isLoading, AllBrand);
-
+  // console.log(AllBrand);
   console.log(product?.brandName);
 
   return (
     <div>
       <div className="border mt-4 border-gray-400 px-10 py-5 w-full bg-gray-100 rounded">
         <div className="flex flex-col">
-          <span className="font-bold">Product Information</span>
+          <span className="font-bold">Product Informations</span>
           <small>
             Having accurate product information raises discoverability.
           </small>
@@ -96,8 +96,8 @@ const SellerInputProductName = ({ product, brandName, setBrandName }) => {
             placeholder="Select your Brand"
             // Set the value prop to the selected brand name
             value={{
-              value: product?.brandName || "",
-              label: product?.brandName || "Select your Brand",
+              value: brandName || "",
+              label: brandName || "Select your Brand",
             }}
             onChange={(selectedOption) => handleBrand(selectedOption.value)}
             options={AllBrand?.map((brand) => ({

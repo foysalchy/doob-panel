@@ -28,7 +28,7 @@ const SellerAllProducts = () => {
     queryKey: ["products"],
     queryFn: async () => {
       const res = await fetch(
-        `https://salenow-v2-backend.vercel.app/api/v1/seller/all-products/${shopInfo._id}`
+        `https://backend.doob.com.bd/api/v1/seller/all-products/${shopInfo._id}`
       );
       const data = await res.json();
       return data;
@@ -40,7 +40,60 @@ const SellerAllProducts = () => {
 
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
-  const [webStoreProduct, setWebStoreProduct] = useState(false);
+  const [webStoreProduct, setWebStoreProduct] = useState(true);
+  const [dropdownOpenWeb, setdropdownOpenWeb] = useState(false);
+
+  const [selectedOption, setSelectedOption] = useState("");
+  const [dropdownOpenFor2nd, setDropdownOpenFor2nd] = useState(false);
+
+  const toggleDropdownFor2nd = () => {
+    setDropdownOpenFor2nd(!dropdownOpenFor2nd);
+    setdropdownOpenWeb(false)
+    setDropdownOpenForWare(false)
+  };
+
+  const handleOptionClickFor2nd = (value) => {
+    setSelectedOption(value);
+    setDropdownOpenFor2nd(false);
+    setdropdownOpenWeb(false)
+    setDropdownOpenForWare(false)
+  };
+
+  const toggleDropdown = () => {
+    setdropdownOpenWeb(!dropdownOpenWeb);
+    setDropdownOpenFor2nd(false)
+    setDropdownOpenForWare(false)
+  };
+
+  const handleOptionClick = (value) => {
+    setWebStoreProduct(value);
+    setdropdownOpenWeb(false);
+    setDropdownOpenFor2nd(false)
+    setDropdownOpenForWare(false)
+  };
+
+
+
+  const [selectwarehouse, setSelectWarehouse] = useState("");
+  const [dropdownOpenForWare, setDropdownOpenForWare] = useState(false);
+
+  const toggleDropdownWare = () => {
+    setDropdownOpenForWare(!dropdownOpenForWare);
+    setDropdownOpenFor2nd(false)
+    setdropdownOpenWeb(false)
+
+  };
+
+  const handleOptionClickWare = (value) => {
+    setSelectWarehouse(value);
+    dropdownOpenForWare(false);
+    setDropdownOpenFor2nd(false)
+    setdropdownOpenWeb(false)
+  };
+
+
+
+
 
   const maxLength = 30;
   const pageSize = 6;
@@ -49,13 +102,33 @@ const SellerAllProducts = () => {
     setSearchQuery(event.target.value);
   };
 
-  const filteredData =
-    products.length &&
-    products?.filter(
-      (item) =>
-        item.name?.toLowerCase().includes(searchQuery?.toLowerCase()) ||
-        (item.sku && item?.sku?.toString()?.includes(searchQuery))
-    );
+
+
+  const filteredData = products.length && products?.filter(
+    (item) =>
+      item.name?.toLowerCase().includes(searchQuery?.toLowerCase()) ||
+      (item.sku && item?.sku?.toString()?.includes(searchQuery))
+  )?.filter((product) =>
+    selectwarehouse === "Doob_Warehouse" && product?.adminWare ||
+    selectwarehouse === "My_Warehouse" && !product?.adminWare || selectwarehouse === "" && true
+  )?.filter((product) => {
+    if (selectedOption === "") {
+      return true; // Show all items if selectedOption is empty
+    } else if (selectedOption === "Daraz" && product.add_daraz === true) {
+      return true; // Show if selectedOption is "Daraz" and product.daraz is true
+    } else if (selectedOption === "Woocommerce" && product.add_woo === true) {
+      return true; // Show if selectedOption is "Woocommerce" and product.woo is true
+    } else if (
+      selectedOption === "My_Product" &&
+      !product.add_daraz &&
+      !product.add_woo
+    ) {
+      return true; // Show if selectedOption is "My_Product" and product.woo and product.daraz are false
+    } else {
+      return false; // Otherwise, filter out the item
+    }
+  });
+
 
   const startIndex = (currentPage - 1) * pageSize;
   const endIndex = startIndex + pageSize;
@@ -66,7 +139,7 @@ const SellerAllProducts = () => {
   const updateProductStatus = (id, status) => {
     console.log(id);
     fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/seller/update-product-status`,
+      `https://backend.doob.com.bd/api/v1/seller/update-product-status`,
       {
         method: "PUT",
         headers: {
@@ -96,7 +169,7 @@ const SellerAllProducts = () => {
   };
   if (isDelete) {
     fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/seller/delete-product`,
+      `https://backend.doob.com.bd/api/v1/seller/delete-product`,
       {
         method: "DELETE",
         headers: {
@@ -124,7 +197,7 @@ const SellerAllProducts = () => {
     }));
     const data = { category, item_id, sku, id, shopId: shopInfo._id };
     fetch(
-      "https://salenow-v2-backend.vercel.app/api/v1/seller/update-product",
+      "https://backend.doob.com.bd/api/v1/seller/update-product",
       {
         method: "PATCH",
         headers: {
@@ -153,7 +226,7 @@ const SellerAllProducts = () => {
     queryKey: ["priceRole"],
     queryFn: async () => {
       const res = await fetch(
-        `https://salenow-v2-backend.vercel.app/api/v1/seller/get-price-role/${shopInfo?._id}`
+        `https://backend.doob.com.bd/api/v1/seller/get-price-role/${shopInfo?._id}`
       );
       const data = await res.json();
       return data?.data;
@@ -180,7 +253,7 @@ const SellerAllProducts = () => {
       setSelectProducts([]);
     } else {
       // Otherwise, select all products
-      const allProductIds = products.map((product) => product._id);
+      const allProductIds = products?.map((product) => product._id);
       setSelectProducts(allProductIds);
     }
   };
@@ -211,7 +284,7 @@ const SellerAllProducts = () => {
 
   const update_product_multi_vendor = (id, status) => {
     fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/seller/update-product-multivendor`,
+      `https://backend.doob.com.bd/api/v1/seller/update-product-multivendor`,
       {
         method: "PUT",
         headers: {
@@ -280,7 +353,7 @@ const SellerAllProducts = () => {
   const update_product_sorting = (e) => {
     console.log(e.target.value);
     fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/seller/update-product-upcoming`,
+      `https://backend.doob.com.bd/api/v1/seller/update-product-upcoming`,
       {
         method: "PUT",
         headers: {
@@ -300,7 +373,7 @@ const SellerAllProducts = () => {
         setSelectProducts([]);
       });
   };
-
+  console.log(products)
   return (
     <div className="">
       <div className="h-0 w-0">
@@ -312,7 +385,7 @@ const SellerAllProducts = () => {
         />
       </div>
 
-      <Link
+      {/* <Link
         className="group relative inline-flex mb-10 items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
         to="/seller/product-management/add-product"
       >
@@ -336,10 +409,141 @@ const SellerAllProducts = () => {
         <span className="text-sm font-medium transition-all group-hover:ms-4">
           Add Product
         </span>
-      </Link>
+      </Link> */}
+      {/* ====================== */}
+      {/* Filtering Option  */}
+      {/* ====================== */}
+      <div className="flex items-center gap-4">
+        <h2 className="text-lg font-medium text-gray-800 ">All Product</h2>
+        <span className="px-3 py-1 text-xs  bg-blue-100 rounded-full d text-blue-400">
+          {products?.length}
+        </span>
+      </div>
+      <div className="flex gap-5 mt-4 items-center">
 
-      <div className="flex items-center justify-between">
-        <div className="relative w-3/5 my-6">
+        <div className="relative inline-block text-left">
+          <button
+            onClick={toggleDropdown}
+            className="px-6 py-2 bg-black text-white rounded-md"
+            aria-haspopup="true"
+            aria-expanded={dropdownOpenWeb}
+          >
+            {webStoreProduct ? "My Store" : "Web Store"}
+          </button>
+
+          {dropdownOpenWeb && (
+            <div className="origin-top-right absolute z-50 right-0 mt-2 w-36 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
+              <div className="py-1" role="none">
+                <button
+                  onClick={() => handleOptionClick(true)}
+                  className="block px-4 py-2 text-sm text-gray-700 w-full hover:bg-gray-100 hover:text-gray-900"
+                  role="menuitem"
+                >
+                  My Store
+                </button>
+                <button
+                  onClick={() => handleOptionClick(false)}
+                  className="block px-4 py-2 text-sm w-full text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                  role="menuitem"
+                >
+                  Web Store
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
+
+        {webStoreProduct && <div className="flex gap-5  items-center" >
+
+          <div className="relative inline-block text-left">
+            <button
+              onClick={toggleDropdownWare}
+              className="px-6 py-2 bg-black text-white rounded-md"
+              aria-haspopup="true"
+              aria-expanded={dropdownOpenForWare}
+            >
+              {selectwarehouse || "Select Warehouse"}
+            </button>
+
+            {dropdownOpenForWare && (
+              <div className="origin-top-right z-50 absolute right-0 mt-2 w-36 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
+                <div className="py-1" role="none">
+                  <button
+                    onClick={() => handleOptionClickWare("")}
+                    className="block px-4 py-2 text-sm text-gray-700 w-full hover:bg-gray-100 hover:text-gray-900"
+                    role="menuitem"
+                  >
+                    All
+                  </button>
+                  <button
+                    onClick={() => handleOptionClickWare("My_Warehouse")}
+                    className="block px-4 py-2 text-sm text-gray-700 w-full hover:bg-gray-100 hover:text-gray-900"
+                    role="menuitem"
+                  >
+                    My_Warehouse
+                  </button>
+                  <button
+                    onClick={() => handleOptionClickWare("Doob_Warehouse")}
+                    className="block px-4 py-2 text-sm text-gray-700 w-full hover:bg-gray-100 hover:text-gray-900"
+                    role="menuitem"
+                  >
+                    Doob_Warehouse
+                  </button>
+
+                </div>
+              </div>
+            )}
+          </div>
+          <div className="relative inline-block text-left">
+            <button
+              onClick={toggleDropdownFor2nd}
+              className="px-6 py-2 bg-black text-white rounded-md"
+              aria-haspopup="true"
+              aria-expanded={dropdownOpenFor2nd}
+            >
+              {selectedOption || "Select an option"}
+            </button>
+
+            {dropdownOpenFor2nd && (
+              <div className="origin-top-right z-50 absolute right-0 mt-2 w-36 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
+                <div className="py-1" role="none">
+                  <button
+                    onClick={() => handleOptionClickFor2nd("")}
+                    className="block px-4 py-2 text-sm text-gray-700 w-full hover:bg-gray-100 hover:text-gray-900"
+                    role="menuitem"
+                  >
+                    All
+                  </button>
+                  <button
+                    onClick={() => handleOptionClickFor2nd("Daraz")}
+                    className="block px-4 py-2 text-sm text-gray-700 w-full hover:bg-gray-100 hover:text-gray-900"
+                    role="menuitem"
+                  >
+                    Daraz
+                  </button>
+                  <button
+                    onClick={() => handleOptionClickFor2nd("Woocommerce")}
+                    className="block px-4 py-2 text-sm text-gray-700 w-full hover:bg-gray-100 hover:text-gray-900"
+                    role="menuitem"
+                  >
+                    Woocommerce
+                  </button>
+                  <button
+                    onClick={() => handleOptionClickFor2nd("My_Product")}
+                    className="block px-4 py-2 text-sm text-gray-700 w-full hover:bg-gray-100 hover:text-gray-900"
+                    role="menuitem"
+                  >
+                    My_Product
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>}
+
+      </div>
+      <div className="md:flex items-center my-6 justify-between">
+        <div className="relative w-3/5 ">
           <input
             type="text"
             id="Search"
@@ -371,54 +575,42 @@ const SellerAllProducts = () => {
           </span>
         </div>
 
-        <button
-          onClick={() => setWebStoreProduct(!webStoreProduct)}
-          className="px-6 py-2 bg-black text-white rounded-md"
-        >
-          {webStoreProduct ? "My Store" : "Web Store"}
-        </button>
+        <div className="flex items-center mt-4 md:mt-0  gap-2">
+          {selectProducts.length ? (
+            <select
+              onChange={update_product_sorting}
+              className="px-8 py-2"
+              name=""
+              id=""
+            >
+              <option>Select Status</option>
+              <option value={false}>For Your Product</option>
+              <option value={true}>Upcoming Product</option>
+            </select>
+          ) : (
+            ""
+          )}
+          <button
+            onClick={barcode_generate}
+            className="bg-blue-500 px-8 py-2 rounded text-white"
+          >
+            Barcode Generate
+          </button>
+
+          <button
+            onClick={logSelectedProducts}
+            disabled={!selectProducts.length}
+            className="bg-blue-500 px-8 py-2 rounded text-white"
+          >
+            Print
+          </button>
+        </div>{" "}
+
       </div>
 
       <section>
-        <div className="flex items-center justify-between gap-x-3">
-          <div className="flex items-center">
-            <h2 className="text-lg font-medium text-gray-800 ">All Product</h2>
-            <span className="px-3 py-1 text-xs  bg-blue-100 rounded-full d text-blue-400">
-              {products?.length}
-            </span>
-          </div>
-          <div className="flex items-center gap-2">
-            {selectProducts.length ? (
-              <select
-                onChange={update_product_sorting}
-                className="px-8 py-2"
-                name=""
-                id=""
-              >
-                <option>Select Status</option>
-                <option value={false}>For Your Product</option>
-                <option value={true}>Upcoming Product</option>
-              </select>
-            ) : (
-              ""
-            )}
-            <button
-              onClick={barcode_generate}
-              className="bg-blue-500 px-8 py-2 rounded text-white"
-            >
-              Barcode Generate
-            </button>
 
-            <button
-              onClick={logSelectedProducts}
-              disabled={!selectProducts.length}
-              className="bg-blue-500 px-8 py-2 rounded text-white"
-            >
-              Print
-            </button>
-          </div>{" "}
-        </div>
-        {webStoreProduct ? (
+        {!webStoreProduct ? (
           <WebStoreproduct priceRole={priceRole} searchQuery={searchQuery} />
         ) : (
           <div className="flex flex-col mt-6">
@@ -509,7 +701,7 @@ const SellerAllProducts = () => {
                       </tr>
                     </thead>
                     <tbody className="bg-white divide-y  divide-gray-200 ">
-                      {currentData &&
+                      {currentData ?
                         currentData
                           ?.sort((a, b) => b.createdAt - a.createdAt)
                           .map((product) => (
@@ -688,19 +880,17 @@ const SellerAllProducts = () => {
                                   </button>
                                   <div
                                     onClick={() => setPriceOn(false)}
-                                    className={`fixed z-[100] flex items-center justify-center ${
-                                      priceOn?._id == product?._id
-                                        ? "visible opacity-100"
-                                        : "invisible opacity-0"
-                                    } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
+                                    className={`fixed z-[100] flex items-center justify-center ${priceOn?._id == product?._id
+                                      ? "visible opacity-100"
+                                      : "invisible opacity-0"
+                                      } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
                                   >
                                     <div
                                       onClick={(e_) => e_.stopPropagation()}
-                                      className={`text- absolute max-w-md rounded-sm bg-white p-6 drop-shadow-lg dark:bg-white dark:text-black ${
-                                        priceOn?._id == product?._id
-                                          ? "scale-1 opacity-1 duration-300"
-                                          : "scale-0 opacity-0 duration-150"
-                                      }`}
+                                      className={`text- absolute max-w-md rounded-sm bg-white p-6 drop-shadow-lg dark:bg-white dark:text-black ${priceOn?._id == product?._id
+                                        ? "scale-1 opacity-1 duration-300"
+                                        : "scale-0 opacity-0 duration-150"
+                                        }`}
                                     >
                                       <form onSubmit={handleEditPrice}>
                                         <h2 className="text-lg font-medium text-gray-800 mb-4">
@@ -745,19 +935,17 @@ const SellerAllProducts = () => {
 
                                     <div
                                       onClick={() => setStockOn(false)}
-                                      className={`fixed z-[100] flex items-center justify-center ${
-                                        stockOn?._id == product?._id
-                                          ? "visible opacity-100"
-                                          : "invisible opacity-0"
-                                      } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
+                                      className={`fixed z-[100] flex items-center justify-center ${stockOn?._id == product?._id
+                                        ? "visible opacity-100"
+                                        : "invisible opacity-0"
+                                        } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
                                     >
                                       <div
                                         onClick={(e_) => e_.stopPropagation()}
-                                        className={`text- absolute max-w-md rounded-sm bg-white p-6 drop-shadow-lg dark:bg-white dark:text-black ${
-                                          stockOn?._id == product?._id
-                                            ? "scale-1 opacity-1 duration-300"
-                                            : "scale-0 opacity-0 duration-150"
-                                        }`}
+                                        className={`text- absolute max-w-md rounded-sm bg-white p-6 drop-shadow-lg dark:bg-white dark:text-black ${stockOn?._id == product?._id
+                                          ? "scale-1 opacity-1 duration-300"
+                                          : "scale-0 opacity-0 duration-150"
+                                          }`}
                                       >
                                         <form onSubmit={handleEditStock}>
                                           <h2 className="text-lg font-medium text-gray-800 mb-4">
@@ -880,12 +1068,13 @@ const SellerAllProducts = () => {
                                     </div>
                                   )}
 
-                                 
+
                                 </div>
                                 <div></div>
                               </td>
                             </tr>
-                          ))}
+                          ))
+                        : ''}
                     </tbody>
                   </table>
                 </div>
@@ -924,11 +1113,10 @@ const SellerAllProducts = () => {
                   (_, index) => (
                     <div
                       key={index}
-                      className={`px-2 py-1 text-sm rounded-md ${
-                        currentPage === index + 1
-                          ? "bg-blue-500 text-white"
-                          : "bg-blue-100/60 text-blue-500"
-                      }`}
+                      className={`px-2 py-1 text-sm rounded-md ${currentPage === index + 1
+                        ? "bg-blue-500 text-white"
+                        : "bg-blue-100/60 text-blue-500"
+                        }`}
                     >
                       <span>{index + 1}</span>
                     </div>

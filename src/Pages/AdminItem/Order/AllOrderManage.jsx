@@ -29,7 +29,7 @@ const AllOrderManage = () => {
     queryKey: ["AllSellerOrder"],
     queryFn: async () => {
       const res = await fetch(
-        `https://salenow-v2-backend.vercel.app/api/v1/admin/all-seller-orders`
+        `https://backend.doob.com.bd/api/v1/admin/all-seller-orders`
       );
       const data = await res.json();
       return data.data;
@@ -92,7 +92,7 @@ const AllOrderManage = () => {
 
   const productStatusUpdate = (status, orderId) => {
     fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/seller/order-status-update?orderId=${orderId}&status=${status}`,
+      `https://backend.doob.com.bd/api/v1/seller/order-status-update?orderId=${orderId}&status=${status}`,
       {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
@@ -109,7 +109,7 @@ const AllOrderManage = () => {
     queryKey: ["getaway"],
     queryFn: async () => {
       const res = await fetch(
-        `https://salenow-v2-backend.vercel.app/api/v1/seller/shipping-interrogation/${shopInfo._id}`
+        `https://backend.doob.com.bd/api/v1/seller/shipping-interrogation/${shopInfo._id}`
       );
       const data = await res.json();
       return data;
@@ -162,14 +162,11 @@ const AllOrderManage = () => {
   };
 
   const handleProductStatusUpdate = (orders) => {
-    fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/seller/order-quantity-update`,
-      {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(orders),
-      }
-    )
+    fetch(`https://backend.doob.com.bd/api/v1/seller/order-quantity-update`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(orders),
+    })
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
@@ -192,7 +189,7 @@ const AllOrderManage = () => {
     setOpenModal(true);
 
     fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/seller/refound-order-info?shopId=${shopInfo._id}&orderId=${order._id}`
+      `https://backend.doob.com.bd/api/v1/seller/refound-order-info?shopId=${shopInfo._id}&orderId=${order._id}`
     )
       .then((res) => res.json())
       .then((data) => {
@@ -205,7 +202,7 @@ const AllOrderManage = () => {
   const [refundData, setRefundData] = useState(true);
   const checkBox = (orderId) => {
     fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/seller/refound-order-info?shopId=${shopInfo._id}&orderId=${orderId}`
+      `https://backend.doob.com.bd/api/v1/seller/refound-order-info?shopId=${shopInfo._id}&orderId=${orderId}`
     )
       .then((res) => res.json())
       .then((data) => {
@@ -216,14 +213,11 @@ const AllOrderManage = () => {
 
   const updateOrderInfo = (note, file, id) => {
     const noteData = { note, file, orderId: id };
-    fetch(
-      "https://salenow-v2-backend.vercel.app/api/v1/seller/refound-order-info",
-      {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(noteData),
-      }
-    )
+    fetch("https://backend.doob.com.bd/api/v1/seller/refound-order-info", {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(noteData),
+    })
       .then((res) => res.json())
       .then((data) => alert(` Successfully Done!`));
   };
@@ -260,8 +254,7 @@ const AllOrderManage = () => {
   };
 
   async function uploadImage(formData) {
-    const url =
-      "https://salenow-v2-backend.vercel.app/api/v1/image/upload-image";
+    const url = "https://backend.doob.com.bd/api/v1/image/upload-image";
     const response = await fetch(url, {
       method: "POST",
       body: formData,
@@ -286,9 +279,8 @@ const AllOrderManage = () => {
           itm?.status === "dropdown" ? (
             <select
               key={itm.name}
-              className={`px-4 border-r bg-transparent relative border-gray-300 flex items-center gap-2 justify-center ${
-                selectedValue === "pending" ? "text-red-500" : "" // Change to your desired color
-              }`}
+              className={`px-4 border-r bg-transparent relative border-gray-300 flex items-center gap-2 justify-center ${selectedValue === "pending" ? "text-red-500" : "" // Change to your desired color
+                }`}
               value={selectedValue}
               onChange={handleSelectChange}
             >
@@ -301,9 +293,8 @@ const AllOrderManage = () => {
             </select>
           ) : (
             <button
-              className={`px-4 border-r md:bg-transparent bg-gray-50 border-gray-300 flex  items-center ${
-                selectedValue === itm.value ? "text-red-500" : "" // Change to your desired color
-              }`}
+              className={`px-4 border-r md:bg-transparent bg-gray-50 border-gray-300 flex  items-center ${selectedValue === itm.value ? "text-red-500" : "" // Change to your desired color
+                }`}
               key={itm.name}
               onClick={() => setSelectedValue(itm.value)}
             >
@@ -692,17 +683,14 @@ const AllOrderManage = () => {
                   <li key={i}>
                     <button
                       onClick={() => setCurrentPage(i + 1)}
-                      className={`bg-white border ${
-                        currentPage === i + 1
-                          ? "text-blue-600"
-                          : "text-gray-500 hover:bg-gray-100 hover:text-gray-700"
-                      } border-gray-300 leading-tight py-2 px-3 rounded ${
-                        i === 0 ? "rounded-l-lg" : ""
-                      } ${
-                        i === Math.ceil(filteredData.length / itemsPerPage) - 1
+                      className={`bg-white border ${currentPage === i + 1
+                        ? "text-blue-600"
+                        : "text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+                        } border-gray-300 leading-tight py-2 px-3 rounded ${i === 0 ? "rounded-l-lg" : ""
+                        } ${i === Math.ceil(filteredData.length / itemsPerPage) - 1
                           ? "rounded-r-lg"
                           : ""
-                      }`}
+                        }`}
                     >
                       {i + 1}
                     </button>

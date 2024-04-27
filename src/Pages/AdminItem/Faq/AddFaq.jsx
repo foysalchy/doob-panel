@@ -9,12 +9,17 @@ const AddFaq = () => {
   const [loading, setLoading] = useState(false);
   const modules = {
     toolbar: [
-      [{ 'header': '1' }, { 'header': '2' }, { 'font': [] }],
-      [{ 'size': [] }],
-      ['bold', 'italic', 'underline', 'strike', 'blockquote'],
-      [{ 'list': 'ordered' }, { 'list': 'bullet' }, { 'indent': '-1' }, { 'indent': '+1' }],
-      ['link', 'image', 'video'],
-      ['clean']
+      [{ header: "1" }, { header: "2" }, { font: [] }],
+      [{ size: [] }],
+      ["bold", "italic", "underline", "strike", "blockquote"],
+      [
+        { list: "ordered" },
+        { list: "bullet" },
+        { indent: "-1" },
+        { indent: "+1" },
+      ],
+      ["link", "image", "video"],
+      ["clean"],
     ],
   };
   const dataSubmit = (event) => {
@@ -30,7 +35,7 @@ const AddFaq = () => {
       sortIndex, // Include sort index in the FAQ object
     };
 
-    fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/newfaq`, {
+    fetch(`https://backend.doob.com.bd/api/v1/admin/newfaq`, {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -70,7 +75,8 @@ const AddFaq = () => {
               <div>
                 <ReactQuill
                   className="h-36"
-                  name="description" id="message"
+                  name="description"
+                  id="message"
                   modules={modules}
                   placeholder="Enter description here..."
                 />

@@ -10,7 +10,7 @@ const Starts = () => {
     queryKey: ["newUser"],
     queryFn: async () => {
       const res = await fetch(
-        "https://salenow-v2-backend.vercel.app/api/v1/admin/previous-week-users"
+        "https://backend.doob.com.bd/api/v1/admin/previous-week-users"
       );
       const data = await res.json();
       return data;
@@ -21,7 +21,7 @@ const Starts = () => {
     queryKey: ["orderData"],
     queryFn: async () => {
       const res = await fetch(
-        `https://salenow-v2-backend.vercel.app/api/v1/admin/get-shop-all-order`
+        `https://backend.doob.com.bd/api/v1/admin/get-shop-all-order`
       );
       const data = await res.json();
       return data.data;
@@ -34,7 +34,7 @@ const Starts = () => {
     queryKey: ["sellerData"],
     queryFn: async () => {
       const res = await fetch(
-        "https://salenow-v2-backend.vercel.app/api/v1/admin/seller"
+        "https://backend.doob.com.bd/api/v1/admin/seller"
       );
       const data = await res.json();
       return data;
@@ -44,10 +44,11 @@ const Starts = () => {
   function sumObjectPrices(objects) {
     let totalPrice = 0;
     for (let i = 0; i < objects.length; i++) {
-      totalPrice += objects[i].price;
+      totalPrice += parseInt(objects[i].price ? objects[i].price : 0); // Parsing the price to an integer
     }
     return totalPrice;
   }
+
 
   const totalAmount = sumObjectPrices(orderData);
 
@@ -55,14 +56,14 @@ const Starts = () => {
     queryKey: ["products"],
     queryFn: async () => {
       const res = await fetch(
-        "https://salenow-v2-backend.vercel.app/api/v1/admin/products"
+        "https://backend.doob.com.bd/api/v1/admin/products"
       );
       const data = await res.json();
       return data;
     },
   });
 
-  const topSel = products.sort((a, b) => {
+  const topSel = products.length && products?.sort((a, b) => {
     return (b.total_sales || 0) - (a.total_sales || 0);
   });
 
@@ -131,17 +132,16 @@ const Starts = () => {
               <div>
                 <div
                   onClick={() => setShowSeller(false)}
-                  className={`fixed z-[100] flex items-center justify-center ${
-                    showSeller ? "visible opacity-100" : "invisible opacity-0"
-                  } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
+                  className={`fixed z-[100] flex items-center justify-center ${showSeller ? "visible opacity-100" : "invisible opacity-0"
+                    } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
                 >
                   <div
                     onClick={(e_) => e_.stopPropagation()}
-                    className={`text- absolute w-[600px] rounded-sm bg-white p-6 drop-shadow-lg dark:bg-white dark:text-black ${
-                      showSeller
-                        ? "scale-1 opacity-1 duration-300"
-                        : "scale-0 opacity-0 duration-150"
-                    }`}
+                    className={`text- absolute w-[600px] rounded-sm bg-white p-6 drop-shadow-lg dark:bg-white dark:text-black ${showSeller
+                      ? "scale-1 opacity-1 duration-300"
+                      : "scale-0 opacity-0 duration-150"
+                      }`}
+
                   >
                     <main>
                       <h1 className="font-semibold border-b pb-3">
@@ -154,7 +154,7 @@ const Starts = () => {
                           <span className="w-full text-sm">Email</span>
                         </li>
                         {sellerData &&
-                          sellerData?.slice(0, 10).map((itm) => (
+                          sellerData?.slice(0, 10)?.map((itm) => (
                             <li
                               className="grid grid-cols-3 gap-4 py-2 border-b border-gray-400 text-sm text-gray-500"
                               key={itm?._id}
@@ -390,7 +390,7 @@ const Starts = () => {
                 </thead>
                 <tbody>
                   {sellerData &&
-                    products?.slice(0, 20).map((item, index) => (
+                    products.length && products?.slice(0, 20)?.map((item, index) => (
                       <tr>
                         <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left text-blueGray-700">
                           {index + 1}{" "}

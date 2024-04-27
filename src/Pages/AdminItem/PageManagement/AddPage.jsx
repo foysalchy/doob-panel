@@ -1,7 +1,7 @@
 import JoditEditor from "jodit-react";
 import React, { useContext, useEffect, useState } from "react";
 import { BsArrowRight } from "react-icons/bs";
-import { Link, useBlocker } from "react-router-dom";
+import { Link, useBlocker, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../../AuthProvider/UserProvider";
 
@@ -43,8 +43,9 @@ const AddPage = () => {
     setDraftSaved(!isFormDataEmpty);
   }, [formData]);
 
+  const [submit, setSubmit] = useState(false)
   useEffect(() => {
-    if (blocker.state === "blocked") {
+    if (blocker.state === "blocked" || submit === false) {
       console.log("yess");
       // event.preventDefault();
       // event.returnValue = ""; // Required for some browsers
@@ -60,7 +61,7 @@ const AddPage = () => {
         };
         // postPage(draftsAddPageData, "");
         console.log(draftsAddPageData);
-        fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/addpage`, {
+        fetch(`https://backend.doob.com.bd/api/v1/admin/addpage`, {
           method: "POST",
           headers: {
             "content-type": "application/json",
@@ -78,12 +79,14 @@ const AddPage = () => {
       } else {
       }
     }
-  }, [draftSaved, blocker]);
+  }, [draftSaved, blocker, submit]);
 
-  console.log(formData);
+  const navigate = useNavigate()
 
   const dataSubmit = async (event) => {
     setLoading(true);
+
+    setSubmit(true)
     event.preventDefault();
     const form = event.target;
     const title = form.title.value;
@@ -106,8 +109,8 @@ const AddPage = () => {
       metaImg: imageUrl,
     };
 
-    console.log(faq);
-    fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/addpage`, {
+
+    fetch(`https://backend.doob.com.bd/api/v1/admin/addpage`, {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -116,16 +119,20 @@ const AddPage = () => {
     })
       .then((res) => res.json())
       .then((data) => {
+
         setLoading(false);
+        // blocker.proceed();
         Swal.fire("success", "Your Blog Publish Successfully", "success");
+        navigate('/admin/page-management')
+
+
 
         form.reset();
       });
   };
 
   async function uploadImage(formData) {
-    const url =
-      "https://salenow-v2-backend.vercel.app/api/v1/image/upload-image";
+    const url = "https://backend.doob.com.bd/api/v1/image/upload-image";
     const response = await fetch(url, {
       method: "POST",
       body: formData,
@@ -180,7 +187,14 @@ const AddPage = () => {
                 <JoditEditor
                   name="description"
                   id="message"
-                  onChange={handleChange}
+                  config={{
+                    readonly: false,
+                    uploader: {
+                      insertImageAsBase64URI: true,
+                    },
+                  }}
+                // value={formData.message}
+
                 ></JoditEditor>
               </div>
             </div>

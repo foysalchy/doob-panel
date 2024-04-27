@@ -34,7 +34,7 @@ const AddCatagorys = () => {
 
     const formData = new FormData();
     formData.append("image", image);
-    const url = `https://salenow-v2-backend.vercel.app/api/v1/image/upload-image`;
+    const url = `https://backend.doob.com.bd/api/v1/image/upload-image`;
     fetch(url, {
       method: "POST",
       body: formData,
@@ -51,7 +51,7 @@ const AddCatagorys = () => {
   };
 
   const PostCategory = (category, form) => {
-    fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/category`, {
+    fetch(`https://backend.doob.com.bd/api/v1/admin/category`, {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -72,7 +72,6 @@ const AddCatagorys = () => {
 
   return (
     <div className="w-full">
-
       <div className="my-8">
         <h1 className="text-2xl font-bold text-center">
           Publish a Category for you and next
@@ -128,7 +127,8 @@ const AddCatagorys = () => {
                 <input
                   required
                   id="dropzone-file"
-                  type="file" accept="image/jpeg, image/png, image/gif, image/bmp, image/webp, image/heic"
+                  type="file"
+                  accept="image/jpeg, image/png, image/gif, image/bmp, image/webp, image/heic"
                   name="photo"
                   className="hidden"
                   onChange={handleFileChange}
@@ -137,32 +137,39 @@ const AddCatagorys = () => {
             </div>
 
             <div className="mt-4">
-              {
-                loading ?
-                  <button disabled className="group relative cursor-not-allowed inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none mt-4">
-                    <span className="text-sm font-medium">
-                      Loading...
-                    </span>
-                    <svg className="animate-spin h-4 w-4 ml-3 text-white" viewBox="0 0 24 24">
-
-                      <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                    </svg>
-                  </button>
-
-                  :
-                  <button type='submit'
-                    className="group relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none mt-4 "
-
+              {loading ? (
+                <button
+                  disabled
+                  className="group relative cursor-not-allowed inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none mt-4"
+                >
+                  <span className="text-sm font-medium">Loading...</span>
+                  <svg
+                    className="animate-spin h-4 w-4 ml-3 text-white"
+                    viewBox="0 0 24 24"
                   >
-                    <span className="absolute -end-full transition-all group-hover:end-4">
-                      <BsArrowRight />
-                    </span>
+                    <circle
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      strokeWidth="4"
+                    />
+                  </svg>
+                </button>
+              ) : (
+                <button
+                  type="submit"
+                  className="group relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none mt-4 "
+                >
+                  <span className="absolute -end-full transition-all group-hover:end-4">
+                    <BsArrowRight />
+                  </span>
 
-                    <span className="text-sm font-medium transition-all group-hover:me-4">
-                      Add Category
-                    </span>
-                  </button>
-              }
+                  <span className="text-sm font-medium transition-all group-hover:me-4">
+                    Add Category
+                  </span>
+                </button>
+              )}
             </div>
           </form>
         </div>

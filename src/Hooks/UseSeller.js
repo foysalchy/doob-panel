@@ -8,15 +8,14 @@ const useSeller = () => {
 
   useEffect(() => {
     if (user?.email) {
-      fetch(`https://salenow-v2-backend.vercel.app/api/v1/users/seller/${user?.email}`)
+      fetch(`https://backend.doob.com.bd/api/v1/users/seller/${user?.email}`)
         .then((res) => res.json())
         .then((data) => {
           setIsSeller(data?.isSeller);
           setIsSellerLoading(false);
         });
-    }
-    else {
-      setIsSellerLoading(false)
+    } else {
+      setIsSellerLoading(false);
     }
   }, [user?.email, setIsSeller, loading]);
   return [isSeller, isSellerLoading];

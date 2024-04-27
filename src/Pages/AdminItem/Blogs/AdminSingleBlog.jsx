@@ -6,7 +6,7 @@ import { Link, useLoaderData } from "react-router-dom";
 const AdminSingleBlog = () => {
   const [blogList, setBlogList] = useState([]);
   useEffect(() => {
-    fetch("https://salenow-v2-backend.vercel.app/api/v1/admin/all-blogs")
+    fetch("https://backend.doob.com.bd/api/v1/admin/all-blogs")
       .then((res) => res.json())
       .then((data) => setBlogList(data));
   }, []);
@@ -18,8 +18,7 @@ const AdminSingleBlog = () => {
     return doc.body.textContent || "";
   };
 
-
-  const [searchTerm, setSearchTerm] = useState('')
+  const [searchTerm, setSearchTerm] = useState("");
 
   const filteredBlogs = blogList.filter((blog) =>
     blog.title.toLowerCase().includes(searchTerm.toLowerCase())
@@ -49,7 +48,10 @@ const AdminSingleBlog = () => {
         </div>
         <div className="border-l px-2 border-[#8080805f]">
           <div className="relative border border-gray-500 rounded">
-            <label for="Search" className="sr-only"> Search </label>
+            <label for="Search" className="sr-only">
+              {" "}
+              Search{" "}
+            </label>
 
             <input
               type="text"
@@ -61,7 +63,10 @@ const AdminSingleBlog = () => {
             />
 
             <span className="absolute border-gray-700 inset-y-0 end-0 grid w-10 place-content-center">
-              <button type="button" className="text-gray-600 hover:text-gray-700">
+              <button
+                type="button"
+                className="text-gray-600 hover:text-gray-700"
+              >
                 <span className="sr-only">Search</span>
 
                 <svg

@@ -18,7 +18,7 @@ const SignUpSeller = () => {
   const [switchForm, setSwitchForm] = useState(false);
   const [switchNumberForm, setSwitchNumberForm] = useState(true);
   const [switchOtpForm, setSwitchOtpForm] = useState(false);
-  const [phone, setPhone] = useState('');
+  const [phone, setPhone] = useState("");
 
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -27,17 +27,15 @@ const SignUpSeller = () => {
   const { RegistrationInEmail } = useContext(AuthContext);
   const [shop, setShop] = useState(true);
   const [modalOpen, setModalOpen] = useState(false);
-  const [userEmail, setUserEmail] = useState('')
+  const [userEmail, setUserEmail] = useState("");
   const navigate = useNavigate();
-  const [phoneNumber, setPhoneNumber] = useState('+880');
+  const [phoneNumber, setPhoneNumber] = useState("+880");
 
-
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [error, setError] = useState('');
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [error, setError] = useState("");
 
   // otp number form
-
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -47,11 +45,8 @@ const SignUpSeller = () => {
     setShowConfirmPassword(!showConfirmPassword);
   };
 
-
-
   // const signUpData = (event) => {
   //   event.preventDefault();
-
 
   //   const form = event.target;
   //   const name = form.name.value;
@@ -70,12 +65,11 @@ const SignUpSeller = () => {
 
   //   const userId = email.replace(/[@.]/g, '')
 
-
   //   setLoading(true);
   //   let user = { name, email, password, userId, phoneNumber, role, createdAt, referCode }
   //   if (password.length >= 6) {
 
-  //     if (password.toLowerCase() === confirmPassword.toLowerCase()){  
+  //     if (password.toLowerCase() === confirmPassword.toLowerCase()){
 
   // if (shop) {
   //   role = "seller";
@@ -84,13 +78,12 @@ const SignUpSeller = () => {
 
   // }
 
-
   //     // Update user
 
   //     setPassError("");
   //   console.log(user);
 
-  // fetch("https://salenow-v2-backend.vercel.app/api/v1/auth/sign-up", {
+  // fetch("https://backend.doob.com.bd/api/v1/auth/sign-up", {
   //     method: "post",
   //     headers: {
   //       "content-type": "application/json",
@@ -128,8 +121,6 @@ const SignUpSeller = () => {
   //   }
   // };
 
-
-
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
   };
@@ -139,48 +130,52 @@ const SignUpSeller = () => {
   };
 
   const signUpData = (event) => {
-    event.preventDefault()
+    event.preventDefault();
 
     const form = event.target;
     const name = form.name.value;
     const email = form.email.value;
     // const password = form.password.value;
     // const confirmPassword = form.password.value;
-    const shopName = form?.shopName?.value
+    const shopName = form?.shopName?.value;
     const referCode = form?.referCode?.value;
     let role = "user";
-    const createdAt = new Date()
+    const createdAt = new Date();
 
-    setUserEmail(email)
+    setUserEmail(email);
 
     console.log(form?.shopName?.value);
 
-    const userId = email.replace(/[@.]/g, '')
-
+    const userId = email.replace(/[@.]/g, "");
 
     setLoading(true);
 
-    let user = { name, email, userId, phoneNumber, role, createdAt, referCode, password }
-
+    let user = {
+      name,
+      email,
+      userId,
+      phoneNumber,
+      role,
+      createdAt,
+      referCode,
+      password,
+    };
 
     if (password.toLocaleLowerCase() !== confirmPassword.toLocaleLowerCase()) {
       setError("Passwords don't match");
       setLoading(false);
     } else if (password.length <= 5 || confirmPassword.length <= 5) {
-      setError('Passwords must be at least 6 characters long');
+      setError("Passwords must be at least 6 characters long");
     } else {
-      setError('');
+      setError("");
       // Handle form submission here
       if (shop) {
         role = "seller";
         user.role = role;
         user.shopName = shopName;
-
       }
 
-
-
-      fetch("https://salenow-v2-backend.vercel.app/api/v1/auth/sign-up", {
+      fetch("https://backend.doob.com.bd/api/v1/auth/sign-up", {
         method: "post",
         headers: {
           "content-type": "application/json",
@@ -190,15 +185,15 @@ const SignUpSeller = () => {
         .then((res) => res.json())
         .then((data) => {
           const result = data.result;
-          console.log(result, 'result');
+          console.log(result, "result");
           if (result) {
             if (shop) {
               handleSubmit(referCode, email);
             }
             setLoading(false);
-            BrightAlert(`${data.message}`, '', 'success');
+            BrightAlert(`${data.message}`, "", "success");
             form.reset();
-            navigate('/sign-in');
+            navigate("/sign-in");
           } else {
             setError(data.message);
           }
@@ -209,47 +204,38 @@ const SignUpSeller = () => {
     }
   };
 
-
-
-
-
-
-
   const handleSubmit = (referCode, email) => {
-    const code = referCode
-    const time = new Date().getTime()
-    const data = { email, code, time }
+    const code = referCode;
+    const time = new Date().getTime();
+    const data = { email, code, time };
 
-    fetch('https://salenow-v2-backend.vercel.app/api/v1/admin/refer-code', {
-      method: 'POST',
+    fetch("https://backend.doob.com.bd/api/v1/admin/refer-code", {
+      method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
-
-    }).then((res) => res.json()).then((data) => {
-
-      setLoading(false)
-      navigate('/sign-in')
     })
-
-  }
-
+      .then((res) => res.json())
+      .then((data) => {
+        setLoading(false);
+        navigate("/sign-in");
+      });
+  };
 
   function isBangladeshiPhoneNumber(phoneNumber) {
     // Remove any non-digit characters from the phone number
-    const cleanedNumber = phoneNumber.replace(/\D/g, '');
+    const cleanedNumber = phoneNumber.replace(/\D/g, "");
 
     // Check if the cleaned number starts with +880 and has a valid length
     return /^880\d{10}$/.test(cleanedNumber);
   }
 
-
   const [valid, setValid] = useState(false);
 
   const handleInputChange = (event) => {
     let newPhoneNumber = event.target.value;
-    if (!newPhoneNumber.startsWith('+880')) {
+    if (!newPhoneNumber.startsWith("+880")) {
       // If the country code is removed, add it back
-      newPhoneNumber = '+880' + newPhoneNumber.replace(/\D/g, '');
+      newPhoneNumber = "+880" + newPhoneNumber.replace(/\D/g, "");
     }
     setPhoneNumber(newPhoneNumber); // Update the phone number in the state
 
@@ -267,60 +253,62 @@ const SignUpSeller = () => {
 
   const handleNumberForm = (e) => {
     e.preventDefault();
-    fetch(`https://salenow-v2-backend.vercel.app/api/v1/auth/send-otp?number=${phoneNumber}`).then((response) => response.json()).then((data) => {
-
-      if (data.success) {
-
-        setPhone(phone)
-        setSwitchNumberForm(false)
-        setSwitchOtpForm(true);
-        setSetTime(true);
-      }
-      else {
-        setOtpError('Already  registered')
-        setSwitchNumberForm(true)
-      }
-
-
-    })
-  }
+    fetch(
+      `https://backend.doob.com.bd/api/v1/auth/send-otp?number=${phoneNumber}`
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.success) {
+          setPhone(phone);
+          setSwitchNumberForm(false);
+          setSwitchOtpForm(true);
+          setSetTime(true);
+        } else {
+          setOtpError("Already  registered");
+          setSwitchNumberForm(true);
+        }
+      });
+  };
 
   const handleResendOtp = () => {
-    setTimeRemaining(120)
-    fetch(`https://salenow-v2-backend.vercel.app/api/v1/auth/send-otp?number=${phoneNumber}`).then((response) => response.json()).then((data) => {
-
-      setPhone(phone)
-      setSwitchNumberForm(false)
-      setSwitchOtpForm(true);
-      setSetTime(true);
-
-    })
-  }
+    setTimeRemaining(120);
+    fetch(
+      `https://backend.doob.com.bd/api/v1/auth/send-otp?number=${phoneNumber}`
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        setPhone(phone);
+        setSwitchNumberForm(false);
+        setSwitchOtpForm(true);
+        setSetTime(true);
+      });
+  };
 
   const handleOtpForm = (e) => {
     e.preventDefault();
     const form = e.target;
     const otp = form.otp.value;
 
-    fetch(`https://salenow-v2-backend.vercel.app/api/v1/auth/verify-otp?number=${phoneNumber}&otp=${otp}`).then((response) => response.json()).then((data) => {
-      if (data.success) {
-        setSwitchNumberForm(false)
-        setSwitchOtpForm(false)
-        setSwitchForm(true)
-      }
-
-    })
-
-  }
+    fetch(
+      `https://backend.doob.com.bd/api/v1/auth/verify-otp?number=${phoneNumber}&otp=${otp}`
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.success) {
+          setSwitchNumberForm(false);
+          setSwitchOtpForm(false);
+          setSwitchForm(true);
+        }
+      });
+  };
 
   useEffect(() => {
     if (setTime) {
       const timer = setInterval(() => {
         setTimeRemaining((prevTime) => {
-
           if (prevTime === 0) {
             clearInterval(timer);
-            setSetTime(false)
+            setSetTime(false);
           }
           return prevTime - 1;
         });
@@ -334,8 +322,8 @@ const SignUpSeller = () => {
     <div>
       <div className="relative">
         <img
-          srcSet='https://c0.wallpaperflare.com/preview/781/693/128/abstract-business-communication-computer.jpg'
-          src='https://c0.wallpaperflare.com/preview/781/693/128/abstract-business-communication-computer.jpg'
+          srcSet="https://c0.wallpaperflare.com/preview/781/693/128/abstract-business-communication-computer.jpg"
+          src="https://c0.wallpaperflare.com/preview/781/693/128/abstract-business-communication-computer.jpg"
           className="absolute inset-0 object-cover w-full h-full"
           alt=""
         />
@@ -369,10 +357,11 @@ const SignUpSeller = () => {
 
               <div className="w-full max-w-xl xl:px-8 xl:w-7/12">
                 {/* otp number form */}
-                {switchNumberForm &&
+                {switchNumberForm && (
                   <form
                     className="bg-white rounded shadow-2xl p-7 sm:p-10"
-                    onSubmit={handleNumberForm}>
+                    onSubmit={handleNumberForm}
+                  >
                     <div className="mb-1 sm:mb-2 ">
                       <h3 className="mb-4 text-xl font-semibold sm:text-center sm:mb-6 sm:text-2xl">
                         Sign up for updates
@@ -400,27 +389,36 @@ const SignUpSeller = () => {
                         name="phone"
                       />
                       {otpError && <small>{otpError}</small>}
-                      {!valid && <small className="text-red-500">Your Number is not valid</small>}
+                      {!valid && (
+                        <small className="text-red-500">
+                          Your Number is not valid
+                        </small>
+                      )}
                       <button
                         disabled={!valid}
                         type="submit"
-                        className="bg-gray-900 text-white px-8 w-full py-3 rounded mt-3">Submit</button>
+                        className="bg-gray-900 text-white px-8 w-full py-3 rounded mt-3"
+                      >
+                        Submit
+                      </button>
                     </div>
-
-                  </form>}
+                  </form>
+                )}
 
                 {/* otp form */}
-                {switchOtpForm &&
+                {switchOtpForm && (
                   <form
                     className="bg-white rounded shadow-2xl p-7 sm:p-10"
-                    onSubmit={handleOtpForm}>
+                    onSubmit={handleOtpForm}
+                  >
                     <div className="mb-1 sm:mb-2">
                       <h3 className="mb-4 text-xl font-semibold sm:text-center sm:mb-6 sm:text-2xl">
                         Sign up for updates
                       </h3>
                       <p className="text-xs text-start">
-                        We have already send you  4 digit
-                        <br />verification code on your number :  {phoneNumber}
+                        We have already send you 4 digit
+                        <br />
+                        verification code on your number : {phoneNumber}
                       </p>
                       <span
                         htmlFor="otp"
@@ -432,7 +430,7 @@ const SignUpSeller = () => {
                         placeholder="0000"
                         required
                         style={{
-                          'letterSpacing': '20px'
+                          letterSpacing: "20px",
                         }}
                         type="number"
                         className="flex-grow   w-full h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded "
@@ -440,25 +438,46 @@ const SignUpSeller = () => {
                         name="otp"
                       />
                       <div>
-                        {setTime && timeRemaining > 0 && <small className="">Resend OTP after  {`${Math.floor(timeRemaining / 60)}, ${timeRemaining % 60 < 10 ? `0${timeRemaining % 60}` : timeRemaining % 60}`}</small>}
+                        {setTime && timeRemaining > 0 && (
+                          <small className="">
+                            Resend OTP after{" "}
+                            {`${Math.floor(timeRemaining / 60)}, ${timeRemaining % 60 < 10
+                              ? `0${timeRemaining % 60}`
+                              : timeRemaining % 60
+                              }`}
+                          </small>
+                        )}
                       </div>
 
-                      {timeRemaining < 1 && <small className="text-blue-500" onClick={handleResendOtp}>Resend</small>}
+                      {timeRemaining < 1 && (
+                        <small
+                          className="text-blue-500"
+                          onClick={handleResendOtp}
+                        >
+                          Resend
+                        </small>
+                      )}
                       <br />
                       <button
                         type="submit"
-                        className="bg-gray-900 text-white px-8 w-full py-3 rounded mt-3">Submit</button>
+                        className="bg-gray-900 text-white px-8 w-full py-3 rounded mt-3"
+                      >
+                        Submit
+                      </button>
                     </div>
-
-                  </form>}
+                  </form>
+                )}
 
                 {/* main form */}
-                {switchForm &&
+                {switchForm && (
                   <div className="bg-white rounded shadow-2xl p-7 sm:p-10">
                     <h3 className="mb-4 text-xl font-semibold sm:text-center sm:mb-6 sm:text-2xl">
                       Sign up for updates
                     </h3>
-                    <form onChange={() => setPassError("")} onSubmit={signUpData}>
+                    <form
+                      onChange={() => setPassError("")}
+                      onSubmit={signUpData}
+                    >
                       <div className="flex gap-4">
                         <div className="mb-1 sm:mb-2">
                           <label
@@ -469,7 +488,6 @@ const SignUpSeller = () => {
                           </label>
 
                           <input
-
                             placeholder="John Doe"
                             required
                             type="text"
@@ -490,23 +508,13 @@ const SignUpSeller = () => {
                               placeholder="Sell Now"
                               required={shop}
                               type="text"
-
                               className="flex-grow w-full h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
                               id="shopName"
                               name="shopName"
                             />
-
-
-
-
                           </div>
-
                         )}
                       </div>
-
-
-
-
 
                       <div className="mb-1 sm:mb-2">
                         <label
@@ -516,7 +524,6 @@ const SignUpSeller = () => {
                           Email
                         </label>
                         <input
-
                           placeholder="xyz@email.com"
                           required
                           type="email"
@@ -536,7 +543,6 @@ const SignUpSeller = () => {
                           </label>
                           <div className="relative">
                             <input
-
                               placeholder="*******"
                               required
                               value={password}
@@ -573,7 +579,6 @@ const SignUpSeller = () => {
                           </label>
                           <div className="relative">
                             <input
-
                               placeholder="*******"
                               required
                               value={confirmPassword}
@@ -601,7 +606,6 @@ const SignUpSeller = () => {
                           </div>
                         </div>
                       </div>
-
 
                       <div className="order-last">
                         <label
@@ -638,10 +642,7 @@ const SignUpSeller = () => {
                         </div>
                       )}</div> */}
 
-
-
                       <p className="text-sm text-red-500">{error}</p>
-
 
                       <div className="mt-4 mb-2 sm:mb-4">
                         {!loading ? (
@@ -661,9 +662,7 @@ const SignUpSeller = () => {
                         )}
                       </div>
 
-
                       <p className="text-xs text-gray-600 text-center sm:text-sm">
-
                         By clicking "Sign up", you agree to the
                         <br />
                         <Link className="underline text-blue-500" to={"/terms"}>
@@ -675,21 +674,22 @@ const SignUpSeller = () => {
                         </Link>
                       </p>
                     </form>
-
-
-                  </div>}
-
+                  </div>
+                )}
               </div>
             </div>
           </div>
         </div>
       </div>
       <div className="h-0 w-0">
-
-        <Modal email={userEmail} setModalOpen={setModalOpen} modalOpen={modalOpen} />
+        <Modal
+          email={userEmail}
+          setModalOpen={setModalOpen}
+          modalOpen={modalOpen}
+        />
       </div>
     </div>
-  )
+  );
 };
 
 export default SignUpSeller;

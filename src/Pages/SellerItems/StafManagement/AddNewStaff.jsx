@@ -9,14 +9,14 @@ const AddNewStaff = () => {
     const { shopInfo } = useContext(AuthContext)
     const [searchValue, setSearchValue] = useState('')
     const [selectedValue, setSelectedValue] = useState([])
-    const [role, setRole] = useState('')
+    const [user_role, setRole] = useState('')
     const [error, setError] = useState('')
     const [value, setValue] = useState("");
     console.log(value);
     const [isNewUser, setIsNewUser] = useState(false)
 
     const handleSearch = () => {
-        fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/seller-allUser?email=${searchValue}`)
+        fetch(`https://backend.doob.com.bd/api/v1/seller/seller-allUser?email=${searchValue}`)
             .then(res => res.json())
             .then(data => {
                 if (data?.status) {
@@ -53,33 +53,33 @@ const AddNewStaff = () => {
 
     const navigate = useNavigate()
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        const user = value;
-        const shopEmail = shopInfo?.shopEmail
-        const permissions = selectedValue
+    // const handleSubmit = (e) => {
+    //     e.preventDefault();
+    //     const user = value;
+    //     const shopEmail = shopInfo?.shopEmail
+    //     const permissions = selectedValue
 
-        const data = { user, shopEmail, permissions, role }
-        fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/staff-add`, {
-            method: 'PATCH',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
+    //     const data = { user, shopEmail, permissions, role }
+    //     fetch(`https://backend.doob.com.bd/api/v1/seller/staff-add`, {
+    //         method: 'PATCH',
+    //         headers: {
+    //             'Content-Type': 'application/json'
+    //         },
+    //         body: JSON.stringify(data)
 
-        })
-            .then(res => res.json())
-            .then(data => {
-                if (data.status) {
-                    BrightAlert(`${data.message}`, '', "success")
-                    navigate('/seller/staff-account')
-                }
-                else {
-                    BrightAlert(`Something went wrong`, '', "error")
-                }
+    //     })
+    //         .then(res => res.json())
+    //         .then(data => {
+    //             if (data.status) {
+    //                 BrightAlert(`${data.message}`, '', "success")
+    //                 navigate('/seller/staff-account')
+    //             }
+    //             else {
+    //                 BrightAlert(`Something went wrong`, '', "error")
+    //             }
 
-            })
-    }
+    //         })
+    // }
 
 
     // const handleSubmit = async (e) => {
@@ -95,7 +95,7 @@ const AddNewStaff = () => {
     //             const userId = email.replace(/[@.]/g, '');
     //             const createdAt = new Date();
 
-    //             const signUpResponse = await fetch(`${API_BASE_URL}/api/v1/auth/sign-up`, {
+    //             const signUpResponse = await fetch(`https://backend.doob.com.bd/api/v1/auth/sign-up`, {
     //                 method: "post",
     //                 headers: {
     //                     "content-type": "application/json",
@@ -114,11 +114,11 @@ const AddNewStaff = () => {
     //             }
     //         }
 
-    //         console.log('hit');
+
     //         const permissions = selectedValue;
     //         const data = { userData, permissions, role };
 
-    //         const staffRoleResponse = await fetch(`${API_BASE_URL}/api/v1/admin/staff-role`, {
+    //         const staffRoleResponse = await fetch(`https://backend.doob.com.bd/api/v1/seller/staff-add`, {
     //             method: 'PATCH',
     //             headers: {
     //                 'Content-Type': 'application/json'
@@ -129,7 +129,7 @@ const AddNewStaff = () => {
     //         const staffRoleData = await staffRoleResponse.json();
     //         console.log(staffRoleData);
     //         BrightAlert()
-    //         navigate('/admin/staff-management')
+    //         navigate('/seller/staff-management')
 
 
     //     } catch (error) {
@@ -137,7 +137,92 @@ const AddNewStaff = () => {
     //         BrightAlert(`An error occurred: ${error.message}`, '', "error");
     //     }
     // };
+    console.log(user_role);
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        let user = {};
+        try {
+            // Destructure the event target for better readability
+            if (isNewUser) {
+                const { name, email, password } = e.target;
 
+                // Input validation
+                if (!isValidEmail(email.value)) {
+                    BrightAlert("Please enter a valid email address", '', 'warning');
+                    return;
+                }
+
+                if (!isValidPassword(password?.value)) {
+                    BrightAlert("Password must be at least 8 characters long", '', 'warning');
+                    return;
+                }
+
+
+                if (isNewUser) {
+                    const userId = email.value.replace(/[@.]/g, '');
+                    const createdAt = new Date();
+
+                    const signUpResponse = await fetch(`https://backend.doob.com.bd/api/v1/auth/sign-up`, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({ name: name.value, email: email.value, userId, phoneNumber: shopInfo.shopNumber, role: "seller", createdAt, password: password.value }),
+                    });
+
+                    const signUpData = await signUpResponse.json();
+
+                    if (!signUpData.result) {
+                        BrightAlert(`${signUpData.message}`, '', 'error');
+                        return;
+                    }
+
+                    // If sign-up successful, populate userData object
+                    user = { name: name.value, email: email.value, oldEmail: value.email };
+                }
+
+            }
+            else {
+                user = { name: value.name, email: value.email, oldEmail: value.email };
+            }
+            console.log(user);
+
+            const permissions = selectedValue;
+            const data = { user, shopEmail: shopInfo?.shopEmail, permissions, role: user_role, oldEmail: user.email, };
+            console.log(data); const staffRoleResponse = await fetch(`https://backend.doob.com.bd/api/v1/seller/staff-add`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data),
+            });
+
+            const staffRoleData = await staffRoleResponse.json();
+
+            if (!staffRoleData.success) {
+                // Display success alert
+                BrightAlert("Staff added successfully", '', 'success');
+                navigate('/seller/staff-account');
+            }
+
+
+
+        } catch (error) {
+            console.error("An error occurred:", error);
+            BrightAlert(`An error occurred: ${error.message}`, '', "error");
+        }
+    };
+
+    // Utility function for email validation
+    function isValidEmail(email) {
+        // Implement your email validation logic here
+        return /\S+@\S+\.\S+/.test(email);
+    }
+
+    // Utility function for password validation
+    function isValidPassword(password) {
+        return password.length >= 8;
+    }
 
 
     return (
@@ -152,15 +237,15 @@ const AddNewStaff = () => {
                     <div className='pb-3'>
                         <div className="flex flex-col gap-3 mt-3">
                             <label className='' htmlFor="fullname">Input FullName</label>
-                            <input type="text" id='fullname' className="w-full p-2 rounded-md ring-1 mt-1 ring-gray-200" placeholder='input user fullname' />
+                            <input type="text" name='name' id='fullname' className="w-full p-2 rounded-md ring-1 mt-1 ring-gray-200" placeholder='input user fullname' />
                         </div>
                         <div className="flex flex-col gap-3 mt-3">
                             <label className='' htmlFor="email">Input Email</label>
-                            <input type="text" className="w-full p-2 rounded-md ring-1 mt-1 ring-gray-200" placeholder='input user email' />
+                            <input type="text" name='email' className="w-full p-2 rounded-md ring-1 mt-1 ring-gray-200" placeholder='input user email' />
                         </div>
                         <div className="flex flex-col gap-3 mt-3">
                             <label className='' htmlFor="password">Input Password</label>
-                            <input type="text" className="w-full p-2 rounded-md ring-1 mt-1 ring-gray-200" placeholder='input user password' />
+                            <input type="text" name='password' className="w-full p-2 rounded-md ring-1 mt-1 ring-gray-200" placeholder='input user password' />
                         </div>
                     </div>
                 </div> :

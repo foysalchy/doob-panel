@@ -17,7 +17,7 @@ const MiniCategoriesManagement = () => {
     queryKey: ["categories"],
     queryFn: async () => {
       const res = await fetch(
-        `https://salenow-v2-backend.vercel.app/api/v1/category/seller/mini/${shopInfo._id}`
+        `https://backend.doob.com.bd/api/v1/category/seller/mini/${shopInfo._id}`
       );
       const data = await res.json();
       return data;
@@ -38,7 +38,7 @@ const MiniCategoriesManagement = () => {
 
         try {
           parsedDarazCategory = JSON.parse(filteredItem?.darazCategory);
-        } catch (error) {}
+        } catch (error) { }
 
         return {
           ...filteredItem,
@@ -88,11 +88,10 @@ const MiniCategoriesManagement = () => {
           return (
             <li key={pageNumber}>
               <button
-                className={`block h-8 w-8 rounded border ${
-                  pageNumber === currentPage
-                    ? "border-blue-600 bg-blue-600 text-white"
-                    : "border-gray-900 bg-white text-center leading-8 text-gray-900"
-                }`}
+                className={`block h-8 w-8 rounded border ${pageNumber === currentPage
+                  ? "border-blue-600 bg-blue-600 text-white"
+                  : "border-gray-900 bg-white text-center leading-8 text-gray-900"
+                  }`}
                 onClick={() => handleChangePage(pageNumber)}
               >
                 {pageNumber}
@@ -117,7 +116,7 @@ const MiniCategoriesManagement = () => {
 
   const updateStatus = (id, status) => {
     fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/category/seller/mini/status/${id}`,
+      `https://backend.doob.com.bd/api/v1/category/seller/mini/status/${id}`,
       {
         method: "PUT",
         headers: {
@@ -156,7 +155,7 @@ const MiniCategoriesManagement = () => {
       if (result.dismiss === Swal.DismissReason.timer) {
         // Timer completed, initiate the fetch for deletion
         fetch(
-          `https://salenow-v2-backend.vercel.app/api/v1/category/seller/mini/delete/${id}`,
+          `https://backend.doob.com.bd/api/v1/category/seller/mini/delete/${id}`,
           {
             method: "DELETE",
             headers: {
@@ -186,7 +185,7 @@ const MiniCategoriesManagement = () => {
 
   const [editOn, setEditOn] = useState(false);
   const uploadImage = async (formData) => {
-    const url = `https://salenow-v2-backend.vercel.app/api/v1/image/upload-image`;
+    const url = `https://backend.doob.com.bd/api/v1/image/upload-image`;
     const response = await fetch(url, {
       method: "POST",
       body: formData,
@@ -214,7 +213,7 @@ const MiniCategoriesManagement = () => {
     console.log(data, id, "update");
 
     fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/category/seller-update-miniCategory?id=${id}`,
+      `https://backend.doob.com.bd/api/v1/category/seller-update-miniCategory?id=${id}`,
       {
         method: "PUT",
         headers: {
@@ -235,7 +234,7 @@ const MiniCategoriesManagement = () => {
 
   const futuresUpdate = (id, status) => {
     fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/category/seller-update-miniCategory-feature?id=${id}&status=${status}`,
+      `https://backend.doob.com.bd/api/v1/category/seller-update-miniCategory-feature?id=${id}&status=${status}`,
       {
         method: "PUT",
 
@@ -395,10 +394,10 @@ const MiniCategoriesManagement = () => {
                                           );
                                           const darazCategoryName =
                                             parsedMegaCategory &&
-                                            parsedMegaCategory.darazCategory
+                                              parsedMegaCategory.darazCategory
                                               ? JSON.parse(
-                                                  parsedMegaCategory.darazCategory
-                                                ).name
+                                                parsedMegaCategory.darazCategory
+                                              ).name
                                               : "Invalidate";
 
                                           return darazCategoryName;
@@ -451,10 +450,10 @@ const MiniCategoriesManagement = () => {
                                       );
                                       const darazCategoryName =
                                         parsedMegaCategory &&
-                                        parsedMegaCategory.wocomarceCategory
+                                          parsedMegaCategory.wocomarceCategory
                                           ? JSON.parse(
-                                              parsedMegaCategory.wocomarceCategory
-                                            ).name
+                                            parsedMegaCategory.wocomarceCategory
+                                          ).name
                                           : "Invalidate";
 
                                       return darazCategoryName;
@@ -510,29 +509,26 @@ const MiniCategoriesManagement = () => {
                                       : true
                                   )
                                 }
-                                className={`${
-                                  warehouse && warehouse.feature === "true"
-                                    ? "bg-green-500"
-                                    : "bg-red-500"
-                                } text-white ml-2 rounded capitalize px-3 py-1`}
+                                className={`${warehouse && warehouse.feature === "true"
+                                  ? "bg-green-500"
+                                  : "bg-red-500"
+                                  } text-white ml-2 rounded capitalize px-3 py-1`}
                               >
                                 futures
                               </button>
                             </td>
 
                             <div
-                              className={`fixed z-[100] flex items-center justify-center ${
-                                editOn?._id === warehouse?._id
-                                  ? "opacity-1 visible"
-                                  : "invisible opacity-0"
-                              } inset-0 bg-black/20 backdrop-blur-sm duration-100`}
+                              className={`fixed z-[100] flex items-center justify-center ${editOn?._id === warehouse?._id
+                                ? "opacity-1 visible"
+                                : "invisible opacity-0"
+                                } inset-0 bg-black/20 backdrop-blur-sm duration-100`}
                             >
                               <div
-                                className={`absolute md:w-[500px] w-full rounded-sm bg-white p-3 pb-5 text-center drop-shadow-2xl ${
-                                  editOn?._id === warehouse?._id
-                                    ? "scale-1 opacity-1 duration-300"
-                                    : "scale-0 opacity-0 duration-150"
-                                } `}
+                                className={`absolute md:w-[500px] w-full rounded-sm bg-white p-3 pb-5 text-center drop-shadow-2xl ${editOn?._id === warehouse?._id
+                                  ? "scale-1 opacity-1 duration-300"
+                                  : "scale-0 opacity-0 duration-150"
+                                  } `}
                               >
                                 <svg
                                   onClick={() => setEditOn(false)}

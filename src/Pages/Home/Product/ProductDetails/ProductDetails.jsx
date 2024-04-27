@@ -46,8 +46,6 @@ const ProductDetails = () => {
   const [userName, setUserName] = useState(user?.name);
   const [variationData, setVariationData] = useState(null);
 
-
-
   const myData = useLoaderData();
   const productFind = myData?.data;
 
@@ -167,7 +165,6 @@ const ProductDetails = () => {
 
   const handleIncrease = () => {
     setQuantity(quantity + 1);
-
   };
 
   const handleManualInput = (e) => {
@@ -196,16 +193,13 @@ const ProductDetails = () => {
         userInfo,
       };
       console.log(data);
-      fetch(
-        `https://salenow-v2-backend.vercel.app/api/v1/seller/web-store?id=${id}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
-        }
-      )
+      fetch(`https://backend.doob.com.bd/api/v1/seller/web-store?id=${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      })
         .then((res) => res.json())
         .then((data) => {
           BrightAlert();
@@ -262,7 +256,7 @@ const ProductDetails = () => {
 
       // Post the comment data to the backend
       const response = await fetch(
-        "https://salenow-v2-backend.vercel.app/api/v1/seller/add-new-comment",
+        "https://backend.doob.com.bd/api/v1/seller/add-new-comment",
         {
           method: "post",
           headers: {
@@ -284,8 +278,7 @@ const ProductDetails = () => {
   };
 
   async function uploadImage(formData) {
-    const url =
-      "https://salenow-v2-backend.vercel.app/api/v1/image/upload-image";
+    const url = "https://backend.doob.com.bd/api/v1/image/upload-image";
     const response = await fetch(url, {
       method: "POST",
       body: formData,
@@ -298,15 +291,13 @@ const ProductDetails = () => {
     queryKey: ["comments"],
     queryFn: async () => {
       const res = await fetch(
-        `https://salenow-v2-backend.vercel.app/api/v1/seller/product-comment?id=${productFind?._id}`
+        `http://localhost:5001/api/v1/seller/product-comment?id=${productFind?._id}`
       );
       const data = await res.json();
       return data?.comments;
     },
   });
-
-
-
+  console.log(`http://localhost:5001/api/v1/seller/product-comment?id=${productFind?._id}`);
   const add_to_cart = (product) => {
     const productData = {
       product_name: product?.name,
@@ -316,29 +307,30 @@ const ProductDetails = () => {
       product_image: product?.images[0]?.src,
       product_seller: product?.shopId,
       sellingPrice: banifit.sellingPrice,
-      delivery: product.DeliveryCharge
+      delivery: product.DeliveryCharge,
     };
 
     // need to save on localStorage
 
-    const getCart = JSON.parse(localStorage.getItem(`cart-product-${user._id}`)) || [];
+    const getCart =
+      JSON.parse(localStorage.getItem(`cart-product-${user._id}`)) || [];
     const productFind = getCart.find(
       (item) => item.product_id === productData.product_id
     );
     if (productFind) {
       productFind.product_quantity =
         productFind.product_quantity + productData.product_quantity;
-      localStorage.setItem((`cart-product-${user._id}`), JSON.stringify(getCart));
+      localStorage.setItem(`cart-product-${user._id}`, JSON.stringify(getCart));
     } else {
       getCart.push(productData);
-      localStorage.setItem((`cart-product-${user._id}`), JSON.stringify(getCart));
+      localStorage.setItem(`cart-product-${user._id}`, JSON.stringify(getCart));
     }
 
     console.log(productData, "productData");
   };
 
   const balk_buy = () => {
-    const product = productFind
+    const product = productFind;
     const newData = {
       product_id: product?._id,
       product_seller: product?.shopId,
@@ -347,22 +339,20 @@ const ProductDetails = () => {
       shopUid: shopInfo?._id,
       quantity: 0,
       sellingPrice: banifit.sellingPrice,
-
-    }
-    fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/balk-order-update`, {
+    };
+    fetch(`https://backend.doob.com.bd/api/v1/seller/balk-order-update`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(newData),
-
-    }).then((res) => res.json()).then((data) => {
-      BrightAlert()
-
     })
+      .then((res) => res.json())
+      .then((data) => {
+        BrightAlert();
+      });
     console.log(newData);
-
-  }
+  };
 
   // console.log(productFind, 'comment');
   return (
@@ -671,7 +661,13 @@ const ProductDetails = () => {
                     </button>
                   </div>
                 </div>
-                <button onClick={balk_buy} className="h-10 px-6 py-2 text-sm rounded bg-orange-600 hover:bg-orange-500 text-white" type="button">Add Store</button>
+                <button
+                  onClick={balk_buy}
+                  className="h-10 px-6 py-2 text-sm rounded bg-orange-600 hover:bg-orange-500 text-white"
+                  type="button"
+                >
+                  Add Store
+                </button>
 
                 {/* 
                 <button
@@ -681,9 +677,6 @@ const ProductDetails = () => {
                 >
                   Buy Now
                 </button> */}
-
-
-
 
                 <div className="flex flex-wrap gap-2">
                   <button
@@ -701,7 +694,6 @@ const ProductDetails = () => {
                     Add to Cart
                   </button>
                 </div>
-
 
                 {invoice && (
                   <ModalForPayment

@@ -11,15 +11,16 @@ const CatagoryManagement = () => {
   const { data: category = [], refetch } = useQuery({
     queryKey: ["category"],
     queryFn: async () => {
-      const res = await fetch("https://salenow-v2-backend.vercel.app/api/v1/admin/category");
+      const res = await fetch(
+        "https://backend.doob.com.bd/api/v1/admin/category"
+      );
       const data = await res.json();
       return data;
     },
   });
 
   const DeleteCategory = (id) => {
-
-    fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/category`, {
+    fetch(`https://backend.doob.com.bd/api/v1/admin/category`, {
       method: "DELETE",
       headers: {
         "content-type": "application/json",
@@ -38,13 +39,14 @@ const CatagoryManagement = () => {
   const handleSearch = (event) => {
     setSearchQuery(event?.target?.value || "");
   };
-  const filteredData = category && category?.filter((item) =>
-    item?.title?.toLowerCase().includes(searchQuery?.toLowerCase())
-  );
-
+  const filteredData =
+    category &&
+    category?.filter((item) =>
+      item?.title?.toLowerCase().includes(searchQuery?.toLowerCase())
+    );
 
   const uploadImage = async (formData) => {
-    const url = `https://salenow-v2-backend.vercel.app/api/v1/image/upload-image`;
+    const url = `https://backend.doob.com.bd/api/v1/image/upload-image`;
     const response = await fetch(url, {
       method: "POST",
       body: formData,
@@ -53,7 +55,6 @@ const CatagoryManagement = () => {
     const imageData = await response.json();
     return imageData.imageUrl;
   };
-
 
   const handleEdit = async (e) => {
     e.preventDefault();
@@ -67,29 +68,25 @@ const CatagoryManagement = () => {
     const data = {
       title,
       image: imageUrl,
-      id: openModal._id
+      id: openModal._id,
     };
 
-    fetch(`https://salenow-v2-backend.vercel.app/api/v1/admin/category-update`, {
+    fetch(`https://backend.doob.com.bd/api/v1/admin/category-update`, {
       method: "PUT",
       headers: {
         "content-type": "application/json",
       },
       body: JSON.stringify(data),
-    }).then((res) => res.json()).then((data) => {
-      BrightAlert()
-      refetch()
     })
-
-  }
-
-
-
+      .then((res) => res.json())
+      .then((data) => {
+        BrightAlert();
+        refetch();
+      });
+  };
 
   return (
     <div>
-
-
       <Link
         className="group relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
         to="/admin/manage-category/add-category"
@@ -206,35 +203,66 @@ const CatagoryManagement = () => {
                   </td>
 
                   <div>
-
-                    <div onClick={() => setOpenModal(false)} className={`fixed z-[100] flex items-center justify-center ${openModal?._id === cate?._id ? 'visible opacity-100' : 'invisible opacity-0'} inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}>
-                      <div onClick={(e_) => e_.stopPropagation()} className={`text- w-[500px] absolute max-w-md rounded-sm bg-white p-6 drop-shadow-lg dark:bg-black dark:text-white ${openModal?._id === cate?._id ? 'scale-1 opacity-1 duration-300' : 'scale-0 opacity-0 duration-150'}`}>
-                        <form
-                          onSubmit={handleEdit}
-                          action="">
-                          <h1 className="mb-2 text-2xl font-semibold">Edit Category!</h1>
-
-
+                    <div
+                      onClick={() => setOpenModal(false)}
+                      className={`fixed z-[100] flex items-center justify-center ${openModal?._id === cate?._id
+                        ? "visible opacity-100"
+                        : "invisible opacity-0"
+                        } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
+                    >
+                      <div
+                        onClick={(e_) => e_.stopPropagation()}
+                        className={`text- w-[500px] absolute max-w-md rounded-sm bg-white p-6 drop-shadow-lg dark:bg-black dark:text-white ${openModal?._id === cate?._id
+                          ? "scale-1 opacity-1 duration-300"
+                          : "scale-0 opacity-0 duration-150"
+                          }`}
+                      >
+                        <form onSubmit={handleEdit} action="">
+                          <h1 className="mb-2 text-2xl font-semibold">
+                            Edit Category!
+                          </h1>
                           <div className="flex flex-col gap-2 bb-3">
-                            <label htmlFor="title" className="text-sm font-medium">Category Name</label>
-                            <input name="title" type="text" id="title" className="w-full text-black placeholder:hover:text=black px-4 py-2 rounded-sm border border-gray-300" defaultValue={openModal?.title} />
-                          </div> <br />
-                          <div className="flex flex-col gap-2 bb-3">
-                            <label htmlFor="img" className="text-sm font-medium">Photo</label>
-                            <input type="file" className="w-full bg-white text-black placeholder:hover:text=black px-4 py-2 rounded-sm border border-gray-300" name="image" />
-                          </div>
-
+                            <label
+                              htmlFor="title"
+                              className="text-sm font-medium"
+                            >
+                              Category Name
+                            </label>
+                            <input
+                              name="title"
+                              type="text"
+                              id="title"
+                              className="w-full text-black placeholder:hover:text=black px-4 py-2 rounded-sm border border-gray-300"
+                              defaultValue={openModal?.title}
+                            />
+                          </div>{" "}
                           <br />
-
+                          <div className="flex flex-col gap-2 bb-3">
+                            <label
+                              htmlFor="img"
+                              className="text-sm font-medium"
+                            >
+                              Photo
+                            </label>
+                            <input
+                              type="file"
+                              className="w-full bg-white text-black placeholder:hover:text=black px-4 py-2 rounded-sm border border-gray-300"
+                              name="image"
+                            />
+                          </div>
+                          <br />
                           <div className="flex justify-between">
-                            <button type="submit" className="me-2 rounded-sm bg-green-700 px-6 py-[6px] text-white">Save</button>
-
+                            <button
+                              type="submit"
+                              className="me-2 rounded-sm bg-green-700 px-6 py-[6px] text-white"
+                            >
+                              Save
+                            </button>
                           </div>
                         </form>
                       </div>
                     </div>
                   </div>
-
                 </tr>
               ))}
             </tbody>

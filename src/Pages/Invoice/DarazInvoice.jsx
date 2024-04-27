@@ -1,140 +1,173 @@
-import React, { useContext, useRef } from 'react';
-import { useReactToPrint } from 'react-to-print';
-import { AuthContext } from '../../AuthProvider/UserProvider';
-import { useParams } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
+import React, { useContext, useRef } from "react";
+import { useReactToPrint } from "react-to-print";
+import { AuthContext } from "../../AuthProvider/UserProvider";
+import { useParams } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
 
 const DarazInvoice = () => {
-    const { id } = useParams();
-    const { invoiceData, shopInfo, shopId } = useContext(AuthContext)
-    console.log(invoiceData);
-    const componentRef = useRef();
-    const handlePrint = useReactToPrint({
-        content: () => componentRef.current,
+  const { id } = useParams();
+  const { invoiceData, shopInfo, shopId } = useContext(AuthContext);
+  console.log(invoiceData);
+  const componentRef = useRef();
+  const handlePrint = useReactToPrint({
+    content: () => componentRef.current,
+  });
+
+  const {
+    data: darazInvoiceData = [],
+    refetch,
+    isLoading,
+  } = useQuery({
+    queryKey: ["invoiceDarazOrder"],
+    queryFn: async () => {
+      if (shopInfo) {
+        const res = await fetch(
+          `https://backend.doob.com.bd/api/v1/seller/daraz-single-order?id=${shopInfo?._id}&orderId=${id}`
+        );
+        const data = await res.json();
+        return data.data;
+      }
+    },
+  });
+  const info = darazInvoiceData.find((itm) => itm?.order_id == id);
+  let totalPrice = 0;
+
+  for (const item of darazInvoiceData || []) {
+    const currentPrice = item?.paid_price || 0;
+    const quantity = item?.quantity || 1;
+    totalPrice += currentPrice * quantity;
+  }
+
+  function formatDate(timestamp) {
+    // Check if the timestamp is in seconds, and convert it to milliseconds if needed
+    if (timestamp?.toString().length === 10) {
+      timestamp *= 1000;
+    }
+    console.log(timestamp);
+    const date = new Date(timestamp);
+
+    const options = { day: "numeric", month: "long", year: "numeric" };
+    const formattedDate = date.toLocaleDateString("en-US", options);
+
+    const formattedTime = date.toLocaleTimeString("en-US", {
+      hour: "numeric",
+      minute: "numeric",
+      hour12: true,
     });
 
-
-    const { data: darazInvoiceData = [], refetch, isLoading } = useQuery({
-        queryKey: ["invoiceDarazOrder"],
-        queryFn: async () => {
-            if (shopInfo) {
-                const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/daraz-single-order?id=${shopInfo?._id}&orderId=${id}`);
-                const data = await res.json();
-                return data.data;
-            }
-        },
-    });
-    const info = darazInvoiceData.find(itm => itm?.order_id == id);
-    let totalPrice = 0;
-
-    for (const item of darazInvoiceData || []) {
-        const currentPrice = item?.paid_price || 0;
-        const quantity = item?.quantity || 1;
-        totalPrice += currentPrice * quantity;
-    }
-
-    function formatDate(timestamp) {
-        // Check if the timestamp is in seconds, and convert it to milliseconds if needed
-        if (timestamp?.toString().length === 10) {
-            timestamp *= 1000;
-        }
-        console.log(timestamp);
-        const date = new Date(timestamp);
-
-        const options = { day: 'numeric', month: 'long', year: 'numeric' };
-        const formattedDate = date.toLocaleDateString('en-US', options);
-
-        const formattedTime = date.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
-
-        return `${formattedDate} `;
-    }
-    return (
-        <div className="bg-gray-100 p-12">
-            <button onClick={handlePrint} className='bg-blue-500 px-6 py-2 rounded-2 text-white rounded-md'>Print</button>
-            <div ref={componentRef} className="w-full h-full p-8 m-auto bg-white" style={{ width: '210mm', height: '297mm' }}>
-                <header className="clearfix">
-                    <div id="logo">
-                        <img src={shopInfo?.logo} />
-                    </div>
-                    <div id="company">
-                        <h2 className="name">{shopInfo?.shopName}</h2>
-                        {/* <div>455 Foggy Heights, AZ 85004, US</div> */}
-                        <div>{shopInfo?.shopNumber}</div>
-                        <div>
-                            <a href="mailto:company@example.com">{shopInfo?.shopEmail}</a>
-                        </div>
-                    </div>
-                </header>
-                <main className='main mt-4'>
-                    <div id="details" className="clearfix">
-                        <div id="client">
-                            {/* <img src={shopInfo?.logo} alt="" className="" /> */}
-                            <div className="to">INVOICE TO: {info?.order_id}</div>
-                            <h2 className="name">{info?.name}</h2>
-                            <div className="address">{info?.addresses?.address} {info?.addresses?.area} {info?.addresses?.city} {info?.addresses?.province}</div>
-                            <div className="email">
-                                <a href="mailto:john@example.com">{info?.addresses?.mobileNumber}</a>
-                            </div>
-                        </div>
-                        <div id="invoice">
-                            <h1>INVOICE</h1>
-                            <div className="date">Date of Invoice:
-                                {formatDate(info?.updated_at)}
-
-                            </div>
-                        </div>
-                    </div>
-                    <table className='table' border={0} cellSpacing={0} cellPadding={0}>
-                        <thead className='thead'>
-                            <tr>
-                                <th className="no text-center">#</th>
-                                <th className=" text-center">Product photo</th>
-                                <th className=" text-center">Product Name</th>
-                                <th className=" text-center bg-gray-400">UNIT PRICE</th>
-                                <th className="text-center">QUANTITY</th>
-                                <th className=" text-center no">TOTAL</th>
-                            </tr>
-                        </thead>
-                        <tbody className='tbody'>
-                            <tr className='text-center'>
-                                <td className="no">1</td>
-                                <td className=""><img className='w-20 h-20 border border-opacity-40 rounded object-cover' src={info?.product_main_image} alt="" /></td>
-                                <td className="">
-                                    <h3>{info?.name?.split(' ').slice(0, 5).join(" ")}</h3>
-                                </td>
-                                <td className=" ">{info?.paid_price}</td>
-                                <td className=" ">{!info?.quantity ? <>1</> : info?.quantity}</td>
-                                <td className="no ">{parseInt(info?.paid_price) * parseInt(info?.quantity ? info?.quantity : 1)}</td>
-                            </tr>
-                        </tbody>
-                        <tfoot>
-                            <tr>
-                                <td colSpan={3} />
-                                <td colSpan={2}>SUBTOTAL</td>
-                                <td>{totalPrice}</td>
-                            </tr>
-                            <tr>
-                                <td colSpan={3} />
-                                <td colSpan={2}>TAX 25%</td>
-                                <td>300</td>
-                            </tr>
-                            <tr>
-                                <td colSpan={3} />
-                                <td colSpan={2}>GRAND TOTAL</td>
-                                <td>{totalPrice + 300} </td>
-                            </tr>
-                        </tfoot>
-                    </table>
-                    <div id="thanks">Thank you!</div>
-                    <div id="notices">
-                        <div>NOTICE:</div>
-
-                    </div>
-                    <footer>
-                        Invoice was created on a computer and is valid without the signature and
-                        seal.
-                    </footer>
-                    {/* <div id="thanks">
+    return `${formattedDate} `;
+  }
+  return (
+    <div className="bg-gray-100 p-12">
+      <button
+        onClick={handlePrint}
+        className="bg-blue-500 px-6 py-2 rounded-2 text-white rounded-md"
+      >
+        Print
+      </button>
+      <div
+        ref={componentRef}
+        className="w-full h-full p-8 m-auto bg-white"
+        style={{ width: "210mm", height: "297mm" }}
+      >
+        <header className="clearfix">
+          <div id="logo">
+            <img src={shopInfo?.logo} />
+          </div>
+          <div id="company">
+            <h2 className="name">{shopInfo?.shopName}</h2>
+            {/* <div>455 Foggy Heights, AZ 85004, US</div> */}
+            <div>{shopInfo?.shopNumber}</div>
+            <div>
+              <a href="mailto:company@example.com">{shopInfo?.shopEmail}</a>
+            </div>
+          </div>
+        </header>
+        <main className="main mt-4">
+          <div id="details" className="clearfix">
+            <div id="client">
+              {/* <img src={shopInfo?.logo} alt="" className="" /> */}
+              <div className="to">INVOICE TO: {info?.order_id}</div>
+              <h2 className="name">{info?.name}</h2>
+              <div className="address">
+                {info?.addresses?.address} {info?.addresses?.area}{" "}
+                {info?.addresses?.city} {info?.addresses?.province}
+              </div>
+              <div className="email">
+                <a href="mailto:john@example.com">
+                  {info?.addresses?.mobileNumber}
+                </a>
+              </div>
+            </div>
+            <div id="invoice">
+              <h1>INVOICE</h1>
+              <div className="date">
+                Date of Invoice:
+                {formatDate(info?.updated_at)}
+              </div>
+            </div>
+          </div>
+          <table className="table" border={0} cellSpacing={0} cellPadding={0}>
+            <thead className="thead">
+              <tr>
+                <th className="no text-center">#</th>
+                <th className=" text-center">Product photo</th>
+                <th className=" text-center">Product Name</th>
+                <th className=" text-center bg-gray-400">UNIT PRICE</th>
+                <th className="text-center">QUANTITY</th>
+                <th className=" text-center no">TOTAL</th>
+              </tr>
+            </thead>
+            <tbody className="tbody">
+              <tr className="text-center">
+                <td className="no">1</td>
+                <td className="">
+                  <img
+                    className="w-20 h-20 border border-opacity-40 rounded object-cover"
+                    src={info?.product_main_image}
+                    alt=""
+                  />
+                </td>
+                <td className="">
+                  <h3>{info?.name?.split(" ").slice(0, 5).join(" ")}</h3>
+                </td>
+                <td className=" ">{info?.paid_price}</td>
+                <td className=" ">
+                  {!info?.quantity ? <>1</> : info?.quantity}
+                </td>
+                <td className="no ">
+                  {parseInt(info?.paid_price) *
+                    parseInt(info?.quantity ? info?.quantity : 1)}
+                </td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td colSpan={3} />
+                <td colSpan={2}>SUBTOTAL</td>
+                <td>{totalPrice}</td>
+              </tr>
+              <tr>
+                <td colSpan={3} />
+                <td colSpan={2}>TAX 25%</td>
+                <td>300</td>
+              </tr>
+              <tr>
+                <td colSpan={3} />
+                <td colSpan={2}>GRAND TOTAL</td>
+                <td>{totalPrice + 300} </td>
+              </tr>
+            </tfoot>
+          </table>
+          <div id="thanks">Thank you!</div>
+          <div id="notices">
+            <div>NOTICE:</div>
+          </div>
+          <footer>
+            Invoice was created on a computer and is valid without the signature
+            and seal.
+          </footer>
+          {/* <div id="thanks">
                         {
                             (info.status !== 'Cancel' && info.status !== 'Failed' && info.status !== 'Returned') && <div className="mt-4 mx-auto px-4 md:px-0">
                                 <ul aria-label="Steps" className="items-center text-gray-600 font-medium md:flex">
@@ -167,17 +200,13 @@ const DarazInvoice = () => {
                             </div>
                         }
                     </div> */}
-                </main>
-            </div>
-        </div>
-    );
+        </main>
+      </div>
+    </div>
+  );
 };
 
 export default DarazInvoice;
-
-
-
-
 
 //    <div className="bg-gray-100 p-12">
 //             <button onClick={handlePrint} className='bg-blue-500 px-6 py-2 rounded-2 text-white rounded-md'>Print</button>

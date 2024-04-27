@@ -8,22 +8,21 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 const EditAdminCategoryforSeller = ({ product }) => {
-  console.log("🚀 ~ file: product:", product);
+  console.log("🚀 ~:", product?.categories);
 
-  
   const navigate = useNavigate();
   const handleGoBack = () => {
     navigate(-1); // This will go back to the previous page
   };
 
-   const [subCategorys, setSubCategorys] = useState([]);
-     const [miniCategorys, setMiniCategorys] = useState([]);
-       const [extraCategorys, setExtraCategorys] = useState([]);
+  const [subCategorys, setSubCategorys] = useState([]);
+  const [miniCategorys, setMiniCategorys] = useState([]);
+  const [extraCategorys, setExtraCategorys] = useState([]);
 
-       console.log(subCategorys);
-       console.log(miniCategorys);
+  console.log(subCategorys);
+  console.log(miniCategorys);
 
-  let megaCategoryUrl = `https://salenow-v2-backend.vercel.app/api/v1/admin/category/megacategory`;
+  let megaCategoryUrl = `https://backend.doob.com.bd/api/v1/admin/category/megacategory`;
 
   const { data: megaCategories = [], refetch } = useQuery({
     queryKey: ["megaCategories"],
@@ -36,6 +35,8 @@ const EditAdminCategoryforSeller = ({ product }) => {
     },
   });
 
+  console.log(megaCategories);
+
   const option = megaCategories
     ?.filter((itm) => itm.status === "true")
     .map((itm) => ({
@@ -43,13 +44,11 @@ const EditAdminCategoryforSeller = ({ product }) => {
       label: itm.name,
     }));
 
- 
-
   const handleSelectChange = (selectedOption) => {
     setSubCategorys([]);
     const optionId = selectedOption.value;
     fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/admin/category/subcategory?id=${optionId}`
+      `https://backend.doob.com.bd/api/v1/admin/category/subcategory?id=${optionId}`
     )
       .then((res) => res.json())
       .then((data) => {
@@ -68,12 +67,11 @@ const EditAdminCategoryforSeller = ({ product }) => {
     label: warehouse.subCategory,
   }));
 
-
   const onHandleMiniCategorys = (selectedOption) => {
     setMiniCategorys([]);
     const optionId = selectedOption.value;
     fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/admin/category/miniCategory?id=${optionId}`
+      `https://backend.doob.com.bd/api/v1/admin/category/miniCategory?id=${optionId}`
     )
       .then((res) => res.json())
       .then((data) => {
@@ -97,9 +95,9 @@ const EditAdminCategoryforSeller = ({ product }) => {
   const onHandleExtraCategorys = (selectedOption) => {
     setExtraCategorys([]);
     const optionId = selectedOption.value;
-    // console.log(`https://salenow-v2-backend.vercel.app/api/v1/admin/category/extraCategory?id=${optionId}`);
+    // console.log(`https://backend.doob.com.bd/api/v1/admin/category/extraCategory?id=${optionId}`);
     fetch(
-      `https://salenow-v2-backend.vercel.app/api/v1/admin/category/extraCategory?id=${optionId}`
+      `https://backend.doob.com.bd/api/v1/admin/category/extraCategory?id=${optionId}`
     )
       .then((res) => res.json())
       .then((data) => {
@@ -117,6 +115,8 @@ const EditAdminCategoryforSeller = ({ product }) => {
       label: itm.extraCategoryName,
     }));
 
+  // console.log(product?.categories);
+
   return (
     <div className="lg:pr-10 mt-4 w-full mx-auto overflow-auto border border-black rounded p-6">
       <div className="grid grid-cols-4 items-center gap-2">
@@ -133,6 +133,10 @@ const EditAdminCategoryforSeller = ({ product }) => {
                 ...provided,
                 cursor: "pointer",
               }),
+            }}
+            defaultValue={{
+              label: product?.categories[0]?.name,
+              value: product?.categories[0]?.name,
             }}
             name="adminMegaCategory"
             required
@@ -157,6 +161,11 @@ const EditAdminCategoryforSeller = ({ product }) => {
                   cursor: "pointer",
                 }),
               }}
+              defaultValue={{
+                label: product?.categories[1]?.name,
+                value: product?.categories[1]?.name,
+              }}
+              // value={subCategorys}
               name="adminSubCategoryName"
               onChange={onHandleMiniCategorys}
               required
@@ -182,6 +191,11 @@ const EditAdminCategoryforSeller = ({ product }) => {
                   cursor: "pointer",
                 }),
               }}
+              // value={miniCategorys}
+              defaultValue={{
+                label: product?.categories[2]?.name,
+                value: product?.categories[2]?.name,
+              }}
               name="adminMiniCategoryName"
               // required
               options={sortedMiniCategorys}
@@ -204,6 +218,11 @@ const EditAdminCategoryforSeller = ({ product }) => {
                   ...provided,
                   cursor: "pointer",
                 }),
+              }}
+              // value={extraCategorys}
+              defaultValue={{
+                label: product?.categories[3]?.name,
+                value: product?.categories[3]?.name,
               }}
               name="adminExtraCategoryName"
               // required

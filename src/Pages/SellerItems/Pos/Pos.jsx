@@ -11,15 +11,15 @@ const Pos = () => {
     const [close, setClose] = useState(false);
     const [searchValue, setSearchValue] = useState('');
     const { data: products = [], reload } = useQuery({
-        queryKey: ["products"],
+        queryKey: ["pos-product"],
         queryFn: async () => {
-            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/all-products/${shopInfo._id}`);
+            const res = await fetch(`https://backend.doob.com.bd/api/v1/seller/get_pos_product/${shopInfo._id}`);
             const data = await res.json();
             return data;
         },
     });
 
-
+    console.log(`https://backend.doob.com.bd/api/v1/seller/get_pos_product/${shopInfo._id}`);
 
     const productList = products;
 
@@ -104,7 +104,7 @@ const Pos = () => {
 
     return (
         <div>
-            <Link className='text-blue-500 underline flex justify-end px-4' to={'/seller'}>Go to dashboard</Link>
+            <Link className='text-blue-500 underline flex justify-end px-4' to={'/seller/dashboard'}>Go to dashboard</Link>
             <main className=' md:p-4 mt-3 rounded-md h-screen overflow-y-auto'>
                 <div className="grid md:grid-cols-3 gap-2 ">
                     <div className="md:col-span-2">
@@ -120,20 +120,21 @@ const Pos = () => {
                                 <small className="text-sm absolute bg-[#ff0059] text-white py-0 px-1 text-[8px] rounded-full right-[-9px] top-[-3px]">{cartProducts?.length}</small>
                             </button>
                         </div>
-                        <div className="bg-gray-100 p-4 rounded-lg mt-3  overflow-y-auto grid md:grid-cols-3 lg:grid-cols-5 grid-cols-2 gap-3 h-[90vh]">
+                        <div className="bg-gray-100 p-4 mt-3  overflow-y-auto grid md:grid-cols-3 lg:grid-cols-5 grid-cols-2 gap-3 max:h-[90vh]">
                             {
-                                filteredData.length ? filteredData?.map((itm, index) => (
+                                filteredData.length ? filteredData?.filter((itm) => itm?.status).map((itm, index) => (
                                     <div key={itm?._id}>
-                                        <div onClick={() => addProductToCart(itm)} className="card bg-white rounded-xl p-2">
-                                            <div style={{ backgroundImage: `url('${itm?.featuredImage?.src}')` }} className="card-body md:h-[130px]  h-[130px] bg-cover object-cover rounded-xl">
+                                        <div onClick={() => addProductToCart(itm)} className="card bg-white p-2 h-[200px] ">
+                                            <div style={{ backgroundImage: `url('${itm?.featuredImage?.src}')` }} className="card-body md:h-[130px]  h-[130px] bg-cover object-cover ">
 
                                             </div>
-                                            <div className="card-footer py-2 md:flex justify-between px-3">
-                                                <h3 className="md:font-semibold md:text-md text-sm">{itm?.name.slice(0, 18)}...</h3>
-                                                <div className="flex items-center gap-2">
+                                            <div className="card-footer py-2 justify-between px-3">
+                                                <h3 className="text-sm h-4 overflow-hidden">{itm?.name}</h3>
+                                                <h3 className="text-sm">Price :{itm?.price ? itm?.price : ' N/A'}</h3>
+                                                {/* <div className="flex items-center gap-2">
 
-                                                    <h3 className="font-semibold">{itm?.price}</h3>
-                                                </div>
+                                                    
+                                                </div> */}
                                             </div>
                                         </div>
                                     </div>

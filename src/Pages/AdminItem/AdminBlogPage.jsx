@@ -5,10 +5,10 @@ import { Link, useLocation } from "react-router-dom";
 const AdminBlogPage = () => {
   const [blogs, setBlogs] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState('all')
+  const [selectedCategory, setSelectedCategory] = useState("all");
 
   useEffect(() => {
-    fetch("https://salenow-v2-backend.vercel.app/api/v1/admin/all-blogs")
+    fetch("https://backend.doob.com.bd/api/v1/admin/all-blogs")
       .then((response) => response.json())
       .then((data) => {
         setBlogs(data);
@@ -22,24 +22,26 @@ const AdminBlogPage = () => {
   //   blog.title.toLowerCase().includes(searchTerm.toLowerCase())
   // );
 
-
-
-  const { data: categories = [], isLoading: isCategoriesLoading, refetch } = useQuery({
-    queryKey: ['categories'],
+  const {
+    data: categories = [],
+    isLoading: isCategoriesLoading,
+    refetch,
+  } = useQuery({
+    queryKey: ["categories"],
     queryFn: async () => {
-      const res = await fetch('https://salenow-v2-backend.vercel.app/api/v1/admin/blog-category');
+      const res = await fetch(
+        "https://backend.doob.com.bd/api/v1/admin/blog-category"
+      );
       const data = await res.json();
       console.log(data);
       return data;
     },
   });
 
-
   const blnkData = [{}, {}, {}];
 
   const filterServices = (category) => {
     setSelectedCategory(category);
-
   };
 
   useEffect(() => {
@@ -47,9 +49,8 @@ const AdminBlogPage = () => {
     refetch();
   }, [categories, refetch]);
 
-
   const location = useLocation();
-  const path = location.hash.replace("#", "")
+  const path = location.hash.replace("#", "");
 
   useEffect(() => {
     // Update selected category based on path
@@ -57,23 +58,22 @@ const AdminBlogPage = () => {
   }, [path]);
 
   // Filter blogs based on selected category
-  const filteredBlogs = blogs.filter(blog => {
+  const filteredBlogs = blogs.filter((blog) => {
     // Check if the blog matches the selected category or if the category is 'all'
-    const categoryMatch = selectedCategory === 'all' || blog.category === selectedCategory;
+    const categoryMatch =
+      selectedCategory === "all" || blog.category === selectedCategory;
     // Check if the blog title contains the search term
-    const titleMatch = blog.title.toLowerCase().includes(searchTerm.toLowerCase());
+    const titleMatch = blog.title
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase());
     return categoryMatch && titleMatch;
   });
 
-
-
   console.log(categories);
-
 
   return (
     <div>
       <div className="px-4 py-10 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-10">
-
         <section className="bg-white ">
           <div className="container">
             <div className="-mx-4 flex flex-wrap">
@@ -86,13 +86,16 @@ const AdminBlogPage = () => {
                     Our Recent Blogs
                   </h2>
                   <p className="text-base text-gray-700 mb-4 ">
-                    There are many variations of passages of Lorem Ipsum available
-                    but the majority have suffered alteration in some form.
+                    There are many variations of passages of Lorem Ipsum
+                    available but the majority have suffered alteration in some
+                    form.
                   </p>
 
-
                   <div className="relative border border-gray-500 rounded">
-                    <label for="Search" className="sr-only"> Search </label>
+                    <label for="Search" className="sr-only">
+                      {" "}
+                      Search{" "}
+                    </label>
 
                     <input
                       type="text"
@@ -104,7 +107,10 @@ const AdminBlogPage = () => {
                     />
 
                     <span className="absolute border-gray-700 inset-y-0 end-0 grid w-10 place-content-center">
-                      <button type="button" className="text-gray-600 hover:text-gray-700">
+                      <button
+                        type="button"
+                        className="text-gray-600 hover:text-gray-700"
+                      >
                         <span className="sr-only">Search</span>
 
                         <svg
@@ -131,17 +137,22 @@ const AdminBlogPage = () => {
                 <div className="flex flex-wrap gap-4">
                   <a
                     href={`#all`}
-                    className={`px-4 py-2 text-sm font-medium uppercase tracking-wide ${selectedCategory === null ? 'bg-black text-white' : 'bg-gray-300 text-gray-700'
+                    className={`px-4 py-2 text-sm font-medium uppercase tracking-wide ${selectedCategory === null
+                      ? "bg-black text-white"
+                      : "bg-gray-300 text-gray-700"
                       }`}
                   >
                     All
                   </a>
                   {!isCategoriesLoading &&
-                    categories.length && categories?.map((category) => (
+                    categories.length &&
+                    categories?.map((category) => (
                       <a
                         key={category.id}
                         href={`#${category?.slag}`}
-                        className={`px-4 py-2 text-sm font-medium uppercase tracking-wide ${selectedCategory === category.title ? 'bg-black text-white' : 'bg-gray-300 text-gray-700'
+                        className={`px-4 py-2 text-sm font-medium uppercase tracking-wide ${selectedCategory === category.title
+                          ? "bg-black text-white"
+                          : "bg-gray-300 text-gray-700"
                           }`}
                       >
                         {category.title}
@@ -149,39 +160,33 @@ const AdminBlogPage = () => {
                     ))}
                 </div>
               </div>
-
             </div>
-
 
             <div className="grid grid-cols-1 gap-x-4 gap-y-8 md:grid-cols-2 lg:grid-cols-4">
               {filteredBlogs?.map((blog, index) => {
-                console.log(blog)
-                return (<BlogCard
-                  date={blog.date}
-                  to={`/blogs/${blog._id}`}
-                  CardTitle={blog.title}
-                  CardDescription={blog.message}
-                  image={blog.img}
-                  id={blog._id}
-                />)
-              }
-              )}
-
+                console.log(blog);
+                return (
+                  <BlogCard
+                    date={blog.date}
+                    to={`/blogs/${blog._id}`}
+                    CardTitle={blog.title}
+                    CardDescription={blog.message}
+                    image={blog.img}
+                    id={blog._id}
+                  />
+                );
+              })}
             </div>
           </div>
         </section>
       </div>
-
     </div>
   );
 };
 
 export default AdminBlogPage;
 
-
-
 const BlogCard = ({ image, id, date, CardTitle, CardDescription }) => {
-
   const extractInnerText = (html) => {
     const parser = new DOMParser();
     const doc = parser.parseFromString(html, "text/html");
@@ -191,12 +196,25 @@ const BlogCard = ({ image, id, date, CardTitle, CardDescription }) => {
   return (
     <>
       <Link to={`/blogs/${id}`} className="flex flex-col bg-gray-50">
-        <a rel="noopener noreferrer" href="#" aria-label="Te nulla oportere reprimique his dolorum">
-          <img alt="" className="object-cover w-full h-52 dark:bg-gray-500" src={image} />
+        <a
+          rel="noopener noreferrer"
+          href="#"
+          aria-label="Te nulla oportere reprimique his dolorum"
+        >
+          <img
+            alt=""
+            className="object-cover w-full h-52 dark:bg-gray-500"
+            src={image}
+          />
         </a>
         <div className="flex flex-col flex-1 p-6">
-          <h3 className="flex-1 py-2 text-lg font-semibold leadi"> {CardTitle}</h3>
-          <p className="text-gray-500">{extractInnerText(CardDescription?.slice(0, 300))}</p>
+          <h3 className="flex-1 py-2 text-lg font-semibold leadi">
+            {" "}
+            {CardTitle}
+          </h3>
+          <p className="text-gray-500">
+            {extractInnerText(CardDescription?.slice(0, 300))}
+          </p>
           <div className="flex flex-wrap justify-between pt-3 space-x-2 text-xs ">
             <span>{new Date(date).toDateString()}</span>
           </div>

@@ -13,7 +13,7 @@ const StafManagement = () => {
     const { data: staffInfo = [], refetch } = useQuery({
         queryKey: ["staffInfo"],
         queryFn: async () => {
-            const res = await fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/all-staff?shopEmail=${user.shopEmail}`);
+            const res = await fetch(`https://backend.doob.com.bd/api/v1/seller/all-staff?shopEmail=${user.shopEmail}`);
             const data = await res.json();
             localStorage.setItem('price', JSON.stringify(data?.data));
             return data;
@@ -35,7 +35,7 @@ const StafManagement = () => {
 
     if (isDelete) {
 
-        fetch(`https://salenow-v2-backend.vercel.app/api/v1/seller/staff-delete?email=${deleteId}`, {
+        fetch(`https://backend.doob.com.bd/api/v1/seller/staff-delete?email=${deleteId}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
@@ -43,7 +43,7 @@ const StafManagement = () => {
         }).then((res) => res.json()).then((data) => {
             setIsDelete(false)
             setDeletId('')
-            Swal.fire('Shop is Deleted', '', 'success')
+            Swal.fire('Staff account is Deleted', '', 'success')
             refetch('')
         })
 
