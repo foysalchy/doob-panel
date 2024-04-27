@@ -104,7 +104,7 @@ const AddPage = () => {
     imageFormData.append("image", MetaImage);
     const imageUrl = await uploadImage(imageFormData);
 
-    const faq = {
+    const pageData = {
       title,
       description,
       metaTag,
@@ -121,7 +121,7 @@ const AddPage = () => {
       headers: {
         "content-type": "application/json",
       },
-      body: JSON.stringify(faq),
+      body: JSON.stringify(pageData),
     })
       .then((res) => res.json())
       .then((data) => {

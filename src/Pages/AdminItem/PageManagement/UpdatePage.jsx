@@ -2,20 +2,28 @@ import JoditEditor from "jodit-react";
 import React, { useState } from "react";
 import { RxCross2 } from "react-icons/rx";
 import Swal from "sweetalert2";
+import useImageUpload from "../../../Hooks/UploadImage";
 
 const UpdatePage = ({ OpenModal, setOpenModal, FAQInfo, refetch }) => {
+  const { uploadImage } = useImageUpload();
   const handleFAQUpdate = async (e) => {
     e.preventDefault();
 
     const title = e.target.title.value;
     const description = e.target.description.value;
-    const MetaTag = e.target.MetaTag.value;
-    const MetaDescription = e.target.MetaDescription.value;
+    const metaTag = e.target.metaTag.value;
+    const metaDescription = e.target.metaDescription.value;
+    const MetaImage = e.target.metaImg.files[0];
+
+    const imageUrl = await uploadImage(MetaImage);
+    console.log(imageUrl);
 
     const data = {
       title,
       description,
-      MetaDescription,
+      metaDescription,
+      metaImg: imageUrl,
+      metaTag,
     };
 
     try {
@@ -42,13 +50,14 @@ const UpdatePage = ({ OpenModal, setOpenModal, FAQInfo, refetch }) => {
 
   return (
     <div
-      className={`fixed z-50 top-0 left-0 flex h-full min-h-screen w-full items-center justify-center bg-black bg-opacity-90 px-4 py-5 ${OpenModal ? "block" : "hidden"
-        }`}
+      className={`fixed z-50 top-0 left-0 flex h-full min-h-screen w-full items-center justify-center bg-black bg-opacity-90 px-4 py-5 ${
+        OpenModal ? "block" : "hidden"
+      }`}
     >
       <div className="w-full max-w-[800px] rounded-[20px] bg-white pb-10 px-8 text-center md:px-[30px]">
         <div className="flex justify-between z-50 pt-4 items-start w-full sticky top-0 bg-white border-b">
           <div className="pb-2 text-xl font-bold text-dark text-center sm:text-2xl">
-            Update FAQ
+            Update Page
           </div>
           <div
             onClick={() => setOpenModal(!OpenModal)}
@@ -100,17 +109,31 @@ const UpdatePage = ({ OpenModal, setOpenModal, FAQInfo, refetch }) => {
           </div>
 
           <input
-            name="MetaTag"
+            name="metaTag"
             placeholder="Meta Tag"
             className="w-full p-2 my-4 border"
             defaultValue={FAQInfo.metaTag}
           />
           <textarea
-            name="MetaDescription"
+            name="metaDescription"
             placeholder="Meta Description"
             className="w-full p-2 my-4 border"
             defaultValue={FAQInfo.metaDescription}
           />
+          <div>
+            <label className="sr-only text-black" htmlFor="metaImg">
+              Meta Image
+            </label>
+            <input
+              required
+              className="w-full rounded-lg border border-gray-900 p-3 text-sm"
+              placeholder="Meta image...."
+              // onChange={imageUploading}
+              type="file"
+              id="metaImg"
+              name="metaImg"
+            />
+          </div>
 
           <div className="flex justify-start">
             <button
