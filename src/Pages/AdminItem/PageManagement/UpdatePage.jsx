@@ -89,6 +89,12 @@ const UpdatePage = ({ OpenModal, setOpenModal, FAQInfo, refetch }) => {
                 value={FAQInfo.description}
                 name="description"
                 id="answer"
+                config={{
+                  readonly: false,
+                  uploader: {
+                    insertImageAsBase64URI: true,
+                  },
+                }}
               />
             </div>
           </div>

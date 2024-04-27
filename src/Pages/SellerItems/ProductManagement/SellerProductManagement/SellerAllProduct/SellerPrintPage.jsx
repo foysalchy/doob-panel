@@ -73,13 +73,13 @@ const SellerPrintPage = ({ setOn, products }) => {
                                                 <div className="imgSm  ">
                                                     <img
                                                         className="object-cover w-10 h-10 rounded"
-                                                        srcSet={product?.images[0].src}
-                                                        src={product?.images[0].src}
+                                                        srcSet={product?.featuredImage?.src}
+                                                        src={product?.featuredImage?.src}
                                                         alt=""
                                                     />
                                                     <div
                                                         style={{
-                                                            backgroundImage: `url(${product?.images[0].src})`,
+                                                            backgroundImage: `url(${product?.featuredImage?.src})`,
                                                         }}
                                                         className="absolute top-[-40px] duration-150 abs hidden bg-[url(${product?.featuredImage?.src})] left-[43px] object-cover bg-cover bg-white shadow-xl opacity-100 z-50 w-[150px] h-[150px] ring-1 ring-gray-500"
                                                     >
@@ -88,7 +88,7 @@ const SellerPrintPage = ({ setOn, products }) => {
 
                                                 <div>
                                                     <h2 className="font-medium text-gray-800  ">
-                                                        {product?.name.split(' ').slice(0, 5).join(' ')}
+                                                        {product?.name?.split(' ').slice(0, 5).join(' ')}
                                                     </h2>
                                                     <p className="text-sm font-normal text-gray-600 ">
                                                         {product?.sku}

@@ -60,7 +60,7 @@ const SellerLoginCredintiial = () => {
       },
     };
 
-    fetch("http://localhost:5001/api/v1/shop/firebase/add", {
+    fetch("https://backend.doob.com.bd/api/v1/shop/firebase/add", {
       method: "PATCH",
       body: JSON.stringify(data),
       headers: {
@@ -87,7 +87,7 @@ const SellerLoginCredintiial = () => {
     queryFn: async () => {
       try {
         const res = await fetch(
-          `http://localhost:5001/api/v1/shop/firebase/${shopInfo?.shopId}`,
+          `https://backend.doob.com.bd/api/v1/shop/firebase/${shopInfo?.shopId}`,
           {
             headers: {
               "ngrok-skip-browser-warning": "69420",
@@ -116,7 +116,7 @@ const SellerLoginCredintiial = () => {
               Email
             </label>
             <input
-             
+
               defaultValue={shopCredential.email ? shopCredential.email : ""}
               type="email"
               name="email"
@@ -132,7 +132,7 @@ const SellerLoginCredintiial = () => {
               Api Key
             </label>
             <input
-             
+
               defaultValue={shopCredential.apiKey ? shopCredential.apiKey : ""}
               type="text"
               name="apiKey"
@@ -148,7 +148,7 @@ const SellerLoginCredintiial = () => {
               Auth Domain
             </label>
             <input
-            
+
               defaultValue={
                 shopCredential.authDomain ? shopCredential.authDomain : ""
               }
@@ -166,7 +166,7 @@ const SellerLoginCredintiial = () => {
               Project Id
             </label>
             <input
-             
+
               defaultValue={
                 shopCredential.email ? shopCredential.projectId : ""
               }
@@ -184,7 +184,7 @@ const SellerLoginCredintiial = () => {
               Storage Bucket
             </label>
             <input
-             
+
               defaultValue={
                 shopCredential.storageBucket ? shopCredential.storageBucket : ""
               }
@@ -202,7 +202,7 @@ const SellerLoginCredintiial = () => {
               Messaging Sender ID
             </label>
             <input
-             
+
               defaultValue={
                 shopCredential.messagingSenderId
                   ? shopCredential.messagingSenderId
@@ -222,7 +222,7 @@ const SellerLoginCredintiial = () => {
               App ID
             </label>
             <input
-            
+
               defaultValue={shopCredential.appId ? shopCredential.appId : ""}
               type="text"
               name="appId"
@@ -238,7 +238,7 @@ const SellerLoginCredintiial = () => {
               Measurement ID
             </label>
             <input
-             
+
               defaultValue={
                 shopCredential.measurementId ? shopCredential.measurementId : ""
               }

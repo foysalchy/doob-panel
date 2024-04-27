@@ -12,7 +12,7 @@ const ReviewTableRow = ({ refetch, itm }) => {
 
   const handleDelete = () => {
     fetch(
-      `http://localhost:5001/api/v1/seller/review?id=${itm?._id}`,
+      `https://backend.doob.com.bd/api/v1/seller/review?id=${itm?._id}`,
       {
         method: "DELETE",
       }

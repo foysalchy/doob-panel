@@ -63,7 +63,7 @@ const Starts = () => {
     },
   });
 
-  const topSel = products.sort((a, b) => {
+  const topSel = products.length && products?.sort((a, b) => {
     return (b.total_sales || 0) - (a.total_sales || 0);
   });
 
@@ -154,7 +154,7 @@ const Starts = () => {
                           <span className="w-full text-sm">Email</span>
                         </li>
                         {sellerData &&
-                          sellerData?.slice(0, 10).map((itm) => (
+                          sellerData?.slice(0, 10)?.map((itm) => (
                             <li
                               className="grid grid-cols-3 gap-4 py-2 border-b border-gray-400 text-sm text-gray-500"
                               key={itm?._id}
@@ -390,7 +390,7 @@ const Starts = () => {
                 </thead>
                 <tbody>
                   {sellerData &&
-                    products?.slice(0, 20).map((item, index) => (
+                    products.length && products?.slice(0, 20)?.map((item, index) => (
                       <tr>
                         <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left text-blueGray-700">
                           {index + 1}{" "}

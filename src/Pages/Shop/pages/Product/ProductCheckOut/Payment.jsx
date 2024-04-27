@@ -49,7 +49,7 @@ const Payment = () => {
       data.file = fileName;
       setPassData(data);
       fetch(
-        `https://backend.doob.com.bd/api/v1/shop/user/order?token=${shopUser._id}`,
+        `http://localhost:5001/api/v1/shop/user/order?token=${shopUser._id}`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },

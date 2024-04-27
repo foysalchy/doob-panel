@@ -81,11 +81,10 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
         {menu ? <FaAngleLeft /> : <FaAngleRight />}
       </button> */}
       <div
-        className={`${
-          responsive
-            ? "flex  h-screen  overflow-y-auto  flex-col  md:p-3 p-0 lg:w-[70px] md:w-[70px] w-0  border-r-2  "
-            : "flex flex-col  p-6 md:w-64 w-[300px]  h-screen  overflow-y-auto"
-        } md:relative fixed  z-[4000] bg-[#111827] text-white  top-0 left-0 bottom-0`}
+        className={`${responsive
+          ? "flex  h-screen  overflow-y-auto  flex-col  md:p-3 p-0 lg:w-[70px] md:w-[70px] w-0  border-r-2  "
+          : "flex flex-col  p-6 md:w-64 w-[300px]  h-screen  overflow-y-auto"
+          } md:relative fixed  z-[4000] bg-[#111827] text-white  top-0 left-0 bottom-0`}
       >
         <div className="space-y-3">
           <div className="flex items-center justify-between">
@@ -1647,7 +1646,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
 
                         {openDropdownIndex == 4 && (
                           <ul className="mt-2 space-y-1 px-4">
-                            {user?.staffRole ? (
+                            {/* {user?.staffRole ? (
                               user?.permissions.find(
                                 (itm) => itm?.name === "Page Management"
                               ) ? (
@@ -1681,7 +1680,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                 <MdOutlineSubscriptions className="w-5 h-5 fill-current text-gray-400" />
                                 {menu && <span>Add Page</span>}
                               </NavLink>
-                            )}
+                            )} */}
 
                             {user?.staffRole ? (
                               user?.permissions.find(

@@ -162,7 +162,7 @@ const AddNewStaff = () => {
                     const userId = email.value.replace(/[@.]/g, '');
                     const createdAt = new Date();
 
-                    const signUpResponse = await fetch(`http://localhost:5001/api/v1/auth/sign-up`, {
+                    const signUpResponse = await fetch(`https://backend.doob.com.bd/api/v1/auth/sign-up`, {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json",
@@ -189,7 +189,7 @@ const AddNewStaff = () => {
 
             const permissions = selectedValue;
             const data = { user, shopEmail: shopInfo?.shopEmail, permissions, role: user_role, oldEmail: user.email, };
-            console.log(data); const staffRoleResponse = await fetch(`http://localhost:5001/api/v1/seller/staff-add`, {
+            console.log(data); const staffRoleResponse = await fetch(`https://backend.doob.com.bd/api/v1/seller/staff-add`, {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json'
