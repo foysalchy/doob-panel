@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import { BiEdit } from "react-icons/bi";
+import { FaLongArrowAltRight } from "react-icons/fa";
 
 const MegaCategoryManagement = () => {
   const { data: megaCategory = [], refetch } = useQuery({
@@ -111,10 +112,21 @@ const MegaCategoryManagement = () => {
   return (
     <div>
       <Link to={"add"}>
-        <button className={style.addBtn}> +Add mega category</button>
+        <button
+
+          className="group mt-4 relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
+        >
+          <span className="absolute -start-full transition-all group-hover:start-4">
+            <FaLongArrowAltRight />
+          </span>
+          <span className="text-sm font-medium transition-all group-hover:ms-4">
+            Add Mega Category
+          </span>
+        </button>
+        {/* <button className={style.addBtn}> +Add mega Manage category</button> */}
       </Link>{" "}
       <br />
-      <div className="max-w-screen-xl mx-auto px-4 md:px-8">
+      <div className="max-w-screen-xl mx-auto ">
         <div className="mt-12 shadow-sm border rounded-lg overflow-x-auto">
           <table className="w-full table-auto text-sm text-left">
             <thead className="bg-gray-50 text-gray-600 font-medium border-b">

@@ -104,8 +104,8 @@ const Withdraw = () => {
       });
   };
 
-  const currentAvailableAmount = totalAllTotalPrices - total_request_amount;
-
+  const currentAvailableAmount = parseInt(totalAllTotalPrices) - parseInt(total_request_amount);
+  console.log(currentAvailableAmount);
   console.log(withdrawHistory);
 
   return (
@@ -128,7 +128,7 @@ const Withdraw = () => {
           <div className="flex items-center">
             <p className="mr-2">Current Balance</p>
             <p className="text-green-500 font-bold">
-              ৳{currentAvailableAmount.toFixed(2)}
+              ৳ {currentAvailableAmount.toFixed(2)}
             </p>
           </div>
         </div>
