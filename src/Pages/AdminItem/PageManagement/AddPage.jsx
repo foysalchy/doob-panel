@@ -20,6 +20,7 @@ const AddPage = () => {
   });
   const [draftSaved, setDraftSaved] = useState(false);
   const [message, setMessage] = useState("");
+  const [submit, setSubmit] = useState(false);
   const { user } = useContext(AuthContext);
   //! for drafts
   const handleInputChange = (field, value) => {
@@ -36,17 +37,21 @@ const AddPage = () => {
       draftSaved && currentLocation.pathname !== nextLocation.pathname
   );
 
+  // console.log("blocker", blocker);
   useEffect(() => {
     const isFormDataEmpty = Object.values(formData).every(
       (value) => value === ""
     );
+    // console.log("draftSaved", draftSaved);
+
     setDraftSaved(!isFormDataEmpty);
   }, [formData]);
 
-  const [submit, setSubmit] = useState(false)
   useEffect(() => {
-    if (blocker.state === "blocked" || submit === false) {
-      console.log("yess");
+    if (blocker.state === "blocked" && submit) {
+      blocker.proceed();
+    } else if (blocker.state === "blocked" && draftSaved && !submit) {
+      // console.log("yess");
       // event.preventDefault();
       // event.returnValue = ""; // Required for some browsers
       const confirmed = window.confirm(
@@ -74,19 +79,18 @@ const AddPage = () => {
             Swal.fire("Drafts Saved", "", "success");
             blocker.proceed();
           });
-
-        // blocker.proceed();
       } else {
+        console.log("blocker", blocker);
+        console.log("not confirmed");
+        blocker.proceed();
       }
     }
   }, [draftSaved, blocker, submit]);
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const dataSubmit = async (event) => {
     setLoading(true);
-
-    setSubmit(true)
     event.preventDefault();
     const form = event.target;
     const title = form.title.value;
@@ -109,6 +113,8 @@ const AddPage = () => {
       metaImg: imageUrl,
     };
 
+    // navigate("/admin/page-management");
+    // return;
 
     fetch(`https://backend.doob.com.bd/api/v1/admin/addpage`, {
       method: "POST",
@@ -119,15 +125,11 @@ const AddPage = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-
         setLoading(false);
-        // blocker.proceed();
         Swal.fire("success", "Your Blog Publish Successfully", "success");
-        navigate('/admin/page-management')
-
-
-
-        form.reset();
+        navigate("/admin/page-management");
+        // form.reset();
+        setSubmit(true); // Move this line here
       });
   };
 
@@ -193,8 +195,7 @@ const AddPage = () => {
                       insertImageAsBase64URI: true,
                     },
                   }}
-                // value={formData.message}
-
+                  // value={formData.message}
                 ></JoditEditor>
               </div>
             </div>
