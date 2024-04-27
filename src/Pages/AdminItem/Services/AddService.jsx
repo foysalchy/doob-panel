@@ -75,7 +75,7 @@ const AddService = () => {
 
     const metaImageFormData = new FormData();
     metaImageFormData.append("image", MetaImage);
-    console.log(metaImageFormData, imageFormData);
+    // console.log(metaImageFormData, imageFormData);
 
     const metaImageUrl = await uploadImage(metaImageFormData);
 

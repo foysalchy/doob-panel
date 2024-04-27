@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { AuthContext } from "../../../../AuthProvider/UserProvider";
 import { FaLongArrowAltLeft, FaLongArrowAltRight } from "react-icons/fa";
@@ -15,11 +15,29 @@ export default function EditCampaign() {
     navigate(-1);
   };
 
+  const { data: campaignDefaultData = {}, refetch: reload } = useQuery({
+    queryKey: ["campaignData"],
+    queryFn: async () => {
+      const res = await fetch(
+        `http://localhost:5001/api/v1/seller/get-single-campaign?id=662cfd09e88f0e8549ef70a7`
+      );
+      const data = await res.json();
+      console.log("data", data);
+      return data.data;
+    },
+  });
+
+  console.log(campaignDefaultData);
+
   const [loading, setLoading] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
 
   const [selectedProducts, setSelectedProducts] = useState([]);
   const [prices, setPrices] = useState({});
+
+  useEffect(() => {
+    setIsChecked(campaignDefaultData?.isFlash ?? false);
+  }, [campaignDefaultData]);
 
   const handleProductChange = (selectedOptions) => {
     setSelectedProducts(selectedOptions);
@@ -64,6 +82,9 @@ export default function EditCampaign() {
     const MetaDescription = form.metaDescription.value;
     const startTime = form.startTime ? form.startTime.value : "";
     const endTime = form.endTime ? form.endTime.value : "";
+
+    // console.log("startTime", startTime);
+    // return;
     const image = form.image.files[0];
     const MetaImage = form.metaImage.files[0];
     const shopId = shopInfo._id;
@@ -150,7 +171,7 @@ export default function EditCampaign() {
       </button>
 
       <h2 className="text-2xl font-semibold text-black mb-6 text-center">
-        Upload a campaign for your shop
+        Update the campaign for your shop
       </h2>
 
       <div>
@@ -166,6 +187,7 @@ export default function EditCampaign() {
               <input
                 required
                 type="text"
+                defaultValue={campaignDefaultData?.name ?? ""}
                 id="name"
                 name="name"
                 className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:ring border-black"
@@ -230,6 +252,7 @@ export default function EditCampaign() {
                     required
                     type="datetime-local"
                     name="startTime"
+                    defaultValue={campaignDefaultData?.startTime ?? ""}
                     className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:ring border-black"
                   />
                 </div>
@@ -243,6 +266,7 @@ export default function EditCampaign() {
                   <input
                     required
                     type="datetime-local"
+                    defaultValue={campaignDefaultData?.endTime ?? ""}
                     name="endTime"
                     className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:ring border-black"
                   />
@@ -262,6 +286,7 @@ export default function EditCampaign() {
                 type="text"
                 id="metaTitle"
                 name="metaTitle"
+                defaultValue={campaignDefaultData?.MetaTag ?? ""}
                 className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:ring border-black"
                 placeholder="Enter meta title"
               />
@@ -294,6 +319,7 @@ export default function EditCampaign() {
                 required
                 id="metaDescription"
                 name="metaDescription"
+                defaultValue={campaignDefaultData?.MetaDescription ?? ""}
                 rows="3"
                 className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:ring border-black"
                 placeholder="Enter meta description"
