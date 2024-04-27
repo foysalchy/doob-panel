@@ -23,6 +23,7 @@ const UserServiceCheckout = () => {
     }
 
     const sendPlaceOrderData = () => {
+        const orderData = [{ ...findService }]; // Create an array and add findService object
         const data = {
             normalPrice: total,
             productId: findService._id,
@@ -36,12 +37,18 @@ const UserServiceCheckout = () => {
             shippingFee,
             shippingFeeDiscount,
             time_duration: findService.subscriptionPeriod
-
-        }
+        };
 
         setOrderStage(data);
-        navigate('/user-service-payment')
-    }
+        navigate('/user-service-payment');
+
+        localStorage.setItem('orderServiceData', JSON.stringify(orderData)); // Store the array in localStorage
+    };
+
+
+
+    // const datas = JSON.parse(localStorage.getItem('orderServiceData') || '')
+    // console.log(datas, 'from localStorage', findService);
 
     return (
         <div className='px-4 py-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-10'>
