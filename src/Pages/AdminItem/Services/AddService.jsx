@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import BrightAlert from "bright-alert";
 import JoditEditor from "jodit-react";
 import React from "react";
 import { useState } from "react";
@@ -54,13 +55,13 @@ const AddService = () => {
     }
   };
 
-  const [message, setMessage] = useState("");
 
   const dataSubmit = async (event) => {
     setLoading(true);
     event.preventDefault();
     const form = event.target;
     const title = form.title.value;
+
     const price = form.price.value;
     const image = form.photo.files[0];
     const category = form.category.value;
@@ -76,24 +77,32 @@ const AddService = () => {
     const metaImageFormData = new FormData();
     metaImageFormData.append("image", MetaImage);
     console.log(metaImageFormData, imageFormData);
+    const message = form.message.value;
 
     const metaImageUrl = await uploadImage(metaImageFormData);
 
     const service = {
       title,
       price,
-      message,
+      message: message,
       img: imageUrl,
       category,
       subscriptionPeriod,
       MetaTag,
       MetaDescription,
       MetaImage: metaImageUrl,
+      timestamp: new Date().toString(),
+      status: true
     };
 
     console.log(metaImageUrl);
 
-    postService(service, form);
+    try {
+      postService(service, form);
+    } catch (error) {
+      BrightAlert(`${error.message}`, '', 'error');
+      setLoading(false);
+    }
   };
 
   async function uploadImage(formData) {
@@ -125,9 +134,7 @@ const AddService = () => {
       });
   };
 
-  const handleChange = (content) => {
-    setMessage(content);
-  };
+
 
   return (
     <div>
@@ -247,7 +254,7 @@ const AddService = () => {
 
             <div>
               <div>
-                <ReactQuill
+                {/* <ReactQuill
                   name="message"
                   id="message"
                   className="h-36"
@@ -255,10 +262,20 @@ const AddService = () => {
                   onChange={handleChange}
                   modules={modules}
                   placeholder="Enter description here..."
+                /> */}
+                <JoditEditor
+                  config={{
+                    readonly: false,
+                    uploader: {
+                      insertImageAsBase64URI: true,
+                    },
+                  }}
+                  name="message"
+                  id="message"
                 />
                 <br />
                 <br />
-                {/* <JoditEditor name="message" id="message"></JoditEditor> */}
+
               </div>
             </div>
 

@@ -150,12 +150,13 @@ const ManageService = () => {
             {services?.length}
           </span>
         </div>
+        {console.log(filteredData)}
         {filteredData.length ? (
           <div className="flex flex-col mt-6 w-full">
             <div className="overflow-x-auto ">
               <div className="  py-2 pr-10">
-                <div className="overflow-hidden border border-gray-200 border-gray-700 md:rounded-lg">
-                  <table className=" w-full divide-y divide-gray-200 divide-gray-700">
+                <div className="overflow-hidden border  border-gray-700 md:rounded-lg">
+                  <table className=" w-full divide-y  divide-gray-700">
                     <thead className="bg-gray-50 ">
                       <tr>
                         <th
@@ -205,17 +206,16 @@ const ManageService = () => {
 
                         <th
                           scope="col"
-                          className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 text-gray-400"
+                          className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 "
                         >
                           Action
                         </th>
-                        <th scope="col" className="relative py-3.5 px-4">
-                          <span className="sr-only">Edit</span>
-                        </th>
+
                       </tr>
                     </thead>
                     <tbody className="bg-white divide-y  divide-gray-200 ">
-                      {filteredData.map((service) => (
+                      {console.log(filteredData)}
+                      {filteredData?.sort((a, b) => new Date(b?.timestamp) - new Date(a?.timestamp))?.map((service) => (
                         <tr>
                           <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                             <div className="inline-flex items-center gap-x-3">
@@ -229,14 +229,14 @@ const ManageService = () => {
                                   <h2 className="font-medium text-gray-800  ">
                                     {service?.title}
                                   </h2>
-                                  <p className="text-sm font-normal text-gray-600 text-gray-400">
+                                  <p className="text-sm font-normal text-gray-600 ">
                                     {service._id}
                                   </p>
                                 </div>
                               </div>
                             </div>
                           </td>
-                          <td className="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 text-gray-400">
+                          <td className="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 ">
                             {service.category}
                           </td>
                           <td className="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 text-gray-400">
