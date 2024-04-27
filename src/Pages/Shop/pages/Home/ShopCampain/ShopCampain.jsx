@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 
 const ShopCampain = () => {
   const { shop_id } = useContext(ShopAuthProvider);
-  const { data: shopCampainData = [], isLoading } = useQuery({
+  const { data: shopCampainData = [], isLoading, refetch } = useQuery({
     queryKey: ["shopCampain"],
     queryFn: async () => {
       const res = await fetch(
@@ -94,7 +94,7 @@ const ShopCampain = () => {
                             key={idx}
                             className="border border-gray-500 border-opacity-90 p-3 rounded"
                           >
-                            <Link to={`product/${product?._id}`}>
+                            <Link to={`flash-product/${product?._id}`}>
                               <a className="block relative rounded overflow-hidden">
                                 <img
                                   alt="ecommerce"
