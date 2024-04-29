@@ -119,17 +119,29 @@ const Variants = ({
   };
 
   const handleMultipleImg = async (e, index) => {
-    const imgs = e.target.files;
-    let imgUrls = [];
-    for (let i = 0; i < imgs.length; i++) {
-      const img = imgs[i];
-      const url = await Upload(img);
-      imgUrls.push({ src: url });
-    }
+   
+  };
 
-    const newInputFields = [...inputFields];
-    newInputFields[index].variantImag = imgUrls;
-    setInputFields(newInputFields);
+
+  const [images, setImages] = useState([]);
+
+  const handle_upload_image =async (e) => {
+      const fileList = Array.from(e.target.files);
+      for (let i = 0; i < images.length; i++) {
+        const img = images[i];
+        const url = await Upload(img);
+        imgUrls.push({ src: url });
+      }
+  
+      const newInputFields = [...inputFields];
+      newInputFields[index].variantImag = imgUrls;
+      setInputFields(newInputFields);
+  };
+
+  const handle_image_remove = (index) => {
+      const updatedImages = [...images];
+      updatedImages.splice(index, 1);
+      setImages(updatedImages);
   };
 
   const colourOptions = [
@@ -260,12 +272,53 @@ const Variants = ({
                   )}
                 </div>
                 <div>
-                  <input
+                  {/* <input
                     ccept="image/jpeg, image/png, image/gif, image/bmp, image/webp, image/heic"
                     onChange={(e) => handleMultipleImg(e, index)}
                     type="file"
                     multiple
-                  />
+                  /> */}
+                  <div className="space-y-2">
+                                <div className="flex items-center space-x-2">
+                                    <input
+                                        name='images'
+                                        className="w-full rounded-md border border-gray-300 p-2 focus:border-primary focus:outline-none"
+                                        id="images"
+                                        multiple
+                                        type="file"
+                                        onChange={handle_upload_image}
+                                    />
+                                </div>
+                                <div className="grid grid-cols-3 gap-2">
+                                    {images.map((image, index) => (
+                                        <div className="relative" key={index}>
+                                            <img
+                                                alt={`Image ${index + 1}`}
+                                                className="h-20 w-full border rounded-md object-cover"
+                                                src={image.url}
+                                            />
+                                            <button
+                                                className="absolute top-1 right-1 rounded-full bg-gray-800 p-1 text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500"
+                                                type="button"
+                                                onClick={() => handle_image_remove(index)}
+                                            >
+                                                <svg
+                                                    className="h-4 w-4"
+                                                    fill="currentColor"
+                                                    viewBox="0 0 20 20"
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                >
+                                                    <path
+                                                        clipRule="evenodd"
+                                                        d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                                        fillRule="evenodd"
+                                                    />
+                                                </svg>
+                                            </button>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
                 </div>
                 <Stock
                   field={field}

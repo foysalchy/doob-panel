@@ -81,9 +81,9 @@ const SellerAddCellModal = ({
     const warehouse = next
       ? preSelectWarehouse.warehouse
       : e.target.warehouse.value;
-    const area = next ? preSelectWarehouse.warehouse : e.target.area.value;
-    const rack = next ? preSelectWarehouse.warehouse : e.target.rack.value;
-    const self = next ? preSelectWarehouse.warehouse : e.target.self.value;
+    const area = next ? preSelectWarehouse.area : e.target.area.value;
+    const rack = next ? preSelectWarehouse.rack : e.target.rack.value;
+    const self = next ? preSelectWarehouse.self : e.target.self.value;
 
     const cell = e.target.cell.value;
     const data = {
@@ -241,7 +241,7 @@ const SellerAddCellModal = ({
             <FaLongArrowAltRight />
           </span>
           <span className="text-sm font-medium transition-all group-hover:ms-4">
-            Add Area
+            Add Cell
           </span>
         </button>
       </form>

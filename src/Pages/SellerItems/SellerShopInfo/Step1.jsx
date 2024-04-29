@@ -288,7 +288,7 @@ const Step1 = ({ nextStep, handleChange, values }) => {
             </p>
             <input
               required
-              type="text"
+              type="number"
               placeholder="Input Your Shop Phone Number"
               onChange={handleChange("shopNumber")}
               value={values.shopNumber}

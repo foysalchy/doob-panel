@@ -760,23 +760,68 @@ const SellerAllProducts = () => {
                                   </div>
                                 </div>
                               </td>
+
+
                               <td className="px-12 py-4 text-sm font-medium text-gray-700 flex gap-4 items-start  whitespace-nowrap">
-                                {!product.adminWare ? (
-                                  <div>
-                                    {product.
-                                      product_status === "reject"
-                                      ? <div>  <div
-                                        onClick={() =>
-                                          setRejectMessage(product)
-                                        }
-                                        className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 cursor-pointer bg-emerald-100/60 bg-gray-800"
-                                      >
-                                        <span className="h-1.5 w-1.5 rounded-full bg-danger-600" />
-                                        <h2 className="text-sm font-normal text-danger-600">
-                                          Rejected
-                                        </h2>
-                                      </div></div> : <div>
-                                        {product.status === true ? (
+                                {product.
+                                  product_status === "reject"
+                                  ? <div>  <div
+                                    onClick={() =>
+                                      setRejectMessage(product)
+                                    }
+                                    className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 cursor-pointer bg-emerald-100/60 bg-gray-800"
+                                  >
+                                    <span className="h-1.5 w-1.5 rounded-full bg-danger-600" />
+                                    <h2 className="text-sm font-normal text-danger-600">
+                                      Rejected
+                                    </h2>
+                                  </div></div> : <div>
+                                    {!product.adminWare ? (
+                                      <div>
+                                        {<div>
+                                          {product.status === true ? (
+                                            <div
+                                              onClick={() =>
+                                                updateProductStatus(
+                                                  product._id,
+                                                  false
+                                                )
+                                              }
+                                              className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 cursor-pointer bg-emerald-100/60 bg-gray-800"
+                                            >
+                                              <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                                              <h2 className="text-sm font-normal text-emerald-500">
+                                                Active
+                                              </h2>
+                                            </div>
+                                          ) : (
+                                            <div
+                                              onClick={() =>
+                                                updateProductStatus(
+                                                  product?._id,
+                                                  true
+                                                )
+                                              }
+                                              className="inline-flex items-center px-3 py-1 rounded-full  cursor-pointer gap-x-2 bg-emerald-100/60 bg-gray-800"
+                                            >
+                                              <span className="h-1.5 w-1.5 rounded-full bg-yellow-500" />
+                                              <h2 className="text-sm font-normal text-yellow-500">
+                                                Inactive
+                                              </h2>
+                                            </div>
+                                          )}
+                                        </div>}
+                                      </div>
+                                    ) : (
+                                      <div>
+                                        {!product?.status ? (
+                                          <div className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 cursor-pointer bg-emerald-100/60 bg-gray-800">
+                                            <span className="h-1.5 w-1.5 rounded-full bg-orange-500" />
+                                            <h2 className="text-sm font-normal text-orange-500">
+                                              Pending
+                                            </h2>
+                                          </div>
+                                        ) : (
                                           <div
                                             onClick={() =>
                                               updateProductStatus(
@@ -791,51 +836,10 @@ const SellerAllProducts = () => {
                                               Active
                                             </h2>
                                           </div>
-                                        ) : (
-                                          <div
-                                            onClick={() =>
-                                              updateProductStatus(
-                                                product?._id,
-                                                true
-                                              )
-                                            }
-                                            className="inline-flex items-center px-3 py-1 rounded-full  cursor-pointer gap-x-2 bg-emerald-100/60 bg-gray-800"
-                                          >
-                                            <span className="h-1.5 w-1.5 rounded-full bg-yellow-500" />
-                                            <h2 className="text-sm font-normal text-yellow-500">
-                                              Inactive
-                                            </h2>
-                                          </div>
                                         )}
-                                      </div>}
-                                  </div>
-                                ) : (
-                                  <div>
-                                    {!product?.status ? (
-                                      <div className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 cursor-pointer bg-emerald-100/60 bg-gray-800">
-                                        <span className="h-1.5 w-1.5 rounded-full bg-orange-500" />
-                                        <h2 className="text-sm font-normal text-orange-500">
-                                          Pending
-                                        </h2>
-                                      </div>
-                                    ) : (
-                                      <div
-                                        onClick={() =>
-                                          updateProductStatus(
-                                            product._id,
-                                            false
-                                          )
-                                        }
-                                        className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 cursor-pointer bg-emerald-100/60 bg-gray-800"
-                                      >
-                                        <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-                                        <h2 className="text-sm font-normal text-emerald-500">
-                                          Active
-                                        </h2>
                                       </div>
                                     )}
-                                  </div>
-                                )}
+                                  </div>}
 
                                 {product?.multiVendor === true ? (
                                   <div
@@ -1210,9 +1214,10 @@ const SellerAllProducts = () => {
               </button>
             </div>
           </div>
-        )}
-      </section>
-    </div>
+        )
+        }
+      </section >
+    </div >
   );
 };
 export default SellerAllProducts;

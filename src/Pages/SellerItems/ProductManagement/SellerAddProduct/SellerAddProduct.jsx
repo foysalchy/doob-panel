@@ -16,6 +16,7 @@ import Swal from "sweetalert2";
 import Variants from "./Components/Variants";
 import DarazOption from "./Components/DarazOption";
 import UploadImage from "./Components/UploadImage";
+import BrightAlert from "bright-alert";
 
 const SellerAddProduct = () => {
   const { shopInfo } = useContext(AuthContext);
@@ -255,9 +256,9 @@ const SellerAddProduct = () => {
       woo,
       categories,
       warehouse: warehouseValue,
-      shortDescription: shortDescription,
-      description: description,
-      banglaDescription: banglaDescription,
+      shortDescription: form.short_description.value,
+      description: form.description.value,
+      banglaDescription: form.bangla_description.value,
       sku: sku,
       regular_price: inputFields[0].price,
       stock_quantity: inputFields[0].quantity,
@@ -322,10 +323,10 @@ const SellerAddProduct = () => {
       .then((res) => res.json())
       .then((data) => {
         if (data.error) {
-          Swal.fire(`${data.message}`, "", "warning");
+         BrightAlert(`${data.error}`, '', 'warning')
           setLoading(false);
         } else {
-          Swal.fire("", "", "success");
+         BrightAlert('Product add successful')
           setLoading(false);
         }
       });

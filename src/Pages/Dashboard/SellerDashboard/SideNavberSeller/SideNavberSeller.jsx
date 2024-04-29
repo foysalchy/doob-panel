@@ -189,7 +189,8 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                               </span>
                             </summary>
 
-                            <ul className="mt-2 space-y-1 px-2 py-2 border border-[#80808043]">
+
+                            <ul className="mt-2 space-y-1 px-2 py-2 border border-[#80808043] w-full bg-white">
                               {user?.staffRole ? (
                                 user?.permissions.find(
                                   (itm) => itm?.name === "Product Management"
@@ -253,7 +254,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                   </li>
                                 ) : null
                               ) : (
-                                <li className="bg-[#1b202ea1]">
+                                <li className="bg-white">
                                   <details className="group [&_summary::-webkit-details-marker]:hidden flex items-center rounded-sm  ">
                                     <summary className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
                                       <div className="flex cursor-pointer items-center gap-2">
@@ -266,7 +267,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                       </span>
                                     </summary>
 
-                                    <ul className="mt-2 space-y-1 px-4 text-control">
+                                    <ul className="mt-2 bg-white space-y-1 px-4 text-control">
                                       <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
                                         <Link
                                           to={
@@ -619,98 +620,19 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                           </div>
 
                           {openDropdownIndex === 1 && (
-                            <ul className="mt-2 space-y-1 px-2 py-2 border border-[#80808043]">
+                            <ul className="mt-2 space-y-1  p-2 border border-[gray] bg-[#1b202ea1] w-full">
                               {user?.staffRole ? (
                                 user?.permissions.find(
                                   (itm) => itm?.name === "Product Management"
                                 ) ? (
                                   <li className="">
-                                    <details className="group [&_summary::-webkit-details-marker]:hidden flex items-center rounded-sm  ">
-                                      <summary className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
-                                        <div className="flex cursor-pointer items-center gap-2">
-                                          {/* <CgProductHunt className="w-5 h-5 fill-current text-gray-400" /> */}
-                                          <span> Management Product</span>
-                                        </div>
-
-                                        <span className="shrink-0 transition duration-300 group-open:-rotate-180">
-                                          <IoIosArrowDown className="h-5 w-5" />
-                                        </span>
-                                      </summary>
-
-                                      <ul className="mt-2 space-y-1 px-4 text-control">
-                                        <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                          <Link
-                                            to={
-                                              "/seller/product-management/add-product"
-                                            }
-                                            className="text-[10px] text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
-                                          >
-                                            Add Product
-                                          </Link>
-                                        </li>
-                                        <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                          <Link
-                                            to={"/products"}
-                                            className="text-[10px] text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
-                                          >
-                                            Add Doob Product
-                                          </Link>
-                                        </li>
-                                        <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                          <Link
-                                            to={
-                                              "/seller/product-management/add-daraz-product"
-                                            }
-                                            className=" text-[10px] text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
-                                          >
-                                            Add Daraz Product
-                                          </Link>
-                                        </li>
-                                        <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                          <Link
-                                            to={
-                                              "/seller/product-management/add-woo-product"
-                                            }
-                                            className="text-[10px] text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
-                                          >
-                                            Woo Product
-                                          </Link>
-                                        </li>
-                                        <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                          <Link
-                                            to={
-                                              "/seller/product-management/manage"
-                                            }
-                                            className="text-[10px] text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
-                                          >
-                                            Product Management
-                                          </Link>
-                                        </li>
-                                      </ul>
-                                    </details>
-                                  </li>
-                                ) : null
-                              ) : (
-                                <li className="bg-[#1b202ea1]">
-                                  <details className="group [&_summary::-webkit-details-marker]:hidden flex items-center rounded-sm  ">
-                                    <summary className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
-                                      <div className="flex cursor-pointer items-center gap-2">
-                                        {/* <CgProductHunt className="w-5 h-5 fill-current text-gray-400" /> */}
-                                        <span> Management Product</span>
-                                      </div>
-
-                                      <span className="shrink-0 transition duration-300 ">
-                                        <IoIosArrowDown className="h-5 w-5" />
-                                      </span>
-                                    </summary>
-
                                     <ul className="mt-2 space-y-1 px-4 text-control">
                                       <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
                                         <Link
                                           to={
                                             "/seller/product-management/add-product"
                                           }
-                                          className=" text-[10px] text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                          className="text-[14px] text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
                                         >
                                           Add Product
                                         </Link>
@@ -718,7 +640,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                       <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
                                         <Link
                                           to={"/products"}
-                                          className="text-[10px] text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                          className="text-[14px] text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
                                         >
                                           Add Doob Product
                                         </Link>
@@ -728,7 +650,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                           to={
                                             "/seller/product-management/add-daraz-product"
                                           }
-                                          className="text-[10px]  text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                          className=" text-[14px] text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
                                         >
                                           Add Daraz Product
                                         </Link>
@@ -738,7 +660,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                           to={
                                             "/seller/product-management/add-woo-product"
                                           }
-                                          className=" text-[10px] text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                          className="text-[14px] text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
                                         >
                                           Woo Product
                                         </Link>
@@ -748,13 +670,66 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                           to={
                                             "/seller/product-management/manage"
                                           }
-                                          className="text-[10px]  text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                          className="text-[14px] text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
                                         >
                                           Product Management
                                         </Link>
                                       </li>
                                     </ul>
-                                  </details>
+                                  </li>
+                                ) : null
+                              ) : (
+                                <li className="">
+                                  <ul className="flex flex-col gap-2">
+                                    <li className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
+                                      <Link
+                                        to={
+                                          "/seller/product-management/add-product"
+                                        }
+                                        className="text-[14px] text-center text-gray-50 flex gap-2 items-center px-4  space-x-3  rounded-md"
+                                      >
+                                        Add Product
+                                      </Link>
+                                    </li>
+                                    <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                      <Link
+                                        to={"/products"}
+                                        className="text-[14px] text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                      >
+                                        Add Doob Product
+                                      </Link>
+                                    </li>
+                                    <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                      <Link
+                                        to={
+                                          "/seller/product-management/add-daraz-product"
+                                        }
+                                        className=" text-[14px] text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                      >
+                                        Add Daraz Product
+                                      </Link>
+                                    </li>
+                                    <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                      <Link
+                                        to={
+                                          "/seller/product-management/add-woo-product"
+                                        }
+                                        className="text-[14px] text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                      >
+                                        Woo Product
+                                      </Link>
+                                    </li>
+                                    <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                      <Link
+                                        to={
+                                          "/seller/product-management/manage"
+                                        }
+                                        className="text-[14px] text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                      >
+                                        Product Management
+                                      </Link>
+                                    </li>
+                                  </ul>
                                 </li>
                               )}
 
@@ -1078,7 +1053,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                 </Link> */}
                           <div className="group [&_summary::-webkit-details-marker]:hidden flex items-center rounded-sm  ">
                             <summary className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
-                              <div className="flex cursor-pointer items-center gap-2">
+                              <div onClick={() => handleToggle(2)} className="flex cursor-pointer items-center gap-2">
                                 <BiShoppingBag className="w-5 h-5 fill-current text-gray-400" />
                                 <span>Orders</span>
                               </div>
@@ -1088,7 +1063,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                               </span>
                             </summary>
 
-                            <ul className="mt-2 space-y-1   px-2 bg-[#1b202ea1] border border-gray-500 py-2 border-opacity-50">
+                            {openDropdownIndex === 2 && <ul className="mt-2 space-y-1   px-2 bg-[#1b202ea1] border border-gray-500 py-2 border-opacity-50">
                               <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
                                 <Link
                                   to={"/seller/orders/manage-order"}
@@ -1116,7 +1091,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                   Manage Review
                                 </Link>
                               </li>
-                            </ul>
+                            </ul>}
                           </div>
                         </li>
                       ) : null
@@ -1126,7 +1101,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                     <BiArchive className="w-5 h-5 text-gray-400" />
                                                     <span>Order Management</span>
                                                 </Link> */}
-                        <details className="group [&_summary::-webkit-details-marker]:hidden flex items-center rounded-sm  ">
+                        <details onClick={() => handleToggle(2)} className="group [&_summary::-webkit-details-marker]:hidden flex items-center rounded-sm  ">
                           <summary className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
                             <div className="flex cursor-pointer items-center gap-2">
                               <BiShoppingBag className="w-5 h-5 fill-current text-gray-400" />
@@ -1138,7 +1113,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                             </span>
                           </summary>
 
-                          <ul className="mt-2 space-y-1  p-2 border border-[gray] bg-[#1b202ea1]">
+                          {openDropdownIndex === 2 && <ul className="mt-2 space-y-1  p-2 border border-[gray] bg-[#1b202ea1]">
                             <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
                               <Link
                                 to={"/seller/orders/manage-order"}
@@ -1184,7 +1159,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                 Manage Review
                               </Link>
                             </li>
-                          </ul>
+                          </ul>}
                         </details>
                       </li>
                     )}
@@ -2599,7 +2574,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
           </div>
         )}
       </div>
-    </div>
+    </div >
   );
 };
 

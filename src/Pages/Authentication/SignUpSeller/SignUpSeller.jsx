@@ -199,7 +199,7 @@ const SignUpSeller = () => {
           }
           setLoading(false);
 
-          form.reset();
+         
         });
     }
   };
@@ -367,7 +367,7 @@ const SignUpSeller = () => {
                         Sign up for updates
                       </h3>
                       <p className="text-xs text-start">
-                        We will send you the 4 digit verification code
+                        {/* We will send you the 4 digit verification code */}
                       </p>
                       <label
                         htmlFor="phone"
@@ -416,9 +416,9 @@ const SignUpSeller = () => {
                         Sign up for updates
                       </h3>
                       <p className="text-xs text-start">
-                        We have already send you 4 digit
+                        We have already sent you 4 digit
                         <br />
-                        verification code on your number : {phoneNumber}
+                        verification code to : {phoneNumber}
                       </p>
                       <span
                         htmlFor="otp"

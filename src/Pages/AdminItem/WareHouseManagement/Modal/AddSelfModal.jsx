@@ -162,7 +162,7 @@ const AddSelfModal = ({ setNewData, recall, setOpenModal }) => {
         </div>
 
         <div className=" mt-4">
-          <label className="text-sm">Add Self</label>
+          <label className="text-sm">Add Shelf</label>
           <input
             required
             name="self"

@@ -42,7 +42,7 @@ const SellerModalForWarehouse = ({ setOpenModal, OpenModal, data, refetch }) => 
                             preSelectWarehouse={warehouses} next={next} setNext={setNext} setWareHouses={setWareHouses} recall={refetch} />) ||
                         (newData == 'Add Rack' && <SellerAddRackModal
                             preSelectWarehouse={warehouses} setNewData={setNewData} setWareHouses={setWareHouses} next={next} setNext={setNext} setOpenModal={setOpenModal} recall={refetch} />) ||
-                        (newData == 'Add Self' && <SellerAddSelfModal setNewData={setNewData} preSelectWarehouse={warehouses} setWareHouses={setWareHouses} next={next} setNext={setNext} setOpenModal={setOpenModal} recall={refetch} />) ||
+                        (newData == 'Add Shelf' && <SellerAddSelfModal setNewData={setNewData} preSelectWarehouse={warehouses} setWareHouses={setWareHouses} next={next} setNext={setNext} setOpenModal={setOpenModal} recall={refetch} />) ||
                         (newData == 'Add Cell' && <SellerAddCellModal next={next} preSelectWarehouse={warehouses} setOpenModal={setOpenModal} recall={refetch} />)
                     }
 

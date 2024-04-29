@@ -13,6 +13,7 @@ const SellerShopInfo = () => {
                     <form className=' mx-auto rounded border-2 p-6' action="">
                         <div className='' >
 
+                            <div className='text-center text-xl font-bold border-b pb-2 capitalize'>You must to complete all the fields</div>
 
                             <div className='lg:p-10'>
 

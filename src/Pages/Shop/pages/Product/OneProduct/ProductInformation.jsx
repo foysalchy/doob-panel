@@ -200,7 +200,7 @@ const ProductInformation = () => {
     queryKey: ["comments"],
     queryFn: async () => {
       const res = await fetch(
-        `http://localhost:5001/api/v1/seller/product-comment?id=${product?.data?._id}`
+        `https://backend.doob.com.bd/api/v1/seller/product-comment?id=${product?.data?._id}`
       );
       const data = await res.json();
       return data?.comments;
