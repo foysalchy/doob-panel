@@ -31,7 +31,7 @@ const ShopNewProduct = () => {
     refetch();
   }, [shop_id])
   const data = [1, 2, 3, 4];
-  console.log(products);
+  console.log(products, 'asdasd');
 
   return (
     <div>
@@ -92,7 +92,7 @@ const ShopNewProduct = () => {
                           <img
                             alt="ecommerce"
                             className="object-cover object-center w-full md:h-[160px] h-[130px] block"
-                            src={product?.featuredImage?.src}
+                            src={product?.featuredImage && product?.featuredImage.src ? product?.featuredImage?.src : product?.images[0]?.src}
                           />
                         </a>
                         <div className="mt-2">

@@ -35,6 +35,7 @@ const ProductInformation = () => {
   const [variations, setVariations] = useState(null);
   const [showVariant, setShowVariant] = useState(product.data.images);
   console.log(product, "product");
+  const blankImg = 'https://backend.doob.com.bd/api/v1/image/66036ed3df13bd9930ac229c.jpg';
 
   const handleImageClick = (imageUrl) => {
     setSelectedImage(imageUrl);
@@ -49,7 +50,6 @@ const ProductInformation = () => {
     imageList.length > 0 ? imageList[0].src : ""
   );
 
-  // const blankImg = 'https://backend.doob.com.bd/api/v1/image/66036ed3df13bd9930ac229c.jpg';
 
   const path = useLocation();
 

@@ -86,7 +86,7 @@ const UpComingProducts = () => {
                       >
                         <div className="relative h-[180px] sm:h-[250px]">
                           <img
-                            src={product?.featuredImage?.src}
+                            src={product?.featuredImage.src ? product?.featuredImage?.src : product?.images[0]?.src} src={product?.featuredImage?.src}
                             alt=""
                             className="absolute inset-0 h-full w-full object-cover opacity-100 group-hover:opacity-0"
                           />

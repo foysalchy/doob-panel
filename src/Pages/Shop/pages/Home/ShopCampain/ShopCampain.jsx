@@ -8,8 +8,9 @@ import { Link } from "react-router-dom";
 
 const ShopCampain = () => {
   const { shop_id } = useContext(ShopAuthProvider);
+ 
   const { data: shopCampainData = [], isLoading, refetch } = useQuery({
-    queryKey: ["shopCampain"],
+     queryKey: ["shopCampain"],
     queryFn: async () => {
       const res = await fetch(
         `https://backend.doob.com.bd/api/v1/shop/shop-campaign?shop_id=${shop_id?.shop_id}`
@@ -99,9 +100,9 @@ const ShopCampain = () => {
                                 <img
                                   alt="ecommerce"
                                   className="object-cover object-center w-full md:h-[160px] h-[130px] block"
-                                  src={product?.featuredImage?.src}
+                                  src={product?.featuredImage.src ? product?.featuredImage?.src : product?.images[0]?.src}
                                 />
-                              </a>
+                              </a>.....
                               <div className="mt-2">
                                 <h2 className="text-gray-200 title-font md:text-lg text-sm font-medium">
                                   {product?.name.slice(0, 18)}..

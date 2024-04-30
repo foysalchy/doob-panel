@@ -19,6 +19,7 @@ const Home = () => {
                 <ShopProductHero />
                 <ShopProductCategory />
                 <ShopCampain />
+
                 <ShopNewProduct />
                 <ShopUpcoming />
                 <ShopFeature />

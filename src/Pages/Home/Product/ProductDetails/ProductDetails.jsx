@@ -417,6 +417,12 @@ const ProductDetails = () => {
           </div>
         </div>
 
+        <p>
+          {
+            ` ${productFind?.variantData?.product1?.quantity} '>' ${productFind?.variantData?.product2?.quantity} '===' ${productFind?.variantData?.product1?.quantityPrice}
+         ` }
+        </p>
+
         <div className="max-w-7xl mx-auto px-4 md:px-4 lg:px-12 mt-6 ">
           <div className="flex flex-col md:flex-row -mx-4 border rounded border-gray-300 py-4">
             <div className="md:flex-1 px-4">
