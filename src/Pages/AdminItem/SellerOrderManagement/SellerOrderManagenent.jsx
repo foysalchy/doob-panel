@@ -11,6 +11,7 @@ import AllOrderInvoice from "../../SellerItems/OrderManagment/ManageOrder/AllOrd
 import AllAdminOrderInvoice from "./AllAdminOrderInvoice";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../../AuthProvider/UserProvider";
+import SelectStatusUpdate from "./SelectStatusUpdate";
 
 const SellerOrderManagement = () => {
   const [selectedValue, setSelectedValue] = useState("All");
@@ -94,6 +95,8 @@ const SellerOrderManagement = () => {
       }
     });
   };
+
+  console.log(selectProducts, "selectProducts");
 
   //   !  all select
   const handleSelectAll = (e, data) => {
@@ -222,6 +225,7 @@ const SellerOrderManagement = () => {
     setIsOpen(!isOpen);
   };
 
+  const [selectedStatusModal, setSelectedStatusModal] = useState(false);
   // ! updated status all selected item
   const handleUpdateStatusForSelectedProducts = (status) => {
     console.log(status, "status");
@@ -274,7 +278,7 @@ const SellerOrderManagement = () => {
   console.log(ships, "ships");
 
   const productStatusUpdate = async (status, orderId) => {
-    console.log(status, orderId,'yyyyyyyyyyyy');
+    console.log(status, orderId, "yyyyyyyyyyyy");
     const res = await fetch(
       `https://backend.doob.com.bd/api/v1/seller/update-seller-order-status?orderId=${orderId}&status=${status}`,
       {
@@ -284,7 +288,7 @@ const SellerOrderManagement = () => {
       }
     );
     const data = await res.json();
-    console.log(data)
+    console.log(data);
     refetch();
   };
 
@@ -459,20 +463,36 @@ const SellerOrderManagement = () => {
                 tabIndex="-1"
               >
                 <div className="flex flex-col gap-2 py-2 " role="none">
-                  {allStatus?.map((item) => (
-                    <button
-                      key={item}
-                      className="block text-start px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                      onClick={() =>
-                        handleUpdateStatusForSelectedProducts(item)
-                      }
-                      role="menuitem"
-                      tabIndex="-1"
-                      id="dropdown-item-1"
-                    >
-                      {item}
-                    </button>
-                  ))}
+                  {allStatus?.map((item) =>
+                    item === "ready_to_ship" ? (
+                      <button
+                        key={item}
+                        className="block text-start px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                        onClick={() => {
+                          setSelectedStatusModal(item);
+                          toggleDropdown();
+                        }}
+                        role="menuitem"
+                        tabIndex="-1"
+                        id="dropdown-item-1"
+                      >
+                        {item}
+                      </button>
+                    ) : (
+                      <button
+                        key={item}
+                        className="block text-start px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                        onClick={() =>
+                          handleUpdateStatusForSelectedProducts(item)
+                        }
+                        role="menuitem"
+                        tabIndex="-1"
+                        id="dropdown-item-1"
+                      >
+                        {item}
+                      </button>
+                    )
+                  )}
                 </div>
               </div>
             )}
@@ -619,6 +639,18 @@ const SellerOrderManagement = () => {
                       </th>
                     </tr>
                   </thead>
+                  {selectedStatusModal && (
+                    <SelectStatusUpdate
+                      selectedStatusModal={selectedStatusModal}
+                      setSelectedStatusModal={setSelectedStatusModal}
+                      handleUpdateStatusForSelectedProducts={
+                        handleUpdateStatusForSelectedProducts
+                      }
+                      orderInfo={selectProducts[0]}
+                      refetch={refetch}
+                      ships={ships}
+                    />
+                  )}
                   <tbody className="bg-white divide-y divide-gray-200">
                     {currentData.length ? (
                       currentData?.map((product) => (
