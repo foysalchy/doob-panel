@@ -21,9 +21,11 @@ const StockManagement = () => {
   });
 
   const handleUpdate = (data) => {
-    console.log(data?.productId);
+    console.log(data);
+
+    // return;
     fetch(
-      `https://backend.doob.com.bd/api/v1/admin/stock-request-update?productId=${data?.productId}&orderId=${data?._id}&quantity=${data?.quantity}`,
+      `https://backend.doob.com.bd/api/v1/admin/stock-request-update?productId=${data?.productId}&orderId=${data?._id}&quantity=${data?.quantity}&SKU=${data?.SKU}`,
       {
         method: "PUT",
         headers: {
@@ -44,8 +46,8 @@ const StockManagement = () => {
 
   const filteredStockRequestData = searchQuery
     ? stockRequest.filter((item) =>
-      item._id.toLowerCase().includes(searchQuery.toLowerCase())
-    )
+        item._id.toLowerCase().includes(searchQuery.toLowerCase())
+      )
     : stockRequest;
 
   return (

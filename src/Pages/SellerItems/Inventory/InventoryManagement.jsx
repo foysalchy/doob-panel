@@ -212,7 +212,7 @@ const InventoryManagement = () => {
                     product?.low_stock_warning
                   );
                   return (
-                    <tr className="border-b ">
+                    <tr className="border-b " key={product?._id}>
                       <td className="whitespace-nowrap border-r px-2 py-2 font-medium ">
                         <img
                           src={product?.featuredImage?.src}
@@ -239,7 +239,10 @@ const InventoryManagement = () => {
                       </td>
 
                       <td className="whitespace-nowrap border-r px-6 py-4 font-medium ">
-                        {product?.stock_quantity},{product?.low_stock_warning}
+                        {product?.stock_quantity} /
+                        <span className="text-red-400">
+                           {product?.low_stock_warning}
+                        </span>
                       </td>
 
                       <td className="whitespace-nowrap border-r px-6 py-4 font-medium ">

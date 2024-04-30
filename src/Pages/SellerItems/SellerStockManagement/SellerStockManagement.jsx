@@ -22,8 +22,8 @@ const SellerStockManagement = () => {
   });
   const filteredStockRequest = searchQuery
     ? stockRequest.filter((item) =>
-      item._id.toLowerCase().includes(searchQuery.toLowerCase())
-    )
+        item._id.toLowerCase().includes(searchQuery.toLowerCase())
+      )
     : stockRequest;
 
   // const filterData = stockRequest.filter(itm => itm?._id.toLowerCase().includes(searchValue.toLowerCase()));
@@ -78,7 +78,7 @@ const SellerStockManagement = () => {
             </thead>
             <tbody className="bg-white divide-y divide-gray-200 ">
               {filteredStockRequest?.map((itm, index) => (
-                <tr>
+                <tr key={index + 1}>
                   <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                     <div className="inline-flex items-center gap-x-3">
                       <div className="w-5/12">
