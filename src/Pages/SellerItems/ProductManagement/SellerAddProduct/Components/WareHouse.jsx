@@ -116,6 +116,8 @@ const WareHouse = ({ adminWare, setAdminWare, shopInfo }) => {
     setSelectedCell(selectedCell);
   };
 
+  console.log(options.cells, `https://backend.doob.com.bd/api/v1/seller/warehouse/cell/${selectedWarehouse}/${selectedArea}/${selectedRack}/${selectedSelf}/${shopInfo._id}`);
+
   return (
     <div>
       <div className="border mt-4 border-gray-400 px-10 py-5 w-full bg-gray-100 rounded">
@@ -134,7 +136,7 @@ const WareHouse = ({ adminWare, setAdminWare, shopInfo }) => {
               className={
                 adminWare
                   ? "px-4 py-2 bg-gray-600 text-white  "
-                  : "px-4 py-2 bg-violet-400"
+                  : "px-4 py-2 bg-green-500 text-white shadow-xl shadow-green-500/50"
               }
             >
               {shopInfo.shopName}
@@ -151,8 +153,8 @@ const WareHouse = ({ adminWare, setAdminWare, shopInfo }) => {
               }}
               className={
                 !adminWare
-                  ? "px-4 py-2 bg-gray-600 text-white "
-                  : "px-4 py-2 bg-violet-400"
+                  ? "px-4 py-2 bg-gray-600 shadow-3 text-white "
+                  : "px-4 py-2 bg-green-500 text-white shadow-xl shadow-green-500/50"
               }
             >
               Doob
@@ -343,7 +345,7 @@ const WareHouse = ({ adminWare, setAdminWare, shopInfo }) => {
                       options={
                         options.cells.length &&
                         options.cells
-                          .filter((cell) => cell.status)
+                          .filter((cell) => cell?.status)
                           .map((cell) => ({
                             value: cell.cell,
                             label: cell.cell,

@@ -31,6 +31,8 @@ const Price = () => {
     },
   });
 
+
+
   return (
     <div className="px-4 py-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-20">
       <section className="text-gray-600 body-font overflow-hidden">
@@ -57,8 +59,8 @@ const Price = () => {
                   {price?.status && (
                     <>
                       {price?.best == "yes" ? (
-                        <div className="p-4 xl:w-1/4 md:w-1/2 w-full">
-                          <div className="h-full p-6 rounded-lg border-2 border-gray-300 flex flex-col  relative overflow-hidden">
+                        <div key={index} className="p-4 xl:w-1/4 md:w-1/2 w-full">
+                          <div className={`h-full p-6 rounded-lg border-2  flex flex-col  relative overflow-hidden ${ price._id ===shopInfo?.priceId ? 'border-indigo-500' : 'border-gray-300'}  `}>
                             <div className="flex  h-full flex-col justify-between">
                               <span className="bg-indigo-500 text-white px-3 py-1 tracking-widest text-xs absolute right-0 top-0 rounded-bl">
                                 POPULAR
@@ -98,7 +100,7 @@ const Price = () => {
                                         {permission
                                           .find((perm) => perm._id === price._id)
                                           ?.permissions?.map((itm) => (
-                                            <p className="flex items-center text-gray-600 mb-2">
+                                            <p key={itm._id} className="flex items-center text-gray-600 mb-2">
                                               <span className="w-4 h-4 mr-2 inline-flex items-center justify-center bg-gray-400 text-white rounded-full flex-shrink-0">
                                                 <svg
                                                   fill="none"
@@ -170,15 +172,19 @@ const Price = () => {
                           </div>
                         </div>
                       ) : (
-                        <div className="p-4 xl:w-1/4 md:w-1/2 w-full">
-                          <div className="h-full p-6 rounded-lg border-2 border-gray-300 flex flex-col  relative overflow-hidden">
-                            <div className="flex  h-full flex-col justify-between">
+                        <div className="p-4 xl:w-1/4 md:w-1/2  w-full">
+                          <div className={`h-full p-6 rounded-lg border-2  flex flex-col  relative overflow-hidden ${ price._id ===shopInfo?.priceId ? 'border-500-500 bg-slate-200' : 'border-gray-300'}  `}>
+                         { price._id ===shopInfo?.priceId && <div className="font-bold text-green-500 mb-2 text-lg text-center border-b-2 border-green-500 ">
+                            Running Package
+                         
+                          </div>}
+                            <div className="flex  h-full  flex-col justify-between">
                               <div className=" ">
                                 <h2 className="text-md text-black font-semibold">
                                   {price.name}
                                 </h2>
 
-                                <hr />
+                              
                                 <h2 className="text-sm tracking-widest title-font mb-1 font-medium"></h2>
 
                                 {price.benefits.map((benefit, index) => (

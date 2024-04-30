@@ -172,7 +172,7 @@ const ManageSelf = () => {
       <div className="mt-4 lg:pr-10 w-full mx-auto overflow-auto">
         <button
           className="group relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
-          onClick={() => handleViewDetails("Add Self")}
+          onClick={() => handleViewDetails("Add Shelf")}
         >
           <span className="absolute -start-full transition-all group-hover:start-4">
             <svg
@@ -192,15 +192,15 @@ const ManageSelf = () => {
           </span>
 
           <span className="text-sm font-medium transition-all group-hover:ms-4">
-            Add New Self
+            Add New Shelf
           </span>
         </button>
 
-        {OpenModal === "Add Self" && (
+        {OpenModal === "Add Shelf" && (
           <ModalForWarehouse
             OpenModal={OpenModal}
             setOpenModal={setOpenModal}
-            data={"Add Self"}
+            data={"Add Shelf"}
             refetch={refetch}
           />
         )}
@@ -242,7 +242,7 @@ const ManageSelf = () => {
             <thead>
               <tr>
                 <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-800  rounded-tl ">
-                  Self Name
+                  Shelf Name
                 </th>
                 <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-800 ">
                   Warehouse

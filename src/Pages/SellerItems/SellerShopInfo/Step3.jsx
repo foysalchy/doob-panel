@@ -119,23 +119,23 @@ const Step3 = ({ prevStep, submitForm, handleChange, values }) => {
         </ol>
       </div>
 
-      <div className="grid max-w-md gap-10 row-gap-5 lg:max-w-screen-lg sm:row-gap-10 lg:grid-cols-3 xl:max-w-screen-lg sm:mx-auto my-10">
+      <div className="grid max-w-md gap-10  row-gap-5 lg:max-w-screen-lg sm:row-gap-10 lg:grid-cols-3 xl:max-w-screen-lg sm:mx-auto my-10">
         {prices.length &&
           prices?.map((price, index) => (
-            <div key={index}>
+            <div  key={index}>
               {price.status && (
-                <div
-                  className={`flex cursor-pointer flex-col justify-between p-8 transition-shadow duration-300  border rounded  shadow-sm sm:items-center hover:shadow ${values.priceId === price._id
+                <a href="#next"
+                  className={`flex cursor-pointer h-full flex-col justify-between p-8 transition-shadow duration-300  border rounded  shadow-sm sm:items-center hover:shadow ${values.priceId === price._id
                     ? "border-blue-500 bg-gray-300"
                     : "" // Add a border if the price is selected
                     }`}
                   onClick={() => handlePriceClick(price._id)}
                 >
-                  <div className="text-center h-[500px]">
+                  <div className=" ">
                     <div className="text-lg font-semibold">{price.name}</div>
                     <hr />
                     {price.benefits.map((benefit, index) => (
-                      <p className="flex items-center text-gray-600 mb-2">
+                      <p className="flex text-left mt-2 items-center text-gray-600 mb-2">
                         <span className="w-4 h-4 mr-2 inline-flex items-center justify-center bg-gray-400 text-white rounded-full flex-shrink-0">
                           <svg
                             fill="none"
@@ -152,7 +152,7 @@ const Step3 = ({ prevStep, submitForm, handleChange, values }) => {
                         {benefit}
                       </p>
                     ))}
-
+                    
                     {permission.find((perm) => perm._id === price._id) && (
                       <div className="">
                         <div>
@@ -189,7 +189,7 @@ const Step3 = ({ prevStep, submitForm, handleChange, values }) => {
                       </div>
                     </div>
                   </div>
-                </div>
+                </a>
               )}
             </div>
           ))}
@@ -213,7 +213,8 @@ const Step3 = ({ prevStep, submitForm, handleChange, values }) => {
         <button
           onClick={submitForm}
           disabled={error}
-          className="group relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none mt-4 disabled:cursor-not-allowed disabled:bg-gray-700"
+          id="next"
+          className="group  relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none mt-4 disabled:cursor-not-allowed disabled:bg-gray-700"
         >
           <span className="absolute -end-full transition-all group-hover:end-4">
             <BsArrowRight />

@@ -1,4 +1,6 @@
+import BrightAlert from "bright-alert";
 import React, { useState } from "react";
+import { FaLongArrowAltRight } from "react-icons/fa";
 import Swal from "sweetalert2";
 
 const AddMegaCategory = () => {
@@ -44,8 +46,7 @@ const AddMegaCategory = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        Swal.fire("Mega category added");
-        console.log(data, "user submit................");
+        BrightAlert()
       });
   };
   return (
@@ -85,12 +86,23 @@ const AddMegaCategory = () => {
             className="w-full border-2 border-gray-300 p-2 rounded-lg mb-2"
           />
         </div>
-        <div className="flex flex-col gap-2">
-          <input
+        <div className=" gap-2">
+          {/* <input
             value={"Upload"}
             type="submit"
             className=" bg-black text-white border-gray-300 w-[100px] mt-6 duration-200 hover:shadow-lg p-2 rounded-lg mb-2"
-          />
+          /> */}
+          <button
+            type="submit"
+            className="group mt-4 relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
+          >
+            <span className="absolute -start-full transition-all group-hover:start-4">
+              <FaLongArrowAltRight />
+            </span>
+            <span className="text-sm font-medium transition-all group-hover:ms-4">
+              {loading ? 'Uploading' : 'Upload Mega Category'}
+            </span>
+          </button>
         </div>
       </form>
     </div>

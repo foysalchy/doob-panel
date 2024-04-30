@@ -23,14 +23,6 @@ const SubscriptionModel = () => {
     },
   });
 
-  console.log(open);
-
-  console.log("prices", prices);
-
-  console.log(
-    `https://backend.doob.com.bd/api/v1/seller/subscription-model?priceId=${shopInfo?.priceId}&shopId=${shopInfo._id}`,
-    "services time prices ====={}"
-  );
 
   const { data: CommissionHistory = [] } = useQuery({
     queryKey: ["commissionHistory"],
@@ -139,7 +131,7 @@ const SubscriptionModel = () => {
         </div>
       )}
 
-      {possibility && (
+      {possibility &&   (
         <div className="bg-orange-100 px-2 py-3 rounded- flex justify-between items-center">
           <p className="text-sm text-orange-800 capitalize ">
             Hi dear, Your free trial is end. Please renew{" "}
@@ -155,7 +147,7 @@ const SubscriptionModel = () => {
               <SubscriptionInvoice
                 pricesData={pricesData}
                 id={prices?._id}
-                CommissionHistory={commissionHistory}
+                CommissionHistory={CommissionHistory}
                 setInvoice={setInvoice}
                 invoice={invoice}
               />

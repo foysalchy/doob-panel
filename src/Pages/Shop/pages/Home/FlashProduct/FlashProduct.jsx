@@ -22,9 +22,9 @@ import MetaHelmet from "../../../../../Helmate/Helmate";
 import { ShopAuthProvider } from "../../../../../AuthProvider/ShopAuthProvide";
 import { useQuery } from "@tanstack/react-query";
 import BrightAlert from "bright-alert";
-import TrandingProductShop from "../TrandingProductShop/TrandingProductShop";
+import TrandingProductShop from "../../Product/TrandingProductShop/TrandingProductShop";
 
-const ProductInformation = () => {
+const FlashProduct = () => {
   const product = useLoaderData();
   // const [selectedImage, setSelectedImage] = useState(product.data.featuredImage.src);
   const [quantity, setQuantity] = useState(1);
@@ -35,7 +35,6 @@ const ProductInformation = () => {
   const [variations, setVariations] = useState(null);
   const [showVariant, setShowVariant] = useState(product.data.images);
   console.log(product, "product");
-  const blankImg = 'https://backend.doob.com.bd/api/v1/image/66036ed3df13bd9930ac229c.jpg';
 
   const handleImageClick = (imageUrl) => {
     setSelectedImage(imageUrl);
@@ -50,6 +49,7 @@ const ProductInformation = () => {
     imageList.length > 0 ? imageList[0].src : ""
   );
 
+  // const blankImg = 'https://backend.doob.com.bd/api/v1/image/66036ed3df13bd9930ac229c.jpg';
 
   const path = useLocation();
 
@@ -334,19 +334,20 @@ const ProductInformation = () => {
                           </svg>
                         </span>
                       ))}
-                      <span className="text-gray-600 ml-2">{product?.data?.rating / 5 || 0}</span>
+                      <span className="text-gray-600 ml-2">
+                        {product?.data?.rating / 5 || 0}
+                      </span>
                     </span>
                   </div>
-
-
                 </div>
                 <div className="flex item-center">
                   <div className="flex items-center">
                     {" "}
                     <FaCircle className="text-[#DBDBDB] text-[8px] mx-2 md:mx-4" />
                     <FaBasketShopping className="text-[#DBDBDB] mr-2 text-[16px]" />
-                    <p className="md:text-sm  text-[10px]">{product?.data?.total_sales + " "
-                    }  Sold</p>
+                    <p className="md:text-sm  text-[10px]">
+                      {product?.data?.total_sales + " "} Sold
+                    </p>
                   </div>
                 </div>
               </div>
@@ -361,16 +362,19 @@ const ProductInformation = () => {
               <div className="flex justify-between items-start">
                 <div className="title-font font-medium md:text-2xl text-lg text-gray-900 flex items-start">
                   <span>Price :</span>{" "}
-                  <div>
-                    <span className="kalpurush">৳</span>
-                    {variations?.price ? variations?.price : product.data.price}
-                    <br />
-                    {!variations && (
-                      <div className=" line-through text-lg text-gray-500">
+                  <div className="flex items-center gap-3">
+                    {
+                      <div className=" line-through text-xl text-gray-500">
                         <span className="kalpurush   ">৳</span>
                         {product.data.regular_price}
                       </div>
-                    )}
+                    }
+                    <p className="">
+                      <span className="kalpurush">৳</span>
+                      {product?.data?.campaignPrice
+                        ? product?.data?.campaignPrice
+                        : product?.data?.price}
+                    </p>
                   </div>
                 </div>
 
@@ -504,8 +508,8 @@ const ProductInformation = () => {
           <TrandingProductShop />
         </div>
       </div>
-    </section >
+    </section>
   );
 };
 
-export default ProductInformation;
+export default FlashProduct;

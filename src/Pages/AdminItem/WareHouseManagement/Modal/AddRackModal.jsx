@@ -68,7 +68,7 @@ const AddRackModal = ({ setNewData, recall, setOpenModal }) => {
         recall();
         refetch();
         if (nextStae) {
-          setNewData("Add Self");
+          setNewData("Add Shelf");
         } else {
           setOpenModal(false);
         }

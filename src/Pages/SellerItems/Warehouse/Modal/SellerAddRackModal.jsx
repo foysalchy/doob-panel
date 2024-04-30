@@ -94,7 +94,7 @@ const SellerAddRackModal = ({
         refetch();
         if (nextStae) {
           setNext(true);
-          setNewData("Add Self");
+          setNewData("Add Shelf");
         } else {
           setOpenModal(false);
         }

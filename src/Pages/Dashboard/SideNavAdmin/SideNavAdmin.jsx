@@ -839,7 +839,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                             className="  flex gap-2 items-center px-4 p-2 space-x-1  rounded-md"
                                           >
                                             <MdSelfImprovement className="w-5 h-5 fill-current text-gray-400 " />{" "}
-                                            Self Management
+                                            Shelf Management
                                           </Link>
                                         </li>
                                         <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">

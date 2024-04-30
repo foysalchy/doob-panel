@@ -1,9 +1,17 @@
 import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../../AuthProvider/UserProvider";
+import Select from "react-select";
 
 const EditInventory = ({ refetch, open, setOpen, data }) => {
+  console.log("data", data);
   const [count, setCount] = useState(0);
   const { shopInfo } = useContext(AuthContext);
+
+  const [selectedValue, setSelectedValue] = useState([]);
+  const handleChange = (selectedOption) => {
+    setSelectedValue(selectedOption);
+  };
+  console.log("selectedValue", selectedValue?.value);
   const handleIncrease = () => {
     setCount(parseInt(count) + 1);
   };
@@ -32,45 +40,56 @@ const EditInventory = ({ refetch, open, setOpen, data }) => {
       quantity: count,
       shopId: data.shopId,
       shopName: shopInfo.shopName,
+      SKU: selectedValue?.value,
     };
 
     {
       data.adminWare
         ? fetch(`https://backend.doob.com.bd/api/v1/admin/stock-request`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(stock),
-        })
-          .then((res) => res.json())
-          .then((data) => {
-            refetch();
-            setOpen(!open);
-          })
-        : fetch(
-          `https://backend.doob.com.bd/api/v1/seller/product-stock-update?productId=${data?._id}&quantity=${count}`,
-          {
-            method: "PUT",
+            method: "POST",
             headers: {
               "Content-Type": "application/json",
             },
-          }
-        )
-          .then((res) => res.json())
-          .then((data) => {
-            refetch();
-            setOpen(!open);
-          });
+            body: JSON.stringify(stock),
+          })
+            .then((res) => res.json())
+            .then((data) => {
+              refetch();
+              setOpen(!open);
+            })
+        : fetch(
+            `https://backend.doob.com.bd/api/v1/seller/product-stock-update?productId=${data?._id}&quantity=${count}&SKU=${selectedValue?.value}`,
+            {
+              method: "PUT",
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          )
+            .then((res) => res.json())
+            .then((data) => {
+              refetch();
+              setOpen(!open);
+            });
     }
     console.log(data, ">>>>>>><<<<<<<<<<<<<<<<<<<");
   };
+
+  const options = data?.variations?.map((item) => {
+    return {
+      label: item?.SKU,
+      value: item?.SKU,
+    };
+  });
+
+  console.log("options", options);
 
   return (
     <div className="fixed bg-[#000000a2] top-0 left-0 flex items-center justify-center w-screen h-screen z-[1000]">
       <div className="p-3 shadow-lg relative bg-white w-[500px] rounded-lg">
         <header>
           <h2 className="text-lg pb-2 border-b font-semibold">Edit Quantity</h2>
+
           <button
             onClick={() => setOpen(!open)}
             className="bg-gray-200 h-[30px] w-[30px] text-lg font-regular rounded-full flex items-center justify-center absolute right-2 top-2"
@@ -79,6 +98,20 @@ const EditInventory = ({ refetch, open, setOpen, data }) => {
           </button>
           {/* <h1 className="text-lg">{data?.name}</h1> */}
           {/* form */}
+          <div className="my-3">
+            <label className="mb-1 text-lg" htmlFor="user">
+              Select Permissions{" "}
+            </label>
+            <Select
+              // lassName="w-full p-2 rounded-md ring-1 mt-2 ring-gray-200" placeholder='input user role'
+              options={options}
+              // isMulti={true}
+              // defaultValue={staffInfo?.permissions}
+              // getOptionLabel={(option) => option.name}
+              // getOptionValue={(option) => option.route}
+              onChange={handleChange}
+            />
+          </div>
           <div>
             <br />
             <div className="flex items-center ring-1 ring-gray-400 rounded-md">

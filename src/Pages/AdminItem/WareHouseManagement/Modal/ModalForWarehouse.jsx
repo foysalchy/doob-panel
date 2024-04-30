@@ -32,7 +32,7 @@ const ModalForWarehouse = ({ setOpenModal, OpenModal, data, refetch }) => {
                         (newData == 'Add New Warehouse' && <AddNewWarehouse setNewData={setNewData} setOpenModal={setOpenModal} next={next} setNext={setNext} warehouses={warehouses} setWareHouses={setWareHouses} refetch={refetch} />) ||
                         (newData == 'Add Area' && <AddAreaForWarehouse setNewData={setNewData} setOpenModal={setOpenModal} next={next} setNext={setNext} warehouses={warehouses} setWareHouses={setWareHouses} recall={refetch} />) ||
                         (newData == 'Add Rack' && <AddRackModal setNewData={setNewData} setOpenModal={setOpenModal} recall={refetch} />) ||
-                        (newData == 'Add Self' && <AddSelfModal setNewData={setNewData} setOpenModal={setOpenModal} recall={refetch} />) ||
+                        (newData == 'Add Shelf' && <AddSelfModal setNewData={setNewData} setOpenModal={setOpenModal} recall={refetch} />) ||
                         (newData == 'Add Cell' && <AddCellModal setOpenModal={setOpenModal} recall={refetch} />)
                     }
 

@@ -11,7 +11,7 @@ const UpdateShopProfile = () => {
   const [copy, setCopy] = useState(false);
 
   const handleCopyLink = (link) => {
-    const linkToCopy = `https://Doob-project.web.app/shop/${link}`;
+    const linkToCopy = `https://doob.com.bd/shop/${link}`;
     navigator.clipboard
       .writeText(linkToCopy)
       .then(() => {

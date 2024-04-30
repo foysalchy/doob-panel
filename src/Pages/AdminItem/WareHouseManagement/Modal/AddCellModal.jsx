@@ -220,7 +220,7 @@ const AddCellModal = ({ recall, setOpenModal }) => {
             <FaLongArrowAltRight />
           </span>
           <span className="text-sm font-medium transition-all group-hover:ms-4">
-            Add Area
+            Add Cell
           </span>
         </button>
       </form>

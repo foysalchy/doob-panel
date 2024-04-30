@@ -373,7 +373,7 @@ const SellerAllProducts = () => {
         setSelectProducts([]);
       });
   };
-  console.log(products)
+  const [rejectMessage, setRejectMessage] = useState(false);
   return (
     <div className="">
       <div className="h-0 w-0">
@@ -760,68 +760,86 @@ const SellerAllProducts = () => {
                                   </div>
                                 </div>
                               </td>
+
+
                               <td className="px-12 py-4 text-sm font-medium text-gray-700 flex gap-4 items-start  whitespace-nowrap">
-                                {!product.adminWare ? (
-                                  <div>
-                                    {product.status === true ? (
-                                      <div
-                                        onClick={() =>
-                                          updateProductStatus(
-                                            product._id,
-                                            false
-                                          )
-                                        }
-                                        className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 cursor-pointer bg-emerald-100/60 bg-gray-800"
-                                      >
-                                        <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-                                        <h2 className="text-sm font-normal text-emerald-500">
-                                          Active
-                                        </h2>
+                                {product.
+                                  product_status === "reject"
+                                  ? <div>  <div
+                                    onClick={() =>
+                                      setRejectMessage(product)
+                                    }
+                                    className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 cursor-pointer bg-emerald-100/60 bg-gray-800"
+                                  >
+                                    <span className="h-1.5 w-1.5 rounded-full bg-danger-600" />
+                                    <h2 className="text-sm font-normal text-danger-600">
+                                      Rejected
+                                    </h2>
+                                  </div></div> : <div>
+                                    {!product.adminWare ? (
+                                      <div>
+                                        {<div>
+                                          {product.status === true ? (
+                                            <div
+                                              onClick={() =>
+                                                updateProductStatus(
+                                                  product._id,
+                                                  false
+                                                )
+                                              }
+                                              className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 cursor-pointer bg-emerald-100/60 bg-gray-800"
+                                            >
+                                              <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                                              <h2 className="text-sm font-normal text-emerald-500">
+                                                Active
+                                              </h2>
+                                            </div>
+                                          ) : (
+                                            <div
+                                              onClick={() =>
+                                                updateProductStatus(
+                                                  product?._id,
+                                                  true
+                                                )
+                                              }
+                                              className="inline-flex items-center px-3 py-1 rounded-full  cursor-pointer gap-x-2 bg-emerald-100/60 bg-gray-800"
+                                            >
+                                              <span className="h-1.5 w-1.5 rounded-full bg-yellow-500" />
+                                              <h2 className="text-sm font-normal text-yellow-500">
+                                                Inactive
+                                              </h2>
+                                            </div>
+                                          )}
+                                        </div>}
                                       </div>
                                     ) : (
-                                      <div
-                                        onClick={() =>
-                                          updateProductStatus(
-                                            product?._id,
-                                            true
-                                          )
-                                        }
-                                        className="inline-flex items-center px-3 py-1 rounded-full  cursor-pointer gap-x-2 bg-emerald-100/60 bg-gray-800"
-                                      >
-                                        <span className="h-1.5 w-1.5 rounded-full bg-red-500" />
-                                        <h2 className="text-sm font-normal text-red-500">
-                                          Inactive
-                                        </h2>
+                                      <div>
+                                        {!product?.status ? (
+                                          <div className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 cursor-pointer bg-emerald-100/60 bg-gray-800">
+                                            <span className="h-1.5 w-1.5 rounded-full bg-orange-500" />
+                                            <h2 className="text-sm font-normal text-orange-500">
+                                              Pending
+                                            </h2>
+                                          </div>
+                                        ) : (
+                                          <div
+                                            onClick={() =>
+                                              updateProductStatus(
+                                                product._id,
+                                                false
+                                              )
+                                            }
+                                            className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 cursor-pointer bg-emerald-100/60 bg-gray-800"
+                                          >
+                                            <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                                            <h2 className="text-sm font-normal text-emerald-500">
+                                              Active
+                                            </h2>
+                                          </div>
+                                        )}
                                       </div>
                                     )}
-                                  </div>
-                                ) : (
-                                  <div>
-                                    {!product?.status ? (
-                                      <div className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 cursor-pointer bg-emerald-100/60 bg-gray-800">
-                                        <span className="h-1.5 w-1.5 rounded-full bg-yellow-500" />
-                                        <h2 className="text-sm font-normal text-yellow-500">
-                                          Pending
-                                        </h2>
-                                      </div>
-                                    ) : (
-                                      <div
-                                        onClick={() =>
-                                          updateProductStatus(
-                                            product._id,
-                                            false
-                                          )
-                                        }
-                                        className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 cursor-pointer bg-emerald-100/60 bg-gray-800"
-                                      >
-                                        <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-                                        <h2 className="text-sm font-normal text-emerald-500">
-                                          Active
-                                        </h2>
-                                      </div>
-                                    )}
-                                  </div>
-                                )}
+                                  </div>}
 
                                 {product?.multiVendor === true ? (
                                   <div
@@ -1080,7 +1098,47 @@ const SellerAllProducts = () => {
                 </div>
               </div>
             </div>
+            {
+              rejectMessage && <div>
+                <div>
+                  <div
+                    onClick={() => setRejectMessage(false)}
+                    className={`fixed z-[100] flex items-center justify-center visible opacity-100 inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
+                  >
+                    <div
 
+                      className={`text- absolute w-[400px] rounded-sm bg-white p-6 drop-shadow-lg dark:bg-white dark:text-black ${rejectMessage._id
+                        ? "scale-1 opacity-1 duration-300"
+                        : "scale-0 opacity-0 duration-150"
+                        }`}
+                    >
+                      <form>
+                        <h1 className="mb-2 text-2xl font-semibold">
+                          Rejected Message!
+                        </h1>
+                        <textarea
+                          name="message"
+                          value={rejectMessage?.message}
+                          className="w-full border mb-6 p-2"
+                          placeholder=" rejected message"
+                        />
+                        <div className="flex justify-between">
+
+                          <button
+                            type="button"
+                            onClick={() => setRejectMessage(false)}
+                            className="rounded-sm border border-red-600 px-6 py-[6px] text-red-600 duration-150 hover:bg-red-600 hover:text-white"
+                          >
+                            Cancel
+                          </button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            }
             <div className="flex items-center gap-4 mt-6">
               <button
                 onClick={() =>
@@ -1156,9 +1214,10 @@ const SellerAllProducts = () => {
               </button>
             </div>
           </div>
-        )}
-      </section>
-    </div>
+        )
+        }
+      </section >
+    </div >
   );
 };
 export default SellerAllProducts;

@@ -1,10 +1,12 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { AuthContext } from "../../../AuthProvider/UserProvider";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import ReactToPrint from "react-to-print";
 
 const FinanceReport = () => {
   const { shopInfo } = useContext(AuthContext);
   const queryClient = useQueryClient(); // Initialize useQueryClient
+  const componentRef = useRef();
 
   const [startDate, setStartDate] = useState(() => {
     const today = new Date();
@@ -48,6 +50,8 @@ const FinanceReport = () => {
     }
   };
 
+  const [isLoading, setIsLoading] = useState(false);
+
   useEffect(() => {
     setError(null); // Clear any previous errors
     fetchFinancialReport(); // Call the mutation to generate report
@@ -74,6 +78,10 @@ const FinanceReport = () => {
     }
     setEndDate(selectedEndDate);
   };
+  const printButtonRef = useRef(null);
+
+
+
 
   return (
     <div className="container mx-auto py-8">
@@ -110,21 +118,25 @@ const FinanceReport = () => {
             />
           </div>
         </div>
-        {/* <div>
-                    <button
-                        onClick={handleGenerateReport}
-                        disabled={isLoading}
-                        className={`bg-blue-500 px-4 py-2.5 text-white rounded hover:bg-blue-600 focus:outline-none ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
-                    >
-                        {isLoading ? 'Generating Report...' : 'Generate Report'}
-                    </button>
-                </div> */}
+        <div>
+          <ReactToPrint
+            trigger={() => (
+              <button
+                ref={printButtonRef}
+                // disabled={loader}
+                className='bg-blue-500 px-4 py-2.5 text-white rounded hover:bg-blue-600 focus:outline-noneya'>
+                Print
+              </button>
+            )}
+            content={() => componentRef.current}
+          />
+        </div>
       </div>
 
       {error && <div className="text-red-500 mt-4">{error}</div>}
 
       {financialReport && (
-        <div className="border mt-4 mx-auto bg-white shadow-lg rounded-lg overflow-hidden">
+        <div ref={componentRef} className="border mt-4 mx-auto bg-white shadow-lg rounded-lg overflow-hidden">
           <div className="p-4">
             <div className="flex justify-between items-center mb-4">
               <div className="text-gray-600">Expected Payout Date:</div>

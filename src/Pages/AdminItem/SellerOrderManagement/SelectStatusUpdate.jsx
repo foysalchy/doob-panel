@@ -2,13 +2,13 @@ import React, { useContext, useState } from "react";
 import { RxCross2 } from "react-icons/rx";
 import BrightAlert from "bright-alert";
 
-const ReadyToShipModal = ({
-  readyToShip,
-  setReadyToShip,
+const SelectStatusUpdate = ({
+  selectedStatusModal,
+  setSelectedStatusModal,
   orderInfo,
   refetch,
   ships,
-  productStatusUpdate,
+  handleUpdateStatusForSelectedProducts,
 }) => {
   console.log(orderInfo);
 
@@ -42,8 +42,8 @@ const ReadyToShipModal = ({
       // shopId: shopInfo._id,
     };
     if (selectedDelivery === "Other" || selectedDelivery === undefined) {
-      productStatusUpdate("ready_to_ship", orderInfo._id);
-      setReadyToShip(false);
+      handleUpdateStatusForSelectedProducts("ready_to_ship");
+      setSelectedStatusModal(false);
     } else {
       // console.log(shipInfo);
       // const api = `${shipInfo.api}/${shipInfo.key}/${shipInfo.secretKey}`;
@@ -65,16 +65,16 @@ const ReadyToShipModal = ({
             console.log(data);
             event.target.reset();
             setLoading(false);
-            readyToShip(false);
+            selectedStatusModal(false);
             BrightAlert("Comment Uploaded", "", "success");
             refetch();
           });
       } catch (error) {
         console.error("Error:", error.message);
         // Handle the error, e.g., show an error message to the user
-        // readyToShip(false);
+        // selectedStatusModal(false);
       }
-      readyToShip(false);
+      setSelectedStatusModal(false);
     }
   };
 
@@ -82,20 +82,20 @@ const ReadyToShipModal = ({
 
   return (
     <div>
-      <div className={readyToShip ? "flex" : "hidden"}>
+      <div className={selectedStatusModal ? "flex" : "hidden"}>
         <div className=" mx-auto py-20">
           <div
             className={`fixed  z-50 top-0 left-0 flex h-full min-h-screen w-full items-center justify-center bg-black bg-opacity-90 px-4 py-5  ${
-              readyToShip ? "block" : "hidden"
+              selectedStatusModal ? "block" : "hidden"
             }`}
           >
             <div className="w-full max-w-[800px] h-[90%]  rounded-[20px]  bg-white  pb-10 px-8 text-center md:px-[30px] overflow-scroll">
               <div className="flex justify-between z-50 pt-4 items-start w-full sticky top-0 bg-white border-b">
                 <div className="pb-2 text-xl font-bold text-dark text-center sm:text-2xl">
-                  Order id: {orderInfo.orderNumber}
+                  {/* Order id: {orderInfo.orderNumber} */}
                 </div>
                 <div
-                  onClick={() => setReadyToShip(false)}
+                  onClick={() => setSelectedStatusModal(false)}
                   className="cursor-pointer bg-gray-500 rounded-full px-2.5 mb-2 p-1 text-2xl hover:text-red-500"
                 >
                   <button>
@@ -150,7 +150,7 @@ const ReadyToShipModal = ({
                   <input
                     readOnly
                     className="flex-grow w-full re h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
-                    defaultValue={orderInfo._id}
+                    defaultValue={orderInfo?._id}
                     type="text"
                     id="title"
                     name="invoice"
@@ -239,4 +239,4 @@ const ReadyToShipModal = ({
   );
 };
 
-export default ReadyToShipModal;
+export default SelectStatusUpdate;

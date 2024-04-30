@@ -6,6 +6,7 @@ import ShopPage from "../Pages/Shop/ShopPage/ShopPage";
 import ConfirmOrder from "../Pages/Shop/pages/ConfirmOrder/ConfirmOrder";
 import ShopSignIn from "../Pages/Shop/pages/Home/Auth/ShopSignIn";
 import ShopSignUp from "../Pages/Shop/pages/Home/Auth/ShopSignUp";
+import FlashProduct from "../Pages/Shop/pages/Home/FlashProduct/FlashProduct";
 import Home from "../Pages/Shop/pages/Home/Home";
 import SeeShopAllProduct from "../Pages/Shop/pages/Home/SeeShopAllProduct/SeeShopAllProduct";
 import SeeShopUpcomingProduct from "../Pages/Shop/pages/Home/SeeShopAllProduct/SeeShopUpcomingProduct";
@@ -101,6 +102,16 @@ const ShopPath = [
   {
     path: ":id/product/:productID", // Use a dynamic route parameter for the product ID
     element: <ProductInformation />,
+    loader: async ({ params }) => {
+      const id = params.id;
+      const productID = params.productID;
+      return fetch(
+        `https://backend.doob.com.bd/api/v1/shop/product/${id}/product/${productID}`
+      );
+    },
+  }, {
+    path: ":id/flash-product/:productID", // Use a dynamic route parameter for the product ID
+    element: <FlashProduct />,
     loader: async ({ params }) => {
       const id = params.id;
       const productID = params.productID;

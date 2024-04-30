@@ -194,7 +194,7 @@ const SellerDashboard = () => {
   };
 
   return (
-    <div className="h-screen mb-10 mt-[-40px]   ">
+    <div className="h-screen mb-10   ">
       {sellerPopupData.length
         ? popup && (
           <div className="fixed top-0 left-0 flex items-center justify-center w-full h-full bg-black bg-opacity-90 z-50">

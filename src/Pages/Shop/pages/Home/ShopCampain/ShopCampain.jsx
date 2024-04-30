@@ -8,8 +8,9 @@ import { Link } from "react-router-dom";
 
 const ShopCampain = () => {
   const { shop_id } = useContext(ShopAuthProvider);
-  const { data: shopCampainData = [], refetch, isLoading } = useQuery({
-    queryKey: ["shopCampain"],
+ 
+  const { data: shopCampainData = [], isLoading, refetch } = useQuery({
+     queryKey: ["shopCampain"],
     queryFn: async () => {
       const res = await fetch(
         `https://backend.doob.com.bd/api/v1/shop/shop-campaign?shop_id=${shop_id?.shop_id}`
@@ -94,7 +95,7 @@ const ShopCampain = () => {
                             key={idx}
                             className="border border-gray-500 border-opacity-90 p-3 rounded"
                           >
-                            <Link to={`product/${product?._id}`}>
+                            <Link to={`flash-product/${product?._id}`}>
                               <a className="block relative rounded overflow-hidden">
                                 <img
                                   alt="ecommerce"

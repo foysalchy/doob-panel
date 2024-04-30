@@ -291,13 +291,13 @@ const ProductDetails = () => {
     queryKey: ["comments"],
     queryFn: async () => {
       const res = await fetch(
-        `http://localhost:5001/api/v1/seller/product-comment?id=${productFind?._id}`
+        `https://backend.doob.com.bd/api/v1/seller/product-comment?id=${productFind?._id}`
       );
       const data = await res.json();
       return data?.comments;
     },
   });
-  console.log(`http://localhost:5001/api/v1/seller/product-comment?id=${productFind?._id}`);
+  console.log(`https://backend.doob.com.bd/api/v1/seller/product-comment?id=${productFind?._id}`);
   const add_to_cart = (product) => {
     const productData = {
       product_name: product?.name,

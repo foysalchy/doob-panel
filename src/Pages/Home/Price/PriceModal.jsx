@@ -3,9 +3,10 @@ import React, { useContext, useEffect, useState } from "react";
 import { MdDelete } from "react-icons/md";
 import { AuthContext } from "../../../AuthProvider/UserProvider";
 import BrightAlert from "bright-alert";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const PriceModal = ({ open, setOpen }) => {
+  console.log(open);
   const { shopInfo, setShopInfo, setCookie } = useContext(AuthContext);
   const [paymentMode, setPaymentMode] = useState(false);
   const [selectGetWay, setSelectGetWay] = useState(false);
@@ -19,7 +20,7 @@ const PriceModal = ({ open, setOpen }) => {
   console.log(parseInt(open?.price) * parseInt(time?.split(",")[1]));
 
   useEffect(() => {
-    setOpen(open);
+    setTime(`${open?.six},6`)
   }, [open]);
 
   const resetForm = () => {
@@ -120,7 +121,7 @@ const PriceModal = ({ open, setOpen }) => {
       collection: "price",
       time,
       buyingPrice:
-        parseInt(open?.price) * parseInt(time?.split(",")[1]) -
+       ( parseInt(open?.price) * parseInt(time?.split(",")[1])) -
         parseInt(time?.split(",")[0]),
     };
 
@@ -254,11 +255,13 @@ const PriceModal = ({ open, setOpen }) => {
             </div>
             <div className="flex items-center justify-center">
               <h2 className="text-2xl font-semibold text-blue-600 flex sm:text-3xl">
-                ৳
+              
                 {parseInt(open?.price) * parseInt(time?.split(",")[1]) -
-                  parseInt(time?.split(",")[0])}
+                  parseInt(time?.split(",")[0]) >0 ?` ৳${parseInt(open?.price) * parseInt(time?.split(",")[1]) -
+                  parseInt(time?.split(",")[0])}` : "Contact With Doob"}
                 <span className="text-base flex-nowrap font-medium ml-1">
-                  /{time.split(",").slice(1, 2)} Month
+                 {parseInt(open?.price) * parseInt(time?.split(",")[1]) -
+                  parseInt(time?.split(",")[0]) >0 && `/${time.split(",").slice(1, 2)} Month}`}
                 </span>
               </h2>
             </div>
@@ -321,13 +324,22 @@ const PriceModal = ({ open, setOpen }) => {
             </button>
           </div>
           <div className="w-1/2 px-3">
-            {!paymentMode && (
+            {(!paymentMode &&  (parseInt(open?.price) * parseInt(time?.split(",")[1]) -
+                  parseInt(time?.split(",")[0])) >0 )?(
               <button
                 onClick={handleNextClick}
                 className="block w-full rounded-md border border-blue-500 bg-blue-500 p-3 text-center text-base font-medium text-white transition hover:bg-blue-500"
               >
                 Next
               </button>
+            ) :
+            (
+              <Link to={'/contact'}
+                onClick={handleNextClick}
+                className="block w-full rounded-md border border-blue-500 bg-blue-500 p-3 text-center text-base font-medium text-white transition hover:bg-blue-500"
+              >
+               Contact
+              </Link>
             )}
           </div>
         </div>
