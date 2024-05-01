@@ -107,7 +107,6 @@ const UpComingProducts = () => {
                             className="absolute inset-0 h-full w-full object-cover opacity-0 group-hover:opacity-100"
                           />
                         </div>
-
                         <div className="relative bg-white pt-3">
                           <h3 className="text-sm h-10 overflow-hidden text-gray-700 group-hover:underline group-hover:underline-offset-4">
                             {product?.name}
