@@ -89,7 +89,7 @@ const CategoryEditPage = () => {
     },
   ]);
 
-  console.log(product?.variantData);
+  // console.log(product?.variantData);
 
   // console.log(product?.variations);
   const [variantInput, setVariantInput] = useState([
@@ -101,7 +101,7 @@ const CategoryEditPage = () => {
       ProductCost: "",
     },
   ]);
-  // console.log(variantInput);
+  console.log(variantInput);
 
   useEffect(() => {
     setInputFields(product?.variations);
@@ -186,6 +186,7 @@ const CategoryEditPage = () => {
 
   // console.log(filteredData);
 
+  console.log(inputFields, "inppppppppppppp");
   const formSubmit = async (e) => {
     // setLoading(true);
     e.preventDefault();
@@ -372,7 +373,8 @@ const CategoryEditPage = () => {
       createdAt: Date.now(),
       // updatedAt,
       featuredImage: [0],
-      images: uploadedImageUrls?.filter((image) => image !== null),
+      images:
+        uploadedImageUrls?.filter((image) => image !== null) || product?.images,
       videos: youtube,
       // attributes,
       variations: inputFields,
@@ -395,7 +397,7 @@ const CategoryEditPage = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ data }),
+        body: JSON.stringify(data),
       }
     )
       .then((res) => res.json())
