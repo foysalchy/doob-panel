@@ -35,7 +35,8 @@ const ProductInformation = () => {
   const [variations, setVariations] = useState(null);
   const [showVariant, setShowVariant] = useState(product.data.images);
   console.log(product, "product");
-  const blankImg = 'https://backend.doob.com.bd/api/v1/image/66036ed3df13bd9930ac229c.jpg';
+  const blankImg =
+    "https://backend.doob.com.bd/api/v1/image/66036ed3df13bd9930ac229c.jpg";
 
   const handleImageClick = (imageUrl) => {
     setSelectedImage(imageUrl);
@@ -49,7 +50,6 @@ const ProductInformation = () => {
   const [clickImage, setClickImage] = useState(
     imageList.length > 0 ? imageList[0].src : ""
   );
-
 
   const path = useLocation();
 
@@ -115,6 +115,7 @@ const ProductInformation = () => {
       regular_price: product.regular_price,
       productId: product._id,
       shopId: shop_id.shop_id,
+      variations,
     };
 
     if (!shopUser) {
@@ -183,6 +184,7 @@ const ProductInformation = () => {
           regular_price: product.regular_price,
           productId: product._id,
           shopId: shop_id.shop_id,
+          variations,
         },
       ];
       setSelectProductData(buyNowInfo);
@@ -334,19 +336,20 @@ const ProductInformation = () => {
                           </svg>
                         </span>
                       ))}
-                      <span className="text-gray-600 ml-2">{product?.data?.rating / 5 || 0}</span>
+                      <span className="text-gray-600 ml-2">
+                        {product?.data?.rating / 5 || 0}
+                      </span>
                     </span>
                   </div>
-
-
                 </div>
                 <div className="flex item-center">
                   <div className="flex items-center">
                     {" "}
                     <FaCircle className="text-[#DBDBDB] text-[8px] mx-2 md:mx-4" />
                     <FaBasketShopping className="text-[#DBDBDB] mr-2 text-[16px]" />
-                    <p className="md:text-sm  text-[10px]">{product?.data?.total_sales + " "
-                    }  Sold</p>
+                    <p className="md:text-sm  text-[10px]">
+                      {product?.data?.total_sales + " "} Sold
+                    </p>
                   </div>
                 </div>
               </div>
@@ -504,7 +507,7 @@ const ProductInformation = () => {
           <TrandingProductShop />
         </div>
       </div>
-    </section >
+    </section>
   );
 };
 

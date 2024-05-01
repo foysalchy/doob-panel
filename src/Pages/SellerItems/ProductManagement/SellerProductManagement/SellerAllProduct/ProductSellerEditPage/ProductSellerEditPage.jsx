@@ -296,6 +296,7 @@ const CategoryEditPage = () => {
     if (firstFile) {
       console.log(firstFile);
     }
+    
 
     const uploadedImageUrls = await Promise.all(
       additionalPhotos
