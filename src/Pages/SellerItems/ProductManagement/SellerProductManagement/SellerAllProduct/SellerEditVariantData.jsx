@@ -209,6 +209,12 @@ const SellerEditVariantData = ({
                         label: field?.name,
                         value: field?.name,
                       }}
+                     // defaultValue={colourOptions.find((option) => {
+                      //   return {
+                      //     label: option?.name,
+                      //     value: option?.name,
+                      //   };
+                      // })}
                       // defaultValue={field?.name}
                       onChange={(newValue) => {
                         // Clone the inputFields array

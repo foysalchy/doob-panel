@@ -188,7 +188,7 @@ const CategoryEditPage = () => {
 
   console.log(inputFields, "inppppppppppppp");
   const formSubmit = async (e) => {
-    // setLoading(true);
+    setLoading(true);
     e.preventDefault();
     const form = e.target;
     const BnName = form.productNameBn.value;
@@ -374,7 +374,9 @@ const CategoryEditPage = () => {
       // updatedAt,
       featuredImage: [0],
       images:
-        uploadedImageUrls?.filter((image) => image !== null) || product?.images,
+        uploadedImageUrls?.length > 1
+          ? uploadedImageUrls?.filter((image) => image !== null)
+          : product?.images,
       videos: youtube,
       // attributes,
       variations: inputFields,
@@ -387,8 +389,13 @@ const CategoryEditPage = () => {
       upcoming: isChecked,
       DeliveryCharge,
     };
-    console.log(data, "edit --------------------------->");
+    console.log(
+      data.images,
+      "edit --------------------------->",
+      data?.variations
+    );
 
+    // return;
     fetch(
       // `https://backend.doob.com.bd/api/v1/seller/normal-product?id=${product?._id}`,
       `https://backend.doob.com.bd/api/v1/seller/normal-product?id=${product?._id}`,
