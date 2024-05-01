@@ -4,7 +4,7 @@ import { MdDelete } from "react-icons/md";
 
 import Swal from "sweetalert2";
 
-import CreatableSelect from "react-select/creatable";
+import Select from "react-select";
 import { AuthContext } from "../../../../../AuthProvider/UserProvider";
 import VariantData from "../../SellerAddProduct/Components/VariantData";
 import Stock from "../../SellerAddProduct/Components/Stock";
@@ -27,7 +27,6 @@ const SellerEditVariantData = ({
   setVariantInput,
 }) => {
   const { shopInfo } = useContext(AuthContext);
-  console.log(multiVendor);
 
   const handleImageChange = async (index, event) => {
     const file = event.target.files[0];
@@ -84,24 +83,22 @@ const SellerEditVariantData = ({
     }
   };
 
-  const Upload = (image) => {
+  const Upload = async (image) => {
     const formData = new FormData();
     formData.append("image", image);
 
     const url = `https://backend.doob.com.bd/api/v1/image/upload-image`;
 
-    return fetch(url, {
+    const res = await fetch(url, {
       method: "POST",
       headers: {
         Origin: "https://backend.doob.com.bd/api/v1/image/upload-image",
       },
       body: formData,
-    })
-      .then((res) => res.json())
-      .then((imageData) => {
-        const imageUrl = imageData.imageUrl;
-        return imageUrl;
-      });
+    });
+    const imageData = await res.json();
+    const imageUrl = imageData.imageUrl;
+    return imageUrl;
   };
 
   const handleAddField = () => {
@@ -158,7 +155,8 @@ const SellerEditVariantData = ({
     { value: "Anther Black", label: "Anther Black", color: "#253858" },
   ];
 
-  console.log(inputFields);
+  // console.log(inputFields);
+  console.log(variantInput);
 
   return (
     <div className=" border mt-4 border-gray-400 md:px-10 px-3 py-5 pb-16 w-full bg-gray-100 rounded">
@@ -182,7 +180,7 @@ const SellerEditVariantData = ({
           onChange={(e) => {
             setMultiVendor(
               (e.target.value === "true" && true) ||
-              (e.target.value === "false" && false)
+                (e.target.value === "false" && false)
             );
           }}
           className="flex-grow w-full h-10 px-4 mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-purple-400 focus:outline-none focus:shadow-outline"
@@ -205,12 +203,19 @@ const SellerEditVariantData = ({
                 {" "}
                 <div className="flex gap-10 justify-between items-center">
                   <div className="w-full">
-                    <CreatableSelect
+                    <Select
                       name={`name-${index}`}
                       defaultValue={{
                         label: field?.name,
                         value: field?.name,
                       }}
+                     // defaultValue={colourOptions.find((option) => {
+                      //   return {
+                      //     label: option?.name,
+                      //     value: option?.name,
+                      //   };
+                      // })}
+                      // defaultValue={field?.name}
                       onChange={(newValue) => {
                         // Clone the inputFields array
                         const newInputFields = [...inputFields];
@@ -221,10 +226,11 @@ const SellerEditVariantData = ({
                         // Check if a name is selected
                         if (newName) {
                           // Generate a unique SKU
-                          const newSKU = `${shopInfo.shopId
-                            }_${newName}_${Math.floor(
-                              Math.random() * 100000000
-                            )}`;
+                          const newSKU = `${
+                            shopInfo.shopId
+                          }_${newName}_${Math.floor(
+                            Math.random() * 100000000
+                          )}`;
 
                           // Update the name and SKU in the inputFields array
                           newInputFields[index].name = newName;
@@ -441,6 +447,7 @@ const SellerEditVariantData = ({
                   onChange={(e) => {
                     const newInputFields = [...variantInput];
                     newInputFields[0].sellingPrice = e.target.value;
+                    console.log(newInputFields);
                     setVariantInput(newInputFields);
                   }}
                   type="text"

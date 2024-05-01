@@ -44,7 +44,11 @@ const EditSincronusCategory = ({
 
   console.log(selectedCategory);
 
-  const { data: megaCategories = [], refetch } = useQuery({
+  const {
+    data: megaCategories = [],
+    refetch,
+    isLoading: loadingMega,
+  } = useQuery({
     queryKey: ["megaCategory"],
     queryFn: async () => {
       const res = await fetch(
@@ -60,6 +64,8 @@ const EditSincronusCategory = ({
     },
   });
 
+  console.log(megaCategories);
+
   const option =
     megaCategories
       ?.filter((megaCategory) => megaCategory.status)
@@ -69,7 +75,11 @@ const EditSincronusCategory = ({
       })) || [];
 
   console.log(selectedCategory, "and", option);
-  const { data: subCategories = [], refetch: reload } = useQuery({
+  const {
+    data: subCategories = [],
+    refetch: reload,
+    isLoading: subLoading,
+  } = useQuery({
     queryKey: ["subCategories"],
     queryFn: async () => {
       if (selectedCategory) {
@@ -101,7 +111,11 @@ const EditSincronusCategory = ({
         }))) ||
     [];
 
-  const { data: miniCategories = [], refetch: reMini } = useQuery({
+  const {
+    data: miniCategories = [],
+    refetch: reMini,
+    isLoading: miniLoading,
+  } = useQuery({
     queryKey: ["miniCategories"],
     queryFn: async () => {
       if (selectedSubcategory) {
@@ -133,7 +147,11 @@ const EditSincronusCategory = ({
         }))) ||
     [];
 
-  const { data: extraCategories = [], refetch: reExtra } = useQuery({
+  const {
+    data: extraCategories = [],
+    refetch: reExtra,
+    isLoading: extraLoading,
+  } = useQuery({
     queryKey: ["extraCategories"],
     queryFn: async () => {
       if (selectedMinicategory) {
@@ -327,6 +345,7 @@ const EditSincronusCategory = ({
                 value: product?.categories?.[0]?.name,
                 label: product?.categories?.[0]?.name,
               }}
+              isLoading={loadingMega}
               className=""
             />
             {selectedCategory && (
@@ -339,6 +358,7 @@ const EditSincronusCategory = ({
                   value: product?.categories?.[1]?.name,
                   label: product?.categories?.[1]?.name,
                 }}
+                isLoading={subLoading}
               />
             )}
             {selectedSubcategory && (
@@ -351,6 +371,7 @@ const EditSincronusCategory = ({
                   value: product?.categories?.[2]?.name,
                   label: product?.categories?.[2]?.name,
                 }}
+                isLoading={miniLoading}
               />
             )}
             {selectedMinicategory && (
@@ -363,6 +384,7 @@ const EditSincronusCategory = ({
                   value: product?.categories?.[3]?.name,
                   label: product?.categories?.[3]?.name,
                 }}
+                isLoading={extraLoading}
               />
             )}
           </div>

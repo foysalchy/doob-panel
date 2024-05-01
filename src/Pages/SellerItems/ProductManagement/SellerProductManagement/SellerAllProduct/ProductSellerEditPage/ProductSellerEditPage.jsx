@@ -76,7 +76,7 @@ const CategoryEditPage = () => {
   // const [adminMiniCategory, setAdminMiniCategory] = useState("");
   // const [adminExtraCategory, setAdminExtraCategory] = useState("");
 
-  console.log(coverPhoto, "coverPhoto", product?.featuredImage);
+  console.log(coverPhoto, "coverPhoto", product?.images?.[0]?.src);
   const [inputFields, setInputFields] = useState([
     {
       name: "",
@@ -89,7 +89,7 @@ const CategoryEditPage = () => {
     },
   ]);
 
-  console.log(product?.variantData);
+  // console.log(product?.variantData);
 
   // console.log(product?.variations);
   const [variantInput, setVariantInput] = useState([
@@ -101,13 +101,13 @@ const CategoryEditPage = () => {
       ProductCost: "",
     },
   ]);
-  // console.log(variantInput);
+  console.log(variantInput);
 
   useEffect(() => {
     setInputFields(product?.variations);
     setVariantInput(product?.variantData);
     setMultiVendor(product?.multiVendor);
-    setCoverPhoto(product?.featuredImage?.src);
+    setCoverPhoto(product?.images?.[0]?.src);
   }, [product]);
   const [brandName, setBrandName] = useState();
 
@@ -186,8 +186,9 @@ const CategoryEditPage = () => {
 
   // console.log(filteredData);
 
+  console.log(inputFields, "inppppppppppppp");
   const formSubmit = async (e) => {
-    setLoading(true);
+    // setLoading(true);
     e.preventDefault();
     const form = e.target;
     const BnName = form.productNameBn.value;
@@ -197,6 +198,20 @@ const CategoryEditPage = () => {
     const Subcategory = form?.adminSubCategoryName?.value || null;
     const miniCategory = form?.adminMiniCategoryName?.value || null;
     const extraCategory = form?.adminExtraCategoryName?.value || null;
+    const short_description_form = form?.short_description?.value;
+    const description_form = form?.description?.value;
+    const banglaDescription_form = form?.banglaDescription?.value;
+
+    console.log(
+      "des",
+      description_form,
+      "descrip",
+      short_description_form,
+      "ad",
+      banglaDescription_form
+    );
+
+    // return;
 
     const categories = [
       { name: megaCategory },
@@ -281,6 +296,7 @@ const CategoryEditPage = () => {
     if (firstFile) {
       console.log(firstFile);
     }
+    
 
     const uploadedImageUrls = await Promise.all(
       additionalPhotos
@@ -307,6 +323,8 @@ const CategoryEditPage = () => {
         })
     );
 
+    console.log(uploadedImageUrls);
+
     const data = {
       videoUrl: youtube,
       brandName,
@@ -316,9 +334,9 @@ const CategoryEditPage = () => {
       woo,
       categories,
       warehouse: warehouseValue,
-      shortDescription: shortDescription,
-      description: description,
-      banglaDescription,
+      shortDescription: short_description_form,
+      description: description_form,
+      banglaDescription: banglaDescription_form,
       sku: sku,
       regular_price: inputFields[0].price,
       stock_quantity: inputFields[0].quantity,
@@ -357,8 +375,14 @@ const CategoryEditPage = () => {
       status: false,
       createdAt: Date.now(),
       // updatedAt,
-      featuredImage: [0],
-      images: uploadedImageUrls?.filter((image) => image !== null),
+      featuredImage:
+        uploadedImageUrls?.length > 1
+          ? uploadedImageUrls?.filter((image) => image !== null)[0]?.src
+          : product?.images[0]?.src,
+      images:
+        uploadedImageUrls?.length > 1
+          ? uploadedImageUrls?.filter((image) => image !== null)
+          : product?.images,
       videos: youtube,
       // attributes,
       variations: inputFields,
@@ -371,8 +395,13 @@ const CategoryEditPage = () => {
       upcoming: isChecked,
       DeliveryCharge,
     };
-    console.log(data, "edit --------------------------->");
+    console.log(
+      data.images,
+      "edit --------------------------->",
+      data?.featuredImage
+    );
 
+    // return;
     fetch(
       // `https://backend.doob.com.bd/api/v1/seller/normal-product?id=${product?._id}`,
       `https://backend.doob.com.bd/api/v1/seller/normal-product?id=${product?._id}`,
@@ -381,7 +410,7 @@ const CategoryEditPage = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ data }),
+        body: JSON.stringify(data),
       }
     )
       .then((res) => res.json())
@@ -462,7 +491,7 @@ const CategoryEditPage = () => {
             For You Product
           </span>
         </label> */}
-        <div id="description">
+        <div>
           <SellerEditDiscription
             product={product}
             shortDescription={shortDescription}

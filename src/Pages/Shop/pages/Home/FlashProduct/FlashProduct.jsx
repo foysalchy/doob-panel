@@ -115,6 +115,7 @@ const FlashProduct = () => {
       regular_price: product.regular_price,
       productId: product._id,
       shopId: shop_id.shop_id,
+      variations,
     };
 
     if (!shopUser) {
@@ -183,6 +184,7 @@ const FlashProduct = () => {
           regular_price: product.regular_price,
           productId: product._id,
           shopId: shop_id.shop_id,
+          variations,
         },
       ];
       setSelectProductData(buyNowInfo);
