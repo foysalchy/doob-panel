@@ -17,6 +17,7 @@ import Variants from "./Components/Variants";
 import DarazOption from "./Components/DarazOption";
 import UploadImage from "./Components/UploadImage";
 import BrightAlert from "bright-alert";
+// import { image } from "html2canvas/dist/types/css/types/image";
 
 const SellerAddProduct = () => {
   const { shopInfo } = useContext(AuthContext);
@@ -132,6 +133,8 @@ const SellerAddProduct = () => {
   const filteredData =
     datazCategory?.length &&
     datazCategory?.filter((item) => !ourData.includes(item.label));
+
+
 
   const formSubmit = async (e) => {
     setLoading(true);
@@ -297,7 +300,7 @@ const SellerAddProduct = () => {
       status: false,
       createdAt: Date.now(),
       // updatedAt,
-      featuredImage: [0],
+      featuredImage: uploadedImageUrls[0],
       images: uploadedImageUrls.filter((image) => image !== null),
       videos: youtube,
       // attributes,
@@ -323,10 +326,10 @@ const SellerAddProduct = () => {
       .then((res) => res.json())
       .then((data) => {
         if (data.error) {
-         BrightAlert(`${data.error}`, '', 'warning')
+          BrightAlert(`${data.error}`, '', 'warning')
           setLoading(false);
         } else {
-         BrightAlert('Product add successful')
+          BrightAlert('Product add successful')
           setLoading(false);
         }
       });

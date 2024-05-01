@@ -417,11 +417,7 @@ const ProductDetails = () => {
           </div>
         </div>
 
-        <p>
-          {
-            ` ${productFind?.variantData?.product1?.quantity} '>' ${productFind?.variantData?.product2?.quantity} '===' ${productFind?.variantData?.product1?.quantityPrice}
-         ` }
-        </p>
+
 
         <div className="max-w-7xl mx-auto px-4 md:px-4 lg:px-12 mt-6 ">
           <div className="flex flex-col md:flex-row -mx-4 border rounded border-gray-300 py-4">
@@ -476,6 +472,47 @@ const ProductDetails = () => {
                   </p>
                 )}
               </div>
+
+              <div className="flex items-center justify-start gap-8">
+                <div>
+                  <div className="flex text-gray-500 text-lg space-x-3">
+                    <h2>
+                      {productFind?.variantData?.product1?.quantity}
+                    </h2>
+                    <span>-</span>
+                    <h2>
+                      {productFind?.variantData?.product2?.quantity}
+                    </h2>
+                    pairs
+                  </div>
+                  <h1 className="text-3xl text-orange-600 font-bold">
+                    ৳{productFind?.variantData?.product1?.quantityPrice}
+                  </h1>
+                  <div>
+                  </div>
+                </div>
+
+
+                <div>
+                  <div className="flex text-lg text-gray-500 space-x-3">
+                    <h2>
+                      {productFind?.variantData?.product2?.quantity}
+                    </h2>
+                    <span>-</span>
+                    <h2>
+                      {productFind?.variantData?.product3?.quantity}
+                    </h2>
+                    pairs
+                  </div>
+                  <h1 className="text-3xl text-orange-600 font-bold">
+                    ৳{productFind?.variantData?.product2?.quantityPrice}
+                  </h1>
+                  <div>
+                  </div>
+                </div>
+              </div>
+
+              <br />
               <h2 className="mb-2 leading-tight tracking-tight font-bold text-gray-800 text-xl sm:text-2xl md:text-3xl">
                 {variationData?.name ? variationData?.name : productFind?.name}
               </h2>
@@ -818,7 +855,7 @@ const ProductDetails = () => {
 
         <br />
         {productFind?.description && (
-          <div className="border p-6 rounded">
+          <div className="border overflow-hidden p-6 rounded">
             <ProductDescription
               metaTitle={productFind?.metaTitle}
               description={productFind?.description}

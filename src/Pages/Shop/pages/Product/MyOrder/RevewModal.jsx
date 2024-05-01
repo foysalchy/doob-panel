@@ -4,8 +4,11 @@ import { ShopAuthProvider } from '../../../../../AuthProvider/ShopAuthProvide';
 import BrightAlert from 'bright-alert';
 
 const RevewModal = ({ oreder_review, setOrder_review }) => {
-    const [images, setImages] = useState([]);
     const { shopUser } = useContext(ShopAuthProvider)
+    const [selectedStarIndex, setSelectedStarIndex] = useState(-1);
+
+    const [images, setImages] = useState([]);
+
     const handleImageChange = (e) => {
         const fileList = Array.from(e.target.files);
         const newImages = fileList.map((file) => ({
@@ -21,9 +24,6 @@ const RevewModal = ({ oreder_review, setOrder_review }) => {
         setImages(updatedImages);
     };
 
-    console.log(oreder_review);
-
-    const [selectedStarIndex, setSelectedStarIndex] = useState(-1);
 
     const handleStarClick = (index) => {
         setSelectedStarIndex(index);

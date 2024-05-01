@@ -55,7 +55,8 @@ import {
 import { GiEarbuds, GiNotebook } from "react-icons/gi";
 import { IoLogOut, IoNotificationsCircle, IoSettings } from "react-icons/io5";
 import { Link, NavLink } from "react-router-dom";
-import Logo from "../../../../Logo.png";
+import Logo from "../../../assets/doobLightLogo.png";
+
 import { TbCategory } from "react-icons/tb";
 import { IoIosArrowDown, IoMdPhotos } from "react-icons/io";
 import { FiSettings } from "react-icons/fi";
