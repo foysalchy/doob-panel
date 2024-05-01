@@ -591,7 +591,7 @@ const SincronusCategory = ({
               name="megaCategory"
               onChange={(e) => handleCategoryChange(e.label)}
               placeholder="Select Category"
-              options={megaCategories.map((megaCategory) => ({
+              options={megaCategories?.map((megaCategory) => ({
                 value: megaCategory.name,
                 label: megaCategory.name,
               }))}
@@ -602,7 +602,7 @@ const SincronusCategory = ({
                 name="subCategory"
                 onChange={(e) => handleSubcategoryChange(e.value)}
                 placeholder="Select SubCategory"
-                options={subCategories.map((subCategory) => ({
+                options={subCategories?.map((subCategory) => ({
                   value: subCategory.subCategoryName,
                   label: subCategory.subCategoryName,
                 }))}
@@ -613,7 +613,7 @@ const SincronusCategory = ({
                 name="miniCategory"
                 placeholder="Select MiniCategory"
                 onChange={(e) => handleMinicategoryChange(e.value)}
-                options={miniCategories.map((miniCategory) => ({
+                options={miniCategories?.map((miniCategory) => ({
                   value: miniCategory.miniCategoryName,
                   label: miniCategory.miniCategoryName,
                 }))}
@@ -624,7 +624,7 @@ const SincronusCategory = ({
                 name="extraCategory"
                 placeholder="Select ExtraCategory"
                 onChange={(e) => handleExtracategoryChange(e.value)}
-                options={extraCategories.map((extraCategory) => ({
+                options={extraCategories?.map((extraCategory) => ({
                   value: extraCategory.extraCategoryName,
                   label: extraCategory.extraCategoryName,
                 }))}

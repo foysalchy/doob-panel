@@ -19,6 +19,7 @@ import { SwiperSlide, Swiper } from "swiper/react";
 import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import { FaCheckCircle, FaExclamationCircle } from "react-icons/fa";
 import EditInventory from "../../SellerItems/Inventory/EditInventory";
+import { PiStorefrontLight } from "react-icons/pi";
 
 const SellerDashboard = () => {
   const { user, shopInfo, setCheckUpData } = useContext(AuthContext);
@@ -404,53 +405,44 @@ const SellerDashboard = () => {
           ))}
         </Swiper>
       </div>
-      <div className="flex flex-col items-start w-full  my-6 space-y-4 md:space-x-4 md:space-y-0 md:flex-row">
-        <div className="w-full    md:w-6/12">
-          <div
-            style={{
-              boxShadow: `0 1px 2px #d0d0d0`,
-            }}
-            className="relative ring-1 ring-gray-100 w-full  overflow-hidden rounded-lg bg-white  "
-          >
-            <a href="#" className="block w-full h-full">
-              <div className="flex items-center justify-between px-4 py-7 space-x-4">
-                <div className="flex items-center">
-                  <span className="relative p-5 bg-yellow-100 rounded-full">
-                    <svg
-                      width="40"
-                      fill="currentColor"
-                      height="40"
-                      className="absolute h-5 text-yellow-500 transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
-                      viewBox="0 0 1792 1792"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path d="M1362 1185q0 153-99.5 263.5t-258.5 136.5v175q0 14-9 23t-23 9h-135q-13 0-22.5-9.5t-9.5-22.5v-175q-66-9-127.5-31t-101.5-44.5-74-48-46.5-37.5-17.5-18q-17-21-2-41l103-135q7-10 23-12 15-2 24 9l2 2q113 99 243 125 37 8 74 8 81 0 142.5-43t61.5-122q0-28-15-53t-33.5-42-58.5-37.5-66-32-80-32.5q-39-16-61.5-25t-61.5-26.5-62.5-31-56.5-35.5-53.5-42.5-43.5-49-35.5-58-21-66.5-8.5-78q0-138 98-242t255-134v-180q0-13 9.5-22.5t22.5-9.5h135q14 0 23 9t9 23v176q57 6 110.5 23t87 33.5 63.5 37.5 39 29 15 14q17 18 5 38l-81 146q-8 15-23 16-14 3-27-7-3-3-14.5-12t-39-26.5-58.5-32-74.5-26-85.5-11.5q-95 0-155 43t-60 111q0 26 8.5 48t29.5 41.5 39.5 33 56 31 60.5 27 70 27.5q53 20 81 31.5t76 35 75.5 42.5 62 50 53 63.5 31.5 76.5 13 94z"></path>
-                    </svg>
-                  </span>
-                  <p className="ml-2  text-sm font-semibold text-gray-700  border-gray-200 capitalize">
-                    {user.name} <br />
-                    <hr />{shopInfo?.shopName}
-
-                  </p>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div
+          style={{
+            boxShadow: `0 1px 2px #d0d0d0`,
+          }}
+          className="  relative ring-1 ring-gray-100 w-full  overflow-hidden rounded-lg bg-white  "
+        >
+          <a href="#" className="justify-between w-full flex items-center h-full">
+            <div className="flex w-full items-center  justify-between px-4  space-x-4">
+              <div className="flex gap-3 items-center">
+                <div className="relative w-[50px] flex items-center justify-center h-[50px] bg-yellow-100 rounded-full">
+                  <PiStorefrontLight className="text-3xl" />
                 </div>
-                <div className="mt-3 text-xl md:font-bold text-black border-b border-gray-200 md:mt-0 ">
-                  ৳{currentAvailableAmount}
+                <p className="ml-2  text-sm font-semibold text-gray-700  border-gray-200 capitalize">
+                  {user.name} <br />
+                  <hr />{shopInfo?.shopName}
 
-                </div>
+                </p>
               </div>
 
-              <div className="w-full hidden h-3 bg-gray-100">
-                <div className="w-2/5 h-full text-xs text-center  bg-green-400"></div>
+
+              <div className="mt-3 text-xl md:font-bold text-black  border-gray-200 md:mt-0 ">
+                ৳{currentAvailableAmount}
+
               </div>
-            </a>
-          </div>
+            </div>
+
+            <div className="w-full hidden h-3 bg-gray-100">
+              <div className="w-2/5 h-full text-xs text-center  bg-green-400"></div>
+            </div>
+          </a>
         </div>
 
         <div
           style={{
             boxShadow: `0 1px 2px #d0d0d0`,
           }}
-          className="flex flex-col bg-white rounded-lg border px-8  shadow-3 py-4 md:w-[700px] w-full gap-3 mb-8 mt-4"
+          className="flex flex-col bg-white rounded-lg border px-8  shadow-3 py-4  gap-3  "
         >
           {/* <div className="bg-white  p-3 ring-1 ring-gray-400 rounded-md shadow-xl "> */}
           {<AnouncementContent setOpen={setOpenAnouncement} />}
@@ -470,26 +462,14 @@ const SellerDashboard = () => {
             style={{
               boxShadow: `0 1px 2px #d0d0d0`,
             }}
-            className="relative rounded-lg ring-1 ring-gray-100 w-full px-4 h-[120px] bg-white shadow-lg "
+            className="relative rounded-lg ring-1 ring-gray-100 w-full px-4 h-[120px] bg-[#ffffff] shadow-lg "
           >
             <p className="text-sm font-semibold text-gray-700 border-b border-gray-200 w-max  pt-4">
               Total Product
             </p>
             <div className="flex items-end my-6 space-x-2">
-              <p className="md:text-5xl text-3xl font-bold text-black ">{products?.length}</p>
-              <span className="flex items-center text-xl font-bold text-green-500">
-                <svg
-                  width="20"
-                  fill="currentColor"
-                  height="20"
-                  className="h-3"
-                  viewBox="0 0 1792 1792"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path d="M1675 971q0 51-37 90l-75 75q-38 38-91 38-54 0-90-38l-294-293v704q0 52-37.5 84.5t-90.5 32.5h-128q-53 0-90.5-32.5t-37.5-84.5v-704l-294 293q-36 38-90 38t-90-38l-75-75q-38-38-38-90 0-53 38-91l651-651q35-37 90-37 54 0 91 37l651 651q37 39 37 91z"></path>
-                </svg>
+              <p className="md:text-5xl text-3xl font-bold text-black "> {products?.length}</p>
 
-              </span>
             </div>
           </div>
         </div>
@@ -506,19 +486,7 @@ const SellerDashboard = () => {
 
             <div className="flex items-end my-6 space-x-2">
               <p className="md:text-5xl text-3xl font-bold text-black ">{orders.length}</p>
-              <span className="flex items-center text-xl font-bold text-green-500">
-                <svg
-                  width="20"
-                  fill="currentColor"
-                  height="20"
-                  className="h-3"
-                  viewBox="0 0 1792 1792"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path d="M1675 971q0 51-37 90l-75 75q-38 38-91 38-54 0-90-38l-294-293v704q0 52-37.5 84.5t-90.5 32.5h-128q-53 0-90.5-32.5t-37.5-84.5v-704l-294 293q-36 38-90 38t-90-38l-75-75q-38-38-38-90 0-53 38-91l651-651q35-37 90-37 54 0 91 37l651 651q37 39 37 91z"></path>
-                </svg>
-                {orderData?.length}
-              </span>
+
             </div>
           </div>
         </div>
@@ -533,20 +501,8 @@ const SellerDashboard = () => {
               Total Sold
             </p>
             <div className="flex items-end my-6 space-x-2">
-              <p className="md:text-5xl  text-3xl font-bold text-black ">{orders.reduce((total, order) => total + parseInt(order.promoHistory.status ? order.promoHistory.promoPrice : order.promoHistory.normalPrice), 0)}</p>
-              <span className="flex items-center text-xl font-bold text-red-500">
-                <svg
-                  width="20"
-                  fill="currentColor"
-                  height="20"
-                  className="h-3 transform rotate-180"
-                  viewBox="0 0 1792 1792"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path d="M1675 971q0 51-37 90l-75 75q-38 38-91 38-54 0-90-38l-294-293v704q0 52-37.5 84.5t-90.5 32.5h-128q-53 0-90.5-32.5t-37.5-84.5v-704l-294 293q-36 38-90 38t-90-38l-75-75q-38-38-38-90 0-53 38-91l651-651q35-37 90-37 54 0 91 37l651 651q37 39 37 91z"></path>
-                </svg>
+              <p className="md:text-5xl  text-3xl font-bold text-black ">৳{orders.reduce((total, order) => total + parseInt(order.promoHistory.status ? order.promoHistory.promoPrice : order.promoHistory.normalPrice), 0)}</p>
 
-              </span>
             </div>
           </div>
         </div>
@@ -571,12 +527,13 @@ const SellerDashboard = () => {
 
 
       </div>
+
       <div className="grid grid-cols-1 gap-4 my-10 md:grid-cols-2 lg:grid-cols-2">
         <div className="w-full px-4 py-2 bg-gray-50 rounded text-blue-500 flex items-center gap-2">
           <MdEmail />
           {<h1 className="w-full"> {darazShop?.result?.account}</h1>}
         </div>
-        <div className="w-full ">
+        <div className="w-full bg-gray-50 px-4 py-2 rounded text-blue-500 flex items-center gap-2">
           <h1>Previous Login</h1>
           <hr />
           {priviousAccount
@@ -598,7 +555,9 @@ const SellerDashboard = () => {
 
       </div>
 
-      <div className="overflow-hidden mt-3">
+
+      <div className="overflow-hidden mt-3 bg-[white]">
+        <h1 className="m-3 font-semibold">Lowest Stock Product</h1>
         <table className="w-full overflow-x-scroll bg-white border text-center text-sm font-light">
           <thead className="border-b  font-medium  ">
             <tr>
@@ -712,7 +671,9 @@ const SellerDashboard = () => {
           </tbody>
         </table>
       </div>
+
       <div className="bg-white border mt-8 rounded-lg mb-10 shadow-sm overflow-auto ">
+        <h1 className="m-3 font-semibold border-b pb-2">Recent Order</h1>
         <table className="w-full">
           <thead>
             <tr>

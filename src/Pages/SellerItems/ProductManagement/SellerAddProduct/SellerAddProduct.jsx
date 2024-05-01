@@ -32,7 +32,6 @@ const SellerAddProduct = () => {
   const [banglaDescription, setBanglaDescription] = useState("");
   const [shortDescription, setShortDescription] = useState("");
   const [youtube, setYoutube] = useState("");
-
   const [multiVendor, setMultiVendor] = useState(adminWare);
 
   const [inputFields, setInputFields] = useState([
@@ -44,6 +43,7 @@ const SellerAddProduct = () => {
       price: "",
       offerPrice: "",
       ability: false,
+      variantImag: [],
     },
   ]);
 
@@ -300,7 +300,7 @@ const SellerAddProduct = () => {
       status: false,
       createdAt: Date.now(),
       // updatedAt,
-      featuredImage: uploadedImageUrls[0],
+      featuredImage: uploadedImageUrls,
       images: uploadedImageUrls.filter((image) => image !== null),
       videos: youtube,
       // attributes,

@@ -658,13 +658,25 @@ const SellerAllProducts = () => {
                             <span>Name</span>
                           </div>
                         </th>
+
                         <th
                           scope="col"
-                          className="px-12 py-3.5 border text-sm font-normal text-left rtl:text-right "
+                          className="px-12 py-3.5 border w-[40px] text-sm font-normal text-center rtl:text-right "
                         >
-                          <button className="flex items-center gap-x-2">
+                          <button className="flex">
                             <span>Status</span>
                           </button>
+                        </th>
+                        <th
+                          scope="col"
+                          className="px-12 py-3.5 border  text-sm font-normal text-center rtl:text-right "
+                        >
+                          <button className="flex">
+                            <span>Sync</span>
+                          </button>
+                        </th>
+                        <th className="px-4 py-3.5 text-sm border font-normal text-left rtl:text-right">
+                          Doob Shop
                         </th>
                         <th
                           scope="col"
@@ -841,37 +853,49 @@ const SellerAllProducts = () => {
                                     )}
                                   </div>}
 
-                                {product?.multiVendor === true ? (
-                                  <div
-                                    onClick={() =>
-                                      update_product_multi_vendor(
-                                        product._id,
-                                        false
-                                      )
-                                    }
-                                    className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 cursor-pointer bg-emerald-100/60 bg-gray-800"
-                                  >
-                                    <span className="h-1.5 w-1.5 rounded-full bg-yellow-500" />
-                                    <h2 className="text-sm font-normal text-yellow-500">
-                                      Multi Vendor
-                                    </h2>
-                                  </div>
-                                ) : (
-                                  <div
-                                    onClick={() =>
-                                      update_product_multi_vendor(
-                                        product._id,
-                                        true
-                                      )
-                                    }
-                                    className="inline-flex items-center px-3 py-1 rounded-full  cursor-pointer gap-x-2 bg-emerald-100/60 bg-gray-800"
-                                  >
-                                    <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-                                    <h2 className="text-sm font-normal text-emerald-500">
-                                      Single Vendor
-                                    </h2>
-                                  </div>
-                                )}
+
+                              </td>
+                              <th className="">
+                                <div className="flex justify-center">
+                                  {product?.daraz && <img className="w-14 " src='https://doob.com.bd/assets/Daraz-fe21961a.svg' /> || product?.woo && <img className="w-14 " src='https://doob.com.bd/assets/woocommerce-icon-236845b7.svg' />}
+
+                                </div>
+
+                              </th>
+                              <td className=" text-sm border-2 text-gray-500  whitespace-nowrap">
+                                <div className="flex justify-center">
+                                  {product?.multiVendor === true ? (
+                                    <div
+                                      onClick={() =>
+                                        update_product_multi_vendor(
+                                          product._id,
+                                          false
+                                        )
+                                      }
+                                      className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 cursor-pointer bg-emerald-100/60 bg-gray-800"
+                                    >
+                                      <span className="h-1.5 w-1.5 rounded-full bg-green-500" />
+                                      <h2 className="text-sm font-normal text-green-500">
+                                        Yes
+                                      </h2>
+                                    </div>
+                                  ) : (
+                                    <div
+                                      onClick={() =>
+                                        update_product_multi_vendor(
+                                          product._id,
+                                          true
+                                        )
+                                      }
+                                      className="inline-flex items-center px-3 py-1 rounded-full  cursor-pointer gap-x-2 bg-emerald-100/60 bg-gray-800"
+                                    >
+                                      <span className="h-1.5 w-1.5 rounded-full bg-yellow-500" />
+                                      <h2 className="text-sm font-normal text-yellow-500">
+                                        No
+                                      </h2>
+                                    </div>
+                                  )}
+                                </div>
                               </td>
 
                               <td className="px-4 py-4 text-sm border-2 text-gray-500  whitespace-nowrap">
