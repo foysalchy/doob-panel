@@ -253,6 +253,38 @@ const ListOfClaimOrder = () => {
         }
       });
   };
+  const [cartProducts, setCartProducts] = useState([]);
+
+  console.log(cartProducts);
+  const handleSearch = (e) => {
+    e.preventDefault();
+    const searchValue = e.target.search.value;
+    const findProduct = tData.find((itm) =>
+      itm.orderNumber.includes(searchValue)
+    );
+
+    if (findProduct) {
+      const existingProductIndex = cartProducts.findIndex(
+        (item) => item.orderNumber === findProduct.orderNumber
+      );
+
+      if (existingProductIndex === -1) {
+        setCartProducts([...cartProducts, findProduct]);
+      } else {
+        console.log("Product with the same ID already exists in cart");
+      }
+
+      // Reset the form input field
+      e.target.reset();
+    }
+  };
+
+  // Calculate the range of items to display based on pagination
+  // const itemsPerPage = 10;
+  // const [currentPage, setCurrentPage] = useState(1);
+  // const startIndex = (currentPage - 1) * itemsPerPage;
+  // const endIndex = startIndex + itemsPerPage;
+  // const currentItems = cartProducts?.slice(startIndex, endIndex);
 
   const [selectAll, setSelectAll] = useState(false);
 
@@ -291,11 +323,13 @@ const ListOfClaimOrder = () => {
   //     }
   // };
 
+  console.log(currentItems);
+
   return (
     <div>
       <div className="flex flex-col overflow-hidden mt-4">
         <form
-          // onSubmit={handleSearch}
+          onSubmit={handleSearch}
           className="flex items-center border w-[70%] bg-gray-100 ring-1 border-gray-900 p-2 rounded-md "
         >
           <BiSearch className="text-gray-600 text-lg" />
@@ -303,7 +337,7 @@ const ListOfClaimOrder = () => {
             name="search"
             type="text"
             className="outline-none  bg-transparent w-full px-2"
-            placeholder="Search..."
+            placeholder="Searching..."
           />
         </form>
         {/* {selectAll && <div className='flex items-center gap-8'>
@@ -351,7 +385,7 @@ const ListOfClaimOrder = () => {
                 </thead>
                 <tbody>
                   {currentItems
-                    ?.filter((item) => item.status === "claim")
+                    ?.filter((item) => item.status === "claim" || "reject")
                     ?.map((item, index) => (
                       <React.Fragment key={item._id}>
                         <tr className={index % 2 === 0 ? "bg-gray-100" : ""}>
@@ -423,20 +457,22 @@ const ListOfClaimOrder = () => {
                             <div>
                               <div
                                 onClick={() => setModalOn(false)}
-                                className={`fixed z-[100] flex items-center justify-center ${modalOn?._id === item?._id
-                                  ? "visible opacity-100"
-                                  : "invisible opacity-0"
-                                  } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
+                                className={`fixed z-[100] flex items-center justify-center ${
+                                  modalOn?._id === item?._id
+                                    ? "visible opacity-100"
+                                    : "invisible opacity-0"
+                                } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
                               >
                                 <div
                                   onClick={(e_) => e_.stopPropagation()}
-                                  className={`text- absolute w-[500px] rounded-sm bg-white p-6 drop-shadow-lg dark:bg-black dark:text-white ${modalOn?._id === item?._id
-                                    ? "scale-1 opacity-1 duration-300"
-                                    : "scale-0 opacity-0 duration-150"
-                                    }`}
+                                  className={`text- absolute w-[500px] rounded-sm bg-white p-6 drop-shadow-lg dark:bg-black dark:text-white ${
+                                    modalOn?._id === item?._id
+                                      ? "scale-1 opacity-1 duration-300"
+                                      : "scale-0 opacity-0 duration-150"
+                                  }`}
                                 >
                                   <h1 className="mb-2 text-2xl font-semibold">
-                                    Edit Order { }
+                                    Edit Order {}
                                   </h1>
                                   <form>
                                     <div className="flex items-start w-full mb-6 flex-col gap-1">
