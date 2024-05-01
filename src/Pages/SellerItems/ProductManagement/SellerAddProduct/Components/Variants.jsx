@@ -156,7 +156,7 @@ const Variants = ({
       </div>
       <div className="min-w-fit mb-4">
         <label className="text-sm " htmlFor="Video url ">
-          Sale Multi Vendor
+          Sell On Doob
         </label>
         <select
           onChange={(e) => {

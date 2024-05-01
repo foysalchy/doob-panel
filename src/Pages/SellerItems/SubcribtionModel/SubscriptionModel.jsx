@@ -71,16 +71,18 @@ const SubscriptionModel = () => {
   const daysPassed = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
 
   const time =
-    (prices?.timeDuration === "Monthly" && 30) ||
-    (prices?.timeDuration === "Yearly" && 365) ||
-    (prices?.timeDuration === "Weekly" && 7) ||
-    (prices?.timeDuration === "Daily" && 1) ||
-    (prices?.timeDuration === "Lifetime" &&
+    (prices?.orderInfo?.time?.split(",")[1] === "1" && 30) ||
+    (prices?.orderInfo?.time?.split(",")[1] === "12" && 365) ||
+    (prices?.orderInfo?.time?.split(",")[1] === "6" && 180) ||
+    (prices?.orderInfo?.time?.split(",")[1] === "20" && 730) ||
+    (prices?.orderInfo?.time?.split(",")[1] === "Lifetime" &&
       10000000000000000000000000000000000);
 
   // if (daysPassed >= time) {
   //     alert('your ads;fj');
   // }
+
+  console.log(prices?.orderInfo?.time?.split(",")[1]);
 
   const showWarningIfNeeded = () => {
     if (daysPassed > 0 && daysPassed <= 5) {
@@ -102,8 +104,9 @@ const SubscriptionModel = () => {
   // const buyTi
   const showBuyingPrice = parseInt(prices?.orderInfo?.buyingPrice);
 
-  console.log(prices, "--------*************");
+  const amount = parseInt(prices?.orderInfo?.amount) * parseInt(prices?.orderInfo?.time?.split(",")[1])
 
+  console.log(time, "days", daysPassed);
   return (
     <div className="bg-white text-black">
       {showWarning && (
@@ -131,7 +134,7 @@ const SubscriptionModel = () => {
         </div>
       )}
 
-      {possibility &&   (
+      {possibility && !amount && (
         <div className="bg-orange-100 px-2 py-3 rounded- flex justify-between items-center">
           <p className="text-sm text-orange-800 capitalize ">
             Hi dear, Your free trial is end. Please renew{" "}
@@ -157,13 +160,10 @@ const SubscriptionModel = () => {
       )}
       <div className="container px-6 py-8 mx-auto">
         <h1 className="text-2xl font-semibold text-center text-gray-800 capitalize lg:text-3xl ">
-          {`${daysPassed} days have passed since the user was created.`}
+          {`The remaining validity of your package is ${daysPassed - time == 10000000000000000000000000000000000 ? "Unlimited" : time} days out of ${time == 10000000000000000000000000000000000 ? "Unlimited" : time
+            } days.`}
         </h1>
 
-        <h1 className="text-2xl font-semibold text-center text-red-800 capitalize lg:text-3xl ">
-          {`${time == 10000000000000000000000000000000000 ? "Unlimited" : time
-            } days you use this service.`}
-        </h1>
 
         <div className="flex justify-center mt-3">
           <div className="w-[300px] bg-[#0000ff08] text-center border-2 border-blue-400 p-3 rounded">
@@ -172,13 +172,12 @@ const SubscriptionModel = () => {
               <li className="text-sm text-gray-500">
                 {/* parseInt(open?.price) * parseInt(time?.split(',')[1]) - parseInt(time?.split(',')[0]) */}
                 <span className=" text-black">Amount :</span>{" "}
-                {parseInt(prices?.orderInfo?.amount) *
-                  parseInt(prices?.orderInfo?.time?.split(",")[1])}{" "}
+                {amount ? amount : 0} {" "}
                 ৳
               </li>
               <li className="text-sm text-gray-500 ">
                 <span className=" text-black">Buying Price :</span>{" "}
-                {prices?.orderInfo?.buyingPrice} ৳
+                {prices?.orderInfo?.buyingPrice ? prices?.orderInfo?.buyingPrice : 0} ৳
               </li>
               <li className="text-sm text-gray-500 ">
                 <span className=" text-black">Discount Price :</span>{" "}

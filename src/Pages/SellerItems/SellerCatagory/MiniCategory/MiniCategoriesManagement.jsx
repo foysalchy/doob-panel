@@ -339,7 +339,7 @@ const MiniCategoriesManagement = () => {
                   <thead>
                     <tr>
                       <th className="px-4 py-3 title-font text-start font-medium text-gray-100 text-sm bg-gray-800  rounded-tl ">
-                        Category Name
+                        Mini  Category Name
                       </th>
 
                       {shopInfo.darazLogin && (

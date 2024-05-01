@@ -289,6 +289,8 @@ const ShopAuth = ({ children }) => {
     };
   }, []);
 
+  console.log(shopUser);
+
   const authInfo = {
     shopUser,
     shopCredential,

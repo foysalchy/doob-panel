@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../../../AuthProvider/UserProvider";
 import { MdEmail } from "react-icons/md";
 import { FaFacebook } from "react-icons/fa6";
@@ -9,9 +9,9 @@ import { useQuery } from "@tanstack/react-query";
 const SellerLoginCredintiial = () => {
   const { shopInfo } = useContext(AuthContext);
 
-  const [emailActive, setEmailActive] = useState(false);
-  const [googleActive, setGoogleActive] = useState(false);
-  const [facebookActive, setFacebookActive] = useState(false);
+  const [emailActive, setEmailActive] = useState(true);
+  const [googleActive, setGoogleActive] = useState(true);
+  const [facebookActive, setFacebookActive] = useState(true);
   const [loading, setLoading] = useState(false);
 
   const handleToggle = (button) => {
@@ -101,6 +101,14 @@ const SellerLoginCredintiial = () => {
       }
     },
   });
+
+  useEffect(() => {
+    if (shopCredential) {
+      setEmailActive(shopCredential.service.email)
+      setGoogleActive(shopCredential.service.google)
+      setFacebookActive(shopCredential.service.facebook)
+    }
+  }, [shopCredential])
 
   return (
     <div>
@@ -253,7 +261,7 @@ const SellerLoginCredintiial = () => {
             {/* Email Logo */}
             <button
               type="button"
-              className={`p-2 rounded-full ${!emailActive ? "bg-blue-500" : "bg-gray-300"
+              className={`p-2 rounded-full ${emailActive ? "bg-blue-500" : "bg-gray-300"
                 }`}
               onClick={() => handleToggle("email")}
             >
@@ -265,7 +273,7 @@ const SellerLoginCredintiial = () => {
             {/* Google Logo */}
             <button
               type="button"
-              className={`p-2 rounded-full ${!googleActive ? "bg-red-500" : "bg-gray-300"
+              className={`p-2 rounded-full ${googleActive ? "bg-red-500" : "bg-gray-300"
                 }`}
               onClick={() => handleToggle("google")}
             >
@@ -275,7 +283,7 @@ const SellerLoginCredintiial = () => {
             {/* Facebook Logo */}
             <button
               type="button"
-              className={`p-2 rounded-full ${!facebookActive ? "bg-blue-800" : "bg-gray-300"
+              className={`p-2 rounded-full ${facebookActive ? "bg-blue-800" : "bg-gray-300"
                 }`}
               onClick={() => handleToggle("facebook")}
             >

@@ -3,7 +3,7 @@ import { useContext } from "react";
 import { AuthContext } from "../../../AuthProvider/UserProvider";
 import { useState } from "react";
 import { useEffect } from "react";
-import { FaBangladeshiTakaSign } from "react-icons/fa6";
+import { FaArrowDown, FaBangladeshiTakaSign, FaEquals } from "react-icons/fa6";
 import AnouncementContent from "./AdminContent/AnouncementContent";
 import NoticeContent from "./AdminContent/NoticeContent";
 import { RxCross2 } from "react-icons/rx";
@@ -17,9 +17,11 @@ import { MdEmail } from "react-icons/md";
 import Swal from "sweetalert2";
 import { SwiperSlide, Swiper } from "swiper/react";
 import { Autoplay, Navigation, Pagination } from "swiper/modules";
+import { FaCheckCircle, FaExclamationCircle } from "react-icons/fa";
+import EditInventory from "../../SellerItems/Inventory/EditInventory";
 
 const SellerDashboard = () => {
-  const { user, shopInfo } = useContext(AuthContext);
+  const { user, shopInfo, setCheckUpData } = useContext(AuthContext);
   const [greeting, setGreeting] = useState("");
   const currentDate = new Date();
   const [open, setOpen] = useState(false);
@@ -137,13 +139,12 @@ const SellerDashboard = () => {
         `https://backend.doob.com.bd/api/v1/seller/order?shopId=${shopInfo._id}`
       );
       const data = await res.json();
-      refetch();
       return data.data;
     },
   });
 
   const {
-    data: darazShop = {},
+    data: darazShop = [],
     isLoading: check,
     refetch: check_reload,
   } = useQuery({
@@ -157,7 +158,9 @@ const SellerDashboard = () => {
     },
   });
 
-  console.log(darazShop, ".......");
+
+  console.log(darazShop);
+
 
   const {
     data: priviousAccount = [],
@@ -193,6 +196,148 @@ const SellerDashboard = () => {
       });
   };
 
+  const { data: products = [] } = useQuery({
+    queryKey: ["products"],
+    queryFn: async () => {
+      const res = await fetch(
+        `https://backend.doob.com.bd/api/v1/seller/all-products/${shopInfo._id}`
+      );
+      const data = await res.json();
+      return data;
+    },
+  });
+
+  const { data: orders = [] } = useQuery({
+    queryKey: ["sellerOrder"],
+    queryFn: async () => {
+      const res = await fetch(
+        `https://backend.doob.com.bd/api/v1/seller/order?shopId=${shopInfo._id}`
+      );
+      const data = await res.json();
+      return data.data;
+    },
+  });
+
+  const { data: withdrawHistory = [] } = useQuery({
+    queryKey: ["my-withdrawHistory"],
+    queryFn: async () => {
+      const res = await fetch(
+        `https://backend.doob.com.bd/api/v1/admin/withdraw-for-shop?shopId=${shopInfo?._id}`
+      );
+      const data = await res.json();
+      return data.data;
+    },
+  })
+
+  const { data: orders_admin = [] } = useQuery({
+    queryKey: ["orders_admin"],
+    queryFn: async () => {
+      const res = await fetch(
+        `https://backend.doob.com.bd/api/v1/seller/get-my-order?shopId=${shopInfo?._id}`
+      );
+      const data = await res.json();
+      return data.data;
+    },
+  });
+  const [totalAllTotalPrices, setTotalAllTotalPrices] = useState(0);
+
+  useEffect(() => {
+    // Calculate the total of all total prices
+    const total = orders_admin.reduce((acc, order) => {
+
+      return (
+        acc +
+        (order.price + parseInt(order.commission) + parseInt(order.handling))
+      );
+    }, 0);
+    setTotalAllTotalPrices(total);
+  }, [orders]);
+
+
+  const total_request_amount = withdrawHistory.reduce(
+    (acc, withdraw) => acc + withdraw.amount,
+    0
+  );
+
+  const currentAvailableAmount = parseInt(totalAllTotalPrices) - parseInt(total_request_amount);
+
+
+
+  const { data: productData = [] } = useQuery({
+    queryKey: ["productData"],
+    queryFn: async () => {
+      const res = await fetch(
+        `https://backend.doob.com.bd/api/v1/seller/all-products/${shopInfo._id}`
+      );
+      const data = await res.json();
+      return data;
+    },
+  });
+
+
+  const getStatus = (quantity, product_Low_alert) => {
+    console.log(product_Low_alert, quantity);
+    const lowAlert = product_Low_alert ? parseInt(product_Low_alert) : null;
+
+    if (quantity <= 0) {
+      return {
+        text: "Stock Out",
+        color: "text-red-500",
+        icon: <FaExclamationCircle />,
+      };
+    } else if (quantity <= (lowAlert !== null ? lowAlert : 10)) {
+      return {
+        text: "Lowest Stock",
+        color: "text-orange-500",
+        icon: <FaArrowDown />,
+      };
+    } else if (quantity <= (lowAlert !== null ? lowAlert : 50)) {
+      return {
+        text: "Average Stock",
+        color: "text-yellow-500",
+        icon: <FaEquals />,
+      };
+    } else {
+      return {
+        text: "Good Stock",
+        color: "text-green-500",
+        icon: <FaCheckCircle />,
+      };
+    }
+  };
+
+
+  const filteredProducts = productData.filter((product) => {
+    const lowStockWarning = product?.low_stock_warning
+      ? parseInt(product.low_stock_warning)
+      : null;
+    const stockQuantity = product.stock_quantity;
+
+    const selectedFilter = 'Lowest Stock'
+
+    switch (selectedFilter) {
+      case "all":
+        return true; // Include all products
+      case "Good Stock":
+        return stockQuantity > (lowStockWarning ? lowStockWarning + 50 : 50);
+      case "Average Stock":
+        return (
+          stockQuantity <= (lowStockWarning ? lowStockWarning + 50 : 50) &&
+          lowStockWarning &&
+          lowStockWarning > 10
+        );
+      case "Lowest Stock":
+        return (
+          stockQuantity <= (lowStockWarning ? lowStockWarning : 10) &&
+          stockQuantity > 0
+        );
+      case "Stock Out":
+        return stockQuantity <= 0;
+      default:
+        return true; // Default to include all products
+    }
+  });
+
   return (
     <div className="h-screen mb-10   ">
       {sellerPopupData.length
@@ -216,7 +361,7 @@ const SellerDashboard = () => {
       <h2 className="text-gray-400 text-md">
         Here&#x27;s what&#x27;s happening with your ambassador account today.
       </h2>
-      {!itemLoad && !shopCredential?._id && (
+      {!shopCredential?._id && (
         <div className="">
           <div
             class="bg-red-100 border border-orange-400 text-orange-700 px-4 py-3 rounded relative"
@@ -259,13 +404,13 @@ const SellerDashboard = () => {
           ))}
         </Swiper>
       </div>
-      <div className="flex flex-col items-start w-full my-6 space-y-4 md:space-x-4 md:space-y-0 md:flex-row">
-        <div className="w-full md:w-6/12">
+      <div className="flex flex-col items-start w-full  my-6 space-y-4 md:space-x-4 md:space-y-0 md:flex-row">
+        <div className="w-full    md:w-6/12">
           <div
             style={{
               boxShadow: `0 1px 2px #d0d0d0`,
             }}
-            className="relative ring-1 ring-gray-100 w-full overflow-hidden rounded-lg bg-white  "
+            className="relative ring-1 ring-gray-100 w-full  overflow-hidden rounded-lg bg-white  "
           >
             <a href="#" className="block w-full h-full">
               <div className="flex items-center justify-between px-4 py-7 space-x-4">
@@ -282,19 +427,18 @@ const SellerDashboard = () => {
                       <path d="M1362 1185q0 153-99.5 263.5t-258.5 136.5v175q0 14-9 23t-23 9h-135q-13 0-22.5-9.5t-9.5-22.5v-175q-66-9-127.5-31t-101.5-44.5-74-48-46.5-37.5-17.5-18q-17-21-2-41l103-135q7-10 23-12 15-2 24 9l2 2q113 99 243 125 37 8 74 8 81 0 142.5-43t61.5-122q0-28-15-53t-33.5-42-58.5-37.5-66-32-80-32.5q-39-16-61.5-25t-61.5-26.5-62.5-31-56.5-35.5-53.5-42.5-43.5-49-35.5-58-21-66.5-8.5-78q0-138 98-242t255-134v-180q0-13 9.5-22.5t22.5-9.5h135q14 0 23 9t9 23v176q57 6 110.5 23t87 33.5 63.5 37.5 39 29 15 14q17 18 5 38l-81 146q-8 15-23 16-14 3-27-7-3-3-14.5-12t-39-26.5-58.5-32-74.5-26-85.5-11.5q-95 0-155 43t-60 111q0 26 8.5 48t29.5 41.5 39.5 33 56 31 60.5 27 70 27.5q53 20 81 31.5t76 35 75.5 42.5 62 50 53 63.5 31.5 76.5 13 94z"></path>
                     </svg>
                   </span>
-                  <p className="ml-2  text-sm font-semibold text-gray-700 border-b border-gray-200 capitalize">
-                    Level 2 <br /> {user.name}
+                  <p className="ml-2  text-sm font-semibold text-gray-700  border-gray-200 capitalize">
+                    {user.name} <br />
+                    <hr />{shopInfo?.shopName}
+
                   </p>
                 </div>
                 <div className="mt-3 text-xl md:font-bold text-black border-b border-gray-200 md:mt-0 ">
-                  ৳44,453.39
-                  <span className="text-xs text-gray-400">/৳100K</span>
+                  ৳{currentAvailableAmount}
+
                 </div>
               </div>
-              <div className="mt-3 p-4 text-xl md:font-bold text-black border-b border-gray-200 md:mt-0 ">
-                All Product
-                <span className="ml-4 text-gray-400">12</span>
-              </div>
+
               <div className="w-full hidden h-3 bg-gray-100">
                 <div className="w-2/5 h-full text-xs text-center  bg-green-400"></div>
               </div>
@@ -316,81 +460,11 @@ const SellerDashboard = () => {
           {<NoticeContent setOpen={setOpen} />}
           {/* </div> */}
         </div>
-        {/* <div className="flex items-center w-full space-x-4 md:w-1/2">
-                    <div className="w-1/2 ">
-                        <div className="relative ring-1 ring-gray-100 md:h-[100px] h-[120px] w-full px-4 py-6 bg-white shadow-lg ">
-                            <p className="text-2xl font-bold text-black ">
-                                12
-                            </p>
-                            <p className="text-sm text-gray-400">
-                                Active Product
-                            </p>
-                        </div>
-                    </div>
-                    <div className="w-1/2 ">
-                        <div className="relative w-full px-4 md:h-[100px] h-[120px] ring-1 ring-gray-100 py-6 bg-white shadow-lg ">
-                            <div className="flex items-center justify-between">
-                                <div className="text-2xl font-bold text-black flex gap-2">
-                                    <span className='kalpurush'>৳</span> <p> 93.76</p>
-                                </div>
 
-                                <div className="flex md:relative absolute right-2 top-2 items-center justify-center text-lg font-bold text-white w-[30px] h-[30px] bg-purple-500 rounded-full ">
-                                    ৳
-                                </div>
-                            </div>
-                            <p className="text-sm text-gray-400">
-                               Commission in approval
-                            </p>
-                        </div>
-                    </div>
-                </div> */}
       </div>
 
-      <div className="flex items-center space-x-4">
-        <div>
-          <div>
-            <div className="relative inline-block">
-              <button
-                style={{
-                  boxShadow: `0 1px 2px #d0d0d0`,
-                }}
-                className="flex text-black bg-white items-center px-4 py-2    border border-gray-300 rounded-r-full rounded-tl-sm rounded-bl-full md:text-md w-[203px]"
-                onClick={handleButtonClick}
-              >
-                <svg
-                  width="20"
-                  height="20"
-                  fill="currentColor"
-                  className="mr-2 text-gray-400"
-                  viewBox="0 0 1792 1792"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  {/* SVG path for the first icon (calendar) */}
-                </svg>
-                {selectedDate ? selectedDate.toDateString() : formattedDate}
-              </button>
 
-              {showDatePicker && (
-                <div className="absolute top-0.5 left-6 border-none focus:none text-black z-10 mt-2">
-                  <DatePicker
-                    wrapperClassName="focus:outline-none text-black focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:text-black"
-                    calendarClassName="border border-gray-300"
-                    selected={selectedDate}
-                    onChange={(date) => setSelectedDate(date)}
-                    onClickOutside={() => setShowDatePicker(false)}
-                    // customInput={<CustomInput />}
-                    open={showDatePicker}
-                  />
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-        <span className="text-sm bg-white text-gray-800">
-          Compared to {formattedDate}
-        </span>
-      </div>
-      <div className="grid grid-cols-1 gap-4 my-4 md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid grid-cols-1 gap-4 my-4 md:grid-cols-2 lg:grid-cols-4">
         <div className="w-full">
           <div
             style={{
@@ -398,11 +472,11 @@ const SellerDashboard = () => {
             }}
             className="relative rounded-lg ring-1 ring-gray-100 w-full px-4 h-[120px] bg-white shadow-lg "
           >
-            <p className="text-sm font-semibold text-gray-700 border-b border-gray-200 w-max ">
-              Product Referred
+            <p className="text-sm font-semibold text-gray-700 border-b border-gray-200 w-max  pt-4">
+              Total Product
             </p>
             <div className="flex items-end my-6 space-x-2">
-              <p className="md:text-5xl text-3xl font-bold text-black ">12</p>
+              <p className="md:text-5xl text-3xl font-bold text-black ">{products?.length}</p>
               <span className="flex items-center text-xl font-bold text-green-500">
                 <svg
                   width="20"
@@ -414,7 +488,7 @@ const SellerDashboard = () => {
                 >
                   <path d="M1675 971q0 51-37 90l-75 75q-38 38-91 38-54 0-90-38l-294-293v704q0 52-37.5 84.5t-90.5 32.5h-128q-53 0-90.5-32.5t-37.5-84.5v-704l-294 293q-36 38-90 38t-90-38l-75-75q-38-38-38-90 0-53 38-91l651-651q35-37 90-37 54 0 91 37l651 651q37 39 37 91z"></path>
                 </svg>
-                22%
+
               </span>
             </div>
           </div>
@@ -426,12 +500,12 @@ const SellerDashboard = () => {
             }}
             className="relative rounded-lg w-full ring-1 ring-gray-100 px-4 h-[120px] bg-white shadow-lg "
           >
-            <p className="text-sm font-semibold text-gray-700 border-b border-gray-200 w-max ">
-              Product Paid
+            <p className="text-sm font-semibold text-gray-700 border-b border-gray-200 w-max  pt-4">
+              Total Order
             </p>
 
             <div className="flex items-end my-6 space-x-2">
-              <p className="md:text-5xl text-3xl font-bold text-black ">23</p>
+              <p className="md:text-5xl text-3xl font-bold text-black ">{orders.length}</p>
               <span className="flex items-center text-xl font-bold text-green-500">
                 <svg
                   width="20"
@@ -443,7 +517,7 @@ const SellerDashboard = () => {
                 >
                   <path d="M1675 971q0 51-37 90l-75 75q-38 38-91 38-54 0-90-38l-294-293v704q0 52-37.5 84.5t-90.5 32.5h-128q-53 0-90.5-32.5t-37.5-84.5v-704l-294 293q-36 38-90 38t-90-38l-75-75q-38-38-38-90 0-53 38-91l651-651q35-37 90-37 54 0 91 37l651 651q37 39 37 91z"></path>
                 </svg>
-                12%
+                {orderData?.length}
               </span>
             </div>
           </div>
@@ -455,11 +529,11 @@ const SellerDashboard = () => {
             }}
             className="relative rounded-lg w-full px-4 ring-1 ring-gray-100 h-[120px] bg-white shadow-lg "
           >
-            <p className="text-sm font-semibold text-gray-700 border-b border-gray-200 w-max ">
-              New features
+            <p className="text-sm font-semibold text-gray-700 border-b border-gray-200 w-max  pt-4">
+              Total Sold
             </p>
             <div className="flex items-end my-6 space-x-2">
-              <p className="md:text-5xl  text-3xl font-bold text-black ">12</p>
+              <p className="md:text-5xl  text-3xl font-bold text-black ">{orders.reduce((total, order) => total + parseInt(order.promoHistory.status ? order.promoHistory.promoPrice : order.promoHistory.normalPrice), 0)}</p>
               <span className="flex items-center text-xl font-bold text-red-500">
                 <svg
                   width="20"
@@ -471,7 +545,7 @@ const SellerDashboard = () => {
                 >
                   <path d="M1675 971q0 51-37 90l-75 75q-38 38-91 38-54 0-90-38l-294-293v704q0 52-37.5 84.5t-90.5 32.5h-128q-53 0-90.5-32.5t-37.5-84.5v-704l-294 293q-36 38-90 38t-90-38l-75-75q-38-38-38-90 0-53 38-91l651-651q35-37 90-37 54 0 91 37l651 651q37 39 37 91z"></path>
                 </svg>
-                2%
+
               </span>
             </div>
           </div>
@@ -483,81 +557,19 @@ const SellerDashboard = () => {
             }}
             className="relative rounded-lg ring-1 ring-gray-100 w-full px-4 h-[120px] bg-white shadow-lg "
           >
-            <p className="text-sm font-semibold text-gray-700 border-b border-gray-200 w-max ">
-              Users
+            <p className="text-sm font-semibold text-gray-700 border-b border-gray-200 w-max  pt-4">
+              Total Customs
             </p>
             <div className="flex items-end my-6 space-x-2">
               <p className="md:text-5xl text-3xl font-bold text-black ">
                 {orderData.length}
               </p>
-              {/* <span className="flex items-center text-xl font-bold text-red-500">
-                                <svg width="20" fill="currentColor" height="20" className="h-3 transform rotate-180"
-                                    viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg">
-                                    <path
-                                        d="M1675 971q0 51-37 90l-75 75q-38 38-91 38-54 0-90-38l-294-293v704q0 52-37.5 84.5t-90.5 32.5h-128q-53 0-90.5-32.5t-37.5-84.5v-704l-294 293q-36 38-90 38t-90-38l-75-75q-38-38-38-90 0-53 38-91l651-651q35-37 90-37 54 0 91 37l651 651q37 39 37 91z">
-                                    </path>
-                                </svg>
-                                14%
-                            </span> */}
+
             </div>
           </div>
         </div>
-        <div className="w-full">
-          <div
-            style={{
-              boxShadow: `0 1px 2px #d0d0d0`,
-            }}
-            className="relative rounded-lg w-full ring-1 ring-gray-100 px-4 h-[120px] bg-white shadow-lg "
-          >
-            <p className="text-sm font-semibold text-gray-700 border-b border-gray-200 w-max ">
-              Sales
-            </p>
-            <div className="flex items-end my-6 space-x-2">
-              <p className="md:text-5xl text-3xl font-bold text-black ">9</p>
-              <span className="flex items-center text-xl font-bold text-green-500">
-                <svg
-                  width="20"
-                  fill="currentColor"
-                  height="20"
-                  className="h-3"
-                  viewBox="0 0 1792 1792"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path d="M1675 971q0 51-37 90l-75 75q-38 38-91 38-54 0-90-38l-294-293v704q0 52-37.5 84.5t-90.5 32.5h-128q-53 0-90.5-32.5t-37.5-84.5v-704l-294 293q-36 38-90 38t-90-38l-75-75q-38-38-38-90 0-53 38-91l651-651q35-37 90-37 54 0 91 37l651 651q37 39 37 91z"></path>
-                </svg>
-                34%
-              </span>
-            </div>
-          </div>
-        </div>
-        <div className="w-full">
-          <div
-            style={{
-              boxShadow: `0 1px 2px #d0d0d0`,
-            }}
-            className="relative rounded-lg w-full ring-1 ring-gray-100 px-4 h-[120px] bg-white shadow-lg "
-          >
-            <p className="text-sm font-semibold text-gray-700 border-b border-gray-200 w-max ">
-              Maintenance
-            </p>
-            <div className="flex items-end my-6 space-x-2">
-              <p className="md:text-5xl text-3xl font-bold text-black ">15</p>
-              <span className="flex items-center text-xl font-bold text-green-500">
-                <svg
-                  width="20"
-                  fill="currentColor"
-                  height="20"
-                  className="h-3"
-                  viewBox="0 0 1792 1792"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path d="M1675 971q0 51-37 90l-75 75q-38 38-91 38-54 0-90-38l-294-293v704q0 52-37.5 84.5t-90.5 32.5h-128q-53 0-90.5-32.5t-37.5-84.5v-704l-294 293q-36 38-90 38t-90-38l-75-75q-38-38-38-90 0-53 38-91l651-651q35-37 90-37 54 0 91 37l651 651q37 39 37 91z"></path>
-                </svg>
-                34%
-              </span>
-            </div>
-          </div>
-        </div>
+
+
       </div>
       <div className="grid grid-cols-1 gap-4 my-10 md:grid-cols-2 lg:grid-cols-2">
         <div className="w-full px-4 py-2 bg-gray-50 rounded text-blue-500 flex items-center gap-2">
@@ -583,7 +595,156 @@ const SellerDashboard = () => {
               </div>
             ))}
         </div>
+
       </div>
+
+      <div className="overflow-hidden mt-3">
+        <table className="w-full overflow-x-scroll bg-white border text-center text-sm font-light">
+          <thead className="border-b  font-medium  ">
+            <tr>
+              <th scope="col" className="border-r px-2 py-4 font-[500]">
+                Photo
+              </th>
+              <th scope="col" className="border-r px-2 py-4 font-[500]">
+                Product Name
+              </th>
+              <th scope="col" className="border-r px-2 py-4 font-[500]">
+                Price
+              </th>
+              <th
+                scope="col"
+                className="border-r px-2 py-4 text-sm font-[500]"
+              >
+                Regular Price
+              </th>
+              <th
+                scope="col"
+                className="border-r px-2 py-4 text-sm font-[500]"
+              >
+                Sale Price
+              </th>
+
+              <th
+                scope="col"
+                className="border-r px-2 py-4 text-sm font-[500]"
+              >
+                Stock Quantity
+              </th>
+              <th
+                scope="col"
+                className="border-r px-2 py-4 text-sm font-[500]"
+              >
+                Status
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {filteredProducts.slice(0, 4)?.map((product) => {
+              const status = getStatus(
+                product?.stock_quantity,
+                product?.low_stock_warning
+              );
+              return (
+                <tr className="border-b " key={product?._id}>
+                  <td className="whitespace-nowrap border-r px-2 py-2 font-medium ">
+                    <img
+                      src={product?.featuredImage?.src}
+                      alt=""
+                      className="w-[80px] h-[80px] rounded-lg object-cover m-auto"
+                    />
+                  </td>
+                  <td className="whitespace-wrap text-sm text-start w-[300px] border-r px-6 py-4 font-medium ">
+                    {product?.name}
+                    <br />
+                    <span className="text-xs text-gray-500">
+                      {" "}
+                      {product?.sku}
+                    </span>
+                  </td>
+                  <td className="whitespace-nowrap border-r px-6 py-4 font-medium ">
+                    {product?.price}
+                  </td>
+                  <td className="whitespace-nowrap border-r px-6 py-4 font-medium ">
+                    {product?.regular_price}
+                  </td>
+                  <td className="whitespace-nowrap border-r px-6 py-4 font-medium ">
+                    {product?.sale_price}
+                  </td>
+
+                  <td className="whitespace-nowrap border-r px-6 py-4 font-medium ">
+                    {product?.stock_quantity} /
+                    <span className="text-red-400">
+                      {product?.low_stock_warning}
+                    </span>
+                  </td>
+
+                  <td className="whitespace-nowrap border-r px-6 py-4 font-medium ">
+                    <>
+                      <div className={`text-xs  ${status.color}`}>
+                        <p className="flex items-center gap-2 justify-center">
+                          {status.icon} {status.text}
+                        </p>
+                      </div>
+                    </>
+                  </td>
+                  <td className="whitespace-nowrap border-r px-6 py-4 font-medium ">
+                    <button
+                      onClick={() => setOpen(product)}
+                      className="text-xs text-blue-500 border border-blue-500 px-2 py-1 rounded-lg"
+                    >
+                      Edit
+                    </button>
+                  </td>
+
+                  {open._id === product._id && (
+                    <div className="h-0 w-0">
+                      <EditInventory
+                        refetch={refetch}
+                        data={product}
+                        open={open}
+                        setOpen={setOpen}
+                      />
+                    </div>
+                  )}
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+      <div className="bg-white border mt-8 rounded-lg mb-10 shadow-sm overflow-auto ">
+        <table className="w-full">
+          <thead>
+            <tr>
+              <th className="px-4 py-3 text-left font-medium">Order</th>
+              <th className="px-4 py-3 text-left font-medium">Customer</th>
+              <th className="px-4 py-3 text-left font-medium hidden md:table-cell">Date</th>
+              <th className="px-4 py-3 text-right font-medium">Total</th>
+              <th className="px-4 py-3 text-left font-medium hidden sm:table-cell">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {orders.map((order) => <tr className="border-b" key={order?._id} style={{ whiteSpace: "nowrap" }} >
+              <Link
+                to="/seller/orders/manage-order/order-checkup"
+                onClick={() => setCheckUpData(order)}
+                style={{ whiteSpace: "nowrap" }}
+                className="px-4 font-[400]"
+              >
+                # {order?.orderNumber}
+              </Link>
+              <td className="px-4 py-3">{order.addresses.fullName}</td>
+              <td className="px-4 py-3 hidden md:table-cell">{new Date(order.
+                timestamp).toDateString()}</td>
+              <td className="px-4 py-3 text-right">৳ {order.promoHistory.status ? order.promoHistory.promoPrice : order.promoHistory.normalPrice}</td>
+              <td className="px-4 py-3 hidden sm:table-cell">{order.status ? order.status : "Pending"}</td>
+
+            </tr>)}
+          </tbody>
+        </table>
+      </div>
+      <br />
+      <br />
     </div>
   );
 };

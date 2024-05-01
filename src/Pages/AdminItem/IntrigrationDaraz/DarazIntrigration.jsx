@@ -32,6 +32,7 @@ const DarazIntegration = () => {
       fetch("https://backend.doob.com.bd/api/v1/daraz/get-key")
         .then((res) => res.json())
         .then((data) => {
+          console.log(data, "daraz");
           const { appkey, secretkey } = data[0];
 
           const appKey = appkey;
@@ -78,7 +79,7 @@ const DarazIntegration = () => {
   }, [code]);
 
   const {
-    data: darazShop = {},
+    data: darazShop = [],
     isLoading,
     refetch,
   } = useQuery({

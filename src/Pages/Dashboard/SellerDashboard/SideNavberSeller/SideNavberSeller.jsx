@@ -627,20 +627,21 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                 ) ? (
                                   <li className="">
                                     <ul className="mt-2 space-y-1 px-4 text-control">
-                                      <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                      <li className="flex cursor-pointer items-start justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
                                         <Link
                                           to={
                                             "/seller/product-management/add-product"
                                           }
-                                          className="text-[14px] text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                          className="text-[14px] text-gray-50 flex gap-2   px-4 p-2 space-x-3  rounded-md"
                                         >
                                           Add Product
                                         </Link>
+                                        +
                                       </li>
-                                      <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                      <li className="flex cursor-pointer items-start justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
                                         <Link
                                           to={"/products"}
-                                          className="text-[14px] text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                          className="text-[14px] text-gray-50 flex gap-2  px-4 p-2 space-x-3  rounded-md"
                                         >
                                           Add Doob Product
                                         </Link>
@@ -680,51 +681,52 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                 ) : null
                               ) : (
                                 <li className="">
-                                  <ul className="flex flex-col gap-2">
-                                    <li className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
+                                  <ul className="flex flex-col ">
+                                    <li className="flex cursor-pointer items-center justify-between py-2 p-2 rounded-sm hover:bg-gray-800 text-gray-50">
                                       <Link
                                         to={
                                           "/seller/product-management/add-product"
                                         }
-                                        className="text-[14px] text-center text-gray-50 flex gap-2 items-center px-4  space-x-3  rounded-md"
+
                                       >
                                         Add Product
                                       </Link>
+
                                     </li>
-                                    <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                    <li className="flex cursor-pointer items-center justify-between py-2 p-2 rounded-sm hover:bg-gray-800 text-gray-50">
                                       <Link
                                         to={"/products"}
-                                        className="text-[14px] text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+
                                       >
                                         Add Doob Product
                                       </Link>
                                     </li>
-                                    <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                    <li className="flex cursor-pointer items-center justify-between py-2 p-2 rounded-sm hover:bg-gray-800 text-gray-50">
                                       <Link
                                         to={
                                           "/seller/product-management/add-daraz-product"
                                         }
-                                        className=" text-[14px] text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+
                                       >
                                         Add Daraz Product
                                       </Link>
                                     </li>
-                                    <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                    <li className="flex cursor-pointer items-center justify-between py-2 p-2 rounded-sm hover:bg-gray-800 text-gray-50">
                                       <Link
                                         to={
                                           "/seller/product-management/add-woo-product"
                                         }
-                                        className="text-[14px] text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+
                                       >
                                         Woo Product
                                       </Link>
                                     </li>
-                                    <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                    <li className="flex cursor-pointer items-center justify-between  py-2 p-2 rounded-sm hover:bg-gray-800 text-gray-50">
                                       <Link
                                         to={
                                           "/seller/product-management/manage"
                                         }
-                                        className="text-[14px] text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                        className=""
                                       >
                                         Product Management
                                       </Link>

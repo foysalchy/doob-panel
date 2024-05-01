@@ -27,6 +27,8 @@ const ConfirmOrder = () => {
     const order = JSON.parse(data);
 
 
+
+
     return (
         <div className=''>
             <div ref={componentRef} className="px-4 py-5 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8">
@@ -86,12 +88,12 @@ const ConfirmOrder = () => {
                             <ul className="border w-[300px] p-3 ml-auto border-gray-400 space-y-1">
                                 <li className="flex items-center justify-between">
                                     <p>Subtotal</p>
-                                    <p>${subtotal.toFixed(2)}</p>
+                                    <p>৳{subtotal.toFixed(2)}</p>
                                 </li>
                                 <br />
                                 <li className="flex font-semibold text-gray-700 items-center justify-between">
                                     <p>Total :</p>
-                                    <p>${total.toFixed(2)}</p>
+                                    <p>৳{total.toFixed(2)}</p>
                                 </li>
                                 <li>
                                     <button onClick={handlePrint} className='bg-blue-500 text-white px-3 py-2 rounded-md w-full mt-2'>Download Full Invoice</button>
@@ -108,5 +110,7 @@ const ConfirmOrder = () => {
         </div>
     );
 };
+
+
 
 export default ConfirmOrder;
