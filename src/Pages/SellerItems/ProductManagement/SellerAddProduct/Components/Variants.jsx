@@ -42,7 +42,7 @@ const Variants = ({
       }
 
       const imageData = await response.json();
-      const imageUrl = imageData.url;
+      const imageUrl = imageData.src;
       if (!imageUrl) {
         Swal.fire(`${imageData.message}`, "", "warning");
       }
@@ -83,49 +83,90 @@ const Variants = ({
   const { uploadImage } = useImageUpload();
 
 
-  const handleImageChange = async (e) => {
-    const fileList = Array.from(e.target.files);
-    fileList?.map(async (file) => {
-      const imageUrl = await uploadImage(file);
-      console.log(file, 'image url');
-    })
+  // Here you're uploading the image and logging it
+  const handleImageChange = async (index, event) => {
+    const file = event.target.files[0];
+
+    if (file) {
+      // need loading
+      const newInputFields = [...inputFields];
+
+
+      try {
+        if (daraz) {
+          const url = await ImageUpload(file);
+          newInputFields[index].image = url;
+          setInputFields(newInputFields);
+        }
+        else {
+          const url = await Upload(file);
+          newInputFields[index].image = url;
+          setInputFields(newInputFields);
+        }
+
+      } catch (error) {
+
+        console.log(error);
+      }
+    }
   };
-  console.log(images, '^^^^^^^^^^^^^^^^');
+
+
+
 
 
   const handleAddField = () => {
-    setInputFields([
-      ...inputFields,
-      {
-        name: "",
-        image: null,
-        quantity: "",
-        SKU: "hello js",
-        price: "",
-        offerPrice: "",
-        ability: false,
-        vendor: false,
-        variantImag: null,
-      },
-    ]);
+    setInputFields([...inputFields, {
+      name: '',
+      image: null,
+      quantity: "",
+      SKU: "hello js",
+      price: '',
+      offerPrice: '',
+      ability: false,
+      vendor: false,
+      variantImag: []
+    }]);
   };
 
-  const handleRemoveField = (index) => {
-    const newInputFields = [...inputFields];
-    newInputFields.splice(index, 1);
-    setInputFields(newInputFields);
-  };
+
+  // const handleRemoveField = (index) => {
+  //   const newInputFields = [...inputFields];
+  //   newInputFields.splice(index, 1);
+  //   setInputFields(newInputFields);
+  // };
+
+
 
   const handleMultipleImg = async (e, index) => {
+    const fileList = Array.from(e.target.files);
+    const newImages = await Promise.all(fileList.map(async (file) => ({
+      src: await uploadImage(file)
+    })
+    ));
 
+
+    setInputFields(prevInputFields => {
+      const updatedFields = [...prevInputFields];
+      updatedFields[index].variantImag = [...updatedFields[index].variantImag, ...newImages];
+      return updatedFields;
+    });
   };
 
 
-  const handle_image_remove = (index) => {
-    const updatedImages = [...images];
-    updatedImages.splice(index, 1);
-    setImages(updatedImages);
+  console.log(images, '-------->>>>>>>>>-------', inputFields);
+
+
+  const handleRemoveField = (index, imageIndex) => {
+
+    console.log(imageIndex, 'imageIndex', index, 'index....');
+    setInputFields(prevInputFields => {
+      const updatedFields = [...prevInputFields];
+      updatedFields[index].variantImag.splice(imageIndex, 1);
+      return updatedFields;
+    });
   };
+
 
   const colourOptions = [
     { value: "black", label: "Black", color: "#0000", isFixed: true },
@@ -264,28 +305,28 @@ const Variants = ({
 
 
                   <div className="space-y-2">
-                    <div className="flex items-center space-x-2">
+                    <div className="flex items-center space-x-2 rounded-md border border-gray-300 p-2 focus:border-primary focus:outline-none mt-3 relative">
                       <input
                         name='images'
-                        className="w-full rounded-md border border-gray-300 p-2 focus:border-primary focus:outline-none"
+                        className="w-full "
                         id="images"
                         multiple
                         type="file"
-                        onChange={handleImageChange}
+                        onChange={(e) => handleMultipleImg(e, index)}
                       />
                     </div>
-                    <div className="grid grid-cols-3 gap-2">
-                      {images.map((image, index) => (
-                        <div className="relative" key={index}>
+                    <div className="grid grid-cols-12 gap-2">
+                      {field?.variantImag.map((image, i) => (
+                        <div className="relative" key={i}>
                           <img
-                            alt={`Image ${index + 1}`}
+                            alt={`Image ${i + 1}`}
                             className="h-20 w-full border rounded-md object-cover"
-                            src={image.url}
+                            src={image?.src}
                           />
                           <button
                             className="absolute top-1 right-1 rounded-full bg-gray-800 p-1 text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500"
                             type="button"
-                            onClick={() => handleImageRemove(index)}
+                            onClick={() => handleRemoveField(index, i)}
                           >
                             <svg
                               className="h-4 w-4"
@@ -304,8 +345,6 @@ const Variants = ({
                       ))}
                     </div>
                   </div>
-
-
                 </div>
                 <Stock
                   field={field}
