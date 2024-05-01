@@ -42,7 +42,8 @@ const UpComingProducts = () => {
               Upcoming Products
             </h3>
           </div>
-          <Link to='upcoming-product'
+          <Link
+            to="upcoming-product"
             type="button"
             className="px-5 py-2 font-semibold rounded bg-gray-500 text-white text-xs "
           >
@@ -86,7 +87,12 @@ const UpComingProducts = () => {
                       >
                         <div className="relative h-[180px] sm:h-[250px]">
                           <img
-                            src={product?.featuredImage.src ? product?.featuredImage?.src : product?.images[0]?.src} src={product?.featuredImage?.src}
+                            src={
+                              product?.featuredImage.src
+                                ? product?.featuredImage?.src
+                                : product?.images[0]?.src
+                            }
+                            // src={product?.featuredImage?.src}
                             alt=""
                             className="absolute inset-0 h-full w-full object-cover opacity-100 group-hover:opacity-0"
                           />
@@ -109,8 +115,16 @@ const UpComingProducts = () => {
 
                           <div className="mt-1.5 flex items-center justify-between text-gray-900">
                             <p className="tracking-wide  ">
-                              <span className="kalpurush">৳</span>{" "}
-                              {user ? product?.price : 0}
+                              {user ? (
+                                <div>
+                                  <span className="kalpurush">৳</span>{" "}
+                                  {user ? product?.price : 0}
+                                </div>
+                              ) : (
+                                <Link className="text-[12px] " to={"/sign-up"}>
+                                  Login to view Price
+                                </Link>
+                              )}
                             </p>
 
                             <p className="text-xs uppercase tracking-wide">

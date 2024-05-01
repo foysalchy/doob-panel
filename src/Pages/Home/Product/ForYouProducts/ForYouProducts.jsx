@@ -46,7 +46,6 @@ const ForYouProducts = () => {
 
                 <h3 className="whitespace-nowrap ml-2 font-medium">For You</h3>
               </div>
-
             </div>
           </div>
           <div className="border-b border-gray-200 mx-5 mt-2"></div>
@@ -88,7 +87,11 @@ const ForYouProducts = () => {
                       >
                         <div className="relative h-[180px] sm:h-[250px]">
                           <img
-                            src={product?.featuredImage?.src ? product?.featuredImage?.src : product?.images[0]?.src}
+                            src={
+                              product?.featuredImage?.src
+                                ? product?.featuredImage?.src
+                                : product?.images[0]?.src
+                            }
                             alt=""
                             className="absolute inset-0 h-full w-full object-cover opacity-100 group-hover:opacity-0"
                           />
@@ -107,8 +110,16 @@ const ForYouProducts = () => {
 
                           <div className="mt-1.5 flex items-center justify-between text-gray-900">
                             <p className="tracking-wide  ">
-                              <span className="kalpurush">৳</span>{" "}
-                              {user ? product?.price : 0}
+                              {user ? (
+                                <div>
+                                  <span className="kalpurush">৳</span>{" "}
+                                  {user ? product?.price : 0}
+                                </div>
+                              ) : (
+                                <Link className="text-[12px] " to={"/sign-up"}>
+                                  Login to view Price
+                                </Link>
+                              )}
                             </p>
 
                             <p className="text-xs uppercase tracking-wide">

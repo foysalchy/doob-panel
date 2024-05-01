@@ -47,6 +47,8 @@ const ProductDetails = () => {
   const [userName, setUserName] = useState(user?.name);
   const [variationData, setVariationData] = useState(null);
 
+
+  console.log(variationData);
   const myData = useLoaderData();
   const productFind = myData?.data;
 

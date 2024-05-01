@@ -27,7 +27,7 @@ const NewProducts = () => {
 
   const data = [1, 2, 3, 4];
 
-  console.log(AdminNewProducts, '+');
+  console.log(AdminNewProducts, "+");
   return (
     <div>
       {AdminNewProducts?.length ? (
@@ -47,7 +47,8 @@ const NewProducts = () => {
                     New Product
                   </h3>
                 </div>
-                <Link to={`/products/new-product`}
+                <Link
+                  to={`/products/new-product`}
                   type="button"
                   className="px-5 py-2 font-semibold rounded bg-gray-500 text-white text-xs "
                 >
@@ -88,7 +89,11 @@ const NewProducts = () => {
                       >
                         <div className="relative h-[180px] sm:h-[250px]">
                           <img
-                            src={product?.featuredImage.src ? product?.featuredImage?.src : product?.images[0]?.src}
+                            src={
+                              product?.featuredImage.src
+                                ? product?.featuredImage?.src
+                                : product?.images[0]?.src
+                            }
                             alt=""
                             className="absolute inset-0 h-full w-full object-cover opacity-100 group-hover:opacity-0"
                           />
@@ -111,11 +116,13 @@ const NewProducts = () => {
 
                           <div className="mt-1.5 flex items-center justify-between text-gray-900">
                             <p className="tracking-wide ">
-                              <span className="kalpurush">৳</span>{" "}
                               {user ? (
-                                product?.price
+                                <div>
+                                  <span className="kalpurush">৳</span>{" "}
+                                  {user ? product?.price : 0}
+                                </div>
                               ) : (
-                                <Link className="text-[8px] " to={"/sign-up"}>
+                                <Link className="text-[12px] " to={"/sign-up"}>
                                   Login to view Price
                                 </Link>
                               )}
