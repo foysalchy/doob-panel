@@ -136,7 +136,7 @@ const ProductCheckout = ({ setNext, product, quantity, sellingPrice, userInfo, s
                             </div>
 
                             <button onClick={handleSetData} className="w-full mt-4 bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition-colors">
-                                Next Step*****=====
+                                Next Step
                             </button>
                         </div>
 

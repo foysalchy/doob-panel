@@ -62,7 +62,7 @@ import {
   BiSolidShoppingBag,
 } from "react-icons/bi";
 import Daraz from "./Daraz.png";
-import Logo from "../../../../../Logo.png";
+import Logo from "../../../../assets/doobLightLogo.png";
 import { CgAdd, CgClose, CgProductHunt } from "react-icons/cg";
 import { useQuery } from "@tanstack/react-query";
 import {
