@@ -163,7 +163,7 @@ const DarazIntegration = () => {
               onClick={() => setWoModal(true)}
               className="text-blue-500 hover:underline mb-4 inline-block"
             >
-              Woo comarce Loin
+              Woocomarce Login
             </button>
           )}
 
