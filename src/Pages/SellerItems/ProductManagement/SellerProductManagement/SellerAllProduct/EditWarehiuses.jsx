@@ -118,7 +118,6 @@ const EditWareHouse = ({ product, adminWare, setAdminWare }) => {
             <span
               onClick={() => {
                 setAdminWare(false);
-                refetch();
                 setSelectedWarehouse("");
                 setSelectedArea("");
                 setSelectedRack("");
@@ -128,7 +127,7 @@ const EditWareHouse = ({ product, adminWare, setAdminWare }) => {
               className={
                 adminWare
                   ? "px-4 py-2 bg-gray-600 text-white  "
-                  : "px-4 py-2 bg-violet-400"
+                  : "px-4 py-2 bg-green-500 text-white shadow-xl shadow-green-500/50"
               }
             >
               {shopInfo.shopName}
@@ -136,17 +135,17 @@ const EditWareHouse = ({ product, adminWare, setAdminWare }) => {
             <span
               onClick={() => {
                 setAdminWare(true);
-                refetch();
                 setSelectedWarehouse("");
                 setSelectedArea("");
                 setSelectedRack("");
                 setSelectedSelf("");
                 setSelectedCell("");
+                fetchData();
               }}
               className={
                 !adminWare
-                  ? "px-4 py-2 bg-gray-600 text-white "
-                  : "px-4 py-2 bg-violet-400"
+                  ? "px-4 py-2 bg-gray-600 shadow-3 text-white "
+                  : "px-4 py-2 bg-green-500 text-white shadow-xl shadow-green-500/50"
               }
             >
               Doob
