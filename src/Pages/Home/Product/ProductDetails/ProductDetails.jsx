@@ -63,7 +63,8 @@ const ProductDetails = () => {
     profitPercent: 0,
   });
 
-  useEffect(() => { }, [variationData]);
+
+
   const allUpdateInfo = () => {
     const price = parseInt(productFind?.variantData?.sellingPrice);
     const quantityPars = parseInt(quantity);
@@ -125,37 +126,35 @@ const ProductDetails = () => {
     allUpdateInfo();
   }, [quantity]);
 
-  let imageList = productFind ? productFind.images : [];
-  const [clickImage, setClickImage] = useState(
-    imageList.length > 0 ? imageList[0].src : ""
-  );
+  const [selected_image, setSelected_image] = useState(false)
 
+  const [image_list, setImage_list] = useState(variationData ? variationData.variantImag : productFind.images)
+
+  console.log(productFind.images, 'my_test_image')
   useEffect(() => {
-    console.log(clickImage, "clickImage");
-  }, [clickImage]); // Watching clickImage for changes
+    // console.log(variationData?.variantImag, '>>>');
+    if (variationData) {
+      setImage_list(variationData?.variantImag);
+    } else {
+      setImage_list(productFind.images);
+    }
 
-  const handleImageClick = (imageUrl) => {
-    setClickImage(imageUrl);
-    setSelectedImage(imageUrl);
-  };
 
-  // const blankImg = 'https://backend.doob.com.bd/api/v1/image/66036ed3df13bd9930ac229c.jpg';
+  }, [variationData]);
 
-  const [selectedImage, setSelectedImage] = useState(imageList[0]?.src);
 
   const path = useLocation();
 
-  console.log(path, "location........");
-
   useEffect(() => {
-    setVariationData(productFind?.variations[0]);
-    if (imageList.length > 0) {
-      setSelectedImage(imageList[0]?.src);
-    } else {
-      productFind?.featuredImage?.src;
-    }
+    // setVariationData(productFind?.variations[0]);
+    // if (imageList?.length > 0) {
+    //   setSelectedImage(imageList[0]?.src);
+    // } else {
+    //   productFind?.featuredImage?.src;
+    // }
   }, [path.pathname]);
-  console.log(imageList, "list.........", productFind);
+
+  // console.log(imageList, "list.........", variationData);
 
   const handleDecrease = () => {
     if (quantity > 1) {
@@ -297,7 +296,6 @@ const ProductDetails = () => {
       return data?.comments;
     },
   });
-  console.log(`https://backend.doob.com.bd/api/v1/seller/product-comment?id=${productFind?._id}`);
   const add_to_cart = (product) => {
     const productData = {
       product_name: product?.name,
@@ -354,7 +352,7 @@ const ProductDetails = () => {
     console.log(newData);
   };
 
-  // console.log(productFind, 'comment');
+
   return (
     <section>
       <div className="py-4">
@@ -425,28 +423,33 @@ const ProductDetails = () => {
               <div>
                 <div className="h-64  md:h-[22rem] rounded-lg bg-gray-100 mb-4">
                   <div className="h-64 md:h-full rounded-lg bg-gray-100 mb-4 flex items-center justify-center">
-                    {selectedImage ? (
+                    {selected_image ? (
                       <img
                         className="w-94 h-full"
-                        src={selectedImage}
-                        srcSet={selectedImage}
+                        src={selected_image}
+                        srcSet={selected_image}
                         alt="product image"
                       />
                     ) : (
-                      <h2>Loading...</h2>
+                      <img
+                        className="w-94 h-full"
+                        src={productFind?.images[0].src}
+                        srcSet={productFind?.images[0].src}
+                        alt="product image"
+                      />
                     )}
                   </div>
                 </div>
                 <div className="grid grid-cols-4 md:grid-cols-4 lg:grid-cols-6 gap-2 -m-4 text-white">
-                  {imageList.map((imageUrl, index) => (
+                  {image_list?.map((imageUrl, index) => (
                     <div
-                      onClick={() => setVariationData(null)}
+
                       key={index}
                       className="p-4 w-full md:w-11/12 rounded"
                     >
-                      <a
+                      <button
                         className="block relative h-16 rounded overflow-hidden border"
-                        onClick={() => handleImageClick(imageUrl?.src)}
+                        onClick={() => setSelected_image(imageUrl?.src)}
                       >
                         <img
                           alt={`ecommerce${index + 1}`}
@@ -454,7 +457,7 @@ const ProductDetails = () => {
                           src={imageUrl?.src}
                           srcSet={imageUrl?.src}
                         />
-                      </a>
+                      </button>
                     </div>
                   ))}
                 </div>
@@ -753,24 +756,27 @@ const ProductDetails = () => {
               {/* variation data */}
               <div className="flex flex-col gap-2">
                 <p className="">Variations : {variationData?.name}</p>
-                {productFind?.variations?.map((variation, index) => (
-                  <div
-                    onClick={() => setVariationData(variation)}
-                    className={`w-[50px] h-[50px] object-cover`}
-                    key={index}
-                  >
-                    <img
-                      className="w-full h-full"
-                      src={variation?.image}
-                      alt={variation?.name}
-                    />
-                  </div>
-                ))}
+                <div className="flex flex-wrap gap-3">
+                  {productFind?.variations?.map((variation, index) => (
+                    <div
+                      onClick={() => { setVariationData(variation) }}
+                      className={`w-[50px] h-[50px] object-cover`}
+                      key={index}
+                    >
+                      <img
+                        className="w-full h-full"
+                        src={variation?.image}
+                        alt={variation?.name}
+                      />
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
+
       <div className="max-w-7xl mx-auto px-4 md:px-4 lg:px-8 my-6">
         {/* comment form */}
         {user && (
