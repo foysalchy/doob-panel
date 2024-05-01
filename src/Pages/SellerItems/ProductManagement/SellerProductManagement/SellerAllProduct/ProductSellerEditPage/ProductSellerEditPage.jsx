@@ -76,7 +76,7 @@ const CategoryEditPage = () => {
   // const [adminMiniCategory, setAdminMiniCategory] = useState("");
   // const [adminExtraCategory, setAdminExtraCategory] = useState("");
 
-  console.log(coverPhoto, "coverPhoto", product?.featuredImage);
+  console.log(coverPhoto, "coverPhoto", product?.images?.[0]?.src);
   const [inputFields, setInputFields] = useState([
     {
       name: "",
@@ -107,7 +107,7 @@ const CategoryEditPage = () => {
     setInputFields(product?.variations);
     setVariantInput(product?.variantData);
     setMultiVendor(product?.multiVendor);
-    setCoverPhoto(product?.featuredImage?.src);
+    setCoverPhoto(product?.images?.[0]?.src);
   }, [product]);
   const [brandName, setBrandName] = useState();
 
@@ -188,7 +188,7 @@ const CategoryEditPage = () => {
 
   console.log(inputFields, "inppppppppppppp");
   const formSubmit = async (e) => {
-    setLoading(true);
+    // setLoading(true);
     e.preventDefault();
     const form = e.target;
     const BnName = form.productNameBn.value;
@@ -322,6 +322,8 @@ const CategoryEditPage = () => {
         })
     );
 
+    console.log(uploadedImageUrls);
+
     const data = {
       videoUrl: youtube,
       brandName,
@@ -372,7 +374,10 @@ const CategoryEditPage = () => {
       status: false,
       createdAt: Date.now(),
       // updatedAt,
-      featuredImage: [0],
+      featuredImage:
+        uploadedImageUrls?.length > 1
+          ? uploadedImageUrls?.filter((image) => image !== null)[0]?.src
+          : product?.images[0]?.src,
       images:
         uploadedImageUrls?.length > 1
           ? uploadedImageUrls?.filter((image) => image !== null)
@@ -392,7 +397,7 @@ const CategoryEditPage = () => {
     console.log(
       data.images,
       "edit --------------------------->",
-      data?.variations
+      data?.featuredImage
     );
 
     // return;
