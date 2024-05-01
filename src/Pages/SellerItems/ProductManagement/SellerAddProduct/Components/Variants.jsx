@@ -130,11 +130,6 @@ const Variants = ({
   };
 
 
-  // const handleRemoveField = (index) => {
-  //   const newInputFields = [...inputFields];
-  //   newInputFields.splice(index, 1);
-  //   setInputFields(newInputFields);
-  // };
 
 
 
@@ -154,7 +149,6 @@ const Variants = ({
   };
 
 
-  console.log(images, '-------->>>>>>>>>-------', inputFields);
 
 
   const handleRemoveField = (index, imageIndex) => {
@@ -316,7 +310,7 @@ const Variants = ({
                       />
                     </div>
                     <div className="grid grid-cols-12 gap-2">
-                      {field?.variantImag.map((image, i) => (
+                      {field?.variantImag?.map((image, i) => (
                         <div className="relative" key={i}>
                           <img
                             alt={`Image ${i + 1}`}
