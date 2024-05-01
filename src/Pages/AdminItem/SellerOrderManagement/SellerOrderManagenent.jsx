@@ -33,6 +33,7 @@ const SellerOrderManagement = () => {
       return data.data;
     },
   });
+  console.log(products);
 
   console.log(selectedValue);
   const filteredData = products?.filter((item) => {
@@ -331,6 +332,7 @@ const SellerOrderManagement = () => {
 
   console.log(products, "--------->>>>>>");
 
+  console.log(currentData, "currentData");
   //  For
 
   const renderPageNumbers = () => {

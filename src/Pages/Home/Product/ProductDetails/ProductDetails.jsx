@@ -28,8 +28,9 @@ const StarRating = ({ rating, onRatingChange }) => {
         <span
           key={star}
           onClick={() => onRatingChange(star)}
-          className={`cursor-pointer text-2xl ${star <= rating ? "text-yellow-500" : "text-gray-300"
-            }`}
+          className={`cursor-pointer text-2xl ${
+            star <= rating ? "text-yellow-500" : "text-gray-300"
+          }`}
         >
           ★
         </span>
@@ -63,7 +64,7 @@ const ProductDetails = () => {
     profitPercent: 0,
   });
 
-  useEffect(() => { }, [variationData]);
+  useEffect(() => {}, [variationData]);
   const allUpdateInfo = () => {
     const price = parseInt(productFind?.variantData?.sellingPrice);
     const quantityPars = parseInt(quantity);
@@ -297,7 +298,9 @@ const ProductDetails = () => {
       return data?.comments;
     },
   });
-  console.log(`https://backend.doob.com.bd/api/v1/seller/product-comment?id=${productFind?._id}`);
+  console.log(
+    `https://backend.doob.com.bd/api/v1/seller/product-comment?id=${productFind?._id}`
+  );
   const add_to_cart = (product) => {
     const productData = {
       product_name: product?.name,
@@ -417,8 +420,6 @@ const ProductDetails = () => {
           </div>
         </div>
 
-
-
         <div className="max-w-7xl mx-auto px-4 md:px-4 lg:px-12 mt-6 ">
           <div className="flex flex-col md:flex-row -mx-4 border rounded border-gray-300 py-4">
             <div className="md:flex-1 px-4">
@@ -476,39 +477,28 @@ const ProductDetails = () => {
               <div className="flex items-center justify-start gap-8">
                 <div>
                   <div className="flex text-gray-500 text-lg space-x-3">
-                    <h2>
-                      {productFind?.variantData?.product1?.quantity}
-                    </h2>
+                    <h2>{productFind?.variantData?.product1?.quantity}</h2>
                     <span>-</span>
-                    <h2>
-                      {productFind?.variantData?.product2?.quantity}
-                    </h2>
+                    <h2>{productFind?.variantData?.product2?.quantity}</h2>
                     pairs
                   </div>
                   <h1 className="text-3xl text-orange-600 font-bold">
                     ৳{productFind?.variantData?.product1?.quantityPrice}
                   </h1>
-                  <div>
-                  </div>
+                  <div></div>
                 </div>
-
 
                 <div>
                   <div className="flex text-lg text-gray-500 space-x-3">
-                    <h2>
-                      {productFind?.variantData?.product2?.quantity}
-                    </h2>
+                    <h2>{productFind?.variantData?.product2?.quantity}</h2>
                     <span>-</span>
-                    <h2>
-                      {productFind?.variantData?.product3?.quantity}
-                    </h2>
+                    <h2>{productFind?.variantData?.product3?.quantity}</h2>
                     pairs
                   </div>
                   <h1 className="text-3xl text-orange-600 font-bold">
                     ৳{productFind?.variantData?.product2?.quantityPrice}
                   </h1>
-                  <div>
-                  </div>
+                  <div></div>
                 </div>
               </div>
 
