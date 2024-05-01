@@ -54,7 +54,7 @@ const SellerEditDiscription = ({
           id="aboutText3 "
           name="short_description"
           value={product?.description}
-          onChange={handleShortDescriptionChange}
+          // onChange={handleShortDescriptionChange}
           config={{
             readonly: false,
             uploader: {
@@ -80,7 +80,7 @@ const SellerEditDiscription = ({
 
         <JoditEditor
           id="description "
-          onChange={handleDescriptionChange}
+          // onChange={handleDescriptionChange}
           name="description"
           value={product?.shortDescription}
           config={{
@@ -108,7 +108,7 @@ const SellerEditDiscription = ({
 
         <JoditEditor
           id="description "
-          onChange={handleDescriptionChange}
+          // onChange={handleDescriptionChange}
           name="banglaDescription"
           value={product?.banglaDescription}
           config={{

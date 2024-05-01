@@ -187,7 +187,7 @@ const CategoryEditPage = () => {
   // console.log(filteredData);
 
   const formSubmit = async (e) => {
-    setLoading(true);
+    // setLoading(true);
     e.preventDefault();
     const form = e.target;
     const BnName = form.productNameBn.value;
@@ -197,6 +197,20 @@ const CategoryEditPage = () => {
     const Subcategory = form?.adminSubCategoryName?.value || null;
     const miniCategory = form?.adminMiniCategoryName?.value || null;
     const extraCategory = form?.adminExtraCategoryName?.value || null;
+    const short_description_form = form?.short_description?.value;
+    const description_form = form?.description?.value;
+    const banglaDescription_form = form?.banglaDescription?.value;
+
+    console.log(
+      "des",
+      description_form,
+      "descrip",
+      short_description_form,
+      "ad",
+      banglaDescription_form
+    );
+
+    // return;
 
     const categories = [
       { name: megaCategory },
@@ -316,9 +330,9 @@ const CategoryEditPage = () => {
       woo,
       categories,
       warehouse: warehouseValue,
-      shortDescription: shortDescription,
-      description: description,
-      banglaDescription,
+      shortDescription: short_description_form,
+      description: description_form,
+      banglaDescription: banglaDescription_form,
       sku: sku,
       regular_price: inputFields[0].price,
       stock_quantity: inputFields[0].quantity,
@@ -462,7 +476,7 @@ const CategoryEditPage = () => {
             For You Product
           </span>
         </label> */}
-        <div id="description">
+        <div>
           <SellerEditDiscription
             product={product}
             shortDescription={shortDescription}
