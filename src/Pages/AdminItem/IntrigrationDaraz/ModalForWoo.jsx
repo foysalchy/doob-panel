@@ -4,7 +4,7 @@ import { BsArrowRight } from "react-icons/bs";
 import { RxCross2 } from "react-icons/rx";
 import Swal from "sweetalert2";
 
-const ModalForWoo = ({ setOpenModal, OpenModal, shopId, setShopInfo }) => {
+const ModalForWoo = ({ setWoModal, OpenModal, shopId, setShopInfo }) => {
   const [loading, setLoading] = useState(false);
 
   const LoginWoocomarce = (e) => {
@@ -40,7 +40,7 @@ const ModalForWoo = ({ setOpenModal, OpenModal, shopId, setShopInfo }) => {
             jsonData
           )}; expires=Thu, 01 Jan 2030 00:00:00 UTC; path=/seller`;
           Swal.fire(`woo commerce login successful`, "", "success");
-          setOpenModal(false);
+          setWoModal(false);
         }
       });
   };
@@ -56,7 +56,7 @@ const ModalForWoo = ({ setOpenModal, OpenModal, shopId, setShopInfo }) => {
             Integration with woo commerce
           </div>
           <div
-            onClick={() => setOpenModal(!OpenModal)}
+            onClick={() => setWoModal(!OpenModal)}
             className="cursor-pointer bg-gray-300 rounded-full  mb-2 p-2 text-2xl hover:bg-gray-400"
           >
             <RxCross2 className="text-xl" />

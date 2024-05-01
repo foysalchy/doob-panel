@@ -167,6 +167,16 @@ const DarazIntegration = () => {
             </button>
           )}
 
+          {wooModal && (
+            <ModalForWoo
+              setWoModal={setWoModal}
+              OpenModal={wooModal}
+              shopInfo={shopInfo}
+              setShopInfo={setShopInfo}
+              shopId={shopInfo._id}
+            />
+          )}
+
           {shopInfo.wooLogin && (
             <div className="bg-green-100 border-l-4 border-green-500  py-6 text-center  rounded-md">
               <h1 className="text-green-700 font-bold">
