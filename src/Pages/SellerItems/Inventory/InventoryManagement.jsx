@@ -269,7 +269,7 @@ const InventoryManagement = () => {
                           </div>
                         </>
                       </td>
-                      <td className="px-4 py-4 text-lg text-gray-700  whitespace-nowrap">
+                      <td className="px-4 py-4 text-lg border-r  text-gray-700  whitespace-nowrap">
                         <button className="text-sm flex items-center gap-2  px-2 py-1 rounded ">
                           {product?.warehouse?.map((war) => {
                             if (war?.name) {
