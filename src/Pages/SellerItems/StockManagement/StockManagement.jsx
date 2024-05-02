@@ -50,7 +50,7 @@ const StockManagement = () => {
       )
     : stockRequest;
 
-  // console.log(filteredStockRequestData, "filteredStockRequestData");
+  console.log(filteredStockRequestData, "filteredStockRequestData");
 
   // update quantity
   const [editedQuantity, setEditedQuantity] = useState("");
@@ -58,7 +58,7 @@ const StockManagement = () => {
   // console.log(editedQuantity, "and", editMode);
   const save_quantity_input = (stockId) => {
     fetch(
-      `https://backend.doob.com.bd/api/v1/admin//stock-quantity-update?stockId=${stockId}&quantity=${editedQuantity}`,
+      `https://backend.doob.com.bd/api/v1/admin/stock-quantity-update?stockId=${stockId}&quantity=${editedQuantity}`,
       {
         method: "PUT",
         headers: {
@@ -152,6 +152,19 @@ const StockManagement = () => {
                   <button className="flex items-center gap-x-2">
                     <span>Status</span>
                   </button>
+                </th>
+
+                <th
+                  scope="col"
+                  className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 text-gray-400"
+                >
+                  Delivery Status
+                </th>
+                <th
+                  scope="col"
+                  className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 text-gray-400"
+                >
+                  Note
                 </th>
 
                 <th
@@ -254,7 +267,16 @@ const StockManagement = () => {
                       </div>
                     )}
                   </td>
-
+                  <td className="px-4 py-4 text-lg text-gray-700  whitespace-nowrap">
+                    <button className="text-sm flex items-center gap-2  px-2 py-1 rounded ">
+                      {itm?.delivery_status}
+                    </button>
+                  </td>
+                  <td className="px-4 py-4 text-lg text-gray-700  whitespace-nowrap">
+                    <button className="text-sm flex items-center gap-2  px-2 py-1 rounded ">
+                      {itm?.note?.slice(0, 25)}..
+                    </button>
+                  </td>
                   <td className="px-4 py-4 text-lg text-gray-700  whitespace-nowrap">
                     <div className="flex items-center gap-x-2">
                       {editMode === itm._id ? (
