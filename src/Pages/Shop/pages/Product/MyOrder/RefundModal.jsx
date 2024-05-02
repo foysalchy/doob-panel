@@ -35,7 +35,7 @@ const RefundModal = ({ refundOpen, setRefundOpen, details }) => {
       onClick={() => setRefundOpen(false)}
       className={`fixed z-[100] flex items-center justify-center ${
         refundOpen ? "visible opacity-100" : "invisible opacity-0"
-      } inset-0 bg-black/20 backdrop-blur- duration-100 dark:bg-transparent`}
+      } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-transparent`}
     >
       <div
         onClick={(e_) => e_.stopPropagation()}
