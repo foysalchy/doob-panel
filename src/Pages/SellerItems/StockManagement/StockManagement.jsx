@@ -21,9 +21,8 @@ const StockManagement = () => {
   });
 
   console.log(stockRequest, "stockRequest");
-  const handleUpdate = (data) => {
-    console.log(data);
-
+  const handleUpdate = (data, status) => {
+    console.log(data, status);
     // return;
     fetch(
       `https://backend.doob.com.bd/api/v1/admin/stock-request-update?productId=${data?.productId}&orderId=${data?._id}&quantity=${data?.quantity}&SKU=${data?.SKU}`,
@@ -32,7 +31,7 @@ const StockManagement = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ status: "active" }),
+        body: JSON.stringify({ status: status }),
       }
     )
       .then((res) => res.json())
@@ -141,14 +140,6 @@ const StockManagement = () => {
                   className="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 text-gray-400"
                 >
                   <button className="flex items-center gap-x-2">
-                    <span>SKU</span>
-                  </button>
-                </th>
-                <th
-                  scope="col"
-                  className="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 text-gray-400"
-                >
-                  <button className="flex items-center gap-x-2">
                     <span>Seller</span>
                   </button>
                 </th>
@@ -200,33 +191,57 @@ const StockManagement = () => {
                     <span className="text-xs text-gray-500"> {itm?.SKU}</span>
                   </td>
                   <td className="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                    <button
-                      disabled={itm.status == "active"}
-                      // onClick={() => DeactiveHandle(faq?._id)}
-                      onClick={() => handleUpdate(itm)}
-                      className="inline-flex items-center px-3 py-1 rounded-full gap-x-2   text-green-500 text-sm flex items-center gap-2 bg-[#23b123ea] px-2 py-1 rounded text-white "
-                    >
-                      {itm?.status}
-                    </button>
+                    {itm?.status === " reject" ? (
+                      <button
+                        disabled
+                        // onClick={() => handleUpdate(itm, "")}
+                        className="inline-flex items-center rounded-full gap-x-2  text-sm  gap-2 bg-red-600 px-2 py-1  text-white "
+                      >
+                        Rejected
+                      </button>
+                    ) : (
+                      <div className="">
+                        {itm?.status === "pending" ? (
+                          <div className="flex gap-2">
+                            <button
+                              onClick={() => handleUpdate(itm, "active")}
+                              className="inline-flex  rounded-full gap-x-2    text-sm items-center gap-2 bg-[#23b123ea] px-2 py-1 text-white "
+                            >
+                              Pending
+                            </button>
+                            <button
+                              onClick={() => handleUpdate(itm, "reject")}
+                              className="inline-flex  rounded-full gap-x-2    text-sm items-center gap-2 bg-orange-500 px-2 py-1 text-white "
+                            >
+                              Reject
+                            </button>
+                          </div>
+                        ) : (
+                          <button
+                            disabled
+                            // onClick={() => handleUpdate(itm, "")}
+                            className="inline-flex  rounded-full gap-x-2    text-sm items-center gap-2 bg-[#23b123ea] px-2 py-1 text-white "
+                          >
+                            Active
+                          </button>
+                        )}
+                      </div>
+                    )}
                   </td>
 
-                  <td className="px-4 py-4 text-lg text-green-500 whitespace-nowrap">
-                    <button className="text-sm flex items-center gap-2 bg-[#23b123ea] px-2 py-1 rounded text-white">
+                  <td className="px-4 py-4 text-lg text-gray-700  whitespace-nowrap">
+                    <button className="text-sm flex items-center gap-2  px-2 py-1 rounded ">
                       {itm?.quantity}
                     </button>
                   </td>
-                  <td className="px-4 py-4 text-lg text-green-500 whitespace-nowrap">
-                    <button className="text-sm flex items-center gap-2 bg-[#23b123ea] px-2 py-1 rounded text-white">
-                      {itm?.SKU}
-                    </button>
-                  </td>
-                  <td className="px-4 py-4 text-lg text-green-500 whitespace-nowrap">
-                    <button className="text-sm flex items-center gap-2 bg-[#23b123ea] px-2 py-1 rounded text-white">
+
+                  <td className="px-4 py-4 text-lg text-gray-700  whitespace-nowrap">
+                    <button className="text-sm flex items-center gap-2  px-2 py-1 rounded ">
                       {itm?.shopName}
                     </button>
                   </td>
-                  <td className="px-4 py-4 text-lg text-green-500 whitespace-nowrap">
-                    <button className="text-sm flex items-center gap-2 bg-[#23b123ea] px-2 py-1 rounded text-white">
+                  <td className="px-4 py-4 text-lg text-gray-700  whitespace-nowrap">
+                    <button className="text-sm flex items-center gap-2  px-2 py-1 rounded ">
                       {itm?.warehouse?.map((war) => {
                         if (war?.name) {
                           return <span>{war?.name}</span>;
