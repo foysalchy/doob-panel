@@ -6,16 +6,28 @@ import { GrClose } from "react-icons/gr";
 import { useEffect } from "react";
 
 const RefundModal = ({ refundOpen, setRefundOpen, details }) => {
-  console.log(details);
-  console.log(details?.file);
-  const handleImageClick = () => {
-    const url = details?.file;
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "refund-modal.pdf";
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
+  const handleDownload = (url, fileName) => {
+    console.log(url);
+    fetch(url)
+      .then((response) => response.blob())
+      .then((blob) => {
+        // Create a temporary URL for the blob
+        const blobUrl = window.URL.createObjectURL(blob);
+
+        // Create an anchor element
+        const a = document.createElement("a");
+        a.href = blobUrl;
+        a.download = fileName;
+
+        // Programmatically click the anchor element to trigger the download
+        document.body.appendChild(a);
+        a.click();
+
+        // Clean up
+        document.body.removeChild(a);
+        window.URL.revokeObjectURL(blobUrl);
+      })
+      .catch((error) => console.error("Error downloading file:", error));
   };
 
   return (
@@ -23,7 +35,7 @@ const RefundModal = ({ refundOpen, setRefundOpen, details }) => {
       onClick={() => setRefundOpen(false)}
       className={`fixed z-[100] flex items-center justify-center ${
         refundOpen ? "visible opacity-100" : "invisible opacity-0"
-      } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-transparent`}
+      } inset-0 bg-black/20 backdrop-blur- duration-100 dark:bg-transparent`}
     >
       <div
         onClick={(e_) => e_.stopPropagation()}
@@ -38,15 +50,17 @@ const RefundModal = ({ refundOpen, setRefundOpen, details }) => {
           {details?.note ?? ""}
         </p>
 
-        <p className="mt-3">
+        <div className="my-3">
           {details?.file ? (
-            <>
-              <img src={details?.file} onClick={handleImageClick} alt="file" />
-            </>
+            <button
+              onClick={() => handleDownload(details?.file, "refund-order")}
+            >
+              <img src={details?.file} className="" alt="file" />
+            </button>
           ) : (
             ""
           )}
-        </p>
+        </div>
         <div className="flex justify-between">
           <button
             onClick={() => setRefundOpen(false)}
