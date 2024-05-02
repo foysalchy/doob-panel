@@ -8,6 +8,7 @@ import TrendingProducts from "./TrendingProducts";
 import { useContext } from "react";
 import { AuthContext } from "../../../../AuthProvider/UserProvider";
 import { useQuery } from "@tanstack/react-query";
+import { TbShoppingBagPlus } from "react-icons/tb";
 import {
   Link,
   useLoaderData,
@@ -28,9 +29,8 @@ const StarRating = ({ rating, onRatingChange }) => {
         <span
           key={star}
           onClick={() => onRatingChange(star)}
-          className={`cursor-pointer text-2xl ${
-            star <= rating ? "text-yellow-500" : "text-gray-300"
-          }`}
+          className={`cursor-pointer text-2xl ${star <= rating ? "text-yellow-500" : "text-gray-300"
+            }`}
         >
           ★
         </span>
@@ -356,6 +356,19 @@ const ProductDetails = () => {
   };
 
 
+  const { data: releventProduct = [], refetch } = useQuery({
+    queryKey: ["releventProduct"],
+    queryFn: async () => {
+      const res = await fetch(
+        "https://backend.doob.com.bd/api/v1/admin/products"
+      );
+      const data = await res.json();
+      return data;
+    },
+  });
+
+  console.log(releventProduct, '>>><<<<');
+
   return (
     <section>
       <div className="py-4">
@@ -418,8 +431,8 @@ const ProductDetails = () => {
           </div>
         </div>
 
-        <div className="max-w-7xl mx-auto px-4 md:px-4 lg:px-12 mt-6 ">
-          <div className="flex flex-col md:flex-row -mx-4 border rounded border-gray-300 py-4">
+        <div className="max-w-7xl  grid md:grid-cols-4 mx-auto mt-6 ">
+          <div className="flex flex-col md:flex-row md:col-span-3 border md:border-r-transparent border-gray-300 py-4">
             <div className="md:flex-1 px-4">
               <div>
                 <div className="h-64  md:h-[22rem] rounded-lg bg-gray-100 mb-4">
@@ -446,7 +459,7 @@ const ProductDetails = () => {
                     <div
 
                       key={index}
-                      className="p-4 w-full md:w-11/12 rounded"
+                      className="m-4 w-full md:w-11/12 rounded"
                     >
                       <button
                         className="block relative h-16 rounded overflow-hidden border"
@@ -477,37 +490,9 @@ const ProductDetails = () => {
                 )}
               </div>
 
-              <div className="flex items-center justify-start gap-8">
-                <div>
-                  <div className="flex text-gray-500 text-lg space-x-3">
-                    <h2>{productFind?.variantData?.product1?.quantity}</h2>
-                    <span>-</span>
-                    <h2>{productFind?.variantData?.product2?.quantity}</h2>
-                    pairs
-                  </div>
-                  <h1 className="text-3xl text-orange-600 font-bold">
-                    ৳{productFind?.variantData?.product1?.quantityPrice}
-                  </h1>
-                  <div></div>
-                </div>
-
-                <div>
-                  <div className="flex text-lg text-gray-500 space-x-3">
-                    <h2>{productFind?.variantData?.product2?.quantity}</h2>
-                    <span>-</span>
-                    <h2>{productFind?.variantData?.product3?.quantity}</h2>
-                    pairs
-                  </div>
-                  <h1 className="text-3xl text-orange-600 font-bold">
-                    ৳{productFind?.variantData?.product2?.quantityPrice}
-                  </h1>
-                  <div></div>
-                </div>
-              </div>
-
               <br />
               <h2 className="mb-2 leading-tight tracking-tight font-bold text-gray-800 text-xl sm:text-2xl md:text-3xl">
-                {variationData?.name ? variationData?.name : productFind?.name}
+                {variationData?.name ? variationData?.name.slice(0, 100) : productFind?.name.slice(0, 100)}
               </h2>
               <div>
                 <div className=" hidden items-center">
@@ -623,23 +608,41 @@ const ProductDetails = () => {
                           {productFind?.variantData?.product1?.quantityPrice}
                         </h6>
                         <p className="text-sm text-[#606060]">
-                          {productFind?.variantData?.product1?.quantity} Qty
+                          <div className="flex justify-center text-gray-500 text-lg space-x-1">
+                            <h2>{productFind?.variantData?.product1?.quantity}</h2>
+                            <span>-</span>
+                            <h2>{productFind?.variantData?.product2?.quantity - 1}</h2>{" "}
+                            <span>Qty</span>
+                          </div>
+                          {/* {productFind?.variantData?.product1?.quantity} Qty */}
                         </p>
                       </div>
                       <div className="text-start sm:text-center  md:border-r-2 border-gray-400">
                         <h6 className="font-bold text-xl text-red-400">
                           {productFind?.variantData?.product2?.quantityPrice}
                         </h6>
-                        <p className="text-sm text-[#606060]">
+
+                        <div className="flex justify-center text-gray-500 text-lg space-x-1">
+                          <div className="flex justify-center text-lg text-gray-500 space-x-1">
+                            <h2>{productFind?.variantData?.product2?.quantity}</h2>
+                            <span>-</span>
+                            <h2>{productFind?.variantData?.product3?.quantity - 1}</h2>
+                            <span>Qty</span>
+                          </div>
+
+                        </div>
+                        {/* <p className="text-sm text-[#606060]">
                           {productFind?.variantData?.product2?.quantity} Qty
-                        </p>
+                        </p> */}
                       </div>
                       <div className="text-start sm:text-center ">
                         <h6 className="font-bold text-xl text-red-400">
                           {productFind?.variantData?.product3?.quantityPrice}
                         </h6>
+                        <h2 className="text-gray-500">{productFind?.variantData?.product3?.quantity} - Unlimited</h2>
+
                         <p className="text-sm text-[#606060]">
-                          {productFind?.variantData?.product3?.quantity} Qty
+                          {/* {productFind?.variantData?.product3?.quantity} Qty */}
                         </p>
                       </div>
                     </div>
@@ -675,7 +678,7 @@ const ProductDetails = () => {
                     <button
                       type="button"
                       onClick={handleDecrease}
-                      className="w-10 h-10 leading-10 text-gray-600 transition hover:opacity-75"
+                      className="w-6 h-10 leading-10 text-gray-600 transition hover:opacity-75"
                     >
                       -
                     </button>
@@ -685,13 +688,13 @@ const ProductDetails = () => {
                       id="Quantity"
                       value={quantity}
                       onChange={handleManualInput}
-                      className="h-10 w-24 rounded border px-4 border-gray-900 [-moz-appearance:_textfield] sm:text-sm [&::-webkit-outer-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button]:appearance-none"
+                      className="h-10 w-12 rounded border px-1 text-center border-gray-900 [-moz-appearance:_textfield] sm:text-sm [&::-webkit-outer-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button]:appearance-none"
                     />
 
                     <button
                       type="button"
                       onClick={handleIncrease}
-                      className="w-10 h-10 leading-10 text-gray-600 transition hover:opacity-75 "
+                      className="w-6 h-10 leading-10 text-gray-600 transition hover:opacity-75 "
                     >
                       +
                     </button>
@@ -699,7 +702,7 @@ const ProductDetails = () => {
                 </div>
                 <button
                   onClick={balk_buy}
-                  className="h-10 px-6 py-2 text-sm rounded bg-orange-600 hover:bg-orange-500 text-white"
+                  className="h-10 px-4 whitespace-nowrap py-2 text-sm rounded bg-orange-600 hover:bg-orange-500 text-white"
                   type="button"
                 >
                   Add Store
@@ -725,9 +728,9 @@ const ProductDetails = () => {
                   <button
                     onClick={() => add_to_cart(productFind)}
                     type="button"
-                    className="h-10 px-6 py-2 text-sm rounded bg-gray-600 hover:bg-gray-500 text-white text-nowrap"
+                    className="h-10 px-8 py-2 text-sm rounded bg-gray-600 hover:bg-gray-500 text-white text-nowrap"
                   >
-                    Add to Cart
+                    <TbShoppingBagPlus className="text-2xl" />
                   </button>
                 </div>
 
@@ -750,7 +753,7 @@ const ProductDetails = () => {
                   {productFind?.variations?.map((variation, index) => (
                     <div
                       onClick={() => { setVariationData(variation) }}
-                      className={`w-[50px] h-[50px] object-cover`}
+                      className={`w-[50px] border rounded p-1 h-[50px] object-cover`}
                       key={index}
                     >
                       <img
@@ -761,6 +764,34 @@ const ProductDetails = () => {
                     </div>
                   ))}
                 </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="border  w-full">
+            <div className="p-4">
+              <h2 className="text-lg font-semibold mb-4">New Exclusive</h2>
+              <div className="space-y-4">
+                {
+                  releventProduct?.slice(0, 4)?.map((product, index) => <Link to={`/products/${product?._id}`} key={product?._id} className="border w-full duration-150 group hover:shadow-lg flex items-start gap-2 p-3 rounded">
+                    <img
+                      alt="Product Image"
+                      className="w-20 h-20 bg-gray-200 rounded mb-2"
+                      height="80"
+                      src={product?.featuredImage?.src ? product?.featuredImage?.src : product?.images[0]?.src}
+                      style={{
+                        aspectRatio: "80/80",
+                        objectFit: "cover",
+                      }}
+                      width="80"
+                    />
+                    <div className="">
+                      <p className="font-medium group-hover:text-blue-500 duration">{product?.name?.slice(0, 50)}</p>
+                      <p className="text-red-500">৳{product?.price}</p>
+                    </div>
+                  </Link>)
+                }
+
               </div>
             </div>
           </div>

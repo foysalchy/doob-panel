@@ -339,6 +339,8 @@ const SellerDashboard = () => {
     }
   });
 
+  const firstAmount = parseInt(currentAvailableAmount);
+
   return (
     <div className="h-screen mb-10   ">
       {sellerPopupData.length
@@ -427,7 +429,7 @@ const SellerDashboard = () => {
 
 
               <div className="mt-3 text-xl md:font-bold text-black  border-gray-200 md:mt-0 ">
-                ৳{currentAvailableAmount}
+                ৳{Math.floor(firstAmount || '0000')}
 
               </div>
             </div>
@@ -468,7 +470,7 @@ const SellerDashboard = () => {
               Total Product
             </p>
             <div className="flex items-end my-6 space-x-2">
-              <p className="md:text-5xl text-3xl font-bold text-black "> {products?.length}</p>
+              <p className="md:text-3xl text-3xl font-bold text-black "> {products?.length}</p>
 
             </div>
           </div>
@@ -485,7 +487,7 @@ const SellerDashboard = () => {
             </p>
 
             <div className="flex items-end my-6 space-x-2">
-              <p className="md:text-5xl text-3xl font-bold text-black ">{orders.length}</p>
+              <p className="md:text-3xl text-3xl font-bold text-black ">{orders.length}</p>
 
             </div>
           </div>
@@ -501,7 +503,7 @@ const SellerDashboard = () => {
               Total Sold
             </p>
             <div className="flex items-end my-6 space-x-2">
-              <p className="md:text-5xl  text-3xl font-bold text-black ">৳{orders.reduce((total, order) => total + parseInt(order.promoHistory.status ? order.promoHistory.promoPrice : order.promoHistory.normalPrice), 0)}</p>
+              <p className="md:text-3xl  text-3xl font-bold text-black ">৳{orders.reduce((total, order) => total + parseInt(order.promoHistory.status ? order.promoHistory.promoPrice : order.promoHistory.normalPrice), 0)}</p>
 
             </div>
           </div>
@@ -517,7 +519,7 @@ const SellerDashboard = () => {
               Total Customs
             </p>
             <div className="flex items-end my-6 space-x-2">
-              <p className="md:text-5xl text-3xl font-bold text-black ">
+              <p className="md:text-3xl text-3xl font-bold text-black ">
                 {orderData.length}
               </p>
 
@@ -534,14 +536,14 @@ const SellerDashboard = () => {
           {<h1 className="w-full"> {darazShop?.result?.account}</h1>}
         </div>
         <div className="w-full bg-gray-50 px-4 py-2 rounded text-blue-500 flex items-center gap-2">
-          <h1>Previous Login</h1>
+          <h1 className="whitespace-nowrap">Previous Login</h1>
           <hr />
           {priviousAccount
             .filter(
               (shop) => shop.result.account !== darazShop?.result?.account
             )
             .map((shop) => (
-              <div className="  px-4 py-2 border flex items-center justify-between rounded bg-[#d2d2d2] text-sm">
+              <div className=" w-full px-4 py-2 border flex items-center justify-between rounded bg-[#d2d2d2] text-sm">
                 {shop.result.account}{" "}
                 <button
                   onClick={() => switchAccount(shop._id, shop.oldId)}
@@ -556,8 +558,8 @@ const SellerDashboard = () => {
       </div>
 
 
-      <div className="overflow-hidden mt-3 bg-[white]">
-        <h1 className="m-3 font-semibold">Lowest Stock Product</h1>
+      <div className="overflow-hidden mt-3 bg-[white] p-4">
+        <h1 className="mb-3 font-semibold">Lowest Stock Product</h1>
         <table className="w-full overflow-x-scroll bg-white border text-center text-sm font-light">
           <thead className="border-b  font-medium  ">
             <tr>
@@ -672,8 +674,8 @@ const SellerDashboard = () => {
         </table>
       </div>
 
-      <div className="bg-white border mt-8 rounded-lg mb-10 shadow-sm overflow-auto ">
-        <h1 className="m-3 font-semibold border-b pb-2">Recent Order</h1>
+      <div className="bg-white border mt-8 mb-10 p-4 shadow-sm overflow-auto ">
+        <h1 className=" font-semibold border-b pb-2">Recent Order</h1>
         <table className="w-full">
           <thead>
             <tr>
@@ -685,7 +687,7 @@ const SellerDashboard = () => {
             </tr>
           </thead>
           <tbody>
-            {orders.map((order) => <tr className="border-b" key={order?._id} style={{ whiteSpace: "nowrap" }} >
+            {orders?.slice(0, 5).map((order) => <tr className="border-b" key={order?._id} style={{ whiteSpace: "nowrap" }} >
               <Link
                 to="/seller/orders/manage-order/order-checkup"
                 onClick={() => setCheckUpData(order)}

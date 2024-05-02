@@ -323,125 +323,67 @@ const MiniCategoriesManagement = () => {
         </div>
 
         <div className="flex flex-col mt-6">
-          <div
-            style={{
-              overflowY: "scroll", // Always show the scrollbar
-              scrollbarWidth: "thin", // For Firefox
-              scrollbarColor: "gray transparent", // Set scrollbar color (gray) for Firefox
-              msOverflowStyle: "scrollbar", // For Internet Explorer and Edge
-            }}
-            className="overflow-x-scroll  "
-          >
-            <div className=" w-[1500px]">
-              <div className="overflow-hidden border  border-gray-700 md:rounded-lg">
-                {" "}
-                <table className=" w-full ">
-                  <thead>
-                    <tr>
-                      <th className="px-4 py-3 title-font text-start font-medium text-gray-100 text-sm bg-gray-800  rounded-tl ">
-                        Mini  Category Name
-                      </th>
 
-                      {shopInfo.darazLogin && (
-                        <th className="px-4 py-3 title-font text-start font-medium text-gray-100 text-sm bg-gray-800 ">
-                          Daraz Category
-                        </th>
-                      )}
-                      {shopInfo.wooLogin && (
-                        <th className="px-4 py-3 title-font text-start font-medium text-gray-100 text-sm bg-gray-800 ">
-                          Woocomarce Category
-                        </th>
-                      )}
-                      <th className="px-4 py-3 title-font text-start font-medium text-gray-100 text-sm bg-gray-800 ">
-                        Status
-                      </th>
-                      <th className="px-4 py-3 title-font text-start font-medium text-gray-100 text-sm bg-gray-800  ">
-                        Action
-                      </th>
-                      <th className="px-4 py-3 title-font text-start font-medium text-gray-100 text-sm bg-gray-800  rounded-tr "></th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {currentData?.length &&
-                      currentData?.map((warehouse, index) => {
-                        return (
-                          <tr key={index + warehouse?._id + 1} className="">
-                            <td className="px-4 py-3">
-                              <div className="flex gap-2 items-center">
-                                <div>
-                                  <h2 className="font-medium text-gray-800  ">
-                                    {warehouse?.megaCategory &&
-                                      JSON.parse(warehouse.megaCategory)
-                                        .name}{" "}
-                                    <span>&gt;</span>
-                                    {warehouse?.subCategoryName}{" "}
-                                    <span>&gt;</span>{" "}
-                                    {warehouse?.miniCategoryName}
-                                  </h2>
-                                </div>
-                              </div>
-                            </td>
+          <div className="overflow-x-auto border border-gray-300 rounded-lg overflow-y-none">
+            <table className="table-auto w-full text-left whitespace-wrap">
+              <thead>
+                <tr className="border-b">
+                  <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-800  rounded-tl ">
+                    Photo
+                  </th>
+                  <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-800  ">
+                    Mini Category Name
+                  </th>
 
-                            {shopInfo.darazLogin && (
-                              <td className="px-4 py-3">
-                                <div className="flex gap-1 items-center">
-                                  <p>
-                                    {warehouse?.megaCategory &&
-                                      (() => {
-                                        try {
-                                          const parsedMegaCategory = JSON.parse(
-                                            warehouse?.megaCategory
-                                          );
-                                          const darazCategoryName =
-                                            parsedMegaCategory &&
-                                              parsedMegaCategory.darazCategory
-                                              ? JSON.parse(
-                                                parsedMegaCategory.darazCategory
-                                              ).name
-                                              : "Invalidate";
+                  <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-800   ">
+                    Daraz Category
+                  </th>
 
-                                          return darazCategoryName;
-                                        } catch (error) {
-                                          console.error(
-                                            "Error parsing JSON:",
-                                            error
-                                          );
-                                          return null;
-                                        }
-                                      })()}
-                                  </p>
-                                  <p>
-                                    {warehouse?.darazMiniCategory && (
-                                      <span>
-                                        &gt;{" "}
-                                        {
-                                          JSON.parse(
-                                            warehouse?.darazMiniCategory
-                                          ).name
-                                        }
-                                      </span>
-                                    )}
-                                  </p>
+                  {shopInfo.darazLogin && (
+                    <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-800 ">
+                      Woo-commerce Category
+                    </th>
+                  )}
+                  {shopInfo.wooLogin && (
+                    <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-800 ">
+                      Status
+                    </th>
+                  )}
+                  <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-800 ">
+                    Action
+                  </th>
 
-                                  <p>
-                                    {warehouse?.darazMiniCategory && (
-                                      <span>
-                                        &gt;{" "}
-                                        {
-                                          JSON.parse(
-                                            warehouse?.darazMiniCategory
-                                          )?.child?.name
-                                        }
-                                      </span>
-                                    )}
-                                  </p>
-                                </div>
-                              </td>
-                            )}
+                  <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-800  rounded-tr "></th>
+                </tr>
+              </thead>
+              <tbody>
+                {currentData?.length &&
+                  currentData?.map((warehouse, index) => {
+                    return (
+                      <tr key={index + warehouse?._id + 1} className="">
+                        <td className="px-4 py-3">
+                          <img
+                            src={warehouse?.img && warehouse?.img}
+                            alt=""
+                            className="w-[50px] rounded-lg"
+                          />
+                        </td>
+                        <td className="px-2 py-3  ">
+                          <h2 className="font-medium text-gray-800  ">
+                            {warehouse?.megaCategory &&
+                              JSON.parse(warehouse.megaCategory)
+                                .name}{" "}
+                            <span>&gt;</span>
+                            {warehouse?.subCategoryName}{" "}
+                            <span>&gt;</span>{" "}
+                            {warehouse?.miniCategoryName}
+                          </h2>
+                        </td>
 
-                            {shopInfo?.wooLogin && (
-                              <td className="px-4 py-3">
-                                {" "}
+                        {shopInfo.darazLogin && (
+                          <td className="px-4 py-3">
+                            <div className="flex gap-1 items-center">
+                              <p>
                                 {warehouse?.megaCategory &&
                                   (() => {
                                     try {
@@ -450,9 +392,9 @@ const MiniCategoriesManagement = () => {
                                       );
                                       const darazCategoryName =
                                         parsedMegaCategory &&
-                                          parsedMegaCategory.wocomarceCategory
+                                          parsedMegaCategory.darazCategory
                                           ? JSON.parse(
-                                            parsedMegaCategory.wocomarceCategory
+                                            parsedMegaCategory.darazCategory
                                           ).name
                                           : "Invalidate";
 
@@ -464,157 +406,211 @@ const MiniCategoriesManagement = () => {
                                       );
                                       return null;
                                     }
-                                  })()}{" "}
-                              </td>
-                            )}
+                                  })()}
+                              </p>
+                              <p>
+                                {warehouse?.darazMiniCategory && (
+                                  <span>
+                                    &gt;{" "}
+                                    {
+                                      JSON.parse(
+                                        warehouse?.darazMiniCategory
+                                      ).name
+                                    }
+                                  </span>
+                                )}
+                              </p>
 
-                            <td className="px-4 py-3">
-                              {!warehouse?.status ? (
-                                <button
-                                  onClick={() =>
-                                    updateStatus(warehouse?._id, true)
-                                  }
-                                  className="inline-flex items-center justify-center py-1 px-4 bg-red-500 rounded shadow-md hover:bg-red-700 focus:shadow-outline focus:outline-none"
-                                >
-                                  Disable
-                                </button>
-                              ) : (
-                                <button
-                                  onClick={() =>
-                                    updateStatus(warehouse?._id, false)
-                                  }
-                                  className="inline-flex items-center justify-center py-1 px-4 bg-green-500 rounded shadow-md hover:bg-green-700 focus:shadow-outline focus:outline-none"
-                                >
-                                  Enable
-                                </button>
-                              )}{" "}
-                            </td>
-                            <td className="px-4  text-2xl flex gap-2 py-6 items-center text-gray-100">
-                              <MdDelete
-                                className="text-red-500 cursor-pointer"
-                                onClick={() => DeleteWarehouse(warehouse?._id)}
-                              />
-                              <BiEdit
-                                className="text-yellow-500 cursor-pointer"
-                                onClick={() => handleViewDetails(warehouse)}
-                              />
-                            </td>
-                            <td>
-                              <button
-                                onClick={() =>
-                                  futuresUpdate(
-                                    warehouse?._id,
-                                    warehouse && warehouse.feature === "true"
-                                      ? false
-                                      : true
-                                  )
-                                }
-                                className={`${warehouse && warehouse.feature === "true"
-                                  ? "bg-green-500"
-                                  : "bg-red-500"
-                                  } text-white ml-2 rounded capitalize px-3 py-1`}
-                              >
-                                futures
-                              </button>
-                            </td>
-
-                            <div
-                              className={`fixed z-[100] flex items-center justify-center ${editOn?._id === warehouse?._id
-                                ? "opacity-1 visible"
-                                : "invisible opacity-0"
-                                } inset-0 bg-black/20 backdrop-blur-sm duration-100`}
-                            >
-                              <div
-                                className={`absolute md:w-[500px] w-full rounded-sm bg-white p-3 pb-5 text-center drop-shadow-2xl ${editOn?._id === warehouse?._id
-                                  ? "scale-1 opacity-1 duration-300"
-                                  : "scale-0 opacity-0 duration-150"
-                                  } `}
-                              >
-                                <svg
-                                  onClick={() => setEditOn(false)}
-                                  className="mx-auto mr-0 w-8 cursor-pointer"
-                                  viewBox="0 0 24 24"
-                                  fill="none"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <g strokeWidth="0"></g>
-                                  <g
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                  ></g>
-                                  <g>
-                                    <path
-                                      d="M6.99486 7.00636C6.60433 7.39689 6.60433 8.03005 6.99486 8.42058L10.58 12.0057L6.99486 15.5909C6.60433 15.9814 6.60433 16.6146 6.99486 17.0051C7.38538 17.3956 8.01855 17.3956 8.40907 17.0051L11.9942 13.4199L15.5794 17.0051C15.9699 17.3956 16.6031 17.3956 16.9936 17.0051C17.3841 16.6146 17.3841 15.9814 16.9936 15.5909L13.4084 12.0057L16.9936 8.42059C17.3841 8.03007 17.3841 7.3969 16.9936 7.00638C16.603 6.61585 15.9699 6.61585 15.5794 7.00638L11.9942 10.5915L8.40907 7.00636C8.01855 6.61584 7.38538 6.61584 6.99486 7.00636Z"
-                                      fill="#000"
-                                    ></path>
-                                  </g>
-                                </svg>
-
-                                <form
-                                  onSubmit={(e) =>
-                                    handleEdit(e, warehouse?._id)
-                                  }
-                                >
-                                  <h1 className="text-lg font-semibold text-center mb-4">
-                                    Edit Mini Category
-                                  </h1>
-                                  <img
-                                    src={warehouse?.img}
-                                    alt=""
-                                    className="w-[100px] h-[100px] rounded"
-                                  />
-                                  <div className="flex flex-col items-start gap-1">
-                                    <label
-                                      className="text-start"
-                                      htmlFor="photo"
-                                    >
-                                      Photo
-                                    </label>
-                                    <input
-                                      type="file"
-                                      name="image"
-                                      className="border border-gray-500 p-1 rounded mb-3 w-full"
-                                    />
-                                  </div>
-
-                                  <div className="flex flex-col items-start gap-1">
-                                    <label
-                                      className="text-start"
-                                      htmlFor="photo"
-                                    >
-                                      Name
-                                    </label>
-                                    <input
-                                      defaultValue={warehouse?.miniCategoryName}
-                                      type="text"
-                                      name="name"
-                                      className="border border-gray-500 p-1 rounded mb-3 w-full"
-                                    />
-                                  </div>
-
-                                  <br />
-                                  <div className="flex justify-start">
-                                    <button
-                                      type="submit"
-                                      className="me-2 rounded bg-green-700 px-6 py-1 text-white"
-                                    >
-                                      Sibmit
-                                    </button>
-                                  </div>
-                                </form>
-                              </div>
+                              <p>
+                                {warehouse?.darazMiniCategory && (
+                                  <span>
+                                    &gt;{" "}
+                                    {
+                                      JSON.parse(
+                                        warehouse?.darazMiniCategory
+                                      )?.child?.name
+                                    }
+                                  </span>
+                                )}
+                              </p>
                             </div>
+                          </td>
+                        )}
 
-                            {/* {OpenModal === warehouse?._id && <div className="h-0 w-0">
+                        {shopInfo?.wooLogin && (
+                          <td className="px-4 py-3">
+                            {" "}
+                            {warehouse?.megaCategory &&
+                              (() => {
+                                try {
+                                  const parsedMegaCategory = JSON.parse(
+                                    warehouse?.megaCategory
+                                  );
+                                  const darazCategoryName =
+                                    parsedMegaCategory &&
+                                      parsedMegaCategory.wocomarceCategory
+                                      ? JSON.parse(
+                                        parsedMegaCategory.wocomarceCategory
+                                      ).name
+                                      : "Invalidate";
+
+                                  return darazCategoryName;
+                                } catch (error) {
+                                  console.error(
+                                    "Error parsing JSON:",
+                                    error
+                                  );
+                                  return null;
+                                }
+                              })()}{" "}
+                          </td>
+                        )}
+
+                        <td className="px-4 py-3">
+                          {!warehouse?.status ? (
+                            <button
+                              onClick={() =>
+                                updateStatus(warehouse?._id, true)
+                              }
+                              className="inline-flex items-center justify-center py-1 px-4 bg-red-500 rounded shadow-md hover:bg-red-700 focus:shadow-outline focus:outline-none"
+                            >
+                              Disable
+                            </button>
+                          ) : (
+                            <button
+                              onClick={() =>
+                                updateStatus(warehouse?._id, false)
+                              }
+                              className="inline-flex items-center justify-center py-1 px-4 bg-green-500 rounded shadow-md hover:bg-green-700 focus:shadow-outline focus:outline-none"
+                            >
+                              Enable
+                            </button>
+                          )}{" "}
+                        </td>
+                        <td className="px-4  text-2xl flex gap-2 py-6 items-center text-gray-100">
+                          <MdDelete
+                            className="text-red-500 cursor-pointer"
+                            onClick={() => DeleteWarehouse(warehouse?._id)}
+                          />
+                          <BiEdit
+                            className="text-yellow-500 cursor-pointer"
+                            onClick={() => handleViewDetails(warehouse)}
+                          />
+                        </td>
+                        <td>
+                          <button
+                            onClick={() =>
+                              futuresUpdate(
+                                warehouse?._id,
+                                warehouse && warehouse.feature === "true"
+                                  ? false
+                                  : true
+                              )
+                            }
+                            className={`${warehouse && warehouse.feature === "true"
+                              ? "bg-green-500"
+                              : "bg-red-500"
+                              } text-white ml-2 rounded capitalize px-3 py-1`}
+                          >
+                            futures
+                          </button>
+                        </td>
+
+                        <div
+                          className={`fixed z-[100] flex items-center justify-center ${editOn?._id === warehouse?._id
+                            ? "opacity-1 visible"
+                            : "invisible opacity-0"
+                            } inset-0 bg-black/20 backdrop-blur-sm duration-100`}
+                        >
+                          <div
+                            className={`absolute md:w-[500px] w-full rounded-sm bg-white p-3 pb-5 text-center drop-shadow-2xl ${editOn?._id === warehouse?._id
+                              ? "scale-1 opacity-1 duration-300"
+                              : "scale-0 opacity-0 duration-150"
+                              } `}
+                          >
+                            <svg
+                              onClick={() => setEditOn(false)}
+                              className="mx-auto mr-0 w-8 cursor-pointer"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <g strokeWidth="0"></g>
+                              <g
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                              ></g>
+                              <g>
+                                <path
+                                  d="M6.99486 7.00636C6.60433 7.39689 6.60433 8.03005 6.99486 8.42058L10.58 12.0057L6.99486 15.5909C6.60433 15.9814 6.60433 16.6146 6.99486 17.0051C7.38538 17.3956 8.01855 17.3956 8.40907 17.0051L11.9942 13.4199L15.5794 17.0051C15.9699 17.3956 16.6031 17.3956 16.9936 17.0051C17.3841 16.6146 17.3841 15.9814 16.9936 15.5909L13.4084 12.0057L16.9936 8.42059C17.3841 8.03007 17.3841 7.3969 16.9936 7.00638C16.603 6.61585 15.9699 6.61585 15.5794 7.00638L11.9942 10.5915L8.40907 7.00636C8.01855 6.61584 7.38538 6.61584 6.99486 7.00636Z"
+                                  fill="#000"
+                                ></path>
+                              </g>
+                            </svg>
+
+                            <form
+                              onSubmit={(e) =>
+                                handleEdit(e, warehouse?._id)
+                              }
+                            >
+                              <h1 className="text-lg font-semibold text-center mb-4">
+                                Edit Mini Category
+                              </h1>
+                              <img
+                                src={warehouse?.img}
+                                alt=""
+                                className="w-[100px] h-[100px] rounded"
+                              />
+                              <div className="flex flex-col items-start gap-1">
+                                <label
+                                  className="text-start"
+                                  htmlFor="photo"
+                                >
+                                  Photo
+                                </label>
+                                <input
+                                  type="file"
+                                  name="image"
+                                  className="border border-gray-500 p-1 rounded mb-3 w-full"
+                                />
+                              </div>
+
+                              <div className="flex flex-col items-start gap-1">
+                                <label
+                                  className="text-start"
+                                  htmlFor="photo"
+                                >
+                                  Name
+                                </label>
+                                <input
+                                  defaultValue={warehouse?.miniCategoryName}
+                                  type="text"
+                                  name="name"
+                                  className="border border-gray-500 p-1 rounded mb-3 w-full"
+                                />
+                              </div>
+
+                              <br />
+                              <div className="flex justify-start">
+                                <button
+                                  type="submit"
+                                  className="me-2 rounded bg-green-700 px-6 py-1 text-white"
+                                >
+                                  Sibmit
+                                </button>
+                              </div>
+                            </form>
+                          </div>
+                        </div>
+
+                        {/* {OpenModal === warehouse?._id && <div className="h-0 w-0">
                                         <EditWareHouse OpenModal={OpenModal} refetch={refetch} setOpenModal={setOpenModal} data={warehouse} />
                                     </div>} */}
-                          </tr>
-                        );
-                      })}
-                  </tbody>
-                </table>
-              </div>
-            </div>
+                      </tr>
+                    );
+                  })}
+              </tbody>
+            </table>
           </div>
         </div>
       </div>

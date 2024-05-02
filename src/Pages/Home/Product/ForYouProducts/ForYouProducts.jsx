@@ -104,7 +104,7 @@ const ForYouProducts = () => {
                         </div>
 
                         <div className="relative bg-white pt-3">
-                          <h3 className="text-sm text-gray-700 group-hover:underline group-hover:underline-offset-4">
+                          <h3 className="text-sm h-5 overflow-hidden text-gray-700 group-hover:underline group-hover:underline-offset-4">
                             {name}
                           </h3>
 
@@ -116,7 +116,7 @@ const ForYouProducts = () => {
                                   {user ? product?.price : 0}
                                 </div>
                               ) : (
-                                <Link className="text-[12px] " to={"/sign-up"}>
+                                <Link className="text-[12px] text-blue-500" to={"/sign-up"}>
                                   Login to view Price
                                 </Link>
                               )}

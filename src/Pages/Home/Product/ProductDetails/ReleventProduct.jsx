@@ -7,65 +7,6 @@ import { Link } from "react-router-dom";
 const ReleventProduct = ({ productFind }) => {
   const { user } = useContext(AuthContext);
 
-  const TrendingProducts = [
-    {
-      name: "Olevs 9868 Leather",
-      image: "https://i.ibb.co/PNBgKv1/watch.png",
-      price: "999",
-      discountPrice: "400",
-      description: "Analog watch for men",
-    },
-    {
-      name: "Olevs 9868 Leather",
-      image: "https://i.ibb.co/PNBgKv1/watch.png",
-      price: "999",
-      discountPrice: "400",
-      description: "Analog watch for men",
-    },
-    {
-      name: "Olevs 9868 Leather",
-      image: "https://i.ibb.co/PNBgKv1/watch.png",
-      price: "999",
-      discountPrice: "400",
-      description: "Analog watch for men",
-    },
-    {
-      name: "Olevs 9868 Leather",
-      image: "https://i.ibb.co/PNBgKv1/watch.png",
-      price: "999",
-      discountPrice: "400",
-      description: "Analog watch for men",
-    },
-    {
-      name: "Olevs 9868 Leather",
-      image: "https://i.ibb.co/PNBgKv1/watch.png",
-      price: "999",
-      discountPrice: "400",
-      description: "Analog watch for men",
-    },
-    {
-      name: "Olevs 9868 Leather",
-      image: "https://i.ibb.co/PNBgKv1/watch.png",
-      price: "999",
-      discountPrice: "400",
-      description: "Analog watch for men",
-    },
-    {
-      name: "Olevs 9868 Leather",
-      image: "https://i.ibb.co/PNBgKv1/watch.png",
-      price: "999",
-      discountPrice: "400",
-      description: "Analog watch for men",
-    },
-    {
-      name: "Olevs 9868 Leather",
-      image: "https://i.ibb.co/PNBgKv1/watch.png",
-      price: "999",
-      discountPrice: "400",
-      description: "Analog watch for men",
-    },
-  ];
-
   const { data: releventProduct = [], refetch } = useQuery({
     queryKey: ["releventProduct"],
     queryFn: async () => {
@@ -100,7 +41,7 @@ const ReleventProduct = ({ productFind }) => {
           <div className="flex justify-between text-black">
             <div className="flex justify-between align-items-center">
               <h3 className="whitespace-nowrap ml-2 font-medium">
-                Relevent Products
+                Top Selling Products
               </h3>
             </div>
             {/* <button
@@ -125,13 +66,13 @@ const ReleventProduct = ({ productFind }) => {
                       <img
                         alt="ecommerce"
                         className="object-cover w-full h-full block"
-                        srcSet={product?.featuredImage?.src}
-                        src={product?.featuredImage?.src}
+                        srcSet={product?.featuredImage?.src ? product?.featuredImage?.src : product?.images[0]?.src}
+                        src={product?.featuredImage?.src ? product?.featuredImage?.src : product?.images[0]?.src}
                       />
                     </a>
                     <div className="mt-4 text-start">
                       <h3 className="text-md mb-1 font-medium">
-                        {product?.name}
+                        {product?.name.slice(0, 100)}
                       </h3>
                       <div
                         className="text-sm text_editor text-gray-600"
@@ -146,12 +87,7 @@ const ReleventProduct = ({ productFind }) => {
                         <del>{product.discountPrice}</del>
                       </div>
 
-                      {/* <button
-                                                type="button"
-                                                className="px-3 py-2  font-semibold rounded bg-black text-white text-xs "
-                                            >
-                                                {user.role === 'seller' ? 'Add My Store' : "Add to card"}
-                                            </button> */}
+
                     </div>
                   </div>
                 </Link>
