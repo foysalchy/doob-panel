@@ -585,7 +585,7 @@ const ManageProduct = () => {
                             <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
                               {/* {product?.warehouse?.map((ware) => ware?.name)} */}
                               <button
-                                className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 cursor-pointer bg-emerald-100/60 bg-gray-800 text-white"
+                                className="inline-flex items-center px-3 py-1 rounded-full cursor-pointer bg-emerald-100/60 bg-gray-800 text-white"
                                 onClick={() => setModalOpen(product?._id)}
                               >
                                 {" "}
