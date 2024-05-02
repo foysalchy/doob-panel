@@ -58,7 +58,7 @@ const StockManagement = () => {
   // console.log(editedQuantity, "and", editMode);
   const save_quantity_input = (stockId) => {
     fetch(
-      `http://localhost:5001/api/v1/admin//stock-quantity-update?stockId=${stockId}&quantity=${editedQuantity}`,
+      `https://backend.doob.com.bd/api/v1/admin//stock-quantity-update?stockId=${stockId}&quantity=${editedQuantity}`,
       {
         method: "PUT",
         headers: {
