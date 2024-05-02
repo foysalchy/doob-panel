@@ -107,7 +107,6 @@ const EditInventory = ({ refetch, open, setOpen, data }) => {
 
   // console.log(note);
 
-
   return (
     <div className="fixed bg-[#000000a2] top-0 left-0 flex items-center justify-center w-screen h-screen z-[1000] text-start">
       <div className="p-3 shadow-lg relative bg-white w-[500px] rounded-lg">

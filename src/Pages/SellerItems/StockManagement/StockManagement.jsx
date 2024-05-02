@@ -261,39 +261,48 @@ const StockManagement = () => {
                     <span className="text-xs text-gray-500"> {itm?.SKU}</span>
                   </td>
                   <td className="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                    {itm?.status === " reject" ? (
-                      <button
-                        disabled
-                        // onClick={() => handleUpdate(itm, "")}
-                        className="inline-flex items-center rounded-full gap-x-2  text-sm  gap-2 bg-red-600 px-2 py-1  text-white "
-                      >
-                        Rejected
-                      </button>
+                    {itm?.status === "cancel" ? (
+                      <span className="text-red-500">Canceled</span>
                     ) : (
-                      <div className="">
-                        {itm?.status === "pending" ? (
-                          <div className="flex gap-2">
-                            <button
-                              onClick={() => handleUpdate(itm, "active")}
-                              className="inline-flex  rounded-full gap-x-2    text-sm items-center gap-2 bg-[#23b123ea] px-2 py-1 text-white "
-                            >
-                              Pending
-                            </button>
-                            <button
-                              onClick={() => handleUpdate(itm, "reject")}
-                              className="inline-flex  rounded-full gap-x-2    text-sm items-center gap-2 bg-orange-500 px-2 py-1 text-white "
-                            >
-                              Reject
-                            </button>
-                          </div>
-                        ) : (
+                      <div>
+                        {itm?.status === " reject" ? (
                           <button
                             disabled
                             // onClick={() => handleUpdate(itm, "")}
-                            className="inline-flex  rounded-full gap-x-2    text-sm items-center gap-2 bg-[#23b123ea] px-2 py-1 text-white "
+                            className="inline-flex items-center rounded-full gap-x-2  text-sm  gap-2 bg-red-600 px-2 py-1  text-white "
                           >
-                            Active
+                            Rejected
                           </button>
+                        ) : (
+                          <div className="">
+                            {itm?.status === "pending" ? (
+                              <div className="flex gap-2">
+                                <button
+                                  disabled={
+                                    itm?.status === "cancel" ? true : false
+                                  }
+                                  onClick={() => handleUpdate(itm, "active")}
+                                  className="inline-flex  rounded-full gap-x-2    text-sm items-center gap-2 bg-[#23b123ea] px-2 py-1 text-white "
+                                >
+                                  Pending
+                                </button>
+                                <button
+                                  onClick={() => handleUpdate(itm, "reject")}
+                                  className="inline-flex  rounded-full gap-x-2    text-sm items-center gap-2 bg-orange-500 px-2 py-1 text-white "
+                                >
+                                  Reject
+                                </button>
+                              </div>
+                            ) : (
+                              <button
+                                disabled
+                                // onClick={() => handleUpdate(itm, "")}
+                                className="inline-flex  rounded-full gap-x-2    text-sm items-center gap-2 bg-[#23b123ea] px-2 py-1 text-white "
+                              >
+                                Active
+                              </button>
+                            )}
+                          </div>
                         )}
                       </div>
                     )}
