@@ -207,6 +207,12 @@ const InventoryManagement = () => {
                     scope="col"
                     className="border-r px-2 py-4 text-sm font-[500]"
                   >
+                    Warehouse
+                  </th>
+                  <th
+                    scope="col"
+                    className="border-r px-2 py-4 text-sm font-[500]"
+                  >
                     Action
                   </th>
                 </tr>
@@ -262,6 +268,15 @@ const InventoryManagement = () => {
                             </p>
                           </div>
                         </>
+                      </td>
+                      <td className="px-4 py-4 text-lg text-gray-700  whitespace-nowrap">
+                        <button className="text-sm flex items-center gap-2  px-2 py-1 rounded ">
+                          {product?.warehouse?.map((war) => {
+                            if (war?.name) {
+                              return <span>{war?.name}</span>;
+                            }
+                          })}
+                        </button>
                       </td>
                       <td className="whitespace-nowrap border-r px-6 py-4 font-medium ">
                         <button
