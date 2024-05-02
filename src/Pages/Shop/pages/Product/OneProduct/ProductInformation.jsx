@@ -34,7 +34,7 @@ const ProductInformation = () => {
     useContext(ShopAuthProvider);
   const [variations, setVariations] = useState(null);
   const [showVariant, setShowVariant] = useState(product.data.images);
-  console.log(product, "product");
+  console.log(variations, "variations");
   const blankImg =
     "https://backend.doob.com.bd/api/v1/image/66036ed3df13bd9930ac229c.jpg";
 

@@ -364,24 +364,32 @@ const AddToCard = () => {
     }
   };
 
+  console.log("all", cartProducts?.length, "product", cartProducts);
+
   const handleRemove = (productId) => {
     console.log(`Removing product ${productId} from the cart`);
 
     // Remove the product from the cartProducts state
     setCartProducts((prevProducts) =>
-      prevProducts.filter((product) => product.productId !== productId)
+      prevProducts.filter((product) => product._id !== productId)
     );
 
     // Retrieve cart data from localStorage
     const cartData = JSON.parse(localStorage.getItem("addToCart")) || [];
 
+    console.log("cartData before removal:", cartData);
+
     // Filter out the product to be removed
     const updatedCartData = cartData.filter(
-      (product) => product.productId !== productId
+      (product) => product._id !== productId
     );
+
+    console.log("updatedCartData after removal:", updatedCartData);
 
     // Update localStorage with the updated cart data
     localStorage.setItem("addToCart", JSON.stringify(updatedCartData));
+
+    console.log("Local storage updated.");
 
     // If needed, remove the product from the allProducts state
     setAllProducts((prevProducts) =>
@@ -396,11 +404,16 @@ const AddToCard = () => {
         headers: { "Content-Type": "application/json" },
       }
     )
-      .then((res) => res.json())
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return res.json();
+      })
       .then((data) => {
         console.log(data);
         // If refetch is a function, you need to call it here
-        // refetch();
+        refetch();
       })
       .catch((error) => {
         console.error("Error removing product:", error);
@@ -417,6 +430,7 @@ const AddToCard = () => {
   useEffect(() => {
     if (!shopUser) {
       const productData = localStorage.getItem("addToCart");
+      console.log(JSON.parse(productData));
       setCartProducts(JSON.parse(productData));
     } else {
       fetch(
@@ -424,6 +438,7 @@ const AddToCard = () => {
       )
         .then((res) => res.json())
         .then((data) => {
+          console.log(data);
           setCartProducts(data.data);
           const productData = localStorage.getItem("addToCart");
           let datas = JSON.parse(productData);
