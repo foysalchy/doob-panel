@@ -5,12 +5,18 @@ import BrightAlert from "bright-alert";
 import Swal from "sweetalert2";
 import { useEffect } from "react";
 
-const EditAddress = ({ data, refetch, setEditAddress, setNewAddress }) => {
+const EditAddress = ({
+  data,
+  refetch,
+  setEditAddress,
+  setNewAddress,
+  setOpen,
+}) => {
   const { shopUser, shopId, shop_id } = useContext(ShopAuthProvider);
 
   const [district, setDistrict] = useState("");
 
-  const { data: divisions = [] } = useQuery({
+  const { data: divisions = [], isLoading: loadingDivision } = useQuery({
     queryKey: ["divisions"],
     queryFn: async () => {
       try {
@@ -95,6 +101,7 @@ const EditAddress = ({ data, refetch, setEditAddress, setNewAddress }) => {
         refetch();
         setEditAddress(false);
         setNewAddress(false);
+        setOpen(false);
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -150,6 +157,7 @@ const EditAddress = ({ data, refetch, setEditAddress, setNewAddress }) => {
             onChange={handleProvinceChange}
             id="province"
             name="province"
+            isLoading={loadingDivision}
             className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
           >
             {/* {!data ? <option value="">Please choose your province</option> : <option value={data?.province}>{data.province}</option>} */}

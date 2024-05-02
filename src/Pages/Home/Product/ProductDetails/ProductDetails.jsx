@@ -47,7 +47,6 @@ const ProductDetails = () => {
   const [userName, setUserName] = useState(user?.name);
   const [variationData, setVariationData] = useState(null);
 
-
   console.log(variationData);
   const myData = useLoaderData();
   const productFind = myData?.data;
@@ -65,8 +64,6 @@ const ProductDetails = () => {
     profit: 0,
     profitPercent: 0,
   });
-
-
 
   const allUpdateInfo = () => {
     const price = parseInt(productFind?.variantData?.sellingPrice);
@@ -129,11 +126,13 @@ const ProductDetails = () => {
     allUpdateInfo();
   }, [quantity]);
 
-  const [selected_image, setSelected_image] = useState(false)
+  const [selected_image, setSelected_image] = useState(false);
 
-  const [image_list, setImage_list] = useState(variationData ? variationData.variantImag : productFind.images)
+  const [image_list, setImage_list] = useState(
+    variationData ? variationData.variantImag : productFind.images
+  );
 
-  console.log(productFind.images, 'my_test_image')
+  console.log(productFind.images, "my_test_image");
   useEffect(() => {
     // console.log(variationData?.variantImag, '>>>');
     if (variationData) {
@@ -141,10 +140,7 @@ const ProductDetails = () => {
     } else {
       setImage_list(productFind.images);
     }
-
-
   }, [variationData]);
-
 
   const path = useLocation();
 
@@ -456,11 +452,7 @@ const ProductDetails = () => {
                 </div>
                 <div className="grid grid-cols-4 md:grid-cols-4 lg:grid-cols-6 gap-2 -m-4 text-white">
                   {image_list?.map((imageUrl, index) => (
-                    <div
-
-                      key={index}
-                      className="m-4 w-full md:w-11/12 rounded"
-                    >
+                    <div key={index} className="p-4 w-full md:w-11/12 rounded">
                       <button
                         className="block relative h-16 rounded overflow-hidden border"
                         onClick={() => setSelected_image(imageUrl?.src)}
@@ -754,6 +746,7 @@ const ProductDetails = () => {
                     <div
                       onClick={() => { setVariationData(variation) }}
                       className={`w-[50px] border rounded p-1 h-[50px] object-cover`}
+
                       key={index}
                     >
                       <img

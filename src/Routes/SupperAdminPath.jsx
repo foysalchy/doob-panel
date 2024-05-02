@@ -80,7 +80,7 @@ const SupperAdminPath = [
     element: <AdminDashboard />,
   },
   {
-    path: "seller-manage",
+    path: "stock-manage",
     element: <StockManagement />,
   },
   {
@@ -570,7 +570,6 @@ const SupperAdminPath = [
     element: <ClaimAndRerunAdmin />,
   },
 
-
   {
     path: "package-management",
     element: (
@@ -583,8 +582,6 @@ const SupperAdminPath = [
     path: "package-management/add-package",
     element: <AddPackage />,
   },
-
 ];
-
 
 export { SupperAdminPath };
