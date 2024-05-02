@@ -20,6 +20,7 @@ const StockManagement = () => {
     },
   });
 
+  console.log(stockRequest, "stockRequest");
   const handleUpdate = (data) => {
     console.log(data);
 
@@ -49,6 +50,8 @@ const StockManagement = () => {
         item._id.toLowerCase().includes(searchQuery.toLowerCase())
       )
     : stockRequest;
+
+  console.log(filteredStockRequestData, "filteredStockRequestData");
 
   return (
     <div>
@@ -98,8 +101,16 @@ const StockManagement = () => {
                   className="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500 text-gray-400"
                 >
                   <div className="flex items-center gap-x-3">
-                    <span>Order Id</span>
+                    <span>Ordered Id</span>
                   </div>
+                </th>
+                <th
+                  scope="col"
+                  className="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 text-gray-400"
+                >
+                  <button className="flex items-center gap-x-2">
+                    <span>Name</span>
+                  </button>
                 </th>
                 <th
                   scope="col"
@@ -116,12 +127,39 @@ const StockManagement = () => {
                 >
                   Quantity
                 </th>
+
                 <th
+                  scope="col"
+                  className="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 text-gray-400"
+                >
+                  <button className="flex items-center gap-x-2">
+                    <span>SKU</span>
+                  </button>
+                </th>
+                <th
+                  scope="col"
+                  className="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 text-gray-400"
+                >
+                  <button className="flex items-center gap-x-2">
+                    <span>Seller</span>
+                  </button>
+                </th>
+
+                <th
+                  scope="col"
+                  className="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 text-gray-400"
+                >
+                  <button className="flex items-center gap-x-2">
+                    <span>Warehouse</span>
+                  </button>
+                </th>
+
+                {/* <th
                   scope="col"
                   className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 text-gray-400"
                 >
                   Action
-                </th>
+                </th> */}
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200 ">
@@ -139,6 +177,11 @@ const StockManagement = () => {
                       </div>
                     </div>
                   </td>
+                  <td className="whitespace-wrap text-sm text-start w-[300px] border-r px-6 py-4 font-medium ">
+                    {itm?.productInfo?.name}
+                    <br />
+                    <span className="text-xs text-gray-500"> {itm?.SKU}</span>
+                  </td>
                   <td className="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                     <button
                       disabled={itm.status == "active"}
@@ -150,20 +193,37 @@ const StockManagement = () => {
                     </button>
                   </td>
 
-                  <td className="px-4 py-4 text-sm whitespace-nowrap">
-                    {itm?.quantity}
-                  </td>
-
                   <td className="px-4 py-4 text-lg text-green-500 whitespace-nowrap">
                     <button className="text-sm flex items-center gap-2 bg-[#23b123ea] px-2 py-1 rounded text-white">
                       {itm?.quantity}
                     </button>
                   </td>
+                  <td className="px-4 py-4 text-lg text-green-500 whitespace-nowrap">
+                    <button className="text-sm flex items-center gap-2 bg-[#23b123ea] px-2 py-1 rounded text-white">
+                      {itm?.SKU}
+                    </button>
+                  </td>
+                  <td className="px-4 py-4 text-lg text-green-500 whitespace-nowrap">
+                    <button className="text-sm flex items-center gap-2 bg-[#23b123ea] px-2 py-1 rounded text-white">
+                      {itm?.shopName}
+                    </button>
+                  </td>
+                  <td className="px-4 py-4 text-lg text-green-500 whitespace-nowrap">
+                    <button className="text-sm flex items-center gap-2 bg-[#23b123ea] px-2 py-1 rounded text-white">
+                      {itm?.warehouse?.map((war) => {
+                        if (war?.name) {
+                          return <span>{war?.name}</span>;
+                        }
+                      })}
+                    </button>
+                  </td>
                   {/* {on._id=== itm?._id && <StockEdit setOn={setOn} itm={itm} />} */}
 
-                  {invoiceOn?._id === itm?._id && (
-                    <StockInvoiceAdmin setOn={setInvoiceOn} products={itm} />
-                  )}
+                  <td>
+                    {invoiceOn?._id === itm?._id && (
+                      <StockInvoiceAdmin setOn={setInvoiceOn} products={itm} />
+                    )}
+                  </td>
                 </tr>
               ))}
             </tbody>
