@@ -4,6 +4,7 @@ import { BiEdit, BiSave } from "react-icons/bi";
 import StockEdit from "./StockEdit";
 import BrightAlert from "bright-alert";
 import StockInvoiceAdmin from "./StockInvoiceAdmin";
+import Swal from "sweetalert2";
 
 const StockManagement = () => {
   const [on, setOn] = useState(false);
@@ -20,26 +21,56 @@ const StockManagement = () => {
     },
   });
 
+  const [adminNote, setAdminNote] = useState("");
+
   console.log(stockRequest, "stockRequest");
   const handleUpdate = (data, status) => {
     console.log(data, status);
-    // return;
-    fetch(
-      `https://backend.doob.com.bd/api/v1/admin/stock-request-update?productId=${data?.productId}&orderId=${data?._id}&quantity=${data?.quantity}&SKU=${data?.SKU}`,
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
+
+    if (status === "reject") {
+      Swal.fire({
+        title: "Write Note for Reject",
+        input: "text",
+        inputAttributes: {
+          autocapitalize: "off",
         },
-        body: JSON.stringify({ status: status }),
-      }
-    )
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        BrightAlert("Update Quantity", "", "success");
-        refetch();
+        showCancelButton: true,
+        confirmButtonText: "Submit",
+        showLoaderOnConfirm: true,
+        preConfirm: async (note) => {
+          console.log(note); // Log the input value
+          setAdminNote(note);
+
+          const bodyData = {
+            status: status,
+            rejectNote: note, // Update rejectNote here
+          };
+
+          console.log(bodyData, "bodyData");
+
+          // return;
+
+          // Make the fetch call inside the preConfirm callback
+          return fetch(
+            `https://backend.doob.com.bd/api/v1/admin/stock-request-update?productId=${data?.productId}&orderId=${data?._id}&quantity=${data?.quantity}&SKU=${data?.SKU}`,
+            {
+              method: "PUT",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(bodyData),
+            }
+          )
+            .then((res) => res.json())
+            .then((data) => {
+              console.log(data);
+              BrightAlert("Update Quantity", "", "success");
+              refetch();
+            });
+        },
+        allowOutsideClick: () => !Swal.isLoading(),
       });
+    }
   };
 
   const [searchQuery, setSearchQuery] = useState("");
