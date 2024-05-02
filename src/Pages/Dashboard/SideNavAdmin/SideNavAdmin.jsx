@@ -3025,7 +3025,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
               <NavLink
                 onMouseMove={() => setMenu(true)}
                 rel="noopener noreferrer"
-                to={"/admin/seller-manage"}
+                to={"/admin/stock-manage"}
                 className={({ isActive }) => {
                   return isActive
                     ? "flex items-center p-2 space-x-3 rounded-sm bg-gray-800 text-white "

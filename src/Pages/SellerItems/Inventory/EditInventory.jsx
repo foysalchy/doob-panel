@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../../AuthProvider/UserProvider";
 import Select from "react-select";
+import BrightAlert from "bright-alert";
 
 const EditInventory = ({ refetch, open, setOpen, data }) => {
   console.log("data", data);
@@ -12,6 +13,13 @@ const EditInventory = ({ refetch, open, setOpen, data }) => {
     setSelectedValue(selectedOption);
   };
   console.log("selectedValue", selectedValue?.value);
+
+  const [selectStatusValue, setSelectStatusValue] = useState([]);
+
+  const [note, setNote] = useState("");
+
+  console.log(selectStatusValue, "selectStatusValue");
+
   const handleIncrease = () => {
     setCount(parseInt(count) + 1);
   };
@@ -34,6 +42,7 @@ const EditInventory = ({ refetch, open, setOpen, data }) => {
         price: data?.price,
         image: data?.featuredImage?.src,
         quantity: data?.stock_quantity,
+        image: data?.images[0]?.src,
       },
       warehouse: data?.warehouse,
       date: new Date().getTime(),
@@ -41,6 +50,8 @@ const EditInventory = ({ refetch, open, setOpen, data }) => {
       shopId: data.shopId,
       shopName: shopInfo.shopName,
       SKU: selectedValue?.value,
+      delivery_status: selectStatusValue?.value,
+      note,
     };
 
     {
@@ -56,6 +67,7 @@ const EditInventory = ({ refetch, open, setOpen, data }) => {
             .then((data) => {
               refetch();
               setOpen(!open);
+              BrightAlert();
             })
         : fetch(
             `https://backend.doob.com.bd/api/v1/seller/product-stock-update?productId=${data?._id}&quantity=${count}&SKU=${selectedValue?.value}`,
@@ -70,6 +82,7 @@ const EditInventory = ({ refetch, open, setOpen, data }) => {
             .then((data) => {
               refetch();
               setOpen(!open);
+              BrightAlert();
             });
     }
     console.log(data, ">>>>>>><<<<<<<<<<<<<<<<<<<");
@@ -82,10 +95,20 @@ const EditInventory = ({ refetch, open, setOpen, data }) => {
     };
   });
 
-  console.log("options", options);
+  const statusOptionsData = ["pending", "purchasing", "shipped", "received"];
+  // console.log("options", options);
+
+  const statusOptions = statusOptionsData?.map((item) => {
+    return {
+      label: item,
+      value: item,
+    };
+  });
+
+  // console.log(note);
 
   return (
-    <div className="fixed bg-[#000000a2] top-0 left-0 flex items-center justify-center w-screen h-screen z-[1000]">
+    <div className="fixed bg-[#000000a2] top-0 left-0 flex items-center justify-center w-screen h-screen z-[1000] text-start">
       <div className="p-3 shadow-lg relative bg-white w-[500px] rounded-lg">
         <header>
           <h2 className="text-lg pb-2 border-b font-semibold">Edit Quantity</h2>
@@ -112,6 +135,30 @@ const EditInventory = ({ refetch, open, setOpen, data }) => {
               onChange={handleChange}
             />
           </div>
+
+          <div className="">
+            <label className="mb-2 text-lg" htmlFor="note">
+              Add Note
+            </label>
+            <textarea
+              onChange={(e) => setNote(e.target.value)}
+              name="note"
+              type="text"
+              className="w-full p-2 rounded-md ring-1 mt-2 ring-gray-200"
+              placeholder="Write your Note"
+            />
+          </div>
+
+          <div className="my-3">
+            <label className="mb-1 text-lg" htmlFor="status">
+              Select Status
+            </label>
+            <Select
+              required
+              options={statusOptions}
+              onChange={(value) => setSelectStatusValue(value)}
+            />
+          </div>
           <div>
             <br />
             <div className="flex items-center ring-1 ring-gray-400 rounded-md">
@@ -134,6 +181,7 @@ const EditInventory = ({ refetch, open, setOpen, data }) => {
                 +
               </button>
             </div>
+
             <br />
             {/* Add similar structure for other fields */}
             <button
