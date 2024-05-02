@@ -8,6 +8,7 @@ import UserOrderInvoice from "./UserOrderInvoice";
 import PaymentGetWay from "./../../../../AdminItem/Settings/PaymentGetWay/PaymentGetWay";
 import Swal from "sweetalert2";
 import RevewModal from "./RevewModal";
+import RefundModal from "./RefundModal";
 
 const ProductCartSm = ({ order, list }) => {
   return (
@@ -130,6 +131,8 @@ const UserMyOrder = () => {
     },
   });
 
+  console.log("myOrders", myOrders);
+
   function formatTimestamp(timestamp) {
     const date = new Date(timestamp);
     const options = { year: "numeric", month: "long", day: "numeric" };
@@ -162,6 +165,8 @@ const UserMyOrder = () => {
   const handleViewDetails = (orderId) => {
     setModalOpen(orderId);
   };
+
+  //// modal for Refund
 
   // ? update status
   const updateStatus = (status, orderId) => {
@@ -360,6 +365,10 @@ const UserMyOrder = () => {
       });
   };
 
+  const [refundOpen, setRefundOpen] = useState(false);
+
+  console.log(refundOpen);
+
   return (
     <div className="">
       <div className=" font-google">
@@ -382,7 +391,10 @@ const UserMyOrder = () => {
               currentStep = 1;
             }
             return (
-              <div className=" p-4 rounded border-[0.5px] border-opacity-40 gap-4 border-gray-500 bg-white">
+              <div
+                key={order._id}
+                className=" p-4 rounded border-[0.5px] border-opacity-40 gap-4 border-gray-500 bg-white"
+              >
                 <div className="pb-4 flex md:flex-row flex-col items-center justify-between">
                   <h1 className="md:text-xl font-bold ">
                     Order Id : {order?.orderNumber}
@@ -396,6 +408,14 @@ const UserMyOrder = () => {
                       <p className="md:block hidden">
                         Order placed {formatTimestamp(order.timestamp)}
                       </p>
+                      {order?.status === "Refund" && (
+                        <button
+                          onClick={() => setRefundOpen(order)}
+                          className="text-green-500 md:text-md text-sm"
+                        >
+                          Refund History →
+                        </button>
+                      )}
 
                       <button
                         onClick={() => handleViewDetails(order._id)}
@@ -403,7 +423,6 @@ const UserMyOrder = () => {
                       >
                         View invoice →
                       </button>
-
                       {modalOpen && (
                         <div>
                           <UserOrderInvoice
@@ -414,6 +433,14 @@ const UserMyOrder = () => {
                             )}
                           />
                         </div>
+                      )}
+
+                      {refundOpen && (
+                        <RefundModal
+                          refundOpen={refundOpen}
+                          setRefundOpen={setRefundOpen}
+                          details={refundOpen}
+                        />
                       )}
                     </div>
                     <div className="flex items-center">
