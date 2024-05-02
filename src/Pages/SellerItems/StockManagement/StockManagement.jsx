@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import React, { useState } from "react";
-import { BiEdit } from "react-icons/bi";
+import { BiEdit, BiSave } from "react-icons/bi";
 import StockEdit from "./StockEdit";
 import BrightAlert from "bright-alert";
 import StockInvoiceAdmin from "./StockInvoiceAdmin";
@@ -50,7 +50,33 @@ const StockManagement = () => {
       )
     : stockRequest;
 
-  console.log(filteredStockRequestData, "filteredStockRequestData");
+  // console.log(filteredStockRequestData, "filteredStockRequestData");
+
+  // update quantity
+  const [editedQuantity, setEditedQuantity] = useState("");
+  const [editMode, setEditMode] = useState(false);
+  // console.log(editedQuantity, "and", editMode);
+  const save_quantity_input = (stockId) => {
+    fetch(
+      `http://localhost:5001/api/v1/admin//stock-quantity-update?stockId=${stockId}&quantity=${editedQuantity}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        // body: JSON.stringify(data),
+      }
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        refetch();
+
+        BrightAlert();
+        setEditMode(false);
+
+        setEditedQuantity("");
+      });
+  };
 
   return (
     <div>
@@ -230,9 +256,31 @@ const StockManagement = () => {
                   </td>
 
                   <td className="px-4 py-4 text-lg text-gray-700  whitespace-nowrap">
-                    <button className="text-sm flex items-center gap-2  px-2 py-1 rounded ">
-                      {itm?.quantity}
-                    </button>
+                    <div className="flex items-center gap-x-2">
+                      {editMode === itm._id ? (
+                        <div className="flex gap-2 ">
+                          <input
+                            type="text"
+                            defaultValue={itm?.quantity}
+                            onChange={(e) => setEditedQuantity(e.target.value)}
+                            className="px-3 w-12 py-1 text-sm border rounded bg-gray-100"
+                          />
+                          <button>
+                            <BiSave
+                              onClick={() => save_quantity_input(itm?._id)}
+                            />
+                          </button>
+                        </div>
+                      ) : (
+                        <button
+                          onClick={() => setEditMode(itm?._id)}
+                          className="px-3 py-1 flex items-center gap-2 text-xs text-indigo-500 rounded-full bg-gray-800 bg-indigo-100/60"
+                        >
+                          {itm?.quantity}
+                          <BiEdit />
+                        </button>
+                      )}
+                    </div>
                   </td>
 
                   <td className="px-4 py-4 text-lg text-gray-700  whitespace-nowrap">
@@ -244,7 +292,7 @@ const StockManagement = () => {
                     <button className="text-sm flex items-center gap-2  px-2 py-1 rounded ">
                       {itm?.warehouse?.map((war) => {
                         if (war?.name) {
-                          return <span>{war?.name}</span>;
+                          return <span key={war?.name}>{war?.name}</span>;
                         }
                       })}
                     </button>

@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../../AuthProvider/UserProvider";
 import Select from "react-select";
+import BrightAlert from "bright-alert";
 
 const EditInventory = ({ refetch, open, setOpen, data }) => {
   console.log("data", data);
@@ -66,6 +67,7 @@ const EditInventory = ({ refetch, open, setOpen, data }) => {
             .then((data) => {
               refetch();
               setOpen(!open);
+              BrightAlert();
             })
         : fetch(
             `https://backend.doob.com.bd/api/v1/seller/product-stock-update?productId=${data?._id}&quantity=${count}&SKU=${selectedValue?.value}`,
@@ -80,6 +82,7 @@ const EditInventory = ({ refetch, open, setOpen, data }) => {
             .then((data) => {
               refetch();
               setOpen(!open);
+              BrightAlert();
             });
     }
     console.log(data, ">>>>>>><<<<<<<<<<<<<<<<<<<");
@@ -92,13 +95,7 @@ const EditInventory = ({ refetch, open, setOpen, data }) => {
     };
   });
 
-  const statusOptionsData = [
-    "pending",
-    "purchasing",
-    "shipped",
-    "received",
-    "reject",
-  ];
+  const statusOptionsData = ["pending", "purchasing", "shipped", "received"];
   // console.log("options", options);
 
   const statusOptions = statusOptionsData?.map((item) => {
@@ -108,7 +105,8 @@ const EditInventory = ({ refetch, open, setOpen, data }) => {
     };
   });
 
-  console.log(note);
+  // console.log(note);
+
 
   return (
     <div className="fixed bg-[#000000a2] top-0 left-0 flex items-center justify-center w-screen h-screen z-[1000] text-start">
