@@ -346,7 +346,7 @@ const SubCategoriesManagement = () => {
             </button>
           </span>
         </div>
-        <div className="overflow-x-auto overflow-y-non">
+        <div className="overflow-x-auto border border-gray-300 rounded-lg overflow-y-none">
           <table className="table-auto w-full text-left whitespace-wrap">
             <thead>
               <tr className="border-b">

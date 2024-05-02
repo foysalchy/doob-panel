@@ -349,8 +349,8 @@ const MageCategoriesManagement = () => {
           </span>
         </div>
 
-        <div className="overflow-x-scroll overflow-hidden">
-          <table className="table-auto overflow-x-scroll w-full text-left whitespace-wrap">
+        <div className="overflow-x-auto overflow-hidden rounded-lg  border border-gray-300">
+          <table className="table-auto overflow-x-auto w-full text-left  rounded-lg whitespace-wrap">
             <thead>
               <tr>
                 <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-800 whitespace-wrap rounded-tl ">
@@ -410,7 +410,7 @@ const MageCategoriesManagement = () => {
                           : "Invalidate"}{" "}
                       </td>
                     )}
-                    <td className="px-4 py-3 flex gap-1 items-center">
+                    <td className="px-4 py-3 flex gap-1  flex-wrap items-center">
                       {!warehouse?.status ? (
                         <button
                           onClick={() => updateStatus(warehouse?._id, true)}

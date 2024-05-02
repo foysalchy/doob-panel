@@ -282,6 +282,7 @@ const ManageProduct = () => {
 
   const [reject_message, setRejectMessage] = useState(false);
 
+  console.log(currentItems, 'Hello js........');
   return (
     <div className="">
       <Link
@@ -493,23 +494,16 @@ const ManageProduct = () => {
                               </div>
                             </td>
                             <td>
-                              <div className="flex  duration-150 items-center gap-x-2 relative">
-                                <div className="imgSm w-10 h-10 bg-red-400">
-                                  <img
-                                    className="object-cover  w-10 h-10 rounded hover:cursor-pointer"
-                                    srcSet={
-                                      product?.featuredImage &&
-                                      product?.featuredImage?.src
-                                    }
-                                    src={
-                                      product?.featuredImage &&
-                                      product?.featuredImage?.src
-                                    }
-                                    alt=""
-                                  />
+                              <div className="flex  duration-150 items-start gap-9 relative">
+                                <div className="imgSm w-[20px] h-[20px] bg-red-50">
                                   <div
                                     style={{
-                                      backgroundImage: `url(${product?.featuredImage?.src})`,
+                                      backgroundImage: `url(${product?.featuredImage?.src ? product?.featuredImage?.src : product?.images[0]?.src})`,
+                                    }}
+                                    className="w-12 h-12 object-cover bg-cover rounded-md border border-[#8080809d] overflow-hidden"></div>
+                                  <div
+                                    style={{
+                                      backgroundImage: `url(${product?.featuredImage?.src ? product?.featuredImage?.src : product?.images[0]?.src})`,
                                     }}
                                     className="absolute top-[-40px] z-50 duration-150 abs hidden bg-[url(${product?.featuredImage?.src})] left-[43px] object-cover bg-cover bg-white shadow-xl w-[150px] h-[150px] ring-1 ring-gray-500"
                                   ></div>
@@ -573,20 +567,25 @@ const ManageProduct = () => {
                               {product?.categories?.length &&
                                 product?.categories?.map((itm, index) => (
                                   <div
-                                    className="text-sm rounded-full flex items-center gap-1"
+                                    className="text-sm rounded-full flex items-center "
                                     key={index}
                                   >
                                     {itm?.name}
                                     {index !==
                                       product.categories.length - 1 ||
                                       (!itm?.name === "" && <FaAngleRight />)}
+                                    {index < product.categories.length - 1 && (
+                                      <>
+                                        {itm?.name ? ',' : ''}
+                                      </>
+                                    )}
                                   </div>
                                 ))}
                             </td>
                             <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
                               {/* {product?.warehouse?.map((ware) => ware?.name)} */}
                               <button
-                                className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 cursor-pointer bg-emerald-100/60 bg-gray-800 text-white"
+                                className="inline-flex items-center px-3 py-1 rounded-full cursor-pointer bg-emerald-100/60 bg-gray-800 text-white"
                                 onClick={() => setModalOpen(product?._id)}
                               >
                                 {" "}
@@ -595,7 +594,16 @@ const ManageProduct = () => {
                                   (item) => item?.name
                                 )?.length
                                   ? product?.warehouse?.map(
-                                    (ware) => ware?.name
+                                    (ware, index) => <span>{ware?.name}
+
+                                      {index < product.warehouse.length - 1 && (
+                                        <>
+                                          {
+                                            ware?.name ? ',' : ''
+                                          }
+                                        </>
+                                      )}
+                                    </span>
                                   )
                                   : "Select Warehouse"}
                               </button>

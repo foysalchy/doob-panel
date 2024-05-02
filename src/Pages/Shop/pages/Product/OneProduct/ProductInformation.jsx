@@ -210,6 +210,16 @@ const ProductInformation = () => {
     },
   });
 
+  const { data: releventProduct = [], reload } = useQuery({
+    queryKey: ["releventProduct"],
+    queryFn: async () => {
+      const res = await fetch(
+        "https://backend.doob.com.bd/api/v1/admin/products"
+      );
+      const data = await res.json();
+      return data;
+    },
+  });
   return (
     <section className="px-2 py-4  sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 mx-auto">
       <MetaHelmet
@@ -256,242 +266,275 @@ const ProductInformation = () => {
               ])}
           </div>
         </div>
-
-        <div className="w-[100%] mx-auto px-4 md:px-4 lg:px-12 mt-6 ">
-          <div className="flex flex-col md:flex-row -mx-4 border rounded border-gray-300 py-4">
-            <div className="md:flex-1 px-4">
-              <div>
-                <div className="h-64  md:h-[22rem] rounded-lg bg-gray-100 mb-4">
-                  <div className="h-64 md:h-full rounded-lg bg-gray-100 mb-4 flex items-center justify-center">
-                    <img
-                      className="w-94 h-full"
-                      src={
-                        product?.data?.daraz
-                          ? variations?.image[0]
-                          : selectedImage
-                      }
-                      srcSet={
-                        product?.data?.daraz
-                          ? variations?.image[0]
-                          : selectedImage
-                      }
-                      alt="Selected Image"
-                    />
-                  </div>
-                </div>
-                <div className="grid grid-cols-4 md:grid-cols-4 lg:grid-cols-6 gap-2 -m-4 text-white">
-                  {showVariant?.map((imageUrl, index) => (
-                    <div
-                      onClick={() => setVariations(null)}
-                      key={index}
-                      className="p-4 w-full md:w-11/12 rounded"
-                    >
-                      <Link
-                        className="block relative h-16 rounded overflow-hidden border"
-                        onClick={() => handleImageClick(imageUrl.src)}
-                      >
-                        <img
-                          alt={`ecommerce${index + 1}`}
-                          className="object-cover cursor-pointer block w-full h-full p-2 "
-                          src={imageUrl.src}
-                          srcSet={imageUrl.src}
-                        />
-                      </Link>
+        <div className="grid md:grid-cols-4">
+          <div className=" md:col-span-3 mx-auto border border-r-transparent px-4 md:px-4 lg:px-12 mt-6 ">
+            <div className="flex flex-col md:flex-row -mx-4  border-gray-300 py-4">
+              <div className="md:flex-1 px-4">
+                <div>
+                  <div className="h-64  md:h-[22rem] rounded-lg bg-gray-100 mb-4">
+                    <div className="h-64 md:h-full rounded-lg bg-gray-100 mb-4 flex items-center justify-center">
+                      <img
+                        className="w-94 h-full"
+                        src={
+                          product?.data?.daraz
+                            ? variations?.image[0]
+                            : selectedImage
+                        }
+                        srcSet={
+                          product?.data?.daraz
+                            ? variations?.image[0]
+                            : selectedImage
+                        }
+                        alt="Selected Image"
+                      />
                     </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0 px-4">
-              <h2 className="text-sm title-font text-gray-500 tracking-widest">
-                {product.data.brandName}
-              </h2>
-              <h1 className="text-gray-900 md:text-3xl title-font font-medium mb-1">
-                {variations?.name
-                  ? `${product?.data?.name} - ${variations?.name}`
-                  : product?.data.name}
-              </h1>
-              <div className="flex my-2 items-center">
-                <div className="flex items-center">
-                  <div className="flex">
-                    <span className="flex items-center">
-                      {[1, 2, 3, 4, 5].map((star) => (
-                        <span
-                          className="w-4 h-4"
-                          key={star}
-                          style={{
-                            color: star <= convertedRating ? "gold" : "gray",
-                          }}
-                        >
-                          <svg
-                            fill="currentColor"
-                            stroke="currentColor"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            className="w-4 h-4 "
-                            viewBox="0 0 24 24"
-                          >
-                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                          </svg>
-                        </span>
-                      ))}
-                      <span className="text-gray-600 ml-2">
-                        {product?.data?.rating / 5 || 0}
-                      </span>
-                    </span>
                   </div>
-                </div>
-                <div className="flex item-center">
-                  <div className="flex items-center">
-                    {" "}
-                    <FaCircle className="text-[#DBDBDB] text-[8px] mx-2 md:mx-4" />
-                    <FaBasketShopping className="text-[#DBDBDB] mr-2 text-[16px]" />
-                    <p className="md:text-sm  text-[10px]">
-                      {product?.data?.total_sales + " "} Sold
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              <div
-                className="mb-2 text_editor "
-                dangerouslySetInnerHTML={{
-                  __html: product.data.shortDescription,
-                }}
-              />
-
-              <div className="flex justify-between items-start">
-                <div className="title-font font-medium md:text-2xl text-lg text-gray-900 flex items-start">
-                  <span>Price :</span>{" "}
-                  <div>
-                    <span className="kalpurush">৳</span>
-                    {variations?.price ? variations?.price : product.data.price}
-                    <br />
-                    {!variations && (
-                      <div className=" line-through text-lg text-gray-500">
-                        <span className="kalpurush   ">৳</span>
-                        {product.data.regular_price}
-                      </div>
-                    )}
-                  </div>
-                </div>
-
-                <div className="flex items-center mt-4">
-                  <a
-                    href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
-                      window.location.href
-                    )}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="mr-2"
-                  >
-                    <FaFacebook />
-                  </a>
-                  <a
-                    href={`https://www.instagram.com/share?url=${encodeURIComponent(
-                      window.location.href
-                    )}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="mr-2"
-                  >
-                    <FaInstagram />
-                  </a>
-                  <a
-                    href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(
-                      window.location.href
-                    )}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <FaXTwitter />
-                  </a>
-                </div>
-              </div>
-              <br />
-              <p>Variations: {variations?.name}</p>
-              {
-                <div className="flex  gap-2  items-center   mb-5">
-                  {product?.data?.variations &&
-                    product?.data?.variations.map((variation, index) => (
+                  <div className="grid grid-cols-4 md:grid-cols-4 lg:grid-cols-6 gap-2 -m-4 text-white">
+                    {showVariant?.map((imageUrl, index) => (
                       <div
-                        onClick={() => handleVariation(variation)}
+                        onClick={() => setVariations(null)}
                         key={index}
-                        className="w-[50px] h-[50px] border border-gray-300"
+                        className="m-4 w-full md:w-11/12 rounded"
                       >
-                        <img
-                          onClick={() => setShowVariant(variation?.variantImag)}
-                          src={
-                            !product?.data
-                              ? variation?.image[0]
-                              : variation?.image
-                          }
-                          alt=""
-                          className="w-full h-full"
-                        />
+                        <Link
+                          className="block relative h-16 rounded overflow-hidden border"
+                          onClick={() => handleImageClick(imageUrl.src)}
+                        >
+                          <img
+                            alt={`ecommerce${index + 1}`}
+                            className="object-cover cursor-pointer block w-full h-full p-2 "
+                            src={imageUrl.src}
+                            srcSet={imageUrl.src}
+                          />
+                        </Link>
                       </div>
                     ))}
+                  </div>
                 </div>
-              }
-              <div>
-                <div className="flex md:flex-row flex-col gap-3 py-4 space-x-4 justify-between">
-                  <div>
-                    <label htmlFor="Quantity" className="sr-only">
+              </div>
+
+              <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0 px-4">
+                <h2 className="text-sm title-font text-gray-500 tracking-widest">
+                  {product.data.brandName}
+                </h2>
+                <h1 className="text-gray-900 md:text-3xl title-font font-medium mb-1">
+                  {variations?.name
+                    ? `${product?.data?.name?.slice(0, 50)}`
+                    : product?.data.name?.slice(0, 50)}
+                </h1>
+                <div className="flex my-2 items-center">
+                  <div className="flex items-center">
+                    <div className="flex">
+                      <span className="flex items-center">
+                        {[1, 2, 3, 4, 5].map((star) => (
+                          <span
+                            className="w-4 h-4"
+                            key={star}
+                            style={{
+                              color: star <= convertedRating ? "gold" : "gray",
+                            }}
+                          >
+                            <svg
+                              fill="currentColor"
+                              stroke="currentColor"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              className="w-4 h-4 "
+                              viewBox="0 0 24 24"
+                            >
+                              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                            </svg>
+                          </span>
+                        ))}
+                        <span className="text-gray-600 ml-2">
+                          {product?.data?.rating / 5 || 0}
+                        </span>
+                      </span>
+                    </div>
+                  </div>
+                  <div className="flex item-center">
+                    <div className="flex items-center">
                       {" "}
-                      Quantity{" "}
-                    </label>
-
-                    <div className="flex items-center gap-1">
-                      <button
-                        type="button"
-                        onClick={handleDecrease}
-                        className="w-10 h-10 leading-10 text-gray-600 transition hover:opacity-75"
-                      >
-                        -
-                      </button>
-
-                      <input
-                        type="number"
-                        id="Quantity"
-                        value={quantity}
-                        onChange={handleManualInput}
-                        className="h-10 md:w-24 w-12 text-sm rounded border px-4 border-gray-900 [-moz-appearance:_textfield] sm:text-sm [&::-webkit-outer-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button]:appearance-none"
-                      />
-
-                      <button
-                        type="button"
-                        onClick={handleIncrease}
-                        className="w-10 h-10 leading-10 text-gray-600 transition text-sm hover:opacity-75 "
-                      >
-                        +
-                      </button>
+                      <FaCircle className="text-[#DBDBDB] text-[8px] mx-2 md:mx-4" />
+                      <FaBasketShopping className="text-[#DBDBDB] mr-2 text-[16px]" />
+                      <p className="md:text-sm  text-[10px]">
+                        {product?.data?.total_sales + " "} Sold
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div className="flex justify-between items-center pb-3">
+                  <div className="title-font font-medium md:text-2xl text-lg text-gray-900 flex items-start">
+                    <span>Price :</span>{" "}
+                    <div>
+                      <span className="kalpurush">৳</span>
+                      {variations?.price ? variations?.price : product.data.price}
+                      <br />
+                      {!variations && (
+                        <div className=" line-through text-lg text-gray-500">
+                          <span className="kalpurush   ">৳</span>
+                          {product.data.regular_price}
+                        </div>
+                      )}
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-3">
-                    <button
-                      type="button"
-                      onClick={() => addToCart(product)}
-                      className="h-10 w-[120px] px-2 py-2 font-semibold rounded bg-gray-950 hover:bg-gray-800 text-white"
+                  <div className="flex items-center ">
+                    <a
+                      href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+                        window.location.href
+                      )}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mr-2"
                     >
-                      {loader ? "Loading.." : "Add to Card"}
-                    </button>
+                      <FaFacebook />
+                    </a>
+                    <a
+                      href={`https://www.instagram.com/share?url=${encodeURIComponent(
+                        window.location.href
+                      )}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mr-2"
+                    >
+                      <FaInstagram />
+                    </a>
+                    <a
+                      href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(
+                        window.location.href
+                      )}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <FaXTwitter />
+                    </a>
+                  </div>
+                </div>
 
-                    <button
-                      onClick={() => buyNowHandler(product)}
-                      type="button"
-                      className="h-10 px-2 py-2 w-[120px] font-semibold  rounded bg-indigo-600 hover:bg-indigo-500 text-white"
-                    >
-                      Buy Now
-                    </button>
+                <hr />
+                <div className=" h-[120px] overflow-y-hidden flex items-center ">
+                  <div
+                    className="mb-2 text_editor  text-start  "
+                    dangerouslySetInnerHTML={{
+                      __html: product.data.shortDescription,
+                    }}
+                  />
+                </div>
+                <br />
+
+                <br />
+                <p>Variations: {variations?.name}</p>
+                {
+                  <div className="flex  gap-2  items-center   mb-5">
+                    {product?.data?.variations &&
+                      product?.data?.variations.map((variation, index) => (
+                        <div
+                          onClick={() => handleVariation(variation)}
+                          key={index}
+                          className="w-[50px] h-[50px] border border-gray-300"
+                        >
+                          <img
+                            onClick={() => setShowVariant(variation?.variantImag)}
+                            src={
+                              !product?.data
+                                ? variation?.image[0]
+                                : variation?.image
+                            }
+                            alt=""
+                            className="w-full h-full"
+                          />
+                        </div>
+                      ))}
+                  </div>
+                }
+                <div>
+                  <div className="flex md:flex-row flex-col gap-3 py-4 space-x-4 justify-between">
+                    <div>
+                      <label htmlFor="Quantity" className="sr-only">
+                        {" "}
+                        Quantity{" "}
+                      </label>
+
+                      <div className="flex items-center gap-1">
+                        <button
+                          type="button"
+                          onClick={handleDecrease}
+                          className="w-6 h-10 leading-10 text-gray-600 transition hover:opacity-75"
+                        >
+                          -
+                        </button>
+
+                        <input
+                          type="number"
+                          id="Quantity"
+                          value={quantity}
+                          onChange={handleManualInput}
+                          className="h-10 md:w-12 text-center w-12 text-sm rounded border px-1 border-gray-900 [-moz-appearance:_textfield] sm:text-sm [&::-webkit-outer-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button]:appearance-none"
+                        />
+
+                        <button
+                          type="button"
+                          onClick={handleIncrease}
+                          className="w-6 h-10 leading-10 text-gray-600 transition text-sm hover:opacity-75 "
+                        >
+                          +
+                        </button>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center gap-3">
+                      <button
+                        type="button"
+                        onClick={() => addToCart(product)}
+                        className="h-10 w-[120px] px-2 py-2 font-semibold rounded bg-gray-950 hover:bg-gray-800 text-white"
+                      >
+                        {loader ? "Loading.." : "Add to card"}
+                      </button>
+
+                      <button
+                        onClick={() => buyNowHandler(product)}
+                        type="button"
+                        className="h-10 px-2 py-2 w-[120px] font-semibold  rounded bg-indigo-600 hover:bg-indigo-500 text-white"
+                      >
+                        Buy Now
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
+
+          <div className="border mt-6 w-full">
+            <div className="p-4">
+              <h2 className="text-lg font-semibold mb-4">Relevent Products</h2>
+              <div className="space-y-4">
+                {
+                  releventProduct?.slice(0, 3)?.map((product, index) => <Link to={`/products/${product?._id}`} key={product?._id} className="border w-full duration-150 group hover:shadow-lg flex items-start gap-2 p-3 rounded">
+                    <img
+                      alt="Product Image"
+                      className="w-20 h-20 bg-gray-200 rounded mb-2"
+                      height="80"
+                      src={product?.featuredImage?.src ? product?.featuredImage?.src : product?.images[0]?.src}
+                      style={{
+                        aspectRatio: "80/80",
+                        objectFit: "cover",
+                      }}
+                      width="80"
+                    />
+                    <div className="">
+                      <p className="font-medium group-hover:text-blue-500 duration">{product?.name?.slice(0, 40)}</p>
+                      <p className="text-red-500">৳{product?.price}</p>
+                    </div>
+                  </Link>)
+                }
+              </div>
+            </div>
+          </div>
         </div>
+
       </div>
       <div className="max-w-7xl mx-auto px-4 md:px-4 lg:px-8 my-6">
         <div className="border p-6 rounded">

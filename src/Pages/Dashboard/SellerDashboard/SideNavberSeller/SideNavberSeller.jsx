@@ -246,7 +246,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                             }
                                             className=" text-gray-50 text-[15px] flex gap-2 items-center px-4 p-2 space-x-3 text-xs rounded-md"
                                           >
-                                            Product Management
+                                            Products
                                           </Link>
                                         </li>
                                       </ul>
@@ -309,7 +309,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                           className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
                                         >
                                           <MdProductionQuantityLimits className="w-5 h-5 fill-current text-gray-400 " />{" "}
-                                          Product Management
+                                          Products
                                         </Link>
                                       </li>
                                     </ul>
@@ -598,6 +598,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                   </li>
                                 )}
                             </ul>
+
                           </details>
                         </li>
                       ) : null
@@ -626,62 +627,73 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                   (itm) => itm?.name === "Product Management"
                                 ) ? (
                                   <li className="">
-                                    <ul className="mt-2 space-y-1 px-4 text-control">
-                                      <li className="flex cursor-pointer items-start justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                        <Link
-                                          to={
-                                            "/seller/product-management/add-product"
-                                          }
-                                          className="text-[14px] text-gray-50 flex gap-2   px-4 p-2 space-x-3  rounded-md"
-                                        >
-                                          Add Product
-                                        </Link>
-                                        +
-                                      </li>
-                                      <li className="flex cursor-pointer items-start justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                        <Link
-                                          to={"/products"}
-                                          className="text-[14px] text-gray-50 flex gap-2  px-4 p-2 space-x-3  rounded-md"
-                                        >
-                                          Add Doob Product
-                                        </Link>
-                                      </li>
-                                      <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                        <Link
-                                          to={
-                                            "/seller/product-management/add-daraz-product"
-                                          }
-                                          className=" text-[14px] text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
-                                        >
-                                          Add Daraz Product
-                                        </Link>
-                                      </li>
-                                      <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                        <Link
-                                          to={
-                                            "/seller/product-management/add-woo-product"
-                                          }
-                                          className="text-[14px] text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
-                                        >
-                                          Woo Product
-                                        </Link>
-                                      </li>
-                                      <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                    <ul className="flex flex-col ">
+                                      <li className="flex cursor-pointer items-center justify-between  py-2 p-2 rounded-sm hover:bg-gray-800 text-gray-50">
                                         <Link
                                           to={
                                             "/seller/product-management/manage"
                                           }
-                                          className="text-[14px] text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                          className=""
                                         >
-                                          Product Management
+                                          Products
                                         </Link>
                                       </li>
+                                      <li className="flex cursor-pointer items-center justify-between py-2 p-2 rounded-sm hover:bg-gray-800 text-gray-50">
+                                        <Link
+                                          to={
+                                            "/seller/product-management/add-product"
+                                          }
+
+                                        >
+                                          Add Product
+                                        </Link>
+
+                                      </li>
+                                      <li className="flex cursor-pointer items-center justify-between py-2 p-2 rounded-sm hover:bg-gray-800 text-gray-50">
+                                        <Link
+                                          to={"/products"}
+
+                                        >
+                                          Add Doob Product
+                                        </Link>
+                                      </li>
+                                      <li className="flex cursor-pointer items-center justify-between py-2 p-2 rounded-sm hover:bg-gray-800 text-gray-50">
+                                        <Link
+                                          to={
+                                            "/seller/product-management/add-daraz-product"
+                                          }
+
+                                        >
+                                          Add Daraz Product
+                                        </Link>
+                                      </li>
+                                      <li className="flex cursor-pointer items-center justify-between py-2 p-2 rounded-sm hover:bg-gray-800 text-gray-50">
+                                        <Link
+                                          to={
+                                            "/seller/product-management/add-woo-product"
+                                          }
+
+                                        >
+                                          Woo Product
+                                        </Link>
+                                      </li>
+
                                     </ul>
                                   </li>
                                 ) : null
                               ) : (
                                 <li className="">
                                   <ul className="flex flex-col ">
+                                    <li className="flex cursor-pointer items-center justify-between  py-2 p-2 rounded-sm hover:bg-gray-800 text-gray-50">
+                                      <Link
+                                        to={
+                                          "/seller/product-management/manage"
+                                        }
+                                        className=""
+                                      >
+                                        Products
+                                      </Link>
+                                    </li>
                                     <li className="flex cursor-pointer items-center justify-between py-2 p-2 rounded-sm hover:bg-gray-800 text-gray-50">
                                       <Link
                                         to={
@@ -721,16 +733,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                         Woo Product
                                       </Link>
                                     </li>
-                                    <li className="flex cursor-pointer items-center justify-between  py-2 p-2 rounded-sm hover:bg-gray-800 text-gray-50">
-                                      <Link
-                                        to={
-                                          "/seller/product-management/manage"
-                                        }
-                                        className=""
-                                      >
-                                        Product Management
-                                      </Link>
-                                    </li>
+
                                   </ul>
                                 </li>
                               )}
@@ -1054,7 +1057,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                     <span>Order Management</span>
                                                 </Link> */}
                           <div className="group [&_summary::-webkit-details-marker]:hidden flex items-center rounded-sm  ">
-                            <summary className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
+                            <div className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
                               <div onClick={() => handleToggle(2)} className="flex cursor-pointer items-center gap-2">
                                 <BiShoppingBag className="w-5 h-5 fill-current text-gray-400" />
                                 <span>Orders</span>
@@ -1063,7 +1066,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                               <span className="shrink-0 transition duration-300 group-open:-rotate-180">
                                 <IoIosArrowDown className="h-5 w-5" />
                               </span>
-                            </summary>
+                            </div>
 
                             {openDropdownIndex === 2 && <ul className="mt-2 space-y-1   px-2 bg-[#1b202ea1] border border-gray-500 py-2 border-opacity-50">
                               <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
@@ -1103,8 +1106,8 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                     <BiArchive className="w-5 h-5 text-gray-400" />
                                                     <span>Order Management</span>
                                                 </Link> */}
-                        <details onClick={() => handleToggle(2)} className="group [&_summary::-webkit-details-marker]:hidden flex items-center rounded-sm  ">
-                          <summary className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
+                        <div onClick={() => handleToggle(2)} className="group [&_summary::-webkit-details-marker]:hidden  items-center rounded-sm  ">
+                          <div className="flex cursor-pointer w-full items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
                             <div className="flex cursor-pointer items-center gap-2">
                               <BiShoppingBag className="w-5 h-5 fill-current text-gray-400" />
                               <span>Orders</span>
@@ -1113,7 +1116,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                             <span className="shrink-0 transition duration-300 group-open:-rotate-180">
                               <IoIosArrowDown className="h-5 w-5" />
                             </span>
-                          </summary>
+                          </div>
 
                           {openDropdownIndex === 2 && <ul className="mt-2 space-y-1  p-2 border border-[gray] bg-[#1b202ea1]">
                             <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
@@ -1162,7 +1165,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                               </Link>
                             </li>
                           </ul>}
-                        </details>
+                        </div>
                       </li>
                     )}
 
@@ -1172,8 +1175,8 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                         (itm) => itm?.name === "Manage Pages"
                       ) ? (
                         <li className="rounded-sm">
-                          <details className="group [&_summary::-webkit-details-marker]:hidden flex items-center rounded-sm  ">
-                            <summary className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
+                          <div onClick={() => handleToggle(3)} className="group [&_summary::-webkit-details-marker]:hidden items-center rounded-sm  ">
+                            <div className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
                               <div className="flex cursor-pointer items-center gap-2">
                                 <SiCloudflarepages className="w-5 h-5 fill-current text-gray-400" />
 
@@ -1183,8 +1186,46 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                               <span className="shrink-0 transition duration-300 group-open:-rotate-180">
                                 <IoIosArrowDown className="h-5 w-5" />
                               </span>
-                            </summary>
+                            </div>
+                            {openDropdownIndex === 3 &&
+                              <ul className="mt-2 space-y-1   px-2 bg-[#1b202ea1] border border-gray-500 py-2 border-opacity-50">
+                                <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                  <Link
+                                    to={"/seller/manage-pages"}
+                                    className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 rounded-md"
+                                  >
+                                    {/* <SiPagekit className='w-5 h-5 fill-current text-gray-400' /> */}
+                                    Manage Pages
+                                  </Link>
+                                </li>
+                                <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                  <Link
+                                    to={"/seller/manage-pages/add-page"}
+                                    className="  text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 rounded-md"
+                                  >
+                                    {/* <AiFillFileAdd className='w-5 h-5 fill-current text-gray-400' /> */}
+                                    Add Page
+                                  </Link>
+                                </li>
+                              </ul>}
+                          </div>
+                        </li>
+                      ) : null
+                    ) : (
+                      <li className="rounded-sm">
+                        <div onClick={() => handleToggle(3)} className="group [&_summary::-webkit-details-marker]:hidden items-center rounded-sm  ">
+                          <div className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
+                            <div className="flex cursor-pointer items-center gap-2">
+                              <SiCloudflarepages className="w-5 h-5 fill-current text-gray-400" />
 
+                              <span>Pages</span>
+                            </div>
+
+                            <span className="shrink-0 transition duration-300 group-open:-rotate-180">
+                              <IoIosArrowDown className="h-5 w-5" />
+                            </span>
+                          </div>
+                          {openDropdownIndex === 3 &&
                             <ul className="mt-2 space-y-1   px-2 bg-[#1b202ea1] border border-gray-500 py-2 border-opacity-50">
                               <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
                                 <Link
@@ -1204,46 +1245,8 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                   Add Page
                                 </Link>
                               </li>
-                            </ul>
-                          </details>
-                        </li>
-                      ) : null
-                    ) : (
-                      <li className="rounded-sm">
-                        <details className="group [&_summary::-webkit-details-marker]:hidden flex items-center rounded-sm  ">
-                          <summary className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
-                            <div className="flex cursor-pointer items-center gap-2">
-                              <SiCloudflarepages className="w-5 h-5 fill-current text-gray-400" />
-
-                              <span>Pages</span>
-                            </div>
-
-                            <span className="shrink-0 transition duration-300 group-open:-rotate-180">
-                              <IoIosArrowDown className="h-5 w-5" />
-                            </span>
-                          </summary>
-
-                          <ul className="mt-2 space-y-1   px-2 bg-[#1b202ea1] border border-gray-500 py-2 border-opacity-50">
-                            <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                              <Link
-                                to={"/seller/manage-pages"}
-                                className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 rounded-md"
-                              >
-                                {/* <SiPagekit className='w-5 h-5 fill-current text-gray-400' /> */}
-                                Manage Pages
-                              </Link>
-                            </li>
-                            <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                              <Link
-                                to={"/seller/manage-pages/add-page"}
-                                className="  text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 rounded-md"
-                              >
-                                {/* <AiFillFileAdd className='w-5 h-5 fill-current text-gray-400' /> */}
-                                Add Page
-                              </Link>
-                            </li>
-                          </ul>
-                        </details>
+                            </ul>}
+                        </div>
                       </li>
                     )}
 
@@ -1286,8 +1289,8 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                         (itm) => itm?.name === "Order Management"
                       ) ? (
                         <li className=" ">
-                          <details className="group [&_summary::-webkit-details-marker]:hidden flex items-center rounded-sm  ">
-                            <summary className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
+                          <div onClick={() => handleToggle(4)} className="group [&_summary::-webkit-details-marker]:hidden  items-center rounded-sm  ">
+                            <div className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
                               <div className="flex cursor-pointer items-center gap-2">
                                 <MdReport className="w-5 h-5 fill-current text-gray-400" />
                                 <span>Report Management</span>
@@ -1296,7 +1299,100 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                               <span className="shrink-0 transition duration-300 group-open:-rotate-180">
                                 <IoIosArrowDown className="h-5 w-5" />
                               </span>
-                            </summary>
+                            </div>
+                            {openDropdownIndex === 4 && (
+                              <ul className="mt-2 space-y-1   px-2 bg-[#1b202ea1] border border-gray-500 py-2 border-opacity-50">
+                                <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                  <Link
+                                    to={
+                                      "/seller/report-management/packaging-cost-report"
+                                    }
+                                    className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                  >
+                                    <TbReportAnalytics className="w-5 h-5 fill-current text-gray-400 " />
+                                    Commission Report
+                                  </Link>
+                                </li>
+                                <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                  <Link
+                                    to={
+                                      "/seller/report-management/customer-report"
+                                    }
+                                    className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                  >
+                                    <MdReportOff className="w-5 h-5 fill-current text-gray-400 " />{" "}
+                                    Customer Report
+                                  </Link>
+                                </li>
+                                <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                  <Link
+                                    to={"/seller/report-management/pos-report"}
+                                    className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                  >
+                                    <BsPostage className="w-5 h-5 fill-current text-gray-400 " />{" "}
+                                    Pos Report
+                                  </Link>
+                                </li>
+                                <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                  <Link
+                                    to={"/seller/report-management/sales-report"}
+                                    className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                  >
+                                    <IoScale className="w-5 h-5 fill-current text-gray-400 " />{" "}
+                                    Sales Report
+                                  </Link>
+                                </li>
+                                <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                  <Link
+                                    to={
+                                      "/seller/report-management/subscriber-report"
+                                    }
+                                    className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                  >
+                                    <BsSubscript className="w-5 h-5 fill-current text-gray-400 " />{" "}
+                                    Subscriber Report
+                                  </Link>
+                                </li>
+                                <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                  <Link
+                                    to={
+                                      "/seller/report-management/user-search-report"
+                                    }
+                                    className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                  >
+                                    <BiSearchAlt className="w-5 h-5 fill-current text-gray-400 " />{" "}
+                                    Search Report
+                                  </Link>
+                                </li>
+                                <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                  <Link
+                                    to={
+                                      "/seller/report-management/warehouse-report"
+                                    }
+                                    className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                  >
+                                    <FaWarehouse className="w-5 h-5 fill-current text-gray-400 " />{" "}
+                                    Warehouse Report
+                                  </Link>
+                                </li>
+                              </ul>)}
+                          </div>
+                        </li>
+                      ) : null
+                    ) : (
+                      <li className=" ">
+                        <div onClick={() => handleToggle(4)} className="group [&_summary::-webkit-details-marker]:hidden  items-center rounded-sm  ">
+                          <div className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
+                            <div className="flex cursor-pointer items-center gap-2">
+                              <MdReport className="w-5 h-5 fill-current text-gray-400" />
+                              <span>Report Management</span>
+                            </div>
+
+                            <span className="shrink-0 transition duration-300 group-open:-rotate-180">
+                              <IoIosArrowDown className="h-5 w-5" />
+                            </span>
+                          </div>
+                          {openDropdownIndex === 4 && (
                             <ul className="mt-2 space-y-1   px-2 bg-[#1b202ea1] border border-gray-500 py-2 border-opacity-50">
                               <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
                                 <Link
@@ -1371,98 +1467,8 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                   Warehouse Report
                                 </Link>
                               </li>
-                            </ul>
-                          </details>
-                        </li>
-                      ) : null
-                    ) : (
-                      <li className=" ">
-                        <details className="group [&_summary::-webkit-details-marker]:hidden flex items-center rounded-sm  ">
-                          <summary className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
-                            <div className="flex cursor-pointer items-center gap-2">
-                              <MdReport className="w-5 h-5 fill-current text-gray-400" />
-                              <span>Report Management</span>
-                            </div>
-
-                            <span className="shrink-0 transition duration-300 group-open:-rotate-180">
-                              <IoIosArrowDown className="h-5 w-5" />
-                            </span>
-                          </summary>
-
-                          <ul className="mt-2 space-y-1   px-2 bg-[#1b202ea1] border border-gray-500 py-2 border-opacity-50 ">
-                            <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                              <Link
-                                to={
-                                  "/seller/report-management/packaging-cost-report"
-                                }
-                                className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
-                              >
-                                {/* <TbReportAnalytics className='w-5 h-5 fill-current text-gray-400 ' /> */}
-                                Packaging Cost Report
-                              </Link>
-                            </li>
-                            <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                              <Link
-                                to={"/seller/report-management/customer-report"}
-                                className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
-                              >
-                                {/* <MdReportOff className='w-5 h-5 fill-current text-gray-400 ' /> */}
-                                Customer Report
-                              </Link>
-                            </li>
-                            <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                              <Link
-                                to={"/seller/report-management/pos-report"}
-                                className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
-                              >
-                                {/* <BsPostage className='w-5 h-5 fill-current text-gray-400 ' /> */}
-                                Pos Report
-                              </Link>
-                            </li>
-                            <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                              <Link
-                                to={"/seller/report-management/sales-report"}
-                                className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
-                              >
-                                {/* <IoScale className='w-5 h-5 fill-current text-gray-400 ' /> */}
-                                Sales Report
-                              </Link>
-                            </li>
-                            <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                              <Link
-                                to={
-                                  "/seller/report-management/subscriber-report"
-                                }
-                                className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
-                              >
-                                {/* <BsSubscript className='w-5 h-5 fill-current text-gray-400 ' /> */}
-                                Subscriber Report
-                              </Link>
-                            </li>
-                            <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                              <Link
-                                to={
-                                  "/seller/report-management/user-search-report"
-                                }
-                                className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
-                              >
-                                {/* <BiSearchAlt className='w-5 h-5 fill-current text-gray-400 ' /> */}
-                                Search Report
-                              </Link>
-                            </li>
-                            <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                              <Link
-                                to={
-                                  "/seller/report-management/warehouse-report"
-                                }
-                                className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
-                              >
-                                {/* <FaWarehouse className='w-5 h-5 fill-current text-gray-400 ' /> */}
-                                Warehouse Report
-                              </Link>
-                            </li>
-                          </ul>
-                        </details>
+                            </ul>)}
+                        </div>
                       </li>
                     )}
 
@@ -1472,8 +1478,8 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                         (itm) => itm?.name === "Manage Pages"
                       ) ? (
                         <li className="rounded-sm">
-                          <details className="group [&_summary::-webkit-details-marker]:hidden flex items-center rounded-sm  ">
-                            <summary className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
+                          <div onClick={() => handleToggle(5)} className="group [&_summary::-webkit-details-marker]:hidden w-full items-center rounded-sm  ">
+                            <div className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
                               <div className="flex cursor-pointer items-center gap-2">
                                 <SiCloudflarepages className="w-5 h-5 fill-current text-gray-400" />
                                 <span>Finance</span>
@@ -1482,92 +1488,41 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                               <span className="shrink-0 transition duration-300 group-open:-rotate-180">
                                 <IoIosArrowDown className="h-5 w-5" />
                               </span>
-                            </summary>
-
-                            <ul className="mt-2 space-y-1   px-2 bg-[#1b202ea1] border border-gray-500 py-2 border-opacity-50">
-                              {user?.staffRole ? (
-                                user?.permissions.find(
-                                  (itm) =>
-                                    itm?.name === "Subscription Management"
-                                ) ? (
-                                  managementPermission("SubscriptionModel") && (
-                                    <>
-                                      <li className="rounded-sm hover:bg-gray-800">
-                                        <Link
-                                          to={"/seller/subscription-management"}
-                                          rel="noopener noreferrer"
-                                          href="#"
-                                          className="flex items-center p-2 space-x-3 rounded-md"
-                                        >
-                                          <BiArchive className="w-5 h-5 text-gray-400" />
-                                          <span>Subscription</span>
-                                        </Link>
-                                      </li>
-                                      <li className="rounded-sm hover:bg-gray-800">
-                                        <Link
-                                          to={"/seller/finance"}
-                                          rel="noopener noreferrer"
-                                          href="#"
-                                          className="flex items-center p-2 space-x-3 rounded-md"
-                                        >
-                                          <BiArchive className="w-5 h-5 text-gray-400" />
-                                          <span>Finance Report</span>
-                                        </Link>
-                                      </li>
-                                    </>
-                                  )
-                                ) : null
-                              ) : (
-                                <>
-                                  {" "}
-                                  <li className="rounded-sm hover:bg-gray-800">
-                                    <Link
-                                      to={"/seller/subscription-management"}
-                                      rel="noopener noreferrer"
-                                      href="#"
-                                      className="flex items-center p-2 space-x-3 rounded-md"
-                                    >
-                                      <BiArchive className="w-5 h-5 text-gray-400" />
-                                      <span>Subscription </span>
-                                    </Link>
-                                  </li>
-                                  <li className="rounded-sm hover:bg-gray-800">
-                                    <Link
-                                      to={"/seller/finance"}
-                                      rel="noopener noreferrer"
-                                      href="#"
-                                      className="flex items-center p-2 space-x-3 rounded-md"
-                                    >
-                                      <BiArchive className="w-5 h-5 text-gray-400" />
-                                      <span>Finance Report</span>
-                                    </Link>
-                                  </li>
-                                </>
-                              )}
-                            </ul>
-                          </details>
-                        </li>
-                      ) : null
-                    ) : (
-                      <li className="rounded-sm">
-                        <details className="group [&_summary::-webkit-details-marker]:hidden flex items-center rounded-sm  ">
-                          <summary className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
-                            <div className="flex cursor-pointer items-center gap-2">
-                              <SiCloudflarepages className="w-5 h-5 fill-current text-gray-400" />
-                              <span>Finance</span>
                             </div>
-
-                            <span className="shrink-0 transition duration-300 group-open:-rotate-180">
-                              <IoIosArrowDown className="h-5 w-5" />
-                            </span>
-                          </summary>
-
-                          <ul className="mt-2 space-y-1   px-2 bg-[#1b202ea1] border border-gray-500 py-2 border-opacity-50">
-                            {user?.staffRole ? (
-                              user?.permissions.find(
-                                (itm) => itm?.name === "Subscription Management"
-                              ) ? (
-                                managementPermission("SubscriptionModel") && (
+                            {openDropdownIndex === 5 &&
+                              (<ul className="mt-2 space-y-1   px-2 bg-[#1b202ea1] border border-gray-500 py-2 border-opacity-50">
+                                {user?.staffRole ? (
+                                  user?.permissions.find(
+                                    (itm) => itm?.name === "Subscription Management"
+                                  ) ? (
+                                    managementPermission("SubscriptionModel") && (
+                                      <>
+                                        <li className="rounded-sm hover:bg-gray-800">
+                                          <Link
+                                            to={"/seller/subscription-management"}
+                                            rel="noopener noreferrer"
+                                            href="#"
+                                            className="flex items-center p-2 space-x-3 rounded-md"
+                                          >
+                                            {/* <BiArchive className="w-5 h-5 text-gray-400" /> */}
+                                            <span>Subscription</span>
+                                          </Link>
+                                        </li>
+                                        <li className="rounded-sm hover:bg-gray-800">
+                                          <Link
+                                            to={"/seller/finance"}
+                                            rel="noopener noreferrer"
+                                            href="#"
+                                            className="flex items-center p-2 space-x-3 rounded-md"
+                                          >
+                                            {/* <BiArchive className="w-5 h-5 text-gray-400" /> */}
+                                            <span>Finance Report</span>
+                                          </Link>
+                                        </li>
+                                      </>
+                                    )
+                                  ) : null
+                                ) : (
                                   <>
                                     <li className="rounded-sm hover:bg-gray-800">
                                       <Link
@@ -1577,7 +1532,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                         className="flex items-center p-2 space-x-3 rounded-md"
                                       >
                                         {/* <BiArchive className="w-5 h-5 text-gray-400" /> */}
-                                        <span>Subscription</span>
+                                        <span>Subscription </span>
                                       </Link>
                                     </li>
                                     <li className="rounded-sm hover:bg-gray-800">
@@ -1588,51 +1543,111 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                         className="flex items-center p-2 space-x-3 rounded-md"
                                       >
                                         {/* <BiArchive className="w-5 h-5 text-gray-400" /> */}
-                                        <span>Finance Report</span>
+                                        <span>Finance Report </span>
+                                      </Link>
+                                    </li>
+                                    <li className="rounded-sm hover:bg-gray-800">
+                                      <Link
+                                        to={"/seller/withdraw"}
+                                        rel="noopener noreferrer"
+                                        href="#"
+                                        className="flex items-center p-2 space-x-3 rounded-md"
+                                      >
+                                        {/* <BiArchive className="w-5 h-5 text-gray-400" /> */}
+                                        <span>Withdraw </span>
                                       </Link>
                                     </li>
                                   </>
-                                )
-                              ) : null
-                            ) : (
-                              <>
-                                <li className="rounded-sm hover:bg-gray-800">
-                                  <Link
-                                    to={"/seller/subscription-management"}
-                                    rel="noopener noreferrer"
-                                    href="#"
-                                    className="flex items-center p-2 space-x-3 rounded-md"
-                                  >
-                                    {/* <BiArchive className="w-5 h-5 text-gray-400" /> */}
-                                    <span>Subscription </span>
-                                  </Link>
-                                </li>
-                                <li className="rounded-sm hover:bg-gray-800">
-                                  <Link
-                                    to={"/seller/finance"}
-                                    rel="noopener noreferrer"
-                                    href="#"
-                                    className="flex items-center p-2 space-x-3 rounded-md"
-                                  >
-                                    {/* <BiArchive className="w-5 h-5 text-gray-400" /> */}
-                                    <span>Finance Report </span>
-                                  </Link>
-                                </li>
-                                <li className="rounded-sm hover:bg-gray-800">
-                                  <Link
-                                    to={"/seller/withdraw"}
-                                    rel="noopener noreferrer"
-                                    href="#"
-                                    className="flex items-center p-2 space-x-3 rounded-md"
-                                  >
-                                    {/* <BiArchive className="w-5 h-5 text-gray-400" /> */}
-                                    <span>Withdraw </span>
-                                  </Link>
-                                </li>
-                              </>
-                            )}
-                          </ul>
-                        </details>
+                                )}
+                              </ul>)}
+                          </div>
+                        </li>
+                      ) : null
+                    ) : (
+                      <li className="rounded-sm">
+                        <div onClick={() => handleToggle(5)} className="group [&_summary::-webkit-details-marker]:hidden w-full items-center rounded-sm  ">
+                          <div className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
+                            <div className="flex cursor-pointer items-center gap-2">
+                              <SiCloudflarepages className="w-5 h-5 fill-current text-gray-400" />
+                              <span>Finance</span>
+                            </div>
+
+                            <span className="shrink-0 transition duration-300 group-open:-rotate-180">
+                              <IoIosArrowDown className="h-5 w-5" />
+                            </span>
+                          </div>
+                          {openDropdownIndex === 5 &&
+                            (<ul className="mt-2 space-y-1   px-2 bg-[#1b202ea1] border border-gray-500 py-2 border-opacity-50">
+                              {user?.staffRole ? (
+                                user?.permissions.find(
+                                  (itm) => itm?.name === "Subscription Management"
+                                ) ? (
+                                  managementPermission("SubscriptionModel") && (
+                                    <>
+                                      <li className="rounded-sm hover:bg-gray-800">
+                                        <Link
+                                          to={"/seller/subscription-management"}
+                                          rel="noopener noreferrer"
+                                          href="#"
+                                          className="flex items-center p-2 space-x-3 rounded-md"
+                                        >
+                                          {/* <BiArchive className="w-5 h-5 text-gray-400" /> */}
+                                          <span>Subscription</span>
+                                        </Link>
+                                      </li>
+                                      <li className="rounded-sm hover:bg-gray-800">
+                                        <Link
+                                          to={"/seller/finance"}
+                                          rel="noopener noreferrer"
+                                          href="#"
+                                          className="flex items-center p-2 space-x-3 rounded-md"
+                                        >
+                                          {/* <BiArchive className="w-5 h-5 text-gray-400" /> */}
+                                          <span>Finance Report</span>
+                                        </Link>
+                                      </li>
+                                    </>
+                                  )
+                                ) : null
+                              ) : (
+                                <>
+                                  <li className="rounded-sm hover:bg-gray-800">
+                                    <Link
+                                      to={"/seller/subscription-management"}
+                                      rel="noopener noreferrer"
+                                      href="#"
+                                      className="flex items-center p-2 space-x-3 rounded-md"
+                                    >
+                                      {/* <BiArchive className="w-5 h-5 text-gray-400" /> */}
+                                      <span>Subscription </span>
+                                    </Link>
+                                  </li>
+                                  <li className="rounded-sm hover:bg-gray-800">
+                                    <Link
+                                      to={"/seller/finance"}
+                                      rel="noopener noreferrer"
+                                      href="#"
+                                      className="flex items-center p-2 space-x-3 rounded-md"
+                                    >
+                                      {/* <BiArchive className="w-5 h-5 text-gray-400" /> */}
+                                      <span>Finance Report </span>
+                                    </Link>
+                                  </li>
+                                  <li className="rounded-sm hover:bg-gray-800">
+                                    <Link
+                                      to={"/seller/withdraw"}
+                                      rel="noopener noreferrer"
+                                      href="#"
+                                      className="flex items-center p-2 space-x-3 rounded-md"
+                                    >
+                                      {/* <BiArchive className="w-5 h-5 text-gray-400" /> */}
+                                      <span>Withdraw </span>
+                                    </Link>
+                                  </li>
+                                </>
+                              )}
+                            </ul>)}
+                        </div>
                       </li>
                     )}
 
@@ -1644,8 +1659,9 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                         (itm) => itm?.name === "Manage Pages"
                       ) ? (
                         <li className="rounded-sm">
-                          <details className="group [&_summary::-webkit-details-marker]:hidden flex items-center rounded-sm  ">
-                            <summary className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
+                          <div onClick={() => handleToggle(6)}
+                            className="group [&_summary::-webkit-details-marker]:hidden items-center rounded-sm  ">
+                            <div className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
                               <div className="flex cursor-pointer items-center gap-2">
                                 <SiCloudflarepages className="w-5 h-5 fill-current text-gray-400" />
                                 <span>Support</span>
@@ -1654,8 +1670,93 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                               <span className="shrink-0 transition duration-300 group-open:-rotate-180">
                                 <IoIosArrowDown className="h-5 w-5" />
                               </span>
-                            </summary>
+                            </div>
 
+                            {openDropdownIndex === 6 &&
+                              <ul className="mt-2 space-y-1   px-2 bg-[#1b202ea1] border border-gray-500 py-2 border-opacity-50">
+                                {user?.staffRole ? (
+                                  user?.permissions.find(
+                                    (itm) => itm?.name === "Support Ticket"
+                                  ) ? (
+                                    <li className="rounded-sm  hover:bg-gray-800">
+                                      <Link
+                                        to={"/seller/support-tickets"}
+                                        rel="noopener noreferrer"
+                                        href="#"
+                                        className="flex items-center p-2 space-x-3 rounded-md"
+                                      >
+                                        {/* <BsTicket className="w-5 h-5 fill-current text-gray-400" /> */}
+
+                                        <span>Support Ticket</span>
+                                      </Link>
+                                    </li>
+                                  ) : null
+                                ) : (
+                                  <li className="rounded-sm  hover:bg-gray-800">
+                                    <Link
+                                      to={"/seller/support-tickets"}
+                                      rel="noopener noreferrer"
+                                      href="#"
+                                      className="flex items-center p-2 space-x-3 rounded-md"
+                                    >
+                                      {/* <BsTicket className="w-5 h-5 fill-current text-gray-400" /> */}
+
+                                      <span>Support Ticket</span>
+                                    </Link>
+                                  </li>
+                                )}
+
+                                {user?.staffRole ? (
+                                  user?.permissions.find(
+                                    (itm) => itm?.name === "User Support Ticket"
+                                  ) ? (
+                                    <li className="rounded-sm  hover:bg-gray-800">
+                                      <Link
+                                        to={"/seller/user-tickets"}
+                                        rel="noopener noreferrer"
+                                        href="#"
+                                        className="flex items-center p-2 space-x-3 rounded-md"
+                                      >
+                                        {/* <BsTicket className="w-5 h-5 fill-current text-gray-400" /> */}
+
+                                        <span> User Support Ticket</span>
+                                      </Link>
+                                    </li>
+                                  ) : null
+                                ) : (
+                                  <li className="rounded-sm  hover:bg-gray-800">
+                                    <Link
+                                      to={"/seller/user-tickets"}
+                                      rel="noopener noreferrer"
+                                      href="#"
+                                      className="flex items-center p-2 space-x-3 rounded-md"
+                                    >
+                                      {/* <BsTicket className="w-5 h-5 fill-current text-gray-400" /> */}
+
+                                      <span> User Support Ticket</span>
+                                    </Link>
+                                  </li>
+                                )}
+                              </ul>}
+                          </div>
+                        </li>
+                      ) : null
+                    ) : (
+                      <li className="rounded-sm">
+                        <div onClick={() => handleToggle(6)}
+                          className="group [&_summary::-webkit-details-marker]:hidden items-center rounded-sm  ">
+                          <div className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
+                            <div className="flex cursor-pointer items-center gap-2">
+                              <SiCloudflarepages className="w-5 h-5 fill-current text-gray-400" />
+                              <span>Support</span>
+                            </div>
+
+                            <span className="shrink-0 transition duration-300 group-open:-rotate-180">
+                              <IoIosArrowDown className="h-5 w-5" />
+                            </span>
+                          </div>
+
+                          {openDropdownIndex === 6 &&
                             <ul className="mt-2 space-y-1   px-2 bg-[#1b202ea1] border border-gray-500 py-2 border-opacity-50">
                               {user?.staffRole ? (
                                 user?.permissions.find(
@@ -1720,90 +1821,8 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                   </Link>
                                 </li>
                               )}
-                            </ul>
-                          </details>
-                        </li>
-                      ) : null
-                    ) : (
-                      <li className="rounded-sm">
-                        <details className="group [&_summary::-webkit-details-marker]:hidden flex items-center rounded-sm  ">
-                          <summary className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
-                            <div className="flex cursor-pointer items-center gap-2">
-                              <SiCloudflarepages className="w-5 h-5 fill-current text-gray-400" />
-                              <span>Support</span>
-                            </div>
-
-                            <span className="shrink-0 transition duration-300 group-open:-rotate-180">
-                              <IoIosArrowDown className="h-5 w-5" />
-                            </span>
-                          </summary>
-
-                          <ul className="mt-2 space-y-1   px-2 bg-[#1b202ea1] border border-gray-500 py-2 border-opacity-50">
-                            {user?.staffRole ? (
-                              user?.permissions.find(
-                                (itm) => itm?.name === "Support Ticket"
-                              ) ? (
-                                <li className="rounded-sm  hover:bg-gray-800">
-                                  <Link
-                                    to={"/seller/support-tickets"}
-                                    rel="noopener noreferrer"
-                                    href="#"
-                                    className="flex items-center p-2 space-x-3 rounded-md"
-                                  >
-                                    {/* <BsTicket className="w-5 h-5 fill-current text-gray-400" /> */}
-
-                                    <span>Support Ticket</span>
-                                  </Link>
-                                </li>
-                              ) : null
-                            ) : (
-                              <li className="rounded-sm  hover:bg-gray-800">
-                                <Link
-                                  to={"/seller/support-tickets"}
-                                  rel="noopener noreferrer"
-                                  href="#"
-                                  className="flex items-center p-2 space-x-3 rounded-md"
-                                >
-                                  {/* <BsTicket className="w-5 h-5 fill-current text-gray-400" /> */}
-
-                                  <span>Support Ticket</span>
-                                </Link>
-                              </li>
-                            )}
-
-                            {user?.staffRole ? (
-                              user?.permissions.find(
-                                (itm) => itm?.name === "User Support Ticket"
-                              ) ? (
-                                <li className="rounded-sm  hover:bg-gray-800">
-                                  <Link
-                                    to={"/seller/user-tickets"}
-                                    rel="noopener noreferrer"
-                                    href="#"
-                                    className="flex items-center p-2 space-x-3 rounded-md"
-                                  >
-                                    {/* <BsTicket className="w-5 h-5 fill-current text-gray-400" /> */}
-
-                                    <span> User Support Ticket</span>
-                                  </Link>
-                                </li>
-                              ) : null
-                            ) : (
-                              <li className="rounded-sm  hover:bg-gray-800">
-                                <Link
-                                  to={"/seller/user-tickets"}
-                                  rel="noopener noreferrer"
-                                  href="#"
-                                  className="flex items-center p-2 space-x-3 rounded-md"
-                                >
-                                  {/* <BsTicket className="w-5 h-5 fill-current text-gray-400" /> */}
-
-                                  <span> User Support Ticket</span>
-                                </Link>
-                              </li>
-                            )}
-                          </ul>
-                        </details>
+                            </ul>}
+                        </div>
                       </li>
                     )}
 
@@ -1813,8 +1832,10 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                     {user?.staffRole ? (
                       user?.permissions.find((itm) => itm?.name === "Blog") ? (
                         <li className="rounded-sm">
-                          <details className="group [&_summary::-webkit-details-marker]:hidden flex items-center rounded-sm  ">
-                            <summary className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
+                          <div
+                            onClick={() => handleToggle(7)}
+                            className="group [&_summary::-webkit-details-marker]:hidden items-center rounded-sm  ">
+                            <div className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
                               <div className="flex cursor-pointer items-center gap-2">
                                 <ImBlog className="w-5 h-5 fill-current text-gray-400" />
 
@@ -1824,8 +1845,58 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                               <span className="shrink-0 transition duration-300 group-open:-rotate-180">
                                 <IoIosArrowDown className="h-5 w-5" />
                               </span>
-                            </summary>
+                            </div>
 
+                            {openDropdownIndex === 7 &&
+                              <ul className="mt-2 space-y-1   px-2 bg-[#1b202ea1] border border-gray-500 py-2 border-opacity-50">
+                                <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                  <Link
+                                    to={"/seller/manage-blogs"}
+                                    className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 rounded-md"
+                                  >
+                                    {/* <MdOutlineManageSearch className='w-5 h-5 fill-current text-gray-400' />  Manage Blogs */}
+                                  </Link>
+                                </li>
+                                <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                  <Link
+                                    to={"/seller/manage-blogs/add-blog"}
+                                    className="  text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 rounded-md"
+                                  >
+                                    {/* <MdOutlineAddCircleOutline className='w-5 h-5 fill-current text-gray-400' /> */}
+                                    Add Blog
+                                  </Link>
+                                </li>
+                                <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                  <Link
+                                    to={"/seller/manage-blogs/blog-category"}
+                                    className="  text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 rounded-md"
+                                  >
+                                    {/* <MdOutlineAddCircleOutline className='w-5 h-5 fill-current text-gray-400' /> */}
+                                    Blog Category
+                                  </Link>
+                                </li>
+                              </ul>}
+                          </div>
+                        </li>
+                      ) : null
+                    ) : (
+                      <li className="rounded-sm">
+                        <div
+                          onClick={() => handleToggle(7)}
+                          className="group [&_summary::-webkit-details-marker]:hidden items-center rounded-sm  ">
+                          <div className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
+                            <div className="flex cursor-pointer items-center gap-2">
+                              <ImBlog className="w-5 h-5 fill-current text-gray-400" />
+
+                              <span>Blog</span>
+                            </div>
+
+                            <span className="shrink-0 transition duration-300 group-open:-rotate-180">
+                              <IoIosArrowDown className="h-5 w-5" />
+                            </span>
+                          </div>
+
+                          {openDropdownIndex === 7 &&
                             <ul className="mt-2 space-y-1   px-2 bg-[#1b202ea1] border border-gray-500 py-2 border-opacity-50">
                               <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
                                 <Link
@@ -1853,55 +1924,8 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                   Blog Category
                                 </Link>
                               </li>
-                            </ul>
-                          </details>
-                        </li>
-                      ) : null
-                    ) : (
-                      <li className="rounded-sm">
-                        <details className="group [&_summary::-webkit-details-marker]:hidden flex items-center rounded-sm  ">
-                          <summary className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
-                            <div className="flex cursor-pointer items-center gap-2">
-                              <ImBlog className="w-5 h-5 fill-current text-gray-400" />
-
-                              <span>Blog</span>
-                            </div>
-
-                            <span className="shrink-0 transition duration-300 group-open:-rotate-180">
-                              <IoIosArrowDown className="h-5 w-5" />
-                            </span>
-                          </summary>
-
-                          <ul className="mt-2 space-y-1   px-2 bg-[#1b202ea1] border border-gray-500 py-2 border-opacity-50">
-                            <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                              <Link
-                                to={"/seller/manage-blogs"}
-                                className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 rounded-md"
-                              >
-                                {/* <MdOutlineManageSearch className='w-5 h-5 fill-current text-gray-400' /> */}
-                                Manage Blogs
-                              </Link>
-                            </li>
-                            <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                              <Link
-                                to={"/seller/manage-blogs/add-blog"}
-                                className="  text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 rounded-md"
-                              >
-                                {/* <MdOutlineAddCircleOutline className='w-5 h-5 fill-current text-gray-400' /> */}
-                                Add Blog
-                              </Link>
-                            </li>
-                            <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                              <Link
-                                to={"/seller/manage-blogs/blog-category"}
-                                className="  text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 rounded-md"
-                              >
-                                {/* <MdOutlineAddCircleOutline className='w-5 h-5 fill-current text-gray-400' /> */}
-                                Blog Category
-                              </Link>
-                            </li>
-                          </ul>
-                        </details>
+                            </ul>}
+                        </div>
                       </li>
                     )}
 
@@ -1912,8 +1936,8 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                         (itm) => itm?.name === "Contact"
                       ) ? (
                         <li className="rounded-sm">
-                          <details className="group [&_summary::-webkit-details-marker]:hidden flex items-center rounded-sm  ">
-                            <summary className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
+                          <div onClick={() => handleToggle(8)} className="group [&_summary::-webkit-details-marker]:hidden items-center rounded-sm  ">
+                            <div className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
                               <div className="flex cursor-pointer items-center gap-2">
                                 <IoShareSocialSharp className="w-5 h-5 fill-current text-gray-400" />
 
@@ -1923,9 +1947,9 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                               <span className="shrink-0 transition duration-300 group-open:-rotate-180">
                                 <IoIosArrowDown className="h-5 w-5" />
                               </span>
-                            </summary>
+                            </div>
 
-                            <ul className="mt-2 space-y-1   px-2 bg-[#1b202ea1] border border-gray-500 py-2 border-opacity-50">
+                            {openDropdownIndex === 8 && <ul className="mt-2 space-y-1   px-2 bg-[#1b202ea1] border border-gray-500 py-2 border-opacity-50">
                               <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
                                 <Link
                                   to={"/seller/manage-contact"}
@@ -1944,14 +1968,14 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                   Add Contact
                                 </Link>
                               </li>
-                            </ul>
-                          </details>
+                            </ul>}
+                          </div>
                         </li>
                       ) : null
                     ) : (
                       <li className="rounded-sm">
-                        <details className="group [&_summary::-webkit-details-marker]:hidden flex items-center rounded-sm  ">
-                          <summary className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
+                        <div onClick={() => handleToggle(8)} className="group [&_summary::-webkit-details-marker]:hidden items-center rounded-sm  ">
+                          <div className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
                             <div className="flex cursor-pointer items-center gap-2">
                               <IoShareSocialSharp className="w-5 h-5 fill-current text-gray-400" />
 
@@ -1961,9 +1985,9 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                             <span className="shrink-0 transition duration-300 group-open:-rotate-180">
                               <IoIosArrowDown className="h-5 w-5" />
                             </span>
-                          </summary>
+                          </div>
 
-                          <ul className="mt-2 space-y-1   px-2 bg-[#1b202ea1] border border-gray-500 py-2 border-opacity-50">
+                          {openDropdownIndex === 8 && <ul className="mt-2 space-y-1   px-2 bg-[#1b202ea1] border border-gray-500 py-2 border-opacity-50">
                             <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
                               <Link
                                 to={"/seller/manage-contact"}
@@ -1982,8 +2006,8 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                 Add Contact
                               </Link>
                             </li>
-                          </ul>
-                        </details>
+                          </ul>}
+                        </div>
                       </li>
                     )}
 
@@ -2055,8 +2079,10 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                         (itm) => itm?.name === "Settings"
                       ) ? (
                         <li className=" ">
-                          <details className="group [&_summary::-webkit-details-marker]:hidden flex items-center rounded-sm  ">
-                            <summary className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
+                          <div
+                            onClick={() => handleToggle(9)}
+                            className="group [&_summary::-webkit-details-marker]:hidden items-center rounded-sm  ">
+                            <div className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
                               <div className="flex cursor-pointer items-center gap-2">
                                 <BsGear className="w-5 h-5 fill-current text-gray-400" />
 
@@ -2066,8 +2092,50 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                               <span className="shrink-0 transition duration-300 group-open:-rotate-180">
                                 <IoIosArrowDown className="h-5 w-5" />
                               </span>
-                            </summary>
+                            </div>
 
+                            {openDropdownIndex === 9 &&
+                              <ul className="mt-2 space-y-1   px-2 bg-[#1b202ea1] border border-gray-500 py-2 border-opacity-50">
+                                <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                  <Link
+                                    to={"/seller/settings/payment-management"}
+                                    className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                  >
+                                    <MdContactSupport className="w-5 h-5 fill-current text-gray-400 " />{" "}
+                                    Payment Getaway
+                                  </Link>
+                                </li>
+                                <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                  <Link
+                                    to={"/seller/manage-contact/add-contact"}
+                                    className="  text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 rounded-md"
+                                  >
+                                    <MdOutlineAddCircleOutline className="w-5 h-5 fill-current text-gray-400" />{" "}
+                                    Add Contact
+                                  </Link>
+                                </li>
+                              </ul>}
+                          </div>
+                        </li>
+                      ) : null
+                    ) : (
+                      <li className=" ">
+                        <div
+                          onClick={() => handleToggle(9)}
+                          className="group [&_summary::-webkit-details-marker]:hidden items-center rounded-sm  ">
+                          <div className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
+                            <div className="flex cursor-pointer items-center gap-2">
+                              <BsGear className="w-5 h-5 fill-current text-gray-400" />
+
+                              <span>Settings</span>
+                            </div>
+
+                            <span className="shrink-0 transition duration-300 group-open:-rotate-180">
+                              <IoIosArrowDown className="h-5 w-5" />
+                            </span>
+                          </div>
+
+                          {openDropdownIndex === 9 &&
                             <ul className="mt-2 space-y-1   px-2 bg-[#1b202ea1] border border-gray-500 py-2 border-opacity-50">
                               <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
                                 <Link
@@ -2087,107 +2155,8 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                   Add Contact
                                 </Link>
                               </li>
-                            </ul>
-                          </details>
-                        </li>
-                      ) : null
-                    ) : (
-                      <li className=" ">
-                        <details className="group [&_summary::-webkit-details-marker]:hidden flex items-center rounded-sm  ">
-                          <summary className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
-                            <div className="flex cursor-pointer items-center gap-2">
-                              <BsGear className="w-5 h-5 fill-current text-gray-400" />
-
-                              <span>Settings</span>
-                            </div>
-
-                            <span className="shrink-0 transition duration-300 group-open:-rotate-180">
-                              <IoIosArrowDown className="h-5 w-5" />
-                            </span>
-                          </summary>
-
-                          <ul className="mt-2 space-y-1   px-2 bg-[#1b202ea1] border border-gray-500 py-2 border-opacity-50">
-                            <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                              <Link
-                                to={
-                                  "/seller/content-management/popup-management"
-                                }
-                                className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
-                              >
-                                {/* <FaPage4 className='w-5 h-5 fill-current text-gray-400 ' /> */}
-                                Popup Management
-                              </Link>
-                            </li>
-                            <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                              <Link
-                                to={
-                                  "/seller/content-management/slider-management"
-                                }
-                                className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
-                              >
-                                {/* <BiSlider className='w-5 h-5 fill-current text-gray-400 ' /> */}
-                                Slider Management
-                              </Link>
-                            </li>
-
-                            <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                              <Link
-                                to={
-                                  "/seller/content-management/feature-management"
-                                }
-                                className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
-                              >
-                                {/* <MdPhotoSizeSelectActual className='w-5 h-5 fill-current text-gray-400 ' /> */}
-                                Feature Image
-                              </Link>
-                            </li>
-                            <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                              <Link
-                                to={"/seller/settings/payment-management"}
-                                className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
-                              >
-                                {/* <MdPayment className='w-5 h-5 fill-current text-gray-400 ' /> */}
-                                Payment Getaway
-                              </Link>
-                            </li>
-                            <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                              <Link
-                                to={"/seller/settings/send-email"}
-                                className="  text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 rounded-md"
-                              >
-                                {/* <BiEnvelope className='w-5 h-5 fill-current text-gray-400' /> */}
-                                Send Email
-                              </Link>
-                            </li>
-                            <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                              <Link
-                                to={"/seller/settings/shipping"}
-                                className="  text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 rounded-md"
-                              >
-                                {/* <MdOutlineLocalShipping className='w-5 h-5 fill-current text-gray-400' /> */}
-                                Shipping
-                              </Link>
-                            </li>
-                            <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                              <Link
-                                to={"/seller/settings/auth-credential"}
-                                className="  text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 rounded-md"
-                              >
-                                {/* <MdOutlineSecurity className='w-5 h-5 fill-current text-gray-400' /> */}
-                                Auth Credential
-                              </Link>
-                            </li>
-                            <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                              <Link
-                                to={"/seller/settings/price-role"}
-                                className="  text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 rounded-md"
-                              >
-                                {/* <MdOutlinePriceChange className='w-5 h-5 fill-current text-gray-400' /> */}
-                                Price Role
-                              </Link>
-                            </li>
-                          </ul>
-                        </details>
+                            </ul>}
+                        </div>
                       </li>
                     )}
                     {user?.staffRole
@@ -2225,8 +2194,8 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                         (itm) => itm?.name === "Content Management"
                       ) ? (
                         <li className="">
-                          <details className="group [&_summary::-webkit-details-marker]:hidden flex items-center rounded-sm  ">
-                            <summary className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
+                          <div onClick={() => handleToggle(10)} className="group [&_summary::-webkit-details-marker]:hidden items-center rounded-sm  ">
+                            <div className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
                               <div className="flex cursor-pointer items-center gap-2">
                                 <BiImage className="w-5 h-5 fill-current text-gray-400" />
 
@@ -2236,8 +2205,64 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                               <span className="shrink-0 transition duration-300 group-open:-rotate-180">
                                 <IoIosArrowDown className="h-5 w-5" />
                               </span>
-                            </summary>
+                            </div>
 
+                            {openDropdownIndex === 10 &&
+                              <ul className="mt-2 space-y-1   px-2 bg-[#1b202ea1] border border-gray-500 py-2 border-opacity-50">
+                                <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                  <Link
+                                    to={
+                                      "/seller/content-management/brand-management"
+                                    }
+                                    className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                  >
+                                    {/* <PiBrandy className='w-5 h-5 fill-current text-gray-400 ' /> */}
+                                    Brand Name
+                                  </Link>
+                                </li>
+                                <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                  <Link
+                                    to={
+                                      "/seller/content-management/promo-code-management"
+                                    }
+                                    className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                  >
+                                    {/* <PiNumberFourFill className='w-5 h-5 fill-current text-gray-400 ' /> */}
+                                    Promo Code
+                                  </Link>
+                                </li>
+
+                                <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                  <Link
+                                    to={
+                                      "/seller/content-management/campaign-management"
+                                    }
+                                    className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                  >
+                                    {/* <MdCampaign className='w-5 h-5 fill-current text-gray-400 ' /> */}
+                                    Campaign Management
+                                  </Link>
+                                </li>
+                              </ul>}
+                          </div>
+                        </li>
+                      ) : null
+                    ) : (
+                      <li className="">
+                        <div onClick={() => handleToggle(10)} className="group [&_summary::-webkit-details-marker]:hidden items-center rounded-sm  ">
+                          <div className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
+                            <div className="flex cursor-pointer items-center gap-2">
+                              <BiImage className="w-5 h-5 fill-current text-gray-400" />
+
+                              <span>Content Management</span>
+                            </div>
+
+                            <span className="shrink-0 transition duration-300 group-open:-rotate-180">
+                              <IoIosArrowDown className="h-5 w-5" />
+                            </span>
+                          </div>
+
+                          {openDropdownIndex === 10 &&
                             <ul className="mt-2 space-y-1   px-2 bg-[#1b202ea1] border border-gray-500 py-2 border-opacity-50">
                               <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
                                 <Link
@@ -2273,62 +2298,8 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                   Campaign Management
                                 </Link>
                               </li>
-                            </ul>
-                          </details>
-                        </li>
-                      ) : null
-                    ) : (
-                      <li className="">
-                        <details className="group [&_summary::-webkit-details-marker]:hidden flex items-center rounded-sm  ">
-                          <summary className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
-                            <div className="flex cursor-pointer items-center gap-2">
-                              <BiImage className="w-5 h-5 fill-current text-gray-400" />
-
-                              <span>Content Management</span>
-                            </div>
-
-                            <span className="shrink-0 transition duration-300 group-open:-rotate-180">
-                              <IoIosArrowDown className="h-5 w-5" />
-                            </span>
-                          </summary>
-
-                          <ul className="mt-2 space-y-1   px-2 bg-[#1b202ea1] border border-gray-500 py-2 border-opacity-50">
-                            <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                              <Link
-                                to={
-                                  "/seller/content-management/brand-management"
-                                }
-                                className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
-                              >
-                                {/* <PiBrandy className='w-5 h-5 fill-current text-gray-400 ' /> */}
-                                Brand Name
-                              </Link>
-                            </li>
-                            <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                              <Link
-                                to={
-                                  "/seller/content-management/promo-code-management"
-                                }
-                                className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
-                              >
-                                {/* <PiNumberFourFill className='w-5 h-5 fill-current text-gray-400 ' /> */}
-                                Promo Code
-                              </Link>
-                            </li>
-
-                            <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                              <Link
-                                to={
-                                  "/seller/content-management/campaign-management"
-                                }
-                                className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
-                              >
-                                {/* <MdCampaign className='w-5 h-5 fill-current text-gray-400 ' /> */}
-                                Campaign Management
-                              </Link>
-                            </li>
-                          </ul>
-                        </details>
+                            </ul>}
+                        </div>
                       </li>
                     )}
 
@@ -2342,8 +2313,8 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                     <BiArchive className="w-5 h-5 text-gray-400" />
                                                     <span>Order Management</span>
                                                 </Link> */}
-                          <details className="group [&_summary::-webkit-details-marker]:hidden flex items-center rounded-sm  ">
-                            <summary className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
+                          <div onClick={() => handleToggle(11)} className="group [&_summary::-webkit-details-marker]:hidden items-center rounded-sm  ">
+                            <div className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
                               <div className="flex cursor-pointer items-center gap-2">
                                 <BiShoppingBag className="w-5 h-5 fill-current text-gray-400" />
                                 <span>My Service</span>
@@ -2352,8 +2323,40 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                               <span className="shrink-0 transition duration-300 group-open:-rotate-180">
                                 <IoIosArrowDown className="h-5 w-5" />
                               </span>
-                            </summary>
+                            </div>
+                            {openDropdownIndex === 11 &&
+                              <ul className="mt-2 space-y-1   px-2 bg-[#1b202ea1] border border-gray-500 py-2 border-opacity-50">
+                                <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                  <Link
+                                    to={"/seller/service/manage-service"}
+                                    className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                  >
+                                    {/* <MdManageAccounts className='w-5 h-5 fill-current text-gray-400 ' /> */}
+                                    My Service
+                                  </Link>
+                                </li>
+                              </ul>}
+                          </div>
+                        </li>
+                      ) : null
+                    ) : (
+                      <li className=" ">
+                        {/* <Link to={'/seller/orders'} rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
+                                                    <BiArchive className="w-5 h-5 text-gray-400" />
+                                                    <span>Order Management</span>
+                                                </Link> */}
+                        <div onClick={() => handleToggle(11)} className="group [&_summary::-webkit-details-marker]:hidden items-center rounded-sm  ">
+                          <div className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
+                            <div className="flex cursor-pointer items-center gap-2">
+                              <BiShoppingBag className="w-5 h-5 fill-current text-gray-400" />
+                              <span>My Service</span>
+                            </div>
 
+                            <span className="shrink-0 transition duration-300 group-open:-rotate-180">
+                              <IoIosArrowDown className="h-5 w-5" />
+                            </span>
+                          </div>
+                          {openDropdownIndex === 11 &&
                             <ul className="mt-2 space-y-1   px-2 bg-[#1b202ea1] border border-gray-500 py-2 border-opacity-50">
                               <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
                                 <Link
@@ -2364,40 +2367,8 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                   My Service
                                 </Link>
                               </li>
-                            </ul>
-                          </details>
-                        </li>
-                      ) : null
-                    ) : (
-                      <li className=" ">
-                        {/* <Link to={'/seller/orders'} rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
-                                                    <BiArchive className="w-5 h-5 text-gray-400" />
-                                                    <span>Order Management</span>
-                                                </Link> */}
-                        <details className="group [&_summary::-webkit-details-marker]:hidden flex items-center rounded-sm  ">
-                          <summary className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
-                            <div className="flex cursor-pointer items-center gap-2">
-                              <BiShoppingBag className="w-5 h-5 fill-current text-gray-400" />
-                              <span>My Service </span>
-                            </div>
-
-                            <span className="shrink-0 transition duration-300 group-open:-rotate-180">
-                              <IoIosArrowDown className="h-5 w-5" />
-                            </span>
-                          </summary>
-
-                          <ul className="mt-2 space-y-1   px-2 bg-[#1b202ea1] border border-gray-500 py-2 border-opacity-50">
-                            <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                              <Link
-                                to={"/seller/service/manage-service"}
-                                className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
-                              >
-                                {/* <MdManageAccounts className='w-5 h-5 fill-current text-gray-400 ' /> */}
-                                My Service
-                              </Link>
-                            </li>
-                          </ul>
-                        </details>
+                            </ul>}
+                        </div>
                       </li>
                     )}
 
