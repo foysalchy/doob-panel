@@ -82,7 +82,7 @@ const ProductListCartSm = ({
                   />
                   <button
                     type="button"
-                    onClick={() => handleIncrease(product.productId)}
+                    onClick={() => handleIncrease(product?.productId)}
                     className="w-10 h-10 leading-10 text-gray-600 transition hover:opacity-75 "
                   >
                     +
@@ -313,14 +313,14 @@ const AddToCard = () => {
 
   const handleDecrease = (productId) => {
     setAllProducts((prevProducts) =>
-      prevproducts?.map((product) =>
+      prevProducts?.map((product) =>
         product.productId === productId && product.quantity > 1
           ? { ...product, quantity: product.quantity - 1 }
           : product
       )
     );
     setCartProducts((prevProducts) =>
-      prevproducts?.map((product) =>
+      prevProducts?.map((product) =>
         product.productId === productId && product.quantity > 1
           ? { ...product, quantity: product.quantity - 1 }
           : product
@@ -330,14 +330,14 @@ const AddToCard = () => {
 
   const handleIncrease = (productId) => {
     setAllProducts((prevProducts) =>
-      prevproducts?.map((product) =>
+      prevProducts?.map((product) =>
         product.productId === productId
           ? { ...product, quantity: product.quantity + 1 }
           : product
       )
     );
     setCartProducts((prevProducts) =>
-      prevproducts?.map((product) =>
+      prevProducts?.map((product) =>
         product.productId === productId
           ? { ...product, quantity: product.quantity + 1 }
           : product
@@ -348,14 +348,14 @@ const AddToCard = () => {
   const handleManualInput = (productId, quantity) => {
     if (!isNaN(quantity) && quantity > 0) {
       setAllProducts((prevProducts) =>
-        prevproducts?.map((product) =>
+        prevProducts?.map((product) =>
           product.productId === productId
             ? { ...product, quantity: Math.max(quantity, 1) }
             : product
         )
       );
       setCartProducts((prevProducts) =>
-        prevproducts?.map((product) =>
+        prevProducts?.map((product) =>
           product.productId === productId
             ? { ...product, quantity: Math.max(quantity, 1) }
             : product
@@ -492,9 +492,9 @@ const AddToCard = () => {
               <span>Select All </span>
             </div>
             <ul className="flex flex-col divide-y dark:divide-gray-700">
-              {cartProducts?.map((product) => (
+              {cartProducts?.map((product, index) => (
                 // eslint-disable-next-line react/jsx-key
-                <div key={product?._id}>
+                <div key={product?._id + index}>
                   <div className="md:hidden block">
                     <ProductListCartSm
                       selectAll={selectAll}

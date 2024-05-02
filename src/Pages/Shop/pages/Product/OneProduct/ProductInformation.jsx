@@ -167,6 +167,7 @@ const ProductInformation = () => {
     const product = data.data;
     if (!shopUser) {
       console.log(location?.pathname, "shop");
+      addToCart(data);
       navigate(`/shop/${shopId}/sign-in`, {
         replace: true,
         state: { from: location?.pathname },
@@ -475,7 +476,7 @@ const ProductInformation = () => {
                       onClick={() => addToCart(product)}
                       className="h-10 w-[120px] px-2 py-2 font-semibold rounded bg-gray-950 hover:bg-gray-800 text-white"
                     >
-                      {loader ? "Loading.." : "Add to card"}
+                      {loader ? "Loading.." : "Add to Card"}
                     </button>
 
                     <button
@@ -483,7 +484,7 @@ const ProductInformation = () => {
                       type="button"
                       className="h-10 px-2 py-2 w-[120px] font-semibold  rounded bg-indigo-600 hover:bg-indigo-500 text-white"
                     >
-                      By Now
+                      Buy Now
                     </button>
                   </div>
                 </div>
