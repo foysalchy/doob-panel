@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+
+
+
+
 html{
   scroll-behavior: smooth;
   font-family: 'Helvetica Neue', sans-serif;
@@ -367,3 +371,21 @@ font-google {
     margin: -8px -12px;
     cursor: pointer;
 }
+
+
+
+@media print {
+
+  html,body{
+  
+    margin: 0!important;
+    padding: 0!important;
+    box-sizing: border-box;
+    box-sizing: border-box;
+  }
+  .hide-print {
+    display: none !important;
+  }
+  .print-data {
+    display: block !important;
+  }}

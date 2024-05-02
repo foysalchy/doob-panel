@@ -35,6 +35,8 @@ const ConfirmOrder = () => {
                 <h1 className="text-center text-3xl mt-12 font-bold">Your order is confirmed**</h1>
                 <p className="text-center text-gray-500">Thank you for shopping.</p>
 
+
+
                 <div className="grid grid-cols-3 gap-3">
                     <div ref={componentRef} className="col-span-2">
                         <>
