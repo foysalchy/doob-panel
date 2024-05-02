@@ -101,6 +101,14 @@ const StockManagement = () => {
                   className="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500 text-gray-400"
                 >
                   <div className="flex items-center gap-x-3">
+                    <span>Image</span>
+                  </div>
+                </th>
+                <th
+                  scope="col"
+                  className="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500 text-gray-400"
+                >
+                  <div className="flex items-center gap-x-3">
                     <span>Ordered Id</span>
                   </div>
                 </th>
@@ -165,6 +173,15 @@ const StockManagement = () => {
             <tbody className="bg-white divide-y divide-gray-200 ">
               {filteredStockRequestData?.map((itm, index) => (
                 <tr>
+                  <td className="whitespace-nowrap border-r px-2 py-2 font-medium ">
+                    <img
+                      src={
+                        itm?.productInfo?.image?.src ?? itm?.productInfo?.image
+                      }
+                      alt=""
+                      className="w-[80px] h-[80px] rounded-lg object-cover m-auto"
+                    />
+                  </td>
                   <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                     <div className="inline-flex items-center gap-x-3">
                       <div className="w-5/12">

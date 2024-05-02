@@ -129,7 +129,7 @@ const InventoryManagement = () => {
     }
   });
 
-  // console.log(productData);
+  console.log(searchProduct, "searchProduct");
   return (
     <div>
       <div className="overflow-x-auto transparent-scroll sm:-mx-6 lg:-mx-8">
@@ -203,6 +203,12 @@ const InventoryManagement = () => {
                   >
                     Status
                   </th>
+                  <th
+                    scope="col"
+                    className="border-r px-2 py-4 text-sm font-[500]"
+                  >
+                    Action
+                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -215,7 +221,10 @@ const InventoryManagement = () => {
                     <tr className="border-b " key={product?._id}>
                       <td className="whitespace-nowrap border-r px-2 py-2 font-medium ">
                         <img
-                          src={product?.featuredImage?.src}
+                          src={
+                            product?.featuredImage?.src ??
+                            product?.featuredImage
+                          }
                           alt=""
                           className="w-[80px] h-[80px] rounded-lg object-cover m-auto"
                         />
@@ -241,7 +250,7 @@ const InventoryManagement = () => {
                       <td className="whitespace-nowrap border-r px-6 py-4 font-medium ">
                         {product?.stock_quantity} /
                         <span className="text-red-400">
-                           {product?.low_stock_warning}
+                          {product?.low_stock_warning}
                         </span>
                       </td>
 
