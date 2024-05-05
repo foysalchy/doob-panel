@@ -176,7 +176,7 @@ const EditWareHouse = ({ product, adminWare, setAdminWare }) => {
           {selectedWarehouse ? (
             <div className="grid md:grid-cols-5 mt-3 gap-4">
               <div className="">
-                <label className="text-sm">Select Warehouse</label>
+                <label className="text-sm">Select Warehouses</label>
                 <Select
                   // required
                   className=""
@@ -402,7 +402,7 @@ const EditWareHouse = ({ product, adminWare, setAdminWare }) => {
           )}
 
           <div className="mt-4">
-            <strong>Selected Warehouses:</strong>
+            <strong>Selected Warehouses {loading && "loading..."}:</strong>
             <span className="ml-4">
               {" "}
               {selectedWarehouse && selectedWarehouse}
