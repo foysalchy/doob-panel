@@ -108,6 +108,7 @@ const CategoryEditPage = () => {
     setVariantInput(product?.variantData);
     setMultiVendor(product?.multiVendor);
     setCoverPhoto(product?.images?.[0]?.src);
+    setAdminWare(product?.adminWare);
   }, [product]);
   const [brandName, setBrandName] = useState();
 
@@ -237,6 +238,8 @@ const CategoryEditPage = () => {
       { name: cell },
     ];
 
+    console.log(warehouseValue);
+
     const warrantyTypes = form?.warrantyTypes?.value;
 
     const packageWidth = form?.packageWidth?.value;
@@ -296,7 +299,6 @@ const CategoryEditPage = () => {
     if (firstFile) {
       console.log(firstFile);
     }
-    
 
     const uploadedImageUrls = await Promise.all(
       additionalPhotos
