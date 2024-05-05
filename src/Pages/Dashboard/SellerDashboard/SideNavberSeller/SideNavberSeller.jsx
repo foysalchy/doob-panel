@@ -2339,48 +2339,175 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                           </div>
                         </li>
                       ) : null
-                    ) : (
-                      <li className=" ">
-                        {/* <Link to={'/seller/orders'} rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
+                    ) :
+                      (
+                        <li className=" ">
+                          {/* <Link to={'/seller/orders'} rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
                                                     <BiArchive className="w-5 h-5 text-gray-400" />
                                                     <span>Order Management</span>
                                                 </Link> */}
-                        <div onClick={() => handleToggle(11)} className="group [&_summary::-webkit-details-marker]:hidden items-center rounded-sm  ">
-                          <div className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
-                            <div className="flex cursor-pointer items-center gap-2">
-                              <BiShoppingBag className="w-5 h-5 fill-current text-gray-400" />
-                              <span>My Service</span>
+                          <div onClick={() => handleToggle(11)} className="group [&_summary::-webkit-details-marker]:hidden items-center rounded-sm  ">
+                            <div className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
+                              <div className="flex cursor-pointer items-center gap-2">
+                                <BiShoppingBag className="w-5 h-5 fill-current text-gray-400" />
+                                <span>My Service</span>
+                              </div>
+
+                              <span className="shrink-0 transition duration-300 group-open:-rotate-180">
+                                <IoIosArrowDown className="h-5 w-5" />
+                              </span>
                             </div>
-
-                            <span className="shrink-0 transition duration-300 group-open:-rotate-180">
-                              <IoIosArrowDown className="h-5 w-5" />
-                            </span>
+                            {openDropdownIndex === 11 &&
+                              <ul className="mt-2 space-y-1   px-2 bg-[#1b202ea1] border border-gray-500 py-2 border-opacity-50">
+                                <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                  <Link
+                                    to={"/seller/service/manage-service"}
+                                    className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                  >
+                                    {/* <MdManageAccounts className='w-5 h-5 fill-current text-gray-400 ' /> */}
+                                    My Service
+                                  </Link>
+                                </li>
+                              </ul>}
                           </div>
-                          {openDropdownIndex === 11 &&
-                            <ul className="mt-2 space-y-1   px-2 bg-[#1b202ea1] border border-gray-500 py-2 border-opacity-50">
-                              <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                <Link
-                                  to={"/seller/service/manage-service"}
-                                  className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
-                                >
-                                  {/* <MdManageAccounts className='w-5 h-5 fill-current text-gray-400 ' /> */}
-                                  My Service
-                                </Link>
-                              </li>
-                            </ul>}
-                        </div>
-                      </li>
-                    )}
+                        </li>
+                      )}
 
-                    <li className="rounded-sm hover:bg-gray-800">
-                      <Link
-                        to={`stock-management`}
-                        className="flex items-center p-2 space-x-3 rounded-md gap-3"
-                      >
-                        <BiArchive className="w-5 h-5 text-gray-400" />
-                        Stock Management
-                      </Link>
-                    </li>
+                    {/* stock dropdown */}
+
+                    {user?.staffRole ? (
+                      user?.permissions.find(
+                        (itm) => itm?.name === "Service Management"
+                      ) ? (
+                        <li className=" ">
+                          {/* <Link to={'/seller/orders'} rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
+                                                    <BiArchive className="w-5 h-5 text-gray-400" />
+                                                    <span>Order Management</span>
+                                                </Link> */}
+                          <div onClick={() => handleToggle(12)} className="group  items-center rounded-sm  ">
+                            <div className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
+                              <div className="flex cursor-pointer items-center gap-2">
+                                <BiShoppingBag className="w-5 h-5 fill-current text-gray-400" />
+                                <span>Stock Management</span>
+                              </div>
+
+                              <span className="shrink-0 transition duration-300 group-open:-rotate-180">
+                                <IoIosArrowDown className="h-5 w-5" />
+                              </span>
+                            </div>
+                            {openDropdownIndex === 12 &&
+                              <ul className="mt-2 space-y-1   px-2 bg-[#1b202ea1] border border-gray-500 py-2 border-opacity-50">
+                                <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                  <Link
+                                    to={`stock-management`}
+                                    className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                  >
+                                    {/* <MdManageAccounts className='w-5 h-5 fill-current text-gray-400 ' /> */}
+                                    Stock
+                                  </Link>
+                                </li>
+
+                                {user?.staffRole ? (
+                                  user?.permissions.find(
+                                    (itm) => itm?.name === "Inventory Management"
+                                  ) ? (
+                                    managementPermission("SubscriptionModel") && (
+                                      <li className="rounded-sm hover:bg-gray-800">
+                                        <Link
+                                          to={"/seller/inventory-management"}
+                                          rel="noopener noreferrer"
+                                          href="#"
+                                          className="flex items-center p-2 space-x-3 rounded-md"
+                                        >
+                                          {/* <BiArchive className="w-5 h-5 text-gray-400" /> */}
+                                          <span>Inventory Management</span>
+                                        </Link>
+                                      </li>
+                                    )
+                                  ) : null
+                                ) : (
+                                  <li className="rounded-sm hover:bg-gray-800">
+                                    <Link
+                                      to={"/seller/inventory-management"}
+                                      rel="noopener noreferrer"
+                                      href="#"
+                                      className="flex items-center p-2 space-x-3 rounded-md"
+                                    >
+                                      <span>Inventory Management</span>
+                                    </Link>
+                                  </li>
+                                )}
+
+                              </ul>}
+                          </div>
+                        </li>
+                      ) : null
+                    ) :
+                      (
+                        <li className=" ">
+                          {/* <Link to={'/seller/orders'} rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
+                                                    <BiArchive className="w-5 h-5 text-gray-400" />
+                                                    <span>Order Management</span>
+                                                </Link> */}
+                          <div onClick={() => handleToggle(12)} className="group  items-center rounded-sm  ">
+                            <div className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
+                              <div className="flex cursor-pointer items-center gap-2">
+                                <BiShoppingBag className="w-5 h-5 fill-current text-gray-400" />
+                                <span>Stock Management</span>
+                              </div>
+
+                              <span className="shrink-0 transition duration-300 group-open:-rotate-180">
+                                <IoIosArrowDown className="h-5 w-5" />
+                              </span>
+                            </div>
+                            {openDropdownIndex === 12 &&
+                              <ul className="mt-2 space-y-1   px-2 bg-[#1b202ea1] border border-gray-500 py-2 border-opacity-50">
+                                <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                  <Link
+                                    to={`stock-management`}
+                                    className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                  >
+                                    {/* <MdManageAccounts className='w-5 h-5 fill-current text-gray-400 ' /> */}
+                                    Stock
+                                  </Link>
+                                </li>
+
+                                {user?.staffRole ? (
+                                  user?.permissions.find(
+                                    (itm) => itm?.name === "Inventory Management"
+                                  ) ? (
+                                    managementPermission("SubscriptionModel") && (
+                                      <li className="rounded-sm hover:bg-gray-800">
+                                        <Link
+                                          to={"/seller/inventory-management"}
+                                          rel="noopener noreferrer"
+                                          href="#"
+                                          className="flex items-center p-2 space-x-3 rounded-md"
+                                        >
+                                          {/* <BiArchive className="w-5 h-5 text-gray-400" /> */}
+                                          <span>Inventory Management</span>
+                                        </Link>
+                                      </li>
+                                    )
+                                  ) : null
+                                ) : (
+                                  <li className="rounded-sm hover:bg-gray-800">
+                                    <Link
+                                      to={"/seller/inventory-management"}
+                                      rel="noopener noreferrer"
+                                      href="#"
+                                      className="flex items-center p-2 space-x-3 rounded-md"
+                                    >
+                                      <span>Inventory Management</span>
+                                    </Link>
+                                  </li>
+                                )}
+
+                              </ul>}
+                          </div>
+                        </li>
+                      )}
+                    {/* edn stock dropdown */}
 
                     <li className="rounded-sm hover:bg-gray-800">
                       <Link
@@ -2391,38 +2518,6 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                         Omni Chat
                       </Link>
                     </li>
-
-                    {user?.staffRole ? (
-                      user?.permissions.find(
-                        (itm) => itm?.name === "Inventory Management"
-                      ) ? (
-                        managementPermission("SubscriptionModel") && (
-                          <li className="rounded-sm hover:bg-gray-800">
-                            <Link
-                              to={"/seller/inventory-management"}
-                              rel="noopener noreferrer"
-                              href="#"
-                              className="flex items-center p-2 space-x-3 rounded-md"
-                            >
-                              {/* <BiArchive className="w-5 h-5 text-gray-400" /> */}
-                              <span>Inventory Management</span>
-                            </Link>
-                          </li>
-                        )
-                      ) : null
-                    ) : (
-                      <li className="rounded-sm hover:bg-gray-800">
-                        <Link
-                          to={"/seller/inventory-management"}
-                          rel="noopener noreferrer"
-                          href="#"
-                          className="flex items-center p-2 space-x-3 rounded-md"
-                        >
-                          <BiArchive className="w-5 h-5 text-gray-400" />
-                          <span>Inventory Management</span>
-                        </Link>
-                      </li>
-                    )}
 
                     {user?.staffRole ? (
                       user?.permissions.find(
