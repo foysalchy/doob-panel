@@ -73,8 +73,8 @@ const SellerPrintPage = ({ setOn, products }) => {
                                                 <div className="imgSm  ">
                                                     <img
                                                         className="object-cover w-10 h-10 rounded"
-                                                        srcSet={product?.featuredImage?.src}
-                                                        src={product?.featuredImage?.src}
+                                                        srcSet={product?.featuredImage?.src || product?.images[0]?.src}
+                                                        src={product?.featuredImage?.src || product?.images[0]?.src}
                                                         alt=""
                                                     />
                                                     <div

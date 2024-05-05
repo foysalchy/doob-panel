@@ -104,9 +104,9 @@ const SellerLoginCredintiial = () => {
 
   useEffect(() => {
     if (shopCredential) {
-      setEmailActive(shopCredential.service.email)
-      setGoogleActive(shopCredential.service.google)
-      setFacebookActive(shopCredential.service.facebook)
+      setEmailActive(shopCredential?.service?.email)
+      setGoogleActive(shopCredential?.service?.google)
+      setFacebookActive(shopCredential?.service?.facebook)
     }
   }, [shopCredential])
 
@@ -125,7 +125,7 @@ const SellerLoginCredintiial = () => {
             </label>
             <input
 
-              defaultValue={shopCredential.email ? shopCredential.email : ""}
+              defaultValue={shopCredential?.email ? shopCredential?.email : ""}
               type="email"
               name="email"
               id="email"
