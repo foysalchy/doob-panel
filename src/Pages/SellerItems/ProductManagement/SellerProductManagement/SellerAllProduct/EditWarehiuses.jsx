@@ -6,11 +6,21 @@ import { AuthContext } from "../../../../../AuthProvider/UserProvider";
 const EditWareHouse = ({ product, adminWare, setAdminWare }) => {
   console.log(product?.warehouse, "product");
   const { shopInfo } = useContext(AuthContext);
-  const [selectedWarehouse, setSelectedWarehouse] = useState(null);
-  const [selectedArea, setSelectedArea] = useState("");
-  const [selectedRack, setSelectedRack] = useState("");
-  const [selectedSelf, setSelectedSelf] = useState("");
-  const [selectedCell, setSelectedCell] = useState("");
+  const [selectedWarehouse, setSelectedWarehouse] = useState(
+    product?.warehouse[0]?.name ?? ""
+  );
+  const [selectedArea, setSelectedArea] = useState(
+    product?.warehouse[1]?.name ?? ""
+  );
+  const [selectedRack, setSelectedRack] = useState(
+    product?.warehouse[2]?.name ?? ""
+  );
+  const [selectedSelf, setSelectedSelf] = useState(
+    product?.warehouse[3]?.name ?? ""
+  );
+  const [selectedCell, setSelectedCell] = useState(
+    product?.warehouse[4]?.name ?? ""
+  );
   const [loading, setLoading] = useState(false);
   const [options, setOptions] = useState({
     warehouses: [],
@@ -23,7 +33,7 @@ const EditWareHouse = ({ product, adminWare, setAdminWare }) => {
   useEffect(() => {
     fetchData();
     setOptions((prev) => prev);
-  }, [adminWare, selectedWarehouse, options]);
+  }, [adminWare, selectedWarehouse]);
 
   const fetchData = async () => {
     const apiUrl = adminWare

@@ -186,6 +186,7 @@ const WarehouseModal = ({
   };
 
   console.log(product.warehouse);
+  const defaultWarehouse = product?.warehouse[0]?.name || null;
   return (
     <div>
       <div
