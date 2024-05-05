@@ -17,7 +17,7 @@ const AddAddress = ({ open, setOpen, address, refetch }) => {
 
   useEffect(() => {
     setDefaultAddress(selectedAddress);
-  }, [selectedAddress, open]);
+  }, [selectedAddress]);
 
   // const selectFunction = (add) => {
   //     setSelectedAddress(add)
@@ -25,10 +25,6 @@ const AddAddress = ({ open, setOpen, address, refetch }) => {
 
   // }
 
-  const handleSelectAddress = (address) => {
-    setDefaultAddress(address);
-    setOpen(false);
-  };
   return (
     <div>
       <div
@@ -67,18 +63,15 @@ const AddAddress = ({ open, setOpen, address, refetch }) => {
                 <div className="grid md:grid-cols-2 grid-cols-1 md:gap-8 gap-3">
                   {address.map((add, index) => (
                     <div
-                      key={add?.id}
-                      onClick={() => handleSelectAddress(add)}
+                      key={index}
+                      onClick={() => setDefaultAddress(add)}
                       className={
                         selectedAddress._id === add._id
                           ? " bg-green-100 capitalize p-4 rounded hover:shadow-xl border relative"
                           : "bg-gray-100 capitalize p-4 rounded hover:shadow-xl border relative"
                       }
                     >
-                      <div
-                        className=""
-                        // onClick={() => setOpen(false)}
-                      >
+                      <div className="" onClick={() => setOpen(false)}>
                         <h1>{add?.fullName}</h1>
                         <h1>{add?.mobileNumber}</h1>
                         <small>

@@ -158,12 +158,12 @@ const ProductCheckout = () => {
                             {defaultAddress?.defaultBillingAddress &&
                               "DEFAULT BILLING ADDRESS"}
                           </span>
-                          <button
+                          {/* <button
                             onClick={() => setEdit(!edit)}
                             className="bg-gray-200 px-2"
                           >
                             Edit
-                          </button>
+                          </button> */}
                           <div className="h-0 w-0">
                             {edit && (
                               <AddAddress
