@@ -19,7 +19,7 @@ const ManageProduct = () => {
   const [doobProduct, setDoobProduct] = useState(false);
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const { data: products = [], refetch } = useQuery({
-    queryKey: ["products"],
+    queryKey: ["products_for_admin"],
     queryFn: async () => {
       const res = await fetch(
         "https://backend.doob.com.bd/api/v1/admin/products"
@@ -281,6 +281,8 @@ const ManageProduct = () => {
   // console.log(currentItems);
 
   const [reject_message, setRejectMessage] = useState(false);
+  const [seller_warehouse, setSellerWarehouse] = useState(false);
+  const [doob_warehouse, setDoob_warehouse] = useState(false);
 
   console.log(currentItems, 'Hello js........');
   return (
@@ -368,26 +370,26 @@ const ManageProduct = () => {
               Print
             </button>
             <button
-              onClick={() => setAll(true)}
-              className={`${all ? "bg-blue-700" : " bg-blue-500"
+              onClick={() => { setAll(true), setSellerWarehouse(false), setDoobProduct(false), setDoob_warehouse(false) }}
+              className={`${all ? "bg-blue-900" : " bg-blue-500"
                 } px-8 py-2 rounded text-white`}
             >
               All Warehouse{" "}
             </button>
             <button
               onClick={() => {
-                setDoobProduct(true), setAll(false);
+                setDoobProduct(true), setAll(false), setSellerWarehouse(false), setDoob_warehouse(true)
               }}
-              className={`${doobProduct ? "bg-blue-700" : " bg-blue-500"
+              className={`${doob_warehouse ? "bg-blue-900" : " bg-blue-500"
                 } px-8 py-2 rounded text-white`}
             >
               Doob Warehouse{" "}
             </button>
             <button
               onClick={() => {
-                setDoobProduct(false), setAll(false);
+                setDoobProduct(false), setAll(false); setDoob_warehouse(false), setSellerWarehouse(true)
               }}
-              className={`${!doobProduct ? "bg-blue-700" : " bg-blue-500"
+              className={`${seller_warehouse ? "bg-blue-900" : " bg-blue-500"
                 } px-8 py-2 rounded text-white`}
             >
               Seller Warehouse{" "}
@@ -407,27 +409,28 @@ const ManageProduct = () => {
                 <table className=" divide-y w-full divide-gray-700">
                   <thead className="bg-gray-900 text-white ">
                     <tr>
-                      <th className="px-2">
+                      <th className="px-4 py-4 text-sm font-medium  text-gray-700 whitespace-nowrap">
                         <label
-                          className="flex items-center gap-2  font-medium"
+                          className="flex items-center gap-2  font-medium "
                           htmlFor="select"
                         >
                           <input
                             id="select"
                             type="checkbox"
+                            className="cursor-pointer"
                             checked={
                               selectProducts.length === filteredData.length
                             }
                             onChange={handleSelectAll}
                           />
-                          Select all
+
                         </label>
                       </th>
                       <th
                         scope="col"
-                        className="py-3.5 px-4 text-sm font-normal text-left rtl:text-right "
+                        className="py-3.5  text-sm font-normal text-left rtl:text-right "
                       >
-                        <div className="flex items-center gap-x-3">
+                        <div className="flex items-center">
                           <span>Name</span>
                         </div>
                       </th>

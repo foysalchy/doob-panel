@@ -398,12 +398,12 @@ const Starts = () => {
                         </th>
                         <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left text-blueGray-700">
                           <img
-                            src={`${item?.featuredImage?.src}`}
+                            src={`${item?.featuredImage?.src ? item?.featuredImage?.src : item?.images[0]?.src}`}
                             className="w-[60px] h-[60px] rounded-md"
                           />
                         </th>
                         <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs text-nowrap whitespace-nowrap p-4">
-                          {item?.name ? item?.name : "empty"}
+                          {item?.name ? item?.name.split(" ").slice(0, 5).join(" ") : "empty"}
                         </td>
                         <td className="border-t-0 px-6 align-center border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                           {item?.price ? item?.price : 0}

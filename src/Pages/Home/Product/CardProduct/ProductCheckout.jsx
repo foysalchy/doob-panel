@@ -112,58 +112,133 @@ const ProductCheckout = ({ setNext, products, userInfo, setUserInfo }) => {
                             <div>
                                 <h2 className="text-lg font-semibold mb-4">Shipping Details</h2>
                                 <div className=" flex flex-col gap-2">
-                                    <input
-                                        className="border p-2 rounded-md"
-                                        placeholder="First Name"
-                                        type="text"
-                                        name="name"
-                                        value={userInfo.name}
-                                        onChange={handleChange}
-                                    />
-
-                                    <input
-                                        className="border p-2 rounded-md"
-                                        placeholder="Email Address"
-                                        type="email"
-                                        name="email"
-                                        value={userInfo.email}
-                                        onChange={handleChange}
-                                    />
-
-                                    <input
-                                        className="border p-2 rounded-md"
-                                        placeholder="Phone"
-                                        type="tel"
-                                        name="phoneNumber"
-                                        value={userInfo.phoneNumber}
-                                        onChange={handleChange}
-                                    />
-
-                                    <input
-                                        className="border p-2 rounded-md"
-                                        placeholder="City"
-                                        type="text"
-                                        name="city"
-                                        value={userInfo.city}
-                                        onChange={handleChange}
-                                    />
-
-                                    <input
-                                        className="border p-2 rounded-md"
-                                        placeholder="Area"
-                                        type="text"
-                                        name="area"
-                                        value={userInfo.area}
-                                        onChange={handleChange}
-                                    />
                                     <select
                                         value={userInfo.for_product}
                                         onChange={handleChange} className="border p-2 rounded-md" name="for_product" id="">
                                         <option value="">Order Type</option>
-                                        <option value="customer">customer</option>
+                                        <option value="customer">Customer</option>
                                         <option value="doob_warehouse">Doob Warehouse</option>
-                                        <option value="seller_warehouse">seller warehouse</option>
+                                        <option value="seller_warehouse">Seller warehouse</option>
                                     </select>
+                                    {userType === 'customer' && <div className=' flex flex-col gap-2'>
+
+                                        <input
+                                            className="border p-2 rounded-md"
+                                            placeholder="First Name"
+                                            type="text"
+                                            name="name"
+                                            value={userInfo.name}
+                                            onChange={handleChange}
+                                        />
+
+                                        <input
+                                            className="border p-2 rounded-md"
+                                            placeholder="Email Address"
+                                            type="email"
+                                            name="email"
+                                            value={userInfo.email}
+                                            onChange={handleChange}
+                                        />
+
+                                        <input
+                                            className="border p-2 rounded-md"
+                                            placeholder="Phone"
+                                            type="tel"
+                                            name="phoneNumber"
+                                            value={userInfo.phoneNumber}
+                                            onChange={handleChange}
+                                        />
+
+                                        <input
+                                            className="border p-2 rounded-md"
+                                            placeholder="City"
+                                            type="text"
+                                            name="city"
+                                            value={userInfo.city}
+                                            onChange={handleChange}
+                                        />
+
+                                        <input
+                                            className="border p-2 rounded-md"
+                                            placeholder="Area"
+                                            type="text"
+                                            name="area"
+                                            value={userInfo.area}
+                                            onChange={handleChange}
+                                        />
+
+                                    </div>}
+                                    {
+                                        (userType === 'doob_warehouse' || userType === 'seller_warehouse') && (
+                                            <div className=' flex flex-col gap-2'>
+                                                <input
+                                                    className="border p-2 rounded-md"
+                                                    placeholder="Full Name"
+                                                    type="text"
+                                                    name="fullName"
+                                                    value={userInfo.fullName}
+                                                    onChange={handleChange}
+                                                />
+
+                                                <input
+                                                    className="border p-2 rounded-md"
+                                                    placeholder="Mobile Number"
+                                                    type="tel"
+                                                    name="mobileNumber"
+                                                    value={userInfo.mobileNumber}
+                                                    onChange={handleChange}
+                                                />
+
+                                                <input
+                                                    className="border p-2 rounded-md"
+                                                    placeholder="Province"
+                                                    type="text"
+                                                    name="province"
+                                                    value={userInfo.province}
+                                                    onChange={handleChange}
+                                                />
+
+                                                <input
+                                                    className="border p-2 rounded-md"
+                                                    placeholder="City"
+                                                    type="text"
+                                                    name="city"
+                                                    value={userInfo.city}
+                                                    onChange={handleChange}
+                                                />
+
+                                                <input
+                                                    className="border p-2 rounded-md"
+                                                    placeholder="Area"
+                                                    type="text"
+                                                    name="area"
+                                                    value={userInfo.area}
+                                                    onChange={handleChange}
+                                                />
+
+                                                <input
+                                                    className="border p-2 rounded-md"
+                                                    placeholder="Address"
+                                                    type="text"
+                                                    name="address"
+                                                    value={userInfo.address}
+                                                    onChange={handleChange}
+                                                />
+
+                                                <input
+                                                    className="border p-2 rounded-md"
+                                                    placeholder="Landmark (Optional)"
+                                                    type="text"
+                                                    name="landmark"
+                                                    value={userInfo.landmark}
+                                                    onChange={handleChange}
+                                                />
+
+
+                                            </div>
+                                        )
+                                    }
+
                                 </div>
 
 
