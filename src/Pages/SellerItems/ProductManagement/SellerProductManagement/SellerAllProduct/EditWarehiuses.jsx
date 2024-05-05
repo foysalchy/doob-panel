@@ -23,7 +23,7 @@ const EditWareHouse = ({ product, adminWare, setAdminWare }) => {
   useEffect(() => {
     fetchData();
     setOptions((prev) => prev);
-  }, [adminWare, selectedWarehouse]);
+  }, [adminWare, selectedWarehouse, options]);
 
   const fetchData = async () => {
     const apiUrl = adminWare
@@ -176,9 +176,9 @@ const EditWareHouse = ({ product, adminWare, setAdminWare }) => {
           {selectedWarehouse ? (
             <div className="grid md:grid-cols-5 mt-3 gap-4">
               <div className="">
-                <label className="text-sm">Select Warehouses</label>
+                <label className="text-sm">Select Warehouse</label>
                 <Select
-                  // required
+                  required
                   className=""
                   onChange={handleWarehouseChange}
                   value={{
@@ -205,6 +205,10 @@ const EditWareHouse = ({ product, adminWare, setAdminWare }) => {
                   <Select
                     required
                     onChange={handleAreaChange}
+                    defaultValue={{
+                      value: product?.warehouse[1]?.name,
+                      label: product?.warehouse[1]?.name,
+                    }}
                     name="area"
                     options={options.areas
                       .filter((area) => area.status) // Filter based on status
@@ -213,10 +217,6 @@ const EditWareHouse = ({ product, adminWare, setAdminWare }) => {
                         label: area.area,
                       }))}
                     placeholder="Please select"
-                    defaultValue={{
-                      value: product?.warehouse[1]?.name,
-                      label: product?.warehouse[1]?.name,
-                    }}
                   />
                 </div>
               )}
@@ -227,16 +227,16 @@ const EditWareHouse = ({ product, adminWare, setAdminWare }) => {
                     required
                     name="rack"
                     onChange={handleRackChange}
+                    defaultValue={{
+                      value: product?.warehouse[2]?.name,
+                      label: product?.warehouse[2]?.name,
+                    }}
                     options={options.racks
                       ?.filter((rack) => rack.status)
                       .map((rack) => ({
                         value: rack.rack,
                         label: rack.rack,
                       }))}
-                    defaultValue={{
-                      value: product?.warehouse[2]?.name,
-                      label: product?.warehouse[2]?.name,
-                    }}
                     placeholder="Please select"
                   />
                 </div>
@@ -248,16 +248,16 @@ const EditWareHouse = ({ product, adminWare, setAdminWare }) => {
                     required
                     name="self"
                     onChange={handleSelfChange}
+                    defaultValue={{
+                      value: product?.warehouse[3]?.name,
+                      label: product?.warehouse[3]?.name,
+                    }}
                     options={options.selfs
                       ?.filter((selfs) => selfs.status)
                       .map((self) => ({
                         value: self.self,
                         label: self.self,
                       }))}
-                    defaultValue={{
-                      value: product?.warehouse[3]?.name,
-                      label: product?.warehouse[3]?.name,
-                    }}
                     placeholder="Please select"
                   />
                 </div>
@@ -269,10 +269,6 @@ const EditWareHouse = ({ product, adminWare, setAdminWare }) => {
                     required
                     name="cell"
                     onChange={handleCellChange}
-                    defaultValue={{
-                      value: product?.warehouse[4]?.name,
-                      label: product?.warehouse[4]?.name,
-                    }}
                     options={
                       options.cells.length &&
                       options.cells
@@ -282,6 +278,10 @@ const EditWareHouse = ({ product, adminWare, setAdminWare }) => {
                           label: cell.cell,
                         }))
                     }
+                    defaultValue={{
+                      value: product?.warehouse[4]?.name,
+                      label: product?.warehouse[4]?.name,
+                    }}
                     placeholder="Please select"
                   />
                 </div>
@@ -291,17 +291,18 @@ const EditWareHouse = ({ product, adminWare, setAdminWare }) => {
             <div>
               <div className="grid md:grid-cols-5 mt-3 gap-4">
                 <div className="">
-                  <label className="text-sm">Select Warehouse</label>
+                  <label className="text-sm">Select Warehouse.</label>
                   <Select
                     required
                     className=""
-                    defaultValue={{
-                      value: product?.warehouse[0]?.name,
-                      label: product?.warehouse[0]?.name,
+                    onChange={handleWarehouseChange}
+                    value={{
+                      label: selectedWarehouse || "Select warehouse", // Set a default label if selectedWarehouse is null
+                      value: selectedWarehouse,
                     }}
                     name="warehouse"
                     options={options.warehouses
-                      .filter((warehouse) => warehouse.status)
+                      .filter((warehouse) => warehouse.status) // Filter based on status
                       .map((warehouse) => ({
                         value: warehouse.name,
                         label: warehouse.name,
@@ -315,10 +316,6 @@ const EditWareHouse = ({ product, adminWare, setAdminWare }) => {
                     <Select
                       required
                       onChange={handleAreaChange}
-                      defaultValue={{
-                        value: product?.warehouse[1]?.name,
-                        label: product?.warehouse[1]?.name,
-                      }}
                       name="area"
                       options={options.areas
                         .filter((area) => area.status) // Filter based on status
@@ -337,10 +334,6 @@ const EditWareHouse = ({ product, adminWare, setAdminWare }) => {
                       required
                       name="rack"
                       onChange={handleRackChange}
-                      defaultValue={{
-                        value: product?.warehouse[2]?.name,
-                        label: product?.warehouse[2]?.name,
-                      }}
                       options={options.racks
                         ?.filter((rack) => rack.status)
                         .map((rack) => ({
@@ -358,10 +351,6 @@ const EditWareHouse = ({ product, adminWare, setAdminWare }) => {
                       required
                       name="self"
                       onChange={handleSelfChange}
-                      defaultValue={{
-                        value: product?.warehouse[3]?.name,
-                        label: product?.warehouse[3]?.name,
-                      }}
                       options={options.selfs
                         ?.filter((selfs) => selfs.status)
                         .map((self) => ({
@@ -379,10 +368,6 @@ const EditWareHouse = ({ product, adminWare, setAdminWare }) => {
                       required
                       name="cell"
                       onChange={handleCellChange}
-                      defaultValue={{
-                        value: product?.warehouse[4]?.name,
-                        label: product?.warehouse[4]?.name,
-                      }}
                       options={
                         options.cells.length &&
                         options.cells
@@ -402,7 +387,8 @@ const EditWareHouse = ({ product, adminWare, setAdminWare }) => {
           )}
 
           <div className="mt-4">
-            <strong>Selected Warehouses {loading && "loading..."}:</strong>
+            <strong>Selected Warehouses:</strong>
+            <span>{loading && " loading.."} </span>
             <span className="ml-4">
               {" "}
               {selectedWarehouse && selectedWarehouse}

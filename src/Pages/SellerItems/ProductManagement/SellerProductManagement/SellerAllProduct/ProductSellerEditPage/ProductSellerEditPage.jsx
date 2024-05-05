@@ -92,16 +92,15 @@ const CategoryEditPage = () => {
   // console.log(product?.variantData);
 
   // console.log(product?.variations);
-  const [variantInput, setVariantInput] = useState([
-    {
-      product1: {},
-      product2: {},
-      product3: {},
-      sellingPrice: "",
-      ProductCost: "",
-    },
-  ]);
+  const [variantInput, setVariantInput] = useState({
+    product1: {},
+    product2: {},
+    product3: {},
+    sellingPrice: "",
+    ProductCost: "",
+  });
   console.log(variantInput);
+  console.log(product?.variantData);
 
   useEffect(() => {
     setInputFields(product?.variations);
@@ -352,7 +351,7 @@ const CategoryEditPage = () => {
       height: productHight,
       multiVendor: multiVendor,
       adminCategory,
-      variantData: variantInput[0],
+      variantData: variantInput,
       // color,
       // size,
       // material,
@@ -398,7 +397,7 @@ const CategoryEditPage = () => {
       DeliveryCharge,
     };
     console.log(
-      data.images,
+      data.variantData,
       "edit --------------------------->",
       data?.featuredImage
     );
@@ -517,8 +516,10 @@ const CategoryEditPage = () => {
         </div>
         <EditAdminCategoryforSeller product={product} />
 
-        {daraz && datazCategory.length && (
+        {daraz && datazCategory.length ? (
           <EditDarazCategory product={product} datazCategory={datazCategory} />
+        ) : (
+          ""
         )}
         <ServiceWarranty product={product} />
         <EditDelivery product={product} />
