@@ -11,6 +11,8 @@ const Payment = () => {
   const { selectProductData, orderStage, shopUser, shop_id, shopInfo, user } =
     useContext(ShopAuthProvider);
 
+  const [loadingPayment, setLoadingPayment] = useState(false);
+
   const params = useParams();
   console.log(params);
   const [payment, setPayment] = useState(false);
@@ -85,29 +87,27 @@ const Payment = () => {
     order.timestamp = new Date().getTime();
     order.userId = shop_id.shop_id;
     order.normalPrice = orderStage?.promoHistory?.normalPrice;
-    order.callback = `https://doob.com.bd/shop/${params?.id}/user/success`;
+    order.callback = `http://localhost:5001/shop/${params?.id}/user/success`;
     console.log(order, "order");
+    // setLoadingPayment(true);
     try {
       const response = await fetch(
-        "http://localhost:5001/api/v1/seller/bkash/payment/create?collection=shop-product",
+        "http://localhost:5001/api/v1/seller/bkash/payment/create",
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          //   body: JSON.stringify({
-          //     amount: orderStage?.promoHistory?.promoPrice
-          //       ? orderStage?.promoHistory?.promoPrice
-          //       : orderStage?.promoHistory?.normalPrice,
-          //     userId: "asdhfbuyagsdf",
-          //   }),
           body: JSON.stringify(order),
         }
       );
       const data = await response.json();
       console.log(data.bkashURL);
+      if (data?.bkashURL) {
+        // setLoadingPayment(false);
 
-      window.location.href = data.bkashURL;
+        window.location.href = data.bkashURL;
+      }
     } catch (error) {
       console.log(error);
     }
@@ -120,8 +120,10 @@ const Payment = () => {
     const order = orderStage;
     order.method = payment;
     order.timestamp = new Date().getTime();
+    order.normalPrice = orderStage?.promoHistory?.normalPrice;
     order.userId = shop_id.shop_id;
     order.callback = `https://doob.com.bd/shop/${params?.id}/user/success`;
+    // setLoadingPayment(true);
     try {
       const response = await fetch(
         "http://localhost:5001/api/v1/seller/amarpay/payment/create",
@@ -130,18 +132,14 @@ const Payment = () => {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({
-            amount: orderStage?.promoHistory?.promoPrice
-              ? orderStage?.promoHistory?.promoPrice
-              : orderStage?.promoHistory?.normalPrice,
-            orderId: 1,
-          }),
+          body: JSON.stringify(order),
         }
       );
       const data = await response.json();
       console.log(data);
       if (data.payment_url) {
         window.location.href = data.payment_url;
+        // setLoadingPayment(false);
       }
     } catch (error) {
       console.log(error);
@@ -180,8 +178,8 @@ const Payment = () => {
     <div className="px-4 py-5 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8">
       <div className="grid md:grid-cols-4 grid-cols-1 md:gap-3 gap-2">
         <div className="grid md:grid-cols-4 grid-cols-1 md:col-span-3 gap-4">
-          {paymentGetWays.map((get) => (
-            <div>
+          {paymentGetWays.map((get, index) => (
+            <div key={index + 1}>
               {get.Getaway === "Bkash" && (
                 <a href="#scrollDestination">
                   <div
@@ -435,7 +433,7 @@ const Payment = () => {
 
                 <span className="text-lg font-medium transition-all group-hover:ms-4">
                   {" "}
-                  Order Now{" "}
+                  Order Now {payment.Getaway}
                 </span>
               </button>
             ) : (
