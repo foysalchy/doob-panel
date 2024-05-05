@@ -184,7 +184,7 @@ const SellerStockManagement = () => {
                     </div>
                   </td>
                   <td className="whitespace-wrap text-sm text-start w-[300px] border-r px-6 py-4 font-medium ">
-                    {itm?.productInfo?.name}
+                    {itm?.productInfo?.name.slice(0, 80)}
                     <br />
                     <span className="text-xs text-gray-500"> {itm?.SKU}</span>
                   </td>
@@ -225,13 +225,15 @@ const SellerStockManagement = () => {
                     </button>
                   </td>
                   <td className="px-4 py-4 text-lg text-gray-700  whitespace-nowrap">
-                    {itm?.status === "cancel" ? (
+                    {itm?.status === "reject" ? (
+                      <h2 className="text-red-400 text-sm">rejected</h2>
+                    ) : itm?.status === "cancel" ? (
                       <h2>Canceled</h2>
                     ) : (
                       <button
                         // onClick={() => handleUpdate(itm, "reject")}
                         onClick={() => cancelHandler(itm?.productId, itm?._id)}
-                        className="inline-flex  rounded-full gap-x-2    text-sm items-center gap-2 bg-orange-500 px-2 py-1 text-white "
+                        className="inline-flex rounded-full gap-x-2 text-sm items-center gap-2 bg-orange-500 px-2 py-1 text-white"
                       >
                         Cancel
                       </button>
