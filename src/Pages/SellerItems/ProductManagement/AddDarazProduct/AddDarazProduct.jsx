@@ -8,6 +8,7 @@ import Swal from "sweetalert2";
 import { FixedSizeList as List } from "react-window";
 import { BsArrowRight } from "react-icons/bs";
 import Variants from "../SellerAddProduct/Components/Variants";
+import OnlySyncCategory from "../SellerAddProduct/Components/OnlySyncCategory";
 
 const AddDarazProduct = () => {
   const { shopInfo } = useContext(AuthContext);
@@ -82,6 +83,21 @@ const AddDarazProduct = () => {
       adminMiniCategory,
       adminExtraCategory,
     ];
+    const megaCategory = form?.megaCategory?.value;
+    const Subcategory = form?.subCategory?.value || null;
+    const miniCategory = form?.miniCategory?.value || null;
+    const extraCategory = form?.extraCategory?.value || null;
+
+    const categories = [
+      { name: megaCategory },
+      Subcategory && { name: Subcategory },
+      miniCategory && { name: miniCategory },
+      extraCategory && { name: extraCategory },
+    ];
+
+    // console.log(categories);
+
+    // return;
 
     const warehouseValue = [
       { name: warehouse },
@@ -112,7 +128,7 @@ const AddDarazProduct = () => {
       name: originalData.attributes.name_en,
       daraz: true,
       woo: false, // You didn't provide this information in the original data
-      categories: [originalData.primary_category],
+      categories: categories,
       warehouse: warehouseValue,
       description: originalData.attributes.description,
       stock_quantity: originalData.skus[0].quantity,
@@ -164,11 +180,12 @@ const AddDarazProduct = () => {
       });
   };
 
+  console.log(loading);
   return (
     <div>
       <div className="border mt-4 border-gray-400 px-10 py-5 w-full bg-gray-100 rounded">
         <div className="flex flex-col">
-          <span className="font-bold">Add Daraz Product</span>
+          <span className="font-bold">Add Daraz Product.</span>
           <small>
             Having accurate product information raises discoverability.
           </small>
@@ -248,6 +265,7 @@ const AddDarazProduct = () => {
             adminWare={adminWare}
             setAdminWare={setAdminWare}
           />
+          <OnlySyncCategory />
           <Variants
             adminWare={adminWare}
             multiVendor={multiVendor}
