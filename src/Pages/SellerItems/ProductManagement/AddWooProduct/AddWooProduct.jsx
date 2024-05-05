@@ -7,6 +7,7 @@ import WareHouse from "../SellerAddProduct/Components/WareHouse";
 import Meta from "../SellerAddProduct/Components/Meta";
 import { BsArrowRight } from "react-icons/bs";
 import Variants from "../SellerAddProduct/Components/Variants";
+import OnlySyncCategory from "../SellerAddProduct/Components/OnlySyncCategory";
 
 const AddWooProduct = () => {
   const { shopInfo } = useContext(AuthContext);
@@ -110,6 +111,20 @@ const AddWooProduct = () => {
       { name: cell },
     ];
 
+    const megaCategory = form?.megaCategory?.value;
+    const Subcategory = form?.subCategory?.value || null;
+    const miniCategory = form?.miniCategory?.value || null;
+    const extraCategory = form?.extraCategory?.value || null;
+
+    const categories = [
+      { name: megaCategory },
+      Subcategory && { name: Subcategory },
+      miniCategory && { name: miniCategory },
+      extraCategory && { name: extraCategory },
+    ];
+
+    // console.log(categories);
+
     const data = product;
     data.shopId = shopInfo._id;
     data.metaTitle = MetaTag;
@@ -122,6 +137,11 @@ const AddWooProduct = () => {
       (data.multiVendor = multiVendor),
       (data.adminCategory = adminCategory),
       (data.variantData = variantInput[0]);
+    data.categories = categories;
+
+    // console.log(data?.categories);
+
+    // return
 
     console.log(data);
     fetch("https://backend.doob.com.bd/api/v1/seller/woo-product/", {
@@ -227,6 +247,7 @@ const AddWooProduct = () => {
           variantInput={variantInput}
           setVariantInput={setVariantInput}
         />
+        <OnlySyncCategory />
 
         <WareHouse
           shopInfo={shopInfo}

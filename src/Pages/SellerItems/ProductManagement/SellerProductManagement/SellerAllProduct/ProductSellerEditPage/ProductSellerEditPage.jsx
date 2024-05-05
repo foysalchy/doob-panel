@@ -92,22 +92,22 @@ const CategoryEditPage = () => {
   // console.log(product?.variantData);
 
   // console.log(product?.variations);
-  const [variantInput, setVariantInput] = useState([
-    {
-      product1: {},
-      product2: {},
-      product3: {},
-      sellingPrice: "",
-      ProductCost: "",
-    },
-  ]);
+  const [variantInput, setVariantInput] = useState({
+    product1: {},
+    product2: {},
+    product3: {},
+    sellingPrice: "",
+    ProductCost: "",
+  });
   console.log(variantInput);
+  console.log(product?.variantData);
 
   useEffect(() => {
     setInputFields(product?.variations);
     setVariantInput(product?.variantData);
     setMultiVendor(product?.multiVendor);
     setCoverPhoto(product?.images?.[0]?.src);
+    setAdminWare(product?.adminWare);
   }, [product]);
   const [brandName, setBrandName] = useState();
 
@@ -237,6 +237,8 @@ const CategoryEditPage = () => {
       { name: cell },
     ];
 
+    console.log(warehouseValue);
+
     const warrantyTypes = form?.warrantyTypes?.value;
 
     const packageWidth = form?.packageWidth?.value;
@@ -296,7 +298,6 @@ const CategoryEditPage = () => {
     if (firstFile) {
       console.log(firstFile);
     }
-    
 
     const uploadedImageUrls = await Promise.all(
       additionalPhotos
@@ -350,7 +351,7 @@ const CategoryEditPage = () => {
       height: productHight,
       multiVendor: multiVendor,
       adminCategory,
-      variantData: variantInput[0],
+      variantData: variantInput,
       // color,
       // size,
       // material,
@@ -396,7 +397,7 @@ const CategoryEditPage = () => {
       DeliveryCharge,
     };
     console.log(
-      data.images,
+      data.variantData,
       "edit --------------------------->",
       data?.featuredImage
     );
@@ -515,8 +516,10 @@ const CategoryEditPage = () => {
         </div>
         <EditAdminCategoryforSeller product={product} />
 
-        {daraz && datazCategory.length && (
+        {daraz && datazCategory.length ? (
           <EditDarazCategory product={product} datazCategory={datazCategory} />
+        ) : (
+          ""
         )}
         <ServiceWarranty product={product} />
         <EditDelivery product={product} />

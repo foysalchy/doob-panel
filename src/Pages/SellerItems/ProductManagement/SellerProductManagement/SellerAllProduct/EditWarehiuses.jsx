@@ -1,113 +1,128 @@
 import { useQuery } from "@tanstack/react-query";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Select from "react-select";
 import { AuthContext } from "../../../../../AuthProvider/UserProvider";
 
 const EditWareHouse = ({ product, adminWare, setAdminWare }) => {
+  console.log(product?.warehouse, "product");
   const { shopInfo } = useContext(AuthContext);
-  const [areas, setAreas] = useState([]);
-  const [racks, setRacks] = useState([]);
-  const [selfs, setSelfs] = useState([]);
-  const [cells, setCells] = useState([]);
-  const [selectedWarehouse, setSelectedWarehouse] = useState("");
+  const [selectedWarehouse, setSelectedWarehouse] = useState(null);
   const [selectedArea, setSelectedArea] = useState("");
   const [selectedRack, setSelectedRack] = useState("");
   const [selectedSelf, setSelectedSelf] = useState("");
   const [selectedCell, setSelectedCell] = useState("");
-
-  const {
-    data: warehouses = [],
-    refetch,
-    isRefetching,
-  } = useQuery({
-    queryKey: ["warehouses"],
-    queryFn: async () => {
-      const getWarehouseApiUrl = adminWare
-        ? "https://backend.doob.com.bd/api/v1/admin/warehouse"
-        : `https://backend.doob.com.bd/api/v1/seller/warehouse/get/${shopInfo._id}`;
-
-      const res = await fetch(getWarehouseApiUrl);
-      if (!res.ok) {
-        throw new Error(`Failed to fetch data: ${res.statusText}`);
-      }
-      const data = await res.json();
-      return data;
-    },
+  const [loading, setLoading] = useState(false);
+  const [options, setOptions] = useState({
+    warehouses: [],
+    areas: [],
+    racks: [],
+    selfs: [],
+    cells: [],
   });
 
-  console.log(warehouses);
+  useEffect(() => {
+    fetchData();
+    setOptions((prev) => prev);
+  }, [adminWare, selectedWarehouse, options]);
+
+  const fetchData = async () => {
+    const apiUrl = adminWare
+      ? "https://backend.doob.com.bd/api/v1/admin/warehouse"
+      : `https://backend.doob.com.bd/api/v1/seller/warehouse/get/${shopInfo._id}`;
+
+    const res = await fetch(apiUrl);
+    if (!res.ok) {
+      throw new Error(`Failed to fetch data: ${res.statusText}`);
+    }
+    const data = await res.json();
+    setOptions((prevOptions) => ({
+      ...prevOptions,
+      warehouses: data,
+    }));
+  };
+  console.log("option", options);
 
   const handleWarehouseChange = async (selectedOption) => {
     console.log(selectedOption);
+    setLoading(true);
     const selectedWarehouse = selectedOption.value;
     setSelectedWarehouse(selectedWarehouse);
-    setRacks([]);
-    setSelfs([]);
-    setCells([]);
-    console.log(selectedWarehouse, adminWare);
-
-    const getAreaApiUrl = `https://backend.doob.com.bd/api/v1/seller/warehouse/area/${selectedWarehouse}/${shopInfo._id}`;
-
-    console.log(getAreaApiUrl);
-
-    const areaRes = await fetch(getAreaApiUrl);
-    const areaData = await areaRes.json();
-    setAreas(areaData);
+    setOptions(options);
     setSelectedArea("");
     setSelectedRack("");
     setSelectedSelf("");
     setSelectedCell("");
+
+    const apiUrl = `https://backend.doob.com.bd/api/v1/seller/warehouse/area/${selectedWarehouse}/${shopInfo._id}`;
+    const res = await fetch(apiUrl);
+    const areaData = await res.json();
+    setLoading(false);
+    console.log("areaData", areaData);
+    setOptions((prevOptions) => ({
+      ...prevOptions,
+      areas: areaData,
+      racks: [],
+      selfs: [],
+      cells: [],
+    }));
   };
 
   const handleAreaChange = async (selectedOption) => {
     const selectedArea = selectedOption.value;
     setSelectedArea(selectedArea);
-    setSelfs([]);
-    setCells([]);
-
-    const getRackApiUrl = `https://backend.doob.com.bd/api/v1/seller/warehouse/rack/${selectedWarehouse}/${selectedArea}/${shopInfo._id}`;
-
-    const rackRes = await fetch(getRackApiUrl);
-    const rackData = await rackRes.json();
-    setRacks(rackData);
     setSelectedRack("");
     setSelectedSelf("");
     setSelectedCell("");
+
+    const apiUrl = `https://backend.doob.com.bd/api/v1/seller/warehouse/rack/${selectedWarehouse}/${selectedArea}/${shopInfo._id}`;
+    const res = await fetch(apiUrl);
+    const rackData = await res.json();
+    setOptions((prevOptions) => ({
+      ...prevOptions,
+      racks: rackData,
+      selfs: [],
+      cells: [],
+    }));
   };
 
-  const handleReckChange = async (selectedOption) => {
+  const handleRackChange = async (selectedOption) => {
     const selectedRack = selectedOption.value;
     setSelectedRack(selectedRack);
-    setCells([]);
-
-    const getSelfApiUrl = `https://backend.doob.com.bd/api/v1/seller/warehouse/self/${selectedWarehouse}/${selectedArea}/${selectedRack}/${shopInfo._id}`;
-
-    const selfRes = await fetch(getSelfApiUrl);
-    const selfData = await selfRes.json();
-    setSelfs(selfData);
     setSelectedSelf("");
     setSelectedCell("");
+
+    const apiUrl = `https://backend.doob.com.bd/api/v1/seller/warehouse/self/${selectedWarehouse}/${selectedArea}/${selectedRack}/${shopInfo._id}`;
+    const res = await fetch(apiUrl);
+    const selfData = await res.json();
+    setOptions((prevOptions) => ({
+      ...prevOptions,
+      selfs: selfData,
+      cells: [],
+    }));
   };
 
   const handleSelfChange = async (selectedOption) => {
-    const selectedSelfs = selectedOption.value;
-    console.log(selectedSelfs);
-    setSelectedSelf(selectedSelfs);
+    const selectedSelf = selectedOption.value;
+    setSelectedSelf(selectedSelf);
 
-    const getCellApiUrl = `https://backend.doob.com.bd/api/v1/seller/warehouse/cell/${selectedWarehouse}/${selectedArea}/${selectedRack}/${selectedSelf}/${shopInfo._id}`;
-
-    const cellsRes = await fetch(getCellApiUrl);
-    const cellData = await cellsRes.json();
-    setCells(cellData);
-    setSelectedCell("");
+    const apiUrl = `https://backend.doob.com.bd/api/v1/seller/warehouse/cell/${selectedWarehouse}/${selectedArea}/${selectedRack}/${selectedSelf}/${shopInfo._id}`;
+    const res = await fetch(apiUrl);
+    const cellData = await res.json();
+    setOptions((prevOptions) => ({
+      ...prevOptions,
+      cells: cellData,
+    }));
   };
 
   const handleCellChange = (selectedOption) => {
-    const cell = selectedOption.value;
-    setSelectedCell(cell);
+    const selectedCell = selectedOption.value;
+    setSelectedCell(selectedCell);
   };
 
-  console.log(product?.warehouse);
+  console.log(
+    options.cells,
+    `https://backend.doob.com.bd/api/v1/seller/warehouse/cell/${selectedWarehouse}/${selectedArea}/${selectedRack}/${selectedSelf}/${shopInfo._id}`
+  );
 
   return (
     <div>
@@ -158,167 +173,222 @@ const EditWareHouse = ({ product, adminWare, setAdminWare }) => {
             Warehouse Information <span className="text-red-500"> *</span>
           </span>
 
-          <div className="grid md:grid-cols-5 mt-3 gap-4">
-            <div className="">
-              <label className="text-sm">Select Warehouse</label>
-              <Select
-                className=""
-                styles={{
-                  control: (provided) => ({
-                    ...provided,
-                    cursor: "pointer",
-                  }),
-                  option: (provided) => ({
-                    ...provided,
-                    cursor: "pointer",
-                  }),
-                }}
-                onChange={handleWarehouseChange}
-                name="warehouse"
-                defaultValue={{
-                  value: product?.warehouse[0]?.name,
-                  label: product?.warehouse[0]?.name,
-                }}
-                // required
-                isLoading={isRefetching}
-                options={warehouses
-                  ?.filter((warehouse) => warehouse.status) // Filter based on status
-                  .map((warehouse) => ({
-                    value: warehouse.name,
-                    label: warehouse.name,
-                  }))}
-                // options={
-                //   isRefetching
-                //     ? [{ label: "Loading...", value: null }]
-                //     : warehouses
-                //         ?.filter((warehouse) => warehouse.status) // Filter based on status
-                //         .map((warehouse) => ({
-                //           value: warehouse.name,
-                //           label: warehouse.name,
-                //         }))
-                // }
-                placeholder="Please select"
-              />
+          {selectedWarehouse ? (
+            <div className="grid md:grid-cols-5 mt-3 gap-4">
+              <div className="">
+                <label className="text-sm">Select Warehouse</label>
+                <Select
+                  required
+                  className=""
+                  onChange={handleWarehouseChange}
+                  value={{
+                    label: selectedWarehouse || "Select warehouse", // Set a default label if selectedWarehouse is null
+                    value: selectedWarehouse,
+                  }}
+                  defaultValue={{
+                    value: product?.warehouse[0]?.name,
+                    label: product?.warehouse[0]?.name,
+                  }}
+                  name="warehouse"
+                  options={options.warehouses
+                    .filter((warehouse) => warehouse.status) // Filter based on status
+                    .map((warehouse) => ({
+                      value: warehouse.name,
+                      label: warehouse.name,
+                    }))}
+                  placeholder="Please select"
+                />
+              </div>
+              {selectedWarehouse && !adminWare && (
+                <div className="">
+                  <label className="text-sm">Select Area</label>
+                  <Select
+                    required
+                    onChange={handleAreaChange}
+                    defaultValue={{
+                      value: product?.warehouse[1]?.name,
+                      label: product?.warehouse[1]?.name,
+                    }}
+                    name="area"
+                    options={options.areas
+                      .filter((area) => area.status) // Filter based on status
+                      .map((area) => ({
+                        value: area.area,
+                        label: area.area,
+                      }))}
+                    placeholder="Please select"
+                  />
+                </div>
+              )}
+              {selectedArea && !adminWare && (
+                <div className="">
+                  <label className="text-sm">Select Rack</label>
+                  <Select
+                    required
+                    name="rack"
+                    onChange={handleRackChange}
+                    defaultValue={{
+                      value: product?.warehouse[2]?.name,
+                      label: product?.warehouse[2]?.name,
+                    }}
+                    options={options.racks
+                      ?.filter((rack) => rack.status)
+                      .map((rack) => ({
+                        value: rack.rack,
+                        label: rack.rack,
+                      }))}
+                    placeholder="Please select"
+                  />
+                </div>
+              )}
+              {selectedRack && !adminWare && (
+                <div className="">
+                  <label className="text-sm">Select Self</label>
+                  <Select
+                    required
+                    name="self"
+                    onChange={handleSelfChange}
+                    defaultValue={{
+                      value: product?.warehouse[3]?.name,
+                      label: product?.warehouse[3]?.name,
+                    }}
+                    options={options.selfs
+                      ?.filter((selfs) => selfs.status)
+                      .map((self) => ({
+                        value: self.self,
+                        label: self.self,
+                      }))}
+                    placeholder="Please select"
+                  />
+                </div>
+              )}
+              {selectedSelf && !adminWare && (
+                <div className="">
+                  <label className="text-sm">Select Cell</label>
+                  <Select
+                    required
+                    name="cell"
+                    onChange={handleCellChange}
+                    options={
+                      options.cells.length &&
+                      options.cells
+                        .filter((cell) => cell.status)
+                        .map((cell) => ({
+                          value: cell.cell,
+                          label: cell.cell,
+                        }))
+                    }
+                    defaultValue={{
+                      value: product?.warehouse[4]?.name,
+                      label: product?.warehouse[4]?.name,
+                    }}
+                    placeholder="Please select"
+                  />
+                </div>
+              )}
             </div>
-
-            {selectedWarehouse && !adminWare && (
-              <div className="">
-                <label className="text-sm">Select Area</label>
-                <Select
-                  styles={{
-                    control: (provided) => ({
-                      ...provided,
-                      cursor: "pointer",
-                    }),
-                    option: (provided) => ({
-                      ...provided,
-                      cursor: "pointer",
-                    }),
-                  }}
-                  onChange={handleAreaChange}
-                  name="area"
-                  // required
-                  options={areas
-                    ?.filter((area) => area.status) // Filter based on status
-                    .map((area) => ({
-                      value: area.area,
-                      label: area.area,
-                    }))}
-                  placeholder="Please select"
-                />
+          ) : (
+            <div>
+              <div className="grid md:grid-cols-5 mt-3 gap-4">
+                <div className="">
+                  <label className="text-sm">Select Warehouse.</label>
+                  <Select
+                    required
+                    className=""
+                    onChange={handleWarehouseChange}
+                    value={{
+                      label: selectedWarehouse || "Select warehouse", // Set a default label if selectedWarehouse is null
+                      value: selectedWarehouse,
+                    }}
+                    name="warehouse"
+                    options={options.warehouses
+                      .filter((warehouse) => warehouse.status) // Filter based on status
+                      .map((warehouse) => ({
+                        value: warehouse.name,
+                        label: warehouse.name,
+                      }))}
+                    placeholder="Please select"
+                  />
+                </div>
+                {selectedWarehouse && !adminWare && (
+                  <div className="">
+                    <label className="text-sm">Select Area</label>
+                    <Select
+                      required
+                      onChange={handleAreaChange}
+                      name="area"
+                      options={options.areas
+                        .filter((area) => area.status) // Filter based on status
+                        .map((area) => ({
+                          value: area.area,
+                          label: area.area,
+                        }))}
+                      placeholder="Please select"
+                    />
+                  </div>
+                )}
+                {selectedArea && !adminWare && (
+                  <div className="">
+                    <label className="text-sm">Select Rack</label>
+                    <Select
+                      required
+                      name="rack"
+                      onChange={handleRackChange}
+                      options={options.racks
+                        ?.filter((rack) => rack.status)
+                        .map((rack) => ({
+                          value: rack.rack,
+                          label: rack.rack,
+                        }))}
+                      placeholder="Please select"
+                    />
+                  </div>
+                )}
+                {selectedRack && !adminWare && (
+                  <div className="">
+                    <label className="text-sm">Select Self</label>
+                    <Select
+                      required
+                      name="self"
+                      onChange={handleSelfChange}
+                      options={options.selfs
+                        ?.filter((selfs) => selfs.status)
+                        .map((self) => ({
+                          value: self.self,
+                          label: self.self,
+                        }))}
+                      placeholder="Please select"
+                    />
+                  </div>
+                )}
+                {selectedSelf && !adminWare && (
+                  <div className="">
+                    <label className="text-sm">Select Cell</label>
+                    <Select
+                      required
+                      name="cell"
+                      onChange={handleCellChange}
+                      options={
+                        options.cells.length &&
+                        options.cells
+                          .filter((cell) => cell?.status)
+                          .map((cell) => ({
+                            value: cell.cell,
+                            label: cell.cell,
+                          }))
+                      }
+                      placeholder="Please select"
+                    />
+                  </div>
+                )}
               </div>
-            )}
-
-            {selectedArea && !adminWare && (
-              <div className="">
-                <label className="text-sm">Select Rack</label>
-                <Select
-                  styles={{
-                    control: (provided) => ({
-                      ...provided,
-                      cursor: "pointer",
-                    }),
-                    option: (provided) => ({
-                      ...provided,
-                      cursor: "pointer",
-                    }),
-                  }}
-                  name="rack"
-                  // required
-                  onChange={handleReckChange}
-                  options={racks
-                    ?.filter((rack) => rack.status)
-                    .map((rack) => ({
-                      value: rack.rack,
-                      label: rack.rack,
-                    }))}
-                  placeholder="Please select"
-                />
-              </div>
-            )}
-
-            {selectedRack && !adminWare && (
-              <div className="">
-                <label className="text-sm">Select Self</label>
-                <Select
-                  styles={{
-                    control: (provided) => ({
-                      ...provided,
-                      cursor: "pointer",
-                    }),
-                    option: (provided) => ({
-                      ...provided,
-                      cursor: "pointer",
-                    }),
-                  }}
-                  name="self"
-                  // required
-                  onChange={handleSelfChange}
-                  options={selfs
-                    ?.filter((selfs) => selfs.status)
-                    .map((self) => ({
-                      value: self.self,
-                      label: self.self,
-                    }))}
-                  placeholder="Please select"
-                />
-              </div>
-            )}
-
-            {selectedSelf && !adminWare && (
-              <div className="">
-                <label className="text-sm">Select Cell</label>
-                <Select
-                  styles={{
-                    control: (provided) => ({
-                      ...provided,
-                      cursor: "pointer",
-                    }),
-                    option: (provided) => ({
-                      ...provided,
-                      cursor: "pointer",
-                    }),
-                  }}
-                  name="cell"
-                  // required
-                  onChange={handleCellChange}
-                  options={
-                    cells.length &&
-                    cells
-                      ?.filter((cell) => cell.status)
-                      .map((cell) => ({
-                        value: cell.cell,
-                        label: cell.cell,
-                      }))
-                  }
-                  placeholder="Please select"
-                />
-              </div>
-            )}
-          </div>
+              {/* <div className="mt-3 text-red-500">Please select a warehouse</div> */}
+            </div>
+          )}
 
           <div className="mt-4">
             <strong>Selected Warehouses:</strong>
+            <span>{loading && " loading.."} </span>
             <span className="ml-4">
               {" "}
               {selectedWarehouse && selectedWarehouse}
