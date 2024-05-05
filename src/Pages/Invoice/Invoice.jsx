@@ -29,6 +29,8 @@ const Invoice = () => {
     return total + item?.price * item?.quantity;
   }, 0);
 
+
+
   const formattedDate = (time) => {
     const date = new Date(time);
 
@@ -53,6 +55,167 @@ const Invoice = () => {
 
   console.log(info, "info");
   console.log(shopInfo, "shop info");
+
+
+  const InvoicePage = ({ order }) => {
+    console.log(order, "order");
+    return (
+      <>
+        <div
+          ref={componentRef}
+          className="p-12 mx-8 print-data   mt-6">
+
+          <header className="flex items-start justify-between">
+            <img src={shopInfo?.logo} alt="logo" className='w-[200px]' />
+            <div className='whitespace-wrap w-[300px]'>
+              <p className='text-gray-600 text-end'>{shopInfo?.address}</p>
+              <p className='text-gray-600 text-end'>{shopInfo?.shopName}</p>
+            </div>
+          </header>
+
+          <main>
+            <div className="flex items-center justify-center py-1 font-bold text-gray-600 bg-gray-200 mt-8 text-center ">
+              SALES INVOICE
+            </div>
+
+            {/*................*/}
+            {/*.... Address ...*/}
+            {/*................*/}
+            <div className="flex items-center justify-between mt-4">
+              <div>
+                <div className='flex items-center gap-2'>
+                  <h4 className='font-semibold text-gray-700 text-sm'>
+                    Email :
+                  </h4>
+                  <p className="text-gray-600 text-sm">{shopInfo?.shopEmail}</p>
+                </div>
+                <div className='flex items-center gap-2'>
+                  <h4 className='font-semibold text-gray-700 text-sm'>
+                    Phone :
+                  </h4>
+                  <p className="text-gray-600 text-sm">{shopInfo?.shopNumber}</p>
+                </div>
+              </div>
+
+              <div>
+                <li className='flex justify-start items-center gap-2'>
+                  <h4 className='font-semibold text-gray-700 text-sm'>
+                    Invoice No :
+                  </h4>
+                  <p className="text-gray-600 text-sm">{shopInfo?._id}</p>
+                </li>
+                <li className='flex justify-start items-center gap-2'>
+                  <h4 className='font-semibold text-gray-700 text-sm'>
+                    Invoice Date :
+                  </h4>
+                  <p className="text-gray-600 text-sm">{
+                    new Date().toDateString(shopInfo?.time_stamp)
+                  }</p>
+                </li>
+                <br />
+                <li className='flex justify-start items-center gap-2'>
+                  <h4 className='font-semibold text-gray-700 text-sm'>
+                    Payment Date :
+                  </h4>
+                  <p className="text-gray-600 text-sm">{
+                    new Date().toDateString(shopInfo?.paymentDate)
+                  }</p>
+                </li> <li className='flex justify-start items-center gap-2'>
+                  <h4 className='font-semibold text-gray-700 text-sm'>
+                    Order Date :
+                  </h4>
+                  <p className="text-gray-600 text-sm">{
+                    new Date().toDateString(shopInfo?.date)
+                  }</p>
+                </li>
+
+              </div>
+
+            </div>
+
+            {/*................*/}
+            {/*.... Product ...*/}
+            {/*................*/}
+
+            <section className="container mx-auto mt-8">
+              <div className="w-full mb-8 overflow-hidden">
+                <div className="w-full overflow-x-auto">
+                  <table className="w-full">
+                    <thead>
+                      <tr className="text-md font-semibold tracking-wide text-left text-gray-100 bg-gray-900 uppercase border-b border-gray-900">
+                        <th className="px-4 py-2">Photo</th>
+                        <th className="px-4 py-2">Name</th>
+                        <th className="px-4 py-2 whitespace-nowrap">Stock Quantity</th>
+                        <th className="px-4 py-2">Price</th>
+                      </tr>
+                    </thead>
+                    <tbody className="bg-white">
+                      {
+                        order?.map(itm => <tr key={itm?._id} className="text-gray-700">
+                          <td className="px-2 w-[90px] py-2 border border-gray-800">
+                            <img src={itm?.img ? itm?.img : ''} alt="photo" className="w-12 h-12 border object-cover m-auto rounded bg-indigo-400" />
+                          </td>
+                          <td className="px-2 py-2 w-[500px] text-sm border border-gray-800">
+                            {itm?.productName}
+                          </td>
+
+                          <td className="px-2 py-2 text-sm border text-center border-gray-800">
+                            {itm?.stock_quantity ? itm?.stock_quantity : 0}
+                          </td>
+                          <td className="px-2 py-2 text-sm text-center border border-gray-800">
+                            {itm?.price ? itm?.price : 0}
+                          </td>
+
+
+                        </tr>)
+                      }
+
+
+                      {/* <tr>
+                                                <td colSpan={6} className='px-1 py-2 text-sm border  border-gray-800'></td>
+                                                <td colSpan={1} className='px-1 py-2 text-sm border-b  border-gray-800 text-end'>
+                                                    TOTAL:
+                                                </td>
+                                                <td colSpan={1} className='px-1 py-2 text-sm border  border-gray-800 text-start'>
+                                                    $5000
+                                                </td>
+                                            </tr> */}
+                      {/* Add more rows here */}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </section>
+
+            <div className="flex justify-between ">
+              <div></div>
+              <div className="  gap-12 flex justify-between">
+                <ul className='space-y-2'>
+                  {/* <li>Sub Total</li> */}
+                  <li className=' font-bold'>Total :</li>
+                </ul>
+
+                <ul className='space-y-2'>
+
+                  <li className='  font-bold'>
+                    ৳{totalPrice}
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+
+
+          </main>
+          <footer>
+
+          </footer>
+        </div>
+      </>
+    )
+  }
+
+
   return (
     <div className="bg-gray-100 p-12 ">
       <button
@@ -61,145 +224,13 @@ const Invoice = () => {
       >
         Print
       </button>
+
       <div
         ref={componentRef}
         className="w-full h-full p-8 m-auto bg-white"
         style={{ width: "210mm", height: "297mm" }}
       >
-        <header className="clearfix">
-          <div id="logo">
-            <img src={shopInfo?.logo} />
-          </div>
-          <div id="company">
-            <h2 className="name">{shopInfo?.shopName}</h2>
-            {/* <div>455 Foggy Heights, AZ 85004, US</div> */}
-            <div>{shopInfo?.shopNumber}</div>
-            <div>
-              <a href="mailto:company@example.com">{shopInfo?.shopEmail}</a>
-            </div>
-          </div>
-        </header>
-        <main className="main mt-4">
-          <div id="details" className="clearfix">
-            <div id="client">
-              {/* <img src={shopInfo?.logo} alt="" className="" /> */}
-              <div className="to">INVOICE TO:</div>
-              <h2 className="name">{info?.addresses?.fullName}</h2>
-              <div className="address">
-                {info?.addresses?.address} {info?.addresses?.area}{" "}
-                {info?.addresses?.city} {info?.addresses?.province}
-              </div>
-              <div className="email">
-                <a href="mailto:john@example.com">
-                  {info?.addresses?.mobileNumber}
-                </a>
-              </div>
-            </div>
-            <div id="invoice">
-              <h1>INVOICE</h1>
-              <div className="wrap-2 mt-[-57px] ml-[40px]">
-                <Barcode value={info?.orderNumber} />
-              </div>
-              <div className="date">
-                Date of Invoice: {formattedDate(info?.timestamp)}
-              </div>
-            </div>
-          </div>
-          <table className="table" border={0} cellSpacing={0} cellPadding={0}>
-            <thead className="thead">
-              <tr>
-                <th className="no text-center">#</th>
-                <th className=" text-center">Product photo</th>
-                <th className=" text-center">Product Name</th>
-                <th className=" text-center bg-gray-400">UNIT PRICE</th>
-                <th className="text-center">QUANTITY</th>
-                <th className=" text-center no">TOTAL</th>
-              </tr>
-            </thead>
-            <tbody className="tbody">
-              {info?.productList?.map((list, index) => (
-                <tr key={index} className="text-center">
-                  <td className="no">{index + 1}</td>
-                  <td className="">
-                    <img
-                      className="w-20 h-20 border border-opacity-40 rounded object-cover"
-                      src={list.img}
-                      alt=""
-                    />
-                  </td>
-                  <td className="">
-                    <h3>
-                      {list.productName?.split(" ").slice(0, 5).join(" ")}
-                    </h3>
-                  </td>
-                  <td className=" ">{list?.price}</td>
-                  <td className=" ">{list.quantity}</td>
-                  <td className="no ">
-                    {parseInt(list?.price) * parseInt(list?.quantity)}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-            <tfoot>
-              <tr>
-                <td colSpan={3} />
-                <td colSpan={2}>SUBTOTAL</td>
-                <td>{totalPrice}</td>
-              </tr>
-              <tr>
-                <td colSpan={3} />
-                <td colSpan={2}>TAX 25%</td>
-                <td>300</td>
-              </tr>
-              <tr>
-                <td colSpan={3} />
-                <td colSpan={2}>GRAND TOTAL</td>
-                <td>{totalPrice + 300} </td>
-              </tr>
-            </tfoot>
-          </table>
-          <div id="thanks">Thank you!</div>
-          <div id="notices">
-            <div>NOTICE:</div>
-          </div>
-          <footer>
-            Invoice was created on a computer and is valid without the signature
-            and seal.
-          </footer>
-          {/* <div id="thanks">
-                        {
-                            (info.status !== 'Cancel' && info.status !== 'Failed' && info.status !== 'Returned') && <div className="mt-4 mx-auto px-4 md:px-0">
-                                <ul aria-label="Steps" className="items-center text-gray-600 font-medium md:flex">
-                                    {info?.stepsItems.map((item, idx) => (
-                                        <li aria-current={currentStep == idx + 1 ? "step" : false} className="flex-1 last:flex-none flex gap-x-2 md:items-center">
-                                            <div className="flex items-center flex-col gap-x-2">
-                                                <div className={`w-8 h-8 rounded-full border-2 flex-none flex items-center justify-center ${currentStep > idx + 1 ? "bg-indigo-600 border-indigo-600" : "" || currentStep == idx + 1 ? "border-indigo-600" : ""}`}>
-                                                    <span className={` ${currentStep > idx + 1 ? "hidden" : "" || currentStep == idx + 1 ? "text-indigo-600" : ""}`}>
-                                                        {idx + 1}
-                                                    </span>
-                                                    {
-                                                        currentStep > idx + 1 ? (
-                                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5 text-white">
-                                                                <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
-                                                            </svg>
-                                                        ) : ""
-                                                    }
-                                                </div>
-                                                <hr className={`h-12 border md:hidden ${idx + 1 == steps.stepsItems.length ? "hidden" : "" || currentStep > idx + 1 ? "border-indigo-600" : ""}`} />
-                                            </div>
-                                            <div className="h-8 flex items-center md:h-auto">
-                                                <h3 className={`text-sm ${currentStep === idx + 1 ? "text-indigo-600" : ""}`}>
-                                                    {item}
-                                                </h3>
-                                            </div>
-                                            <hr className={`hidden mr-2 w-full border md:block ${idx + 1 == steps.stepsItems.length ? "hidden" : "" || currentStep > idx + 1 ? "border-indigo-600" : ""}`} />
-                                        </li>
-                                    ))}
-                                </ul>
-                            </div>
-                        }
-                    </div> */}
-        </main>
+        <InvoicePage order={info?.productList} />
       </div>
     </div>
   );

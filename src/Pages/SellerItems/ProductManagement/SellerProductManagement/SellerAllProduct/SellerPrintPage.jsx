@@ -5,6 +5,8 @@ import { AuthContext } from '../../../../../AuthProvider/UserProvider';
 
 const SellerPrintPage = ({ setOn, products }) => {
     const { id } = useParams();
+    const { shopInfo } = useContext(AuthContext)
+
     const componentRef = useRef();
     const handlePrint = useReactToPrint({
         content: () => componentRef.current,
@@ -12,7 +14,173 @@ const SellerPrintPage = ({ setOn, products }) => {
 
 
 
-    console.log(products);
+    // Calculate subtotal
+    const subtotal = products?.reduce((acc, itm) => acc + (itm.price ? itm.price : 0), 0);
+    const totalPrice = subtotal;
+    const formattedSubtotal = subtotal.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+    const formattedTotalPrice = totalPrice.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+
+
+    console.log(products, '---->');
+
+    const InvoicePage = ({ order }) => {
+        return (
+            <>
+                <div
+                    ref={componentRef}
+                    className="p-12 mx-8 print-data   mt-6">
+
+                    <header className="flex items-start justify-between">
+                        <img src={shopInfo?.logo} alt="logo" className='w-[200px]' />
+                        <div className='whitespace-wrap w-[300px]'>
+                            <p className='text-gray-600 text-end'>{shopInfo?.address}</p>
+                            <p className='text-gray-600 text-end'>{shopInfo?.shopName}</p>
+                        </div>
+                    </header>
+
+                    <main>
+                        <div className="flex items-center justify-center py-1 font-bold text-gray-600 bg-gray-200 mt-8 text-center ">
+                            SALES INVOICE
+                        </div>
+
+                        {/*................*/}
+                        {/*.... Address ...*/}
+                        {/*................*/}
+                        <div className="flex items-center justify-between mt-4">
+                            <div>
+                                <div className='flex items-center gap-2'>
+                                    <h4 className='font-semibold text-gray-700 text-sm'>
+                                        Email :
+                                    </h4>
+                                    <p className="text-gray-600 text-sm">{shopInfo?.shopEmail}</p>
+                                </div>
+                                <div className='flex items-center gap-2'>
+                                    <h4 className='font-semibold text-gray-700 text-sm'>
+                                        Phone :
+                                    </h4>
+                                    <p className="text-gray-600 text-sm">{shopInfo?.shopNumber}</p>
+                                </div>
+                            </div>
+
+                            <div>
+                                <li className='flex justify-start items-center gap-2'>
+                                    <h4 className='font-semibold text-gray-700 text-sm'>
+                                        Invoice No :
+                                    </h4>
+                                    <p className="text-gray-600 text-sm">{shopInfo?._id}</p>
+                                </li>
+                                <li className='flex justify-start items-center gap-2'>
+                                    <h4 className='font-semibold text-gray-700 text-sm'>
+                                        Invoice Date :
+                                    </h4>
+                                    <p className="text-gray-600 text-sm">{
+                                        new Date().toDateString(shopInfo?.time_stamp)
+                                    }</p>
+                                </li>
+                                <br />
+                                <li className='flex justify-start items-center gap-2'>
+                                    <h4 className='font-semibold text-gray-700 text-sm'>
+                                        Payment Date :
+                                    </h4>
+                                    <p className="text-gray-600 text-sm">{
+                                        new Date().toDateString(shopInfo?.paymentDate)
+                                    }</p>
+                                </li> <li className='flex justify-start items-center gap-2'>
+                                    <h4 className='font-semibold text-gray-700 text-sm'>
+                                        Order Date :
+                                    </h4>
+                                    <p className="text-gray-600 text-sm">{
+                                        new Date().toDateString(shopInfo?.date)
+                                    }</p>
+                                </li>
+
+                            </div>
+
+                        </div>
+
+                        {/*................*/}
+                        {/*.... Product ...*/}
+                        {/*................*/}
+
+                        <section className="container mx-auto mt-8">
+                            <div className="w-full mb-8 overflow-hidden">
+                                <div className="w-full overflow-x-auto">
+                                    <table className="w-full">
+                                        <thead>
+                                            <tr className="text-md font-semibold tracking-wide text-left text-gray-100 bg-gray-900 uppercase border-b border-gray-900">
+                                                <th className="px-4 py-2">Photo</th>
+                                                <th className="px-4 py-2">Name</th>
+                                                <th className="px-4 py-2 whitespace-nowrap">Stock Quantity</th>
+                                                <th className="px-4 py-2">Price</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody className="bg-white">
+                                            {
+                                                order?.map(itm => <tr key={itm?._id} className="text-gray-700">
+                                                    <td className="px-2 w-[90px] py-2 border border-gray-800">
+                                                        <img src={itm?.featuredImage ? itm?.featuredImage : itm?.images[0]?.src} alt="photo" className="w-12 h-12 border object-cover m-auto rounded bg-indigo-400" />
+                                                    </td>
+                                                    <td className="px-2 py-2 w-[500px] text-sm border border-gray-800">
+                                                        {itm?.name}
+                                                    </td>
+
+                                                    <td className="px-2 py-2 text-sm border border-gray-800">
+                                                        {itm?.stock_quantity ? itm?.stock_quantity : 0}
+                                                    </td>
+                                                    <td className="px-2 py-2 text-sm border border-gray-800">
+                                                        {itm?.price ? itm?.price : 0}
+                                                    </td>
+
+
+                                                </tr>)
+                                            }
+
+
+                                            {/* <tr>
+                                                <td colSpan={6} className='px-1 py-2 text-sm border  border-gray-800'></td>
+                                                <td colSpan={1} className='px-1 py-2 text-sm border-b  border-gray-800 text-end'>
+                                                    TOTAL:
+                                                </td>
+                                                <td colSpan={1} className='px-1 py-2 text-sm border  border-gray-800 text-start'>
+                                                    $5000
+                                                </td>
+                                            </tr> */}
+                                            {/* Add more rows here */}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </section>
+
+                        <div className="flex justify-between ">
+                            <div></div>
+                            <div className="  gap-12 flex justify-between">
+                                <ul className='space-y-2'>
+                                    <li>Sub Total</li>
+                                    <li className=' font-bold'>Total</li>
+                                </ul>
+
+                                <ul className='space-y-2'>
+                                    <li className=''>
+                                        {subtotal}
+                                    </li>
+                                    <li className='  font-bold'>
+                                        {formattedTotalPrice}
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+
+
+                    </main>
+                    <footer>
+
+                    </footer>
+                </div>
+            </>
+        )
+    }
 
     return (
         <div className="bg-gray-100 p-12">
@@ -22,97 +190,7 @@ const SellerPrintPage = ({ setOn, products }) => {
                 <button onClick={handlePrint} className='bg-blue-500 px-6 py-2 rounded-2 text-white rounded-md'>Print</button></div>
 
             <div ref={componentRef} className="w-full h-full p-8 m-auto bg-white" style={{ width: '210mm', height: '297mm' }}>
-
-                <div className="overflow-hidden   -gray-700 md:rounded-lg">
-                    <table className="w-full bg-gray-100">
-                        <thead className="bg-gray-900 text-white ">
-
-                            <tr>
-                                <th
-                                    scope="col"
-                                    className="py-3.5 px-4 text-sm  font-normal text-left rtl:text-right "
-                                >
-                                    <div className="flex items-center gap-x-3">
-
-                                        <span>Name</span>
-                                    </div>
-                                </th>
-                                <th
-                                    scope="col"
-                                    className="px-12 py-3.5  text-sm font-normal text-left rtl:text-right "
-                                >
-                                    <button className="flex items-center gap-x-2">
-                                        <span>Price</span>
-                                    </button>
-                                </th>
-                                <th
-                                    scope="col"
-                                    className="px-4 py-3.5 text-sm  font-normal text-left rtl:text-right "
-                                >
-                                    <button className="flex items-center gap-x-2">
-                                        <span>Regular price</span>
-                                    </button>
-                                </th> <th
-                                    scope="col"
-                                    className="px-4 py-3.5 text-sm  font-normal text-left rtl:text-right "
-                                >
-                                    <button className="flex items-center gap-x-2">
-                                        <span>Stock Quantity</span>
-                                    </button>
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody className="bg-gray-50 divide-y  divide-gray-20 ">
-                            {products?.map((product) => (
-                                <tr className='bg-red-50'>
-
-                                    <td className="px-4 py-4 text-sm  -black font-medium text-gray-700 whitespace-nowrap">
-                                        <div className="inline-flex items-center gap-x-3">
-
-                                            <div className="flex relative items-center gap-x-2">
-                                                <div className="imgSm  ">
-                                                    <img
-                                                        className="object-cover w-10 h-10 rounded"
-                                                        srcSet={product?.featuredImage?.src}
-                                                        src={product?.featuredImage?.src}
-                                                        alt=""
-                                                    />
-                                                    <div
-                                                        style={{
-                                                            backgroundImage: `url(${product?.featuredImage?.src})`,
-                                                        }}
-                                                        className="absolute top-[-40px] duration-150 abs hidden bg-[url(${product?.featuredImage?.src})] left-[43px] object-cover bg-cover bg-white shadow-xl opacity-100 z-50 w-[150px] h-[150px] ring-1 ring-gray-500"
-                                                    >
-                                                    </div>
-                                                </div>
-
-                                                <div>
-                                                    <h2 className="font-medium text-gray-800  ">
-                                                        {product?.name?.split(' ').slice(0, 5).join(' ')}
-                                                    </h2>
-                                                    <p className="text-sm font-normal text-gray-600 ">
-                                                        {product?.sku}
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td className="px-12 py-4  -black text-sm font-medium text-gray-700 whitespace-nowrap">
-                                        {product.price}
-                                    </td>
-                                    <td className="px-4 py-4 text-center text-sm  -black text-gray-500  whitespace-nowrap">
-                                        {product.regular_price}
-                                    </td>
-
-                                    <td className="px-4 py-4 text-center text-sm  -black whitespace-nowrap">
-                                        {product?.stock_quantity}
-                                    </td>
-
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </div>
+                <InvoicePage order={products} />
             </div>
         </div>
     );

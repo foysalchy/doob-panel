@@ -696,7 +696,7 @@ const SellerDashboard = () => {
               >
                 # {order?.orderNumber}
               </Link>
-              <td className="px-4 py-3">{order.addresses.fullName}</td>
+              <td className="px-4 py-3">{order?.addresses?.fullName}</td>
               <td className="px-4 py-3 hidden md:table-cell">{new Date(order.
                 timestamp).toDateString()}</td>
               <td className="px-4 py-3 text-right">৳ {order.promoHistory.status ? order.promoHistory.promoPrice : order.promoHistory.normalPrice}</td>
