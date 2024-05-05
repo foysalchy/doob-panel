@@ -61,36 +61,39 @@ const AddAddress = ({ open, setOpen, address, refetch }) => {
                 </div>
               ) : (
                 <div className="grid md:grid-cols-2 grid-cols-1 md:gap-8 gap-3">
-                  {address.map((add) => (
+                  {address.map((add, index) => (
                     <div
-                      onClick={() => setSelectedAddress(add)}
+                      key={index}
+                      onClick={() => setDefaultAddress(add)}
                       className={
                         selectedAddress._id === add._id
                           ? " bg-green-100 capitalize p-4 rounded hover:shadow-xl border relative"
                           : "bg-gray-100 capitalize p-4 rounded hover:shadow-xl border relative"
                       }
                     >
-                      <h1>{add?.fullName}</h1>
-                      <h1>{add?.mobileNumber}</h1>
-                      <small>
-                        <span>{add?.address},</span>{" "}
-                        <span>{add?.province} - </span> <span>{add?.city}</span>{" "}
-                        <span>{add?.area}</span>
-                      </small>
-                      <br />
-                      <small className="flex flex-wrap md:gap-4 gap-1  items-center mt-2">
-                        <span className="bg-green-200 p-0.5 px-1 rounded text-[9px] text-black ">
-                          {" "}
-                          {add.deliveryLabel}
-                        </span>
-                        <span className="bg-gray-200 rounded text-[9px] px-1">
-                          {add?.defaultAddress && "DEFAULT DELIVERY ADDRESS"}
-                        </span>
-                        <span className="bg-gray-200 rounded text-[9px] px-1">
-                          {add?.defaultBillingAddress &&
-                            "DEFAULT BILLING ADDRESS"}
-                        </span>
-                      </small>
+                      <div className="" onClick={() => setOpen(false)}>
+                        <h1>{add?.fullName}</h1>
+                        <h1>{add?.mobileNumber}</h1>
+                        <small>
+                          <span>{add?.address},</span>{" "}
+                          <span>{add?.province} - </span>{" "}
+                          <span>{add?.city}</span> <span>{add?.area}</span>
+                        </small>
+                        <br />
+                        <small className="flex flex-wrap md:gap-4 gap-1  items-center mt-2">
+                          <span className="bg-green-200 p-0.5 px-1 rounded text-[9px] text-black ">
+                            {" "}
+                            {add.deliveryLabel}
+                          </span>
+                          <span className="bg-gray-200 rounded text-[9px] px-1">
+                            {add?.defaultAddress && "DEFAULT DELIVERY ADDRESS"}
+                          </span>
+                          <span className="bg-gray-200 rounded text-[9px] px-1">
+                            {add?.defaultBillingAddress &&
+                              "DEFAULT BILLING ADDRESS"}
+                          </span>
+                        </small>
+                      </div>
                       <div className="absolute top-2 right-2">
                         <button
                           onClick={() => setEditAddress(add)}

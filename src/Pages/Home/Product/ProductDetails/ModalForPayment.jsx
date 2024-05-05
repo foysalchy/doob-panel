@@ -45,7 +45,7 @@ const ModalForPayment = ({
     handleStore(invoice, getway, userInfo);
     paymentHandler(payment);
 
-    navigate(`/admin/confirm-order`);
+    // navigate(`/admin/confirm-order`);
   };
 
   const [next, setNext] = useState(false);
@@ -56,13 +56,15 @@ const ModalForPayment = ({
       payWithBkash();
     } else if (payment.Getaway === "AmarPay") {
       payWithAmarPay();
+    } else if (payment.Getaway === "Doob_Payment") {
+      pay_with_doob();
     }
   };
 
   const payWithBkash = async () => {
     try {
       const response = await fetch(
-        "https://backend.doob.com.bd/api/v1/seller/bkash/payment/create",
+        "http://localhost:5001/api/v1/seller/bkash/payment/create",
         {
           method: "POST",
           headers: {
@@ -159,8 +161,8 @@ const ModalForPayment = ({
                   Payment:{sellingPrice}
                 </label>
                 <div className="grid grid-cols-4">
-                  {getaways.map((get) => (
-                    <div>
+                  {getaways.map((get, index) => (
+                    <div key={index + 1}>
                       {get.Getaway === "Bkash" && (
                         <button>
                           <div

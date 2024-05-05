@@ -3,17 +3,33 @@ import React, { useEffect, useState } from "react";
 import Select from "react-select";
 import BrightAlert from "bright-alert";
 
-const WarehouseModal = ({ modalOpen, setModalOpen, product, doobProduct }) => {
+const WarehouseModal = ({
+  modalOpen,
+  setModalOpen,
+  product,
+  doobProduct,
+  reload,
+}) => {
   const [areas, setAreas] = useState([]);
   const [racks, setRacks] = useState([]);
   const [selfs, setSelfs] = useState([]);
   const [cells, setCells] = useState([]);
   const [selectedWarehouse, setSelectedWarehouse] = useState("");
-  const [selectedArea, setSelectedArea] = useState("");
-  const [selectedRack, setSelectedRack] = useState("");
-  const [selectedSelf, setSelectedSelf] = useState("");
-  const [selectedCell, setSelectedCell] = useState("");
-  const [selectedPackage, setSelectedPackage] = useState("");
+  const [selectedArea, setSelectedArea] = useState(
+    product?.warehouse[0]?.name ?? ""
+  );
+  const [selectedRack, setSelectedRack] = useState(
+    product?.warehouse[1]?.name ?? ""
+  );
+  const [selectedSelf, setSelectedSelf] = useState(
+    product?.warehouse[2]?.name ?? ""
+  );
+  const [selectedCell, setSelectedCell] = useState(
+    product?.warehouse[3]?.name ?? ""
+  );
+  const [selectedPackage, setSelectedPackage] = useState(
+    product?.warehouse[4]?.name ?? ""
+  );
 
   const { data: packageData = [] } = useQuery({
     queryKey: ["package"],
@@ -132,8 +148,8 @@ const WarehouseModal = ({ modalOpen, setModalOpen, product, doobProduct }) => {
   const updateInfo = (e) => {
     e.preventDefault();
     // const handling = e.target.handling.value;
-    const Commission = e.target.commission.value;
-    const Packaging_cost = e.target.commission.value;
+    const Commission = e.target.commission.value ?? 0;
+    const Packaging_cost = e.target.commission.value ?? 0;
 
     const adminCategory = [
       { name: selectedWarehouse },
@@ -165,14 +181,18 @@ const WarehouseModal = ({ modalOpen, setModalOpen, product, doobProduct }) => {
         console.log(data);
         BrightAlert();
         setModalOpen(false);
+        reload();
       });
   };
 
+  console.log(product.warehouse);
+  const defaultWarehouse = product?.warehouse[0]?.name || null;
   return (
     <div>
       <div
-        className={`fixed left-0 top-0 flex z-50 h-full min-h-screen w-full items-center justify-center bg-black/90 px-4 py-5 ${modalOpen ? "block" : "hidden"
-          }`}
+        className={`fixed left-0 top-0 flex z-50 h-full min-h-screen w-full items-center justify-center bg-black/90 px-4 py-5 ${
+          modalOpen ? "block" : "hidden"
+        }`}
       >
         <form
           onSubmit={updateInfo}
@@ -223,6 +243,7 @@ const WarehouseModal = ({ modalOpen, setModalOpen, product, doobProduct }) => {
                     //     cursor: "pointer",
                     //   }),
                     // }}
+
                     value={selectedPackage}
                     className="mt-2 border border-gray-300 px-3 py-3 rounded-md w-full focus:outline-none focus:border-blue-500 text-black"
                     onChange={handlePackageChange}
@@ -286,12 +307,16 @@ const WarehouseModal = ({ modalOpen, setModalOpen, product, doobProduct }) => {
                         isRefetching
                           ? [{ label: "Loading...", value: null }]
                           : warehouses
-                            .filter((warehouse) => warehouse.status) // Filter based on status
-                            .map((warehouse) => ({
-                              value: warehouse.name,
-                              label: warehouse.name,
-                            }))
+                              .filter((warehouse) => warehouse.status) // Filter based on status
+                              .map((warehouse) => ({
+                                value: warehouse.name,
+                                label: warehouse.name,
+                              }))
                       }
+                      defaultValue={{
+                        value: product?.warehouse[0]?.name,
+                        label: product?.warehouse[0]?.name,
+                      }}
                       placeholder="Please select"
                     />
                   </div>
@@ -308,6 +333,10 @@ const WarehouseModal = ({ modalOpen, setModalOpen, product, doobProduct }) => {
                             ...provided,
                             cursor: "pointer",
                           }),
+                        }}
+                        defaultValue={{
+                          value: product?.warehouse[1]?.name,
+                          label: product?.warehouse[1]?.name,
                         }}
                         onChange={handleAreaChange}
                         name="area"
@@ -336,6 +365,10 @@ const WarehouseModal = ({ modalOpen, setModalOpen, product, doobProduct }) => {
                             ...provided,
                             cursor: "pointer",
                           }),
+                        }}
+                        defaultValue={{
+                          value: product?.warehouse[2]?.name,
+                          label: product?.warehouse[2]?.name,
                         }}
                         name="rack"
                         // required
@@ -366,6 +399,10 @@ const WarehouseModal = ({ modalOpen, setModalOpen, product, doobProduct }) => {
                           }),
                         }}
                         name="self"
+                        defaultValue={{
+                          value: product?.warehouse[3]?.name,
+                          label: product?.warehouse[3]?.name,
+                        }}
                         // required
                         onChange={handleSelfChange}
                         options={selfs
@@ -392,6 +429,10 @@ const WarehouseModal = ({ modalOpen, setModalOpen, product, doobProduct }) => {
                             ...provided,
                             cursor: "pointer",
                           }),
+                        }}
+                        defaultValue={{
+                          value: product?.warehouse[4]?.name,
+                          label: product?.warehouse[4]?.name,
                         }}
                         name="cell"
                         // required

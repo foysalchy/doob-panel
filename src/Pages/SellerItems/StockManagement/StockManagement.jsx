@@ -233,7 +233,7 @@ const StockManagement = () => {
             </thead>
             <tbody className="bg-white divide-y divide-gray-200 ">
               {filteredStockRequestData?.map((itm, index) => (
-                <tr>
+                <tr key={index + 1}>
                   <td className="whitespace-nowrap border-r px-2 py-2 font-medium ">
                     <img
                       src={
@@ -265,7 +265,7 @@ const StockManagement = () => {
                       <span className="text-red-500">Canceled</span>
                     ) : (
                       <div>
-                        {itm?.status === " reject" ? (
+                        {itm?.status === "reject" ? (
                           <button
                             disabled
                             // onClick={() => handleUpdate(itm, "")}
@@ -319,7 +319,9 @@ const StockManagement = () => {
                   </td>
                   <td className="px-4 py-4 text-lg text-gray-700  whitespace-nowrap">
                     <div className="flex items-center gap-x-2">
-                      {editMode === itm._id ? (
+                      {itm?.status !== "reject" &&
+                      itm?.status !== "cancel" &&
+                      editMode === itm._id ? (
                         <div className="flex gap-2 ">
                           <input
                             type="text"

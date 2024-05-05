@@ -19,7 +19,7 @@ const ManageProduct = () => {
   const [doobProduct, setDoobProduct] = useState(false);
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const { data: products = [], refetch } = useQuery({
-    queryKey: ["products"],
+    queryKey: ["products_for_admin"],
     queryFn: async () => {
       const res = await fetch(
         "https://backend.doob.com.bd/api/v1/admin/products"
@@ -281,6 +281,8 @@ const ManageProduct = () => {
   // console.log(currentItems);
 
   const [reject_message, setRejectMessage] = useState(false);
+  const [seller_warehouse, setSellerWarehouse] = useState(false);
+  const [doob_warehouse, setDoob_warehouse] = useState(false);
 
   console.log(currentItems, 'Hello js........');
   return (
@@ -368,26 +370,26 @@ const ManageProduct = () => {
               Print
             </button>
             <button
-              onClick={() => setAll(true)}
-              className={`${all ? "bg-blue-700" : " bg-blue-500"
+              onClick={() => { setAll(true), setSellerWarehouse(false), setDoobProduct(false), setDoob_warehouse(false) }}
+              className={`${all ? "bg-blue-900" : " bg-blue-500"
                 } px-8 py-2 rounded text-white`}
             >
               All Warehouse{" "}
             </button>
             <button
               onClick={() => {
-                setDoobProduct(true), setAll(false);
+                setDoobProduct(true), setAll(false), setSellerWarehouse(false), setDoob_warehouse(true)
               }}
-              className={`${doobProduct ? "bg-blue-700" : " bg-blue-500"
+              className={`${doob_warehouse ? "bg-blue-900" : " bg-blue-500"
                 } px-8 py-2 rounded text-white`}
             >
               Doob Warehouse{" "}
             </button>
             <button
               onClick={() => {
-                setDoobProduct(false), setAll(false);
+                setDoobProduct(false), setAll(false); setDoob_warehouse(false), setSellerWarehouse(true)
               }}
-              className={`${!doobProduct ? "bg-blue-700" : " bg-blue-500"
+              className={`${seller_warehouse ? "bg-blue-900" : " bg-blue-500"
                 } px-8 py-2 rounded text-white`}
             >
               Seller Warehouse{" "}
@@ -407,27 +409,28 @@ const ManageProduct = () => {
                 <table className=" divide-y w-full divide-gray-700">
                   <thead className="bg-gray-900 text-white ">
                     <tr>
-                      <th className="px-2">
+                      <th className="px-4 py-4 text-sm font-medium  text-gray-700 whitespace-nowrap">
                         <label
-                          className="flex items-center gap-2  font-medium"
+                          className="flex items-center gap-2  font-medium "
                           htmlFor="select"
                         >
                           <input
                             id="select"
                             type="checkbox"
+                            className="cursor-pointer"
                             checked={
                               selectProducts.length === filteredData.length
                             }
                             onChange={handleSelectAll}
                           />
-                          Select all
+
                         </label>
                       </th>
                       <th
                         scope="col"
-                        className="py-3.5 px-4 text-sm font-normal text-left rtl:text-right "
+                        className="py-3.5  text-sm font-normal text-left rtl:text-right "
                       >
-                        <div className="flex items-center gap-x-3">
+                        <div className="flex items-center">
                           <span>Name</span>
                         </div>
                       </th>
@@ -498,12 +501,21 @@ const ManageProduct = () => {
                                 <div className="imgSm w-[20px] h-[20px] bg-red-50">
                                   <div
                                     style={{
-                                      backgroundImage: `url(${product?.featuredImage?.src ? product?.featuredImage?.src : product?.images[0]?.src})`,
+                                      backgroundImage: `url(${
+                                        product?.featuredImage?.src
+                                          ? product?.featuredImage?.src
+                                          : product?.images[0]?.src
+                                      })`,
                                     }}
-                                    className="w-12 h-12 object-cover bg-cover rounded-md border border-[#8080809d] overflow-hidden"></div>
+                                    className="w-12 h-12 object-cover bg-cover rounded-md border border-[#8080809d] overflow-hidden"
+                                  ></div>
                                   <div
                                     style={{
-                                      backgroundImage: `url(${product?.featuredImage?.src ? product?.featuredImage?.src : product?.images[0]?.src})`,
+                                      backgroundImage: `url(${
+                                        product?.featuredImage?.src
+                                          ? product?.featuredImage?.src
+                                          : product?.images[0]?.src
+                                      })`,
                                     }}
                                     className="absolute top-[-40px] z-50 duration-150 abs hidden bg-[url(${product?.featuredImage?.src})] left-[43px] object-cover bg-cover bg-white shadow-xl w-[150px] h-[150px] ring-1 ring-gray-500"
                                   ></div>
@@ -538,10 +550,12 @@ const ManageProduct = () => {
                                 </button>
                               ) : (
                                 (() => {
-                                  {/* const filteredWarehouses =
+                                  {
+                                    /* const filteredWarehouses =
                                     product?.warehouse?.filter(
                                       (ware) => ware.name !== ""
-                                    ); */}
+                                    ); */
+                                  }
                                   // console.log(filteredWarehouses);
                                   return (
                                     <button
@@ -571,13 +585,10 @@ const ManageProduct = () => {
                                     key={index}
                                   >
                                     {itm?.name}
-                                    {index !==
-                                      product.categories.length - 1 ||
+                                    {index !== product.categories.length - 1 ||
                                       (!itm?.name === "" && <FaAngleRight />)}
                                     {index < product.categories.length - 1 && (
-                                      <>
-                                        {itm?.name ? ',' : ''}
-                                      </>
+                                      <>{itm?.name ? "," : ""}</>
                                     )}
                                   </div>
                                 ))}
@@ -593,25 +604,23 @@ const ManageProduct = () => {
                                 {product?.warehouse?.filter(
                                   (item) => item?.name
                                 )?.length
-                                  ? product?.warehouse?.map(
-                                    (ware, index) => <span>{ware?.name}
+                                  ? product?.warehouse?.map((ware, index) => (
+                                      <span>
+                                        {ware?.name}
 
-                                      {index < product.warehouse.length - 1 && (
-                                        <>
-                                          {
-                                            ware?.name ? ',' : ''
-                                          }
-                                        </>
-                                      )}
-                                    </span>
-                                  )
+                                        {index <
+                                          product.warehouse.length - 1 && (
+                                          <>{ware?.name ? "," : ""}</>
+                                        )}
+                                      </span>
+                                    ))
                                   : "Select Warehouse"}
                               </button>
                             </td>
                             <td className="px-4 py-4 text-sm whitespace-nowrap">
                               <div className="flex items-center gap-x-2">
                                 {editMode === product._id &&
-                                  editedCommission ? (
+                                editedCommission ? (
                                   <div className="flex gap-2 ">
                                     <input
                                       type="text"
@@ -651,8 +660,7 @@ const ManageProduct = () => {
                             </td>
                             <td className="px-4 py-4 text-sm whitespace-nowrap">
                               <div className="flex items-center gap-x-2">
-                                {editMode === product._id &&
-                                  editedHandling ? (
+                                {editMode === product._id && editedHandling ? (
                                   <div className="flex gap-2 ">
                                     <input
                                       type="text"
@@ -716,7 +724,12 @@ const ManageProduct = () => {
                                   </svg>
                                 </button>
                                 {product.product_status == "reject" ? (
-                                  <button onClick={() => setRejectMessage(product)} className="px-2 py-1 text-red-500 ">Reject Reason</button>
+                                  <button
+                                    onClick={() => setRejectMessage(product)}
+                                    className="px-2 py-1 text-red-500 "
+                                  >
+                                    Reject Reason
+                                  </button>
                                 ) : (
                                   <button
                                     onClick={() => setOpenModal(product)}
@@ -765,6 +778,7 @@ const ManageProduct = () => {
                                   modalOpen={modalOpen}
                                   product={product}
                                   setModalOpen={setModalOpen}
+                                  reload={reload}
                                 />
                               )}
                             </div>
@@ -772,17 +786,19 @@ const ManageProduct = () => {
                             <div>
                               <div
                                 onClick={() => setOpenModal(false)}
-                                className={`fixed z-[100] flex items-center justify-center ${openModal._id == product?._id
-                                  ? "visible opacity-100"
-                                  : "invisible opacity-0"
-                                  } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
+                                className={`fixed z-[100] flex items-center justify-center ${
+                                  openModal._id == product?._id
+                                    ? "visible opacity-100"
+                                    : "invisible opacity-0"
+                                } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
                               >
                                 <div
                                   onClick={(e_) => e_.stopPropagation()}
-                                  className={`text- absolute w-[400px] rounded-sm bg-white p-6 drop-shadow-lg dark:bg-white dark:text-black ${openModal._id == product?._id
-                                    ? "scale-1 opacity-1 duration-300"
-                                    : "scale-0 opacity-0 duration-150"
-                                    }`}
+                                  className={`text- absolute w-[400px] rounded-sm bg-white p-6 drop-shadow-lg dark:bg-white dark:text-black ${
+                                    openModal._id == product?._id
+                                      ? "scale-1 opacity-1 duration-300"
+                                      : "scale-0 opacity-0 duration-150"
+                                  }`}
                                 >
                                   <form onSubmit={handleSubmit}>
                                     <h1 className="mb-2 text-2xl font-semibold">
@@ -812,8 +828,6 @@ const ManageProduct = () => {
                                 </div>
                               </div>
                             </div>
-
-
                           </tr>
                         );
                       })

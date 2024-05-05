@@ -13,7 +13,7 @@ const Pos = () => {
     const { data: products = [], reload } = useQuery({
         queryKey: ["pos-product"],
         queryFn: async () => {
-            const res = await fetch(`https://backend.doob.com.bd/api/v1/seller/get_pos_product/${shopInfo._id}`);
+            const res = await fetch(`https://backend.doob.com.bd/api/v1/seller/get-pos-product/${shopInfo._id}`);
             const data = await res.json();
             return data;
         },
@@ -47,7 +47,7 @@ const Pos = () => {
                 price: parseInt(findProduct.price),
                 quantity: 1,
                 sku: findProduct.sku,
-                img: findProduct.featuredImage.src
+                img: findProduct.featuredImage.src ? findProduct.featuredImage.src : findProduct.images[0].src,
             };
 
             if (existingProductIndex !== -1) {
@@ -64,17 +64,48 @@ const Pos = () => {
 
     }
 
-    const filteredData = searchValue == '' ? productList : productList.filter((itm) => itm.name.toLowerCase().includes(searchValue.toLowerCase()) || itm._id.includes(searchValue));
+    const filteredData = searchValue == '' ? productList : productList?.filter((itm) => itm.name.toLowerCase().includes(searchValue.toLowerCase()) || itm._id.includes(searchValue));
+
+
 
 
 
     const handleSearch = (e) => {
         e.preventDefault();
-        const searchValue = e.target.search.value;
+        const searchValue = e.target.search.value.trim().toLowerCase(); // Trim and convert to lowercase for case-insensitive search
         console.log(searchValue);
-        const findProduct = productList.find((itm) => itm._id.includes(searchValue));
-        const existingProductIndex = cartProducts.findIndex(itm => itm.id.includes(searchValue));
-        //need to reset e searchValue
+
+        const findProduct = productList.find((item) => {
+            // Check main SKU
+            if (item.sku && item.sku.toLowerCase().includes(searchValue)) {
+                return true;
+            }
+            // Check variations' SKU
+            if (item.variations) {
+                for (const variation of item.variations) {
+                    if (variation.SKU && variation.SKU.toLowerCase().includes(searchValue)) {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        });
+
+        const existingProductIndex = cartProducts.findIndex((item) => {
+            // Check main SKU
+            if (item.sku && item.sku.toLowerCase().includes(searchValue)) {
+                return true;
+            }
+            // Check variations' SKU
+            if (item.variations) {
+                for (const variation of item.variations) {
+                    if (variation.SKU && variation.SKU.toLowerCase().includes(searchValue)) {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        });
 
         if (findProduct) {
             const productInfo = {
@@ -83,7 +114,7 @@ const Pos = () => {
                 price: parseInt(findProduct.price),
                 quantity: 1,
                 sku: findProduct.sku,
-                img: findProduct.featuredImage.src
+                img: findProduct.featuredImage.src ? findProduct.featuredImage.src : findProduct.images[0].src
             };
 
             if (existingProductIndex !== -1) {
@@ -96,9 +127,11 @@ const Pos = () => {
                 setCartProducts([...cartProducts, productInfo]);
             }
             e.target.reset();
-
         }
+
     };
+
+
 
 
 
@@ -122,10 +155,10 @@ const Pos = () => {
                         </div>
                         <div className="bg-gray-100 p-4 mt-3  overflow-y-auto grid md:grid-cols-3 lg:grid-cols-5 grid-cols-2 gap-3 max:h-[90vh]">
                             {
-                                filteredData.length ? filteredData?.filter((itm) => itm?.status).map((itm, index) => (
+                                filteredData.length ? filteredData?.map((itm, index) => (
                                     <div key={itm?._id}>
                                         <div onClick={() => addProductToCart(itm)} className="card bg-white p-2 h-[200px] ">
-                                            <div style={{ backgroundImage: `url('${itm?.featuredImage?.src}')` }} className="card-body md:h-[130px]  h-[130px] bg-cover object-cover ">
+                                            <div style={{ backgroundImage: `url('${itm?.featuredImage?.src ? itm?.featuredImage?.src : itm?.images[0].src}')` }} className="card-body md:h-[130px]  h-[130px] bg-cover object-cover ">
 
                                             </div>
                                             <div className="card-footer py-2 justify-between px-3">

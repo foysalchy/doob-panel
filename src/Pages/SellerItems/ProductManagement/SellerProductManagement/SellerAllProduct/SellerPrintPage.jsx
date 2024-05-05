@@ -197,4 +197,3 @@ const SellerPrintPage = ({ setOn, products }) => {
 };
 
 export default SellerPrintPage;
-
