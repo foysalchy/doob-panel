@@ -76,7 +76,7 @@ const UserPayment = () => {
     order.callback = "https://doob.com.bd/services-payment-successful";
     try {
       const response = await fetch(
-        "https://backend.doob.com.bd/api/v1/seller/bkash/payment/create",
+        "http://localhost:5001/api/v1/seller/bkash/payment/create",
         {
           method: "POST",
           headers: {

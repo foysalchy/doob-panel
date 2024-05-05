@@ -109,7 +109,8 @@ const ShopPath = [
         `https://backend.doob.com.bd/api/v1/shop/product/${id}/product/${productID}`
       );
     },
-  }, {
+  },
+  {
     path: ":id/flash-product/:productID", // Use a dynamic route parameter for the product ID
     element: <FlashProduct />,
     loader: async ({ params }) => {
@@ -199,7 +200,6 @@ const ShopPath = [
     path: ":id/user/payment",
     element: (
       <IsUserRegistration>
-
         <Payment />
       </IsUserRegistration>
     ),
@@ -270,13 +270,19 @@ const ShopPath = [
         console.log("shop_id or userId not found in the URL");
       }
     },
-
   },
   {
-    path: ':id/confirm-order',
-    element: <ConfirmOrder />
+    path: ":id/confirm-order",
+    element: <ConfirmOrder />,
   },
-
+  {
+    path: ":id/user/success",
+    element: (
+      <IsUserRegistration>
+        <Payment />
+      </IsUserRegistration>
+    ),
+  },
 
   // },
 
