@@ -1,4 +1,4 @@
-name: Build and Deploy
+name: Deploy to Server
 
 on:
   push:
@@ -13,14 +13,21 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Install dependencies
-        run: npm install
-
-      - name: Build
-        run: npm run build
-
-      - name: Deploy
+      - name: Install dependencies and build
         run: |
-          scp -r -o "StrictHostKeyChecking=no" -o "PasswordAuthentication=yes" dist root@152.42.184.243:/var/www/SaleNow-Frontend << EOF
-          mAhadi624234a
-          EOF
+          # Add commands to install dependencies and build your project
+          # For example, if you are using npm:
+          # npm install
+          # npm run build
+
+      - name: Deploy to Server
+        uses: appleboy/scp-action@master
+        with:
+          host: 152.42.184.243
+          username: root
+          key: mAhadi624234a
+          source: dist
+          target: /var/www/SaleNow-Frontend
+
+# Make sure to add your SSH private key as a secret in your GitHub repository settings.
+# Name the secret SSH_PRIVATE_KEY.
