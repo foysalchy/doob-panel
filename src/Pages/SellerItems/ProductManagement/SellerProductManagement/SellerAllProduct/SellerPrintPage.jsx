@@ -29,14 +29,14 @@ const SellerPrintPage = ({ setOn, products }) => {
                 <div
                     ref={componentRef}
                     className="p-12 mx-8 print-data   mt-6">
-
-                    <header className="flex items-start justify-between">
-                        <img src={shopInfo?.logo} alt="logo" className='w-[200px]' />
-                        <div className='whitespace-wrap w-[300px]'>
-                            <p className='text-gray-600 text-end'>{shopInfo?.address}</p>
-                            <p className='text-gray-600 text-end'>{shopInfo?.shopName}</p>
-                        </div>
-                    </header>
+                    {shopInfo?.address || shopInfo?.shopNumber &&
+                        <header className="flex items-start justify-between">
+                            <img src={shopInfo?.logo} alt="logo" className='w-[200px]' />
+                            <div className='whitespace-wrap w-[300px]'>
+                                <p className='text-gray-600 text-end'>{shopInfo?.address}</p>
+                                <p className='text-gray-600 text-end'>{shopInfo?.shopName}</p>
+                            </div>
+                        </header>}
 
                     <main>
                         <div className="flex items-center justify-center py-1 font-bold text-gray-600 bg-gray-200 mt-8 text-center ">
@@ -46,57 +46,58 @@ const SellerPrintPage = ({ setOn, products }) => {
                         {/*................*/}
                         {/*.... Address ...*/}
                         {/*................*/}
-                        <div className="flex items-center justify-between mt-4">
-                            <div>
-                                <div className='flex items-center gap-2'>
-                                    <h4 className='font-semibold text-gray-700 text-sm'>
-                                        Email :
-                                    </h4>
-                                    <p className="text-gray-600 text-sm">{shopInfo?.shopEmail}</p>
+                        {shopInfo?.shopNumber || shopInfo?.shopEmail &&
+                            <div className="flex items-center justify-between mt-4">
+                                <div>
+                                    <div className='flex items-center gap-2'>
+                                        <h4 className='font-semibold text-gray-700 text-sm'>
+                                            Email :
+                                        </h4>
+                                        <p className="text-gray-600 text-sm">{shopInfo?.shopEmail}</p>
+                                    </div>
+                                    <div className='flex items-center gap-2'>
+                                        <h4 className='font-semibold text-gray-700 text-sm'>
+                                            Phone :
+                                        </h4>
+                                        <p className="text-gray-600 text-sm">{shopInfo?.shopNumber}</p>
+                                    </div>
                                 </div>
-                                <div className='flex items-center gap-2'>
-                                    <h4 className='font-semibold text-gray-700 text-sm'>
-                                        Phone :
-                                    </h4>
-                                    <p className="text-gray-600 text-sm">{shopInfo?.shopNumber}</p>
+
+                                <div>
+                                    <li className='flex justify-start items-center gap-2'>
+                                        <h4 className='font-semibold text-gray-700 text-sm'>
+                                            Invoice No :
+                                        </h4>
+                                        <p className="text-gray-600 text-sm">{shopInfo?._id}</p>
+                                    </li>
+                                    <li className='flex justify-start items-center gap-2'>
+                                        <h4 className='font-semibold text-gray-700 text-sm'>
+                                            Invoice Date :
+                                        </h4>
+                                        <p className="text-gray-600 text-sm">{
+                                            new Date().toDateString(shopInfo?.time_stamp)
+                                        }</p>
+                                    </li>
+                                    <br />
+                                    <li className='flex justify-start items-center gap-2'>
+                                        <h4 className='font-semibold text-gray-700 text-sm'>
+                                            Payment Date :
+                                        </h4>
+                                        <p className="text-gray-600 text-sm">{
+                                            new Date().toDateString(shopInfo?.paymentDate)
+                                        }</p>
+                                    </li> <li className='flex justify-start items-center gap-2'>
+                                        <h4 className='font-semibold text-gray-700 text-sm'>
+                                            Order Date :
+                                        </h4>
+                                        <p className="text-gray-600 text-sm">{
+                                            new Date().toDateString(shopInfo?.date)
+                                        }</p>
+                                    </li>
+
                                 </div>
-                            </div>
 
-                            <div>
-                                <li className='flex justify-start items-center gap-2'>
-                                    <h4 className='font-semibold text-gray-700 text-sm'>
-                                        Invoice No :
-                                    </h4>
-                                    <p className="text-gray-600 text-sm">{shopInfo?._id}</p>
-                                </li>
-                                <li className='flex justify-start items-center gap-2'>
-                                    <h4 className='font-semibold text-gray-700 text-sm'>
-                                        Invoice Date :
-                                    </h4>
-                                    <p className="text-gray-600 text-sm">{
-                                        new Date().toDateString(shopInfo?.time_stamp)
-                                    }</p>
-                                </li>
-                                <br />
-                                <li className='flex justify-start items-center gap-2'>
-                                    <h4 className='font-semibold text-gray-700 text-sm'>
-                                        Payment Date :
-                                    </h4>
-                                    <p className="text-gray-600 text-sm">{
-                                        new Date().toDateString(shopInfo?.paymentDate)
-                                    }</p>
-                                </li> <li className='flex justify-start items-center gap-2'>
-                                    <h4 className='font-semibold text-gray-700 text-sm'>
-                                        Order Date :
-                                    </h4>
-                                    <p className="text-gray-600 text-sm">{
-                                        new Date().toDateString(shopInfo?.date)
-                                    }</p>
-                                </li>
-
-                            </div>
-
-                        </div>
+                            </div>}
 
                         {/*................*/}
                         {/*.... Product ...*/}
@@ -118,7 +119,7 @@ const SellerPrintPage = ({ setOn, products }) => {
                                             {
                                                 order?.map(itm => <tr key={itm?._id} className="text-gray-700">
                                                     <td className="px-2 w-[90px] py-2 border border-gray-800">
-                                                        <img src={itm?.featuredImage ? itm?.featuredImage : itm?.images[0]?.src} alt="photo" className="w-12 h-12 border object-cover m-auto rounded bg-indigo-400" />
+                                                        <img src={itm?.featuredImage.src ? itm?.featuredImage?.src : itm?.images[0]?.src} alt="photo" className="w-12 h-12 border object-cover m-auto rounded bg-indigo-400" />
                                                     </td>
                                                     <td className="px-2 py-2 w-[500px] text-sm border border-gray-800">
                                                         {itm?.name}
@@ -183,7 +184,7 @@ const SellerPrintPage = ({ setOn, products }) => {
     }
 
     return (
-        <div className="bg-gray-100 p-12">
+        <div className="bg-gray-100 p-12 fixed h-screen w-full overflow-y-auto">
             <div className="flex items-center gap-2">
                 <button onClick={() => setOn(false)} className='bg-gray-900 px-6 py-2 rounded-2 text-white rounded-md'>Cancel</button>
 
