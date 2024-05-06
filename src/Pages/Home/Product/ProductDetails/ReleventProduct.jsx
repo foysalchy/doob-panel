@@ -60,31 +60,31 @@ const ReleventProduct = ({ productFind }) => {
                 <Link to={`/products/${product._id}`} className="mt-2">
                   <div
                     key={idx}
-                    className="p-4 flex flex-col justify-center items-center w-full md:w-11/12 lg:mx-2 text-black rounded"
+                    className="p-4 flex flex-col justify-center border items-center w-full md:w-11/12 lg:mx-2 text-black rounded"
                   >
                     <a className="block w-full relative h-[220px] rounded overflow-hidden">
                       <img
                         alt="ecommerce"
-                        className="object-cover w-full h-full block"
+                        className="object-cover w-full h-full block border rounded"
                         srcSet={product?.featuredImage?.src ? product?.featuredImage?.src : product?.images[0]?.src}
                         src={product?.featuredImage?.src ? product?.featuredImage?.src : product?.images[0]?.src}
                       />
                     </a>
-                    <div className="mt-4 text-start">
-                      <h3 className="text-md mb-1 font-medium">
-                        {product?.name.slice(0, 100)}
+                    <div className="mt-4 w-full text-start ">
+                      <h3 className="text-md w-full mb-1 h-[52px] overflow-hidden font-medium">
+                        {product?.name.slice(0, 60)}
                       </h3>
-                      <div
+                      {/* <div
                         className="text-sm text_editor text-gray-600"
                         dangerouslySetInnerHTML={{
                           __html:
                             product?.shortDescription?.slice(0, 150) + "...",
                         }}
-                      ></div>
+                      ></div> */}
 
-                      <div className="flex justify-start mt-3">
-                        <p className="py-0 font-medium">{product?.price}</p>
-                        <del>{product.discountPrice}</del>
+                      <div className="flex justify-start gap-4 mt-3">
+                        <p className="py-0 font-medium">৳ {product?.price}</p>
+                        <del> ৳{product.discountPrice ? product.discountPrice : 0}</del>
                       </div>
 
 

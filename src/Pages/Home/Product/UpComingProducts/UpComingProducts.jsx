@@ -27,7 +27,7 @@ const UpComingProducts = () => {
   const blankImg = "";
 
   return (
-    <div className="  bg-white">
+    <div className="mt-3 py-6 bg-white">
       <div className="px-5">
         <div className="flex justify-between text-black">
           <div className="flex justify-between align-items-center">
@@ -108,7 +108,7 @@ const UpComingProducts = () => {
                           />
                         </div>
                         <div className="relative bg-white pt-3">
-                          <h3 className="text-sm h-5 overflow-hidden text-gray-700 group-hover:underline group-hover:underline-offset-4">
+                          <h3 className="text-sm h-5 whitespace-nowrap overflow-hidden text-gray-700 group-hover:underline group-hover:underline-offset-4">
                             {product?.name}
                           </h3>
 

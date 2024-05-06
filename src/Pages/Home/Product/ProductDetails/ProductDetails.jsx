@@ -374,7 +374,7 @@ const ProductDetails = () => {
           image={productFind.MetaImage}
         />
         <div className="max-w-7xl mx-auto px-4 md:px-4 lg:px-12 ">
-          <div className="flex items-center space-x-2 text-gray-400 text-sm">
+          <div className="flex flex-wrap gap-2 items-center justify-start space-x-2 text-gray-400 text-sm">
             <Link
               to={"/products"}
               className="hover:underline hover:text-gray-600"
@@ -432,17 +432,17 @@ const ProductDetails = () => {
             <div className="md:flex-1 px-4">
               <div>
                 <div className="h-64  md:h-[22rem] rounded-lg bg-gray-100 mb-4">
-                  <div className="h-64 md:h-full rounded-lg bg-gray-100 mb-4 flex items-center justify-center">
+                  <div className="h-64 border md:h-full rounded-lg bg-gray-100 mb-4 flex items-center justify-center">
                     {selected_image ? (
                       <img
-                        className="w-94 h-full"
+                        className="md:w-94 w-full object-cover h-full rounded-lg"
                         src={selected_image}
                         srcSet={selected_image}
                         alt="product image"
                       />
                     ) : (
                       <img
-                        className="w-94 h-full"
+                        className="md:w-94 w-full object-cover h-full rounded-lg"
                         src={productFind?.images[0].src}
                         srcSet={productFind?.images[0].src}
                         alt="product image"
@@ -450,16 +450,16 @@ const ProductDetails = () => {
                     )}
                   </div>
                 </div>
-                <div className="grid grid-cols-4 md:grid-cols-4 lg:grid-cols-6 gap-2 -m-4 text-white">
+                <div className="mt-3 grid md:grid-cols-8 grid-cols-5 gap-2">
                   {image_list?.map((imageUrl, index) => (
-                    <div key={index} className="p-4 w-full md:w-11/12 rounded">
+                    <div key={index} className="">
                       <button
-                        className="block relative h-16 rounded overflow-hidden border"
+                        className="block relative w-full md:h-[50px] h-[60px] rounded overflow-hidden border"
                         onClick={() => setSelected_image(imageUrl?.src)}
                       >
                         <img
                           alt={`ecommerce${index + 1}`}
-                          className="object-cover cursor-pointer block w-full h-full p-2 "
+                          className="object-cover cursor-pointer block w-full h-full p-1 rounded-lg"
                           src={imageUrl?.src}
                           srcSet={imageUrl?.src}
                         />
@@ -469,6 +469,7 @@ const ProductDetails = () => {
                 </div>
               </div>
             </div>
+            <br />
             <div className="md:flex-1 px-4 ">
               <div className="flex items-center">
                 {productFind?.stock_quantity > quantity ? (
@@ -694,7 +695,7 @@ const ProductDetails = () => {
                 </div>
                 <button
                   onClick={balk_buy}
-                  className="h-10 px-4 whitespace-nowrap py-2 text-sm rounded bg-orange-600 hover:bg-orange-500 text-white"
+                  className="h-10 md:px-4 px-2 whitespace-nowrap py-2 text-sm rounded bg-orange-600 hover:bg-orange-500 text-white"
                   type="button"
                 >
                   Add Store
@@ -713,14 +714,14 @@ const ProductDetails = () => {
                   <button
                     onClick={() => setInvoice(productFind?._id)}
                     type="button"
-                    className="h-10 px-6 py-2 text-sm rounded bg-indigo-600 hover:bg-indigo-500 text-white text-nowrap"
+                    className="h-10 md:px-6 px-4 py-2 text-sm rounded bg-indigo-600 hover:bg-indigo-500 text-white text-nowrap"
                   >
                     Buy Now
                   </button>
                   <button
                     onClick={() => add_to_cart(productFind)}
                     type="button"
-                    className="h-10 px-8 py-2 text-sm rounded bg-gray-600 hover:bg-gray-500 text-white text-nowrap"
+                    className="h-10 md:px-8 px-2 py-2 text-sm rounded bg-gray-600 hover:bg-gray-500 text-white text-nowrap"
                   >
                     <TbShoppingBagPlus className="text-2xl" />
                   </button>
@@ -761,12 +762,13 @@ const ProductDetails = () => {
             </div>
           </div>
 
+
           <div className="border  w-full">
             <div className="p-4">
               <h2 className="text-lg font-semibold mb-4">New Exclusive</h2>
               <div className="space-y-4">
                 {
-                  releventProduct?.slice(0, 4)?.map((product, index) => <Link to={`/products/${product?._id}`} key={product?._id} className="border w-full duration-150 group hover:shadow-lg flex items-start gap-2 p-3 rounded">
+                  releventProduct?.slice(0, 3)?.map((product, index) => <Link to={`/products/${product?._id}`} key={product?._id} className="border w-full duration-150 group hover:shadow-lg flex items-start gap-2 p-3 rounded">
                     <img
                       alt="Product Image"
                       className="w-20 h-20 bg-gray-200 rounded mb-2"
@@ -791,7 +793,7 @@ const ProductDetails = () => {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 md:px-4 lg:px-8 my-6">
+      <div className="max-w-7xl m-auto px-4  md:px-4 lg:px-8 my-6">
         {/* comment form */}
         {user && (
           <div className="bg-gray-100 hidden py-2 px-3">

@@ -1,9 +1,11 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { ShopAuthProvider } from "../../../../../AuthProvider/ShopAuthProvide";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 
 const AllProduct = () => {
+  const [displayedProducts, setDisplayedProducts] = useState(10);
+
   const { shop_id } = useContext(ShopAuthProvider);
   // console.log(`https://backend.doob.com.bd/api/v1/shop/product/${shop_id.shop_id}/all-product?limit=20`);
   const { data: newProducts = [], refetch } = useQuery({
@@ -20,9 +22,17 @@ const AllProduct = () => {
   useEffect(() => {
     refetch();
   }, [shop_id])
+
+  const handleLoadMore = () => {
+    setDisplayedProducts((prev) => prev + 10);
+    refetch();
+  };
+
+
+
   return (
-    <div>
-      <div className="py-4 bg-white rounded mt-6">
+    <div className="bg-white py-4 mt-6">
+      <div className=" bg-white pt-6 rounded mt-[-65px]">
         <section className="body-font">
           <div className="px-5">
             <div className="flex justify-between text-black">
@@ -36,20 +46,20 @@ const AllProduct = () => {
 
                 <h3 className="whitespace-nowrap ml-2 font-medium">For You</h3>
               </div>
-              <button
+              {/* <button
                 type="button"
                 className="px-5 py-2 font-semibold rounded bg-black text-gray-100 text-xs "
               >
                 SHOP MORE
-              </button>
+              </button> */}
             </div>
           </div>
           <div className="border-b border-gray-200 mx-5 mt-2"></div>
-          <div className="container px-10 py-8 mx-auto">
+          <div className="container md:px-10 px-4 py-8 mx-auto">
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 -m-4 text-black">
-              {newProducts?.data?.map((product, idx) => {
+              {newProducts?.data?.slice(0, displayedProducts)?.map((product, idx) => {
                 return (
-                  <Link key={product?._id} to={`product/${product?._id}`}>
+                  <Link className="border border-gray-300 overflow-hidden rounded p-2" key={product?._id} to={`product/${product?._id}`}>
                     <a className="block relative rounded overflow-hidden">
                       <img
                         alt="ecommerce"
@@ -58,7 +68,7 @@ const AllProduct = () => {
                       />
                     </a>
                     <div className="mt-2">
-                      <h2 className="text-black title-font md:text-lg text-sm font-medium">
+                      <h2 className="text-black whitespace-nowrap title-font md:text-lg text-sm font-medium">
                         {product?.name.slice(0, 18)}..
                       </h2>
                       <div className="flex items-center gap-10 text-black">
@@ -74,7 +84,7 @@ const AllProduct = () => {
 
                       <button
                         type="button"
-                        className="px-5 py-2  font-semibold rounded bg-black text-white w-full mt-3 text-xs "
+                        className="px-5 py-2 whitespace-nowrap font-semibold rounded bg-black text-white w-full mt-3 text-xs "
                       >
                         Add to card
                       </button>
@@ -87,12 +97,17 @@ const AllProduct = () => {
         </section>
       </div>
       <div className="mt-6 flex justify-center">
-        <button
-          type="button"
-          className="px-5 py-2  font-semibold rounded bg-black text-white text-xs "
-        >
-          LOAD MORE
-        </button>
+        {newProducts && newProducts.data && newProducts.data.length > displayedProducts && (
+          <div className="mt-6 flex justify-center">
+            <button
+              onClick={handleLoadMore}
+              type="button"
+              className="px-5 py-2 font-semibold rounded bg-black text-white text-xs"
+            >
+              LOAD MORE
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );

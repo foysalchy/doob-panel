@@ -83,9 +83,9 @@ const ForYouProducts = () => {
                     return (
                       <Link
                         to={`${product._id}`}
-                        className="group block overflow-hidden"
+                        className="group block overflow-hidden border rounded p-2 "
                       >
-                        <div className="relative h-[180px] sm:h-[250px]">
+                        <div className="relative h-[140px] sm:h-[250px]">
                           <img
                             src={
                               product?.featuredImage?.src
@@ -93,7 +93,7 @@ const ForYouProducts = () => {
                                 : product?.images[0]?.src
                             }
                             alt=""
-                            className="absolute inset-0 h-full w-full object-cover opacity-100 group-hover:opacity-0"
+                            className="absolute rounded inset-0 h-full w-full object-cover opacity-100 group-hover:opacity-0"
                           />
 
                           <img
@@ -104,7 +104,7 @@ const ForYouProducts = () => {
                         </div>
 
                         <div className="relative bg-white pt-3">
-                          <h3 className="text-sm h-5 overflow-hidden text-gray-700 group-hover:underline group-hover:underline-offset-4">
+                          <h3 className="text-sm whitespace-nowrap h-5 overflow-hidden text-gray-700 group-hover:underline group-hover:underline-offset-4">
                             {name}
                           </h3>
 

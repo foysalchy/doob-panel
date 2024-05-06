@@ -22,6 +22,8 @@ const TrandingProductShop = () => {
     },
   });
 
+
+  console.log(newProducts, "newProducts");
   return (
     <div>
       <div className="py-4 bg-white rounded mt-6">
@@ -50,22 +52,22 @@ const TrandingProductShop = () => {
                   <Link
                     to={`/shop/${shopId}/product/${product?._id}`}
                     key={idx}
-                    className="p-4 w-full md:w-11/12 border lg:mx-2 text-black rounded"
+                    className="p-2 w-full  border lg:mx-2 text-black rounded"
                   >
-                    <a className="block relative h-32 rounded overflow-hidden">
+                    <a className="block relative w-full m-auto h-32 rounded overflow-hidden">
                       <img
                         alt="ecommerce"
-                        className="object-cover h-full block"
-                        src={product?.featuredImage?.src}
-                        srcSet={product?.featuredImage?.src}
+                        className="object-cover h-full block w-full m-auto border rounded"
+                        src={product?.featuredImage[0]?.src ? product?.featuredImage[0]?.src : product?.images[0]?.src}
+                        srcSet={product?.featuredImage[0]?.src}
                       />
                     </a>
                     <div className="mt-4 text-center">
-                      <h3 className="text-xs mb-1 font-medium">
+                      <h3 className="text-xs whitespace-nowrap mb-1 font-medium">
                         {product?.name.slice(0, 20)}..
                       </h3>
 
-                      <div className="flex justify-evenly">
+                      <div className="flex justify-evenly mt-2">
                         <p className="py-0 font-medium">
                           {" "}
                           {product?.regular_price}
@@ -75,7 +77,7 @@ const TrandingProductShop = () => {
                       <div className="mt-2">
                         <button
                           type="button"
-                          className="px-5 py-2  font-semibold rounded bg-black text-white text-xs "
+                          className="px-5 py-2  font-semibold w-full rounded bg-black text-white text-xs "
                         >
                           Add to card
                         </button>

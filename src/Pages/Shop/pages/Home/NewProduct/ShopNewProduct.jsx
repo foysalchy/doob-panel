@@ -96,8 +96,8 @@ const ShopNewProduct = () => {
                           />
                         </a>
                         <div className="mt-2">
-                          <h2 className="text-black title-font md:text-lg text-sm font-medium">
-                            {product?.name.slice(0, 18)}..
+                          <h2 className="text-black whitespace-nowrap title-font md:text-lg text-sm font-medium">
+                            {product?.name.slice(0, 18)}
                           </h2>
                           <div className="flex items-center gap-10 text-black">
                             <del className="flex items-center ">
