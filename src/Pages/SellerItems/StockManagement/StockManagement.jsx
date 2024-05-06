@@ -70,6 +70,31 @@ const StockManagement = () => {
         },
         allowOutsideClick: () => !Swal.isLoading(),
       });
+    } else {
+      const bodyData = {
+        status: status,
+      };
+
+      console.log(bodyData, "bodyData");
+      // return;
+
+      // Make the fetch call inside the preConfirm callback
+      return fetch(
+        `https://backend.doob.com.bd/api/v1/admin/stock-request-update?productId=${data?.productId}&orderId=${data?._id}&quantity=${data?.quantity}&SKU=${data?.SKU}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(bodyData),
+        }
+      )
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+          BrightAlert("Update Quantity", "", "success");
+          refetch();
+        });
     }
   };
 
@@ -284,7 +309,7 @@ const StockManagement = () => {
                                   onClick={() => handleUpdate(itm, "active")}
                                   className="inline-flex  rounded-full gap-x-2    text-sm items-center gap-2 bg-[#23b123ea] px-2 py-1 text-white "
                                 >
-                                  Pending
+                                  Approve
                                 </button>
                                 <button
                                   onClick={() => handleUpdate(itm, "reject")}
