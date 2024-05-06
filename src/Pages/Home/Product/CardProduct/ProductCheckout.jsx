@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 const ProductCheckout = ({ setNext, products, userInfo, setUserInfo }) => {
+    const [userType, setUserType] = useState();
 
     const handleChange = (e) => {
         const { name, value } = e.target;
