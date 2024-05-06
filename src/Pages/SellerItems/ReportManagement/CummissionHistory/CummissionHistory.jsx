@@ -82,9 +82,42 @@ const CommissionHistory = () => {
     );
   };
 
+
+  const [selectedItems, setSelectedItems] = useState([]);
+  const handleSelectAll = (e, data) => {
+    const isChecked = e.target.checked;
+    if (isChecked) {
+      setSelectedItems(data);
+    } else {
+      setSelectedItems([]);
+    }
+  };
+
+  const handleCheckboxChange = (event, item) => {
+    const isChecked = event.target.checked;
+    if (isChecked) {
+      // If checkbox is checked, add item to selectedItems array
+      setSelectedItems((prevSelectedItems) => [...prevSelectedItems, item]);
+    } else {
+      // If checkbox is unchecked, remove item from selectedItems array
+      setSelectedItems((prevSelectedItems) =>
+        prevSelectedItems.filter(
+          (selectedItem) => selectedItem._id !== item._id
+        )
+      );
+    }
+  };
+
+
+  const prints = () => {
+    console.log('data= ', selectedItems);
+  }
+
   return (
     <div>
       <section className="container px-4 mx-auto">
+        <button onClick={prints}>Log Checked Items</button>
+
         <div className="flex flex-col">
           <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
             <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
@@ -99,6 +132,14 @@ const CommissionHistory = () => {
                         <div className="flex items-center gap-x-3">
                           <input
                             type="checkbox"
+                            onChange={(e) => {
+                              handleSelectAll(e, currentData);
+                            }}
+                            checked={
+                              currentData?.length === selectedItems?.length
+                                ? true
+                                : false
+                            }
                             className="text-blue-500 border-gray-300 rounded dark:bg-gray-900 dark:ring-offset-gray-900 dark:border-gray-700"
                           />
                           <button className="flex items-center gap-x-2">
@@ -152,6 +193,10 @@ const CommissionHistory = () => {
                           <div className="inline-flex items-center gap-x-3">
                             <input
                               type="checkbox"
+                              onChange={(e) => handleCheckboxChange(e, history)}
+                              checked={selectedItems.some(
+                                (selectedItem) => selectedItem._id === history._id
+                              )}
                               className="text-blue-500 border-gray-300 rounded dark:bg-gray-900 dark:ring-offset-gray-900 dark:border-gray-700"
                             />
                             <span>#{history._id}</span>

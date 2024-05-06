@@ -95,7 +95,7 @@ const ShopUpcoming = () => {
                         />
                       </a>
                       <div className="mt-4">
-                        <h2 className="text-gray-900 title-font md:text-lg text-sm font-medium">
+                        <h2 className="text-gray-900 whitespace-nowrap title-font md:text-lg text-sm font-medium">
                           {product?.name.slice(0, 20)}..
                         </h2>
                         <div className="flex items-center gap-10 text-gray-800">

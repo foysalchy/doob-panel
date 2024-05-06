@@ -48,7 +48,7 @@ const ManageOrder = () => {
       return data.data;
     },
   });
-  
+
   const getOrderCount = (orders, status) => {
     return orders.filter(
       (order) =>
@@ -534,20 +534,20 @@ const ManageOrder = () => {
                         <li className="flex items-center border-b">
                           <div className="px-2 w-[170px]">name :</div>
                           <div className="border-l py-2 ml-1 pl-2">
-                            {itm?.addresses.fullName}
+                            {itm?.addresses?.fullName ? itm?.addresses?.fullName : ''}
                           </div>
                         </li>
                         <li className="flex border-b items-center">
                           <div className="px-2 w-[170px]">Address :</div>
                           <div className="border-l py-2 ml-1 pl-2">
-                            {itm?.addresses.address},{itm?.addresses?.area},{" "}
+                            {itm?.addresses?.address},{itm?.addresses?.area},{" "}
                             {itm?.addresses?.city}
                           </div>
                         </li>
                         <li className="flex border-b items-center">
                           <div className="px-2 w-[170px]">Number :</div>
                           <div className="border-l py-2 ml-1 pl-2">
-                            {itm?.addresses.mobileNumber}
+                            {itm?.addresses?.mobileNumber}
                           </div>
                         </li>
                         <li className="flex border-b items-center">
@@ -598,7 +598,7 @@ const ManageOrder = () => {
                               </td>
                               <td className="">
                                 <h3 className="">
-                                  {list.productName
+                                  {list?.productName
                                     ?.split(" ")
                                     .slice(0, 5)
                                     .join(" ")}

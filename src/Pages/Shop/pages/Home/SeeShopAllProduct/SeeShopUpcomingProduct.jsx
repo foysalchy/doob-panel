@@ -980,18 +980,18 @@ const SeeShopUpcomingProduct = () => {
                                 {/* lg */}
                                 <div className={`${isGrid === 'grid' ? 'md:grid grid-cols-3 gap-3' : ''}`}>
                                     {
-                                        filterData && filterData?.map((itm) => (
+                                        filterData.length && filterData?.map((itm) => (
                                             <div key={itm?._id}>
                                                 {
                                                     isGrid === 'list' ?
-                                                        <div className="group md:grid grid-cols-3 mb-3 gap-3 w-full p-3 border rounded-lg">
+                                                        <Link to={`/shop/${shopId}/product/${itm?._id}`} className="group grid grid-cols-3 mb-3 gap-3 w-full p-3 border rounded-lg  duration-200 hover:border-gray-300">
                                                             <a
-                                                                className="relative mx-3 mt-3 flex h-40 overflow-hidden rounded-xl"
+                                                                className="relative md:mx-3 md:mt-3 flex md:h-40 h-full border overflow-hidden rounded-xl"
                                                                 href="#"
                                                             >
                                                                 <img
                                                                     className="peer absolute top-0 right-0 h-full w-full object-cover"
-                                                                    src={itm?.featuredImage.length && itm?.featuredImage?.src}
+                                                                    src={itm?.featuredImage?.src ?? itm?.images[0]?.src}
                                                                     alt="product image"
                                                                 />
                                                                 {itm?.images[1] && <img
@@ -1016,12 +1016,13 @@ const SeeShopUpcomingProduct = () => {
                                                                 </svg>
                                                                 {/* <span className="absolute top-0 left-0 m-2 rounded-full bg-black px-2 text-center text-sm font-medium text-white">39% OFF</span> */}
                                                             </a>
+
                                                             <div className="col-span-2">
-                                                                <h5 className="text-lg tracking-tight text-slate-900">
-                                                                    {itm?.name}
+                                                                <h5 className="md:text-lg text-sm tracking-tight text-slate-900">
+                                                                    {itm?.name.slice(0, 35)}
                                                                 </h5>
 
-                                                                <div className="flex text-2xl mt-3 items-center gap-6">
+                                                                <div className="flex md:text-2xl text-sm mt-3 items-center gap-6">
                                                                     <h1 className="font-bold  ">৳{itm?.regular_price}</h1>
                                                                     <del className="font-bold   text-gray-400">৳{itm?.price}</del>
                                                                 </div>
@@ -1031,43 +1032,43 @@ const SeeShopUpcomingProduct = () => {
                                                                         {myRating(itm.rating_count).map(itm => <FaStar className="text-orange-500" />)} {itm.rating_count}
                                                                         <div className="w-[5px] h-[5px] bg-gray-400  text-transparent rounded-full">.</div>
                                                                     </div>
-                                                                    <div className='flex items-center gap-2'>
+                                                                    <div className='flex md:text-md text-xs items-center gap-2'>
                                                                         {itm?.total_sales} orders <div className="w-[5px] h-[5px] bg-gray-400  text-transparent rounded-full">.</div>
                                                                     </div>
                                                                 </div>
 
                                                                 <div className=" ">
                                                                     {/* <p dangerouslySetInnerHTML={{ __html: itm?.shortDescription }} /> */}
-                                                                    <p className="text-gray-400 mt-2">
+                                                                    <p className="text-gray-400 mt-2 md:block hidden">
                                                                         {itm?.metaDescription.slice(0, 200)}
                                                                     </p>
                                                                 </div>
 
                                                                 <div className="flex items-center gap-3 mt-3">
                                                                     <Link>
-                                                                        <div className="bg-black px-4 py-2 rounded-md text-white">
+                                                                        <div className="bg-black px-4 py-2 rounded-md whitespace-nowrap text-white">
                                                                             Add to Cart
                                                                         </div>
                                                                     </Link>
                                                                     <Link to={`/products/${itm?._id}`}>
-                                                                        <div className="bg-blue-500 px-4 py-2 rounded-md text-white">
+                                                                        <div className="bg-blue-500 px-4 py-2 rounded-md text-white whitespace-nowrap">
                                                                             Buy Now
                                                                         </div>
                                                                     </Link>
                                                                 </div>
                                                             </div>
-                                                        </div>
+                                                        </Link>
 
                                                         :
 
-                                                        <div className="group grid  mb-3 gap-3 w-full p-3 border rounded-lg">
+                                                        <Link to={`/shop/${shopId}/product/${itm?._id}`} className="group grid  mb-3 gap-3 w-full p-3 border rounded-lg">
                                                             <a
-                                                                className="relative  border flex h-60 overflow-hidden rounded-xl"
+                                                                className="relative  md:border flex h-60 overflow-hidden rounded-xl"
                                                                 href="#"
                                                             >
                                                                 <img
                                                                     className="peer absolute top-0 right-0 h-full w-full object-cover"
-                                                                    src={itm?.featuredImage?.src}
+                                                                    src={itm?.featuredImage?.src ?? itm?.images[0]?.src}
                                                                     alt="product image"
                                                                 />
                                                                 {itm?.images[1] && <img
@@ -1094,8 +1095,8 @@ const SeeShopUpcomingProduct = () => {
                                                             </a>
 
                                                             <div className="">
-                                                                <h5 className="text-lg tracking-tight text-slate-900">
-                                                                    {itm?.name}
+                                                                <h5 className="text-lg tracking-tight white text-slate-900 h-[60px] overflow-hidden">
+                                                                    {itm?.name.slice(0, 48)}
                                                                 </h5>
 
                                                                 <div className="flex text-2xl mt-3 items-center gap-6">
@@ -1116,7 +1117,7 @@ const SeeShopUpcomingProduct = () => {
                                                                 <div className=" ">
                                                                     {/* <p dangerouslySetInnerHTML={{ __html: itm?.shortDescription }} /> */}
                                                                     <p className="text-gray-400 mt-2">
-                                                                        {itm?.metaDescription.slice(0, 200)}
+                                                                        {itm?.metaDescription.slice(0, 100)}
                                                                     </p>
                                                                 </div>
 
@@ -1128,12 +1129,12 @@ const SeeShopUpcomingProduct = () => {
                                                                     </Link>
                                                                     <Link to={`/products/${itm?._id}`} >
                                                                         <div className="bg-blue-500 px-4 py-2 rounded-md text-white">
-                                                                            Buy Now..
+                                                                            Buy Now
                                                                         </div>
                                                                     </Link>
                                                                 </div>
                                                             </div>
-                                                        </div>
+                                                        </Link>
                                                 }
 
                                             </div>
@@ -1141,81 +1142,6 @@ const SeeShopUpcomingProduct = () => {
                                     }
 
                                 </div>
-
-                                {/* sm */}
-                                <div className="md:hidden block gap-4 w-full ">
-                                    {
-                                        filterData && filterData?.map((itm) => (
-                                            <div key={itm?._id}>
-                                                <div className="group  flex w-full max-w-xs flex-col overflow-hidden rounded-lg border border-gray-100 bg-white duration-150 hover:shadow-md">
-                                                    <a
-                                                        className="relative mx-3 mt-3 flex h-40 overflow-hidden rounded-xl"
-                                                        href="#"
-                                                    >
-                                                        <img
-                                                            className="peer absolute top-0 right-0 h-full w-full object-cover"
-                                                            src={itm?.featuredImage.length && itm?.featuredImage.src}
-                                                            alt="product image"
-                                                        />
-                                                        {itm?.images[1] && <img
-                                                            className="peer absolute top-0 -right-96 h-full w-full object-cover transition-all delay-100 duration-1000 hover:right-0 peer-hover:right-0"
-                                                            src={itm?.images.length && itm?.images[1].src}
-                                                            alt="product image"
-                                                        />}
-                                                        <svg
-                                                            className="pointer-events-none absolute inset-x-0 bottom-5 mx-auto text-3xl text-white  transition-opacity group-hover:animate-ping group-hover:opacity-30 peer-hover:opacity-0"
-                                                            xmlns="http://www.w3.org/2000/svg"
-                                                            aria-hidden="true"
-                                                            role="img"
-                                                            width="1em"
-                                                            height="1em"
-                                                            preserveAspectRatio="xMidYMid meet"
-                                                            viewBox="0 0 32 32"
-                                                        >
-                                                            <path
-                                                                fill="currentColor"
-                                                                d="M2 10a4 4 0 0 1 4-4h20a4 4 0 0 1 4 4v10a4 4 0 0 1-2.328 3.635a2.996 2.996 0 0 0-.55-.756l-8-8A3 3 0 0 0 14 17v7H6a4 4 0 0 1-4-4V10Zm14 19a1 1 0 0 0 1.8.6l2.7-3.6H25a1 1 0 0 0 .707-1.707l-8-8A1 1 0 0 0 16 17v12Z"
-                                                            />
-                                                        </svg>
-                                                        {/* <span className="absolute top-0 left-0 m-2 rounded-full bg-black px-2 text-center text-sm font-medium text-white">39% OFF</span> */}
-                                                    </a>
-                                                    <div className="mt-4 px-5 pb-5">
-                                                        <h5 className="text-lg tracking-tight text-slate-900">
-                                                            {itm?.name?.slice(0, 18)}...
-                                                        </h5>
-                                                        <div className="mt-2 mb-5 flex items-center justify-between">
-                                                            <p>
-                                                                <span className="text-xl font-bold text-slate-900">৳{itm?.price}</span>
-                                                                <span className="text-sm text-slate-900 line-through">৳{itm?.regular_price}</span>
-                                                            </p>
-                                                        </div>
-                                                        <Link to={`/products/${itm._id}`}
-                                                            className="flex items-center justify-center rounded-md bg-slate-900 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-blue-300"
-                                                        >
-                                                            <svg
-                                                                xmlns="http://www.w3.org/2000/svg"
-                                                                className="mr-2 h-6 w-6"
-                                                                fill="none"
-                                                                viewBox="0 0 24 24"
-                                                                stroke="currentColor"
-                                                                strokeWidth={2}
-                                                            >
-                                                                <path
-                                                                    strokeLinecap="round"
-                                                                    strokeLinejoin="round"
-                                                                    d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
-                                                                />
-                                                            </svg>
-                                                            Buy Now
-                                                        </Link>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        ))
-                                    }
-
-                                </div>
-
                             </div>
                         </div>
 

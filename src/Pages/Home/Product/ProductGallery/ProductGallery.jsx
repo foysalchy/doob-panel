@@ -22,7 +22,7 @@ const ProductGallery = () => {
   // const blankImg = 'https://backend.doob.com.bd/api/v1/image/66036ed3df13bd9930ac229c.jpg';
   return (
     <div>
-      <div className="my-12 grid grid-cols-2 gap-4 lg:grid-cols-4 ">
+      <div className="yy-6 mt-[-10px] grid grid-cols-2 gap-4 lg:grid-cols-4 ">
         {featureImageData?.map((itm) => (
           <div className="">
             <img

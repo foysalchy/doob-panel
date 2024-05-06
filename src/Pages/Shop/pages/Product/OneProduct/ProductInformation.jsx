@@ -11,6 +11,8 @@ import { MdDone } from "react-icons/md";
 import ProductDescription from "../../../../Home/Product/ProductDetails/ProductDescription";
 import ProductReviews from "../../../../Home/Product/ProductDetails/ProductReviews";
 import TrendingProducts from "../../../../Home/Product/ProductDetails/TrendingProducts";
+import { BsCart2 } from "react-icons/bs";
+
 import {
   Link,
   useLoaderData,
@@ -274,7 +276,7 @@ const ProductInformation = () => {
                   <div className="h-64  md:h-[22rem] rounded-lg bg-gray-100 mb-4">
                     <div className="h-64 md:h-full rounded-lg bg-gray-100 mb-4 flex items-center justify-center">
                       <img
-                        className="w-94 h-full"
+                        className="md:w-94 w-full object-cover border rounded h-full"
                         src={
                           product?.data?.daraz
                             ? variations?.image[0]
@@ -289,7 +291,7 @@ const ProductInformation = () => {
                       />
                     </div>
                   </div>
-                  <div className="grid grid-cols-4 md:grid-cols-4 lg:grid-cols-6 gap-2 -m-4 text-white">
+                  <div className="grid grid-cols-6 md:grid-cols-4 lg:grid-cols-6 gap-2 -m-4 text-white">
                     {showVariant?.map((imageUrl, index) => (
                       <div
                         onClick={() => setVariations(null)}
@@ -297,12 +299,12 @@ const ProductInformation = () => {
                         className="m-4 w-full md:w-11/12 rounded"
                       >
                         <Link
-                          className="block relative h-16 rounded overflow-hidden border"
+                          className="block relative md:h-16 h-14 rounded overflow-hidden border border-[black]"
                           onClick={() => handleImageClick(imageUrl.src)}
                         >
                           <img
                             alt={`ecommerce${index + 1}`}
-                            className="object-cover cursor-pointer block w-full h-full p-2 "
+                            className="object-cover cursor-pointer block w-full h-full p-1  "
                             src={imageUrl.src}
                             srcSet={imageUrl.src}
                           />
@@ -450,7 +452,7 @@ const ProductInformation = () => {
                   </div>
                 }
                 <div>
-                  <div className="flex md:flex-row flex-col gap-3 py-4 space-x-4 justify-between">
+                  <div className="flex  gap-3 py-4 space-x-4 justify-between">
                     <div>
                       <label htmlFor="Quantity" className="sr-only">
                         {" "}
@@ -496,9 +498,17 @@ const ProductInformation = () => {
                       <button
                         onClick={() => buyNowHandler(product)}
                         type="button"
-                        className="h-10 px-2 py-2 w-[120px] font-semibold  rounded bg-indigo-600 hover:bg-indigo-500 text-white"
+                        className="h-10 md:block hidden px-2 py-2 w-[120px] font-semibold  rounded bg-indigo-600 hover:bg-indigo-500 text-white"
                       >
                         Buy Now
+                      </button>
+
+                      <button
+                        onClick={() => buyNowHandler(product)}
+                        type="button"
+                        className="h-10 md:hidden block px-2 py-2 w-[60px] font-semibold  rounded bg-indigo-600 hover:bg-indigo-500 text-white"
+                      >
+                        <BsCart2 className="text-2xl m-auto" />
                       </button>
                     </div>
                   </div>
