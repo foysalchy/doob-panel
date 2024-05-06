@@ -15,7 +15,7 @@ const EditSincronusCategory = ({
   setDarazOption,
 }) => {
   const { shopInfo } = useContext(AuthContext);
-  console.log(product);
+  console.log(product?.categories);
 
   console.log(product?.categories, "product", product?.categories?.[0]?.name);
 
@@ -32,202 +32,85 @@ const EditSincronusCategory = ({
     product?.categories?.[3]?.name ?? null
   );
 
-  useEffect(() => {
-    if (product?.categories) {
-      setSelectedCategory(product.categories[0]?.name ?? null);
-      setSelectedSubcategory(product.categories[1]?.name ?? null);
-      setSelectedMinicategory(product.categories[2]?.name ?? null);
-      setSelectedExtracategory(product.categories[3]?.name ?? null);
-    }
-    setDaraz(product?.daraz);
-  }, [product]);
-
-  console.log(selectedCategory);
-
-  const {
-    data: megaCategories = [],
-    refetch,
-    isLoading: loadingMega,
-  } = useQuery({
-    queryKey: ["megaCategory"],
-    queryFn: async () => {
-      const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/category/seller/mega-category/get/${shopInfo._id}`
-      );
-      const data = await res.json();
-      if (data) {
-        return data;
-      } else {
-        // If data is undefined or falsy, return an empty array or handle it as per your requirements
-        return [];
-      }
-    },
-  });
-
-  console.log(megaCategories);
-
-  const option =
-    megaCategories
-      ?.filter((megaCategory) => megaCategory.status)
-      .map((megaCategory) => ({
-        value: megaCategory.name,
-        label: megaCategory.name,
-      })) || [];
-
-  console.log(selectedCategory, "and", option);
-  const {
-    data: subCategories = [],
-    refetch: reload,
-    isLoading: subLoading,
-  } = useQuery({
-    queryKey: ["subCategories"],
-    queryFn: async () => {
-      if (selectedCategory) {
+  // Load mega categories
+  const { data: megaCategories = [], refetch: refetchMegaCategories } =
+    useQuery({
+      queryKey: ["megaCategory"],
+      queryFn: async () => {
         const res = await fetch(
-          `https://backend.doob.com.bd/api/v1/category/seller/sub-category/get/${shopInfo._id}/${selectedCategory}`
+          `https://backend.doob.com.bd/api/v1/category/seller/mega-category/get/${shopInfo._id}`
         );
         const data = await res.json();
-        if (data) {
-          if (data?.daraz) {
-            setDarazOption(data?.daraz);
-            return data.data;
-          }
-          return data.data;
-        } else {
-          // If data is undefined or falsy, return an empty array or handle it as per your requirements
-          return [];
-        }
-      }
+        setDarazOption(data?.daraz);
+        return data || [];
+      },
+    });
+
+  // Load subcategories based on selected mega category
+  const { data: subCategories = [], refetch: refetchSubCategories } = useQuery({
+    queryKey: ["subCategories", selectedCategory],
+    enabled: !!selectedCategory,
+    queryFn: async () => {
+      const res = await fetch(
+        `https://backend.doob.com.bd/api/v1/category/seller/sub-category/get/${shopInfo._id}/${selectedCategory}`
+      );
+      const data = await res.json();
+      setDarazOption(data?.daraz);
+      return data?.data || [];
     },
   });
 
-  let SubOption =
-    (selectedCategory &&
-      subCategories
-        ?.filter((subCategory) => subCategory.status)
-        .map((subCategory) => ({
-          value: subCategory.subCategoryName,
-          label: subCategory.subCategoryName,
-        }))) ||
-    [];
-
-  const {
-    data: miniCategories = [],
-    refetch: reMini,
-    isLoading: miniLoading,
-  } = useQuery({
-    queryKey: ["miniCategories"],
-    queryFn: async () => {
-      if (selectedSubcategory) {
+  // Load mini categories based on selected subcategory
+  const { data: miniCategories = [], refetch: refetchMiniCategories } =
+    useQuery({
+      queryKey: ["miniCategories", selectedSubcategory],
+      enabled: !!selectedSubcategory,
+      queryFn: async () => {
         const res = await fetch(
           `https://backend.doob.com.bd/api/v1/category/seller/mini-category/get/${shopInfo._id}/${selectedSubcategory}`
         );
         const data = await res.json();
-        if (data) {
-          if (data?.daraz) {
-            setDarazOption(data?.daraz);
-            return data.data;
-          }
-          return data.data;
-        } else {
-          // If data is undefined or falsy, return an empty array or handle it as per your requirements
-          return [];
-        }
-      }
-    },
-  });
+        return data?.data || [];
+      },
+    });
 
-  let MiniOption =
-    (subCategories &&
-      miniCategories
-        ?.filter((miniCategory) => miniCategory.status)
-        .map((miniCategory) => ({
-          value: miniCategory.miniCategoryName,
-          label: miniCategory.miniCategoryName,
-        }))) ||
-    [];
-
-  const {
-    data: extraCategories = [],
-    refetch: reExtra,
-    isLoading: extraLoading,
-  } = useQuery({
-    queryKey: ["extraCategories"],
-    queryFn: async () => {
-      if (selectedMinicategory) {
+  // Load extra categories based on selected mini category
+  const { data: extraCategories = [], refetch: refetchExtraCategories } =
+    useQuery({
+      queryKey: ["extraCategories", selectedMinicategory],
+      enabled: !!selectedMinicategory,
+      queryFn: async () => {
         const res = await fetch(
           `https://backend.doob.com.bd/api/v1/category/seller/extra-category/get/${shopInfo._id}/${selectedMinicategory}`
         );
         const data = await res.json();
-        if (data) {
-          if (data?.daraz) {
-            setDarazOption(data?.daraz);
-            return data.data;
-          }
-          setDarazOption(data || []);
-          return data.data;
-        } else {
-          // If data is undefined or falsy, return an empty array or handle it as per your requirements
-          return [];
-        }
-      }
-    },
-  });
+        return data?.data || [];
+      },
+    });
 
-  let ExtraOption =
-    extraCategories
-      ?.filter((extraCategory) => extraCategory.status)
-      .map((extraCategory) => ({
-        value: extraCategory.extraCategoryName,
-        label: extraCategory.extraCategoryName,
-      })) || [];
-
+  // Handlers for category changes
   const handleCategoryChange = (category) => {
     setSelectedCategory(category);
     setSelectedSubcategory(null);
     setSelectedMinicategory(null);
     setSelectedExtracategory(null);
-    reload();
-    ExtraOption = null;
-    SubOption = null;
-    MiniOption = null;
   };
 
   const handleSubcategoryChange = (subcategory) => {
     setSelectedSubcategory(subcategory);
     setSelectedMinicategory(null);
     setSelectedExtracategory(null);
-    reMini();
-    reExtra();
-    ExtraOption = null;
-    MiniOption = null;
   };
 
   const handleMinicategoryChange = (minicategory) => {
     setSelectedMinicategory(minicategory);
     setSelectedExtracategory(null);
-    reExtra();
-    ExtraOption = null;
   };
 
   const handleExtracategoryChange = (extracategory) => {
     setSelectedExtracategory(extracategory);
   };
 
-  useEffect(() => {
-    reload();
-  }, [selectedCategory]);
-
-  useEffect(() => {
-    reMini();
-  }, [selectedSubcategory]);
-
-  useEffect(() => {
-    reExtra();
-  }, [selectedMinicategory]);
-
-  console.log(product);
-  console.log(selectedSubcategory);
   return (
     <div>
       <div className="border mt-4 border-gray-400 px-10 py-5 w-full bg-gray-100 rounded">
@@ -293,7 +176,6 @@ const EditSincronusCategory = ({
                 <span className="font-bold">
                   Are you want Sync with WooCommerce{" "}
                 </span>
-
                 <button type="button" className="flex justify-start mt-2">
                   <span
                     onClick={() => setWoo(false)}
@@ -325,27 +207,15 @@ const EditSincronusCategory = ({
           <span>
             Category Information <span className="text-red-500"> *</span>
           </span>
-
           <div className="grid md:grid-cols-4 mt-3 items-center gap-4">
-            {/* <select
-                            onChange={(e) => handleCategoryChange(e.label)}
-                            name="megaCategory" id="">
-                            {option.map((op) => (
-                                <option key={op.value} value={op.value}>
-                                    {op.label}
-                                </option>
-                            ))}
-                        </select> */}
             <Select
               name="megaCategory"
               onChange={(e) => handleCategoryChange(e.label)}
               placeholder="Select Category"
-              options={option}
-              defaultValue={{
-                value: product?.categories?.[0]?.name,
-                label: product?.categories?.[0]?.name,
-              }}
-              isLoading={loadingMega}
+              options={megaCategories?.map((megaCategory) => ({
+                value: megaCategory.name,
+                label: megaCategory.name,
+              }))}
               className=""
             />
             {selectedCategory && (
@@ -353,12 +223,10 @@ const EditSincronusCategory = ({
                 name="subCategory"
                 onChange={(e) => handleSubcategoryChange(e.value)}
                 placeholder="Select SubCategory"
-                options={SubOption ? SubOption : "Please Select"}
-                defaultValue={{
-                  value: product?.categories?.[1]?.name,
-                  label: product?.categories?.[1]?.name,
-                }}
-                isLoading={subLoading}
+                options={subCategories?.map((subCategory) => ({
+                  value: subCategory.subCategoryName,
+                  label: subCategory.subCategoryName,
+                }))}
               />
             )}
             {selectedSubcategory && (
@@ -366,12 +234,10 @@ const EditSincronusCategory = ({
                 name="miniCategory"
                 placeholder="Select MiniCategory"
                 onChange={(e) => handleMinicategoryChange(e.value)}
-                options={MiniOption ? MiniOption : "Please Select"}
-                defaultValue={{
-                  value: product?.categories?.[2]?.name,
-                  label: product?.categories?.[2]?.name,
-                }}
-                isLoading={miniLoading}
+                options={miniCategories?.map((miniCategory) => ({
+                  value: miniCategory.miniCategoryName,
+                  label: miniCategory.miniCategoryName,
+                }))}
               />
             )}
             {selectedMinicategory && (
@@ -379,12 +245,10 @@ const EditSincronusCategory = ({
                 name="extraCategory"
                 placeholder="Select ExtraCategory"
                 onChange={(e) => handleExtracategoryChange(e.value)}
-                options={ExtraOption ?? "Please Select"}
-                defaultValue={{
-                  value: product?.categories?.[3]?.name,
-                  label: product?.categories?.[3]?.name,
-                }}
-                isLoading={extraLoading}
+                options={extraCategories?.map((extraCategory) => ({
+                  value: extraCategory.extraCategoryName,
+                  label: extraCategory.extraCategoryName,
+                }))}
               />
             )}
           </div>
@@ -392,7 +256,6 @@ const EditSincronusCategory = ({
           <div className="mt-4">
             <strong>Selected Categories:</strong>
             <span className="ml-4">
-              {" "}
               {selectedCategory && selectedCategory}
               {selectedSubcategory && ` > ${selectedSubcategory}`}
               {selectedMinicategory && ` > ${selectedMinicategory} `}

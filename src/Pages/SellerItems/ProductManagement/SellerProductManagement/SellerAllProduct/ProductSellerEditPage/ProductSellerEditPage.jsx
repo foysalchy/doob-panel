@@ -15,6 +15,7 @@ import EditMeta from "../EditMeta";
 import { BsArrowRight } from "react-icons/bs";
 import Swal from "sweetalert2";
 import EditAdminCategoryforSeller from "../EditAdminCategoryforSeller";
+import SincronusCategory from "../../../SellerAddProduct/Components/SincronusCategory";
 
 const CategoryEditPage = () => {
   const id = useParams().id;
@@ -195,9 +196,9 @@ const CategoryEditPage = () => {
     const sku = form.ProductSKU.value;
     const EnName = form.productNameEn.value;
     const megaCategory = form?.megaCategory?.value;
-    const Subcategory = form?.adminSubCategoryName?.value || null;
-    const miniCategory = form?.adminMiniCategoryName?.value || null;
-    const extraCategory = form?.adminExtraCategoryName?.value || null;
+    const Subcategory = form?.subCategory?.value || null;
+    const miniCategory = form?.miniCategory?.value || null;
+    const extraCategory = form?.extraCategory?.value || null;
     const short_description_form = form?.short_description?.value;
     const description_form = form?.description?.value;
     const banglaDescription_form = form?.banglaDescription?.value;
@@ -222,7 +223,7 @@ const CategoryEditPage = () => {
 
     // console.log(categories);
 
-    // return
+    // return;
     const warehouse = form?.warehouse.value;
     const area = (form.area && form.area.value) || null;
     const rack = (form.rack && form.rack.value) || null;
@@ -402,6 +403,7 @@ const CategoryEditPage = () => {
       data?.featuredImage
     );
 
+     setLoading(true);
     // return;
     fetch(
       // `https://backend.doob.com.bd/api/v1/seller/normal-product?id=${product?._id}`,
@@ -458,6 +460,16 @@ const CategoryEditPage = () => {
           woo={woo}
           setWoo={setWoo}
         />
+
+        {/* <SincronusCategory
+          datazCategory={datazCategory}
+          setDarazOption={setDarazOption}
+          setInputFields={setInputFields}
+          daraz={daraz}
+          setDaraz={setDaraz}
+          woo={woo}
+          setWoo={setWoo}
+        /> */}
         <EditWareHouse
           product={product}
           shopInfo={shopInfo}
@@ -516,7 +528,7 @@ const CategoryEditPage = () => {
         </div>
         <EditAdminCategoryforSeller product={product} />
 
-        {daraz && datazCategory.length ? (
+        {daraz && datazCategory?.length ? (
           <EditDarazCategory product={product} datazCategory={datazCategory} />
         ) : (
           ""
