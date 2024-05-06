@@ -179,7 +179,7 @@ const StockManagement = () => {
               <tr>
                 <th
                   scope="col"
-                  className="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500 text-gray-400"
+                  className="py-3.5 px-4 text-sm font-normal border-r text-left rtl:text-right text-gray-500 text-gray-400"
                 >
                   <div className="flex items-center gap-x-3">
                     <span>Image</span>
@@ -187,7 +187,7 @@ const StockManagement = () => {
                 </th>
                 <th
                   scope="col"
-                  className="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500 text-gray-400"
+                  className="py-3.5 px-4 text-sm font-normal border-r text-left rtl:text-right text-gray-500 text-gray-400"
                 >
                   <div className="flex items-center gap-x-3">
                     <span>Ordered Id</span>
@@ -195,7 +195,7 @@ const StockManagement = () => {
                 </th>
                 <th
                   scope="col"
-                  className="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 text-gray-400"
+                  className="px-12 py-3.5 text-sm font-normal border-r text-left rtl:text-right text-gray-500 text-gray-400"
                 >
                   <button className="flex items-center gap-x-2">
                     <span>Name</span>
@@ -203,7 +203,7 @@ const StockManagement = () => {
                 </th>
                 <th
                   scope="col"
-                  className="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 text-gray-400"
+                  className="px-12 py-3.5 text-sm font-normal border-r text-left rtl:text-right text-gray-500 text-gray-400"
                 >
                   <button className="flex items-center gap-x-2">
                     <span>Status</span>
@@ -212,27 +212,27 @@ const StockManagement = () => {
 
                 <th
                   scope="col"
-                  className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 text-gray-400"
+                  className="px-4 py-3.5 text-sm font-normal border-r text-left rtl:text-right text-gray-500 text-gray-400"
                 >
                   Delivery Status
                 </th>
                 <th
                   scope="col"
-                  className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 text-gray-400"
+                  className="px-4 py-3.5 text-sm font-normal border-r text-left rtl:text-right text-gray-500 text-gray-400"
                 >
                   Note
                 </th>
 
                 <th
                   scope="col"
-                  className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 text-gray-400"
+                  className="px-4 py-3.5 text-sm font-normal border-r text-left rtl:text-right text-gray-500 text-gray-400"
                 >
                   Quantity
                 </th>
 
                 <th
                   scope="col"
-                  className="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 text-gray-400"
+                  className="px-12 py-3.5 text-sm font-normal border-r text-left rtl:text-right text-gray-500 text-gray-400"
                 >
                   <button className="flex items-center gap-x-2">
                     <span>Seller</span>
@@ -241,7 +241,7 @@ const StockManagement = () => {
 
                 <th
                   scope="col"
-                  className="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 text-gray-400"
+                  className="px-12 py-3.5 text-sm font-normal border-r text-left rtl:text-right text-gray-500 text-gray-400"
                 >
                   <button className="flex items-center gap-x-2">
                     <span>Warehouse</span>
@@ -268,7 +268,7 @@ const StockManagement = () => {
                       className="w-[80px] h-[80px] rounded-lg object-cover m-auto"
                     />
                   </td>
-                  <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
+                  <td className="px-4 py-4 text-sm font-medium border-r text-gray-700 whitespace-nowrap">
                     <div className="inline-flex items-center gap-x-3">
                       <div className="w-5/12">
                         <h2
@@ -285,7 +285,7 @@ const StockManagement = () => {
                     <br />
                     <span className="text-xs text-gray-500"> {itm?.SKU}</span>
                   </td>
-                  <td className="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
+                  <td className="px-12 py-4 text-sm font-medium border-r text-gray-700 whitespace-nowrap">
                     {itm?.status === "cancel" ? (
                       <span className="text-red-500">Canceled</span>
                     ) : (
@@ -332,17 +332,17 @@ const StockManagement = () => {
                       </div>
                     )}
                   </td>
-                  <td className="px-4 py-4 text-lg text-gray-700  whitespace-nowrap">
+                  <td className="px-4 py-4 text-lg text-gray-700 border-r  whitespace-nowrap">
                     <button className="text-sm flex items-center gap-2  px-2 py-1 rounded ">
                       {itm?.delivery_status}
                     </button>
                   </td>
-                  <td className="px-4 py-4 text-lg text-gray-700  whitespace-nowrap">
+                  <td className="px-4 py-4 text-lg text-gray-700 border-r  whitespace-nowrap">
                     <button className="text-sm flex items-center gap-2  px-2 py-1 rounded ">
                       {itm?.note?.slice(0, 25)}..
                     </button>
                   </td>
-                  <td className="px-4 py-4 text-lg text-gray-700  whitespace-nowrap">
+                  <td className="px-4 py-4 text-lg text-gray-700 border-r  whitespace-nowrap">
                     <div className="flex items-center gap-x-2">
                       {itm?.status !== "reject" &&
                       itm?.status !== "cancel" &&
@@ -372,12 +372,12 @@ const StockManagement = () => {
                     </div>
                   </td>
 
-                  <td className="px-4 py-4 text-lg text-gray-700  whitespace-nowrap">
+                  <td className="px-4 py-4 text-lg text-gray-700 border-r  whitespace-nowrap">
                     <button className="text-sm flex items-center gap-2  px-2 py-1 rounded ">
                       {itm?.shopName}
                     </button>
                   </td>
-                  <td className="px-4 py-4 text-lg text-gray-700  whitespace-nowrap">
+                  <td className="px-4 py-4 text-lg text-gray-700 border-r  whitespace-nowrap">
                     <button className="text-sm flex items-center gap-2  px-2 py-1 rounded ">
                       {itm?.warehouse?.map((war) => {
                         if (war?.name) {
