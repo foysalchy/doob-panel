@@ -1,8 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Select from "react-select";
-
-const WareHouse = ({ adminWare, setAdminWare, shopInfo }) => {
+import { AuthContext } from "../../../../AuthProvider/UserProvider";
+export default function SelectWareHouse({ adminWare }) {
+  const { shopInfo } = useContext(AuthContext);
   const [selectedWarehouse, setSelectedWarehouse] = useState(null);
   const [selectedArea, setSelectedArea] = useState("");
   const [selectedRack, setSelectedRack] = useState("");
@@ -123,60 +124,21 @@ const WareHouse = ({ adminWare, setAdminWare, shopInfo }) => {
 
   return (
     <div>
-      <div className="border mt-4 border-gray-400 px-10 py-5 w-full bg-gray-100 rounded">
-        <div className=" gap-10">
-          <span className="font-bold">Select Warehouse</span>
-          <button type="button" className="flex justify-start mt-2">
-            <span
-              onClick={() => {
-                setAdminWare(false);
-                setSelectedWarehouse("");
-                setSelectedArea("");
-                setSelectedRack("");
-                setSelectedSelf("");
-                setSelectedCell("");
-              }}
-              className={
-                adminWare
-                  ? "px-4 py-2 bg-gray-600 text-white  "
-                  : "px-4 py-2 bg-green-500 text-white shadow-xl shadow-green-500/50"
-              }
-            >
-              {shopInfo.shopName}
-            </span>
-            <span
-              onClick={() => {
-                setAdminWare(true);
-                setSelectedWarehouse("");
-                setSelectedArea("");
-                setSelectedRack("");
-                setSelectedSelf("");
-                setSelectedCell("");
-                fetchData();
-              }}
-              className={
-                !adminWare
-                  ? "px-4 py-2 bg-gray-600 shadow-3 text-white "
-                  : "px-4 py-2 bg-green-500 text-white shadow-xl shadow-green-500/50"
-              }
-            >
-              Doob
-            </span>
-          </button>
-        </div>
-
+      <div className="border mt-4 border-gray-400 px-2 py-5 w-full bg-gray-100 rounded">
         <div className="flex flex-col mt-3">
           <span>
             Warehouse Information <span className="text-red-500"> *</span>
           </span>
-
           {selectedWarehouse ? (
-            <div className="grid md:grid-cols-5 mt-3 gap-4">
+            <div className=" mt-3 ">
               <div className="">
                 <label className="text-sm">Select Warehouse.</label>
                 <Select
                   required
                   className=""
+                  styles={{
+                    minWidth: "3rem",
+                  }}
                   onChange={handleWarehouseChange}
                   value={{
                     label: selectedWarehouse || "Select warehouse", // Set a default label if selectedWarehouse is null
@@ -266,12 +228,11 @@ const WareHouse = ({ adminWare, setAdminWare, shopInfo }) => {
             </div>
           ) : (
             <div>
-              <div className="grid md:grid-cols-5 mt-3 gap-4">
+              <div className="grid md:grid-cols mt-3 gap-4">
                 <div className="">
                   <label className="text-sm">Select Warehouses</label>
                   <Select
                     required
-                    className=""
                     onChange={handleWarehouseChange}
                     value={{
                       label: selectedWarehouse || "Select warehouse", // Set a default label if selectedWarehouse is null
@@ -378,6 +339,4 @@ const WareHouse = ({ adminWare, setAdminWare, shopInfo }) => {
       </div>
     </div>
   );
-};
-
-export default WareHouse;
+}
