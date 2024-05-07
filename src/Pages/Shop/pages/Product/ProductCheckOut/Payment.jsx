@@ -87,12 +87,12 @@ const Payment = () => {
     order.timestamp = new Date().getTime();
     order.userId = shop_id.shop_id;
     order.normalPrice = orderStage?.promoHistory?.normalPrice;
-    order.callback = `http://localhost:5001/shop/${params?.id}/user/success`;
+    order.callback = `https://backend.doob.com.bd/shop/${params?.id}/user/success`;
     console.log(order, "order");
     // setLoadingPayment(true);
     try {
       const response = await fetch(
-        "http://localhost:5001/api/v1/seller/bkash/payment/create",
+        "https://backend.doob.com.bd/api/v1/seller/bkash/payment/create",
         {
           method: "POST",
           headers: {
@@ -126,7 +126,7 @@ const Payment = () => {
     // setLoadingPayment(true);
     try {
       const response = await fetch(
-        "http://localhost:5001/api/v1/seller/amarpay/payment/create",
+        "https://backend.doob.com.bd/api/v1/seller/amarpay/payment/create",
         {
           method: "POST",
           headers: {

@@ -66,7 +66,7 @@ const ModalForPayment = ({
   const payWithBkash = async () => {
     try {
       const response = await fetch(
-        "http://localhost:5001/api/v1/seller/bkash/payment/create",
+        "https://backend.doob.com.bd/api/v1/seller/bkash/payment/create",
         {
           method: "POST",
           headers: {

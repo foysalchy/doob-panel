@@ -72,7 +72,7 @@ const SellerStockManagement = () => {
     }
     // return;
     return fetch(
-      `http://localhost:5001/api/v1/admin/stock-status-update?productId=${productId}&orderId=${order?._id}`,
+      `https://backend.doob.com.bd/api/v1/admin/stock-status-update?productId=${productId}&orderId=${order?._id}`,
       {
         method: "PUT",
         headers: {
