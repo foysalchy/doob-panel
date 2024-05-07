@@ -1309,7 +1309,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                     }
                                     className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
                                   >
-                                    <TbReportAnalytics className="w-5 h-5 fill-current text-gray-400 " />
+                                    {/* <TbReportAnalytics className="w-5 h-5 fill-current text-gray-400 " /> */}
                                     Commission Report
                                   </Link>
                                 </li>
@@ -1320,7 +1320,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                     }
                                     className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
                                   >
-                                    <MdReportOff className="w-5 h-5 fill-current text-gray-400 " />{" "}
+                                    {/* <MdReportOff className="w-5 h-5 fill-current text-gray-400 " />{" "} */}
                                     Customer Report
                                   </Link>
                                 </li>
@@ -1329,7 +1329,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                     to={"/seller/report-management/pos-report"}
                                     className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
                                   >
-                                    <BsPostage className="w-5 h-5 fill-current text-gray-400 " />{" "}
+                                    {/* <BsPostage className="w-5 h-5 fill-current text-gray-400 " />{" "} */}
                                     Pos Report
                                   </Link>
                                 </li>
@@ -1338,7 +1338,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                     to={"/seller/report-management/sales-report"}
                                     className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
                                   >
-                                    <IoScale className="w-5 h-5 fill-current text-gray-400 " />{" "}
+                                    {/* <IoScale className="w-5 h-5 fill-current text-gray-400 " />{" "} */}
                                     Sales Report
                                   </Link>
                                 </li>
@@ -1349,7 +1349,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                     }
                                     className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
                                   >
-                                    <BsSubscript className="w-5 h-5 fill-current text-gray-400 " />{" "}
+                                    {/* <BsSubscript className="w-5 h-5 fill-current text-gray-400 " />{" "} */}
                                     Subscriber Report
                                   </Link>
                                 </li>
@@ -1360,7 +1360,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                     }
                                     className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
                                   >
-                                    <BiSearchAlt className="w-5 h-5 fill-current text-gray-400 " />{" "}
+                                    {/* <BiSearchAlt className="w-5 h-5 fill-current text-gray-400 " />{" "} */}
                                     Search Report
                                   </Link>
                                 </li>
@@ -1371,7 +1371,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                     }
                                     className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
                                   >
-                                    <FaWarehouse className="w-5 h-5 fill-current text-gray-400 " />{" "}
+                                    {/* <FaWarehouse className="w-5 h-5 fill-current text-gray-400 " />{" "} */}
                                     Warehouse Report
                                   </Link>
                                 </li>
@@ -1401,7 +1401,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                   }
                                   className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
                                 >
-                                  <TbReportAnalytics className="w-5 h-5 fill-current text-gray-400 " />
+                                  {/* <TbReportAnalytics className="w-5 h-5 fill-current text-gray-400 " /> */}
                                   Commission Report
                                 </Link>
                               </li>
@@ -1412,7 +1412,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                   }
                                   className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
                                 >
-                                  <MdReportOff className="w-5 h-5 fill-current text-gray-400 " />{" "}
+                                  {/* <MdReportOff className="w-5 h-5 fill-current text-gray-400 " />{" "} */}
                                   Customer Report
                                 </Link>
                               </li>
@@ -1421,7 +1421,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                   to={"/seller/report-management/pos-report"}
                                   className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
                                 >
-                                  <BsPostage className="w-5 h-5 fill-current text-gray-400 " />{" "}
+                                  {/* <BsPostage className="w-5 h-5 fill-current text-gray-400 " />{" "} */}
                                   Pos Report
                                 </Link>
                               </li>
@@ -1430,7 +1430,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                   to={"/seller/report-management/sales-report"}
                                   className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
                                 >
-                                  <IoScale className="w-5 h-5 fill-current text-gray-400 " />{" "}
+                                  {/* <IoScale className="w-5 h-5 fill-current text-gray-400 " />{" "} */}
                                   Sales Report
                                 </Link>
                               </li>
@@ -1441,7 +1441,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                   }
                                   className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
                                 >
-                                  <BsSubscript className="w-5 h-5 fill-current text-gray-400 " />{" "}
+                                  {/* <BsSubscript className="w-5 h-5 fill-current text-gray-400 " />{" "} */}
                                   Subscriber Report
                                 </Link>
                               </li>
@@ -1452,7 +1452,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                   }
                                   className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
                                 >
-                                  <BiSearchAlt className="w-5 h-5 fill-current text-gray-400 " />{" "}
+                                  {/* <BiSearchAlt className="w-5 h-5 fill-current text-gray-400 " />{" "} */}
                                   Search Report
                                 </Link>
                               </li>
@@ -1463,7 +1463,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                   }
                                   className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
                                 >
-                                  <FaWarehouse className="w-5 h-5 fill-current text-gray-400 " />{" "}
+                                  {/* <FaWarehouse className="w-5 h-5 fill-current text-gray-400 " />{" "} */}
                                   Warehouse Report
                                 </Link>
                               </li>
@@ -1854,7 +1854,8 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                     to={"/seller/manage-blogs"}
                                     className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 rounded-md"
                                   >
-                                    {/* <MdOutlineManageSearch className='w-5 h-5 fill-current text-gray-400' />  Manage Blogs */}
+                                    {/* <MdOutlineManageSearch className='w-5 h-5 fill-current text-gray-400' />  */}
+                                    Manage Blogs
                                   </Link>
                                 </li>
                                 <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
@@ -1903,7 +1904,8 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                   to={"/seller/manage-blogs"}
                                   className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 rounded-md"
                                 >
-                                  {/* <MdOutlineManageSearch className='w-5 h-5 fill-current text-gray-400' />  Manage Blogs */}
+                                  {/* <MdOutlineManageSearch className='w-5 h-5 fill-current text-gray-400' />   */}
+                                  Manage Blogs
                                 </Link>
                               </li>
                               <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
@@ -2096,24 +2098,87 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
 
                             {openDropdownIndex === 9 &&
                               <ul className="mt-2 space-y-1   px-2 bg-[#1b202ea1] border border-gray-500 py-2 border-opacity-50">
-                                <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                  <Link
-                                    to={"/seller/settings/payment-management"}
-                                    className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
-                                  >
-                                    <MdContactSupport className="w-5 h-5 fill-current text-gray-400 " />{" "}
-                                    Payment Getaway
-                                  </Link>
-                                </li>
-                                <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                  <Link
-                                    to={"/seller/manage-contact/add-contact"}
-                                    className="  text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 rounded-md"
-                                  >
-                                    <MdOutlineAddCircleOutline className="w-5 h-5 fill-current text-gray-400" />{" "}
-                                    Add Contact
-                                  </Link>
-                                </li>
+                                <ul className="mt-2 space-y-1   px-2 bg-[#1b202ea1] border border-gray-500 py-2 border-opacity-50">
+                                  <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                    <Link
+                                      to={
+                                        "/seller/content-management/popup-management"
+                                      }
+                                      className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                    >
+                                      {/* <FaPage4 className='w-5 h-5 fill-current text-gray-400 ' /> */}
+                                      Popup Management
+                                    </Link>
+                                  </li>
+                                  <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                    <Link
+                                      to={
+                                        "/seller/content-management/slider-management"
+                                      }
+                                      className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                    >
+                                      {/* <BiSlider className='w-5 h-5 fill-current text-gray-400 ' /> */}
+                                      Slider Management
+                                    </Link>
+                                  </li>
+
+                                  <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                    <Link
+                                      to={
+                                        "/seller/content-management/feature-management"
+                                      }
+                                      className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                    >
+                                      {/* <MdPhotoSizeSelectActual className='w-5 h-5 fill-current text-gray-400 ' /> */}
+                                      Feature Image
+                                    </Link>
+                                  </li>
+                                  <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                    <Link
+                                      to={"/seller/settings/payment-management"}
+                                      className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                    >
+                                      {/* <MdPayment className='w-5 h-5 fill-current text-gray-400 ' /> */}
+                                      Payment Getaway
+                                    </Link>
+                                  </li>
+                                  <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                    <Link
+                                      to={"/seller/settings/send-email"}
+                                      className="  text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 rounded-md"
+                                    >
+                                      {/* <BiEnvelope className='w-5 h-5 fill-current text-gray-400' /> */}
+                                      Send Email
+                                    </Link>
+                                  </li>
+                                  <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                    <Link
+                                      to={"/seller/settings/shipping"}
+                                      className="  text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 rounded-md"
+                                    >
+                                      {/* <MdOutlineLocalShipping className='w-5 h-5 fill-current text-gray-400' /> */}
+                                      Shipping
+                                    </Link>
+                                  </li>
+                                  <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                    <Link
+                                      to={"/seller/settings/auth-credential"}
+                                      className="  text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 rounded-md"
+                                    >
+                                      {/* <MdOutlineSecurity className='w-5 h-5 fill-current text-gray-400' /> */}
+                                      Auth Credential
+                                    </Link>
+                                  </li>
+                                  <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                    <Link
+                                      to={"/seller/settings/price-role"}
+                                      className="  text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 rounded-md"
+                                    >
+                                      {/* <MdOutlinePriceChange className='w-5 h-5 fill-current text-gray-400' /> */}
+                                      Price Role
+                                    </Link>
+                                  </li>
+                                </ul>
                               </ul>}
                           </div>
                         </li>
@@ -2139,20 +2204,81 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                             <ul className="mt-2 space-y-1   px-2 bg-[#1b202ea1] border border-gray-500 py-2 border-opacity-50">
                               <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
                                 <Link
+                                  to={
+                                    "/seller/content-management/popup-management"
+                                  }
+                                  className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                >
+                                  {/* <FaPage4 className='w-5 h-5 fill-current text-gray-400 ' /> */}
+                                  Popup Management
+                                </Link>
+                              </li>
+                              <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                <Link
+                                  to={
+                                    "/seller/content-management/slider-management"
+                                  }
+                                  className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                >
+                                  {/* <BiSlider className='w-5 h-5 fill-current text-gray-400 ' /> */}
+                                  Slider Management
+                                </Link>
+                              </li>
+
+                              <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                <Link
+                                  to={
+                                    "/seller/content-management/feature-management"
+                                  }
+                                  className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                >
+                                  {/* <MdPhotoSizeSelectActual className='w-5 h-5 fill-current text-gray-400 ' /> */}
+                                  Feature Image
+                                </Link>
+                              </li>
+                              <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                <Link
                                   to={"/seller/settings/payment-management"}
                                   className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
                                 >
-                                  <MdContactSupport className="w-5 h-5 fill-current text-gray-400 " />{" "}
+                                  {/* <MdPayment className='w-5 h-5 fill-current text-gray-400 ' /> */}
                                   Payment Getaway
                                 </Link>
                               </li>
                               <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
                                 <Link
-                                  to={"/seller/manage-contact/add-contact"}
+                                  to={"/seller/settings/send-email"}
                                   className="  text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 rounded-md"
                                 >
-                                  <MdOutlineAddCircleOutline className="w-5 h-5 fill-current text-gray-400" />{" "}
-                                  Add Contact
+                                  {/* <BiEnvelope className='w-5 h-5 fill-current text-gray-400' /> */}
+                                  Send Email
+                                </Link>
+                              </li>
+                              <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                <Link
+                                  to={"/seller/settings/shipping"}
+                                  className="  text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 rounded-md"
+                                >
+                                  {/* <MdOutlineLocalShipping className='w-5 h-5 fill-current text-gray-400' /> */}
+                                  Shipping
+                                </Link>
+                              </li>
+                              <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                <Link
+                                  to={"/seller/settings/auth-credential"}
+                                  className="  text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 rounded-md"
+                                >
+                                  {/* <MdOutlineSecurity className='w-5 h-5 fill-current text-gray-400' /> */}
+                                  Auth Credential
+                                </Link>
+                              </li>
+                              <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                <Link
+                                  to={"/seller/settings/price-role"}
+                                  className="  text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 rounded-md"
+                                >
+                                  {/* <MdOutlinePriceChange className='w-5 h-5 fill-current text-gray-400' /> */}
+                                  Price Role
                                 </Link>
                               </li>
                             </ul>}
