@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+import SelectWareHouse from "./SelectWareHouse";
+import OnlySyncCategory from "../../../SellerItems/ProductManagement/SellerAddProduct/Components/OnlySyncCategory";
+import CategorySelect from "./CategorySelect";
 
 const ProductCheckout = ({
   setNext,
@@ -9,7 +12,7 @@ const ProductCheckout = ({
   setUserInfo,
 }) => {
   const [userType, setUserType] = useState();
-
+  //   console.log(product);
   console.log("userType", userType);
   console.log(userInfo, "userInfo");
   const handleChange = (e) => {
@@ -18,15 +21,55 @@ const ProductCheckout = ({
 
     // return;
     // setUserType(value);
-    setUserInfo((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
+    if (userType === "customer") {
+      setUserInfo((prevState) => ({
+        ...prevState,
+        [name]: value,
+      }));
+    }
   };
 
   const handleSetData = () => {
     setNext(true);
     localStorage.setItem("orderData", JSON.stringify(product));
+  };
+
+  const dataSubmit = async (e) => {
+    e.preventDefault();
+
+    // const product = e.target.darazProduct.value
+    const form = e.target;
+    const warehouse = form.warehouse.value;
+    const area = form.area ? form.area.value : "";
+    const rack = form.rack ? form.rack.value : "";
+    const self = form.self ? form.self.value : "";
+    const cell = form.cell ? form.cell.value : "";
+
+    const megaCategory = form?.megaCategory?.value;
+    const Subcategory = form?.subCategory?.value || null;
+    const miniCategory = form?.miniCategory?.value || null;
+    const extraCategory = form?.extraCategory?.value || null;
+
+    const categories = [
+      { name: megaCategory },
+      Subcategory && { name: Subcategory },
+      miniCategory && { name: miniCategory },
+      extraCategory && { name: extraCategory },
+    ];
+
+    // console.log(categories);
+
+    // return;
+
+    const warehouseValue = [
+      { name: warehouse },
+      { name: area },
+      { name: rack },
+      { name: self },
+      { name: cell },
+    ];
+
+    console.log(categories, "and", warehouseValue);
   };
 
   return (
@@ -103,7 +146,13 @@ const ProductCheckout = ({
                 <div className=" flex flex-col gap-2">
                   <select
                     value={userInfo.for_product}
-                    onChange={(e) => setUserType(e.target?.value)}
+                    onChange={(e) => {
+                      setUserType(e.target?.value),
+                        setUserInfo((prevState) => ({
+                          ...prevState,
+                          for_product: e.target.value,
+                        }));
+                    }}
                     className="border p-2 rounded-md"
                     name="for_product"
                     id=""
@@ -179,7 +228,14 @@ const ProductCheckout = ({
                       />
                     </div>
                   )}
-                  {userType === "doob_warehouse" && <div>Select Warehouse</div>}
+                  <form onSubmit={dataSubmit}>
+                    {userType === "doob_warehouse" && (
+                      <div className="">
+                        <SelectWareHouse adminWare={true} />
+                        <CategorySelect />
+                      </div>
+                    )}
+                  </form>
                 </div>
               </div>
 

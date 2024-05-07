@@ -116,7 +116,10 @@ const WareHouse = ({ adminWare, setAdminWare, shopInfo }) => {
     setSelectedCell(selectedCell);
   };
 
-  console.log(options.cells, `https://backend.doob.com.bd/api/v1/seller/warehouse/cell/${selectedWarehouse}/${selectedArea}/${selectedRack}/${selectedSelf}/${shopInfo._id}`);
+  console.log(
+    options.cells,
+    `https://backend.doob.com.bd/api/v1/seller/warehouse/cell/${selectedWarehouse}/${selectedArea}/${selectedRack}/${selectedSelf}/${shopInfo._id}`
+  );
 
   return (
     <div>
@@ -170,7 +173,7 @@ const WareHouse = ({ adminWare, setAdminWare, shopInfo }) => {
           {selectedWarehouse ? (
             <div className="grid md:grid-cols-5 mt-3 gap-4">
               <div className="">
-                <label className="text-sm">Select Warehouse</label>
+                <label className="text-sm">Select Warehouse.</label>
                 <Select
                   required
                   className=""
