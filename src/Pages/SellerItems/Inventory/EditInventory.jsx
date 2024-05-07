@@ -40,9 +40,9 @@ const EditInventory = ({ refetch, open, setOpen, data }) => {
       productInfo: {
         name: data?.name,
         price: data?.price,
-        image: data?.featuredImage?.src,
+        image: data?.featuredImage?.src ?? data?.images[0]?.src,
         quantity: data?.stock_quantity,
-        image: data?.images[0]?.src,
+        // image:,
       },
       warehouse: data?.warehouse,
       date: new Date().getTime(),

@@ -33,6 +33,7 @@ const ProductCheckout = ({
             }));
         }
     };
+    
     console.log(userInfo);
     //   console.log(shopInfo);
 
