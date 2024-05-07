@@ -10,6 +10,7 @@ const WarehouseModal = ({
   doobProduct,
   reload,
 }) => {
+  console.log(product, "doobProduct");
   const [areas, setAreas] = useState([]);
   const [racks, setRacks] = useState([]);
   const [selfs, setSelfs] = useState([]);
@@ -283,7 +284,7 @@ const WarehouseModal = ({
                 </div>
               </div>
             )}
-            {doobProduct && (
+            {product?.adminWare && (
               <div>
                 <div className="grid md:grid-cols-5 mt-3 gap-4">
                   <div className="">

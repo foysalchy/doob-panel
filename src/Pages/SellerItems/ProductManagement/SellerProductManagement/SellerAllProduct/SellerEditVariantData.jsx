@@ -27,7 +27,12 @@ const SellerEditVariantData = ({
   setVariantInput,
 }) => {
   const { shopInfo } = useContext(AuthContext);
-  // console.log(product?.variantData?.product2?.quantityPrice);
+  console.log(product?.variantData);
+  console.log(variantInput);
+
+  console.log(
+    product?.variantData?.sellingPrice ? product?.variantData?.sellingPrice : 1
+  );
 
   const handleImageChange = async (index, event) => {
     const file = event.target.files[0];
@@ -434,8 +439,8 @@ const SellerEditVariantData = ({
                       setVariantInput(newInputFields);
                     }}
                     defaultValue={
-                      variantInput?.product3?.quantity
-                        ? variantInput?.product3?.quantity
+                      product?.variantData?.product3?.quantity
+                        ? product?.variantData?.product3?.quantity
                         : 50
                     }
                     type="text"
@@ -458,8 +463,8 @@ const SellerEditVariantData = ({
                     type="text"
                     // defaultValue={1}
                     defaultValue={
-                      variantInput?.product3?.quantityPrice
-                        ? variantInput?.product3?.quantityPrice
+                      product?.variantData?.product3?.quantityPrice
+                        ? product?.variantData?.product3?.quantityPrice
                         : 1
                     }
                     className={style.input}
@@ -483,7 +488,9 @@ const SellerEditVariantData = ({
                   type="text"
                   // defaultValue={1}
                   defaultValue={
-                    variantInput?.sellingPrice ? variantInput?.sellingPrice : 1
+                    product?.variantData?.sellingPrice
+                      ? product?.variantData?.sellingPrice
+                      : 1
                   }
                   className={style.input}
                 />
@@ -504,7 +511,9 @@ const SellerEditVariantData = ({
                   type="text"
                   // defaultValue={1}
                   defaultValue={
-                    variantInput?.ProductCost ? variantInput?.ProductCost : 1
+                    product?.variantData?.ProductCost
+                      ? product?.variantData?.ProductCost
+                      : 1
                   }
                   className={style.input}
                 />

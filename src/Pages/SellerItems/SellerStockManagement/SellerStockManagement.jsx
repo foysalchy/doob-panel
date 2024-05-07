@@ -2,8 +2,9 @@ import { useQuery } from "@tanstack/react-query";
 import { useContext, useState } from "react";
 import { AuthContext } from "../../../AuthProvider/UserProvider";
 import SellerStockInvoice from "./SellerStockInvoice";
-import { BiSearch } from "react-icons/bi";
+import { BiEdit, BiSave, BiSearch } from "react-icons/bi";
 import BrightAlert from "bright-alert";
+import Swal from "sweetalert2";
 
 const SellerStockManagement = () => {
   const [on, setOn] = useState(false);
@@ -53,6 +54,45 @@ const SellerStockManagement = () => {
       });
   };
 
+  // ! update delivery status
+  const [selectStatusValue, setSelectStatusValue] = useState("");
+  const [editStatus, setEditStatus] = useState(false);
+  const [editMode, setEditMode] = useState(false);
+
+  const statusOptionsData = ["pending", "purchasing", "shipped", "received"];
+  // console.log("options", options);
+
+  console.log("selectStatusValue", selectStatusValue);
+  const updateDeliveryStatusHandler = async (productId, order) => {
+    console.log(order);
+    // console.log(selectStatusValue, productId, "status", orderId);
+    if (order?.status === "cancel" || order?.status === "reject") {
+      setEditMode(false);
+      return Swal.fire(`${order?.status}ed can't be updated`, "", "warning");
+    }
+    // return;
+    return fetch(
+      `http://localhost:5001/api/v1/admin/stock-status-update?productId=${productId}&orderId=${order?._id}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          delivery_status: selectStatusValue,
+        }),
+      }
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        BrightAlert(data?.message ?? "Updated Delivery", "", "success");
+        refetch();
+        setEditMode(false);
+        false;
+      });
+  };
+
   return (
     <div className="relative">
       <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
@@ -73,7 +113,7 @@ const SellerStockManagement = () => {
         </div>
 
         <div className="overflow-hidden border border-gray-200 border-gray-700 md:rounded-lg">
-          <table className="min-w-full divide-y divide-gray-200 divide-gray-700">
+          <table className="min-w-full divide-y divide-gray-200 divide-gray-700 ">
             <thead className="bg-gray-50 ">
               <tr>
                 <th
@@ -105,7 +145,7 @@ const SellerStockManagement = () => {
                   className="px-12 py-3.5 text-sm font-normal border-r text-left rtl:text-right text-gray-500 text-gray-400"
                 >
                   <button className="flex items-center gap-x-2">
-                    <span>Status</span>
+                    <span>Delivery Status</span>
                   </button>
                 </th>
 
@@ -113,7 +153,7 @@ const SellerStockManagement = () => {
                   scope="col"
                   className="px-4 py-3.5 text-sm font-normal border-r text-left rtl:text-right text-gray-500 text-gray-400"
                 >
-                  Delivery Status
+                  Admin Note
                 </th>
                 <th
                   scope="col"
@@ -189,9 +229,45 @@ const SellerStockManagement = () => {
                     <span className="text-xs text-gray-500"> {itm?.SKU}</span>
                   </td>
                   <td className="px-4 py-4 text-lg text-gray-700 border-r  whitespace-nowrap">
-                    <button className="text-sm flex items-center gap-2  px-2 py-1 rounded ">
+                    {/* <button className="text-sm flex items-center gap-2  px-2 py-1 rounded ">
                       {itm?.delivery_status}
-                    </button>
+                    </button> */}
+                    <div className="my-3 flex items-center gap-1">
+                      {editMode === itm._id ? (
+                        <div className="flex gap-2 ">
+                          <select
+                            // options={statusOptions}
+                            // aria-readonly
+                            // disabled={editStatus}
+                            onChange={(e) =>
+                              setSelectStatusValue(e.target.value)
+                            }
+                            className="rounded-lg p-1"
+                          >
+                            {statusOptionsData?.map((item) => (
+                              <option value={item} key={item}>
+                                {item}{" "}
+                              </option>
+                            ))}
+                          </select>
+                          <button>
+                            <BiSave
+                              onClick={() =>
+                                updateDeliveryStatusHandler(itm?.productId, itm)
+                              }
+                            />
+                          </button>
+                        </div>
+                      ) : (
+                        <button
+                          onClick={() => setEditMode(itm?._id)}
+                          className="px-3 py-1 flex items-center gap-2 text-xs text-indigo-500 rounded-full bg-gray-800 bg-indigo-100/60"
+                        >
+                          {itm?.delivery_status}
+                          <BiEdit />
+                        </button>
+                      )}
+                    </div>
                   </td>
                   <td className="px-4 py-4 text-lg text-gray-700 border-r  whitespace-nowrap">
                     <button className="text-sm flex items-center gap-2  px-2 py-1 rounded ">
