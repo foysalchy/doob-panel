@@ -135,7 +135,10 @@ export default function SelectWareHouse({ adminWare }) {
                 <label className="text-sm">Select Warehouse.</label>
                 <Select
                   required
-                  className="w-full"
+                  className=""
+                  styles={{
+                    minWidth: "3rem",
+                  }}
                   onChange={handleWarehouseChange}
                   value={{
                     label: selectedWarehouse || "Select warehouse", // Set a default label if selectedWarehouse is null
@@ -225,12 +228,11 @@ export default function SelectWareHouse({ adminWare }) {
             </div>
           ) : (
             <div>
-              <div className="grid md:grid-cols-5 mt-3 gap-4">
+              <div className="grid md:grid-cols mt-3 gap-4">
                 <div className="">
                   <label className="text-sm">Select Warehouses</label>
                   <Select
                     required
-                    className=""
                     onChange={handleWarehouseChange}
                     value={{
                       label: selectedWarehouse || "Select warehouse", // Set a default label if selectedWarehouse is null
