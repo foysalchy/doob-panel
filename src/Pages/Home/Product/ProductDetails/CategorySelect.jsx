@@ -100,6 +100,7 @@ const CategorySelect = ({}) => {
           <div className="grid md:grid-cols-2 mt-3 items-center gap-4">
             <Select
               name="megaCategory"
+              required
               onChange={(e) => handleCategoryChange(e.label)}
               placeholder="Select Category"
               options={megaCategories?.map((megaCategory) => ({

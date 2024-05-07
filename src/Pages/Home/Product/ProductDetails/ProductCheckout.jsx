@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import SelectWareHouse from "./SelectWareHouse";
 import OnlySyncCategory from "../../../SellerItems/ProductManagement/SellerAddProduct/Components/OnlySyncCategory";
 import CategorySelect from "./CategorySelect";
+import { AuthContext } from "../../../../AuthProvider/UserProvider";
 
 const ProductCheckout = ({
   setNext,
@@ -11,7 +12,9 @@ const ProductCheckout = ({
   userInfo,
   setUserInfo,
 }) => {
+  const { shopInfo } = useContext(AuthContext);
   const [userType, setUserType] = useState();
+
   //   console.log(product);
   console.log("userType", userType);
   console.log(userInfo, "userInfo");
@@ -19,19 +22,19 @@ const ProductCheckout = ({
     const { name, value } = e.target;
     console.log(name, "and", value);
 
-    // return;
-    // setUserType(value);
+    console.log("yes");
+
     if (userType === "customer") {
+      // If userType is "customer", update userInfo with the new value for the corresponding property
+      //   console.log("yes");
       setUserInfo((prevState) => ({
         ...prevState,
         [name]: value,
       }));
-    } else {
-      setUserInfo({
-        for_product: userType,
-      });
     }
   };
+  console.log(userInfo);
+  //   console.log(shopInfo);
 
   const handleSetData = () => {
     setNext(true);
@@ -82,16 +85,20 @@ const ProductCheckout = ({
     console.log(categories, "and", warehouseValue);
 
     if (categories.length > 0 && warehouseValue.length > 0) {
+      //   return;
+      setUserInfo((prevState) => ({
+        for_product: userType,
+        categories: categories,
+        warehouse: warehouseValue,
+        fullName: shopInfo?.shopName,
+        mobileNumber: shopInfo?.shopNumber,
+        address: shopInfo?.address,
+      }));
+      handleSetData();
     }
-    setUserInfo((prevState) => ({
-      for_product: userType,
-      categories: categories,
-      warehouse: warehouseValue,
-    }));
   };
 
   console.log(userInfo);
-  
   return (
     <div>
       <div className="max-w-4xl mx-auto my-8 p-2  bg-white shadow-md">
@@ -167,11 +174,15 @@ const ProductCheckout = ({
                   <select
                     value={userInfo.for_product}
                     onChange={(e) => {
-                      setUserType(e.target?.value),
+                      setUserType(e.target?.value);
+                      if (e.target?.value === "customer") {
                         setUserInfo((prevState) => ({
                           ...prevState,
                           for_product: e.target.value,
                         }));
+                      } else {
+                        setUserInfo({ for_product: e.target.value });
+                      }
                     }}
                     className="border p-2 rounded-md"
                     name="for_product"
@@ -182,6 +193,7 @@ const ProductCheckout = ({
                     <option value="doob_warehouse">Doob Warehouse</option>
                     <option value="seller_warehouse">Seller warehouse</option>
                   </select>
+
                   {userType === "customer" && (
                     <div className=" flex flex-col gap-2">
                       <input

@@ -21,6 +21,8 @@ const ModalForPayment = ({
   const { shopInfo } = useContext(AuthContext);
   const [payment_done, setPaymentDone] = useState(false);
 
+  console.log(userInfo, "userInfo");
+
   const {
     data: getaways = [],
     refetch,
