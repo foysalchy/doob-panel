@@ -92,12 +92,12 @@ const CategorySelect = ({}) => {
 
   return (
     <div>
-      <div className="border mt-4 border-gray-400 px-10 py-5 w-full bg-gray-100 rounded">
+      <div className="border mt-4 border-gray-400 px-2 py-5 w-full bg-gray-100 rounded">
         <div className="flex flex-col mt-3">
           <span>
             Category Information <span className="text-red-500"> *</span>
           </span>
-          <div className="grid md:grid-cols-4 mt-3 items-center gap-4">
+          <div className="grid md:grid-cols-2 mt-3 items-center gap-4">
             <Select
               name="megaCategory"
               onChange={(e) => handleCategoryChange(e.label)}

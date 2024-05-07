@@ -26,6 +26,10 @@ const ProductCheckout = ({
         ...prevState,
         [name]: value,
       }));
+    } else {
+      setUserInfo({
+        for_product: userType,
+      });
     }
   };
 
@@ -36,6 +40,12 @@ const ProductCheckout = ({
 
   const dataSubmit = async (e) => {
     e.preventDefault();
+
+    if (userType === "customer") {
+      handleSetData();
+
+      return;
+    }
 
     // const product = e.target.darazProduct.value
     const form = e.target;
@@ -70,11 +80,21 @@ const ProductCheckout = ({
     ];
 
     console.log(categories, "and", warehouseValue);
+
+    if (categories.length > 0 && warehouseValue.length > 0) {
+    }
+    setUserInfo((prevState) => ({
+      for_product: userType,
+      categories: categories,
+      warehouse: warehouseValue,
+    }));
   };
 
+  console.log(userInfo);
+  
   return (
     <div>
-      <div className="max-w-4xl mx-auto my-8 p-4 bg-white shadow-md">
+      <div className="max-w-4xl mx-auto my-8 p-2  bg-white shadow-md">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {/* left side */}
           <div>
@@ -138,12 +158,12 @@ const ProductCheckout = ({
           </div>
           {/* right side */}
           <div>
-            <div className="border-b pb-4 mb-4">
+            <div className="border-b pb-1 mb-2">
               {/* <h2 className="text-lg font-semibold mb-4">Shipping Details</h2> */}
 
               <div>
                 <h2 className="text-lg font-semibold mb-4">Shipping Details</h2>
-                <div className=" flex flex-col gap-2">
+                <div className=" flex flex-col gap-2 overflow-auto">
                   <select
                     value={userInfo.for_product}
                     onChange={(e) => {
@@ -235,16 +255,22 @@ const ProductCheckout = ({
                         <CategorySelect />
                       </div>
                     )}
+                    {userType === "seller_warehouse" && (
+                      <div className="">
+                        <SelectWareHouse adminWare={false} />
+                        <CategorySelect />
+                      </div>
+                    )}
+                    <button
+                      //   onClick={handleSetData}
+                      type="submit"
+                      className="w-full mt-4 bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition-colors"
+                    >
+                      Next Step
+                    </button>
                   </form>
                 </div>
               </div>
-
-              <button
-                onClick={handleSetData}
-                className="w-full mt-4 bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition-colors"
-              >
-                Next Step
-              </button>
             </div>
           </div>
         </div>

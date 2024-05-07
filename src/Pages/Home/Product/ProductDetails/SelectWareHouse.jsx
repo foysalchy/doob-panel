@@ -124,7 +124,7 @@ export default function SelectWareHouse({ adminWare }) {
 
   return (
     <div>
-      <div className="border mt-4 border-gray-400 px-10 py-5 w-full bg-gray-100 rounded">
+      <div className="border mt-4 border-gray-400 px-2 py-5 w-full bg-gray-100 rounded">
         <div className="flex flex-col mt-3">
           <span>
             Warehouse Information <span className="text-red-500"> *</span>
