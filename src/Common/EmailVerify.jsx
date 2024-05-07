@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const EmailVerify = () => {
   const location = useLocation();
@@ -98,12 +98,13 @@ const EmailVerify = () => {
                 </p>
               </div>
               <div>
-                <a
-                  href="/"
+                <Link
+                  // href="/s"
+                  to="/sign-in"
                   className="inline-flex items-center justify-center h-12 px-6 font-semibold tracking-wide text-teal-100 transition duration-200 rounded shadow-md bg-black hover:text-purple-900 bg-teal-accent-400 hover:bg-purple-100 focus:shadow-outline focus:outline-none"
                 >
                   Get started
-                </a>
+                </Link>
               </div>
             </div>
           </div>

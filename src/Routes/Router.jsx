@@ -202,18 +202,20 @@ const Router = createBrowserRouter([
       },
 
       {
-        path: 'confirm-order',
-        element: <SellerConfirmOrder />
+        path: "confirm-order",
+        element: <SellerConfirmOrder />,
       },
       {
         path: "new-product",
         loader: async () => {
           try {
-            const response = await fetch(`https://backend.doob.com.bd/api/v1/admin/new-products`);
+            const response = await fetch(
+              `https://backend.doob.com.bd/api/v1/admin/new-products`
+            );
             const data = await response.json();
             return data;
           } catch (error) {
-            console.error('Error fetching new products:', error);
+            console.error("Error fetching new products:", error);
             return null; // Return null in case of an error
           }
         },
@@ -223,20 +225,19 @@ const Router = createBrowserRouter([
         path: "upcoming-product",
         loader: async () => {
           try {
-            const response = await fetch(`https://backend.doob.com.bd/api/v1/admin/upcoming-products`);
+            const response = await fetch(
+              `https://backend.doob.com.bd/api/v1/admin/upcoming-products`
+            );
             const data = await response.json();
             return data;
           } catch (error) {
-            console.error('Error fetching new products:', error);
+            console.error("Error fetching new products:", error);
             return null; // Return null in case of an error
           }
         },
         element: <SeeAllProduct />,
-      }
-
+      },
     ],
   },
-
-
 ]);
 export default Router;
