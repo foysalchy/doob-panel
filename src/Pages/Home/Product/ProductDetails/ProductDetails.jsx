@@ -323,7 +323,7 @@ const ProductDetails = () => {
       localStorage.setItem(`cart-product-${user._id}`, JSON.stringify(getCart));
     }
 
-    console.log(productData, "productData");
+    BrightAlert()
   };
 
   const balk_buy = () => {
@@ -363,7 +363,7 @@ const ProductDetails = () => {
     },
   });
 
-  console.log(releventProduct, '>>><<<<');
+
 
   return (
     <section>
@@ -693,13 +693,21 @@ const ProductDetails = () => {
                     </button>
                   </div>
                 </div>
-                <button
-                  onClick={balk_buy}
-                  className="h-10 md:px-4 px-2 whitespace-nowrap py-2 text-sm rounded bg-orange-600 hover:bg-orange-500 text-white"
-                  type="button"
-                >
-                  Add Store
-                </button>
+                {shopInfo ?
+                  <button
+                    onClick={balk_buy}
+                    className="h-10 md:px-4 px-2 whitespace-nowrap py-2 text-sm rounded bg-orange-600 hover:bg-orange-500 text-white"
+                    type="button"
+                  >
+                    Add Store
+                  </button> :
+                  <Link to={'/sign-in'}
+
+                    className="h-10 md:px-4 px-2 whitespace-nowrap py-2 text-sm rounded bg-orange-600 hover:bg-orange-500 text-white"
+                    type="button"
+                  >
+                    Add Store
+                  </Link>}
 
                 {/* 
                 <button
@@ -711,13 +719,20 @@ const ProductDetails = () => {
                 </button> */}
 
                 <div className="flex flex-wrap gap-2">
-                  <button
+                  {shopInfo ? <button
                     onClick={() => setInvoice(productFind?._id)}
                     type="button"
                     className="h-10 md:px-6 px-4 py-2 text-sm rounded bg-indigo-600 hover:bg-indigo-500 text-white text-nowrap"
                   >
                     Buy Now
-                  </button>
+                  </button> :
+                    <Link
+                      to={'/sign-in'}
+                      type="button"
+                      className="h-10 md:px-6 px-4 py-2 text-sm rounded bg-indigo-600 hover:bg-indigo-500 text-white text-nowrap"
+                    >
+                      Buy Now
+                    </Link>}
                   <button
                     onClick={() => add_to_cart(productFind)}
                     type="button"

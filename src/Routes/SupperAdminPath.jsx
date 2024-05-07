@@ -73,6 +73,7 @@ import ClaimAndRerunAdmin from "../Pages/AdminItem/Order/ClaimAndRerunAdmin";
 import AdminTrackOrder from "../Pages/AdminItem/AdminTrackOrder/AdminTrackOrder";
 import PackageManagement from "../Pages/AdminItem/PriceMangement/PackageHandle";
 import AddPackage from "../Pages/AdminItem/PriceMangement/AddPackage";
+import CommissionReport from "../Pages/AdminItem/ReportManagement/CommitonReport/CommistionReport";
 
 const SupperAdminPath = [
   {
@@ -378,7 +379,7 @@ const SupperAdminPath = [
   },
   {
     path: "report-management/commission-history-admin",
-    element: <SellerReport />,
+    element: <CommissionReport />,
   },
   {
     path: "warehouse/warehouse-management",

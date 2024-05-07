@@ -44,13 +44,23 @@ const Withdraw = () => {
   useEffect(() => {
     // Calculate the total of all total prices
     const total = orders.reduce((acc, order) => {
+      const price = parseInt(order.price) || 0;
+      const commission = (parseInt(order.commission) || 0) * order.quantity ?? 1;
+      const handling = (parseInt(order.handling) || 0) * order.quantity ?? 1;
+      console.log(
+        price - (commission + handling),
+        "price - (commission + handling)");
       return (
         acc +
-        (order.price + parseInt(order.commission) + parseInt(order.handling))
+        (price - (commission + handling))
       );
     }, 0);
     setTotalAllTotalPrices(total);
+
   }, [orders]);
+
+
+  console.log(orders);
 
   // Calculate total pending withdrawal
   const totalPendingWithdrawal = withdrawHistory
@@ -63,6 +73,7 @@ const Withdraw = () => {
     .reduce((acc, withdraw) => acc + withdraw.amount, 0);
 
   const total_request = withdrawHistory.length;
+
   const total_pending = withdrawHistory.filter(
     (withdraw) => !withdraw.status
   ).length;
@@ -145,25 +156,29 @@ const Withdraw = () => {
             <th className="p-3 text-left">Product Price</th>
             <th className="p-3 text-left">Commission</th>
             <th className="p-3 text-left">Handling</th>
+            <th className="p-3 text-left">Quantity</th>
             <th className="p-3 text-left">Total Amount</th>{" "}
             {/* Add new column for Total Amount */}
           </tr>
         </thead>
         <tbody>
           {orders.map((order, index) => (
+
             <tr
               key={index}
               className={index % 2 === 0 ? "bg-gray-100" : "bg-white"}
             >
+
               <td className="p-3">{order._id}</td>
               <td className="p-3 text-left">৳{order.price}</td>
               <td className="p-3">৳{order.commission}</td>
               <td className="p-3">৳{order.handling}</td>
+              <td className="p-3">{order.quantity}</td>
               <td className="p-3">
                 ৳
                 {(
                   order.price -
-                  (parseInt(order.commission) + parseInt(order.handling))
+                  (parseInt(order.commission * parseInt(order.quantity)) + parseInt(order.handling * parseInt(order.quantity)))
                 ).toFixed(2)}
               </td>{" "}
               {/* Calculate and display total amount */}
@@ -172,78 +187,80 @@ const Withdraw = () => {
         </tbody>
       </table>
 
-      {withdraw && (
-        <div className="fixed top-0 z-50 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center">
-          <div className="bg-white p-4 max-w-lg rounded-md">
-            <h1 className="text-2xl font-bold mb-4">Withdraw</h1>
-            <p className="mb-4">
-              Are you sure you want to withdraw ৳{currentAvailableAmount}?
-            </p>
-            <input
-              type="number"
-              className="w-full border border-gray-300  rounded-md px-3 py-2 mb-3"
-              placeholder="Amount"
-              value={amount}
-              max={currentAvailableAmount} // Set the minimum value for the input
-              onChange={(e) =>
-                setAmount(Math.min(currentAvailableAmount, e.target.value))
-              }
-            />
-            <input
-              type="email"
-              className="w-full border border-gray-300 mt-3 rounded-md px-3 py-2 mb-3"
-              placeholder="Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-            <input
-              type="text"
-              className="w-full border border-gray-300 rounded-md px-3 py-2 mb-3"
-              placeholder="Phone"
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
-            />
-            <input
-              type="text"
-              className="w-full border border-gray-300 rounded-md px-3 py-2 mb-3"
-              placeholder="Account Number"
-              value={accountNumber}
-              onChange={(e) => setAccountNumber(e.target.value)}
-            />
-            <input
-              type="text"
-              className="w-full border border-gray-300 rounded-md px-3 py-2 mb-3"
-              placeholder="Account Name"
-              value={accountName}
-              onChange={(e) => setAccountName(e.target.value)}
-            />
-            <input
-              type="text"
-              className="w-full border border-gray-300 rounded-md px-3 py-2 mb-3"
-              placeholder="Bank Name"
-              value={bankName}
-              onChange={(e) => setBankName(e.target.value)}
-            />
-            <div className="flex justify-end">
-              <button
-                onClick={handleWithdraw}
-                className="bg-green-500 text-white px-4 py-2 rounded-md"
-              >
-                Yes
-              </button>
-              <button
-                onClick={() => {
-                  setWithdraw(false);
-                }}
-                className="bg-red-500 text-white px-4 py-2 rounded-md ml-4"
-              >
-                No
-              </button>
+      {
+        withdraw && (
+          <div className="fixed top-0 z-50 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center">
+            <div className="bg-white p-4 max-w-lg rounded-md">
+              <h1 className="text-2xl font-bold mb-4">Withdraw</h1>
+              <p className="mb-4">
+                Are you sure you want to withdraw ৳{currentAvailableAmount}?
+              </p>
+              <input
+                type="number"
+                className="w-full border border-gray-300  rounded-md px-3 py-2 mb-3"
+                placeholder="Amount"
+                value={amount}
+                max={currentAvailableAmount} // Set the minimum value for the input
+                onChange={(e) =>
+                  setAmount(Math.min(currentAvailableAmount, e.target.value))
+                }
+              />
+              <input
+                type="email"
+                className="w-full border border-gray-300 mt-3 rounded-md px-3 py-2 mb-3"
+                placeholder="Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+              <input
+                type="text"
+                className="w-full border border-gray-300 rounded-md px-3 py-2 mb-3"
+                placeholder="Phone"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+              />
+              <input
+                type="text"
+                className="w-full border border-gray-300 rounded-md px-3 py-2 mb-3"
+                placeholder="Account Number"
+                value={accountNumber}
+                onChange={(e) => setAccountNumber(e.target.value)}
+              />
+              <input
+                type="text"
+                className="w-full border border-gray-300 rounded-md px-3 py-2 mb-3"
+                placeholder="Account Name"
+                value={accountName}
+                onChange={(e) => setAccountName(e.target.value)}
+              />
+              <input
+                type="text"
+                className="w-full border border-gray-300 rounded-md px-3 py-2 mb-3"
+                placeholder="Bank Name"
+                value={bankName}
+                onChange={(e) => setBankName(e.target.value)}
+              />
+              <div className="flex justify-end">
+                <button
+                  onClick={handleWithdraw}
+                  className="bg-green-500 text-white px-4 py-2 rounded-md"
+                >
+                  Yes
+                </button>
+                <button
+                  onClick={() => {
+                    setWithdraw(false);
+                  }}
+                  className="bg-red-500 text-white px-4 py-2 rounded-md ml-4"
+                >
+                  No
+                </button>
+              </div>
             </div>
           </div>
-        </div>
-      )}
-    </div>
+        )
+      }
+    </div >
   );
 };
 

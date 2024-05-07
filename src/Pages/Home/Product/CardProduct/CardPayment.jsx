@@ -157,7 +157,7 @@ const CardPayment = ({ openPayment, setOpenPayment, handleStore }) => {
     return (
         <div className={`fixed inset-0 flex items-center justify-center z-50 ${openPayment ? 'visible' : 'hidden'}`}>
             <div className="fixed inset-0 bg-gray-900 bg-opacity-50 transition-opacity" aria-hidden="true"></div>
-            <div className="relative bg-white rounded-lg w-full max-w-4xl mx-auto px-8 py-6 z-50">
+            <div className="relative bg-white rounded-lg w-full h-[80%] overflow-y-auto max-w-4xl mx-auto px-8 py-6 z-50">
                 <button onClick={() => setOpenPayment(false)}>x</button>
 
                 {!loading ? <div>
