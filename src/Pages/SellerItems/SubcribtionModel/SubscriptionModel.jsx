@@ -82,7 +82,7 @@ const SubscriptionModel = () => {
   //     alert('your ads;fj');
   // }
 
-  console.log(prices?.orderInfo?.time?.split(",")[1]);
+
 
   const showWarningIfNeeded = () => {
     if (daysPassed > 0 && daysPassed <= 5) {
@@ -97,16 +97,17 @@ const SubscriptionModel = () => {
     showWarningIfNeeded();
   }, [daysPassed]);
 
-  console.log(daysPassed, "services time");
+
 
   const [invoice, setInvoice] = useState(false);
 
   // const buyTi
   const showBuyingPrice = parseInt(prices?.orderInfo?.buyingPrice);
 
+
   const amount = parseInt(prices?.orderInfo?.amount) * parseInt(prices?.orderInfo?.time?.split(",")[1])
 
-  console.log(time, "days", daysPassed);
+  console.log(CommissionHistory);
   return (
     <div className="bg-white text-black">
       {showWarning && (
@@ -134,7 +135,7 @@ const SubscriptionModel = () => {
         </div>
       )}
 
-      {possibility && !amount && (
+      {!amount && (
         <div className="bg-orange-100 px-2 py-3 rounded- flex justify-between items-center">
           <p className="text-sm text-orange-800 capitalize ">
             Hi dear, Your free trial is end. Please renew{" "}
