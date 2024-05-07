@@ -160,13 +160,13 @@ const SubscriptionModel = () => {
         </div>
       )}
       <div className="container px-6 py-8 mx-auto">
-        <h1 className="text-2xl font-semibold text-center text-gray-800 capitalize lg:text-3xl ">
+        {amount ? <h1 className="text-2xl font-semibold text-center text-gray-800 capitalize lg:text-3xl ">
           {`The remaining validity of your package is ${daysPassed - time == 10000000000000000000000000000000000 ? "Unlimited" : time} days out of ${time == 10000000000000000000000000000000000 ? "Unlimited" : time
             } days.`}
-        </h1>
+        </h1> : ''}
 
 
-        <div className="flex justify-center mt-3">
+        {amount ? <div className="flex justify-center mt-3">
           <div className="w-[300px] bg-[#0000ff08] text-center border-2 border-blue-400 p-3 rounded">
             <h2 className="font-semibold pb-2">Order Information:</h2>
             <ul>
@@ -186,7 +186,7 @@ const SubscriptionModel = () => {
               </li>
             </ul>
           </div>
-        </div>
+        </div> : ''}
 
         {/* <div className="grid grid-cols-1 gap-8 mt-6 lg:grid-cols-3 xl:mt-12">
 
