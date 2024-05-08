@@ -38,56 +38,28 @@ const ConfirmOrder = () => {
             <>
                 <div
                     ref={componentRef}
-                    className="p-12 mx-8 print-data hidden  mt-6">
+                    className="p-12 mx-8 print-data bg-white  mt-6">
 
                     <header className="flex items-start justify-between">
-                        <img src={shopInfo?.logo} alt="logo" className='w-[200px]' />
-                        <div className='whitespace-wrap w-[300px]'>
+                        {/* <img src={shopInfo?.logo} alt="logo" className='w-[200px]' /> */}
+                        {/* <div className='whitespace-wrap w-[300px]'>
                             <p className='text-gray-600 text-end'>{shopInfo?.address}</p>
                             <p className='text-gray-600 text-end'>{shopInfo?.shopName}</p>
-                        </div>
+                        </div> */}
                     </header>
 
                     <main>
                         <div className="flex items-center justify-center py-1 font-bold text-gray-600 bg-gray-200 mt-8 text-center ">
-                            SALES INVOICE
+                            INVOICE
                         </div>
 
                         {/*................*/}
                         {/*.... Address ...*/}
                         {/*................*/}
                         <div className="flex items-center justify-between mt-4">
-                            <div>
-                                <div className='flex items-center gap-2'>
-                                    <h4 className='font-semibold text-gray-700 text-sm'>
-                                        Email :
-                                    </h4>
-                                    <p className="text-gray-600 text-sm">{shopInfo?.shopEmail}</p>
-                                </div>
-                                <div className='flex items-center gap-2'>
-                                    <h4 className='font-semibold text-gray-700 text-sm'>
-                                        Phone :
-                                    </h4>
-                                    <p className="text-gray-600 text-sm">{shopInfo?.shopNumber}</p>
-                                </div>
-                            </div>
 
                             <div>
-                                <li className='flex justify-start items-center gap-2'>
-                                    <h4 className='font-semibold text-gray-700 text-sm'>
-                                        Invoice No :
-                                    </h4>
-                                    <p className="text-gray-600 text-sm">{shopInfo?._id}</p>
-                                </li>
-                                <li className='flex justify-start items-center gap-2'>
-                                    <h4 className='font-semibold text-gray-700 text-sm'>
-                                        Invoice Date :
-                                    </h4>
-                                    <p className="text-gray-600 text-sm">{
-                                        new Date().toDateString(shopInfo?.time_stamp)
-                                    }</p>
-                                </li>
-                                <br />
+
                                 <li className='flex justify-start items-center gap-2'>
                                     <h4 className='font-semibold text-gray-700 text-sm'>
                                         Payment Date :
@@ -193,15 +165,15 @@ const ConfirmOrder = () => {
     }
 
     return (
-        <div className=''>
-            <InvoicePage order={order} />
+        <div className='bg-gray-50'>
             <div className="px-4 py-5 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8">
                 <h1 className="text-center text-3xl mt-12 font-bold">Your order is confirmed</h1>
                 <p className="text-center text-gray-500">Thank you for shopping.</p>
+                <button onClick={handlePrint} className='bg-blue-500 text-white px-8 py-2 rounded-md  mt-2'>Print</button>
+                <InvoicePage order={order} />
 
 
-
-                <div className="grid grid-cols-3 gap-3">
+                <div className="hidden grid-cols-3 gap-3">
                     <div className="col-span-2">
                         <>
                             <div className="p-6 overflow-x-auto px-0">
