@@ -6,6 +6,7 @@ const EmailVerify = () => {
   const userId = location.hash.replace("#", "");
   const [loading, setLoading] = useState(true);
   const [success, setSuccess] = useState(false);
+  const [successMail, setSuccessMail] = useState("");
 
   useEffect(() => {
     const verifyEmail = async () => {
@@ -20,14 +21,18 @@ const EmailVerify = () => {
             body: JSON.stringify({ userId }),
           }
         );
+        console.log(response.stringify());
 
         if (response.ok) {
           setSuccess(true);
+          setSuccessMail("Email verified successfully");
         } else {
           console.error("Email verification failed:", response.statusText);
+          setSuccessMail(response?.message);
         }
       } catch (error) {
         console.error("Email verification failed:", error.message);
+        setSuccessMail(error?.message);
       } finally {
         setLoading(false);
       }
@@ -35,6 +40,8 @@ const EmailVerify = () => {
 
     verifyEmail();
   }, [userId]);
+
+  console.log(successMail);
 
   return (
     <div>

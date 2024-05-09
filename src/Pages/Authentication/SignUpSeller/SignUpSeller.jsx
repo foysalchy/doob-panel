@@ -198,8 +198,6 @@ const SignUpSeller = () => {
             setError(data.message);
           }
           setLoading(false);
-
-
         });
     }
   };
@@ -441,10 +439,11 @@ const SignUpSeller = () => {
                         {setTime && timeRemaining > 0 && (
                           <small className="">
                             Resend OTP after{" "}
-                            {`${Math.floor(timeRemaining / 60)}, ${timeRemaining % 60 < 10
-                              ? `0${timeRemaining % 60}`
-                              : timeRemaining % 60
-                              }`}
+                            {`${Math.floor(timeRemaining / 60)}, ${
+                              timeRemaining % 60 < 10
+                                ? `0${timeRemaining % 60}`
+                                : timeRemaining % 60
+                            }`}
                           </small>
                         )}
                       </div>

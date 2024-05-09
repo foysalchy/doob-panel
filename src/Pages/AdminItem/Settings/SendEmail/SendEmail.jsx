@@ -88,7 +88,7 @@ const SendEmail = () => {
       .then((response) => response.json())
       .finally(() => {
         setLoading(false);
-        alert(data.message);
+        alert(response.message);
         form.reset();
       });
   };
