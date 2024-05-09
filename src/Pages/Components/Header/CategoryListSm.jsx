@@ -161,10 +161,12 @@ export default function CategoryListSm({ setOn }) {
   const [activeMiniCategory, setActiveMiniCategory] = useState(null);
 
   console.log(activeMiniCategory, "data......");
+
   return (
     <div className=" ">
       <div className="grid grid-cols-4 gap-2 pt-2">
-        {/* mega category */}
+        {/* 
+        ega category */}
         <div className="">
           {megaSideCategoryData.map((item, index) => (
             <div key={index} className="">
@@ -180,7 +182,7 @@ export default function CategoryListSm({ setOn }) {
                       alt=""
                       className="w-[70px]  h-[60px] object-cover ring-1 ring-gray-400"
                     />
-                    <p className="text-sm text-center">{item?.name}</p>
+                    <p className="text-sm text-center">{item?.name}...</p>
                   </div>
                 </Link>
               ) : (
@@ -190,7 +192,8 @@ export default function CategoryListSm({ setOn }) {
                     className={`${openDropdownIndex === index
                       ? "bg-gray-800 text-white"
                       : "bg-gray-100 text-black"
-                      } flex flex-col gap-2 w-full h-auto rounded  items-center justify-center mb-2 px-2 py-2 text-sm font-normal   relative `}
+                      } flex flex-col gap-2 w-full h-auto rounded  items-center justify-center mb-2 px-2 py-2 text-sm font-normal  border 
+                       relative `}
                   >
                     <img
                       src={item?.image}

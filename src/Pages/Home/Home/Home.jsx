@@ -8,7 +8,6 @@ import HomeUserVoice from './HomeUserVoice/HomeUserVoice';
 import HomeNewsletter from './HomeNewsletter/HomeNewsletter';
 import Benefits from './HomeOmniChannel/Benefits';
 
-
 const Home = () => {
     return (
         <div>

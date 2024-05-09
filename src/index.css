@@ -388,4 +388,9 @@ font-google {
   }
   .print-data {
     display: block !important;
-  }}
+  }
+.print-container{
+  padding : 0px 100px!important;
+}
+
+}
