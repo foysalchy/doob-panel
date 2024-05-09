@@ -56,7 +56,7 @@ const HomeHero = () => {
                                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.
                             </p> */}
             </div>
-            <div className="flex gap-4 md:justify-center">
+            <div className="flex gap-4 justify-center">
               <button
                 onClick={() => BrightAlert()}
                 className="inline-flex items-center justify-center h-12 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-gray-900 hover:bg-black focus:shadow-outline focus:outline-none"

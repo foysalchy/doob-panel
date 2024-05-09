@@ -594,8 +594,8 @@ const SeeAllProduct = () => {
                         </div>
 
                         <div className="col-span-3">
-                            <header className="border rounded-md md:p-4 p-2 flex items-center justify-between">
-                                <h6 className="">Products</h6>
+                            <header className="border rounded-md lg:p-4 p-2 flex items-center justify-between">
+                                <h6 className="font-semibold text-black">Products</h6>
                                 <div className="flex items-center gap-3">
 
                                     <button
@@ -608,13 +608,13 @@ const SeeAllProduct = () => {
                                     <div className="inline-flex rounded-lg shadow-sm">
                                         <button
                                             onClick={() => setIsGrid('grid')}
-                                            type="button" className="py-2 px-2 inline-flex items-center gap-x-2 -ms-px first:rounded-s-lg first:ms-0 last:rounded-e-lg text-sm font-medium focus:z-10 border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none   ">
+                                            type="button" className={`py-2 px-2 inline-flex items-center gap-x-2 -ms-px first:rounded-s-lg first:ms-0 last:rounded-e-lg text-sm font-medium focus:z-10 border border-gray-200 ${isGrid === 'grid' ? 'bg-gray-900 text-red-500' : ''}  text-gray-800 shadow-sm   disabled:opacity-50 disabled:pointer-events-none `}>
                                             <IoGrid className='text-xl' />
 
                                         </button>
                                         <button
                                             onClick={() => setIsGrid('list')}
-                                            type="button" className="py-2 px-2 inline-flex items-center gap-x-2 -ms-px first:rounded-s-lg first:ms-0 last:rounded-e-lg text-sm font-medium focus:z-10 border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none   ">
+                                            type="button" className={`py-2 px-2 inline-flex items-center gap-x-2 -ms-px first:rounded-s-lg first:ms-0 last:rounded-e-lg text-sm font-medium focus:z-10 border border-gray-200 ${isGrid === 'list' ? 'bg-gray-900 text-red-500' : ''}  text-gray-800 shadow-sm  disabled:opacity-50 disabled:pointer-events-none   `}>
                                             <IoListSharp className='text-xl' />
                                         </button>
                                     </div>
@@ -956,24 +956,24 @@ const SeeAllProduct = () => {
                             <br />
                             <div>
                                 {/* lg */}
-                                <div className={`${isGrid === 'grid' ? 'md:grid grid-cols-3 gap-3' : ''}`}>
+                                <div className={`${isGrid === 'grid' ? 'md:grid lg:grid-cols-3 md:grid-cols-2 gap-3' : ''}`}>
                                     {
                                         filterData && filterData?.map((itm) => (
                                             <div key={itm?._id}>
                                                 {
                                                     isGrid === 'list' ?
-                                                        <div className="group md:grid grid-cols-3 mb-3 gap-3 w-full p-3 border rounded-lg">
+                                                        <div className="md:grid md:grid-cols-3 flex items-start gap-2 mb-3 w-full md:p-4 p-2 border rounded-lg">
                                                             <a
-                                                                className="relative mx-3 mt-3 flex h-40 overflow-hidden rounded-xl"
+                                                                className="relative md:w-full w-[160px]  flex lg:h-[200px] h-40 overflow-hidden rounded-xl"
                                                                 href="#"
                                                             >
                                                                 <img
-                                                                    className="peer absolute top-0 right-0 h-full w-full object-cover"
-                                                                    src={itm?.featuredImage.length && itm?.featuredImage?.src}
+                                                                    className="peer absolute top-0 right-0 h-full w-full left-0 object-cover"
+                                                                    src={itm?.featuredImage?.src ?? itm?.images[0].src}
                                                                     alt="product image"
                                                                 />
                                                                 {itm?.images[1] && <img
-                                                                    className="peer absolute top-0 -right-96 h-full w-full object-cover transition-all delay-100 duration-1000 hover:right-0 peer-hover:right-0"
+                                                                    className="peer absolute top-0 -right-96 h-full w-full object-cover transition-all delay-100 duration-500 hover:right-0 peer-hover:right-0"
                                                                     src={itm?.images.length && itm?.images[1].src}
                                                                     alt="product image"
                                                                 />}
@@ -994,12 +994,15 @@ const SeeAllProduct = () => {
                                                                 </svg>
                                                                 {/* <span className="absolute top-0 left-0 m-2 rounded-full bg-black px-2 text-center text-sm font-medium text-white">39% OFF</span> */}
                                                             </a>
-                                                            <div className="col-span-2">
-                                                                <h5 className="text-lg tracking-tight text-slate-900">
-                                                                    {itm?.name}
+                                                            <div className="md:col-span-2">
+                                                                <h5 className="md:text-xl lg:hidden block  text-sm tracking-tight text-slate-900">
+                                                                    {itm?.name.slice(0, 20)}
+                                                                </h5>
+                                                                <h5 className="md:text-xl lg:block hidden  text-sm tracking-tight text-slate-900">
+                                                                    {itm?.name.slice(0, 90)}
                                                                 </h5>
 
-                                                                <div className="flex text-2xl mt-3 items-center gap-6">
+                                                                <div className="flex md:text-xl text-sm md:mt-3 mt-3 items-center gap-6">
                                                                     <h1 className="font-bold  ">৳{itm?.regular_price}</h1>
                                                                     <del className="font-bold   text-gray-400">৳{itm?.price}</del>
                                                                 </div>
@@ -1016,19 +1019,19 @@ const SeeAllProduct = () => {
 
                                                                 <div className=" ">
                                                                     {/* <p dangerouslySetInnerHTML={{ __html: itm?.shortDescription }} /> */}
-                                                                    <p className="text-gray-400 mt-2">
+                                                                    <p className="text-gray-400 hidden mt-1">
                                                                         {itm?.metaDescription.slice(0, 200)}
                                                                     </p>
                                                                 </div>
 
-                                                                <div className="flex items-center gap-3 mt-3">
+                                                                <div className="flex items-center gap-3 md:mt-4 mt-1">
                                                                     <Link>
-                                                                        <div className="bg-black px-4 py-2 rounded-md text-white">
+                                                                        <div className="bg-black px-4 py-2 rounded-md md:text-lg text-xs text-white">
                                                                             Add to Cart
                                                                         </div>
                                                                     </Link>
                                                                     <Link to={`/products/${itm?._id}`}>
-                                                                        <div className="bg-blue-500 px-4 py-2 rounded-md text-white">
+                                                                        <div className="bg-blue-500 px-4 py-2 rounded-md text-white md:text-lg text-xs">
                                                                             Buy Now
                                                                         </div>
                                                                     </Link>
@@ -1040,12 +1043,12 @@ const SeeAllProduct = () => {
 
                                                         <div className="group grid  mb-3 gap-3 w-full p-3 border rounded-lg">
                                                             <a
-                                                                className="relative  border flex h-60 overflow-hidden rounded-xl"
+                                                                className="relative  border flex lg:h-60 md:h-40 h-60 overflow-hidden rounded-xl"
                                                                 href="#"
                                                             >
                                                                 <img
                                                                     className="peer absolute top-0 right-0 h-full w-full object-cover"
-                                                                    src={itm?.featuredImage?.src}
+                                                                    src={itm?.featuredImage?.src ?? itm?.images[0].src}
                                                                     alt="product image"
                                                                 />
                                                                 {itm?.images[1] && <img
@@ -1072,8 +1075,12 @@ const SeeAllProduct = () => {
                                                             </a>
 
                                                             <div className="">
-                                                                <h5 className="text-lg tracking-tight text-slate-900">
+                                                                <h5 className="text-lg lg:block hidden tracking-tight text-slate-900">
                                                                     {itm?.name}
+                                                                </h5>
+
+                                                                <h5 className="text-lg lg:hidden block tracking-tight text-slate-900 ">
+                                                                    {itm?.name.slice(0, 20)}
                                                                 </h5>
 
                                                                 <div className="flex text-2xl mt-3 items-center gap-6">
@@ -1098,14 +1105,14 @@ const SeeAllProduct = () => {
                                                                     </p>
                                                                 </div>
 
-                                                                <div className="flex items-center gap-3 mt-3">
+                                                                <div className="flex items-center lg:gap-3 gap-1 mt-3">
                                                                     <Link>
-                                                                        <div className="bg-black px-4 py-2 rounded-md text-white">
+                                                                        <div className="bg-black lg:text-md md:text-sm  px-4 py-2 rounded-md text-white whitespace-nowrap">
                                                                             Add to Cart
                                                                         </div>
                                                                     </Link>
                                                                     <Link to={`/products/${itm?._id}`} >
-                                                                        <div className="bg-blue-500 px-4 py-2 rounded-md text-white">
+                                                                        <div className="bg-blue-500 px-4 py-2 rounded-md lg:text-md md:text-sm  text-white whitespace-nowrap">
                                                                             Buy Now..
                                                                         </div>
                                                                     </Link>
@@ -1121,7 +1128,7 @@ const SeeAllProduct = () => {
                                 </div>
 
                                 {/* sm */}
-                                <div className="md:hidden block gap-4 w-full ">
+                                <div className="hidden  gap-4 w-full ">
                                     {
                                         filterData && filterData?.map((itm) => (
                                             <div key={itm?._id}>

@@ -34,7 +34,7 @@ const ServiceConfirmOrder = () => {
             <>
                 <div
                     ref={componentRef}
-                    className="px-12 bg-white pb-12 pt-2 mx-8 print-data">
+                    className="lg:px-12 bg-white print-container  pb-12 pt-2 mx-8 print-data">
 
                     <header className="flex items-start justify-between">
                         {/* <img src={shopInfo?.logo} alt="logo" className='w-[200px]' /> */}
@@ -144,11 +144,11 @@ const ServiceConfirmOrder = () => {
 
     return (
         <div className='bg-gray-50'>
-            <div ref={componentRef} className="px-4 py-5 mx-auto bg-gray-50 sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8">
+            <div ref={componentRef} className="px-1 py-5 mx-auto bg-gray-50 sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-4 lg:px-8">
                 <h1 className="text-center text-3xl mt-12 font-bold">Your order is confirmed</h1>
                 <p className="text-center text-gray-500">Thank you for shopping.</p>
 
-                <button onClick={handlePrint} className='bg-blue-500 mb-3 text-white px-6 py-2 rounded-md mt-2'>Print</button>
+                <button onClick={handlePrint} className='bg-blue-500 mb-3 ml-8 text-white px-6 py-2 rounded-md mt-2'>Print</button>
                 <InvoicePage itm={order} />
 
                 <div className="hidden grid-cols-3 gap-3">
