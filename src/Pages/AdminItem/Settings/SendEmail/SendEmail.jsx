@@ -78,7 +78,7 @@ const SendEmail = () => {
         select,
       };
     }
-    fetch("https://backend.doob.com.bd/api/v1/admin/send-email", {
+    fetch("http://localhost:5001/api/v1/admin/send-email", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -88,7 +88,7 @@ const SendEmail = () => {
       .then((response) => response.json())
       .finally(() => {
         setLoading(false);
-        alert(data.message);
+        alert(response.message);
         form.reset();
       });
   };

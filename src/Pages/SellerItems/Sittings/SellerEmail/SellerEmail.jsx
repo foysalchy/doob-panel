@@ -65,6 +65,9 @@ const SellerEmail = () => {
   };
 
   const [loading, setLoading] = useState(false);
+  // console.log(shopInfo?.shopId);
+
+  // console.log(select,'');
 
   const emailData = (event) => {
     setLoading(true);
@@ -80,15 +83,18 @@ const SellerEmail = () => {
         message,
         users: selectedOptions,
         select,
+        shopId: shopInfo?.shopId,
       };
     } else {
       formData = {
         subject,
         message,
         select,
+        shopId: shopInfo?.shopId,
       };
     }
-    fetch("https://backend.doob.com.bd/api/v1/admin/send-email", {
+
+    fetch("http://localhost:5001/api/v1/seller/send-email", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

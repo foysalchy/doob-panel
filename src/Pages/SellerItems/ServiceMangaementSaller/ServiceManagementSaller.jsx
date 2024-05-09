@@ -8,7 +8,11 @@ import { AuthContext } from "../../../AuthProvider/UserProvider";
 const ServiceManagementSaller = () => {
   const { shopInfo } = useContext(AuthContext);
 
-  const { data: serviceOrder = [], refetch } = useQuery({
+  const {
+    data: serviceOrder = [],
+    refetch,
+    isLoading,
+  } = useQuery({
     queryKey: ["serviceOrderSaller"],
     queryFn: async () => {
       const res = await fetch(
@@ -19,14 +23,17 @@ const ServiceManagementSaller = () => {
     },
   });
 
+  console.log(serviceOrder);
   console.log(
     `https://backend.doob.com.bd/api/v1/seller/my-service?shopId=${shopInfo._id}`
   );
 
   const [input, setInput] = useState("");
-  const [filteredData, setFilteredData] = useState([]);
+  const [filteredData, setFilteredData] = useState(serviceOrder);
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
+
+  console.log(filteredData);
 
   const searchItem = () => {
     if (input === "" && startDate === "" && endDate === "") {
@@ -42,7 +49,7 @@ const ServiceManagementSaller = () => {
         const matchesDateRange =
           startDate && endDate
             ? new Date(order.timestamp) >= new Date(startDate) &&
-            new Date(order.timestamp) <= new Date(endDate)
+              new Date(order.timestamp) <= new Date(endDate)
             : true;
 
         return matchesSearch && matchesDateRange;
@@ -63,7 +70,7 @@ const ServiceManagementSaller = () => {
 
   useEffect(() => {
     setFilteredData(serviceOrder);
-  }, [input]);
+  }, [input, isLoading]);
 
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -102,10 +109,11 @@ const ServiceManagementSaller = () => {
           return (
             <li key={pageNumber}>
               <button
-                className={`block h-8 w-8 rounded border ${pageNumber === currentPage
-                  ? "border-blue-600 bg-blue-600 text-white"
-                  : "border-gray-900 bg-white text-center leading-8 text-gray-900"
-                  }`}
+                className={`block h-8 w-8 rounded border ${
+                  pageNumber === currentPage
+                    ? "border-blue-600 bg-blue-600 text-white"
+                    : "border-gray-900 bg-white text-center leading-8 text-gray-900"
+                }`}
                 onClick={() => handleChangePage(pageNumber)}
               >
                 {pageNumber}
@@ -281,8 +289,8 @@ const ServiceManagementSaller = () => {
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
-                  {currentData.map((order, idx) => (
-                    <tr>
+                  {currentData?.map((order, idx) => (
+                    <tr key={idx}>
                       <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
                         <img
                           className="h-10 w-10 rounded-sm"

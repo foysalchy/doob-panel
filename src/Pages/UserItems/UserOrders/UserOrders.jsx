@@ -8,7 +8,7 @@ const UserOrders = () => {
     queryKey: ["orderListForSideUser"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/site-user/order?userId=${user._id}`
+        `http://localhost:5001/api/v1/site-user/order?userId=${user._id}`
       );
       const data = await res.json();
 
