@@ -78,7 +78,7 @@ const SendEmail = () => {
         select,
       };
     }
-    fetch("http://localhost:5001/api/v1/admin/send-email", {
+    fetch("https://backend.doob.com.bd/api/v1/admin/send-email", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

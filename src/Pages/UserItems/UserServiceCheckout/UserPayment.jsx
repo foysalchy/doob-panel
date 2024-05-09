@@ -43,7 +43,7 @@ const UserPayment = () => {
       data.file = fileName;
     }
     setPassData(data);
-    fetch(`http://localhost:5001/api/v1/site-user/order`, {
+    fetch(`https://backend.doob.com.bd/api/v1/site-user/order`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),

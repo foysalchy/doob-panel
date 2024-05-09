@@ -94,7 +94,7 @@ const SellerEmail = () => {
       };
     }
 
-    fetch("http://localhost:5001/api/v1/seller/send-email", {
+    fetch("https://backend.doob.com.bd/api/v1/seller/send-email", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

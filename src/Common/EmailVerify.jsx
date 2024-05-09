@@ -12,7 +12,7 @@ const EmailVerify = () => {
     const verifyEmail = async () => {
       try {
         const response = await fetch(
-          "http://localhost:5001/api/v1/auth/verify-email",
+          "https://backend.doob.com.bd/api/v1/auth/verify-email",
           {
             method: "PUT",
             headers: {
