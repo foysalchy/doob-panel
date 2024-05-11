@@ -369,9 +369,23 @@ const ProductInformation = () => {
                 <div className="flex justify-between items-center pb-3">
                   <div className="title-font font-medium md:text-2xl text-lg text-gray-900 flex items-start">
                     <span>Price :</span>{" "}
-                    <div>
+                    <div className="flex items-center ">
                       <span className="kalpurush">৳</span>
-                      {variations?.price ? variations?.price : product.data.price}
+                      {variations?.price ? (
+                        variations?.offerPrice ? (
+                          <div className="flex gap-3">
+                            <del>{variations?.price}</del>
+                            <div className="">
+                              <span className="kalpurush">৳</span>
+                              <span>{variations?.offerPrice}</span>
+                            </div>
+                          </div>
+                        ) : (
+                          variations?.price
+                        )
+                      ) : (
+                        product.data.price
+                      )}
                       <br />
                       {!variations && (
                         <div className=" line-through text-lg text-gray-500">
@@ -438,7 +452,9 @@ const ProductInformation = () => {
                           className="w-[50px] h-[50px] border border-gray-300"
                         >
                           <img
-                            onClick={() => setShowVariant(variation?.variantImag)}
+                            onClick={() =>
+                              setShowVariant(variation?.variantImag)
+                            }
                             src={
                               !product?.data
                                 ? variation?.image[0]
@@ -519,15 +535,23 @@ const ProductInformation = () => {
 
           <div className="border mt-6 w-full">
             <div className="p-4">
-              <h2 className="text-lg font-semibold mb-4">Relevent Products</h2>
+              <h2 className="text-lg font-semibold mb-4">Relevant Products</h2>
               <div className="space-y-4">
-                {
-                  releventProduct?.slice(0, 3)?.map((product, index) => <Link to={`/products/${product?._id}`} key={product?._id} className="border w-full duration-150 group hover:shadow-lg flex items-start gap-2 p-3 rounded">
+                {releventProduct?.slice(0, 3)?.map((product, index) => (
+                  <Link
+                    to={`/products/${product?._id}`}
+                    key={product?._id}
+                    className="border w-full duration-150 group hover:shadow-lg flex items-start gap-2 p-3 rounded"
+                  >
                     <img
                       alt="Product Image"
                       className="w-20 h-20 bg-gray-200 rounded mb-2"
                       height="80"
-                      src={product?.featuredImage?.src ? product?.featuredImage?.src : product?.images[0]?.src}
+                      src={
+                        product?.featuredImage?.src
+                          ? product?.featuredImage?.src
+                          : product?.images[0]?.src
+                      }
                       style={{
                         aspectRatio: "80/80",
                         objectFit: "cover",
@@ -535,16 +559,17 @@ const ProductInformation = () => {
                       width="80"
                     />
                     <div className="">
-                      <p className="font-medium group-hover:text-blue-500 duration">{product?.name?.slice(0, 40)}</p>
+                      <p className="font-medium group-hover:text-blue-500 duration">
+                        {product?.name?.slice(0, 40)}
+                      </p>
                       <p className="text-red-500">৳{product?.price}</p>
                     </div>
-                  </Link>)
-                }
+                  </Link>
+                ))}
               </div>
             </div>
           </div>
         </div>
-
       </div>
       <div className="max-w-7xl mx-auto px-4 md:px-4 lg:px-8 my-6">
         <div className="border p-6 rounded">
