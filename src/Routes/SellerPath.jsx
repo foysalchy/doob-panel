@@ -90,6 +90,7 @@ import Withdrow from "../Pages/SellerItems/Withdrow/Withdrow";
 import FinanceReport from "../Pages/SellerItems/Finance/FinanceReport";
 import OmniChat from "../Pages/SellerItems/OmniChat/OmniChat";
 import EditCampaign from "../Pages/SellerItems/SiteContent/Campain/EditCampaign";
+import SellerEmailSetup from "../Pages/SellerItems/Sittings/EmailSetup/EmailSetup";
 
 const SellerPath = [
   {
@@ -172,6 +173,10 @@ const SellerPath = [
   {
     path: "settings/shipping",
     element: <SellerShipping />,
+  },
+  {
+    path: "settings/email-setup",
+    element: <SellerEmailSetup />,
   },
   {
     path: "channel-integration",

@@ -73,7 +73,7 @@ const PriceModal = ({ open, setOpen }) => {
 
     if (shopInfo) {
       fetch(
-        `https://backend.doob.com.bd/api/v1/seller/update-payment?shopId=${shopInfo._id}&paymentId=${open?._id}`,
+        ` http://localhost:5001/api/v1/seller/update-payment?shopId=${shopInfo._id}&paymentId=${open?._id}`,
         {
           method: "PATCH",
           headers: {
