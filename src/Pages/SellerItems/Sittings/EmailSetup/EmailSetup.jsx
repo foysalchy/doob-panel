@@ -38,7 +38,7 @@ const SellerEmailSetup = () => {
     queryFn: async () => {
       try {
         const res = await fetch(
-          ` http://localhost:5001/api/v1/seller/setup-email/${shopInfo?._id}`
+          ` https://backend.doob.com.bd/api/v1/seller/setup-email/${shopInfo?._id}`
         );
         const data = await res.json();
         return data;
@@ -72,7 +72,7 @@ const SellerEmailSetup = () => {
     // return;
     setLoading(true);
 
-    fetch(" http://localhost:5001/api/v1/seller/setup-email", {
+    fetch("https://backend.doob.com.bd/api/v1/seller/setup-email", {
       method: "PATCH",
       body: JSON.stringify(data),
       headers: {

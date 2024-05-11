@@ -20,7 +20,7 @@ const PriceModal = ({ open, setOpen }) => {
   console.log(parseInt(open?.price) * parseInt(time?.split(",")[1]));
 
   useEffect(() => {
-    setTime(`${open?.six},6`)
+    setTime(`${open?.six},6`);
   }, [open]);
 
   const resetForm = () => {
@@ -73,7 +73,7 @@ const PriceModal = ({ open, setOpen }) => {
 
     if (shopInfo) {
       fetch(
-        ` http://localhost:5001/api/v1/seller/update-payment?shopId=${shopInfo._id}&paymentId=${open?._id}`,
+        `https://backend.doob.com.bd/api/v1/seller/update-payment?shopId=${shopInfo._id}&paymentId=${open?._id}`,
         {
           method: "PATCH",
           headers: {
@@ -121,7 +121,7 @@ const PriceModal = ({ open, setOpen }) => {
       collection: "price",
       time,
       buyingPrice:
-       ( parseInt(open?.price) * parseInt(time?.split(",")[1])) -
+        parseInt(open?.price) * parseInt(time?.split(",")[1]) -
         parseInt(time?.split(",")[0]),
     };
 
@@ -155,8 +155,9 @@ const PriceModal = ({ open, setOpen }) => {
 
   return (
     <div
-      className={`fixed left-0 top-0 right-0 bottom-0 flex h-full min-h-screen w-full z-[1000] bg-[#0000005b] items-center justify-center bg-dark/90 px-4 py-5 ${open ? "block" : "hidden"
-        }`}
+      className={`fixed left-0 top-0 right-0 bottom-0 flex h-full min-h-screen w-full z-[1000] bg-[#0000005b] items-center justify-center bg-dark/90 px-4 py-5 ${
+        open ? "block" : "hidden"
+      }`}
     >
       <div className="w-full max-w-[570px] rounded-[20px] bg-white px-8 py-12 text-center dark:bg-dark-2 md:px-[70px] md:py-[60px]">
         <h3 className="pb-[18px] text-xl font-semibold text-dark text-black sm:text-2xl">
@@ -172,46 +173,51 @@ const PriceModal = ({ open, setOpen }) => {
               <div key={get._id}>
                 {get.Getaway === "Bkash" && (
                   <button
-                    className={`group relative block border  ${selectGetWay._id === get._id
-                      ? "border-blue-500"
-                      : "border-gray-100"
-                      }`}
+                    className={`group relative block border  ${
+                      selectGetWay._id === get._id
+                        ? "border-blue-500"
+                        : "border-gray-100"
+                    }`}
                   >
                     <img
                       alt="Developer"
                       src="https://logos-download.com/wp-content/uploads/2022/01/BKash_Logo_icon-1536x1452.png"
                       srcSet="https://logos-download.com/wp-content/uploads/2022/01/BKash_Logo_icon-1536x1452.png"
-                      className={`p-4 object-cover  transition-opacity ${selectGetWay._id === get._id ? "opacity-20" : ""
-                        }`}
+                      className={`p-4 object-cover  transition-opacity ${
+                        selectGetWay._id === get._id ? "opacity-20" : ""
+                      }`}
                     />
                   </button>
                 )}
                 {get.Getaway === "Nogod" && (
                   <button
                     onClick={() => setSelectGetWay(get)}
-                    className={`group relative block border  ${selectGetWay._id === get._id
-                      ? "border-blue-500"
-                      : "border-gray-100"
-                      }`}
+                    className={`group relative block border  ${
+                      selectGetWay._id === get._id
+                        ? "border-blue-500"
+                        : "border-gray-100"
+                    }`}
                   >
                     <img
                       alt="Developer"
                       src="https://download.logo.wine/logo/Nagad/Nagad-Vertical-Logo.wine.png"
                       srcSet="https://download.logo.wine/logo/Nagad/Nagad-Vertical-Logo.wine.png"
-                      className={`p-4 object-cover  transition-opacity ${selectGetWay._id === get._id
-                        ? "opacity-20"
-                        : "bg-gray-700"
-                        }`}
+                      className={`p-4 object-cover  transition-opacity ${
+                        selectGetWay._id === get._id
+                          ? "opacity-20"
+                          : "bg-gray-700"
+                      }`}
                     />
                   </button>
                 )}
                 {get.Getaway === "AmarPay" && (
                   <button
                     onClick={() => pay_on_amar_pay(get)}
-                    className={`group relative block border  ${selectGetWay._id === get._id
-                      ? "border-blue-500"
-                      : "border-gray-100"
-                      }`}
+                    className={`group relative block border  ${
+                      selectGetWay._id === get._id
+                        ? "border-blue-500"
+                        : "border-gray-100"
+                    }`}
                   >
                     <img
                       alt="Developer"
@@ -225,10 +231,11 @@ const PriceModal = ({ open, setOpen }) => {
             {
               <button
                 onClick={() => handleSubmit()}
-                className={`group relative block border  ${selectGetWay === "Cash"
-                  ? "border-blue-500"
-                  : "border-gray-100"
-                  }`}
+                className={`group relative block border  ${
+                  selectGetWay === "Cash"
+                    ? "border-blue-500"
+                    : "border-gray-100"
+                }`}
               >
                 Cash
               </button>
@@ -255,13 +262,18 @@ const PriceModal = ({ open, setOpen }) => {
             </div>
             <div className="flex items-center justify-center">
               <h2 className="text-2xl font-semibold text-blue-600 flex sm:text-3xl">
-              
                 {parseInt(open?.price) * parseInt(time?.split(",")[1]) -
-                  parseInt(time?.split(",")[0]) >0 ?` ৳${parseInt(open?.price) * parseInt(time?.split(",")[1]) -
-                  parseInt(time?.split(",")[0])}` : "Contact With Doob"}
+                  parseInt(time?.split(",")[0]) >
+                0
+                  ? ` ৳${
+                      parseInt(open?.price) * parseInt(time?.split(",")[1]) -
+                      parseInt(time?.split(",")[0])
+                    }`
+                  : "Contact With Doob"}
                 <span className="text-base flex-nowrap font-medium ml-1">
-                 {parseInt(open?.price) * parseInt(time?.split(",")[1]) -
-                  parseInt(time?.split(",")[0]) >0 && `/${time.split(",").slice(1, 2)} Month}`}
+                  {parseInt(open?.price) * parseInt(time?.split(",")[1]) -
+                    parseInt(time?.split(",")[0]) >
+                    0 && `/${time.split(",").slice(1, 2)} Month}`}
                 </span>
               </h2>
             </div>
@@ -324,21 +336,23 @@ const PriceModal = ({ open, setOpen }) => {
             </button>
           </div>
           <div className="w-1/2 px-3">
-            {(!paymentMode &&  (parseInt(open?.price) * parseInt(time?.split(",")[1]) -
-                  parseInt(time?.split(",")[0])) >0 )?(
+            {!paymentMode &&
+            parseInt(open?.price) * parseInt(time?.split(",")[1]) -
+              parseInt(time?.split(",")[0]) >
+              0 ? (
               <button
                 onClick={handleNextClick}
                 className="block w-full rounded-md border border-blue-500 bg-blue-500 p-3 text-center text-base font-medium text-white transition hover:bg-blue-500"
               >
                 Next
               </button>
-            ) :
-            (
-              <Link to={'/contact'}
+            ) : (
+              <Link
+                to={"/contact"}
                 onClick={handleNextClick}
                 className="block w-full rounded-md border border-blue-500 bg-blue-500 p-3 text-center text-base font-medium text-white transition hover:bg-blue-500"
               >
-               Contact
+                Contact
               </Link>
             )}
           </div>

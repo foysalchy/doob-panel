@@ -32,19 +32,19 @@ const ShopNav = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [searchHistory, setSearchHistory] = useState([]);
-  const [value, setValue] = useState("");
+    const [value, setValue] = useState("");
   const [searchOpen, setSearchOpen] = useState(false);
   const searchData = async () => {
     const term = searchTerm;
-    // console.log(` http://localhost:5001/api/v1/shop/search?term=${encodeURIComponent(term)}`);
+    // console.log(`https://backend.doob.com.bd/api/v1/shop/search?term=${encodeURIComponent(term)}`);
     try {
       const response = await fetch(
-        ` http://localhost:5001/api/v1/shop/search?term=${encodeURIComponent(
+        `https://backend.doob.com.bd/api/v1/shop/search?term=${encodeURIComponent(
           term
         )}`
       );
       const data = await response.json();
-      console.log(data);
+      // console.log(data);
       setSearchResults(data);
       setSearchHistory([]);
 
@@ -58,13 +58,13 @@ const ShopNav = () => {
 
   const handleInputChange = (e) => {
     const input = e.target.value;
-    console.log(input);
+    // console.log(input);
     setValue(input);
     setSearchTerm(input);
     setSearchResults();
     setSearch(input);
     fetch(
-      ` http://localhost:5001/api/v1/shop/search-history?term=${encodeURIComponent(
+      `https://backend.doob.com.bd/api/v1/shop/search-history?term=${encodeURIComponent(
         input
       )}`
     )
@@ -73,10 +73,10 @@ const ShopNav = () => {
   };
 
   const { data: categories = [], refetch: reload } = useQuery({
-    queryKey: ["categoriesSearch"],
+    queryKey: ["ShopCategories"],
     queryFn: async () => {
       const res = await fetch(
-        ` http://localhost:5001/api/v1/shop/category/get/${shopId}`
+        `https://backend.doob.com.bd/api/v1/shop/category/get/${shopId}`
       );
       const data = await res.json();
       return data;
@@ -88,9 +88,11 @@ const ShopNav = () => {
     isLoading,
     refetch,
   } = useQuery({
-    queryKey: ["shopSearch"],
+    queryKey: ["shop"],
     queryFn: async () => {
-      const res = await fetch(` http://localhost:5001/api/v1/shop/${shopId}`);
+      const res = await fetch(
+        `https://backend.doob.com.bd/api/v1/shop/${shopId}`
+      );
       const data = await res.json();
       return data;
     },
@@ -109,7 +111,7 @@ const ShopNav = () => {
         setCartProducts(JSON.parse(productData));
       } else {
         fetch(
-          ` http://localhost:5001/api/v1/shop/user/add-to-cart?userId=${shopUser?._id}&shopId=${shop_id?.shop_id}&token=${shopUser?._id}`
+          `https://backend.doob.com.bd/api/v1/shop/user/add-to-cart?userId=${shopUser?._id}&shopId=${shop_id?.shop_id}&token=${shopUser?._id}`
         )
           .then((res) => res.json())
           .then((data) => {
