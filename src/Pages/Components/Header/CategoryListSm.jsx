@@ -255,7 +255,7 @@ export default function CategoryListSm({ setOn }) {
                             <summary className="flex cursor-pointer items-center justify-between gap-2 bg-white p-4 text-gray-900 transition">
                               <span className="text-sm font-medium">
                                 {" "}
-                                {miniItem?.miniCategoryName.slice(0, 10)}{" "}
+                                {miniItem?.miniCategoryName.slice(0, 10)}{" "},,,,,,,,,,
                               </span>
 
                               <span className="transition group-open:-rotate-180">
@@ -282,11 +282,11 @@ export default function CategoryListSm({ setOn }) {
                                   {extraCategoryData.map(
                                     (extraItem, extraIndex) => (
                                       <div
-                                        onClick={() => setOn(false)}
                                         key={extraItem._id}
                                         className=""
                                       >
                                         <Link
+                                          onClick={() => setOn(false)}
                                           className=" w-full h-full flex justify-between"
                                           to={`/products/catagory/${item?._id}`}
                                         >
