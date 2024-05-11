@@ -24,6 +24,7 @@ import {
 import { ImFacebook } from "react-icons/im";
 import { SlSocialTwitter } from "react-icons/sl";
 import QRCode from "react-qr-code";
+import BrightAlert from "bright-alert";
 
 
 export const Footer = () => {
@@ -77,6 +78,7 @@ export const Footer = () => {
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
 
+  console.log(email, shopId);
   const submitEmail = (e) => {
     e.preventDefault();
     setLoading(true);
@@ -99,6 +101,7 @@ export const Footer = () => {
         .then((data) => {
           setLoading(false);
           BrightAlert(`${data.message}`);
+          e.target.reset();
         });
     } else {
       setLoading(false);
