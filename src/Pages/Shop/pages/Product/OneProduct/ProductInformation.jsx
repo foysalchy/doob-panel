@@ -263,13 +263,13 @@ const ProductInformation = () => {
                   to={`/shop/${shopId}/categories/${shop_id.shop_id}/${category.name}`}
                   className="hover:underline hover:text-gray-600"
                 >
-                  {category.name}
+                  {category?.name}
                 </Link>,
               ])}
           </div>
         </div>
-        <div className="grid md:grid-cols-4">
-          <div className=" md:col-span-3 mx-auto border border-r-transparent px-4 md:px-4 lg:px-12 mt-6 ">
+        <div className="md:grid md:grid-cols-4">
+          <div className="col-span-3 mx-auto border border-gray-300 px-4 md:px-4 lg:px-12 mt-6 ">
             <div className="flex flex-col md:flex-row -mx-4  border-gray-300 py-4">
               <div className="md:flex-1 px-4">
                 <div>
@@ -517,28 +517,30 @@ const ProductInformation = () => {
             </div>
           </div>
 
-          <div className="border mt-6 w-full">
+          <div className="border md:block hidden mt-6 w-full">
             <div className="p-4">
               <h2 className="text-lg font-semibold mb-4">Relevent Products</h2>
               <div className="space-y-4">
                 {
-                  releventProduct?.slice(0, 3)?.map((product, index) => <Link to={`/products/${product?._id}`} key={product?._id} className="border w-full duration-150 group hover:shadow-lg flex items-start gap-2 p-3 rounded">
-                    <img
-                      alt="Product Image"
-                      className="w-20 h-20 bg-gray-200 rounded mb-2"
-                      height="80"
-                      src={product?.featuredImage?.src ? product?.featuredImage?.src : product?.images[0]?.src}
-                      style={{
-                        aspectRatio: "80/80",
-                        objectFit: "cover",
-                      }}
-                      width="80"
-                    />
-                    <div className="">
-                      <p className="font-medium group-hover:text-blue-500 duration">{product?.name?.slice(0, 40)}</p>
-                      <p className="text-red-500">৳{product?.price}</p>
-                    </div>
-                  </Link>)
+                  releventProduct?.slice(0, 3)?.map((product, index) =>
+                    <Link to={`/products/${product?._id}`} key={product?._id} className="border w-full duration-150 group hover:shadow-lg flex items-start gap-2 p-3 rounded">
+                      <img
+                        alt="Product Image"
+                        className="w-20 h-20 bg-gray-200 rounded mb-2"
+                        height="80"
+                        src={product?.featuredImage?.src ? product?.featuredImage?.src : product?.images[0]?.src}
+                        style={{
+                          aspectRatio: "80/80",
+                          objectFit: "cover",
+                        }}
+                        width="80"
+                      />
+                      <div className="">
+                        <p className="font-medium group-hover:text-blue-500 duration">{product?.name?.slice(0, 40)}</p>
+                        <p className="text-red-500">৳{product?.price}</p>
+                      </div>
+                    </Link>
+                  )
                 }
               </div>
             </div>
@@ -557,7 +559,38 @@ const ProductInformation = () => {
         </div>
       </div>
       <div className="max-w-7xl mx-auto px-4 md:px-4 lg:px-8 my-6">
-        <div className="border p-6 rounded">
+
+        <div className="border md:hidden block mb-6 mt-6 w-full">
+          <div className="p-4">
+            <h2 className="text-lg font-semibold mb-4">Relevent Products</h2>
+            <div className="space-y-4">
+              {
+                releventProduct?.slice(0, 3)?.map((product, index) =>
+                  <Link to={`/products/${product?._id}`} key={product?._id} className="border w-full duration-150 group hover:shadow-lg flex items-start gap-2 p-3 rounded">
+                    <img
+                      alt="Product Image"
+                      className="w-20 h-20 bg-gray-200 rounded mb-2"
+                      height="80"
+                      src={product?.featuredImage?.src ? product?.featuredImage?.src : product?.images[0]?.src}
+                      style={{
+                        aspectRatio: "80/80",
+                        objectFit: "cover",
+                      }}
+                      width="80"
+                    />
+                    <div className="">
+                      <p className="font-medium group-hover:text-blue-500 duration">{product?.name?.slice(0, 40)}</p>
+                      <p className="text-red-500">৳{product?.price}</p>
+                    </div>
+                  </Link>
+                )
+              }
+            </div>
+          </div>
+        </div>
+
+
+        <div className="border md:p-6 rounded">
           <TrandingProductShop />
         </div>
       </div>

@@ -13,7 +13,7 @@ const ShopSmallNav = () => {
 
   const shopId = idMatch ? idMatch[1] : null;
 
-  const { shopInfo } = useContext(AuthContext);
+  const shopInfo = useContext(AuthContext);
 
   const {
     data: shop = {},
@@ -58,10 +58,15 @@ const ShopSmallNav = () => {
           </div>
         </div>
       </div>
-      <nav className="mx-auto lg:hidden flex items-center justify-between py-3 px-4 sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8">
-        <div>
-          <img src={shopInfo?.logo} alt="" className="w-[90px]" />
-        </div>
+      <nav className="mx-auto lg:hidden md:border-none border-b flex items-center justify-between py-3 px-4 sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8">
+        <Link to={`/shop/${shopId}`} aria-label="Company" title="Company">
+          <img
+            srcSet={shop?.logo}
+            className="w-[100px] object-cover"
+            src={shop?.logo}
+            alt=""
+          />
+        </Link>
 
         <div className="flex items-center border py-1 px-2 h-[36px] rounded">
           <input

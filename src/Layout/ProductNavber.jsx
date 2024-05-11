@@ -80,82 +80,89 @@ export default function Component() {
     return () => clearInterval(interval);
   }, []);
 
+
+  const toggleDropdown = (dropdownId) => {
+    setDropdowns(prevState => {
+      const newState = {};
+
+      // Close all dropdowns except the one being toggled
+      Object.keys(prevState).forEach(key => {
+        newState[key] = key === dropdownId ? !prevState[key] : false;
+      });
+
+      return {
+        ...newState,
+        [dropdownId]: !prevState[dropdownId] || false,
+      };
+    });
+  };
+
   const menuData = (
     <>
-      <li>
+      <li className=" ">
         <NavLink
           to="/products"
+          onClick={() => setIsMenuOpen(false)}
           aria-label="Our product"
           title="Our product"
-          className={({ isActive }) => {
+          className={` w-full ${({ isActive }) => {
             return isActive
-              ? "tracking-wide text-gray-800 transition-colors duration-200 font-semibold hover:text-black underline underline-offset-8   "
-              : "tracking-wide text-gray-800 transition-colors duration-200 font-semibold hover:text-black hover:underline underline-offset-8   ";
-          }}
+              ? "tracking-wide text-gray-800 transition-colors duration-200 w-full font-semibold hover:text-black underline underline-offset-8   "
+              : "tracking-wide text-gray-800 transition-colors duration-200 w-full font-semibold hover:text-black hover:underline underline-offset-8   ";
+          }}`}
         >
-          Product
+          <div className="w-full ">Product</div>
         </NavLink>
       </li>
 
       <li className="relative">
         <button
-          onClick={() => toggleDropdown("solution")}
+          onClick={() => toggleDropdown('solution')}
           className="tracking-wide   text-gray-800 transition-colors duration-200 font-semibold hover:text-black  underline-offset-8 flex items-center gap-2"
         >
-          Solution <FaAngleDown />
+          Solution  <FaAngleDown />
         </button>
-        <div
-          className={`${dropdowns["solution"] ? "h-[auto]" : "h-[0px]"
-            } w-[200px] overflow-hidden duration-300 absolute top-[24px] left-0 ri`}
-        >
+        <div className={`${dropdowns.solution ? 'h-[auto]' : 'h-[0px]'} w-[200px] overflow-hidden duration-300 absolute top-[24px] left-0 ri z-[1000]`}>
           <ul className="bg-gray-100 shadow-xl w-[200px] mt-3 p-2">
-            <li>
+            <li onClick={() => setIsMenuOpen(false)}>
               <Link to={``} className="">
-                <div className="w-full hover:text-blue-500 duration-200 mb-2">
-                  Create Online Store
-                </div>
+                <div className="w-full hover:text-blue-500 duration-200 mb-2">Create Online Store</div>
               </Link>
             </li>
-            <li>
+
+            <li onClick={() => setIsMenuOpen(false)}>
               <Link to={``} className="">
-                <div className="w-full hover:text-blue-500 duration-200 mb-2">
-                  Get domain
-                </div>
+                <div className="w-full hover:text-blue-500 duration-200 mb-2">Get domain</div>
               </Link>
             </li>
-            <li>
+
+            <li onClick={() => setIsMenuOpen(false)}>
               <Link to={``} className="">
-                <div className="w-full hover:text-blue-500 duration-200 mb-2">
-                  Mobile App
-                </div>
+                <div className="w-full hover:text-blue-500 duration-200 mb-2">Mobile App</div>
               </Link>
             </li>
-            <li>
+
+            <li onClick={() => setIsMenuOpen(false)}>
               <Link to={``} className="">
-                <div className="w-full hover:text-blue-500 duration-200 mb-2">
-                  POS System
-                </div>
+                <div className="w-full hover:text-blue-500 duration-200 mb-2">POS System</div>
               </Link>
             </li>
-            <li>
+
+            <li onClick={() => setIsMenuOpen(false)}>
               <Link to={``} className="">
-                <div className="w-full hover:text-blue-500 duration-200 mb-2">
-                  Dropshipping
-                </div>
+                <div className="w-full hover:text-blue-500 duration-200 mb-2">Dropshipping</div>
               </Link>
             </li>
-            <li>
+
+            <li onClick={() => setIsMenuOpen(false)}>
               <Link to={``} className="">
-                <div className="w-full hover:text-blue-500 duration-200 mb-2">
-                  Wholesale
-                </div>
+                <div className="w-full hover:text-blue-500 duration-200 mb-2">Wholesale</div>
               </Link>
             </li>
-            <li>
+
+            <li onClick={() => setIsMenuOpen(false)}>
               <Link to={``} className="">
-                <div className="w-full hover:text-blue-500 duration-200 mb-2">
-                  Warehousing{" "}
-                </div>
+                <div className="w-full hover:text-blue-500 duration-200 mb-2">Warehousing </div>
               </Link>
             </li>
           </ul>
@@ -164,49 +171,41 @@ export default function Component() {
 
       <li className="relative">
         <button
-          onClick={() => toggleDropdown("marketing")}
+          onClick={() => toggleDropdown('marketing')}
           className="tracking-wide   text-gray-800 transition-colors duration-200 font-semibold hover:text-black  underline-offset-8 flex items-center gap-2"
         >
-          Marketing <FaAngleDown />
+          Marketing  <FaAngleDown />
         </button>
-        <div
-          className={`${dropdowns["marketing"] ? "h-[auto]" : "h-[0px]"
-            } w-[200px] overflow-hidden duration-300 absolute top-[24px] left-0 ri`}
-        >
+        <div className={`${dropdowns['marketing'] ? 'h-[auto]' : 'h-[0px]'} w-[200px] overflow-hidden duration-300 absolute top-[24px] left-0 ri`}>
           <ul className="bg-gray-100 shadow-xl w-[200px] mt-3 p-2">
-            <li>
+            <li onClick={() => setIsMenuOpen(false)}>
               <Link to={``} className="">
-                <div className="w-full hover:text-blue-500 duration-200 mb-2">
-                  Facebook Ads
-                </div>
+                <div className="w-full hover:text-blue-500 duration-200 mb-2">Facebook Ads</div>
               </Link>
             </li>
-            <li>
+            <li onClick={() => setIsMenuOpen(false)}>
               <Link to={``} className="">
-                <div className="w-full hover:text-blue-500 duration-200 mb-2">
-                  Google Ads
-                </div>
+                <div className="w-full hover:text-blue-500 duration-200 mb-2">Google Ads</div>
               </Link>
             </li>
-            <li>
+            <li onClick={() => setIsMenuOpen(false)}>
               <Link to={``} className="">
-                <div className="w-full hover:text-blue-500 duration-200 mb-2">
-                  Email Marketing
-                </div>
+                <div className="w-full hover:text-blue-500 duration-200 mb-2">Email Marketing</div>
               </Link>
             </li>
-            <li>
+            <li onClick={() => setIsMenuOpen(false)}>
               <Link to={``} className="">
-                <div className="w-full hover:text-blue-500 duration-200 mb-2">
-                  SMS Marketing
-                </div>
+                <div className="w-full hover:text-blue-500 duration-200 mb-2">SMS Marketing</div>
               </Link>
             </li>
+
           </ul>
         </div>
       </li>
 
-      <li>
+      <li
+        onClick={() => setIsMenuOpen(false)}
+      >
         <NavLink
           to="/services"
           aria-label="About us"
@@ -236,9 +235,10 @@ export default function Component() {
         </NavLink>
       </li> */}
 
-      <li>
+      <li >
         <NavLink
           to="/price"
+          onClick={() => setIsMenuOpen(false)}
           aria-label="Product pricing"
           title="Product pricing"
           className={({ isActive }) => {
@@ -252,6 +252,7 @@ export default function Component() {
       </li>
       <li>
         <NavLink
+          onClick={() => setIsMenuOpen(false)}
           to="/faq"
           aria-label="Product pricing"
           title="Product pricing"
@@ -471,7 +472,7 @@ export default function Component() {
                                     d="M19.7,4.3c-0.4-0.4-1-0.4-1.4,0L12,10.6L5.7,4.3c-0.4-0.4-1-0.4-1.4,0s-0.4,1,0,1.4l6.3,6.3l-6.3,6.3 c-0.4,0.4-0.4,1,0,1.4C4.5,19.9,4.7,20,5,20s0.5-0.1,0.7-0.3l6.3-6.3l6.3,6.3c0.2,0.2,0.5,0.3,0.7,0.3s0.5-0.1,0.7-0.3 c0.4-0.4,0.4-1,0-1.4L13.4,12l6.3-6.3C20.1,5.3,20.1,4.7,19.7,4.3z"
                                   />
                                 </svg>
-                                Back To Home Page
+                                Back To Home Page....
                               </button>
                             </div>
                           </div>

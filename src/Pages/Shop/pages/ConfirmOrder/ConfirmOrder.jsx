@@ -239,10 +239,10 @@ const ConfirmOrder = () => {
                             </ul>
                         </>
                     </div>
-                    <div className="">
+                    {/* <div className="">
                         <img src={vct} alt="vector" className="w-full h-full object-cover" />
                         <button className='bg-gray-900 text-white px-3 py-2 rounded-md w-full mt-2'>Track Your Order</button>
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </div>

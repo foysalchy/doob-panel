@@ -15,7 +15,6 @@ const Header = () => {
   const { user, logOut, search, setSearch } = useContext(AuthContext);
   const [on, setOn] = useState(false);
   const [dropdowns, setDropdowns] = useState({});
-
   const toggleDropdown = (dropdownId) => {
     setDropdowns(prevState => {
       const newState = {};
@@ -31,11 +30,13 @@ const Header = () => {
       };
     });
   };
+  console.log(dropdowns, '---------****--------');
   const menuData = (
     <>
       <li>
         <NavLink
           to="/products"
+          onClick={() => setIsMenuOpen(false)}
           aria-label="Our product"
           title="Our product"
           className={({ isActive }) => {
@@ -56,39 +57,45 @@ const Header = () => {
         >
           Solution  <FaAngleDown />
         </button>
-        <div className={`${dropdowns['solution'] ? 'h-[auto]' : 'h-[0px]'} w-[200px] overflow-hidden duration-300 absolute top-[24px] left-0 ri`}>
+        <div className={`${dropdowns.solution ? 'h-[auto]' : 'h-[0px]'} w-[200px] overflow-hidden duration-300 absolute top-[24px] left-0 ri z-[1000]`}>
           <ul className="bg-gray-100 shadow-xl w-[200px] mt-3 p-2">
-            <li>
+            <li onClick={() => setIsMenuOpen(false)}>
               <Link to={``} className="">
                 <div className="w-full hover:text-blue-500 duration-200 mb-2">Create Online Store</div>
               </Link>
             </li>
-            <li>
+
+            <li onClick={() => setIsMenuOpen(false)}>
               <Link to={``} className="">
                 <div className="w-full hover:text-blue-500 duration-200 mb-2">Get domain</div>
               </Link>
             </li>
-            <li>
+
+            <li onClick={() => setIsMenuOpen(false)}>
               <Link to={``} className="">
                 <div className="w-full hover:text-blue-500 duration-200 mb-2">Mobile App</div>
               </Link>
             </li>
-            <li>
+
+            <li onClick={() => setIsMenuOpen(false)}>
               <Link to={``} className="">
                 <div className="w-full hover:text-blue-500 duration-200 mb-2">POS System</div>
               </Link>
             </li>
-            <li>
+
+            <li onClick={() => setIsMenuOpen(false)}>
               <Link to={``} className="">
                 <div className="w-full hover:text-blue-500 duration-200 mb-2">Dropshipping</div>
               </Link>
             </li>
-            <li>
+
+            <li onClick={() => setIsMenuOpen(false)}>
               <Link to={``} className="">
                 <div className="w-full hover:text-blue-500 duration-200 mb-2">Wholesale</div>
               </Link>
             </li>
-            <li>
+
+            <li onClick={() => setIsMenuOpen(false)}>
               <Link to={``} className="">
                 <div className="w-full hover:text-blue-500 duration-200 mb-2">Warehousing </div>
               </Link>
@@ -106,22 +113,22 @@ const Header = () => {
         </button>
         <div className={`${dropdowns['marketing'] ? 'h-[auto]' : 'h-[0px]'} w-[200px] overflow-hidden duration-300 absolute top-[24px] left-0 ri`}>
           <ul className="bg-gray-100 shadow-xl w-[200px] mt-3 p-2">
-            <li>
+            <li onClick={() => setIsMenuOpen(false)}>
               <Link to={``} className="">
                 <div className="w-full hover:text-blue-500 duration-200 mb-2">Facebook Ads</div>
               </Link>
             </li>
-            <li>
+            <li onClick={() => setIsMenuOpen(false)}>
               <Link to={``} className="">
                 <div className="w-full hover:text-blue-500 duration-200 mb-2">Google Ads</div>
               </Link>
             </li>
-            <li>
+            <li onClick={() => setIsMenuOpen(false)}>
               <Link to={``} className="">
                 <div className="w-full hover:text-blue-500 duration-200 mb-2">Email Marketing</div>
               </Link>
             </li>
-            <li>
+            <li onClick={() => setIsMenuOpen(false)}>
               <Link to={``} className="">
                 <div className="w-full hover:text-blue-500 duration-200 mb-2">SMS Marketing</div>
               </Link>
@@ -134,6 +141,7 @@ const Header = () => {
       <li>
         <NavLink
           to="/services"
+          onClick={() => setIsMenuOpen(false)}
           aria-label="About us"
           title="Services"
           className={({ isActive }) => {
@@ -164,6 +172,7 @@ const Header = () => {
       <li>
         <NavLink
           to="/price"
+          onClick={() => setIsMenuOpen(false)}
           aria-label="Product pricing"
           title="Product pricing"
           className={({ isActive }) => {
@@ -178,6 +187,7 @@ const Header = () => {
       <li>
         <NavLink
           to="/faq"
+          onClick={() => setIsMenuOpen(false)}
           aria-label="Product pricing"
           title="Product pricing"
           className={({ isActive }) => {

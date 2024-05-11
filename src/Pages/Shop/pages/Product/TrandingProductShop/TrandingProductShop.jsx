@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 import { ShopAuthProvider } from "../../../../../AuthProvider/ShopAuthProvide";
@@ -23,10 +23,18 @@ const TrandingProductShop = () => {
   });
 
 
+  const [displayedProducts, setDisplayedProducts] = useState(10);
+  const handleLoadMore = () => {
+    setDisplayedProducts((prev) => prev + 10);
+    refetch();
+  };
+
+
+
   console.log(newProducts, "newProducts");
   return (
     <div>
-      <div className="py-4 bg-white rounded mt-6">
+      <div className="py-4 bg-white rounded md:mt-6">
         <section className="body-font">
           <div className="px-5">
             <div className="flex justify-between text-black">
@@ -38,7 +46,7 @@ const TrandingProductShop = () => {
                   alt="new-product-icon"
                 />
 
-                <h3 className="whitespace-nowrap ml-2 font-medium">
+                <h3 className="whitespace-nowrap font-semibold ml-2 text-lg">
                   Trading Products
                 </h3>
               </div>
@@ -91,12 +99,19 @@ const TrandingProductShop = () => {
         </section>
       </div>
       <div className="mt-6 flex justify-center">
-        <button
-          type="button"
-          className="px-5 py-2  font-semibold rounded bg-black text-white text-xs "
-        >
-          LOAD MORE
-        </button>
+        <div className="mt-6 flex justify-center">
+          {newProducts && newProducts.data && newProducts.data.length > displayedProducts && (
+            <div className="mt-6 flex justify-center">
+              <button
+                onClick={handleLoadMore}
+                type="button"
+                className="px-5 py-2 font-semibold rounded bg-black text-white text-xs"
+              >
+                LOAD MORE
+              </button>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

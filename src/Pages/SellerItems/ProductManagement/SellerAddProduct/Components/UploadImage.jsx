@@ -458,7 +458,7 @@ const UploadImage = ({ coverPhoto, setCoverPhoto, youtube, setYoutube }) => {
                 <div className='mt-4'>
                     <label className='text-sm ' htmlFor="Video url "> Video Url</label>
                     <input
-                    // defaultValue={}
+                        // defaultValue={}
                         onChange={(e) => handleCheck(e.target.value)}
                         className="flex-grow w-full h-10 px-4 mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-purple-400 focus:outline-none focus:shadow-outline"
                         placeholder="Input YouTube video link here"

@@ -279,7 +279,7 @@ const ShopProductHero = () => {
                                     {/* Dropdown toggle button */}
                                     <div>
                                         {
-                                            <Link to={`/shop/${shopId}/product/catagory/${item?._id}`}
+                                            <Link to={`/shop/${shopId}/categories/${item?._id}/${item?.name}`}
                                                 onMouseEnter={() => subCategoryHandler(item, index)}
                                                 className={`flex  items-center  w-full justify-between px-2 py-1 capitalize text-sm font-normal  hover:bg-gray-100   relative  ${openDropdownIndex === index ? 'bg-gray-100 text-black' : 'text-black'} rounded`}
                                             >
@@ -340,7 +340,7 @@ const ShopProductHero = () => {
                                                                     {miniCategoryData.map((miniCategory, index) =>
                                                                         <div key={index}>
                                                                             {
-                                                                                !megaSideCategoryData.length == 0 ? <Link to={`/products/catagory/${miniCategory?._id}`}>
+                                                                                !megaSideCategoryData.length == 0 ? <Link to={`/shop/${shopId}/categories/${miniCategory?._id}/${miniCategory?.miniCategoryName}`}>
                                                                                     <div onMouseMove={(() => extraCategoryHandler(miniCategory, index))} className={`flex mt-2 items-center  w-full justify-between px-2 py-1 capitalize text-sm font-normal rounded hover:bg-gray-100 hover:text-black  relative  ${active?.step2 === miniCategory?._id ? 'bg-gray-100 text-black' : 'text-black'}`}>
                                                                                         <span className="flex items-center gap-2">
                                                                                             <img src={miniCategory?.img} alt="" className="w-8 h-8 rounded-full ring-1 ring-gray-200" /> {miniCategory?.miniCategoryName}
@@ -364,7 +364,7 @@ const ShopProductHero = () => {
                                                                                     extraCategoryData.length == 0 ? <div>
                                                                                         {extraCategory?.extraCategoryName}
 
-                                                                                    </div> : <Link to={`${extraCategory?._id}/categories/${shopId}/${item?.categoryId}`}>
+                                                                                    </div> : <Link to={`/shop/${shopId}/categories/${extraCategory?._id}/${extraCategory?.extraCategoryName}`}>
                                                                                         <div className='py-1 capitalize px-2'>
                                                                                             <span className="flex flex-col hover:bg-gray-100 items-center  w-[90px] p-2 rounded-lg ">
                                                                                                 <img src={extraCategory?.img} alt="" className="w-14 h-14 object-cover rounded-full ring-1 ring-gray-200" />
@@ -383,7 +383,7 @@ const ShopProductHero = () => {
 
                                                             :
 
-                                                            <Link to={`${item?._id}/categories/${shopId}/${item?.categoryId}`}>
+                                                            <Link to={`/shop/${shopId}/categories/${subCategory?._id}/${subCategory.subCategoryName}`}>
                                                                 <div
                                                                     onMouseMove={() => miniCategoryHandler(subCategory, index)}
                                                                     className={`flex items-center  w-full justify-between hover:bg-gray-100 px-2 py-1 capitalize text-sm font-normal  mb-1 rounded relative  ${active?.step2 === subCategory?._id ? 'black-black ' : 'text-black'}`}

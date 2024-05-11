@@ -55,12 +55,12 @@ const ShopProductCategory = () => {
                   className=" flex flex-col items-center justify-center w-full"
                 >
                   <img
-                    className="w-16 h-16 rounded-2xl object-cover "
+                    className="md:w-16 md:h-16 md:border-none border md:p-0 p-1 md:bg-transparent bg-orange-50 w-12 h-12 rounded-2xl object-cover "
                     srcSet={i?.img}
                     src={i.img}
                     alt=""
                   />
-                  <p className="text-sm text-center">{i.name}</p>
+                  <p className="text-sm text-center mt-1">{i.name}</p>
                 </Link>
               </SwiperSlide>
             ))

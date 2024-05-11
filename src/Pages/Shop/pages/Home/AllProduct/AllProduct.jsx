@@ -56,10 +56,10 @@ const AllProduct = () => {
           </div>
           <div className="border-b border-gray-200 mx-5 mt-2"></div>
           <div className="container md:px-10 px-4 py-8 mx-auto">
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 -m-4 text-black">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 -m-4 text-black">
               {newProducts?.data?.slice(0, displayedProducts)?.map((product, idx) => {
                 return (
-                  <Link className="border border-gray-300 overflow-hidden rounded p-2" key={product?._id} to={`product/${product?._id}`}>
+                  <Link className="group overflow-hidden  border my-2 border-gray-500 border-opacity-90 p-3 rounded" key={product?._id} to={`product/${product?._id}`}>
                     <a className="block relative rounded overflow-hidden">
                       <img
                         alt="ecommerce"
