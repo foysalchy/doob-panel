@@ -376,13 +376,13 @@ const ProductInformation = () => {
                 <div className="flex justify-between items-center pb-3">
                   <div className="title-font font-medium md:text-2xl text-lg text-gray-900 flex items-start">
                     <span>Price :</span>{" "}
-                    <div className="flex items-center ">
+                    <div className="flex items-center">
                       <span className="kalpurush">৳</span>
                       {variations?.price ? (
                         variations?.offerPrice ? (
                           <div className="flex gap-3">
                             <del>{variations?.price}</del>
-                            <div className="">
+                            <div className="flex gap-">
                               <span className="kalpurush">৳</span>
                               <span>{variations?.offerPrice}</span>
                             </div>
@@ -391,12 +391,15 @@ const ProductInformation = () => {
                           variations?.price
                         )
                       ) : (
-                        product.data.price
+                        <>
+                          <span className="kalpurush">৳</span>
+                          {product.data.price}
+                        </>
                       )}
                       <br />
                       {!variations && (
-                        <div className=" line-through text-lg text-gray-500">
-                          <span className="kalpurush   ">৳</span>
+                        <div className="line-through text-lg text-gray-500">
+                          <span className="kalpurush">৳</span>
                           {product.data.regular_price}
                         </div>
                       )}
