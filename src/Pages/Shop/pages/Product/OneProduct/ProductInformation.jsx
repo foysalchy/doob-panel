@@ -95,7 +95,14 @@ const ProductInformation = () => {
     }
   };
 
-  const convertedRating = (` ${product?.data?.rating}` / 10) * 5;
+  const convertedRating = (` ${product?.data?.rating_count}` / 10) * 5 || 0;
+
+  console.log(
+    "convertedRating",
+    convertedRating,
+    "and ",
+    product?.data?.rating_count
+  );
 
   const pathname = window.location.pathname;
 
