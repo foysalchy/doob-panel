@@ -95,15 +95,6 @@ const ProductInformation = () => {
     }
   };
 
-  const convertedRating = (` ${product?.data?.rating_count}` / 10) * 5 || 0;
-
-  // console.log(
-  //   "convertedRating",
-  //   convertedRating,
-  //   "and ",
-  //   product?.data?.rating_count
-  // );
-
   const pathname = window.location.pathname;
 
   const idMatch = pathname.match(/\/shop\/([^/]+)/);
@@ -218,6 +209,24 @@ const ProductInformation = () => {
       return data?.comments;
     },
   });
+
+  console.log(comments);
+
+  const totalStars =
+    comments?.length &&
+    comments?.reduce((total, comment) => total + comment.star, 0) /
+      comments?.length;
+
+  console.log("Total stars:", totalStars);
+
+  const convertedRating = (` ${totalStars}` / 10) * 5 || 0;
+
+  // console.log(
+  //   "convertedRating",
+  //   convertedRating,
+  //   "and ",
+  //   product?.data?.rating_count
+  // );
 
   const { data: releventProduct = [], reload } = useQuery({
     queryKey: ["releventProduct"],
@@ -340,7 +349,7 @@ const ProductInformation = () => {
                             className="w-4 h-4"
                             key={star}
                             style={{
-                              color: star <= convertedRating ? "gold" : "gray",
+                              color: star <= totalStars ? "gold" : "gray",
                             }}
                           >
                             <svg
@@ -357,7 +366,8 @@ const ProductInformation = () => {
                           </span>
                         ))}
                         <span className="text-gray-600 ml-2">
-                          {product?.data?.rating / 5 || 0}
+                          {/* {product?.data?.rating / 5 || 0} */}
+                          {totalStars}
                         </span>
                       </span>
                     </div>
