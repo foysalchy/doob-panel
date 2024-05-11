@@ -402,7 +402,8 @@ const ProductDetails = () => {
                 </span>,
                 <Link
                   key={`category-${index}`}
-                  to={`/product/categories/${category.name}`}
+                  to={`/products/catagory/${category?.name}`}
+
                   className="hover:underline hover:text-gray-600"
                 >
                   {category.name}

@@ -387,7 +387,7 @@ const SignUpSeller = () => {
                         name="phone"
                       />
                       {otpError && <small>{otpError}</small>}
-                      {!valid && (
+                      {phoneNumber === "" && !valid && (
                         <small className="text-red-500">
                           Your Number is not valid
                         </small>
@@ -439,11 +439,10 @@ const SignUpSeller = () => {
                         {setTime && timeRemaining > 0 && (
                           <small className="">
                             Resend OTP after{" "}
-                            {`${Math.floor(timeRemaining / 60)}, ${
-                              timeRemaining % 60 < 10
-                                ? `0${timeRemaining % 60}`
-                                : timeRemaining % 60
-                            }`}
+                            {`${Math.floor(timeRemaining / 60)}, ${timeRemaining % 60 < 10
+                              ? `0${timeRemaining % 60}`
+                              : timeRemaining % 60
+                              }`}
                           </small>
                         )}
                       </div>

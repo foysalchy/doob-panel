@@ -191,6 +191,7 @@ const SellerConfirmOrder = () => {
         )
     }
 
+
     return (
         <div className=''>
             <InvoicePage order={order} />
@@ -198,7 +199,7 @@ const SellerConfirmOrder = () => {
                 <h1 className="text-center text-3xl mt-12 font-bold">Your order is confirmed</h1>
                 <p className="text-center text-gray-500">Thank you for shopping.</p>
 
-                <div className="grid grid-cols-3 gap-3">
+                <div className="  grid-cols-3 gap-3">
                     <div className="col-span-2">
                         <>
                             <div className="p-6 overflow-x-auto px-0">
@@ -264,10 +265,10 @@ const SellerConfirmOrder = () => {
                             </ul>
                         </>
                     </div>
-                    <div className="">
+                    {/* <div className="">
                         <img src={vct} alt="vector" className="w-full h-full object-cover" />
                         <button className='bg-gray-900 text-white px-3 py-2 rounded-md w-full mt-2'>Track Your Order</button>
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </div>

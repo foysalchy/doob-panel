@@ -71,7 +71,7 @@ const ForYouProducts = () => {
                 </div>
               </>
             ) : (
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 -m-4 text-black">
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 -m-4 text-black md:px-4">
                 {newProducts
                   ?.slice(0, displayedProducts)
                   ?.map((product, idx) => {
@@ -83,7 +83,7 @@ const ForYouProducts = () => {
                     return (
                       <Link
                         to={`${product._id}`}
-                        className="group block overflow-hidden border rounded p-2 "
+                        className="group block overflow-hidden border my-2 border-gray-500 border-opacity-90 p-3 rounded "
                       >
                         <div className="relative h-[140px] sm:h-[250px]">
                           <img
