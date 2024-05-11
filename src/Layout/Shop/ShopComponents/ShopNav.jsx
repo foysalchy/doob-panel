@@ -20,15 +20,60 @@ import { useEffect } from "react";
 import { BiHomeAlt, BiSearch } from "react-icons/bi";
 import CategorieItems from "./categorieItems";
 import { Footer } from "./shopFotterComponent";
+import { AuthContext } from "../../../AuthProvider/UserProvider";
 
 const ShopNav = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const pathname = window.location.pathname;
   const idMatch = pathname.match(/\/shop\/([^/]+)/);
   const shopId = idMatch ? idMatch[1] : null;
+  // ! search
+  const { search, user, setSearch } = useContext(AuthContext);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
+  const [searchHistory, setSearchHistory] = useState([]);
+    const [value, setValue] = useState("");
   const [searchOpen, setSearchOpen] = useState(false);
+  const searchData = async () => {
+    const term = searchTerm;
+    // console.log(`https://backend.doob.com.bd/api/v1/shop/search?term=${encodeURIComponent(term)}`);
+    try {
+      const response = await fetch(
+        `https://backend.doob.com.bd/api/v1/shop/search?term=${encodeURIComponent(
+          term
+        )}`
+      );
+      const data = await response.json();
+      // console.log(data);
+      setSearchResults(data);
+      setSearchHistory([]);
+
+      // Update the context with the current search term
+      setSearch(term);
+    } catch (error) {
+      // Handle errors
+      console.error("Error:", error);
+    }
+  };
+
+  const handleInputChange = (e) => {
+    const input = e.target.value;
+    // console.log(input);
+    setValue(input);
+    setSearchTerm(input);
+    setSearchResults();
+    setSearch(input);
+    fetch(
+      `https://backend.doob.com.bd/api/v1/shop/search-history?term=${encodeURIComponent(
+        input
+      )}`
+    )
+      .then((response) => response.json())
+      .then((data) => setSearchHistory(data));
+  };
+
   const { data: categories = [], refetch: reload } = useQuery({
-    queryKey: ["categories"],
+    queryKey: ["ShopCategories"],
     queryFn: async () => {
       const res = await fetch(
         `https://backend.doob.com.bd/api/v1/shop/category/get/${shopId}`
@@ -139,37 +184,69 @@ const ShopNav = () => {
             </div>
           </div>
           <ul className="w-[320px]">
-            <div className="relative ">
+            <div className=" mx-4 relative w-[500px] md:flex hidden items-center px-1 py-1 border bg-gray-100 rounded-md">
               <input
-                type="text"
-                id="Search"
-                placeholder="Search for..."
-                className="w-full rounded-md  px-4 bg-gray-100 py-2.5 pe-10 shadow-sm sm:text-sm"
+                value={searchTerm}
+                onChange={handleInputChange}
+                className="w-full pl-4  bg-gray-100 outline-none h-full"
+                placeholder="Search......"
+                type="search"
               />
-
-              <span className="absolute inset-y-0 end-0 grid w-10 place-content-center">
-                <button
-                  type="button"
-                  className="text-gray-600 hover:text-gray-700"
-                >
-                  <span className="sr-only ">Search</span>
-
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth="1.5"
-                    stroke="currentColor"
-                    className="h-4 w-4"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
-                    />
-                  </svg>
-                </button>
-              </span>
+              <button
+                className="bg-black text-white px-4 py-2 rounded-md hover:bg-gray-800"
+                onClick={searchData}
+              >
+                Search
+              </button>
+              {!value == "" && (
+                <div className="bg-white w-full left-0 ring-1 ring-gray-500 absolute top-[52px] z-[1000] p-3">
+                  {/* Display search history suggestions */}
+                  {searchHistory.length ? (
+                    <div className="mt-4 w-full">
+                      <div className="flex flex-wrap justify-center gap-2">
+                        {searchHistory.slice(0, 10).map((item, index) => (
+                          <button
+                            className="border-2 text-sm px-2 rounded-2xl "
+                            onClick={() => setSearchTerm(item.term)}
+                            key={item.term + index}
+                          >
+                            {item.term}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  ) : (
+                    ""
+                  )}
+                  {/* Display search results */}
+                  {
+                    <div className="mt-4 ">
+                      <ul>
+                        {searchResults?.data?.productCollections
+                          ?.filter((p) => p.adminWare)
+                          .map((product, index) => (
+                            <li>
+                              <Link
+                                onClick={() => {
+                                  setSearch(false), setSearchHistory();
+                                }}
+                                to={`/products/${product._id}`}
+                                className="text-black flex items-center gap-2"
+                                key={index}
+                              >
+                                <img
+                                  src={product?.featuredImage.src}
+                                  className="w-[30px] h-[30px]"
+                                />
+                                {product?.name}
+                              </Link>
+                            </li>
+                          ))}
+                      </ul>
+                    </div>
+                  }
+                </div>
+              )}
             </div>
           </ul>
           <ul className="flex items-center  space-x-8 lg:flex">

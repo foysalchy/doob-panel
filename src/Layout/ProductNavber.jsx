@@ -315,7 +315,7 @@ export default function Component() {
             value={searchTerm}
             onChange={handleInputChange}
             className="w-full pl-4  bg-gray-100 outline-none h-full"
-            placeholder="Search........"
+            placeholder="Search......"
             type="search"
           />
           <button
@@ -334,7 +334,7 @@ export default function Component() {
                       <button
                         className="border-2 text-sm px-2 rounded-2xl "
                         onClick={() => setSearchTerm(item.term)}
-                        key={index}
+                        key={item.term + index}
                       >
                         {item.term}
                       </button>
@@ -479,19 +479,21 @@ export default function Component() {
                           <nav className={``}>
                             <div className="flex items-center justify-between border-b ">
                               <button
-                                className={`${on
-                                  ? "bg-white"
-                                  : "bg-gray-100 border-b border-blue-700"
-                                  } text-center  p-2  w-full`}
+                                className={`${
+                                  on
+                                    ? "bg-white"
+                                    : "bg-gray-100 border-b border-blue-700"
+                                } text-center  p-2  w-full`}
                                 onClick={() => setOn(!on)}
                               >
                                 Menu
                               </button>
                               <button
-                                className={`${on
-                                  ? "bg-gray-100 border-b border-blue-700"
-                                  : "bg-white"
-                                  } text-center  p-2  w-full`}
+                                className={`${
+                                  on
+                                    ? "bg-gray-100 border-b border-blue-700"
+                                    : "bg-white"
+                                } text-center  p-2  w-full`}
                                 onClick={() => setOn(!on)}
                               >
                                 Category

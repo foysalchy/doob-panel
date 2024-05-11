@@ -32,6 +32,8 @@ const DarazOrderTable = ({
     },
   });
 
+  // console.log(tData, "tData");
+
   useEffect(() => {
     refetch();
   }, [selectedValue]);
@@ -84,7 +86,7 @@ const DarazOrderTable = ({
         )}
 
         {/* Current Page */}
-        {Array.from({ length: endPage - startPage + 1 }).map((_, index) => {
+        {Array.from({ length: endPage - startPage + 1 })?.map((_, index) => {
           const pageNumber = startPage + index;
           return (
             <li key={pageNumber}>
@@ -127,12 +129,12 @@ const DarazOrderTable = ({
                   <tr>
                     <th scope="col" className="border-r px-2 py-4 font-[500]">
                       <input
-                        checked={selected.length === currentData.length}
+                        checked={selected.length === currentData?.length}
                         onChange={() => {
                           if (!selected.length) {
                             console.log("Filtered Data:", currentData);
                             setSelected(
-                              currentData.map((item) => item.order_id)
+                              currentData?.map((item) => item.order_id)
                             );
                           } else {
                             // If selected is true, deselect all items
@@ -194,7 +196,7 @@ const DarazOrderTable = ({
                   </tr>
                 </thead>
                 <tbody>
-                  {currentData.map &&
+                  {currentData?.map &&
                     currentData?.map((itm, index) => (
                       <DarazTableRow
                         select={selected}

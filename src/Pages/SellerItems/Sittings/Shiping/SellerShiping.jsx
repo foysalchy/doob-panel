@@ -283,11 +283,18 @@ const SellerShipping = () => {
                   <div>
                     {get.name === "Steadfast" && (
                       <div className="group border relative block bg-white">
+                        {/* <img
+                          alt="Developer"
+                          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRG0WCZpBjYh0ZHeRKSPywA5x_FnBovhgJVyUfzx6Wn0w&s"
+                          srcSet="hhttps://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRG0WCZpBjYh0ZHeRKSPywA5x_FnBovhgJVyUfzx6Wn0w&s"
+                          className="absolute inset-0 p-2 object-cover opacity-75 flex justify-center items-center transition-opacity group-hover:opacity-20"
+                        /> */}
+
                         <img
                           alt="Developer"
-                          src="https://pathao.com/wp-content/uploads/2023/10/Pathao-Logo_Vertical_with_TagLine.png"
-                          srcSet="hhttps://pathao.com/wp-content/uploads/2023/10/Pathao-Logo_Vertical_with_TagLine.png"
-                          className="absolute inset-0 p-2 object-cover opacity-75 flex justify-center items-center transition-opacity group-hover:opacity-20"
+                          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRG0WCZpBjYh0ZHeRKSPywA5x_FnBovhgJVyUfzx6Wn0w&s"
+                          srcSet="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRG0WCZpBjYh0ZHeRKSPywA5x_FnBovhgJVyUfzx6Wn0w&s"
+                          className="absolute inset-0 py-3 object-cover opacity-75 flex justify-center items-center transition-opacity group-hover:opacity-20"
                         />
 
                         <div className="relative p-4 sm:p-6 lg:p-8">
