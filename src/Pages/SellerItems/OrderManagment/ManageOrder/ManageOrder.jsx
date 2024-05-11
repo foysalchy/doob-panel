@@ -59,7 +59,7 @@ const ManageOrder = () => {
   };
 
   const getDarazOrderCount = (orders, status) => {
-    return orders.filter(
+    return orders?.filter(
       (order) =>
         status === "All" ||
         (status === "pending" && !order.statuses[0]) ||
