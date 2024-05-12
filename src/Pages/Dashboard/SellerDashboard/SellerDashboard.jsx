@@ -159,9 +159,7 @@ const SellerDashboard = () => {
     },
   });
 
-
   console.log(darazShop);
-
 
   const {
     data: priviousAccount = [],
@@ -228,7 +226,7 @@ const SellerDashboard = () => {
       const data = await res.json();
       return data.data;
     },
-  })
+  });
 
   const { data: orders_admin = [] } = useQuery({
     queryKey: ["orders_admin"],
@@ -245,7 +243,6 @@ const SellerDashboard = () => {
   useEffect(() => {
     // Calculate the total of all total prices
     const total = orders_admin.reduce((acc, order) => {
-
       return (
         acc +
         (order.price + parseInt(order.commission) + parseInt(order.handling))
@@ -254,15 +251,13 @@ const SellerDashboard = () => {
     setTotalAllTotalPrices(total);
   }, [orders]);
 
-
   const total_request_amount = withdrawHistory.reduce(
     (acc, withdraw) => acc + withdraw.amount,
     0
   );
 
-  const currentAvailableAmount = parseInt(totalAllTotalPrices) - parseInt(total_request_amount);
-
-
+  const currentAvailableAmount =
+    parseInt(totalAllTotalPrices) - parseInt(total_request_amount);
 
   const { data: productData = [] } = useQuery({
     queryKey: ["productData"],
@@ -275,6 +270,7 @@ const SellerDashboard = () => {
     },
   });
 
+  console.log(shopInfo._id, productData);
 
   const getStatus = (quantity, product_Low_alert) => {
     console.log(product_Low_alert, quantity);
@@ -307,37 +303,38 @@ const SellerDashboard = () => {
     }
   };
 
+  const filteredProducts =
+    productData?.length &&
+    productData?.filter((product) => {
+      const lowStockWarning = product?.low_stock_warning
+        ? parseInt(product.low_stock_warning)
+        : null;
+      const stockQuantity = product.stock_quantity;
 
-  const filteredProducts = productData.filter((product) => {
-    const lowStockWarning = product?.low_stock_warning
-      ? parseInt(product.low_stock_warning)
-      : null;
-    const stockQuantity = product.stock_quantity;
+      const selectedFilter = "Lowest Stock";
 
-    const selectedFilter = 'Lowest Stock'
-
-    switch (selectedFilter) {
-      case "all":
-        return true; // Include all products
-      case "Good Stock":
-        return stockQuantity > (lowStockWarning ? lowStockWarning + 50 : 50);
-      case "Average Stock":
-        return (
-          stockQuantity <= (lowStockWarning ? lowStockWarning + 50 : 50) &&
-          lowStockWarning &&
-          lowStockWarning > 10
-        );
-      case "Lowest Stock":
-        return (
-          stockQuantity <= (lowStockWarning ? lowStockWarning : 10) &&
-          stockQuantity > 0
-        );
-      case "Stock Out":
-        return stockQuantity <= 0;
-      default:
-        return true; // Default to include all products
-    }
-  });
+      switch (selectedFilter) {
+        case "all":
+          return true; // Include all products
+        case "Good Stock":
+          return stockQuantity > (lowStockWarning ? lowStockWarning + 50 : 50);
+        case "Average Stock":
+          return (
+            stockQuantity <= (lowStockWarning ? lowStockWarning + 50 : 50) &&
+            lowStockWarning &&
+            lowStockWarning > 10
+          );
+        case "Lowest Stock":
+          return (
+            stockQuantity <= (lowStockWarning ? lowStockWarning : 10) &&
+            stockQuantity > 0
+          );
+        case "Stock Out":
+          return stockQuantity <= 0;
+        default:
+          return true; // Default to include all products
+      }
+    });
 
   const firstAmount = parseInt(currentAvailableAmount);
 
@@ -345,16 +342,16 @@ const SellerDashboard = () => {
     <div className="h-screen mb-10   ">
       {sellerPopupData.length
         ? popup && (
-          <div className="fixed top-0 left-0 flex items-center justify-center w-full h-full bg-black bg-opacity-90 z-50">
-            <SellerPopUp
-              onClose={onClose}
-              showModal={popup}
-              setShowModal={setPopUp}
-              data={sellerPopupData}
-              handleClose={onClose}
-            />
-          </div>
-        )
+            <div className="fixed top-0 left-0 flex items-center justify-center w-full h-full bg-black bg-opacity-90 z-50">
+              <SellerPopUp
+                onClose={onClose}
+                showModal={popup}
+                setShowModal={setPopUp}
+                data={sellerPopupData}
+                handleClose={onClose}
+              />
+            </div>
+          )
         : ""}
       <div className=" bg-gradient-to-r from-[#1493f4] to-[#835177] absolute -z-10 -top-12 -right-14 blur-2xl opacity-10"></div>
       <h1 className="text-4xl font-semibold text-gray-800 capitalize">
@@ -414,7 +411,10 @@ const SellerDashboard = () => {
           }}
           className="  relative ring-1 ring-gray-100 w-full  overflow-hidden rounded-lg bg-white  "
         >
-          <a href="#" className="justify-between w-full flex items-center h-full">
+          <a
+            href="#"
+            className="justify-between w-full flex items-center h-full"
+          >
             <div className="flex w-full items-center  justify-between px-4  space-x-4">
               <div className="flex gap-3 items-center">
                 <div className="relative w-[50px] flex items-center justify-center h-[50px] bg-yellow-100 rounded-full">
@@ -422,15 +422,13 @@ const SellerDashboard = () => {
                 </div>
                 <p className="ml-2  text-sm font-semibold text-gray-700  border-gray-200 capitalize">
                   {user.name} <br />
-                  <hr />{shopInfo?.shopName}
-
+                  <hr />
+                  {shopInfo?.shopName}
                 </p>
               </div>
 
-
               <div className="mt-3 text-xl md:font-bold text-black  border-gray-200 md:mt-0 ">
-                ৳{Math.floor(firstAmount || '0000')}
-
+                ৳{Math.floor(firstAmount || "0000")}
               </div>
             </div>
 
@@ -454,9 +452,7 @@ const SellerDashboard = () => {
           {<NoticeContent setOpen={setOpen} />}
           {/* </div> */}
         </div>
-
       </div>
-
 
       <div className="grid grid-cols-1 gap-4 my-4 md:grid-cols-2 lg:grid-cols-4">
         <div className="w-full">
@@ -470,8 +466,10 @@ const SellerDashboard = () => {
               Total Product
             </p>
             <div className="flex items-end my-6 space-x-2">
-              <p className="md:text-3xl text-3xl font-bold text-black "> {products?.length}</p>
-
+              <p className="md:text-3xl text-3xl font-bold text-black ">
+                {" "}
+                {products?.length}
+              </p>
             </div>
           </div>
         </div>
@@ -487,8 +485,9 @@ const SellerDashboard = () => {
             </p>
 
             <div className="flex items-end my-6 space-x-2">
-              <p className="md:text-3xl text-3xl font-bold text-black ">{orders.length}</p>
-
+              <p className="md:text-3xl text-3xl font-bold text-black ">
+                {orders.length}
+              </p>
             </div>
           </div>
         </div>
@@ -503,8 +502,19 @@ const SellerDashboard = () => {
               Total Sold
             </p>
             <div className="flex items-end my-6 space-x-2">
-              <p className="md:text-3xl  text-3xl font-bold text-black ">৳{orders.reduce((total, order) => total + parseInt(order.promoHistory.status ? order.promoHistory.promoPrice : order.promoHistory.normalPrice), 0)}</p>
-
+              <p className="md:text-3xl  text-3xl font-bold text-black ">
+                ৳
+                {orders.reduce(
+                  (total, order) =>
+                    total +
+                    parseInt(
+                      order.promoHistory.status
+                        ? order.promoHistory.promoPrice
+                        : order.promoHistory.normalPrice
+                    ),
+                  0
+                )}
+              </p>
             </div>
           </div>
         </div>
@@ -522,12 +532,9 @@ const SellerDashboard = () => {
               <p className="md:text-3xl text-3xl font-bold text-black ">
                 {orderData.length}
               </p>
-
             </div>
           </div>
         </div>
-
-
       </div>
 
       <div className="grid grid-cols-1 gap-4 my-10 md:grid-cols-2 lg:grid-cols-2">
@@ -539,7 +546,7 @@ const SellerDashboard = () => {
           <h1 className="whitespace-nowrap">Previous Login</h1>
           <hr />
           {priviousAccount
-            .filter(
+            ?.filter(
               (shop) => shop.result.account !== darazShop?.result?.account
             )
             .map((shop) => (
@@ -554,9 +561,7 @@ const SellerDashboard = () => {
               </div>
             ))}
         </div>
-
       </div>
-
 
       <div className="overflow-hidden mt-3 bg-[white] p-4">
         <h1 className="mb-3 font-semibold">Lowest Stock Product</h1>
@@ -572,35 +577,23 @@ const SellerDashboard = () => {
               <th scope="col" className="border-r px-2 py-4 font-[500]">
                 Price
               </th>
-              <th
-                scope="col"
-                className="border-r px-2 py-4 text-sm font-[500]"
-              >
+              <th scope="col" className="border-r px-2 py-4 text-sm font-[500]">
                 Regular Price
               </th>
-              <th
-                scope="col"
-                className="border-r px-2 py-4 text-sm font-[500]"
-              >
+              <th scope="col" className="border-r px-2 py-4 text-sm font-[500]">
                 Sale Price
               </th>
 
-              <th
-                scope="col"
-                className="border-r px-2 py-4 text-sm font-[500]"
-              >
+              <th scope="col" className="border-r px-2 py-4 text-sm font-[500]">
                 Stock Quantity
               </th>
-              <th
-                scope="col"
-                className="border-r px-2 py-4 text-sm font-[500]"
-              >
+              <th scope="col" className="border-r px-2 py-4 text-sm font-[500]">
                 Status
               </th>
             </tr>
           </thead>
           <tbody>
-            {filteredProducts.slice(0, 4)?.map((product) => {
+            {filteredProducts.length && filteredProducts?.slice(0, 4)?.map((product) => {
               const status = getStatus(
                 product?.stock_quantity,
                 product?.low_stock_warning
@@ -681,28 +674,45 @@ const SellerDashboard = () => {
             <tr>
               <th className="px-4 py-3 text-left font-medium">Order</th>
               <th className="px-4 py-3 text-left font-medium">Customer</th>
-              <th className="px-4 py-3 text-left font-medium hidden md:table-cell">Date</th>
+              <th className="px-4 py-3 text-left font-medium hidden md:table-cell">
+                Date
+              </th>
               <th className="px-4 py-3 text-right font-medium">Total</th>
-              <th className="px-4 py-3 text-left font-medium hidden sm:table-cell">Status</th>
+              <th className="px-4 py-3 text-left font-medium hidden sm:table-cell">
+                Status
+              </th>
             </tr>
           </thead>
           <tbody>
-            {orders?.slice(0, 5).map((order) => <tr className="border-b" key={order?._id} style={{ whiteSpace: "nowrap" }} >
-              <Link
-                to="/seller/orders/manage-order/order-checkup"
-                onClick={() => setCheckUpData(order)}
+            {orders?.slice(0, 5).map((order) => (
+              <tr
+                className="border-b"
+                key={order?._id}
                 style={{ whiteSpace: "nowrap" }}
-                className="px-4 font-[400]"
               >
-                # {order?.orderNumber}
-              </Link>
-              <td className="px-4 py-3">{order?.addresses?.fullName}</td>
-              <td className="px-4 py-3 hidden md:table-cell">{new Date(order.
-                timestamp).toDateString()}</td>
-              <td className="px-4 py-3 text-right">৳ {order.promoHistory.status ? order.promoHistory.promoPrice : order.promoHistory.normalPrice}</td>
-              <td className="px-4 py-3 hidden sm:table-cell">{order.status ? order.status : "Pending"}</td>
-
-            </tr>)}
+                <Link
+                  to="/seller/orders/manage-order/order-checkup"
+                  onClick={() => setCheckUpData(order)}
+                  style={{ whiteSpace: "nowrap" }}
+                  className="px-4 font-[400]"
+                >
+                  # {order?.orderNumber}
+                </Link>
+                <td className="px-4 py-3">{order?.addresses?.fullName}</td>
+                <td className="px-4 py-3 hidden md:table-cell">
+                  {new Date(order.timestamp).toDateString()}
+                </td>
+                <td className="px-4 py-3 text-right">
+                  ৳{" "}
+                  {order.promoHistory.status
+                    ? order.promoHistory.promoPrice
+                    : order.promoHistory.normalPrice}
+                </td>
+                <td className="px-4 py-3 hidden sm:table-cell">
+                  {order.status ? order.status : "Pending"}
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
