@@ -8,6 +8,7 @@ import OrderAllinfoModal from "./OrderAllinfoModal";
 import ShippingModal from "./ShipingModal";
 import { useEffect } from "react";
 import { saveInvoice } from "./StoreInvoiceData";
+import Swal from "sweetalert2";
 
 const OrderTable = ({
   setSelectedItems,
@@ -114,24 +115,19 @@ const OrderTable = ({
 
   const productStatusUpdate = (status, orderId) => {
     // Open modal dialog to confirm action
-    if (confirm("Are you sure you want to update the status?")) {
-      fetch(
-        `https://backend.doob.com.bd/api/v1/seller/order-status-update?orderId=${orderId}&status=${status}`,
-        {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ status, orderId }),
-        }
-      )
-        .then((res) => res.json())
-        .then((data) => {
-          // Assuming refetch is defined somewhere
-          refetch();
-        });
-    } else {
-      // Action cancelled
-      console.log("Status update cancelled.");
-    }
+    fetch(
+      `https://backend.doob.com.bd/api/v1/seller/order-status-update?orderId=${orderId}&status=${status}`,
+      {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ status, orderId }),
+      }
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        // Assuming refetch is defined somewhere
+        refetch();
+      });
   };
 
   const { data: ships = [] } = useQuery({
@@ -190,12 +186,15 @@ const OrderTable = ({
     setShowImage(true);
   };
 
-  const handleProductStatusUpdate = (orders) => {
-    fetch(`https://backend.doob.com.bd/api/v1/seller/order-quantity-update`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(orders),
-    })
+  const handleProductStatusUpdate = (orders, isUpdateQuantity) => {
+    fetch(
+      `https://backend.doob.com.bd/api/v1/seller/order-quantity-update?isUpdateQuantity=${isUpdateQuantity}`,
+      {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(orders),
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
@@ -242,6 +241,8 @@ const OrderTable = ({
 
   const updateOrderInfo = (note, file, id) => {
     const noteData = { note, file, orderId: id };
+    console.log(noteData);
+    // return;
     fetch("https://backend.doob.com.bd/api/v1/seller/refound-order-info", {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
@@ -250,6 +251,7 @@ const OrderTable = ({
       .then((res) => res.json())
       .then((data) => alert(` Successfully Done!`));
   };
+
   const [file, setFile] = useState();
   const cancelNoteSubmit = () => {
     console.log({
@@ -260,12 +262,14 @@ const OrderTable = ({
       showAlert,
     });
 
+    // return;
+
     if (isChecked && !refundCheck) {
-      handleProductStatusUpdate(showAlert);
+      handleProductStatusUpdate(showAlert, isChecked);
       updateOrderInfo(note, file, showAlert._id);
       setShowAlert(false);
     } else if (isChecked && refundCheck) {
-      handleProductStatusUpdate(showAlert);
+      handleProductStatusUpdate(showAlert, isChecked);
       updateOrderInfo(note, file, showAlert._id);
       setShowAlert(false);
     } else {
@@ -336,6 +340,64 @@ const OrderTable = ({
         )
       );
     }
+  };
+  const handleRejectProduct = (item) => {
+    console.log(selectedItems);
+
+    Swal.fire({
+      title: "Do you want to reject the Order?",
+      showCancelButton: true,
+      confirmButtonText: "Reject",
+      input: "textarea", // Add a textarea input
+      inputPlaceholder: "Enter your rejection reason here", // Placeholder for the textarea
+      inputAttributes: {
+        // Optional attributes for the textarea
+        maxLength: 100, // Set maximum length
+      },
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const rejectNote = result.value; // Get the value entered in the textarea
+        // Now you can use the rejection reason as needed
+        console.log(rejectNote, item?._id);
+
+        // return;
+
+        fetch(
+          `http://localhost:5001/api/v1/seller/order-status-update?orderId=${item?._id}&status=return`,
+          {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              status: "return",
+              orderId: item?._id,
+              rejectNote: rejectNote,
+            }),
+          }
+        )
+          .then((res) => res.json())
+          .then((data) => {
+            // Assuming refetch is defined somewhere
+            refetch();
+          });
+        Swal.fire("Saved!", `Rejection reason: ${rejectNote}`, "success");
+      } else if (result.isDenied) {
+        Swal.fire("Changes are not saved", "", "info");
+      }
+    });
+    // productStatusUpdate("failed", item?._id);
+  };
+
+  console.log(currentItems, "currentItems");
+
+  const showRejectNode = (item) => {
+    // console.log("item", item);
+
+    Swal.fire({
+      title: "Rejected Note",
+      // showCancelButton: true,
+      confirmButtonText: "OK",
+      text: item?.rejectNote,
+    });
   };
 
   return (
@@ -533,23 +595,32 @@ const OrderTable = ({
                               </button>
                             )) ||
                             (item?.status === "return" && (
-                              <div className="flex flex-col justify-center">
-                                <button
-                                  onClick={() => {
-                                    setShowAlert(item), checkBox(item._id);
-                                  }}
-                                  className="text-[16px] font-[400] text-blue-700"
-                                >
-                                  Approve
-                                </button>
-                                <button
-                                  onClick={() =>
-                                    productStatusUpdate("failed", item?._id)
-                                  }
-                                  className="text-[16px] font-[400] text-blue-700"
-                                >
-                                  Reject
-                                </button>
+                              <div>
+                                {item?.rejectNote ? (
+                                  <button
+                                    className="text-red-500"
+                                    onClick={() => showRejectNode(item)}
+                                  >
+                                    Rejected
+                                  </button>
+                                ) : (
+                                  <div className="flex flex-col justify-center">
+                                    <button
+                                      onClick={() => {
+                                        setShowAlert(item), checkBox(item._id);
+                                      }}
+                                      className="text-[16px] font-[400] text-blue-700"
+                                    >
+                                      Approve
+                                    </button>
+                                    <button
+                                      onClick={() => handleRejectProduct(item)}
+                                      className="text-[16px] font-[400] text-blue-700"
+                                    >
+                                      Reject
+                                    </button>
+                                  </div>
+                                )}
                               </div>
                             )) ||
                             (item?.status === "returned" && (
@@ -581,20 +652,22 @@ const OrderTable = ({
                         <div>
                           <div
                             onClick={() => setModalOn(false)}
-                            className={`fixed z-[100] flex items-center justify-center ${modalOn?._id === item?._id
-                              ? "visible opacity-100"
-                              : "invisible opacity-0"
-                              } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
+                            className={`fixed z-[100] flex items-center justify-center ${
+                              modalOn?._id === item?._id
+                                ? "visible opacity-100"
+                                : "invisible opacity-0"
+                            } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
                           >
                             <div
                               onClick={(e_) => e_.stopPropagation()}
-                              className={`text- absolute w-[500px] rounded-sm bg-white p-6 drop-shadow-lg dark:bg-black dark:text-white ${modalOn?._id === item?._id
-                                ? "scale-1 opacity-1 duration-300"
-                                : "scale-0 opacity-0 duration-150"
-                                }`}
+                              className={`text- absolute w-[500px] rounded-sm bg-white p-6 drop-shadow-lg dark:bg-black dark:text-white ${
+                                modalOn?._id === item?._id
+                                  ? "scale-1 opacity-1 duration-300"
+                                  : "scale-0 opacity-0 duration-150"
+                              }`}
                             >
                               <h1 className="mb-2 text-2xl font-semibold">
-                                Edit Order { }
+                                Edit Order {}
                               </h1>
                               <form>
                                 <div className="flex items-start w-full mb-6 flex-col gap-1">
@@ -740,7 +813,7 @@ const OrderTable = ({
                         rows="4"
                         cols="10"
                         className="shadow-sm w-full p-2 focus:ring-blue-500 focus:border-blue-500 mt-1 block  sm:text-sm border-gray-300 rounded-md"
-                        placeholder="Enter your note here..."
+                        placeholder="Enter your note here ..."
                       ></textarea>
                     </div>
                   </div>
@@ -776,14 +849,17 @@ const OrderTable = ({
                 <li key={i}>
                   <button
                     onClick={() => setCurrentPage(i + 1)}
-                    className={`bg-white border ${currentPage === i + 1
-                      ? "text-blue-600"
-                      : "text-gray-500 hover:bg-gray-100 hover:text-gray-700"
-                      } border-gray-300 leading-tight py-2 px-3 rounded ${i === 0 ? "rounded-l-lg" : ""
-                      } ${i === Math.ceil(filteredData.length / itemsPerPage) - 1
+                    className={`bg-white border ${
+                      currentPage === i + 1
+                        ? "text-blue-600"
+                        : "text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+                    } border-gray-300 leading-tight py-2 px-3 rounded ${
+                      i === 0 ? "rounded-l-lg" : ""
+                    } ${
+                      i === Math.ceil(filteredData.length / itemsPerPage) - 1
                         ? "rounded-r-lg"
                         : ""
-                      }`}
+                    }`}
                   >
                     {i + 1}
                   </button>

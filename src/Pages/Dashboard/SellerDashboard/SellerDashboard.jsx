@@ -265,6 +265,7 @@ const SellerDashboard = () => {
       const res = await fetch(
         `https://backend.doob.com.bd/api/v1/seller/all-products/${shopInfo._id}`
       );
+      k;
       const data = await res.json();
       return data;
     },
@@ -593,76 +594,77 @@ const SellerDashboard = () => {
             </tr>
           </thead>
           <tbody>
-            {filteredProducts.length && filteredProducts?.slice(0, 4)?.map((product) => {
-              const status = getStatus(
-                product?.stock_quantity,
-                product?.low_stock_warning
-              );
-              return (
-                <tr className="border-b " key={product?._id}>
-                  <td className="whitespace-nowrap border-r px-2 py-2 font-medium ">
-                    <img
-                      src={product?.featuredImage?.src}
-                      alt=""
-                      className="w-[80px] h-[80px] rounded-lg object-cover m-auto"
-                    />
-                  </td>
-                  <td className="whitespace-wrap text-sm text-start w-[300px] border-r px-6 py-4 font-medium ">
-                    {product?.name}
-                    <br />
-                    <span className="text-xs text-gray-500">
-                      {" "}
-                      {product?.sku}
-                    </span>
-                  </td>
-                  <td className="whitespace-nowrap border-r px-6 py-4 font-medium ">
-                    {product?.price}
-                  </td>
-                  <td className="whitespace-nowrap border-r px-6 py-4 font-medium ">
-                    {product?.regular_price}
-                  </td>
-                  <td className="whitespace-nowrap border-r px-6 py-4 font-medium ">
-                    {product?.sale_price}
-                  </td>
-
-                  <td className="whitespace-nowrap border-r px-6 py-4 font-medium ">
-                    {product?.stock_quantity} /
-                    <span className="text-red-400">
-                      {product?.low_stock_warning}
-                    </span>
-                  </td>
-
-                  <td className="whitespace-nowrap border-r px-6 py-4 font-medium ">
-                    <>
-                      <div className={`text-xs  ${status.color}`}>
-                        <p className="flex items-center gap-2 justify-center">
-                          {status.icon} {status.text}
-                        </p>
-                      </div>
-                    </>
-                  </td>
-                  <td className="whitespace-nowrap border-r px-6 py-4 font-medium ">
-                    <button
-                      onClick={() => setOpen(product)}
-                      className="text-xs text-blue-500 border border-blue-500 px-2 py-1 rounded-lg"
-                    >
-                      Edit
-                    </button>
-                  </td>
-
-                  {open._id === product._id && (
-                    <div className="h-0 w-0">
-                      <EditInventory
-                        refetch={refetch}
-                        data={product}
-                        open={open}
-                        setOpen={setOpen}
+            {filteredProducts.length &&
+              filteredProducts?.slice(0, 4)?.map((product) => {
+                const status = getStatus(
+                  product?.stock_quantity,
+                  product?.low_stock_warning
+                );
+                return (
+                  <tr className="border-b " key={product?._id}>
+                    <td className="whitespace-nowrap border-r px-2 py-2 font-medium ">
+                      <img
+                        src={product?.featuredImage?.src}
+                        alt=""
+                        className="w-[80px] h-[80px] rounded-lg object-cover m-auto"
                       />
-                    </div>
-                  )}
-                </tr>
-              );
-            })}
+                    </td>
+                    <td className="whitespace-wrap text-sm text-start w-[300px] border-r px-6 py-4 font-medium ">
+                      {product?.name}
+                      <br />
+                      <span className="text-xs text-gray-500">
+                        {" "}
+                        {product?.sku}
+                      </span>
+                    </td>
+                    <td className="whitespace-nowrap border-r px-6 py-4 font-medium ">
+                      {product?.price}
+                    </td>
+                    <td className="whitespace-nowrap border-r px-6 py-4 font-medium ">
+                      {product?.regular_price}
+                    </td>
+                    <td className="whitespace-nowrap border-r px-6 py-4 font-medium ">
+                      {product?.sale_price}
+                    </td>
+
+                    <td className="whitespace-nowrap border-r px-6 py-4 font-medium ">
+                      {product?.stock_quantity} /
+                      <span className="text-red-400">
+                        {product?.low_stock_warning}
+                      </span>
+                    </td>
+
+                    <td className="whitespace-nowrap border-r px-6 py-4 font-medium ">
+                      <>
+                        <div className={`text-xs  ${status.color}`}>
+                          <p className="flex items-center gap-2 justify-center">
+                            {status.icon} {status.text}
+                          </p>
+                        </div>
+                      </>
+                    </td>
+                    <td className="whitespace-nowrap border-r px-6 py-4 font-medium ">
+                      <button
+                        onClick={() => setOpen(product)}
+                        className="text-xs text-blue-500 border border-blue-500 px-2 py-1 rounded-lg"
+                      >
+                        Edit
+                      </button>
+                    </td>
+
+                    {open._id === product._id && (
+                      <div className="h-0 w-0">
+                        <EditInventory
+                          refetch={refetch}
+                          data={product}
+                          open={open}
+                          setOpen={setOpen}
+                        />
+                      </div>
+                    )}
+                  </tr>
+                );
+              })}
           </tbody>
         </table>
       </div>
