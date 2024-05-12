@@ -40,7 +40,7 @@ export const ordersNav = [
     {
         name: 'return request',
         status: '',
-        value: 'Return',
+        value: 'return',
         dropdownLink: [""],
     },
     {
