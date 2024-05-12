@@ -81,12 +81,13 @@ const SellerManageBlog = () => {
   };
 
   const [searchQuery, setSearchQuery] = useState("");
-
+  const [blogType, setBlogType] = useState(false);
   const handleSearch = (event) => {
     setSearchQuery(event.target.value);
   };
+  const allBlogs = blogs.filter((item) => item.draft || item.draft === blogType);
 
-  const filteredData = blogs.filter(
+  const filteredData = allBlogs?.filter(
     (item) =>
       item.title?.toLowerCase().includes(searchQuery?.toLowerCase()) ||
       item._id.toString().includes(searchQuery)
@@ -98,7 +99,8 @@ const SellerManageBlog = () => {
     setOpenModal(ticketId);
   };
 
-  console.log(filteredData);
+
+
   return (
     <div>
       <Link
@@ -154,9 +156,9 @@ const SellerManageBlog = () => {
           </span>
         </div>
 
-        <div className="bg-gray-900 rounded cursor-pointer text-white px-4 py-2">
-          Trash
-        </div>
+        <button onClick={() => setBlogType(!blogType)} className="bg-gray-900 rounded cursor-pointer text-white px-4 py-2">
+          {!blogType ? 'Trash' : 'All Blogs'}
+        </button>
       </div>
       <div>
         <div>

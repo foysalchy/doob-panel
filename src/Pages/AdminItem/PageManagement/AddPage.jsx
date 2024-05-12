@@ -7,7 +7,7 @@ import { AuthContext } from "../../../AuthProvider/UserProvider";
 
 const AddPage = () => {
   const [loading, setLoading] = useState(false);
-
+  const [draft, setDraft] = useState(false);
   //! for save Drafts
   const [formData, setFormData] = useState({
     title: "",
@@ -111,6 +111,7 @@ const AddPage = () => {
       page,
       metaDescription,
       metaImg: imageUrl,
+      draft
     };
 
     // navigate("/admin/page-management");
@@ -195,7 +196,7 @@ const AddPage = () => {
                       insertImageAsBase64URI: true,
                     },
                   }}
-                  // value={formData.message}
+                // value={formData.message}
                 ></JoditEditor>
               </div>
             </div>
@@ -267,6 +268,7 @@ const AddPage = () => {
                 </button>
               ) : (
                 <button
+                  onClick={() => setDraft(false)}
                   type="submit"
                   className="group relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none mt-4 "
                 >
@@ -279,6 +281,20 @@ const AddPage = () => {
                   </span>
                 </button>
               )}
+
+              <button
+                onClick={() => setDraft(true)}
+                type="submit"
+                className="group ml-3 relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none mt-4 "
+              >
+                <span className="absolute -end-full transition-all group-hover:end-4">
+                  <BsArrowRight />
+                </span>
+
+                <span className="text-sm font-medium transition-all group-hover:me-4">
+                  Save To Trash
+                </span>
+              </button>
             </div>
           </form>
         </div>

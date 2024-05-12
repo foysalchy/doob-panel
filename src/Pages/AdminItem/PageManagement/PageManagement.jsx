@@ -23,6 +23,9 @@ const PageManagement = () => {
     },
   });
 
+  const allPage = faqs.filter((item) => item.draft || item.draft === trash_status);
+
+
   const ActiveHandle = (id) => {
     fetch(`https://backend.doob.com.bd/api/v1/admin/page/status/${id}`, {
       method: "PUT",
@@ -234,7 +237,7 @@ const PageManagement = () => {
 
                               <Link
                                 to={`/pages/${faq?._id}`}
-                                // onClick={() => handleViewDetails(faq?._id)}
+                              // onClick={() => handleViewDetails(faq?._id)}
                               >
                                 <BsEye className=" transition-colors text-xl duration-200 text-green-500 hover:text-green-700 focus:outline-none" />
                               </Link>

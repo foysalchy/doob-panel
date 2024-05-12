@@ -10,6 +10,7 @@ import { quillModules } from "../../quillModule";
 const AddSellerPage = () => {
   const [loading, setLoading] = useState(false);
   const { shopInfo, user } = useContext(AuthContext);
+  const [draft, setDraft] = useState(false);
   const formRef = useRef(null);
 
   const location = useLocation();
@@ -25,6 +26,7 @@ const AddSellerPage = () => {
     MetaDescription: "",
     img: "",
     MetaImage: "",
+    draft
   });
   const [draftSaved, setDraftSaved] = useState(false);
 
@@ -87,7 +89,7 @@ const AddSellerPage = () => {
     }
   }, [draftSaved, blocker]);
 
-  const dataSubmit = (event, draft = false) => {
+  const dataSubmit = (event) => {
     setLoading(true);
     event.preventDefault();
     const form = event.target;
@@ -105,6 +107,8 @@ const AddSellerPage = () => {
       metaDescription,
       draft, // Add draft flag
     };
+
+    console.log('data.......', faq);
 
     fetch(`https://backend.doob.com.bd/api/v1/seller/page`, {
       method: "POST",
@@ -224,6 +228,7 @@ const AddSellerPage = () => {
               </button>
             ) : (
               <button
+                onClick={() => setDraft(false)}
                 type="submit"
                 className="group relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none mt-4 "
               >
@@ -235,6 +240,19 @@ const AddSellerPage = () => {
                 </span>
               </button>
             )}
+
+            <button
+              onClick={() => setDraft(true)}
+              type="submit"
+              className="group relative inline-flex ml-4 items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none mt-4 "
+            >
+              <span className="absolute -end-full transition-all group-hover:end-4">
+                <BsArrowRight />
+              </span>
+              <span className="text-sm font-medium transition-all group-hover:me-4">
+                Save and Draft
+              </span>
+            </button>
           </div>
         </form>
       </div>
