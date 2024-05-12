@@ -325,7 +325,7 @@ export default function Component() {
             Search
           </button>
           {!value == "" && (
-            <div className="bg-white w-full left-0 ring-1 ring-gray-500 absolute top-[52px] z-[1000] p-3">
+            <div className="bg-white w-full left-0 border border-gray-500 border-opacity-20 rounded absolute top-[52px] z-[1000] p-3 max-h-[400px] overflow-y-auto">
               {/* Display search history suggestions */}
               {searchHistory.length ? (
                 <div className="mt-4 w-full">
@@ -347,24 +347,24 @@ export default function Component() {
               {/* Display search results */}
               {
                 <div className="mt-4 ">
-                  <ul>
+                  <ul className="">
                     {searchResults?.data?.productCollections
                       ?.filter((p) => p.adminWare)
                       .map((product, index) => (
-                        <li>
+                        <li key={index}>
                           <Link
                             onClick={() => {
                               setSearch(false), setSearchHistory();
                             }}
                             to={`/products/${product._id}`}
-                            className="text-black flex items-center gap-2"
+                            className="text-black flex items-center gap-2 mb-2  bg-gray-100 px-2 py-1"
                             key={index}
                           >
                             <img
-                              src={product?.featuredImage.src}
-                              className="w-[30px] h-[30px]"
+                              src={product?.featuredImage.src ?? product.images[0].src}
+                              className="w-[30px] h-[30px] rounded"
                             />
-                            {product?.name}
+                            {product?.name.slice(0, 40)}
                           </Link>
                         </li>
                       ))}
@@ -479,21 +479,19 @@ export default function Component() {
                           <nav className={``}>
                             <div className="flex items-center justify-between border-b ">
                               <button
-                                className={`${
-                                  on
-                                    ? "bg-white"
-                                    : "bg-gray-100 border-b border-blue-700"
-                                } text-center  p-2  w-full`}
+                                className={`${on
+                                  ? "bg-white"
+                                  : "bg-gray-100 border-b border-blue-700"
+                                  } text-center  p-2  w-full`}
                                 onClick={() => setOn(!on)}
                               >
                                 Menu
                               </button>
                               <button
-                                className={`${
-                                  on
-                                    ? "bg-gray-100 border-b border-blue-700"
-                                    : "bg-white"
-                                } text-center  p-2  w-full`}
+                                className={`${on
+                                  ? "bg-gray-100 border-b border-blue-700"
+                                  : "bg-white"
+                                  } text-center  p-2  w-full`}
                                 onClick={() => setOn(!on)}
                               >
                                 Category

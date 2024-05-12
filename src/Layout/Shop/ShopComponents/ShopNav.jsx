@@ -27,7 +27,7 @@ const ShopNav = () => {
   const pathname = window.location.pathname;
   const idMatch = pathname.match(/\/shop\/([^/]+)/);
   const shopId = idMatch ? idMatch[1] : null;
-  // ! search
+
   const { shopUser, logOut, shop_id } = useContext(ShopAuthProvider);
   // console.log("🚀 ~ file: ShopNav.jsx:32 ~ ShopNav ~ shop_id:", shop_id);
 
@@ -39,10 +39,8 @@ const ShopNav = () => {
   const [searchOpen, setSearchOpen] = useState(false);
   const searchData = async () => {
     const term = searchTerm;
-    // console.log(`https://backend.doob.com.bd/api/v1/shop/search?term=${encodeURIComponent(term)}`);
-    console.log(term);
-    // const data = { shop_id: shop_id.shop_id, term };
-    // console.log(data);
+    console.log(shop_id);
+
     try {
       const response = await fetch(`http://localhost:5001/api/v1/shop/search`, {
         method: "POST",
@@ -50,10 +48,13 @@ const ShopNav = () => {
         headers: {
           "Content-Type": "application/json",
         },
-      });
-      const data = await response.json(data);
+      })
+
+      const data = await response.json();
       console.log(data);
-      setSearchResults(data);
+
+
+      setSearchResults(data.data);
       setSearchHistory([]);
 
       // Update the context with the current search term
@@ -72,9 +73,15 @@ const ShopNav = () => {
     setSearchResults();
     // setSearch(input);
     fetch(
-      `http://localhost:5001/api/v1/shop/search-history?term=${encodeURIComponent(
-        input
-      )}&shop_id=${shop_id.shop_id}`
+      'http://localhost:5001/api/v1/shop/search-history',
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ shop_id: shop_id.shop_id, term: input }),
+      }
+
     )
       .then((response) => response.json())
       .then((data) => setSearchHistory(data));
@@ -205,11 +212,11 @@ const ShopNav = () => {
                 Search
               </button>
               {!value == "" && (
-                <div className="bg-white w-full left-0 ring-1 ring-gray-500 absolute top-[52px] z-[1000] p-3">
+                <div className="bg-white w-full left-0 border border-gray-500 rounded border-opacity-50 absolute top-[52px] z-[1000] p-3">
                   {/* Display search history suggestions */}
                   {searchHistory.length ? (
                     <div className="mt-4 w-full">
-                      <div className="flex flex-wrap justify-center gap-2">
+                      <div className="flex flex-wrap justify-center gap-2  border-b-black">
                         {searchHistory.slice(0, 10).map((item, index) => (
                           <button
                             className="border-2 text-sm px-2 rounded-2xl "
@@ -226,28 +233,26 @@ const ShopNav = () => {
                   )}
                   {/* Display search results */}
                   {
-                    <div className="mt-4 ">
+                    <div className="mt-4 max-h-[400px] overflow-y-auto ">
                       <ul>
-                        {searchResults?.data?.productCollections
-                          ?.filter((p) => p.adminWare)
-                          .map((product, index) => (
-                            <li>
-                              <Link
-                                onClick={() => {
-                                  setSearch(false), setSearchHistory();
-                                }}
-                                to={`/products/${product._id}`}
-                                className="text-black flex items-center gap-2"
-                                key={index}
-                              >
-                                <img
-                                  src={product?.featuredImage.src}
-                                  className="w-[30px] h-[30px]"
-                                />
-                                {product?.name}
-                              </Link>
-                            </li>
-                          ))}
+                        {searchResults?.map((product, index) => (
+                          <li key={index}>
+                            <Link
+                              onClick={() => {
+                                setSearchHistory(false), setSearchHistory();
+                              }}
+                              to={`/shop/${shopId}/product/${product._id}`}
+                              className="text-black  mb-2 flex items-center gap-2"
+                              key={index}
+                            >
+                              <img
+                                src={product?.featuredImage.src ?? product.images[0].src}
+                                className="w-[30px] h-[30px]"
+                              />
+                              {product?.name}
+                            </Link>
+                          </li>
+                        ))}
                       </ul>
                     </div>
                   }
@@ -308,9 +313,8 @@ const ShopNav = () => {
 
                     {/* Dropdown menu */}
                     <div
-                      className={`absolute right-0 z-20 w-48 py-2 mt-2 origin-top-right bg-white rounded-md shadow-xl dark:bg-gray-800 ${
-                        isOpen ? "block" : "hidden"
-                      }`}
+                      className={`absolute right-0 z-20 w-48 py-2 mt-2 origin-top-right bg-white rounded-md shadow-xl dark:bg-gray-800 ${isOpen ? "block" : "hidden"
+                        }`}
                       onClick={() => setIsOpen(false)}
                     >
                       <Link
