@@ -340,7 +340,7 @@ const OrderTable = ({
 
   return (
     <div className="flex flex-col overflow-hidden mt-4">
-      <div className="overflow-x-auto transparent-scroll sm:-mx-6 lg:-mx-8">
+      {currentItems.length ? <div className="overflow-x-auto transparent-scroll sm:-mx-6 lg:-mx-8">
         <div className="inline-block  min-w-full py-2 sm:px-6 lg:px-8">
           <div className="overflow-y-hidden overflow-x-auto">
             <table className="w-full bg-white border text-center text-sm font-light">
@@ -664,8 +664,13 @@ const OrderTable = ({
             </table>
           </div>
         </div>
-      </div>
-
+      </div> :
+        <div>
+          <h1>
+            Here is not order found
+          </h1>
+        </div>
+      }
       {showAlert && (
         <div className="fixed inset-0 z-10 bg-opacity-50 overflow-y-auto">
           <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">

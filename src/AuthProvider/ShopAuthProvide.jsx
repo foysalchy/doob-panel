@@ -74,6 +74,7 @@ const ShopAuth = ({ children }) => {
   });
 
   const [shopUser, setShopUser] = useState("");
+  console.log(shopUser);
   const [auth, setAuth] = useState();
 
   useEffect(() => {
@@ -271,7 +272,9 @@ const ShopAuth = ({ children }) => {
     let unsubscribe;
     setLoading(true);
     const tokenData = localStorage.getItem(`${shopId}`);
+    console.log(tokenData, 'tokenData');
     const user = JSON.parse(tokenData);
+    console.log(user?.shopId === shopId);
 
     if (user?.shopId === shopId) {
       setToken(user);
@@ -289,7 +292,6 @@ const ShopAuth = ({ children }) => {
     };
   }, []);
 
-  console.log(shopUser);
 
   const authInfo = {
     shopUser,

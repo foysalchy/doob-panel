@@ -37,7 +37,7 @@ const IsUserRegistration = ({ children }) => {
 
     useEffect(() => {
         // Check if the user is not logged in and not loading
-        if (shopUser == '' && shopUser?.role !== "user" && !loading) {
+        if (shopUser == '' && !loading) {
             console.log("this navigate");
             navigate(`/shop/${shopId}`);
         }
@@ -50,7 +50,7 @@ const IsUserRegistration = ({ children }) => {
 
     // Show loading message if loading is true
     if (loading) {
-        return <h1 className="text-black  py-20">Loading...</h1>;
+        return <h1 className="text-black text-center  py-20">Loading...</h1>;
     }
 
     // Render children or null
