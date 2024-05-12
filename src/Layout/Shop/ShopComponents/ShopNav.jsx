@@ -28,28 +28,36 @@ const ShopNav = () => {
   const idMatch = pathname.match(/\/shop\/([^/]+)/);
   const shopId = idMatch ? idMatch[1] : null;
   // ! search
-  const { search, user, setSearch } = useContext(AuthContext);
+  const { shopUser, logOut, shop_id } = useContext(ShopAuthProvider);
+  // console.log("🚀 ~ file: ShopNav.jsx:32 ~ ShopNav ~ shop_id:", shop_id);
+
+  // const {} = useContext()
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [searchHistory, setSearchHistory] = useState([]);
-    const [value, setValue] = useState("");
+  const [value, setValue] = useState("");
   const [searchOpen, setSearchOpen] = useState(false);
   const searchData = async () => {
     const term = searchTerm;
     // console.log(`https://backend.doob.com.bd/api/v1/shop/search?term=${encodeURIComponent(term)}`);
+    console.log(term);
+    // const data = { shop_id: shop_id.shop_id, term };
+    // console.log(data);
     try {
-      const response = await fetch(
-        `https://backend.doob.com.bd/api/v1/shop/search?term=${encodeURIComponent(
-          term
-        )}`
-      );
-      const data = await response.json();
-      // console.log(data);
+      const response = await fetch(`http://localhost:5001/api/v1/shop/search`, {
+        method: "POST",
+        body: JSON.stringify({ shop_id: shop_id.shop_id, term }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const data = await response.json(data);
+      console.log(data);
       setSearchResults(data);
       setSearchHistory([]);
 
       // Update the context with the current search term
-      setSearch(term);
+      // setSearch(term);
     } catch (error) {
       // Handle errors
       console.error("Error:", error);
@@ -62,11 +70,11 @@ const ShopNav = () => {
     setValue(input);
     setSearchTerm(input);
     setSearchResults();
-    setSearch(input);
+    // setSearch(input);
     fetch(
-      `https://backend.doob.com.bd/api/v1/shop/search-history?term=${encodeURIComponent(
+      `http://localhost:5001/api/v1/shop/search-history?term=${encodeURIComponent(
         input
-      )}`
+      )}&shop_id=${shop_id.shop_id}`
     )
       .then((response) => response.json())
       .then((data) => setSearchHistory(data));
@@ -97,8 +105,6 @@ const ShopNav = () => {
       return data;
     },
   });
-
-  const { shopUser, logOut, shop_id } = useContext(ShopAuthProvider);
 
   const [isOpen, setIsOpen] = useState(false);
 
