@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import React, { useContext } from "react";
 import { useState } from "react";
-import { FaJediOrder, FaMapLocationDot } from "react-icons/fa6";
+import { FaJediOrder, FaMapLocationDot, FaUser } from "react-icons/fa6";
 import { PiShoppingCartSimpleBold } from "react-icons/pi";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet";
@@ -190,7 +190,7 @@ const ShopNav = () => {
             </div>
           </div>
           <ul className="w-[320px]">
-            <div className=" mx-4 relative w-[500px] md:flex hidden items-center px-1 py-1 border bg-gray-100 rounded-md">
+            <div className=" mx-4 relative w-[400px] md:flex hidden items-center px-1 py-1 border bg-gray-100 rounded-md">
               <input
                 value={searchTerm}
                 onChange={handleInputChange}
@@ -301,16 +301,16 @@ const ShopNav = () => {
                     {/* Dropdown toggle button */}
                     <button
                       onClick={() => setIsOpen(!isOpen)}
-                      className="relative z-10 block text-gray-700 bg-white border border-transparent rounded-full dark:text-white focus:border-blue-500 focus:ring-opacity-40  h-[30px] w-[30px] dark:focus:ring-opacity-40 focus:ring-blue-300 dark:focus:ring-blue-400 focus:ring dark:bg-gray-800 focus:outline-none"
+                      className="relative z-10 text-gray-700 bg-white border border-transparent rounded-full dark:text-white focus:border-blue-500 focus:ring-opacity-40  h-[30px] w-[30px] dark:focus:ring-opacity-40 focus:ring-blue-300 dark:focus:ring-blue-400 focus:ring dark:bg-gray-800 focus:outline-none flex items-center justify-center"
                     >
-                      {shopUser?.name.slice(0, 1)}
+                      <FaUser className="m-auto" />
+                      {/* {shopUser?.name.slice(0, 1)} */}
                     </button>
 
                     {/* Dropdown menu */}
                     <div
-                      className={`absolute right-0 z-20 w-48 py-2 mt-2 origin-top-right bg-white rounded-md shadow-xl dark:bg-gray-800 ${
-                        isOpen ? "block" : "hidden"
-                      }`}
+                      className={`absolute right-0 z-20 w-48 py-2 mt-2 origin-top-right bg-white rounded-md shadow-xl dark:bg-gray-800 ${isOpen ? "block" : "hidden"
+                        }`}
                       onClick={() => setIsOpen(false)}
                     >
                       <Link

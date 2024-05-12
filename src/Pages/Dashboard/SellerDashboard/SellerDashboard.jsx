@@ -304,6 +304,7 @@ const SellerDashboard = () => {
     }
   };
 
+
   const filteredProducts =
     productData?.length &&
     productData?.filter((product) => {
@@ -594,6 +595,7 @@ const SellerDashboard = () => {
             </tr>
           </thead>
           <tbody>
+                
             {filteredProducts.length &&
               filteredProducts?.slice(0, 4)?.map((product) => {
                 const status = getStatus(

@@ -173,6 +173,16 @@ const ProductHero = () => {
   };
 
   console.log(allCategory, "megaSideCategoryData");
+
+
+
+
+
+  const ctg = () => {
+
+  }
+
+
   return (
     <div className="flex gap-4 ">
       <div className="bg-white  w-[340px] relative lg:flex hidden flex-col  rounded-lg p-4 ">
@@ -226,35 +236,64 @@ const ProductHero = () => {
                         <div
                         // to={`/category-products/${shopInfo?.shopId}/${itm?.megaCategoryId}`}
                         >
-                          <div
-                            onMouseMove={() =>
-                              miniCategoryHandler(subCategory, index)
+                          <div>
+                            {
+                              miniCategoryData?.length >= 1 ? (
+                                <div
+                                  onMouseMove={() =>
+                                    miniCategoryHandler(subCategory, index)
+                                  }
+                                  className={`flex  items-center hover:bg-gray-100 w-full justify-between px-2 py-1 capitalize text-sm font-normal cursor-pointer mb-1 rounded relative  ${active?.step1 === subCategory?._id
+                                    ? "text-black bg-gray-100"
+                                    : "text-black"
+                                    }`}
+                                  type="button"
+                                  id={item?._id}
+                                  data-te-dropdown-toggle-ref
+                                  aria-expanded="false"
+                                  data-te-ripple-init
+                                  data-te-ripple-color="light"
+                                >
+                                  <span className="flex items-center ">
+                                    <img
+                                      src={subCategory?.img}
+                                      alt=""
+                                      className="w-8 h-8 rounded-full ring-1 ring-gray-200"
+                                    />{" "}
+                                    {subCategory?.subCategory}
+                                  </span>
+                                </div>
+                              ) : (
+                                <Link to={`/category-products/${shopInfo?.shopId}/${subCategory?._id}`}
+                                  className={`flex  items-center hover:bg-gray-100 w-full justify-between px-2 py-1 capitalize text-sm font-normal cursor-pointer mb-1 rounded relative  ${active?.step1 === subCategory?._id
+                                    ? "text-black bg-gray-100"
+                                    : "text-black"
+                                    }`}
+                                  type="button"
+                                  id={item?._id}
+                                  data-te-dropdown-toggle-ref
+                                  aria-expanded="false"
+                                  data-te-ripple-init
+                                  data-te-ripple-color="light"
+                                >
+                                  <span className="flex items-center ">
+                                    <img
+                                      src={subCategory?.img}
+                                      alt=""
+                                      className="w-8 h-8 rounded-full ring-1 ring-gray-200"
+                                    />{" "}
+                                    {subCategory?.subCategory}
+                                  </span>
+                                </Link>
+                              )
                             }
-                            className={`flex  items-center hover:bg-gray-100 w-full justify-between px-2 py-1 capitalize text-sm font-normal cursor-pointer mb-1 rounded relative  ${active?.step1 === subCategory?._id
-                              ? "text-black bg-gray-100"
-                              : "text-black"
-                              }`}
-                            type="button"
-                            id={item?._id}
-                            data-te-dropdown-toggle-ref
-                            aria-expanded="false"
-                            data-te-ripple-init
-                            data-te-ripple-color="light"
-                          >
-                            <span className="flex items-center ">
-                              <img
-                                src={subCategory?.img}
-                                alt=""
-                                className="w-8 h-8 rounded-full ring-1 ring-gray-200"
-                              />{" "}
-                              {subCategory?.subCategory}
-                            </span>
                           </div>
 
-                          {miniCategoryData.length <= 1 ? (
+                          {miniCategoryData.length ? (
                             ""
                           ) : (
                             <div className="bg-white    border-gray-400 absolute top-0 h-full right-[-180px] px-2 w-[190px]">
+                              tfutyfuy
                               {miniCategoryData.map((miniCategory, index) => (
                                 <div key={index}>
                                   {!megaSideCategoryData.length == 0 ? (

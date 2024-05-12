@@ -1,5 +1,8 @@
-import React, { useState } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import { FaAnglesRight } from 'react-icons/fa6';
+import { useReactToPrint } from 'react-to-print';
+import { ShopAuthProvider } from '../../../../../AuthProvider/ShopAuthProvide';
+import { AuthContext } from '../../../../../AuthProvider/UserProvider';
 
 const InvoiceSm = ({ order, modalOpen, setModalOpen, formatDate, totalPrice }) => {
 
@@ -211,6 +214,9 @@ const InvoiceLg = ({ order, modalOpen, setModalOpen, formatDate, totalPrice }) =
 }
 
 const UserOrderInvoice = ({ order, modalOpen, setModalOpen }) => {
+    const { shopUser } = useContext(ShopAuthProvider)
+    const { shopInfo } = useContext(AuthContext);
+
     const [steps, setStep] = useState({
         stepsItems: ["Order", "Processing", "Delivered"],
     })
@@ -257,9 +263,210 @@ const UserOrderInvoice = ({ order, modalOpen, setModalOpen }) => {
         return `${formattedDate} `;
     }
 
+    const componentRef = useRef();
+    const handlePrint = useReactToPrint({
+        content: () => componentRef.current,
+    });
+
+    const InvoicePage = ({ order }) => {
+        console.log(order, "order");
+        return (
+            <>
+                <div
+                    ref={componentRef}
+                    className="p-12 mx-8 print-data bg-white  mt-6">
+
+                    <header className="flex items-start justify-between">
+                        <img src={shopInfo?.logo} alt="logo" className='w-[200px]' />
+                        <div className='whitespace-wrap w-[300px]'>
+                            <p className='text-gray-600 text-end'>{shopInfo?.shopName}</p>
+                            <p className='text-gray-600 text-end'>{shopInfo?.address}</p>
+                            <p className='text-gray-600 text-end'>{shopInfo?.shopEmail}</p>
+                            <p className='text-gray-600 text-end'>{shopInfo?.shopNumber}</p>
+                        </div>
+                    </header>
+
+                    <main>
+                        <div className="flex items-center justify-center py-1 font-bold text-gray-600 bg-gray-200 mt-8 text-center ">
+                            SALES INVOICE
+                        </div>
+
+                        {/*................*/}
+                        {/*.... Address ...*/}
+                        {/*................*/}
+                        <div className="flex items-center justify-between mt-4">
+                            <div>
+                                <div className='flex items-center gap-2'>
+                                    <h4 className='font-semibold text-gray-700 text-sm'>
+                                        Name :
+                                    </h4>
+                                    <p className="text-gray-600 text-sm">{order?.addresses?.fullName}</p>
+                                </div>
+
+                                <div className='flex items-center gap-2'>
+                                    <h4 className='font-semibold text-gray-700 text-sm'>
+                                        Phone :
+                                    </h4>
+                                    <p className="text-gray-600 text-sm">{order?.addresses?.mobileNumber}</p>
+                                </div>
+                                <div className='flex items-center gap-2'>
+                                    <h4 className='font-semibold text-gray-700 text-sm'>
+                                        Address :
+                                    </h4>
+                                    <p className="text-gray-600 text-sm">{order?.addresses?.address}</p>
+                                    <p className="text-gray-600 text-sm">{order?.addresses?.address}</p>
+                                    <p className="text-gray-600 text-sm">{order?.addresses?.city}</p>
+                                </div>
+                            </div>
+
+                            <div>
+                                <li className='flex justify-start items-center gap-2'>
+                                    <h4 className='font-semibold text-gray-700 text-sm'>
+                                        Invoice No :
+                                    </h4>
+                                    <p className="text-gray-600 text-sm">{order?._id}</p>
+                                </li>
+                                <li className='flex justify-start items-center gap-2'>
+                                    <h4 className='font-semibold text-gray-700 text-sm'>
+                                        Invoice Date :
+                                    </h4>
+                                    <p className="text-gray-600 text-sm">{
+                                        new Date().toDateString(new Date())
+                                    }</p>
+                                </li>
+                                <br />
+                                <li className='flex justify-start items-center gap-2'>
+                                    <h4 className='font-semibold text-gray-700 text-sm'>
+                                        Payment Date :
+                                    </h4>
+                                    <p className="text-gray-600 text-sm">{
+                                        new Date().toDateString(shopInfo?.paymentDate)
+                                    }</p>
+                                </li> <li className='flex justify-start items-center gap-2'>
+                                    <h4 className='font-semibold text-gray-700 text-sm'>
+                                        Order Date :
+                                    </h4>
+                                    <p className="text-gray-600 text-sm">{
+                                        new Date().toDateString(shopInfo?.date)
+                                    }</p>
+                                </li>
+
+                            </div>
+
+                        </div>
+
+                        {/*................*/}
+                        {/*.... Product ...*/}
+                        {/*................*/}
+
+                        <section className="container mx-auto mt-8">
+                            <div className="w-full mb-8 overflow-hidden">
+                                <div className="w-full overflow-x-auto">
+                                    <table className="w-full">
+                                        <thead>
+                                            <tr className="text-md font-semibold tracking-wide text-left text-gray-100 bg-gray-900 uppercase border-b border-gray-900">
+                                                <th className="px-4 py-2">Photo</th>
+                                                <th className="px-4 py-2">Name</th>
+                                                <th className="px-4 py-2 whitespace-nowrap">Stock Quantity</th>
+                                                <th className="px-4 py-2">Price</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody className="bg-white">
+                                            {
+                                                order?.productList?.map(itm => <tr key={itm?._id} className="text-gray-700">
+                                                    <td className="px-2 w-[90px] py-2 border border-gray-800">
+                                                        <img src={itm?.img ? itm?.img : ''} alt="photo" className="w-12 h-12 border object-cover m-auto rounded bg-indigo-400" />
+                                                    </td>
+                                                    <td className="px-2 py-2 w-[500px] text-sm border border-gray-800">
+                                                        {itm?.productName}
+                                                    </td>
+
+                                                    <td className="px-2 py-2 text-sm border text-center border-gray-800">
+                                                        {itm?.stock_quantity ? itm?.stock_quantity : 0}
+                                                    </td>
+                                                    <td className="px-2 py-2 text-sm text-center border border-gray-800">
+                                                        {itm?.price ? itm?.price : 0}
+                                                    </td>
+
+
+                                                </tr>)
+                                            }
+
+
+                                            {/* <tr>
+                                                <td colSpan={2} className='px-1 py-2 text-sm border  border-gray-800'></td>
+                                                <td colSpan={1} className='px-1 py-2 text-sm border-b  border-gray-800 text-end'>
+                                                    TOTAL:
+                                                </td>
+                                                <td colSpan={1} className='px-1 py-2 text-sm border  border-gray-800 text-start'>
+                                                    $5000
+                                                </td>
+                                            </tr> */}
+                                            {/* Add more rows here */}
+                                        </tbody>
+                                    </table>
+                                    <tfoot className='float-right mt-3  font-semibold'>
+                                        <tr>
+                                            <td colSpan={3} />
+                                            <td colSpan={2}>SUBTOTAL</td>
+                                            <td>{totalPrice}</td>
+                                        </tr>
+                                        <tr>
+                                            <td colSpan={3} />
+                                            <td colSpan={2}>TAX 25%</td>
+                                            <td>300</td>
+                                        </tr>
+                                        <tr>
+                                            <td colSpan={3} />
+                                            <td colSpan={2}>GRAND TOTAL</td>
+                                            <td>{totalPrice + 300} </td>
+                                        </tr>
+                                    </tfoot>
+                                </div>
+                            </div>
+                        </section>
+
+                        <div className="flex justify-between ">
+                            <div></div>
+                            <div className="  gap-12 flex justify-between">
+                                <ul className='space-y-2'>
+                                    {/* <li>Sub Total</li> */}
+                                    {/* <li className=' font-bold'>Total :</li> */}
+                                </ul>
+
+                                <ul className='space-y-2'>
+
+                                    <li className='  font-bold'>
+                                        {/* ৳{totalPrice} */}
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+
+
+                    </main>
+                    <footer>
+
+                    </footer>
+                </div>
+            </>
+        )
+    }
+
     return (
         <>
-            {order &&
+
+            <div className="bg-[#f2f2f2ca] fixed top-0 left-0 right-0 bottom-0 p-3 z-10">
+                <div className="flex items-center gap-1">
+                    <button onClick={handlePrint} className='bg-[#3676ff] text-white px-8 py-2 float-right'>Print</button>
+
+                    <button onClick={() => setModalOpen(!modalOpen)} className='bg-[#ff0033]  text-white px-8 py-2 float-right'>close</button>
+                </div>
+                <InvoicePage order={order} />
+            </div>
+
+            {/* {order &&
                 <div>
                     <div className="md:block block">
                         <InvoiceSm order={order} modalOpen={modalOpen} setModalOpen={setModalOpen} formatDate={formatDate} totalPrice={totalPrice} />
@@ -269,7 +476,7 @@ const UserOrderInvoice = ({ order, modalOpen, setModalOpen }) => {
                     </div>
                 </div>
 
-            }
+            } */}
         </>
     );
 };

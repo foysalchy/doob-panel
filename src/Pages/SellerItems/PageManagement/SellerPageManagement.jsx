@@ -9,7 +9,10 @@ import { FaArrowRightLong } from "react-icons/fa6";
 import { BiEdit } from "react-icons/bi";
 import SellerUpdatePage from "./SellerUpdatePage";
 import { BsEye } from "react-icons/bs";
-import { MdOutlineFolderDelete } from "react-icons/md";
+import { MdOutlineFolderDelete, MdRestore } from "react-icons/md";
+import { TbRestore } from "react-icons/tb";
+import { LiaTrashRestoreAltSolid } from "react-icons/lia";
+import { TbTrashOff } from "react-icons/tb";
 
 const SellerPageManagement = () => {
   const [loading, setLoading] = useState(false);
@@ -233,9 +236,10 @@ const SellerPageManagement = () => {
                                 onClick={() =>
                                   trash(faq?._id, faq?.trash ? false : true)
                                 }
-                                className=" transition-colors duration-200  text-xl text-red-500 hover:text-red-700 focus:outline-none"
+                                className=" transition-colors duration-200  text-xl  focus:outline-none"
                               >
-                                <MdOutlineFolderDelete />
+                                {trash_status ? <TbRestore className="text-green-500 hover:text-green-700" /> : <TbTrashOff className="text-red-500 hover:text-red-700" />
+                                }
                               </button>
 
                               <button

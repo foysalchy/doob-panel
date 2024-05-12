@@ -34,11 +34,9 @@ const ShopNav = () => {
                             Company
                         </span>
                     </a>
-                    <ul className="flex items-center hidden space-x-8 lg:flex">
-
+                    <ul className="flex items-center space-x-8 lg:flex">
                         <div className="relative">
                             <label htmlFor="Search" className="sr-only"> Search </label>
-
                             <input
                                 type="text"
                                 id="Search"

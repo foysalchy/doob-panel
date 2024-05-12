@@ -28,33 +28,36 @@ const AnouncementModal = ({ setOpen, modalData, index }) => {
   };
   console.log(modalData, "++>>>>>");
   return (
-    <div className={style.overlay}>
-      <div className={style.card}>
-        <div className="">
-          <h3 className={style.title}>Announcement</h3>
-          <button onClick={() => setOpen(false)} className={style.close}>
-            <RxCross2 />
-          </button>
-        </div>
-        <div className="h-[400px] overflow-y-auto">
-          <h3 className={style.title}>{currentData?.title}</h3>
-          <div
-            className="text_editor"
-            dangerouslySetInnerHTML={{ __html: currentData?.message }}
-          ></div>
+    <>
+      {currentData &&
+        <div className={style.overlay}>
+          <div className={style.card}>
+            <div className="">
+              <h3 className={style.title}>Announcement.........</h3>
+              <button onClick={() => setOpen(false)} className={style.close}>
+                <RxCross2 />
+              </button>
+            </div>
+            <div className="h-[400px] overflow-y-auto">
+              <h3 className={style.title}>{currentData?.title}</h3>
+              <div
+                className="text_editor"
+                dangerouslySetInnerHTML={{ __html: currentData?.message }}
+              ></div>
 
-          <img className={style.img} src={currentData?.image} alt="" />
-          <div className="flex items-center gap-2">
-            <button className={style.nextBtn} onClick={mHandlePrev}>
-              Prev
-            </button>
-            <button className={style.prevBtn} onClick={mHandleNext}>
-              Next
-            </button>
+              <img className={style.img} src={currentData?.image} alt="" />
+              <div className="flex items-center gap-2">
+                <button className={style.nextBtn} onClick={mHandlePrev}>
+                  Prev
+                </button>
+                <button className={style.prevBtn} onClick={mHandleNext}>
+                  Next
+                </button>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-    </div>
+        </div>}
+    </>
   );
 };
 

@@ -7,6 +7,7 @@ const UserInvoice = () => {
   const [steps, setStep] = useState({
     stepsItems: ["Order", "Processing", "Delivered"],
   });
+
   let currentStep = 2;
   // const componentRef = useRef();
   // const handlePrint = useReactToPrint({

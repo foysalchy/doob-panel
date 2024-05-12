@@ -178,6 +178,7 @@ const SeeAllProduct = () => {
         setSelectedValues(updatedSelectedValues);
         // Log all selected features
         setSelectedFeature(updatedSelectedValues);
+        log
     };
 
 
