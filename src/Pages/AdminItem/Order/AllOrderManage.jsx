@@ -597,7 +597,7 @@ const AllOrderManage = () => {
                           type="checkbox"
                           checked={isChecked}
                         />
-                        Do you update your product quantity?
+                        Do you update your product quantity ?
                       </h3>
                       <h3
                         onClick={() => setRefundCheck(!refundCheck)}

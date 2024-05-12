@@ -121,95 +121,103 @@ const DarazOrderTable = ({
   return (
     <div className="">
       {!isLoading ? (
-        <div className=" sm:-mx-6 lg:-mx-8">
-          <div className=" py-2 sm:px-6 lg:px-8">
-            <div className="">
-              <table className="overflow-x-scroll  bg-white border text-center text-sm font-light">
-                <thead className="border-b  font-medium  ">
-                  <tr>
-                    <th scope="col" className="border-r px-2 py-4 font-[500]">
-                      <input
-                        checked={selected.length === currentData?.length}
-                        onChange={() => {
-                          if (!selected.length) {
-                            console.log("Filtered Data:", currentData);
-                            setSelected(
-                              currentData?.map((item) => item.order_id)
-                            );
-                          } else {
-                            // If selected is true, deselect all items
-                            console.log("Deselect All");
-                            setSelected([]);
-                          }
-                        }}
-                        type="checkbox"
-                        className="shrink-0 mt-0.5 border-gray-200 rounded text-blue-600 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800"
-                        id="hs-checkbox-group-1"
-                      />
-                    </th>
-                    <th
-                      scope="col"
-                      className="border-r px-2 py-4 font-[500]"
-                    ></th>
-                    <th scope="col" className="border-r px-2 py-4 font-[500]">
-                      Document
-                    </th>
-                    <th scope="col" className="border-r px-2 py-4 font-[500]">
-                      Order No.
-                    </th>
-                    <th
-                      scope="col"
-                      className="border-r px-2 py-4 text-sm font-[500]"
-                    >
-                      Order Date
-                    </th>
-                    <th
-                      scope="col"
-                      className="border-r px-2 py-4 text-sm font-[500]"
-                    >
-                      Pending Since
-                    </th>
-                    <th
-                      scope="col"
-                      className="border-r px-2 py-4 text-sm font-[500]"
-                    >
-                      Payment Method
-                    </th>
-                    <th
-                      scope="col"
-                      className="border-r px-2 py-4 text-sm font-[500]"
-                    >
-                      Retail Price
-                    </th>
-                    <th
-                      scope="col"
-                      className="border-r px-2 py-4 text-sm font-[500]"
-                    >
-                      Status
-                    </th>
-                    <th
-                      scope="col"
-                      className="border-r px-2 py-4 text-sm font-[500]"
-                    >
-                      Actions
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {currentData?.map &&
-                    currentData?.map((itm, index) => (
-                      <DarazTableRow
-                        select={selected}
-                        setSelect={setSelected}
-                        data={itm}
-                        index={index}
-                        key={index}
-                      />
-                    ))}
-                </tbody>
-              </table>
+        <div>
+          {currentData?.length ?
+            <div className=" sm:-mx-6 lg:-mx-8">
+              <div className=" py-2 sm:px-6 lg:px-8">
+                <div className="">
+                  <table className="overflow-x-scroll  bg-white border text-center text-sm font-light">
+                    <thead className="border-b  font-medium  ">
+                      <tr>
+                        <th scope="col" className="border-r px-2 py-4 font-[500]">
+                          <input
+                            checked={selected.length === currentData?.length}
+                            onChange={() => {
+                              if (!selected.length) {
+                                console.log("Filtered Data:", currentData);
+                                setSelected(
+                                  currentData?.map((item) => item.order_id)
+                                );
+                              } else {
+                                // If selected is true, deselect all items
+                                console.log("Deselect All");
+                                setSelected([]);
+                              }
+                            }}
+                            type="checkbox"
+                            className="shrink-0 mt-0.5 border-gray-200 rounded text-blue-600 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800"
+                            id="hs-checkbox-group-1"
+                          />
+                        </th>
+                        <th
+                          scope="col"
+                          className="border-r px-2 py-4 font-[500]"
+                        ></th>
+                        <th scope="col" className="border-r px-2 py-4 font-[500]">
+                          Document
+                        </th>
+                        <th scope="col" className="border-r px-2 py-4 font-[500]">
+                          Order No.
+                        </th>
+                        <th
+                          scope="col"
+                          className="border-r px-2 py-4 text-sm font-[500]"
+                        >
+                          Order Date
+                        </th>
+                        <th
+                          scope="col"
+                          className="border-r px-2 py-4 text-sm font-[500]"
+                        >
+                          Pending Since
+                        </th>
+                        <th
+                          scope="col"
+                          className="border-r px-2 py-4 text-sm font-[500]"
+                        >
+                          Payment Method
+                        </th>
+                        <th
+                          scope="col"
+                          className="border-r px-2 py-4 text-sm font-[500]"
+                        >
+                          Retail Price
+                        </th>
+                        <th
+                          scope="col"
+                          className="border-r px-2 py-4 text-sm font-[500]"
+                        >
+                          Status
+                        </th>
+                        <th
+                          scope="col"
+                          className="border-r px-2 py-4 text-sm font-[500]"
+                        >
+                          Actions
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {currentData?.map &&
+                        currentData?.map((itm, index) => (
+                          <DarazTableRow
+                            select={selected}
+                            setSelect={setSelected}
+                            data={itm}
+                            index={index}
+                            key={index}
+                          />
+                        ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
             </div>
-          </div>
+            :
+            <div>
+              Here is no order found
+            </div>
+          }
         </div>
       ) : (
         <h1>Loading......</h1>

@@ -6,6 +6,7 @@ import ShippingModal from "../ShipingModal";
 import { Link } from "react-router-dom";
 import OrderAllinfoModal from "../OrderAllinfoModal";
 import { BiSearch } from "react-icons/bi";
+import Swal from "sweetalert2";
 
 const ClimAndReturn = () => {
   const [modalOn, setModalOn] = useState(false);
@@ -319,60 +320,133 @@ const ClimAndReturn = () => {
 
   const update_all_status_claim = (status) => {
     // Ask for confirmation to update status
-    const isConfirmedUpdate = confirm(
-      "Are you sure you want to update the status?"
-    );
+    // const isConfirmedUpdate = confirm(
+    //   "Are you sure you want to update the status?"
+    // );
 
-    if (isConfirmedUpdate) {
-      const isConfirmedStockUpdate = confirm(
-        "Would you like to update the stock as well for order ?"
-      );
-      // Iterate over each order in the ordersList array
-      ordersList.forEach((order) => {
-        // Ask for confirmation to update stock for each order
+    Swal.fire({
+      title: "Are you sure you want to update the status?",
+      text: "You won't be able to revert this!",
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, Approve it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const isConfirmedStockUpdate = confirm(
+          "Would you like to update the stock as well for order ?"
+        );
+        // Iterate over each order in the ordersList array
+        ordersList.forEach((order) => {
+          // Ask for confirmation to update stock for each order
 
-        if (isConfirmedStockUpdate) {
-          // If confirmed to update stock, call handleProductStatusUpdate
+          if (isConfirmedStockUpdate) {
+            // If confirmed to update stock, call handleProductStatusUpdate
 
-          if (status === "reject") {
-            fetch(
-              `https://backend.doob.com.bd/api/v1/seller/order-quantity-update`,
-              {
-                method: "PUT",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(order),
-              }
-            )
-              .then((res) => res.json())
-              .then((data) => {
-                console.log(data);
-                if (data.success) {
-                  productStatusUpdate("reject", order._id);
-                  refetch();
-                } else {
-                  alert("Failed to Update");
+            if (status === "reject") {
+              fetch(
+                `https://backend.doob.com.bd/api/v1/seller/order-quantity-update`,
+                {
+                  method: "PUT",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify(order),
                 }
-              });
+              )
+                .then((res) => res.json())
+                .then((data) => {
+                  console.log(data);
+                  if (data.success) {
+                    productStatusUpdate("reject", order._id);
+                    refetch();
+                  } else {
+                    alert("Failed to Update");
+                  }
+                });
+            } else {
+              handleProductStatusUpdate(order);
+            }
           } else {
-            handleProductStatusUpdate(order);
+            // If not confirmed to update stock, call productStatusUpdate for claim
+            if (status === "reject") {
+              productStatusUpdate("reject", order?._id);
+            } else {
+              productStatusUpdate("claim", order?._id);
+            }
           }
-        } else {
-          // If not confirmed to update stock, call productStatusUpdate for claim
-          if (status === "reject") {
-            productStatusUpdate("reject", order?._id);
-          } else {
-            productStatusUpdate("claim", order?._id);
-          }
-        }
-      });
-      refetch();
-    } else {
-      // If not confirmed to update status, do nothing
-      console.log("Update cancelled");
-    }
+        });
+        refetch();
+      } else {
+        // If not confirmed to update status, do nothing
+        console.log("Update cancelled");
+
+        // Swal.fire({
+        //   title: "Deleted!",
+        //   text: "Your file has been deleted.",
+        //   icon: "success",
+        // });
+      }
+    });
   };
 
-  const update_all_status_failed = () => {};
+  const update_all_status_reject = (item) => {
+    Swal.fire({
+      title: "Do you want to reject All Order?",
+      showCancelButton: true,
+      confirmButtonText: "Reject",
+      input: "textarea", // Add a textarea input
+      inputPlaceholder: "Enter your rejection reason here", // Placeholder for the textarea
+      inputAttributes: {
+        // Optional attributes for the textarea
+        maxLength: 100, // Set maximum length
+      },
+    }).then((result) => {
+      const rejectNote = result.value; // Get the value entered in the textarea
+      // Now you can use the rejection reason as needed
+      console.log(rejectNote, item?._id);
+
+      ordersList.forEach((order) => {
+        console.log(order, "order");
+
+        // return;
+        fetch(
+          `https://backend.doob.com.bd/api/v1/seller/order-quantity-update`,
+          {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(order),
+          }
+        )
+          .then((res) => res.json())
+          .then((data) => {
+            console.log(data);
+            if (data.success) {
+              // productStatusUpdate("reject", order._id);
+              fetch(
+                `https://backend.doob.com.bd/api/v1/seller/order-status-update?orderId=${order?._id}&status=return`,
+                {
+                  method: "PUT",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({
+                    status: "return",
+                    orderId: order?._id,
+                    rejectNote: rejectNote,
+                  }),
+                }
+              )
+                .then((res) => res.json())
+                .then((data) => {
+                  refetch();
+                });
+              refetch();
+            } else {
+              alert("Failed to Update");
+            }
+          });
+      });
+      // return;
+    });
+  };
 
   console.log(currentItems, "currentItems");
 
@@ -399,7 +473,7 @@ const ClimAndReturn = () => {
             Approve
           </button>
           <button
-            onClick={() => update_all_status_claim("reject")}
+            onClick={() => update_all_status_reject()}
             className="bg-gray-800 w-[200px] mt-4 mb-6 text-white px-3 py-2 rounded"
           >
             Reject
