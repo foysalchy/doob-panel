@@ -12,6 +12,7 @@ const AddBlog = () => {
   const [previewUrl, setPreviewUrl] = useState(null);
   const [fileName, setFileName] = useState("");
   const [loading, setLoading] = useState(false);
+  const [draft, setDraft] = useState(false);
 
   const [upload, setUpload] = useState("");
   const [uplodOk, setUploadOk] = useState(false);
@@ -139,7 +140,7 @@ const AddBlog = () => {
           img: image,
           date: new Date(),
           MetaImage,
-          status: true,
+          status: draft,
           MetaDescription,
           MetaTag,
         };
@@ -160,7 +161,7 @@ const AddBlog = () => {
         // console.log(data);
         reftechDraft();
         setLoading(false);
-        // Swal.fire("Your Blog Publish Successfully", "", "success");
+        Swal.fire("Your Blog Publish Successfully", "", "success");
         blocker.proceed();
         // form.reset();
         // setPreviewUrl("");
@@ -357,8 +358,8 @@ const AddBlog = () => {
               // }
               >
                 <option disabled>Select Blog Category</option>
-                {blogcategories.length &&
-                  categories?.map((category, i) => (
+                {blogCategories?.length &&
+                  blogCategories?.map((category, i) => (
                     <option key={category.title} value={category.title}>
                       {category.title}
                     </option>
@@ -471,6 +472,7 @@ const AddBlog = () => {
                 </button>
               ) : (
                 <button
+                  onClick={() => setDraft(false)}
                   type="submit"
                   className="group relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none mt-4 "
                 >
@@ -483,6 +485,20 @@ const AddBlog = () => {
                   </span>
                 </button>
               )}
+
+              <button
+                onClick={() => setDraft(true)}
+                type="submit"
+                className="group relative ml-3 inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none mt-4 "
+              >
+                <span className="absolute -end-full transition-all group-hover:end-4">
+                  <BsArrowRight />
+                </span>
+
+                <span className="text-sm font-medium transition-all group-hover:me-4">
+                  Save to Draft
+                </span>
+              </button>
             </div>
           </form>
         </div>

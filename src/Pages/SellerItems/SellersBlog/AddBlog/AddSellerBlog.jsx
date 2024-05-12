@@ -17,7 +17,7 @@ const AddSellerBlog = () => {
   const [loading, setLoading] = useState(false);
   const { shopInfo, user } = useContext(AuthContext);
   const [messageData, setMessage] = useState("");
-
+  const [draft, setDraft] = useState(false);
   const navigate = useNavigate();
 
   const { data: category = [], refetch } = useQuery({
@@ -40,6 +40,7 @@ const AddSellerBlog = () => {
     MetaDescription: "", //done
     img: "", //done
     MetaImage: "", //done
+    draft
   });
   const [draftSaved, setDraftSaved] = useState(false);
 
@@ -177,6 +178,7 @@ const AddSellerBlog = () => {
           MetaTag,
           status: true,
           MetaDescription,
+          draft
         };
         postBlog(blog, form);
       });
@@ -367,6 +369,7 @@ const AddSellerBlog = () => {
               </button>
             ) : (
               <button
+                onClick={() => setDraft(false)}
                 type="submit"
                 className="group relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none mt-4 "
               >
@@ -379,6 +382,20 @@ const AddSellerBlog = () => {
                 </span>
               </button>
             )}
+
+            <button
+              onClick={() => setDraft(true)}
+              type="submit"
+              className="group relative ml-3 inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none mt-4 "
+            >
+              <span className="absolute  -end-full transition-all group-hover:end-4">
+                <BsArrowRight />
+              </span>
+
+              <span className="text-sm font-medium transition-all group-hover:me-4">
+                Save Trash
+              </span>
+            </button>
           </div>
         </form>
       </div>

@@ -38,8 +38,11 @@ const AdminBlogs = () => {
   const handleSearch = (event) => {
     setSearchQuery(event.target.value);
   };
+  const [type, setType] = useState(true);
+  const allBlogs = blogs.filter((item) => item.status || item.status === type);
 
-  const filteredData = blogs.filter(
+
+  const filteredData = allBlogs.filter(
     (item) =>
       item.title?.toLowerCase().includes(searchQuery?.toLowerCase()) ||
       item._id.toString().includes(searchQuery)
@@ -78,7 +81,7 @@ const AdminBlogs = () => {
       refetch();
     });
   };
-
+  console.log(allBlogs, '--------=========');
   return (
     <div className=" w-full h-full">
       <Link
@@ -106,6 +109,12 @@ const AdminBlogs = () => {
           Add New Blog
         </span>
       </Link>
+
+      <button onClick={() => setType(!type)} className="group relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 ml-2 text-white focus:outline-none focus:ring active:bg-gray-500">
+        {
+          type ? <span className="text-sm font-medium transition-all group-hover:ms-4">Published</span> : <span className="text-sm font-medium transition-all group-hover:ms-4">Draft</span>
+        }
+      </button>
 
       <div className="relative w-3/5 my-6">
         <input
