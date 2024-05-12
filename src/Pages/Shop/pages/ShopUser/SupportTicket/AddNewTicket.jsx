@@ -39,6 +39,26 @@ const AddNewTicket = ({ OpenSupport, setOpenSupport, refetch }) => {
     return imageData.imageUrl;
   };
 
+
+
+  const quillModulesF = {
+    toolbar: [
+      [{ header: "1" }, { header: "2" }, { font: [] }],
+      [{ size: [] }],
+      ["bold", "italic", "underline", "strike", "blockquote"],
+      [
+        { list: "ordered" },
+        { list: "bullet" },
+        { indent: "-1" },
+        { indent: "+1" },
+      ],
+      ["link", "image", "video"],
+      ["color"],
+      ["clean"],
+    ],
+  };
+
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -129,7 +149,7 @@ const AddNewTicket = ({ OpenSupport, setOpenSupport, refetch }) => {
                   className=" h-36"
                 />
               </div>
-              <div>
+              <div className="mt-12">
                 {!Sccenshort ? (
                   <button
                     type="button"

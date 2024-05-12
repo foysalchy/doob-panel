@@ -58,12 +58,6 @@ const SeeShopAllProduct = () => {
     {/*---------------------------------*/ }
     const [categroyValue, setCategoryValue] = useState('')
 
-
-
-    console.log(products, 'select.........');
-
-
-
     const [selectedValues, setSelectedValues] = useState([]);
     {/*---------------------------------*/ }
     {/*       Filter with Brand         */ }
@@ -77,20 +71,6 @@ const SeeShopAllProduct = () => {
     ]
     const [showAllBrands, setShowAllBrands] = useState(false);
     const [selectedBrandValues, setSelectedBrandValues] = useState([]);
-
-    // const handleCheckboxChange = (key) => {
-    //     const index = selectedValues.indexOf(key);
-
-    //     if (index === -1) {
-    //         setSelectedValues([...selectedValues, key]);
-    //     } else {
-    //         const updatedValues = [...selectedValues];
-    //         updatedValues.splice(index, 1);
-    //         setSelectedValues(updatedValues);
-    //     }
-    // };
-
-
     const handleBrandCheck = (key) => {
         const isSelected = selectedBrandValues.includes(key);
         const selectItm = selectedItem.includes(key);
@@ -123,10 +103,6 @@ const SeeShopAllProduct = () => {
         console.log(brand, 'Brands....');
     }
 
-
-
-
-
     {/*---------------------------------*/ }
     {/*     Filter with Features        */ }
     {/*---------------------------------*/ }
@@ -140,50 +116,6 @@ const SeeShopAllProduct = () => {
 
     const [selectedFeature, setSelectedFeature] = useState([]);
     const [showAllFeature, setShowAllFeature] = useState(false);
-
-    // const handleCheckboxChange = (key) => {
-    //     const index = selectedValues.indexOf(key);
-
-    //     if (index === -1) {
-    //         setSelectedValues([...selectedValues, key]);
-    //     } else {
-    //         const updatedValues = [...selectedValues];
-    //         updatedValues.splice(index, 1);
-    //         setSelectedValues(updatedValues);
-    //     }
-    // };
-
-
-    // const handleFeatureCheck = (key) => {
-    //     const isSelected = selectedValues.includes(key);
-    //     const selectItm = selectedItem.includes(key);
-    //     let updatedSelect;
-    //     let updatedSelectedValues;
-    //     if (isSelected) {
-    //         updatedSelectedValues = selectedValues.filter(value => value !== key);
-    //     } else {
-    //         updatedSelectedValues = [...selectedValues, key];
-    //     }
-    //     setSelectedValues(updatedSelectedValues);
-
-
-    //     if (selectItm) {
-    //         updatedSelect = selectedItem.filter(value => value !== key);
-    //     } else {
-    //         updatedSelect = [...selectedItem, key]
-    //     }
-
-    //     setSelectedItem(updatedSelect)
-    // };
-
-
-    // useEffect(() => {
-    //     filterWithFeature(selectedValues)
-    // }, [selectedValues]);
-
-    // const filterWithFeature = (feature) => {
-    //     console.log(feature, 'Features....');
-    // }
 
 
     const handleFeatureCheck = (key) => {

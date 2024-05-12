@@ -308,7 +308,7 @@ const SellerDashboard = () => {
   };
 
 
-  const filteredProducts = productData.filter((product) => {
+  const filteredProducts = productData.length && productData?.filter((product) => {
     const lowStockWarning = product?.low_stock_warning
       ? parseInt(product.low_stock_warning)
       : null;
@@ -600,7 +600,7 @@ const SellerDashboard = () => {
             </tr>
           </thead>
           <tbody>
-            {filteredProducts.slice(0, 4)?.map((product) => {
+            {filteredProducts && filteredProducts?.slice(0, 4)?.map((product) => {
               const status = getStatus(
                 product?.stock_quantity,
                 product?.low_stock_warning

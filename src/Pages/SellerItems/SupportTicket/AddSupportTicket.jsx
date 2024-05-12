@@ -135,6 +135,9 @@ const AddSupportTicket = ({ OpenSupport, setOpenSupport, refetch }) => {
                 <option disabled selected value={""}>
                   Select a Department
                 </option>
+                <option value={"test"}>
+                  Test
+                </option>
                 {departments.map((department) => (
                   <option key={department.id} value={department.id}>
                     {department.name}

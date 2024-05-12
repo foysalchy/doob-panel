@@ -9,6 +9,7 @@ import { BsEye } from "react-icons/bs";
 import { AuthContext } from "../../../AuthProvider/UserProvider";
 import { FaArrowRightLong, FaDeleteLeft } from "react-icons/fa6";
 import { MdOutlineDeleteOutline, MdOutlineFolderDelete } from "react-icons/md";
+import { TbRestore, TbTrashOff } from "react-icons/tb";
 
 const PageManagement = () => {
   const { shopInfo } = useContext(AuthContext);
@@ -227,7 +228,10 @@ const PageManagement = () => {
                                 }
                                 className=" transition-colors duration-200  text-xl text-red-500 hover:text-red-700 focus:outline-none"
                               >
-                                <MdOutlineFolderDelete />
+
+                                {trash_status ? <TbRestore className="text-green-500 hover:text-green-700" /> : <TbTrashOff className="text-red-500 hover:text-red-700" />
+                                }
+                                {/* <MdOutlineFolderDelete /> */}
                               </button>
                               <button
                                 onClick={() => handleViewDetails(faq?._id)}
