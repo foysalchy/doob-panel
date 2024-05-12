@@ -42,7 +42,7 @@ const ShopNav = () => {
     console.log(shop_id);
 
     try {
-      const response = await fetch(`http://localhost:5001/api/v1/shop/search`, {
+      const response = await fetch(`https://backend.doob.com.bd/api/v1/shop/search`, {
         method: "POST",
         body: JSON.stringify({ shop_id: shop_id.shop_id, term }),
         headers: {
@@ -73,7 +73,7 @@ const ShopNav = () => {
     setSearchResults();
     // setSearch(input);
     fetch(
-      'http://localhost:5001/api/v1/shop/search-history',
+      'https://backend.doob.com.bd/api/v1/shop/search-history',
       {
         method: "POST",
         headers: {
