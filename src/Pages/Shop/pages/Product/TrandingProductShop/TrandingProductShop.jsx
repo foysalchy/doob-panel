@@ -87,7 +87,7 @@ const TrandingProductShop = () => {
                           type="button"
                           className="px-5 py-2  font-semibold w-full rounded bg-black text-white text-xs "
                         >
-                          Add to card
+                          Add to Cart
                         </button>
                       </div>
                     </div>

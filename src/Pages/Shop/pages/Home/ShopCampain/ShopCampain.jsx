@@ -8,9 +8,9 @@ import { Link } from "react-router-dom";
 
 const ShopCampain = () => {
   const { shop_id } = useContext(ShopAuthProvider);
- 
+
   const { data: shopCampainData = [], isLoading, refetch } = useQuery({
-     queryKey: ["shopCampain"],
+    queryKey: ["shopCampain"],
     queryFn: async () => {
       const res = await fetch(
         `https://backend.doob.com.bd/api/v1/shop/shop-campaign?shop_id=${shop_id?.shop_id}`
@@ -124,7 +124,7 @@ const ShopCampain = () => {
                                   type="button"
                                   className="px-5 py-2  font-semibold rounded bg-white text-black w-full mt-3 text-xs "
                                 >
-                                  Add to card
+                                  Add to Cart
                                 </button>
                               </div>
                             </Link>

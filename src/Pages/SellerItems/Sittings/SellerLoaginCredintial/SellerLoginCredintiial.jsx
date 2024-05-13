@@ -9,9 +9,9 @@ import { useQuery } from "@tanstack/react-query";
 const SellerLoginCredintiial = () => {
   const { shopInfo } = useContext(AuthContext);
 
-  const [emailActive, setEmailActive] = useState(true);
-  const [googleActive, setGoogleActive] = useState(true);
-  const [facebookActive, setFacebookActive] = useState(true);
+  const [emailActive, setEmailActive] = useState(false);
+  const [googleActive, setGoogleActive] = useState(false);
+  const [facebookActive, setFacebookActive] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const handleToggle = (button) => {
@@ -29,6 +29,8 @@ const SellerLoginCredintiial = () => {
         break;
     }
   };
+
+  console.log(emailActive, googleActive, facebookActive, 'actice');
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -88,11 +90,6 @@ const SellerLoginCredintiial = () => {
       try {
         const res = await fetch(
           `https://backend.doob.com.bd/api/v1/shop/firebase/${shopInfo?.shopId}`,
-          {
-            headers: {
-              "ngrok-skip-browser-warning": "69420",
-            },
-          }
         );
         const data = await res.json();
         return data;
@@ -103,12 +100,15 @@ const SellerLoginCredintiial = () => {
   });
 
   useEffect(() => {
-    if (shopCredential) {
+    if (shopCredential?.service) {
       setEmailActive(shopCredential?.service?.email)
       setGoogleActive(shopCredential?.service?.google)
       setFacebookActive(shopCredential?.service?.facebook)
     }
   }, [shopCredential])
+
+
+  console.log(shopCredential, 'shopCredential');
 
   return (
     <div>
@@ -263,7 +263,7 @@ const SellerLoginCredintiial = () => {
               type="button"
               className={`p-2 rounded-full ${emailActive ? "bg-blue-500" : "bg-gray-300"
                 }`}
-              onClick={() => handleToggle("email")}
+              onClick={() => setEmailActive(!emailActive)}
             >
               <div>
                 <MdEmail />
@@ -275,7 +275,7 @@ const SellerLoginCredintiial = () => {
               type="button"
               className={`p-2 rounded-full ${googleActive ? "bg-red-500" : "bg-gray-300"
                 }`}
-              onClick={() => handleToggle("google")}
+              onClick={() => setGoogleActive(!googleActive)}
             >
               <BsGoogle />
             </button>
@@ -285,7 +285,7 @@ const SellerLoginCredintiial = () => {
               type="button"
               className={`p-2 rounded-full ${facebookActive ? "bg-blue-800" : "bg-gray-300"
                 }`}
-              onClick={() => handleToggle("facebook")}
+              onClick={() => setFacebookActive(!facebookActive)}
             >
               <FaFacebook />
             </button>

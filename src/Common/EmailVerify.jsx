@@ -21,7 +21,8 @@ const EmailVerify = () => {
             body: JSON.stringify({ userId }),
           }
         );
-        console.log(response.stringify());
+
+        console.log(response);
 
         if (response.ok) {
           setSuccess(true);
@@ -41,7 +42,6 @@ const EmailVerify = () => {
     verifyEmail();
   }, [userId]);
 
-  console.log(successMail);
 
   return (
     <div>
@@ -99,10 +99,7 @@ const EmailVerify = () => {
                     ? "Email verification successful!"
                     : "mail verification failed. Please try again later."}
                 </h2>
-                <p className="text-base text-indigo-100 md:text-lg">
-                  Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-                  accusantium doloremque rem aperiam, eaque ipsa quae.
-                </p>
+
               </div>
               <div>
                 <Link
