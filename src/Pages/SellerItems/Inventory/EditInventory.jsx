@@ -56,34 +56,34 @@ const EditInventory = ({ refetch, open, setOpen, data }) => {
 
     {
       data.adminWare
-        ? fetch(`https://backend.doob.com.bd/api/v1/admin/stock-request`, {
-            method: "POST",
+        ? fetch(`http://localhost:5001/api/v1/admin/stock-request-create`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(stock),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            refetch();
+            setOpen(!open);
+            BrightAlert();
+          })
+        : fetch(
+          `http://localhost:5001/api/v1/seller/product-stock-update?productId=${data?._id}&quantity=${count}&SKU=${selectedValue?.value}`,
+          {
+            method: "PUT",
             headers: {
               "Content-Type": "application/json",
             },
-            body: JSON.stringify(stock),
-          })
-            .then((res) => res.json())
-            .then((data) => {
-              refetch();
-              setOpen(!open);
-              BrightAlert();
-            })
-        : fetch(
-            `https://backend.doob.com.bd/api/v1/seller/product-stock-update?productId=${data?._id}&quantity=${count}&SKU=${selectedValue?.value}`,
-            {
-              method: "PUT",
-              headers: {
-                "Content-Type": "application/json",
-              },
-            }
-          )
-            .then((res) => res.json())
-            .then((data) => {
-              refetch();
-              setOpen(!open);
-              BrightAlert();
-            });
+          }
+        )
+          .then((res) => res.json())
+          .then((data) => {
+            refetch();
+            setOpen(!open);
+            BrightAlert();
+          });
     }
     console.log(data, ">>>>>>><<<<<<<<<<<<<<<<<<<");
   };
@@ -136,7 +136,7 @@ const EditInventory = ({ refetch, open, setOpen, data }) => {
             />
           </div>
 
-          <div className="">
+          {data.adminWare && <div className="">
             <label className="mb-2 text-lg" htmlFor="note">
               Add Note
             </label>
@@ -147,9 +147,9 @@ const EditInventory = ({ refetch, open, setOpen, data }) => {
               className="w-full p-2 rounded-md ring-1 mt-2 ring-gray-200"
               placeholder="Write your Note"
             />
-          </div>
+          </div>}
 
-          <div className="my-3">
+          {data.adminWare && <div className="my-3">
             <label className="mb-1 text-lg" htmlFor="status">
               Select Status
             </label>
@@ -158,7 +158,7 @@ const EditInventory = ({ refetch, open, setOpen, data }) => {
               options={statusOptions}
               onChange={(value) => setSelectStatusValue(value)}
             />
-          </div>
+          </div>}
           <div>
             <br />
             <div className="flex items-center ring-1 ring-gray-400 rounded-md">

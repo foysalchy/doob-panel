@@ -235,7 +235,7 @@ const ShopNav = () => {
                   {
                     <div className="mt-4 max-h-[400px] overflow-y-auto ">
                       <ul>
-                        {searchResults?.map((product, index) => (
+                        {searchResults?.length && searchResults?.map((product, index) => (
                           <li key={index}>
                             <Link
                               onClick={() => {
