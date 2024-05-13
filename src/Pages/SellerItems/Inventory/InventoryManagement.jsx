@@ -225,18 +225,17 @@ const InventoryManagement = () => {
                   );
                   return (
                     <tr className="border-b " key={product?._id}>
-                      <td className="whitespace-nowrap border-r px-2 py-2 font-medium ">
+                      <td className="whitespace-nowrap w-[1000px] border-r px-2 py-2 font-medium ">
                         <img
                           src={
-                            product?.featuredImage?.src ??
-                            product?.featuredImage
+                            product?.featuredImage?.src ?? product.images[0]?.src
                           }
                           alt=""
                           className="w-[80px] h-[80px] rounded-lg object-cover m-auto"
                         />
                       </td>
                       <td className="whitespace-wrap text-sm text-start w-[300px] border-r px-6 py-4 font-medium ">
-                        {product?.name}
+                        {product?.name.split(" ").slice(0, 4).join(" ")}
                         <br />
                         <span className="text-xs text-gray-500">
                           {" "}
