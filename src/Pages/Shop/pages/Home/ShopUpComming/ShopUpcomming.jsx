@@ -112,7 +112,7 @@ const ShopUpcoming = () => {
                           type="button"
                           className="px-5 py-2  font-semibold rounded bg-black text-white w-full mt-3 text-xs "
                         >
-                          Add to card
+                          Add to Cart
                         </button>
                       </div>
                     </Link>

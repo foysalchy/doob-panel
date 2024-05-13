@@ -86,7 +86,7 @@ const AllProduct = () => {
                         type="button"
                         className="px-5 py-2 whitespace-nowrap font-semibold rounded bg-black text-white w-full mt-3 text-xs "
                       >
-                        Add to card
+                        Add to Cart
                       </button>
                     </div>
                   </Link>

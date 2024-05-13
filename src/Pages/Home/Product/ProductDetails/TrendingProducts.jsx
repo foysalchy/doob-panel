@@ -134,7 +134,7 @@ const TrendingProducts = () => {
                       >
                         {user.role === "seller"
                           ? "Add My Store"
-                          : "Add to card"}
+                          : "Add to Cart"}
                       </button>
                     </div>
                   </div>

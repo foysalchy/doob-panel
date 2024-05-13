@@ -102,6 +102,8 @@ const ProductInformation = () => {
   const shopId = idMatch ? idMatch[1] : null;
 
   const addToCart = (data) => {
+
+
     setLoader(true);
     const product = data.data;
     const addToCard = {
@@ -116,6 +118,7 @@ const ProductInformation = () => {
       productId: product._id,
       shopId: shop_id.shop_id,
       variations,
+      delivery_charge: parseInt(product?.DeliveryCharge) ?? 40
     };
 
     if (!shopUser) {
@@ -215,7 +218,7 @@ const ProductInformation = () => {
   const totalStars =
     comments?.length &&
     comments?.reduce((total, comment) => total + comment.star, 0) /
-      comments?.length;
+    comments?.length;
 
   console.log("Total stars:", totalStars);
 
@@ -528,7 +531,7 @@ const ProductInformation = () => {
                         onClick={() => addToCart(product)}
                         className="h-10 w-[120px] px-2 py-2 font-semibold rounded bg-gray-950 hover:bg-gray-800 text-white"
                       >
-                        {loader ? "Loading.." : "Add to card"}
+                        {loader ? "Loading.." : "Add to Cart"}
                       </button>
 
                       <button

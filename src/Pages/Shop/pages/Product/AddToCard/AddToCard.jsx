@@ -155,13 +155,14 @@ const ProductListCartLg = ({
       });
   };
   const { shopUser } = useContext(ShopAuthProvider);
+  console.log(product);
 
   return (
     <li className="flex gap-4 flex-col py-6 sm:flex-row sm:justify-between">
       <input
         type="checkbox"
         checked={
-          selectAll || allProducts.some((p) => p._id === product.productId)
+          allProducts.filter((pro) => pro._id === product._id).length > 0
         }
         onChange={() => selectOne(product)}
       />
@@ -175,7 +176,7 @@ const ProductListCartLg = ({
           <div className="flex justify-between w-full pb-2 space-x-2">
             <div className="space-y-1">
               <h3 className="text-lg font-semibold leadi sm:pr-8">
-                {product.productName}
+                {product.productName.split(' ').slice(0, 8).join(' ')}
               </h3>
               <div>
                 <label
@@ -281,15 +282,16 @@ const AddToCard = () => {
   };
 
   const selectOne = (newProduct) => {
+    console.log(newProduct);
     setSelectAll(false);
     setAllProducts((prevProducts) => {
-      const isProductSelected = prevProducts.some(
-        (product) => product.productId === newProduct.productId
+      const isProductSelected = prevProducts?.some(
+        (product) => product?.productId === newProduct?.productId
       );
 
       if (isProductSelected) {
-        return prevProducts.filter(
-          (product) => product.productId !== newproduct.productId
+        return prevProducts?.filter(
+          (product) => product?.productId !== newProduct?.productId
         );
       } else {
         return [...prevProducts, newProduct];
@@ -306,7 +308,7 @@ const AddToCard = () => {
 
   const calculateTotal = () => {
     const subtotal = calculateSubtotal();
-    const shippingFee = 300;
+    const shippingFee = allProducts.reduce((total, product) => total + product.delivery_charge, 0);
     const shippingFeeDiscount = 0;
     return subtotal + shippingFee - shippingFeeDiscount;
   };
@@ -367,57 +369,37 @@ const AddToCard = () => {
   console.log("all", cartProducts?.length, "product", cartProducts);
 
   const handleRemove = (productId) => {
-    console.log(`Removing product ${productId} from the cart`);
-
-    // Remove the product from the cartProducts state
     setCartProducts((prevProducts) =>
       prevProducts.filter((product) => product._id !== productId)
     );
-
-    // Retrieve cart data from localStorage
     const cartData = JSON.parse(localStorage.getItem("addToCart")) || [];
-
-    console.log("cartData before removal:", cartData);
-
-    // Filter out the product to be removed
     const updatedCartData = cartData.filter(
       (product) => product._id !== productId
     );
-
-    console.log("updatedCartData after removal:", updatedCartData);
-
-    // Update localStorage with the updated cart data
     localStorage.setItem("addToCart", JSON.stringify(updatedCartData));
 
-    console.log("Local storage updated.");
 
-    // If needed, remove the product from the allProducts state
     setAllProducts((prevProducts) =>
       prevProducts.filter((product) => product.productId !== productId)
     );
 
-    // If you want to remove the product from the backend as well, you can make a DELETE request here
-    fetch(
-      `https://backend.doob.com.bd/api/v1/shop/user/add-to-cart?productId=${productId}&token=${shopUser._id}`,
-      {
-        method: "DELETE",
-        headers: { "Content-Type": "application/json" },
-      }
-    )
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error("Network response was not ok");
+
+    if (shopUser) {
+      fetch(
+        `https://backend.doob.com.bd/api/v1/shop/user/add-to-cart?productId=${productId}&token=${shopUser._id}`,
+        {
+          method: "DELETE",
+          headers: { "Content-Type": "application/json" },
         }
-        return res.json();
-      })
-      .then((data) => {
-        console.log(data);
-        // If refetch is a function, you need to call it here
-        refetch();
-      })
-      .catch((error) => {
-        console.error("Error removing product:", error);
-      });
+      )
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+        })
+
+    }
+
+
   };
 
   const navigator = () => {
@@ -541,6 +523,7 @@ const AddToCard = () => {
             </ul>
           </div>
         </div>
+        {console.log(allProducts[0], 'all-product')}
         <div className="bg-gray-200 flex flex-col flex-grow lg:w-96 mt-8 lg:mt-0 h-[330px] rounded p-8">
           <div className="">
             <div className="space-y-1 my-4">
@@ -556,7 +539,8 @@ const AddToCard = () => {
               <div className="flex justify-between ">
                 <p className="text-gray-700">Shipping Fee </p>
                 <p className="kalpurush">
-                  ৳ <span className="font-sans">300</span>
+
+                  ৳ <span className="font-sans">{allProducts.reduce((total, product) => total + product.delivery_charge, 0)}</span>
                 </p>
               </div>
               <div className="flex justify-between ">

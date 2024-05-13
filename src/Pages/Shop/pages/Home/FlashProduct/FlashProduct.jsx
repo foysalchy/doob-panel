@@ -478,7 +478,7 @@ const FlashProduct = () => {
                       onClick={() => addToCart(product)}
                       className="h-10 w-[120px] px-2 py-2 font-semibold rounded bg-gray-950 hover:bg-gray-800 text-white"
                     >
-                      {loader ? "Loading.." : "Add to card"}
+                      {loader ? "Loading.." : "Add to Cart"}
                     </button>
 
                     <button

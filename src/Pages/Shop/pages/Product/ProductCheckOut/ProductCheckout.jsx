@@ -5,6 +5,7 @@ import AddAddress from "../../Home/UserProfile/ProfileUpdate/AddAddress";
 import { PiPlus } from "react-icons/pi";
 import CheckoutModal from "./CheckoutModal";
 import { useQuery } from "@tanstack/react-query";
+import BrightAlert from "bright-alert";
 
 const ProductCheckout = () => {
   const {
@@ -52,7 +53,7 @@ const ProductCheckout = () => {
 
   const calculateTotal = () => {
     const subtotal = calculateSubtotal();
-    const shippingFee = 300;
+    const shippingFee = selectProductData.reduce((total, product) => total + product.delivery_charge, 0);
     const shippingFeeDiscount = 0;
     return subtotal + shippingFee - shippingFeeDiscount;
   };
@@ -69,23 +70,22 @@ const ProductCheckout = () => {
     const code = e.target.promoCode.value;
     const shopId = shop_id.shop_id;
     const userEmail = shopUser.email;
-    console.log(price);
+
     fetch(
       `https://backend.doob.com.bd/api/v1/shop/user/promocode?shopId=${shopId}&code=${code}&email=${userEmail}&token=${shopUser._id}&price=${price}`,
-      {
-        headers: {
-          "ngrok-skip-browser-warning": "69420",
-        },
-      }
     )
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
         setProcess(false);
         if (data.status) {
+          BrightAlert("Promo Code Added Successfully", "", "success");
           setPromoValue(code);
           setPromoPrice(data.promoPrice);
           setPromoDiscount(data.promoDiscount);
+        }
+        else {
+          BrightAlert(data.msg, "", "error");
         }
       });
   };
@@ -327,7 +327,7 @@ const ProductCheckout = () => {
               </div>
             </div>
           </div>
-
+          {console.log(selectProductData, 'selelcted-product')}
           <div className="bg-gray-200 lg:w-96 mt-8 lg:mt-0 min-h-[350px] max-h-[380px] rounded p-8">
             <div className="space-y-1 my-4">
               <h2 className="text-xl font-semibold ">Order Summary</h2>
@@ -342,7 +342,7 @@ const ProductCheckout = () => {
               <div className="flex justify-between ">
                 <p className="text-gray-700">Shipping Fee </p>
                 <p className="kalpurush">
-                  ৳ <span className="font-sans">300</span>
+                  ৳ <span className="font-sans">{selectProductData.reduce((total, product) => total + product.delivery_charge, 0)}</span>
                 </p>
               </div>
               <div className="flex justify-between ">
