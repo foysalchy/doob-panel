@@ -35,6 +35,8 @@ const SellerAllProducts = () => {
     },
   });
 
+  console.log(products[0], "products==");
+
   const [openModal, setOpenModal] = useState(false);
   const [onModal, setOnModal] = useState(false);
 
@@ -96,7 +98,7 @@ const SellerAllProducts = () => {
 
 
   const maxLength = 30;
-  const pageSize = 6;
+  const pageSize = 20;
 
   const handleSearch = (event) => {
     setSearchQuery(event.target.value);
