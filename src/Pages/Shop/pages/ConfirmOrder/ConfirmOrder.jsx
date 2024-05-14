@@ -1,14 +1,32 @@
 import React, { useRef, useEffect, useState, useContext } from 'react';
 import vct from '../../../../assets/vct.png';
 import { useReactToPrint } from 'react-to-print';
-import { AuthContext } from '../../../../AuthProvider/UserProvider';
+import { ShopAuthProvider } from '../../../../AuthProvider/ShopAuthProvide';
+import { useQuery } from '@tanstack/react-query';
 
 const ConfirmOrder = () => {
+    const pathname = window.location.pathname;
+    const idMatch = pathname.match(/\/shop\/([^/]+)/);
+    const shopId = idMatch ? idMatch[1] : null;
     const componentRef = useRef();
     const handlePrint = useReactToPrint({
         content: () => componentRef.current,
     });
-    const { shopInfo } = useContext(AuthContext)
+    const { shopUser } = useContext(ShopAuthProvider);
+    const {
+        data: shop = {},
+        isLoading,
+        refetch,
+    } = useQuery({
+        queryKey: ["shop"],
+        queryFn: async () => {
+            const res = await fetch(
+                `https://backend.doob.com.bd/api/v1/shop/${shopId}`
+            );
+            const data = await res.json();
+            return data;
+        },
+    });
 
 
     const [subtotal, setSubtotal] = useState(0);
@@ -34,6 +52,7 @@ const ConfirmOrder = () => {
     // invoice
     // invoice
     const InvoicePage = ({ order }) => {
+        console.log(order, 'order.......');
         return (
             <>
                 <div
@@ -41,11 +60,12 @@ const ConfirmOrder = () => {
                     className="p-12 mx-8 print-data bg-white  mt-6">
 
                     <header className="flex items-start justify-between">
-                        {/* <img src={shopInfo?.logo} alt="logo" className='w-[200px]' /> */}
-                        {/* <div className='whitespace-wrap w-[300px]'>
-                            <p className='text-gray-600 text-end'>{shopInfo?.address}</p>
-                            <p className='text-gray-600 text-end'>{shopInfo?.shopName}</p>
-                        </div> */}
+                        <img src={shop?.logo} alt="logo" className='w-[200px]' />
+                        <div className='whitespace-wrap w-[300px]'>
+                            <p className='text-gray-600 text-end'>{shop?.shopName}</p>
+                            <p className='text-gray-600 text-end'>{shop?.shopEmail}</p>
+                            <p className='text-gray-600 text-end'>{shop?.shopName}</p>
+                        </div>
                     </header>
 
                     <main>
@@ -62,19 +82,13 @@ const ConfirmOrder = () => {
 
                                 <li className='flex justify-start items-center gap-2'>
                                     <h4 className='font-semibold text-gray-700 text-sm'>
-                                        Payment Date :
+                                        INVOICE ID :
                                     </h4>
-                                    <p className="text-gray-600 text-sm">{
-                                        new Date().toDateString(shopInfo?.paymentDate)
-                                    }</p>
-                                </li> <li className='flex justify-start items-center gap-2'>
-                                    <h4 className='font-semibold text-gray-700 text-sm'>
-                                        Order Date :
-                                    </h4>
-                                    <p className="text-gray-600 text-sm">{
-                                        new Date().toDateString(shopInfo?.date)
-                                    }</p>
+                                    <p className="text-gray-600 text-sm">
+                                        {shop?._id}
+                                    </p>
                                 </li>
+
 
                             </div>
 

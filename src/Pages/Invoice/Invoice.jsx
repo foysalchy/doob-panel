@@ -7,7 +7,7 @@ import Barcode from "react-barcode";
 
 const Invoice = () => {
   const { id } = useParams();
-  const { invoiceData, shopInfo, shopId } = useContext(AuthContext);
+  const { invoiceData, user, shopInfo, shopId } = useContext(AuthContext);
   console.log(invoiceData);
   const componentRef = useRef();
   const handlePrint = useReactToPrint({
@@ -29,6 +29,20 @@ const Invoice = () => {
     return total + item?.price * item?.quantity;
   }, 0);
 
+  const {
+    data: shop = {},
+    isLoading,
+    reload,
+  } = useQuery({
+    queryKey: ["shop"],
+    queryFn: async () => {
+      const res = await fetch(
+        `https://backend.doob.com.bd/api/v1/shop/${shopInfo?.shopId}`
+      );
+      const data = await res.json();
+      return data;
+    },
+  });
 
 
   const formattedDate = (time) => {
@@ -53,8 +67,7 @@ const Invoice = () => {
     return finalDate;
   };
 
-  console.log(info, "info");
-  console.log(shopInfo, "shop info");
+  console.log(shop, "shop info");
 
 
   const InvoicePage = ({ order }) => {
@@ -66,7 +79,7 @@ const Invoice = () => {
           className="p-12 mx-8 print-data   mt-6">
 
           <header className="flex items-start justify-between">
-            <img src={shopInfo?.logo} alt="logo" className='w-[200px]' />
+            <img src={shop?.logo} alt="logo" className='w-[200px]' />
             <div className='whitespace-wrap w-[300px]'>
               <p className='text-gray-600 text-end'>{shopInfo?.address}</p>
               <p className='text-gray-600 text-end'>{shopInfo?.shopName}</p>

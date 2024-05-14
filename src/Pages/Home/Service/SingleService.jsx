@@ -11,7 +11,6 @@ const SingleService = () => {
 
   const service = useLoaderData();
   const navigate = useNavigate();
-
   const {
     data: services = [],
     refetch,
@@ -161,12 +160,12 @@ const SingleService = () => {
                 </span>
                 <div className="flex items-center">
                   {/* <Link to={`/user-service-checkout/${service?._id}`}> */}
-                  <button
+                  {user?.role === "supperadmin" ? <div className="flex ml-auto cursor-pointer text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none  rounded">OWN SERVICE</div> : <button button
                     onClick={handleOrder}
                     className="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded"
                   >
                     Buy Now
-                  </button>
+                  </button>}
                   {/* </Link> */}
                   <button
                     onClick={handleWishlist}
@@ -296,8 +295,8 @@ const SingleService = () => {
             ))}
           </div>
         </div>
-      </section>
-    </div>
+      </section >
+    </div >
   );
 };
 

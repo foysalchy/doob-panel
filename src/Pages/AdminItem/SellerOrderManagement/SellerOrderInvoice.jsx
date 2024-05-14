@@ -4,7 +4,7 @@ import { AuthContext } from "../../../AuthProvider/UserProvider";
 
 const SellerOrderInvoice = ({ setOn, products }) => {
     const { user } = useContext(AuthContext)
-   
+
 
     const subtotal = products.reduce((acc, curr) => acc + (curr.quantity * curr.price), 0);
     const taxRate = 0.1;
@@ -22,6 +22,7 @@ const SellerOrderInvoice = ({ setOn, products }) => {
                 <button onClick={() => setOn(null)} className="bg-red-500 text-white rounded px-6 py-2">Cancel</button>
                 <button onClick={handlePrint} className="bg-blue-500 text-white rounded px-6 py-2">Print</button>
             </div>
+
             <div ref={componentRef} className="p-6 ">
                 <div className="px-4 py-10 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl m-12 md:px-24 lg:px-8 lg:py-10">
                     <div className="flex items-center justify-between mb-8">
