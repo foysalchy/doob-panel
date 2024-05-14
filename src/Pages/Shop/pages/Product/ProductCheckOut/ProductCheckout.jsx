@@ -53,7 +53,7 @@ const ProductCheckout = () => {
 
   const calculateTotal = () => {
     const subtotal = calculateSubtotal();
-    const shippingFee = selectProductData.reduce((total, product) => total + product.delivery_charge, 0);
+    const shippingFee = selectProductData.reduce((total, product) => total + product.delivery_charge || 0, 0);
     const shippingFeeDiscount = 0;
     return subtotal + shippingFee - shippingFeeDiscount;
   };
@@ -342,7 +342,7 @@ const ProductCheckout = () => {
               <div className="flex justify-between ">
                 <p className="text-gray-700">Shipping Fee </p>
                 <p className="kalpurush">
-                  ৳ <span className="font-sans">{selectProductData.reduce((total, product) => total + product.delivery_charge, 0)}</span>
+                  ৳ <span className="font-sans">{selectProductData.reduce((total, product) => total + product.delivery_charge || 0, 0)}</span>
                 </p>
               </div>
               <div className="flex justify-between ">

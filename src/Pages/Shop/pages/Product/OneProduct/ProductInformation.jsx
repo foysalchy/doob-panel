@@ -109,11 +109,11 @@ const ProductInformation = () => {
     const addToCard = {
       userId: shopUser?._id,
       quantity: quantity,
-      img: product?.daraz ? variations?.image[0] : selectedImage,
+      img: selectedImage,
       productName: variations?.name
         ? `${product.name} - ${variations?.name}`
         : product.name,
-      price: variations?.price ? variations?.price : product.price,
+      price: variations?.offerPrice !== undefined ? variations.offerPrice : (variations?.price !== undefined ? variations.price : product.price),
       regular_price: product.regular_price,
       productId: product._id,
       shopId: shop_id.shop_id,
@@ -180,7 +180,7 @@ const ProductInformation = () => {
         {
           userId: shopUser?._id,
           quantity: quantity,
-          img: product?.daraz ? variations?.image[0] : selectedImage,
+          img: selectedImage,
           productName: variations?.name
             ? `${product.name} - ${variations?.name}`
             : product.name,
@@ -298,14 +298,10 @@ const ProductInformation = () => {
                       <img
                         className="md:w-94 w-full object-cover border rounded h-full"
                         src={
-                          product?.data?.daraz
-                            ? variations?.image[0]
-                            : selectedImage
+                          selectedImage
                         }
                         srcSet={
-                          product?.data?.daraz
-                            ? variations?.image[0]
-                            : selectedImage
+                          selectedImage
                         }
                         alt="Selected Image"
                       />
@@ -388,17 +384,24 @@ const ProductInformation = () => {
                   </div>
                 </div>
                 <div className="flex justify-between items-center pb-3">
-                  <div className="title-font font-medium md:text-2xl text-lg text-gray-900 flex items-start">
+                  <div className="title-font font-medium md:text-2xl text-lg text-gray-900 flex items-center gap-2 ">
                     <span>Price :</span>{" "}
-                    <div className="flex items-center">
-                      <span className="kalpurush">৳</span>
+                    <div className="flex items-center gap-2">
+
+                      {!variations && (
+                        <div className="line-through text-lg flex gap-2 text-gray-500">
+                          <span className="kalpurush">৳</span>
+                          {product.data.regular_price}
+                        </div>
+                      )}
                       {variations?.price ? (
                         variations?.offerPrice ? (
                           <div className="flex gap-3">
-                            <del>{variations?.price}</del>
-                            <div className="flex gap-">
+
+                            <del className="flex gap-1 line-through text-lg text-gray-500">    <span className="kalpurush">৳</span> {variations?.price}</del>
+                            <div className="flex gap-1">
                               <span className="kalpurush">৳</span>
-                              <span>{variations?.offerPrice}</span>
+                              <span> {variations?.offerPrice}</span>
                             </div>
                           </div>
                         ) : (
@@ -411,12 +414,7 @@ const ProductInformation = () => {
                         </>
                       )}
                       <br />
-                      {!variations && (
-                        <div className="line-through text-lg text-gray-500">
-                          <span className="kalpurush">৳</span>
-                          {product.data.regular_price}
-                        </div>
-                      )}
+
                     </div>
                   </div>
 

@@ -231,7 +231,8 @@ const ProductListCartLg = ({
               type="button"
               className="flex items-center px-2 py-1 space-x-1"
               onClick={
-                () => handleRemove(!shopUser ? product.productId : product._id)
+                () => { handleRemove(!shopUser ? product.productId : product._id), selectOne(product) }
+
                 // console.log(product)
               }
             >
@@ -420,7 +421,6 @@ const AddToCard = () => {
       )
         .then((res) => res.json())
         .then((data) => {
-          console.log(data);
           setCartProducts(data.data);
           const productData = localStorage.getItem("addToCart");
           let datas = JSON.parse(productData);
@@ -447,31 +447,7 @@ const AddToCard = () => {
     }
   }, [shopUser]);
 
-  // const [promoPrice, setPromoPrice] = useState(false)
-  // const [promoDiscount, setPromoDiscount] = useState(false)
-  // const [process, setProcess] = useState(false)
 
-  // const checkPromoCode = (e) => {
-  //     setProcess(true)
-  //     e.preventDefault();
-  //     const price = calculateTotal()
-  //     const code = e.target.promoCode.value
-  //     const shopId = shop_id.shop_id
-  //     console.log(price);
-  //     fetch(`https://backend.doob.com.bd/api/v1/shop/user/promocode?shopId=${shopId}&code=${code}&token=${shopUser._id}&price=${price}`, {
-  //         headers: {
-  //             "ngrok-skip-browser-warning": "69420",
-  //         }
-  //     }).then((res) => res.json()).then((data) => {
-  //         console.log(data);
-  //         setProcess(false)
-  //         if (data.status) {
-  //             setPromoPrice(data.promoPrice)
-  //             setPromoDiscount(data.promoDiscount)
-  //         }
-  //     })
-
-  // }
 
   console.log(cartProducts, "checked......");
   return (
