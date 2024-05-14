@@ -33,7 +33,7 @@ const SellerAddProduct = () => {
   const [shortDescription, setShortDescription] = useState("");
   const [youtube, setYoutube] = useState("");
   const [multiVendor, setMultiVendor] = useState(adminWare);
-
+  const [allImage, setAllImage] = useState([]);
   const [inputFields, setInputFields] = useState([
     {
       name: "",
@@ -62,7 +62,7 @@ const SellerAddProduct = () => {
   const imageUpload = (image) => {
     const formData = new FormData();
     formData.append("image", image);
-
+    console.log(image, 'filessssss');
     const url = `https://backend.doob.com.bd/api/v1/image/upload-image?shopId=${shopInfo._id}`;
 
     return fetch(url, {
@@ -215,40 +215,61 @@ const SellerAddProduct = () => {
       form.photo6,
       form.photo7,
     ];
-    console.log(additionalPhotos[0][0].files[0]);
-    const firstFile =
-      additionalPhotos.length > 0 &&
-      additionalPhotos[0].length > 0 &&
-      additionalPhotos[0][0].files[0];
+    console.log(allImage, 'is file');
+    allImage.forEach((image) => {
+      console.log(image?.file);
+    })
+    // const firstFile =
+    //   additionalPhotos.length > 0 &&
+    //   additionalPhotos[0].length > 0 &&
+    //   additionalPhotos[0][0].files[0];
 
-    if (firstFile) {
-      console.log(firstFile);
+    // if (firstFile) {
+    //   console.log(firstFile);
+    // }
+
+    // const uploadedImageUrls = await Promise.all(
+    //   allImage
+    //     ?.filter(
+    //       (fileInputArray) =>
+    //         fileInputArray.length > 0 && fileInputArray[0]?.file?.files[0]
+    //     )
+    //     .map(async (fileInputArray, index) => {
+    //       const file = fileInputArray[0]?.file?.files[0];
+    //       let imageUrl;
+    //       if (file) {
+    //         if (!daraz) {
+    //           imageUrl = await imageUpload(file);
+    //         } else {
+    //           imageUrl = await DarazImage(file);
+    //         }
+    //         formData.append(`photo${index + 2}`, imageUrl);
+    //         return {
+    //           name: `photo ${index}`,
+    //           src: imageUrl,
+    //         };
+    //       }
+    //       return null;
+    //     })
+    // );
+
+    let galleryImageUrls = [];
+    for (let i = 0; i < allImage.length; i++) {
+      // const imageUrl = await uploadImage(images[i].file);
+      let imageUrl;
+      if (!daraz) {
+        imageUrl = await imageUpload(allImage[i].file);
+      } else {
+        imageUrl = await DarazImage(allImage[i].file);
+      }
+      formData.append(`photo${i + 2}`, imageUrl);
+      const imgArray = {
+        name: `photo ${i}`,
+        src: imageUrl,
+      };
+      galleryImageUrls.push(imgArray);
     }
-
-    const uploadedImageUrls = await Promise.all(
-      additionalPhotos
-        ?.filter(
-          (fileInputArray) =>
-            fileInputArray.length > 0 && fileInputArray[0].files[0]
-        )
-        .map(async (fileInputArray, index) => {
-          const file = fileInputArray[0].files[0];
-          let imageUrl;
-          if (file) {
-            if (!daraz) {
-              imageUrl = await imageUpload(file);
-            } else {
-              imageUrl = await DarazImage(file);
-            }
-            formData.append(`photo${index + 2}`, imageUrl);
-            return {
-              name: `photo ${index}`,
-              src: imageUrl,
-            };
-          }
-          return null;
-        })
-    );
+    console.log(galleryImageUrls, 'test......');
 
     const data = {
       videoUrl: youtube,
@@ -300,8 +321,8 @@ const SellerAddProduct = () => {
       status: false,
       createdAt: Date.now(),
       // updatedAt,
-      featuredImage: uploadedImageUrls,
-      images: uploadedImageUrls.filter((image) => image !== null),
+      featuredImage: galleryImageUrls[0],
+      images: galleryImageUrls,
       videos: youtube,
       // attributes,
       variations: inputFields,
@@ -340,6 +361,8 @@ const SellerAddProduct = () => {
       <form className="border p-2" onSubmit={formSubmit} action="">
         <div className="mt-10">
           <UploadImage
+            allImage={allImage}
+            setAllImage={setAllImage}
             youtube={youtube}
             setYoutube={setYoutube}
             coverPhoto={coverPhoto}
@@ -461,6 +484,7 @@ const SellerAddProduct = () => {
               </span>
             </button>
           )}
+
         </div>
       </form>
     </div>

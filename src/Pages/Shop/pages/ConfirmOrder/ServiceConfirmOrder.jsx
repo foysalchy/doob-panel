@@ -2,16 +2,35 @@ import React, { useRef, useEffect, useState, useContext } from 'react';
 import vct from '../../../../assets/vct.png';
 import { useReactToPrint } from 'react-to-print';
 import { AuthContext } from '../../../../AuthProvider/UserProvider';
-
+import logo from '../../../../assets/Logo.png'
+import { useQuery } from '@tanstack/react-query';
 const ServiceConfirmOrder = () => {
     const componentRef = useRef();
     const { shopInfo, user } = useContext(AuthContext)
     const handlePrint = useReactToPrint({
         content: () => componentRef.current,
     });
+    console.log(shopInfo, 'shopInfo');
+    const pathname = window.location.pathname;
+    const idMatch = pathname.match(/\/shop\/([^/]+)/);
+    const shopId = idMatch ? idMatch[1] : null;
 
     const [subtotal, setSubtotal] = useState(0);
     const [total, setTotal] = useState(0);
+    const {
+        data: shop = {},
+        isLoading,
+        refetch,
+    } = useQuery({
+        queryKey: ["shop"],
+        queryFn: async () => {
+            const res = await fetch(
+                `https://backend.doob.com.bd/api/v1/shop/${shopInfo?.shopId}`
+            );
+            const data = await res.json();
+            return data;
+        },
+    });
 
     useEffect(() => {
         const data = localStorage.getItem('orderServiceData');
@@ -27,20 +46,21 @@ const ServiceConfirmOrder = () => {
 
     const data = localStorage.getItem('orderServiceData');
     const order = JSON.parse(data);
-
-
+    console.log('shop', user);
     const InvoicePage = ({ itm }) => {
+
+        console.log(itm);
         return (
             <>
                 <div
                     ref={componentRef}
-                    className="lg:px-12 bg-white print-container  pb-12 pt-2 mx-8 print-data">
+                    className="lg:px-12 bg-white print-container  pb-12 pt-16 mx-8 print-data">
 
                     <header className="flex items-start justify-between">
-                        {/* <img src={shopInfo?.logo} alt="logo" className='w-[200px]' /> */}
+                        <img src={shop?.logo ?? logo} alt="logo" className='w-[200px]' />
                         <div className='whitespace-wrap w-[300px]'>
-                            {/* <p className='text-gray-600 text-end'>{shopInfo?.address}</p>
-              <p className='text-gray-600 text-end'>{shopInfo?.shopName}</p> */}
+                            <p className='text-gray-600 text-end'>{user?.shopName}</p>
+                            <p className='text-gray-600 text-end'>{user?.shopEmail}</p>
                         </div>
                     </header>
 
@@ -52,7 +72,7 @@ const ServiceConfirmOrder = () => {
                         {/*................*/}
                         {/*.... Address ...*/}
                         {/*................*/}
-                        <div className="hidden items-start justify-between mt-4">
+                        <div className=" items-start justify-between mt-4">
                             <div>
                                 <div className='flex items-center gap-2'>
                                     <h4 className='font-semibold text-gray-700 text-sm'>
@@ -128,6 +148,7 @@ const ServiceConfirmOrder = () => {
                                     </table>
                                 </div>
                             </div>
+                            <h1 className='text-end text-xl '>Total : {total}</h1>
                         </section>
 
 

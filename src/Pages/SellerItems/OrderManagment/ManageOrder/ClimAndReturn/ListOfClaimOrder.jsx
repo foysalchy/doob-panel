@@ -8,8 +8,13 @@ import { BiSearch } from "react-icons/bi";
 
 const ListOfClaimOrder = () => {
   const [modalOn, setModalOn] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
 
-  const { shopInfo, setCheckUpData } = useContext(AuthContext);
+  const componentRef = useRef();
+  const handlePrint = useReactToPrint({
+    content: () => componentRef.current,
+  });
+  const { shopInfo, setCheckUpData, user } = useContext(AuthContext);
 
   const { data: tData = [], refetch } = useQuery({
     queryKey: ["sellerOrder"],
@@ -68,6 +73,23 @@ const ListOfClaimOrder = () => {
       });
   };
 
+
+
+  const {
+    data: shop = {},
+    isLoading,
+    reload,
+  } = useQuery({
+    queryKey: ["shop"],
+    queryFn: async () => {
+      const res = await fetch(
+        `https://backend.doob.com.bd/api/v1/shop/${shopInfo?.shopId}`
+      );
+      const data = await res.json();
+      return data;
+    },
+  });
+
   const { data: ships = [] } = useQuery({
     queryKey: ["getaway"],
     queryFn: async () => {
@@ -107,12 +129,7 @@ const ListOfClaimOrder = () => {
     }
   }
 
-  const componentRef = useRef();
-  const handlePrint = useReactToPrint({
-    content: () => componentRef.current,
-  });
 
-  console.log(tData);
 
   const [readyToShip, setReadyToShip] = useState(false);
 
@@ -149,7 +166,6 @@ const ListOfClaimOrder = () => {
 
   const viewDetails = (order) => {
     console.log(order);
-    setOpenModal(true);
 
     fetch(
       `https://backend.doob.com.bd/api/v1/seller/refound-order-info?shopId=${shopInfo._id}&orderId=${order._id}`
@@ -158,6 +174,9 @@ const ListOfClaimOrder = () => {
       .then((data) => {
         console.log(data);
         const refund = { refund: data.data, order };
+
+
+
         console.log(refund);
         setDetails(refund);
       });
@@ -323,7 +342,7 @@ const ListOfClaimOrder = () => {
   //     }
   // };
 
-  console.log(currentItems);
+  console.log(openModal, 'shopppppp');
 
   return (
     <div>
@@ -350,9 +369,7 @@ const ListOfClaimOrder = () => {
               <table className="w-full bg-white border text-center text-sm font-light">
                 <thead className="border-b font-medium">
                   <tr>
-                    <th scope="col" className="border-r px-2 py-4 font-[500]">
-                      {/* <input type='checkbox' name="" id="" onChange={handleSelectAll} checked={selectAll} /> */}
-                    </th>
+
                     <th scope="col" className="border-r px-2 py-4 font-[500]">
                       #
                     </th>
@@ -389,7 +406,7 @@ const ListOfClaimOrder = () => {
                     ?.map((item, index) => (
                       <React.Fragment key={item._id}>
                         <tr className={index % 2 === 0 ? "bg-gray-100" : ""}>
-                          <td
+                          {/* <td
                             scope="col"
                             className="border-r px-2 py-4 font-[500]"
                           >
@@ -399,7 +416,7 @@ const ListOfClaimOrder = () => {
                               id=""
                               checked={selectAll}
                             />
-                          </td>
+                          </td> */}
                           <td className="border-r px-6 py-4 font-medium">
                             {index + 1}
                           </td>
@@ -421,13 +438,12 @@ const ListOfClaimOrder = () => {
                             )}
                           </td>
                           <td className="border-r px-6 py-4">
-                            <Link
-                              to={`/invoice/${item?._id}`}
-                              onClick={handlePrint}
+                            <button
+                              onClick={() => setOpenModal(item)}
                               className="text-blue-600 font-[500]"
                             >
                               Invoice
-                            </Link>
+                            </button>
                           </td>
                           <td className="border-r px-6 py-4">
                             <Link
@@ -457,22 +473,20 @@ const ListOfClaimOrder = () => {
                             <div>
                               <div
                                 onClick={() => setModalOn(false)}
-                                className={`fixed z-[100] flex items-center justify-center ${
-                                  modalOn?._id === item?._id
-                                    ? "visible opacity-100"
-                                    : "invisible opacity-0"
-                                } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
+                                className={`fixed z-[100] flex items-center justify-center ${modalOn?._id === item?._id
+                                  ? "visible opacity-100"
+                                  : "invisible opacity-0"
+                                  } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
                               >
                                 <div
                                   onClick={(e_) => e_.stopPropagation()}
-                                  className={`text- absolute w-[500px] rounded-sm bg-white p-6 drop-shadow-lg dark:bg-black dark:text-white ${
-                                    modalOn?._id === item?._id
-                                      ? "scale-1 opacity-1 duration-300"
-                                      : "scale-0 opacity-0 duration-150"
-                                  }`}
+                                  className={`text- absolute w-[500px] rounded-sm bg-white p-6 drop-shadow-lg dark:bg-black dark:text-white ${modalOn?._id === item?._id
+                                    ? "scale-1 opacity-1 duration-300"
+                                    : "scale-0 opacity-0 duration-150"
+                                    }`}
                                 >
                                   <h1 className="mb-2 text-2xl font-semibold">
-                                    Edit Order {}
+                                    Edit Order { }
                                   </h1>
                                   <form>
                                     <div className="flex items-start w-full mb-6 flex-col gap-1">
@@ -499,6 +513,142 @@ const ListOfClaimOrder = () => {
                             </div>
                           </td>
                         </tr>
+
+                        <div onClick={() => setOpenModal(false)} className={`fixed z-[100]   flex items-center justify-center ${openModal?._id === item?._id ? 'opacity-1 visible' : 'invisible opacity-0'} inset-0 bg- backdrop-blur-sm duration-100`}>
+
+                          <div onClick={(e_) => e_.stopPropagation()} className={`absolute w-full  p-6 text-center drop-shadow-2xl bg-gray-100 dark:text-white ${openModal?._id === item?._id ? 'opacity-1 translate-y-0 duration-300' : 'translate-y-20 opacity-0 duration-150'} overflow-y-auto h-screen`}>
+                            <div className="flex flex-col  space-y-4">
+                              <div className='flex gap-2'>
+                                <button onClick={handlePrint} className="rounded-md bg-indigo-600 px-6 py-2 text-sm text-white">
+                                  Print
+                                </button>
+                                <button onClick={() => setOpenModal(false)} className="rounded-md border border-rose-600 px-6 py-2 text-sm text-rose-600 hover:bg-rose-600 hover:text-white">
+                                  Cancel
+                                </button>
+                              </div>
+
+
+                              <div className="">
+                                <div
+                                  ref={componentRef}
+                                  className="lg:px-6 m-auto w-[210mm] h-[297mm] bg-white print-container  pb-12 pt-16  print-data">
+
+                                  <header className="flex items-start justify-between">
+                                    <img src={shop?.logo ?? ''} alt="logo" className='w-[200px]' />
+                                    <div className='whitespace-wrap w-[300px]'>
+                                      <p className='text-gray-600 text-end'>{shop?.shopName}</p>
+                                      <p className='text-gray-600 text-end'>{shop?.shopEmail}</p>
+                                    </div>
+                                  </header>
+
+                                  <main>
+                                    <div className="flex items-center justify-center py-1 font-bold text-gray-600 bg-gray-200 mt-8 text-center ">
+                                      INVOICE
+                                    </div>
+
+                                    {/*................*/}
+                                    {/*.... Address ...*/}
+                                    {/*................*/}
+                                    <div className=" items-start justify-between mt-4">
+                                      <div>
+                                        <div className='flex items-center gap-2'>
+                                          <h4 className='font-semibold text-gray-700 text-sm'>
+                                            Name :
+                                          </h4>
+                                          <p className="text-gray-600 text-sm">{openModal?.addresses?.fullName}</p>
+                                        </div>
+                                        <div className='flex items-center gap-2'>
+                                          <h4 className='font-semibold text-gray-700 text-sm'>
+                                            Number :
+                                          </h4>
+                                          <p className="text-gray-600 text-sm">{openModal?.addresses?.mobileNumber}</p>
+                                        </div>
+                                        <div className='flex items-center gap-2'>
+                                          <h4 className='font-semibold text-gray-700 text-sm'>
+                                            address :
+                                          </h4>
+                                          <p className="text-gray-600 text-sm">{openModal?.addresses?.address}, {openModal?.addresses?.city}</p>
+                                        </div>
+                                      </div>
+
+                                      <div>
+                                        <li className='flex justify-start items-center gap-2'>
+                                          <h4 className='font-semibold text-gray-700 text-sm'>
+                                            Invoice No : {user?._id}
+                                          </h4>
+                                          <p className="text-gray-600 text-sm">{openModal?._id}</p>
+                                        </li>
+
+                                      </div>
+
+                                    </div>
+
+                                    {/*................*/}
+                                    {/*.... Product ...*/}
+                                    {/*................*/}
+
+                                    <section className="container mx-auto mt-8">
+                                      <div className="w-full mb-8 overflow-hidden">
+                                        <div className="w-full overflow-x-auto border">
+                                          <table className="w-full">
+                                            <thead>
+                                              <tr className="text-md font-semibold tracking-wide text-left text-gray-100 bg-gray-900 uppercase border-b border-gray-900">
+                                                <th className="px-4 py-2">Photo</th>
+                                                <th className="px-4 py-2">Name</th>
+                                                <th className="px-4 py-2 whitespace-nowrap">Stock Quantity</th>
+                                                <th className="px-4 py-2">Price</th>
+                                              </tr>
+                                            </thead>
+                                            <tbody className="bg-white text-black">
+                                              {openModal?.productList?.map(itm => (
+                                                <tr className='border-t' key={itm?._id}>
+                                                  <td className="p-4 w-[110px] border-b border-blue-gray-50">
+                                                    <img src={itm?.img} alt="" className="w-[100px] object-cover h-[80px] rounded border" />
+                                                  </td>
+                                                  <td className="p-4 text-start border-b w-[300px] border-blue-gray-50">
+                                                    {itm?.productName}
+                                                  </td>
+                                                  <td className="p-4 text-start border-b border-blue-gray-50">
+                                                    {itm?.price}
+                                                  </td>
+                                                  <td className="p-4 text-start border-b border-blue-gray-50">
+                                                    {itm?.quantity}
+                                                  </td>
+                                                </tr>
+                                              ))}
+                                            </tbody>
+                                          </table>
+                                        </div>
+                                      </div>
+                                      {/* <h1 className='text-end text-xl '>Total : {total}</h1> */}
+
+                                      {/* <div id="thanks">Thank you!</div>
+                            <div id="notices">
+                                <div>NOTICE:</div>
+
+                            </div>
+                            <footer>
+                                Invoice was created on a computer and is valid without the signature and
+                                seal.
+                            </footer> */}
+                                    </section>
+
+
+
+
+                                  </main>
+                                  <footer>
+
+                                  </footer>
+                                </div>
+                              </div>
+
+
+                            </div>
+                          </div>
+                        </div>
+
+
                         {/* {item._id === readyToShip._id && (
                                             <tr>
                                                 <td colSpan="10">

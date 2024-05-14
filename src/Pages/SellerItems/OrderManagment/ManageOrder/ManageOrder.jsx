@@ -511,11 +511,11 @@ const ManageOrder = () => {
                     className="bg-white mx-auto mb-4 p-12  "
                     key={itm?._id}
                   >
-                    <header className="flex ">
+                    <header className="flex justify-between  ">
                       <div id="logo">
                         <img src={shopInfo?.logo} />
                       </div>
-                      <div className="text-start">
+                      <div className="text-end">
                         <h2 className="name">{shopInfo?.shopName}</h2>
                         <div>{shopInfo?.shopNumber}</div>
 
@@ -528,125 +528,125 @@ const ManageOrder = () => {
                     </header>
                     <br />
                     <main>
-                      <h3 className="font-semibold">Order Details:</h3>
+                      <div
+                        className="lg:px-6 bg-white print-container  pb-12 print-data">
+                        <main>
+                          <div className="flex items-center justify-center py-1 font-bold text-gray-600 bg-gray-200 text-center ">
+                            INVOICE
+                          </div>
 
-                      <ul className="border mt-3">
-                        <li className="flex items-center border-b">
-                          <div className="px-2 w-[170px]">name :</div>
-                          <div className="border-l py-2 ml-1 pl-2">
-                            {itm?.addresses?.fullName ? itm?.addresses?.fullName : ''}
-                          </div>
-                        </li>
-                        <li className="flex border-b items-center">
-                          <div className="px-2 w-[170px]">Address :</div>
-                          <div className="border-l py-2 ml-1 pl-2">
-                            {itm?.addresses?.address},{itm?.addresses?.area},{" "}
-                            {itm?.addresses?.city}
-                          </div>
-                        </li>
-                        <li className="flex border-b items-center">
-                          <div className="px-2 w-[170px]">Number :</div>
-                          <div className="border-l py-2 ml-1 pl-2">
-                            {itm?.addresses?.mobileNumber}
-                          </div>
-                        </li>
-                        <li className="flex border-b items-center">
-                          <div className="px-2 w-[170px]">Order Number :</div>
-                          <div className="border-l py-2 ml-1 pl-2">
-                            {itm?.orderNumber}
-                          </div>
-                        </li>
-                        <li className="flex items-center">
-                          <div className="px-2 w-[170px]">invoice ID :</div>
-                          <div className="border-l py-2 ml-1 pl-2">
-                            {itm?._id}
-                          </div>
-                        </li>
-                      </ul>
+                          {/*................*/}
+                          {/*.... Address ...*/}
+                          {/*................*/}
+                          <div className=" items-start justify-between mt-4">
+                            <div>
+                              <div className='flex items-center gap-2'>
+                                <h4 className='font-semibold text-gray-700 text-sm'>
+                                  Name :
+                                </h4>
+                                <p className="text-gray-600 text-sm">
+                                  {itm?.addresses?.fullName}
+                                </p>
+                              </div>
+                              <div className='flex items-center gap-2'>
+                                <h4 className='font-semibold text-gray-700 text-sm'>
+                                  Number :
+                                </h4>
+                                <p className="text-gray-600 text-sm">
+                                  {itm?.addresses?.mobileNumber}
+                                </p>
+                              </div>
+                              <div className='flex items-center gap-2'>
+                                <h4 className='font-semibold text-gray-700 text-sm'>
+                                  address :
+                                </h4>
+                                <p className="text-gray-600 text-sm">
+                                  {itm?.addresses?.address}, {itm?.addresses?.city}
+                                </p>
+                              </div>
+                            </div>
 
-                      <br />
+                            <div>
+                              <li className='flex justify-start items-center gap-2'>
+                                <h4 className='font-semibold text-gray-700 text-sm'>
+                                  {/* Invoice No : {user?._id} */}
+                                </h4>
+                                {/* <p className="text-gray-600 text-sm">{shopInfo?._id}</p> */}
+                              </li>
 
-                      <h3 className="font-semibold">Products List:</h3>
-                      <table
-                        className="table"
-                        border={0}
-                        cellSpacing={0}
-                        cellPadding={0}
-                      >
-                        <thead className="thead">
-                          <tr>
-                            <th className="no text-center">#</th>
-                            <th className=" text-center">Product photo</th>
-                            <th className=" text-center">Product Name</th>
-                            <th className=" text-center bg-gray-400">
-                              UNIT PRICE
-                            </th>
-                            <th className="text-center">QUANTITY</th>
-                            <th className=" text-center no">TOTAL</th>
-                          </tr>
-                        </thead>
-                        <tbody className="tbody">
-                          {itm?.productList?.map((list, index) => (
-                            <tr key={index} className="text-center">
-                              <td className="no">{index + 1}</td>
-                              <td className="">
-                                <img
-                                  className="w-20 h-20 border border-opacity-40 rounded object-cover"
-                                  src={list.img}
-                                  alt=""
-                                />
-                              </td>
-                              <td className="">
-                                <h3 className="">
-                                  {list?.productName
-                                    ?.split(" ")
-                                    .slice(0, 5)
-                                    .join(" ")}
-                                </h3>
-                              </td>
-                              <td className=" ">{list?.price}</td>
-                              <td className=" ">{list.quantity}</td>
-                              <td className="no ">
-                                {parseInt(list?.price) *
-                                  parseInt(list?.quantity)}
-                              </td>
-                            </tr>
-                          ))}
-                        </tbody>
-                        <tfoot>
-                          <tr>
-                            <td colSpan={3} />
-                            <td colSpan={2}>SUBTOTAL</td>
-                            <td>
-                              {itm?.productList?.reduce(
-                                (acc, list) =>
-                                  acc +
-                                  parseInt(list?.price) *
-                                  parseInt(list?.quantity),
-                                0
-                              )}
-                            </td>
-                          </tr>
-                          <tr>
-                            <td colSpan={3} />
-                            <td colSpan={2}>TAX 25%</td>
-                            <td>300</td>
-                          </tr>
-                          <tr>
-                            <td colSpan={3} />
-                            <td colSpan={2}>GRAND TOTAL</td>
-                            <td>
-                              {itm?.productList?.reduce(
-                                (acc, list) =>
-                                  acc +
-                                  parseInt(list?.price) *
-                                  parseInt(list?.quantity),
-                                0
-                              )}
-                            </td>
-                          </tr>
-                        </tfoot>
-                      </table>
+                            </div>
+
+                          </div>
+
+                          {/*................*/}
+                          {/*.... Product ...*/}
+                          {/*................*/}
+
+                          <section className="container mx-auto mt-8">
+                            <div className="w-full mb-8 overflow-hidden">
+                              <div className="w-full overflow-x-auto border">
+                                <table className="w-full">
+                                  <thead>
+                                    <tr className="text-md font-semibold tracking-wide text-left text-gray-100 bg-gray-900 uppercase border-b border-gray-900">
+                                      <th className="px-4 py-2">Photo</th>
+                                      <th className="px-4 py-2">Name</th>
+                                      <th className="px-4 py-2 whitespace-nowrap">Stock Quantity</th>
+                                      <th className="px-4 py-2">Price</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody className="bg-white">
+                                    {itm?.productList?.map(itm => (
+                                      <tr className='border-t' key={itm?._id}>
+                                        <td className="p-4 w-[110px] border-b border-blue-gray-50">
+                                          <img src={itm?.img} alt="" className="w-[100px] object-cover h-[80px] rounded border" />
+                                        </td>
+                                        <td className="p-4 border-b w-[300px] border-blue-gray-50">
+                                          {itm?.title}
+                                        </td>
+                                        <td className="p-4 border-b border-blue-gray-50">
+                                          {itm?.price}
+                                        </td>
+                                        <td className="p-4 border-b border-blue-gray-50">
+                                          1  {/* {itm?.quantity} */}
+                                        </td>
+                                      </tr>
+                                    ))}
+
+                                    {/* <tr>
+                                                <td colSpan={6} className='px-1 py-2 text-sm border  border-gray-800'></td>
+                                                <td colSpan={1} className='px-1 py-2 text-sm border-b  border-gray-800 text-end'>
+                                                    TOTAL:
+                                                </td>
+                                                <td colSpan={1} className='px-1 py-2 text-sm border  border-gray-800 text-start'>
+                                                    $5000
+                                                </td>
+                                            </tr> */}
+                                    {/* Add more rows here */}
+                                  </tbody>
+                                </table>
+                              </div>
+                            </div>
+                            {/* <h1 className='text-end text-xl '>Total : {total}</h1> */}
+
+                            {/* <div id="thanks">Thank you!</div>
+                            <div id="notices">
+                                <div>NOTICE:</div>
+
+                            </div>
+                            <footer>
+                                Invoice was created on a computer and is valid without the signature and
+                                seal.
+                            </footer> */}
+                          </section>
+
+
+
+
+                        </main>
+                        <footer>
+
+                        </footer>
+                      </div>
                     </main>
                   </div>
                 ))}

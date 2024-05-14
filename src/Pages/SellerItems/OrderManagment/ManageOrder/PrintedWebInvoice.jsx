@@ -1,12 +1,12 @@
+import { useReactToPrint } from 'react-to-print';
 import React, { useContext, useRef } from 'react';
 import Barcode from 'react-barcode';
-import { useReactToPrint } from 'react-to-print';
 import { AuthContext } from '../../../../AuthProvider/UserProvider';
+import { useQuery } from '@tanstack/react-query';
 
 const PrintedWebInvoice = (data) => {
-    const invoiceData = data?.data;
-    const { shopInfo, shopId } = useContext(AuthContext)
-
+    const invoiceData = data?.data || [];
+    const { user, shopInfo, shopId } = useContext(AuthContext)
 
     const componentRef = useRef();
     const handlePrint = useReactToPrint({
@@ -44,6 +44,151 @@ const PrintedWebInvoice = (data) => {
     }
 
 
+    const {
+        data: shop = {},
+        isLoading,
+        refetch,
+    } = useQuery({
+        queryKey: ["shop"],
+        queryFn: async () => {
+            const res = await fetch(
+                `https://backend.doob.com.bd/api/v1/shop/${shopInfo?.shopId}`
+            );
+            const data = await res.json();
+            return data;
+        },
+    });
+
+    const InvoicePage = ({ itm }) => {
+
+
+        const subTotal = itm?.productList?.reduce((acc, list) => acc + parseInt(list?.price) * parseInt(list?.quantity), 0);
+
+        const total = itm?.productList?.reduce((acc, list) => acc + parseInt(list?.price) * parseInt(list?.quantity), 0)
+
+        console.log(itm);
+        return (
+            <>
+                <div
+                    className="lg:px-6 bg-white print-container  pb-12 pt-16 mx-2 print-data">
+
+                    <header className="flex items-start justify-between">
+                        <img src={shop?.logo ?? logo} alt="logo" className='w-[200px]' />
+                        <div className='whitespace-wrap w-[300px]'>
+                            <p className='text-gray-600 text-end'>{user?.shopName}</p>
+                            <p className='text-gray-600 text-end'>{user?.shopEmail}</p>
+                        </div>
+                    </header>
+
+                    <main>
+                        <div className="flex items-center justify-center py-1 font-bold text-gray-600 bg-gray-200 mt-8 text-center ">
+                            INVOICE
+                        </div>
+
+                        {/*................*/}
+                        {/*.... Address ...*/}
+                        {/*................*/}
+                        <div className=" items-start justify-between mt-4">
+                            <div>
+                                <div className='flex items-center gap-2'>
+                                    <h4 className='font-semibold text-gray-700 text-sm'>
+                                        Email :
+                                    </h4>
+                                    <p className="text-gray-600 text-sm">{user?.email}</p>
+                                </div>
+                                <div className='flex items-center gap-2'>
+                                    <h4 className='font-semibold text-gray-700 text-sm'>
+                                        Phone :
+                                    </h4>
+                                    <p className="text-gray-600 text-sm">{user?.phoneNumber}</p>
+                                </div>
+                            </div>
+
+                            <div>
+                                <li className='flex justify-start items-center gap-2'>
+                                    <h4 className='font-semibold text-gray-700 text-sm'>
+                                        Invoice No : {user?._id}
+                                    </h4>
+                                    {/* <p className="text-gray-600 text-sm">{shopInfo?._id}</p> */}
+                                </li>
+
+                            </div>
+
+                        </div>
+
+                        {/*................*/}
+                        {/*.... Product ...*/}
+                        {/*................*/}
+
+                        <section className="container mx-auto mt-8">
+                            <div className="w-full mb-8 overflow-hidden">
+                                <div className="w-full overflow-x-auto border">
+                                    <table className="w-full">
+                                        <thead>
+                                            <tr className="text-md font-semibold tracking-wide text-left text-gray-100 bg-gray-900 uppercase border-b border-gray-900">
+                                                <th className="px-4 py-2">Photo</th>
+                                                <th className="px-4 py-2">Name</th>
+                                                <th className="px-4 py-2 whitespace-nowrap">Stock Quantity</th>
+                                                <th className="px-4 py-2">Price</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody className="bg-white">
+                                            {itm?.productList?.map(itm => (
+                                                <tr className='border-t' key={itm?._id}>
+                                                    <td className="p-4 w-[110px] border-b border-blue-gray-50">
+                                                        <img src={itm?.img} alt="" className="w-[100px] object-cover h-[80px] rounded border" />
+                                                    </td>
+                                                    <td className="p-4 border-b w-[300px] border-blue-gray-50">
+                                                        {itm?.title}
+                                                    </td>
+                                                    <td className="p-4 border-b border-blue-gray-50">
+                                                        {itm?.price}
+                                                    </td>
+                                                    <td className="p-4 border-b border-blue-gray-50">
+                                                        1  {/* {itm?.quantity} */}
+                                                    </td>
+                                                </tr>
+                                            ))}
+
+                                            {/* <tr>
+                                                <td colSpan={6} className='px-1 py-2 text-sm border  border-gray-800'></td>
+                                                <td colSpan={1} className='px-1 py-2 text-sm border-b  border-gray-800 text-end'>
+                                                    TOTAL:
+                                                </td>
+                                                <td colSpan={1} className='px-1 py-2 text-sm border  border-gray-800 text-start'>
+                                                    $5000
+                                                </td>
+                                            </tr> */}
+                                            {/* Add more rows here */}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <h1 className='text-end text-xl '>Total : {total}</h1>
+
+                            {/* <div id="thanks">Thank you!</div>
+                            <div id="notices">
+                                <div>NOTICE:</div>
+
+                            </div>
+                            <footer>
+                                Invoice was created on a computer and is valid without the signature and
+                                seal.
+                            </footer> */}
+                        </section>
+
+
+
+
+                    </main>
+                    <footer>
+
+                    </footer>
+                </div>
+            </>
+        )
+    }
+
 
 
 
@@ -55,122 +200,150 @@ const PrintedWebInvoice = (data) => {
                 <button onClick={handlePrint} className='bg-blue-500 text-white px-4 py-1 rounded'>
                     Print
                 </button>
-
             </header>
 
-            <div ref={componentRef} className=''>
-                {
-                    invoiceData.map(itm =>
+            {invoiceData.length > 0 && (
+                <div ref={componentRef} className=''>
+                    {invoiceData?.map(itm => {
 
-                        <div className="w-full h-full mb-2 p-8 m-auto bg-white" style={{ width: '210mm', height: '297mm' }}>
-                            <header className="clearfix">
-                                <div id="logo">
-                                    <img src={shopInfo?.logo} />
-                                </div>
-                                <div id="company">
-                                    <h2 className="name">
-                                        {shopInfo?.shopName}
-                                    </h2>
-                                    <div>455 Foggy Heights, AZ 85004, US</div>
-                                    <div>
-                                        {shopInfo?.shopNumber}
-                                    </div>
-                                    <div>
-                                        <a href="mailto:company@example.com">
-                                            {shopInfo?.shopEmail}
-                                        </a>
-                                    </div>
-                                </div>
-                            </header>
-                            <main className='main mt-4'>
-                                <div id="details" className="clearfix">
-                                    <div id="client">
-                                        {/* <img src={shopInfo?.logo} alt="" className="" /> */}
-                                        <div className="to">INVOICE TO:</div>
-                                        <h2 className="name">
-                                            {itm?.addresses?.fullName}
-                                        </h2>
-                                        <div className="address">
-                                            {itm?.addresses?.address} {itm?.addresses?.area} {itm?.addresses?.city} {itm?.addresses?.province}
-                                        </div>
-                                        <div className="email">
-                                            <a href="mailto:john@example.com">
-                                                {itm?.addresses?.mobileNumber}
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div id="invoice">
-                                        <h1>INVOICE</h1>
-                                        <div className="wrap-2 mt-[-57px] ml-[40px]">
-                                            <Barcode value={itm?.orderNumber} />
-                                        </div>
-                                        <div className="date">Date of Invoice:
-                                            {formattedDate(itm?.timestamp)}
-                                        </div>
-                                    </div>
-                                </div>
-                                <table className='table' border={0} cellSpacing={0} cellPadding={0}>
-                                    <thead className='thead'>
-                                        <tr>
-                                            <th className="no text-center">#</th>
-                                            <th className=" text-center">Product photo</th>
-                                            <th className=" text-center">Product Name</th>
-                                            <th className=" text-center bg-gray-400">UNIT PRICE</th>
-                                            <th className="text-center">QUANTITY</th>
-                                            <th className=" text-center no">TOTAL</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody className='tbody'>
-                                        {
-                                            itm?.productList?.map((list, index) => <tr key={index} className='text-center'>
-                                                <td className="no">{index + 1}</td>
-                                                <td className=""><img className='w-20 h-20 border border-opacity-40 rounded object-cover' src={list.img} alt="" /></td>
-                                                <td className="">
-                                                    <h3>{list.productName?.split(' ').slice(0, 5).join(" ")}</h3>
+                        console.log(itm, 'itm');
+
+                        const subTotal = itm?.productList?.reduce((acc, list) => acc + parseInt(list?.price) * parseInt(list?.quantity), 0);
+
+                        const total = itm?.productList?.reduce((acc, list) => acc + parseInt(list?.price) * parseInt(list?.quantity), 0)
+
+                        return (
+                            <div className="w-full h-full mb-2 p-8 m-auto bg-white" style={{ width: '210mm', height: '297mm' }}>
+                                {/* <InvoicePage itm={itm} /> */}
+                                <>
+                                    <div
+                                        className="lg:px-6 bg-white print-container  pb-12 pt-16 mx-2 print-data">
+
+                                        <header className="flex items-start justify-between">
+                                            <img src={shop?.logo ?? logo} alt="logo" className='w-[200px]' />
+                                            <div className='whitespace-wrap w-[300px]'>
+                                                <p className='text-gray-600 text-end'>{shop?.shopName}</p>
+                                                <p className='text-gray-600 text-end'>{shop?.shopEmail}</p>
+                                            </div>
+                                        </header>
+
+                                        <main>
+                                            <div className="flex items-center justify-center py-1 font-bold text-gray-600 bg-gray-200 mt-8 text-center ">
+                                                INVOICE
+                                            </div>
+
+                                            {/*................*/}
+                                            {/*.... Address ...*/}
+                                            {/*................*/}
+                                            <div className=" items-start justify-between mt-4">
+                                                <div>
+                                                    <div className='flex items-center gap-2'>
+                                                        <h4 className='font-semibold text-gray-700 text-sm'>
+                                                            Name :
+                                                        </h4>
+                                                        <p className="text-gray-600 text-sm">{itm?.addresses?.fullName}</p>
+                                                    </div>
+                                                    <div className='flex items-center gap-2'>
+                                                        <h4 className='font-semibold text-gray-700 text-sm'>
+                                                            Number :
+                                                        </h4>
+                                                        <p className="text-gray-600 text-sm">{itm?.addresses?.mobileNumber}</p>
+                                                    </div>
+                                                    <div className='flex items-center gap-2'>
+                                                        <h4 className='font-semibold text-gray-700 text-sm'>
+                                                            address :
+                                                        </h4>
+                                                        <p className="text-gray-600 text-sm">{itm?.addresses?.address}, {itm?.addresses?.city}</p>
+                                                    </div>
+                                                </div>
+
+                                                <div>
+                                                    <li className='flex justify-start items-center gap-2'>
+                                                        <h4 className='font-semibold text-gray-700 text-sm'>
+                                                            Invoice No : {user?._id}
+                                                        </h4>
+                                                        {/* <p className="text-gray-600 text-sm">{shopInfo?._id}</p> */}
+                                                    </li>
+
+                                                </div>
+
+                                            </div>
+
+                                            {/*................*/}
+                                            {/*.... Product ...*/}
+                                            {/*................*/}
+
+                                            <section className="container mx-auto mt-8">
+                                                <div className="w-full mb-8 overflow-hidden">
+                                                    <div className="w-full overflow-x-auto border">
+                                                        <table className="w-full">
+                                                            <thead>
+                                                                <tr className="text-md font-semibold tracking-wide text-left text-gray-100 bg-gray-900 uppercase border-b border-gray-900">
+                                                                    <th className="px-4 py-2">Photo</th>
+                                                                    <th className="px-4 py-2">Name</th>
+                                                                    <th className="px-4 py-2 whitespace-nowrap">Stock Quantity</th>
+                                                                    <th className="px-4 py-2">Price</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody className="bg-white">
+                                                                {itm?.productList?.map(itm => (
+                                                                    <tr className='border-t' key={itm?._id}>
+                                                                        <td className="p-4 w-[110px] border-b border-blue-gray-50">
+                                                                            <img src={itm?.img} alt="" className="w-[100px] object-cover h-[80px] rounded border" />
+                                                                        </td>
+                                                                        <td className="p-4 border-b w-[300px] border-blue-gray-50">
+                                                                            {itm?.title}
+                                                                        </td>
+                                                                        <td className="p-4 border-b border-blue-gray-50">
+                                                                            {itm?.price}
+                                                                        </td>
+                                                                        <td className="p-4 border-b border-blue-gray-50">
+                                                                            1  {/* {itm?.quantity} */}
+                                                                        </td>
+                                                                    </tr>
+                                                                ))}
+
+                                                                {/* <tr>
+                                                <td colSpan={6} className='px-1 py-2 text-sm border  border-gray-800'></td>
+                                                <td colSpan={1} className='px-1 py-2 text-sm border-b  border-gray-800 text-end'>
+                                                    TOTAL:
                                                 </td>
-                                                <td className=" ">{list?.price}</td>
-                                                <td className=" ">{list.quantity}</td>
-                                                <td className="no ">{parseInt(list?.price) * parseInt(list?.quantity)}</td>
-                                            </tr>)
-                                        }
-                                    </tbody>
-                                    <tfoot>
-                                        <tr>
-                                            <td colSpan={3} />
-                                            <td colSpan={2}>SUBTOTAL</td>
-                                            <td>
-                                                {itm?.productList?.reduce((acc, list) => acc + parseInt(list?.price) * parseInt(list?.quantity), 0)}
-                                            </td>
+                                                <td colSpan={1} className='px-1 py-2 text-sm border  border-gray-800 text-start'>
+                                                    $5000
+                                                </td>
+                                            </tr> */}
+                                                                {/* Add more rows here */}
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                                <h1 className='text-end text-xl '>Total : {total}</h1>
 
-                                        </tr>
-                                        <tr>
-                                            <td colSpan={3} />
-                                            <td colSpan={2}>TAX 25%</td>
-                                            <td>300</td>
-                                        </tr>
-                                        <tr>
-                                            <td colSpan={3} />
-                                            <td colSpan={2}>GRAND TOTAL</td>
-                                            <td>
-                                                {itm?.productList?.reduce((acc, list) => acc + parseInt(list?.price) * parseInt(list?.quantity), 0)}
-                                            </td>
-                                        </tr>
-                                    </tfoot>
-                                </table>
-                                <div id="thanks">Thank you!</div>
-                                <div id="notices">
-                                    <div>NOTICE:</div>
+                                                {/* <div id="thanks">Thank you!</div>
+                            <div id="notices">
+                                <div>NOTICE:</div>
 
-                                </div>
-                                <footer>
-                                    Invoice was created on a computer and is valid without the signature and
-                                    seal.
-                                </footer>
+                            </div>
+                            <footer>
+                                Invoice was created on a computer and is valid without the signature and
+                                seal.
+                            </footer> */}
+                                            </section>
 
-                            </main>
-                        </div>)
-                }
-            </div>
+
+
+
+                                        </main>
+                                        <footer>
+
+                                        </footer>
+                                    </div>
+                                </>
+                            </div>
+                        );
+                    })}
+                </div>
+            )}
         </div>
     );
 };
