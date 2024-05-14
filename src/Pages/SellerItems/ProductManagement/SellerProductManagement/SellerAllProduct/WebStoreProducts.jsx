@@ -370,6 +370,8 @@ export default function WebStoreproduct({ priceRole, searchQuery }) {
                     ? "bg-blue-500 text-white"
                     : "text-blue-500 bg-blue-100/60"
                 }`}
+                onClick={() => setCurrentPage(index + 1)}
+
               >
                 <span>{index + 1}</span>
               </div>
