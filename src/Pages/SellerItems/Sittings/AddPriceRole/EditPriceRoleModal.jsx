@@ -13,8 +13,7 @@ export default function ({ setOpen, itm }) {
       from: e.target.from.value,
       priceRange: e.target.priceRange.value,
       shopId: shopInfo?.shopId,
-    };
-
+    }
 
     fetch(`https://backend.doob.com.bd/api/v1/seller/edit-price-role?priceId=${itm?._id}`, {
       method: "PATCH",

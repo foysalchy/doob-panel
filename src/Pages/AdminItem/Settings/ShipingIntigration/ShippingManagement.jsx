@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import BrightAlert from "bright-alert";
 import React from "react";
 import { useState } from "react";
 import { BsArrowRight } from "react-icons/bs";
@@ -58,7 +59,8 @@ const ShippingManagement = () => {
       .then((res) => res.json())
       .then((data) => {
         if (data.message === true) {
-          Swal.fire("Shipping interrogation Successful", "", "success");
+          BrightAlert("Shipping interrogation Successful", "", "success");
+          event.target.reset();
           refetch();
         } else {
           Swal.fire({

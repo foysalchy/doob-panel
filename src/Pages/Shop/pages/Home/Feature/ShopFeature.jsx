@@ -38,15 +38,15 @@ const ShopFeature = () => {
   });
 
   return (
-    <div className="my-12 grid grid-cols-2 gap-4 lg:grid-cols-4 ">
+    <div className="my-12 grid grid-cols-2 gap-4 lg:grid-cols-4 pb-8 ">
       {features?.map((itm) => (
-        <div className="">
+        <a key={itm?._id} href={`//${itm?.link}`} className="">
           <img
             src={itm?.image}
             alt=""
             className="w-full border rounded-xl h-full object-cover"
           />
-        </div>
+        </a>
       ))}
       {/* <Swiper
                 pagination={true}
