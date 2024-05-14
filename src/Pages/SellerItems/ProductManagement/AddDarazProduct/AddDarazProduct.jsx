@@ -130,6 +130,7 @@ const AddDarazProduct = () => {
       woo: false, // You didn't provide this information in the original data
       categories: categories,
       warehouse: warehouseValue,
+      shortDescription: originalData.attributes.short_description,
       description: originalData.attributes.description,
       stock_quantity: originalData.skus[0].quantity,
       regular_price: originalData.skus[0].price,

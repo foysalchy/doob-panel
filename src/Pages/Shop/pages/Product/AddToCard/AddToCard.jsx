@@ -105,7 +105,7 @@ const ProductListCartSm = ({
             <button
               type="button"
               className="flex items-center px-2 py-0 space-x-1"
-              onClick={() => handleRemove(product.productId)}
+              onClick={() => { handleRemove(!shopUser ? product.productId : product._id), selectOne(product) }}
             >
               <MdDelete className="w-4 h-4 " />
               <span className="text-[12px]">Remove</span>
