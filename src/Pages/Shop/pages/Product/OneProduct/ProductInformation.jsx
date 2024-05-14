@@ -184,7 +184,7 @@ const ProductInformation = () => {
           productName: variations?.name
             ? `${product.name} - ${variations?.name}`
             : product.name,
-          price: variations?.price ? variations?.price : product.price,
+          price: variations?.offerPrice !== undefined ? variations.offerPrice : (variations?.price !== undefined ? variations.price : product.price),
           regular_price: product.regular_price,
           productId: product._id,
           shopId: shop_id.shop_id,
