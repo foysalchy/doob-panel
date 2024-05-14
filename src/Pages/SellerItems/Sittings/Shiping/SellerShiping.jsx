@@ -4,6 +4,7 @@ import { BsArrowRight } from "react-icons/bs";
 import { MdDelete } from "react-icons/md";
 import { AuthContext } from "../../../../AuthProvider/UserProvider";
 import Swal from "sweetalert2";
+import BrightAlert from "bright-alert";
 
 const SellerShipping = () => {
   const { shopInfo } = useContext(AuthContext);
@@ -72,7 +73,10 @@ const SellerShipping = () => {
             text: "",
           });
         } else {
-          Swal.fire("Shipping interrogation Successful", "", "success");
+
+          BrightAlert("Shipping interrogation Successful", "", "success");
+          event.target.reset()
+          setSelectedMedia("Choose your Api")
           refetch();
         }
       });
@@ -90,7 +94,8 @@ const SellerShipping = () => {
     )
       .then((res) => res.json())
       .then((data) => {
-        Swal.fire("Your Getaway Delete Successfully", "", "success");
+        BrightAlert("Your Getaway Delete Successfully", "", "success");
+
         refetch();
       });
   };

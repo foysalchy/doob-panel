@@ -170,7 +170,7 @@ const AddSlider = () => {
           </form>
         </div>
       </div>
-      <input type="text" />
+
     </div>
   );
 };

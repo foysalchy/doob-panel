@@ -235,22 +235,24 @@ const ShopProductHero = () => {
             <div className='flex gap-4 overflow-y-hidden  '>
 
                 <div className='hidden   bg-white w-[20%] h-[350px]   rounded-xl lg:flex flex-col   text-sm'>
-                    {/* {showModal && adds && (
+                    {showModal && adds && (
                         <div className="fixed top-0 left-0 flex items-center justify-center w-full h-full bg-black bg-opacity-90 z-50">
                             <div className="relative max-w-screen-lg mx-auto">
                                 <div onClick={() => setShowModal(false)} className='cursor-pointer bg-gray-300 rounded-full absolute top-4 right-4  mb-2 p-2 text-2xl hover:bg-gray-400'>
                                     <RxCross2 className='text-xl' />
                                 </div>
 
-                                <img
-                                    className="max-w-full rounded max-h-full"
-                                    srcSet={adds.image}
-                                    src={adds.image}
-                                    alt="Preview"
-                                />
+                                <a href={`//${adds.link}`} target="_blank" rel="noopener noreferrer">
+                                    <img
+                                        className="max-w-full rounded max-h-[80%]"
+                                        srcSet={adds.image}
+                                        src={adds.image}
+                                        alt="Preview"
+                                    />
+                                </a>
                             </div>
                         </div>
-                    )} */}
+                    )}
 
                     {/* <div>
                         {categories
@@ -412,12 +414,15 @@ const ShopProductHero = () => {
 
 
                 <div className='lg:w-[80%] w-[100%]'>
+                    {
+                        console.log(Banar)
+                    }
 
                     <Swiper pagination={true} modules={[Pagination]} className="mySwiper rounded-md">
                         {Banar?.filter((item) => item.status).map((i, index) => (
                             <SwiperSlide key={index + 6}>
                                 {i.status && (
-                                    <Link to={`${i?.link}`}>
+                                    <a target="_blank" href={`//${i?.link}`}>
                                         <img
                                             className='w-full lg:h-[350px] h-[150px] object-cover object-center rounded'
                                             src={i?.image}
@@ -426,7 +431,7 @@ const ShopProductHero = () => {
                                             loading="lazy"
 
                                         />
-                                    </Link>
+                                    </a>
                                 )}
                             </SwiperSlide>
                         ))}
@@ -434,7 +439,7 @@ const ShopProductHero = () => {
 
                 </div>
             </div>
-        </div>
+        </div >
     );
 };
 

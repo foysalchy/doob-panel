@@ -189,6 +189,7 @@ const ProductInformation = () => {
           productId: product._id,
           shopId: shop_id.shop_id,
           variations,
+          delivery_charge: parseInt(product?.DeliveryCharge) ?? 40
         },
       ];
       setSelectProductData(buyNowInfo);

@@ -168,7 +168,7 @@ const AddFeature = () => {
           </form>
         </div>
       </div>
-      <input type="text" />
+
     </div>
   );
 };
