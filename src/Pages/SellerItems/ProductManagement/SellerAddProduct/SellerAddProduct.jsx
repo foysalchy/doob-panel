@@ -134,8 +134,6 @@ const SellerAddProduct = () => {
     datazCategory?.length &&
     datazCategory?.filter((item) => !ourData.includes(item.label));
 
-
-
   const formSubmit = async (e) => {
     setLoading(true);
     e.preventDefault();
@@ -297,7 +295,7 @@ const SellerAddProduct = () => {
 
       // shortDescription,
       // longDescription,
-      status: false,
+      status: !adminWare,
       createdAt: Date.now(),
       // updatedAt,
       featuredImage: uploadedImageUrls,
@@ -326,10 +324,10 @@ const SellerAddProduct = () => {
       .then((res) => res.json())
       .then((data) => {
         if (data.error) {
-          BrightAlert(`${data.error}`, '', 'warning')
+          BrightAlert(`${data.error}`, "", "warning");
           setLoading(false);
         } else {
-          BrightAlert('Product add successful')
+          BrightAlert("Product add successful");
           setLoading(false);
         }
       });
