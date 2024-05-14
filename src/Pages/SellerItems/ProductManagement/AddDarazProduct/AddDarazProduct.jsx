@@ -83,6 +83,10 @@ const AddDarazProduct = () => {
       adminMiniCategory,
       adminExtraCategory,
     ];
+
+    console.log(adminCategory);
+
+    // return;
     const megaCategory = form?.megaCategory?.value;
     const Subcategory = form?.subCategory?.value || null;
     const miniCategory = form?.miniCategory?.value || null;
@@ -95,7 +99,7 @@ const AddDarazProduct = () => {
       extraCategory && { name: extraCategory },
     ];
 
-    // console.log(categories);
+    console.log(categories);
 
     // return;
 
@@ -165,7 +169,8 @@ const AddDarazProduct = () => {
       // Add other fields as needed
     };
 
-    console.log(renamedData);
+    console.log(transformedData);
+    console.log(transformedData.categories);
     fetch("https://backend.doob.com.bd/api/v1/seller/daraz-product/", {
       method: "POST",
       headers: {

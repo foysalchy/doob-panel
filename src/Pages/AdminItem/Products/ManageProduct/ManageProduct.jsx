@@ -17,7 +17,7 @@ const ManageProduct = () => {
   const [openModal, setOpenModal] = useState(false);
 
   const [doobProduct, setDoobProduct] = useState(false);
-  const [itemsPerPage, setItemsPerPage] = useState(10);
+  const [itemsPerPage, setItemsPerPage] = useState(20);
   const { data: products = [], refetch } = useQuery({
     queryKey: ["products_for_admin"],
     queryFn: async () => {
@@ -173,7 +173,7 @@ const ManageProduct = () => {
   const barcode_generate = () => {
     const pdf = new jsPDF();
     const barcodesPerRow = 3;
-    const maxProductsPerPage = 15;
+    const maxProductsPerPage = 20;
     let productsDisplayed = 0;
     let pageIndex = 0;
     let yPos = 10;

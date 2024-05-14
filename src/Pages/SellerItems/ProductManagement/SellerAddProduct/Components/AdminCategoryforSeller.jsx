@@ -147,7 +147,7 @@ const AdminCategoryforSeller = () => {
                   cursor: "pointer",
                 }),
               }}
-              name="adminSubCategoryName"
+              name="adminSubCategory"
               onChange={onHandleMiniCategorys}
               required
               options={subcategoryOption}
@@ -172,7 +172,7 @@ const AdminCategoryforSeller = () => {
                   cursor: "pointer",
                 }),
               }}
-              name="adminMiniCategoryName"
+              name="adminMiniCategory"
               // required
               options={sortedMiniCategorys}
               placeholder="Select mini Category"
@@ -195,7 +195,7 @@ const AdminCategoryforSeller = () => {
                   cursor: "pointer",
                 }),
               }}
-              name="adminExtraCategoryName"
+              name="adminExtraCategory"
               // required
               options={sortedExtraCategorys}
               placeholder="Select mini Category"

@@ -66,8 +66,16 @@ const ReleventProduct = ({ productFind }) => {
                       <img
                         alt="ecommerce"
                         className="object-cover w-full h-full block border rounded"
-                        srcSet={product?.featuredImage?.src ? product?.featuredImage?.src : product?.images[0]?.src}
-                        src={product?.featuredImage?.src ? product?.featuredImage?.src : product?.images[0]?.src}
+                        srcSet={
+                          product?.featuredImage?.src
+                            ? product?.featuredImage?.src
+                            : product?.images[0]?.src
+                        }
+                        src={
+                          product?.featuredImage?.src
+                            ? product?.featuredImage?.src
+                            : product?.images[0]?.src
+                        }
                       />
                     </a>
                     <div className="mt-4 w-full text-start ">
@@ -83,11 +91,32 @@ const ReleventProduct = ({ productFind }) => {
                       ></div> */}
 
                       <div className="flex justify-start gap-4 mt-3">
-                        <p className="py-0 font-medium">৳ {product?.price}</p>
-                        <del> ৳{product.discountPrice ? product.discountPrice : 0}</del>
+                        {/* <p className="py-0 font-medium">৳ {product?.price}</p> */}
+                        <p className="tracking-wide ">
+                          {user ? (
+                            <div className="flex gap-3">
+                              <div className="">
+                                <span className="kalpurush">৳</span>{" "}
+                                <span>{user ? product?.price : 0}</span>
+                              </div>
+                              <del>
+                                {" "}
+                                ৳
+                                {product.discountPrice
+                                  ? product.discountPrice
+                                  : 0}
+                              </del>
+                            </div>
+                          ) : (
+                            <Link
+                              className="text-[12px] text-blue-500"
+                              to={"/sign-up"}
+                            >
+                              Login to view Price
+                            </Link>
+                          )}
+                        </p>
                       </div>
-
-
                     </div>
                   </div>
                 </Link>

@@ -29,8 +29,9 @@ const StarRating = ({ rating, onRatingChange }) => {
         <span
           key={star}
           onClick={() => onRatingChange(star)}
-          className={`cursor-pointer text-2xl ${star <= rating ? "text-yellow-500" : "text-gray-300"
-            }`}
+          className={`cursor-pointer text-2xl ${
+            star <= rating ? "text-yellow-500" : "text-gray-300"
+          }`}
         >
           ★
         </span>
@@ -133,6 +134,7 @@ const ProductDetails = () => {
   );
 
   console.log(productFind.images, "my_test_image");
+
   useEffect(() => {
     // console.log(variationData?.variantImag, '>>>');
     if (variationData) {
@@ -323,7 +325,7 @@ const ProductDetails = () => {
       localStorage.setItem(`cart-product-${user._id}`, JSON.stringify(getCart));
     }
 
-    BrightAlert()
+    BrightAlert();
   };
 
   const balk_buy = () => {
@@ -351,7 +353,6 @@ const ProductDetails = () => {
     console.log(newData);
   };
 
-
   const { data: releventProduct = [], refetch } = useQuery({
     queryKey: ["releventProduct"],
     queryFn: async () => {
@@ -363,7 +364,8 @@ const ProductDetails = () => {
     },
   });
 
-
+  console.log(shopInfo.shopId, "shopInfo");
+  console.log(productFind.shopId, "productFind");
 
   return (
     <section>
@@ -403,7 +405,6 @@ const ProductDetails = () => {
                 <Link
                   key={`category-${index}`}
                   to={`/products/catagory/${category?.name}`}
-
                   className="hover:underline hover:text-gray-600"
                 >
                   {category.name}
@@ -486,7 +487,9 @@ const ProductDetails = () => {
 
               <br />
               <h2 className="mb-2 leading-tight tracking-tight font-bold text-gray-800 text-xl sm:text-2xl md:text-3xl">
-                {variationData?.name ? variationData?.name.slice(0, 100) : productFind?.name.slice(0, 100)}
+                {variationData?.name
+                  ? variationData?.name.slice(0, 100)
+                  : productFind?.name.slice(0, 100)}
               </h2>
               <div>
                 <div className=" hidden items-center">
@@ -603,9 +606,13 @@ const ProductDetails = () => {
                         </h6>
                         <p className="text-sm text-[#606060]">
                           <div className="flex justify-center text-gray-500 text-lg space-x-1">
-                            <h2>{productFind?.variantData?.product1?.quantity}</h2>
+                            <h2>
+                              {productFind?.variantData?.product1?.quantity}
+                            </h2>
                             <span>-</span>
-                            <h2>{productFind?.variantData?.product2?.quantity - 1}</h2>{" "}
+                            <h2>
+                              {productFind?.variantData?.product2?.quantity - 1}
+                            </h2>{" "}
                             <span>Qty</span>
                           </div>
                           {/* {productFind?.variantData?.product1?.quantity} Qty */}
@@ -618,12 +625,15 @@ const ProductDetails = () => {
 
                         <div className="flex justify-center text-gray-500 text-lg space-x-1">
                           <div className="flex justify-center text-lg text-gray-500 space-x-1">
-                            <h2>{productFind?.variantData?.product2?.quantity}</h2>
+                            <h2>
+                              {productFind?.variantData?.product2?.quantity}
+                            </h2>
                             <span>-</span>
-                            <h2>{productFind?.variantData?.product3?.quantity - 1}</h2>
+                            <h2>
+                              {productFind?.variantData?.product3?.quantity - 1}
+                            </h2>
                             <span>Qty</span>
                           </div>
-
                         </div>
                         {/* <p className="text-sm text-[#606060]">
                           {productFind?.variantData?.product2?.quantity} Qty
@@ -633,7 +643,10 @@ const ProductDetails = () => {
                         <h6 className="font-bold text-xl text-red-400">
                           {productFind?.variantData?.product3?.quantityPrice}
                         </h6>
-                        <h2 className="text-gray-500">{productFind?.variantData?.product3?.quantity} - Unlimited</h2>
+                        <h2 className="text-gray-500">
+                          {productFind?.variantData?.product3?.quantity} -
+                          Unlimited
+                        </h2>
 
                         <p className="text-sm text-[#606060]">
                           {/* {productFind?.variantData?.product3?.quantity} Qty */}
@@ -661,56 +674,63 @@ const ProductDetails = () => {
                 )}
               </div>
 
-              <div className="flex py-4 space-x-4">
-                <div>
-                  <label htmlFor="Quantity" className="sr-only">
-                    {" "}
-                    Quantity{" "}
-                  </label>
-
-                  <div className="flex items-center gap-1">
-                    <button
-                      type="button"
-                      onClick={handleDecrease}
-                      className="w-6 h-10 leading-10 text-gray-600 transition hover:opacity-75"
-                    >
-                      -
-                    </button>
-
-                    <input
-                      type="number"
-                      id="Quantity"
-                      value={quantity}
-                      onChange={handleManualInput}
-                      className="h-10 w-12 rounded border px-1 text-center border-gray-900 [-moz-appearance:_textfield] sm:text-sm [&::-webkit-outer-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button]:appearance-none"
-                    />
-
-                    <button
-                      type="button"
-                      onClick={handleIncrease}
-                      className="w-6 h-10 leading-10 text-gray-600 transition hover:opacity-75 "
-                    >
-                      +
-                    </button>
-                  </div>
+              {shopInfo?.shopId === productFind?.shopId ? (
+                <div className="p-4 bg-red-400 text-white font-bold text-center uppercase">
+                  your own Product
                 </div>
-                {shopInfo ?
-                  <button
-                    onClick={balk_buy}
-                    className="h-10 md:px-4 px-2 whitespace-nowrap py-2 text-sm rounded bg-orange-600 hover:bg-orange-500 text-white"
-                    type="button"
-                  >
-                    Add Store
-                  </button> :
-                  <Link to={'/sign-in'}
+              ) : (
+                <div className="flex py-4 space-x-4">
+                  <div>
+                    <label htmlFor="Quantity" className="sr-only">
+                      {" "}
+                      Quantity{" "}
+                    </label>
 
-                    className="h-10 md:px-4 px-2 whitespace-nowrap py-2 text-sm rounded bg-orange-600 hover:bg-orange-500 text-white"
-                    type="button"
-                  >
-                    Add Store
-                  </Link>}
+                    <div className="flex items-center gap-1">
+                      <button
+                        type="button"
+                        onClick={handleDecrease}
+                        className="w-6 h-10 leading-10 text-gray-600 transition hover:opacity-75"
+                      >
+                        -
+                      </button>
 
-                {/* 
+                      <input
+                        type="number"
+                        id="Quantity"
+                        value={quantity}
+                        onChange={handleManualInput}
+                        className="h-10 w-12 rounded border px-1 text-center border-gray-900 [-moz-appearance:_textfield] sm:text-sm [&::-webkit-outer-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button]:appearance-none"
+                      />
+
+                      <button
+                        type="button"
+                        onClick={handleIncrease}
+                        className="w-6 h-10 leading-10 text-gray-600 transition hover:opacity-75 "
+                      >
+                        +
+                      </button>
+                    </div>
+                  </div>
+                  {shopInfo ? (
+                    <button
+                      onClick={balk_buy}
+                      className="h-10 md:px-4 px-2 whitespace-nowrap py-2 text-sm rounded bg-orange-600 hover:bg-orange-500 text-white"
+                      type="button"
+                    >
+                      Add Store
+                    </button>
+                  ) : (
+                    <Link
+                      to={"/sign-in"}
+                      className="h-10 md:px-4 px-2 whitespace-nowrap py-2 text-sm rounded bg-orange-600 hover:bg-orange-500 text-white"
+                      type="button"
+                    >
+                      Add Store
+                    </Link>
+                  )}
+
+                  {/* 
                 <button
                   onClick={() => handleStore(productFind?._id)}
                   type="button"
@@ -719,51 +739,57 @@ const ProductDetails = () => {
                   Buy Now
                 </button> */}
 
-                <div className="flex flex-wrap gap-2">
-                  {shopInfo ? <button
-                    onClick={() => setInvoice(productFind?._id)}
-                    type="button"
-                    className="h-10 md:px-6 px-4 py-2 text-sm rounded bg-indigo-600 hover:bg-indigo-500 text-white text-nowrap"
-                  >
-                    Buy Now
-                  </button> :
-                    <Link
-                      to={'/sign-in'}
+                  <div className="flex flex-wrap gap-2">
+                    {shopInfo ? (
+                      <button
+                        onClick={() => setInvoice(productFind?._id)}
+                        type="button"
+                        className="h-10 md:px-6 px-4 py-2 text-sm rounded bg-indigo-600 hover:bg-indigo-500 text-white text-nowrap"
+                      >
+                        Buy Now
+                      </button>
+                    ) : (
+                      <Link
+                        to={"/sign-in"}
+                        type="button"
+                        className="h-10 md:px-6 px-4 py-2 text-sm rounded bg-indigo-600 hover:bg-indigo-500 text-white text-nowrap"
+                      >
+                        Buy Now
+                      </Link>
+                    )}
+                    <button
+                      onClick={() => add_to_cart(productFind)}
                       type="button"
-                      className="h-10 md:px-6 px-4 py-2 text-sm rounded bg-indigo-600 hover:bg-indigo-500 text-white text-nowrap"
+                      className="h-10 md:px-8 px-2 py-2 text-sm rounded bg-gray-600 hover:bg-gray-500 text-white text-nowrap"
                     >
-                      Buy Now
-                    </Link>}
-                  <button
-                    onClick={() => add_to_cart(productFind)}
-                    type="button"
-                    className="h-10 md:px-8 px-2 py-2 text-sm rounded bg-gray-600 hover:bg-gray-500 text-white text-nowrap"
-                  >
-                    <TbShoppingBagPlus className="text-2xl" />
-                  </button>
-                </div>
+                      <TbShoppingBagPlus className="text-2xl" />
+                    </button>
+                  </div>
 
-                {invoice && (
-                  <ModalForPayment
-                    quantity={quantity}
-                    seller={productFind.shopId}
-                    product={productFind}
-                    handleStore={handleStore}
-                    invoice={invoice}
-                    setInvoice={setInvoice}
-                    sellingPrice={banifit.sellingPrice}
-                  />
-                )}
-              </div>
+                  {invoice && (
+                    <ModalForPayment
+                      quantity={quantity}
+                      seller={productFind.shopId}
+                      product={productFind}
+                      handleStore={handleStore}
+                      invoice={invoice}
+                      setInvoice={setInvoice}
+                      sellingPrice={banifit.sellingPrice}
+                    />
+                  )}
+                </div>
+              )}
+
               {/* variation data */}
               <div className="flex flex-col gap-2">
                 <p className="">Variations : {variationData?.name}</p>
                 <div className="flex flex-wrap gap-3">
                   {productFind?.variations?.map((variation, index) => (
                     <div
-                      onClick={() => { setVariationData(variation) }}
+                      onClick={() => {
+                        setVariationData(variation);
+                      }}
                       className={`w-[50px] border rounded p-1 h-[50px] object-cover`}
-
                       key={index}
                     >
                       <img
@@ -778,18 +804,25 @@ const ProductDetails = () => {
             </div>
           </div>
 
-
           <div className="border  w-full">
             <div className="p-4">
               <h2 className="text-lg font-semibold mb-4">New Exclusive</h2>
               <div className="space-y-4">
-                {
-                  releventProduct?.slice(0, 3)?.map((product, index) => <Link to={`/products/${product?._id}`} key={product?._id} className="border w-full duration-150 group hover:shadow-lg flex items-start gap-2 p-3 rounded">
+                {releventProduct?.slice(0, 3)?.map((product, index) => (
+                  <Link
+                    to={`/products/${product?._id}`}
+                    key={product?._id}
+                    className="border w-full duration-150 group hover:shadow-lg flex items-start gap-2 p-3 rounded"
+                  >
                     <img
                       alt="Product Image"
                       className="w-20 h-20 bg-gray-200 rounded mb-2"
                       height="80"
-                      src={product?.featuredImage?.src ? product?.featuredImage?.src : product?.images[0]?.src}
+                      src={
+                        product?.featuredImage?.src
+                          ? product?.featuredImage?.src
+                          : product?.images[0]?.src
+                      }
                       style={{
                         aspectRatio: "80/80",
                         objectFit: "cover",
@@ -797,12 +830,38 @@ const ProductDetails = () => {
                       width="80"
                     />
                     <div className="">
-                      <p className="font-medium group-hover:text-blue-500 duration">{product?.name?.slice(0, 50)}</p>
-                      <p className="text-red-500">৳{product?.price}</p>
-                    </div>
-                  </Link>)
-                }
+                      <p className="font-medium group-hover:text-blue-500 duration">
+                        {product?.name?.slice(0, 50)}
+                      </p>
+                      {/* <p className="text-red-500">৳{product?.price}</p> */}
 
+                      <p className="tracking-wide ">
+                        {user ? (
+                          <div className="flex gap-3">
+                            <div className="">
+                              <span className="kalpurush">৳</span>{" "}
+                              <span>{user ? product?.price : 0}</span>
+                            </div>
+                            <del>
+                              {" "}
+                              ৳
+                              {product.discountPrice
+                                ? product.discountPrice
+                                : 0}
+                            </del>
+                          </div>
+                        ) : (
+                          <Link
+                            className="text-[12px] text-blue-500"
+                            to={"/sign-up"}
+                          >
+                            Login to view Price
+                          </Link>
+                        )}
+                      </p>
+                    </div>
+                  </Link>
+                ))}
               </div>
             </div>
           </div>

@@ -46,6 +46,8 @@ const EditSincronusCategory = ({
       },
     });
 
+  // console.log(megaCategories.length, "megaCategories");
+
   // Load subcategories based on selected mega category
   const { data: subCategories = [], refetch: refetchSubCategories } = useQuery({
     queryKey: ["subCategories", selectedCategory],
@@ -59,6 +61,8 @@ const EditSincronusCategory = ({
       return data?.data || [];
     },
   });
+
+  // console.log(subCategories.length, "subCategories");
 
   // Load mini categories based on selected subcategory
   const { data: miniCategories = [], refetch: refetchMiniCategories } =
@@ -217,6 +221,10 @@ const EditSincronusCategory = ({
                 label: megaCategory.name,
               }))}
               className=""
+              defaultValue={{
+                label: product?.categories[0]?.name,
+                value: product?.categories[0]?.name,
+              }}
             />
             {selectedCategory && (
               <Select
@@ -227,6 +235,10 @@ const EditSincronusCategory = ({
                   value: subCategory.subCategoryName,
                   label: subCategory.subCategoryName,
                 }))}
+                defaultValue={{
+                  label: product?.categories[1]?.name,
+                  value: product?.categories[1]?.name,
+                }}
               />
             )}
             {selectedSubcategory && (
@@ -238,6 +250,10 @@ const EditSincronusCategory = ({
                   value: miniCategory.miniCategoryName,
                   label: miniCategory.miniCategoryName,
                 }))}
+                defaultValue={{
+                  label: product?.categories[2]?.name,
+                  value: product?.categories[2]?.name,
+                }}
               />
             )}
             {selectedMinicategory && (
@@ -249,6 +265,10 @@ const EditSincronusCategory = ({
                   value: extraCategory.extraCategoryName,
                   label: extraCategory.extraCategoryName,
                 }))}
+                defaultValue={{
+                  label: product?.categories[3]?.name,
+                  value: product?.categories[3]?.name,
+                }}
               />
             )}
           </div>
