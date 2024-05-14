@@ -105,6 +105,8 @@ const ViewUserSupportTicket = ({
     setIsFullscreen(!isFullscreen);
   };
 
+  console.log(ticketDetails);
+
   return (
     <div>
       <div className={viewComment ? "flex" : "hidden"}>
@@ -133,7 +135,7 @@ const ViewUserSupportTicket = ({
                   Subject: {ticketDetails.subject}
                 </h3>
 
-                {ticketDetails?.file && (
+                {ticketDetails?.image && (
                   <div className="flex gap-4 my-4 items-stretch relative ">
                     <p className=" text-lg text-gray-600  sm">File</p>
                     <div
@@ -145,8 +147,8 @@ const ViewUserSupportTicket = ({
                     >
                       <img
                         className="w-20 h-auto"
-                        src={ticketDetails?.file}
-                        srcSet={ticketDetails?.file}
+                        src={ticketDetails?.image}
+                        srcSet={ticketDetails?.image}
                         alt="Image"
                       />
                       {(isHovered || isFullscreen) && (
@@ -157,8 +159,8 @@ const ViewUserSupportTicket = ({
                           <img
                             className={`w-full h-auto bg-black rounded ${isFullscreen ? "cursor-pointer" : ""
                               }`}
-                            src={ticketDetails?.file}
-                            srcSet={ticketDetails?.file}
+                            src={ticketDetails?.image}
+                            srcSet={ticketDetails?.image}
                             alt="Image"
                           />
                         </div>
