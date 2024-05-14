@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 const EditAdminCategoryforSeller = ({ product }) => {
-  console.log("🚀 ~:", product?.adminCategory);
+  // console.log("🚀 ~:", product?.adminCategory);
 
   const navigate = useNavigate();
   const handleGoBack = () => {

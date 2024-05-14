@@ -73,15 +73,8 @@ const Variants = ({
       });
   };
 
-
-
-
-
-
-
   const [images, setImages] = useState([]);
   const { uploadImage } = useImageUpload();
-
 
   // Here you're uploading the image and logging it
   const handleImageChange = async (index, event) => {
@@ -91,76 +84,65 @@ const Variants = ({
       // need loading
       const newInputFields = [...inputFields];
 
-
       try {
         if (daraz) {
           const url = await ImageUpload(file);
           newInputFields[index].image = url;
           setInputFields(newInputFields);
-        }
-        else {
+        } else {
           const url = await Upload(file);
           newInputFields[index].image = url;
           setInputFields(newInputFields);
         }
-
       } catch (error) {
-
         console.log(error);
       }
     }
   };
 
-
-
-
-
   const handleAddField = () => {
-    setInputFields([...inputFields, {
-      name: '',
-      image: null,
-      quantity: "",
-      SKU: "hello js",
-      price: '',
-      offerPrice: '',
-      ability: false,
-      vendor: false,
-      variantImag: []
-    }]);
+    setInputFields([
+      ...inputFields,
+      {
+        name: "",
+        image: null,
+        quantity: "",
+        SKU: "hello js",
+        price: "",
+        offerPrice: "",
+        ability: false,
+        vendor: false,
+        variantImag: [],
+      },
+    ]);
   };
-
-
-
-
 
   const handleMultipleImg = async (e, index) => {
     const fileList = Array.from(e.target.files);
-    const newImages = await Promise.all(fileList.map(async (file) => ({
-      src: await uploadImage(file)
-    })
-    ));
+    const newImages = await Promise.all(
+      fileList.map(async (file) => ({
+        src: await uploadImage(file),
+      }))
+    );
 
-
-    setInputFields(prevInputFields => {
+    setInputFields((prevInputFields) => {
       const updatedFields = [...prevInputFields];
-      updatedFields[index].variantImag = [...updatedFields[index].variantImag, ...newImages];
+      updatedFields[index].variantImag = [
+        ...updatedFields[index].variantImag,
+        ...newImages,
+      ];
       return updatedFields;
     });
   };
 
-
-
-
   const handleRemoveField = (index, imageIndex) => {
-
-    console.log(imageIndex, 'imageIndex', index, 'index....');
-    setInputFields(prevInputFields => {
+    console.log(imageIndex, "imageIndex", index, "index....");
+    setInputFields((prevInputFields) => {
       const updatedFields = [...prevInputFields];
       updatedFields[index].variantImag.splice(imageIndex, 1);
       return updatedFields;
     });
   };
-
 
   const colourOptions = [
     { value: "black", label: "Black", color: "#0000", isFixed: true },
@@ -197,7 +179,7 @@ const Variants = ({
           onChange={(e) => {
             setMultiVendor(
               (e.target.value === "true" && true) ||
-              (e.target.value === "false" && false)
+                (e.target.value === "false" && false)
             );
           }}
           className="flex-grow w-full h-10 px-4 mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-purple-400 focus:outline-none focus:shadow-outline"
@@ -212,7 +194,7 @@ const Variants = ({
       <div className="flex gap-4 flex-col w-full">
         {inputFields &&
           inputFields.map((field, index) => (
-            <div>
+            <div key={index + 11}>
               <div
                 key={index}
                 className=" border border-green-300 rounded px-4 py-2  w-full"
@@ -232,10 +214,11 @@ const Variants = ({
                         // Check if a name is selected
                         if (newName) {
                           // Generate a unique SKU
-                          const newSKU = `${shopInfo.shopId
-                            }_${newName}_${Math.floor(
-                              Math.random() * 100000000
-                            )}`;
+                          const newSKU = `${
+                            shopInfo.shopId
+                          }_${newName}_${Math.floor(
+                            Math.random() * 100000000
+                          )}`;
 
                           // Update the name and SKU in the inputFields array
                           newInputFields[index].name = newName;
@@ -297,11 +280,10 @@ const Variants = ({
                     multiple
                   /> */}
 
-
                   <div className="space-y-2">
                     <div className="flex items-center space-x-2 rounded-md border border-gray-300 p-2 focus:border-primary focus:outline-none mt-3 relative">
                       <input
-                        name='images'
+                        name="images"
                         className="w-full "
                         id="images"
                         multiple
