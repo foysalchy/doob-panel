@@ -60,7 +60,7 @@ const ProductSellerEditPage = () => {
   const [isChecked, setIsChecked] = useState(true);
   const [datazCategory, setDarazOption] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [daraz, setDaraz] = useState(false);
+  const [daraz, setDaraz] = useState(product?.daraz ?? false);
   const [woo, setWoo] = useState(false);
   const [adminWare, setAdminWare] = useState(true);
   const [coverPhoto, setCoverPhoto] = useState("");
@@ -214,14 +214,12 @@ const ProductSellerEditPage = () => {
 
     // return;
 
-    const categories =
-      [
-        { name: megaCategory },
-        Subcategory && { name: Subcategory },
-        miniCategory && { name: miniCategory },
-        extraCategory && { name: extraCategory },
-      ] 
-      
+    const categories = [
+      { name: megaCategory },
+      Subcategory && { name: Subcategory },
+      miniCategory && { name: miniCategory },
+      extraCategory && { name: extraCategory },
+    ];
 
     console.log(categories);
 
@@ -407,8 +405,8 @@ const ProductSellerEditPage = () => {
       data?.daraz
     );
 
-    //  setLoading(true);
-    return;
+    setLoading(true);
+    // return;
 
     fetch(
       // `https://backend.doob.com.bd/api/v1/seller/normal-product?id=${product?._id}`,

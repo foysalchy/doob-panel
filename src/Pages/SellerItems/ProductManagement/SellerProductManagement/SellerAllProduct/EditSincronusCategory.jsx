@@ -46,6 +46,8 @@ const EditSincronusCategory = ({
       },
     });
 
+  // console.log(megaCategories.length, "megaCategories");
+
   // Load subcategories based on selected mega category
   const { data: subCategories = [], refetch: refetchSubCategories } = useQuery({
     queryKey: ["subCategories", selectedCategory],
@@ -59,6 +61,8 @@ const EditSincronusCategory = ({
       return data?.data || [];
     },
   });
+
+  // console.log(subCategories.length, "subCategories");
 
   // Load mini categories based on selected subcategory
   const { data: miniCategories = [], refetch: refetchMiniCategories } =
