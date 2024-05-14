@@ -773,7 +773,7 @@ const SellerAllProducts = () => {
                                   </div>
                                 </td>
 
-                                <td className="px-12 py-4 text-sm font-medium text-gray-700 flex gap-4 items-start  whitespace-nowrap">
+                                <td className="px-12 py-4 text-sm font-medium text-gray-700 flex gap-4 items-start  whitespace-nowrap border-r">
                                   {product.product_status === "reject" ? (
                                     <div>
                                       {" "}

@@ -17,7 +17,7 @@ import Swal from "sweetalert2";
 import EditAdminCategoryforSeller from "../EditAdminCategoryforSeller";
 import SincronusCategory from "../../../SellerAddProduct/Components/SincronusCategory";
 
-const CategoryEditPage = () => {
+const ProductSellerEditPage = () => {
   const id = useParams().id;
 
   const navigate = useNavigate();
@@ -214,14 +214,16 @@ const CategoryEditPage = () => {
 
     // return;
 
-    const categories = [
-      { name: megaCategory },
-      Subcategory && { name: Subcategory },
-      miniCategory && { name: miniCategory },
-      extraCategory && { name: extraCategory },
-    ];
+    const categories =
+      [
+        { name: megaCategory },
+        Subcategory && { name: Subcategory },
+        miniCategory && { name: miniCategory },
+        extraCategory && { name: extraCategory },
+      ] 
+      
 
-    // console.log(categories);
+    console.log(categories);
 
     // return;
     const warehouse = form?.warehouse.value;
@@ -273,7 +275,7 @@ const CategoryEditPage = () => {
       adminExtraCategory,
     ];
 
-    // console.log(adminCategory);
+    console.log(adminCategory);
     // setLoading(false);
     // return;
 
@@ -332,7 +334,7 @@ const CategoryEditPage = () => {
       brandName,
       BnName,
       name: EnName,
-      daraz,
+      daraz: daraz ?? product?.daraz,
       woo,
       categories,
       warehouse: warehouseValue,
@@ -397,14 +399,17 @@ const CategoryEditPage = () => {
       upcoming: isChecked,
       DeliveryCharge,
     };
+
     console.log(
-      data.variantData,
+      product.categories,
+      data.categories,
       "edit --------------------------->",
-      data?.featuredImage
+      data?.daraz
     );
 
-     setLoading(true);
-    // return;
+    //  setLoading(true);
+    return;
+
     fetch(
       // `https://backend.doob.com.bd/api/v1/seller/normal-product?id=${product?._id}`,
       `https://backend.doob.com.bd/api/v1/seller/normal-product?id=${product?._id}`,
@@ -423,7 +428,7 @@ const CategoryEditPage = () => {
           Swal.fire(`${data.message}`, "", "warning");
           setLoading(false);
         } else {
-          Swal.fire("Product updated", "", "success");
+          Swal.fire("Product Updated", "", "success");
           setLoading(false);
           navigate("/seller/product-management/manage");
         }
@@ -580,4 +585,4 @@ const CategoryEditPage = () => {
   );
 };
 
-export default CategoryEditPage;
+export default ProductSellerEditPage;

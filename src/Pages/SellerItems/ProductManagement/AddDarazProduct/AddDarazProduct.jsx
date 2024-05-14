@@ -83,6 +83,10 @@ const AddDarazProduct = () => {
       adminMiniCategory,
       adminExtraCategory,
     ];
+
+    console.log(adminCategory);
+
+    // return;
     const megaCategory = form?.megaCategory?.value;
     const Subcategory = form?.subCategory?.value || null;
     const miniCategory = form?.miniCategory?.value || null;

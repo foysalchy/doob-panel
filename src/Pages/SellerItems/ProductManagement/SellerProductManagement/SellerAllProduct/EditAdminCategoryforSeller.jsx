@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 const EditAdminCategoryforSeller = ({ product }) => {
-  console.log("🚀 ~:", product?.categories);
+  console.log("🚀 ~:", product?.adminCategory);
 
   const navigate = useNavigate();
   const handleGoBack = () => {
@@ -24,7 +24,11 @@ const EditAdminCategoryforSeller = ({ product }) => {
 
   let megaCategoryUrl = `https://backend.doob.com.bd/api/v1/admin/category/megacategory`;
 
-  const { data: megaCategories = [], refetch } = useQuery({
+  const {
+    data: megaCategories = [],
+    refetch,
+    isLoading: loadingMega,
+  } = useQuery({
     queryKey: ["megaCategories"],
     queryFn: async () => {
       const res = await fetch(megaCategoryUrl);
@@ -53,11 +57,14 @@ const EditAdminCategoryforSeller = ({ product }) => {
       .then((res) => res.json())
       .then((data) => {
         setSubCategorys(data.subCategory);
+        console.log(data, ">>>>>");
       })
       .catch((error) => {
         console.error("Error:", error);
       });
   };
+
+  // console.log(subCategorys);
   const sortedWarehouses = subCategorys?.filter(
     (warehouse) => warehouse.status === "true"
   );
@@ -66,6 +73,8 @@ const EditAdminCategoryforSeller = ({ product }) => {
     value: warehouse._id,
     label: warehouse.subCategory,
   }));
+
+  // console.log(subcategoryOption);
 
   const onHandleMiniCategorys = (selectedOption) => {
     setMiniCategorys([]);
@@ -115,7 +124,16 @@ const EditAdminCategoryforSeller = ({ product }) => {
       label: itm.extraCategoryName,
     }));
 
-  // console.log(product?.categories);
+  const defaultMegaCategory = option.filter(
+    (item) => item.value === product.adminCategory[0]
+  )[0];
+  console.log(defaultMegaCategory);
+
+  const defaultSubCategory = subcategoryOption.filter(
+    (item) => item.value === product.adminCategory[1]
+  )[0];
+
+  console.log(defaultSubCategory);
 
   return (
     <div className="lg:pr-10 mt-4 w-full mx-auto overflow-auto border border-black rounded p-6">
@@ -134,10 +152,8 @@ const EditAdminCategoryforSeller = ({ product }) => {
                 cursor: "pointer",
               }),
             }}
-            defaultValue={{
-              label: product?.categories[0]?.name,
-              value: product?.categories[0]?.name,
-            }}
+            isLoading={loadingMega}
+            defaultValue={defaultMegaCategory}
             name="adminMegaCategory"
             required
             onChange={handleSelectChange}
@@ -161,16 +177,17 @@ const EditAdminCategoryforSeller = ({ product }) => {
                   cursor: "pointer",
                 }),
               }}
-              defaultValue={{
-                label: product?.categories[1]?.name,
-                value: product?.categories[1]?.name,
-              }}
+              // defaultValue={{
+              //   label: product?.categories[1]?.name,
+              //   value: product?.categories[1]?.name,
+              // }}
               // value={subCategorys}
               name="adminSubCategoryName"
               onChange={onHandleMiniCategorys}
               required
               options={subcategoryOption}
               placeholder="Select sub Category"
+              defaultValue={defaultSubCategory}
             />
           </div>
         </div>
@@ -192,10 +209,10 @@ const EditAdminCategoryforSeller = ({ product }) => {
                 }),
               }}
               // value={miniCategorys}
-              defaultValue={{
-                label: product?.categories[2]?.name,
-                value: product?.categories[2]?.name,
-              }}
+              // defaultValue={{
+              //   label: product?.categories[2]?.name,
+              //   value: product?.categories[2]?.name,
+              // }}
               name="adminMiniCategoryName"
               // required
               options={sortedMiniCategorys}
@@ -220,10 +237,10 @@ const EditAdminCategoryforSeller = ({ product }) => {
                 }),
               }}
               // value={extraCategorys}
-              defaultValue={{
-                label: product?.categories[3]?.name,
-                value: product?.categories[3]?.name,
-              }}
+              // defaultValue={{
+              //   label: product?.categories[3]?.name,
+              //   value: product?.categories[3]?.name,
+              // }}
               name="adminExtraCategoryName"
               // required
               options={sortedExtraCategorys}
