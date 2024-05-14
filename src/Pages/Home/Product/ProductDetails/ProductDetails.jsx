@@ -833,7 +833,32 @@ const ProductDetails = () => {
                       <p className="font-medium group-hover:text-blue-500 duration">
                         {product?.name?.slice(0, 50)}
                       </p>
-                      <p className="text-red-500">৳{product?.price}</p>
+                      {/* <p className="text-red-500">৳{product?.price}</p> */}
+
+                      <p className="tracking-wide ">
+                        {user ? (
+                          <div className="flex gap-3">
+                            <div className="">
+                              <span className="kalpurush">৳</span>{" "}
+                              <span>{user ? product?.price : 0}</span>
+                            </div>
+                            <del>
+                              {" "}
+                              ৳
+                              {product.discountPrice
+                                ? product.discountPrice
+                                : 0}
+                            </del>
+                          </div>
+                        ) : (
+                          <Link
+                            className="text-[12px] text-blue-500"
+                            to={"/sign-up"}
+                          >
+                            Login to view Price
+                          </Link>
+                        )}
+                      </p>
                     </div>
                   </Link>
                 ))}
