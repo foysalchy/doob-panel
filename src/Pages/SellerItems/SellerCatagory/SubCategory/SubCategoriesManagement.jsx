@@ -14,14 +14,18 @@ import { Link } from "react-router-dom";
 const SubCategoriesManagement = () => {
   const { shopInfo } = useContext(AuthContext);
   console.log(
-    `https://backend.doob.com.bd/api/v1/category/seller/sub/${shopInfo._id}`
+    `http://localhost:5001/api/v1/category/seller/sub/${shopInfo._id}`
   );
 
-  const { data: categories = [], refetch } = useQuery({
+  const {
+    data: categories = [],
+    refetch,
+    isLoading: loadingSubData,
+  } = useQuery({
     queryKey: ["categories"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/category/seller/sub/${shopInfo._id}`
+        `http://localhost:5001/api/v1/category/seller/sub/${shopInfo._id}`
       );
       const data = await res.json();
       return data;
@@ -101,10 +105,11 @@ const SubCategoriesManagement = () => {
           return (
             <li key={pageNumber}>
               <button
-                className={`block h-8 w-8 rounded border ${pageNumber === currentPage
-                  ? "border-blue-600 bg-blue-600 text-white"
-                  : "border-gray-900 bg-white text-center leading-8 text-gray-900"
-                  }`}
+                className={`block h-8 w-8 rounded border ${
+                  pageNumber === currentPage
+                    ? "border-blue-600 bg-blue-600 text-white"
+                    : "border-gray-900 bg-white text-center leading-8 text-gray-900"
+                }`}
                 onClick={() => handleChangePage(pageNumber)}
               >
                 {pageNumber}
@@ -128,16 +133,13 @@ const SubCategoriesManagement = () => {
   };
 
   const updateStatus = (id, status) => {
-    fetch(
-      `https://backend.doob.com.bd/api/v1/category/seller/sub/status/${id}`,
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ status }),
-      }
-    )
+    fetch(`http://localhost:5001/api/v1/category/seller/sub/status/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ status }),
+    })
       .then((res) => res.json())
       .then((data) => {
         Swal.fire(`Category disable ${status} `, "", "success");
@@ -167,18 +169,15 @@ const SubCategoriesManagement = () => {
     }).then((result) => {
       if (result.dismiss === Swal.DismissReason.timer) {
         // Timer completed, initiate the fetch for deletion
-        fetch(
-          `https://backend.doob.com.bd/api/v1/category/seller/sub/delete/${id}`,
-          {
-            method: "DELETE",
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        )
+        fetch(`http://localhost:5001/api/v1/category/seller/sub/delete/${id}`, {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
           .then((res) => res.json())
           .then((data) => {
-            Swal.fire("Seller Deleted", "", "success");
+            Swal.fire("Sub Category Deleted", "", "success");
             refetch();
           })
           .catch((error) => {
@@ -200,7 +199,7 @@ const SubCategoriesManagement = () => {
   const [editOn, setEditOn] = useState(false);
 
   const uploadImage = async (formData) => {
-    const url = `https://backend.doob.com.bd/api/v1/image/upload-image`;
+    const url = `http://localhost:5001/api/v1/image/upload-image`;
     const response = await fetch(url, {
       method: "POST",
       body: formData,
@@ -227,7 +226,7 @@ const SubCategoriesManagement = () => {
     console.log(data, id, "update");
 
     fetch(
-      `https://backend.doob.com.bd/api/v1/category/seller-update-subCategory?id=${id}`,
+      `http://localhost:5001/api/v1/category/seller-update-subCategory?id=${id}`,
       {
         method: "PUT",
         headers: {
@@ -245,7 +244,7 @@ const SubCategoriesManagement = () => {
         form.reset();
       });
 
-    // fetch(`https://backend.doob.com.bd/api/v1/admin/feature-image-update?id=${id}`, {
+    // fetch(`http://localhost:5001/api/v1/admin/feature-image-update?id=${id}`, {
     //     method: "PUT",
     //     headers: {
     //         "Content-Type": "application/json",
@@ -259,7 +258,7 @@ const SubCategoriesManagement = () => {
 
   const futuresUpdate = (id, status) => {
     fetch(
-      `https://backend.doob.com.bd/api/v1/category/seller-update-subCategory-feature?id=${id}&status=${status}`,
+      `http://localhost:5001/api/v1/category/seller-update-subCategory-feature?id=${id}&status=${status}`,
       {
         method: "PUT",
 
@@ -355,7 +354,7 @@ const SubCategoriesManagement = () => {
                 </th>
 
                 <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-800   ">
-                  Category Name
+                  Categories Name
                 </th>
 
                 {shopInfo.darazLogin && (
@@ -378,7 +377,11 @@ const SubCategoriesManagement = () => {
               </tr>
             </thead>
             <tbody className=" ">
-              {currentData?.length &&
+              {loadingSubData && (
+                <h2 className="text-center py-3">Loading Data......</h2>
+              )}
+              {!loadingSubData &&
+                currentData?.length &&
                 currentData?.map((warehouse, index) => (
                   <tr key={index + warehouse?._id + 1} className="border-b">
                     <td className="px-4 py-3">
@@ -413,10 +416,10 @@ const SubCategoriesManagement = () => {
                                   );
                                   const darazCategoryName =
                                     parsedMegaCategory &&
-                                      parsedMegaCategory.darazCategory
+                                    parsedMegaCategory.darazCategory
                                       ? JSON.parse(
-                                        parsedMegaCategory.darazCategory
-                                      ).name
+                                          parsedMegaCategory.darazCategory
+                                        ).name
                                       : null;
 
                                   return darazCategoryName;
@@ -452,10 +455,10 @@ const SubCategoriesManagement = () => {
                               );
                               const darazCategoryName =
                                 parsedMegaCategory &&
-                                  parsedMegaCategory.wocomarceCategory
+                                parsedMegaCategory.wocomarceCategory
                                   ? JSON.parse(
-                                    parsedMegaCategory.wocomarceCategory
-                                  ).name
+                                      parsedMegaCategory.wocomarceCategory
+                                    ).name
                                   : "Invalidate";
 
                               return darazCategoryName;
@@ -508,26 +511,29 @@ const SubCategoriesManagement = () => {
                               : true
                           )
                         }
-                        className={`${warehouse && warehouse.feature === "true"
-                          ? "bg-green-500"
-                          : "bg-red-500"
-                          } text-white ml-2 rounded capitalize px-3 py-1`}
+                        className={`${
+                          warehouse && warehouse.feature === "true"
+                            ? "bg-green-500"
+                            : "bg-red-500"
+                        } text-white ml-2 rounded capitalize px-3 py-1`}
                       >
                         futures
                       </button>
                     </td>
 
                     <div
-                      className={`fixed z-[100] flex items-center justify-center ${editOn?._id === warehouse?._id
-                        ? "opacity-1 visible"
-                        : "invisible opacity-0"
-                        } inset-0 bg-black/20 backdrop-blur-sm duration-100`}
+                      className={`fixed z-[100] flex items-center justify-center ${
+                        editOn?._id === warehouse?._id
+                          ? "opacity-1 visible"
+                          : "invisible opacity-0"
+                      } inset-0 bg-black/20 backdrop-blur-sm duration-100`}
                     >
                       <div
-                        className={`absolute md:w-[500px] w-full rounded-sm bg-white p-3 pb-5 text-center drop-shadow-2xl ${editOn?._id === warehouse?._id
-                          ? "scale-1 opacity-1 duration-300"
-                          : "scale-0 opacity-0 duration-150"
-                          } `}
+                        className={`absolute md:w-[500px] w-full rounded-sm bg-white p-3 pb-5 text-center drop-shadow-2xl ${
+                          editOn?._id === warehouse?._id
+                            ? "scale-1 opacity-1 duration-300"
+                            : "scale-0 opacity-0 duration-150"
+                        } `}
                       >
                         <svg
                           onClick={() => setEditOn(false)}

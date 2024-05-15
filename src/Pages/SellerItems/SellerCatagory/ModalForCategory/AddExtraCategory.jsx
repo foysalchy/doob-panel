@@ -84,6 +84,12 @@ const AddExtraCategory = () => {
     imageFormData.append("image", image.files[0]);
     const imageUrl = await uploadImage(imageFormData);
 
+    const selectedSUbs = subCategorys.find(
+      (item) => item?.subCategoryName === subCategoryName
+    );
+    // console.log(selectedSUbs?._id);
+
+    // return;
     const data = {
       img: imageUrl,
       megaCategory,
@@ -96,6 +102,7 @@ const AddExtraCategory = () => {
       extraCategoryName,
       darazCategory_id,
       status: true,
+      subCategoryId: selectedSUbs?._id,
     };
 
     const url = `https://backend.doob.com.bd/api/v1/category/seller/extra/add`;
@@ -156,9 +163,12 @@ const AddExtraCategory = () => {
     label: warehouse?.subCategoryName,
   }));
 
+  // console.log(subCategorys);
   const [miniCategories, setMiniCategories] = useState([]);
 
   const handleChangeSub = (value) => {
+    // console.log(value);
+
     const requestBody = {
       shopId: shopInfo._id,
       subCategoryName: value.value,

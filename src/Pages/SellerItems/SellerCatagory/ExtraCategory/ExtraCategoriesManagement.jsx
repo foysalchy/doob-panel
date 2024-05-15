@@ -399,9 +399,12 @@ const ExtraCategoriesManagement = () => {
                             <h2 className="font-medium text-gray-800  ">
                               {warehouse?.megaCategory &&
                                 JSON.parse(warehouse.megaCategory).name}
-                              <span>&gt;</span>
+                              <span>&gt;
+                                
+                              </span>
                               {warehouse?.subCategoryName}
-                              <span>&gt;</span>
+                              <span>
+                                &gt;</span>
                               {warehouse?.miniCategoryName}
                               <span>&gt;</span>
                               {warehouse?.extraCategoryName}
