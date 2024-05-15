@@ -78,7 +78,7 @@ const ReadyToShipModal = ({
     }
   };
 
-  // console.log(shipInfo);
+  console.log(orderInfo,'orderInfo');
 
   return (
     <div>

@@ -9,6 +9,7 @@ import ModalForCategory from "../ModalForCategory/ModalForCategory";
 import { useContext } from "react";
 import { AuthContext } from "../../../../AuthProvider/UserProvider";
 import { Link } from "react-router-dom";
+import Select from "react-select";
 // import EditWareHouse from './EditWareHouse';
 
 const MageCategoriesManagement = () => {
@@ -244,6 +245,12 @@ const MageCategoriesManagement = () => {
   };
 
   const [loading, setLoading] = useState(false);
+  // for update
+  const [wocomarce, setWocomarce] = useState(false);
+
+  const [daraz, setDaraz] = useState(false);
+
+  
   const handleEdit = async (e, id) => {
     e.preventDefault();
     setLoading(true);
@@ -281,6 +288,51 @@ const MageCategoriesManagement = () => {
         form.reset();
       });
   };
+
+  const handleButtonClick = (buttonName) => {
+    if (buttonName === "daraz") {
+      setDaraz(!daraz);
+    }
+    if (buttonName === "wocomarce") {
+      setWocomarce(!wocomarce);
+    }
+  };
+  const { data: darazData = [] } = useQuery({
+    queryKey: ["category"],
+    queryFn: async () => {
+      if (shopInfo.darazLogin) {
+        const res = await fetch(
+          `https://backend.doob.com.bd/api/v1/daraz/category/${shopInfo._id}`
+        );
+        const data = await res.json();
+        return data;
+      }
+
+      return [];
+    },
+  });
+
+  const { data: wooCategory = [] } = useQuery({
+    queryKey: ["wooCategory"],
+    queryFn: async () => {
+      if (shopInfo.wooLogin) {
+        const res = await fetch(
+          `https://backend.doob.com.bd/api/v1/woo/category?shopId=${shopInfo._id}`
+        );
+        const data = await res.json();
+        return data;
+      }
+
+      return [];
+    },
+  });
+
+  const option =
+    darazData.length &&
+    darazData?.map((warehouse) => ({
+      value: JSON.stringify(warehouse),
+      label: warehouse.name,
+    }));
 
   return (
     <div>
@@ -509,7 +561,7 @@ const MageCategoriesManagement = () => {
                             ></path>
                           </g>
                         </svg>
-
+                        {/* //! Edit Mega Category */}
                         <form onSubmit={(e) => handleEdit(e, warehouse?._id)}>
                           <h1 className="text-lg font-semibold text-center mb-4">
                             Edit Mega Category
@@ -542,7 +594,89 @@ const MageCategoriesManagement = () => {
                               className="border border-gray-500 p-1 rounded mb-3 w-full"
                             />
                           </div>
+                          {shopInfo.darazLogin && (
+                            <button
+                              type="button"
+                              className={
+                                !shopInfo.darazLogin
+                                  ? "hidden"
+                                  : "bg-gray-500 mt-4 w-full hover:bg-gray-700 text-white font-bold py-2 px-4 rounded"
+                              }
+                              onClick={() => handleButtonClick("daraz")}
+                            >
+                              Synchronize With Daraz
+                            </button>
+                          )}
+                          {daraz && shopInfo.darazLogin && (
+                            <div className="mt-4">
+                              <label className="text-sm">
+                                Select Daraz Category
+                              </label>
+                              <Select
+                                // menuPortalTarget={document.body}
+                                styles={{
+                                  control: (provided) => ({
+                                    ...provided,
+                                    cursor: "pointer",
+                                  }),
+                                  option: (provided) => ({
+                                    ...provided,
+                                    cursor: "pointer",
+                                  }),
+                                }}
+                                name="darazCategory"
+                                required
+                                options={option}
+                                placeholder="Please select"
+                              />
+                            </div>
+                          )}
 
+                          <br />
+
+                          {shopInfo.wooLogin && (
+                            <button
+                              type="button"
+                              className={
+                                shopInfo.wooLogin &&
+                                "bg-gray-500 w-full hover:bg-gray-700 text-white font-bold py-2 px-4 rounded mt-4"
+                              }
+                              onClick={() => handleButtonClick("wocomarce")}
+                            >
+                              Synchronize With Wocomarce
+                            </button>
+                          )}
+
+                          {wocomarce && shopInfo.wooLogin && (
+                            <div className={!wocomarce && "hidden"}>
+                              <label className="text-sm">
+                                Select Woocommerce Category
+                              </label>
+                              <Select
+                                styles={{
+                                  control: (provided) => ({
+                                    ...provided,
+                                    cursor: "pointer",
+                                  }),
+                                  option: (provided) => ({
+                                    ...provided,
+                                    cursor: "pointer",
+                                  }),
+                                }}
+                                name="wocomarceCategory"
+                                required
+                                options={
+                                  wooCategory?.categories?.length &&
+                                  wooCategory?.categories?.map((warehouse) => ({
+                                    value: JSON.stringify(warehouse),
+                                    label: warehouse.name,
+                                  }))
+                                }
+                                placeholder="Please select"
+                              />
+                            </div>
+                          )}
+                          <br />
                           <br />
                           <div className="flex justify-start">
                             <button

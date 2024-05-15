@@ -48,6 +48,8 @@ const AddMagaCategory = () => {
     },
   });
 
+  console.log(wooCategory?.categories);
+
   const [daraz, setDaraz] = useState(false);
   const [wocomarce, setWocomarce] = useState(false);
 
@@ -252,8 +254,8 @@ const AddMagaCategory = () => {
               name="wocomarceCategory"
               required
               options={
-                wooCategory.categories.length &&
-                categories?.map((warehouse) => ({
+                wooCategory?.categories?.length &&
+                wooCategory?.categories?.map((warehouse) => ({
                   value: JSON.stringify(warehouse),
                   label: warehouse.name,
                 }))
