@@ -16,7 +16,11 @@ const MageCategoriesManagement = () => {
   const { shopInfo } = useContext(AuthContext);
   const [newImage, setNewImage] = useState(false);
 
-  const { data: categories = [], refetch } = useQuery({
+  const {
+    data: categories = [],
+    refetch,
+    isLoading: megaLoading,
+  } = useQuery({
     queryKey: ["categories"],
     queryFn: async () => {
       const res = await fetch(
@@ -97,10 +101,11 @@ const MageCategoriesManagement = () => {
           return (
             <li key={pageNumber}>
               <button
-                className={`block h-8 w-8 rounded border ${pageNumber === currentPage
-                  ? "border-blue-600 bg-blue-600 text-white"
-                  : "border-gray-900 bg-white text-center leading-8 text-gray-900"
-                  }`}
+                className={`block h-8 w-8 rounded border ${
+                  pageNumber === currentPage
+                    ? "border-blue-600 bg-blue-600 text-white"
+                    : "border-gray-900 bg-white text-center leading-8 text-gray-900"
+                }`}
                 onClick={() => handleChangePage(pageNumber)}
               >
                 {pageNumber}
@@ -375,7 +380,11 @@ const MageCategoriesManagement = () => {
               </tr>
             </thead>
             <tbody>
-              {currentData?.length &&
+              {megaLoading && (
+                <h2 className="text-center py-3">Loading data ...</h2>
+              )}
+              {!megaLoading &&
+                currentData?.length &&
                 currentData?.map((warehouse, index) => (
                   <tr key={index + warehouse?._id + 1} className="">
                     <td className="px-4 py-3">
@@ -433,8 +442,9 @@ const MageCategoriesManagement = () => {
                             warehouse?.feature ? false : true
                           )
                         }
-                        className={`${warehouse?.feature ? "bg-green-500" : "bg-red-500"
-                          } text-white ml-2 rounded capitalize px-3 py-1`}
+                        className={`${
+                          warehouse?.feature ? "bg-green-500" : "bg-red-500"
+                        } text-white ml-2 rounded capitalize px-3 py-1`}
                       >
                         futures
                       </button>
@@ -445,8 +455,9 @@ const MageCategoriesManagement = () => {
                             warehouse?.menu ? false : true
                           )
                         }
-                        className={`${warehouse?.menu ? "bg-green-500" : "bg-red-500"
-                          } text-white ml-2 rounded capitalize px-3 py-1`}
+                        className={`${
+                          warehouse?.menu ? "bg-green-500" : "bg-red-500"
+                        } text-white ml-2 rounded capitalize px-3 py-1`}
                       >
                         menu
                       </button>
@@ -469,16 +480,18 @@ const MageCategoriesManagement = () => {
                     </td>
 
                     <div
-                      className={`fixed z-[100] flex items-center justify-center ${editOn?._id === warehouse?._id
-                        ? "opacity-1 visible"
-                        : "invisible opacity-0"
-                        } inset-0 bg-black/20 backdrop-blur-sm duration-100`}
+                      className={`fixed z-[100] flex items-center justify-center ${
+                        editOn?._id === warehouse?._id
+                          ? "opacity-1 visible"
+                          : "invisible opacity-0"
+                      } inset-0 bg-black/20 backdrop-blur-sm duration-100`}
                     >
                       <div
-                        className={`absolute md:w-[500px] w-full rounded-sm bg-white p-3 pb-5 text-center drop-shadow-2xl ${editOn?._id === warehouse?._id
-                          ? "scale-1 opacity-1 duration-300"
-                          : "scale-0 opacity-0 duration-150"
-                          } `}
+                        className={`absolute md:w-[500px] w-full rounded-sm bg-white p-3 pb-5 text-center drop-shadow-2xl ${
+                          editOn?._id === warehouse?._id
+                            ? "scale-1 opacity-1 duration-300"
+                            : "scale-0 opacity-0 duration-150"
+                        } `}
                       >
                         <svg
                           onClick={() => setEditOn(false)}

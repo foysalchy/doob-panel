@@ -3,14 +3,14 @@ import { SortableContainer, SortableElement } from 'react-sortable-hoc';
 import { arrayMoveImmutable } from 'array-move';
 import { AiOutlineCloudUpload } from "react-icons/ai";
 
-const SortableItem = SortableElement(({ value, onRemove, id }) => {
+const SortableItem = SortableElement(({ value, onRemove, index, idx }) => {
     console.log(value, '***');
     return (
         <div className="relative h-[100px] rounded object-cover" style={{ margin: '5px', border: '1px solid #ccc', padding: '2px' }}>
             <button
                 type="button"
                 className='bg-red-500 text-white w-[20px] h-[20px] flex items-center justify-center absolute rounded-full'
-                onClick={() => onRemove(id)}
+                onClick={() => onRemove(idx)}
                 style={{ top: '5px', right: '5px' }}
             >
                 x
@@ -30,7 +30,7 @@ const SortableList = SortableContainer(({ items, onRemove }) => {
                     {items.map((value, index) => {
                         console.log('value : ', value);
                         return (
-                            <SortableItem key={`item-${index}`} id={index} value={value} onRemove={onRemove} />
+                            <SortableItem key={`item-${index}`} index={index} idx={index} value={value} onRemove={onRemove} />
                         )
                     })}
                 </div>
