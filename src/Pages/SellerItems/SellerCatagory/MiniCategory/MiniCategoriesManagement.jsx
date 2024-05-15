@@ -214,7 +214,7 @@ const MiniCategoriesManagement = () => {
     console.log(data, id, "update");
 
     fetch(
-      `http://localhost:5001/api/v1/category/seller-update-miniCategory?id=${id}`,
+      `https://backend.doob.com.bd/api/v1/category/seller-update-miniCategory?id=${id}`,
       {
         method: "PUT",
         headers: {
@@ -235,7 +235,7 @@ const MiniCategoriesManagement = () => {
 
   const futuresUpdate = (id, status) => {
     fetch(
-      `http://localhost:5001/api/v1/category/seller-update-miniCategory-feature?id=${id}&status=${status}`,
+      `https://backend.doob.com.bd/api/v1/category/seller-update-miniCategory-feature?id=${id}&status=${status}`,
       {
         method: "PUT",
 

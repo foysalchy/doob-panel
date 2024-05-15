@@ -24,7 +24,7 @@ const MageCategoriesManagement = () => {
     queryKey: ["categories"],
     queryFn: async () => {
       const res = await fetch(
-        `http://localhost:5001/api/v1/category/seller/${shopInfo._id}`
+        `https://backend.doob.com.bd/api/v1/category/seller/${shopInfo._id}`
       );
       const data = await res.json();
       return data;
@@ -129,7 +129,7 @@ const MageCategoriesManagement = () => {
   };
 
   const updateStatus = (id, status) => {
-    fetch(`http://localhost:5001/api/v1/category/seller/status/${id}`, {
+    fetch(`https://backend.doob.com.bd/api/v1/category/seller/status/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -166,7 +166,7 @@ const MageCategoriesManagement = () => {
       if (result.dismiss === Swal.DismissReason.timer) {
         // Timer completed, initiate the fetch for deletion
         fetch(
-          `http://localhost:5001/api/v1/category/seller/delete/${id}`,
+          `https://backend.doob.com.bd/api/v1/category/seller/delete/${id}`,
           {
             method: "DELETE",
             headers: {
@@ -194,7 +194,7 @@ const MageCategoriesManagement = () => {
 
   const futuresUpdate = (id, status) => {
     fetch(
-      `http://localhost:5001/api/v1/category/seller/category/updateStatus?id=${id}`,
+      `https://backend.doob.com.bd/api/v1/category/seller/category/updateStatus?id=${id}`,
       {
         method: "PUT",
 
@@ -214,7 +214,7 @@ const MageCategoriesManagement = () => {
   const menuUpdate = (id, status) => {
     console.log(id, status, "dsfa");
     fetch(
-      `http://localhost:5001/api/v1/category/seller/category/updateStatus?id=${id}`,
+      `https://backend.doob.com.bd/api/v1/category/seller/category/updateStatus?id=${id}`,
       {
         method: "PUT",
 
@@ -233,7 +233,7 @@ const MageCategoriesManagement = () => {
   };
 
   const uploadImage = async (formData) => {
-    const url = `http://localhost:5001/api/v1/image/upload-image`;
+    const url = `https://backend.doob.com.bd/api/v1/image/upload-image`;
     const response = await fetch(url, {
       method: "POST",
       body: formData,
@@ -263,7 +263,7 @@ const MageCategoriesManagement = () => {
     console.log(data, id, "update");
 
     fetch(
-      `http://localhost:5001/api/v1/category/seller-update-megaCategory?id=${id}`,
+      `https://backend.doob.com.bd/api/v1/category/seller-update-megaCategory?id=${id}`,
       {
         method: "PUT",
         headers: {
