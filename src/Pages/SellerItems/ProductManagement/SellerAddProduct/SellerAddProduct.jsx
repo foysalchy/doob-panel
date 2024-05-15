@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { useState } from "react";
 import { BsArrowRight } from "react-icons/bs";
 import { AuthContext } from "../../../../AuthProvider/UserProvider";
@@ -34,6 +34,7 @@ const SellerAddProduct = () => {
   const [youtube, setYoutube] = useState("");
   const [multiVendor, setMultiVendor] = useState(adminWare);
   const [allImage, setAllImage] = useState([]);
+  const [checkAlert, setCheckAlert] = useState(false);
   const [inputFields, setInputFields] = useState([
     {
       name: "",
@@ -134,6 +135,20 @@ const SellerAddProduct = () => {
     datazCategory?.length &&
     datazCategory?.filter((item) => !ourData.includes(item.label));
 
+
+
+  useEffect(() => {
+    if (allImage.length < 2) {
+      console.log(allImage.length, 'test......');
+      setCheckAlert(true);
+    } else {
+      setCheckAlert(false)
+    }
+
+    console.log('alert', checkAlert);
+  }, [allImage])
+
+
   const formSubmit = async (e) => {
     setLoading(true);
     e.preventDefault();
@@ -203,54 +218,6 @@ const SellerAddProduct = () => {
 
     const formData = new FormData();
 
-    const additionalPhotos = [
-      form.coverPhoto,
-      form.photo1,
-      form.photo2,
-      form.photo3,
-      form.photo4,
-      form.photo5,
-      form.photo6,
-      form.photo7,
-    ];
-    console.log(allImage, 'is file');
-    allImage.forEach((image) => {
-      console.log(image?.file);
-    })
-    // const firstFile =
-    //   additionalPhotos.length > 0 &&
-    //   additionalPhotos[0].length > 0 &&
-    //   additionalPhotos[0][0].files[0];
-
-    // if (firstFile) {
-    //   console.log(firstFile);
-    // }
-
-    // const uploadedImageUrls = await Promise.all(
-    //   allImage
-    //     ?.filter(
-    //       (fileInputArray) =>
-    //         fileInputArray.length > 0 && fileInputArray[0]?.file?.files[0]
-    //     )
-    //     .map(async (fileInputArray, index) => {
-    //       const file = fileInputArray[0]?.file?.files[0];
-    //       let imageUrl;
-    //       if (file) {
-    //         if (!daraz) {
-    //           imageUrl = await imageUpload(file);
-    //         } else {
-    //           imageUrl = await DarazImage(file);
-    //         }
-    //         formData.append(`photo${index + 2}`, imageUrl);
-    //         return {
-    //           name: `photo ${index}`,
-    //           src: imageUrl,
-    //         };
-    //       }
-    //       return null;
-    //     })
-    // );
-
     let galleryImageUrls = [];
     for (let i = 0; i < allImage.length; i++) {
       // const imageUrl = await uploadImage(images[i].file);
@@ -267,7 +234,6 @@ const SellerAddProduct = () => {
       };
       galleryImageUrls.push(imgArray);
     }
-    console.log(galleryImageUrls, 'test......');
 
     const data = {
       videoUrl: youtube,
@@ -320,7 +286,7 @@ const SellerAddProduct = () => {
       createdAt: Date.now(),
       // updatedAt,
       featuredImage: galleryImageUrls[0],
-      images: galleryImageUrls,
+      images: galleryImageUrls.slice(1),
       videos: youtube,
       // attributes,
       variations: inputFields,
@@ -466,23 +432,18 @@ const SellerAddProduct = () => {
           ) : (
             <button
               type="submit"
-              // disabled={loading || coverPhoto}
-              className={
-                loading || coverPhoto
-                  ? "group relative cursor-pointer inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none mt-4 "
-                  : "group relative inline-flex items-center overflow-hidden rounded bg-gray-700 px-8 py-3 text-white focus:outline-none mt-4 cursor-not-allowed"
-              }
+              disabled={allImage.length < 3}
+              className={`${loading || coverPhoto ? 'group relative cursor-pointer inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none mt-4' : 'group relative inline-flex items-center overflow-hidden rounded bg-gray-700 px-8 py-3 text-white focus:outline-none mt-4 cursor-not-allowed'} ${allImage.length < 3 ? 'bg-red-500 cursor-not-allowed' : 'bg-gray-700 cursor-pointer'
+                }`}
             >
               <span className="absolute -end-full transition-all group-hover:end-4">
                 <BsArrowRight />
               </span>
-
               <span className="text-sm font-medium transition-all group-hover:me-4">
                 Upload Product
               </span>
             </button>
           )}
-
         </div>
       </form>
     </div>
