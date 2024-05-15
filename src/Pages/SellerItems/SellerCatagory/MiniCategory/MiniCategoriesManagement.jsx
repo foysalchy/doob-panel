@@ -38,7 +38,7 @@ const MiniCategoriesManagement = () => {
 
         try {
           parsedDarazCategory = JSON.parse(filteredItem?.darazCategory);
-        } catch (error) { }
+        } catch (error) {}
 
         return {
           ...filteredItem,
@@ -88,10 +88,11 @@ const MiniCategoriesManagement = () => {
           return (
             <li key={pageNumber}>
               <button
-                className={`block h-8 w-8 rounded border ${pageNumber === currentPage
-                  ? "border-blue-600 bg-blue-600 text-white"
-                  : "border-gray-900 bg-white text-center leading-8 text-gray-900"
-                  }`}
+                className={`block h-8 w-8 rounded border ${
+                  pageNumber === currentPage
+                    ? "border-blue-600 bg-blue-600 text-white"
+                    : "border-gray-900 bg-white text-center leading-8 text-gray-900"
+                }`}
                 onClick={() => handleChangePage(pageNumber)}
               >
                 {pageNumber}
@@ -213,7 +214,7 @@ const MiniCategoriesManagement = () => {
     console.log(data, id, "update");
 
     fetch(
-      `https://backend.doob.com.bd/api/v1/category/seller-update-miniCategory?id=${id}`,
+      `http://localhost:5001/api/v1/category/seller-update-miniCategory?id=${id}`,
       {
         method: "PUT",
         headers: {
@@ -234,7 +235,7 @@ const MiniCategoriesManagement = () => {
 
   const futuresUpdate = (id, status) => {
     fetch(
-      `https://backend.doob.com.bd/api/v1/category/seller-update-miniCategory-feature?id=${id}&status=${status}`,
+      `http://localhost:5001/api/v1/category/seller-update-miniCategory-feature?id=${id}&status=${status}`,
       {
         method: "PUT",
 
@@ -323,7 +324,6 @@ const MiniCategoriesManagement = () => {
         </div>
 
         <div className="flex flex-col mt-6">
-
           <div className="overflow-x-auto border border-gray-300 rounded-lg overflow-y-none">
             <table className="table-auto w-full text-left whitespace-wrap">
               <thead>
@@ -371,11 +371,9 @@ const MiniCategoriesManagement = () => {
                         <td className="px-2 py-3  ">
                           <h2 className="font-medium text-gray-800  ">
                             {warehouse?.megaCategory &&
-                              JSON.parse(warehouse.megaCategory)
-                                .name}{" "}
+                              JSON.parse(warehouse.megaCategory).name}{" "}
                             <span>&gt;</span>
-                            {warehouse?.subCategoryName}{" "}
-                            <span>&gt;</span>{" "}
+                            {warehouse?.subCategoryName} <span>&gt;</span>{" "}
                             {warehouse?.miniCategoryName}
                           </h2>
                         </td>
@@ -392,10 +390,10 @@ const MiniCategoriesManagement = () => {
                                       );
                                       const darazCategoryName =
                                         parsedMegaCategory &&
-                                          parsedMegaCategory.darazCategory
+                                        parsedMegaCategory.darazCategory
                                           ? JSON.parse(
-                                            parsedMegaCategory.darazCategory
-                                          ).name
+                                              parsedMegaCategory.darazCategory
+                                            ).name
                                           : "Invalidate";
 
                                       return darazCategoryName;
@@ -413,9 +411,8 @@ const MiniCategoriesManagement = () => {
                                   <span>
                                     &gt;{" "}
                                     {
-                                      JSON.parse(
-                                        warehouse?.darazMiniCategory
-                                      ).name
+                                      JSON.parse(warehouse?.darazMiniCategory)
+                                        .name
                                     }
                                   </span>
                                 )}
@@ -426,9 +423,8 @@ const MiniCategoriesManagement = () => {
                                   <span>
                                     &gt;{" "}
                                     {
-                                      JSON.parse(
-                                        warehouse?.darazMiniCategory
-                                      )?.child?.name
+                                      JSON.parse(warehouse?.darazMiniCategory)
+                                        ?.child?.name
                                     }
                                   </span>
                                 )}
@@ -448,18 +444,15 @@ const MiniCategoriesManagement = () => {
                                   );
                                   const darazCategoryName =
                                     parsedMegaCategory &&
-                                      parsedMegaCategory.wocomarceCategory
+                                    parsedMegaCategory.wocomarceCategory
                                       ? JSON.parse(
-                                        parsedMegaCategory.wocomarceCategory
-                                      ).name
+                                          parsedMegaCategory.wocomarceCategory
+                                        ).name
                                       : "Invalidate";
 
                                   return darazCategoryName;
                                 } catch (error) {
-                                  console.error(
-                                    "Error parsing JSON:",
-                                    error
-                                  );
+                                  console.error("Error parsing JSON:", error);
                                   return null;
                                 }
                               })()}{" "}
@@ -469,9 +462,7 @@ const MiniCategoriesManagement = () => {
                         <td className="px-4 py-3">
                           {!warehouse?.status ? (
                             <button
-                              onClick={() =>
-                                updateStatus(warehouse?._id, true)
-                              }
+                              onClick={() => updateStatus(warehouse?._id, true)}
                               className="inline-flex items-center justify-center py-1 px-4 bg-red-500 rounded shadow-md hover:bg-red-700 focus:shadow-outline focus:outline-none"
                             >
                               Disable
@@ -507,26 +498,29 @@ const MiniCategoriesManagement = () => {
                                   : true
                               )
                             }
-                            className={`${warehouse && warehouse.feature === "true"
-                              ? "bg-green-500"
-                              : "bg-red-500"
-                              } text-white ml-2 rounded capitalize px-3 py-1`}
+                            className={`${
+                              warehouse && warehouse.feature === "true"
+                                ? "bg-green-500"
+                                : "bg-red-500"
+                            } text-white ml-2 rounded capitalize px-3 py-1`}
                           >
                             futures
                           </button>
                         </td>
 
                         <div
-                          className={`fixed z-[100] flex items-center justify-center ${editOn?._id === warehouse?._id
-                            ? "opacity-1 visible"
-                            : "invisible opacity-0"
-                            } inset-0 bg-black/20 backdrop-blur-sm duration-100`}
+                          className={`fixed z-[100] flex items-center justify-center ${
+                            editOn?._id === warehouse?._id
+                              ? "opacity-1 visible"
+                              : "invisible opacity-0"
+                          } inset-0 bg-black/20 backdrop-blur-sm duration-100`}
                         >
                           <div
-                            className={`absolute md:w-[500px] w-full rounded-sm bg-white p-3 pb-5 text-center drop-shadow-2xl ${editOn?._id === warehouse?._id
-                              ? "scale-1 opacity-1 duration-300"
-                              : "scale-0 opacity-0 duration-150"
-                              } `}
+                            className={`absolute md:w-[500px] w-full rounded-sm bg-white p-3 pb-5 text-center drop-shadow-2xl ${
+                              editOn?._id === warehouse?._id
+                                ? "scale-1 opacity-1 duration-300"
+                                : "scale-0 opacity-0 duration-150"
+                            } `}
                           >
                             <svg
                               onClick={() => setEditOn(false)}
@@ -549,9 +543,7 @@ const MiniCategoriesManagement = () => {
                             </svg>
 
                             <form
-                              onSubmit={(e) =>
-                                handleEdit(e, warehouse?._id)
-                              }
+                              onSubmit={(e) => handleEdit(e, warehouse?._id)}
                             >
                               <h1 className="text-lg font-semibold text-center mb-4">
                                 Edit Mini Category
@@ -562,10 +554,7 @@ const MiniCategoriesManagement = () => {
                                 className="w-[100px] h-[100px] rounded"
                               />
                               <div className="flex flex-col items-start gap-1">
-                                <label
-                                  className="text-start"
-                                  htmlFor="photo"
-                                >
+                                <label className="text-start" htmlFor="photo">
                                   Photo
                                 </label>
                                 <input
@@ -576,10 +565,7 @@ const MiniCategoriesManagement = () => {
                               </div>
 
                               <div className="flex flex-col items-start gap-1">
-                                <label
-                                  className="text-start"
-                                  htmlFor="photo"
-                                >
+                                <label className="text-start" htmlFor="photo">
                                   Name
                                 </label>
                                 <input
