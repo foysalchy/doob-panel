@@ -86,6 +86,7 @@ const AddMiniCategory = () => {
     imageFormData.append("image", image.files[0]);
     const imageUrl = await uploadImage(imageFormData);
 
+    // console.log(JSON.parse(megaCategory)._id);
     const data = {
       img: imageUrl,
       megaCategory,
@@ -97,9 +98,12 @@ const AddMiniCategory = () => {
       darazCategory_id,
       status: true,
       subCategoryId: miniCategoryId,
+      megaCategoryId: JSON.parse(megaCategory)._id,
     };
 
     console.log(data, "net check......");
+
+    return;
 
     const url = `https://backend.doob.com.bd/api/v1/category/seller/mini/add`;
 
