@@ -1,220 +1,180 @@
-import React from 'react';
-import { useState } from 'react';
-import { DndContext, closestCenter } from '@dnd-kit/core';
-import DragImgBox from './DragImgBox';
-import { arrayMove } from '@dnd-kit/sortable';
+import React, { useState } from 'react';
+import { SortableContainer, SortableElement } from 'react-sortable-hoc';
+import { arrayMoveImmutable } from 'array-move';
+import { AiOutlineCloudUpload } from "react-icons/ai";
 
-const UploadImage = ({ allImage, setAllImage, coverPhoto, setCoverPhoto, youtube, setYoutube }) => {
+const SortableItem = SortableElement(({ value, onRemove, id }) => {
+    console.log(value, '***');
+    return (
+        <div className="relative h-[100px] rounded object-cover" style={{ margin: '5px', border: '1px solid #ccc', padding: '2px' }}>
+            <button
+                type="button"
+                className='bg-red-500 text-white w-[20px] h-[20px] flex items-center justify-center absolute rounded-full'
+                onClick={() => onRemove(id)}
+                style={{ top: '5px', right: '5px' }}
+            >
+                x
+            </button>
+            <img src={value?.url} alt="Uploaded" className="max-w-full object-cover w-full h-full max-h-full" />
+        </div>
 
-    // const [photo1, setPhoto1] = useState('');
-    // const [photo2, setPhoto2] = useState('');
-    // const [photo3, setPhoto3] = useState('');
-    // const [photo4, setPhoto4] = useState('');
-    // const [photo5, setPhoto5] = useState('');
-    // const [photo6, setPhoto6] = useState('');
-    // const [photo7, setPhoto7] = useState('');
-    const [image, setImage] = useState([]);
-    const [deletItem, setDeletItem] = useState('');
-    const [youtubeError, setYoutubeError] = useState('')
+    )
+});
 
+const SortableList = SortableContainer(({ items, onRemove }) => {
+    return (
+        <div className="w-full mt-6">
+            {/* <h2 className="">total {items.length} images uploaded</h2> */}
+            {items.length ? (
+                <div className=" rounded grid grid-cols-8">
+                    {items.map((value, index) => {
+                        console.log('value : ', value);
+                        return (
+                            <SortableItem key={`item-${index}`} id={index} value={value} onRemove={onRemove} />
+                        )
+                    })}
+                </div>
+            ) : (
+                ''
+            )}
+        </div>
+    );
+});
+
+const UploadImage = ({ allImage, setAllImage, youtube, setYoutube }) => {
+    const [isDraggingOver, setIsDraggingOver] = useState(false);
+    const [youtubeError, setYoutubeError] = useState('');
 
     const handleCheck = (value) => {
-        console.log(value);
         const youtubeRegex = /^(https?:\/\/)?(www\.)?(youtube\.com\/(v\/|watch\?v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
-
-
         const isYoutube = youtubeRegex.test(value);
-        console.log(isYoutube);
+
         if (isYoutube) {
-            setYoutube(value)
-            setYoutubeError('')
+            setYoutube(value);
+            setYoutubeError('');
+        } else {
+            setYoutubeError('Provide Youtube Video URL');
         }
-        else {
-            setYoutubeError('Provide Youtube Video URl')
-        }
-    }
-
-    const [activeId, setActiveId] = useState(null);
-
-    const handleDragStart = (event) => {
-        setDeletItem(event.target.id);
-        setActiveId(event.target.src)
-        event.dataTransfer.setData("index", event.target.id);
     };
 
+    const handleFileUpload = (e) => {
+        const filesList = Array.from(e.target.files);
+        // const urls = files.map(file => { url: URL.createObjectURL(file), file });
 
-    // ============= upload image drag and drop===============//
+        const newImages = filesList.map((file) => ({
+            file: file,
+            url: URL.createObjectURL(file),
+        }));
+        // setImages([...images, ...newImages]);
 
+        console.log('url', newImages);
+        setAllImage([...allImage, ...newImages]);
+    };
+
+    const onSortEnd = ({ oldIndex, newIndex }) => {
+        const newData = arrayMoveImmutable(allImage, oldIndex, newIndex);
+        setAllImage(newData);
+    };
 
     const handleDrop = (e) => {
         e.preventDefault();
-        const files = [...e.dataTransfer.files];
-        handleFiles(files);
-    };
+        setIsDraggingOver(false);
+        const filesList = Array.from(e.dataTransfer.files);
+        // const urls = files.map(file => { url: URL.createObjectURL(file), file });
 
-    const handleFiles = (files) => {
-        const newImages = files.map((file) => ({
-            file,
-            preview: URL.createObjectURL(file),
+        const newImages = filesList.map((file) => ({
+            file: file,
+            url: URL.createObjectURL(file),
         }));
-        setAllImage((prevImages) => [...prevImages, ...newImages]);
+        // setImages([...images, ...newImages]);
+
+        console.log('url', newImages);
+        setAllImage([...allImage, ...newImages]);
     };
 
-    const handleUploadClick = () => {
-
-
-
-        console.log('uploaded images ===== ', allImage);
-        // Here you can send images to the server or perform any other action with the images
-    };
-
-
-    //============ dragable ===============//
-    const [test, setTest] = useState([
-        'coverPhoto',
-        'photo2',
-        'photo3',
-        'photo4',
-        'photo5',
-        'photo6',
-        'photo7'
-
-    ])
-
-    const [images, setImages] = useState(Array(allImage.length).fill(null));
-
-    const handleImageChange = (index, event) => {
-        const file = event.target.files[0];
-        const newImages = [...images];
-        newImages[index] = URL.createObjectURL(file);
-        setImages(newImages);
-    };
-
-
-
-    const [dragIndex, setDragIndex] = useState();
-    const [dragOverIndex, setDragOverIndex] = useState();
-
-    const handleDragStart2 = (index) => {
-        setDragIndex(index);
-    }
-    const handleDragOver2 = (e) => {
+    const handleDragOver = (e) => {
         e.preventDefault();
-    }
-
-    const handleDrop2 = () => {
-        const _test = [...allImage];
-        const item = _test.splice(dragIndex, 1);
-        _test.splice(dragOverIndex, 0, item);
-
-        setAllImage(_test);
-    }
-
-    const handleDragEnter = (index) => {
-        setDragOverIndex(index);
-    }
-
-    const handleDragLeave = () => {
-        setDragIndex(undefined);
-    }
-
-    // const handleDragEnd = () => {
-    //     setDragIndex(undefined);
-    //     setDragOverIndex(undefined);
-    // }
-
-
-    const handleDragEnd = () => {
-        setDragIndex(undefined);
-        setDragOverIndex(undefined);
-        setImages(allImage.map((itm, index) => {
-            if (index === dragIndex) {
-                return allImage[dragOverIndex].preview;
-            }
-            if (index === dragOverIndex) {
-                return allImage[dragIndex].preview;
-            }
-            return itm.preview;
-        }));
-
-        console.log('end image:::', images);
+        setIsDraggingOver(true);
     };
 
+    const handleDragLeave = (e) => {
+        e.preventDefault();
+        setIsDraggingOver(false);
+    };
 
-    console.log(allImage, 'is file');
+    const handleRemoveImage = (index) => {
+        const updatedImages = allImage.filter((_, idx) => idx !== index);
+        setAllImage(updatedImages);
+    };
 
     return (
         <div>
-            {/* image drag and drop */}
-            <div className="flex flex-col items-center mt-4">
+            <div className=''>
+                {/* <h2 className="mt-4 mb-8 text-center font-bold text-3xl">Draggable Cards</h2> */}
                 <div
-                    className="border border-gray-400 relative overflow-hidden border-dashed rounded-lg w-64 h-64 flex flex-col items-center justify-center"
+                    className={`border-2 border-dashed px-3 overflow-hidden relative py-6 ${isDraggingOver ? 'border-red-500 bg-[#ff007717]' : 'border-gray-400 bg-[#ffffff]'} mb-4 min:h-[220px] flex flex-col items-center justify-center w-full mx-auto rounded-xl`}
                     onDrop={handleDrop}
-                    onDragOver={(e) => e.preventDefault()}
+                    onDragOver={handleDragOver}
+                    onDragLeave={handleDragLeave}
                 >
-                    <span className="text-gray-400">Drag & Drop Images Here</span>
-                </div>
+                    <input
+                        type="file"
+                        accept="image/*"
+                        multiple
+                        className="hidden"
+                        onChange={handleFileUpload}
+                        id="fileInput"
+                    />
+                    <label
+                        htmlFor="fileInput"
+                        className="text-center  top-0 left-0 right-0 bottom-0   w-full h-full cursor-pointer flex flex-col justify-center hover:bg-none items-center"
+                    >
+                        <AiOutlineCloudUpload className='text-5xl text-center' />
+                        Drop files here or click to upload
+                        {allImage.length < 3 && <small className={`flex items-center gap-2 mt-3  ${allImage.length < 3 ? 'text-red-500 font-semibold text-md' : 'text-gray-500'}`}> {allImage.length < 3 &&
+                            <svg
+                                width="18"
+                                height="18"
+                                viewBox="0 0 18 18"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                            >
+                                <path
+                                    d="M17.0156 11.6156L10.9969 1.93125C10.5188 1.28437 9.78752 0.91875 9.00002 0.91875C8.18439 0.91875 7.45314 1.28437 7.00314 1.93125L0.984395 11.6156C0.421895 12.375 0.33752 13.3594 0.759395 14.2031C1.18127 15.0469 2.02502 15.5813 2.98127 15.5813H15.0188C15.975 15.5813 16.8188 15.0469 17.2406 14.2031C17.6625 13.3875 17.5781 12.375 17.0156 11.6156ZM16.1156 13.6406C15.8906 14.0625 15.4969 14.3156 15.0188 14.3156H2.98127C2.50315 14.3156 2.10939 14.0625 1.88439 13.6406C1.68752 13.2188 1.71564 12.7406 1.99689 12.375L8.01564 2.69062C8.24064 2.38125 8.60627 2.18437 9.00002 2.18437C9.39377 2.18437 9.75939 2.35312 9.9844 2.69062L16.0031 12.375C16.2844 12.7406 16.3125 13.2188 16.1156 13.6406Z"
+                                    fill="currentColor"
+                                />
+                                <path
+                                    d="M8.9999 6.15002C8.6624 6.15002 8.35303 6.43127 8.35303 6.79689V9.86252C8.35303 10.2 8.63428 10.5094 8.9999 10.5094C9.36553 10.5094 9.64678 10.2281 9.64678 9.86252V6.76877C9.64678 6.43127 9.3374 6.15002 8.9999 6.15002Z"
+                                    fill="currentColor"
+                                />
+                                <path
+                                    d="M8.9999 11.25C8.6624 11.25 8.35303 11.5313 8.35303 11.8969V12.0375C8.35303 12.375 8.63428 12.6844 8.9999 12.6844C9.36553 12.6844 9.64678 12.4031 9.64678 12.0375V11.8688C9.64678 11.5313 9.3374 11.25 8.9999 11.25Z"
+                                    fill="currentColor"
+                                />
+                            </svg>} Please upload at least 3 images</small>}
 
-                <div className="mt-4 grid grid-cols-9 gap-4">
-                    {allImage.map((image, index) => (
-                        <div key={index} className="relative">
-                            <img
-                                src={image.preview}
-                                alt={`Preview ${index}`}
-                                className="w-full h-full object-cover rounded-lg"
-                            />
-                        </div>
-                    ))}
+                    </label>
+                    <SortableList
+                        items={allImage}
+                        onSortEnd={onSortEnd}
+                        onRemove={handleRemoveImage}
+                        axis="x"
+                        lockAxis="x"
+                    />
                 </div>
-                <button
-                    onClick={handleUploadClick}
-                    className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
-                >
-                    Upload Images
-                </button>
             </div>
-
-            {/* start area */}
-            {/* <ul className='grid grid-cols-7 gap-3 '>
-                {
-                    allImage.map((itm, index) => <li
-                        style={{
-                            backgroundImage: `url(${itm.preview})`,
-                        }}
-                        className={
-                            `${dragOverIndex === index ? "bg-red-300 border" : "bg-green-100 border border-green-600"} h-[140px] rounded-md bg-cover object-cover`
-                        }
-                        key={index}
-                        draggable
-                        onDragStart={() => handleDragStart2(index)}
-                        onDragOver={handleDragOver2}
-                        onDrop={() => handleDrop2(index)}
-                        onDragEnter={() => handleDragEnter(index)}
-                        onDragLeave={handleDragLeave}
-                        onDragEnd={handleDragEnd}>
-                        {
-                            index
-                        }
-                    </li>)
-                }
-            </ul> */}
-            {/* end area */}
-
             <div className='border border-gray-400 px-10 py-5 w-full bg-gray-100 rounded'>
                 <div className='flex flex-col'>
-                    <span className='font-bold'>Product Images & Video</span>
-                    <small>Your product images is the first thing your customer sees on the product page.</small>
+                    <span className='font-bold'>Product Images & Video...</span>
+                    <small>Your product images are the first thing your customer sees on the product page.</small>
                 </div>
                 <div className='flex flex-col mt-3'>
                     <span>Product Images <span className='text-red-500'> *</span></span>
                     <small>Upload between 3 to 8 images</small>
                 </div>
-
-
                 <div className='mt-4'>
-                    <label className='text-sm ' htmlFor="Video url "> Video Url</label>
+                    <label className='text-sm' htmlFor="Video url">Video Url</label>
                     <input
-                        // defaultValue={}
                         onChange={(e) => handleCheck(e.target.value)}
                         className="flex-grow w-full h-10 px-4 mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-purple-400 focus:outline-none focus:shadow-outline"
                         placeholder="Input YouTube video link here"
@@ -226,7 +186,6 @@ const UploadImage = ({ allImage, setAllImage, coverPhoto, setCoverPhoto, youtube
             </div>
         </div >
     );
-
 };
 
 export default UploadImage;
