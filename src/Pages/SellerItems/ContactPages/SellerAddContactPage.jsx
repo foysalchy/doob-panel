@@ -17,7 +17,7 @@ const SellerAddContactPage = () => {
   const [msg, setMsg] = useState(false); // State to store the message
 
   const { data: contact = [], refetch } = useQuery({
-    queryKey: ["contact"],
+    queryKey: ["contact_for_seller"],
     queryFn: async () => {
       const res = await fetch(
         `https://backend.doob.com.bd/api/v1/shop/contact/${shopInfo?.shopId}`
@@ -71,10 +71,6 @@ const SellerAddContactPage = () => {
       .then((data) => {
         setLoading(false);
         Swal.fire("success", "Your Contact Publish Successfully", "success");
-
-        form.reset();
-        setPreDeleteUrl("");
-        setFileName("");
         refetch();
       });
 

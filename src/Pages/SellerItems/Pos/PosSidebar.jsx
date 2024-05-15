@@ -172,10 +172,10 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
   const handleFormSubmit = (e) => {
     e.preventDefault();
     const form = e.target;
-    const name = gust ? "Gest User" : form?.name.value;
-    const email = gust ? " " : form?.email.value;
-    const number = gust ? " " : form?.phoneNumber.value;
-    const address = gust ? " " : form?.phoneNumber.value;
+    const name = gest ? "Gest User" : form?.name.value;
+    const email = gest ? " " : form?.email.value;
+    const number = gest ? " " : form?.phoneNumber.value;
+    const address = gest ? " " : form?.phoneNumber.value;
 
     const data = {
       name,
@@ -654,6 +654,10 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
           address: user?.address,
         }}
         invoice={invoice}
+        setGest={setGest}
+        setCash={setCash}
+        setDiscount={setDiscount}
+        setUser={setUser}
         open={open}
         setOpen={setOpen}
       />

@@ -1,11 +1,12 @@
 import JoditEditor from "jodit-react";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { RxCross2 } from "react-icons/rx";
 import Swal from "sweetalert2";
+import { AuthContext } from "../../../../AuthProvider/UserProvider";
 
 const EditSellerBlog = ({ OpenModal, setOpenModal, BlogInfo, refetch }) => {
   const [previewUrl, setPreviewUrl] = useState(BlogInfo.img);
-
+  const { shopInfo } = useContext(AuthContext)
   const handleFileChange = async (event) => {
     const image = event.target.files[0];
     const formData = new FormData();
@@ -72,14 +73,14 @@ const EditSellerBlog = ({ OpenModal, setOpenModal, BlogInfo, refetch }) => {
           </div>
           <div
             onClick={() => setOpenModal(!OpenModal)}
-            className="cursor-pointer bg-gray-500 rounded-full px-2.5 mb-2 p-1 text-2xl hover:text-red-500"
+            className="cursor-pointer bg-gray-500 flex justify-center items-center rounded-full p-2.5 mb-2  text-2xl hover:text-red-500"
           >
             <RxCross2 className="text-xl" />
           </div>
         </div>
 
         <form
-          className="h-[500px] overflow-y-scroll"
+          className="h-[500px] overflow-y-scroll text-start"
           onSubmit={handleBlogUpdate}
         >
           <input
@@ -113,12 +114,20 @@ const EditSellerBlog = ({ OpenModal, setOpenModal, BlogInfo, refetch }) => {
             </label>
           </div>
 
+
+
           <div>
-            <div>
+            <div className="jodit-editor">
               <JoditEditor
                 value={BlogInfo.message}
                 name="message"
                 id="message"
+                config={{
+                  readonly: false,
+                  uploader: {
+                    insertImageAsBase64URI: true,
+                  }
+                }}
               />
             </div>
           </div>

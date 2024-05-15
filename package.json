@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "i": "npm install || npm install --force",
+    "i": "npm install --force",
     "start": "vite preview",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist",
