@@ -55,7 +55,7 @@ export default function EditMegaCategoryModal({
     queryFn: async () => {
       if (shopInfo.wooLogin) {
         const res = await fetch(
-          `http://localhost:5001/api/v1/woo/category?shopId=${shopInfo._id}`
+          `https://backend.doob.com.bd/api/v1/woo/category?shopId=${shopInfo._id}`
         );
         const data = await res.json();
         return data;
@@ -147,7 +147,7 @@ export default function EditMegaCategoryModal({
     // return;
 
     fetch(
-      `http://localhost:5001/api/v1/category/seller-update-megaCategory?id=${id}`,
+      `https://backend.doob.com.bd/api/v1/category/seller-update-megaCategory?id=${id}`,
       {
         method: "PUT",
         headers: {
