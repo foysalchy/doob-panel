@@ -23,7 +23,6 @@ const ProductSellerEditPage = () => {
   const navigate = useNavigate();
 
   const { state } = useLocation();
-  console.log(state);
   const { shopInfo } = useContext(AuthContext);
 
   //   console.log(shopInfo, "shopInfo==");
@@ -55,8 +54,9 @@ const ProductSellerEditPage = () => {
   //   getProduct?.find((itm) => (itm._id === id ? itm._id === id : {})) || [];
 
   const product = state;
-  console.log(product);
 
+
+  const [allImage, setAllImage] = useState([product?.featuredImage, ...product?.images]);
   const [isChecked, setIsChecked] = useState(true);
   const [datazCategory, setDarazOption] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -77,7 +77,43 @@ const ProductSellerEditPage = () => {
   // const [adminMiniCategory, setAdminMiniCategory] = useState("");
   // const [adminExtraCategory, setAdminExtraCategory] = useState("");
 
-  console.log(coverPhoto, "coverPhoto", product?.images?.[0]?.src);
+
+  const [processedImages, setProcessedImages] = useState([]);
+
+  // const shopInfo = { _id: "yourShopId" };
+
+  const imageUploadEdit = (image, index) => {
+    const formData = new FormData();
+    formData.append("image", image.file);
+    const url = `https://backend.doob.com.bd/api/v1/image/upload-image?shopId=${shopInfo._id}`;
+
+    return fetch(url, {
+      method: "POST",
+      body: formData
+    })
+      .then((res) => res.json())
+      .then((imageData) => {
+        const imageUrl = imageData.imageUrl;
+        const updatedImages = [...allImage];
+        updatedImages[index] = { name: `photo${index}`, src: imageUrl };
+        setAllImage(updatedImages);
+        return { name: `photo${index}`, src: imageUrl };
+      });
+  };
+
+  const handleImageProcessing = async () => {
+    const processed = await Promise.all(allImage.map((image, index) => {
+      if (!image.src) {
+        return imageUploadEdit(image, index);
+      } else {
+        return Promise.resolve({ name: `photo${index}`, src: image.src });
+      }
+    }));
+    setProcessedImages(processed);
+  };
+
+
+
   const [inputFields, setInputFields] = useState([
     {
       name: "",
@@ -100,8 +136,6 @@ const ProductSellerEditPage = () => {
     sellingPrice: "",
     ProductCost: "",
   });
-  console.log(variantInput);
-  console.log(product?.variantData);
 
   useEffect(() => {
     setInputFields(product?.variations);
@@ -187,10 +221,14 @@ const ProductSellerEditPage = () => {
 
   // console.log(filteredData);
 
-  console.log(inputFields, "inppppppppppppp");
   const formSubmit = async (e) => {
     // setLoading(true);
     e.preventDefault();
+
+    console.log('prev.....',);
+
+    await handleImageProcessing();
+
     const form = e.target;
     const BnName = form.productNameBn.value;
     const sku = form.ProductSKU.value;
@@ -279,54 +317,6 @@ const ProductSellerEditPage = () => {
 
     const formData = new FormData();
 
-    const additionalPhotos = [
-      form.coverPhoto,
-      form.photo1,
-      form.photo2,
-      form.photo3,
-      form.photo4,
-      form.photo5,
-      form.photo6,
-      form.photo7,
-    ];
-    console.log(additionalPhotos[0][0].files[0]);
-
-    const firstFile =
-      additionalPhotos.length > 0 &&
-      additionalPhotos[0].length > 0 &&
-      additionalPhotos[0][0].files[0];
-
-    if (firstFile) {
-      console.log(firstFile);
-    }
-
-    const uploadedImageUrls = await Promise.all(
-      additionalPhotos
-        ?.filter(
-          (fileInputArray) =>
-            fileInputArray.length > 0 && fileInputArray[0].files[0]
-        )
-        .map(async (fileInputArray, index) => {
-          const file = fileInputArray[0].files[0];
-          let imageUrl;
-          if (file) {
-            if (!daraz) {
-              imageUrl = await imageUpload(file);
-            } else {
-              imageUrl = await DarazImage(file);
-            }
-            formData.append(`photo${index + 2}`, imageUrl);
-            return {
-              name: `photo ${index}`,
-              src: imageUrl,
-            };
-          }
-          return null;
-        })
-    );
-
-    console.log(uploadedImageUrls);
-
     const data = {
       videoUrl: youtube,
       brandName,
@@ -377,14 +367,8 @@ const ProductSellerEditPage = () => {
       status: false,
       createdAt: Date.now(),
       // updatedAt,
-      featuredImage:
-        uploadedImageUrls?.length > 1
-          ? uploadedImageUrls?.filter((image) => image !== null)[0]?.src
-          : product?.images[0]?.src,
-      images:
-        uploadedImageUrls?.length > 1
-          ? uploadedImageUrls?.filter((image) => image !== null)
-          : product?.images,
+      featuredImage: processedImages[0],
+      images: processedImages.slice(1),
       videos: youtube,
       // attributes,
       variations: inputFields,
@@ -399,38 +383,37 @@ const ProductSellerEditPage = () => {
     };
 
     console.log(
-      product.categories,
-      data.categories,
+
       "edit --------------------------->",
-      data?.daraz
+      data
     );
 
     setLoading(true);
     // return;
 
-    fetch(
-      // `https://backend.doob.com.bd/api/v1/seller/normal-product?id=${product?._id}`,
-      `https://backend.doob.com.bd/api/v1/seller/normal-product?id=${product?._id}`,
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      }
-    )
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data, "=====product update");
-        if (data.error) {
-          Swal.fire(`${data.message}`, "", "warning");
-          setLoading(false);
-        } else {
-          Swal.fire("Product Updated", "", "success");
-          setLoading(false);
-          navigate("/seller/product-management/manage");
-        }
-      });
+    // fetch(
+    //   // `https://backend.doob.com.bd/api/v1/seller/normal-product?id=${product?._id}`,
+    //   `https://backend.doob.com.bd/api/v1/seller/normal-product?id=${product?._id}`,
+    //   {
+    //     method: "PUT",
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //     },
+    //     body: JSON.stringify(data),
+    //   }
+    // )
+    //   .then((res) => res.json())
+    //   .then((data) => {
+    //     console.log(data, "=====product update");
+    //     if (data.error) {
+    //       Swal.fire(`${data.message}`, "", "warning");
+    //       setLoading(false);
+    //     } else {
+    //       Swal.fire("Product Updated", "", "success");
+    //       setLoading(false);
+    //       navigate("/seller/product-management/manage");
+    //     }
+    //   });
   };
 
   //   console.log(product, ">>>>>>>>>>>>>>>>>");
@@ -441,6 +424,8 @@ const ProductSellerEditPage = () => {
         <h2 className="font-bold text-xl">Edit Product</h2>
         <div className="mt-10">
           <ImageUploadSeller
+            allImage={allImage}
+            setAllImage={setAllImage}
             product={product}
             youtube={youtube}
             setYoutube={setYoutube}
@@ -577,6 +562,8 @@ const ProductSellerEditPage = () => {
               </span>
             </button>
           )}
+
+          <button type="submit">subminf</button>
         </div>
       </form>
     </div>

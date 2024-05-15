@@ -37,13 +37,14 @@ const SortableList = SortableContainer(({ items, onRemove }) => {
 
 
 const ImageUploadSeller = ({
+  allImage,
+  setAllImage,
   product,
   coverPhoto,
   setCoverPhoto,
   youtube,
   setYoutube,
 }) => {
-  const [allImage, setAllImage] = useState([product?.featuredImage, ...product?.images]);
   //   console.log(product);
   console.log(product?.featuredImage);
   //   console.log(product?.images?.[0]?.src);
