@@ -391,29 +391,29 @@ const ProductSellerEditPage = () => {
     setLoading(true);
     // return;
 
-    // fetch(
-    //   // `https://backend.doob.com.bd/api/v1/seller/normal-product?id=${product?._id}`,
-    //   `https://backend.doob.com.bd/api/v1/seller/normal-product?id=${product?._id}`,
-    //   {
-    //     method: "PUT",
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //     body: JSON.stringify(data),
-    //   }
-    // )
-    //   .then((res) => res.json())
-    //   .then((data) => {
-    //     console.log(data, "=====product update");
-    //     if (data.error) {
-    //       Swal.fire(`${data.message}`, "", "warning");
-    //       setLoading(false);
-    //     } else {
-    //       Swal.fire("Product Updated", "", "success");
-    //       setLoading(false);
-    //       navigate("/seller/product-management/manage");
-    //     }
-    //   });
+    fetch(
+      // `https://backend.doob.com.bd/api/v1/seller/normal-product?id=${product?._id}`,
+      `https://backend.doob.com.bd/api/v1/seller/normal-product?id=${product?._id}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      }
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data, "=====product update");
+        if (data.error) {
+          Swal.fire(`${data.message}`, "", "warning");
+          setLoading(false);
+        } else {
+          Swal.fire("Product Updated", "", "success");
+          setLoading(false);
+          navigate("/seller/product-management/manage");
+        }
+      });
   };
 
   //   console.log(product, ">>>>>>>>>>>>>>>>>");
@@ -563,7 +563,6 @@ const ProductSellerEditPage = () => {
             </button>
           )}
 
-          <button type="submit">subminf</button>
         </div>
       </form>
     </div>
