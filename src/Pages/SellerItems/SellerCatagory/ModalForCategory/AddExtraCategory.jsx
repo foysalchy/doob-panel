@@ -103,7 +103,11 @@ const AddExtraCategory = () => {
       darazCategory_id,
       status: true,
       subCategoryId: selectedSUbs?._id,
+      megaCategoryId: JSON.parse(megaCategory)._id,
     };
+
+    console.log(data);
+    // return;
 
     const url = `https://backend.doob.com.bd/api/v1/category/seller/extra/add`;
 

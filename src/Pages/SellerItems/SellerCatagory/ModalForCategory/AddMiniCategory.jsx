@@ -103,7 +103,7 @@ const AddMiniCategory = () => {
 
     console.log(data, "net check......");
 
-    return;
+    // return;
 
     const url = `https://backend.doob.com.bd/api/v1/category/seller/mini/add`;
 
