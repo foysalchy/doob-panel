@@ -105,11 +105,10 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
   return (
     <div className=" sticky">
       <div
-        className={`${
-          responsive
-            ? "flex  h-screen  overflow-y-auto  flex-col  md:p-3 p-0 lg:w-[70px] md:w-[70px] w-0  border-r-2  "
-            : "flex flex-col  p-6 md:w-64 w-[300px]  h-screen  overflow-y-auto"
-        } md:relative fixed  z-[4000] bg-[#111827] top-0 left-0 bottom-0`}
+        className={`${responsive
+          ? "flex  h-screen  overflow-y-auto  flex-col  md:p-3 p-0 lg:w-[70px] md:w-[70px] w-0  border-r-2  "
+          : "flex flex-col  p-6 md:w-64 w-[300px]  h-screen  overflow-y-auto"
+          } md:relative fixed  z-[4000] bg-[#111827] top-0 left-0 bottom-0`}
       >
         <div className="space-y-3">
           <div className="flex items-center justify-between">
@@ -175,10 +174,13 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
 
                     {/* product management */}
                     {user?.staffRole ? (
-                      user?.permissions.find((itm) => itm?.name === "Blog") ? (
+                      user?.permissions.find((itm) => itm?.name === "Product Management") ? (
                         <li className="rounded-sm">
-                          <details className="group [&_summary::-webkit-details-marker]:hidden flex items-center rounded-sm  ">
-                            <summary className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
+                          <div className="group [&_summary::-webkit-details-marker]:hidden flex-col flex items-center rounded-sm  ">
+                            <div
+                              onClick={() => handleToggle(1)}
+                              className="flex cursor-pointer w-full items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50"
+                            >
                               <div className="flex cursor-pointer items-center gap-2">
                                 <ImBlog className="w-5 h-5 fill-current text-gray-400" />
 
@@ -188,144 +190,175 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                               <span className="shrink-0 transition duration-300 group-open:-rotate-180">
                                 <IoIosArrowDown className="h-5 w-5" />
                               </span>
-                            </summary>
+                            </div>
 
-                            <ul className="mt-2 space-y-1 px-2 py-2 border border-[#80808043] w-full bg-white">
-                              {user?.staffRole ? (
-                                user?.permissions.find(
-                                  (itm) => itm?.name === "Product Management"
-                                ) ? (
-                                  <li className="">
-                                    <details className="group [&_summary::-webkit-details-marker]:hidden flex items-center rounded-sm  ">
-                                      <summary className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
-                                        <div className="flex cursor-pointer items-center gap-2">
-                                          {/* <CgProductHunt className="w-5 h-5 fill-current text-gray-400" /> */}
-                                          <span> Management Product</span>
-                                        </div>
+                            {openDropdownIndex === 1 && (
+                              <ul className="mt-2 space-y-1  p-2 border border-[gray] bg-[#1b202ea1] w-full">
+                                {user?.staffRole ? (
+                                  user?.permissions.find(
+                                    (itm) => itm?.name === "Product Management"
+                                  ) ? (
+                                    <li className="">
+                                      <ul className="flex flex-col ">
+                                        <Link to={
+                                          "/seller/product-management/manage"
+                                        } className="flex cursor-pointer items-center justify-between  py-2 p-2 rounded-sm hover:bg-gray-800 text-gray-50">
 
-                                        <span className="shrink-0 transition duration-300 group-open:-rotate-180">
-                                          <IoIosArrowDown className="h-5 w-5" />
-                                        </span>
-                                      </summary>
+                                          Products
 
-                                      <ul className="mt-2 space-y-1 px-4 text-control">
-                                        <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                        </Link>
+                                        <li className="flex cursor-pointer items-center justify-between py-2 p-2 rounded-sm hover:bg-gray-800 text-gray-50">
                                           <Link
                                             to={
                                               "/seller/product-management/add-product"
                                             }
-                                            className=" text-gray-50 flex gap-2 items-center px-4 p-2 text-[10px] space-x-3 text-xs rounded-md"
                                           >
                                             Add Product
                                           </Link>
                                         </li>
-                                        <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                        <li className="flex cursor-pointer items-center justify-between py-2 p-2 rounded-sm hover:bg-gray-800 text-gray-50">
+                                          <Link to={"/products"}>
+                                            Add Doob Product
+                                          </Link>
+                                        </li>
+                                        <li className="flex cursor-pointer items-center justify-between py-2 p-2 rounded-sm hover:bg-gray-800 text-gray-50">
                                           <Link
                                             to={
                                               "/seller/product-management/add-daraz-product"
                                             }
-                                            className=" text-[15px] text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-xs rounded-md"
                                           >
                                             Add Daraz Product
                                           </Link>
                                         </li>
-                                        <li className="flex cursor-pointer items-center justify-between  text-[15px] rounded-sm hover:bg-gray-800 text-gray-50">
+                                        <li className="flex cursor-pointer items-center justify-between py-2 p-2 rounded-sm hover:bg-gray-800 text-gray-50">
                                           <Link
                                             to={
                                               "/seller/product-management/add-woo-product"
                                             }
-                                            className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-xs rounded-md"
                                           >
                                             Woo Product
                                           </Link>
                                         </li>
-                                        <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                          <Link
-                                            to={
-                                              "/seller/product-management/manage"
-                                            }
-                                            className=" text-gray-50 text-[15px] flex gap-2 items-center px-4 p-2 space-x-3 text-xs rounded-md"
-                                          >
-                                            Products
-                                          </Link>
-                                        </li>
                                       </ul>
-                                    </details>
-                                  </li>
-                                ) : null
-                              ) : (
-                                <li className="bg-white">
-                                  <details className="group [&_summary::-webkit-details-marker]:hidden flex items-center rounded-sm  ">
-                                    <summary className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
-                                      <div className="flex cursor-pointer items-center gap-2">
-                                        {/* <CgProductHunt className="w-5 h-5 fill-current text-gray-400" /> */}
-                                        <span> Management Product</span>
-                                      </div>
-
-                                      <span className="shrink-0 transition duration-300 ">
-                                        <IoIosArrowDown className="h-5 w-5" />
-                                      </span>
-                                    </summary>
-
-                                    <ul className="mt-2 bg-white space-y-1 px-4 text-control">
-                                      <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                    </li>
+                                  ) : null
+                                ) : (
+                                  <li className="">
+                                    <ul className="flex flex-col ">
+                                      <li className="flex cursor-pointer items-center justify-between  py-2 p-2 rounded-sm hover:bg-gray-800 text-gray-50">
+                                        <Link
+                                          to={"/seller/product-management/manage"}
+                                          className=""
+                                        >
+                                          Products
+                                        </Link>
+                                      </li>
+                                      <li className="flex cursor-pointer items-center justify-between py-2 p-2 rounded-sm hover:bg-gray-800 text-gray-50">
                                         <Link
                                           to={
                                             "/seller/product-management/add-product"
                                           }
-                                          className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
                                         >
-                                          <CgAdd className="w-5 h-5 fill-current text-gray-400 " />{" "}
                                           Add Product
                                         </Link>
                                       </li>
-                                      <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                      <li className="flex cursor-pointer items-center justify-between py-2 p-2 rounded-sm hover:bg-gray-800 text-gray-50">
+                                        <Link to={"/products"}>
+                                          Add Doob Product
+                                        </Link>
+                                      </li>
+                                      <li className="flex cursor-pointer items-center justify-between py-2 p-2 rounded-sm hover:bg-gray-800 text-gray-50">
                                         <Link
                                           to={
                                             "/seller/product-management/add-daraz-product"
                                           }
-                                          className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
                                         >
-                                          <CgAdd className="w-5 h-5 fill-current text-gray-400 " />{" "}
                                           Add Daraz Product
                                         </Link>
                                       </li>
-                                      <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                      <li className="flex cursor-pointer items-center justify-between py-2 p-2 rounded-sm hover:bg-gray-800 text-gray-50">
                                         <Link
                                           to={
                                             "/seller/product-management/add-woo-product"
                                           }
-                                          className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
                                         >
-                                          <CgAdd className="w-5 h-5 fill-current text-gray-400 " />{" "}
                                           Woo Product
                                         </Link>
                                       </li>
-                                      <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                        <Link
-                                          to={
-                                            "/seller/product-management/manage"
-                                          }
-                                          className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
-                                        >
-                                          <MdProductionQuantityLimits className="w-5 h-5 fill-current text-gray-400 " />{" "}
-                                          Products
-                                        </Link>
-                                      </li>
                                     </ul>
-                                  </details>
-                                </li>
-                              )}
+                                  </li>
+                                )}
 
-                              {user?.staffRole ? (
-                                user?.permissions.find(
-                                  (itm) => itm?.name === "Category"
-                                ) ? (
+                                {user?.staffRole ? (
+                                  user?.permissions.find(
+                                    (itm) => itm?.name === "Categories Management"
+                                  ) ? (
+                                    <li className="bg-[#1b202ea1]">
+                                      <details className="group [&_summary::-webkit-details-marker]:hidden flex items-center rounded-sm  ">
+                                        <summary className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
+                                          <div className="flex cursor-pointer items-center gap-2">
+                                            {/* <TbCategory className="w-5 h-5 fill-current text-gray-400" /> */}
+
+                                            <span>Category</span>
+                                          </div>
+
+                                          <span className="shrink-0 transition duration-300 ">
+                                            <IoIosArrowDown className="h-5 w-5" />
+                                          </span>
+                                        </summary>
+
+                                        <ul className="mt-2 space-y-1 px-4 text-control">
+                                          <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                            <Link
+                                              to={
+                                                "/seller/categories-management/mega-categories-management"
+                                              }
+                                              className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-xs rounded-md"
+                                            >
+                                              Mega Category
+                                            </Link>
+                                          </li>
+                                          <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                            <Link
+                                              to={
+                                                "/seller/categories-management/sub-categories-management"
+                                              }
+                                              className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-xs rounded-md"
+                                            >
+                                              Sub Category
+                                            </Link>
+                                          </li>
+                                          <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                            <Link
+                                              to={
+                                                "/seller/categories-management/mini-categories-management"
+                                              }
+                                              className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-xs rounded-md"
+                                            >
+                                              Mini Category
+                                            </Link>
+                                          </li>
+
+                                          <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                            <Link
+                                              to={
+                                                "/seller/categories-management/extra-categories-management"
+                                              }
+                                              className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-xs rounded-md"
+                                            >
+                                              Extra Category
+                                            </Link>
+                                          </li>
+                                        </ul>
+                                      </details>
+                                    </li>
+                                  ) : null
+                                ) : (
                                   <li className="bg-[#1b202ea1]">
                                     <details className="group [&_summary::-webkit-details-marker]:hidden flex items-center rounded-sm  ">
                                       <summary className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
                                         <div className="flex cursor-pointer items-center gap-2">
-                                          <TbCategory className="w-5 h-5 fill-current text-gray-400" />
+                                          {/* <TbCategory className="w-5 h-5 fill-current text-gray-400" /> */}
 
                                           <span>Category</span>
                                         </div>
@@ -343,7 +376,6 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                             }
                                             className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-xs rounded-md"
                                           >
-                                            {" "}
                                             Mega Category
                                           </Link>
                                         </li>
@@ -381,74 +413,13 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                       </ul>
                                     </details>
                                   </li>
-                                ) : null
-                              ) : (
-                                <li className="bg-[#1b202ea1]">
-                                  <details className="group [&_summary::-webkit-details-marker]:hidden flex items-center rounded-sm  ">
-                                    <summary className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
-                                      <div className="flex cursor-pointer items-center gap-2">
-                                        <TbCategory className="w-5 h-5 fill-current text-gray-400" />
+                                )}
 
-                                        <span>Category</span>
-                                      </div>
-
-                                      <span className="shrink-0 transition duration-300 ">
-                                        <IoIosArrowDown className="h-5 w-5" />
-                                      </span>
-                                    </summary>
-
-                                    <ul className="mt-2 space-y-1 px-4 text-control">
-                                      <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                        <Link
-                                          to={
-                                            "/seller/categories-management/mega-categories-management"
-                                          }
-                                          className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-xs rounded-md"
-                                        >
-                                          Mega Category
-                                        </Link>
-                                      </li>
-                                      <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                        <Link
-                                          to={
-                                            "/seller/categories-management/sub-categories-management"
-                                          }
-                                          className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-xs rounded-md"
-                                        >
-                                          Sub Category
-                                        </Link>
-                                      </li>
-                                      <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                        <Link
-                                          to={
-                                            "/seller/categories-management/mini-categories-management"
-                                          }
-                                          className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3text-xs  rounded-md"
-                                        >
-                                          Mini Category
-                                        </Link>
-                                      </li>
-
-                                      <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                        <Link
-                                          to={
-                                            "/seller/categories-management/extra-categories-management"
-                                          }
-                                          className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-xs rounded-md"
-                                        >
-                                          Extra Category
-                                        </Link>
-                                      </li>
-                                    </ul>
-                                  </details>
-                                </li>
-                              )}
-
-                              {user?.staffRole
-                                ? user?.permissions.find(
+                                {user?.staffRole
+                                  ? user?.permissions.find(
                                     (itm) => itm?.name === "Product Management"
                                   )
-                                  ? managementPermission("Warehouse") && (
+                                    ? managementPermission("Warehouse") && (
                                       <li className="bg-[#1b202ea1]">
                                         <details className="group [&_summary::-webkit-details-marker]:hidden flex items-center rounded-sm  ">
                                           <summary className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
@@ -468,9 +439,8 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                 to={
                                                   "/seller/warehouse/warehouse-management"
                                                 }
-                                                className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                                className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-xs rounded-md"
                                               >
-                                                {/* <PiWarehouseThin className='w-5 h-5 fill-current text-gray-400 ' /> */}
                                                 Manage Warehouse
                                               </Link>
                                             </li>
@@ -479,9 +449,8 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                 to={
                                                   "/seller/warehouse/area-management"
                                                 }
-                                                className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                                className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-xs rounded-md"
                                               >
-                                                {/* <BiArea className='w-5 h-5 fill-current text-gray-400 ' /> */}
                                                 Area Management
                                               </Link>
                                             </li>
@@ -490,9 +459,8 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                 to={
                                                   "/seller/warehouse/rack-management"
                                                 }
-                                                className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                                className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-xs rounded-md"
                                               >
-                                                {/* <BsHddRack className='w-5 h-5 fill-current text-gray-400 ' /> */}
                                                 Rack Management
                                               </Link>
                                             </li>
@@ -501,9 +469,8 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                 to={
                                                   "/seller/warehouse/self-management"
                                                 }
-                                                className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                                className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-xs rounded-md"
                                               >
-                                                {/* <MdSelfImprovement className='w-5 h-5 fill-current text-gray-400 ' />  */}
                                                 Self Management
                                               </Link>
                                             </li>
@@ -512,9 +479,8 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                 to={
                                                   "/seller/warehouse/cell-management"
                                                 }
-                                                className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                                className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-xs rounded-md"
                                               >
-                                                <BiSolidBellRing className="w-5 h-5 fill-current text-gray-400 " />{" "}
                                                 Cell Management
                                               </Link>
                                             </li>
@@ -522,8 +488,8 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                         </details>
                                       </li>
                                     )
-                                  : null
-                                : managementPermission("Warehouse") && (
+                                    : null
+                                  : managementPermission("Warehouse") && (
                                     <li className="bg-[#1b202ea1]">
                                       <details className="group [&_summary::-webkit-details-marker]:hidden flex items-center rounded-sm  ">
                                         <summary className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
@@ -543,9 +509,8 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                               to={
                                                 "/seller/warehouse/warehouse-management"
                                               }
-                                              className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                              className=" text-gray-50 flex gap-2 items-center px-4 p-1 space-x-3 text-xs rounded-md"
                                             >
-                                              {/* <PiWarehouseThin className='w-5 h-5 fill-current text-gray-400 ' /> */}
                                               Manage Warehouse
                                             </Link>
                                           </li>
@@ -554,9 +519,8 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                               to={
                                                 "/seller/warehouse/area-management"
                                               }
-                                              className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                              className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-xs rounded-md"
                                             >
-                                              {/* <BiArea className='w-5 h-5 fill-current text-gray-400 ' /> */}
                                               Area Management
                                             </Link>
                                           </li>
@@ -565,9 +529,8 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                               to={
                                                 "/seller/warehouse/rack-management"
                                               }
-                                              className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                              className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-xs rounded-md"
                                             >
-                                              {/* <BsHddRack className='w-5 h-5 fill-current text-gray-400 ' /> */}
                                               Rack Management
                                             </Link>
                                           </li>
@@ -576,9 +539,8 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                               to={
                                                 "/seller/warehouse/self-management"
                                               }
-                                              className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                              className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-xs rounded-md"
                                             >
-                                              {/* <MdSelfImprovement className='w-5 h-5 fill-current text-gray-400 ' /> */}
                                               Self Management
                                             </Link>
                                           </li>
@@ -587,9 +549,8 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                               to={
                                                 "/seller/warehouse/cell-management"
                                               }
-                                              className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                              className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-xs rounded-md"
                                             >
-                                              {/* <BiSolidBellRing className='w-5 h-5 fill-current text-gray-400 ' /> */}
                                               Cell Management
                                             </Link>
                                           </li>
@@ -597,8 +558,9 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                       </details>
                                     </li>
                                   )}
-                            </ul>
-                          </details>
+                              </ul>
+                            )}
+                          </div>
                         </li>
                       ) : null
                     ) : (
@@ -847,88 +809,18 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
 
                               {user?.staffRole
                                 ? user?.permissions.find(
-                                    (itm) => itm?.name === "Product Management"
-                                  )
+                                  (itm) => itm?.name === "Product Management"
+                                )
                                   ? managementPermission("Warehouse") && (
-                                      <li className="bg-[#1b202ea1]">
-                                        <details className="group [&_summary::-webkit-details-marker]:hidden flex items-center rounded-sm  ">
-                                          <summary className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
-                                            <div className="flex cursor-pointer items-center gap-2">
-                                              {/* <MdWarehouse className="w-5 h-5 fill-current text-gray-400" /> */}
-                                              <span>Warehouse </span>
-                                            </div>
-
-                                            <span className="shrink-0 transition duration-300">
-                                              <IoIosArrowDown className="h-5 w-5" />
-                                            </span>
-                                          </summary>
-
-                                          <ul className="mt-2 space-y-1 px-4 text-control">
-                                            <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                              <Link
-                                                to={
-                                                  "/seller/warehouse/warehouse-management"
-                                                }
-                                                className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-xs rounded-md"
-                                              >
-                                                Manage Warehouse
-                                              </Link>
-                                            </li>
-                                            <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                              <Link
-                                                to={
-                                                  "/seller/warehouse/area-management"
-                                                }
-                                                className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-xs rounded-md"
-                                              >
-                                                Area Management
-                                              </Link>
-                                            </li>
-                                            <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                              <Link
-                                                to={
-                                                  "/seller/warehouse/rack-management"
-                                                }
-                                                className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-xs rounded-md"
-                                              >
-                                                Rack Management
-                                              </Link>
-                                            </li>
-                                            <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                              <Link
-                                                to={
-                                                  "/seller/warehouse/self-management"
-                                                }
-                                                className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-xs rounded-md"
-                                              >
-                                                Self Management
-                                              </Link>
-                                            </li>
-                                            <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                              <Link
-                                                to={
-                                                  "/seller/warehouse/cell-management"
-                                                }
-                                                className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-xs rounded-md"
-                                              >
-                                                Cell Management
-                                              </Link>
-                                            </li>
-                                          </ul>
-                                        </details>
-                                      </li>
-                                    )
-                                  : null
-                                : managementPermission("Warehouse") && (
                                     <li className="bg-[#1b202ea1]">
                                       <details className="group [&_summary::-webkit-details-marker]:hidden flex items-center rounded-sm  ">
                                         <summary className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
                                           <div className="flex cursor-pointer items-center gap-2">
                                             {/* <MdWarehouse className="w-5 h-5 fill-current text-gray-400" /> */}
-                                            <span>Warehouse</span>
+                                            <span>Warehouse </span>
                                           </div>
 
-                                          <span className="shrink-0 transition duration-300 ">
+                                          <span className="shrink-0 transition duration-300">
                                             <IoIosArrowDown className="h-5 w-5" />
                                           </span>
                                         </summary>
@@ -939,7 +831,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                               to={
                                                 "/seller/warehouse/warehouse-management"
                                               }
-                                              className=" text-gray-50 flex gap-2 items-center px-4 p-1 space-x-3 text-xs rounded-md"
+                                              className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-xs rounded-md"
                                             >
                                               Manage Warehouse
                                             </Link>
@@ -987,7 +879,77 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                         </ul>
                                       </details>
                                     </li>
-                                  )}
+                                  )
+                                  : null
+                                : managementPermission("Warehouse") && (
+                                  <li className="bg-[#1b202ea1]">
+                                    <details className="group [&_summary::-webkit-details-marker]:hidden flex items-center rounded-sm  ">
+                                      <summary className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
+                                        <div className="flex cursor-pointer items-center gap-2">
+                                          {/* <MdWarehouse className="w-5 h-5 fill-current text-gray-400" /> */}
+                                          <span>Warehouse</span>
+                                        </div>
+
+                                        <span className="shrink-0 transition duration-300 ">
+                                          <IoIosArrowDown className="h-5 w-5" />
+                                        </span>
+                                      </summary>
+
+                                      <ul className="mt-2 space-y-1 px-4 text-control">
+                                        <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                          <Link
+                                            to={
+                                              "/seller/warehouse/warehouse-management"
+                                            }
+                                            className=" text-gray-50 flex gap-2 items-center px-4 p-1 space-x-3 text-xs rounded-md"
+                                          >
+                                            Manage Warehouse
+                                          </Link>
+                                        </li>
+                                        <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                          <Link
+                                            to={
+                                              "/seller/warehouse/area-management"
+                                            }
+                                            className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-xs rounded-md"
+                                          >
+                                            Area Management
+                                          </Link>
+                                        </li>
+                                        <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                          <Link
+                                            to={
+                                              "/seller/warehouse/rack-management"
+                                            }
+                                            className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-xs rounded-md"
+                                          >
+                                            Rack Management
+                                          </Link>
+                                        </li>
+                                        <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                          <Link
+                                            to={
+                                              "/seller/warehouse/self-management"
+                                            }
+                                            className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-xs rounded-md"
+                                          >
+                                            Self Management
+                                          </Link>
+                                        </li>
+                                        <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                          <Link
+                                            to={
+                                              "/seller/warehouse/cell-management"
+                                            }
+                                            className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-xs rounded-md"
+                                          >
+                                            Cell Management
+                                          </Link>
+                                        </li>
+                                      </ul>
+                                    </details>
+                                  </li>
+                                )}
                             </ul>
                           )}
                         </div>
@@ -998,23 +960,9 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
 
                     {user?.staffRole
                       ? user?.permissions.find(
-                          (itm) => itm?.name === "Order Management"
-                        )
+                        (itm) => itm?.name === "Pos"
+                      )
                         ? managementPermission("POS") && (
-                            <li className="rounded-sm hover:bg-gray-800">
-                              <Link
-                                to={"/seller/pos"}
-                                rel="noopener noreferrer"
-                                href="#"
-                                className="flex items-center p-2 space-x-3 rounded-md"
-                              >
-                                <BiArchive className="w-5 h-5 text-gray-400" />
-                                <span>POS</span>
-                              </Link>
-                            </li>
-                          )
-                        : null
-                      : managementPermission("POS") && (
                           <li className="rounded-sm hover:bg-gray-800">
                             <Link
                               to={"/seller/pos"}
@@ -1026,21 +974,35 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                               <span>POS</span>
                             </Link>
                           </li>
-                        )}
+                        )
+                        : null
+                      : managementPermission("POS") && (
+                        <li className="rounded-sm hover:bg-gray-800">
+                          <Link
+                            to={"/seller/pos"}
+                            rel="noopener noreferrer"
+                            href="#"
+                            className="flex items-center p-2 space-x-3 rounded-md"
+                          >
+                            <BiArchive className="w-5 h-5 text-gray-400" />
+                            <span>POS</span>
+                          </Link>
+                        </li>
+                      )}
 
                     {user?.staffRole ? (
                       user?.permissions.find(
-                        (itm) => itm?.name === "Order Management"
+                        (itm) => itm?.name === "Orders"
                       ) ? (
                         <li className=" ">
                           {/* <Link to={'/seller/orders'} rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
                                                     <BiArchive className="w-5 h-5 text-gray-400" />
                                                     <span>Order Management</span>
                                                 </Link> */}
-                          <div className="group [&_summary::-webkit-details-marker]:hidden flex items-center rounded-sm  ">
-                            <div className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
+                          <div onClick={() => handleToggle(2)} className="group [&_summary::-webkit-details-marker]:hidden flex flex-col items-center rounded-sm  ">
+                            <div className="flex cursor-pointer w-full items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
                               <div
-                                onClick={() => handleToggle(2)}
+
                                 className="flex cursor-pointer items-center gap-2"
                               >
                                 <BiShoppingBag className="w-5 h-5 fill-current text-gray-400" />
@@ -1253,23 +1215,9 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
 
                     {user?.staffRole
                       ? user?.permissions.find(
-                          (itm) => itm?.name === "Staff Account"
-                        )
+                        (itm) => itm?.name === "Staff Account"
+                      )
                         ? managementPermission("Staff Account") && (
-                            <li className="rounded-sm hover:bg-gray-800">
-                              <Link
-                                to={"/seller/staff-account"}
-                                rel="noopener noreferrer"
-                                href="#"
-                                className="flex items-center p-2 space-x-3 rounded-md"
-                              >
-                                <BiArchive className="w-5 h-5 text-gray-400" />
-                                <span>Staff Account</span>
-                              </Link>
-                            </li>
-                          )
-                        : null
-                      : managementPermission("Staff Account") && (
                           <li className="rounded-sm hover:bg-gray-800">
                             <Link
                               to={"/seller/staff-account"}
@@ -1281,7 +1229,21 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                               <span>Staff Account</span>
                             </Link>
                           </li>
-                        )}
+                        )
+                        : null
+                      : managementPermission("Staff Account") && (
+                        <li className="rounded-sm hover:bg-gray-800">
+                          <Link
+                            to={"/seller/staff-account"}
+                            rel="noopener noreferrer"
+                            href="#"
+                            className="flex items-center p-2 space-x-3 rounded-md"
+                          >
+                            <BiArchive className="w-5 h-5 text-gray-400" />
+                            <span>Staff Account</span>
+                          </Link>
+                        </li>
+                      )}
 
                     {user?.staffRole ? (
                       user?.permissions.find(
@@ -1484,7 +1446,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                     {/* start */}
                     {user?.staffRole ? (
                       user?.permissions.find(
-                        (itm) => itm?.name === "Manage Pages"
+                        (itm) => itm?.name === "Finance"
                       ) ? (
                         <li className="rounded-sm">
                           <div
@@ -1679,7 +1641,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                     {/* start */}
                     {user?.staffRole ? (
                       user?.permissions.find(
-                        (itm) => itm?.name === "Manage Pages"
+                        (itm) => itm?.name === "Support Tickets"
                       ) ? (
                         <li className="rounded-sm">
                           <div
@@ -1701,7 +1663,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                               <ul className="mt-2 space-y-1   px-2 bg-[#1b202ea1] border border-gray-500 py-2 border-opacity-50">
                                 {user?.staffRole ? (
                                   user?.permissions.find(
-                                    (itm) => itm?.name === "Support Ticket"
+                                    (itm) => itm?.name === "Support Tickets"
                                   ) ? (
                                     <li className="rounded-sm  hover:bg-gray-800">
                                       <Link
@@ -1733,7 +1695,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
 
                                 {user?.staffRole ? (
                                   user?.permissions.find(
-                                    (itm) => itm?.name === "User Support Ticket"
+                                    (itm) => itm?.name === "User Tickets"
                                   ) ? (
                                     <li className="rounded-sm  hover:bg-gray-800">
                                       <Link
@@ -1855,11 +1817,14 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                       </li>
                     )}
 
+                    {
+                      console.log(user?.permissions, 'permitioon')
+                    }
                     {/* end */}
 
                     {/* blog */}
                     {user?.staffRole ? (
-                      user?.permissions.find((itm) => itm?.name === "Blog") ? (
+                      user?.permissions.find((itm) => itm?.name === "Manage Blogs") ? (
                         <li className="rounded-sm">
                           <div
                             onClick={() => handleToggle(7)}
@@ -1968,7 +1933,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
 
                     {user?.staffRole ? (
                       user?.permissions.find(
-                        (itm) => itm?.name === "Contact"
+                        (itm) => itm?.name === "Manage Contact"
                       ) ? (
                         <li className="rounded-sm">
                           <div
@@ -2090,23 +2055,9 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
 
                     {user?.staffRole
                       ? user?.permissions.find(
-                          (itm) => itm?.name === "Domain Management"
-                        )
+                        (itm) => itm?.name === "Domain Management"
+                      )
                         ? managementPermission("Domain Management") && (
-                            <li className="rounded-sm  hover:bg-gray-800">
-                              <Link
-                                to={"/seller/domain-management"}
-                                rel="noopener noreferrer"
-                                href="#"
-                                className="flex items-center p-2 space-x-3 rounded-md"
-                              >
-                                <MdDomain className="w-5 h-5 fill-current text-gray-400" />
-                                <span>Domain Management</span>
-                              </Link>
-                            </li>
-                          )
-                        : null
-                      : managementPermission("Domain Management") && (
                           <li className="rounded-sm  hover:bg-gray-800">
                             <Link
                               to={"/seller/domain-management"}
@@ -2118,7 +2069,21 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                               <span>Domain Management</span>
                             </Link>
                           </li>
-                        )}
+                        )
+                        : null
+                      : managementPermission("Domain Management") && (
+                        <li className="rounded-sm  hover:bg-gray-800">
+                          <Link
+                            to={"/seller/domain-management"}
+                            rel="noopener noreferrer"
+                            href="#"
+                            className="flex items-center p-2 space-x-3 rounded-md"
+                          >
+                            <MdDomain className="w-5 h-5 fill-current text-gray-400" />
+                            <span>Domain Management</span>
+                          </Link>
+                        </li>
+                      )}
                     {user?.staffRole ? (
                       user?.permissions.find(
                         (itm) => itm?.name === "Settings"
@@ -2141,98 +2106,98 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                             </div>
 
                             {openDropdownIndex === 9 && (
-                              <ul className="mt-2 space-y-1   px-2 bg-[#1b202ea1] border border-gray-500 py-2 border-opacity-50">
-                                <ul className="mt-2 space-y-1   px-2 bg-[#1b202ea1] border border-gray-500 py-2 border-opacity-50">
-                                  <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                    <Link
-                                      to={
-                                        "/seller/content-management/popup-management"
-                                      }
-                                      className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
-                                    >
-                                      {/* <FaPage4 className='w-5 h-5 fill-current text-gray-400 ' /> */}
-                                      Popup Management
-                                    </Link>
-                                  </li>
-                                  <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                    <Link
-                                      to={
-                                        "/seller/content-management/slider-management"
-                                      }
-                                      className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
-                                    >
-                                      {/* <BiSlider className='w-5 h-5 fill-current text-gray-400 ' /> */}
-                                      Slider Management
-                                    </Link>
-                                  </li>
 
-                                  <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                    <Link
-                                      to={
-                                        "/seller/content-management/feature-management"
-                                      }
-                                      className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
-                                    >
-                                      {/* <MdPhotoSizeSelectActual className='w-5 h-5 fill-current text-gray-400 ' /> */}
-                                      Feature Image
-                                    </Link>
-                                  </li>
-                                  <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                    <Link
-                                      to={"/seller/settings/payment-management"}
-                                      className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
-                                    >
-                                      {/* <MdPayment className='w-5 h-5 fill-current text-gray-400 ' /> */}
-                                      Payment Getaway
-                                    </Link>
-                                  </li>
-                                  <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                    <Link
-                                      to={"/seller/settings/send-email"}
-                                      className="  text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 rounded-md"
-                                    >
-                                      {/* <BiEnvelope className='w-5 h-5 fill-current text-gray-400' /> */}
-                                      Send Email
-                                    </Link>
-                                  </li>
-                                  <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                    <Link
-                                      to={"/seller/settings/shipping"}
-                                      className="  text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 rounded-md"
-                                    >
-                                      {/* <MdOutlineLocalShipping className='w-5 h-5 fill-current text-gray-400' /> */}
-                                      Shipping
-                                    </Link>
-                                  </li>
-                                  <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                    <Link
-                                      to={"/seller/settings/auth-credential"}
-                                      className="  text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 rounded-md"
-                                    >
-                                      {/* <MdOutlineSecurity className='w-5 h-5 fill-current text-gray-400' /> */}
-                                      Auth Credential
-                                    </Link>
-                                  </li>
-                                  <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                    <Link
-                                      to={"/seller/settings/email-setup"}
-                                      className="  text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 rounded-md"
-                                    >
-                                      {/* <MdOutlineSecurity className='w-5 h-5 fill-current text-gray-400' /> */}
-                                      Email Setup
-                                    </Link>
-                                  </li>
-                                  <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                    <Link
-                                      to={"/seller/settings/price-role"}
-                                      className="  text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 rounded-md"
-                                    >
-                                      {/* <MdOutlinePriceChange className='w-5 h-5 fill-current text-gray-400' /> */}
-                                      Price Role
-                                    </Link>
-                                  </li>
-                                </ul>
+                              <ul className="mt-2 space-y-1   px-2 bg-[#1b202ea1] border border-gray-500 py-2 border-opacity-50">
+                                <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                  <Link
+                                    to={
+                                      "/seller/content-management/popup-management"
+                                    }
+                                    className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                  >
+                                    {/* <FaPage4 className='w-5 h-5 fill-current text-gray-400 ' /> */}
+                                    Popup Management
+                                  </Link>
+                                </li>
+                                <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                  <Link
+                                    to={
+                                      "/seller/content-management/slider-management"
+                                    }
+                                    className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                  >
+                                    {/* <BiSlider className='w-5 h-5 fill-current text-gray-400 ' /> */}
+                                    Slider Management
+                                  </Link>
+                                </li>
+
+                                <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                  <Link
+                                    to={
+                                      "/seller/content-management/feature-management"
+                                    }
+                                    className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                  >
+                                    {/* <MdPhotoSizeSelectActual className='w-5 h-5 fill-current text-gray-400 ' /> */}
+                                    Feature Image
+                                  </Link>
+                                </li>
+                                <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                  <Link
+                                    to={"/seller/settings/payment-management"}
+                                    className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                  >
+                                    {/* <MdPayment className='w-5 h-5 fill-current text-gray-400 ' /> */}
+                                    Payment Getaway
+                                  </Link>
+                                </li>
+                                <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                  <Link
+                                    to={"/seller/settings/send-email"}
+                                    className="  text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 rounded-md"
+                                  >
+                                    {/* <BiEnvelope className='w-5 h-5 fill-current text-gray-400' /> */}
+                                    Send Email
+                                  </Link>
+                                </li>
+                                <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                  <Link
+                                    to={"/seller/settings/shipping"}
+                                    className="  text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 rounded-md"
+                                  >
+                                    {/* <MdOutlineLocalShipping className='w-5 h-5 fill-current text-gray-400' /> */}
+                                    Shipping
+                                  </Link>
+                                </li>
+                                <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                  <Link
+                                    to={"/seller/settings/auth-credential"}
+                                    className="  text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 rounded-md"
+                                  >
+                                    {/* <MdOutlineSecurity className='w-5 h-5 fill-current text-gray-400' /> */}
+                                    Auth Credential
+                                  </Link>
+                                </li>
+                                <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                  <Link
+                                    to={"/seller/settings/email-setup"}
+                                    className="  text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 rounded-md"
+                                  >
+                                    {/* <MdOutlineSecurity className='w-5 h-5 fill-current text-gray-400' /> */}
+                                    Email Setup
+                                  </Link>
+                                </li>
+                                <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                  <Link
+                                    to={"/seller/settings/price-role"}
+                                    className="  text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 rounded-md"
+                                  >
+                                    {/* <MdOutlinePriceChange className='w-5 h-5 fill-current text-gray-400' /> */}
+                                    Price Role
+                                  </Link>
+                                </li>
                               </ul>
+
                             )}
                           </div>
                         </li>
@@ -2351,22 +2316,9 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                     )}
                     {user?.staffRole
                       ? user?.permissions.find(
-                          (itm) => itm?.name === "Channel Integration"
-                        )
+                        (itm) => itm?.name === "Channel Integration"
+                      )
                         ? managementPermission("Channel Integration") && (
-                            <li className="rounded-sm hover:bg-gray-800">
-                              <Link
-                                to={"/seller/channel-integration"}
-                                rel="noopener noreferrer"
-                                className="flex items-center p-2 space-x-3 rounded-md"
-                              >
-                                <MdOutlineIntegrationInstructions className="w-5 h-5 text-gray-400" />
-                                <span>Channel Integration</span>
-                              </Link>
-                            </li>
-                          )
-                        : null
-                      : managementPermission("Channel Integration") && (
                           <li className="rounded-sm hover:bg-gray-800">
                             <Link
                               to={"/seller/channel-integration"}
@@ -2377,7 +2329,20 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                               <span>Channel Integration</span>
                             </Link>
                           </li>
-                        )}
+                        )
+                        : null
+                      : managementPermission("Channel Integration") && (
+                        <li className="rounded-sm hover:bg-gray-800">
+                          <Link
+                            to={"/seller/channel-integration"}
+                            rel="noopener noreferrer"
+                            className="flex items-center p-2 space-x-3 rounded-md"
+                          >
+                            <MdOutlineIntegrationInstructions className="w-5 h-5 text-gray-400" />
+                            <span>Channel Integration</span>
+                          </Link>
+                        </li>
+                      )}
 
                     {user?.staffRole ? (
                       user?.permissions.find(

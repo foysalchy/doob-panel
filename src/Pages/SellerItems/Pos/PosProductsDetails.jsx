@@ -10,9 +10,13 @@ const PosProductsDetails = ({
   open,
   setOpen,
   setCartProducts,
+  setGest,
+  setCash,
+  setDiscount,
+  setUser,
 }) => {
   const { shopInfo } = useContext(AuthContext);
-  const [user, setUser] = useState(false);
+
   const [error, setError] = useState(false);
 
   const { name, email, phoneNumber, address } = passUser;
@@ -149,6 +153,9 @@ const PosProductsDetails = ({
           setCartProducts={setCartProducts}
           setUser={setUser}
           setOpen={setOpen}
+          setGest={setGest}
+          setCash={setCash}
+          setDiscount={setDiscount}
           invoiceData={postData}
           setInvoiceOpen={setInvoiceOpen}
           invoiceOpen={invoiceOpen}

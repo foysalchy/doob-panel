@@ -68,9 +68,6 @@ const AddSellerBlog = () => {
       });
   };
 
-  const handleChange = (content) => {
-    setMessage(content);
-  };
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
@@ -153,7 +150,6 @@ const AddSellerBlog = () => {
     const image = form.photo.files[0];
     const message = form?.message?.value;
     const shop = shopInfo?.shopId;
-    // const MetaImage = upload;
     const MetaTag = form.MetaTag.value;
     const MetaDescription = form.MetaDescription.value;
 
@@ -285,20 +281,21 @@ const AddSellerBlog = () => {
             </select>
           </div>
 
-          <div>
-            <div>
-              <ReactQuill
-                name="message"
-                id="message"
-                className="h-36 "
-                handleChange
-                value={messageData}
-                modules={quillModules}
-                placeholder="Enter description here..."
-              />
-              <br />
-              <br />
-            </div>
+          <div className="jodit-editor">
+            <JoditEditor
+              id="message"
+              // onChange={handleDescriptionChange}
+              name="message"
+
+              config={{
+                readonly: false,
+                uploader: {
+                  insertImageAsBase64URI: true,
+                },
+              }}
+            />
+
+
           </div>
 
           <div>
@@ -307,7 +304,7 @@ const AddSellerBlog = () => {
             </label>
             <input
               required
-              className="w-full mt-[2.5rem] rounded-lg border border-gray-900 p-3 text-sm"
+              className="w-full rounded-lg border border-gray-900 p-3 text-sm"
               placeholder="Meta Tag"
               type="text"
               id="MetaTag"
@@ -398,8 +395,8 @@ const AddSellerBlog = () => {
             </button>
           </div>
         </form>
-      </div>
-    </div>
+      </div >
+    </div >
   );
 };
 export default AddSellerBlog;

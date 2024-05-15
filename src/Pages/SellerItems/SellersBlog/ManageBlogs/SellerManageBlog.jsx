@@ -9,6 +9,8 @@ import Swal from "sweetalert2";
 import EditSellerBlog from "./EditSellerBlog";
 import { BiEdit } from "react-icons/bi";
 import { BsEye } from "react-icons/bs";
+import BrightAlert from "bright-alert";
+import { TbRestore } from "react-icons/tb";
 
 const SellerManageBlog = () => {
   const { shopInfo } = useContext(AuthContext);
@@ -51,7 +53,7 @@ const SellerManageBlog = () => {
         method: "PUT",
       }
     ).then(() => {
-      Swal.fire("success");
+      BrightAlert()
       refetch();
     });
   };
@@ -82,15 +84,19 @@ const SellerManageBlog = () => {
 
   const [searchQuery, setSearchQuery] = useState("");
   const [blogType, setBlogType] = useState(false);
+  const [trashType, setTrashType] = useState(false);
+
   const handleSearch = (event) => {
     setSearchQuery(event.target.value);
   };
-  const allBlogs = blogs.filter((item) => item.draft || item.draft === blogType);
 
-  const filteredData = allBlogs?.filter(
-    (item) =>
-      item.title?.toLowerCase().includes(searchQuery?.toLowerCase()) ||
+  let filteredData = blogs.filter((item) =>
+    (item.draft === blogType || !blogType) &&
+    (item.trash === `${trashType}` || !trashType) &&
+    (
+      item.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
       item._id.toString().includes(searchQuery)
+    )
   );
 
   const [OpenModal, setOpenModal] = useState(false);
@@ -150,20 +156,37 @@ const SellerManageBlog = () => {
 
       <div className="flex justify-between ">
         <div className="flex items-center gap-x-3">
-          <h2 className="text-lg font-medium text-gray-800 ">All Blog</h2>
+          <h2 className="text-lg font-medium text-gray-700 ">All Blog</h2>
           <span className="px-3 py-1 text-xs  bg-blue-100 rounded-full d text-blue-400">
             {blogs?.length}
           </span>
         </div>
 
-        <button onClick={() => setBlogType(!blogType)} className="bg-gray-900 rounded cursor-pointer text-white px-4 py-2">
-          {!blogType ? 'Trash' : 'All Blogs'}
-        </button>
+        <div className="flex gap-3 items-start">
+          <button
+            onClick={() => setBlogType(!blogType)}
+            className={
+              blogType ? "bg-green-700 rounded cursor-pointer text-white px-4 py-2" :
+                "bg-red-700 rounded cursor-pointer text-white px-4 py-2"
+            }
+          >
+            {!blogType ? 'Draft' : 'All Blogs'}
+          </button>
+
+          <button onClick={() => setTrashType(!trashType)} className={
+            trashType ? "bg-green-500 rounded cursor-pointer text-white px-4 py-2" :
+              "bg-red-500 rounded cursor-pointer text-white px-4 py-2"
+          }>
+            {!trashType ? 'Trashed' : 'All Blogs'}
+          </button>
+        </div>
+
+
       </div>
       <div>
         <div>
-          <div className="  py-2 md:pr-10 pr-0">
-            <div className="overflow-y-hidden overflow-x-auto border border-gray-200  md:rounded-lg">
+          <div className=" ">
+            <div className="overflow-y-hidden overflow-x-auto border mt-4 w-full border-gray-200  md:rounded-lg">
               <table className=" divide-y w-full divide-gray-200 ">
                 <thead className="bg-gray-50 ">
                   <tr>
@@ -175,17 +198,10 @@ const SellerManageBlog = () => {
                         <span>Name</span>
                       </div>
                     </th>
+
                     <th
                       scope="col"
-                      className="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500 "
-                    >
-                      <div className="flex items-center gap-x-3">
-                        <span>Stash</span>
-                      </div>
-                    </th>
-                    <th
-                      scope="col"
-                      className="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 text-gray-400"
+                      className="px-12 py-3.5 text-sm font-normal text-left rtl:text-right  text-gray-400"
                     >
                       <button className="flex items-center gap-x-2">
                         <span>Status</span>
@@ -194,7 +210,7 @@ const SellerManageBlog = () => {
 
                     <th
                       scope="col"
-                      className="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 text-gray-400"
+                      className="px-12 py-3.5 text-sm font-normal text-left rtl:text-right  text-gray-400"
                     >
                       <span className="flex items-center gap-x-2">Action</span>
                     </th>
@@ -253,7 +269,7 @@ const SellerManageBlog = () => {
                           </button>
                         )}
                       </td>
-                      <td className="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
+                      {/* <td className="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                         {blog.trash === "true" ? (
                           <button
                             onClick={() => blogStash(blog._id, false)}
@@ -271,11 +287,11 @@ const SellerManageBlog = () => {
                             </h2>
                           </button>
                         )}
-                      </td>
+                      </td> */}
 
                       <td className="px-4 py-4 text-sm whitespace-nowrap">
                         <div className="flex gap-4 justify-center">
-                          <button
+                          {trashType && <button
                             onClick={() => DeleteBlog(blog._id)}
                             className=" transition-colors duration-200 text-red-500 hover:text-red-700 focus:outline-none"
                           >
@@ -293,7 +309,28 @@ const SellerManageBlog = () => {
                                 d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
                               />
                             </svg>
-                          </button>
+                          </button>}
+                          {!trashType && <button
+                            onClick={() => blogStash(blog._id, true)}
+                            className=" transition-colors duration-200 text-red-500 hover:text-red-700 focus:outline-none"
+                          >
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              strokeWidth="1.5"
+                              stroke="currentColor"
+                              className="w-5 h-5"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
+                              />
+                            </svg>
+                          </button>}
+
+                          {trashType && <TbRestore onClick={() => blogStash(blog._id, false)} className="transition-colors text-xl duration-200 cursor-pointer text-green-500 hover:text-green-700 focus:outline-none" />}
                           <BiEdit
                             onClick={() => handleViewDetails(blog._id)}
                             className="transition-colors text-xl duration-200 cursor-pointer text-yellow-500 hover:text-yellow-700 focus:outline-none"
@@ -323,7 +360,7 @@ const SellerManageBlog = () => {
           </div>
         </div>
       </div>
-    </div>
+    </div >
   );
 };
 export default SellerManageBlog;

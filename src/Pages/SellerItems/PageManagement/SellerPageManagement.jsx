@@ -13,6 +13,7 @@ import { MdOutlineFolderDelete, MdRestore } from "react-icons/md";
 import { TbRestore } from "react-icons/tb";
 import { LiaTrashRestoreAltSolid } from "react-icons/lia";
 import { TbTrashOff } from "react-icons/tb";
+import BrightAlert from "bright-alert";
 
 const SellerPageManagement = () => {
   const [loading, setLoading] = useState(false);
@@ -46,7 +47,7 @@ const SellerPageManagement = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        Swal.fire("success", "Your Faq Publish Successfully", "success");
+        BrightAlert()
         refetch();
       });
   };
@@ -60,7 +61,7 @@ const SellerPageManagement = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        Swal.fire("Your Page Unpublish Successfully", "", "success");
+        BrightAlert()
         refetch();
       });
   };
@@ -73,7 +74,7 @@ const SellerPageManagement = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        Swal.fire("Your Page Delete Successfully", "", "success");
+        BrightAlert()
         refetch();
       });
   };
@@ -88,7 +89,7 @@ const SellerPageManagement = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        Swal.fire(`Your Page Trash ${status} Successfully`, "", "success");
+        BrightAlert()
         refetch();
       });
   };
@@ -232,15 +233,15 @@ const SellerPageManagement = () => {
                                   />
                                 </svg>
                               </button>
-                              <button
+                              {trash_status && <button
                                 onClick={() =>
                                   trash(faq?._id, faq?.trash ? false : true)
                                 }
                                 className=" transition-colors duration-200  text-xl  focus:outline-none"
                               >
-                                {trash_status ? <TbRestore className="text-green-500 hover:text-green-700" /> : <TbTrashOff className="text-red-500 hover:text-red-700" />
+                                {<TbRestore className="text-green-500 hover:text-green-700" />
                                 }
-                              </button>
+                              </button>}
 
                               <button
                                 onClick={() => handleViewDetails(faq?._id)}

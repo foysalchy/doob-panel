@@ -3,9 +3,10 @@ import { BsArrowRight } from "react-icons/bs";
 import Swal from "sweetalert2";
 import JoditEditor from "jodit-react";
 import { AuthContext } from "../../../AuthProvider/UserProvider";
-import { useBlocker, useLocation } from "react-router-dom";
+import { useBlocker, useLocation, useNavigate } from "react-router-dom";
 import ReactQuill from "react-quill";
 import { quillModules } from "../../quillModule";
+import BrightAlert from "bright-alert";
 
 const AddSellerPage = () => {
   const [loading, setLoading] = useState(false);
@@ -16,8 +17,7 @@ const AddSellerPage = () => {
   const location = useLocation();
   const [messageData, setMessage] = useState("");
 
-  ///! for drafts and save
-  //! for save Drafts
+
   const [formData, setFormData] = useState({
     title: "",
     page: "",
@@ -79,15 +79,19 @@ const AddSellerPage = () => {
           .then((res) => res.json())
           .then((data) => {
             setLoading(false);
-            Swal.fire("Drafts Saved", "", "success");
+            BrightAlert()
             blocker.proceed();
           });
 
         // blocker.proceed();
       } else {
+        blocker.proceed();
       }
     }
   }, [draftSaved, blocker]);
+
+
+  const navigate = useNavigate()
 
   const dataSubmit = (event) => {
     setLoading(true);
@@ -97,14 +101,16 @@ const AddSellerPage = () => {
     const metaTag = form.metaTag.value;
     const metaDescription = form.metaDescription.value;
     const page = form.page.value;
-    // const description = form.description.value;
+    const description = form.description.value;
     const faq = {
       title,
-      description: messageData,
+      description: description,
       shop: shopInfo.shopId,
+      status: true,
       page,
       metaTag,
       metaDescription,
+      trash: false,
       draft, // Add draft flag
     };
 
@@ -120,9 +126,11 @@ const AddSellerPage = () => {
       .then((res) => res.json())
       .then((data) => {
         setLoading(false);
-        Swal.fire("success", "Your page Publish Successfully", "success");
+        BrightAlert()
         form.reset();
-        // setFormDirty(false); // Reset form dirty state
+        blocker.state = "unblocked";
+        navigate('/seller/manage-pages/')
+
         // window.location.href = "/"; // Redirect to home or any other page after successful submission
       });
   };
@@ -152,7 +160,7 @@ const AddSellerPage = () => {
             </label>
             <select
               name="page"
-              onChange={(e) => handleInputChange("page", e.target.value)}
+              // onChange={(e) => handleInputChange("page", e.target.value)}
               className="w-full rounded-lg border bg-white border-gray-900 p-3 text-sm"
             >
               <option value="footer1">Footer 1</option>
@@ -162,9 +170,16 @@ const AddSellerPage = () => {
             </select>
           </div>
           <div>
-            <div>
-              {/* <JoditEditor name="description" id="message"></JoditEditor> */}
-              <ReactQuill
+            <div className="jodit-editor">
+              <JoditEditor
+                config={{
+                  readonly: false,
+                  uploader: {
+                    insertImageAsBase64URI: true,
+                  },
+                }}
+                name="description" id="message"></JoditEditor>
+              {/* <ReactQuill
                 name="message"
                 id="message"
                 className="h-36  "
@@ -173,7 +188,7 @@ const AddSellerPage = () => {
                 modules={quillModules}
                 onChange={(e) => handleInputChange("message", e.target.value)}
                 placeholder="Enter description here..."
-              />
+              /> */}
             </div>
           </div>
           <div>
