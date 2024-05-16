@@ -39,7 +39,7 @@ const SellerShipping = () => {
       setDisable(false);
       setSelectedMedia(selectedValue);
       fetch(
-        `http://localhost:5001/api/v1/seller/pathao-shopId?shop_id=${shopInfo?._id}`
+        `https://backend.doob.com.bd/api/v1/seller/pathao-shopId?shop_id=${shopInfo?._id}`
       )
         .then((response) => response.json())
         .then((data) => {
@@ -64,7 +64,7 @@ const SellerShipping = () => {
   //   queryKey: ["shopPathao"],
   //   queryFn: async () => {
   //     const res = await fetch(
-  //       `http://localhost:5001/api/v1/seller/pathao-shopId?shop_id=${shopInfo?._id}`
+  //       `https://backend.doob.com.bd/api/v1/seller/pathao-shopId?shop_id=${shopInfo?._id}`
   //     );
   //     const data = await res.json();
   //     return data;
@@ -83,14 +83,14 @@ const SellerShipping = () => {
   // console.log(shopOPtion);
 
   // console.log(shopOPtion);
-  const [shopPathaoData, setShopPathaoData] = useState([]);
+  const [storePathaoData, setStorePathaoData] = useState([]);
 
-  const handleShopSelect = (event) => {
+  const handlStoreSelect = (event) => {
     const selectedValue = event.target.value;
-    setShopPathaoData(selectedValue);
+    setStorePathaoData(selectedValue);
   };
 
-  console.log(shopPathaoData);
+  console.log(storePathaoData);
   const dataSubmit = (event) => {
     event.preventDefault();
     const name = selectedMedia;
@@ -111,13 +111,13 @@ const SellerShipping = () => {
       shopId: shopInfo.shopId,
     };
 
-    if (shopPathaoData) {
-      data["shopId"] = shopPathaoData;
+    if (storePathaoData) {
+      data["pathao_store_id"] = storePathaoData;
     }
     // console.log(data, "data");
 
     // return;
-    fetch("http://localhost:5001/api/v1/seller/shipping-interrogation", {
+    fetch("https://backend.doob.com.bd/api/v1/seller/shipping-interrogation", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -246,12 +246,12 @@ const SellerShipping = () => {
                   </div>
                   <div className="my-4">
                     <label className="sr-only text-black" htmlFor="title">
-                      Select an ShopId
+                      Select an Store
                     </label>
                     <select
                       name="Media"
-                      onChange={handleShopSelect}
-                      value={shopPathaoData}
+                      onChange={handlStoreSelect}
+                      value={storePathaoData}
                       id="countries"
                       className="flex-grow w-full re h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
                     >
