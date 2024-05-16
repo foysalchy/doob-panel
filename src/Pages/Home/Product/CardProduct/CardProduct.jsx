@@ -38,6 +38,7 @@ const CardProduct = () => {
   const handleDelete = (index) => {
     const updatedCart = [...cartProduct];
     updatedCart.splice(index, 1);
+    console.log(updatedCart, "updated");
     setCartProduct(updatedCart);
   };
 
