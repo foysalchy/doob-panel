@@ -85,7 +85,7 @@ const ShippingModal = ({
     }
   };
 
-  // console.log(orderInfo);
+  console.log(selectedDelivery);
 
   return (
     <div>
@@ -127,7 +127,9 @@ const ShippingModal = ({
                   >
                     <option value="Other">Other</option>
                     {ships?.map((ship) => (
-                      <option value={JSON.stringify(ship)}>{ship.name}</option>
+                      <option value={JSON.stringify(ship)} key={ship.name}>
+                        {ship.name}
+                      </option>
                     ))}
                   </select>
                 </div>
@@ -151,8 +153,7 @@ const ShippingModal = ({
                     ))}
                   </div>
                 </div>
-                {/* StedFast */}
-                {JSON.parse(selectedDelivery)?.name === "Steadfast" && (
+                {selectedDelivery === "Other" && (
                   <>
                     <div className="mt-2">
                       <label className=" text-black" htmlFor="title">
@@ -222,8 +223,81 @@ const ShippingModal = ({
                     </div>
                   </>
                 )}
+                {/* StedFast */}
+                {selectedDelivery !== "Other" &&
+                  JSON.parse(selectedDelivery)?.name === "Steadfast" && (
+                    <>
+                      <div className="mt-2">
+                        <label className=" text-black" htmlFor="title">
+                          Invoice Number
+                        </label>
+                        <input
+                          required
+                          readOnly
+                          className="flex-grow w-full re h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
+                          defaultValue={orderInfo._id}
+                          type="text"
+                          id="title"
+                          name="invoice"
+                        />
+                      </div>
+                      <div className="mt-2">
+                        <label className=" text-black" htmlFor="title">
+                          Cash
+                        </label>
+                        <input
+                          required
+                          className="flex-grow w-full re h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
+                          defaultValue={orderInfo?.promoHistory?.normalPrice}
+                          type="text"
+                          id="title"
+                          name="cod_amount"
+                        />
+                      </div>
+                      <div className="mt-2">
+                        <label className=" text-black" htmlFor="title">
+                          Receiver Name
+                        </label>
+                        <input
+                          required
+                          className="flex-grow w-full re h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
+                          defaultValue={orderInfo?.addresses?.fullName}
+                          type="text"
+                          id="title"
+                          name="recipient_name"
+                        />
+                      </div>
+                      <div className="mt-2">
+                        <label className=" text-black" htmlFor="title">
+                          Receiver Number
+                        </label>
+                        <input
+                          required
+                          className="flex-grow w-full re h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
+                          defaultValue={orderInfo?.addresses?.mobileNumber}
+                          type="text"
+                          id="title"
+                          name="recipient_phone"
+                        />
+                      </div>
+                      <div className="mt-2">
+                        <label className=" text-black" htmlFor="title">
+                          Receiver address
+                        </label>
+                        <textarea
+                          required
+                          className="flex-grow w-full re h-28 p-2 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
+                          defaultValue={`${orderInfo?.addresses?.province},\n${orderInfo?.addresses?.city},\n${orderInfo?.addresses?.area},\n${orderInfo?.addresses?.address}`}
+                          type="text"
+                          id="title"
+                          name="recipient_address"
+                        />
+                      </div>
+                    </>
+                  )}
                 {/* pathao */}
-                {JSON.parse(selectedDelivery)?.name === "Steadfast" && <></>}
+                {selectedDelivery !== "Other" &&
+                  JSON.parse(selectedDelivery)?.name === "Steadfast" && <></>}
 
                 <div className="mt-2">
                   <label className=" text-black" htmlFor="title">

@@ -27,16 +27,70 @@ const SellerShipping = () => {
   const [selectedMedia, setSelectedMedia] = useState("Choose your Api");
   const [disabled, setDisable] = useState(true);
 
+  const [shop, setShop] = useState([]);
+
   const handleGetaway = (event) => {
     const selectedValue = event.target.value;
+
+    console.log(selectedValue);
     if (selectedValue == "Choose your Api") {
       setDisable(true);
+    } else if (selectedValue === "Pathao") {
+      setDisable(false);
+      setSelectedMedia(selectedValue);
+      fetch(
+        `http://localhost:5001/api/v1/seller/pathao-shopId?shop_id=${shopInfo?._id}`
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          setShop(data);
+        })
+        .catch((error) => {
+          console.error("Error fetching data:", error);
+        });
     } else {
       setDisable(false);
       setSelectedMedia(selectedValue);
     }
   };
 
+  // shop id of pathao
+
+  // const {
+  //   data: shop = [],
+  //   // refetch:,
+  //   isLoading: loadingSHop,
+  // } = useQuery({
+  //   queryKey: ["shopPathao"],
+  //   queryFn: async () => {
+  //     const res = await fetch(
+  //       `http://localhost:5001/api/v1/seller/pathao-shopId?shop_id=${shopInfo?._id}`
+  //     );
+  //     const data = await res.json();
+  //     return data;
+  //   },
+  // });
+
+  // console.log(shop?.storeInfoArray);
+
+  // const shopOPtion =
+  //   shop?.length &&
+  //   shop?.storeInfoArray?.map((item) => ({
+  //     label: item?.store_name,
+  //     value: item?.store_id,
+  //   }));
+
+  // console.log(shopOPtion);
+
+  // console.log(shopOPtion);
+  const [shopPathaoData, setShopPathaoData] = useState([]);
+
+  const handleShopSelect = (event) => {
+    const selectedValue = event.target.value;
+    setShopPathaoData(selectedValue);
+  };
+
+  console.log(shopPathaoData);
   const dataSubmit = (event) => {
     event.preventDefault();
     const name = selectedMedia;
@@ -57,7 +111,10 @@ const SellerShipping = () => {
       shopId: shopInfo.shopId,
     };
 
-    console.log(data, "data");
+    if (shopPathaoData) {
+      data["shopId"] = shopPathaoData;
+    }
+    // console.log(data, "data");
 
     // return;
     fetch("http://localhost:5001/api/v1/seller/shipping-interrogation", {
@@ -143,6 +200,7 @@ const SellerShipping = () => {
                       name="api"
                     />
                   </div>
+
                   <div className="my-4">
                     <label className="sr-only text-black" htmlFor="title">
                       {selectedMedia} Api Key
@@ -185,6 +243,28 @@ const SellerShipping = () => {
                       id="title"
                       name="api"
                     />
+                  </div>
+                  <div className="my-4">
+                    <label className="sr-only text-black" htmlFor="title">
+                      Select an ShopId
+                    </label>
+                    <select
+                      name="Media"
+                      onChange={handleShopSelect}
+                      value={shopPathaoData}
+                      id="countries"
+                      className="flex-grow w-full re h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
+                    >
+                      {/* <option disabled>Choose A Shop</option>
+                      <option value="Pathao">Pathao</option>
+                      <option value="Steadfast">Steadfast </option> */}
+                      <option disabled>Choose A Shop</option>
+                      {shop?.storeInfoArray?.map((item) => (
+                        <option value={item?.store_id}>
+                          {item?.store_name}
+                        </option>
+                      ))}
+                    </select>
                   </div>
                   <div className="my-4">
                     <label className="sr-only text-black" htmlFor="title">
