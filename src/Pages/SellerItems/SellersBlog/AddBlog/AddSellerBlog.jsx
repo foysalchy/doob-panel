@@ -11,15 +11,63 @@ import ReactQuill from "react-quill";
 import { quillModules } from "../../../quillModule";
 
 const AddSellerBlog = () => {
+  const { shopInfo, user } = useContext(AuthContext);
   const [selectedFile, setSelectedFile] = useState(null);
   const [previewUrl, setPreviewUrl] = useState(null);
   const [fileName, setFileName] = useState("");
   const [loading, setLoading] = useState(false);
-  const { shopInfo, user } = useContext(AuthContext);
   const [messageData, setMessage] = useState("");
   const [draft, setDraft] = useState(false);
-  const navigate = useNavigate();
 
+  const [upload, setUpload] = useState("");
+  const [uplodOk, setUploadOk] = useState(false);
+
+  // ! for drafts
+  const [formData, setFormData] = useState({
+    title: "", ///done
+    category: "", //done
+    MetaTag: "", //done
+    message: "", //done
+    MetaDescription: "", //done
+    img: "", //done
+    MetaImage: "", //done
+  });
+  const [draftSaved, setDraftSaved] = useState(false);
+  const [restoreDrafts, setRestoreDrafts] = useState(false);
+
+  // console.log(user);
+
+  // all blogs data
+  const { data: blogsData = [], refetch: reftechDraft } = useQuery({
+    queryKey: ["blogs"],
+    queryFn: async () => {
+      const res = await fetch(
+        `https://backend.doob.com.bd/api/v1/seller/blog-category?shopId=${shopInfo.shopId}`
+      );
+      const data = await res.json();
+      return data;
+    },
+  });
+
+  // console.log(blogsData);
+  // const draftsAllBlogData = blogsData?.filter(
+  //   (item) => item.status === "drafts"
+  // );
+  // ! get latest draft data
+  // const draftsBlogData = blogsData?.reduce((latestDraft, currentBlog) => {
+  //   if (currentBlog.status === "drafts") {
+  //     // Check if there is no latest draft yet or if the current blog has a later date
+  //     if (
+  //       !latestDraft ||
+  //       new Date(currentBlog.date) > new Date(latestDraft.date)
+  //     ) {
+  //       return currentBlog; // Set the current blog as the latest draft
+  //     }
+  //   }
+  //   return latestDraft; // Return the existing latest draft if no update is needed
+  // }, null);
+
+  // console.log(draftsBlogData, "draftsBlogData");
   const { data: category = [], refetch } = useQuery({
     queryKey: ["blog-category"],
     queryFn: async () => {
@@ -31,28 +79,12 @@ const AddSellerBlog = () => {
     },
   });
 
-  // ! for drafts
-  const [formData, setFormData] = useState({
-    title: "", ///done
-    category: "", //done
-    MetaTag: "", //done
-    message: "", //done
-    MetaDescription: "", //done
-    img: "", //done
-    MetaImage: "", //done
-    draft
-  });
-  const [draftSaved, setDraftSaved] = useState(false);
-
-  const [upload, setUpload] = useState("");
-  const [uplodOk, setUploadOk] = useState(false);
-
   const imageUploading = (e) => {
     e.preventDefault();
     const selectedFile = e.target.files[0];
     const formData = new FormData();
     formData.append("image", selectedFile);
-    const url = `https://backend.doob.com.bd/api/v1/image/upload-image?shopId=${shopInfo._id}`;
+    const url = `https://backend.doob.com.bd/api/v1/image/upload-image`;
     fetch(url, {
       method: "POST",
       body: formData,
@@ -61,13 +93,13 @@ const AddSellerBlog = () => {
       .then((imageData) => {
         if (imageData.imageUrl) {
           setUpload(imageData.imageUrl);
+          setFormData({ ...formData, MetaImage: imageData.imageUrl });
           setUploadOk(true);
         } else {
           setUpload("");
         }
       });
   };
-
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
@@ -77,10 +109,99 @@ const AddSellerBlog = () => {
       const reader = new FileReader();
       reader.onloadend = () => {
         setPreviewUrl(reader.result);
+        setFormData({ ...formData, img: imageData.imageUrl });
       };
       reader.readAsDataURL(file);
       setFileName(file.name);
     }
+  };
+  // const [message, setMessage] = useState("");
+
+  const dataSubmit = (event) => {
+    setLoading(true);
+    event.preventDefault();
+    const form = event.target;
+    const title = form.title.value;
+    const category = form.category.value;
+    const image = form.photo.files[0];
+    const MetaImage = upload;
+    const MetaTag = form.MetaTag.value;
+    const MetaDescription = form.MetaDescription.value;
+    const formData = new FormData();
+    formData.append("image", image);
+    const url = `https://backend.doob.com.bd/api/v1/image/upload-image`;
+    fetch(url, {
+      method: "POST",
+      body: formData,
+    })
+      .then((res) => res.json())
+      .then((imageData) => {
+        const image = imageData.imageUrl;
+        const blog = {
+          title,
+          category,
+          message,
+          img: image,
+          date: new Date(),
+          MetaImage,
+          status: draft,
+          MetaDescription,
+          MetaTag,
+        };
+        postBlog(blog, form, "");
+      });
+  };
+
+  const postBlog = (blog, form, type) => {
+    console.log(blog);
+    // return
+    fetch(`https://backend.doob.com.bd/api/v1/seller/blog`, {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(blog),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        // console.log(data);
+        reftechDraft();
+        setLoading(false);
+        if (type === "draft") {
+          Swal.fire("Saved as Drafts", "", "success");
+          blocker.proceed();
+        } else {
+          Swal.fire("Your Blog Publish Successfully", "", "success");
+          // navigate("/seller/manage-blogs");
+        }
+
+        // form.reset();
+        // setPreviewUrl("");
+        // setFileName("");
+        // window.location.href = '/admin/blog';
+      });
+  };
+
+  const handleChange = (content) => {
+    setMessage(content);
+    handleInputChange("message", content); // for drafts
+  };
+
+  const modules = {
+    toolbar: [
+      [{ header: "1" }, { header: "2" }, { font: [] }],
+      [{ size: [] }],
+      ["bold", "italic", "underline", "strike", "blockquote"],
+      [
+        { list: "ordered" },
+        { list: "bullet" },
+        { indent: "-1" },
+        { indent: "+1" },
+      ],
+      ["link", "image", "video"],
+      ["color"],
+      ["clean"],
+    ],
   };
 
   //! for drafts
@@ -101,6 +222,19 @@ const AddSellerBlog = () => {
     setDraftSaved(!isFormDataEmpty);
   }, [formData]);
 
+  // useEffect(() => {
+  //   if (draftsAllBlogData?.length && !restoreDrafts) {
+  //     // Check if restoreDrafts is false
+  //     const confirmedRestore = window.confirm("Restore your drafts");
+  //     if (confirmedRestore) {
+  //       setRestoreDrafts(true);
+  //       if (draftsBlogData?.message) {
+  //         setMessage(draftsBlogData?.message);
+  //       }
+  //     }
+  //   }
+  // }, [draftsAllBlogData, restoreDrafts]);
+
   useEffect(() => {
     if (blocker.state === "blocked") {
       console.log("yess");
@@ -110,29 +244,17 @@ const AddSellerBlog = () => {
         "Are you sure you want to leave? Your changes may not be saved."
       );
       if (confirmed) {
+        Swal.fire("Drafts Saved", "", "success");
+
         const draftsAddBlogData = {
           ...formData,
-          // status: "drafts",
+          status: "drafts",
           email: user?.email,
+          date: new Date(),
           draft: true,
         };
-        // postPage(draftsAddBlogData, "");
-        // console.log(draftsAddBlogData);
-        fetch(`https://backend.doob.com.bd/api/v1/seller/blog`, {
-          method: "POST",
-          headers: {
-            "content-type": "application/json",
-          },
-          body: JSON.stringify(draftsAddBlogData),
-        })
-          .then((res) => res.json())
-          .then((data) => {
-            console.log(data);
-
-            setLoading(false);
-            Swal.fire("Drafts Saved", "", "success");
-            blocker.proceed();
-          });
+        postBlog(draftsAddBlogData, "", "drafts");
+        console.log(draftsAddBlogData);
 
         // blocker.proceed();
       } else {
@@ -141,64 +263,7 @@ const AddSellerBlog = () => {
     }
   }, [draftSaved, blocker]);
 
-  const dataSubmit = (event) => {
-    setLoading(true);
-    event.preventDefault();
-    const form = event.target;
-    const title = form.title.value;
-    const category = form.category.value;
-    const image = form.photo.files[0];
-    const message = form?.message?.value;
-    const shop = shopInfo?.shopId;
-    const MetaTag = form.MetaTag.value;
-    const MetaDescription = form.MetaDescription.value;
-
-    const formData = new FormData();
-    formData.append("image", image);
-    const url = `https://backend.doob.com.bd/api/v1/image/upload-image?shopId=${shopInfo._id}`;
-    fetch(url, {
-      method: "POST",
-      body: formData,
-    })
-      .then((res) => res.json())
-      .then((imageData) => {
-        const image = imageData.imageUrl;
-        const blog = {
-          title,
-          message,
-          img: image,
-          shop,
-          category,
-          date: new Date(),
-          MetaImage: image,
-          MetaTag,
-          status: true,
-          MetaDescription,
-          draft
-        };
-        postBlog(blog, form);
-      });
-  };
-
-  const postBlog = (blog, form) => {
-    fetch(`https://backend.doob.com.bd/api/v1/seller/blog`, {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(blog),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setLoading(false);
-        Swal.fire("Your Blog Upload Successfully", "", "success");
-
-        form.reset();
-        setPreviewUrl("");
-        setFileName("");
-        // navigate(`/seller/manage-blogs`);
-      });
-  };
+  console.log(blocker);
 
   return (
     <div className="  ">
@@ -271,7 +336,7 @@ const AddSellerBlog = () => {
               className="w-full rounded-lg border border-gray-900 p-3 text-sm"
               name="category"
               onChange={(e) => handleInputChange("category", e.target.value)}
-              id=""
+              id="category"
             >
               {category?.map((cat) => (
                 <option key={cat?.slag} value={cat.slag}>
@@ -281,21 +346,20 @@ const AddSellerBlog = () => {
             </select>
           </div>
 
-          <div className="jodit-editor">
-            <JoditEditor
-              id="message"
-              // onChange={handleDescriptionChange}
-              name="message"
-
-              config={{
-                readonly: false,
-                uploader: {
-                  insertImageAsBase64URI: true,
-                },
-              }}
-            />
-
-
+          <div>
+            <div>
+              <ReactQuill
+                name="message"
+                id="message"
+                className="h-36 "
+                handleChange
+                value={messageData}
+                modules={quillModules}
+                placeholder="Enter description here..."
+              />
+              <br />
+              <br />
+            </div>
           </div>
 
           <div>
@@ -304,7 +368,7 @@ const AddSellerBlog = () => {
             </label>
             <input
               required
-              className="w-full rounded-lg border border-gray-900 p-3 text-sm"
+              className="w-full mt-[2.5rem] rounded-lg border border-gray-900 p-3 text-sm"
               placeholder="Meta Tag"
               type="text"
               id="MetaTag"
@@ -395,8 +459,8 @@ const AddSellerBlog = () => {
             </button>
           </div>
         </form>
-      </div >
-    </div >
+      </div>
+    </div>
   );
 };
 export default AddSellerBlog;

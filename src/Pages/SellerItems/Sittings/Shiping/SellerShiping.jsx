@@ -41,7 +41,7 @@ const SellerShipping = () => {
     event.preventDefault();
     const name = selectedMedia;
     const api = event.target.api.value;
-    const key = event.target.key.value;
+    const client_id = event.target.client_id.value;
     const secretKey = event.target.secretKey.value;
     const user_name = name == "Pathao" ? event.target.user_name.value : "";
     const password = name == "Pathao" ? event.target.password.value : "";
@@ -49,7 +49,7 @@ const SellerShipping = () => {
     const data = {
       name,
       api,
-      key,
+      client_id,
       secretKey,
       user_name,
       password,
@@ -57,7 +57,10 @@ const SellerShipping = () => {
       shopId: shopInfo.shopId,
     };
 
-    fetch("https://backend.doob.com.bd/api/v1/seller/shipping-interrogation", {
+    console.log(data, "data");
+
+    // return;
+    fetch("http://localhost:5001/api/v1/seller/shipping-interrogation", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -73,10 +76,9 @@ const SellerShipping = () => {
             text: "",
           });
         } else {
-
           BrightAlert("Shipping interrogation Successful", "", "success");
-          event.target.reset()
-          setSelectedMedia("Choose your Api")
+          event.target.reset();
+          setSelectedMedia("Choose your Api");
           refetch();
         }
       });
@@ -194,7 +196,7 @@ const SellerShipping = () => {
                       placeholder={selectedMedia + "  client_id"}
                       type="text"
                       id="title"
-                      name="key"
+                      name="client_id"
                     />
                   </div>
 

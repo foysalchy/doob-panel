@@ -113,6 +113,7 @@ const ShippingModal = ({
                   <label className=" text-black" htmlFor="title">
                     Select Your Delivery
                   </label>
+
                   <select
                     value={selectedDelivery}
                     onChange={handleDeliveryChange}
