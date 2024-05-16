@@ -27,21 +27,75 @@ const SellerShipping = () => {
   const [selectedMedia, setSelectedMedia] = useState("Choose your Api");
   const [disabled, setDisable] = useState(true);
 
+  const [shop, setShop] = useState([]);
+
   const handleGetaway = (event) => {
     const selectedValue = event.target.value;
+
+    console.log(selectedValue);
     if (selectedValue == "Choose your Api") {
       setDisable(true);
+    } else if (selectedValue === "Pathao") {
+      setDisable(false);
+      setSelectedMedia(selectedValue);
+      fetch(
+        `https://backend.doob.com.bd/api/v1/seller/pathao-shopId?shop_id=${shopInfo?._id}`
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          setShop(data);
+        })
+        .catch((error) => {
+          console.error("Error fetching data:", error);
+        });
     } else {
       setDisable(false);
       setSelectedMedia(selectedValue);
     }
   };
 
+  // shop id of pathao
+
+  // const {
+  //   data: shop = [],
+  //   // refetch:,
+  //   isLoading: loadingSHop,
+  // } = useQuery({
+  //   queryKey: ["shopPathao"],
+  //   queryFn: async () => {
+  //     const res = await fetch(
+  //       `https://backend.doob.com.bd/api/v1/seller/pathao-shopId?shop_id=${shopInfo?._id}`
+  //     );
+  //     const data = await res.json();
+  //     return data;
+  //   },
+  // });
+
+  // console.log(shop?.storeInfoArray);
+
+  // const shopOPtion =
+  //   shop?.length &&
+  //   shop?.storeInfoArray?.map((item) => ({
+  //     label: item?.store_name,
+  //     value: item?.store_id,
+  //   }));
+
+  // console.log(shopOPtion);
+
+  // console.log(shopOPtion);
+  const [storePathaoData, setStorePathaoData] = useState([]);
+
+  const handlStoreSelect = (event) => {
+    const selectedValue = event.target.value;
+    setStorePathaoData(selectedValue);
+  };
+
+  console.log(storePathaoData);
   const dataSubmit = (event) => {
     event.preventDefault();
     const name = selectedMedia;
     const api = event.target.api.value;
-    const key = event.target.key.value;
+    const client_id = event.target.client_id.value;
     const secretKey = event.target.secretKey.value;
     const user_name = name == "Pathao" ? event.target.user_name.value : "";
     const password = name == "Pathao" ? event.target.password.value : "";
@@ -49,7 +103,7 @@ const SellerShipping = () => {
     const data = {
       name,
       api,
-      key,
+      client_id,
       secretKey,
       user_name,
       password,
@@ -57,6 +111,12 @@ const SellerShipping = () => {
       shopId: shopInfo.shopId,
     };
 
+    if (storePathaoData) {
+      data["pathao_store_id"] = storePathaoData;
+    }
+    // console.log(data, "data");
+
+    // return;
     fetch("https://backend.doob.com.bd/api/v1/seller/shipping-interrogation", {
       method: "POST",
       headers: {
@@ -73,10 +133,9 @@ const SellerShipping = () => {
             text: "",
           });
         } else {
-
           BrightAlert("Shipping interrogation Successful", "", "success");
-          event.target.reset()
-          setSelectedMedia("Choose your Api")
+          event.target.reset();
+          setSelectedMedia("Choose your Api");
           refetch();
         }
       });
@@ -141,6 +200,7 @@ const SellerShipping = () => {
                       name="api"
                     />
                   </div>
+
                   <div className="my-4">
                     <label className="sr-only text-black" htmlFor="title">
                       {selectedMedia} Api Key
@@ -186,6 +246,28 @@ const SellerShipping = () => {
                   </div>
                   <div className="my-4">
                     <label className="sr-only text-black" htmlFor="title">
+                      Select an Store
+                    </label>
+                    <select
+                      name="Media"
+                      onChange={handlStoreSelect}
+                      value={storePathaoData}
+                      id="countries"
+                      className="flex-grow w-full re h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
+                    >
+                      {/* <option disabled>Choose A Shop</option>
+                      <option value="Pathao">Pathao</option>
+                      <option value="Steadfast">Steadfast </option> */}
+                      <option disabled>Choose A Shop</option>
+                      {shop?.storeInfoArray?.map((item) => (
+                        <option value={item?.store_id}>
+                          {item?.store_name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div className="my-4">
+                    <label className="sr-only text-black" htmlFor="title">
                       {selectedMedia} client_id
                     </label>
                     <input
@@ -194,7 +276,7 @@ const SellerShipping = () => {
                       placeholder={selectedMedia + "  client_id"}
                       type="text"
                       id="title"
-                      name="key"
+                      name="client_id"
                     />
                   </div>
 
