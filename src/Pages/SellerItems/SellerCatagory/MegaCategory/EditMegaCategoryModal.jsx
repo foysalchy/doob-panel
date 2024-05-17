@@ -65,7 +65,7 @@ export default function EditMegaCategoryModal({
     },
   });
 
-  console.log(wooCategory.categories[3].id, "wooCategory");
+  // console.log(wooCategory.categories[3].id, "wooCategory");
   const option =
     darazData.length &&
     darazData?.map((warehouse) => ({

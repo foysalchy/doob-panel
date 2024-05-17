@@ -297,6 +297,9 @@ const OrderTable = ({
   }
 
   const updateCourier_status = (id, courier_id) => {
+    console.log(id, courier_id, shopInfo._id);
+
+    // return;
     fetch(
       `https://backend.doob.com.bd/api/v1/admin/courier_status?orderId=${id}&id=${courier_id}&shopId=${shopInfo._id}`,
       {
@@ -402,348 +405,359 @@ const OrderTable = ({
 
   return (
     <div className="flex flex-col overflow-hidden mt-4">
-      {currentItems.length ? <div className="overflow-x-auto transparent-scroll sm:-mx-6 lg:-mx-8">
-        <div className="inline-block  min-w-full py-2 sm:px-6 lg:px-8">
-          <div className="overflow-y-hidden overflow-x-auto">
-            <table className="w-full bg-white border text-center text-sm font-light">
-              <thead className="border-b font-medium">
-                <tr>
-                  <th scope="col" className="border-r px-2 py-4 font-[500]">
-                    <input
-                      type="checkbox"
-                      onChange={(e) => {
-                        handleSelectAll(e, currentItems);
-                        handleStoreInvoice(e, selectedItems);
-                      }}
-                      checked={
-                        currentItems?.length === selectedItems?.length
-                          ? true
-                          : false
-                      }
-                    />
-                  </th>
-                  <th scope="col" className="border-r px-2 py-4 font-[500]">
-                    Details
-                  </th>
-                  <th scope="col" className="border-r px-2 py-4 font-[500]">
-                    Document
-                  </th>
-                  <th scope="col" className="border-r px-2 py-4 font-[500]">
-                    Order No.
-                  </th>
-                  <th scope="col" className="border-r px-2 py-4 font-[500]">
-                    Order Date
-                  </th>
-                  <th scope="col" className="border-r px-2 py-4 font-[500]">
-                    Pending Since
-                  </th>
-                  <th scope="col" className="border-r px-2 py-4 font-[500]">
-                    Payment Method
-                  </th>
-                  <th scope="col" className="border-r px-2 py-4 font-[500]">
-                    Retail Price
-                  </th>
-                  <th scope="col" className="border-r px-2 py-4 font-[500]">
-                    courier_status
-                  </th>
-                  <th scope="col" className="border-r px-2 py-4 font-[500]">
-                    courier_id
-                  </th>
-                  <th scope="col" className="border-r px-2 py-4 font-[500]">
-                    Status
-                  </th>
-                  <th scope="col" className="border-r px-2 py-4 font-[500]">
-                    Actions
-                  </th>
-                  <th scope="col" className="border-r px-2 py-4 font-[500]">
-                    Check Status
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {currentItems?.map((item, index) => (
-                  <React.Fragment key={item._id}>
-                    <tr className={index % 2 === 0 ? "bg-gray-100" : ""}>
-                      <td className="border-r px-6 py-4 font-medium">
-                        <input
-                          type="checkbox"
-                          onChange={(e) => handleCheckboxChange(e, item)}
-                          checked={selectedItems.some(
-                            (selectedItem) => selectedItem._id === item._id
-                          )}
-                        />
-                      </td>
-                      <td className="border-r px-6 py-4">
-                        {!modalOn ? (
-                          <button
-                            onClick={() => setModalOn(item._id)}
-                            className="px-4 py-2"
-                          >
-                            Details
-                          </button>
-                        ) : (
-                          <button
-                            onClick={() => setModalOn(false)}
-                            className="px-4 py-2"
-                          >
-                            Close
-                          </button>
-                        )}
-                      </td>
-                      <td className="border-r px-6 py-4">
-                        <Link
-                          to={`/invoice/${item?._id}`}
-                          onClick={handlePrint}
-                          className="text-blue-600 font-[500]"
-                        >
-                          Invoice
-                        </Link>
-                      </td>
-                      <td className="border-r px-6 py-4">
-                        <Link
-                          to="order-checkup"
-                          onClick={() => setCheckUpData(item)}
-                          style={{ whiteSpace: "nowrap" }}
-                          className="text-blue-500  font-[400]"
-                        >
-                          {item?.orderNumber}
-                        </Link>
-                      </td>
-                      <td className="border-r px-6 py-4">
-                        {formattedDate(item?.timestamp)}
-                      </td>
-                      <td className="border-r w-[200px] px-6 py-4">
-                        {getTimeAgo(item?.timestamp)}
-                      </td>
-                      <td className="border-r px-6 py-4">
-                        {item?.method.Getaway}
-                      </td>
-                      <td className="border-r px-6 py-4">
-                        {ratial_price(item?.productList)}
-                      </td>
-                      <td className="border-r px-6 py-4">
-                        {item?.courier_status}
-                      </td>
-                      <td className="border-r px-6 py-4">{item?.courier_id}</td>
-                      <td className="border-r px-6 py-4">
-                        {item?.status ? item?.status : "Pending"}
-                      </td>
-                      <td className="border-r px-6 py-4 flex items-center gap-2">
-                        <td className="whitespace-nowrap  px-6 py-4 text-[16px] font-[400] flex flex-col gap-2">
-                          {(!item?.status && (
-                            <>
-                              <button
-                                onClick={() => setReadyToShip(item)}
-                                // onClick={() =>
-                                //   productStatusUpdate(
-                                //     "ready_to_ship",
-                                //     item?._id
-                                //   )
-                                // }
-                                className="text-[16px] font-[400] text-blue-700"
-                              >
-                                Ready to Ship
-                              </button>
-                              <button
-                                onClick={() =>
-                                  productStatusUpdate("Cancel", item?._id)
-                                }
-                                className="text-[16px] font-[400] text-blue-700"
-                              >
-                                Cancel
-                              </button>
-                            </>
-                          )) ||
-                            (item?.status === "ready_to_ship" && (
-                              <button
-                                onClick={() =>
-                                  productStatusUpdate("shipped", item?._id)
-                                }
-                                className="text-[16px] font-[400] text-blue-700"
-                              >
-                                Shipped
-                              </button>
-                            )) ||
-                            (item?.status === "shipped" && (
-                              <div className="flex flex-col gap-2">
-                                <button
-                                  onClick={() =>
-                                    productStatusUpdate("delivered", item?._id)
-                                  }
-                                  className="text-[16px] font-[400] text-blue-700"
-                                >
-                                  Delivered
-                                </button>
-                                <button
-                                  onClick={() =>
-                                    productStatusUpdate("failed", item?._id)
-                                  }
-                                  className="text-[16px] font-[400] text-blue-700"
-                                >
-                                  Failed Delivery
-                                </button>
-                              </div>
-                            )) ||
-                            (item?.status === "delivered" && (
-                              <button
-                                onClick={() =>
-                                  productStatusUpdate("returned", item?._id)
-                                }
-                                className="text-[16px] font-[400] text-blue-700"
-                              >
-                                Returned
-                              </button>
-                            )) ||
-                            (item?.status === "return" && (
-                              <div>
-                                {item?.rejectNote ? (
-                                  <button
-                                    className="text-red-500"
-                                    onClick={() => showRejectNode(item)}
-                                  >
-                                    Rejected
-                                  </button>
-                                ) : (
-                                  <div className="flex flex-col justify-center">
-                                    <button
-                                      onClick={() => {
-                                        setShowAlert(item), checkBox(item._id);
-                                      }}
-                                      className="text-[16px] font-[400] text-blue-700"
-                                    >
-                                      Approve
-                                    </button>
-                                    <button
-                                      onClick={() => handleRejectProduct(item)}
-                                      className="text-[16px] font-[400] text-blue-700"
-                                    >
-                                      Reject
-                                    </button>
-                                  </div>
-                                )}
-                              </div>
-                            )) ||
-                            (item?.status === "returned" && (
-                              <button
-                                onClick={() =>
-                                  productStatusUpdate("RefoundOnly", item?._id)
-                                }
-                                className="text-[16px] font-[400] text-blue-700"
-                              >
-                                Refund Data
-                              </button>
-                            )) ||
-                            (item?.status === "Refund" && (
-                              <button
-                                onClick={() => viewDetails(item)}
-                                className="text-[16px] font-[400] text-blue-700"
-                              >
-                                View Details
-                              </button>
-                            ))}
+      {currentItems.length ? (
+        <div className="overflow-x-auto transparent-scroll sm:-mx-6 lg:-mx-8">
+          <div className="inline-block  min-w-full py-2 sm:px-6 lg:px-8">
+            <div className="overflow-y-hidden overflow-x-auto">
+              <table className="w-full bg-white border text-center text-sm font-light">
+                <thead className="border-b font-medium">
+                  <tr>
+                    <th scope="col" className="border-r px-2 py-4 font-[500]">
+                      <input
+                        type="checkbox"
+                        onChange={(e) => {
+                          handleSelectAll(e, currentItems);
+                          handleStoreInvoice(e, selectedItems);
+                        }}
+                        checked={
+                          currentItems?.length === selectedItems?.length
+                            ? true
+                            : false
+                        }
+                      />
+                    </th>
+                    <th scope="col" className="border-r px-2 py-4 font-[500]">
+                      Details
+                    </th>
+                    <th scope="col" className="border-r px-2 py-4 font-[500]">
+                      Document
+                    </th>
+                    <th scope="col" className="border-r px-2 py-4 font-[500]">
+                      Order No.
+                    </th>
+                    <th scope="col" className="border-r px-2 py-4 font-[500]">
+                      Order Date
+                    </th>
+                    <th scope="col" className="border-r px-2 py-4 font-[500]">
+                      Pending Since
+                    </th>
+                    <th scope="col" className="border-r px-2 py-4 font-[500]">
+                      Payment Method
+                    </th>
+                    <th scope="col" className="border-r px-2 py-4 font-[500]">
+                      Retail Price
+                    </th>
+                    <th scope="col" className="border-r px-2 py-4 font-[500]">
+                      courier_status
+                    </th>
+                    <th scope="col" className="border-r px-2 py-4 font-[500]">
+                      courier_id
+                    </th>
+                    <th scope="col" className="border-r px-2 py-4 font-[500]">
+                      Status
+                    </th>
+                    <th scope="col" className="border-r px-2 py-4 font-[500]">
+                      Actions
+                    </th>
+                    <th scope="col" className="border-r px-2 py-4 font-[500]">
+                      Check Status
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {currentItems?.map((item, index) => (
+                    <React.Fragment key={item._id}>
+                      <tr className={index % 2 === 0 ? "bg-gray-100" : ""}>
+                        <td className="border-r px-6 py-4 font-medium">
+                          <input
+                            type="checkbox"
+                            onChange={(e) => handleCheckboxChange(e, item)}
+                            checked={selectedItems.some(
+                              (selectedItem) => selectedItem._id === item._id
+                            )}
+                          />
                         </td>
+                        <td className="border-r px-6 py-4">
+                          {!modalOn ? (
+                            <button
+                              onClick={() => setModalOn(item._id)}
+                              className="px-4 py-2"
+                            >
+                              Details
+                            </button>
+                          ) : (
+                            <button
+                              onClick={() => setModalOn(false)}
+                              className="px-4 py-2"
+                            >
+                              Close
+                            </button>
+                          )}
+                        </td>
+                        <td className="border-r px-6 py-4">
+                          <Link
+                            to={`/invoice/${item?._id}`}
+                            onClick={handlePrint}
+                            className="text-blue-600 font-[500]"
+                          >
+                            Invoice
+                          </Link>
+                        </td>
+                        <td className="border-r px-6 py-4">
+                          <Link
+                            to="order-checkup"
+                            onClick={() => setCheckUpData(item)}
+                            style={{ whiteSpace: "nowrap" }}
+                            className="text-blue-500  font-[400]"
+                          >
+                            {item?.orderNumber}
+                          </Link>
+                        </td>
+                        <td className="border-r px-6 py-4">
+                          {formattedDate(item?.timestamp)}
+                        </td>
+                        <td className="border-r w-[200px] px-6 py-4">
+                          {getTimeAgo(item?.timestamp)}
+                        </td>
+                        <td className="border-r px-6 py-4">
+                          {item?.method.Getaway}
+                        </td>
+                        <td className="border-r px-6 py-4">
+                          {ratial_price(item?.productList)}
+                        </td>
+                        <td className="border-r px-6 py-4">
+                          {item?.courier_status}
+                        </td>
+                        <td className="border-r px-6 py-4">
+                          {item?.courier_id}
+                        </td>
+                        <td className="border-r px-6 py-4">
+                          {item?.status ? item?.status : "Pending"}
+                        </td>
+                        <td className="border-r px-6 py-4 flex items-center gap-2">
+                          <td className="whitespace-nowrap  px-6 py-4 text-[16px] font-[400] flex flex-col gap-2">
+                            {(!item?.status && (
+                              <>
+                                <button
+                                  onClick={() => setReadyToShip(item)}
+                                  // onClick={() =>
+                                  //   productStatusUpdate(
+                                  //     "ready_to_ship",
+                                  //     item?._id
+                                  //   )
+                                  // }
+                                  className="text-[16px] font-[400] text-blue-700"
+                                >
+                                  Ready to Ship
+                                </button>
+                                <button
+                                  onClick={() =>
+                                    productStatusUpdate("Cancel", item?._id)
+                                  }
+                                  className="text-[16px] font-[400] text-blue-700"
+                                >
+                                  Cancel
+                                </button>
+                              </>
+                            )) ||
+                              (item?.status === "ready_to_ship" && (
+                                <button
+                                  onClick={() =>
+                                    productStatusUpdate("shipped", item?._id)
+                                  }
+                                  className="text-[16px] font-[400] text-blue-700"
+                                >
+                                  Shipped
+                                </button>
+                              )) ||
+                              (item?.status === "shipped" && (
+                                <div className="flex flex-col gap-2">
+                                  <button
+                                    onClick={() =>
+                                      productStatusUpdate(
+                                        "delivered",
+                                        item?._id
+                                      )
+                                    }
+                                    className="text-[16px] font-[400] text-blue-700"
+                                  >
+                                    Delivered
+                                  </button>
+                                  <button
+                                    onClick={() =>
+                                      productStatusUpdate("failed", item?._id)
+                                    }
+                                    className="text-[16px] font-[400] text-blue-700"
+                                  >
+                                    Failed Delivery
+                                  </button>
+                                </div>
+                              )) ||
+                              (item?.status === "delivered" && (
+                                <button
+                                  onClick={() =>
+                                    productStatusUpdate("returned", item?._id)
+                                  }
+                                  className="text-[16px] font-[400] text-blue-700"
+                                >
+                                  Returned
+                                </button>
+                              )) ||
+                              (item?.status === "return" && (
+                                <div>
+                                  {item?.rejectNote ? (
+                                    <button
+                                      className="text-red-500"
+                                      onClick={() => showRejectNode(item)}
+                                    >
+                                      Rejected
+                                    </button>
+                                  ) : (
+                                    <div className="flex flex-col justify-center">
+                                      <button
+                                        onClick={() => {
+                                          setShowAlert(item),
+                                            checkBox(item._id);
+                                        }}
+                                        className="text-[16px] font-[400] text-blue-700"
+                                      >
+                                        Approve
+                                      </button>
+                                      <button
+                                        onClick={() =>
+                                          handleRejectProduct(item)
+                                        }
+                                        className="text-[16px] font-[400] text-blue-700"
+                                      >
+                                        Reject
+                                      </button>
+                                    </div>
+                                  )}
+                                </div>
+                              )) ||
+                              (item?.status === "returned" && (
+                                <button
+                                  onClick={() =>
+                                    productStatusUpdate(
+                                      "RefoundOnly",
+                                      item?._id
+                                    )
+                                  }
+                                  className="text-[16px] font-[400] text-blue-700"
+                                >
+                                  Refund Data
+                                </button>
+                              )) ||
+                              (item?.status === "Refund" && (
+                                <button
+                                  onClick={() => viewDetails(item)}
+                                  className="text-[16px] font-[400] text-blue-700"
+                                >
+                                  View Details
+                                </button>
+                              ))}
+                          </td>
 
-                        {/* <button
+                          {/* <button
                                                     onClick={() => setModalOn(item)}
                                                     className='bg-blue-500 text-white px-3 py-1 text-sm rounded'>
                                                     Edit
                                                 </button> */}
 
-                        <div>
-                          <div
-                            onClick={() => setModalOn(false)}
-                            className={`fixed z-[100] flex items-center justify-center ${
-                              modalOn?._id === item?._id
-                                ? "visible opacity-100"
-                                : "invisible opacity-0"
-                            } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
-                          >
+                          <div>
                             <div
-                              onClick={(e_) => e_.stopPropagation()}
-                              className={`text- absolute w-[500px] rounded-sm bg-white p-6 drop-shadow-lg dark:bg-black dark:text-white ${
+                              onClick={() => setModalOn(false)}
+                              className={`fixed z-[100] flex items-center justify-center ${
                                 modalOn?._id === item?._id
-                                  ? "scale-1 opacity-1 duration-300"
-                                  : "scale-0 opacity-0 duration-150"
-                              }`}
+                                  ? "visible opacity-100"
+                                  : "invisible opacity-0"
+                              } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
                             >
-                              <h1 className="mb-2 text-2xl font-semibold">
-                                Edit Order {}
-                              </h1>
-                              <form>
-                                <div className="flex items-start w-full mb-6 flex-col gap-1">
-                                  <label htmlFor="name">Name</label>
-                                  <input
-                                    type="text"
-                                    className="border border-white w-full bg-transparent text-white py-2"
-                                    defaultValue={item?.addresses?.fullName}
-                                  />
-                                </div>
+                              <div
+                                onClick={(e_) => e_.stopPropagation()}
+                                className={`text- absolute w-[500px] rounded-sm bg-white p-6 drop-shadow-lg dark:bg-black dark:text-white ${
+                                  modalOn?._id === item?._id
+                                    ? "scale-1 opacity-1 duration-300"
+                                    : "scale-0 opacity-0 duration-150"
+                                }`}
+                              >
+                                <h1 className="mb-2 text-2xl font-semibold">
+                                  Edit Order {}
+                                </h1>
+                                <form>
+                                  <div className="flex items-start w-full mb-6 flex-col gap-1">
+                                    <label htmlFor="name">Name</label>
+                                    <input
+                                      type="text"
+                                      className="border border-white w-full bg-transparent text-white py-2"
+                                      defaultValue={item?.addresses?.fullName}
+                                    />
+                                  </div>
 
-                                <div className="flex justify-between">
-                                  <button
-                                    type="submit"
-                                    onClick={() => setModalOn(false)}
-                                    className="me-2 rounded-sm bg-green-700 px-6 py-[6px] text-white"
-                                  >
-                                    Ok
-                                  </button>
-                                </div>
-                              </form>
+                                  <div className="flex justify-between">
+                                    <button
+                                      type="submit"
+                                      onClick={() => setModalOn(false)}
+                                      className="me-2 rounded-sm bg-green-700 px-6 py-[6px] text-white"
+                                    >
+                                      Ok
+                                    </button>
+                                  </div>
+                                </form>
+                              </div>
                             </div>
                           </div>
-                        </div>
-                      </td>
-                      <td className="border-r px-6 py-4">
-                        {item?.courier_id && (
-                          <button
-                            onClick={() =>
-                              updateCourier_status(item._id, item.courier_id)
-                            }
-                          >
-                            Check Status
-                          </button>
-                        )}
-                      </td>
-                    </tr>
-                    {item._id === readyToShip._id && (
-                      <tr>
-                        <td colSpan="10">
-                          <ShippingModal
-                            readyToShip={readyToShip}
-                            setReadyToShip={setReadyToShip}
-                            productStatusUpdate={productStatusUpdate}
-                            orderInfo={item}
-                            refetch={refetch}
-                            ships={ships}
-                          />
+                        </td>
+                        <td className="border-r px-6 py-4">
+                          {item?.courier_id && (
+                            <button
+                              onClick={() =>
+                                updateCourier_status(item._id, item.courier_id)
+                              }
+                            >
+                              Check Status
+                            </button>
+                          )}
                         </td>
                       </tr>
-                    )}
-                    {item._id === modalOn && (
-                      <tr>
-                        <td colSpan="10">
-                          <OrderAllinfoModal
-                            status={item?.status ? item?.status : "Pending"}
-                            setModalOn={setModalOn}
-                            modalOn={modalOn}
-                            productList={item?.productList}
-                          />
-                        </td>
-                      </tr>
-                    )}
-                  </React.Fragment>
-                ))}
-              </tbody>
-            </table>
+                      {item._id === readyToShip._id && (
+                        <tr>
+                          <td colSpan="10">
+                            <ShippingModal
+                              readyToShip={readyToShip}
+                              setReadyToShip={setReadyToShip}
+                              productStatusUpdate={productStatusUpdate}
+                              orderInfo={item}
+                              refetch={refetch}
+                              ships={ships}
+                            />
+                          </td>
+                        </tr>
+                      )}
+                      {item._id === modalOn && (
+                        <tr>
+                          <td colSpan="10">
+                            <OrderAllinfoModal
+                              status={item?.status ? item?.status : "Pending"}
+                              setModalOn={setModalOn}
+                              modalOn={modalOn}
+                              productList={item?.productList}
+                            />
+                          </td>
+                        </tr>
+                      )}
+                    </React.Fragment>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
-      </div> :
+      ) : (
         <div>
-          <h1>
-            Here is not order found
-          </h1>
+          <h1>Here is not order found</h1>
         </div>
-      }
+      )}
       {showAlert && (
         <div className="fixed inset-0 z-10 bg-opacity-50 overflow-y-auto">
           <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
