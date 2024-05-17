@@ -126,7 +126,7 @@ const DarazOrderTable = ({
             <div className=" sm:-mx-6 lg:-mx-8">
               <div className=" py-2 sm:px-6 lg:px-8">
                 <div className="">
-                  <table className="overflow-x-scroll  bg-white border text-center text-sm font-light">
+                  <table className="">
                     <thead className="border-b  font-medium  ">
                       <tr>
                         <th scope="col" className="border-r px-2 py-4 font-[500]">

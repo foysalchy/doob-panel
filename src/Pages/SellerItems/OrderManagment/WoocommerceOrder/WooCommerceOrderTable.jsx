@@ -17,7 +17,7 @@ const WooCommerceOrderTable = ({ searchValue }) => {
         `https://backend.doob.com.bd/api/v1/seller/woo-commerce-order?shopId=${shopInfo._id}`
       );
       const data = await res.json();
-      return data.orders;
+      return data.data;
     },
   });
   console.log(tData, "woo-order");
@@ -107,6 +107,7 @@ const WooCommerceOrderTable = ({ searchValue }) => {
                     data={data}
                     index={index + startIndex}
                     key={index}
+                    refetch={refetch}
                   />
                 ))}
               </tbody>
