@@ -1,32 +1,23 @@
-import React, { useContext, useEffect, useState } from "react";
-import { AuthContext } from "../../../../AuthProvider/UserProvider";
-import Select from "react-select";
 import { useQuery } from "@tanstack/react-query";
+import React, { useContext, useEffect, useState } from "react";
 import Swal from "sweetalert2";
 
-export default function EditMegaCategoryModal({
-  warehouse,
+import Select from "react-select";
+import { AuthContext } from "../../../../AuthProvider/UserProvider";
+export default function EditSUbCategoryModal({
   editOn,
+  warehouse,
   setEditOn,
   refetch,
 }) {
-  const [wocomarce, setWocomarce] = useState(false);
-  const [loading, setLoading] = useState(false);
+  // console.log(editOn);
+  // const [loading, setLoading] = useState(false);
 
   const { shopInfo } = useContext(AuthContext);
+  const [wocomarce, setWocomarce] = useState(false);
   const [daraz, setDaraz] = useState(false);
 
-  const uploadImage = async (formData) => {
-    const url = `https://backend.doob.com.bd/api/v1/image/upload-image`;
-    const response = await fetch(url, {
-      method: "POST",
-      body: formData,
-    });
-
-    const imageData = await response.json();
-    return imageData.imageUrl;
-  };
-
+  // console.log(shopInfo.wooLogin);
   const handleButtonClick = (buttonName) => {
     if (buttonName === "daraz") {
       setDaraz(!daraz);
@@ -50,7 +41,7 @@ export default function EditMegaCategoryModal({
     },
   });
 
-  const { data: wooCategory = [] } = useQuery({
+  const { data: wooCategory = [], isLoading: loadingWoo } = useQuery({
     queryKey: ["wooCategoryData"],
     queryFn: async () => {
       if (shopInfo.wooLogin) {
@@ -82,94 +73,125 @@ export default function EditMegaCategoryModal({
     (item) => item.category_id === editOn?.darazCategory_id
   );
 
-  // console.log(editOn?.darazCategory_id);
+  console.log(defaultDarazData);
   const defaultDaraz = {
     value: JSON.stringify(defaultDarazData),
     label: defaultDarazData?.name,
   };
 
-  // console.log(JSON.parse(editOn?.wocomarceCategory)?.id, "defaultDaraz");
-
-  const defaultWooData = wooCategory?.categories?.find(
-    (item) => item.id === JSON.parse(editOn?.wocomarceCategory)?.id
-  );
+  // console.log(defaultDaraz, "defaultDaraz");
+  // const parsedId = JSON.parse(editOn?.wooSubCategory)?.id;
+  const defaultWooData = wooCategory?.categories?.find((item) => {
+    // console.log("item.parent:", item.parent);
+    // console.log("parsed wooSubCategory id:", parseInt(parsedId));
+    return (
+      item.id ===
+      (editOn?.wooSubCategory && JSON.parse(editOn?.wooSubCategory)?.id)
+    );
+  });
+  // console.log(wooCategory?.categories);
+  console.log(defaultWooData);
+  // console.log(parseInt(parsedId));
 
   const defaultWoo = {
     value: JSON.stringify(defaultWooData),
     label: defaultWooData?.name,
   };
 
-
-    useEffect(() => {
-      if (defaultWooData?.id) {
-        setWocomarce(true);
-      }
+  // console.log(defaultDaraz);
+  const uploadImage = async (formData) => {
+    const url = `https://backend.doob.com.bd/api/v1/image/upload-image`;
+    const response = await fetch(url, {
+      method: "POST",
+      body: formData,
     });
 
-  // console.log(JSON.parse(editOn?.wocomarceCategory)?.id);
-
-  // console.log(wooCategory?.categories[0]);
-  console.log(editOn?.wocomarceCategory);
-
-  console.log(defaultWooData, "defaultDaraz");
-  console.log(defaultWoo, "defaultWoo");
-
+    const imageData = await response.json();
+    return imageData.imageUrl;
+  };
+  const [loading, setLoading] = useState(false);
   const handleEdit = async (e, id) => {
+    // setLoading(true);
     e.preventDefault();
-    setLoading(true);
     const form = e.target;
     const image = form.image;
     const name = form.name.value;
-
+    const imageFormData = new FormData();
+    imageFormData.append("image", image.files[0]);
+    const imageUrl = await uploadImage(imageFormData);
     const darazCategory = daraz
       ? e.target.darazCategory.value
-      : JSON.stringify(editOn?.darazCategory);
+      : e.target.darazCategory.value;
 
     let darazCategory_id = editOn?.darazCategory_id ?? "";
     if (darazCategory) {
       darazCategory_id = JSON.parse(darazCategory).category_id;
     }
 
-    const wocomarceCategory = wocomarce
-      ? e.target.wocomarceCategory.value
-      : editOn?.wocomarceCategory;
+    console.log(darazCategory, "darazCategory");
+    const wocomarceCategory = wocomarce ? e.target.wocomarceCategory.value : "";
 
-    console.log(image);
-    const imageFormData = new FormData();
-    imageFormData.append("image", image.files[0]);
-    const imageUrl = await uploadImage(imageFormData);
-
-    const data = {
+    const UpdateData = {
       img: imageUrl ? imageUrl : editOn?.img,
       name: name,
-      darazCategory,
-      wocomarceCategory,
+      darazSubCategory: darazCategory,
+      wooSubCategory: wocomarceCategory ?? defaultWoo?.value,
       darazCategory_id,
     };
 
-    console.log(data, id, "update");
-
+    console.log(UpdateData, id, "update");
     // return;
 
     fetch(
-      `https://backend.doob.com.bd/api/v1/category/seller-update-megaCategory?id=${id}`,
+      `https://backend.doob.com.bd/api/v1/category/seller-update-subCategory?id=${id}`,
       {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify(UpdateData),
       }
     )
       .then((res) => res.json())
       .then((data) => {
         setLoading(false);
-        Swal.fire(`Category update `, "", "success");
+        Swal.fire(`Sub Category update `, "", "success");
         refetch();
         setEditOn(false);
         form.reset();
       });
+
+    // fetch(`https://backend.doob.com.bd/api/v1/admin/feature-image-update?id=${id}`, {
+    //     method: "PUT",
+    //     headers: {
+    //         "Content-Type": "application/json",
+    //     },
+    //     body: JSON.stringify(data),
+    // }).then((res) => res.json()).then((data) => {
+    //     Swal.fire(`Category update `, '', 'success');
+    //     refetch()
+    // })
   };
+
+  // console.log(
+  //   editOn?._id === warehouse?._id &&
+  //     (daraz || defaultDarazData) &&
+  //     shopInfo.darazLogin
+  // );
+  // console.log(
+  //   editOn?._id === warehouse?._id &&
+  //     (wocomarce || defaultWooData?.id) &&
+  //     shopInfo.wooLogin
+  // );
+
+  useEffect(() => {
+    if (defaultWooData?.id) {
+      setWocomarce(true);
+    }
+  });
+  // console.log(defaultDarazData);
+
+  // console.log(defaultWooData?.id);
   return (
     <div
       className={`fixed z-[100] flex items-center justify-center ${
@@ -201,10 +223,10 @@ export default function EditMegaCategoryModal({
             ></path>
           </g>
         </svg>
-        {/* //! Edit Mega Category */}
+
         <form onSubmit={(e) => handleEdit(e, warehouse?._id)}>
           <h1 className="text-lg font-semibold text-center mb-4">
-            Edit Mega Category
+            Edit Sub Category
           </h1>
           <img
             src={warehouse?.img}
@@ -216,7 +238,6 @@ export default function EditMegaCategoryModal({
               Photo
             </label>
             <input
-              onChange={() => setNewImage(true)}
               type="file"
               name="image"
               className="border border-gray-500 p-1 rounded mb-3 w-full"
@@ -228,12 +249,13 @@ export default function EditMegaCategoryModal({
               Name
             </label>
             <input
-              defaultValue={warehouse?.name}
+              defaultValue={warehouse?.subCategoryName}
               type="text"
               name="name"
               className="border border-gray-500 p-1 rounded mb-3 w-full"
             />
           </div>
+
           {shopInfo.darazLogin && (
             <button
               type="button"
@@ -325,7 +347,7 @@ export default function EditMegaCategoryModal({
               type="submit"
               className="me-2 rounded bg-green-700 px-6 py-1 text-white"
             >
-              Submit
+              {loading ? "loading......" : " Submit"}
             </button>
           </div>
         </form>
