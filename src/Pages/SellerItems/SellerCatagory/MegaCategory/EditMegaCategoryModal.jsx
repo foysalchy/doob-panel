@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../../../AuthProvider/UserProvider";
 import Select from "react-select";
 import { useQuery } from "@tanstack/react-query";
@@ -90,16 +90,21 @@ export default function EditMegaCategoryModal({
 
   // console.log(JSON.parse(editOn?.wocomarceCategory)?.id, "defaultDaraz");
 
-  const defaultWooData =
-    wooCategory?.length &&
-    wooCategory?.categories?.find(
-      (item) => item.id === JSON.parse(editOn?.wocomarceCategory)?.id
-    );
+  const defaultWooData = wooCategory?.categories?.find(
+    (item) => item.id === JSON.parse(editOn?.wocomarceCategory)?.id
+  );
 
   const defaultWoo = {
     value: JSON.stringify(defaultWooData),
     label: defaultWooData?.name,
   };
+
+
+    useEffect(() => {
+      if (defaultWooData?.id) {
+        setWocomarce(true);
+      }
+    });
 
   // console.log(JSON.parse(editOn?.wocomarceCategory)?.id);
 
