@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect, useContext } from "react";
 import { useReactToPrint } from "react-to-print";
 import { AuthContext } from "../../../AuthProvider/UserProvider";
-import logo from '../../../assets/Logo.png';
+import logo from '../../../assets/doobBlack.png';
 const AllAdminOrderInvoice = ({
   data,
   showPrintModal1,
@@ -38,12 +38,12 @@ const AllAdminOrderInvoice = ({
       <>
         <div
           ref={componentRef}
-          className="p-12 mx-8 print-data bg-white  mt-6">
+          className="">
           {
             data?.map(data => {
               const totalPrice = data?.price * data?.quantity;
               return (
-                <div className="">
+                <div className="p-12 mx-8 print-data bg-white  mt-6">
                   <header className="flex items-start justify-between">
                     <img src={logo} alt="logo" className='w-[200px]' />
                     <div className='whitespace-wrap w-[300px]'>

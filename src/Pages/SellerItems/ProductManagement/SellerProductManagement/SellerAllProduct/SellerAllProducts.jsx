@@ -15,6 +15,7 @@ import SellerPrintPage from "./SellerPrintPage";
 import { RxCross2 } from "react-icons/rx";
 import jsPDF from "jspdf";
 import Barcode from "react-barcode";
+import PrintList from "../PrintList";
 
 const SellerAllProducts = () => {
   const navigate = useNavigate();
@@ -671,7 +672,7 @@ const SellerAllProducts = () => {
                 {on && (
                   <div className="absolute top-0 left-0 right-0 bottom-0 m-auto z-[3000]">
                     {" "}
-                    <SellerPrintPage setOn={setOn} products={printProduct} />
+                    <PrintList setOn={setOn} products={printProduct} />
                   </div>
                 )}
 

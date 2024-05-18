@@ -652,7 +652,7 @@ const SellerOrderManagement = () => {
                     {currentData.length ? (
                       currentData?.map((product) => (
                         <React.Fragment key={product._id}>
-                          <tr key={product._id}>
+                          <tr className="items-center" key={product._id}>
                             <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                               <div className="inline-flex items-center gap-x-3">
                                 {/* single input */}
@@ -689,14 +689,17 @@ const SellerOrderManagement = () => {
                                 </div>
                               </div>
                             </td>
+
                             <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                               {product?.userInfo?.name}
                             </td>
+
                             <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                               {calculateProfit(product)}
                             </td>
-                            <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                              <div className="border-r px-6 py-4 whitespace-nowrap text-[16px] font-[400] flex flex-col gap-2">
+
+                            <td className="px-4 py-4 text-sm flex items-center font-medium text-gray-700 whitespace-nowrap">
+                              <div className="border-r flex items-center px-6 py-4 whitespace-nowrap text-[16px] font-[400]  flex-col gap-2">
                                 {product.status === "pending" && (
                                   <>
                                     <button
@@ -844,7 +847,9 @@ const SellerOrderManagement = () => {
                                   </tr>
                                 )}
                               </div>
+
                             </td>
+
                             <td className="px-4 py-4 text-sm whitespace-nowrap">
                               <div className="flex items-center gap-x-2">
                                 <p className="px-3 py-1 text-xs text-indigo-500 rounded-full bg-gray-800 bg-indigo-100/60">
@@ -852,9 +857,11 @@ const SellerOrderManagement = () => {
                                 </p>
                               </div>
                             </td>
+
                             <td className="px-4 py-4 text-sm text-gray-500 whitespace-nowrap">
                               {product.customerName}
                             </td>
+
                             <td className="px-4 py-4 text-sm whitespace-nowrap">
                               <div className="flex items-center gap-x-2">
                                 <p className="px-3 py-1 text-xs text-indigo-500 rounded-full bg-gray-800 bg-indigo-100/60">
@@ -862,6 +869,7 @@ const SellerOrderManagement = () => {
                                 </p>
                               </div>
                             </td>
+
                             <td className="px-4 py-4 text-sm whitespace-nowrap">
                               <div className="flex items-center gap-x-2">
                                 <p className="px-3 py-1 text-xs text-indigo-500 rounded-full bg-gray-800 bg-indigo-100/60">
@@ -869,7 +877,8 @@ const SellerOrderManagement = () => {
                                 </p>
                               </div>
                             </td>
-                            <td className="px-4  py-4 flex items-center gap-4 text-sm whitespace-nowrap">
+
+                            <td className="px-4 mt-12  h-full my-auto flex items-center gap-4 text-sm whitespace-nowrap">
                               <button
                                 onClick={() => deleteMethod(product._id)}
                                 className="transition-colors duration-200 text-red-500 hover:text-red-700 focus:outline-none"
