@@ -174,7 +174,7 @@ const DarazTableRow = ({ data, select, setSelect }) => {
         </Link>
       </td>
       <td className="whitespace-nowrap border-r px-6 py-4 text-[16px] font-[400]">
-        <Link to={`${order_number}`} className="text-blue-500 font-[400]">
+        <Link to={`/seller/orders/daraz-order/${order_number}`} className="text-blue-500 font-[400]">
           {order_number}
         </Link>
       </td>

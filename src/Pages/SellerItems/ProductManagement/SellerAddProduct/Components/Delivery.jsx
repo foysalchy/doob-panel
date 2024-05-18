@@ -13,7 +13,7 @@ const Delivery = () => {
 
                 <div>
                     <label className='text-sm ' >Package Width (kg) </label>
-                    <input className="flex-grow w-full h-10 px-4 mt-1 mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-purple-400 focus:outline-none focus:shadow-outline" placeholder="Input Quantity"  name="packageWidth" id="" />
+                    <input className="flex-grow w-full h-10 px-4 mt-1 mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-purple-400 focus:outline-none focus:shadow-outline" placeholder="Input Quantity" name="packageWidth" id="" />
                 </div>
                 <div className='md:mt-4 grid md:grid-cols-3 md:gap-4'>
                     <div>
@@ -29,8 +29,12 @@ const Delivery = () => {
                         <input className="flex-grow w-full h-10 px-4 mt-1 mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-purple-400 focus:outline-none focus:shadow-outline" placeholder="Input Quantity" name="productHight" id="" />
                     </div>
                     <div>
-                        <label className='text-sm ' >Delivery Charge</label>
-                        <input className="flex-grow w-full h-10 px-4 mt-1 mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-purple-400 focus:outline-none focus:shadow-outline" placeholder="Input Quantity" name="DeliveryCharge" id="" />
+                        <label className='text-sm ' >Delivery Charge Inside Dhaka</label>
+                        <input className="flex-grow w-full h-10 px-4 mt-1 mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-purple-400 focus:outline-none focus:shadow-outline" placeholder="Delivery Charge Inside Dhaka" defaultValue={100} name="DeliveryChargeDhaka" id="" />
+                    </div>
+                    <div>
+                        <label className='text-sm ' >Delivery Charge Outside Dhaka</label>
+                        <input className="flex-grow w-full h-10 px-4 mt-1 mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-purple-400 focus:outline-none focus:shadow-outline" placeholder="Delivery Charge Outside Dhaka" defaultValue={150} name="DeliveryChargeOutside" id="" />
                     </div>
                     <div>
                         <label className='text-sm ' >Low Stock Warning</label>

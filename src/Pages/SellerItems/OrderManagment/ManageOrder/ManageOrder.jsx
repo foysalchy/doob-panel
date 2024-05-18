@@ -320,22 +320,22 @@ const ManageOrder = () => {
       <h3 className="font-bold text-xl">Orders Overview</h3>
       <div className="flex flex-wrap justify-start  items-center gap-4 ">
         <button
-          onClick={() => setDaraz(false)}
-          className={`px-4 py-1 border text-white ${!daraz ? "bg-gray-900" : "bg-gray-500"
+          onClick={() => { setDaraz(false), setWoo(false) }}
+          className={`px-4 py-1 border text-white ${!daraz && !woo ? "bg-gray-900" : "bg-gray-500"
             }`}
         >
           Web Order
         </button>
         <button
-          onClick={() => setDaraz(true)}
+          onClick={() => { setDaraz(true), setWoo(false) }}
           className={`px-4 py-1 border text-white ${daraz ? "bg-gray-900" : "bg-gray-500"
             }`}
         >
           Daraz Order
         </button>
         <button
-          onClick={() => setWoo(!woo)}
-          className="px-4 py-1 bg-transparent border"
+          onClick={() => { setWoo(true), setDaraz(false) }}
+          className={`px-4 py-1 text-white  border ${woo ? "bg-gray-900" : "bg-gray-500"}`}
         >
           Woo Commerce Order
         </button>
@@ -717,8 +717,8 @@ const ManageOrder = () => {
       </div>
 
       <div className="mt-12 ">
-        {/* <WooCommerceOrderTable searchValue={searchValue} /> */}
-        {!daraz ? (
+
+        {!daraz && !woo && (
           <OrderTable
             selectedItems={selectedItems}
             setSelectedItems={setSelectedItems}
@@ -730,14 +730,23 @@ const ManageOrder = () => {
             selectedValue={selectedValue}
             searchValue={searchValue}
           />
-        ) : (
-          <DarazOrderTable
+        )}
+        {
+          daraz && <DarazOrderTable
             selected={selected}
             setSelected={setSelected}
             selectedValue={selectedValue}
             searchValue={searchValue}
           />
-        )}
+        }
+        {
+          woo && <WooCommerceOrderTable
+            selected={selected}
+            setSelected={setSelected}
+            selectedValue={selectedValue}
+            searchValue={searchValue}
+          />
+        }
       </div>
     </div>
   );

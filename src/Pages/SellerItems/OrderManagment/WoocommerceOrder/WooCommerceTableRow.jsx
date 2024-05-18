@@ -6,8 +6,9 @@ import { useReactToPrint } from 'react-to-print';
 import OrderAllinfoModal from './WooCommerceOrderAllinfoModal';
 import { AuthContext } from '../../../../AuthProvider/UserProvider';
 import WooCommerceOrderAllinfoModal from './WooCommerceOrderAllinfoModal';
+import BrightAlert from 'bright-alert';
 
-const WooCommerceTableRow = ({ data }) => {
+const WooCommerceTableRow = ({ data, refetch }) => {
 
     // if (!data) {
     //     return null
@@ -16,7 +17,7 @@ const WooCommerceTableRow = ({ data }) => {
 
     // const [formattedDate, setFormattedDate] = useState('');
     // const [emptyAction, setEmptyAction] = useState(true);
-    // const { checkUpData, setCheckUpData } = useContext(AuthContext);
+    const { checkUpData, setCheckUpData, shopInfo } = useContext(AuthContext);
     const [modalOn, setModalOn] = useState(false);
     // useEffect(() => {
     //     const Timestamp = timestamp;
@@ -39,25 +40,28 @@ const WooCommerceTableRow = ({ data }) => {
     // }
 
 
-    // function getTimeAgo(timestamp) {
-    //     const currentTime = new Date().getTime();
-    //     const timeDifference = currentTime - timestamp;
+    function getTimeAgo(timestamp) {
+        const currentTime = new Date().getTime();
+        const timeDifference = currentTime - new Date(timestamp).getTime();
 
-    //     const hours = Math.floor(timeDifference / (1000 * 60 * 60));
-    //     const days = Math.floor(hours / 24);
+        const hours = Math.floor(timeDifference / (1000 * 60 * 60));
+        const days = Math.floor(hours / 24);
 
-    //     if (hours < 24) {
-    //         return `${hours} hour${hours !== 1 ? 's' : ''} ago`;
-    //     } else {
-    //         return `${days} day${days !== 1 ? 's' : ''} ago`;
-    //     }
-    // }
+        if (hours < 24) {
+            return `${hours} hour${hours !== 1 ? 's' : ''} ago`;
+        } else {
+            return `${days} day${days !== 1 ? 's' : ''} ago`;
+        }
+    }
 
-    // // ? download invoice
-    // const componentRef = useRef();
-    // const handlePrint = useReactToPrint({
-    //     content: () => componentRef.current,
-    // });
+    const update_order_status = (status, order_id) => {
+        fetch(`https://backend.doob.com.bd/api/v1/seller/woo-order-status-update?order_id=${order_id}&status=${status}&shop_id=${shopInfo?._id}`)
+            .then((res) => res.json())
+            .then((data) => {
+                BrightAlert()
+                refetch()
+            });
+    }
 
     return (
         <tr className="border-b ">
@@ -76,28 +80,122 @@ const WooCommerceTableRow = ({ data }) => {
                 <Link to={`/invoice/${data?._id}`} className='text-blue-600 font-[500] text-[16px]'></Link>
             </td>
             <td className="whitespace-nowrap border-r px-6 py-4 text-[16px] font-[400]">
-                {data?.id}
-                {/* <Link onClick={() => setCheckUpData(data)} to="woocommerce-order-checkup" className='text-blue-500 font-[400]'>{_id}</Link> */}
+                {/* {data?.id} */}
+                {/* <Link onClick={() => setCheckUpData(data)} to="woocommerce-order-checkup" className='text-blue-500 font-[400]'>{data.id}</Link> */}
             </td>
             <td className="whitespace-nowrap border-r px-6 py-4 text-[16px] font-[400]">
                 {/* {formattedDate} */}
-                {data?.date_created}
+                {new Date(data?.date_created).toLocaleString()}
             </td>
             <td className="whitespace-nowrap border-r px-6 py-4 text-[16px] font-[400]">
-                {/* {getTimeAgo(timestamp)} */}
+                {getTimeAgo(data?.date_created)}
             </td>
             <td className="whitespace-nowrap border-r px-6 py-4 text-[16px] font-[400]">
-                {/* {method.Getaway} */}
+                {data?.payment_method_title}
             </td>
             <td className="whitespace-nowrap border-r px-6 py-4 text-[16px] font-[400]">
-                {/* {ratial_price} */}
+                {data?.total}
             </td>
             <td className="whitespace-nowrap border-r px-6 py-4 text-[16px] font-[400]">
-                {/* {Status ? <>{status}</> : <>Process</>} */}
+                {data.status}
             </td>
             <td className="whitespace-nowrap border-r px-6 py-4 text-[16px] font-[400] flex flex-col gap-2">
-                {/* {emptyAction && <> <button onClick={() => setEmptyAction(!emptyAction)} className='text-[16px] font-[400] text-blue-700' >Ready to Ship</button>
-                    <button onClick={() => setEmptyAction(!emptyAction)} className='text-[16px] font-[400] text-blue-700' >Cancel</button> </>} */}
+                {
+
+                    <td className="border-r px-6 py-4 flex items-center gap-2">
+                        <td className="whitespace-nowrap  px-6 py-4 text-[16px] font-[400] flex flex-col gap-2">
+                            {(data?.status === "pending" && (
+                                <>
+                                    <button
+                                        className="text-[16px] font-[400] text-blue-700"
+                                        onClick={() =>
+                                            update_order_status("processing", data?.id)
+                                        }
+                                    >
+                                        Ready to Ship
+                                    </button>
+                                    <button
+                                        onClick={() =>
+                                            update_order_status("cancelled", data?.id)
+                                        }
+                                        className="text-[16px] font-[400] text-blue-700"
+                                    >
+                                        Cancel
+                                    </button>
+                                </>
+                            )) ||
+                                (data?.status === "processing" && (
+                                    <button
+                                        onClick={() =>
+                                            update_order_status("on-hold", data?.id)
+                                        }
+                                        className="text-[16px] font-[400] text-blue-700"
+                                    >
+                                        Shipped
+                                    </button>
+                                )) ||
+                                (data?.status === "on-hold" && (
+                                    <div className="flex flex-col gap-2">
+                                        <button
+                                            onClick={() =>
+                                                update_order_status("completed", data?.id)
+                                            }
+                                            className="text-[16px] font-[400] text-blue-700"
+                                        >
+                                            Delivered
+                                        </button>
+                                        <button
+                                            onClick={() =>
+                                                update_order_status("failed", data?.id)
+                                            }
+                                            className="text-[16px] font-[400] text-blue-700"
+                                        >
+                                            Failed Delivery
+                                        </button>
+                                    </div>
+                                ))
+                                ||
+                                (data?.status === "failed" && (
+                                    <button
+                                        onClick={() =>
+                                            update_order_status("cancelled", data?.id)
+                                        }
+                                        className="text-[16px] font-[400] text-blue-700"
+                                    >
+                                        Cancel
+                                    </button>
+                                )) ||
+                                (data?.status === "cancelled" && (
+                                    <button
+                                        onClick={() =>
+                                            update_order_status("refunded", data?.id)
+                                        }
+                                        className="text-[16px] font-[400] text-blue-700"
+                                    >
+                                        Refund
+                                    </button>
+                                )) ||
+                                (data?.status === "refunded" && (
+                                    <button
+                                        onClick={() =>
+                                            update_order_status("completed", data?.id)
+                                        }
+                                        className="text-[16px] font-[400] text-blue-700"
+                                    >
+                                        Delivered
+                                    </button>
+                                ))
+                            }
+
+
+                        </td>
+                    </td>
+                }
+
+
+
+
+
             </td>
         </tr>
     );

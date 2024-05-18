@@ -11,137 +11,12 @@ import { useQuery } from "@tanstack/react-query";
 import Select from "react-select";
 
 const AddCopon = () => {
-  // const { shopInfo } = useContext(AuthContext);
-  // const [uniq, setUniq] = useState(false);
-  // const [loading, setLoading] = useState(false);
-  // const navigate = useNavigate();
-
-  // const { data: your_shop_users = [] } = useQuery({
-  //     queryKey: ["your_shop_users"],
-  //     queryFn: async () => {
-  //         const res = await fetch(`https://backend.doob.com.bd/api/v1/seller/get-all-shop-user?shopId=${shopInfo.shopId}`);
-  //         const data = await res.json();
-  //         return data.users;
-  //     },
-  // });
-
-  // const options = your_shop_users?.map(user => ({
-  //     value: user.email,
-  //     label: user.email
-  // }));
-
-  // const handleGoBack = () => {
-  //     navigate(-1);
-  // };
-
-  // const [formData, setFormData] = useState({
-  //     code: '',
-  //     name: '',
-  //     type: 'percentage',
-  //     price: 10,
-  //     usageLimitPerUser: 1,
-  //     userLimit: 100,
-  //     shopId: shopInfo._id,
-  //     selectedGmails: [],
-  //     startDateTime: '',
-  //     endDateTime: '',
-  //     status: true
-  // });
-
-  // console.log(formData);
-
-  // const handleChange = (e) => {
-  //     const { name, value } = e.target;
-
-  //     const updatedValue = name === 'code' ? value.replace(/\s+/g, '').toUpperCase() : value;
-
-  //     if (updatedValue.length > 3) {
-  //         fetch(`https://backend.doob.com.bd/api/v1/seller/uniq-promo/${shopInfo._id}/${updatedValue}`)
-  //             .then((res) => res.json())
-  //             .then((data) => setUniq(data));
-  //     } else {
-  //         setUniq(false);
-  //     }
-
-  //     setFormData((prevData) => ({
-  //         ...prevData,
-  //         [name]: updatedValue,
-  //     }));
-  // };
-
-  // const handleSubmit = (e) => {
-  //     e.preventDefault();
-
-  //     // Add selected Gmails to formData
-  //     setFormData((prevData) => ({
-  //         ...prevData,
-  //         selectedGmails: selectedGmails,
-  //     }));
-
-  //     fetch(`https://backend.doob.com.bd/api/v1/seller/promo-code/add`, {
-  //         method: 'POST',
-  //         headers: {
-  //             'content-type': 'application/json',
-  //         },
-  //         body: JSON.stringify(formData),
-  //     })
-  //         .then((res) => res.json())
-  //         .then((data) => {
-  //             Swal.fire('Your Promo Code Published Successfully', '', 'success');
-  //             setLoading(false);
-  //             setFormData({
-  //                 code: '',
-  //                 name: '',
-  //                 type: 'percentage',
-  //                 price: 10,
-  //                 usageLimitPerUser: 1,
-  //                 userLimit: 100,
-  //                 shopId: shopInfo._id,
-  //                 selectedGmails: [],
-
-  //             });
-  //             handleGoBack();
-  //         });
-  // };
-
-  // const [inputValue, setInputValue] = useState('');
-  const [selectedGmails, setSelectedGmails] = useState([]);
-
-  // const handleInputChange = (e) => {
-  //     setInputValue(e.target.value);
-  // };
-
-  // const handleInputKeyDown = (e) => {
-  //     if (e.key === 'Enter') {
-  //         e.preventDefault();
-  //         handleAddGmail();
-  //     }
-  // };
-
-  // const handleAddGmail = () => {
-  //     if (inputValue.trim() !== '') {
-  //         setSelectedGmails([...selectedGmails, inputValue.trim()]);
-  //         setFormData((prevData) => ({
-  //             ...prevData,
-  //             SelectGamails: [...selectedGmails, inputValue.trim()]
-  //         }));
-  //         setInputValue('');
-  //     }
-  // };
-
-  // const handleRemoveGmail = (gmail) => {
-  //     const updatedGmails = selectedGmails.filter((item) => item !== gmail);
-  //     setSelectedGmails(updatedGmails);
-  //     setFormData((prevData) => ({
-  //         ...prevData,
-  //         SelectGamails: updatedGmails,
-  //     }));
-  // };
 
   const { shopInfo } = useContext(AuthContext);
   const [uniq, setUniq] = useState(false);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+
 
   const { data: your_shop_users = [] } = useQuery({
     queryKey: ["your_shop_users"],
@@ -418,7 +293,7 @@ const AddCopon = () => {
 
             <div className="relative">
               <div className="">
-                {selectedGmails.map((gmail) => (
+                {formData.selectedGmails.map((gmail) => (
                   <div
                     key={gmail}
                     className="inline-block m-1 bg-blue-500 text-white rounded px-2 py-1 mr-1"
@@ -434,15 +309,7 @@ const AddCopon = () => {
                   </div>
                 ))}
               </div>
-              {/* <select className="border border-gray-300 rounded px-3 py-2 
-                            w-full focus:outline-none" name=""
-                                id="">
-                                {your_shop_users?.map((user) => (
-                                    <option value="">{user?.email}</option>
-                                ))}
 
-
-                            </select> */}
               <Select
                 name="selectedGmails"
                 className="border border-gray-300 rounded px-3 py-2 w-full focus:outline-none"
@@ -453,14 +320,7 @@ const AddCopon = () => {
                 )}
                 onChange={handleSelectChange}
               />
-              {/* <input
-                                type="text"
-                                className="border border-gray-300 rounded px-3 py-2 w-full focus:outline-none"
-                                placeholder={selectedGmails.length === 0 ? 'Enter Gmail address' : ''}
-                                value={inputValue}
-                                onChange={handleInputChange}
-                                onKeyDown={handleInputKeyDown}
-                            /> */}
+
             </div>
 
             <button
