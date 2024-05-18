@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { useLoaderData } from "react-router";
 import { useNavigate, Link } from "react-router-dom";
 import MetaHelmet from "../../../Helmate/Helmate";
@@ -100,31 +100,35 @@ const SingleService = () => {
       });
   };
 
+  useEffect(() => {
+    refetch();
+  }, [refetch]);
+
   function timeAgo(timestamp) {
-    const date = new Date(timestamp);
-    const now = Date.now();
-    const difference = now - date.getTime();
+      const date = new Date(timestamp);
+      const now = Date.now();
+      const difference = now - date.getTime();
 
-    const units = [
-      { value: 365 * 24 * 60 * 60 * 1000, label: "year" },
-      { value: 30 * 24 * 60 * 60 * 1000, label: "month" },
-      { value: 7 * 24 * 60 * 60 * 1000, label: "week" },
-      { value: 24 * 60 * 60 * 1000, label: "day" },
-      { value: 60 * 60 * 1000, label: "hour" },
-      { value: 60 * 1000, label: "minute" },
-    ];
+      const units = [
+        { value: 365 * 24 * 60 * 60 * 1000, label: "year" },
+        { value: 30 * 24 * 60 * 60 * 1000, label: "month" },
+        { value: 7 * 24 * 60 * 60 * 1000, label: "week" },
+        { value: 24 * 60 * 60 * 1000, label: "day" },
+        { value: 60 * 60 * 1000, label: "hour" },
+        { value: 60 * 1000, label: "minute" },
+      ];
 
-    for (const unit of units) {
-      const count = Math.floor(difference / unit.value);
-      if (count >= 1) {
-        return count === 1
-          ? `1 ${unit.label} ago`
-          : `${count} ${unit.label}s ago`;
+      for (const unit of units) {
+        const count = Math.floor(difference / unit.value);
+        if (count >= 1) {
+          return count === 1
+            ? `1 ${unit.label} ago`
+            : `${count} ${unit.label}s ago`;
+        }
       }
-    }
 
-    return "just now";
-  }
+      return "just now";
+    }
 
   return (
     <div className="px-4 pt-16 relative mx-auto sm:max-w-xl md:max-w-full  lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-20">

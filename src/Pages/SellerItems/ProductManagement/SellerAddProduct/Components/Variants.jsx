@@ -28,8 +28,9 @@ const Variants = ({
 
     const formData = new FormData();
     formData.append("image", imageBlob);
+    console.log(formData);
 
-    const url = `https://backend.doob.com.bd/api/v1/daraz/daraz-image/${shopInfo._id}`;
+    const url = `http://localhost:5001/api/v1/daraz/daraz-image/${shopInfo._id}`;
 
     try {
       const response = await fetch(url, {
@@ -42,7 +43,8 @@ const Variants = ({
       }
 
       const imageData = await response.json();
-      const imageUrl = imageData.src;
+      console.log(imageData);
+      const imageUrl = imageData?.url;
       if (!imageUrl) {
         Swal.fire(`${imageData.message}`, "", "warning");
       }
@@ -179,7 +181,7 @@ const Variants = ({
           onChange={(e) => {
             setMultiVendor(
               (e.target.value === "true" && true) ||
-                (e.target.value === "false" && false)
+              (e.target.value === "false" && false)
             );
           }}
           className="flex-grow w-full h-10 px-4 mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-purple-400 focus:outline-none focus:shadow-outline"
@@ -214,11 +216,10 @@ const Variants = ({
                         // Check if a name is selected
                         if (newName) {
                           // Generate a unique SKU
-                          const newSKU = `${
-                            shopInfo.shopId
-                          }_${newName}_${Math.floor(
-                            Math.random() * 100000000
-                          )}`;
+                          const newSKU = `${shopInfo.shopId
+                            }_${newName}_${Math.floor(
+                              Math.random() * 100000000
+                            )}`;
 
                           // Update the name and SKU in the inputFields array
                           newInputFields[index].name = newName;

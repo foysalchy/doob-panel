@@ -23,6 +23,8 @@ const SubscriptionModel = () => {
     },
   });
 
+  console.log(prices);
+
 
   const { data: CommissionHistory = [] } = useQuery({
     queryKey: ["commissionHistory"],
@@ -104,6 +106,7 @@ const SubscriptionModel = () => {
   // const buyTi
   const showBuyingPrice = parseInt(prices?.orderInfo?.buyingPrice);
 
+  console.log(prices.orderInfo);
 
   const amount = parseInt(prices?.orderInfo?.amount) * parseInt(prices?.orderInfo?.time?.split(",")[1])
 

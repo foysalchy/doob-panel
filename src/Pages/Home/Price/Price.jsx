@@ -62,11 +62,10 @@ const Price = () => {
                           className="p-4 xl:w-1/4 md:w-1/2 w-full"
                         >
                           <div
-                            className={`h-full p-6 rounded-lg border-2  flex flex-col  relative overflow-hidden ${
-                              price._id === shopInfo?.priceId
-                                ? "border-indigo-500"
-                                : "border-gray-300"
-                            }  `}
+                            className={`h-full p-6 rounded-lg border-2  flex flex-col  relative overflow-hidden ${price._id === shopInfo?.priceId
+                              ? "border-indigo-500"
+                              : "border-gray-300"
+                              }  `}
                           >
                             <div className="flex  h-full flex-col justify-between">
                               <span className="bg-indigo-500 text-white px-3 py-1 tracking-widest text-xs absolute right-0 top-0 rounded-bl">
@@ -81,55 +80,58 @@ const Price = () => {
                                 <h2 className="text-sm tracking-widest title-font mb-1 font-medium"></h2>
 
                                 {price.benefits.map((benefit, index) => (
-                                  <p className="flex items-center text-gray-600 mb-2">
-                                    <span className="w-4 h-4 mr-2 inline-flex items-center justify-center bg-gray-400 text-white rounded-full flex-shrink-0">
-                                      <svg
-                                        fill="none"
-                                        stroke="currentColor"
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth="2.5"
-                                        className="w-3 h-3"
-                                        viewBox="0 0 24 24"
-                                      >
-                                        <path d="M20 6L9 17l-5-5" />
-                                      </svg>
-                                    </span>
-                                    {benefit}
-                                  </p>
+                                  // Check if benefit is not empty before rendering
+                                  benefit.trim() !== '' && (
+                                    <p key={index} className="flex items-center text-gray-600 mb-2">
+                                      <span className="w-4 h-4 mr-2 inline-flex items-center justify-center bg-gray-400 text-white rounded-full flex-shrink-0">
+                                        <svg
+                                          fill="none"
+                                          stroke="currentColor"
+                                          strokeLinecap="round"
+                                          strokeLinejoin="round"
+                                          strokeWidth="2.5"
+                                          className="w-3 h-3"
+                                          viewBox="0 0 24 24"
+                                        >
+                                          <path d="M20 6L9 17l-5-5" />
+                                        </svg>
+                                      </span>
+                                      {benefit}
+                                    </p>
+                                  )
                                 ))}
 
                                 {permission.find(
                                   (perm) => perm._id === price._id
                                 ) && (
-                                  <div className="">
-                                    <div>
-                                      {permission
-                                        .find((perm) => perm._id === price._id)
-                                        ?.permissions?.map((itm) => (
-                                          <p
-                                            key={itm._id}
-                                            className="flex items-center text-gray-600 mb-2"
-                                          >
-                                            <span className="w-4 h-4 mr-2 inline-flex items-center justify-center bg-gray-400 text-white rounded-full flex-shrink-0">
-                                              <svg
-                                                fill="none"
-                                                stroke="currentColor"
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                                strokeWidth="2.5"
-                                                className="w-3 h-3"
-                                                viewBox="0 0 24 24"
-                                              >
-                                                <path d="M20 6L9 17l-5-5" />
-                                              </svg>
-                                            </span>
-                                            {itm?.name}
-                                          </p>
-                                        ))}
+                                    <div className="">
+                                      <div>
+                                        {permission
+                                          .find((perm) => perm._id === price._id)
+                                          ?.permissions?.map((itm) => (
+                                            <p
+                                              key={itm._id}
+                                              className="flex items-center text-gray-600 mb-2"
+                                            >
+                                              <span className="w-4 h-4 mr-2 inline-flex items-center justify-center bg-gray-400 text-white rounded-full flex-shrink-0">
+                                                <svg
+                                                  fill="none"
+                                                  stroke="currentColor"
+                                                  strokeLinecap="round"
+                                                  strokeLinejoin="round"
+                                                  strokeWidth="2.5"
+                                                  className="w-3 h-3"
+                                                  viewBox="0 0 24 24"
+                                                >
+                                                  <path d="M20 6L9 17l-5-5" />
+                                                </svg>
+                                              </span>
+                                              {itm?.name}
+                                            </p>
+                                          ))}
+                                      </div>
                                     </div>
-                                  </div>
-                                )}
+                                  )}
                               </div>
                               <div>
                                 <h1 className="text-5xl text-gray-900 leading-none flex items-center pb-4 mb-4   border-gray-200">
@@ -184,11 +186,10 @@ const Price = () => {
                       ) : (
                         <div className="p-4 xl:w-1/4 md:w-1/2  w-full">
                           <div
-                            className={`h-full p-6 rounded-lg border-2  flex flex-col  relative overflow-hidden ${
-                              price._id === shopInfo?.priceId
-                                ? "border-500-500 bg-slate-200"
-                                : "border-gray-300"
-                            }  `}
+                            className={`h-full p-6 rounded-lg border-2  flex flex-col  relative overflow-hidden ${price._id === shopInfo?.priceId
+                              ? "border-500-500 bg-slate-200"
+                              : "border-gray-300"
+                              }  `}
                           >
                             {price._id === shopInfo?.priceId && (
                               <div className="font-bold text-green-500 mb-2 text-lg text-center border-b-2 border-green-500 ">
@@ -204,52 +205,56 @@ const Price = () => {
                                 <h2 className="text-sm tracking-widest title-font mb-1 font-medium"></h2>
 
                                 {price.benefits.map((benefit, index) => (
-                                  <p className="flex items-center text-gray-600 mb-2">
-                                    <span className="w-4 h-4 mr-2 inline-flex items-center justify-center bg-gray-400 text-white rounded-full flex-shrink-0">
-                                      <svg
-                                        fill="none"
-                                        stroke="currentColor"
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth="2.5"
-                                        className="w-3 h-3"
-                                        viewBox="0 0 24 24"
-                                      >
-                                        <path d="M20 6L9 17l-5-5" />
-                                      </svg>
-                                    </span>
-                                    {benefit}
-                                  </p>
+                                  // Check if benefit is not empty before rendering
+                                  benefit && (
+                                    <p key={index} className="flex items-center text-gray-600 mb-2">
+                                      <span className="w-4 h-4 mr-2 inline-flex items-center justify-center bg-gray-400 text-white rounded-full flex-shrink-0">
+                                        <svg
+                                          fill="none"
+                                          stroke="currentColor"
+                                          strokeLinecap="round"
+                                          strokeLinejoin="round"
+                                          strokeWidth="2.5"
+                                          className="w-3 h-3"
+                                          viewBox="0 0 24 24"
+                                        >
+                                          <path d="M20 6L9 17l-5-5" />
+                                        </svg>
+                                      </span>
+                                      {benefit}
+                                    </p>
+                                  )
                                 ))}
+
 
                                 {permission.find(
                                   (perm) => perm._id === price._id
                                 ) && (
-                                  <div className="">
-                                    <div>
-                                      {permission
-                                        .find((perm) => perm._id === price._id)
-                                        ?.permissions?.map((itm) => (
-                                          <p className="flex items-center text-gray-600 mb-2">
-                                            <span className="w-4 h-4 mr-2 inline-flex items-center justify-center bg-gray-400 text-white rounded-full flex-shrink-0">
-                                              <svg
-                                                fill="none"
-                                                stroke="currentColor"
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                                strokeWidth="2.5"
-                                                className="w-3 h-3"
-                                                viewBox="0 0 24 24"
-                                              >
-                                                <path d="M20 6L9 17l-5-5" />
-                                              </svg>
-                                            </span>
-                                            {itm?.name}
-                                          </p>
-                                        ))}
+                                    <div className="">
+                                      <div>
+                                        {permission
+                                          .find((perm) => perm._id === price._id)
+                                          ?.permissions?.map((itm) => (
+                                            <p className="flex items-center text-gray-600 mb-2">
+                                              <span className="w-4 h-4 mr-2 inline-flex items-center justify-center bg-gray-400 text-white rounded-full flex-shrink-0">
+                                                <svg
+                                                  fill="none"
+                                                  stroke="currentColor"
+                                                  strokeLinecap="round"
+                                                  strokeLinejoin="round"
+                                                  strokeWidth="2.5"
+                                                  className="w-3 h-3"
+                                                  viewBox="0 0 24 24"
+                                                >
+                                                  <path d="M20 6L9 17l-5-5" />
+                                                </svg>
+                                              </span>
+                                              {itm?.name}
+                                            </p>
+                                          ))}
+                                      </div>
                                     </div>
-                                  </div>
-                                )}
+                                  )}
                               </div>
                               <div>
                                 <h1 className="text-5xl text-gray-900 leading-none flex items-center pb-4 mb-4   border-gray-200">

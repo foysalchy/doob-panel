@@ -289,19 +289,20 @@ const SellerReport = () => {
                   {filteredData.length
                     ? filteredData?.map((shopInfo) => (
                       <tr>
+                        {console.log(shopInfo)}
                         <td className="px-4 py-4 text-sm font-medium whitespace-nowrap">
                           <div>
                             <h2 className="font-medium text-gray-800  ">
-                              {shopInfo.shop.shopName}
+                              Shop Name: {shopInfo.shop.shopName}
                             </h2>
                             <p className="text-sm font-normal text-gray-600 ">
-                              {shopInfo.shop.shopEmail}
+                              Shop Email: {shopInfo.shop.shopEmail}
                             </p>
                           </div>
                         </td>
                         <td className="px-12 py-4 text-sm font-medium whitespace-nowrap">
                           <div className="inline px-3 py-1 text-sm font-normal rounded-full text-emerald-500 gap-x-2 bg-emerald-100/60 ">
-                            Customer
+                            Shop
                           </div>
                         </td>
                         <td className="px-4 py-4 text-sm whitespace-nowrap">
@@ -332,13 +333,17 @@ const SellerReport = () => {
                           </div>
                         </td>
                         <td className="px-4 py-4 text-sm whitespace-nowrap">
+                          {console.log(calculateRemainingDays(
+                            shopInfo?.shop?.paymentDate,
+                            new Date().getTime()
+                          ))}
                           <div className="w-48 h-1.5 bg-blue-200 overflow-hidden rounded-full">
                             <div
                               className="bg-blue-500"
                               style={{
                                 width: `${calculateRemainingDays(
                                   shopInfo?.shop?.paymentDate,
-                                  shopInfo?.timeDuration
+                                  new Date().toDateString()
                                 )}%`,
                               }}
                             />
