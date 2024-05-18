@@ -12,6 +12,7 @@ import jsPDF from "jspdf";
 import Barcode from "react-barcode";
 import { BiEdit, BiSave } from "react-icons/bi";
 import { BsEye } from "react-icons/bs";
+import PrintList from "./PrintList";
 
 const ManageProduct = () => {
   const [openModal, setOpenModal] = useState(false);
@@ -366,7 +367,7 @@ const ManageProduct = () => {
             onClick={logSelectedProducts}
             disabled={!selectProducts.length}
             className="bg-blue-500 rounded px-6 text-white h-full">
-            Print
+            Print...
           </button>
 
           <button
@@ -409,7 +410,7 @@ const ManageProduct = () => {
               {on && (
                 <div className="absolute top-0 left-0 right-0 bottom-0 m-auto z-[3000]">
                   {" "}
-                  <SellerPrintPage setOn={setOn} products={printProduct} />
+                  <PrintList setOn={setOn} products={printProduct} />
                 </div>
               )}
               <div className=" overflow-x-auto border  border-gray-700 md:rounded-lg">
