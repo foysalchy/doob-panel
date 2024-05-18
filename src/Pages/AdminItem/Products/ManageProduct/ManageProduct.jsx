@@ -345,57 +345,64 @@ const ManageProduct = () => {
         </span>
       </div>
 
-      <section className=" mx-auto">
-        <div className="flex items-center justify-between gap-x-3">
-          <div className="flex items-center gap-2">
-            <h2 className="text-lg font-medium text-gray-800 ">All Product</h2>
-            <span className="px-3 py-1 text-xs  bg-blue-100 rounded-full d text-blue-400">
-              {filteredData?.length}
-            </span>
-          </div>
 
-          <div className="flex gap-2 items-center">
-            <button
-              className="bg-blue-500 px-8 py-2 rounded text-white"
-              onClick={create_barcode}
-            >
-              {loading_start ? "Loading" : "Barcode Generate"}
-            </button>
-            <button
-              onClick={logSelectedProducts}
-              disabled={!selectProducts.length}
-              className="bg-blue-500 px-8 py-2 rounded text-white"
-            >
-              {" "}
-              Print
-            </button>
-            <button
-              onClick={() => { setAll(true), setSellerWarehouse(false), setDoobProduct(false), setDoob_warehouse(false) }}
-              className={`${all ? "bg-blue-900" : " bg-blue-500"
-                } px-8 py-2 rounded text-white`}
-            >
-              All Warehouse{" "}
-            </button>
-            <button
-              onClick={() => {
-                setDoobProduct(true), setAll(false), setSellerWarehouse(false), setDoob_warehouse(true)
-              }}
-              className={`${doob_warehouse ? "bg-blue-900" : " bg-blue-500"
-                } px-8 py-2 rounded text-white`}
-            >
-              Doob Warehouse{" "}
-            </button>
-            <button
-              onClick={() => {
-                setDoobProduct(false), setAll(false); setDoob_warehouse(false), setSellerWarehouse(true)
-              }}
-              className={`${seller_warehouse ? "bg-blue-900" : " bg-blue-500"
-                } px-8 py-2 rounded text-white`}
-            >
-              Seller Warehouse{" "}
-            </button>
-          </div>
+      <div className="flex justify-between items-">
+        <div className="flex items-center gap-6">
+          <h2 className="text-lg font-medium text-gray-800 ">All Product</h2>
+          <span className="px-3 h-[30px] text-xs flex items-center bg-blue-100 rounded-full d text-blue-400">
+            {filteredData?.length}
+          </span>
         </div>
+
+        <div className="flex items-center gap-2">
+          <button
+            className="bg-blue-500 px-8 py-2 rounded text-white"
+            onClick={create_barcode}
+          >
+            {loading_start ? "Loading" : "Barcode Generate"}
+          </button>
+
+          <button
+            onClick={logSelectedProducts}
+            disabled={!selectProducts.length}
+            className="bg-blue-500 rounded px-6 text-white h-full">
+            Print
+          </button>
+
+          <button
+            onClick={() => { setAll(true), setSellerWarehouse(false), setDoobProduct(false), setDoob_warehouse(false) }}
+            className={`${all ? "bg-blue-900" : " bg-blue-500"
+              } px-8 py-2 rounded text-white`}
+          >
+            All Warehouse
+          </button>
+          <button
+            onClick={() => {
+              setDoobProduct(true), setAll(false), setSellerWarehouse(false), setDoob_warehouse(true)
+            }}
+            className={`${doob_warehouse ? "bg-blue-900" : " bg-blue-500"
+              } px-8 py-2 rounded text-white`}
+          >
+            Doob Warehouse
+          </button>
+          <button
+            onClick={() => {
+              setDoobProduct(false), setAll(false); setDoob_warehouse(false), setSellerWarehouse(true)
+            }}
+            className={`${seller_warehouse ? "bg-blue-900" : " bg-blue-500"
+              } px-8 py-2 rounded text-white`}
+          >
+            Seller Warehouse
+          </button>
+        </div>
+      </div>
+
+
+
+      <section className=" mx-auto">
+
+
+
         <div className="flex flex-col mt-6">
           <div className="overflow-x-auto">
             <div className="  py-2">
@@ -501,21 +508,19 @@ const ManageProduct = () => {
                                 <div className="imgSm w-[20px] h-[20px] bg-red-50">
                                   <div
                                     style={{
-                                      backgroundImage: `url(${
-                                        product?.featuredImage?.src
-                                          ? product?.featuredImage?.src
-                                          : product?.images[0]?.src
-                                      })`,
+                                      backgroundImage: `url(${product?.featuredImage?.src
+                                        ? product?.featuredImage?.src
+                                        : product?.images[0]?.src
+                                        })`,
                                     }}
                                     className="w-12 h-12 object-cover bg-cover rounded-md border border-[#8080809d] overflow-hidden"
                                   ></div>
                                   <div
                                     style={{
-                                      backgroundImage: `url(${
-                                        product?.featuredImage?.src
-                                          ? product?.featuredImage?.src
-                                          : product?.images[0]?.src
-                                      })`,
+                                      backgroundImage: `url(${product?.featuredImage?.src
+                                        ? product?.featuredImage?.src
+                                        : product?.images[0]?.src
+                                        })`,
                                     }}
                                     className="absolute top-[-40px] z-50 duration-150 abs hidden bg-[url(${product?.featuredImage?.src})] left-[43px] object-cover bg-cover bg-white shadow-xl w-[150px] h-[150px] ring-1 ring-gray-500"
                                   ></div>
@@ -605,22 +610,22 @@ const ManageProduct = () => {
                                   (item) => item?.name
                                 )?.length
                                   ? product?.warehouse?.map((ware, index) => (
-                                      <span>
-                                        {ware?.name}
+                                    <span>
+                                      {ware?.name}
 
-                                        {index <
-                                          product.warehouse.length - 1 && (
+                                      {index <
+                                        product.warehouse.length - 1 && (
                                           <>{ware?.name ? "," : ""}</>
                                         )}
-                                      </span>
-                                    ))
+                                    </span>
+                                  ))
                                   : "Select Warehouse"}
                               </button>
                             </td>
                             <td className="px-4 py-4 text-sm whitespace-nowrap">
                               <div className="flex items-center gap-x-2">
                                 {editMode === product._id &&
-                                editedCommission ? (
+                                  editedCommission ? (
                                   <div className="flex gap-2 ">
                                     <input
                                       type="text"
@@ -786,19 +791,17 @@ const ManageProduct = () => {
                             <div>
                               <div
                                 onClick={() => setOpenModal(false)}
-                                className={`fixed z-[100] flex items-center justify-center ${
-                                  openModal._id == product?._id
-                                    ? "visible opacity-100"
-                                    : "invisible opacity-0"
-                                } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
+                                className={`fixed z-[100] flex items-center justify-center ${openModal._id == product?._id
+                                  ? "visible opacity-100"
+                                  : "invisible opacity-0"
+                                  } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
                               >
                                 <div
                                   onClick={(e_) => e_.stopPropagation()}
-                                  className={`text- absolute w-[400px] rounded-sm bg-white p-6 drop-shadow-lg dark:bg-white dark:text-black ${
-                                    openModal._id == product?._id
-                                      ? "scale-1 opacity-1 duration-300"
-                                      : "scale-0 opacity-0 duration-150"
-                                  }`}
+                                  className={`text- absolute w-[400px] rounded-sm bg-white p-6 drop-shadow-lg dark:bg-white dark:text-black ${openModal._id == product?._id
+                                    ? "scale-1 opacity-1 duration-300"
+                                    : "scale-0 opacity-0 duration-150"
+                                    }`}
                                 >
                                   <form onSubmit={handleSubmit}>
                                     <h1 className="mb-2 text-2xl font-semibold">
