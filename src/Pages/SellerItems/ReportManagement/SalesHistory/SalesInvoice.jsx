@@ -24,7 +24,7 @@ const SalesInvoice = ({ products, setModalOpen }) => {
     const formattedDate = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
     console.log(formattedDate);
 
-    console.log(products, 'invoice****>>>>', user);
+    console.log(products, 'invoice****>>>>');
 
     const InvoicePage = ({ order }) => {
         return (
@@ -55,19 +55,19 @@ const SalesInvoice = ({ products, setModalOpen }) => {
                                     <h4 className='font-semibold text-gray-700 text-sm'>
                                         Name :
                                     </h4>
-                                    <p className="text-gray-600 text-sm">{user?.userInfo?.name}</p>
+                                    <p className="text-gray-600 text-sm">{products?.customerName}</p>
                                 </div>
                                 <div className='flex items-center gap-2'>
                                     <h4 className='font-semibold text-gray-700 text-sm'>
-                                        Email :
+                                        Address :
                                     </h4>
-                                    <p className="text-gray-600 text-sm">{shopInfo?.shopEmail}</p>
+                                    <p className="text-gray-600 text-sm">{products?.userInfo?.address}</p>
                                 </div>
                                 <div className='flex items-center gap-2'>
                                     <h4 className='font-semibold text-gray-700 text-sm'>
                                         Phone :
                                     </h4>
-                                    <p className="text-gray-600 text-sm">{shopInfo?.shopNumber}</p>
+                                    <p className="text-gray-600 text-sm">{products?.userInfo?.mobileNumber}</p>
                                 </div>
                             </div>
 

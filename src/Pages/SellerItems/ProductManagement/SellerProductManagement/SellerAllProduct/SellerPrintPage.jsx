@@ -2,10 +2,10 @@ import React, { useContext, useRef } from 'react';
 import { useReactToPrint } from 'react-to-print';
 import { useParams } from 'react-router-dom';
 import { AuthContext } from '../../../../../AuthProvider/UserProvider';
-
+import logo from '../../../../../assets/Logo.png'
 const SellerPrintPage = ({ setOn, products }) => {
     const { id } = useParams();
-    const { shopInfo } = useContext(AuthContext)
+    const { shopInfo, user } = useContext(AuthContext)
 
     const componentRef = useRef();
     const handlePrint = useReactToPrint({
@@ -15,13 +15,13 @@ const SellerPrintPage = ({ setOn, products }) => {
 
 
     // Calculate subtotal
-    const subtotal = products?.reduce((acc, itm) => acc + (itm.price ? itm.price : 0), 0);
+    const subtotal = products?.reduce((acc, itm) => acc + (parseFloat(itm.price) ? parseFloat(itm.price) : 0), 0);
     const totalPrice = subtotal;
     const formattedSubtotal = subtotal.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
     const formattedTotalPrice = totalPrice.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
 
 
-    console.log(products, '---->');
+    console.log(shopInfo, '---->', user);
 
     const InvoicePage = ({ order }) => {
         return (
@@ -29,18 +29,20 @@ const SellerPrintPage = ({ setOn, products }) => {
                 <div
                     ref={componentRef}
                     className="p-12 mx-8 print-data   mt-6">
-                    {shopInfo?.address || shopInfo?.shopNumber &&
-                        <header className="flex items-start justify-between">
-                            <img src={shopInfo?.logo} alt="logo" className='w-[200px]' />
-                            <div className='whitespace-wrap w-[300px]'>
-                                <p className='text-gray-600 text-end'>{shopInfo?.address}</p>
-                                <p className='text-gray-600 text-end'>{shopInfo?.shopName}</p>
-                            </div>
-                        </header>}
+
+
+                    <header className="flex items-start justify-between">
+                        <img src={logo} alt="logo" className='w-[200px]' />
+                        <div className='whitespace-wrap w-[300px]'>
+                            <p className='text-gray-600 text-end'>{user?.name}</p>
+                            <p className='text-gray-600 text-end'>{user?.email}</p>
+                            <p className='text-gray-600 text-end'>{user?.phoneNumber}</p>
+                        </div>
+                    </header>
 
                     <main>
                         <div className="flex items-center justify-center py-1 font-bold text-gray-600 bg-gray-200 mt-8 text-center ">
-                            SALES INVOICE
+                            INVOICE
                         </div>
 
                         {/*................*/}
@@ -190,7 +192,7 @@ const SellerPrintPage = ({ setOn, products }) => {
 
                 <button onClick={handlePrint} className='bg-blue-500 px-6 py-2 rounded-2 text-white rounded-md'>Print</button></div>
 
-            <div ref={componentRef} className="w-full h-full p-8 m-auto bg-white" style={{ width: '210mm', height: '297mm' }}>
+            <div ref={componentRef} className="w-full h-full p-8 m-auto bg-white" style={{ width: '210mm', height: 'fit-content' }}>
                 <InvoicePage order={products} />
             </div>
         </div>
