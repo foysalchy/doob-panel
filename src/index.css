@@ -45,53 +45,28 @@ input[type="number"] {
 }
 
 
-* {
-  scrollbar-width: thin;
-  scrollbar-color: rgb(13, 153, 177) black;
+/* Webkit Browsers (Chrome, Safari, Edge) */
+::-webkit-scrollbar {
+  width: 2px;
+  /* Set to 2px */
+  height: 2px;
+  background-color: rgb(61, 62, 62) !important;
 }
 
-/* Works in Chrome, Edge, and Safari */
-/* Width */
-*::-webkit-scrollbar {
-  width: 4px;
-}
-
-/* Track */
-*::-webkit-scrollbar-track {
-  background: black!important;
-}
-
-/* Handle */
-*::-webkit-scrollbar-thumb {
-  width: 4px;
-  background-color: rgb(3, 61, 154)!important;
-}
-
-/* Handle on hover */
-*::-webkit-scrollbar-thumb:hover {
-  background-color:transparent;
+::-webkit-scrollbar-thumb {
+  background-color: rgb(13, 153, 177) !important;
 }
 
 
-/* Track */
-.transparent-scroll::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0)!important;
+::-moz-scrollbar {
+  width: 2px;
+  /* Set to 2px */
+  height: 2px;
+  background-color: rgb(61, 62, 62) !important;
 }
 
-
-.transparent-scroll::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0)!important;
-}
-
-/* Handle */
-.transparent-scroll::-webkit-scrollbar-thumb {
-  width: 4px;
-  background-color: rgba(3, 61, 154, 0)!important;
-}
-
-/* Handle on hover */
-.transparent-scroll::-webkit-scrollbar-thumb:hover {
-  background-color:transparent;
+::-moz-scrollbar-thumb {
+  background-color: rgb(13, 153, 177) !important;
 }
 
 font-google {

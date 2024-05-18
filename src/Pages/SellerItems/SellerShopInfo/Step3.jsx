@@ -122,7 +122,7 @@ const Step3 = ({ prevStep, submitForm, handleChange, values }) => {
       <div className="grid max-w-md gap-10  row-gap-5 lg:max-w-screen-lg sm:row-gap-10 lg:grid-cols-3 xl:max-w-screen-lg sm:mx-auto my-10">
         {prices.length &&
           prices?.map((price, index) => (
-            <div  key={index}>
+            <div key={index}>
               {price.status && (
                 <a href="#next"
                   className={`flex cursor-pointer h-full flex-col justify-between p-8 transition-shadow duration-300  border rounded  shadow-sm sm:items-center hover:shadow ${values.priceId === price._id
@@ -135,24 +135,28 @@ const Step3 = ({ prevStep, submitForm, handleChange, values }) => {
                     <div className="text-lg font-semibold">{price.name}</div>
                     <hr />
                     {price.benefits.map((benefit, index) => (
-                      <p className="flex text-left mt-2 items-center text-gray-600 mb-2">
-                        <span className="w-4 h-4 mr-2 inline-flex items-center justify-center bg-gray-400 text-white rounded-full flex-shrink-0">
-                          <svg
-                            fill="none"
-                            stroke="currentColor"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2.5"
-                            className="w-3 h-3"
-                            viewBox="0 0 24 24"
-                          >
-                            <path d="M20 6L9 17l-5-5" />
-                          </svg>
-                        </span>
-                        {benefit}
-                      </p>
+                      // Check if benefit is not empty before rendering
+                      benefit.trim() !== '' && (
+                        <p key={index} className="flex items-center text-gray-600 mb-2">
+                          <span className="w-4 h-4 mr-2 inline-flex items-center justify-center bg-gray-400 text-white rounded-full flex-shrink-0">
+                            <svg
+                              fill="none"
+                              stroke="currentColor"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth="2.5"
+                              className="w-3 h-3"
+                              viewBox="0 0 24 24"
+                            >
+                              <path d="M20 6L9 17l-5-5" />
+                            </svg>
+                          </span>
+                          {benefit}
+                        </p>
+                      )
                     ))}
-                    
+
+
                     {permission.find((perm) => perm._id === price._id) && (
                       <div className="">
                         <div>
