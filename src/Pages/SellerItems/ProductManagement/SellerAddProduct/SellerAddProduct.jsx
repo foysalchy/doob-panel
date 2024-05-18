@@ -189,7 +189,8 @@ const SellerAddProduct = () => {
     const productWidth = form?.productWidth?.value;
     const productHight = form?.productHight?.value;
     const low_stock_warning = form?.low_stock_warning?.value;
-    const DeliveryCharge = form?.DeliveryCharge?.value;
+    const DeliveryCharge = form?.DeliveryChargeDhaka?.value;
+    const DeliveryChargeOutside = form?.DeliveryChargeOutside?.value;
 
     const MetaTag = form?.MetaTag?.value;
     const MetaTagMetaDescription = form?.MetaDescription?.value;
@@ -298,6 +299,7 @@ const SellerAddProduct = () => {
       upcoming: isChecked,
       low_stock_warning,
       DeliveryCharge,
+      DeliveryChargeOutside
     };
     console.log(data, "product_ready");
 

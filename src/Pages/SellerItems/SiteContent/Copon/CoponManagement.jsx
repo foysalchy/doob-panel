@@ -10,6 +10,7 @@ import { RxCross2 } from "react-icons/rx";
 import Swal from "sweetalert2";
 import DeleteModal from "../../../../Common/DeleteModal";
 import { FaRegCopy } from "react-icons/fa";
+import EditPromoCode from "./EditPromoCode";
 
 const CoponManagement = () => {
   const [loading, setLoading] = useState(false);
@@ -370,9 +371,9 @@ const CoponManagement = () => {
                               </svg>
                             </button>
 
-                            {/* <button onClick={() => handleViewDetails(faq?._id)}>
-                                                            <BiEdit className=" transition-colors text-xl duration-200 text-yellow-500 hover:text-yellow-700 focus:outline-none" />
-                                                        </button> */}
+                            <button onClick={() => handleViewDetails(faq)}>
+                              <BiEdit className=" transition-colors text-xl duration-200 text-yellow-500 hover:text-yellow-700 focus:outline-none" />
+                            </button>
                           </div>
                         </td>
                       </tr>
@@ -384,6 +385,14 @@ const CoponManagement = () => {
           </div>
         </div>
       </section>
+
+      {OpenModal && (
+        <EditPromoCode
+          data={OpenModal}
+          setOpenModal={setOpenModal}
+
+        />
+      )}
     </div>
   );
 };

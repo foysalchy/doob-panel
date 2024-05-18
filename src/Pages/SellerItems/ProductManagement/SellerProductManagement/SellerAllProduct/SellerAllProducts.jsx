@@ -151,7 +151,7 @@ const SellerAllProducts = () => {
   const endIndex = startIndex + pageSize;
 
   // Get the current page data
-  const currentData = filteredData && filteredData?.slice(startIndex, endIndex);
+  const currentData = filteredData && filteredData?.sort((a, b) => b.createdAt - a.createdAt).slice(startIndex, endIndex);
 
   const updateProductStatus = (id, status) => {
     console.log(id);
@@ -756,11 +756,11 @@ const SellerAllProducts = () => {
                         </th>
                       </tr>
                     </thead>
+                    {console.log(currentData[0])}
                     <tbody className="bg-white divide-y  divide-gray-200 ">
                       {currentData
                         ? currentData
-                          ?.sort((a, b) => b.createdAt - a.createdAt)
-                          .map((product) => (
+                          ?.map((product) => (
                             <tr>
                               <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap   flex items-center justify-center">
                                 <label>

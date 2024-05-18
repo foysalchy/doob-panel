@@ -25,8 +25,7 @@ const ProductSellerEditPage = () => {
   const { state } = useLocation();
   const { shopInfo } = useContext(AuthContext);
 
-  //   console.log(shopInfo, "shopInfo==");
-  // console.log(id);
+
 
   const {
     data: getProduct = [],
@@ -48,10 +47,6 @@ const ProductSellerEditPage = () => {
     },
   });
 
-  //   console.log(getProduct);
-
-  // const product =
-  //   getProduct?.find((itm) => (itm._id === id ? itm._id === id : {})) || [];
 
   const product = state;
 
@@ -69,7 +64,7 @@ const ProductSellerEditPage = () => {
   const [banglaDescription, setBanglaDescription] = useState("");
   const [youtube, setYoutube] = useState("");
 
-  // console.log(youtube);
+
   const [multiVendor, setMultiVendor] = useState(adminWare);
   // ! for admin category
   // const [adminMegaCategory, setAdminMegaCategory] = useState("");
@@ -102,15 +97,22 @@ const ProductSellerEditPage = () => {
   };
 
   const handleImageProcessing = async () => {
-    const processed = await Promise.all(allImage.map((image, index) => {
-      if (!image.src) {
-        return imageUploadEdit(image, index);
-      } else {
-        return Promise.resolve({ name: `photo${index}`, src: image.src });
-      }
-    }));
-    setProcessedImages(processed);
+    try {
+      const processed = await Promise.all(allImage.map((image, index) => {
+        if (!image.src) {
+          return imageUploadEdit(image, index);
+        } else {
+          return Promise.resolve({ name: `photo${index}`, src: image.src });
+        }
+      }));
+      return processed;
+    } catch (error) {
+      console.error("Error during image processing:", error);
+      // Handle the error appropriately, maybe show a message to the user
+      return []; // Return an empty array in case of error
+    }
   };
+
 
 
 
@@ -126,9 +128,7 @@ const ProductSellerEditPage = () => {
     },
   ]);
 
-  // console.log(product?.variantData);
 
-  // console.log(product?.variations);
   const [variantInput, setVariantInput] = useState({
     product1: {},
     product2: {},
@@ -219,15 +219,16 @@ const ProductSellerEditPage = () => {
     datazCategory?.length &&
     datazCategory?.filter((item) => !ourData?.includes(item.label));
 
-  // console.log(filteredData);
+
 
   const formSubmit = async (e) => {
     // setLoading(true);
     e.preventDefault();
 
-    console.log('prev.....',);
 
-    await handleImageProcessing();
+    setLoading(true);
+
+    const processed = await handleImageProcessing();
 
     const form = e.target;
     const BnName = form.productNameBn.value;
@@ -241,15 +242,6 @@ const ProductSellerEditPage = () => {
     const description_form = form?.description?.value;
     const banglaDescription_form = form?.banglaDescription?.value;
 
-    console.log(
-      "des",
-      description_form,
-      "descrip",
-      short_description_form,
-      "ad",
-      banglaDescription_form
-    );
-
     // return;
 
     const categories = [
@@ -259,7 +251,7 @@ const ProductSellerEditPage = () => {
       extraCategory && { name: extraCategory },
     ];
 
-    console.log(categories);
+
 
     // return;
     const warehouse = form?.warehouse.value;
@@ -276,7 +268,7 @@ const ProductSellerEditPage = () => {
       { name: cell },
     ];
 
-    console.log(warehouseValue);
+
 
     const warrantyTypes = form?.warrantyTypes?.value;
 
@@ -311,11 +303,12 @@ const ProductSellerEditPage = () => {
       adminExtraCategory,
     ];
 
-    console.log(adminCategory);
+
     // setLoading(false);
     // return;
 
     const formData = new FormData();
+    console.log(processedImages)
 
     const data = {
       videoUrl: youtube,
@@ -367,8 +360,9 @@ const ProductSellerEditPage = () => {
       status: false,
       createdAt: Date.now(),
       // updatedAt,
-      featuredImage: processedImages[0],
-      images: processedImages.slice(1),
+
+      featuredImage: processed[0],
+      images: processed.slice(1),
       videos: youtube,
       // attributes,
       variations: inputFields,
@@ -388,8 +382,9 @@ const ProductSellerEditPage = () => {
       data
     );
 
-    setLoading(true);
-    // return;
+    setLoading(false)
+
+
 
     fetch(
       // `https://backend.doob.com.bd/api/v1/seller/normal-product?id=${product?._id}`,
@@ -404,7 +399,7 @@ const ProductSellerEditPage = () => {
     )
       .then((res) => res.json())
       .then((data) => {
-        console.log(data, "=====product update");
+
         if (data.error) {
           Swal.fire(`${data.message}`, "", "warning");
           setLoading(false);
@@ -416,7 +411,7 @@ const ProductSellerEditPage = () => {
       });
   };
 
-  //   console.log(product, ">>>>>>>>>>>>>>>>>");
+
 
   return (
     <div>

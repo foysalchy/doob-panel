@@ -55,7 +55,7 @@ const WooCommerceTableRow = ({ data, refetch }) => {
     }
 
     const update_order_status = (status, order_id) => {
-        fetch(`http://localhost:5001/api/v1/seller/woo-order-status-update?order_id=${order_id}&status=${status}&shop_id=${shopInfo?._id}`)
+        fetch(`https://backend.doob.com.bd/api/v1/seller/woo-order-status-update?order_id=${order_id}&status=${status}&shop_id=${shopInfo?._id}`)
             .then((res) => res.json())
             .then((data) => {
                 BrightAlert()

@@ -113,7 +113,7 @@ export default function PriceRole() {
               </td>
               <div className="m-0 p-0">
                 {open?._id === itm?._id && (
-                  <EditPriceRoleModal itm={itm} setOpen={setOpen} />
+                  <EditPriceRoleModal refetch={refetch} itm={itm} setOpen={setOpen} />
                 )}
               </div>
             </tr>

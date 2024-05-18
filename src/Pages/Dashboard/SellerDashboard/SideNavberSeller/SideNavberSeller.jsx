@@ -245,10 +245,10 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                 ) : (
                                   <li className="">
                                     <ul className="flex flex-col ">
-                                      <li className="flex cursor-pointer items-center justify-between  py-2 p-2 rounded-sm hover:bg-gray-800 text-gray-50">
+                                      <li >
                                         <Link
                                           to={"/seller/product-management/manage"}
-                                          className=""
+                                          className="flex cursor-pointer items-center justify-between  py-2 p-2 rounded-sm hover:bg-gray-800 text-gray-50"
                                         >
                                           Products
                                         </Link>
@@ -589,32 +589,35 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                 ) ? (
                                   <li className="">
                                     <ul className="flex flex-col ">
-                                      <li className="flex cursor-pointer items-center justify-between  py-2 p-2 rounded-sm hover:bg-gray-800 text-gray-50">
+                                      <li >
                                         <Link
+                                          className="flex cursor-pointer items-center justify-between  py-2 p-2 rounded-sm hover:bg-gray-800 text-gray-50"
                                           to={
                                             "/seller/product-management/manage"
                                           }
-                                          className=""
+
                                         >
                                           Products
                                         </Link>
                                       </li>
-                                      <li className="flex cursor-pointer items-center justify-between py-2 p-2 rounded-sm hover:bg-gray-800 text-gray-50">
+                                      <li>
                                         <Link
                                           to={
                                             "/seller/product-management/add-product"
                                           }
+                                          className="flex cursor-pointer items-center justify-between py-2 p-2 rounded-sm hover:bg-gray-800 text-gray-50"
                                         >
                                           Add Product
                                         </Link>
                                       </li>
-                                      <li className="flex cursor-pointer items-center justify-between py-2 p-2 rounded-sm hover:bg-gray-800 text-gray-50">
-                                        <Link to={"/products"}>
+                                      <li >
+                                        <Link className="flex cursor-pointer items-center justify-between py-2 p-2 rounded-sm hover:bg-gray-800 text-gray-50" to={"/products"}>
                                           Add Doob Product
                                         </Link>
                                       </li>
-                                      <li className="flex cursor-pointer items-center justify-between py-2 p-2 rounded-sm hover:bg-gray-800 text-gray-50">
+                                      <li >
                                         <Link
+                                          className="flex cursor-pointer items-center justify-between py-2 p-2 rounded-sm hover:bg-gray-800 text-gray-50"
                                           to={
                                             "/seller/product-management/add-daraz-product"
                                           }
@@ -624,6 +627,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                       </li>
                                       <li className="flex cursor-pointer items-center justify-between py-2 p-2 rounded-sm hover:bg-gray-800 text-gray-50">
                                         <Link
+                                          className="flex cursor-pointer items-center justify-between py-2 p-2 rounded-sm hover:bg-gray-800 text-gray-50"
                                           to={
                                             "/seller/product-management/add-woo-product"
                                           }
@@ -637,19 +641,21 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                               ) : (
                                 <li className="">
                                   <ul className="flex flex-col ">
-                                    <li className="flex cursor-pointer items-center justify-between  py-2 p-2 rounded-sm hover:bg-gray-800 text-gray-50">
+                                    <li >
                                       <Link
+                                        className="flex cursor-pointer items-center justify-between  py-2 p-2 rounded-sm hover:bg-gray-800 text-gray-50"
                                         to={"/seller/product-management/manage"}
-                                        className=""
+
                                       >
                                         Products
                                       </Link>
                                     </li>
-                                    <li className="flex cursor-pointer items-center justify-between py-2 p-2 rounded-sm hover:bg-gray-800 text-gray-50">
+                                    <li >
                                       <Link
                                         to={
                                           "/seller/product-management/add-product"
                                         }
+                                        className="flex cursor-pointer items-center justify-between py-2 p-2 rounded-sm hover:bg-gray-800 text-gray-50"
                                       >
                                         Add Product
                                       </Link>
@@ -2779,10 +2785,10 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                     <span>Subscription Management</span>
                   </Link>
                 </div>
-                <div className="rounded-sm  hover:bg-gray-800">
+                <div>
                   <button
                     onClick={() => logOut()}
-                    className="flex items-center p-2 space-x-3 rounded-md "
+                    className="flex items-center p-2   hover:bg-gray-800 space-x-3 rounded-md "
                   >
                     <IoLogOut className="w-5 h-5 fill-current text-gray-400" />
                     <span>Logout</span>
