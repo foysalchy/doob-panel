@@ -169,7 +169,7 @@ const ExtraCategoriesManagement = () => {
         )
           .then((res) => res.json())
           .then((data) => {
-            Swal.fire("Seller Deleted", "", "success");
+            Swal.fire("Extra Category Deleted", "", "success");
             refetch();
           })
           .catch((error) => {

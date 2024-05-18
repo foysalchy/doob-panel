@@ -166,7 +166,7 @@ const MiniCategoriesManagement = () => {
         )
           .then((res) => res.json())
           .then((data) => {
-            Swal.fire("Seller Deleted", "", "success");
+            Swal.fire("Mini Category Deleted", "", "success");
             refetch();
           })
           .catch((error) => {

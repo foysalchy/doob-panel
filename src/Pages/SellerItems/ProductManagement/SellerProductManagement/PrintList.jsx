@@ -1,9 +1,9 @@
 import React, { useContext, useRef } from 'react';
 import { useReactToPrint } from 'react-to-print';
 import { useParams } from 'react-router-dom';
-import { AuthContext } from '../../../../../AuthProvider/UserProvider';
-import logo from '../../../../../assets/Logo.png'
-const SellerPrintPage = ({ setOn, products }) => {
+import logo from '../../../../assets/doobBlack.png'
+import { AuthContext } from '../../../../AuthProvider/UserProvider';
+const PrintList = ({ setOn, products }) => {
     const { id } = useParams();
     const { shopInfo, user } = useContext(AuthContext)
 
@@ -21,7 +21,7 @@ const SellerPrintPage = ({ setOn, products }) => {
     const formattedTotalPrice = totalPrice.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
 
 
-    console.log(products, '---->', user);
+    console.log(shopInfo, '---->', user);
 
     const InvoicePage = ({ order }) => {
         return (
@@ -32,74 +32,75 @@ const SellerPrintPage = ({ setOn, products }) => {
 
 
                     <header className="flex items-start justify-between">
-                        <img src={logo} alt="logo" className='w-[200px]' />
+                        <img src={shopInfo?.logo} alt="logo" className='w-[200px]' />
                         <div className='whitespace-wrap w-[300px]'>
-                            <p className='text-gray-600 text-end'>{user?.name}</p>
-                            <p className='text-gray-600 text-end'>{user?.email}</p>
-                            <p className='text-gray-600 text-end'>{user?.phoneNumber}</p>
+                            <p className='text-gray-600 text-end'>{shopInfo?.shopName}</p>
+                            <p className='text-gray-600 text-end'>{user?.shopEmail}</p>
                         </div>
                     </header>
 
                     <main>
                         <div className="flex items-center justify-center py-1 font-bold text-gray-600 bg-gray-200 mt-8 text-center ">
-                            INVOICE
+                            Products
                         </div>
 
                         {/*................*/}
                         {/*.... Address ...*/}
                         {/*................*/}
                         {
-                            <div className="flex items-center justify-between mt-4">
-                                <div>
-                                    <div className='flex items-center gap-2'>
-                                        <h4 className='font-semibold text-gray-700 text-sm'>
-                                            Email :
-                                        </h4>
-                                        <p className="text-gray-600 text-sm">{shopInfo?.shopEmail}</p>
-                                    </div>
-                                    <div className='flex items-center gap-2'>
-                                        <h4 className='font-semibold text-gray-700 text-sm'>
-                                            Phone :
-                                        </h4>
-                                        <p className="text-gray-600 text-sm">{shopInfo?.shopNumber}</p>
-                                    </div>
-                                </div>
+                            // <div className="flex items-center justify-between mt-4">
+                            //     <div>
+                            //         <div className='flex items-center gap-2'>
+                            //             <h4 className='font-semibold text-gray-700 text-sm'>
+                            //                 Email :
+                            //             </h4>
+                            //             <p className="text-gray-600 text-sm">{shopInfo?.shopEmail}</p>
+                            //         </div>
+                            //         <div className='flex items-center gap-2'>
+                            //             <h4 className='font-semibold text-gray-700 text-sm'>
+                            //                 Phone :
+                            //             </h4>
+                            //             <p className="text-gray-600 text-sm">{shopInfo?.shopNumber}</p>
+                            //         </div>
+                            //     </div>
 
-                                <div>
-                                    <li className='flex justify-start items-center gap-2'>
-                                        <h4 className='font-semibold text-gray-700 text-sm'>
-                                            Invoice No :
-                                        </h4>
-                                        <p className="text-gray-600 text-sm">{shopInfo?._id}</p>
-                                    </li>
-                                    <li className='flex justify-start items-center gap-2'>
-                                        <h4 className='font-semibold text-gray-700 text-sm'>
-                                            Invoice Date :
-                                        </h4>
-                                        <p className="text-gray-600 text-sm">{
-                                            new Date().toDateString(shopInfo?.time_stamp)
-                                        }</p>
-                                    </li>
-                                    <br />
-                                    <li className='flex justify-start items-center gap-2'>
-                                        <h4 className='font-semibold text-gray-700 text-sm'>
-                                            Payment Date :
-                                        </h4>
-                                        <p className="text-gray-600 text-sm">{
-                                            new Date().toDateString(shopInfo?.paymentDate)
-                                        }</p>
-                                    </li> <li className='flex justify-start items-center gap-2'>
-                                        <h4 className='font-semibold text-gray-700 text-sm'>
-                                            Order Date :
-                                        </h4>
-                                        <p className="text-gray-600 text-sm">{
-                                            new Date().toDateString(shopInfo?.date)
-                                        }</p>
-                                    </li>
+                            //     <div>
+                            //         <li className='flex justify-start items-center gap-2'>
+                            //             <h4 className='font-semibold text-gray-700 text-sm'>
+                            //                 Invoice No :
+                            //             </h4>
+                            //             <p className="text-gray-600 text-sm">{shopInfo?._id}</p>
+                            //         </li>
+                            //         <li className='flex justify-start items-center gap-2'>
+                            //             <h4 className='font-semibold text-gray-700 text-sm'>
+                            //                 Invoice Date :
+                            //             </h4>
+                            //             <p className="text-gray-600 text-sm">{
+                            //                 new Date().toDateString(shopInfo?.time_stamp)
+                            //             }</p>
+                            //         </li>
+                            //         <br />
+                            //         <li className='flex justify-start items-center gap-2'>
+                            //             <h4 className='font-semibold text-gray-700 text-sm'>
+                            //                 Payment Date :
+                            //             </h4>
+                            //             <p className="text-gray-600 text-sm">{
+                            //                 new Date().toDateString(shopInfo?.paymentDate)
+                            //             }</p>
+                            //         </li> <li className='flex justify-start items-center gap-2'>
+                            //             <h4 className='font-semibold text-gray-700 text-sm'>
+                            //                 Order Date :
+                            //             </h4>
+                            //             <p className="text-gray-600 text-sm">{
+                            //                 new Date().toDateString(shopInfo?.date)
+                            //             }</p>
+                            //         </li>
 
-                                </div>
+                            //     </div>
 
-                            </div>}
+                            // </div>
+
+                        }
 
                         {/*................*/}
                         {/*.... Product ...*/}
@@ -199,4 +200,4 @@ const SellerPrintPage = ({ setOn, products }) => {
     );
 };
 
-export default SellerPrintPage;
+export default PrintList;

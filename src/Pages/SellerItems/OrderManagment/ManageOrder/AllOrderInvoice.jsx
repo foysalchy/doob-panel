@@ -183,7 +183,11 @@ const AllOrderInvoice = ({ data, showPrintModal1, setShowPrintModal1 }) => {
 
 
 
+                <div className="flex fixed top-4 left-4 gap-2">
+                    <button onClick={handlePrint} className="me-2 rounded-sm bg-green-700 px-6 py-[6px] text-white">print</button>
 
+                    <button onClick={() => setShowPrintModal1(false)} className="rounded-sm border border-red-600 px-6 py-[6px] text-red-600 duration-150 hover:bg-red-600 hover:text-white">Cancel</button>
+                </div>
 
                 <div
                     ref={componentRef}
@@ -228,11 +232,7 @@ const AllOrderInvoice = ({ data, showPrintModal1, setShowPrintModal1 }) => {
 
                     </table>
                 </div>
-                <div className="flex gap-2">
-                    <button onClick={handlePrint} className="me-2 rounded-sm bg-green-700 px-6 py-[6px] text-white">print</button>
 
-                    <button onClick={() => setShowPrintModal1(false)} className="rounded-sm border border-red-600 px-6 py-[6px] text-red-600 duration-150 hover:bg-red-600 hover:text-white">Cancel</button>
-                </div>
             </div>
         </div>
     );

@@ -2,7 +2,7 @@ import { useContext, useRef } from "react";
 import { AuthContext } from "../../../AuthProvider/UserProvider";
 import { useReactToPrint } from "react-to-print";
 import Barcode from "react-barcode";
-
+import logo from '../../../assets/Logo.png'
 const OrderInvoice = ({ openModal, setOpenModal, product }) => {
     const { user } = useContext(AuthContext)
     const componentRef = useRef();
@@ -32,6 +32,7 @@ const OrderInvoice = ({ openModal, setOpenModal, product }) => {
 
     const InvoicePage = ({ itm }) => {
         console.log(product, "order");
+        const totalPrice = product?.price * product?.quantity;
         return (
             <>
                 <div
@@ -39,16 +40,17 @@ const OrderInvoice = ({ openModal, setOpenModal, product }) => {
                     className="p-12 mx-8 print-data  mt-6">
 
                     <header className="flex items-start justify-between">
-                        {/* <img src={shopInfo?.logo} alt="logo" className='w-[200px]' /> */}
+                        <img src={logo} alt="logo" className='w-[200px]' />
                         <div className='whitespace-wrap w-[300px]'>
-                            {/* <p className='text-gray-600 text-end'>{shopInfo?.address}</p>
-              <p className='text-gray-600 text-end'>{shopInfo?.shopName}</p> */}
+                            <p className='text-gray-600 text-end'>{user?.name}</p>
+                            <p className='text-gray-600 text-end'>{user?.email}</p>
+                            <p className='text-gray-600 text-end'>{user?.phoneNumber}</p>
                         </div>
                     </header>
 
                     <main>
                         <div className="flex items-center justify-center py-1 font-bold text-gray-600 bg-gray-200 mt-8 text-center ">
-                            INVOICE
+                            INVOICE....
                         </div>
 
                         {/*................*/}
@@ -58,16 +60,24 @@ const OrderInvoice = ({ openModal, setOpenModal, product }) => {
                             <div>
                                 <div className='flex items-center gap-2'>
                                     <h4 className='font-semibold text-gray-700 text-sm'>
-                                        Email :
+                                        Name :
                                     </h4>
-                                    <p className="text-gray-600 text-sm">{user?.email}</p>
+                                    <p className="text-gray-600 text-sm">{product?.userInfo?.fullName}</p>
                                 </div>
+                                <div className='flex items-center gap-2'>
+                                    <h4 className='font-semibold text-gray-700 text-sm'>
+                                        Name :
+                                    </h4>
+                                    <p className="text-gray-600 text-sm">{product?.userInfo?.address}</p>
+                                </div>
+
                                 <div className='flex items-center gap-2'>
                                     <h4 className='font-semibold text-gray-700 text-sm'>
                                         Phone :
                                     </h4>
-                                    <p className="text-gray-600 text-sm">{user?.phoneNumber}</p>
+                                    <p className="text-gray-600 text-sm">{product?.userInfo?.mobileNumber}</p>
                                 </div>
+
                             </div>
 
                             <div>
@@ -113,28 +123,22 @@ const OrderInvoice = ({ openModal, setOpenModal, product }) => {
                                                 <td className="px-2 py-2 text-sm text-center border border-gray-800">
                                                     {product?.price ? product?.price : 0}
                                                 </td>
-
-
                                             </tr>
 
-                                            {/* <tr>
-                                                <td colSpan={6} className='px-1 py-2 text-sm border  border-gray-800'></td>
-                                                <td colSpan={1} className='px-1 py-2 text-sm border-b  border-gray-800 text-end'>
+                                            <tr>
+                                                <td colSpan={3} className='px-1 py-2 text-sm border border-gray-800 text-right'>
                                                     TOTAL:
                                                 </td>
-                                                <td colSpan={1} className='px-1 py-2 text-sm border  border-gray-800 text-start'>
-                                                    $5000
+                                                <td colSpan={1} className='px-1 py-2 text-sm border border-gray-800 text-center'>
+                                                    ${totalPrice}
                                                 </td>
-                                            </tr> */}
+                                            </tr>
                                             {/* Add more rows here */}
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
                         </section>
-
-
-
 
                     </main>
                     <footer>
@@ -154,7 +158,7 @@ const OrderInvoice = ({ openModal, setOpenModal, product }) => {
 
                 <div onClick={(e_) => e_.stopPropagation()} className={`text-   absolute w-screen h-full m-auto rounded-sm bg-white p-12  ${openModal?._id == product?._id ? 'scale-1 opacity-1 duration-300' : 'scale-0 opacity-0 duration-150'} bg-gray-100`}>
 
-                    <div className=" p-12 ">
+                    <div className=" p-12 mb-8">
                         <button
                             onClick={handlePrint}
                             className='bg-blue-500 px-6 py-2 rounded-2 text-black rounded-md'>Print</button>
