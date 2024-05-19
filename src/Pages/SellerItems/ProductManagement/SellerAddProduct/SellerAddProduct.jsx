@@ -446,6 +446,8 @@ const SellerAddProduct = () => {
               </span>
             </button>
           )}
+
+          <button type="submit">submit</button>
         </div>
       </form>
     </div>

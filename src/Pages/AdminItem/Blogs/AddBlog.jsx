@@ -143,7 +143,10 @@ const AddBlog = () => {
           status: draft,
           MetaDescription,
           MetaTag,
+          draft_status: false
         };
+
+        console.log('Blogs:::::::', blog);
         postBlog(blog, form);
       });
   };

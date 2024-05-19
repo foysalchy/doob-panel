@@ -111,7 +111,8 @@ const AddPage = () => {
       page,
       metaDescription,
       metaImg: imageUrl,
-      draft
+      draft,
+      status: true
     };
 
     // navigate("/admin/page-management");

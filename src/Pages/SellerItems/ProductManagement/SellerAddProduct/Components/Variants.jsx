@@ -192,7 +192,7 @@ const Variants = ({
           <option value={false}>No</option>
         </select>
       </div>
-
+      dsf
       <div className="flex gap-4 flex-col w-full">
         {inputFields &&
           inputFields.map((field, index) => (
@@ -281,6 +281,9 @@ const Variants = ({
                     type="file"
                     multiple
                   /> */}
+
+
+
 
                   <div className="space-y-2">
                     <div className="flex items-center space-x-2 rounded-md border border-gray-300 p-2 focus:border-primary focus:outline-none mt-3 relative">

@@ -2,18 +2,18 @@ import React, { useContext, useRef } from "react";
 import { useReactToPrint } from "react-to-print";
 import { AuthContext } from "../../../AuthProvider/UserProvider";
 import Barcode from "react-barcode";
-import logo from '../../../assets/Logo.png';
+import logo from '../../../assets/doobBlack.png';
 const StockInvoiceAdmin = ({ setOn, products }) => {
     const { user, shopInfo } = useContext(AuthContext);
 
     // Calculate subtotal
-    const subtotal = products?.quantity * products?.productInfo?.price;
+    const subtotal = products?.productInfo?.quantity * products?.productInfo?.price;
 
     // Calculate tax
     const taxRate = 0.1;
-    const tax = subtotal * taxRate;
+    const tax = subtotal;
 
-    const total = subtotal + tax;
+    const total = subtotal;
 
     const componentRef = useRef();
     const handlePrint = useReactToPrint({
@@ -24,14 +24,12 @@ const StockInvoiceAdmin = ({ setOn, products }) => {
     const formattedDate = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
     console.log(formattedDate);
 
-    console.log(products, 'invoice>>>>', user);
 
 
 
 
 
     const InvoicePage = ({ order }) => {
-        console.log(order, "order");
         return (
             <>
                 <div
@@ -39,11 +37,12 @@ const StockInvoiceAdmin = ({ setOn, products }) => {
                     className="p-12 mx-8 print-data   mt-6">
 
                     <header className="flex items-start justify-between">
-                        <img src={logo} alt="logo" className='w-[200px]' />
+                        <img src={products?.shopInfo?.logo} alt="logo" className='w-[200px]' />
                         <div className='whitespace-wrap w-[300px]'>
-                            <p className='text-gray-600 text-end'>{user?.name}</p>
-                            <p className='text-gray-600 text-end'>{user?.email}</p>
-                            <p className='text-gray-600 text-end'>{user?.phoneNumber}</p>
+                            <p className='text-gray-600 text-end'>{products?.shopInfo?.shopName}</p>
+                            <p className='text-gray-600 text-end'>{products?.shopInfo?.shopEmail}</p>
+                            <p className='text-gray-600 text-end'>{products?.shopInfo?.address}</p>
+                            <p className='text-gray-600 text-end'>{products?.shopInfo?.phone}</p>
                         </div>
                     </header>
 
@@ -61,21 +60,29 @@ const StockInvoiceAdmin = ({ setOn, products }) => {
                                     <h4 className='font-semibold text-gray-700 text-sm'>
                                         Name :
                                     </h4>
-                                    <p className="text-gray-600 text-sm">{products?.shopInfo?.shopName}</p>
+                                    <p className="text-gray-600 text-sm">{user?.name}</p>
                                 </div>
                                 <div className='flex items-center gap-2'>
                                     <h4 className='font-semibold text-gray-700 text-sm'>
                                         Email :
                                     </h4>
-                                    <p className="text-gray-600 text-sm">{products?.shopInfo?.shopEmail}</p>
+                                    <p className="text-gray-600 text-sm">{user?.email}</p>
                                 </div>
                                 <div className='flex items-center gap-2'>
                                     <h4 className='font-semibold text-gray-700 text-sm'>
-                                        Address :
+                                        Phone :
                                     </h4>
-                                    <p className="text-gray-600 text-sm">{products?.shopInfo?.address}</p>
+                                    <p className="text-gray-600 text-sm">{user?.phoneNumber}</p>
                                 </div>
 
+                                {products?.warehouse && <div className='flex items-center gap-2'>
+                                    <h4 className='font-semibold text-gray-700 text-sm'>
+                                        Warehouses :
+                                    </h4>
+                                    <div className="text-gray-600 text-sm flex flex-wrap gap-2">{
+                                        products?.warehouse?.map((w, i) => <p className=" px-1" key={i}>{w?.name}</p>)
+                                    }</div>
+                                </div>}
                             </div>
 
                             <div>
@@ -114,23 +121,23 @@ const StockInvoiceAdmin = ({ setOn, products }) => {
                                             </tr>
                                         </thead>
                                         <tbody className="bg-white">
-                                            {/* <tr className="text-gray-700">
+                                            <tr className="text-gray-700">
                                                 <td className="px-2 w-[90px] py-2 border border-gray-800">
-                                                    <img src={itm?.img ? itm?.img : ''} alt="photo" className="w-12 h-12 border object-cover m-auto rounded bg-indigo-400" />
+                                                    <img src={products?.productInfo?.image ? products?.productInfo?.image : ''} alt="photo" className="w-12 h-12 border object-cover m-auto rounded bg-indigo-400" />
                                                 </td>
                                                 <td className="px-2 py-2 w-[500px] text-sm border border-gray-800">
-                                                    {itm?.productName}
+                                                    {products?.productInfo?.name}
                                                 </td>
 
                                                 <td className="px-2 py-2 text-sm border text-center border-gray-800">
-                                                    {itm?.stock_quantity ? itm?.stock_quantity : 0}
+                                                    {products?.productInfo?.quantity ? products?.productInfo?.quantity : 0}
                                                 </td>
                                                 <td className="px-2 py-2 text-sm text-center border border-gray-800">
-                                                    {itm?.price ? itm?.price : 0}
+                                                    {products?.productInfo?.price ? products?.productInfo?.price : 0}
                                                 </td>
 
 
-                                            </tr> */}
+                                            </tr>
 
 
                                             {/* <tr>

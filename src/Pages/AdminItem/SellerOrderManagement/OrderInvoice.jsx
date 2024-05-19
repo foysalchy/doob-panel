@@ -2,7 +2,7 @@ import { useContext, useRef } from "react";
 import { AuthContext } from "../../../AuthProvider/UserProvider";
 import { useReactToPrint } from "react-to-print";
 import Barcode from "react-barcode";
-import logo from '../../../assets/Logo.png'
+import logo from '../../../assets/doobBlack.png'
 const OrderInvoice = ({ openModal, setOpenModal, product }) => {
     const { user } = useContext(AuthContext)
     const componentRef = useRef();
@@ -62,13 +62,24 @@ const OrderInvoice = ({ openModal, setOpenModal, product }) => {
                                     <h4 className='font-semibold text-gray-700 text-sm'>
                                         Name :
                                     </h4>
-                                    <p className="text-gray-600 text-sm">{product?.userInfo?.fullName}</p>
+                                    <p className="text-gray-600 text-sm">{product?.userInfo?.fullName} </p>
                                 </div>
                                 <div className='flex items-center gap-2'>
                                     <h4 className='font-semibold text-gray-700 text-sm'>
-                                        Name :
+                                        Address :
                                     </h4>
-                                    <p className="text-gray-600 text-sm">{product?.userInfo?.address}</p>
+                                    <p className="text-gray-600 text-sm">{product?.userInfo?.address}
+                                        ,{
+                                            product?.userInfo?.for_product === "customer" &&
+                                            <>
+                                                {
+                                                    product?.userInfo?.city
+                                                } {
+                                                    product?.userInfo?.area
+                                                }
+                                            </>
+                                        }
+                                    </p>
                                 </div>
 
                                 <div className='flex items-center gap-2'>

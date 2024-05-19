@@ -111,6 +111,7 @@ const AdminCategoryforSeller = () => {
     <div className="lg:pr-10 mt-4 w-full mx-auto overflow-auto border border-black rounded p-6">
       <div className="grid grid-cols-1 lg:grid-cols-4 items-center gap-2">
         <div className="">
+
           <label className="text-sm">Select Mega Category</label>
           <Select
             menuPortalTarget={document.body}
@@ -149,7 +150,7 @@ const AdminCategoryforSeller = () => {
               }}
               name="adminSubCategory"
               onChange={onHandleMiniCategorys}
-              required
+              // required
               options={subcategoryOption}
               placeholder="Select sub Category"
             />
