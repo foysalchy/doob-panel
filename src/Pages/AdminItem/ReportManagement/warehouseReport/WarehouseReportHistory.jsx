@@ -12,7 +12,7 @@ const WarehouseReportHistory = () => {
     queryKey: ["adminWarehouseData"],
     queryFn: async () => {
       const res = await fetch(
-        `http://localhost:5001/api/v1/admin/warehouses-products`
+        `https://backend.doob.com.bd/api/v1/admin/warehouses-products`
       );
       const data = await res.json();
       return data.warehouses;
@@ -24,7 +24,7 @@ const WarehouseReportHistory = () => {
     queryKey: ["wareAdminLengthData"],
     queryFn: async () => {
       const res = await fetch(
-        `http://localhost:5001/api/v1/admin/admin-all-warehouse-area-rack-cell-self`
+        `https://backend.doob.com.bd/api/v1/admin/admin-all-warehouse-area-rack-cell-self`
       );
       const data = await res.json();
       return data;
