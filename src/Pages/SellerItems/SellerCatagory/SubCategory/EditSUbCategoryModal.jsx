@@ -121,8 +121,8 @@ export default function EditSUbCategoryModal({
     imageFormData.append("image", image.files[0]);
     const imageUrl = await uploadImage(imageFormData);
     const darazCategory = daraz
-      ? e.target.darazCategory.value
-      : e.target.darazCategory.value;
+      ? e.target?.darazCategory?.value
+      : e.target?.darazCategory?.value;
 
     let darazCategory_id = editOn?.darazCategory_id ?? "";
     if (darazCategory) {
