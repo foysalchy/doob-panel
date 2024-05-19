@@ -74,6 +74,7 @@ import AdminTrackOrder from "../Pages/AdminItem/AdminTrackOrder/AdminTrackOrder"
 import PackageManagement from "../Pages/AdminItem/PriceMangement/PackageHandle";
 import AddPackage from "../Pages/AdminItem/PriceMangement/AddPackage";
 import CommissionReport from "../Pages/AdminItem/ReportManagement/CommitonReport/CommistionReport";
+import WarehouseReportHistory from "../Pages/AdminItem/ReportManagement/warehouseReport/WarehouseReportHistory";
 
 const SupperAdminPath = [
   {
@@ -371,7 +372,8 @@ const SupperAdminPath = [
   },
   {
     path: "report-management/warehouse-admin",
-    element: <SellerReport />,
+    // element: <SellerReport />,
+    element: <WarehouseReportHistory />,
   },
   {
     path: "report-management/subscriber-admin",
