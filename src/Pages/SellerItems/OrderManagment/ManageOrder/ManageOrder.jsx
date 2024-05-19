@@ -59,10 +59,11 @@ const ManageOrder = () => {
   };
 
   const getDarazOrderCount = (orders, status) => {
+    console.log(orders, status);
     return orders?.filter(
       (order) =>
         status === "All" ||
-        (status === "pending" && !order.statuses[0]) ||
+        (status === "pending" && !order.statuses[0]) || (status === "canceled" && order.statuses[0] === "Cancel") ||
         order.statuses[0] === status
     ).length;
   };
@@ -367,7 +368,7 @@ const ManageOrder = () => {
               {itm.name}{" "}
               {!daraz
                 ? `(${getOrderCount(tData, itm.value)})`
-                : getDarazOrderCount(darazOrder.orders, itm.value)}
+                : getDarazOrderCount(darazOrder.orders, itm.daraz_value)}
             </button>
           )
         )}

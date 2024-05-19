@@ -93,6 +93,8 @@ const AddSellerPage = () => {
 
   const navigate = useNavigate()
 
+
+
   const dataSubmit = (event) => {
     setLoading(true);
     event.preventDefault();
@@ -126,9 +128,20 @@ const AddSellerPage = () => {
       .then((res) => res.json())
       .then((data) => {
         setLoading(false);
+        setFormData({
+          title: "",
+          page: "",
+          message: "",
+          MetaTag: "",
+          MetaDescription: "",
+          img: "",
+          MetaImage: "",
+          draft
+        })
+        setDraftSaved(false)
+        console.log(draftSaved, 'asdfwf')
         BrightAlert()
         form.reset();
-        blocker.state = "unblocked";
         navigate('/seller/manage-pages/')
 
         // window.location.href = "/"; // Redirect to home or any other page after successful submission
