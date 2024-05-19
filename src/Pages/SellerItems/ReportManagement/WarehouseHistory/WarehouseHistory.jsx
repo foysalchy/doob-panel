@@ -21,6 +21,19 @@ const WarehouseHistory = () => {
     },
   });
 
+  const { data: wareLength = [], refetch: reload } = useQuery({
+    queryKey: ["wareLengthData"],
+    queryFn: async () => {
+      const res = await fetch(
+        `https://backend.doob.com.bd/api/v1/seller/warehouse/seller-all-warehouse-area-rack-cell-self?shopId=${shopInfo._id}`
+      );
+      const data = await res.json();
+      return data;
+    },
+  });
+
+  console.log(wareLength);
+
   // Calculate total number of pages
   const totalPages = Math.ceil(warehouseData.length / itemsPerPage);
 
@@ -60,6 +73,18 @@ const WarehouseHistory = () => {
                         scope="col"
                         className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
                       >
+                        Area Details
+                      </th>
+                      <th
+                        scope="col"
+                        className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                      >
+                        Rank Details
+                      </th>
+                      <th
+                        scope="col"
+                        className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                      >
                         Status
                       </th>
                       <th
@@ -94,6 +119,53 @@ const WarehouseHistory = () => {
                         </td>
                         <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
                           <span>{data?.warehouse?.name}</span>
+                        </td>
+                        <td className=" text-white ">
+                          <span>
+                            {" "}
+                            Area:{" "}
+                            {
+                              wareLength?.find(
+                                (item) =>
+                                  item.warehouse === data?.warehouse?.name
+                              )?.areas?.length
+                            }
+                          </span>
+
+                          <span>
+                            {" "}
+                            Racks:{" "}
+                            {
+                              wareLength?.find(
+                                (item) =>
+                                  item.warehouse === data?.warehouse?.name
+                              )?.racks?.length
+                            }
+                          </span>
+                        </td>
+
+                        <td className="text-white">
+                          {" "}
+                          <span>
+                            {" "}
+                            Selfs:{" "}
+                            {
+                              wareLength?.find(
+                                (item) =>
+                                  item.warehouse === data?.warehouse?.name
+                              )?.selfs?.length
+                            }
+                          </span>
+                          <span>
+                            {" "}
+                            Cells:{" "}
+                            {
+                              wareLength?.find(
+                                (item) =>
+                                  item.warehouse === data?.warehouse?.name
+                              )?.cells?.length
+                            }
+                          </span>
                         </td>
                         <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                           <div className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 text-emerald-500 bg-emerald-100/60 dark:bg-gray-800">
@@ -176,10 +248,11 @@ const WarehouseHistory = () => {
                   key={i}
                   href="#"
                   onClick={() => setCurrentPage(i + 1)}
-                  className={`px-2 py-1 mr-2 text-sm rounded-md ${currentPage === i + 1
-                    ? "text-blue-500 dark:bg-gray-800 bg-blue-100/60"
-                    : "text-gray-500 dark:hover:bg-gray-800 dark:text-gray-300 hover:bg-gray-100"
-                    }`}
+                  className={`px-2 py-1 mr-2 text-sm rounded-md ${
+                    currentPage === i + 1
+                      ? "text-blue-500 dark:bg-gray-800 bg-blue-100/60"
+                      : "text-gray-500 dark:hover:bg-gray-800 dark:text-gray-300 hover:bg-gray-100"
+                  }`}
                 >
                   {i + 1}
                 </a>
