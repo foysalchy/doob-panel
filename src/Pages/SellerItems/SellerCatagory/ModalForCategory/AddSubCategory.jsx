@@ -30,9 +30,7 @@ const AddSubCategory = () => {
     },
   });
 
-  console.log(
-    `https://backend.doob.com.bd/api/v1/category/seller/${shopInfo._id}`
-  );
+  console.log(darazData);
 
   const option = darazData
     ?.filter((warehouse) => warehouse.status)
@@ -41,6 +39,7 @@ const AddSubCategory = () => {
       label: warehouse.name,
     }));
 
+  console.log(option, "option");
   const [daraz, setDaraz] = useState(false);
   const [wocomarce, setWocomarce] = useState(false);
 
@@ -116,7 +115,9 @@ const AddSubCategory = () => {
   const [selectedData, setSelectedData] = useState([]);
   const [wooData, setWooData] = useState([]);
 
+  console.log(selectedData);
   const handleSelectChange = (selectedOption) => {
+    console.log(selectedOption.label, "selectedOption");
     const darazCategoryString = JSON.parse(selectedOption.value)?.darazCategory;
 
     if (darazCategoryString) {
@@ -138,6 +139,8 @@ const AddSubCategory = () => {
     value: JSON.stringify(warehouse),
     label: warehouse.name,
   }));
+
+  console.log(darazOption);
 
   const wooOption = wooData?.map((warehouse) => ({
     value: warehouse,

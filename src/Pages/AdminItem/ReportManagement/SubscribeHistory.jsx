@@ -6,30 +6,24 @@ import { useState } from "react";
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
 import { FaArrowRightLong } from "react-icons/fa6";
-import { AuthContext } from "../../../../AuthProvider/UserProvider";
 
-const SubscriberHisroy = () => {
-  const { shopInfo } = useContext(AuthContext);
+const SubscribeHistory = () => {
+  //   const { shopInfo } = useContext(AuthContext);
 
-  console.log(shopInfo);
   const { data: subscriber = [], refetch } = useQuery({
-    queryKey: ["subscriberSeller"],
+    queryKey: ["subscriber"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/seller/get-all-subscribe?shopId=${shopInfo?.shopId}`
+        `https://backend.doob.com.bd/api/v1/admin/get-all-subscribe`
       );
       const data = await res.json();
-      console.log(data);
       return data?.data;
     },
   });
 
-  console.log(subscriber);
-
   const DeleteCategory = (id) => {
-    console.log(id);
     fetch(
-      `https://backend.doob.com.bd/api/v1/seller/delete-subscribe?id=${id}`,
+      `https://backend.doob.com.bd/api/v1/admin/delete-subscribe?id=${id}`,
       {
         method: "DELETE",
         headers: {
@@ -114,6 +108,12 @@ const SubscriberHisroy = () => {
 
             <tbody className="divide-y  divide-gray-200">
               {filteredData?.map((subscrib, index) => {
+                const timestamp = 1715791630755;
+                const date = new Date(subscrib?.dateTime);
+
+                const year = date.getFullYear();
+                const month = date.getMonth() + 1; // Months are zero-based
+                const day = date.getDate();
                 return (
                   <tr key={subscrib?._id}>
                     <td className="whitespace-nowrap  px-4 py-2 font-medium text-gray-900">
@@ -121,8 +121,7 @@ const SubscriberHisroy = () => {
                     </td>
 
                     <td className="whitespace-nowrap px-4 py-2 text-gray-700">
-                      {/* {`Year: ${year}, Month: ${month}, Day: ${day}`} */}
-                      {new Date(subscrib?.dateTime).toDateString()}
+                      {`Year: ${year}, Month: ${month}, Day: ${day}`}
                     </td>
                     <td className="whitespace-nowrap px-4 py-2">
                       <button
@@ -145,4 +144,4 @@ const SubscriberHisroy = () => {
   );
 };
 
-export default SubscriberHisroy;
+export default SubscribeHistory;
