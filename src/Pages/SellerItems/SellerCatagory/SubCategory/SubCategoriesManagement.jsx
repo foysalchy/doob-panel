@@ -106,11 +106,10 @@ const SubCategoriesManagement = () => {
           return (
             <li key={pageNumber}>
               <button
-                className={`block h-8 w-8 rounded border ${
-                  pageNumber === currentPage
-                    ? "border-blue-600 bg-blue-600 text-white"
-                    : "border-gray-900 bg-white text-center leading-8 text-gray-900"
-                }`}
+                className={`block h-8 w-8 rounded border ${pageNumber === currentPage
+                  ? "border-blue-600 bg-blue-600 text-white"
+                  : "border-gray-900 bg-white text-center leading-8 text-gray-900"
+                  }`}
                 onClick={() => handleChangePage(pageNumber)}
               >
                 {pageNumber}
@@ -155,8 +154,8 @@ const SubCategoriesManagement = () => {
     let timerInterval;
 
     Swal.fire({
-      title: "Deleting Seller",
-      html: "Please wait... <br> <b></b> milliseconds remaining.",
+      title: "Deleting...",
+      html: "Please wait <br> <b></b> milliseconds remaining.",
       timer: 500,
       timerProgressBar: true,
       showConfirmButton: false,
@@ -421,10 +420,10 @@ const SubCategoriesManagement = () => {
                                   );
                                   const darazCategoryName =
                                     parsedMegaCategory &&
-                                    parsedMegaCategory.darazCategory
+                                      parsedMegaCategory.darazCategory
                                       ? JSON.parse(
-                                          parsedMegaCategory.darazCategory
-                                        ).name
+                                        parsedMegaCategory.darazCategory
+                                      ).name
                                       : null;
 
                                   return darazCategoryName;
@@ -496,11 +495,10 @@ const SubCategoriesManagement = () => {
                               : true
                           )
                         }
-                        className={`${
-                          warehouse && warehouse.feature === "true"
-                            ? "bg-green-500"
-                            : "bg-red-500"
-                        } text-white ml-2 rounded capitalize px-3 py-1`}
+                        className={`${warehouse && warehouse.feature === "true"
+                          ? "bg-green-500"
+                          : "bg-red-500"
+                          } text-white ml-2 rounded capitalize px-3 py-1`}
                       >
                         futures
                       </button>

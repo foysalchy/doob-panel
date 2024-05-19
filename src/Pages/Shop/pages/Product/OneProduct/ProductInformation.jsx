@@ -34,9 +34,16 @@ const ProductInformation = () => {
   const [loader, setLoader] = useState(false);
   const { shop_id, shopUser, setSelectProductData } =
     useContext(ShopAuthProvider);
+
+  const pathname = window.location.pathname;
+  const idMatch = pathname.match(/\/shop\/([^/]+)/);
+  const shopId = idMatch ? idMatch[1] : null;
+
+  console.log(product?.data?.shopId, "<<<=====>>>", shop_id?.shop_id);
+
+
   const [variations, setVariations] = useState(null);
   const [showVariant, setShowVariant] = useState(product.data.images);
-  console.log(variations, "variations");
   const blankImg =
     "https://backend.doob.com.bd/api/v1/image/66036ed3df13bd9930ac229c.jpg";
 
@@ -95,11 +102,6 @@ const ProductInformation = () => {
     }
   };
 
-  const pathname = window.location.pathname;
-
-  const idMatch = pathname.match(/\/shop\/([^/]+)/);
-
-  const shopId = idMatch ? idMatch[1] : null;
 
   const addToCart = (data) => {
 
@@ -214,14 +216,12 @@ const ProductInformation = () => {
     },
   });
 
-  console.log(comments);
 
   const totalStars =
     comments?.length &&
     comments?.reduce((total, comment) => total + comment.star, 0) /
     comments?.length;
 
-  console.log("Total stars:", totalStars);
 
   const convertedRating = (` ${totalStars}` / 10) * 5 || 0;
 
@@ -288,6 +288,7 @@ const ProductInformation = () => {
               ])}
           </div>
         </div>
+
         <div className="md:grid md:grid-cols-4">
           <div className="col-span-3 mx-auto border border-gray-300 px-4 md:px-4 lg:px-12 mt-6 ">
             <div className="flex flex-col md:flex-row -mx-4  border-gray-300 py-4">
@@ -490,66 +491,69 @@ const ProductInformation = () => {
                   </div>
                 }
                 <div>
-                  <div className="flex  gap-3 py-4 space-x-4 justify-between">
-                    <div>
-                      <label htmlFor="Quantity" className="sr-only">
-                        {" "}
-                        Quantity{" "}
-                      </label>
+                  {
+                    product?.data?.shopId == shop_id?.shop_id ? <div className="text-black bg-[#ffb6b6] py-2 rounded text-center">Your Own Product</div>
+                      :
+                      <div className="flex  gap-3 py-4 space-x-4 justify-between">
+                        <div>
+                          <label htmlFor="Quantity" className="sr-only">
+                            {" "}
+                            Quantity{" "}
+                          </label>
 
-                      <div className="flex items-center gap-1">
-                        <button
-                          type="button"
-                          onClick={handleDecrease}
-                          className="w-6 h-10 leading-10 text-gray-600 transition hover:opacity-75"
-                        >
-                          -
-                        </button>
+                          <div className="flex items-center gap-1">
+                            <button
+                              type="button"
+                              onClick={handleDecrease}
+                              className="w-6 h-10 leading-10 text-gray-600 transition hover:opacity-75"
+                            >
+                              -
+                            </button>
 
-                        <input
-                          type="number"
-                          id="Quantity"
-                          value={quantity}
-                          onChange={handleManualInput}
-                          className="h-10 md:w-12 text-center w-12 text-sm rounded border px-1 border-gray-900 [-moz-appearance:_textfield] sm:text-sm [&::-webkit-outer-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button]:appearance-none"
-                        />
+                            <input
+                              type="number"
+                              id="Quantity"
+                              value={quantity}
+                              onChange={handleManualInput}
+                              className="h-10 md:w-12 text-center w-12 text-sm rounded border px-1 border-gray-900 [-moz-appearance:_textfield] sm:text-sm [&::-webkit-outer-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button]:appearance-none"
+                            />
 
-                        <button
-                          type="button"
-                          onClick={handleIncrease}
-                          className="w-6 h-10 leading-10 text-gray-600 transition text-sm hover:opacity-75 "
-                        >
-                          +
-                        </button>
-                      </div>
-                    </div>
+                            <button
+                              type="button"
+                              onClick={handleIncrease}
+                              className="w-6 h-10 leading-10 text-gray-600 transition text-sm hover:opacity-75 "
+                            >
+                              +
+                            </button>
+                          </div>
+                        </div>
 
-                    <div className="flex items-center gap-3">
-                      <button
-                        type="button"
-                        onClick={() => addToCart(product)}
-                        className="h-10 w-[120px] px-2 py-2 font-semibold rounded bg-gray-950 hover:bg-gray-800 text-white"
-                      >
-                        {loader ? "Loading.." : "Add to Cart"}
-                      </button>
+                        <div className="flex items-center gap-3">
+                          <button
+                            type="button"
+                            onClick={() => addToCart(product)}
+                            className="h-10 w-[120px] px-2 py-2 font-semibold rounded bg-gray-950 hover:bg-gray-800 text-white"
+                          >
+                            {loader ? "Loading.." : "Add to Cart"}
+                          </button>
 
-                      <button
-                        onClick={() => buyNowHandler(product)}
-                        type="button"
-                        className="h-10 md:block hidden px-2 py-2 w-[120px] font-semibold  rounded bg-indigo-600 hover:bg-indigo-500 text-white"
-                      >
-                        Buy Now
-                      </button>
+                          <button
+                            onClick={() => buyNowHandler(product)}
+                            type="button"
+                            className="h-10 md:block hidden px-2 py-2 w-[120px] font-semibold  rounded bg-indigo-600 hover:bg-indigo-500 text-white"
+                          >
+                            Buy Now
+                          </button>
 
-                      <button
-                        onClick={() => buyNowHandler(product)}
-                        type="button"
-                        className="h-10 md:hidden block px-2 py-2 w-[60px] font-semibold  rounded bg-indigo-600 hover:bg-indigo-500 text-white"
-                      >
-                        <BsCart2 className="text-2xl m-auto" />
-                      </button>
-                    </div>
-                  </div>
+                          <button
+                            onClick={() => buyNowHandler(product)}
+                            type="button"
+                            className="h-10 md:hidden block px-2 py-2 w-[60px] font-semibold  rounded bg-indigo-600 hover:bg-indigo-500 text-white"
+                          >
+                            <BsCart2 className="text-2xl m-auto" />
+                          </button>
+                        </div>
+                      </div>}
                 </div>
               </div>
             </div>

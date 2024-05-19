@@ -186,8 +186,8 @@ const AdminSalesReport = () => {
       <div className="flex flex-col">
         <div className=" w-full overflow-x-auto ">
           <div className="inline-block min-w-full py-2 align-middle ">
-            <div className="overflow-hidden border border-gray-200 dark:border-gray-700 md:rounded-lg">
-              <table className=" divide-y divide-gray-200 dark:divide-gray-700">
+            <div className="overflow-hidden dark:border-gray-700 ">
+              <table className=" divide-y divide-gray-200  border border-gray-200 w-full md:rounded-lg dark:divide-gray-700">
                 <thead className="bg-gray-50 dark:bg-gray-800">
                   <tr>
                     <th
@@ -257,50 +257,52 @@ const AdminSalesReport = () => {
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
                   {currentData?.map((order, idx) => (
-                    <tr>
-                      <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                        <img
-                          className="h-10 w-10 rounded-sm"
-                          src={order.productImg}
-                          alt=""
-                        />
-                      </td>
-                      <td className="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
-                        <div
-                          onClick={() => setModalOpen(order)}
-                          className="inline-flex items-center text-blue-500 gap-x-3"
-                        >
-                          <span># {order._id}</span>
-                        </div>
-                      </td>
-                      <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                        {order.productTitle}
-                      </td>
-                      <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                        {order.productPrice}
-                      </td>
-                      <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                        {order.normalPrice}
-                      </td>
-                      <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                        {new Date(order.timestamp).toDateString()}
-                      </td>
-
-                      <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                        <div className="flex items-center gap-x-2">
-                          <div>
-                            <p className="text-xs font-normal text-gray-600 dark:text-gray-400">
-                              {order?.userEmail}
-                            </p>
+                    <>
+                      <tr>
+                        <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                          <img
+                            className="h-10 w-10 rounded-sm"
+                            src={order.productImg}
+                            alt=""
+                          />
+                        </td>
+                        <td className="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
+                          <div
+                            onClick={() => setModalOpen(order)}
+                            className="inline-flex items-center text-blue-500 gap-x-3"
+                          >
+                            <span># {order._id}</span>
                           </div>
-                        </div>
-                      </td>
-                      <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                        {order?.productCategory}
-                      </td>
-                      <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                        {order?.method?.Getaway}
-                      </td>
+                        </td>
+                        <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                          {order.productTitle}
+                        </td>
+                        <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                          {order.productPrice}
+                        </td>
+                        <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                          {order.normalPrice}
+                        </td>
+                        <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                          {new Date(order.timestamp).toDateString()}
+                        </td>
+
+                        <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                          <div className="flex items-center gap-x-2">
+                            <div>
+                              <p className="text-xs font-normal text-gray-600 dark:text-gray-400">
+                                {order?.userEmail}
+                              </p>
+                            </div>
+                          </div>
+                        </td>
+                        <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                          {order?.productCategory}
+                        </td>
+                        <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                          {order?.method?.Getaway}
+                        </td>
+                      </tr>
 
                       {modalOpen._id === order._id && (
                         <AdminSalesInvoice
@@ -308,7 +310,7 @@ const AdminSalesReport = () => {
                           setModalOpen={setModalOpen}
                         />
                       )}
-                    </tr>
+                    </>
                   ))}
                 </tbody>
               </table>

@@ -6,14 +6,12 @@ import Barcode from "react-barcode";
 const SellerStockInvoice = ({ setOn, products }) => {
     const { user, shopInfo } = useContext(AuthContext);
 
-    // Calculate subtotal
-    const subtotal = products?.quantity * products?.productInfo?.price;
-
+    const subtotal = products?.productInfo?.quantity * products?.productInfo?.price;
     // Calculate tax
     const taxRate = 0.1;
-    const tax = subtotal * taxRate;
-
+    const tax = subtotal;
     const total = subtotal;
+
 
     const componentRef = useRef();
     const handlePrint = useReactToPrint({
@@ -60,19 +58,19 @@ const SellerStockInvoice = ({ setOn, products }) => {
                                     <h4 className='font-semibold text-gray-700 text-sm'>
                                         Name :
                                     </h4>
-                                    <p className="text-gray-600 text-sm">{products?.shopInfo?.shopName}</p>
+                                    <p className="text-gray-600 text-sm">Doob</p>
                                 </div>
                                 <div className='flex items-center gap-2'>
                                     <h4 className='font-semibold text-gray-700 text-sm'>
                                         Email :
                                     </h4>
-                                    <p className="text-gray-600 text-sm">{products?.shopInfo?.shopEmail}</p>
+                                    <p className="text-gray-600 text-sm">nahid@example.com</p>
                                 </div>
                                 <div className='flex items-center gap-2'>
                                     <h4 className='font-semibold text-gray-700 text-sm'>
-                                        Address :
+                                        Phone :
                                     </h4>
-                                    <p className="text-gray-600 text-sm">{products?.shopInfo?.address}</p>
+                                    <p className="text-gray-600 text-sm">+8801712345678ss</p>
                                 </div>
 
                             </div>

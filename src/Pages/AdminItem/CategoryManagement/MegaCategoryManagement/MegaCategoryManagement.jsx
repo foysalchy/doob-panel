@@ -6,6 +6,7 @@ import { BiEdit } from "react-icons/bi";
 import { FaLongArrowAltRight } from "react-icons/fa";
 
 const MegaCategoryManagement = () => {
+
   const { data: megaCategory = [], refetch } = useQuery({
     queryKey: ["megaCategory"],
     queryFn: async () => {

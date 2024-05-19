@@ -7,6 +7,7 @@ import EditBlog from "./EditBlog";
 import { BsEye } from "react-icons/bs";
 
 const AdminBlogs = () => {
+  const [draft, setDraft] = useState(false);
   const { data: blogs = [], refetch } = useQuery({
     queryKey: ["blogs"],
     queryFn: async () => {
@@ -81,6 +82,8 @@ const AdminBlogs = () => {
       refetch();
     });
   };
+
+
   console.log(allBlogs, '--------=========');
   return (
     <div className=" w-full h-full">
@@ -156,15 +159,15 @@ const AdminBlogs = () => {
           </span>
         </div>
         <div className="mt-6">
-          <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
-            <div className="  py-2 pr-10">
-              <div className="overflow-hidden border   md:rounded-lg">
-                <table className=" w-full divide-y divide-gray-200 divide-gray-700">
+          <div className="overflow-x-auto px-6 sm:-mx-6 lg:-mx-8">
+            <div className="w-full py-2 ">
+              <div className="overflow-hidden border md:rounded-lg">
+                <table className=" w-full divide-y bg- divide-gray-700">
                   <thead className="bg-gray-50 ">
                     <tr>
                       <th
                         scope="col"
-                        className="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500 text-gray-400"
+                        className="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500 "
                       >
                         <div className="flex items-center gap-x-3">
                           <span>Name</span>
@@ -190,7 +193,7 @@ const AdminBlogs = () => {
 
                       <th
                         scope="col"
-                        className="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 text-gray-400"
+                        className="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500"
                       >
                         <span className="flex items-center gap-x-2">
                           Action
@@ -199,8 +202,8 @@ const AdminBlogs = () => {
                     </tr>
                   </thead>
                   <tbody className="bg-white divide-y  divide-gray-200 ">
-                    {filteredData.map((blog) => (
-                      <tr key={blog._id + 1}>
+                    {filteredData?.map((blog) => (
+                      <tr key={blog?._id + 1}>
                         <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                           <div className="inline-flex items-center gap-x-3">
                             <div className="flex items-center gap-x-2">
@@ -212,14 +215,10 @@ const AdminBlogs = () => {
                               />
                               <div>
                                 <h2 className="font-medium text-gray-800  ">
-                                  {blog?.title.split(" ").slice(0, 5).join(" ")}
+                                  {blog?.title?.split(" ")?.slice(0, 5).join(" ")}
                                 </h2>
-                                <p className="text-sm font-normal text-gray-600 text-gray-400">
-                                  {new DOMParser()
-                                    .parseFromString(blog.message, "text/html")
-                                    .body.textContent.split(" ")
-                                    .slice(0, 5)
-                                    .join(" ")}
+                                <p className="text-sm font-normal text-gray-600">
+                                  {new DOMParser()?.parseFromString(blog.message, "text/html")?.body.textContent?.split(" ")?.slice(0, 5)?.join(" ")}
                                 </p>
                               </div>
                             </div>
