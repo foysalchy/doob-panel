@@ -75,6 +75,7 @@ import PackageManagement from "../Pages/AdminItem/PriceMangement/PackageHandle";
 import AddPackage from "../Pages/AdminItem/PriceMangement/AddPackage";
 import CommissionReport from "../Pages/AdminItem/ReportManagement/CommitonReport/CommistionReport";
 import WarehouseReportHistory from "../Pages/AdminItem/ReportManagement/warehouseReport/WarehouseReportHistory";
+import SearchAdminReport from "../Pages/AdminItem/ReportManagement/searchReport/SearchAdminReport";
 
 const SupperAdminPath = [
   {
@@ -378,6 +379,10 @@ const SupperAdminPath = [
   {
     path: "report-management/subscriber-admin",
     element: <SellerReport />,
+  },
+  {
+    path: "report-management/search",
+    element: <SearchAdminReport />,
   },
   {
     path: "report-management/commission-history-admin",
