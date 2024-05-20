@@ -24,8 +24,8 @@ const SellerStockManagement = () => {
   });
   const filteredStockRequest = searchQuery
     ? stockRequest.filter((item) =>
-        item._id.toLowerCase().includes(searchQuery.toLowerCase())
-      )
+      item._id.toLowerCase().includes(searchQuery.toLowerCase())
+    )
     : stockRequest;
 
   // const filterData = stockRequest.filter(itm => itm?._id.toLowerCase().includes(searchValue.toLowerCase()));
@@ -91,6 +91,82 @@ const SellerStockManagement = () => {
         setEditMode(false);
         false;
       });
+  };
+
+  const [adminNote, setAdminNote] = useState("");
+
+  const handleUpdate = (data, status) => {
+    console.log(data, status);
+
+    if (status === "reject") {
+      Swal.fire({
+        title: "Write Note for Reject",
+        input: "text",
+        inputAttributes: {
+          autocapitalize: "off",
+        },
+        showCancelButton: true,
+        confirmButtonText: "Submit",
+        showLoaderOnConfirm: true,
+        preConfirm: async (note) => {
+          console.log(note); // Log the input value
+          setAdminNote(note);
+
+          const bodyData = {
+            status: status,
+            rejectNote: note, // Update rejectNote here
+          };
+
+          console.log(bodyData, "bodyData");
+
+          // return;
+
+          // Make the fetch call inside the preConfirm callback
+          return fetch(
+            `https://backend.doob.com.bd/api/v1/admin/stock-request-update?productId=${data?.productId}&orderId=${data?._id}&quantity=${data?.quantity}&SKU=${data?.SKU}`,
+            {
+              method: "PUT",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(bodyData),
+            }
+          )
+            .then((res) => res.json())
+            .then((data) => {
+              console.log(data);
+              BrightAlert("Update Quantity", "", "success");
+              refetch();
+            });
+        },
+        allowOutsideClick: () => !Swal.isLoading(),
+      });
+    } else {
+      const bodyData = {
+        status: status,
+      };
+
+      console.log(bodyData, "bodyData");
+      // return;
+
+      // Make the fetch call inside the preConfirm callback
+      return fetch(
+        `https://backend.doob.com.bd/api/v1/admin/stock-request-update?productId=${data?.productId}&orderId=${data?._id}&quantity=${data?.quantity}&SKU=${data?.SKU}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(bodyData),
+        }
+      )
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+          BrightAlert("Update Quantity", "", "success");
+          refetch();
+        });
+    }
   };
 
   return (
@@ -300,7 +376,7 @@ const SellerStockManagement = () => {
                       })}
                     </button>
                   </td>
-                  <td className="px-4 py-4 text-lg text-gray-700  whitespace-nowrap">
+                  <td className="px-4 py-4 flex gap-2  text-lg text-gray-700  whitespace-nowrap">
                     {itm?.status === "reject" ? (
                       <h2 className="text-red-400 text-sm">rejected</h2>
                     ) : itm?.status === "cancel" ? (
@@ -314,6 +390,50 @@ const SellerStockManagement = () => {
                         Cancel
                       </button>
                     )}
+
+                    {
+                      !itm.adminWare && <div>
+                        {itm?.status === "reject" ? (
+                          <button
+                            disabled
+                            // onClick={() => handleUpdate(itm, "")}
+                            className="inline-flex items-center rounded-full gap-x-2  text-sm  gap-2 bg-red-600 px-2 py-1  text-white "
+                          >
+                            Rejected
+                          </button>
+                        ) : (
+                          <div className="">
+                            {itm?.status === "pending" ? (
+                              <div className="flex gap-2">
+                                <button
+                                  disabled={
+                                    itm?.status === "cancel" ? true : false
+                                  }
+                                  onClick={() => handleUpdate(itm, "active")}
+                                  className="inline-flex  rounded-full gap-x-2    text-sm items-center gap-2 bg-[#23b123ea] px-2 py-1 text-white "
+                                >
+                                  Approve
+                                </button>
+                                <button
+                                  onClick={() => handleUpdate(itm, "reject")}
+                                  className="inline-flex  rounded-full gap-x-2    text-sm items-center gap-2 bg-orange-500 px-2 py-1 text-white "
+                                >
+                                  Reject
+                                </button>
+                              </div>
+                            ) : (
+                              <button
+                                disabled
+                                // onClick={() => handleUpdate(itm, "")}
+                                className="inline-flex  rounded-full gap-x-2    text-sm items-center gap-2 bg-[#23b123ea] px-2 py-1 text-white "
+                              >
+                                Active
+                              </button>
+                            )}
+                          </div>
+                        )}
+                      </div>
+                    }
                   </td>
                   {on?._id === itm?._id && (
                     <SellerStockInvoice setOn={setOn} products={itm} />

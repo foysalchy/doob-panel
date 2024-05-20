@@ -12,9 +12,10 @@ export default function EditMegaCategoryModal({
 }) {
   const [wocomarce, setWocomarce] = useState(false);
   const [loading, setLoading] = useState(false);
+  console.log(editOn)
 
   const { shopInfo } = useContext(AuthContext);
-  const [daraz, setDaraz] = useState(false);
+  const [daraz, setDaraz] = useState(editOn?.darazCategory_id ? true : false);
 
   const uploadImage = async (formData) => {
     const url = `https://backend.doob.com.bd/api/v1/image/upload-image`;
@@ -78,7 +79,7 @@ export default function EditMegaCategoryModal({
   // console.log(OpenModal);
   // console.log(daraz);
   // console.log(editOn.darazCategory_id);
-  const defaultDarazData = darazData?.find(
+  const defaultDarazData = editOn?.darazCategory_id && darazData?.find(
     (item) => item.category_id === editOn?.darazCategory_id
   );
 
@@ -90,7 +91,7 @@ export default function EditMegaCategoryModal({
 
   // console.log(JSON.parse(editOn?.wocomarceCategory)?.id, "defaultDaraz");
 
-  const defaultWooData = wooCategory?.categories?.find(
+  const defaultWooData = editOn?.wocomarceCategory && wooCategory?.categories?.find(
     (item) => item.id === JSON.parse(editOn?.wocomarceCategory)?.id
   );
 
@@ -100,19 +101,18 @@ export default function EditMegaCategoryModal({
   };
 
 
-    useEffect(() => {
-      if (defaultWooData?.id) {
-        setWocomarce(true);
-      }
-    });
+  useEffect(() => {
+    if (defaultWooData?.id) {
+      setWocomarce(true);
+    }
+  });
 
   // console.log(JSON.parse(editOn?.wocomarceCategory)?.id);
 
   // console.log(wooCategory?.categories[0]);
   console.log(editOn?.wocomarceCategory);
 
-  console.log(defaultWooData, "defaultDaraz");
-  console.log(defaultWoo, "defaultWoo");
+
 
   const handleEdit = async (e, id) => {
     e.preventDefault();
@@ -121,9 +121,7 @@ export default function EditMegaCategoryModal({
     const image = form.image;
     const name = form.name.value;
 
-    const darazCategory = daraz
-      ? e.target?.darazCategory?.value
-      : JSON.stringify(editOn?.darazCategory);
+    const darazCategory = daraz ? e.target?.darazCategory?.value : JSON.stringify(editOn?.darazCategory);
 
     let darazCategory_id = editOn?.darazCategory_id ?? "";
     if (darazCategory) {
@@ -152,7 +150,7 @@ export default function EditMegaCategoryModal({
     // return;
 
     fetch(
-      `https://backend.doob.com.bd/api/v1/category/seller-update-megaCategory?id=${id}`,
+      `http://localhost:5001/api/v1/category/seller-update-megaCategory?id=${id}`,
       {
         method: "PUT",
         headers: {
@@ -172,18 +170,16 @@ export default function EditMegaCategoryModal({
   };
   return (
     <div
-      className={`fixed z-[100] flex items-center justify-center ${
-        editOn?._id === warehouse?._id
-          ? "opacity-1 visible"
-          : "invisible opacity-0"
-      } inset-0 bg-black/20 backdrop-blur-sm duration-100`}
+      className={`fixed z-[100] flex items-center justify-center ${editOn?._id === warehouse?._id
+        ? "opacity-1 visible"
+        : "invisible opacity-0"
+        } inset-0 bg-black/20 backdrop-blur-sm duration-100`}
     >
       <div
-        className={`absolute md:w-[500px] w-full rounded-sm bg-white p-3 pb-5 text-center drop-shadow-2xl ${
-          editOn?._id === warehouse?._id
-            ? "scale-1 opacity-1 duration-300"
-            : "scale-0 opacity-0 duration-150"
-        } `}
+        className={`absolute md:w-[500px] w-full rounded-sm bg-white p-3 pb-5 text-center drop-shadow-2xl ${editOn?._id === warehouse?._id
+          ? "scale-1 opacity-1 duration-300"
+          : "scale-0 opacity-0 duration-150"
+          } `}
       >
         <svg
           onClick={() => setEditOn(false)}

@@ -93,7 +93,7 @@ const Router = createBrowserRouter([
       </>
     ),
     children: SellerPath,
-  },
+  }, 
 
   {
     path: "/seller/pos",

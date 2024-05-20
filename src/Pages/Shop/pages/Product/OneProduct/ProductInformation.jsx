@@ -595,12 +595,52 @@ const ProductInformation = () => {
             <div className="p-4">
               <h2 className="text-lg font-semibold mb-4">Relevant Products</h2>
               <div className="space-y-4">
-                {releventProduct?.filter((item)=>item?._id !==product?.data?._id)?.slice(0, 3)?.map((product, index) => (
-                  <Link
-                    to={`/products/${product?._id}`}
-                    key={product?._id}
-                    className="border w-full duration-150 group hover:shadow-lg flex items-start gap-2 p-3 rounded"
-                  >
+                {
+                  releventProduct?.slice(0, 3)?.map((product, index) =>
+                    <Link to={`/shop/${shopId}/product/${product?._id}`} key={product?._id} className="border w-full duration-150 group hover:shadow-lg flex items-start gap-2 p-3 rounded">
+                      <img
+                        alt="Product Image"
+                        className="w-20 h-20 bg-gray-200 rounded mb-2"
+                        height="80"
+                        src={product?.featuredImage?.src ? product?.featuredImage?.src : product?.images[0]?.src}
+                        style={{
+                          aspectRatio: "80/80",
+                          objectFit: "cover",
+                        }}
+                        width="80"
+                      />
+                      <div className="">
+                        <p className="font-medium group-hover:text-blue-500 duration">{product?.name?.slice(0, 40)}</p>
+                        <p className="text-red-500">৳{product?.price}</p>
+                      </div>
+                    </Link>
+                  )
+                }
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div className="max-w-7xl mx-auto px-4 md:px-4 lg:px-8 my-6">
+        <div className="border p-6 rounded">
+          <ProductDescription description={product.data.description} />
+        </div>
+      </div>
+      <div className="max-w-7xl mx-auto px-4 md:px-4 lg:px-8 my-6">
+        <div className="border p-6 rounded">
+          <ProductReviews comments={comments} />
+        </div>
+      </div>
+      <div className="max-w-7xl mx-auto px-4 md:px-4 lg:px-8 my-6">
+
+        <div className="border md:hidden block mb-6 mt-6 w-full">
+          <div className="p-4">
+            <h2 className="text-lg font-semibold mb-4">Relevent Products</h2>
+            <div className="space-y-4">
+              {
+                releventProduct?.slice(0, 3)?.map((product, index) =>
+                  <Link to={`/shop/${shopId}/product/${product?._id}`} key={product?._id} className="border w-full duration-150 group hover:shadow-lg flex items-start gap-2 p-3 rounded">
                     <img
                       alt="Product Image"
                       className="w-20 h-20 bg-gray-200 rounded mb-2"

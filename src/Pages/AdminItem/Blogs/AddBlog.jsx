@@ -31,9 +31,7 @@ const AddBlog = () => {
   const [restoreDrafts, setRestoreDrafts] = useState(false);
 
   const { user } = useContext(AuthContext);
-  // console.log(user);
 
-  // all blogs data
   const { data: blogsData = [], refetch: reftechDraft } = useQuery({
     queryKey: ["blogs"],
     queryFn: async () => {
@@ -45,25 +43,6 @@ const AddBlog = () => {
     },
   });
 
-  // console.log(blogsData);
-  // const draftsAllBlogData = blogsData?.filter(
-  //   (item) => item.status === "drafts"
-  // );
-  // ! get latest draft data
-  // const draftsBlogData = blogsData?.reduce((latestDraft, currentBlog) => {
-  //   if (currentBlog.status === "drafts") {
-  //     // Check if there is no latest draft yet or if the current blog has a later date
-  //     if (
-  //       !latestDraft ||
-  //       new Date(currentBlog.date) > new Date(latestDraft.date)
-  //     ) {
-  //       return currentBlog; // Set the current blog as the latest draft
-  //     }
-  //   }
-  //   return latestDraft; // Return the existing latest draft if no update is needed
-  // }, null);
-
-  // console.log(draftsBlogData, "draftsBlogData");
   const { data: blogCategories = [], refetch } = useQuery({
     queryKey: ["blogcategory"],
     queryFn: async () => {

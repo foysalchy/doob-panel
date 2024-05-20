@@ -17,27 +17,12 @@ const AddSellerBlog = () => {
   const [fileName, setFileName] = useState("");
   const [loading, setLoading] = useState(false);
   const [messageData, setMessage] = useState("");
-  const [draft, setDraft] = useState(false);
 
   const [upload, setUpload] = useState("");
-  const [uplodOk, setUploadOk] = useState(false);
 
-  // ! for drafts
-  const [formData, setFormData] = useState({
-    title: "", ///done
-    category: "", //done
-    MetaTag: "", //done
-    message: "", //done
-    MetaDescription: "", //done
-    img: "", //done
-    MetaImage: "", //done
-  });
-  const [draftSaved, setDraftSaved] = useState(false);
-  const [restoreDrafts, setRestoreDrafts] = useState(false);
 
-  // console.log(user);
 
-  // all blogs data
+
   const { data: blogsData = [], refetch: reftechDraft } = useQuery({
     queryKey: ["blogs"],
     queryFn: async () => {
@@ -49,25 +34,7 @@ const AddSellerBlog = () => {
     },
   });
 
-  // console.log(blogsData);
-  // const draftsAllBlogData = blogsData?.filter(
-  //   (item) => item.status === "drafts"
-  // );
-  // ! get latest draft data
-  // const draftsBlogData = blogsData?.reduce((latestDraft, currentBlog) => {
-  //   if (currentBlog.status === "drafts") {
-  //     // Check if there is no latest draft yet or if the current blog has a later date
-  //     if (
-  //       !latestDraft ||
-  //       new Date(currentBlog.date) > new Date(latestDraft.date)
-  //     ) {
-  //       return currentBlog; // Set the current blog as the latest draft
-  //     }
-  //   }
-  //   return latestDraft; // Return the existing latest draft if no update is needed
-  // }, null);
 
-  // console.log(draftsBlogData, "draftsBlogData");
   const { data: category = [], refetch } = useQuery({
     queryKey: ["blog-category"],
     queryFn: async () => {
@@ -79,43 +46,21 @@ const AddSellerBlog = () => {
     },
   });
 
-  const imageUploading = (e) => {
-    e.preventDefault();
-    const selectedFile = e.target.files[0];
-    const formData = new FormData();
-    formData.append("image", selectedFile);
-    const url = `https://backend.doob.com.bd/api/v1/image/upload-image`;
-    fetch(url, {
-      method: "POST",
-      body: formData,
-    })
-      .then((res) => res.json())
-      .then((imageData) => {
-        if (imageData.imageUrl) {
-          setUpload(imageData.imageUrl);
-          setFormData({ ...formData, MetaImage: imageData.imageUrl });
-          setUploadOk(true);
-        } else {
-          setUpload("");
-        }
-      });
-  };
-
   const handleFileChange = (event) => {
     const file = event.target.files[0];
-    setSelectedFile(file);
-
     if (file) {
+      setFileName(file.name);
+      setSelectedFile(file);
+
       const reader = new FileReader();
       reader.onloadend = () => {
         setPreviewUrl(reader.result);
-        setFormData({ ...formData, img: imageData.imageUrl });
       };
       reader.readAsDataURL(file);
-      setFileName(file.name);
     }
   };
-  // const [message, setMessage] = useState("");
+
+  const [draft, setDraft] = useState(false)
 
   const dataSubmit = (event) => {
     setLoading(true);
@@ -126,6 +71,7 @@ const AddSellerBlog = () => {
     const image = form.photo.files[0];
     const MetaImage = upload;
     const MetaTag = form.MetaTag.value;
+    const message = form.message.value
     const MetaDescription = form.MetaDescription.value;
     const formData = new FormData();
     formData.append("image", image);
@@ -144,18 +90,25 @@ const AddSellerBlog = () => {
           img: image,
           date: new Date(),
           MetaImage,
-          status: draft,
+          status: true,
           MetaDescription,
           MetaTag,
+          status: !draft,
+          shop: shopInfo.shopId,
+          draft,
+          trash: 'false'
         };
         postBlog(blog, form, "");
       });
+
   };
+
+  const navigate = useNavigate()
 
   const postBlog = (blog, form, type) => {
     console.log(blog);
     // return
-    fetch(`https://backend.doob.com.bd/api/v1/seller/blog`, {
+    fetch(`http://localhost:5001/api/v1/seller/blog`, {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -164,106 +117,27 @@ const AddSellerBlog = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        // console.log(data);
-        reftechDraft();
+        console.log(data);
         setLoading(false);
         if (type === "draft") {
           Swal.fire("Saved as Drafts", "", "success");
-          blocker.proceed();
+
         } else {
           Swal.fire("Your Blog Publish Successfully", "", "success");
-          // navigate("/seller/manage-blogs");
-        }
+          form.reset()
+          navigate("/seller/manage-blogs");
 
-        // form.reset();
-        // setPreviewUrl("");
-        // setFileName("");
-        // window.location.href = '/admin/blog';
+        }
       });
   };
 
-  const handleChange = (content) => {
-    setMessage(content);
-    handleInputChange("message", content); // for drafts
-  };
 
-  const modules = {
-    toolbar: [
-      [{ header: "1" }, { header: "2" }, { font: [] }],
-      [{ size: [] }],
-      ["bold", "italic", "underline", "strike", "blockquote"],
-      [
-        { list: "ordered" },
-        { list: "bullet" },
-        { indent: "-1" },
-        { indent: "+1" },
-      ],
-      ["link", "image", "video"],
-      ["color"],
-      ["clean"],
-    ],
-  };
-
-  //! for drafts
   const handleInputChange = (field, value) => {
     setFormData({ ...formData, [field]: value });
   };
 
-  // Block navigating elsewhere when data has been entered into the input
-  let blocker = useBlocker(
-    ({ currentLocation, nextLocation }) =>
-      draftSaved && currentLocation.pathname !== nextLocation.pathname
-  );
 
-  useEffect(() => {
-    const isFormDataEmpty = Object.values(formData).every(
-      (value) => value === ""
-    );
-    setDraftSaved(!isFormDataEmpty);
-  }, [formData]);
 
-  // useEffect(() => {
-  //   if (draftsAllBlogData?.length && !restoreDrafts) {
-  //     // Check if restoreDrafts is false
-  //     const confirmedRestore = window.confirm("Restore your drafts");
-  //     if (confirmedRestore) {
-  //       setRestoreDrafts(true);
-  //       if (draftsBlogData?.message) {
-  //         setMessage(draftsBlogData?.message);
-  //       }
-  //     }
-  //   }
-  // }, [draftsAllBlogData, restoreDrafts]);
-
-  useEffect(() => {
-    if (blocker.state === "blocked") {
-      console.log("yess");
-      // event.preventDefault();
-      // event.returnValue = ""; // Required for some browsers
-      const confirmed = window.confirm(
-        "Are you sure you want to leave? Your changes may not be saved."
-      );
-      if (confirmed) {
-        Swal.fire("Drafts Saved", "", "success");
-
-        const draftsAddBlogData = {
-          ...formData,
-          status: "drafts",
-          email: user?.email,
-          date: new Date(),
-          draft: true,
-        };
-        postBlog(draftsAddBlogData, "", "drafts");
-        console.log(draftsAddBlogData);
-
-        // blocker.proceed();
-      } else {
-        blocker.proceed();
-      }
-    }
-  }, [draftSaved, blocker]);
-
-  console.log(blocker);
 
   return (
     <div className="  ">
@@ -283,7 +157,7 @@ const AddSellerBlog = () => {
               type="text"
               id="title"
               name="title"
-              onChange={(e) => handleInputChange("title", e.target.value)} // for drafts
+            // onChange={(e) => handleInputChange("title", e.target.value)} // for drafts
             />
           </div>
           <div>
@@ -335,7 +209,7 @@ const AddSellerBlog = () => {
             <select
               className="w-full rounded-lg border border-gray-900 p-3 text-sm"
               name="category"
-              onChange={(e) => handleInputChange("category", e.target.value)}
+              // onChange={(e) => handleInputChange("category", e.target.value)}
               id="category"
             >
               {category?.map((cat) => (
@@ -347,7 +221,16 @@ const AddSellerBlog = () => {
           </div>
 
           <div>
-            <div>
+            <JoditEditor
+              name="message"
+              id="message"
+              config={{
+                readonly: false,
+                uploader: {
+                  insertImageAsBase64URI: true,
+                },
+              }} />
+            {/* <div>
               <ReactQuill
                 name="message"
                 id="message"
@@ -359,7 +242,7 @@ const AddSellerBlog = () => {
               />
               <br />
               <br />
-            </div>
+            </div> */}
           </div>
 
           <div>
@@ -373,7 +256,7 @@ const AddSellerBlog = () => {
               type="text"
               id="MetaTag"
               name="MetaTag"
-              onChange={(e) => handleInputChange("MetaTag", e.target.value)} // for drafts
+            // onChange={(e) => handleInputChange("MetaTag", e.target.value)} // for drafts
             />
           </div>
 
@@ -383,9 +266,9 @@ const AddSellerBlog = () => {
             </label>
             <textarea
               required
-              onChange={(e) =>
-                handleInputChange("MetaDescription", e.target.value)
-              } // for drafts
+              // onChange={(e) =>
+              //   handleInputChange("MetaDescription", e.target.value)
+              // } // for drafts
               className="w-full rounded-lg border border-gray-900 p-3 text-sm"
               placeholder="Meta Description"
               type="text"

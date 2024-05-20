@@ -51,42 +51,30 @@ const EditInventory = ({ refetch, open, setOpen, data }) => {
       quantity: count,
       shopId: data.shopId,
       shopName: shopInfo.shopName,
+      adminWare: data?.adminWare,
       SKU: selectedValue?.value,
       delivery_status: selectStatusValue?.value,
       note,
     };
 
-    {
-      data.adminWare
-        ? fetch(`https://backend.doob.com.bd/api/v1/admin/stock-request-create`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(stock),
-        })
-          .then((res) => res.json())
-          .then((data) => {
-            refetch();
-            setOpen(!open);
-            BrightAlert();
-          })
-        : fetch(
-          `https://backend.doob.com.bd/api/v1/seller/product-stock-update?productId=${data?._id}&quantity=${count}&SKU=${selectedValue?.value}`,
-          {
-            method: "PUT",
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        )
-          .then((res) => res.json())
-          .then((data) => {
-            refetch();
-            setOpen(!open);
-            BrightAlert();
-          });
-    }
+
+
+
+    fetch(`https://backend.doob.com.bd/api/v1/admin/stock-request-create`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(stock),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        refetch();
+        setOpen(!open);
+        BrightAlert();
+      })
+
+
   };
 
   const options = data?.variations?.map((item) => {
@@ -120,8 +108,7 @@ const EditInventory = ({ refetch, open, setOpen, data }) => {
           >
             x
           </button>
-          {/* <h1 className="text-lg">{data?.name}</h1> */}
-          {/* form */}
+
           <div className="my-3">
             <label className="mb-1 text-lg" htmlFor="user">
               Select Permissions{" "}
@@ -137,7 +124,7 @@ const EditInventory = ({ refetch, open, setOpen, data }) => {
             />
           </div>
 
-          {data.adminWare && <div className="">
+          {<div className="">
             <label className="mb-2 text-lg" htmlFor="note">
               Add Note
             </label>
@@ -150,7 +137,7 @@ const EditInventory = ({ refetch, open, setOpen, data }) => {
             />
           </div>}
 
-          {data.adminWare && <div className="my-3">
+          {<div className="my-3">
             <label className="mb-1 text-lg" htmlFor="status">
               Select Status
             </label>

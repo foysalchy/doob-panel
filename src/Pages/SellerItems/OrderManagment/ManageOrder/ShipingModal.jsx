@@ -175,7 +175,7 @@ const ShippingModal = ({
 
       // return
       await fetch(
-        `https://backend.doob.com.bd/api/v1/seller/login-in-credintial-pathao?shop_id=${shopInfo?._id}`,
+        `http://localhost:5001/api/v1/seller/login-in-credintial-pathao?shop_id=${shopInfo?._id}`,
         {
           method: "POST",
           headers: {
@@ -186,7 +186,7 @@ const ShippingModal = ({
       )
         .then((res) => res.json())
         .then((data) => {
-          console.log(data);
+          console.log(data, 'uplod data error');
           if (data?.status) {
             event.target.reset();
             setLoading(false);
@@ -206,9 +206,8 @@ const ShippingModal = ({
       <div className={readyToShip ? "flex" : "hidden"}>
         <div className=" mx-auto py-20">
           <div
-            className={`fixed  z-50 top-0 left-0 flex h-full min-h-screen w-full items-center justify-center bg-black bg-opacity-90 px-4 py-5  ${
-              readyToShip ? "block" : "hidden"
-            }`}
+            className={`fixed  z-50 top-0 left-0 flex h-full min-h-screen w-full items-center justify-center bg-black bg-opacity-90 px-4 py-5  ${readyToShip ? "block" : "hidden"
+              }`}
           >
             <div className="w-full max-w-[800px] h-[90%]  rounded-[20px]  bg-white  pb-10 px-8 text-center md:px-[30px] overflow-scroll">
               <div className="flex justify-between z-50 pt-4 items-start w-full sticky top-0 bg-white border-b">
@@ -434,6 +433,7 @@ const ShippingModal = ({
                         </label>
                         <input
                           required
+                          defaultValue={orderInfo?.addresses?.fullName}
                           className="flex-grow w-full re h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
                           type="text"
                           id="recipient_name"
@@ -447,6 +447,7 @@ const ShippingModal = ({
                         </label>
                         <input
                           required
+                          defaultValue={orderInfo?.addresses?.mobileNumber}
                           className="flex-grow w-full re h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
                           type="text"
                           id="recipient_phone"
@@ -461,9 +462,11 @@ const ShippingModal = ({
                         >
                           Recipient Address
                         </label>
+                        {console.log(orderInfo)}
                         <input
                           required
                           minLength="10"
+                          defaultValue={`${orderInfo?.addresses?.province},\n${orderInfo?.addresses?.city},\n${orderInfo?.addresses?.area},\n${orderInfo?.addresses?.address}`}
                           className="flex-grow w-full re h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
                           type="text"
                           id="recipient_address"
@@ -512,6 +515,7 @@ const ShippingModal = ({
                         <input
                           required
                           min="0.5"
+                          defaultValue="0.5"
                           max="10"
                           step="0.01"
                           className="flex-grow w-full re h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
@@ -526,7 +530,7 @@ const ShippingModal = ({
                           className="text-black"
                           htmlFor="item_description"
                         >
-                          Item Description
+                          Item Description (Optional)
                         </label>
                         <textarea
                           className="flex-grow w-full re h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
@@ -541,7 +545,7 @@ const ShippingModal = ({
                           className="text-black"
                           htmlFor="special_instruction"
                         >
-                          Special Instruction
+                          Special Instruction (Optional)
                         </label>
                         <input
                           className="flex-grow w-full re h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
@@ -578,8 +582,8 @@ const ShippingModal = ({
                           id="item_type"
                           name="item_type"
                         >
-                          <option value={1}>Document</option>
                           <option value={2}>Parcel</option>
+                          <option value={1}>Document</option>
                         </select>
                       </div>
                     </>
@@ -587,7 +591,7 @@ const ShippingModal = ({
 
                 <div className="mt-2">
                   <label className=" text-black" htmlFor="title">
-                    Note
+                    Note (Optional)
                   </label>
                   <textarea
                     className="flex-grow w-full re h-12 p-2 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
@@ -606,8 +610,8 @@ const ShippingModal = ({
                       loading
                         ? "Uploading.."
                         : selectedDelivery === "Other"
-                        ? "Ready to ship"
-                        : `Ready for Ship`
+                          ? "Ready to ship"
+                          : `Ready for Ship`
                     }
                   />
                 </div>

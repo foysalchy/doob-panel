@@ -47,35 +47,7 @@ const SellerShipping = () => {
     }
   };
 
-  // shop id of pathao
 
-  // const {
-  //   data: shop = [],
-  //   // refetch:,
-  //   isLoading: loadingSHop,
-  // } = useQuery({
-  //   queryKey: ["shopPathao"],
-  //   queryFn: async () => {
-  //     const res = await fetch(
-  //       `https://backend.doob.com.bd/api/v1/seller/pathao-shopId?shop_id=${shopInfo?._id}`
-  //     );
-  //     const data = await res.json();
-  //     return data;
-  //   },
-  // });
-
-  // console.log(shop?.storeInfoArray);
-
-  // const shopOPtion =
-  //   shop?.length &&
-  //   shop?.storeInfoArray?.map((item) => ({
-  //     label: item?.store_name,
-  //     value: item?.store_id,
-  //   }));
-
-  // console.log(shopOPtion);
-
-  // console.log(shopOPtion);
   const [storePathaoData, setStorePathaoData] = useState([]);
   const [openModal, setOpenModal] = useState(false);
 
@@ -84,7 +56,7 @@ const SellerShipping = () => {
     setStorePathaoData(selectedValue);
   };
 
-  // console.log(storePathaoData);
+
   const dataSubmit = (event) => {
     setloadingUpdate(true);
     event.preventDefault();
