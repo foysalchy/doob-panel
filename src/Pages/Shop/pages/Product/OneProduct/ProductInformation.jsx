@@ -41,7 +41,6 @@ const ProductInformation = () => {
 
   console.log(product?.data?.shopId, "<<<=====>>>", shop_id?.shop_id);
 
-
   const [variations, setVariations] = useState(null);
   const [showVariant, setShowVariant] = useState(product.data.images);
   const blankImg =
@@ -102,10 +101,7 @@ const ProductInformation = () => {
     }
   };
 
-
   const addToCart = (data) => {
-
-
     setLoader(true);
     const product = data.data;
     const addToCard = {
@@ -115,12 +111,17 @@ const ProductInformation = () => {
       productName: variations?.name
         ? `${product.name} - ${variations?.name}`
         : product.name,
-      price: variations?.offerPrice !== undefined ? variations.offerPrice : (variations?.price !== undefined ? variations.price : product.price),
+      price:
+        variations?.offerPrice !== undefined
+          ? variations.offerPrice
+          : variations?.price !== undefined
+          ? variations.price
+          : product.price,
       regular_price: product.regular_price,
       productId: product._id,
       shopId: shop_id.shop_id,
       variations,
-      delivery_charge: parseInt(product?.DeliveryCharge) ?? 40
+      delivery_charge: parseInt(product?.DeliveryCharge) ?? 40,
     };
 
     if (!shopUser) {
@@ -186,12 +187,17 @@ const ProductInformation = () => {
           productName: variations?.name
             ? `${product.name} - ${variations?.name}`
             : product.name,
-          price: variations?.offerPrice !== undefined ? variations.offerPrice : (variations?.price !== undefined ? variations.price : product.price),
+          price:
+            variations?.offerPrice !== undefined
+              ? variations.offerPrice
+              : variations?.price !== undefined
+              ? variations.price
+              : product.price,
           regular_price: product.regular_price,
           productId: product._id,
           shopId: shop_id.shop_id,
           variations,
-          delivery_charge: parseInt(product?.DeliveryCharge) ?? 40
+          delivery_charge: parseInt(product?.DeliveryCharge) ?? 40,
         },
       ];
       setSelectProductData(buyNowInfo);
@@ -216,12 +222,10 @@ const ProductInformation = () => {
     },
   });
 
-
   const totalStars =
     comments?.length &&
     comments?.reduce((total, comment) => total + comment.star, 0) /
-    comments?.length;
-
+      comments?.length;
 
   const convertedRating = (` ${totalStars}` / 10) * 5 || 0;
 
@@ -232,16 +236,50 @@ const ProductInformation = () => {
   //   product?.data?.rating_count
   // );
 
+  console.log(product?.data, "product");
+
+  const queryURL = (() => {
+    let url = `https://backend.doob.com.bd/api/v1/seller/relavent-products?shopId=${shop_id?.shop_id}`;
+
+    const relaventBrand = product?.data?.brandName;
+    const relaventCategories = product?.data?.categories
+      ?.filter((item) => item?.name !== "")
+      .map((item) => item?.name);
+    const relaventWarehouse = product?.data?.warehouse
+      ?.filter((item) => item?.name !== "")
+      .map((item) => item?.name);
+
+    if (relaventBrand) {
+      url += `&brandName=["${relaventBrand}"]`;
+    }
+
+    if (relaventCategories.length > 0) {
+      url += `&categories=[${relaventCategories
+        .map((category) => `"${category}"`)
+        .join(",")}]`;
+    }
+
+    if (relaventWarehouse.length > 0) {
+      url += `&warehouse=[${relaventWarehouse
+        .map((warehouse) => `"${warehouse}"`)
+        .join(",")}]`;
+    }
+
+    return url;
+  })();
+
+  // console.log(queryURL);
+
+  // console.log(queryURL);
   const { data: releventProduct = [], reload } = useQuery({
     queryKey: ["releventProduct"],
     queryFn: async () => {
-      const res = await fetch(
-        "https://backend.doob.com.bd/api/v1/admin/products"
-      );
+      const res = await fetch(queryURL);
       const data = await res.json();
       return data;
     },
   });
+  console.log(releventProduct);
   return (
     <section className="px-2 py-4  sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 mx-auto">
       <MetaHelmet
@@ -298,12 +336,8 @@ const ProductInformation = () => {
                     <div className="h-64 md:h-full rounded-lg bg-gray-100 mb-4 flex items-center justify-center">
                       <img
                         className="md:w-94 w-full object-cover border rounded h-full"
-                        src={
-                          selectedImage
-                        }
-                        srcSet={
-                          selectedImage
-                        }
+                        src={selectedImage}
+                        srcSet={selectedImage}
                         alt="Selected Image"
                       />
                     </div>
@@ -388,7 +422,6 @@ const ProductInformation = () => {
                   <div className="title-font font-medium md:text-2xl text-lg text-gray-900 flex items-center gap-2 ">
                     <span>Price :</span>{" "}
                     <div className="flex items-center gap-2">
-
                       {!variations && (
                         <div className="line-through text-lg flex gap-2 text-gray-500">
                           <span className="kalpurush">৳</span>
@@ -398,8 +431,11 @@ const ProductInformation = () => {
                       {variations?.price ? (
                         variations?.offerPrice ? (
                           <div className="flex gap-3">
-
-                            <del className="flex gap-1 line-through text-lg text-gray-500">    <span className="kalpurush">৳</span> {variations?.price}</del>
+                            <del className="flex gap-1 line-through text-lg text-gray-500">
+                              {" "}
+                              <span className="kalpurush">৳</span>{" "}
+                              {variations?.price}
+                            </del>
                             <div className="flex gap-1">
                               <span className="kalpurush">৳</span>
                               <span> {variations?.offerPrice}</span>
@@ -415,7 +451,6 @@ const ProductInformation = () => {
                         </>
                       )}
                       <br />
-
                     </div>
                   </div>
 
@@ -491,7 +526,6 @@ const ProductInformation = () => {
                   </div>
                 }
                 <div>
-
                   <div className="flex  gap-3 py-4 space-x-4 justify-between">
                     <div>
                       <label htmlFor="Quantity" className="sr-only">
@@ -561,52 +595,12 @@ const ProductInformation = () => {
             <div className="p-4">
               <h2 className="text-lg font-semibold mb-4">Relevant Products</h2>
               <div className="space-y-4">
-                {
-                  releventProduct?.slice(0, 3)?.map((product, index) =>
-                    <Link to={`/products/${product?._id}`} key={product?._id} className="border w-full duration-150 group hover:shadow-lg flex items-start gap-2 p-3 rounded">
-                      <img
-                        alt="Product Image"
-                        className="w-20 h-20 bg-gray-200 rounded mb-2"
-                        height="80"
-                        src={product?.featuredImage?.src ? product?.featuredImage?.src : product?.images[0]?.src}
-                        style={{
-                          aspectRatio: "80/80",
-                          objectFit: "cover",
-                        }}
-                        width="80"
-                      />
-                      <div className="">
-                        <p className="font-medium group-hover:text-blue-500 duration">{product?.name?.slice(0, 40)}</p>
-                        <p className="text-red-500">৳{product?.price}</p>
-                      </div>
-                    </Link>
-                  )
-                }
-              </div>
-            </div>
-          </div>
-        </div>
-
-      </div>
-      <div className="max-w-7xl mx-auto px-4 md:px-4 lg:px-8 my-6">
-        <div className="border p-6 rounded">
-          <ProductDescription description={product.data.description} />
-        </div>
-      </div>
-      <div className="max-w-7xl mx-auto px-4 md:px-4 lg:px-8 my-6">
-        <div className="border p-6 rounded">
-          <ProductReviews comments={comments} />
-        </div>
-      </div>
-      <div className="max-w-7xl mx-auto px-4 md:px-4 lg:px-8 my-6">
-
-        <div className="border md:hidden block mb-6 mt-6 w-full">
-          <div className="p-4">
-            <h2 className="text-lg font-semibold mb-4">Relevent Products</h2>
-            <div className="space-y-4">
-              {
-                releventProduct?.slice(0, 3)?.map((product, index) =>
-                  <Link to={`/products/${product?._id}`} key={product?._id} className="border w-full duration-150 group hover:shadow-lg flex items-start gap-2 p-3 rounded">
+                {releventProduct?.filter((item)=>item?._id !==product?.data?._id)?.slice(0, 3)?.map((product, index) => (
+                  <Link
+                    to={`/products/${product?._id}`}
+                    key={product?._id}
+                    className="border w-full duration-150 group hover:shadow-lg flex items-start gap-2 p-3 rounded"
+                  >
                     <img
                       alt="Product Image"
                       className="w-20 h-20 bg-gray-200 rounded mb-2"
@@ -629,12 +623,59 @@ const ProductInformation = () => {
                       <p className="text-red-500">৳{product?.price}</p>
                     </div>
                   </Link>
-                )
-              }
+                ))}
+              </div>
             </div>
           </div>
         </div>
-
+      </div>
+      <div className="max-w-7xl mx-auto px-4 md:px-4 lg:px-8 my-6">
+        <div className="border p-6 rounded">
+          <ProductDescription description={product.data.description} />
+        </div>
+      </div>
+      <div className="max-w-7xl mx-auto px-4 md:px-4 lg:px-8 my-6">
+        <div className="border p-6 rounded">
+          <ProductReviews comments={comments} />
+        </div>
+      </div>
+      <div className="max-w-7xl mx-auto px-4 md:px-4 lg:px-8 my-6">
+        <div className="border md:hidden block mb-6 mt-6 w-full">
+          <div className="p-4">
+            <h2 className="text-lg font-semibold mb-4">Relevent Products</h2>
+            <div className="space-y-4">
+              {releventProduct?.slice(0, 3)?.map((product, index) => (
+                <Link
+                  to={`/products/${product?._id}`}
+                  key={product?._id}
+                  className="border w-full duration-150 group hover:shadow-lg flex items-start gap-2 p-3 rounded"
+                >
+                  <img
+                    alt="Product Image"
+                    className="w-20 h-20 bg-gray-200 rounded mb-2"
+                    height="80"
+                    src={
+                      product?.featuredImage?.src
+                        ? product?.featuredImage?.src
+                        : product?.images[0]?.src
+                    }
+                    style={{
+                      aspectRatio: "80/80",
+                      objectFit: "cover",
+                    }}
+                    width="80"
+                  />
+                  <div className="">
+                    <p className="font-medium group-hover:text-blue-500 duration">
+                      {product?.name?.slice(0, 40)}
+                    </p>
+                    <p className="text-red-500">৳{product?.price}</p>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </div>
 
         <div className="border md:p-6 rounded">
           <TrandingProductShop />
