@@ -310,7 +310,7 @@ const Header = () => {
                                   <div method="POST" action="#" className=" p-4">
                                     <Link
                                       to="seller/dashboard"
-                                      className="flex w-full items-center  gap-2 rounded-lg px-4 py-2 text-sm text-green-700 hover:bg-green-50"
+                                      className="flex w-full items-center justify-center  gap-2 rounded-lg px-4 py-2 text-sm text-green-700 hover:bg-green-50"
                                       role="menuitem"
                                     >
                                       <MdDashboard className="h-4 w-4" />
@@ -324,7 +324,7 @@ const Header = () => {
                                   <div method="POST" action="#" className=" p-4">
                                     <Link
                                       to="user/dashboard"
-                                      className="flex w-full items-center  gap-2 rounded-lg px-4 py-2 text-sm text-green-700 hover:bg-green-50"
+                                      className="flex w-full items-center justify-center  gap-2 rounded-lg px-4 py-2 text-sm text-green-700 hover:bg-green-50"
                                       role="menuitem"
                                     >
                                       <MdDashboard className="h-4 w-4" />
@@ -337,16 +337,13 @@ const Header = () => {
 
                               }
 
-                              <div className="pb-2 px-2">
-                                <strong className="block px-4 text-xs font-medium uppercase text-gray-400">
-                                  Danger Zone
-                                </strong>
+                              <div className="pb-2 px-2 flex w-full items-center justify-center ">
 
-                                <div className="px-4">
+                                <div className="px-4 w-full mt-3">
 
                                   <button
                                     onClick={() => logOut()}
-                                    className="flex w-full items-center gap-2 rounded-lg px-4 py-2 text-sm text-red-700 hover:bg-red-50"
+                                    className="flex w-full items-center justify-center gap-2 rounded-lg px-4 py-2  text-center text-sm text-red-700 hover:bg-red-50"
                                     role="menuitem"
                                   >
                                     <svg
@@ -444,15 +441,13 @@ const Header = () => {
                               ))}
 
                             <div className="pb-2">
-                              <strong className="block px-4 text-xs font-medium uppercase text-gray-400">
-                                Danger Zone
-                              </strong>
+
 
                               <div className="px-4">
 
                                 <button
                                   onClick={() => logOut()}
-                                  className="flex w-full items-center gap-2 rounded-lg px-4 py-2 text-sm text-red-700 hover:bg-red-50"
+                                  className="flex w-full items-center gap-2 rounded-lg px-4 mt-2 py-2 text-sm text-red-700 hover:bg-red-50"
                                   role="menuitem"
                                 >
                                   <svg

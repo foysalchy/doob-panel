@@ -29,9 +29,8 @@ const StarRating = ({ rating, onRatingChange }) => {
         <span
           key={star}
           onClick={() => onRatingChange(star)}
-          className={`cursor-pointer text-2xl ${
-            star <= rating ? "text-yellow-500" : "text-gray-300"
-          }`}
+          className={`cursor-pointer text-2xl ${star <= rating ? "text-yellow-500" : "text-gray-300"
+            }`}
         >
           ★
         </span>
@@ -674,8 +673,10 @@ const ProductDetails = () => {
                 )}
               </div>
 
-              {shopInfo?.shopId === productFind?.shopId ? (
-                <div className="p-4 bg-red-400 text-white font-bold text-center uppercase">
+              {console.log(shopInfo?._id === productFind?.shopId, 'update_ui')}
+
+              {shopInfo?._id === productFind?.shopId ? (
+                <div className="p-4 py-3 rounded bg-red-400 text-white font-bold  text-center uppercase">
                   your own Product
                 </div>
               ) : (

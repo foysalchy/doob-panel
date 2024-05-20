@@ -556,7 +556,7 @@ export default function Component() {
 
                         <div className="pb-2 px-2">
                           <strong className="block px-4 text-xs font-medium uppercase text-gray-400">
-                            Danger Zone
+
                           </strong>
 
                           <div className="px-4">

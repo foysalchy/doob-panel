@@ -225,7 +225,7 @@ const SellerShipping = () => {
                       placeholder={selectedMedia + "  Secret-Key"}
                       type="text"
                       id="title"
-                      name="secretKey"
+                      name="client_id"
                     />
                   </div>
                 </div>

@@ -34,9 +34,16 @@ const ProductInformation = () => {
   const [loader, setLoader] = useState(false);
   const { shop_id, shopUser, setSelectProductData } =
     useContext(ShopAuthProvider);
+
+  const pathname = window.location.pathname;
+  const idMatch = pathname.match(/\/shop\/([^/]+)/);
+  const shopId = idMatch ? idMatch[1] : null;
+
+  console.log(product?.data?.shopId, "<<<=====>>>", shop_id?.shop_id);
+
+
   const [variations, setVariations] = useState(null);
   const [showVariant, setShowVariant] = useState(product.data.images);
-  console.log(variations, "variations");
   const blankImg =
     "https://backend.doob.com.bd/api/v1/image/66036ed3df13bd9930ac229c.jpg";
 
@@ -95,11 +102,6 @@ const ProductInformation = () => {
     }
   };
 
-  const pathname = window.location.pathname;
-
-  const idMatch = pathname.match(/\/shop\/([^/]+)/);
-
-  const shopId = idMatch ? idMatch[1] : null;
 
   const addToCart = (data) => {
 
@@ -214,14 +216,12 @@ const ProductInformation = () => {
     },
   });
 
-  console.log(comments);
 
   const totalStars =
     comments?.length &&
     comments?.reduce((total, comment) => total + comment.star, 0) /
     comments?.length;
 
-  console.log("Total stars:", totalStars);
 
   const convertedRating = (` ${totalStars}` / 10) * 5 || 0;
 
@@ -288,6 +288,7 @@ const ProductInformation = () => {
               ])}
           </div>
         </div>
+
         <div className="md:grid md:grid-cols-4">
           <div className="col-span-3 mx-auto border border-gray-300 px-4 md:px-4 lg:px-12 mt-6 ">
             <div className="flex flex-col md:flex-row -mx-4  border-gray-300 py-4">
@@ -490,6 +491,7 @@ const ProductInformation = () => {
                   </div>
                 }
                 <div>
+
                   <div className="flex  gap-3 py-4 space-x-4 justify-between">
                     <div>
                       <label htmlFor="Quantity" className="sr-only">
