@@ -1,5 +1,31 @@
 import React, { useContext, useState } from "react";
 import { AuthContext } from "../../../AuthProvider/UserProvider";
+
+import { 
+  BsColumnsGap ,
+  BsBox2  ,
+  BsPrinter  ,
+  BsBasket ,
+  BsCalendar2Range ,
+  BsPersonLinesFill  ,
+  BsLayoutTextSidebarReverse ,
+  BsCalculator,
+  BsHeadset ,
+  BsFillBootstrapFill  ,
+  BsArrowsFullscreen ,
+  BsFillJournalBookmarkFill ,
+  BsShop ,
+  BsFillImageFill ,
+  BsGlobe ,
+  BsGear,
+  BsHddNetworkFill ,
+  BsWindowPlus ,
+  BsLifePreserver,
+  BsBoxSeam ,
+  BsChatSquareText ,
+  BsBoxArrowLeft  
+
+ } from "react-icons/bs";
 import {
   BiArea,
   BiCategory,
@@ -141,8 +167,8 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                     : "flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
                 }}
               >
-                <BiHomeAlt className="w-5 h-5 fill-current text-gray-400" />
-                {!responsive && <span>Home</span>}
+                <BsColumnsGap className="w-5 h-5 fill-current text-gray-400" />
+                {!responsive && <span>Dashboard</span>}
               </NavLink>
 
               {/* product */}
@@ -161,7 +187,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                             className="flex cursor-pointer w-full items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-white hover:text-gray-50"
                           >
                             <div className="flex cursor-pointer text-white items-center gap-2">
-                              <TbCategory className="w-5 h-5 fill-current text-gray-400" />
+                              <BsBox2 className="w-5 h-5 fill-current text-gray-400" />
 
                               <span>Product</span>
                             </div>
@@ -524,7 +550,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                           className="flex cursor-pointer w-full items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-white hover:text-gray-50"
                         >
                           <div className="flex cursor-pointer items-center gap-2">
-                            <TbCategory className="w-5 h-5 fill-current text-gray-400" />
+                            <BsBox2 className="w-5 h-5 fill-current text-gray-400" />
 
                             <span>Products</span>
                           </div>
@@ -892,7 +918,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                             className="flex cursor-pointer items-center w-full justify-between  p-2 rounded-sm hover:bg-gray-800 text-white hover:text-gray-50"
                           >
                             <div className="flex cursor-pointer items-center gap-2">
-                              {/* <TbCategory className="w-5 h-5 fill-current text-gray-400" /> */}
+                              <BsBasket className="w-5 h-5 fill-current text-gray-400" />
 
                               <span>Orders</span>
                             </div>
@@ -958,7 +984,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                       <details className="group [&_summary::-webkit-details-marker]:hidden flex items-center rounded-sm  ">
                         <summary className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-white hover:text-gray-50">
                           <div className="flex cursor-pointer items-center gap-2">
-                            <BiShoppingBag className="w-5 h-5 fill-current text-gray-400" />
+                            <BsBasket className="w-5 h-5 fill-current text-gray-400" />
                             <span>Orders</span>
                           </div>
                           <span className="shrink-0 transition duration-300 group-open:-rotate-180">
@@ -1066,7 +1092,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                         >
                           <div className="flex w-full cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-white hover:text-gray-50">
                             <div className="flex cursor-pointer items-center gap-2">
-                              <TbCategory className="w-5 h-5 fill-current text-gray-400" />
+                              <BsLifePreserver className="w-5 h-5 fill-current text-gray-400" />
 
                               <span>Service</span>
                             </div>
@@ -1195,7 +1221,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                       >
                         <div className="flex w-full cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-white hover:text-gray-50">
                           <div className="flex cursor-pointer items-center gap-2">
-                            <TbCategory className="w-5 h-5 fill-current text-gray-400" />
+                            <BsLifePreserver className="w-5 h-5 fill-current text-gray-400" />
 
                             <span>Service</span>
                           </div>
@@ -1468,7 +1494,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                             className="flex cursor-pointer items-center w-full justify-between  p-2 rounded-sm hover:bg-gray-800 text-white hover:text-gray-50"
                           >
                             <div className="flex cursor-pointer items-center gap-2">
-                              <TbCategory className="w-5 h-5 fill-current text-gray-400" />
+                              <BsCalendar2Range className="w-5 h-5 fill-current text-gray-400" />
 
                               <span>Pages</span>
                             </div>
@@ -1566,7 +1592,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                           className="flex cursor-pointer items-center w-full justify-between  p-2 rounded-sm hover:bg-gray-800 text-white hover:text-gray-50"
                         >
                           <div className="flex cursor-pointer items-center gap-2">
-                            <TbCategory className="w-5 h-5 fill-current text-gray-400" />
+                            <BsCalendar2Range className="w-5 h-5 fill-current text-gray-400" />
 
                             <span>Pages</span>
                           </div>
@@ -1670,7 +1696,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                             className="flex cursor-pointer w-full items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-white hover:text-gray-50"
                           >
                             <div className="flex cursor-pointer items-center gap-2">
-                              <TbCategory className="w-5 h-5 fill-current text-gray-400" />
+                              <BsPersonLinesFill className="w-5 h-5 fill-current text-gray-400" />
 
                               <span>Users</span>
                             </div>
@@ -1780,7 +1806,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                           className="flex cursor-pointer w-full items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-white hover:text-gray-50"
                         >
                           <div className="flex cursor-pointer items-center gap-2">
-                            <TbCategory className="w-5 h-5 fill-current text-gray-400" />
+                            <BsPersonLinesFill className="w-5 h-5 fill-current text-gray-400" />
 
                             <span>Users</span>
                           </div>
@@ -1903,7 +1929,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                     >
                       <div className="flex cursor-pointer items-center justify-between w-full  p-2 rounded-sm hover:bg-gray-800 text-white hover:text-gray-50">
                         <div className="flex cursor-pointer items-center gap-2">
-                          <MdSettings className="w-5 h-5 fill-current text-gray-400" />
+                          <BsGear className="w-5 h-5 fill-current text-gray-400" />
 
                           <span>Settings</span>
                         </div>
@@ -2098,7 +2124,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                     >
                       <div className="flex cursor-pointer items-center justify-between w-full  p-2 rounded-sm hover:bg-gray-800 text-white hover:text-gray-50">
                         <div className="flex cursor-pointer items-center gap-2">
-                          <MdSettings className="w-5 h-5 fill-current text-gray-400" />
+                          <BsGear className="w-5 h-5 fill-current text-gray-400" />
 
                           <span>Settings</span>
                         </div>

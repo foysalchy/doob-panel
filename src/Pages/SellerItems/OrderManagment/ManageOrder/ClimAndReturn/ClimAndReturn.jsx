@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import OrderAllinfoModal from "../OrderAllinfoModal";
 import { BiSearch } from "react-icons/bi";
 import Swal from "sweetalert2";
+import RejectModal from "./RejectModal";
 
 const ClimAndReturn = () => {
   const [modalOn, setModalOn] = useState(false);
@@ -389,6 +390,8 @@ const ClimAndReturn = () => {
     });
   };
 
+  const [isReject, setReject] = useState(false);
+
   const update_all_status_reject = (item) => {
     Swal.fire({
       title: "Do you want to reject All Order?",
@@ -408,6 +411,12 @@ const ClimAndReturn = () => {
       ordersList.forEach((order) => {
         console.log(order, "order");
 
+        const rejectData = {
+          status: "return",
+          orderId: order?._id,
+          rejectNote: rejectNote,
+        };
+        // console.log(rejectData);
         // return;
         fetch(
           `https://backend.doob.com.bd/api/v1/seller/order-quantity-update`,
@@ -428,9 +437,7 @@ const ClimAndReturn = () => {
                   method: "PUT",
                   headers: { "Content-Type": "application/json" },
                   body: JSON.stringify({
-                    status: "return",
-                    orderId: order?._id,
-                    rejectNote: rejectNote,
+                    ...rejectData,
                   }),
                 }
               )
@@ -473,13 +480,22 @@ const ClimAndReturn = () => {
             Approve
           </button>
           <button
-            onClick={() => update_all_status_reject()}
+            onClick={() => setReject(ordersList)}
             className="bg-gray-800 w-[200px] mt-4 mb-6 text-white px-3 py-2 rounded"
           >
             Reject
           </button>
         </div>
       )}
+      {isReject && (
+        <RejectModal
+          ordersList={ordersList}
+          isReject={isReject}
+          setReject={setReject}
+          refetch={refetch}
+        />
+      )}
+
       <div className="overflow-x-auto transparent-scroll sm:-mx-6 lg:-mx-8">
         <div className="inline-block  min-w-full py-2 sm:px-6 lg:px-8">
           <div className="overflow-hidden">

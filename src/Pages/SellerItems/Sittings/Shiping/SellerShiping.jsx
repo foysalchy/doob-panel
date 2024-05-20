@@ -5,6 +5,8 @@ import { MdDelete } from "react-icons/md";
 import { AuthContext } from "../../../../AuthProvider/UserProvider";
 import Swal from "sweetalert2";
 import BrightAlert from "bright-alert";
+import { RxCross2 } from "react-icons/rx";
+import { FaLongArrowAltRight } from "react-icons/fa";
 
 const SellerShipping = () => {
   const { shopInfo } = useContext(AuthContext);
@@ -28,6 +30,7 @@ const SellerShipping = () => {
   const [disabled, setDisable] = useState(true);
 
   const [shop, setShop] = useState([]);
+  const [loadingUpdate, setloadingUpdate] = useState(false);
 
   const handleGetaway = (event) => {
     const selectedValue = event.target.value;
@@ -38,16 +41,6 @@ const SellerShipping = () => {
     } else if (selectedValue === "Pathao") {
       setDisable(false);
       setSelectedMedia(selectedValue);
-      fetch(
-        `https://backend.doob.com.bd/api/v1/seller/pathao-shopId?shop_id=${shopInfo?._id}`
-      )
-        .then((response) => response.json())
-        .then((data) => {
-          setShop(data);
-        })
-        .catch((error) => {
-          console.error("Error fetching data:", error);
-        });
     } else {
       setDisable(false);
       setSelectedMedia(selectedValue);
@@ -56,13 +49,16 @@ const SellerShipping = () => {
 
 
   const [storePathaoData, setStorePathaoData] = useState([]);
+  const [openModal, setOpenModal] = useState(false);
 
   const handlStoreSelect = (event) => {
     const selectedValue = event.target.value;
     setStorePathaoData(selectedValue);
   };
 
+
   const dataSubmit = (event) => {
+    setloadingUpdate(true);
     event.preventDefault();
     const name = selectedMedia;
     const api = event.target.api.value;
@@ -82,9 +78,9 @@ const SellerShipping = () => {
       shopId: shopInfo.shopId,
     };
 
-    if (storePathaoData) {
-      data["pathao_store_id"] = storePathaoData;
-    }
+    // if (storePathaoData) {
+    //   data["pathao_store_id"] = storePathaoData;
+    // }
     // console.log(data, "data");
 
     // return;
@@ -104,14 +100,57 @@ const SellerShipping = () => {
             text: "",
           });
         } else {
-          BrightAlert("Shipping interrogation Successful", "", "success");
-          event.target.reset();
-          setSelectedMedia("Choose your Api");
-          refetch();
+          // event.target.reset();
+          // setSelectedMedia("Choose your Api");
+          if (selectedMedia === "Pathao") {
+            // setDisable(true);
+            // handleGetaway()
+            console.log("yes");
+            fetch(
+              `https://backend.doob.com.bd/api/v1/seller/pathao-shopId?shop_id=${shopInfo?._id}`
+            )
+              .then((response) => response.json())
+              .then((data) => {
+                setShop(data);
+                setOpenModal(data);
+              })
+              .catch((error) => {
+                console.error("Error fetching data:", error);
+              });
+          } else {
+            setSelectedMedia("Choose your Api");
+            setloadingUpdate;
+            false;
+            BrightAlert("Shipping interrogation Successful", "", "success");
+            event.target.reset();
+            refetch();
+          }
         }
       });
   };
 
+  const updateShopId = async () => {
+    console.log(storePathaoData);
+    fetch(
+      `https://backend.doob.com.bd/api/v1/seller/update-shopId?shopId=${shopInfo.shopId}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ pathao_store_id: storePathaoData }),
+      }
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        // setSelectedMedia("Choose your Api");
+        refetch();
+        setloadingUpdate(false);
+        BrightAlert("Shipping interrogation Successful", "", "success");
+        setOpenModal(false);
+      });
+  };
   const deleteHandel = (id) => {
     fetch(
       `https://backend.doob.com.bd/api/v1/seller/shipping-interrogation/${id}`,
@@ -135,7 +174,7 @@ const SellerShipping = () => {
       <div>
         <div className="md:my-10">
           <h1 className="text-2xl font-bold text-center">
-            Publish your shipping information
+            Publish your shipping information.
           </h1>
           <div className="md:p-10 p-3 bg-[#d3edc1] border-2  rounded md:m-10 mt-3">
             <form onSubmit={dataSubmit} className="w-full ">
@@ -159,7 +198,7 @@ const SellerShipping = () => {
               {!disabled && selectedMedia !== "Pathao" ? (
                 <div>
                   <div>
-                    <label className="sr-only text-black" htmlFor="title">
+                    <label className="sr-only text-black" htmlFor="api">
                       {selectedMedia} Base URL
                     </label>
                     <input
@@ -167,35 +206,35 @@ const SellerShipping = () => {
                       className="flex-grow w-full re h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
                       placeholder={selectedMedia + " Base URL"}
                       type="text"
-                      id="title"
+                      id="api"
                       name="api"
                     />
                   </div>
 
                   <div className="my-4">
-                    <label className="sr-only text-black" htmlFor="title">
-                      {selectedMedia} Api Key
-                    </label>
-                    <input
-                      required
-                      className="flex-grow w-full re h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
-                      placeholder={selectedMedia + "  Api Key"}
-                      type="text"
-                      id="title"
-                      name="key"
-                    />
-                  </div>
-
-                  <div className="my-4">
-                    <label className="sr-only text-black" htmlFor="title">
+                    <label className="sr-only text-black" htmlFor="secretKey">
                       {selectedMedia} Secret-Key
                     </label>
                     <input
                       required
                       className="flex-grow w-full re h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
-                      placeholder={selectedMedia + "  Secret-Key"}
+                      placeholder={selectedMedia + " Secret-Key"}
                       type="text"
-                      id="title"
+                      id="secretKey"
+                      name="secretKey"
+                    />
+                  </div>
+
+                  <div className="my-4">
+                    <label className="sr-only text-black" htmlFor="client_id">
+                      {selectedMedia} Client Id
+                    </label>
+                    <input
+                      required
+                      className="flex-grow w-full re h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
+                      placeholder={selectedMedia + " Client Id"}
+                      type="text"
+                      id="client_id"
                       name="client_id"
                     />
                   </div>
@@ -203,7 +242,7 @@ const SellerShipping = () => {
               ) : (
                 <div>
                   <div>
-                    <label className="sr-only text-black" htmlFor="title">
+                    <label className="sr-only text-black" htmlFor="api">
                       {selectedMedia} Base URL
                     </label>
                     <input
@@ -211,34 +250,33 @@ const SellerShipping = () => {
                       className="flex-grow w-full re h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
                       placeholder={selectedMedia + " Base URL"}
                       type="text"
-                      id="title"
+                      id="api"
                       name="api"
                     />
                   </div>
-                  <div className="my-4">
-                    <label className="sr-only text-black" htmlFor="title">
+                  {/* //! Select Shop */}
+                  {/* <div className="my-4">
+                    <label className="sr-only text-black" htmlFor="store">
                       Select an Store
                     </label>
                     <select
-                      name="Media"
+                      name="store"
                       onChange={handlStoreSelect}
                       value={storePathaoData}
                       id="countries"
                       className="flex-grow w-full re h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
                     >
-                      {/* <option disabled>Choose A Shop</option>
-                      <option value="Pathao">Pathao</option>
-                      <option value="Steadfast">Steadfast </option> */}
-                      <option disabled>Choose A Shop</option>
+                    
+                      <option disabled>Choose A Store</option>
                       {shop?.storeInfoArray?.map((item) => (
                         <option value={item?.store_id}>
                           {item?.store_name}
                         </option>
                       ))}
                     </select>
-                  </div>
+                  </div> */}
                   <div className="my-4">
-                    <label className="sr-only text-black" htmlFor="title">
+                    <label className="sr-only text-black" htmlFor="client_id">
                       {selectedMedia} client_id
                     </label>
                     <input
@@ -246,13 +284,12 @@ const SellerShipping = () => {
                       className="flex-grow w-full re h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
                       placeholder={selectedMedia + "  client_id"}
                       type="text"
-                      id="title"
+                      id="client_id"
                       name="client_id"
                     />
                   </div>
-
                   <div className="my-4">
-                    <label className="sr-only text-black" htmlFor="title">
+                    <label className="sr-only text-black" htmlFor="secretKey">
                       {selectedMedia} client_secret
                     </label>
                     <input
@@ -260,13 +297,13 @@ const SellerShipping = () => {
                       className="flex-grow w-full re h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
                       placeholder={selectedMedia + "  client_secret"}
                       type="text"
-                      id="title"
+                      id="secretKey"
                       name="secretKey"
                     />
                   </div>
 
                   <div className="my-4">
-                    <label className="sr-only text-black" htmlFor="title">
+                    <label className="sr-only text-black" htmlFor="user_name">
                       {selectedMedia} user_name
                     </label>
                     <input
@@ -274,13 +311,13 @@ const SellerShipping = () => {
                       className="flex-grow w-full re h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
                       placeholder={selectedMedia + "  user_name"}
                       type="text"
-                      id="title"
+                      id="user_name"
                       name="user_name"
                     />
                   </div>
 
                   <div className="my-4">
-                    <label className="sr-only text-black" htmlFor="title">
+                    <label className="sr-only text-black" htmlFor="password">
                       {selectedMedia} password
                     </label>
                     <input
@@ -288,7 +325,7 @@ const SellerShipping = () => {
                       className="flex-grow w-full re h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
                       placeholder={selectedMedia + "  password"}
                       type="text"
-                      id="title"
+                      id="password"
                       name="password"
                     />
                   </div>
@@ -326,14 +363,77 @@ const SellerShipping = () => {
                     </span>
 
                     <span className="text-sm font-medium transition-all group-hover:me-4">
-                      Upload Shipping Information
+                      {loadingUpdate
+                        ? "Updating..."
+                        : " Upload Shipping Information"}
                     </span>
                   </button>
                 )}
               </div>
             </form>
           </div>
+          {/* modal for shopid */}
+          {openModal && (
+            <div
+              className={`fixed z-50 top-0 left-0 flex h-full min-h-screen w-full items-center justify-center bg-black bg-opacity-90 px-4 py-5 ${
+                openModal ? "block" : "hidden"
+              }`}
+            >
+              <div className="w-full max-w-[800px]  rounded-[20px] bg-white pb-10  text-center ">
+                <div className="flex justify-between z-50 pt-4 items-start w-full sticky top-0 bg-gray-800 border-b border-gray-300 rounded-t-[18px] px-10">
+                  <div className="pb-2 text-xl font-bold text-white text-center sm:text-2xl">
+                    Update ShopId of Pathao
+                  </div>
+                  <div
+                    onClick={() => setOpenModal(!openModal)}
+                    className="cursor-pointer bg-gray-300 rounded-full  mb-2 p-2 text-2xl hover:bg-gray-400"
+                  >
+                    <RxCross2 className="text-xl" />
+                  </div>
+                </div>
 
+                <div className="max-h-[700px] px-10 text-start overflow-y-scroll">
+                  <div action="">
+                    <div className="my-4">
+                      <label className="sr-only text-black" htmlFor="store">
+                        Select an Store
+                      </label>
+                      <select
+                        name="store"
+                        onChange={handlStoreSelect}
+                        value={storePathaoData}
+                        id="countries"
+                        className="flex-grow w-full re h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
+                      >
+                        <option disabled>Choose A Store</option>
+                        {shop?.storeInfoArray?.map((item) => (
+                          <option value={item?.store_id}>
+                            {item?.store_name}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                    <div className="flex items-center justify-between mt-10">
+                      <button
+                        // type="submit"
+                        onClick={updateShopId}
+                        className="group relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
+                      >
+                        <span className="absolute -start-full transition-all group-hover:start-4">
+                          <FaLongArrowAltRight />
+                        </span>
+                        <span className="text-sm font-medium transition-all group-hover:ms-4">
+                          Add ShopId
+                        </span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* closed modal */}
           <div className="border my-10 p-10">
             {ships.length ? (
               <div className="flex items-center justify-center gap-4 my-4 ">
