@@ -164,8 +164,8 @@ export default function EditCampaign() {
       });
   };
 
-  const defultSelect = products.filter((product) => product.
-    campaignId === id);
+  // const defultSelect = products.filter((product) => product.
+  //   campaignId === id);
 
 
 
