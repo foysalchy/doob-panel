@@ -79,11 +79,10 @@ const SellerManagement = () => {
           return (
             <li key={pageNumber}>
               <button
-                className={`block h-8 w-8 rounded border ${
-                  pageNumber === currentPage
+                className={`block h-8 w-8 rounded border ${pageNumber === currentPage
                     ? "border-blue-600 bg-blue-600 text-white"
                     : "border-gray-900 bg-white text-center leading-8 text-gray-900"
-                }`}
+                  }`}
                 onClick={() => handleChangePage(pageNumber)}
               >
                 {pageNumber}
@@ -156,7 +155,7 @@ const SellerManagement = () => {
         if (data.user) {
           if (data.user.role === "seller") {
             fetch(
-              `https://backend.doob.com.bd/api/v1/shop/checkshop?shopEmail=${data?.user?.shopEmail}`
+              `https://backend.doob.com.bd/api/v1/shop/checkshop?shopEmail=${data?.user?.shopId}`
             )
               .then((response) => response.json())
               .then((result) => {

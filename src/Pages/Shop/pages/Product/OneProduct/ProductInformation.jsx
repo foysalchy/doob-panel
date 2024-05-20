@@ -491,69 +491,67 @@ const ProductInformation = () => {
                   </div>
                 }
                 <div>
-                  {
-                    product?.data?.shopId == shop_id?.shop_id ? <div className="text-black bg-[#ffb6b6] py-2 rounded text-center">Your Own Product</div>
-                      :
-                      <div className="flex  gap-3 py-4 space-x-4 justify-between">
-                        <div>
-                          <label htmlFor="Quantity" className="sr-only">
-                            {" "}
-                            Quantity{" "}
-                          </label>
 
-                          <div className="flex items-center gap-1">
-                            <button
-                              type="button"
-                              onClick={handleDecrease}
-                              className="w-6 h-10 leading-10 text-gray-600 transition hover:opacity-75"
-                            >
-                              -
-                            </button>
+                  <div className="flex  gap-3 py-4 space-x-4 justify-between">
+                    <div>
+                      <label htmlFor="Quantity" className="sr-only">
+                        {" "}
+                        Quantity{" "}
+                      </label>
 
-                            <input
-                              type="number"
-                              id="Quantity"
-                              value={quantity}
-                              onChange={handleManualInput}
-                              className="h-10 md:w-12 text-center w-12 text-sm rounded border px-1 border-gray-900 [-moz-appearance:_textfield] sm:text-sm [&::-webkit-outer-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button]:appearance-none"
-                            />
+                      <div className="flex items-center gap-1">
+                        <button
+                          type="button"
+                          onClick={handleDecrease}
+                          className="w-6 h-10 leading-10 text-gray-600 transition hover:opacity-75"
+                        >
+                          -
+                        </button>
 
-                            <button
-                              type="button"
-                              onClick={handleIncrease}
-                              className="w-6 h-10 leading-10 text-gray-600 transition text-sm hover:opacity-75 "
-                            >
-                              +
-                            </button>
-                          </div>
-                        </div>
+                        <input
+                          type="number"
+                          id="Quantity"
+                          value={quantity}
+                          onChange={handleManualInput}
+                          className="h-10 md:w-12 text-center w-12 text-sm rounded border px-1 border-gray-900 [-moz-appearance:_textfield] sm:text-sm [&::-webkit-outer-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button]:appearance-none"
+                        />
 
-                        <div className="flex items-center gap-3">
-                          <button
-                            type="button"
-                            onClick={() => addToCart(product)}
-                            className="h-10 w-[120px] px-2 py-2 font-semibold rounded bg-gray-950 hover:bg-gray-800 text-white"
-                          >
-                            {loader ? "Loading.." : "Add to Cart"}
-                          </button>
+                        <button
+                          type="button"
+                          onClick={handleIncrease}
+                          className="w-6 h-10 leading-10 text-gray-600 transition text-sm hover:opacity-75 "
+                        >
+                          +
+                        </button>
+                      </div>
+                    </div>
 
-                          <button
-                            onClick={() => buyNowHandler(product)}
-                            type="button"
-                            className="h-10 md:block hidden px-2 py-2 w-[120px] font-semibold  rounded bg-indigo-600 hover:bg-indigo-500 text-white"
-                          >
-                            Buy Now
-                          </button>
+                    <div className="flex items-center gap-3">
+                      <button
+                        type="button"
+                        onClick={() => addToCart(product)}
+                        className="h-10 w-[120px] px-2 py-2 font-semibold rounded bg-gray-950 hover:bg-gray-800 text-white"
+                      >
+                        {loader ? "Loading.." : "Add to Cart"}
+                      </button>
 
-                          <button
-                            onClick={() => buyNowHandler(product)}
-                            type="button"
-                            className="h-10 md:hidden block px-2 py-2 w-[60px] font-semibold  rounded bg-indigo-600 hover:bg-indigo-500 text-white"
-                          >
-                            <BsCart2 className="text-2xl m-auto" />
-                          </button>
-                        </div>
-                      </div>}
+                      <button
+                        onClick={() => buyNowHandler(product)}
+                        type="button"
+                        className="h-10 md:block hidden px-2 py-2 w-[120px] font-semibold  rounded bg-indigo-600 hover:bg-indigo-500 text-white"
+                      >
+                        Buy Now
+                      </button>
+
+                      <button
+                        onClick={() => buyNowHandler(product)}
+                        type="button"
+                        className="h-10 md:hidden block px-2 py-2 w-[60px] font-semibold  rounded bg-indigo-600 hover:bg-indigo-500 text-white"
+                      >
+                        <BsCart2 className="text-2xl m-auto" />
+                      </button>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

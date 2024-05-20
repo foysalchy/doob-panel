@@ -149,7 +149,7 @@ const AddDarazProduct = () => {
       package_height: originalData.skus[0].package_height,
       weight: originalData.skus[0].package_weight,
       createdAt: Date.now(),
-      status: false, // You can modify this based on your logic
+      status: !adminWare, // You can modify this based on your logic
       featuredImage: Images[0],
       images: Images,
       videos: originalData.videos,
