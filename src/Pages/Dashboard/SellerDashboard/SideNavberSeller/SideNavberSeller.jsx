@@ -1,79 +1,47 @@
 import React from "react";
 import { useContext } from "react";
 import { AuthContext } from "../../../../AuthProvider/UserProvider";
-import {
-  IoCellular,
-  IoLogOut,
-  IoScale,
-  IoSettings,
-  IoShareSocialSharp,
-  IoStorefront,
-} from "react-icons/io5";
+
 import { Link } from "react-router-dom";
-import {
-  MdCampaign,
-  MdContactSupport,
-  MdContacts,
-  MdDomain,
-  MdManageAccounts,
-  MdMediation,
-  MdOutlineAddCircleOutline,
-  MdOutlineCategory,
-  MdOutlineDashboardCustomize,
-  MdOutlineIntegrationInstructions,
-  MdOutlineLocalShipping,
-  MdOutlineManageSearch,
-  MdOutlinePriceChange,
-  MdOutlineReviews,
-  MdOutlineSecurity,
-  MdPayment,
-  MdPhotoSizeSelectActual,
-  MdProductionQuantityLimits,
-  MdReport,
-  MdReportOff,
-  MdSelfImprovement,
-  MdWarehouse,
-} from "react-icons/md";
+
 import { IoIosArrowDown } from "react-icons/io";
-import { ImBlog } from "react-icons/im";
+ 
 import { useState } from "react";
-import { FaBlog, FaPeopleGroup, FaPlaneDeparture } from "react-icons/fa6";
-import { AiFillFileAdd, AiOutlineHome } from "react-icons/ai";
-import { FiSettings } from "react-icons/fi";
-import {
+
+
+ 
+import { 
+  BsColumnsGap ,
+  BsBox2  ,
+  BsPrinter  ,
+  BsBasket ,
+  BsCalendar2Range ,
+  BsPersonLinesFill  ,
+  BsLayoutTextSidebarReverse ,
+  BsCalculator,
+  BsHeadset ,
+  BsFillBootstrapFill  ,
+  BsArrowsFullscreen ,
+  BsFillJournalBookmarkFill ,
+  BsShop ,
+  BsFillImageFill ,
+  BsGlobe ,
   BsGear,
-  BsHddRack,
-  BsPostage,
-  BsSubscript,
-  BsTicket,
-} from "react-icons/bs";
-import { SiCloudflarepages, SiPagekit } from "react-icons/si";
-import {
-  BiArchive,
-  BiArea,
-  BiBookContent,
-  BiCategoryAlt,
-  BiEnvelope,
-  BiImage,
-  BiSearchAlt,
-  BiShoppingBag,
-  BiSlider,
-  BiSolidBellRing,
-  BiSolidShoppingBag,
-} from "react-icons/bi";
+  BsHddNetworkFill ,
+  BsWindowPlus ,
+  BsLifePreserver,
+  BsBoxSeam ,
+  BsChatSquareText ,
+  BsBoxArrowLeft  
+
+ } from "react-icons/bs";
+
 import Daraz from "./Daraz.png";
 import Logo from "../../../../assets/doobLightLogo.png";
-import { CgAdd, CgClose, CgProductHunt } from "react-icons/cg";
+import {  CgClose } from "react-icons/cg";
 import { useQuery } from "@tanstack/react-query";
-import {
-  TbCategory,
-  TbExclamationMark,
-  TbMenuOrder,
-  TbReportAnalytics,
-} from "react-icons/tb";
-import { PiBrandy, PiNumberFourFill, PiWarehouseThin } from "react-icons/pi";
-import { FaPage4, FaWarehouse } from "react-icons/fa";
-import { GiScales, GiWoodBeam } from "react-icons/gi";
+
+
 
 const SideNavberSeller = ({ responsive, setResponsive }) => {
   const { user, logOut, shopInfo } = useContext(AuthContext);
@@ -129,21 +97,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                 title="Company"
                 className="inline-flex items-center"
               >
-                <svg
-                  className="w-8 text-white"
-                  viewBox="0 0 24 24"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeMiterlimit="10"
-                  stroke="currentColor"
-                  fill="none"
-                >
-                  <rect x="3" y="1" width="7" height="12" />
-                  <rect x="3" y="17" width="7" height="6" />
-                  <rect x="14" y="1" width="7" height="6" />
-                  <rect x="14" y="11" width="7" height="12" />
-                </svg>
+                <BsArrowsFullscreen className="w-5 h-5 fill-current "/>
               </button>
             ) : (
               <button onClick={() => setResponsive(true)} className="p-2">
@@ -166,7 +120,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                         href="#"
                         className="flex items-center p-2 space-x-3 rounded-md"
                       >
-                        <AiOutlineHome className="w-5 h-5 fill-current text-gray-400" />
+                        <BsColumnsGap   className="w-5 h-5 fill-current text-gray-400" />
 
                         <span>Dashboard</span>
                       </Link>
@@ -182,7 +136,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                               className="flex cursor-pointer w-full items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50"
                             >
                               <div className="flex cursor-pointer items-center gap-2">
-                                <ImBlog className="w-5 h-5 fill-current text-gray-400" />
+                                <BsBox2   className="w-5 h-5 fill-current text-gray-400" />
 
                                 <span>Product</span>
                               </div>
@@ -571,7 +525,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                             className="flex cursor-pointer w-full items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50"
                           >
                             <div className="flex cursor-pointer items-center gap-2">
-                              <ImBlog className="w-5 h-5 fill-current text-gray-400" />
+                              <BsBox2  className="w-5 h-5 fill-current text-gray-400" />
 
                               <span>Product</span>
                             </div>
@@ -976,7 +930,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                               href="#"
                               className="flex items-center p-2 space-x-3 rounded-md"
                             >
-                              <BiArchive className="w-5 h-5 text-gray-400" />
+                              <BsPrinter   className="w-5 h-5 text-gray-400" />
                               <span>POS</span>
                             </Link>
                           </li>
@@ -990,7 +944,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                             href="#"
                             className="flex items-center p-2 space-x-3 rounded-md"
                           >
-                            <BiArchive className="w-5 h-5 text-gray-400" />
+                            <BsPrinter    className="w-5 h-5 text-gray-400" />
                             <span>POS</span>
                           </Link>
                         </li>
@@ -1011,7 +965,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
 
                                 className="flex cursor-pointer items-center gap-2"
                               >
-                                <BiShoppingBag className="w-5 h-5 fill-current text-gray-400" />
+                                <BsBasket  className="w-5 h-5 fill-current text-gray-400" />
                                 <span>Orders</span>
                               </div>
 
@@ -1066,7 +1020,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                         >
                           <div className="flex cursor-pointer w-full items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
                             <div className="flex cursor-pointer items-center gap-2">
-                              <BiShoppingBag className="w-5 h-5 fill-current text-gray-400" />
+                              <BsBasket  className="w-5 h-5 fill-current text-gray-400" />
                               <span>Orders</span>
                             </div>
 
@@ -1140,7 +1094,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                           >
                             <div className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
                               <div className="flex cursor-pointer items-center gap-2">
-                                <SiCloudflarepages className="w-5 h-5 fill-current text-gray-400" />
+                                <BsCalendar2Range  className="w-5 h-5 fill-current text-gray-400" />
 
                                 <span>Pages</span>
                               </div>
@@ -1182,7 +1136,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                         >
                           <div className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
                             <div className="flex cursor-pointer items-center gap-2">
-                              <SiCloudflarepages className="w-5 h-5 fill-current text-gray-400" />
+                              <BsCalendar2Range  className="w-5 h-5 fill-current text-gray-400" />
 
                               <span>Pages</span>
                             </div>
@@ -1231,7 +1185,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                               href="#"
                               className="flex items-center p-2 space-x-3 rounded-md"
                             >
-                              <BiArchive className="w-5 h-5 text-gray-400" />
+                              <BsPersonLinesFill   className="w-5 h-5 text-gray-400" />
                               <span>Staff Account</span>
                             </Link>
                           </li>
@@ -1245,7 +1199,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                             href="#"
                             className="flex items-center p-2 space-x-3 rounded-md"
                           >
-                            <BiArchive className="w-5 h-5 text-gray-400" />
+                            <BsPersonLinesFill   className="w-5 h-5 text-gray-400" />
                             <span>Staff Account</span>
                           </Link>
                         </li>
@@ -1262,7 +1216,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                           >
                             <div className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
                               <div className="flex cursor-pointer items-center gap-2">
-                                <MdReport className="w-5 h-5 fill-current text-gray-400" />
+                                <BsLayoutTextSidebarReverse  className="w-5 h-5 fill-current text-gray-400" />
                                 <span>Report Management</span>
                               </div>
 
@@ -1360,7 +1314,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                         >
                           <div className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
                             <div className="flex cursor-pointer items-center gap-2">
-                              <MdReport className="w-5 h-5 fill-current text-gray-400" />
+                              <BsLayoutTextSidebarReverse  className="w-5 h-5 fill-current text-gray-400" />
                               <span>Report Management</span>
                             </div>
 
@@ -1461,7 +1415,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                           >
                             <div className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
                               <div className="flex cursor-pointer items-center gap-2">
-                                <SiCloudflarepages className="w-5 h-5 fill-current text-gray-400" />
+                                <BsCalculator  className="w-5 h-5 fill-current text-gray-400" />
                                 <span>Finance</span>
                               </div>
 
@@ -1557,7 +1511,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                         >
                           <div className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
                             <div className="flex cursor-pointer items-center gap-2">
-                              <SiCloudflarepages className="w-5 h-5 fill-current text-gray-400" />
+                              <BsCalculator  className="w-5 h-5 fill-current text-gray-400" />
                               <span>Finance</span>
                             </div>
 
@@ -1656,7 +1610,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                           >
                             <div className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
                               <div className="flex cursor-pointer items-center gap-2">
-                                <SiCloudflarepages className="w-5 h-5 fill-current text-gray-400" />
+                                <BsHeadset  className="w-5 h-5 fill-current text-gray-400" />
                                 <span>Support</span>
                               </div>
 
@@ -1743,7 +1697,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                         >
                           <div className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
                             <div className="flex cursor-pointer items-center gap-2">
-                              <SiCloudflarepages className="w-5 h-5 fill-current text-gray-400" />
+                              <BsHeadset  className="w-5 h-5 fill-current text-gray-400" />
                               <span>Support</span>
                             </div>
 
@@ -1838,7 +1792,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                           >
                             <div className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
                               <div className="flex cursor-pointer items-center gap-2">
-                                <ImBlog className="w-5 h-5 fill-current text-gray-400" />
+                                <BsFillBootstrapFill  className="w-5 h-5 fill-current text-gray-400" />
 
                                 <span>Blog</span>
                               </div>
@@ -1890,7 +1844,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                         >
                           <div className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
                             <div className="flex cursor-pointer items-center gap-2">
-                              <ImBlog className="w-5 h-5 fill-current text-gray-400" />
+                              <BsFillBootstrapFill  className="w-5 h-5 fill-current text-gray-400" />
 
                               <span>Blog</span>
                             </div>
@@ -1948,7 +1902,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                           >
                             <div className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
                               <div className="flex cursor-pointer items-center gap-2">
-                                <IoShareSocialSharp className="w-5 h-5 fill-current text-gray-400" />
+                                <BsFillJournalBookmarkFill  className="w-5 h-5 fill-current text-gray-400" />
 
                                 <span>Contact</span>
                               </div>
@@ -1991,7 +1945,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                         >
                           <div className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
                             <div className="flex cursor-pointer items-center gap-2">
-                              <IoShareSocialSharp className="w-5 h-5 fill-current text-gray-400" />
+                              <BsFillJournalBookmarkFill  className="w-5 h-5 fill-current text-gray-400" />
 
                               <span>Contact</span>
                             </div>
@@ -2038,7 +1992,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                             href="#"
                             className="flex items-center p-2 space-x-3 rounded-md"
                           >
-                            <IoStorefront className="w-5 h-5 fill-current text-gray-400" />
+                            <BsShop  className="w-5 h-5 fill-current text-gray-400" />
 
                             <span>Shop Profile</span>
                           </Link>
@@ -2052,7 +2006,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                           href="#"
                           className="flex items-center p-2 space-x-3 rounded-md"
                         >
-                          <IoStorefront className="w-5 h-5 fill-current text-gray-400" />
+                          <BsShop  className="w-5 h-5 fill-current text-gray-400" />
 
                           <span>Shop Profile</span>
                         </Link>
@@ -2071,7 +2025,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                               href="#"
                               className="flex items-center p-2 space-x-3 rounded-md"
                             >
-                              <MdDomain className="w-5 h-5 fill-current text-gray-400" />
+                              <BsGlobe  className="w-5 h-5 fill-current text-gray-400" />
                               <span>Domain Management</span>
                             </Link>
                           </li>
@@ -2085,7 +2039,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                             href="#"
                             className="flex items-center p-2 space-x-3 rounded-md"
                           >
-                            <MdDomain className="w-5 h-5 fill-current text-gray-400" />
+                            <BsGlobe  className="w-5 h-5 fill-current text-gray-400" />
                             <span>Domain Management</span>
                           </Link>
                         </li>
@@ -2331,7 +2285,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                               rel="noopener noreferrer"
                               className="flex items-center p-2 space-x-3 rounded-md"
                             >
-                              <MdOutlineIntegrationInstructions className="w-5 h-5 text-gray-400" />
+                              <BsHddNetworkFill  className="w-5 h-5 text-gray-400" />
                               <span>Channel Integration</span>
                             </Link>
                           </li>
@@ -2344,7 +2298,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                             rel="noopener noreferrer"
                             className="flex items-center p-2 space-x-3 rounded-md"
                           >
-                            <MdOutlineIntegrationInstructions className="w-5 h-5 text-gray-400" />
+                            <BsHddNetworkFill  className="w-5 h-5 text-gray-400" />
                             <span>Channel Integration</span>
                           </Link>
                         </li>
@@ -2361,7 +2315,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                           >
                             <div className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
                               <div className="flex cursor-pointer items-center gap-2">
-                                <BiImage className="w-5 h-5 fill-current text-gray-400" />
+                                <BsWindowPlus  className="w-5 h-5 fill-current text-gray-400" />
 
                                 <span>Content Management</span>
                               </div>
@@ -2420,7 +2374,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                         >
                           <div className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
                             <div className="flex cursor-pointer items-center gap-2">
-                              <BiImage className="w-5 h-5 fill-current text-gray-400" />
+                              <BsWindowPlus  className="w-5 h-5 fill-current text-gray-400" />
 
                               <span>Content Management</span>
                             </div>
@@ -2488,7 +2442,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                           >
                             <div className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
                               <div className="flex cursor-pointer items-center gap-2">
-                                <BiShoppingBag className="w-5 h-5 fill-current text-gray-400" />
+                                <BsLifePreserver  className="w-5 h-5 fill-current text-gray-400" />
                                 <span>My Service</span>
                               </div>
 
@@ -2524,7 +2478,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                         >
                           <div className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
                             <div className="flex cursor-pointer items-center gap-2">
-                              <BiShoppingBag className="w-5 h-5 fill-current text-gray-400" />
+                              <BsLifePreserver  className="w-5 h-5 fill-current text-gray-400" />
                               <span>My Service</span>
                             </div>
 
@@ -2566,7 +2520,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                           >
                             <div className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
                               <div className="flex cursor-pointer items-center gap-2">
-                                <BiShoppingBag className="w-5 h-5 fill-current text-gray-400" />
+                                <BsBoxSeam  className="w-5 h-5 fill-current text-gray-400" />
                                 <span>Stock Management</span>
                               </div>
 
@@ -2636,7 +2590,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                         >
                           <div className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
                             <div className="flex cursor-pointer items-center gap-2">
-                              <BiShoppingBag className="w-5 h-5 fill-current text-gray-400" />
+                              <BsBoxSeam  className="w-5 h-5 fill-current text-gray-400" />
                               <span>Stock Management</span>
                             </div>
 
@@ -2698,7 +2652,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                         to={`omni-chat`}
                         className="flex items-center p-2 space-x-3 rounded-md gap-3"
                       >
-                        <BiArchive className="w-5 h-5 text-gray-400" />
+                        <BsChatSquareText className="w-5 h-5 text-gray-400" />
                         Omni Chat
                       </Link>
                     </li>
@@ -2715,7 +2669,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                               href="#"
                               className="flex items-center p-2 space-x-3 rounded-md"
                             >
-                              <BiArchive className="w-5 h-5 text-gray-400" />
+                              <BsFillImageFill className="w-5 h-5 text-gray-400" />
                               <span>Media Manager</span>
                             </Link>
                           </li>
@@ -2729,7 +2683,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                           href="#"
                           className="flex items-center p-2 space-x-3 rounded-md"
                         >
-                          <BiArchive className="w-5 h-5 text-gray-400" />
+                          <BsFillImageFill className="w-5 h-5 text-gray-400" />
                           <span>Media Manager</span>
                         </Link>
                       </li>
@@ -2740,7 +2694,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                         onClick={() => logOut()}
                         className="flex items-center p-2 space-x-3 rounded-md "
                       >
-                        <IoLogOut className="w-5 h-5 fill-current text-gray-400" />
+                        <BsBoxArrowLeft  className="w-5 h-5 fill-current text-gray-200" />
                         <span>Logout</span>
                       </button>
                     </li>
@@ -2751,14 +2705,10 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
               {responsive && (
                 <div className="flex-1 ">
                   <ul className="pt-2 pb-4 space-y-1 text-sm">
-                    <Link
-                      to={"/seller/manage-blogs"}
-                      className="flex items-center  space-x-3 rounded-md"
-                    >
-                      <FaBlog className="w-8 h-8 fill-current text-gray-400" />
-                    </Link>
+                    
                   </ul>
                 </div>
+                
               )}
             </>
           ) : (
@@ -2770,7 +2720,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                     rel="noopener noreferrer"
                     className="flex items-center p-2 space-x-3 rounded-md"
                   >
-                    <BsTicket className="w-5 h-5 fill-current text-gray-400" />
+                    <BsHeadset className="w-5 h-5 fill-current text-gray-400" />
                     <span>Support Ticket</span>
                   </Link>
                 </div>
@@ -2790,7 +2740,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                     onClick={() => logOut()}
                     className="flex items-center p-2   hover:bg-gray-800 space-x-3 rounded-md "
                   >
-                    <IoLogOut className="w-5 h-5 fill-current text-gray-400" />
+                    <BsBoxArrowLeft  className="w-5 h-5 fill-current text-gray-400" />
                     <span>Logout</span>
                   </button>
                 </div>
