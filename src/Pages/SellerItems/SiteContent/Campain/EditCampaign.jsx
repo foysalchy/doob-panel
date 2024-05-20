@@ -19,7 +19,7 @@ export default function EditCampaign() {
     queryKey: ["campaignData"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/seller/get-single-campaign?id=662cfd09e88f0e8549ef70a7`
+        `https://backend.doob.com.bd/api/v1/seller/get-single-campaign?id=${id}`,
       );
       const data = await res.json();
       console.log("data", data);
@@ -164,6 +164,12 @@ export default function EditCampaign() {
       });
   };
 
+  const defultSelect = products.filter((product) => product.
+    campaignId === id);
+
+
+
+
   return (
     <div className="">
       <button
@@ -237,14 +243,12 @@ export default function EditCampaign() {
                   onChange={() => setIsChecked(!isChecked)}
                 />
                 <div
-                  className={`w-10 h-4 rounded-full shadow ${
-                    isChecked ? "bg-violet-400" : "bg-gray-600"
-                  }`}
+                  className={`w-10 h-4 rounded-full shadow ${isChecked ? "bg-violet-400" : "bg-gray-600"
+                    }`}
                 ></div>
                 <div
-                  className={`absolute w-6 h-6 rounded-full shadow -inset-y-1 ${
-                    isChecked ? "peer-checked:right-0" : "peer-checked:left-0"
-                  } peer-checked:left-auto bg-violet-400`}
+                  className={`absolute w-6 h-6 rounded-full shadow -inset-y-1 ${isChecked ? "peer-checked:right-0" : "peer-checked:left-0"
+                    } peer-checked:left-auto bg-violet-400`}
                 ></div>
               </span>
             </label>
@@ -380,46 +384,46 @@ export default function EditCampaign() {
             <div className="flex flex-col gap-2 mt-4">
               {selectedProducts?.length
                 ? selectedProducts?.map((product, i) => (
-                    <div
-                      key={i + 200}
-                      className="flex p-2 px-4 rounded border border-black  gap-2 justify-between items-center"
-                    >
-                      <div className="flex items-start">
-                        <img
-                          className="border border-black rounded-sm"
-                          style={{
-                            marginRight: "8px",
-                            height: "24px",
-                            width: "24px",
-                          }}
-                          src={product?.value?.images[0]?.src}
-                          alt=""
-                        />
-                        {product.value.name.split(" ").slice(0, 10).join(" ") +
-                          "..."}
-                      </div>
-
-                      <div className="flex gap-4 items-center">
-                        <span>Regular Price: {product.value.price}</span>
-                        <input
-                          type="number"
-                          placeholder="Camping Price"
-                          className="py-0.5 px-2 border border-black"
-                          value={product.value.campaignPrice || ""}
-                          onChange={(e) =>
-                            handlePriceChange(product.value, e.target.value)
-                          }
-                        />
-                        <button
-                          type="button"
-                          className="bg-red-500 px-2 py-0.5 rounded ml-4"
-                          onClick={() => handleRemoveProduct(product)}
-                        >
-                          Remove
-                        </button>
-                      </div>
+                  <div
+                    key={i + 200}
+                    className="flex p-2 px-4 rounded border border-black  gap-2 justify-between items-center"
+                  >
+                    <div className="flex items-start">
+                      <img
+                        className="border border-black rounded-sm"
+                        style={{
+                          marginRight: "8px",
+                          height: "24px",
+                          width: "24px",
+                        }}
+                        src={product?.value?.images[0]?.src}
+                        alt=""
+                      />
+                      {product.value.name.split(" ").slice(0, 10).join(" ") +
+                        "..."}
                     </div>
-                  ))
+
+                    <div className="flex gap-4 items-center">
+                      <span>Regular Price: {product.value.price}</span>
+                      <input
+                        type="number"
+                        placeholder="Camping Price"
+                        className="py-0.5 px-2 border border-black"
+                        value={product.value.campaignPrice || ""}
+                        onChange={(e) =>
+                          handlePriceChange(product.value, e.target.value)
+                        }
+                      />
+                      <button
+                        type="button"
+                        className="bg-red-500 px-2 py-0.5 rounded ml-4"
+                        onClick={() => handleRemoveProduct(product)}
+                      >
+                        Remove
+                      </button>
+                    </div>
+                  </div>
+                ))
                 : ""}
             </div>
 

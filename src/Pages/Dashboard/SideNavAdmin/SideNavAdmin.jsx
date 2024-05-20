@@ -2299,7 +2299,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
               </NavLink>
 
               {/* Support */}
-              <NavLink
+              {/* <NavLink
                 onMouseMove={() => setMenu(true)}
                 to="/"
                 rel="noopener noreferrer"
@@ -2312,7 +2312,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
               >
                 <FaBlogger className="w-5 h-5 fill-current text-gray-400" />
                 {menu && <span>Support</span>}
-              </NavLink>
+              </NavLink> */}
 
               {/* Omni chats
               <li onMouseMove={() => setMenu(true)} className="">

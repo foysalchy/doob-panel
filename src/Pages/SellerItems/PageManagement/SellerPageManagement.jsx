@@ -27,7 +27,7 @@ const SellerPageManagement = () => {
     queryKey: ["faqs"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/seller/pages/${shopInfo.shopId}`
+        `http://localhost:5001/api/v1/seller/pages/${shopInfo.shopId}`
       );
       const data = await res.json();
       return data;
@@ -169,7 +169,7 @@ const SellerPageManagement = () => {
                   </thead>
                   <tbody className="bg-white divide-y divide-gray-200 ">
                     {faqs
-                      .filter((faq) => faq?.trash !== trash_status)
+                      .filter((faq) => faq?.trash == trash_status)
                       ?.map((faq, index) => (
                         <tr key={faq?.title}>
                           <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">

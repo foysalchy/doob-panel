@@ -16,7 +16,7 @@ export const SellerManageBlog = () => {
     const { shopInfo } = useContext(AuthContext);
 
     const { data: blogs = [], refetch } = useQuery({
-        queryKey: ["blogs"],
+        queryKey: ["blogs_seller"],
         queryFn: async () => {
             const res = await fetch(
                 `https://backend.doob.com.bd/api/v1/seller/blog/${shopInfo?.shopId}`
@@ -120,6 +120,7 @@ export const SellerManageBlog = () => {
                     Add New Blog
                 </span>
             </Link>
+
 
             <div className="relative  my-6">
                 <input

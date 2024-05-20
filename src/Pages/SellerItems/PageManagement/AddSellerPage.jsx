@@ -7,88 +7,12 @@ import { useBlocker, useLocation, useNavigate } from "react-router-dom";
 import ReactQuill from "react-quill";
 import { quillModules } from "../../quillModule";
 import BrightAlert from "bright-alert";
+import { Timestamp } from "firebase/firestore";
 
 const AddSellerPage = () => {
   const [loading, setLoading] = useState(false);
   const { shopInfo, user } = useContext(AuthContext);
   const [draft, setDraft] = useState(false);
-  const formRef = useRef(null);
-
-  const location = useLocation();
-  const [messageData, setMessage] = useState("");
-
-
-  const [formData, setFormData] = useState({
-    title: "",
-    page: "",
-    message: "",
-    MetaTag: "",
-    MetaDescription: "",
-    img: "",
-    MetaImage: "",
-    draft
-  });
-  const [draftSaved, setDraftSaved] = useState(false);
-
-  const handleInputChange = (field, value) => {
-    setFormData({ ...formData, [field]: value });
-  };
-
-  const handleChange = (content) => {
-    setMessage(content);
-    // handleInputChange("message", content); // for drafts
-  };
-
-  let blocker = useBlocker(
-    ({ currentLocation, nextLocation }) =>
-      draftSaved && currentLocation.pathname !== nextLocation.pathname
-  );
-
-  useEffect(() => {
-    const isFormDataEmpty = Object.values(formData).every(
-      (value) => value === ""
-    );
-    setDraftSaved(!isFormDataEmpty);
-  }, [formData]);
-  // Flag to track if user has interacted with the form
-
-  useEffect(() => {
-    if (blocker.state === "blocked") {
-      console.log("yess");
-      // event.preventDefault();
-      // event.returnValue = ""; // Required for some browsers
-      const confirmed = window.confirm(
-        "Are you sure you want to leave? Your changes may not be saved."
-      );
-      if (confirmed) {
-        const draftsAddPageData = {
-          ...formData,
-          // status: "drafts",
-          email: user?.email,
-          drafts: true,
-        };
-        // postPage(draftsAddPageData, "");
-        console.log(draftsAddPageData);
-        fetch(`https://backend.doob.com.bd/api/v1/seller/page`, {
-          method: "POST",
-          headers: {
-            "content-type": "application/json",
-          },
-          body: JSON.stringify(draftsAddPageData),
-        })
-          .then((res) => res.json())
-          .then((data) => {
-            setLoading(false);
-            BrightAlert()
-            blocker.proceed();
-          });
-
-        // blocker.proceed();
-      } else {
-        blocker.proceed();
-      }
-    }
-  }, [draftSaved, blocker]);
 
 
   const navigate = useNavigate()
@@ -108,15 +32,15 @@ const AddSellerPage = () => {
       title,
       description: description,
       shop: shopInfo.shopId,
-      status: true,
+      status: !draft,
       page,
       metaTag,
       metaDescription,
       trash: false,
+      timestamp: new Date().getTime(),
       draft, // Add draft flag
     };
 
-    console.log('data.......', faq);
 
     fetch(`https://backend.doob.com.bd/api/v1/seller/page`, {
       method: "POST",
@@ -128,23 +52,9 @@ const AddSellerPage = () => {
       .then((res) => res.json())
       .then((data) => {
         setLoading(false);
-        setFormData({
-          title: "",
-          page: "",
-          message: "",
-          MetaTag: "",
-          MetaDescription: "",
-          img: "",
-          MetaImage: "",
-          draft
-        })
-        setDraftSaved(false)
-        console.log(draftSaved, 'asdfwf')
         BrightAlert()
         form.reset();
         navigate('/seller/manage-pages/')
-
-        // window.location.href = "/"; // Redirect to home or any other page after successful submission
       });
   };
 
@@ -158,13 +68,13 @@ const AddSellerPage = () => {
               Page Title
             </label>
             <input
-              required
+
               className="w-full rounded-lg border border-gray-900 p-3 text-sm"
               placeholder="Title"
               type="text"
               id="title"
               name="title"
-              onChange={(e) => handleInputChange("title", e.target.value)} // for drafts
+            // onChange={(e) => handleInputChange("title", e.target.value)} // for drafts
             />
           </div>
           <div>
@@ -212,7 +122,7 @@ const AddSellerPage = () => {
               required
               className="w-full mt-[4rem] sm:mt-9 rounded-lg border border-gray-900 p-3 text-sm"
               placeholder="Meta Tag"
-              onChange={(e) => handleInputChange("MetaTag", e.target.value)} // for drafts
+              // onChange={(e) => handleInputChange("MetaTag", e.target.value)} // for drafts
               type="text"
               id="metaTag"
               name="metaTag"
@@ -228,9 +138,9 @@ const AddSellerPage = () => {
               placeholder="Meta Description"
               type="text"
               id="metaDescription"
-              onChange={(e) =>
-                handleInputChange("MetaDescription", e.target.value)
-              } // for drafts
+              // onChange={(e) =>
+              //   handleInputChange("MetaDescription", e.target.value)
+              // } // for drafts
               name="metaDescription"
             />
           </div>

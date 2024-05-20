@@ -90,14 +90,16 @@ const SellerManageBlog = () => {
     setSearchQuery(event.target.value);
   };
 
-  let filteredData = blogs.filter((item) =>
-    (item.draft === blogType || !blogType) &&
-    (item.trash === `${trashType}` || !trashType) &&
-    (
-      item.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      item._id.toString().includes(searchQuery)
-    )
-  );
+  let filteredData = blogs.length ? blogs.filter((item) => {
+    const matchesBlogType = (item.draft === blogType) || !blogType;
+    const matchesTrashType = (item.trash === `${trashType}`)
+    const matchesSearchQuery = item.title?.toLowerCase().includes(searchQuery.toLowerCase()) || item._id.toString().includes(searchQuery);
+
+    return matchesBlogType && matchesTrashType && matchesSearchQuery;
+  }) : [];
+
+
+  console.log(filteredData);
 
   const [OpenModal, setOpenModal] = useState(false);
 
@@ -121,6 +123,7 @@ const SellerManageBlog = () => {
           Add New Blog
         </span>
       </Link>
+
 
       <div className="relative  my-6">
         <input

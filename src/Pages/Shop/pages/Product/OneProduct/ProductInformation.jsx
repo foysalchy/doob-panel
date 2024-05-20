@@ -563,7 +563,7 @@ const ProductInformation = () => {
               <div className="space-y-4">
                 {
                   releventProduct?.slice(0, 3)?.map((product, index) =>
-                    <Link to={`/products/${product?._id}`} key={product?._id} className="border w-full duration-150 group hover:shadow-lg flex items-start gap-2 p-3 rounded">
+                    <Link to={`/shop/${shopId}/product/${product?._id}`} key={product?._id} className="border w-full duration-150 group hover:shadow-lg flex items-start gap-2 p-3 rounded">
                       <img
                         alt="Product Image"
                         className="w-20 h-20 bg-gray-200 rounded mb-2"
@@ -606,7 +606,7 @@ const ProductInformation = () => {
             <div className="space-y-4">
               {
                 releventProduct?.slice(0, 3)?.map((product, index) =>
-                  <Link to={`/products/${product?._id}`} key={product?._id} className="border w-full duration-150 group hover:shadow-lg flex items-start gap-2 p-3 rounded">
+                  <Link to={`/shop/${shopId}/product/${product?._id}`} key={product?._id} className="border w-full duration-150 group hover:shadow-lg flex items-start gap-2 p-3 rounded">
                     <img
                       alt="Product Image"
                       className="w-20 h-20 bg-gray-200 rounded mb-2"
