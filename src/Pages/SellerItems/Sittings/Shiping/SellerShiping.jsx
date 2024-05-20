@@ -135,7 +135,7 @@ const SellerShipping = () => {
             // handleGetaway()
             console.log("yes");
             fetch(
-              `http://localhost:5001/api/v1/seller/pathao-shopId?shop_id=${shopInfo?._id}`
+              `https://backend.doob.com.bd/api/v1/seller/pathao-shopId?shop_id=${shopInfo?._id}`
             )
               .then((response) => response.json())
               .then((data) => {
@@ -160,7 +160,7 @@ const SellerShipping = () => {
   const updateShopId = async () => {
     console.log(storePathaoData);
     fetch(
-      `http://localhost:5001/api/v1/seller/update-shopId?shopId=${shopInfo.shopId}`,
+      `https://backend.doob.com.bd/api/v1/seller/update-shopId?shopId=${shopInfo.shopId}`,
       {
         method: "PUT",
         headers: {

@@ -492,6 +492,7 @@ const ClimAndReturn = () => {
           ordersList={ordersList}
           isReject={isReject}
           setReject={setReject}
+          refetch={refetch}
         />
       )}
 

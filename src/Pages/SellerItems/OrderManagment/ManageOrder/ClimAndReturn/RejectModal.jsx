@@ -7,12 +7,18 @@ import useImageUpload from "../../../../../Hooks/UploadImage";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../../../../AuthProvider/UserProvider";
 
-export default function RejectModal({ ordersList, setReject, isReject }) {
+export default function RejectModal({
+  ordersList,
+  setReject,
+  isReject,
+  refetch,
+}) {
   // for image
 
   const { shopInfo } = useContext(AuthContext);
 
   const [images, setImages] = useState([]);
+  const [loading, setIsLoading] = useState(false);
 
   const handleImageChange = (e) => {
     const fileList = Array.from(e.target.files);
@@ -29,14 +35,16 @@ export default function RejectModal({ ordersList, setReject, isReject }) {
     setImages(updatedImages);
   };
   const { uploadImage } = useImageUpload();
+
+  const [statusOptionSelect, setStatusOptionSelect] = useState("");
   const statusOption = [
     {
       label: "Claim To Daraz",
       value: "claim_to_daraz",
     },
     {
-      label: "Return To curiur",
-      value: "return_to_curiur",
+      label: "Return To Courier",
+      value: "return_to_courier",
     },
     {
       label: "Approved",
@@ -48,69 +56,77 @@ export default function RejectModal({ ordersList, setReject, isReject }) {
     },
   ];
 
-  const update_all_status_reject = () => {
-    Swal.fire({
-      title: "Do you want to reject All Order?",
-      showCancelButton: true,
-      confirmButtonText: "Reject",
-      input: "textarea", // Add a textarea input
-      inputPlaceholder: "Enter your rejection reason here", // Placeholder for the textarea
-      inputAttributes: {
-        // Optional attributes for the textarea
-        maxLength: 100, // Set maximum length
-      },
-    }).then((result) => {
-      const rejectNote = result.value; // Get the value entered in the textarea
-      // Now you can use the rejection reason as needed
-      //   console.log(rejectNote, item?._id);
+  const update_all_status_rejectSubmit = async (e) => {
+    e.preventDefault();
+    const values = Object.fromEntries(new FormData(e.target));
+    console.log("Form values:", values);
 
-      ordersList.forEach((order) => {
-        console.log(order, "order");
+    let rejectImages = [];
+    for (let i = 0; i < images.length; i++) {
+      const imageUrl = await uploadImage(images[i].file);
 
-        const rejectData = {
-          status: "return",
-          orderId: order?._id,
-          rejectNote: rejectNote,
-        };
-        // console.log(rejectData);
-        // return;
-        fetch(
-          `https://backend.doob.com.bd/api/v1/seller/order-quantity-update`,
-          {
-            method: "PUT",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(order),
+      rejectImages.push(imageUrl);
+    }
+
+    const { rejectStatus, rejectNote } = values;
+
+    console.log(rejectImages);
+    setIsLoading(true);
+    ordersList.forEach((order) => {
+      console.log(order, "order");
+
+      const rejectData = {
+        status: "return",
+        // status: rejectStatus,
+        orderId: order?._id,
+        rejectNote: rejectNote,
+        rejectStatus: rejectStatus,
+      };
+
+      if (statusOptionSelect?.value === "approved") {
+        rejectData["rejectAmount"] = parseInt(values?.rejectAmount);
+      }
+      console.log(rejectData);
+      //   return;
+      fetch(`https://backend.doob.com.bd/api/v1/seller/order-quantity-update`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(order),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+          if (data.success) {
+            // productStatusUpdate("reject", order._id);
+            fetch(
+              `https://backend.doob.com.bd/api/v1/seller/order-status-update?orderId=${order?._id}&status=return`,
+              {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                  ...rejectData,
+                }),
+              }
+            )
+              .then((res) => res.json())
+              .then((data) => {
+                console.log(
+                  "🚀 ~ file: RejectModal.jsx:113 ~ .then ~ data:",
+                  data
+                );
+                refetch();
+                setReject(false);
+                setIsLoading(false);
+              });
+            refetch();
+          } else {
+            alert("Failed to Update");
           }
-        )
-          .then((res) => res.json())
-          .then((data) => {
-            console.log(data);
-            if (data.success) {
-              // productStatusUpdate("reject", order._id);
-              fetch(
-                `https://backend.doob.com.bd/api/v1/seller/order-status-update?orderId=${order?._id}&status=return`,
-                {
-                  method: "PUT",
-                  headers: { "Content-Type": "application/json" },
-                  body: JSON.stringify({
-                    ...rejectData,
-                  }),
-                }
-              )
-                .then((res) => res.json())
-                .then((data) => {
-                  refetch();
-                });
-              refetch();
-            } else {
-              alert("Failed to Update");
-            }
-          });
-      });
-      // return;
+        });
     });
   };
 
+  //   console.log(statusOptionSelect);
   return (
     <div
       className={`fixed z-50 top-0 left-0 flex h-full min-h-screen w-full items-center justify-center bg-black bg-opacity-90 px-4 py-5 ${
@@ -131,7 +147,7 @@ export default function RejectModal({ ordersList, setReject, isReject }) {
         </div>
 
         <div className="max-h-[700px] px-10 text-start overflow-y-scroll">
-          <form action="">
+          <form action="" onSubmit={update_all_status_rejectSubmit}>
             <div className="mt-10 text-black">
               <label className="text-sm">Select Status</label>
               <Select
@@ -146,36 +162,104 @@ export default function RejectModal({ ordersList, setReject, isReject }) {
                   }),
                 }}
                 // className="text-black"
-                name="warehouse"
+                name="rejectStatus"
                 required
                 options={statusOption}
                 placeholder="Please select"
+                onChange={setStatusOptionSelect}
               />
             </div>
+            {/* {} */}
 
+            {statusOptionSelect?.value === "approved" && (
+              <div className=" mt-4">
+                <label className="text-sm">Add Amount</label>
+                <input
+                  required
+                  name="rejectAmount"
+                  type="number"
+                  placeholder="Reject Amount"
+                  rows="4"
+                  className="w-full p-2 border border-black rounded-md  text-gray-900"
+                />
+              </div>
+            )}
+            <div className="space-y-2 mt-5">
+              <div className="flex items-center space-x-2">
+                <input
+                  name="images"
+                  className="w-full rounded-md border border-gray-300 p-2 focus:border-primary focus:outline-none"
+                  id="images"
+                  multiple
+                  type="file"
+                  onChange={handleImageChange}
+                />
+              </div>
+              <div className="grid grid-cols-3 gap-2">
+                {images.map((image, index) => (
+                  <div className="relative" key={index}>
+                    <img
+                      alt={`Image ${index + 1}`}
+                      className="h-20 w-full border rounded-md object-cover"
+                      src={image.url}
+                    />
+                    <button
+                      className="absolute top-1 right-1 rounded-full bg-gray-800 p-1 text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500"
+                      type="button"
+                      onClick={() => handleImageRemove(index)}
+                    >
+                      <svg
+                        className="h-4 w-4"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          clipRule="evenodd"
+                          d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                          fillRule="evenodd"
+                        />
+                      </svg>
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </div>
             <div className=" mt-4">
-              <label className="text-sm">Add Node</label>
-              <input
+              <label className="text-sm">Add Note</label>
+              <textarea
                 required
-                name="area"
+                name="rejectNote"
                 type="text"
-                placeholder="Description"
+                placeholder="Reject Note"
+                rows="4"
                 className="w-full p-2 border border-black rounded-md  text-gray-900"
               />
             </div>
 
             <div className="flex items-center justify-between mt-10">
-              <button
-                type="submit"
-                className="group relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
-              >
-                <span className="absolute -start-full transition-all group-hover:start-4">
-                  <FaLongArrowAltRight />
-                </span>
-                <span className="text-sm font-medium transition-all group-hover:ms-4">
-                  Update Reject
-                </span>
-              </button>
+              {!loading ? (
+                <button
+                  type="submit"
+                  className="group relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
+                >
+                  <span className="absolute -start-full transition-all group-hover:start-4">
+                    <FaLongArrowAltRight />
+                  </span>
+                  <span className="text-sm font-medium transition-all group-hover:ms-4">
+                    Update Reject
+                  </span>
+                </button>
+              ) : (
+                <div className="group relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500">
+                  <span className="absolute -start-full transition-all group-hover:start-4">
+                    <FaLongArrowAltRight />
+                  </span>
+                  <span className="text-sm font-medium transition-all group-hover:ms-4">
+                    Update...............
+                  </span>
+                </div>
+              )}
             </div>
           </form>
         </div>

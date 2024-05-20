@@ -66,7 +66,7 @@ const Payment = () => {
         .then((data) => {
           console.log("data payment", data);
           BrightAlert({ icon: "success" });
-          navigate(`/shop/${shopId}/confirm-order`);
+          navigate(`/shop/${shopId}/user/my-orders`);
         });
     }
   };
