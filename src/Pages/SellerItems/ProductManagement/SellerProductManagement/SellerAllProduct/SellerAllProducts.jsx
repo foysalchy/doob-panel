@@ -410,6 +410,9 @@ const SellerAllProducts = () => {
   };
 
 
+
+  console.log('manage product : ', products);
+
   return (
     <div className="">
       <div className="h-0 w-0">
@@ -784,13 +787,13 @@ const SellerAllProducts = () => {
                                       <div className="imgSm  ">
                                         <img
                                           className="object-cover w-10 h-10 rounded"
-                                          srcSet={product?.images[0].src}
-                                          src={product?.images[0].src}
+                                          srcSet={product?.featuredImage?.src}
+                                          src={product?.featuredImage?.src}
                                           alt=""
                                         />
                                         <div
                                           style={{
-                                            backgroundImage: `url(${product?.images[0].src})`,
+                                            backgroundImage: `url(${product?.featuredImage?.src})`,
                                           }}
                                           className="absolute top-[-40px] duration-150 abs hidden bg-[url(${product?.featuredImage?.src})] left-[43px] object-cover bg-cover rounded bg-white shadow-xl opacity-100 z-[1000] w-[150px] h-[150px] ring-1 ring-gray-500"
                                         ></div>

@@ -1,3 +1,4 @@
+import { useQuery } from '@tanstack/react-query';
 import React, { useEffect, useState } from 'react';
 import { CgClose } from 'react-icons/cg';
 import { FaFilter, FaStar } from 'react-icons/fa6';
@@ -28,10 +29,6 @@ const SeeAllProduct = () => {
 
 
 
-
-
-
-
     {/*---------------------------------*/ }
     {/*       Filter with Category         */ }
     {/*---------------------------------*/ }
@@ -39,7 +36,6 @@ const SeeAllProduct = () => {
 
 
 
-    console.log(products, 'select.........');
 
 
 
@@ -101,6 +97,7 @@ const SeeAllProduct = () => {
     const filterWithBrand = (brand) => {
         console.log(brand, 'Brands....');
     }
+
 
 
 
@@ -180,7 +177,6 @@ const SeeAllProduct = () => {
         setSelectedFeature(updatedSelectedValues);
         log
     };
-
 
 
     {/*---------------------------------*/ }
@@ -284,6 +280,74 @@ const SeeAllProduct = () => {
 
     // const filterData = filterAllData(categroyValue, selectedBrandValues, products, selectedFeature, selectedRatings);
 
+
+
+
+    const { data: megaCategoryData = [], refetch: refetchMega } = useQuery({
+        queryKey: ["megaCategoryData"],
+        queryFn: async () => {
+            const res = await fetch(
+                "https://backend.doob.com.bd/api/v1/seller/category/megacategory"
+            );
+            const data = await res.json();
+            return data.rows;
+        },
+    });
+
+    const { data: miniCategoryData = [], refetch: refetchMini } = useQuery({
+        queryKey: ["miniCategoryData"],
+        queryFn: async () => {
+            const res = await fetch(
+                "https://backend.doob.com.bd/api/v1/seller/category/miniCategories"
+            );
+            const data = await res.json();
+            return data.rows;
+        },
+    });
+
+    const { data: subCategoryData = [], refetch: refetchSub } = useQuery({
+        queryKey: ["subCategoryData"],
+        queryFn: async () => {
+            const res = await fetch(
+                "https://backend.doob.com.bd/api/v1/seller/category/subcategories"
+            );
+            const data = await res.json();
+            return data.rows;
+        },
+    });
+
+    const { data: extraCategoryData = [], refetch: refetchExtra } = useQuery({
+        queryKey: ["extraCategoryData"],
+        queryFn: async () => {
+            const res = await fetch(
+                "https://backend.doob.com.bd/api/v1/seller/category/extraCategories"
+            );
+            const data = await res.json();
+            return data.rows;
+        },
+    });
+
+
+
+    const { data: fData, refetch } = useQuery({
+        queryKey: "fData",
+        queryFn: async () => {
+            const res = await fetch(
+                `https://backend.doob.com.bd/api/v1/seller/filter-products?categories=${categroyValue}&minPrice=${minPrice}&maxPrice=${maxPrice}&brandName=${selectedBrandValues}`
+            );
+            const data = await res.json();
+            return data;
+        },
+    });
+
+    useEffect(() => {
+        refetch();
+    }, [selectedBrandValues, categroyValue, minPrice, maxPrice, selectedRatings, selectedFeature]);
+
+
+    console.log('select.........', fData);
+
+
     return (
         <div>
             <section className="text-gray-600 body-font">
@@ -320,16 +384,60 @@ const SeeAllProduct = () => {
 
                                         <div className=" border-gray-200 bg-white">
                                             <ul className="space-y-1 px-4 pb-4 pt-0">
-                                                {filterValue?.category.length &&
-                                                    filterValue?.category.slice(0, showAllBrands ? filterValue.category.length : 4).map(itm => (
+
+                                                <li>
+                                                    <button
+                                                        onClick={() => setCategoryValue('')}
+                                                        className="inline-flex hover:text-blue-600 duration-150 items-center gap-2">
+                                                        <span className="text-sm font-medium">All</span>
+                                                    </button>
+                                                </li>
+                                                {
+                                                    megaCategoryData?.map(itm => (
                                                         <li key={itm.key}>
                                                             <button
-                                                                onClick={() => setCategoryValue(itm?.key)}
+                                                                onClick={() => setCategoryValue(itm?.name)}
                                                                 className="inline-flex hover:text-blue-600 duration-150 items-center gap-2">
-                                                                <span className="text-sm font-medium">{itm.value}</span>
+                                                                <span className="text-sm font-medium">{itm?.name}</span>
                                                             </button>
                                                         </li>
                                                     ))}
+
+                                                {
+                                                    subCategoryData?.map(itm => (
+                                                        <li key={itm.key}>
+                                                            <button
+                                                                onClick={() => setCategoryValue(itm?.subCategoryName)}
+                                                                className="inline-flex hover:text-blue-600 duration-150 items-center gap-2">
+                                                                <span className="text-sm font-medium">{itm?.subCategoryName}</span>
+                                                            </button>
+                                                        </li>
+                                                    ))}
+                                                {
+                                                    miniCategoryData?.map(itm => (
+                                                        <li key={itm._id}>
+                                                            <button
+                                                                onClick={() => setCategoryValue(itm?.miniCategoryName)}
+                                                                className="inline-flex hover:text-blue-600 duration-150 items-center gap-2">
+                                                                <span className="text-sm font-medium">{itm?.miniCategoryName}</span>
+                                                            </button>
+                                                        </li>
+                                                    ))}
+
+                                                {
+                                                    extraCategoryData?.map(itm => (
+                                                        <li key={itm._id}>
+                                                            <button
+                                                                onClick={() => setCategoryValue(itm?.extraCategoryName)}
+                                                                className="inline-flex hover:text-blue-600 duration-150 items-center gap-2">
+                                                                <span className="text-sm font-medium">{itm?.extraCategoryName}</span>
+                                                            </button>
+                                                        </li>
+                                                    ))}
+
+
+
+
                                                 {filterValue?.category.length > 4 && (
                                                     <li className="text-blue-500">
                                                         <button onClick={() => setShowAllBrands(!showAllBrands)}>

@@ -2,7 +2,7 @@ import React, { useContext, useRef } from 'react';
 import { AuthContext } from '../../../../AuthProvider/UserProvider';
 import Barcode from 'react-barcode';
 import { useReactToPrint } from 'react-to-print';
-import logo from '../../../../assets/Logo.png'
+import logo from '../../../../assets/doobBlack.png'
 const AdminSalesInvoice = ({ products, setModalOpen }) => {
     const { user } = useContext(AuthContext);
 
@@ -26,9 +26,9 @@ const AdminSalesInvoice = ({ products, setModalOpen }) => {
 
 
     const InvoicePage = ({ data }) => {
-        const totalPrice = parseFloat(data?.productPrice ?? 0) * parseFloat(data?.quantity ?? 1);
+        const totalPrice = parseFloat(data?.data?.productPrice ?? 0) * parseFloat(data?.data?.quantity ?? 1);
 
-
+        console.log(products, '.....');
         return (
             <>
                 <div
@@ -54,24 +54,24 @@ const AdminSalesInvoice = ({ products, setModalOpen }) => {
                             <div className="flex items-start justify-between mt-4">
                                 <div>
                                     <div className='flex items-center gap-2'>
-                                        {/* <h4 className='font-semibold text-gray-700 text-sm'>
+                                        <h4 className='font-semibold text-gray-700 text-sm'>
                                             Name :
-                                        </h4> */}
-                                        {/* <p className="text-gray-600 text-sm">{data?.userInfo?.fullName}</p> */}
+                                        </h4>
+                                        <p className="text-gray-600 text-sm">{data?.user?.name}</p>
                                     </div>
                                     <div className='flex items-center gap-2'>
                                         <h4 className='font-semibold text-gray-700 text-sm'>
                                             Email :
                                         </h4>
-                                        <p className="text-gray-600 text-sm">{data?.userEmail}</p>
+                                        <p className="text-gray-600 text-sm">{data?.user?.email}</p>
                                     </div>
 
-                                    {/* <div className='flex items-center gap-2'>
+                                    <div className='flex items-center gap-2'>
                                         <h4 className='font-semibold text-gray-700 text-sm'>
                                             Phone :
                                         </h4>
-                                        <p className="text-gray-600 text-sm">{data?.userInfo?.mobileNumber}</p>
-                                    </div> */}
+                                        <p className="text-gray-600 text-sm">{data?.user?.phoneNumber}</p>
+                                    </div>
 
                                 </div>
 
@@ -109,17 +109,17 @@ const AdminSalesInvoice = ({ products, setModalOpen }) => {
                                                 {
                                                     <tr className="text-gray-700">
                                                         <td className="px-2 w-[90px] py-2 border border-gray-800">
-                                                            <img src={data?.productImg ?? ''} alt="photo" className="w-12 h-12 border object-cover m-auto rounded bg-indigo-400" />
+                                                            <img src={data?.data?.productImg ?? ''} alt="photo" className="w-12 h-12 border object-cover m-auto rounded bg-indigo-400" />
                                                         </td>
                                                         <td className="px-2 py-2 w-[500px] text-sm border border-gray-800">
-                                                            {data?.productTitle}
+                                                            {data?.data?.productTitle}
                                                         </td>
 
                                                         <td className="px-2 py-2 text-sm border text-center border-gray-800">
-                                                            {data?.quantity ?? 1}
+                                                            {data?.data?.quantity ?? 1}
                                                         </td>
                                                         <td className="px-2 py-2 text-sm text-center border border-gray-800">
-                                                            {data?.productPrice ?? 0}
+                                                            {data?.data?.productPrice ?? 0}
                                                         </td>
                                                     </tr>}
 

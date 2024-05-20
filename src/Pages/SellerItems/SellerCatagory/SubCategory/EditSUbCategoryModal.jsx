@@ -4,6 +4,7 @@ import Swal from "sweetalert2";
 
 import Select from "react-select";
 import { AuthContext } from "../../../../AuthProvider/UserProvider";
+import EditDarazWoo from "../DarazWoo/EditDarazWoo";
 export default function EditSUbCategoryModal({
   editOn,
   warehouse,
@@ -120,8 +121,8 @@ export default function EditSUbCategoryModal({
     imageFormData.append("image", image.files[0]);
     const imageUrl = await uploadImage(imageFormData);
     const darazCategory = daraz
-      ? e.target.darazCategory.value
-      : e.target.darazCategory.value;
+      ? e.target?.darazCategory?.value
+      : e.target?.darazCategory?.value;
 
     let darazCategory_id = editOn?.darazCategory_id ?? "";
     if (darazCategory) {
@@ -256,6 +257,8 @@ export default function EditSUbCategoryModal({
             />
           </div>
 
+          {/* <EditDarazWoo selectedData={warehouse} /> */}
+
           {shopInfo.darazLogin && (
             <button
               type="button"
@@ -340,6 +343,7 @@ export default function EditSUbCategoryModal({
                 />
               </div>
             )}
+
           <br />
           <br />
           <div className="flex justify-start">

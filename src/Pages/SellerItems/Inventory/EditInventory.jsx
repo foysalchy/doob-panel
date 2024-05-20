@@ -18,7 +18,7 @@ const EditInventory = ({ refetch, open, setOpen, data }) => {
 
   const [note, setNote] = useState("");
 
-  console.log(selectStatusValue, "selectStatusValue");
+  console.log(shopInfo, ".........>>>");
 
   const handleIncrease = () => {
     setCount(parseInt(count) + 1);
@@ -32,6 +32,8 @@ const EditInventory = ({ refetch, open, setOpen, data }) => {
     const stock = {
       productId: data._id,
       shopInfo: {
+        logo: shopInfo?.logo,
+        phone: shopInfo?.shopNumber,
         address: shopInfo?.address,
         shopEmail: shopInfo?.shopEmail,
         shopName: shopInfo?.shopName,
@@ -85,7 +87,6 @@ const EditInventory = ({ refetch, open, setOpen, data }) => {
             BrightAlert();
           });
     }
-    console.log(data, ">>>>>>><<<<<<<<<<<<<<<<<<<");
   };
 
   const options = data?.variations?.map((item) => {

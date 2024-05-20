@@ -196,7 +196,7 @@ const WareHouse = ({ adminWare, setAdminWare, shopInfo }) => {
                 <div className="">
                   <label className="text-sm">Select Area</label>
                   <Select
-                    required
+                    // required
                     onChange={handleAreaChange}
                     name="area"
                     options={options.areas
@@ -213,7 +213,7 @@ const WareHouse = ({ adminWare, setAdminWare, shopInfo }) => {
                 <div className="">
                   <label className="text-sm">Select Rack</label>
                   <Select
-                    required
+                    // required
                     name="rack"
                     onChange={handleRackChange}
                     options={options.racks
@@ -222,7 +222,7 @@ const WareHouse = ({ adminWare, setAdminWare, shopInfo }) => {
                         value: rack.rack,
                         label: rack.rack,
                       }))}
-                    placeholder="Please select"
+                    placeholder="Please select...."
                   />
                 </div>
               )}
@@ -230,7 +230,7 @@ const WareHouse = ({ adminWare, setAdminWare, shopInfo }) => {
                 <div className="">
                   <label className="text-sm">Select Self</label>
                   <Select
-                    required
+                    // required
                     name="self"
                     onChange={handleSelfChange}
                     options={options.selfs
@@ -247,7 +247,7 @@ const WareHouse = ({ adminWare, setAdminWare, shopInfo }) => {
                 <div className="">
                   <label className="text-sm">Select Cell</label>
                   <Select
-                    required
+                    // required
                     name="cell"
                     onChange={handleCellChange}
                     options={
@@ -270,7 +270,7 @@ const WareHouse = ({ adminWare, setAdminWare, shopInfo }) => {
                 <div className="">
                   <label className="text-sm">Select Warehouses</label>
                   <Select
-                    required
+                    // required
                     className=""
                     onChange={handleWarehouseChange}
                     value={{

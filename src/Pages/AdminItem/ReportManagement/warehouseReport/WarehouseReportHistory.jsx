@@ -1,39 +1,37 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { AuthContext } from "../../../../AuthProvider/UserProvider";
 import { useQuery } from "@tanstack/react-query";
 import { BiCloset } from "react-icons/bi";
-import WarehouseProductModal from "./WarehouseProductModal";
+import WarehouseAdminProductModal from "./WarehouseAdminProductModal";
 
-const WarehouseHistory = () => {
-  const { shopInfo } = useContext(AuthContext);
+const WarehouseReportHistory = () => {
   const [OpenModal, setOpenModal] = useState(false);
   const itemsPerPage = 10; // Number of items per page
 
   const { data: warehouseData = [], isLoading } = useQuery({
-    queryKey: ["warehouseData"],
+    queryKey: ["adminWarehouseData"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/seller/warehouses-products?shopId=${shopInfo?._id}`
+        `https://backend.doob.com.bd/api/v1/admin/warehouses-products`
       );
       const data = await res.json();
       return data.warehouses;
     },
   });
 
-  console.log(warehouseData);
+  //   console.log(warehouseData);
   const { data: wareLength = [], refetch: reload } = useQuery({
-    queryKey: ["wareLengthData"],
+    queryKey: ["wareAdminLengthData"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/seller/warehouse/seller-all-warehouse-area-rack-cell-self?shopId=${shopInfo._id}`
+        `https://backend.doob.com.bd/api/v1/admin/admin-all-warehouse-area-rack-cell-self`
       );
       const data = await res.json();
       return data;
     },
   });
 
-  console.log(wareLength);
+  //   console.log(wareLength);
 
   // Calculate total number of pages
   const totalPages = Math.ceil(warehouseData.length / itemsPerPage);
@@ -125,23 +123,21 @@ const WarehouseHistory = () => {
                           <span>
                             {" "}
                             Area:{" "}
-                            {
+                            {wareLength?.length &&
                               wareLength?.find(
                                 (item) =>
                                   item.warehouse === data?.warehouse?.name
-                              )?.areas?.length
-                            }
+                              )?.areas?.length}
                           </span>
 
                           <span>
                             {" "}
                             Racks:{" "}
-                            {
+                            {wareLength?.length &&
                               wareLength?.find(
                                 (item) =>
                                   item.warehouse === data?.warehouse?.name
-                              )?.racks?.length
-                            }
+                              )?.racks?.length}
                           </span>
                         </td>
 
@@ -150,22 +146,20 @@ const WarehouseHistory = () => {
                           <span>
                             {" "}
                             Selfs:{" "}
-                            {
+                            {wareLength?.length &&
                               wareLength?.find(
                                 (item) =>
                                   item.warehouse === data?.warehouse?.name
-                              )?.selfs?.length
-                            }
+                              )?.selfs?.length}
                           </span>
                           <span>
                             {" "}
                             Cells:{" "}
-                            {
+                            {wareLength?.length &&
                               wareLength?.find(
                                 (item) =>
                                   item.warehouse === data?.warehouse?.name
-                              )?.cells?.length
-                            }
+                              )?.cells?.length}
                           </span>
                         </td>
                         <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
@@ -208,7 +202,7 @@ const WarehouseHistory = () => {
                           </div>
                         </td>
                         {OpenModal === data.warehouse._id && (
-                          <WarehouseProductModal
+                          <WarehouseAdminProductModal
                             setOpenModal={setOpenModal}
                             products={data.products}
                           />
@@ -288,4 +282,4 @@ const WarehouseHistory = () => {
   );
 };
 
-export default WarehouseHistory;
+export default WarehouseReportHistory;

@@ -122,7 +122,7 @@ export default function EditMegaCategoryModal({
     const name = form.name.value;
 
     const darazCategory = daraz
-      ? e.target.darazCategory.value
+      ? e.target?.darazCategory?.value
       : JSON.stringify(editOn?.darazCategory);
 
     let darazCategory_id = editOn?.darazCategory_id ?? "";

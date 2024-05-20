@@ -24,7 +24,6 @@ const PopupManagement = () => {
     },
   });
 
-  console.log(faqs);
 
   const updateStatus = (id, status) => {
     fetch(`https://backend.doob.com.bd/api/v1/seller/popup/status/${id}`, {

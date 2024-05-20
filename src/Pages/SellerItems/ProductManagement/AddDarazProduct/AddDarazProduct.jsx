@@ -272,6 +272,7 @@ const AddDarazProduct = () => {
             setAdminWare={setAdminWare}
           />
           <OnlySyncCategory />
+
           <Variants
             adminWare={adminWare}
             multiVendor={multiVendor}

@@ -140,8 +140,8 @@ const ExtraCategoriesManagement = () => {
     let timerInterval;
 
     Swal.fire({
-      title: "Deleting Seller",
-      html: "Please wait... <br> <b></b> milliseconds remaining.",
+      title: "Deleting...",
+      html: "Please wait <br> <b></b> milliseconds remaining.",
       timer: 500,
       timerProgressBar: true,
       showConfirmButton: false,
@@ -400,7 +400,7 @@ const ExtraCategoriesManagement = () => {
                               {warehouse?.megaCategory &&
                                 JSON.parse(warehouse.megaCategory).name}
                               <span>&gt;
-                                
+
                               </span>
                               {warehouse?.subCategoryName}
                               <span>

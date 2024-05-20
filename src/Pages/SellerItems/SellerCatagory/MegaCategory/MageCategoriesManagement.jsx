@@ -103,11 +103,10 @@ const MageCategoriesManagement = () => {
           return (
             <li key={pageNumber}>
               <button
-                className={`block h-8 w-8 rounded border ${
-                  pageNumber === currentPage
-                    ? "border-blue-600 bg-blue-600 text-white"
-                    : "border-gray-900 bg-white text-center leading-8 text-gray-900"
-                }`}
+                className={`block h-8 w-8 rounded border ${pageNumber === currentPage
+                  ? "border-blue-600 bg-blue-600 text-white"
+                  : "border-gray-900 bg-white text-center leading-8 text-gray-900"
+                  }`}
                 onClick={() => handleChangePage(pageNumber)}
               >
                 {pageNumber}
@@ -149,8 +148,8 @@ const MageCategoriesManagement = () => {
     let timerInterval;
 
     Swal.fire({
-      title: "Deleting Seller",
-      html: "Please wait... <br> <b></b> milliseconds remaining.",
+      title: "Deleting...",
+      html: "Please wait <br> <b></b> milliseconds remaining.",
       timer: 500,
       timerProgressBar: true,
       showConfirmButton: false,
@@ -178,7 +177,13 @@ const MageCategoriesManagement = () => {
         )
           .then((res) => res.json())
           .then((data) => {
-            Swal.fire("Seller Deleted", "", "success");
+            // Show success message upon successful deletion
+            Swal.fire({
+              title: "Category Deleted",
+              icon: "success",
+              showConfirmButton: false,
+              timer: 1500,
+            });
             refetch();
           })
           .catch((error) => {
@@ -394,9 +399,8 @@ const MageCategoriesManagement = () => {
                             warehouse?.feature ? false : true
                           )
                         }
-                        className={`${
-                          warehouse?.feature ? "bg-green-500" : "bg-red-500"
-                        } text-white ml-2 rounded capitalize px-3 py-1`}
+                        className={`${warehouse?.feature ? "bg-green-500" : "bg-red-500"
+                          } text-white ml-2 rounded capitalize px-3 py-1`}
                       >
                         futures
                       </button>
@@ -407,9 +411,8 @@ const MageCategoriesManagement = () => {
                             warehouse?.menu ? false : true
                           )
                         }
-                        className={`${
-                          warehouse?.menu ? "bg-green-500" : "bg-red-500"
-                        } text-white ml-2 rounded capitalize px-3 py-1`}
+                        className={`${warehouse?.menu ? "bg-green-500" : "bg-red-500"
+                          } text-white ml-2 rounded capitalize px-3 py-1`}
                       >
                         menu
                       </button>
