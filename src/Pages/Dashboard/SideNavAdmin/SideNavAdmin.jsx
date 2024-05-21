@@ -2835,6 +2835,15 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                               </li>
                               <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50">
                                 <Link
+                                  to={"/admin/report-management/pricing"}
+                                  className="hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                >
+                                  {/* <FaWarehouse className="w-5 h-5 fill-current text-gray-400 " />{" "} */}
+                                  Pricing
+                                </Link>
+                              </li>
+                              <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50">
+                                <Link
                                   to={
                                     "/admin/report-management/subscriber-admin"
                                   }
@@ -2936,6 +2945,15 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                               >
                                 {/* <FaWarehouse className="w-5 h-5 fill-current text-gray-400 " />{" "} */}
                                 Search
+                              </Link>
+                            </li>
+                            <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50">
+                              <Link
+                                to={"/admin/report-management/pricing"}
+                                className="hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                              >
+                                {/* <FaWarehouse className="w-5 h-5 fill-current text-gray-400 " />{" "} */}
+                                Pricing
                               </Link>
                             </li>
                             <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50">
