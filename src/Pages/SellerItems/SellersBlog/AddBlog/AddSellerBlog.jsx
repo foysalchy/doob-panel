@@ -86,7 +86,7 @@ const AddSellerBlog = () => {
           img: image,
           date: new Date(),
           MetaImage,
-          status: true,
+          // status: true,
           MetaDescription,
           MetaTag,
           status: !draft,
