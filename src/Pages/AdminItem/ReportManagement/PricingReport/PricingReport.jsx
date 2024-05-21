@@ -54,7 +54,16 @@ const PricingReport = () => {
                   Price
                 </th>
                 <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm ">
+                  Yearly Price
+                </th>
+                <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm ">
                   Time Duration
+                </th>
+                <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm ">
+                  Product Limit
+                </th>
+                <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm ">
+                  Permission Number
                 </th>
                 <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm ">
                   Action
@@ -67,11 +76,14 @@ const PricingReport = () => {
                   <tr key={price?.name}>
                     <td className="px-4 py-3">{price?.name}</td>
                     <td className="px-4 py-3">{price?.price}</td>
+                    <td className="px-4 py-3">{price?.twelve}</td>
                     <td className="px-4 py-3">{price?.timeDuration}</td>
-                    <td className="px-4 py-3 text-xl flex gap-2 items-center text-gray-900">
+                    <td className="px-4 py-3">{price?.product_limit}</td>
+                    <td className="px-4 py-3">{price?.permissions?.length}</td>
+                    <td className="px-4 py-3 text-3xl flex gap-2 items-center text-gray-900">
                       <MdDelete
                         onClick={() => DeletePrice(price?._id)}
-                        className="text-red-500 cursor-pointer"
+                        className="text-red-500 cursor-pointer "
                       />
                     </td>
 
