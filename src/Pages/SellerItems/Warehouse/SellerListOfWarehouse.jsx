@@ -88,10 +88,11 @@ const SellerListOfWarehouse = () => {
           return (
             <li key={pageNumber}>
               <button
-                className={`block h-8 w-8 rounded border ${pageNumber === currentPage
-                  ? "border-blue-600 bg-blue-600 text-white"
-                  : "border-gray-900 bg-white text-center leading-8 text-gray-900"
-                  }`}
+                className={`block h-8 w-8 rounded border ${
+                  pageNumber === currentPage
+                    ? "border-blue-600 bg-blue-600 text-white"
+                    : "border-gray-900 bg-white text-center leading-8 text-gray-900"
+                }`}
                 onClick={() => handleChangePage(pageNumber)}
               >
                 {pageNumber}
@@ -115,7 +116,7 @@ const SellerListOfWarehouse = () => {
     );
   };
 
-  const [status, setStatus] = useState(false);
+  const [isPreviewModal, setIsPreviewModal] = useState(false);
 
   const updateStatus = (id, status) => {
     fetch(`https://backend.doob.com.bd/api/v1/seller/warehouse/status/${id}`, {
@@ -342,16 +343,16 @@ const SellerListOfWarehouse = () => {
                   <td className="">
                     <button
                       onClick={() =>
-                        setStatus({
+                        setIsPreviewModal({
                           data: wareLength?.find(
                             (item) => item.warehouse === warehouse.name
                           ),
                           id: warehouse._id,
                         })
                       }
-                      className="bg-yellow-600 p-2 rounded"
+                      className="text-black bg-slate-200 p-2 rounded "
                     >
-                      Show Preview
+                      Show Previews
                     </button>
                   </td>
 
@@ -365,8 +366,11 @@ const SellerListOfWarehouse = () => {
                       />
                     </div>
                   )}
-                  {status.id === warehouse._id && (
-                    <SellerShowPrivew status={status} setStatus={setStatus} />
+                  {isPreviewModal.id === warehouse._id && (
+                    <SellerShowPrivew
+                      status={isPreviewModal}
+                      setStatus={setIsPreviewModal}
+                    />
                   )}
                 </tr>
               ))}

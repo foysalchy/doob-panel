@@ -33,7 +33,7 @@ const SellerEmailSetup = () => {
     }
   };
 
-  const { data: defaultEmailData = {} } = useQuery({
+  const { data: defaultEmailData = {}, refetch } = useQuery({
     queryKey: ["defaultEmailData"],
     queryFn: async () => {
       try {
@@ -48,8 +48,13 @@ const SellerEmailSetup = () => {
     },
   });
 
-  //   console.log(defaultEmailData);
+  // console.log(defaultEmailData.secure);
+  // console.log(defaultEmailData?.secure ?? false);
   const [secure, setSecure] = useState(defaultEmailData?.secure ?? false);
+
+  useEffect(() => {
+    setSecure(defaultEmailData?.secure ?? false);
+  }, [defaultEmailData]);
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -82,9 +87,11 @@ const SellerEmailSetup = () => {
       .then((res) => res.json())
       .then((data) => {
         setLoading(false);
+
         console.log(!data.error);
         if (!data.error) {
           BrightAlert({ timeDuration: 2000 });
+          refetch();
         } else {
           BrightAlert(`${data.message}`, "", "error");
         }

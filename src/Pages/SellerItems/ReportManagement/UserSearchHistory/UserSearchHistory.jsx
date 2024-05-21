@@ -9,14 +9,14 @@ import { FaArrowRightLong } from "react-icons/fa6";
 import { AuthContext } from "../../../../AuthProvider/UserProvider";
 
 const UserSearchHistory = () => {
-  const { shopInfo } = useContext(AuthContext);
+  // const { shopInfo } = useContext(AuthContext);
 
-  console.log(shopInfo);
-  const { data: seller = [], refetch } = useQuery({
-    queryKey: ["sellerSeller"],
+  // console.log(shopInfo);
+  const { data: sellerSearch = [], refetch } = useQuery({
+    queryKey: ["sellerSearch"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/seller/get-all-search`
+        `https://backend.doob.com.bd/api/v1/seller/search-report`
       );
       const data = await res.json();
       console.log(data);
@@ -24,9 +24,9 @@ const UserSearchHistory = () => {
     },
   });
 
-  console.log(seller);
+  // console.log(sellerSearch);
 
-  const DeleteCategory = (id) => {
+  const DeleteSearch = (id) => {
     console.log(id);
     fetch(`https://backend.doob.com.bd/api/v1/seller/delete-search?id=${id}`, {
       method: "DELETE",
@@ -36,12 +36,12 @@ const UserSearchHistory = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        Swal.fire("Seller Deleted Successfully", "", "success");
+        Swal.fire("Search Deleted", "", "success");
         refetch();
       });
   };
 
-  console.log(seller, "seller");
+  console.log(sellerSearch, "seller");
 
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -50,9 +50,9 @@ const UserSearchHistory = () => {
   };
 
   const filteredData =
-    seller.length &&
-    seller?.filter((item) =>
-      item?.email?.toLowerCase().includes(searchQuery?.toLowerCase())
+    sellerSearch.length &&
+    sellerSearch?.filter((item) =>
+      item?.term?.toLowerCase().includes(searchQuery?.toLowerCase())
     );
 
   return (
@@ -110,20 +110,20 @@ const UserSearchHistory = () => {
             </thead>
 
             <tbody className="divide-y  divide-gray-200">
-              {filteredData?.map((subscrib, index) => {
+              {filteredData?.map((searchSingle, index) => {
                 return (
-                  <tr key={subscrib?._id}>
+                  <tr key={searchSingle?._id}>
                     <td className="whitespace-nowrap  px-4 py-2 font-medium text-gray-900">
-                      {subscrib.email}
+                      {searchSingle.term}
                     </td>
 
                     <td className="whitespace-nowrap px-4 py-2 text-gray-700">
                       {/* {`Year: ${year}, Month: ${month}, Day: ${day}`} */}
-                      {new Date(subscrib?.dateTime).toDateString()}
+                      {new Date(searchSingle?.date).toDateString()}
                     </td>
                     <td className="whitespace-nowrap px-4 py-2">
                       <button
-                        onClick={() => DeleteCategory(subscrib._id)}
+                        onClick={() => DeleteSearch(searchSingle._id)}
                         className="inline-block rounded  bg-red-600 px-4 py-2 text-xs font-medium text-white hover:bg-red-700"
                       >
                         Delete
