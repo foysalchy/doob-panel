@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { BiCloset } from "react-icons/bi";
 import WarehouseAdminProductModal from "./WarehouseAdminProductModal";
+import SellerShowPrivew from "../../../SellerItems/Warehouse/SellerShowPrivew";
 
 const WarehouseReportHistory = () => {
   const [OpenModal, setOpenModal] = useState(false);
@@ -45,6 +46,7 @@ const WarehouseReportHistory = () => {
   };
 
   const [currentPage, setCurrentPage] = useState(1);
+  const [isPreviewModal, setIsPreviewModal] = useState(false);
 
   return (
     <div>
@@ -53,113 +55,123 @@ const WarehouseReportHistory = () => {
           <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
             <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
               <div className="overflow-hidden border border-gray-200 dark:border-gray-700 md:rounded-lg">
-                <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-                  <thead className="bg-gray-50 dark:bg-gray-800">
+                <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700 text-black">
+                  <thead className="">
                     <tr>
                       <th
                         scope="col"
-                        className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                        className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-800 dark:text-gray-"
                       >
                         Photo
                       </th>
                       <th
                         scope="col"
-                        className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                        className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-800 dark:text-gray-"
                       >
                         Name
                       </th>
                       <th
                         scope="col"
-                        className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                        className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-800 dark:text-gray-"
                       >
                         Area Details
                       </th>
                       <th
                         scope="col"
-                        className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                        className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-800 dark:text-gray-"
                       >
                         Rank Details
                       </th>
                       <th
                         scope="col"
-                        className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                        className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-800 dark:text-gray-"
                       >
                         Status
                       </th>
                       <th
                         scope="col"
-                        className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                        className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-800 dark:text-gray-"
                       >
                         Slag
                       </th>
                       <th
                         scope="col"
-                        className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                        className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-800 dark:text-gray-"
                       >
                         Address
                       </th>
                       <th
                         scope="col"
-                        className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                        className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-800 dark:text-gray-"
                       >
-                        Action
+                        Products
+                      </th>
+                      <th
+                        scope="col"
+                        className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-800 dark:text-gray-"
+                      >
+                        Preview
                       </th>
                     </tr>
                   </thead>
-                  <tbody className="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
+                  <tbody className="">
                     {warehouseData.map((data) => (
                       <tr key={data?.warehouse?._id}>
-                        <td className="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
+                        <td className="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray- whitespace-nowrap">
                           <img
                             src={data?.warehouse?.img}
                             alt=""
                             className="w-[50px] h-[50px] object-cover rounded-lg"
                           />
                         </td>
-                        <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                        <td className="px-4 py-4 text-sm text-gray-800  whitespace-nowrap">
                           <span>{data?.warehouse?.name}</span>
                         </td>
-                        <td className=" text-white ">
+                        <td className=" text- ">
                           <span>
                             {" "}
                             Area:{" "}
-                            {wareLength?.length &&
+                            {
                               wareLength?.find(
                                 (item) =>
                                   item.warehouse === data?.warehouse?.name
-                              )?.areas?.length}
+                              )?.areas?.length
+                            }
                           </span>
 
                           <span>
                             {" "}
                             Racks:{" "}
-                            {wareLength?.length &&
+                            {
                               wareLength?.find(
                                 (item) =>
                                   item.warehouse === data?.warehouse?.name
-                              )?.racks?.length}
+                              )?.racks?.length
+                            }
                           </span>
                         </td>
 
-                        <td className="text-white">
+                        <td className="text-">
                           {" "}
                           <span>
                             {" "}
                             Selfs:{" "}
-                            {wareLength?.length &&
+                            {
                               wareLength?.find(
                                 (item) =>
                                   item.warehouse === data?.warehouse?.name
-                              )?.selfs?.length}
+                              )?.selfs?.length
+                            }
                           </span>
                           <span>
                             {" "}
                             Cells:{" "}
-                            {wareLength?.length &&
+                            {
                               wareLength?.find(
                                 (item) =>
                                   item.warehouse === data?.warehouse?.name
-                              )?.cells?.length}
+                              )?.cells?.length
+                            }
                           </span>
                         </td>
                         <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
@@ -185,10 +197,10 @@ const WarehouseReportHistory = () => {
                             )}
                           </div>
                         </td>
-                        <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                        <td className="px-4 py-4 text-sm whitespace-nowrap">
                           <span>{data?.warehouse?.slag}</span>
                         </td>
-                        <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                        <td className="px-4 py-4 text-sm whitespace-nowrap">
                           {data?.warehouse?.address}
                         </td>
                         <td className="px-4 py-4 text-sm whitespace-nowrap">
@@ -201,10 +213,32 @@ const WarehouseReportHistory = () => {
                             </button>
                           </div>
                         </td>
+                        <td className="">
+                          <button
+                            onClick={() =>
+                              setIsPreviewModal({
+                                data: wareLength?.find(
+                                  (item) =>
+                                    item.warehouse === data?.warehouse.name
+                                ),
+                                id: data?.warehouse._id,
+                              })
+                            }
+                            className="text-black bg-slate-200 p-2 rounded "
+                          >
+                            Show Previews
+                          </button>
+                        </td>
                         {OpenModal === data.warehouse._id && (
-                          <WarehouseAdminProductModal
+                          <WarehouseProductModal
                             setOpenModal={setOpenModal}
                             products={data.products}
+                          />
+                        )}
+                        {isPreviewModal.id === data?.warehouse._id && (
+                          <SellerShowPrivew
+                            status={isPreviewModal}
+                            setStatus={setIsPreviewModal}
                           />
                         )}
                       </tr>
@@ -220,7 +254,7 @@ const WarehouseReportHistory = () => {
             <a
               href="#"
               onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-              className="flex items-center px-2 py-2 mr-2 text-sm text-gray-700 capitalize transition-colors duration-200 bg-white border rounded-md gap-x-2 hover:bg-gray-100 dark:bg-gray-900 dark:text-gray-200 dark:border-gray-700 dark:hover:bg-gray-800"
+              className="flex items-center px-2 py-2 mr-2 text-sm  text-white capitalize transition-colors duration-200 bg-white border rounded-md gap-x-2 hover:bg-gray-100 dark:bg-gray-900 dark:text-gray text-white- dark:border-gray-700 dark:hover:bg-gray-800"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -246,7 +280,7 @@ const WarehouseReportHistory = () => {
                   className={`px-2 py-1 mr-2 text-sm rounded-md ${
                     currentPage === i + 1
                       ? "text-blue-500 dark:bg-gray-800 bg-blue-100/60"
-                      : "text-gray-500 dark:hover:bg-gray-800 dark:text-gray-300 hover:bg-gray-100"
+                      : "text-gray-200 dark:hover:bg-gray-800 dark:text-gray-300 hover:bg-gray-100"
                   }`}
                 >
                   {i + 1}
@@ -258,7 +292,7 @@ const WarehouseReportHistory = () => {
               onClick={() =>
                 setCurrentPage((prev) => Math.min(prev + 1, totalPages))
               }
-              className="flex items-center  px-2 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 bg-white border rounded-md gap-x-2 hover:bg-gray-100 dark:bg-gray-900 dark:text-gray-200 dark:border-gray-700 dark:hover:bg-gray-800"
+              className="flex items-center  px-2 py-2 text-sm text-gray-200 capitalize transition-colors duration-200 bg-white border rounded-md gap-x-2 hover:bg-gray-100 dark:bg-gray-900 dark:text-gray- dark:border-gray-700 dark:hover:bg-gray-800"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
