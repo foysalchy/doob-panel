@@ -115,8 +115,8 @@ const ProductInformation = () => {
         variations?.offerPrice !== undefined
           ? variations.offerPrice
           : variations?.price !== undefined
-          ? variations.price
-          : product.price,
+            ? variations.price
+            : product.price,
       regular_price: product.regular_price,
       productId: product._id,
       shopId: shop_id.shop_id,
@@ -191,8 +191,8 @@ const ProductInformation = () => {
             variations?.offerPrice !== undefined
               ? variations.offerPrice
               : variations?.price !== undefined
-              ? variations.price
-              : product.price,
+                ? variations.price
+                : product.price,
           regular_price: product.regular_price,
           productId: product._id,
           shopId: shop_id.shop_id,
@@ -225,7 +225,7 @@ const ProductInformation = () => {
   const totalStars =
     comments?.length &&
     comments?.reduce((total, comment) => total + comment.star, 0) /
-      comments?.length;
+    comments?.length;
 
   const convertedRating = (` ${totalStars}` / 10) * 5 || 0;
 
@@ -364,282 +364,280 @@ const ProductInformation = () => {
                     ))}
                   </div>
                 </div>
-              </div>
 
-              <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0 px-4">
-                <h2 className="text-sm title-font text-gray-500 tracking-widest">
-                  {product.data.brandName}
-                </h2>
-                <h1 className="text-gray-900 md:text-3xl title-font font-medium mb-1">
-                  {variations?.name
-                    ? `${product?.data?.name?.slice(0, 50)}`
-                    : product?.data.name?.slice(0, 50)}
-                </h1>
-                <div className="flex my-2 items-center">
-                  <div className="flex items-center">
-                    <div className="flex">
-                      <span className="flex items-center">
-                        {[1, 2, 3, 4, 5].map((star) => (
-                          <span
-                            className="w-4 h-4"
-                            key={star}
-                            style={{
-                              color: star <= totalStars ? "gold" : "gray",
-                            }}
-                          >
-                            <svg
-                              fill="currentColor"
-                              stroke="currentColor"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth={2}
-                              className="w-4 h-4 "
-                              viewBox="0 0 24 24"
-                            >
-                              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                            </svg>
-                          </span>
-                        ))}
-                        <span className="text-gray-600 ml-2">
-                          {/* {product?.data?.rating / 5 || 0} */}
-                          {totalStars}
-                        </span>
-                      </span>
-                    </div>
-                  </div>
-                  <div className="flex item-center">
+                <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0 px-4">
+                  <h2 className="text-sm title-font text-gray-500 tracking-widest">
+                    {product.data.brandName}
+                  </h2>
+                  <h1 className="text-gray-900 md:text-3xl title-font font-medium mb-1">
+                    {variations?.name
+                      ? `${product?.data?.name?.slice(0, 50)}`
+                      : product?.data.name?.slice(0, 50)}
+                  </h1>
+                  <div className="flex my-2 items-center">
                     <div className="flex items-center">
-                      {" "}
-                      <FaCircle className="text-[#DBDBDB] text-[8px] mx-2 md:mx-4" />
-                      <FaBasketShopping className="text-[#DBDBDB] mr-2 text-[16px]" />
-                      <p className="md:text-sm  text-[10px]">
-                        {product?.data?.total_sales + " "} Sold
-                      </p>
+                      <div className="flex">
+                        <span className="flex items-center">
+                          {[1, 2, 3, 4, 5].map((star) => (
+                            <span
+                              className="w-4 h-4"
+                              key={star}
+                              style={{
+                                color: star <= totalStars ? "gold" : "gray",
+                              }}
+                            >
+                              <svg
+                                fill="currentColor"
+                                stroke="currentColor"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                className="w-4 h-4 "
+                                viewBox="0 0 24 24"
+                              >
+                                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                              </svg>
+                            </span>
+                          ))}
+                          <span className="text-gray-600 ml-2">
+                            {/* {product?.data?.rating / 5 || 0} */}
+                            {totalStars}
+                          </span>
+                        </span>
+                      </div>
                     </div>
-                  </div>
-                </div>
-                <div className="flex justify-between items-center pb-3">
-                  <div className="title-font font-medium md:text-2xl text-lg text-gray-900 flex items-center gap-2 ">
-                    <span>Price :</span>{" "}
-                    <div className="flex items-center gap-2">
-                      {!variations && (
-                        <div className="line-through text-lg flex gap-2 text-gray-500">
-                          <span className="kalpurush">৳</span>
-                          {product.data.regular_price}
-                        </div>
-                      )}
-                      {variations?.price ? (
-                        variations?.offerPrice ? (
-                          <div className="flex gap-3">
-                            <del className="flex gap-1 line-through text-lg text-gray-500">
-                              {" "}
-                              <span className="kalpurush">৳</span>{" "}
-                              {variations?.price}
-                            </del>
-                            <div className="flex gap-1">
-                              <span className="kalpurush">৳</span>
-                              <span> {variations?.offerPrice}</span>
-                            </div>
-                          </div>
-                        ) : (
-                          variations?.price
-                        )
-                      ) : (
-                        <>
-                          <span className="kalpurush">৳</span>
-                          {product.data.price}
-                        </>
-                      )}
-                      <br />
-                    </div>
-                  </div>
-
-                  <div className="flex items-center ">
-                    <a
-                      href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
-                        window.location.href
-                      )}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="mr-2"
-                    >
-                      <FaFacebook />
-                    </a>
-                    <a
-                      href={`https://www.instagram.com/share?url=${encodeURIComponent(
-                        window.location.href
-                      )}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="mr-2"
-                    >
-                      <FaInstagram />
-                    </a>
-                    <a
-                      href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(
-                        window.location.href
-                      )}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <FaXTwitter />
-                    </a>
-                  </div>
-                </div>
-
-                <hr />
-                <div className=" h-[120px] overflow-y-hidden flex items-center ">
-                  <div
-                    className="mb-2 text_editor  text-start  "
-                    dangerouslySetInnerHTML={{
-                      __html: product.data.shortDescription,
-                    }}
-                  />
-                </div>
-                <br />
-
-                <br />
-                <p>Variations: {variations?.name}</p>
-                {
-                  <div className="flex  gap-2  items-center   mb-5">
-                    {product?.data?.variations &&
-                      product?.data?.variations.map((variation, index) => (
-                        <div
-                          onClick={() => handleVariation(variation)}
-                          key={index}
-                          className="w-[50px] h-[50px] border border-gray-300"
-                        >
-                          <img
-                            onClick={() =>
-                              setShowVariant(variation?.variantImag)
-                            }
-                            src={
-                              !product?.data
-                                ? variation?.image[0]
-                                : variation?.image
-                            }
-                            alt=""
-                            className="w-full h-full"
-                          />
-                        </div>
-                      ))}
-                  </div>
-                }
-                <div>
-                  <div className="flex  gap-3 py-4 space-x-4 justify-between">
-                    <div>
-                      <label htmlFor="Quantity" className="sr-only">
+                    <div className="flex item-center">
+                      <div className="flex items-center">
                         {" "}
-                        Quantity{" "}
-                      </label>
-
-                      <div className="flex items-center gap-1">
-                        <button
-                          type="button"
-                          onClick={handleDecrease}
-                          className="w-6 h-10 leading-10 text-gray-600 transition hover:opacity-75"
-                        >
-                          -
-                        </button>
-
-                        <input
-                          type="number"
-                          id="Quantity"
-                          value={quantity}
-                          onChange={handleManualInput}
-                          className="h-10 md:w-12 text-center w-12 text-sm rounded border px-1 border-gray-900 [-moz-appearance:_textfield] sm:text-sm [&::-webkit-outer-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button]:appearance-none"
-                        />
-
-                        <button
-                          type="button"
-                          onClick={handleIncrease}
-                          className="w-6 h-10 leading-10 text-gray-600 transition text-sm hover:opacity-75 "
-                        >
-                          +
-                        </button>
+                        <FaCircle className="text-[#DBDBDB] text-[8px] mx-2 md:mx-4" />
+                        <FaBasketShopping className="text-[#DBDBDB] mr-2 text-[16px]" />
+                        <p className="md:text-sm  text-[10px]">
+                          {product?.data?.total_sales + " "} Sold
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex justify-between items-center pb-3">
+                    <div className="title-font font-medium md:text-2xl text-lg text-gray-900 flex items-center gap-2 ">
+                      <span>Price :</span>{" "}
+                      <div className="flex items-center gap-2">
+                        {!variations && (
+                          <div className="line-through text-lg flex gap-2 text-gray-500">
+                            <span className="kalpurush">৳</span>
+                            {product.data.regular_price}
+                          </div>
+                        )}
+                        {variations?.price ? (
+                          variations?.offerPrice ? (
+                            <div className="flex gap-3">
+                              <del className="flex gap-1 line-through text-lg text-gray-500">
+                                {" "}
+                                <span className="kalpurush">৳</span>{" "}
+                                {variations?.price}
+                              </del>
+                              <div className="flex gap-1">
+                                <span className="kalpurush">৳</span>
+                                <span> {variations?.offerPrice}</span>
+                              </div>
+                            </div>
+                          ) : (
+                            variations?.price
+                          )
+                        ) : (
+                          <>
+                            <span className="kalpurush">৳</span>
+                            {product.data.price}
+                          </>
+                        )}
+                        <br />
                       </div>
                     </div>
 
-                    <div className="flex items-center gap-3">
-                      <button
-                        type="button"
-                        onClick={() => addToCart(product)}
-                        className="h-10 w-[120px] px-2 py-2 font-semibold rounded bg-gray-950 hover:bg-gray-800 text-white"
+                    <div className="flex items-center ">
+                      <a
+                        href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+                          window.location.href
+                        )}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="mr-2"
                       >
-                        {loader ? "Loading.." : "Add to Cart"}
-                      </button>
+                        <FaFacebook />
+                      </a>
+                      <a
+                        href={`https://www.instagram.com/share?url=${encodeURIComponent(
+                          window.location.href
+                        )}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="mr-2"
+                      >
+                        <FaInstagram />
+                      </a>
+                      <a
+                        href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(
+                          window.location.href
+                        )}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <FaXTwitter />
+                      </a>
+                    </div>
+                  </div>
 
-                      <button
-                        onClick={() => buyNowHandler(product)}
-                        type="button"
-                        className="h-10 md:block hidden px-2 py-2 w-[120px] font-semibold  rounded bg-indigo-600 hover:bg-indigo-500 text-white"
-                      >
-                        Buy Now
-                      </button>
+                  <hr />
+                  <div className=" h-[120px] overflow-y-hidden flex items-center ">
+                    <div
+                      className="mb-2 text_editor  text-start  "
+                      dangerouslySetInnerHTML={{
+                        __html: product.data.shortDescription,
+                      }}
+                    />
+                  </div>
+                  <br />
 
-                      <button
-                        onClick={() => buyNowHandler(product)}
-                        type="button"
-                        className="h-10 md:hidden block px-2 py-2 w-[60px] font-semibold  rounded bg-indigo-600 hover:bg-indigo-500 text-white"
-                      >
-                        <BsCart2 className="text-2xl m-auto" />
-                      </button>
+                  <br />
+                  <p>Variations: {variations?.name}</p>
+                  {
+                    <div className="flex  gap-2  items-center   mb-5">
+                      {product?.data?.variations &&
+                        product?.data?.variations.map((variation, index) => (
+                          <div
+                            onClick={() => handleVariation(variation)}
+                            key={index}
+                            className="w-[50px] h-[50px] border border-gray-300"
+                          >
+                            <img
+                              onClick={() =>
+                                setShowVariant(variation?.variantImag)
+                              }
+                              src={
+                                !product?.data
+                                  ? variation?.image[0]
+                                  : variation?.image
+                              }
+                              alt=""
+                              className="w-full h-full"
+                            />
+                          </div>
+                        ))}
+                    </div>
+                  }
+                  <div>
+                    <div className="flex  gap-3 py-4 space-x-4 justify-between">
+                      <div>
+                        <label htmlFor="Quantity" className="sr-only">
+                          {" "}
+                          Quantity{" "}
+                        </label>
+
+                        <div className="flex items-center gap-1">
+                          <button
+                            type="button"
+                            onClick={handleDecrease}
+                            className="w-6 h-10 leading-10 text-gray-600 transition hover:opacity-75"
+                          >
+                            -
+                          </button>
+
+                          <input
+                            type="number"
+                            id="Quantity"
+                            value={quantity}
+                            onChange={handleManualInput}
+                            className="h-10 md:w-12 text-center w-12 text-sm rounded border px-1 border-gray-900 [-moz-appearance:_textfield] sm:text-sm [&::-webkit-outer-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button]:appearance-none"
+                          />
+
+                          <button
+                            type="button"
+                            onClick={handleIncrease}
+                            className="w-6 h-10 leading-10 text-gray-600 transition text-sm hover:opacity-75 "
+                          >
+                            +
+                          </button>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center gap-3">
+                        <button
+                          type="button"
+                          onClick={() => addToCart(product)}
+                          className="h-10 w-[120px] px-2 py-2 font-semibold rounded bg-gray-950 hover:bg-gray-800 text-white"
+                        >
+                          {loader ? "Loading.." : "Add to Cart"}
+                        </button>
+
+                        <button
+                          onClick={() => buyNowHandler(product)}
+                          type="button"
+                          className="h-10 md:block hidden px-2 py-2 w-[120px] font-semibold  rounded bg-indigo-600 hover:bg-indigo-500 text-white"
+                        >
+                          Buy Now
+                        </button>
+
+                        <button
+                          onClick={() => buyNowHandler(product)}
+                          type="button"
+                          className="h-10 md:hidden block px-2 py-2 w-[60px] font-semibold  rounded bg-indigo-600 hover:bg-indigo-500 text-white"
+                        >
+                          <BsCart2 className="text-2xl m-auto" />
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
 
-          <div className="border md:block hidden mt-6 w-full">
-            <div className="p-4">
-              <h2 className="text-lg font-semibold mb-4">Relevant Products</h2>
-              <div className="space-y-4">
-                {
-                  releventProduct?.slice(0, 3)?.map((product, index) =>
-                    <Link to={`/shop/${shopId}/product/${product?._id}`} key={product?._id} className="border w-full duration-150 group hover:shadow-lg flex items-start gap-2 p-3 rounded">
-                      <img
-                        alt="Product Image"
-                        className="w-20 h-20 bg-gray-200 rounded mb-2"
-                        height="80"
-                        src={product?.featuredImage?.src ? product?.featuredImage?.src : product?.images[0]?.src}
-                        style={{
-                          aspectRatio: "80/80",
-                          objectFit: "cover",
-                        }}
-                        width="80"
-                      />
-                      <div className="">
-                        <p className="font-medium group-hover:text-blue-500 duration">{product?.name?.slice(0, 40)}</p>
-                        <p className="text-red-500">৳{product?.price}</p>
-                      </div>
-                    </Link>
-                  )
-                }
+            <div className="border md:block hidden mt-6 w-full">
+              <div className="p-4">
+                <h2 className="text-lg font-semibold mb-4">Relevant Products</h2>
+                <div className="space-y-4">
+                  {
+                    releventProduct?.slice(0, 3)?.map((product, index) =>
+                      <Link to={`/shop/${shopId}/product/${product?._id}`} key={product?._id} className="border w-full duration-150 group hover:shadow-lg flex items-start gap-2 p-3 rounded">
+                        <img
+                          alt="Product Image"
+                          className="w-20 h-20 bg-gray-200 rounded mb-2"
+                          height="80"
+                          src={product?.featuredImage?.src ? product?.featuredImage?.src : product?.images[0]?.src}
+                          style={{
+                            aspectRatio: "80/80",
+                            objectFit: "cover",
+                          }}
+                          width="80"
+                        />
+                        <div className="">
+                          <p className="font-medium group-hover:text-blue-500 duration">{product?.name?.slice(0, 40)}</p>
+                          <p className="text-red-500">৳{product?.price}</p>
+                        </div>
+                      </Link>
+                    )
+                  }
+                </div>
               </div>
             </div>
           </div>
-        </div>
 
-      </div>
-      <div className="max-w-7xl mx-auto px-4 md:px-4 lg:px-8 my-6">
-        <div className="border p-6 rounded">
-          <ProductDescription description={product.data.description} />
         </div>
-      </div>
-      <div className="max-w-7xl mx-auto px-4 md:px-4 lg:px-8 my-6">
-        <div className="border p-6 rounded">
-          <ProductReviews comments={comments} />
+        <div className="max-w-7xl mx-auto px-4 md:px-4 lg:px-8 my-6">
+          <div className="border p-6 rounded">
+            <ProductDescription description={product.data.description} />
+          </div>
         </div>
-      </div>
-      <div className="max-w-7xl mx-auto px-4 md:px-4 lg:px-8 my-6">
+        <div className="max-w-7xl mx-auto px-4 md:px-4 lg:px-8 my-6">
+          <div className="border p-6 rounded">
+            <ProductReviews comments={comments} />
+          </div>
+        </div>
+        <div className="max-w-7xl mx-auto px-4 md:px-4 lg:px-8 my-6">
 
-        <div className="border md:hidden block mb-6 mt-6 w-full">
-          <div className="p-4">
-            <h2 className="text-lg font-semibold mb-4">Relevent Products</h2>
-            <div className="space-y-4">
-              {
-                releventProduct?.slice(0, 3)?.map((product, index) =>
+          <div className="border md:hidden block mb-6 mt-6 w-full">
+            <div className="p-4">
+              <h2 className="text-lg font-semibold mb-4">Relevent Products</h2>
+              <div className="space-y-4">
+                {releventProduct?.slice(0, 3)?.map((product, index) =>
                   <Link to={`/shop/${shopId}/product/${product?._id}`} key={product?._id} className="border w-full duration-150 group hover:shadow-lg flex items-start gap-2 p-3 rounded">
                     <img
                       alt="Product Image"
@@ -663,7 +661,7 @@ const ProductInformation = () => {
                       <p className="text-red-500">৳{product?.price}</p>
                     </div>
                   </Link>
-                ))}
+                )}
               </div>
             </div>
           </div>
