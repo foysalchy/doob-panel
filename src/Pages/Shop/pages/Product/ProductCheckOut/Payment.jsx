@@ -80,6 +80,7 @@ const Payment = () => {
     } else {
       data.file = fileName;
       setPassData(data);
+      setLoadingPayment(true);
       await fetch(
         `https://backend.doob.com.bd/api/v1/shop/user/order?token=${shopUser._id}`,
         {
@@ -92,9 +93,11 @@ const Payment = () => {
         .then((responseData) => {
           console.log("responseData payment", responseData);
           BrightAlert({ icon: "success" });
+          setLoadingPayment(false);
           data.productList?.forEach((order) => {
             handleRemoveFromCart(order._id);
           });
+
           navigate(`/shop/${shopId}/user/my-orders`);
         });
     }
@@ -111,6 +114,7 @@ const Payment = () => {
   console.log(orderStage?.normalPrice);
   //   console.log(user);
   const payWithBkash = async () => {
+    setLoadingPayment(true);
     const order = orderStage;
     order.method = payment;
     order.timestamp = new Date().getTime();
@@ -134,7 +138,7 @@ const Payment = () => {
       console.log(data.bkashURL);
       if (data?.bkashURL) {
         // setLoadingPayment(false);
-
+        setLoadingPayment(false);
         window.location.href = data.bkashURL;
       }
     } catch (error) {
@@ -146,6 +150,7 @@ const Payment = () => {
 
   const payWithAmarPay = async () => {
     console.log(orderStage.productPrice);
+    setLoadingPayment(true);
     const order = orderStage;
     order.method = payment;
     order.timestamp = new Date().getTime();
@@ -167,6 +172,7 @@ const Payment = () => {
       const data = await response.json();
       console.log(data);
       if (data.payment_url) {
+        setLoadingPayment(false);
         window.location.href = data.payment_url;
         // setLoadingPayment(false);
       }
@@ -412,59 +418,120 @@ const Payment = () => {
             {open && <PaymentAlert open={open} />}
 
             {payment.Getaway === "CashOnDelivery" ? (
-              <button
-                onClick={() => orderSubmit()}
-                className="group relative inline-flex m-auto items-center overflow-hidden rounded bg-gray-900 px-10 py-2 text-white focus:outline-none focus:ring active:bg-gray-900"
-              >
-                <span className="absolute -start-full transition-all group-hover:start-4">
-                  <svg
-                    className="h-5 w-5 rtl:rotate-180"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
+              <div>
+                {loadingPayment ? (
+                  <div
+                    // onClick={() => orderSubmit()}
+                    className="group relative inline-flex m-auto items-center overflow-hidden rounded bg-gray-900 px-10 py-2 text-white focus:outline-none focus:ring active:bg-gray-900"
                   >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M17 8l4 4m0 0l-4 4m4-4H3"
-                    />
-                  </svg>
-                </span>
+                    <span className="absolute -start-full transition-all group-hover:start-4">
+                      <svg
+                        className="h-5 w-5 rtl:rotate-180"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          d="M17 8l4 4m0 0l-4 4m4-4H3"
+                        />
+                      </svg>
+                    </span>
 
-                <span className="text-lg font-medium transition-all group-hover:ms-4">
-                  {" "}
-                  Order Now{" "}
-                </span>
-              </button>
+                    <span className="text-lg font-medium transition-all group-hover:ms-4">
+                      Loading order .....
+                    </span>
+                  </div>
+                ) : (
+                  <button
+                    onClick={() => orderSubmit()}
+                    className="group relative inline-flex m-auto items-center overflow-hidden rounded bg-gray-900 px-10 py-2 text-white focus:outline-none focus:ring active:bg-gray-900"
+                  >
+                    <span className="absolute -start-full transition-all group-hover:start-4">
+                      <svg
+                        className="h-5 w-5 rtl:rotate-180"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          d="M17 8l4 4m0 0l-4 4m4-4H3"
+                        />
+                      </svg>
+                    </span>
+
+                    <span className="text-lg font-medium transition-all group-hover:ms-4">
+                      {" "}
+                      Order Now{" "}
+                    </span>
+                  </button>
+                )}
+              </div>
             ) : payment.Getaway === "Bank" ? (
-              <button
-                onClick={() => orderSubmit()}
-                className="group relative inline-flex m-auto items-center overflow-hidden rounded bg-gray-900 px-10 py-2 text-white focus:outline-none focus:ring active:bg-gray-900"
-              >
-                <span className="absolute -start-full transition-all group-hover:start-4">
-                  <svg
-                    className="h-5 w-5 rtl:rotate-180"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
+              <p>
+                {loadingPayment ? (
+                  <div
+                    // onClick={() => orderSubmit()}
+                    className="group relative inline-flex m-auto items-center overflow-hidden rounded bg-gray-900 px-10 py-2 text-white focus:outline-none focus:ring active:bg-gray-900"
                   >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M17 8l4 4m0 0l-4 4m4-4H3"
-                    />
-                  </svg>
-                </span>
+                    <span className="absolute -start-full transition-all group-hover:start-4">
+                      <svg
+                        className="h-5 w-5 rtl:rotate-180"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          d="M17 8l4 4m0 0l-4 4m4-4H3"
+                        />
+                      </svg>
+                    </span>
 
-                <span className="text-lg font-medium transition-all group-hover:ms-4">
-                  {" "}
-                  Order Now {payment.Getaway}
-                </span>
-              </button>
+                    <span className="text-lg font-medium transition-all group-hover:ms-4">
+                      {" "}
+                      Loading ....{payment.Getaway}
+                    </span>
+                  </div>
+                ) : (
+                  <button
+                    onClick={() => orderSubmit()}
+                    className="group relative inline-flex m-auto items-center overflow-hidden rounded bg-gray-900 px-10 py-2 text-white focus:outline-none focus:ring active:bg-gray-900"
+                  >
+                    <span className="absolute -start-full transition-all group-hover:start-4">
+                      <svg
+                        className="h-5 w-5 rtl:rotate-180"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          d="M17 8l4 4m0 0l-4 4m4-4H3"
+                        />
+                      </svg>
+                    </span>
+
+                    <span className="text-lg font-medium transition-all group-hover:ms-4">
+                      {" "}
+                      Order Now {payment.Getaway}
+                    </span>
+                  </button>
+                )}
+              </p>
             ) : (
               <div>
                 <button

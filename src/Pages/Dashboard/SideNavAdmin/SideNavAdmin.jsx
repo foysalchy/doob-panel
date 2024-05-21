@@ -1,31 +1,30 @@
 import React, { useContext, useState } from "react";
 import { AuthContext } from "../../../AuthProvider/UserProvider";
 
-import { 
-  BsColumnsGap ,
-  BsBox2  ,
-  BsPrinter  ,
-  BsBasket ,
-  BsCalendar2Range ,
-  BsPersonLinesFill  ,
-  BsLayoutTextSidebarReverse ,
+import {
+  BsColumnsGap,
+  BsBox2,
+  BsPrinter,
+  BsBasket,
+  BsCalendar2Range,
+  BsPersonLinesFill,
+  BsLayoutTextSidebarReverse,
   BsCalculator,
-  BsHeadset ,
-  BsFillBootstrapFill  ,
-  BsArrowsFullscreen ,
-  BsFillJournalBookmarkFill ,
-  BsShop ,
-  BsFillImageFill ,
-  BsGlobe ,
+  BsHeadset,
+  BsFillBootstrapFill,
+  BsArrowsFullscreen,
+  BsFillJournalBookmarkFill,
+  BsShop,
+  BsFillImageFill,
+  BsGlobe,
   BsGear,
-  BsHddNetworkFill ,
-  BsWindowPlus ,
+  BsHddNetworkFill,
+  BsWindowPlus,
   BsLifePreserver,
-  BsBoxSeam ,
-  BsChatSquareText ,
-  BsBoxArrowLeft  
-
- } from "react-icons/bs";
+  BsBoxSeam,
+  BsChatSquareText,
+  BsBoxArrowLeft,
+} from "react-icons/bs";
 import {
   BiArea,
   BiCategory,
@@ -108,10 +107,11 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
         {menu ? <FaAngleLeft /> : <FaAngleRight />}
       </button> */}
       <div
-        className={`${responsive
-          ? "flex  h-screen  overflow-y-auto  flex-col  md:p-3 p-0 lg:w-[70px] md:w-[70px] w-0  border-r-2  "
-          : "flex flex-col  p-6 md:w-64 w-[300px]  h-screen  overflow-y-auto"
-          } md:relative fixed  z-[4000] bg-[#111827] text-white  top-0 left-0 bottom-0`}
+        className={`${
+          responsive
+            ? "flex  h-screen  overflow-y-auto  flex-col  md:p-3 p-0 lg:w-[70px] md:w-[70px] w-0  border-r-2  "
+            : "flex flex-col  p-6 md:w-64 w-[300px]  h-screen  overflow-y-auto"
+        } md:relative fixed  z-[4000] bg-[#111827] text-white  top-0 left-0 bottom-0`}
       >
         <div className="space-y-3">
           <div className="flex items-center justify-between">
@@ -967,8 +967,6 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                   )}
                                 </NavLink>
                               )}
-
-
                             </ul>
                           )}
                         </div>
@@ -1057,8 +1055,6 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                             </NavLink>
                           )}
                         </ul>
-
-
 
                         {/* <ul className="mt-2 space-y-1  p-2 border border-[gray] bg-[#1b202ea1]">
                           <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
@@ -2230,7 +2226,6 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                   onMouseMove={() => setMenu(true)}
                                   rel="noopener noreferrer"
                                   to={"/admin/faq"}
-
                                   className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50"
                                 >
                                   {/* <FaUsersGear className="w-5 h-5 fill-current text-gray-400" /> */}
@@ -2469,7 +2464,6 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                 </NavLink>
               )}
 
-
               {/* //! price */}
               {user?.staffRole ? (
                 user?.permissions.find((itm) => itm?.name === "Faq") ? (
@@ -2617,8 +2611,6 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                             </NavLink>
                           )}
                         </ul>
-
-
                       </details>
                     </li>
                   )}
@@ -2834,9 +2826,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                               </li>
                               <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50">
                                 <Link
-                                  to={
-                                    "/admin/report-management/search"
-                                  }
+                                  to={"/admin/report-management/search"}
                                   className="hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
                                 >
                                   {/* <FaWarehouse className="w-5 h-5 fill-current text-gray-400 " />{" "} */}
@@ -2938,6 +2928,16 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                 Subscriber
                               </Link>
                             </li>
+
+                            <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50">
+                              <Link
+                                to={"/admin/report-management/search"}
+                                className="hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                              >
+                                {/* <FaWarehouse className="w-5 h-5 fill-current text-gray-400 " />{" "} */}
+                                Search
+                              </Link>
+                            </li>
                             <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50">
                               <Link
                                 to={
@@ -3008,8 +3008,8 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                 {menu && <span>Logout</span>}
               </button>
             </ul>
-          </div >
-        </div >
+          </div>
+        </div>
         <div className="flex items-center p-2 mt-12 space-x-4 justify-self-end">
           {user?.image ? (
             <img
@@ -3036,8 +3036,8 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
             </div>
           )}
         </div>
-      </div >
-    </div >
+      </div>
+    </div>
   );
 };
 

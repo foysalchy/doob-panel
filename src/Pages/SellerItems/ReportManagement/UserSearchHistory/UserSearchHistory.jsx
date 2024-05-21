@@ -16,7 +16,7 @@ const UserSearchHistory = () => {
     queryKey: ["sellerSearch"],
     queryFn: async () => {
       const res = await fetch(
-        `http://localhost:5001/api/v1/seller/search-report`
+        `https://backend.doob.com.bd/api/v1/seller/search-report`
       );
       const data = await res.json();
       console.log(data);
