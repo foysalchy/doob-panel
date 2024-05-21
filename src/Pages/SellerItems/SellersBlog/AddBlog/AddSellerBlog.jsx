@@ -20,9 +20,6 @@ const AddSellerBlog = () => {
 
   const [upload, setUpload] = useState("");
 
-
-
-
   const { data: blogsData = [], refetch: reftechDraft } = useQuery({
     queryKey: ["blogs"],
     queryFn: async () => {
@@ -33,7 +30,6 @@ const AddSellerBlog = () => {
       return data;
     },
   });
-
 
   const { data: category = [], refetch } = useQuery({
     queryKey: ["blog-category"],
@@ -60,7 +56,7 @@ const AddSellerBlog = () => {
     }
   };
 
-  const [draft, setDraft] = useState(false)
+  const [draft, setDraft] = useState(false);
 
   const dataSubmit = (event) => {
     setLoading(true);
@@ -71,7 +67,7 @@ const AddSellerBlog = () => {
     const image = form.photo.files[0];
     const MetaImage = upload;
     const MetaTag = form.MetaTag.value;
-    const message = form.message.value
+    const message = form.message.value;
     const MetaDescription = form.MetaDescription.value;
     const formData = new FormData();
     formData.append("image", image);
@@ -96,19 +92,18 @@ const AddSellerBlog = () => {
           status: !draft,
           shop: shopInfo.shopId,
           draft,
-          trash: 'false'
+          trash: "false",
         };
         postBlog(blog, form, "");
       });
-
   };
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const postBlog = (blog, form, type) => {
     console.log(blog);
     // return
-    fetch(`http://localhost:5001/api/v1/seller/blog`, {
+    fetch(`https://backend.doob.com.bd/api/v1/seller/blog`, {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -121,23 +116,17 @@ const AddSellerBlog = () => {
         setLoading(false);
         if (type === "draft") {
           Swal.fire("Saved as Drafts", "", "success");
-
         } else {
           Swal.fire("Your Blog Publish Successfully", "", "success");
-          form.reset()
+          form.reset();
           navigate("/seller/manage-blogs");
-
         }
       });
   };
 
-
   const handleInputChange = (field, value) => {
     setFormData({ ...formData, [field]: value });
   };
-
-
-
 
   return (
     <div className="  ">
@@ -157,7 +146,7 @@ const AddSellerBlog = () => {
               type="text"
               id="title"
               name="title"
-            // onChange={(e) => handleInputChange("title", e.target.value)} // for drafts
+              // onChange={(e) => handleInputChange("title", e.target.value)} // for drafts
             />
           </div>
           <div>
@@ -229,7 +218,8 @@ const AddSellerBlog = () => {
                 uploader: {
                   insertImageAsBase64URI: true,
                 },
-              }} />
+              }}
+            />
             {/* <div>
               <ReactQuill
                 name="message"
@@ -256,7 +246,7 @@ const AddSellerBlog = () => {
               type="text"
               id="MetaTag"
               name="MetaTag"
-            // onChange={(e) => handleInputChange("MetaTag", e.target.value)} // for drafts
+              // onChange={(e) => handleInputChange("MetaTag", e.target.value)} // for drafts
             />
           </div>
 
