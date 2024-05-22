@@ -47,7 +47,7 @@ const SellerPageManagement = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        BrightAlert()
+        BrightAlert();
         refetch();
       });
   };
@@ -61,7 +61,7 @@ const SellerPageManagement = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        BrightAlert()
+        BrightAlert();
         refetch();
       });
   };
@@ -74,7 +74,7 @@ const SellerPageManagement = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        BrightAlert()
+        BrightAlert();
         refetch();
       });
   };
@@ -89,7 +89,7 @@ const SellerPageManagement = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        BrightAlert()
+        BrightAlert();
         refetch();
       });
   };
@@ -233,15 +233,18 @@ const SellerPageManagement = () => {
                                   />
                                 </svg>
                               </button>
-                              {trash_status && <button
-                                onClick={() =>
-                                  trash(faq?._id, faq?.trash ? false : true)
-                                }
-                                className=" transition-colors duration-200  text-xl  focus:outline-none"
-                              >
-                                {<TbRestore className="text-green-500 hover:text-green-700" />
-                                }
-                              </button>}
+                              {trash_status && (
+                                <button
+                                  onClick={() =>
+                                    trash(faq?._id, faq?.trash ? false : true)
+                                  }
+                                  className=" transition-colors duration-200  text-xl  focus:outline-none"
+                                >
+                                  {
+                                    <TbRestore className="text-green-500 hover:text-green-700" />
+                                  }
+                                </button>
+                              )}
 
                               <button
                                 onClick={() => handleViewDetails(faq?._id)}

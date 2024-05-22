@@ -309,7 +309,7 @@ const AddCampaign = () => {
               <Select
                 name=""
                 placeholder="Select woo product"
-                options={products.length && products?.map((data, i) => ({
+                options={products?.length && products?.map((data, i) => ({
                   value: data,
                   label: (
                     <div className="flex cursor-pointer gap-4 items-center">

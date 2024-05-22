@@ -22,10 +22,10 @@ const SellerEmail = () => {
     },
   });
 
-  console.log(
-    `https://backend.doob.com.bd/api/v1/seller/get-seller-user?id=${shopInfo?.shopId}`,
-    options.data
-  );
+  // console.log(
+  //   `https://backend.doob.com.bd/api/v1/seller/get-seller-user?id=${shopInfo?.shopId}`,
+  //   options.data
+  // );
 
   const filteredOptions = options
     ?.filter((option) =>
@@ -102,7 +102,7 @@ const SellerEmail = () => {
       body: JSON.stringify(formData),
     })
       .then((response) => response.json())
-      .finally(() => {
+      .finally((data) => {
         setLoading(false);
         alert(data.message);
         form.reset();

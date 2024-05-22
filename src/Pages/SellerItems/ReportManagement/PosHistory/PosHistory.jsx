@@ -50,11 +50,11 @@ const PosHistory = () => {
             <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
               <div className="overflow-hidden border border-gray-200 dark:border-gray-700 md:rounded-lg">
                 <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-                  <thead className="bg-gray-50 dark:bg-gray-800">
+                  <thead className="">
                     <tr>
                       <th
                         scope="col"
-                        className="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                        className="py-3.5 px-4 text-sm font-normal text-left rtl:text-right "
                       >
                         <div className="flex items-center gap-x-3">
                           <button className="flex items-center gap-x-2">
@@ -89,55 +89,55 @@ const PosHistory = () => {
                       </th>
                       <th
                         scope="col"
-                        className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                        className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right "
                       >
                         Date
                       </th>
                       <th
                         scope="col"
-                        className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                        className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right "
                       >
                         Name
                       </th>
                       <th
                         scope="col"
-                        className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                        className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right "
                       >
                         Email
                       </th>
                       <th
                         scope="col"
-                        className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                        className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right "
                       >
                         Cash
                       </th>
                       <th
                         scope="col"
-                        className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                        className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right "
                       >
                         Change
                       </th>
                       <th
                         scope="col"
-                        className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                        className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right "
                       >
                         Discount
                       </th>
                       <th
                         scope="col"
-                        className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                        className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right "
                       >
                         Phone
                       </th>{" "}
                       <th
                         scope="col"
-                        className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                        className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right "
                       >
                         Address
                       </th>
                     </tr>
                   </thead>
-                  <tbody className="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
+                  <tbody className=" divide-y d">
                     {posData.map((itm) => (
                       <tr key={itm?._id}>
                         {openInvoice === itm._id && (
@@ -155,9 +155,10 @@ const PosHistory = () => {
                             <span>{itm?._id}</span>
                           </div>
                         </td>
-                        <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                          {`${new Date(itm?.date).getDate()}, ${new Date(itm?.date).getMonth() + 1
-                            }, ${new Date(itm?.date).getFullYear()}`}
+                        <td className="px-4 py-4 text-sm whitespace-nowrap">
+                          {`${new Date(itm?.date).getDate()}, ${
+                            new Date(itm?.date).getMonth() + 1
+                          }, ${new Date(itm?.date).getFullYear()}`}
                         </td>
 
                         <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
@@ -167,37 +168,37 @@ const PosHistory = () => {
                             </h2>
                           </div>
                         </td>
-                        <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                        <td className="px-4 py-4 text-sm whitespace-nowrap">
                           <div className="flex items-center gap-x-2">
                             <div>
-                              <h2 className="text-sm  text-gray-800 dark:text-white ">
+                              <h2 className="text-sm   ">
                                 {itm?.userInfo.email}
                               </h2>
                             </div>
                           </div>
                         </td>
-                        <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                        <td className="px-4 py-4 text-sm whitespace-nowrap">
                           <div className="flex items-center gap-x-2">
                             <div>
-                              <h2 className="text-sm  text-gray-800 dark:text-white ">
+                              <h2 className="text-sm   ">
                                 {itm?.invoice.cash}
                               </h2>
                             </div>
                           </div>
                         </td>
-                        <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                        <td className="px-4 py-4 text-sm whitespace-nowrap">
                           <div className="flex items-center gap-x-2">
                             <div>
-                              <h2 className="text-sm  text-gray-800 dark:text-white ">
+                              <h2 className="text-sm   ">
                                 {itm?.invoice.change}
                               </h2>
                             </div>
                           </div>
                         </td>
-                        <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                        <td className="px-4 py-4 text-sm whitespace-nowrap">
                           <div className="flex items-center gap-x-2">
                             <div>
-                              <h2 className="text-sm  text-gray-800 dark:text-white ">
+                              <h2 className="text-sm   ">
                                 {itm?.invoice.discount}
                               </h2>
                             </div>
@@ -205,12 +206,12 @@ const PosHistory = () => {
                         </td>
 
                         <td className="px-4 py-4 text-sm whitespace-nowrap">
-                          <h2 className="text-sm  text-gray-800 dark:text-white ">
+                          <h2 className="text-sm   ">
                             {itm?.userInfo.phoneNumber}
                           </h2>
                         </td>
                         <td className="px-4 py-4 text-sm whitespace-nowrap">
-                          <h2 className="text-sm  text-gray-800 dark:text-white ">
+                          <h2 className="text-sm   ">
                             {itm?.userInfo.address}
                           </h2>
                         </td>

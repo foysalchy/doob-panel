@@ -216,14 +216,20 @@ const ProductListCartLg = ({
               </div>
             </div>
             <div className="text-right">
-              <p className="text-lg font-semibold">
-                <span className="kalpurush">৳</span>
-                {product.price}
-              </p>
               <p className="text-sm line-through dark:text-gray-600">
                 <span className="kalpurush">৳</span>
-                {product.regular_price}
+                {product?.regular_price}
+
               </p>
+
+              <p className="text-lg font-semibold">
+                <span className="kalpurush">৳</span>
+                {product?.campaignPrice
+                  ? product?.campaignPrice
+                  : product?.price}
+
+              </p>
+
             </div>
           </div>
           <div className="flex text-sm divide-x">

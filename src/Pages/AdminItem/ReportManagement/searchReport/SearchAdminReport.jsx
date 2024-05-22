@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import BrightAlert from "bright-alert";
 import React from "react";
 
 export default function SearchAdminReport() {
@@ -17,7 +18,7 @@ export default function SearchAdminReport() {
     },
   });
 
-  // console.log(searchData);
+  console.log(searchData);
 
   const DeleteSearch = (id) => {
     fetch(`https://backend.doob.com.bd/api/v1/admin/delete-search?id=${id}`, {
@@ -28,8 +29,9 @@ export default function SearchAdminReport() {
     })
       .then((res) => res.json())
       .then((data) => {
-        alert("Delete successful");
+        // alert("Delete successful");
         refetch();
+        BrightAlert("Delete successful", "", "success");
       });
   };
 
@@ -41,43 +43,45 @@ export default function SearchAdminReport() {
             <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
               <div className="overflow-hidden border border-gray-200 dark:border-gray-700 md:rounded-lg">
                 <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-                  <thead className="bg-gray-50 dark:bg-gray-800">
+                  <thead className="">
                     <tr>
                       <th
                         scope="col"
-                        className="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                        className="py-3.5 px-4 text-sm font-normal text-left rtl:text-right "
                       >
-                        <div className="flex items-center gap-x-3">Id</div>
+                        <div className="flex items-center gap-x-3">Search</div>
                       </th>
                       <th
                         scope="col"
-                        className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                        className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right "
                       >
                         Date
                       </th>
 
                       <th
                         scope="col"
-                        className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                        className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right "
                       >
                         Text
                       </th>
                     </tr>
                   </thead>
-                  <tbody className="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
+                  <tbody className="0">
                     {isLoading && (
-                      <h2 className="text-white">Loading Data............</h2>
+                      <h2 className="text-black">Loading Data............</h2>
                     )}
                     {!isLoading &&
                       searchData?.map((search) => {
+                        const dateData =
+                          search?.date ?? new Date().toDateString();
                         return (
                           <tr key={search._id}>
-                            <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                              {search._id}
+                            <td className="px-4 py-4 text-sm  whitespace-nowrap">
+                              {search?.term}
                             </td>
 
-                            <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                              {search?.term}
+                            <td className="px-4 py-4 text-sm  whitespace-nowrap">
+                              {new Date(dateData).toDateString()}
                             </td>
 
                             <td className="px-4 py-4 text-sm whitespace-nowrap">
