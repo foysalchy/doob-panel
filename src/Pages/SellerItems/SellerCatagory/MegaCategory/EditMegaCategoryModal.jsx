@@ -150,7 +150,7 @@ export default function EditMegaCategoryModal({
     // return;
 
     fetch(
-      `http://localhost:5001/api/v1/category/seller-update-megaCategory?id=${id}`,
+      `https://backend.doob.com.bd/api/v1/category/seller-update-megaCategory?id=${id}`,
       {
         method: "PUT",
         headers: {

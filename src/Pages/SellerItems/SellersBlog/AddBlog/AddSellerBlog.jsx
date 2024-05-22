@@ -108,7 +108,7 @@ const AddSellerBlog = () => {
   const postBlog = (blog, form, type) => {
     console.log(blog);
     // return
-    fetch(`http://localhost:5001/api/v1/seller/blog`, {
+    fetch(`https://backend.doob.com.bd/api/v1/seller/blog`, {
       method: "POST",
       headers: {
         "content-type": "application/json",

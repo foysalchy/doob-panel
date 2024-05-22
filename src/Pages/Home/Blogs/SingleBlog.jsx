@@ -84,7 +84,7 @@ const SingleBlog = () => {
 
   const [searchTerm, setSearchTerm] = useState("");
   const filteredBlogs = blogList.filter((blog) =>
-    blog.title.toLowerCase().includes(searchTerm.toLowerCase())
+    blog?.title?.toLowerCase()?.includes(searchTerm?.toLowerCase())
   );
 
   return (

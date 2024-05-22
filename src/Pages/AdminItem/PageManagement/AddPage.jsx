@@ -4,6 +4,7 @@ import { BsArrowRight } from "react-icons/bs";
 import { Link, useBlocker, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../../AuthProvider/UserProvider";
+import BrightAlert from "bright-alert";
 
 const AddPage = () => {
   const [loading, setLoading] = useState(false);
@@ -23,69 +24,66 @@ const AddPage = () => {
   const [submit, setSubmit] = useState(false);
   const { user } = useContext(AuthContext);
   //! for drafts
-  const handleInputChange = (field, value) => {
-    setFormData({ ...formData, [field]: value });
-  };
+  // const handleInputChange = (field, value) => {
+  //   setFormData({ ...formData, [field]: value });
+  // };
 
-  const handleChange = (content) => {
-    setMessage(content);
-    // handleInputChange("message", content); // for drafts
-  };
+  // const handleChange = (content) => {
+  //   setMessage(content);
+  //   // handleInputChange("message", content); // for drafts
+  // };
 
-  let blocker = useBlocker(
-    ({ currentLocation, nextLocation }) =>
-      draftSaved && currentLocation.pathname !== nextLocation.pathname
-  );
+  // let blocker = useBlocker(
+  //   ({ currentLocation, nextLocation }) =>
+  //     draftSaved && currentLocation.pathname !== nextLocation.pathname
+  // );
 
   // console.log("blocker", blocker);
-  useEffect(() => {
-    const isFormDataEmpty = Object.values(formData).every(
-      (value) => value === ""
-    );
-    // console.log("draftSaved", draftSaved);
+  // useEffect(() => {
+  //   const isFormDataEmpty = Object.values(formData).every(
+  //     (value) => value === ""
+  //   );
+  //   // console.log("draftSaved", draftSaved);
 
-    setDraftSaved(!isFormDataEmpty);
-  }, [formData]);
+  //   setDraftSaved(!isFormDataEmpty);
+  // }, [formData]);
 
-  useEffect(() => {
-    if (blocker.state === "blocked" && submit) {
-      blocker.proceed();
-    } else if (blocker.state === "blocked" && draftSaved && !submit) {
-      // console.log("yess");
-      // event.preventDefault();
-      // event.returnValue = ""; // Required for some browsers
-      const confirmed = window.confirm(
-        "Are you sure you want to leave? Your changes may not be saved."
-      );
-      if (confirmed) {
-        const draftsAddPageData = {
-          ...formData,
-          // status: "drafts",
-          email: user?.email,
-          drafts: true,
-        };
-        // postPage(draftsAddPageData, "");
-        console.log(draftsAddPageData);
-        fetch(`https://backend.doob.com.bd/api/v1/admin/addpage`, {
-          method: "POST",
-          headers: {
-            "content-type": "application/json",
-          },
-          body: JSON.stringify(draftsAddPageData),
-        })
-          .then((res) => res.json())
-          .then((data) => {
-            setLoading(false);
-            Swal.fire("Drafts Saved", "", "success");
-            blocker.proceed();
-          });
-      } else {
-        console.log("blocker", blocker);
-        console.log("not confirmed");
-        blocker.proceed();
-      }
-    }
-  }, [draftSaved, blocker, submit]);
+  // useEffect(() => {
+  //   if (blocker.state === "blocked" && submit) {
+  //     blocker.proceed();
+  //   } else if (blocker.state === "blocked" && draftSaved && !submit) {
+  //     const confirmed = window.confirm(
+  //       "Are you sure you want to leave? Your changes may not be saved."
+  //     );
+  //     if (confirmed) {
+  //       const draftsAddPageData = {
+  //         ...formData,
+  //         // status: "drafts",
+  //         email: user?.email,
+  //         drafts: true,
+  //       };
+  //       // postPage(draftsAddPageData, "");
+  //       console.log(draftsAddPageData);
+  //       fetch(`https://backend.doob.com.bd/api/v1/admin/addpage`, {
+  //         method: "POST",
+  //         headers: {
+  //           "content-type": "application/json",
+  //         },
+  //         body: JSON.stringify(draftsAddPageData),
+  //       })
+  //         .then((res) => res.json())
+  //         .then((data) => {
+  //           setLoading(false);
+  //           Swal.fire("Drafts Saved", "", "success");
+  //           blocker.proceed();
+  //         });
+  //     } else {
+  //       console.log("blocker", blocker);
+  //       console.log("not confirmed");
+  //       blocker.proceed();
+  //     }
+  //   }
+  // }, [draftSaved, blocker, submit]);
 
   const navigate = useNavigate();
 
@@ -112,7 +110,8 @@ const AddPage = () => {
       metaDescription,
       metaImg: imageUrl,
       draft,
-      status: true
+      status: !draft,
+      trash: false
     };
 
     // navigate("/admin/page-management");
@@ -128,7 +127,8 @@ const AddPage = () => {
       .then((res) => res.json())
       .then((data) => {
         setLoading(false);
-        Swal.fire("success", "Your Blog Publish Successfully", "success");
+        BrightAlert()
+        // Swal.fire("success", "Your Blog Publish Successfully", "success");
         navigate("/admin/page-management");
         // form.reset();
         setSubmit(true); // Move this line here
@@ -162,13 +162,13 @@ const AddPage = () => {
                 Page Title
               </label>
               <input
-                required
+               
                 className="w-full rounded-lg border border-gray-900 p-3 text-sm"
                 placeholder="Title"
                 type="text"
                 id="title"
                 name="title"
-                onChange={(e) => handleInputChange("title", e.target.value)} // for drafts
+                // onChange={(e) => handleInputChange("title", e.target.value)} // for drafts
               />
             </div>
             <div>
@@ -177,7 +177,7 @@ const AddPage = () => {
               </label>
               <select
                 name="page"
-                onChange={(e) => handleInputChange("page", e.target.value)}
+                // onChange={(e) => handleInputChange("page", e.target.value)}
                 className="w-full rounded-lg border bg-white border-gray-900 p-3 text-sm"
               >
                 <option value="footer1">Footer 1</option>
@@ -207,10 +207,10 @@ const AddPage = () => {
                 Meta Title
               </label>
               <input
-                required
+               
                 className="w-full rounded-lg border border-gray-900 p-3 text-sm"
                 placeholder="Meta tag"
-                onChange={(e) => handleInputChange("MetaTag", e.target.value)} // for drafts
+                // onChange={(e) => handleInputChange("MetaTag", e.target.value)} // for drafts
                 type="text"
                 id="metaTag"
                 name="metaTag"
@@ -221,12 +221,12 @@ const AddPage = () => {
                 Meta Description
               </label>
               <textarea
-                required
+               
                 className="w-full rounded-lg border border-gray-900 p-3 text-sm"
                 placeholder="Meta description...."
-                onChange={(e) =>
-                  handleInputChange("MetaDescription", e.target.value)
-                } // for drafts
+                // onChange={(e) =>
+                //   handleInputChange("MetaDescription", e.target.value)
+                // } // for drafts
                 type="text"
                 id="metaDescription"
                 name="metaDescription"
@@ -238,7 +238,7 @@ const AddPage = () => {
                 Meta Image
               </label>
               <input
-                required
+               
                 className="w-full rounded-lg border border-gray-900 p-3 text-sm"
                 placeholder="Meta image...."
                 // onChange={imageUploading}
@@ -293,7 +293,7 @@ const AddPage = () => {
                 </span>
 
                 <span className="text-sm font-medium transition-all group-hover:me-4">
-                  Save To Trash
+                  Save as Draft
                 </span>
               </button>
             </div>

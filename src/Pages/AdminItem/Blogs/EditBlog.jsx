@@ -94,7 +94,7 @@ const EditBlog = ({ OpenModal, setOpenModal, BlogInfo, refetch }) => {
         </div>
 
         <form
-          className="h-[500px]  overflow-scroll"
+          className="h-[500px] text-start overflow-scroll"
           onSubmit={handleBlogUpdate}
         >
           <input
@@ -130,16 +130,24 @@ const EditBlog = ({ OpenModal, setOpenModal, BlogInfo, refetch }) => {
 
           <div>
             <div>
-              <ReactQuill
+              <JoditEditor id="message "
+                name="message"
+                value={BlogInfo.message}
+                config={{
+                  readonly: false,
+                  uploader: {
+                    insertImageAsBase64URI: true,
+                  },
+                }} />
+              {/* <ReactQuill
                 name="message"
                 id="message"
                 className="h-36"
                 // value={message}
                 modules={modules}
                 placeholder="Enter description here..."
-              />
-              <br />
-              <br />
+              /> */}
+           
               {/* <JoditEditor value={BlogInfo.message} /> */}
             </div>
           </div>

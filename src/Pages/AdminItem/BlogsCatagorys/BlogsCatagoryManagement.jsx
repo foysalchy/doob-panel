@@ -71,8 +71,9 @@ const BlogsCatagoryManagement = () => {
     const data = {
       id: openModal._id,
       title: title,
-      img: imageUrl,
+      img: image.files[0] ? imageUrl : openModal.img,
     };
+
 
     fetch(`https://backend.doob.com.bd/api/v1/admin/blog-category-details`, {
       method: "PUT",
@@ -198,7 +199,7 @@ const BlogsCatagoryManagement = () => {
                         Edit
                       </button>
                       <Link
-                        to={`/blog#${cate?.title}`}
+                        to={`/blogs#${cate?.title}`}
                         className="inline-block rounded px-4 text-xs font-medium text-green-600  "
                       >
                         <RxEyeOpen className="text-xl" />

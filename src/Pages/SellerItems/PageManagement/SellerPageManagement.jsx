@@ -27,7 +27,7 @@ const SellerPageManagement = () => {
     queryKey: ["faqs"],
     queryFn: async () => {
       const res = await fetch(
-        `http://localhost:5001/api/v1/seller/pages/${shopInfo.shopId}`
+        `https://backend.doob.com.bd/api/v1/seller/pages/${shopInfo.shopId}`
       );
       const data = await res.json();
       return data;
