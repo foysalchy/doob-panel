@@ -253,9 +253,9 @@ const InventoryManagement = () => {
                       </td>
 
                       <td className="whitespace-nowrap border-r px-6 py-4 font-medium ">
-                        {product?.stock_quantity} /
+                        {product?.stock_quantity}
                         <span className="text-red-400">
-                          {product?.low_stock_warning}
+                          {product?.low_stock_warning ? `/${product?.low_stock_warning}` : ''}
                         </span>
                       </td>
 
