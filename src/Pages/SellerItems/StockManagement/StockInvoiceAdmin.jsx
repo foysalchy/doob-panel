@@ -117,7 +117,7 @@ const StockInvoiceAdmin = ({ setOn, products }) => {
                                                 <th className="px-4 py-2">Photo</th>
                                                 <th className="px-4 py-2">Name</th>
                                                 <th className="px-4 py-2 whitespace-nowrap">Stock Quantity</th>
-                                                <th className="px-4 py-2">Price</th>
+                                                <th className="px-4 py-2">Request</th>
                                             </tr>
                                         </thead>
                                         <tbody className="bg-white">
@@ -133,7 +133,7 @@ const StockInvoiceAdmin = ({ setOn, products }) => {
                                                     {products?.productInfo?.quantity ? products?.productInfo?.quantity : 0}
                                                 </td>
                                                 <td className="px-2 py-2 text-sm text-center border border-gray-800">
-                                                    {products?.productInfo?.price ? products?.productInfo?.price : 0}
+                                                    {products?.quantity ? products?.quantity : 0}
                                                 </td>
 
 
@@ -191,7 +191,7 @@ const StockInvoiceAdmin = ({ setOn, products }) => {
 
 
 
-
+    console.log("--<>", products)
     return (
         <div className="bg-gray-100 p-12 fixed overflow-y-auto h-screen top-0 left-0 right-0 z-[3000]">
 

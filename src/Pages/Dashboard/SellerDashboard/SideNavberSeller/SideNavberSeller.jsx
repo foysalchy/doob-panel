@@ -5,40 +5,40 @@ import { AuthContext } from "../../../../AuthProvider/UserProvider";
 import { Link } from "react-router-dom";
 
 import { IoIosArrowDown } from "react-icons/io";
- 
+
 import { useState } from "react";
 
 
- 
-import { 
-  BsColumnsGap ,
-  BsBox2  ,
-  BsPrinter  ,
-  BsBasket ,
-  BsCalendar2Range ,
-  BsPersonLinesFill  ,
-  BsLayoutTextSidebarReverse ,
-  BsCalculator,
-  BsHeadset ,
-  BsFillBootstrapFill  ,
-  BsArrowsFullscreen ,
-  BsFillJournalBookmarkFill ,
-  BsShop ,
-  BsFillImageFill ,
-  BsGlobe ,
-  BsGear,
-  BsHddNetworkFill ,
-  BsWindowPlus ,
-  BsLifePreserver,
-  BsBoxSeam ,
-  BsChatSquareText ,
-  BsBoxArrowLeft  
 
- } from "react-icons/bs";
+import {
+  BsColumnsGap,
+  BsBox2,
+  BsPrinter,
+  BsBasket,
+  BsCalendar2Range,
+  BsPersonLinesFill,
+  BsLayoutTextSidebarReverse,
+  BsCalculator,
+  BsHeadset,
+  BsFillBootstrapFill,
+  BsArrowsFullscreen,
+  BsFillJournalBookmarkFill,
+  BsShop,
+  BsFillImageFill,
+  BsGlobe,
+  BsGear,
+  BsHddNetworkFill,
+  BsWindowPlus,
+  BsLifePreserver,
+  BsBoxSeam,
+  BsChatSquareText,
+  BsBoxArrowLeft
+
+} from "react-icons/bs";
 
 import Daraz from "./Daraz.png";
 import Logo from "../../../../assets/doobLightLogo.png";
-import {  CgClose } from "react-icons/cg";
+import { CgClose } from "react-icons/cg";
 import { useQuery } from "@tanstack/react-query";
 
 
@@ -97,7 +97,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                 title="Company"
                 className="inline-flex items-center"
               >
-                <BsArrowsFullscreen className="w-5 h-5 fill-current "/>
+                <BsArrowsFullscreen className="w-5 h-5 fill-current " />
               </button>
             ) : (
               <button onClick={() => setResponsive(true)} className="p-2">
@@ -120,7 +120,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                         href="#"
                         className="flex items-center p-2 space-x-3 rounded-md"
                       >
-                        <BsColumnsGap   className="w-5 h-5 fill-current text-gray-400" />
+                        <BsColumnsGap className="w-5 h-5 fill-current text-gray-400" />
 
                         <span>Dashboard</span>
                       </Link>
@@ -136,7 +136,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                               className="flex cursor-pointer w-full items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50"
                             >
                               <div className="flex cursor-pointer items-center gap-2">
-                                <BsBox2   className="w-5 h-5 fill-current text-gray-400" />
+                                <BsBox2 className="w-5 h-5 fill-current text-gray-400" />
 
                                 <span>Product</span>
                               </div>
@@ -525,7 +525,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                             className="flex cursor-pointer w-full items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50"
                           >
                             <div className="flex cursor-pointer items-center gap-2">
-                              <BsBox2  className="w-5 h-5 fill-current text-gray-400" />
+                              <BsBox2 className="w-5 h-5 fill-current text-gray-400" />
 
                               <span>Product</span>
                             </div>
@@ -930,7 +930,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                               href="#"
                               className="flex items-center p-2 space-x-3 rounded-md"
                             >
-                              <BsPrinter   className="w-5 h-5 text-gray-400" />
+                              <BsPrinter className="w-5 h-5 text-gray-400" />
                               <span>POS</span>
                             </Link>
                           </li>
@@ -944,7 +944,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                             href="#"
                             className="flex items-center p-2 space-x-3 rounded-md"
                           >
-                            <BsPrinter    className="w-5 h-5 text-gray-400" />
+                            <BsPrinter className="w-5 h-5 text-gray-400" />
                             <span>POS</span>
                           </Link>
                         </li>
@@ -955,17 +955,14 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                         (itm) => itm?.name === "Orders"
                       ) ? (
                         <li className=" ">
-                          {/* <Link to={'/seller/orders'} rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
-                                                    <BiArchive className="w-5 h-5 text-gray-400" />
-                                                    <span>Order Management</span>
-                                                </Link> */}
+
                           <div onClick={() => handleToggle(2)} className="group [&_summary::-webkit-details-marker]:hidden flex flex-col items-center rounded-sm  ">
                             <div className="flex cursor-pointer w-full items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
                               <div
 
                                 className="flex cursor-pointer items-center gap-2"
                               >
-                                <BsBasket  className="w-5 h-5 fill-current text-gray-400" />
+                                <BsBasket className="w-5 h-5 fill-current text-gray-400" />
                                 <span>Orders</span>
                               </div>
 
@@ -1010,17 +1007,14 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                       ) : null
                     ) : (
                       <li className=" ">
-                        {/* <Link to={'/seller/orders'} rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
-                                                    <BiArchive className="w-5 h-5 text-gray-400" />
-                                                    <span>Order Management</span>
-                                                </Link> */}
+
                         <div
                           onClick={() => handleToggle(2)}
                           className="group [&_summary::-webkit-details-marker]:hidden  items-center rounded-sm  "
                         >
                           <div className="flex cursor-pointer w-full items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
                             <div className="flex cursor-pointer items-center gap-2">
-                              <BsBasket  className="w-5 h-5 fill-current text-gray-400" />
+                              <BsBasket className="w-5 h-5 fill-current text-gray-400" />
                               <span>Orders</span>
                             </div>
 
@@ -1094,7 +1088,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                           >
                             <div className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
                               <div className="flex cursor-pointer items-center gap-2">
-                                <BsCalendar2Range  className="w-5 h-5 fill-current text-gray-400" />
+                                <BsCalendar2Range className="w-5 h-5 fill-current text-gray-400" />
 
                                 <span>Pages</span>
                               </div>
@@ -1136,7 +1130,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                         >
                           <div className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
                             <div className="flex cursor-pointer items-center gap-2">
-                              <BsCalendar2Range  className="w-5 h-5 fill-current text-gray-400" />
+                              <BsCalendar2Range className="w-5 h-5 fill-current text-gray-400" />
 
                               <span>Pages</span>
                             </div>
@@ -1185,7 +1179,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                               href="#"
                               className="flex items-center p-2 space-x-3 rounded-md"
                             >
-                              <BsPersonLinesFill   className="w-5 h-5 text-gray-400" />
+                              <BsPersonLinesFill className="w-5 h-5 text-gray-400" />
                               <span>Staff Account</span>
                             </Link>
                           </li>
@@ -1199,7 +1193,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                             href="#"
                             className="flex items-center p-2 space-x-3 rounded-md"
                           >
-                            <BsPersonLinesFill   className="w-5 h-5 text-gray-400" />
+                            <BsPersonLinesFill className="w-5 h-5 text-gray-400" />
                             <span>Staff Account</span>
                           </Link>
                         </li>
@@ -1216,7 +1210,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                           >
                             <div className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
                               <div className="flex cursor-pointer items-center gap-2">
-                                <BsLayoutTextSidebarReverse  className="w-5 h-5 fill-current text-gray-400" />
+                                <BsLayoutTextSidebarReverse className="w-5 h-5 fill-current text-gray-400" />
                                 <span>Report Management</span>
                               </div>
 
@@ -1314,7 +1308,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                         >
                           <div className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
                             <div className="flex cursor-pointer items-center gap-2">
-                              <BsLayoutTextSidebarReverse  className="w-5 h-5 fill-current text-gray-400" />
+                              <BsLayoutTextSidebarReverse className="w-5 h-5 fill-current text-gray-400" />
                               <span>Report Management</span>
                             </div>
 
@@ -1415,7 +1409,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                           >
                             <div className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
                               <div className="flex cursor-pointer items-center gap-2">
-                                <BsCalculator  className="w-5 h-5 fill-current text-gray-400" />
+                                <BsCalculator className="w-5 h-5 fill-current text-gray-400" />
                                 <span>Finance</span>
                               </div>
 
@@ -1511,7 +1505,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                         >
                           <div className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
                             <div className="flex cursor-pointer items-center gap-2">
-                              <BsCalculator  className="w-5 h-5 fill-current text-gray-400" />
+                              <BsCalculator className="w-5 h-5 fill-current text-gray-400" />
                               <span>Finance</span>
                             </div>
 
@@ -1610,7 +1604,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                           >
                             <div className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
                               <div className="flex cursor-pointer items-center gap-2">
-                                <BsHeadset  className="w-5 h-5 fill-current text-gray-400" />
+                                <BsHeadset className="w-5 h-5 fill-current text-gray-400" />
                                 <span>Support</span>
                               </div>
 
@@ -1697,7 +1691,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                         >
                           <div className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
                             <div className="flex cursor-pointer items-center gap-2">
-                              <BsHeadset  className="w-5 h-5 fill-current text-gray-400" />
+                              <BsHeadset className="w-5 h-5 fill-current text-gray-400" />
                               <span>Support</span>
                             </div>
 
@@ -1792,7 +1786,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                           >
                             <div className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
                               <div className="flex cursor-pointer items-center gap-2">
-                                <BsFillBootstrapFill  className="w-5 h-5 fill-current text-gray-400" />
+                                <BsFillBootstrapFill className="w-5 h-5 fill-current text-gray-400" />
 
                                 <span>Blog</span>
                               </div>
@@ -1844,7 +1838,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                         >
                           <div className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
                             <div className="flex cursor-pointer items-center gap-2">
-                              <BsFillBootstrapFill  className="w-5 h-5 fill-current text-gray-400" />
+                              <BsFillBootstrapFill className="w-5 h-5 fill-current text-gray-400" />
 
                               <span>Blog</span>
                             </div>
@@ -1902,7 +1896,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                           >
                             <div className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
                               <div className="flex cursor-pointer items-center gap-2">
-                                <BsFillJournalBookmarkFill  className="w-5 h-5 fill-current text-gray-400" />
+                                <BsFillJournalBookmarkFill className="w-5 h-5 fill-current text-gray-400" />
 
                                 <span>Contact</span>
                               </div>
@@ -1945,7 +1939,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                         >
                           <div className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
                             <div className="flex cursor-pointer items-center gap-2">
-                              <BsFillJournalBookmarkFill  className="w-5 h-5 fill-current text-gray-400" />
+                              <BsFillJournalBookmarkFill className="w-5 h-5 fill-current text-gray-400" />
 
                               <span>Contact</span>
                             </div>
@@ -1992,7 +1986,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                             href="#"
                             className="flex items-center p-2 space-x-3 rounded-md"
                           >
-                            <BsShop  className="w-5 h-5 fill-current text-gray-400" />
+                            <BsShop className="w-5 h-5 fill-current text-gray-400" />
 
                             <span>Shop Profile</span>
                           </Link>
@@ -2006,7 +2000,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                           href="#"
                           className="flex items-center p-2 space-x-3 rounded-md"
                         >
-                          <BsShop  className="w-5 h-5 fill-current text-gray-400" />
+                          <BsShop className="w-5 h-5 fill-current text-gray-400" />
 
                           <span>Shop Profile</span>
                         </Link>
@@ -2025,7 +2019,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                               href="#"
                               className="flex items-center p-2 space-x-3 rounded-md"
                             >
-                              <BsGlobe  className="w-5 h-5 fill-current text-gray-400" />
+                              <BsGlobe className="w-5 h-5 fill-current text-gray-400" />
                               <span>Domain Management</span>
                             </Link>
                           </li>
@@ -2039,7 +2033,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                             href="#"
                             className="flex items-center p-2 space-x-3 rounded-md"
                           >
-                            <BsGlobe  className="w-5 h-5 fill-current text-gray-400" />
+                            <BsGlobe className="w-5 h-5 fill-current text-gray-400" />
                             <span>Domain Management</span>
                           </Link>
                         </li>
@@ -2285,7 +2279,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                               rel="noopener noreferrer"
                               className="flex items-center p-2 space-x-3 rounded-md"
                             >
-                              <BsHddNetworkFill  className="w-5 h-5 text-gray-400" />
+                              <BsHddNetworkFill className="w-5 h-5 text-gray-400" />
                               <span>Channel Integration</span>
                             </Link>
                           </li>
@@ -2298,7 +2292,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                             rel="noopener noreferrer"
                             className="flex items-center p-2 space-x-3 rounded-md"
                           >
-                            <BsHddNetworkFill  className="w-5 h-5 text-gray-400" />
+                            <BsHddNetworkFill className="w-5 h-5 text-gray-400" />
                             <span>Channel Integration</span>
                           </Link>
                         </li>
@@ -2315,7 +2309,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                           >
                             <div className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
                               <div className="flex cursor-pointer items-center gap-2">
-                                <BsWindowPlus  className="w-5 h-5 fill-current text-gray-400" />
+                                <BsWindowPlus className="w-5 h-5 fill-current text-gray-400" />
 
                                 <span>Content Management</span>
                               </div>
@@ -2374,7 +2368,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                         >
                           <div className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
                             <div className="flex cursor-pointer items-center gap-2">
-                              <BsWindowPlus  className="w-5 h-5 fill-current text-gray-400" />
+                              <BsWindowPlus className="w-5 h-5 fill-current text-gray-400" />
 
                               <span>Content Management</span>
                             </div>
@@ -2442,7 +2436,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                           >
                             <div className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
                               <div className="flex cursor-pointer items-center gap-2">
-                                <BsLifePreserver  className="w-5 h-5 fill-current text-gray-400" />
+                                <BsLifePreserver className="w-5 h-5 fill-current text-gray-400" />
                                 <span>My Service</span>
                               </div>
 
@@ -2478,7 +2472,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                         >
                           <div className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
                             <div className="flex cursor-pointer items-center gap-2">
-                              <BsLifePreserver  className="w-5 h-5 fill-current text-gray-400" />
+                              <BsLifePreserver className="w-5 h-5 fill-current text-gray-400" />
                               <span>My Service</span>
                             </div>
 
@@ -2520,7 +2514,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                           >
                             <div className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
                               <div className="flex cursor-pointer items-center gap-2">
-                                <BsBoxSeam  className="w-5 h-5 fill-current text-gray-400" />
+                                <BsBoxSeam className="w-5 h-5 fill-current text-gray-400" />
                                 <span>Stock Management</span>
                               </div>
 
@@ -2590,7 +2584,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                         >
                           <div className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
                             <div className="flex cursor-pointer items-center gap-2">
-                              <BsBoxSeam  className="w-5 h-5 fill-current text-gray-400" />
+                              <BsBoxSeam className="w-5 h-5 fill-current text-gray-400" />
                               <span>Stock Management</span>
                             </div>
 
@@ -2694,7 +2688,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                         onClick={() => logOut()}
                         className="flex items-center p-2 space-x-3 rounded-md "
                       >
-                        <BsBoxArrowLeft  className="w-5 h-5 fill-current text-gray-200" />
+                        <BsBoxArrowLeft className="w-5 h-5 fill-current text-gray-200" />
                         <span>Logout</span>
                       </button>
                     </li>
@@ -2705,10 +2699,10 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
               {responsive && (
                 <div className="flex-1 ">
                   <ul className="pt-2 pb-4 space-y-1 text-sm">
-                    
+
                   </ul>
                 </div>
-                
+
               )}
             </>
           ) : (
@@ -2731,7 +2725,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                     href="#"
                     className="flex items-center p-2 space-x-3 rounded-md"
                   >
-                    <BiArchive className="w-5 h-5 text-gray-400" />
+                    {/* <BiArchive className="w-5 h-5 text-gray-400" /> */}
                     <span>Subscription Management</span>
                   </Link>
                 </div>
@@ -2740,7 +2734,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                     onClick={() => logOut()}
                     className="flex items-center p-2   hover:bg-gray-800 space-x-3 rounded-md "
                   >
-                    <BsBoxArrowLeft  className="w-5 h-5 fill-current text-gray-400" />
+                    <BsBoxArrowLeft className="w-5 h-5 fill-current text-gray-400" />
                     <span>Logout</span>
                   </button>
                 </div>

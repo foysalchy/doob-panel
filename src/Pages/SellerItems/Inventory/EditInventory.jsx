@@ -9,10 +9,13 @@ const EditInventory = ({ refetch, open, setOpen, data }) => {
   const { shopInfo } = useContext(AuthContext);
 
   const [selectedValue, setSelectedValue] = useState([]);
+  const [variationQuantity, setVariationQuantity] = useState(null)
   const handleChange = (selectedOption) => {
     setSelectedValue(selectedOption);
+    setVariationQuantity(selectedOption?.quantity);
+
   };
-  console.log("selectedValue", selectedValue?.value);
+
 
   const [selectStatusValue, setSelectStatusValue] = useState([]);
 
@@ -43,7 +46,7 @@ const EditInventory = ({ refetch, open, setOpen, data }) => {
         name: data?.name,
         price: data?.price,
         image: data?.featuredImage?.src ?? data?.images[0]?.src,
-        quantity: data?.stock_quantity,
+        quantity: variationQuantity,
         // image:,
       },
       warehouse: data?.warehouse,
@@ -78,9 +81,12 @@ const EditInventory = ({ refetch, open, setOpen, data }) => {
   };
 
   const options = data?.variations?.map((item) => {
+
+
     return {
       label: item?.SKU,
       value: item?.SKU,
+      quantity: item?.quantity,
     };
   });
 
@@ -91,6 +97,7 @@ const EditInventory = ({ refetch, open, setOpen, data }) => {
     return {
       label: item,
       value: item,
+
     };
   });
 
@@ -111,15 +118,13 @@ const EditInventory = ({ refetch, open, setOpen, data }) => {
 
           <div className="my-3">
             <label className="mb-1 text-lg" htmlFor="user">
-              Select Permissions{" "}
+              Select Variations{" "}
             </label>
             <Select
+              getOptionLabel={(option) => option.label}
+              getOptionValue={(option) => option.label}
               // lassName="w-full p-2 rounded-md ring-1 mt-2 ring-gray-200" placeholder='input user role'
               options={options}
-              // isMulti={true}
-              // defaultValue={staffInfo?.permissions}
-              // getOptionLabel={(option) => option.name}
-              // getOptionValue={(option) => option.route}
               onChange={handleChange}
             />
           </div>

@@ -77,6 +77,7 @@ import CommissionReport from "../Pages/AdminItem/ReportManagement/CommitonReport
 import WarehouseReportHistory from "../Pages/AdminItem/ReportManagement/warehouseReport/WarehouseReportHistory";
 import SearchAdminReport from "../Pages/AdminItem/ReportManagement/searchReport/SearchAdminReport";
 import SubscribeHistory from "../Pages/AdminItem/ReportManagement/SubscribeHistory";
+import Profile from "../Pages/AdminItem/Profile/Profile";
 
 const SupperAdminPath = [
   {
@@ -592,6 +593,10 @@ const SupperAdminPath = [
     path: "package-management/add-package",
     element: <AddPackage />,
   },
+  {
+    path: "view-profile",
+    element: <Profile />
+  }
 ];
 
 export { SupperAdminPath };

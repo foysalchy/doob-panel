@@ -2,6 +2,7 @@ import React, { useContext, useRef } from 'react';
 import { AuthContext } from '../../../../AuthProvider/UserProvider';
 import Barcode from 'react-barcode';
 import { useReactToPrint } from 'react-to-print';
+import { useQuery } from '@tanstack/react-query';
 
 const SalesInvoice = ({ products, setModalOpen }) => {
     const { shopInfo, user } = useContext(AuthContext);
@@ -11,9 +12,9 @@ const SalesInvoice = ({ products, setModalOpen }) => {
 
     // Calculate tax
     const taxRate = 0.1;
-    const tax = subtotal * taxRate;
+    // const tax = subtotal;
 
-    const total = subtotal + tax;
+    const total = subtotal;
 
     const componentRef = useRef();
     const handlePrint = useReactToPrint({
@@ -26,6 +27,18 @@ const SalesInvoice = ({ products, setModalOpen }) => {
 
     console.log(products, 'invoice****>>>>');
 
+
+
+    const { data: adminData = [], isLoading, refetch } = useQuery({
+        queryKey: ["adminData"],
+        queryFn: async () => {
+            const res = await fetch("/adminData.json");
+            const data = await res.json();
+            return data[0];
+        },
+    });
+
+
     const InvoicePage = ({ order }) => {
         return (
             <>
@@ -34,10 +47,12 @@ const SalesInvoice = ({ products, setModalOpen }) => {
                     className="p-12 mx-8 bg-white print-data   mt-6">
 
                     <header className="flex items-start justify-between">
-                        <img src={shopInfo?.logo} alt="logo" className='w-[200px]' />
+                        <img src={adminData?.logo} alt="logo" className='w-[200px]' />
                         <div className='whitespace-wrap w-[300px]'>
-                            <p className='text-gray-600 text-end'>{user?.shopName}</p>
-                            <p className='text-gray-600 text-end'>{user?.shopEmail}</p>
+                            <p className='text-gray-600 text-end'>{adminData?.name}</p>
+                            <p className='text-gray-600 text-end'>{adminData?.email}</p>
+                            <p className='text-gray-600 text-end'>{adminData?.phone}</p>
+                            <p className='text-gray-600 text-end'>{adminData?.address}</p>
                         </div>
                     </header>
 
@@ -50,24 +65,39 @@ const SalesInvoice = ({ products, setModalOpen }) => {
                         {/*.... Address ...*/}
                         {/*................*/}
                         <div className="flex items-center justify-between mt-4">
-                            <div>
-                                <div className='flex items-center gap-2'>
-                                    <h4 className='font-semibold text-gray-700 text-sm'>
-                                        Name :
-                                    </h4>
-                                    <p className="text-gray-600 text-sm">{products?.customerName}</p>
-                                </div>
-                                <div className='flex items-center gap-2'>
-                                    <h4 className='font-semibold text-gray-700 text-sm'>
-                                        Address :
-                                    </h4>
-                                    <p className="text-gray-600 text-sm">{products?.userInfo?.address}</p>
-                                </div>
-                                <div className='flex items-center gap-2'>
-                                    <h4 className='font-semibold text-gray-700 text-sm'>
-                                        Phone :
-                                    </h4>
-                                    <p className="text-gray-600 text-sm">{products?.userInfo?.mobileNumber}</p>
+                            <div className="flex items-start justify-between mt-4">
+                                <div>
+                                    <div className='flex items-center gap-2'>
+                                        <h4 className='font-semibold text-gray-700 text-sm'>
+                                            Name :
+                                        </h4>
+                                        <p className="text-gray-600 text-sm">{products?.userInfo?.fullName} </p>
+                                    </div>
+                                    <div className='flex items-center gap-2'>
+                                        <h4 className='font-semibold text-gray-700 text-sm'>
+                                            Address :
+                                        </h4>
+                                        <p className="text-gray-600 text-sm">{products?.userInfo?.address}
+                                            ,{
+                                                products?.userInfo?.for_product === "customer" &&
+                                                <>
+                                                    {
+                                                        products?.userInfo?.city
+                                                    } {
+                                                        products?.userInfo?.area
+                                                    }
+                                                </>
+                                            }
+                                        </p>
+                                    </div>
+
+                                    <div className='flex items-center gap-2'>
+                                        <h4 className='font-semibold text-gray-700 text-sm'>
+                                            Phone :
+                                        </h4>
+                                        <p className="text-gray-600 text-sm">{products?.userInfo?.mobileNumber}</p>
+                                    </div>
+
                                 </div>
                             </div>
 
@@ -165,7 +195,7 @@ const SalesInvoice = ({ products, setModalOpen }) => {
                             <div className="  gap-12 flex justify-between">
                                 <ul className='space-y-2'>
                                     <li>Sub Total</li>
-                                    <li>Tax</li>
+                                    {/* <li>Tax</li> */}
                                     <li className=' font-bold'>Total</li>
                                 </ul>
 
@@ -173,9 +203,9 @@ const SalesInvoice = ({ products, setModalOpen }) => {
                                     <li className=''>
                                         {subtotal.toFixed(2)}
                                     </li>
-                                    <li className=''>
+                                    {/* <li className=''>
                                         {tax.toFixed(2)}
-                                    </li>
+                                    </li> */}
                                     <li className='  font-bold'>
                                         {total.toFixed(2)}
                                     </li>
