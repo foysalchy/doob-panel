@@ -39,19 +39,6 @@ export default function EditCampaign() {
     setIsChecked(campaignDefaultData?.isFlash ?? false);
   }, [campaignDefaultData]);
 
-  const handleProductChange = (selectedOptions) => {
-    setSelectedProducts(selectedOptions);
-
-    const newPrices = { ...prices };
-
-    selectedOptions.forEach((option) => {
-      console.log(option);
-      if (!newPrices) {
-        newPrices.campaignPrice = 0;
-      }
-    });
-    setPrices(newPrices);
-  };
 
   const handlePriceChange = (product, newPrice) => {
     console.log(product, newPrice);
@@ -157,6 +144,26 @@ export default function EditCampaign() {
 
   const defultSelect = products.filter((product) => product?.campaignId === id);
   const [dfd, setDfd] = useState(defultSelect)
+
+
+
+  const handleProductChange = (selectedOptions) => {
+    setSelectedProducts(selectedOptions);
+
+    defultSelect.forEach((option) => {
+      console.log(option);
+    });
+
+    const newPrices = { ...prices };
+
+    defultSelect.forEach((option) => {
+      console.log(option);
+      if (!newPrices) {
+        newPrices.campaignPrice = 0;
+      }
+    });
+    setPrices(newPrices);
+  };
 
   const handleRemoveProduct = (product) => {
 
