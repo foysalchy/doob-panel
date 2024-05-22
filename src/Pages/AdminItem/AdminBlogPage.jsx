@@ -50,7 +50,7 @@ const AdminBlogPage = () => {
   }, [categories, refetch]);
 
   const location = useLocation();
-  const path = location.hash.replace("#", "");
+  const path = decodeURIComponent(location.hash.replace("#", ""));
 
   useEffect(() => {
     // Update selected category based on path
@@ -58,14 +58,13 @@ const AdminBlogPage = () => {
   }, [path]);
 
   // Filter blogs based on selected category
-  const filteredBlogs = blogs.filter((blog) => {
+  const filteredBlogs = blogs?.filter((blog) => {
     // Check if the blog matches the selected category or if the category is 'all'
     const categoryMatch =
-      selectedCategory === "all" || blog.category === selectedCategory;
+      selectedCategory === "all" || blog?.category === selectedCategory;
     // Check if the blog title contains the search term
-    const titleMatch = blog.title
-      .toLowerCase()
-      .includes(searchTerm.toLowerCase());
+    const titleMatch = blog?.title?.toLowerCase()
+      .includes(searchTerm?.toLowerCase());
     return categoryMatch && titleMatch;
   });
 
@@ -149,7 +148,7 @@ const AdminBlogPage = () => {
                     categories?.map((category) => (
                       <a
                         key={category.id}
-                        href={`#${category?.slag}`}
+                        href={`#${category?.title}`}
                         className={`px-4 py-2 text-sm font-medium uppercase tracking-wide ${selectedCategory === category.title
                           ? "bg-black text-white"
                           : "bg-gray-300 text-gray-700"

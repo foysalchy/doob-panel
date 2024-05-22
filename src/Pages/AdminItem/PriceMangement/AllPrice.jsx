@@ -6,6 +6,7 @@ import { FiDelete } from "react-icons/fi";
 import { MdDelete } from "react-icons/md";
 import Swal from "sweetalert2";
 import EditPrice from "./EditPrice";
+import { Timestamp } from "firebase/firestore";
 
 const AllPrice = () => {
   const [loading, setLoading] = useState(false);
@@ -15,7 +16,9 @@ const AllPrice = () => {
       const res = await fetch(
         "https://backend.doob.com.bd/api/v1/admin/pricing"
       );
-      const data = await res.json();
+      const price = await res.json();
+      // need to data sort by Timestamp 
+      const data = price.sort((a, b) => b.timestamp - a.timestamp);
       return data;
     },
   });

@@ -10,6 +10,7 @@ import { AuthContext } from "../../../AuthProvider/UserProvider";
 import { FaArrowRightLong, FaDeleteLeft } from "react-icons/fa6";
 import { MdOutlineDeleteOutline, MdOutlineFolderDelete } from "react-icons/md";
 import { TbRestore, TbTrashOff } from "react-icons/tb";
+import BrightAlert from "bright-alert";
 
 const PageManagement = () => {
   const { shopInfo } = useContext(AuthContext);
@@ -36,7 +37,7 @@ const PageManagement = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        Swal.fire("success", "Your Faq Publish Successfully", "success");
+        BrightAlert()
         refetch();
       });
   };
@@ -50,7 +51,7 @@ const PageManagement = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        Swal.fire("success", "Your FAQ Unpublish Successfully", "success");
+        BrightAlert()
         refetch();
       });
   };
@@ -65,7 +66,7 @@ const PageManagement = () => {
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
-        Swal.fire("success", "Your Price Delete Successfully", "success");
+        BrightAlert()
         refetch();
       });
   };
@@ -81,7 +82,7 @@ const PageManagement = () => {
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
-        Swal.fire(`Your Page Trash ${status} Successfully`, "", "success");
+        BrightAlert()
         refetch();
       });
   };
@@ -131,7 +132,7 @@ const PageManagement = () => {
           </span>
 
           <span className="text-sm font-medium transition-all group-hover:ms-4">
-            Trash Page
+            {trash_status ? 'Active Page' : 'Trash Page'}
           </span>
         </button>
       </div>
@@ -172,8 +173,7 @@ const PageManagement = () => {
                     </tr>
                   </thead>
                   <tbody className="bg-white divide-y divide-gray-200 ">
-                    {faqs
-                      ?.filter((faq) => faq?.trash !== trash_status)
+                    {faqs?.filter((faq) => faq?.trash == trash_status)
                       ?.map((faq, index) => (
                         <tr>
                           <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
@@ -181,8 +181,8 @@ const PageManagement = () => {
                               <div className="w-5/12">
                                 <h2 className="font-medium text-gray-800  ">
                                   {faq?.title}
-                                  <span className="text-yellow-600">
-                                    {faq?.drafts && <>(draft)</>}
+                                  <span className="text-yellow-600 ml-3">
+                                    {faq?.draft && <>(draft)</>}
                                   </span>
                                 </h2>
                               </div>

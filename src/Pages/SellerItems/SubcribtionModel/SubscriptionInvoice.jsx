@@ -13,7 +13,7 @@ const SubscriptionInvoice = ({ CommissionHistory, invoice, setInvoice, due, pric
         // selectedObject.price = parseInt(allCommissions) + parseInt( selectedObject?.price ? selectedObject?.price: 0)
         // setInvoice(false)
         setOpen(selectedObject)
-        
+
 
     }
 
@@ -24,7 +24,7 @@ const SubscriptionInvoice = ({ CommissionHistory, invoice, setInvoice, due, pric
                 <h3 className="pb-[18px] text-xl font-semibold text-dark dark:text-back sm:text-2xl">
                     Your TotalCommission : {parseInt(allCommissions).toFixed()}
                     <br></br>
-                    Your Due   {parseInt(allCommissions) + parseInt( selectedObject?.price ? selectedObject?.price: 0)}
+                    Your Due   {parseInt(allCommissions) + parseInt(selectedObject?.price ? selectedObject?.price : 0)}
                 </h3>
                 <span
                     className={`mx-auto mb-6 inline-block h-1 w-[90px] rounded bg-primary`}
@@ -39,11 +39,11 @@ const SubscriptionInvoice = ({ CommissionHistory, invoice, setInvoice, due, pric
                         </button>
                     </div>
 
-                    {open && <PriceModal open={open} setOpen={setOpen} />}
+                    {open && <PriceModal refetch={setOpen} open={open} setOpen={setOpen} />}
 
                     <div className="w-1/2 px-3">
                         <button onClick={() => handleSubmit()} className="block w-full rounded-md border border-primary bg-primary p-3 text-center text-base font-medium text-white transition hover:bg-blue-dark">
-                           Renew
+                            Renew
                         </button>
                     </div>
                 </div>

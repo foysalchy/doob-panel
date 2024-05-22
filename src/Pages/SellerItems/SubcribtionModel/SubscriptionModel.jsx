@@ -12,7 +12,7 @@ const SubscriptionModel = () => {
   const [services, setServices] = useState([]);
   const [showWarning, setShowWarning] = useState(false);
 
-  const { data: prices = {}, loader } = useQuery({
+  const { data: prices = {}, isLoading, refetch: reload } = useQuery({
     queryKey: ["subscriptionModal"],
     queryFn: async () => {
       const res = await fetch(
@@ -49,55 +49,23 @@ const SubscriptionModel = () => {
     },
   });
 
-  const { data: possibility } = useQuery({
-    queryKey: "possibility",
-    queryFn: async () => {
-      const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/seller/check-free-trail?shopId=${shopInfo._id}`
-      );
-      const data = await res.json();
-      console.log(data);
-      return data.freeTrialActive;
-    },
-  });
 
-  // console.log(`https://backend.doob.com.bd/api/v1/seller/check-free-trail?shopId=${shopInfo._id}`, 'posible');
-
-  const originalDate = shopInfo?.paymentDate;
-  const formattedDate = new Date(originalDate);
-
-  // Calculate the time difference in milliseconds
-  const timeDifference = new Date() - formattedDate;
-
-  // Convert milliseconds to days
-  const daysPassed = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
-
-  const time =
-    (prices?.orderInfo?.time?.split(",")[1] === "1" && 30) ||
-    (prices?.orderInfo?.time?.split(",")[1] === "12" && 365) ||
-    (prices?.orderInfo?.time?.split(",")[1] === "6" && 180) ||
-    (prices?.orderInfo?.time?.split(",")[1] === "20" && 730) ||
-    (prices?.orderInfo?.time?.split(",")[1] === "Lifetime" &&
-      10000000000000000000000000000000000);
-
-  // if (daysPassed >= time) {
-  //     alert('your ads;fj');
-  // }
+  console.log(prices.orderInfo, "orderInfo");
 
 
 
-  const showWarningIfNeeded = () => {
-    if (daysPassed > 0 && daysPassed <= 5) {
-      setShowWarning(true);
-    } else {
-      setShowWarning(false);
-    }
-  };
+  // const showWarningIfNeeded = () => {
+  //   if (daysPassed > 0 && daysPassed <= 5) {
+  //     setShowWarning(true);
+  //   } else {
+  //     setShowWarning(false);
+  //   }
+  // };
 
   // Use useEffect to trigger the warning check on component mount and when daysPassed changes
-  useEffect(() => {
-    showWarningIfNeeded();
-  }, [daysPassed]);
+  // useEffect(() => {
+  //   showWarningIfNeeded();
+  // }, [daysPassed]);
 
 
 
@@ -108,90 +76,106 @@ const SubscriptionModel = () => {
 
   console.log(prices.orderInfo);
 
-  const amount = parseInt(prices?.orderInfo?.amount) * parseInt(prices?.orderInfo?.time?.split(",")[1])
+  const amount = parseInt(prices?.orderInfo?.amount)
+
+  const calculatePassedDays = (startTime) => {
+    const currentTime = Date.now();
+    const passedTimeMs = currentTime - startTime;
+    return Math.floor(passedTimeMs / (1000 * 60 * 60 * 24));
+  };
+
+  const calculateRemainingDays = (endTime) => {
+    const currentTime = Date.now();
+    const remainingTimeMs = endTime - currentTime;
+    return Math.ceil(remainingTimeMs / (1000 * 60 * 60 * 24));
+  };
+
+  const passedDays = calculatePassedDays(prices?.orderInfo?.time_stamp);
+  const remainingDays = calculateRemainingDays(prices?.orderInfo?.endTime);
 
   console.log(CommissionHistory);
   return (
-    <div className="bg-white text-black">
-      {showWarning && (
-        <div className="bg-orange-100 px-2 py-3 rounded- flex justify-between items-center">
-          <p className="text-sm text-orange-800 capitalize ">
-            Hi dear, only 5 days left for your service. Please renew{" "}
-            <button
-              onClick={() => setInvoice(true)}
-              className="bg-orange-500 px-4 ml-2 py-1 text-xs rounded text-black"
-            >
-              Renew
-            </button>
-          </p>
-          <div className="h-0 w-0">
-            {invoice && (
-              <SubscriptionInvoice
-                pricesData={pricesData}
-                id={prices}
-                CommissionHistory={commissionHistory}
-                setInvoice={setInvoice}
-                invoice={invoice}
-              />
-            )}
+    <div className="">
+      {!isLoading ? <div className="bg-white text-black">
+        {(remainingDays - passedDays <= 5) && (
+          <div className="bg-orange-100 px-2 py-3 rounded- flex justify-between items-center">
+            <p className="text-sm text-orange-800 capitalize ">
+              Hi dear, only {remainingDays - passedDays} days left for your service. Please renew{" "}
+              <button
+                onClick={() => setInvoice(true)}
+                className="bg-orange-500 px-4 ml-2 py-1 text-xs rounded text-black"
+              >
+                Renew
+              </button>
+            </p>
+            <div className="h-0 w-0">
+              {invoice && (
+                <SubscriptionInvoice
+                  pricesData={pricesData}
+                  id={prices}
+                  CommissionHistory={CommissionHistory}
+                  setInvoice={setInvoice}
+                  invoice={invoice}
+                />
+              )}
+            </div>
           </div>
-        </div>
-      )}
+        )}
 
-      {!amount && (
-        <div className="bg-orange-100 px-2 py-3 rounded- flex justify-between items-center">
-          <p className="text-sm text-orange-800 capitalize ">
-            Hi dear, Your free trial is end. Please renew{" "}
-            <button
-              onClick={() => setInvoice(true)}
-              className="bg-orange-500 px-4 ml-2 py-1 text-xs rounded text-black"
-            >
-              Renew
-            </button>
-          </p>
-          <div className="h-0 w-0">
-            {invoice && (
-              <SubscriptionInvoice
-                pricesData={pricesData}
-                id={prices?._id}
-                CommissionHistory={CommissionHistory}
-                setInvoice={setInvoice}
-                invoice={invoice}
-              />
-            )}
+        {(!prices?.orderInfo) && (
+          <div className="bg-orange-100 px-2 py-3 rounded- flex justify-between items-center">
+            <p className="text-sm text-orange-800 capitalize ">
+              Hi dear, Your free trial is end. Please renew{" "}
+              <button
+                onClick={() => setInvoice(true)}
+                className="bg-orange-500 px-4 ml-2 py-1 text-xs rounded text-black"
+              >
+                Renew
+              </button>
+            </p>
+            <div className="h-0 w-0">
+              {invoice && (
+                <SubscriptionInvoice
+                  pricesData={pricesData}
+                  id={prices?._id}
+                  CommissionHistory={CommissionHistory}
+                  setInvoice={setInvoice}
+                  invoice={invoice}
+                />
+              )}
+            </div>
           </div>
-        </div>
-      )}
-      <div className="container px-6 py-8 mx-auto">
-        {amount ? <h1 className="text-2xl font-semibold text-center text-gray-800 capitalize lg:text-3xl ">
-          {`The remaining validity of your package is ${daysPassed - time == 10000000000000000000000000000000000 ? "Unlimited" : time} days out of ${time == 10000000000000000000000000000000000 ? "Unlimited" : time
-            } days.`}
-        </h1> : ''}
+        )}
+        <div className="container px-6 py-8 mx-auto">
+          {amount ? (
+            <h1 className="text-2xl font-semibold text-center text-gray-800 capitalize lg:text-3xl">
+              {`The number of days that have passed since your package activation is ${passedDays} days. The remaining validity of your package is ${remainingDays} days. And Remaining Date is ${remainingDays - passedDays} Days`}
+            </h1>
+          ) : ''}
 
+          {amount ? <div className="flex justify-center mt-3">
+            <div className="w-[300px] bg-[#0000ff08] text-center border-2 border-blue-400 p-3 rounded">
+              <h2 className="font-semibold pb-2">Order Information:</h2>
+              <ul>
+                <li className="text-sm text-gray-500">
+                  {/* parseInt(open?.price) * parseInt(time?.split(',')[1]) - parseInt(time?.split(',')[0]) */}
+                  <span className=" text-black">Amount :</span>{" "}
+                  {amount ? amount : 0} {" "}
+                  ৳
+                </li>
+                <li className="text-sm text-gray-500 ">
+                  <span className=" text-black">Buying Price :</span>{" "}
+                  {prices?.orderInfo?.buyingPrice ? prices?.orderInfo?.buyingPrice : 0} ৳
+                </li>
+                <li className="text-sm text-gray-500 ">
+                  <span className=" text-black">Discount Price :</span>{" "}
+                  {prices?.orderInfo?.time?.split(",")[0]} ৳
+                </li>
+              </ul>
+            </div>
+          </div> : ''}
 
-        {amount ? <div className="flex justify-center mt-3">
-          <div className="w-[300px] bg-[#0000ff08] text-center border-2 border-blue-400 p-3 rounded">
-            <h2 className="font-semibold pb-2">Order Information:</h2>
-            <ul>
-              <li className="text-sm text-gray-500">
-                {/* parseInt(open?.price) * parseInt(time?.split(',')[1]) - parseInt(time?.split(',')[0]) */}
-                <span className=" text-black">Amount :</span>{" "}
-                {amount ? amount : 0} {" "}
-                ৳
-              </li>
-              <li className="text-sm text-gray-500 ">
-                <span className=" text-black">Buying Price :</span>{" "}
-                {prices?.orderInfo?.buyingPrice ? prices?.orderInfo?.buyingPrice : 0} ৳
-              </li>
-              <li className="text-sm text-gray-500 ">
-                <span className=" text-black">Discount Price :</span>{" "}
-                {prices?.orderInfo?.time?.split(",")[0]} ৳
-              </li>
-            </ul>
-          </div>
-        </div> : ''}
-
-        {/* <div className="grid grid-cols-1 gap-8 mt-6 lg:grid-cols-3 xl:mt-12">
+          {/* <div className="grid grid-cols-1 gap-8 mt-6 lg:grid-cols-3 xl:mt-12">
 
                     {
                         pricesData?.map(data => {
@@ -235,8 +219,8 @@ const SubscriptionModel = () => {
                     }
                 </div> */}
 
-        {/* list */}
-        {/* <div className="p-8 mt-8 space-y-8 bg-gray-100  rounded-xl">
+          {/* list */}
+          {/* <div className="p-8 mt-8 space-y-8 bg-gray-100  rounded-xl">
                     {
                         prices?.benefits?.map(benefit => <div className="flex items-center justify-between text-gray-800 ">
                             <p className="text-lg sm:text-xl">{benefit}</p>
@@ -273,36 +257,39 @@ const SubscriptionModel = () => {
                         </div>)
                     }
                 </div> */}
-        <div className="flex gap-3 justify-center mt-8">
-          {/* <Link to={`/price`} className="px-8 py-2 tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-600 rounded-md hover:bg-blue-500 focus:outline-none focus:bg-blue-500 focus:ring focus:ring-blue-300 focus:ring-opacity-80">
+          <div className="flex gap-3 justify-center mt-8">
+            {/* <Link to={`/price`} className="px-8 py-2 tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-600 rounded-md hover:bg-blue-500 focus:outline-none focus:bg-blue-500 focus:ring focus:ring-blue-300 focus:ring-opacity-80">
                         Renew
                     </Link> */}
-          <PriceModal open={open} setOpen={setOpen} />
+            <PriceModal refetch={reload} open={open} setOpen={setOpen} />
 
-          <Link to={`/price`}>
-            <div className="flex items-center mt-auto text-white bg-indigo-500 border-0 py-2 px-4  focus:outline-none hover:bg-indigo-600 rounded">
-              Update
-            </div>
-          </Link>
-          <button
-            onClick={() => setOpen(prices?.result)}
-            className="flex items-center mt-auto text-white bg-indigo-500 border-0 py-2 px-4  focus:outline-none hover:bg-indigo-600 rounded"
-          >
-            Renew
-            <svg
-              fill="none"
-              stroke="currentColor"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              className="w-4 h-4 ml-auto"
-              viewBox="0 0 24 24"
+            <Link to={`/price`}>
+              <div className="flex items-center mt-auto text-white bg-indigo-500 border-0 py-2 px-4  focus:outline-none hover:bg-indigo-600 rounded">
+                Update
+              </div>
+            </Link>
+            <button
+              onClick={() => setOpen(prices?.result)}
+              className="flex items-center mt-auto text-white bg-indigo-500 border-0 py-2 px-4  focus:outline-none hover:bg-indigo-600 rounded"
             >
-              <path d="M5 12h14M12 5l7 7-7 7" />
-            </svg>
-          </button>
+              Renew
+              <svg
+                fill="none"
+                stroke="currentColor"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                className="w-4 h-4 ml-auto"
+                viewBox="0 0 24 24"
+              >
+                <path d="M5 12h14M12 5l7 7-7 7" />
+              </svg>
+            </button>
+          </div>
         </div>
-      </div>
+      </div> : <div className="flex justify-center items-center h-screen">
+        Data is load on Database
+      </div>}
     </div>
   );
 };

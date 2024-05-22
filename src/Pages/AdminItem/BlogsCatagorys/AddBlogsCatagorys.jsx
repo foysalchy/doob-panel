@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import BrightAlert from "bright-alert";
 import React from "react";
 import { useState } from "react";
 import { BsArrowRight } from "react-icons/bs";
@@ -61,7 +62,7 @@ const AddBlogsCatagorys = () => {
       .then((res) => res.json())
       .then((data) => {
         setLoading(false);
-        Swal.fire("success", "Your Blog Publish Successfully", "success");
+        BrightAlert()
 
         form.reset();
         setPreDeleteUrl("");
@@ -91,19 +92,7 @@ const AddBlogsCatagorys = () => {
                 name="categoryName"
               />
             </div>
-            {/* <div>
-              <label className="sr-only text-black" htmlFor="title">
-                Category Slag
-              </label>
-              <input
-                required
-                className="w-full rounded-lg border border-gray-900 p-3 text-sm"
-                placeholder="Category S"
-                type="text"
-                id="title"
-                name="categoryName"
-              />
-            </div> */}
+
             <div>
               <label
                 htmlFor="dropzone-file"

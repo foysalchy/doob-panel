@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { RxCross2 } from "react-icons/rx";
 import Swal from "sweetalert2";
 import Select from "react-select";
+import { BsArrowRight } from "react-icons/bs";
 
 const EditPackage = ({ OpenModal, setOpenModal, packageInfo, refetch }) => {
   console.log("packageInfo", packageInfo);
@@ -10,19 +11,34 @@ const EditPackage = ({ OpenModal, setOpenModal, packageInfo, refetch }) => {
   // ! submit form
   const handlePackageUpdate = async (e) => {
     e.preventDefault();
-    const packageName = e.target.packageName.value;
-    const amount = e.target.amount.value;
 
-    const data = {
-      packageName,
-      amount,
+    const slotOne = {
+      to: e.target.slot1_to_price.value,
+      price: e.target.slot1_to_commotion.value,
     };
+
+    const slotTwo = {
+      to: e.target.slot2_to_price.value,
+      price: e.target.slot2_to_commotion.value,
+    };
+
+    const slotThree = {
+      to: e.target.slot3_to_price.value,
+      price: e.target.slot3_to_commotion.value,
+    };
+    const data = {
+      name: e.target.packageName.value,
+      slotOne,
+      slotTwo,
+      slotThree,
+    };
+
+
     console.log(data, "data");
     setIsLoading(true);
     try {
       fetch(
         `https://backend.doob.com.bd/api/v1/admin/package/update-package/${packageInfo._id}`,
-        // `https://backend.doob.com.bd/api/v1/admin/package/update-package/${packageInfo._id}`,
         {
           method: "PUT",
           headers: {
@@ -62,68 +78,140 @@ const EditPackage = ({ OpenModal, setOpenModal, packageInfo, refetch }) => {
           </div>
         </div>
 
-        <form className="h-[500px] text-start" onSubmit={handlePackageUpdate}>
-          <label
+        <form className="h-[500px] overflow-y-auto text-start my-4" onSubmit={handlePackageUpdate}>
+          <div className=""> <label
             htmlFor="packageName"
-            className="inline-block text-start mb-1 font-medium mt-5"
+            className="inline-block mb-1 font-medium"
           >
             Package Name
           </label>
-          <input
-            placeholder="Package Name"
-            required
-            type="text"
-            defaultValue={packageInfo?.packageName}
-            name="packageName"
-            //   value={formData.name}
-            // onChange={(e) => handleInputChange("packageName", e.target.value)}
-            className="flex-grow w-full h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-purple-400 focus:outline-none focus:shadow-outline"
-          />
-          <label
-            htmlFor="amount"
-            className="inline-block text-start mb-1 font-medium mt-5"
-          >
-            Package Amount
-          </label>
-          <input
-            placeholder="Package Amount"
-            type="number"
-            name="amount"
-            defaultValue={packageInfo?.amount}
-            // value={formData.tagname}
-            // onChange={(e) => handleInputChange("amount", e.target.value)}
-            className="flex-grow w-full h-12 px-4 mb-4 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-purple-400 focus:outline-none focus:shadow-outline"
-          />
+            <input
+              placeholder="Package Name"
+              required
+              type="text"
+              name="packageName"
+              defaultValue={packageInfo.name}
 
-          <div className="flex justify-start">
+              className="flex-grow w-full h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-purple-400 focus:outline-none focus:shadow-outline"
+            /></div>
+          <div className="flex gap-4">
+            <div className="border border-gray-300 p-2">
+              <label
+                htmlFor="packageName"
+                className="inline-block mb-1 font-medium"
+              >
+                Slot 1
+              </label>
+              <div className="mb-2">
+                <input
+                  placeholder="To Price "
+                  required
+                  type="number"
+                  defaultValue={packageInfo.slotOne.to}
+                  name="slot1_to_price"
+                  className="flex-grow w-full h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-purple-400 focus:outline-none focus:shadow-outline"
+                /></div>
+              <div>
+
+                <input
+                  placeholder="Commotion Price"
+                  type="number"
+                  name="slot1_to_commotion"
+                  defaultValue={packageInfo.slotOne.price}
+
+                  className="flex-grow w-full h-12 px-4 mb-4 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-purple-400 focus:outline-none focus:shadow-outline"
+                />
+              </div>
+            </div>
+            <div className="border border-gray-300 p-2">
+              <label
+                htmlFor="packageName"
+                className="inline-block mb-1 font-medium"
+              >
+                Slot 2
+              </label>
+              <div className="mb-2">
+                <input
+                  placeholder="To Price "
+                  required
+                  defaultValue={packageInfo.slotTwo.to}
+                  type="number"
+                  name="slot2_to_price"
+                  className="flex-grow w-full h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-purple-400 focus:outline-none focus:shadow-outline"
+                /></div>
+              <div>
+
+                <input
+                  placeholder="Commotion Price"
+                  type="number"
+                  defaultValue={packageInfo.slotTwo.price}
+                  name="slot2_to_commotion"
+                  className="flex-grow w-full h-12 px-4 mb-4 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-purple-400 focus:outline-none focus:shadow-outline"
+                />
+              </div>
+            </div>
+            <div className="border border-gray-300 p-2">
+              <label
+                htmlFor="packageName"
+                className="inline-block mb-1 font-medium"
+              >
+                Slot 3
+              </label>
+              <div className="mb-2">
+                <input
+                  placeholder="To Price "
+                  required
+                  defaultValue={packageInfo.slotThree.to}
+                  type="number"
+                  name="slot3_to_price"
+                  className="flex-grow w-full h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-purple-400 focus:outline-none focus:shadow-outline"
+                /></div>
+              <div>
+
+                <input
+                  placeholder="Commotion Price"
+                  type="number"
+                  name="slot3_to_commotion"
+                  defaultValue={packageInfo.slotThree.price}
+                  className="flex-grow w-full h-12 px-4 mb-4 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-purple-400 focus:outline-none focus:shadow-outline"
+                />
+              </div>
+            </div>
+
+          </div>
+          {loading ? (
+            <button
+              disabled
+              className="group relative cursor-not-allowed inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none "
+            >
+              <span className="text-sm font-medium">Loading...</span>
+              <svg
+                className="animate-spin h-4 w-4 ml-3 text-white"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                />
+              </svg>
+            </button>
+          ) : (
             <button
               type="submit"
-              className="group relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500 mt-4"
+              className="group relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none mt-3"
             >
-              <span className="absolute -start-full transition-all group-hover:start-4">
-                <svg
-                  className="h-5 w-5 rtl:rotate-180"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M17 8l4 4m0 0l-4 4m4-4H3"
-                  />
-                </svg>
+              <span className="absolute -end-full transition-all group-hover:end-4">
+                <BsArrowRight />
               </span>
-              <span
-                className={`"text-sm ${loading && "animate-pulse"
-                  } font-medium transition-all group-hover:ms-4"`}
-              >
+
+              <span className="text-sm font-medium transition-all group-hover:me-4">
                 Update Package
               </span>
             </button>
-          </div>
+          )}
         </form>
       </div>
     </div>

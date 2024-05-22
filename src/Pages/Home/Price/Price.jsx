@@ -53,7 +53,7 @@ const Price = () => {
             {prices?.length &&
               prices?.map((price, index) => (
                 <>
-                  <PriceModal open={open} setOpen={setOpen} />
+                  <PriceModal open={open} refetch={refetch} setOpen={setOpen} />
                   {price?.status && (
                     <>
                       {price?.best == "yes" ? (
