@@ -26,6 +26,7 @@ const SingleService = () => {
     },
   });
 
+  console.log(service, "service");
   const handleOrder = () => {
     if (!user) {
       navigate("/sign-in");
@@ -105,30 +106,30 @@ const SingleService = () => {
   }, [refetch]);
 
   function timeAgo(timestamp) {
-      const date = new Date(timestamp);
-      const now = Date.now();
-      const difference = now - date.getTime();
+    const date = new Date(timestamp);
+    const now = Date.now();
+    const difference = now - date.getTime();
 
-      const units = [
-        { value: 365 * 24 * 60 * 60 * 1000, label: "year" },
-        { value: 30 * 24 * 60 * 60 * 1000, label: "month" },
-        { value: 7 * 24 * 60 * 60 * 1000, label: "week" },
-        { value: 24 * 60 * 60 * 1000, label: "day" },
-        { value: 60 * 60 * 1000, label: "hour" },
-        { value: 60 * 1000, label: "minute" },
-      ];
+    const units = [
+      { value: 365 * 24 * 60 * 60 * 1000, label: "year" },
+      { value: 30 * 24 * 60 * 60 * 1000, label: "month" },
+      { value: 7 * 24 * 60 * 60 * 1000, label: "week" },
+      { value: 24 * 60 * 60 * 1000, label: "day" },
+      { value: 60 * 60 * 1000, label: "hour" },
+      { value: 60 * 1000, label: "minute" },
+    ];
 
-      for (const unit of units) {
-        const count = Math.floor(difference / unit.value);
-        if (count >= 1) {
-          return count === 1
-            ? `1 ${unit.label} ago`
-            : `${count} ${unit.label}s ago`;
-        }
+    for (const unit of units) {
+      const count = Math.floor(difference / unit.value);
+      if (count >= 1) {
+        return count === 1
+          ? `1 ${unit.label} ago`
+          : `${count} ${unit.label}s ago`;
       }
-
-      return "just now";
     }
+
+    return "just now";
+  }
 
   return (
     <div className="px-4 pt-16 relative mx-auto sm:max-w-xl md:max-w-full  lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-20">
@@ -157,6 +158,41 @@ const SingleService = () => {
                   <span className="mr-3">Subscription Model</span> :{" "}
                   {service.subscriptionPeriod}
                 </div>
+                <div className="relative mt-1.5">
+                  <select
+                    type="text"
+                    list="pricingDiscount"
+                    id="pricingDiscount"
+                    name="pricingDiscount"
+                    className="w-full mt-1 rounded-lg border border-gray-600 px-3 py-3 text-sm mx-3"
+                    placeholder="Select Subscription Period"
+                  >
+                    <option disabled selected className="" value="">
+                      Select Service Discount
+                    </option>
+
+                    {service?.pricingPriceOne && (
+                      <option value={service?.pricingPriceOne}>
+                        Monthly Time {service?.pricingPriceOne} BDT
+                      </option>
+                    )}
+                    {service?.pricingPriceSix && (
+                      <option value={service?.pricingPriceSix}>
+                        Six Month {service?.pricingPriceSix} BDT
+                      </option>
+                    )}
+                    {service?.pricingPriceTwelve && (
+                      <option value={service?.pricingPriceTwelve}>
+                        One Year {service?.pricingPriceTwelve} BDT
+                      </option>
+                    )}
+                    {service?.pricingPriceTwenty && (
+                      <option value={service?.pricingPriceTwenty}>
+                        Two Year {service?.pricingPriceTwenty} BDT
+                      </option>
+                    )}
+                  </select>
+                </div>
               </div>
               <div className="flex w-full justify-between items-center">
                 <span className="title-font font-medium text-2xl text-gray-900">
@@ -164,12 +200,19 @@ const SingleService = () => {
                 </span>
                 <div className="flex items-center">
                   {/* <Link to={`/user-service-checkout/${service?._id}`}> */}
-                  {user?.role === "supperadmin" ? <div className="flex ml-auto cursor-pointer text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none  rounded">OWN SERVICE</div> : <button button
-                    onClick={handleOrder}
-                    className="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded"
-                  >
-                    Buy Now
-                  </button>}
+                  {user?.role === "supperadmin" ? (
+                    <div className="flex ml-auto cursor-pointer text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none  rounded">
+                      OWN SERVICE
+                    </div>
+                  ) : (
+                    <button
+                      button
+                      onClick={handleOrder}
+                      className="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded"
+                    >
+                      Buy Now
+                    </button>
+                  )}
                   {/* </Link> */}
                   <button
                     onClick={handleWishlist}
@@ -299,8 +342,8 @@ const SingleService = () => {
             ))}
           </div>
         </div>
-      </section >
-    </div >
+      </section>
+    </div>
   );
 };
 

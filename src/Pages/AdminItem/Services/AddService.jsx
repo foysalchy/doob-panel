@@ -55,7 +55,6 @@ const AddService = () => {
     }
   };
 
-
   const dataSubmit = async (event) => {
     setLoading(true);
     event.preventDefault();
@@ -69,6 +68,10 @@ const AddService = () => {
     const MetaImage = form.MetaImage.files[0];
     const MetaTag = form.MetaTag.value;
     const MetaDescription = form.MetaDescription.value;
+    const pricingPriceSix = form.pricingPriceSix.value;
+    const pricingPriceOne = form.pricingPriceOne.value;
+    const pricingPriceTwelve = form.pricingPriceTwelve.value;
+    const pricingPriceTwenty = form.pricingPriceTwelve.value;
 
     const imageFormData = new FormData();
     imageFormData.append("image", image);
@@ -77,7 +80,6 @@ const AddService = () => {
     const metaImageFormData = new FormData();
     metaImageFormData.append("image", MetaImage);
     const message = form.message.value;
-
 
     const metaImageUrl = await uploadImage(metaImageFormData);
 
@@ -92,15 +94,19 @@ const AddService = () => {
       MetaDescription,
       MetaImage: metaImageUrl,
       timestamp: new Date().toString(),
-      status: true
+      status: true,
+      pricingPriceSix,
+      pricingPriceOne,
+      pricingPriceTwelve,
+      pricingPriceTwenty,
     };
 
-    console.log(metaImageUrl);
+    console.log(service);
 
     try {
       postService(service, form);
     } catch (error) {
-      BrightAlert(`${error.message}`, '', 'error');
+      BrightAlert(`${error.message}`, "", "error");
       setLoading(false);
     }
   };
@@ -133,8 +139,6 @@ const AddService = () => {
         setFileName("");
       });
   };
-
-
 
   return (
     <div>
@@ -274,10 +278,69 @@ const AddService = () => {
                   id="message"
                 />
                 <br />
-                <br />
-
+                {/* <br /> */}
               </div>
             </div>
+            <label
+              htmlFor="pricingPriceOne"
+              className="inline-block mb-1 font-medium"
+            >
+              1st Month Discount
+            </label>
+            <input
+              placeholder="$50"
+              required
+              type="number"
+              name="pricingPriceOne"
+              // value={formData.one}
+              // onChange={(e) => handleInputChange("one", e.target.value)}
+              className="flex-grow w-full h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-purple-400 focus:outline-none focus:shadow-outline"
+            />
+            <label
+              htmlFor="pricingPriceSix"
+              className="inline-block mb-1 font-medium"
+            >
+              Six Month Discount
+            </label>
+            <input
+              placeholder="$50"
+              required
+              type="number"
+              name="pricingPriceSix"
+              // value={formData.six}
+              // onChange={(e) => handleInputChange("six", e.target.value)}
+              className="flex-grow w-full h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-purple-400 focus:outline-none focus:shadow-outline"
+            />
+            <label
+              htmlFor="pricingPriceTwelve"
+              className="inline-block mb-1 font-medium"
+            >
+              One Year Discount
+            </label>
+            <input
+              placeholder="$50"
+              required
+              type="number"
+              name="pricingPriceTwelve"
+              // value={formData.twelve}
+              // onChange={(e) => handleInputChange("twelve", e.target.value)}
+              className="flex-grow w-full h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-purple-400 focus:outline-none focus:shadow-outline"
+            />
+            <label
+              htmlFor="pricingPriceTwenty"
+              className="inline-block mb-1 font-medium"
+            >
+              Two Year Discount
+            </label>
+            <input
+              placeholder="$50"
+              required
+              type="number"
+              name="pricingPriceTwenty"
+              // value={formData.twenty}
+              // onChange={(e) => handleInputChange("twenty", e.target.value)}
+              className="flex-grow w-full h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-purple-400 focus:outline-none focus:shadow-outline"
+            />
 
             <div>
               <label className="sr-only text-black" htmlFor="title">
