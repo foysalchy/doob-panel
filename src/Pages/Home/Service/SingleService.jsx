@@ -30,19 +30,47 @@ const SingleService = () => {
   console.log(service, "service");
 
   const [selectedDiscount, setSelectedDiscount] = useState(`0,0`);
+
+  function calculateEndTime(time) {
+    console.log(time);
+    const monthsToAdd = parseInt(time?.split(",")[1], 10);
+    if (isNaN(monthsToAdd)) {
+      throw new Error("Invalid month value in time");
+    }
+
+    const currentDate = new Date();
+    const endDate = new Date(currentDate);
+    endDate.setMonth(endDate.getMonth() + monthsToAdd);
+
+    return endDate.getTime();
+  }
+
+  console.log({
+    endDate: selectedDiscount?.split(",")[1],
+    endTime: calculateEndTime(selectedDiscount),
+  });
+
   const handleOrder = () => {
     if (!user) {
       navigate("/sign-in");
     } else {
+      if (parseFloat(selectedDiscount?.split(",")[1]) < 1) {
+        BrightAlert("Select Any Subscription Model", "", "warning");
+        return;
+      }
       const order = {
         id: service._id,
         title: service.title,
-        price: selectedDiscount
-          ? service.price - selectedDiscount?.split(",")[0]
-          : service.price,
+        price: service?.price,
         img: service?.img,
         category: service.category,
         subscriptionPeriod: service.subscriptionPeriod,
+        endDate: selectedDiscount?.split(",")[1],
+        endTime: calculateEndTime(selectedDiscount),
+        normalPrice: service?.price,
+        buyingPrice: selectedDiscount
+          ? service.price - selectedDiscount?.split(",")[0]
+          : service.price,
       };
       console.log(order);
       setOrderStage([order]);
@@ -50,10 +78,16 @@ const SingleService = () => {
     }
   };
 
+  // console.log(parseFloat(selectedDiscount.split(",")[1]));
+  // console.log(parseFloat(selectedDiscount?.split(",")[1]) < 1);
   const handleWishlist = () => {
     if (!user) {
       navigate("/sign-in");
     } else {
+      if (parseFloat(selectedDiscount?.split(",")[1]) < 1) {
+        BrightAlert("Select Any Subscription Model", "", "info");
+        return;
+      }
       const order = {
         serviceId: service._id,
         userId: user._id,
@@ -61,11 +95,15 @@ const SingleService = () => {
         img: service.img,
         email: user.email,
         title: service.title,
-        price: selectedDiscount
-          ? service.price - selectedDiscount?.split(",")[0]
-          : service.price,
+        price: service.price,
         category: service.category,
         subscriptionPeriod: service.subscriptionPeriod,
+        endDate: selectedDiscount?.split(",")[1],
+        endTime: calculateEndTime(selectedDiscount),
+        normalPrice: service?.price,
+        buyingPrice: selectedDiscount
+          ? service.price - selectedDiscount?.split(",")[0]
+          : service.price,
       };
 
       console.log(order);
@@ -146,15 +184,10 @@ const SingleService = () => {
       console.log(value);
       setSelectedDiscount(value);
     } else {
-      Swal.fire("Oops!", "Discount is not valid!", "info");
+      BrightAlert(" Subscription Model is not valid", "", "warning");
     }
   };
-  console.log(
-    selectedDiscount
-      ? service.price - selectedDiscount?.split(",")[0]
-      : service.price,
-    "selectedDiscount"
-  );
+
   return (
     <div className="px-4 pt-16 relative mx-auto sm:max-w-xl md:max-w-full  lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-20">
       <section className="text-gray-600 body-font overflow-hidden">

@@ -11,8 +11,11 @@ const UserServiceCheckout = () => {
   // const findService = myServices.find((service) => service._id === id.id);
   const navigate = useNavigate();
   const subtotal =
-    parseInt(orderStage[0]?.price ? orderStage[0]?.price : findService?.price) ||
-    0;
+    parseInt(
+      orderStage[0]?.buyingPrice
+        ? orderStage[0]?.buyingPrice
+        : findService?.price
+    ) || 0;
   const shippingFee = 0;
   const shippingFeeDiscount = 0;
   const discount = 0; // You need to implement promo code functionality to calculate this
@@ -26,12 +29,16 @@ const UserServiceCheckout = () => {
 
   console.log(orderStage[0]);
 
-  console.log(orderStage[0]?.price ? orderStage[0]?.price : findService.price);
+  //   console.log(orderStage[0]?.buyingPrice ? orderStage[0]?.buyingPrice : findService.price);
   const sendPlaceOrderData = () => {
     const orderData = [
       {
         ...findService,
-        price: orderStage[0]?.price ? orderStage[0]?.price : findService?.price,
+        price: findService?.price,
+        endDate: orderStage[0]?.endDate,
+        endTime: orderStage[0]?.endTime,
+        normalPrice: orderStage[0]?.normalPrice,
+        buyingPrice: orderStage[0]?.buyingPrice,
       },
     ]; // Create an array and add findService object
     const data = {
@@ -39,9 +46,7 @@ const UserServiceCheckout = () => {
       productId: findService._id,
       userEmail: user.email,
       productTitle: findService.title,
-      productPrice: orderStage[0]?.price
-        ? orderStage[0]?.price
-        : findService?.price,
+      productPrice: findService?.price,
       productImg: findService.img,
       productCategory: findService.category,
       promoPice,
@@ -49,6 +54,10 @@ const UserServiceCheckout = () => {
       shippingFee,
       shippingFeeDiscount,
       time_duration: findService.subscriptionPeriod,
+      endDate: orderStage[0]?.endDate,
+      endTime: orderStage[0]?.endTime,
+      // normalPrice: orderStage[0]?.normalPrice,
+      buyingPrice: orderStage[0]?.buyingPrice,
     };
 
     console.log(data);
@@ -86,8 +95,8 @@ const UserServiceCheckout = () => {
                           </h3>
                           <p className="text-lg font-semibold">
                             <span className="kalpurush">৳</span>
-                            {orderStage[0]?.price
-                              ? orderStage[0]?.price
+                            {orderStage[0]?.buyingPrice
+                              ? orderStage[0]?.buyingPrice
                               : findService.price}
                           </p>
                         </div>
@@ -102,7 +111,7 @@ const UserServiceCheckout = () => {
 
         <div className="bg-gray-200 lg:w-96 mt-8 lg:mt-0 min-h-[350px] max-h-[380px] rounded p-8">
           <div className="space-y-1 my-4">
-            <h2 className="text-xl font-semibold ">Order Summar</h2>
+            <h2 className="text-xl font-semibold ">Order Summay</h2>
             <div className="flex justify-between ">
               <p className="text-gray-700">Subtotal</p>
               <p className="">

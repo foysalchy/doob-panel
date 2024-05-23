@@ -8,6 +8,7 @@ import UploadImage from "../../SellerItems/ProductManagement/SellerAddProduct/Co
 const EditService = ({ OpenModal, setOpenModal, BlogInfo, refetch }) => {
   const [previewUrl, setPreviewUrl] = useState(BlogInfo.img);
 
+  // console.log(BlogInfo);
   const { data: categories = [] } = useQuery({
     queryKey: ["category"],
     queryFn: async () => {
@@ -53,6 +54,7 @@ const EditService = ({ OpenModal, setOpenModal, BlogInfo, refetch }) => {
     e.preventDefault();
 
     const img = previewUrl;
+    const form = e.target;
     const title = e.target.title.value;
     const message = e.target.message.value;
     const price = e.target.price.value;
@@ -61,6 +63,11 @@ const EditService = ({ OpenModal, setOpenModal, BlogInfo, refetch }) => {
     const category = e.target.category.value;
     const subscriptionPeriod = e.target.subscriptionPeriod.value;
     const MetaImage = e.target.MetaImage.files[0];
+    const pricingPriceOne = form.pricingPriceOne.value;
+    const pricingPriceSix = form.pricingPriceSix.value;
+
+    const pricingPriceTwelve = form.pricingPriceTwelve.value;
+    const pricingPriceTwenty = form.pricingPriceTwelve.value;
 
     const metaImageFormData = new FormData();
     metaImageFormData.append("image", MetaImage);
@@ -78,8 +85,13 @@ const EditService = ({ OpenModal, setOpenModal, BlogInfo, refetch }) => {
       category,
       subscriptionPeriod,
       MetaImage: metaImageUrl,
+      pricingPriceOne: `${pricingPriceOne},1`,
+      pricingPriceSix: `${pricingPriceSix},6`,
+      pricingPriceTwelve: `${pricingPriceTwelve},12`,
+      pricingPriceTwenty: `${pricingPriceTwenty},24`,
     };
 
+    console.log(data)
     try {
       const response = await fetch(
         `https://backend.doob.com.bd/api/v1/admin/service/update-service/${BlogInfo._id}`,
@@ -93,7 +105,7 @@ const EditService = ({ OpenModal, setOpenModal, BlogInfo, refetch }) => {
       )
         .then((res) => res.json())
         .then((data) => {
-          Swal.fire("Update Blog Successful", "", "success");
+          Swal.fire("Update Service Successful", "", "success");
           refetch();
           setOpenModal(false);
         });
@@ -239,6 +251,70 @@ const EditService = ({ OpenModal, setOpenModal, BlogInfo, refetch }) => {
               name="MetaImage"
             />
           </div>
+          <label
+            htmlFor="pricingPriceOne"
+            className="inline-block mb-1 font-medium"
+          >
+            1st Month Discount
+          </label>
+          <input
+            placeholder="$50"
+            required
+            type="number"
+            name="pricingPriceOne"
+            defaultValue={BlogInfo?.pricingPriceOne?.split(",")[0]}
+            // value={formData.one}
+            // onChange={(e) => handleInputChange("one", e.target.value)}
+            className="flex-grow w-full h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-purple-400 focus:outline-none focus:shadow-outline"
+          />
+          <label
+            htmlFor="pricingPriceSix"
+            className="inline-block mb-1 font-medium"
+          >
+            Six Month Discount
+          </label>
+          <input
+            placeholder="$100"
+            required
+            type="number"
+            name="pricingPriceSix"
+            defaultValue={BlogInfo?.pricingPriceSix?.split(",")[0]}
+            // value={formData.six}
+            // onChange={(e) => handleInputChange("six", e.target.value)}
+            className="flex-grow w-full h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-purple-400 focus:outline-none focus:shadow-outline"
+          />
+          <label
+            htmlFor="pricingPriceTwelve"
+            className="inline-block mb-1 font-medium"
+          >
+            One Year Discount
+          </label>
+          <input
+            placeholder="$500"
+            required
+            type="number"
+            name="pricingPriceTwelve"
+            defaultValue={BlogInfo?.pricingPriceTwelve?.split(",")[0]}
+            // value={formData.twelve}
+            // onChange={(e) => handleInputChange("twelve", e.target.value)}
+            className="flex-grow w-full h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-purple-400 focus:outline-none focus:shadow-outline"
+          />
+          <label
+            htmlFor="pricingPriceTwenty"
+            className="inline-block mb-1 font-medium"
+          >
+            Two Year Discount
+          </label>
+          <input
+            placeholder="$150"
+            required
+            type="number"
+            name="pricingPriceTwenty"
+            defaultValue={BlogInfo?.pricingPriceTwenty?.split(",")[0]}
+            // value={formData.twenty}
+            // onChange={(e) => handleInputChange("twenty", e.target.value)}
+            className="flex-grow w-full h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-purple-400 focus:outline-none focus:shadow-outline"
+          />
 
           <input
             name="MetaTag"

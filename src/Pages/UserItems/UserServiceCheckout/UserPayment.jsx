@@ -41,8 +41,8 @@ const UserPayment = () => {
     const uInfo = {
       data,
       user,
-      shopInfo
-    }
+      shopInfo,
+    };
 
     if (fileName) {
       data.file = fileName;
@@ -184,9 +184,10 @@ const UserPayment = () => {
                 <a href="#scrollDestination">
                   <div
                     onClick={() => setPayment(get)}
-                    className={`${payment?.Getaway === "Bkash" &&
+                    className={`${
+                      payment?.Getaway === "Bkash" &&
                       "shadow-lg shadow-gray-700"
-                      }   border border-gray-600 flex md:flex-col flex-row items-center justify-center gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] overflow-hidden`}
+                    }   border border-gray-600 flex md:flex-col flex-row items-center justify-center gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] overflow-hidden`}
                   >
                     <img
                       alt="Developer"
@@ -204,9 +205,10 @@ const UserPayment = () => {
                 <a href="#scrollDestination">
                   <div
                     onClick={() => setPayment(get)}
-                    className={`${payment?.Getaway === "Nogod" &&
+                    className={`${
+                      payment?.Getaway === "Nogod" &&
                       "shadow-lg shadow-gray-700"
-                      }  border border-gray-600 flex md:flex-col flex-row items-center justify-center gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] overflow-hidden`}
+                    }  border border-gray-600 flex md:flex-col flex-row items-center justify-center gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] overflow-hidden`}
                   >
                     <img
                       alt="Developer"
@@ -224,9 +226,10 @@ const UserPayment = () => {
                 <a href="#scrollDestination">
                   <div
                     onClick={() => setPayment(get)}
-                    className={`${payment?.Getaway === "AmarPay" &&
+                    className={`${
+                      payment?.Getaway === "AmarPay" &&
                       "shadow-lg shadow-gray-700"
-                      }  border border-gray-600 flex md:flex-col flex-row items-center justify-center gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] overflow-hidden`}
+                    }  border border-gray-600 flex md:flex-col flex-row items-center justify-center gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] overflow-hidden`}
                   >
                     <img
                       alt="Developer"
@@ -244,9 +247,10 @@ const UserPayment = () => {
                 <a href="#scrollDestination">
                   <div
                     onClick={() => setPayment(get)}
-                    className={`${payment?.Getaway === "AmarPay" &&
+                    className={`${
+                      payment?.Getaway === "AmarPay" &&
                       "shadow-lg shadow-gray-700"
-                      }  border border-gray-600 flex md:flex-col flex-row items-center justify-center gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] overflow-hidden`}
+                    }  border border-gray-600 flex md:flex-col flex-row items-center justify-center gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] overflow-hidden`}
                   >
                     <h4 className="mt-2  md:font-bold md:text-lg">
                       {get?.Getaway}
@@ -260,9 +264,10 @@ const UserPayment = () => {
           <a href="#scrollDestination">
             <div
               onClick={() => setPayment({ Getaway: "CashOnDelivery" })}
-              className={`${payment?.Getaway === "CashOnDelivery" &&
+              className={`${
+                payment?.Getaway === "CashOnDelivery" &&
                 "shadow-lg shadow-gray-700"
-                }  border border-gray-600 flex md:flex-col flex-row items-center justify-center  gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] overflow-hidden`}
+              }  border border-gray-600 flex md:flex-col flex-row items-center justify-center  gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] overflow-hidden`}
             >
               <img
                 alt="Developer"
@@ -278,9 +283,10 @@ const UserPayment = () => {
           <a href="#scrollDestination">
             <div
               onClick={() => setPayment({ Getaway: "Doob_Payment" })}
-              className={`${payment?.Getaway === "Doob_Payment" &&
+              className={`${
+                payment?.Getaway === "Doob_Payment" &&
                 "shadow-lg shadow-gray-700"
-                }  border border-gray-600 flex md:flex-col flex-row items-center justify-center  gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] overflow-hidden`}
+              }  border border-gray-600 flex md:flex-col flex-row items-center justify-center  gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] overflow-hidden`}
             >
               <h4 className="mt-2  md:font-bold md:text-lg">Doob Payment</h4>
             </div>
@@ -302,7 +308,9 @@ const UserPayment = () => {
                 {!orderStage?.promoPrice?.status && (
                   <div className="">
                     <span className="kalpurush text-2xl">৳</span>
-                    {orderStage?.normalPrice}
+                    {orderStage?.buyingPrice
+                      ? orderStage?.buyingPrice
+                      : orderStage?.normalPrice}
                   </div>
                 )}
                 {orderStage?.promoPrice?.promoPrice && (

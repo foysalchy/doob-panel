@@ -39,7 +39,7 @@ const ServiceConfirmOrder = () => {
     console.log(order);
     // Calculate subtotal
     const subTotal = order.reduce(
-      (acc, itm) => acc + parseInt(itm.price) * 1,
+      (acc, itm) => acc + parseInt(itm.buyingPrice) * 1,
       0
     );
     setSubtotal(subTotal);
