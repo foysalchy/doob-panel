@@ -263,7 +263,13 @@ const ServiceManagementSaller = () => {
                       scope="col"
                       className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
                     >
-                      Date
+                      End Time
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                    >
+                      Created Time
                     </th>
 
                     <th
@@ -320,6 +326,9 @@ const ServiceManagementSaller = () => {
                       </td>
                       <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
                         {order.discount}
+                      </td>
+                      <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                        {new Date(order.endTime).toDateString()}
                       </td>
                       <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
                         {new Date(order.timestamp).toDateString()}
