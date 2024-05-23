@@ -1,10 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useLoaderData } from "react-router";
 import { useNavigate, Link } from "react-router-dom";
 import MetaHelmet from "../../../Helmate/Helmate";
 import { AuthContext } from "../../../AuthProvider/UserProvider";
 import BrightAlert from "bright-alert";
+import Swal from "sweetalert2";
 
 const SingleService = () => {
   const { user, setOrderStage } = useContext(AuthContext);
@@ -27,6 +28,8 @@ const SingleService = () => {
   });
 
   console.log(service, "service");
+
+  const [selectedDiscount, setSelectedDiscount] = useState(`0,0`);
   const handleOrder = () => {
     if (!user) {
       navigate("/sign-in");
@@ -34,11 +37,14 @@ const SingleService = () => {
       const order = {
         id: service._id,
         title: service.title,
-        price: service.price,
+        price: selectedDiscount
+          ? service.price - selectedDiscount?.split(",")[0]
+          : service.price,
         img: service?.img,
         category: service.category,
         subscriptionPeriod: service.subscriptionPeriod,
       };
+      console.log(order);
       setOrderStage([order]);
       navigate(`/user-service-checkout/${service._id}`);
     }
@@ -55,7 +61,9 @@ const SingleService = () => {
         img: service.img,
         email: user.email,
         title: service.title,
-        price: service.price,
+        price: selectedDiscount
+          ? service.price - selectedDiscount?.split(",")[0]
+          : service.price,
         category: service.category,
         subscriptionPeriod: service.subscriptionPeriod,
       };
@@ -131,6 +139,22 @@ const SingleService = () => {
     return "just now";
   }
 
+  const onChangeDiscount = (value) => {
+    console.log(service.price > value.split(",")[0]);
+    console.log(service.price, value.split(",")[0]);
+    if (service.price > parseInt(value.split(",")[0])) {
+      console.log(value);
+      setSelectedDiscount(value);
+    } else {
+      Swal.fire("Oops!", "Discount is not valid!", "info");
+    }
+  };
+  console.log(
+    selectedDiscount
+      ? service.price - selectedDiscount?.split(",")[0]
+      : service.price,
+    "selectedDiscount"
+  );
   return (
     <div className="px-4 pt-16 relative mx-auto sm:max-w-xl md:max-w-full  lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-20">
       <section className="text-gray-600 body-font overflow-hidden">
@@ -154,18 +178,18 @@ const SingleService = () => {
               </div>
 
               <div className="flex items-center pb-5 border-b-2 border-gray-100 mb-5">
-                <div className="flex">
-                  <span className="mr-3">Subscription Model</span> :{" "}
-                  {service.subscriptionPeriod}
-                </div>
-                <div className="relative mt-1.5">
+                <span className="mr-3">Subscription Model</span> :{" "}
+                <div className="flex"></div>
+                <div className="relative mt-1.5 p-2">
+                  {/* <div className="">{service.subscriptionPeriod}</div> */}
                   <select
                     type="text"
                     list="pricingDiscount"
                     id="pricingDiscount"
                     name="pricingDiscount"
-                    className="w-full mt-1 rounded-lg border border-gray-600 px-3 py-3 text-sm mx-3"
+                    className="w-full mt-1 rounded-lg border border-gray-600 px-1 py-3 text-sm mx-"
                     placeholder="Select Subscription Period"
+                    onChange={(e) => onChangeDiscount(e.target.value)}
                   >
                     <option disabled selected className="" value="">
                       Select Service Discount
@@ -173,22 +197,23 @@ const SingleService = () => {
 
                     {service?.pricingPriceOne && (
                       <option value={service?.pricingPriceOne}>
-                        Monthly Time {service?.pricingPriceOne} BDT
+                        Monthly Time {service?.pricingPriceOne.split(",")[0]}{" "}
+                        BDT
                       </option>
                     )}
                     {service?.pricingPriceSix && (
                       <option value={service?.pricingPriceSix}>
-                        Six Month {service?.pricingPriceSix} BDT
+                        Six Month {service?.pricingPriceSix.split(",")[0]} BDT
                       </option>
                     )}
                     {service?.pricingPriceTwelve && (
                       <option value={service?.pricingPriceTwelve}>
-                        One Year {service?.pricingPriceTwelve} BDT
+                        One Year {service?.pricingPriceTwelve.split(",")[0]} BDT
                       </option>
                     )}
                     {service?.pricingPriceTwenty && (
                       <option value={service?.pricingPriceTwenty}>
-                        Two Year {service?.pricingPriceTwenty} BDT
+                        Two Year {service?.pricingPriceTwenty.split(",")[0]} BDT
                       </option>
                     )}
                   </select>
@@ -196,7 +221,10 @@ const SingleService = () => {
               </div>
               <div className="flex w-full justify-between items-center">
                 <span className="title-font font-medium text-2xl text-gray-900">
-                  {service.price} BDT
+                  {selectedDiscount
+                    ? service.price - selectedDiscount?.split(",")[0]
+                    : service.price}
+                  <span> BDT</span>
                 </span>
                 <div className="flex items-center">
                   {/* <Link to={`/user-service-checkout/${service?._id}`}> */}
@@ -298,48 +326,56 @@ const SingleService = () => {
             Relevant Service
           </h3>
           <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-6">
-            {services.slice(0, 4).map((service) => (
-              <Link
-                to={`/service/${service._id}`}
-                key={service?._id}
-                className={
-                  !service.status
-                    ? "hidden"
-                    : "w-full max-w-sm mx-auto rounded-md shadow-md overflow-hidden"
-                }
-              >
-                <MetaHelmet
-                  title={service?.MetaTag}
-                  description={service?.MetaDescription}
-                  image={service?.MetaImage}
-                />
-                <div
-                  className="flex items-end justify-end h-56 w-full bg-cover"
-                  style={{
-                    backgroundImage: `url(${service.img})`,
-                  }}
+            {services
+              ?.filter((item) => item?._id !== service?._id)
+              .slice(0, 4)
+              .map((service) => (
+                <Link
+                  to={`/service/${service._id}`}
+                  key={service?._id}
+                  className={
+                    !service.status
+                      ? "hidden"
+                      : "w-full max-w-sm mx-auto rounded-md shadow-md overflow-hidden"
+                  }
                 >
-                  <button className="p-2 rounded-full bg-blue-600 text-white mx-5 -mb-4 hover:bg-blue-500 focus:outline-none focus:bg-blue-500">
-                    <svg
-                      className="h-5 w-5"
-                      fill="none"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-                    </svg>
-                  </button>
-                </div>
+                  <MetaHelmet
+                    title={service?.MetaTag}
+                    description={service?.MetaDescription}
+                    image={service?.MetaImage}
+                  />
+                  <div
+                    className="flex items-end justify-end h-56 w-full bg-cover"
+                    style={{
+                      backgroundImage: `url(${service.img})`,
+                    }}
+                  >
+                    <button className="p-2 rounded-full bg-blue-600 text-white mx-5 -mb-4 hover:bg-blue-500 focus:outline-none focus:bg-blue-500">
+                      <svg
+                        className="h-5 w-5"
+                        fill="none"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                      </svg>
+                    </button>
+                  </div>
 
-                <div className="px-5 py-3">
-                  <h3 className="text-gray-700 uppercase">{service.title}</h3>
-                  <span className="text-gray-500 mt-2">৳{service.price}</span>
-                </div>
-              </Link>
-            ))}
+                  <div className="px-5 py-3">
+                    <h3 className="text-gray-700 uppercase">{service.title}</h3>
+                    <span className="text-gray-500 mt-2">
+                      ৳
+                      {selectedDiscount
+                        ? service.price - selectedDiscount?.split(",")[0]
+                        : service.price}
+                    </span>
+                  </div>
+                </Link>
+              ))}
           </div>
         </div>
       </section>

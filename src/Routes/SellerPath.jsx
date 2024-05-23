@@ -460,6 +460,10 @@ const SellerPath = [
     path: "report-management/subscriber-report",
     element: <SubscriberHisroy />,
   },
+  // {
+  //   path: "report-management/seller-sales-report",
+  //   element: <SubscriberHisroy />,
+  // },
   {
     path: "report-management/packaging-cost-report",
     element: <CommissionHistory />,
