@@ -28,10 +28,16 @@ const WarehouseModal = ({
   const [selectedCell, setSelectedCell] = useState(
     product?.warehouse[3]?.name ?? ""
   );
-  const [selectedPackage, setSelectedPackage] = useState(
-    product?.warehouse[4]?.name ?? ""
-  );
 
+
+  const [selectedPackage, setSelectedPackage] = useState("");
+
+  const handlePackageChange = (e) => {
+    console.log(e.target.value)
+    setSelectedPackage(e.target.value);
+  };
+
+  console.log(product);
   const { data: packageData = [] } = useQuery({
     queryKey: ["package"],
     queryFn: async () => {
@@ -46,9 +52,7 @@ const WarehouseModal = ({
     },
   });
 
-  const handlePackageChange = (e) => {
-    setSelectedPackage(e.target.value);
-  };
+
 
   //   console.log(packageData);
   console.log(selectedPackage);
@@ -78,8 +82,24 @@ const WarehouseModal = ({
     },
   });
 
-  //   console.log(product);
+  //   c
 
+  const getSlotByPrice = (pkg, price) => {
+    console.log(pkg, price);
+    const slots = Object.values(pkg).filter(slot => typeof slot === 'object' && 'to' in slot && 'price' in slot);
+    let matchedSlot = slots.find(slot => parseInt(price) <= parseInt(slot.to));
+    if (!matchedSlot) {
+      matchedSlot = slots[slots.length - 1];
+    }
+    return matchedSlot;
+  };
+
+  // Sort packageData based on the matching slot's 'to' value
+  const sortedPackageData = [...packageData].sort((a, b) => {
+    const slotA = getSlotByPrice(a, product?.price);
+    const slotB = getSlotByPrice(b, product?.price);
+    return parseInt(slotA.to) - parseInt(slotB.to);
+  });
   const handleWarehouseChange = async (selectedOption) => {
     const selectedWarehouse = selectedOption.value;
     setSelectedWarehouse(selectedWarehouse);
@@ -191,9 +211,8 @@ const WarehouseModal = ({
   return (
     <div>
       <div
-        className={`fixed left-0 top-0 flex z-50 h-full min-h-screen w-full items-center justify-center bg-black/90 px-4 py-5 ${
-          modalOpen ? "block" : "hidden"
-        }`}
+        className={`fixed left-0 top-0 flex z-50 h-full min-h-screen w-full items-center justify-center bg-black/90 px-4 py-5 ${modalOpen ? "block" : "hidden"
+          }`}
       >
         <form
           onSubmit={updateInfo}
@@ -220,41 +239,26 @@ const WarehouseModal = ({
                   />
                 </div>
                 <div>
-                  {/* <h1 className="text-xl font-bold mb-2">Handling Frees</h1>
-                  <input
-                    required
-                    type="text"
-                    className="border border-gray-300 px-3 py-2 rounded-md w-full focus:outline-none focus:border-blue-500"
-                    name="handling"
-                    placeholder="Enter handling free"
-                  /> */}
+
                   <label htmlFor="package" className="text-xl font-bold mb-2">
                     Select Package
                   </label>
                   <select
-                    defaultValue={"300"}
                     id="package"
-                    // styles={{
-                    //   control: (provided) => ({
-                    //     ...provided,
-                    //     cursor: "pointer",
-                    //   }),
-                    //   option: (provided) => ({
-                    //     ...provided,
-                    //     cursor: "pointer",
-                    //   }),
-                    // }}
-
                     value={selectedPackage}
                     className="mt-2 border border-gray-300 px-3 py-3 rounded-md w-full focus:outline-none focus:border-blue-500 text-black"
                     onChange={handlePackageChange}
                   >
                     <option value="">Select Package</option>
-                    {packageData?.map((pkg) => (
-                      <option key={pkg._id} value={pkg.amount}>
-                        {pkg.packageName}
-                      </option>
-                    ))}
+                    {sortedPackageData.map((pkg) => {
+                      const slot = getSlotByPrice(pkg, product?.price);
+                      console.log(slot)
+                      return (
+                        <option key={pkg._id} value={slot?.price}>
+                          {pkg.name}
+                        </option>
+                      );
+                    })}
                   </select>
                   {/* 
                   <Select
@@ -308,11 +312,11 @@ const WarehouseModal = ({
                         isRefetching
                           ? [{ label: "Loading...", value: null }]
                           : warehouses
-                              .filter((warehouse) => warehouse.status) // Filter based on status
-                              .map((warehouse) => ({
-                                value: warehouse.name,
-                                label: warehouse.name,
-                              }))
+                            .filter((warehouse) => warehouse.status) // Filter based on status
+                            .map((warehouse) => ({
+                              value: warehouse.name,
+                              label: warehouse.name,
+                            }))
                       }
                       defaultValue={{
                         value: product?.warehouse[0]?.name,
@@ -487,8 +491,8 @@ const WarehouseModal = ({
             </div>
           </div>
         </form>
-      </div>
-    </div>
+      </div >
+    </div >
   );
 };
 

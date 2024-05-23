@@ -3,8 +3,10 @@ import { AuthContext } from "../../../AuthProvider/UserProvider";
 import { useReactToPrint } from "react-to-print";
 import Barcode from "react-barcode";
 import logo from '../../../assets/doobBlack.png'
+import { useQuery } from "@tanstack/react-query";
+import adminDatas from "../../../../public/adminData.json"
 const OrderInvoice = ({ openModal, setOpenModal, product }) => {
-    const { user } = useContext(AuthContext)
+    const { shopInfo, user } = useContext(AuthContext)
     const componentRef = useRef();
     const handlePrint = useReactToPrint({
         content: () => componentRef.current,
@@ -30,6 +32,17 @@ const OrderInvoice = ({ openModal, setOpenModal, product }) => {
     }
 
 
+    const { data: adminData = [], isLoading, refetch } = useQuery({
+        queryKey: ["adminData"],
+        queryFn: async () => {
+            const res = await fetch("/adminData.json");
+            const data = await res.json();
+            return data[0];
+        },
+    });
+
+    console.log(adminData, 'shopinfo...');
+
     const InvoicePage = ({ itm }) => {
         console.log(product, "order");
         const totalPrice = product?.price * product?.quantity;
@@ -40,11 +53,13 @@ const OrderInvoice = ({ openModal, setOpenModal, product }) => {
                     className="p-12 mx-8 print-data  mt-6">
 
                     <header className="flex items-start justify-between">
-                        <img src={logo} alt="logo" className='w-[200px]' />
+                        <img src={adminData?.logo} alt="logo" className='w-[200px]' />
                         <div className='whitespace-wrap w-[300px]'>
-                            <p className='text-gray-600 text-end'>{user?.name}</p>
-                            <p className='text-gray-600 text-end'>{user?.email}</p>
-                            <p className='text-gray-600 text-end'>{user?.phoneNumber}</p>
+                            {/* <p className='text-gray-600 text-end'>{user?._id}</p> */}
+                            <p className='text-gray-600 text-end'>{adminData?.name}</p>
+                            <p className='text-gray-600 text-end'>{adminData?.email}</p>
+                            <p className='text-gray-600 text-end'>{adminData?.phone}</p>
+                            <p className='text-gray-600 text-end'>{adminData?.address}</p>
                         </div>
                     </header>
 

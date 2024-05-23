@@ -82,7 +82,14 @@ const AllPackage = () => {
                   Package Name
                 </th>
                 <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm ">
-                  Package AMount
+                  Slot 1
+                </th>
+
+                <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm ">
+                  Slot 2
+                </th>
+                <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm ">
+                  Slot 3
                 </th>
 
                 <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm ">
@@ -93,9 +100,28 @@ const AllPackage = () => {
             <tbody>
               {packages.length &&
                 packages?.map((pack) => (
-                  <tr key={pack?.name}>
-                    <td className="px-4 py-3">{pack?.packageName}</td>
-                    <td className="px-4 py-3">{pack?.amount}</td>
+                  <tr key={pack?._id}>
+                    {console.log(pack)}
+                    <td className="px-4 py-3">{pack?.name}</td>
+                    <td className="px-4 py-3">
+                      <div className="flex flex-col">
+                        <div> To: {pack?.slotOne.to}</div>
+                        <div> Price:  {pack?.slotOne.price}</div>
+                      </div>
+                    </td>
+                    <td>
+                      <div className="flex flex-col">
+                        <div>  To:  {pack?.slotTwo.to}</div>
+                        <div>  Price:  {pack?.slotTwo.price}</div>
+                      </div>
+                    </td>
+
+                    <td>
+                      <div className="flex flex-col">
+                        <div>To: {pack?.slotThree.to}</div>
+                        <div> Price: {pack?.slotThree.price}</div>
+                      </div>
+                    </td>
 
                     <td className="px-4 py-3 text-xl flex gap-4 items-center text-gray-900">
                       <MdDelete

@@ -39,19 +39,6 @@ export default function EditCampaign() {
     setIsChecked(campaignDefaultData?.isFlash ?? false);
   }, [campaignDefaultData]);
 
-  const handleProductChange = (selectedOptions) => {
-    setSelectedProducts(selectedOptions);
-
-    const newPrices = { ...prices };
-
-    selectedOptions.forEach((option) => {
-      console.log(option);
-      if (!newPrices) {
-        newPrices.campaignPrice = 0;
-      }
-    });
-    setPrices(newPrices);
-  };
 
   const handlePriceChange = (product, newPrice) => {
     console.log(product, newPrice);
@@ -60,16 +47,7 @@ export default function EditCampaign() {
     setPrices((prevPrices) => ({ ...prevPrices, product }));
   };
 
-  const handleRemoveProduct = (product) => {
-    setSelectedProducts((prevSelected) =>
-      prevSelected.filter((p) => p !== product)
-    );
-    setPrices((prevPrices) => {
-      const newPrices = { ...prevPrices };
-      delete newPrices[product.value];
-      return newPrices;
-    });
-  };
+
 
   const { shopInfo } = useContext(AuthContext);
 
@@ -164,10 +142,57 @@ export default function EditCampaign() {
       });
   };
 
-  // const defultSelect = products.filter((product) => product.
-  //   campaignId === id);
+  const defultSelect = products.filter((product) => product?.campaignId === id);
+  const [dfd, setDfd] = useState(defultSelect)
 
 
+
+  const handleProductChange = (selectedOptions) => {
+    setSelectedProducts(selectedOptions);
+
+    defultSelect.forEach((option) => {
+      console.log(option);
+    });
+
+    const newPrices = { ...prices };
+
+    defultSelect.forEach((option) => {
+      console.log(option);
+      if (!newPrices) {
+        newPrices.campaignPrice = 0;
+      }
+    });
+    setPrices(newPrices);
+  };
+
+  const handleRemoveProduct = (product) => {
+
+    setSelectedProducts((prevSelected) =>
+      prevSelected.filter((p) => p !== product)
+    );
+
+    // setDfd((prevSelected) =>
+    //   prevSelected.filter((p) => p !== dfd)
+    // );
+    setPrices((prevPrices) => {
+      const newPrices = { ...prevPrices };
+      delete newPrices[product.value];
+      return newPrices;
+    });
+
+    setDfd((prevPrices) => {
+      const newPrices = { ...prevPrices };
+      delete newPrices[dfd.value];
+      return newPrices;
+    });
+  };
+
+
+
+
+  console.log('****', defultSelect);
+
+  // Use refetchCampaign instead of refetch if needed
 
 
   return (
@@ -382,8 +407,8 @@ export default function EditCampaign() {
             </div>
 
             <div className="flex flex-col gap-2 mt-4">
-              {selectedProducts?.length
-                ? selectedProducts?.map((product, i) => (
+              {defultSelect?.length
+                ? defultSelect?.map((product, i) => (
                   <div
                     key={i + 200}
                     className="flex p-2 px-4 rounded border border-black  gap-2 justify-between items-center"
@@ -396,20 +421,20 @@ export default function EditCampaign() {
                           height: "24px",
                           width: "24px",
                         }}
-                        src={product?.value?.images[0]?.src}
+                        src={product?.images[0]?.src}
                         alt=""
                       />
-                      {product.value.name.split(" ").slice(0, 10).join(" ") +
+                      {product?.name.split(" ").slice(0, 10).join(" ") +
                         "..."}
                     </div>
 
                     <div className="flex gap-4 items-center">
-                      <span>Regular Price: {product.value.price}</span>
+                      <span>Regular Price: {product?.price}</span>
                       <input
                         type="number"
                         placeholder="Camping Price"
                         className="py-0.5 px-2 border border-black"
-                        value={product.value.campaignPrice || ""}
+                        defaultValue={product?.campaignPrice || ""}
                         onChange={(e) =>
                           handlePriceChange(product.value, e.target.value)
                         }

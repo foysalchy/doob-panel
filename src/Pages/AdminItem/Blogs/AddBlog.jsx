@@ -17,16 +17,16 @@ const AddBlog = () => {
   const [upload, setUpload] = useState("");
   const [uplodOk, setUploadOk] = useState(false);
 
-  // ! for drafts
-  const [formData, setFormData] = useState({
-    title: "", ///done
-    category: "", //done
-    MetaTag: "", //done
-    message: "", //done
-    MetaDescription: "", //done
-    img: "", //done
-    MetaImage: "", //done
-  });
+  // // ! for drafts
+  // const [formData, setFormData] = useState({
+  //   title: "", ///done
+  //   category: "", //done
+  //   MetaTag: "", //done
+  //   message: "", //done
+  //   MetaDescription: "", //done
+  //   img: "", //done
+  //   MetaImage: "", //done
+  // });
   const [draftSaved, setDraftSaved] = useState(false);
   const [restoreDrafts, setRestoreDrafts] = useState(false);
 
@@ -90,7 +90,7 @@ const AddBlog = () => {
       setFileName(file.name);
     }
   };
-  const [message, setMessage] = useState("");
+
 
   const dataSubmit = (event) => {
     setLoading(true);
@@ -98,6 +98,7 @@ const AddBlog = () => {
     const form = event.target;
     const title = form.title.value;
     const category = form.category.value;
+    const message = form.message.value;
     const image = form.photo.files[0];
     const MetaImage = upload;
     const MetaTag = form.MetaTag.value;
@@ -119,10 +120,11 @@ const AddBlog = () => {
           img: image,
           date: new Date(),
           MetaImage,
-          status: draft,
+          status: !draft,
+          trash: 'false',
           MetaDescription,
           MetaTag,
-          draft_status: false
+          draft_status: draft,
         };
 
         console.log('Blogs:::::::', blog);
@@ -144,53 +146,34 @@ const AddBlog = () => {
         reftechDraft();
         setLoading(false);
         Swal.fire("Your Blog Publish Successfully", "", "success");
-        blocker.proceed();
-        // form.reset();
-        // setPreviewUrl("");
-        // setFileName("");
-        // window.location.href = '/admin/blog';
+        // blocker.proceed();
+        form.reset();
+        setPreviewUrl("");
+        setFileName("");
+        window.location.href = '/admin/blog';
       });
   };
 
-  const handleChange = (content) => {
-    setMessage(content);
-    handleInputChange("message", content); // for drafts
-  };
 
-  const modules = {
-    toolbar: [
-      [{ header: "1" }, { header: "2" }, { font: [] }],
-      [{ size: [] }],
-      ["bold", "italic", "underline", "strike", "blockquote"],
-      [
-        { list: "ordered" },
-        { list: "bullet" },
-        { indent: "-1" },
-        { indent: "+1" },
-      ],
-      ["link", "image", "video"],
-      ["color"],
-      ["clean"],
-    ],
-  };
+
 
   //! for drafts
-  const handleInputChange = (field, value) => {
-    setFormData({ ...formData, [field]: value });
-  };
+  // const handleInputChange = (field, value) => {
+  //   setFormData({ ...formData, [field]: value });
+  // };
 
   // Block navigating elsewhere when data has been entered into the input
-  let blocker = useBlocker(
-    ({ currentLocation, nextLocation }) =>
-      draftSaved && currentLocation.pathname !== nextLocation.pathname
-  );
+  // let blocker = useBlocker(
+  //   ({ currentLocation, nextLocation }) =>
+  //     draftSaved && currentLocation.pathname !== nextLocation.pathname
+  // );
 
-  useEffect(() => {
-    const isFormDataEmpty = Object.values(formData).every(
-      (value) => value === ""
-    );
-    setDraftSaved(!isFormDataEmpty);
-  }, [formData]);
+  // useEffect(() => {
+  //   const isFormDataEmpty = Object.values(formData).every(
+  //     (value) => value === ""
+  //   );
+  //   setDraftSaved(!isFormDataEmpty);
+  // }, [formData]);
 
   // useEffect(() => {
   //   if (draftsAllBlogData?.length && !restoreDrafts) {
@@ -205,33 +188,33 @@ const AddBlog = () => {
   //   }
   // }, [draftsAllBlogData, restoreDrafts]);
 
-  useEffect(() => {
-    if (blocker.state === "blocked") {
-      console.log("yess");
-      // event.preventDefault();
-      // event.returnValue = ""; // Required for some browsers
-      const confirmed = window.confirm(
-        "Are you sure you want to leave? Your changes may not be saved."
-      );
-      if (confirmed) {
-        Swal.fire("Drafts Saved", "", "success");
+  // useEffect(() => {
+  //   if (blocker.state === "blocked") {
+  //     console.log("yess");
+  //     // event.preventDefault();
+  //     // event.returnValue = ""; // Required for some browsers
+  //     const confirmed = window.confirm(
+  //       "Are you sure you want to leave? Your changes may not be saved."
+  //     );
+  //     if (confirmed) {
+  //       Swal.fire("Drafts Saved", "", "success");
 
-        const draftsAddBlogData = {
-          ...formData,
-          status: "drafts",
-          email: user?.email,
-          date: new Date(),
-        };
-        postBlog(draftsAddBlogData, "");
-        console.log(draftsAddBlogData);
+  //       const draftsAddBlogData = {
+  //         ...formData,
+  //         status: "drafts",
+  //         email: user?.email,
+  //         date: new Date(),
+  //       };
+  //       postBlog(draftsAddBlogData, "");
+  //       console.log(draftsAddBlogData);
 
-        // blocker.proceed();
-      } else {
-      }
-    }
-  }, [draftSaved, blocker]);
+  //       // blocker.proceed();
+  //     } else {
+  //     }
+  //   }
+  // }, [draftSaved, blocker]);
 
-  console.log(formData);
+  // console.log(formData);
   // console.log(draftsBlogData);
   // console.log(blocker);
 
@@ -271,12 +254,12 @@ const AddBlog = () => {
                 type="text"
                 id="title"
                 name="title"
-                // defaultValue={
-                //   restoreDrafts && draftsBlogData?.title
-                //     ? draftsBlogData?.title
-                //     : ""
-                // }
-                onChange={(e) => handleInputChange("title", e.target.value)} // for drafts
+              // defaultValue={
+              //   restoreDrafts && draftsBlogData?.title
+              //     ? draftsBlogData?.title
+              //     : ""
+              // }
+              // onChange={(e) => handleInputChange("title", e.target.value)} // for drafts
               />
             </div>
             <div>
@@ -330,7 +313,7 @@ const AddBlog = () => {
                 type="text"
                 id="Category"
                 name="category"
-                onChange={(e) => handleInputChange("category", e.target.value)}
+                // onChange={(e) => handleInputChange("category", e.target.value)}
                 className="w-full mt-1 rounded-lg border border-gray-900 px-3 py-2 text-sm"
                 placeholder="Select a category"
               // defaultValue={
@@ -351,21 +334,13 @@ const AddBlog = () => {
 
             <div>
               <div>
-                <ReactQuill
-                  name="message"
-                  id="message"
-                  className="h-36"
-                  onChange={handleChange}
-                  modules={modules}
-                  placeholder="Enter description here..."
-                  value={message}
-                // defaultValue={
-                //   restoreDrafts && draftsBlogData?.message
-                //     ? draftsBlogData?.message
-                //     : ""
-                // }
-                />
-                {/* <JoditEditor ></JoditEditor> */}
+
+                <JoditEditor name='message' id="message" config={{
+                  readonly: false,
+                  uploader: {
+                    insertImageAsBase64URI: true,
+                  },
+                }} ></JoditEditor>
               </div>
               <br />
               <br />
@@ -379,7 +354,7 @@ const AddBlog = () => {
                 required
                 className="w-full rounded-lg border border-gray-900 p-3 text-sm"
                 placeholder="Meta Tag"
-                onChange={(e) => handleInputChange("MetaTag", e.target.value)} // for drafts
+                // onChange={(e) => handleInputChange("MetaTag", e.target.value)} // for drafts
                 type="text"
                 id="MetaTag"
                 name="MetaTag"
@@ -402,9 +377,9 @@ const AddBlog = () => {
                 type="text"
                 id="MetaDescription"
                 name="MetaDescription"
-                onChange={(e) =>
-                  handleInputChange("MetaDescription", e.target.value)
-                } // for drafts
+              // onChange={(e) =>
+              // handleInputChange("MetaDescription", e.target.value)
+              // } // for drafts
               // defaultValue={
               //   restoreDrafts && draftsBlogData?.MetaDescription
               //     ? draftsBlogData?.MetaDescription

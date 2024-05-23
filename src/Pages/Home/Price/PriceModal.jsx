@@ -5,7 +5,7 @@ import { AuthContext } from "../../../AuthProvider/UserProvider";
 import BrightAlert from "bright-alert";
 import { Link, useNavigate } from "react-router-dom";
 
-const PriceModal = ({ open, setOpen }) => {
+const PriceModal = ({ refetch, open, setOpen, }) => {
   console.log(open);
   const { shopInfo, setShopInfo, setCookie } = useContext(AuthContext);
   const [paymentMode, setPaymentMode] = useState(false);
@@ -23,6 +23,9 @@ const PriceModal = ({ open, setOpen }) => {
     setTime(`${open?.six},6`);
   }, [open]);
 
+
+  const [buyingPrice, setBuyingPrice] = useState(0);
+
   const resetForm = () => {
     // setPaymentMode(false);
     setSelectGetWay(false);
@@ -32,12 +35,11 @@ const PriceModal = ({ open, setOpen }) => {
   const handleNextClick = (e) => {
     e.stopPropagation();
     setPaymentMode(!paymentMode);
-    resetForm();
+    // resetForm();
   };
 
   const {
     data: getawayData = [],
-    refetch,
     isLoading,
   } = useQuery({
     queryKey: ["getawayData"],
@@ -61,15 +63,39 @@ const PriceModal = ({ open, setOpen }) => {
     },
   });
 
+  function calculateEndTime(time) {
+    const monthsToAdd = parseInt(time?.split(",")[1], 10);
+    if (isNaN(monthsToAdd)) {
+      throw new Error("Invalid month value in time");
+    }
+
+    const currentDate = new Date();
+    const endDate = new Date(currentDate);
+    endDate.setMonth(endDate.getMonth() + monthsToAdd);
+
+    return endDate.getTime();
+  }
+
   const handleSubmit = () => {
-    console.log({
+    const body = {
       paymentId: open?._id,
       shopId: shopInfo._id,
       getway: "Cash",
-      amount: open?.price,
+      amount: parseInt(open?.price) * parseInt(time?.split(",")[1]),
       priceName: open?.name,
+      endDate: time?.split(",")[1],
+      endTime: calculateEndTime(time),
+
       time,
-    });
+      buyingPrice: parseInt(open?.price) * parseInt(time?.split(",")[1]) -
+        parseInt(time?.split(",")[0]) >
+        0
+        ? parseInt(open?.price) * parseInt(time?.split(",")[1]) -
+        parseInt(time?.split(",")[0])
+
+        : 0
+    };
+    console.log(body, 'update');
 
     if (shopInfo) {
       fetch(
@@ -79,17 +105,7 @@ const PriceModal = ({ open, setOpen }) => {
           headers: {
             "content-type": "application/json",
           },
-          body: JSON.stringify({
-            paymentId: open?._id,
-            shopId: shopInfo._id,
-            getway: "Cash",
-            amount: open?.price,
-            priceName: open?.name,
-            time,
-            buyingPrice:
-              parseInt(open?.price) * parseInt(time?.split(",")[1]) -
-              parseInt(time?.split(",")[0]),
-          }),
+          body: JSON.stringify(body),
         }
       )
         .then((res) => res.json())
@@ -103,6 +119,8 @@ const PriceModal = ({ open, setOpen }) => {
             setCookie("SellerShop", JSON.stringify(data.shopInfo));
             setSelectGetWay(false);
             setTime("one,1");
+            resetForm()
+            refetch()
           }
         });
     } else {
@@ -120,9 +138,15 @@ const PriceModal = ({ open, setOpen }) => {
       priceName: open?.name,
       collection: "price",
       time,
-      buyingPrice:
-        parseInt(open?.price) * parseInt(time?.split(",")[1]) -
-        parseInt(time?.split(",")[0]),
+      endDate: time?.split(",")[1],
+      buyingPrice: parseInt(open?.price) * parseInt(time?.split(",")[1]) -
+        parseInt(time?.split(",")[0]) >
+        0
+        ? ` ৳${parseInt(open?.price) * parseInt(time?.split(",")[1]) -
+        parseInt(time?.split(",")[0])
+        }`
+        : "Contact With Doob"
+
     };
 
     if (shopInfo) {
@@ -168,13 +192,15 @@ const PriceModal = ({ open, setOpen }) => {
 
         {paymentMode ? (
           <div className="grid grid-cols-3 gap-3">
+
+
             {getawayData.map((get) => (
               <div key={get._id}>
                 {get.Getaway === "Bkash" && (
                   <button
                     className={`group relative block border  ${selectGetWay._id === get._id
-                        ? "border-blue-500"
-                        : "border-gray-100"
+                      ? "border-blue-500"
+                      : "border-gray-100"
                       }`}
                   >
                     <img
@@ -190,8 +216,8 @@ const PriceModal = ({ open, setOpen }) => {
                   <button
                     onClick={() => setSelectGetWay(get)}
                     className={`group relative block border  ${selectGetWay._id === get._id
-                        ? "border-blue-500"
-                        : "border-gray-100"
+                      ? "border-blue-500"
+                      : "border-gray-100"
                       }`}
                   >
                     <img
@@ -199,8 +225,8 @@ const PriceModal = ({ open, setOpen }) => {
                       src="https://download.logo.wine/logo/Nagad/Nagad-Vertical-Logo.wine.png"
                       srcSet="https://download.logo.wine/logo/Nagad/Nagad-Vertical-Logo.wine.png"
                       className={`p-4 object-cover  transition-opacity ${selectGetWay._id === get._id
-                          ? "opacity-20"
-                          : "bg-gray-700"
+                        ? "opacity-20"
+                        : "bg-gray-700"
                         }`}
                     />
                   </button>
@@ -209,8 +235,8 @@ const PriceModal = ({ open, setOpen }) => {
                   <button
                     onClick={() => pay_on_amar_pay(get)}
                     className={`group relative block border  ${selectGetWay._id === get._id
-                        ? "border-blue-500"
-                        : "border-gray-100"
+                      ? "border-blue-500"
+                      : "border-gray-100"
                       }`}
                   >
                     <img
@@ -226,8 +252,8 @@ const PriceModal = ({ open, setOpen }) => {
               <button
                 onClick={() => handleSubmit()}
                 className={`group relative block border  ${selectGetWay === "Cash"
-                    ? "border-blue-500"
-                    : "border-gray-100"
+                  ? "border-blue-500"
+                  : "border-gray-100"
                   }`}
               >
                 Cash
@@ -252,6 +278,7 @@ const PriceModal = ({ open, setOpen }) => {
               <h2 className=" font-medium text-gray-700 sm:text-xl ">
                 {open?.name}
               </h2>
+              Discount Price =   {time?.split(",")[0]}
             </div>
             <div className="flex items-center justify-center">
               <h2 className="text-2xl font-semibold text-blue-600 flex sm:text-3xl">
@@ -286,7 +313,9 @@ const PriceModal = ({ open, setOpen }) => {
               name="HeadlineAct"
               id="HeadlineAct"
               defaultValue={`${open?.six},6`} // Set the value attribute to match the option for six months
-              onChange={(e) => setTime(e.target.value)}
+              onChange={(e) => {
+                setTime(e.target.value)
+              }}
               className="mt-1.5 w-full py-2 my-4 border rounded-lg border-gray-300 text-gray-700 sm:text-sm"
             >
               <option value={`${open?.one},1`}>One Month</option>
@@ -350,7 +379,7 @@ const PriceModal = ({ open, setOpen }) => {
           </div>
         </div>
       </div>
-    </div>
+    </div >
   );
 };
 

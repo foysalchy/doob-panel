@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { BsArrowRight } from "react-icons/bs";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Select from "react-select";
 import Swal from "sweetalert2";
 
@@ -17,6 +17,8 @@ const AddPrice = () => {
     timeDuration: "",
     benefits: [""],
     permissions: [],
+    status: true,
+
   });
   const [loading, setLoading] = useState(false);
   // react selector
@@ -67,8 +69,12 @@ const AddPrice = () => {
     });
   };
 
+  const navigate = useNavigate();
+
   const handleSubmit = (e) => {
     e.preventDefault();
+    formData.timestamp = new Date().getTime()
+    formData.limitValue = limitValue
     fetch(`https://backend.doob.com.bd/api/v1/admin/pricing`, {
       method: "POST",
       headers: {
@@ -89,40 +95,13 @@ const AddPrice = () => {
           benefits: [""],
           permissions: [""],
         });
+        navigate('/admin/price-management')
       });
 
-    console.log(formData, "update.......");
+
   };
 
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   fetch(`https://backend.doob.com.bd/api/v1/admin/pricing`, {
-  //     method: "POST",
-  //     headers: {
-  //       "content-type": "application/json",
-  //     },
-  //     body: JSON.stringify({
-  //       ...formData,
-  //       permissions: sellerRoutes, // Include selected permissions in formData
-  //     }),
-  //   })
-  //     .then((res) => res.json())
-  //     .then((data) => {
-  //       setLoading(false);
-  //       Swal.fire("success", "Your Category Publish Successfully", "success");
-  //       setFormData({
-  //         name: "",
-  //         price: "",
-  //         tagname: "",
-  //         best: "",
-  //         timeDuration: "",
-  //         benefits: [""],
-  //         permissions: [], // Clear selected permissions after submit
-  //       });
-  //     });
 
-  //   console.log(formData, "update.......");
-  // };
 
   return (
     <div>
@@ -335,17 +314,7 @@ const AddPrice = () => {
               placeholder="product_limit"
             />
             <br />
-            <div className="flex items-center mt-3 gap-3">
-              <label htmlFor="ck">
-                <input
-                  checked={selectLimit}
-                  onChange={() => setSelectLimit(!selectLimit)}
-                  type="checkbox"
-                  id="ck"
-                />{" "}
-                Life Time
-              </label>
-            </div>
+
             <div className="flex gap-5 items-start mt-10">
               <button
                 type="button"

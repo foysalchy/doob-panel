@@ -367,7 +367,7 @@ const ManageProduct = () => {
             onClick={logSelectedProducts}
             disabled={!selectProducts.length}
             className="bg-blue-500 rounded px-6 text-white h-full">
-            Print...
+            Print
           </button>
 
           <button

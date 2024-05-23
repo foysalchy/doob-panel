@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import BrightAlert from "bright-alert";
 import React, { useEffect } from "react";
 import { useState } from "react";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
@@ -67,11 +68,7 @@ const AddContact = () => {
       .then((res) => res.json())
       .then((data) => {
         setLoading(false);
-        Swal.fire("success", "", "success");
-
-        form.reset();
-        setPreDeleteUrl("");
-        setFileName("");
+        BrightAlert()
         refetch();
       });
 

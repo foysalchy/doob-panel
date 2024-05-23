@@ -583,7 +583,7 @@ const ManageOrder = () => {
                           {/*.... Product ...*/}
                           {/*................*/}
 
-                          <section className="container mx-auto mt-8">
+                          <section className="container  mx-auto mt-8">
                             <div className="w-full mb-8 overflow-hidden">
                               <div className="w-full overflow-x-auto border">
                                 <table className="w-full">
