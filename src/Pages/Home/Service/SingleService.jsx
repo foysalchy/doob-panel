@@ -11,6 +11,7 @@ const SingleService = () => {
   const { user, setOrderStage } = useContext(AuthContext);
 
   const service = useLoaderData();
+  console.log(service);
   const navigate = useNavigate();
   const {
     data: services = [],

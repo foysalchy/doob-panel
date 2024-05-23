@@ -8,17 +8,16 @@ const UserServiceCheckout = () => {
   const findService = useLoaderData();
   const { setSelectProductData, setOrderStage, user, orderStage } =
     useContext(AuthContext);
+  console.log(orderStage);
+  console.log(parseInt(orderStage?.buyingPrice));
   // const findService = myServices.find((service) => service._id === id.id);
   const navigate = useNavigate();
-  const subtotal =
-    parseInt(
-      orderStage[0]?.buyingPrice
-        ? orderStage[0]?.buyingPrice
-        : findService?.price
-    ) || 0;
+  const subtotal = findService?.price;
   const shippingFee = 0;
   const shippingFeeDiscount = 0;
-  const discount = 0; // You need to implement promo code functionality to calculate this
+  const discount =
+    parseInt(findService?.price) - parseInt(orderStage?.buyingPrice); // You need to implement promo code functionality to calculate this
+  console.log(discount);
   const total = subtotal + shippingFee - shippingFeeDiscount - discount;
   const [promoPice, setPomoPrice] = useState(false);
 
@@ -27,18 +26,19 @@ const UserServiceCheckout = () => {
     alert("wrong code");
   };
 
-  console.log(orderStage[0]);
+  console.log(orderStage);
 
-  //   console.log(orderStage[0]?.buyingPrice ? orderStage[0]?.buyingPrice : findService.price);
+  //   console.log(orderStage?.buyingPrice ? orderStage?.buyingPrice : findService.price);
   const sendPlaceOrderData = () => {
     const orderData = [
       {
         ...findService,
         price: findService?.price,
-        endDate: orderStage[0]?.endDate,
-        endTime: orderStage[0]?.endTime,
-        normalPrice: orderStage[0]?.normalPrice,
-        buyingPrice: orderStage[0]?.buyingPrice,
+        endDate: orderStage?.endDate,
+        endTime: orderStage?.endTime,
+        normalPrice: orderStage?.normalPrice,
+        buyingPrice: orderStage?.buyingPrice,
+        // discount,:
       },
     ]; // Create an array and add findService object
     const data = {
@@ -54,10 +54,10 @@ const UserServiceCheckout = () => {
       shippingFee,
       shippingFeeDiscount,
       time_duration: findService.subscriptionPeriod,
-      endDate: orderStage[0]?.endDate,
-      endTime: orderStage[0]?.endTime,
-      // normalPrice: orderStage[0]?.normalPrice,
-      buyingPrice: orderStage[0]?.buyingPrice,
+      endDate: orderStage?.endDate,
+      endTime: orderStage?.endTime,
+      // normalPrice: orderStage?.normalPrice,
+      buyingPrice: orderStage?.buyingPrice,
     };
 
     console.log(data);
@@ -95,8 +95,8 @@ const UserServiceCheckout = () => {
                           </h3>
                           <p className="text-lg font-semibold">
                             <span className="kalpurush">৳</span>
-                            {orderStage[0]?.buyingPrice
-                              ? orderStage[0]?.buyingPrice
+                            {orderStage?.buyingPrice
+                              ? orderStage?.buyingPrice
                               : findService.price}
                           </p>
                         </div>
@@ -111,7 +111,7 @@ const UserServiceCheckout = () => {
 
         <div className="bg-gray-200 lg:w-96 mt-8 lg:mt-0 min-h-[350px] max-h-[380px] rounded p-8">
           <div className="space-y-1 my-4">
-            <h2 className="text-xl font-semibold ">Order Summay</h2>
+            <h2 className="text-xl font-semibold ">Order Summary</h2>
             <div className="flex justify-between ">
               <p className="text-gray-700">Subtotal</p>
               <p className="">

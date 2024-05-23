@@ -38,11 +38,14 @@ const UserPayment = () => {
     data.timestamp = new Date().getTime();
     data.userId = shopInfo._id ? shopInfo._id : user?._id;
 
-    const uInfo = {
-      data,
-      user,
-      shopInfo,
-    };
+    // const uInfo = {
+    //   data,
+    //   user,
+    //   shopInfo,
+    // };
+
+    data.user = user;
+    data.shopInfo = shopInfo;
 
     if (fileName) {
       data.file = fileName;
@@ -51,7 +54,7 @@ const UserPayment = () => {
     fetch(`https://backend.doob.com.bd/api/v1/site-user/order`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(uInfo),
+      body: JSON.stringify(data),
     })
       .then((res) => res.json())
       .then((data) => {
