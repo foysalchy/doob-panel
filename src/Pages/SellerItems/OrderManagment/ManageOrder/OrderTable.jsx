@@ -658,31 +658,23 @@ const OrderTable = ({
                               ))}
                           </td>
 
-                          {/* <button
-                                                    onClick={() => setModalOn(item)}
-                                                    className='bg-blue-500 text-white px-3 py-1 text-sm rounded'>
-                                                    Edit
-                                                </button> */}
-
-                          <div>
+                          {/* <div>
                             <div
                               onClick={() => setModalOn(false)}
-                              className={`fixed z-[100] flex items-center justify-center ${
-                                modalOn?._id === item?._id
-                                  ? "visible opacity-100"
-                                  : "invisible opacity-0"
-                              } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
+                              className={`fixed z-[100] flex items-center justify-center ${modalOn?._id === item?._id
+                                ? "visible opacity-100"
+                                : "invisible opacity-0"
+                                } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
                             >
                               <div
                                 onClick={(e_) => e_.stopPropagation()}
-                                className={`text- absolute w-[500px] rounded-sm bg-white p-6 drop-shadow-lg dark:bg-black dark:text-white ${
-                                  modalOn?._id === item?._id
-                                    ? "scale-1 opacity-1 duration-300"
-                                    : "scale-0 opacity-0 duration-150"
-                                }`}
+                                className={`text- absolute w-[500px] rounded-sm bg-white p-6 drop-shadow-lg dark:bg-black dark:text-white ${modalOn?._id === item?._id
+                                  ? "scale-1 opacity-1 duration-300"
+                                  : "scale-0 opacity-0 duration-150"
+                                  }`}
                               >
                                 <h1 className="mb-2 text-2xl font-semibold">
-                                  Edit Order {}
+                                  Edit Order { }
                                 </h1>
                                 <form>
                                   <div className="flex items-start w-full mb-6 flex-col gap-1">
@@ -706,7 +698,7 @@ const OrderTable = ({
                                 </form>
                               </div>
                             </div>
-                          </div>
+                          </div> */}
                         </td>
                         <td className="border-r px-6 py-4">
                           {item?.courier_id && (
@@ -736,11 +728,12 @@ const OrderTable = ({
                       )}
                       {item._id === modalOn && (
                         <tr>
-                          <td colSpan="10">
+                          <td colSpan="12">
                             <OrderAllinfoModal
                               status={item?.status ? item?.status : "Pending"}
                               setModalOn={setModalOn}
                               modalOn={modalOn}
+                              orderInfo={item}
                               productList={item?.productList}
                             />
                           </td>
@@ -868,17 +861,14 @@ const OrderTable = ({
                 <li key={i}>
                   <button
                     onClick={() => setCurrentPage(i + 1)}
-                    className={`bg-white border ${
-                      currentPage === i + 1
-                        ? "text-blue-600"
-                        : "text-gray-500 hover:bg-gray-100 hover:text-gray-700"
-                    } border-gray-300 leading-tight py-2 px-3 rounded ${
-                      i === 0 ? "rounded-l-lg" : ""
-                    } ${
-                      i === Math.ceil(filteredData.length / itemsPerPage) - 1
+                    className={`bg-white border ${currentPage === i + 1
+                      ? "text-blue-600"
+                      : "text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+                      } border-gray-300 leading-tight py-2 px-3 rounded ${i === 0 ? "rounded-l-lg" : ""
+                      } ${i === Math.ceil(filteredData.length / itemsPerPage) - 1
                         ? "rounded-r-lg"
                         : ""
-                    }`}
+                      }`}
                   >
                     {i + 1}
                   </button>

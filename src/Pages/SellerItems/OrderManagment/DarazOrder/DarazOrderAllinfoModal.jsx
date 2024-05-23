@@ -3,7 +3,7 @@ import ModalTableRow from './DarazModalTableRow';
 import DarazModalTableRow from './DarazModalTableRow';
 
 const DarazOrderAllinfoModal = ({ status, productList, setModalOn, modalOn }) => {
-    // const {img, productName, productId, quantity, price, shopId, userId } = productList
+    // const { img, productName, productId, quantity, price, shopId, userId } = productList
     return (
         <>
             {

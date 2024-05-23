@@ -227,7 +227,7 @@ const TrackOrder = () => {
                                 )}
                               </div>
                               <hr
-                                className={`h-12 border md:hidden ${idx + 1 == steps.stepsItems.length
+                                className={`h-12 border md:hidden  ${idx + 1 == steps.stepsItems.length
                                   ? "hidden"
                                   : "" || currentStep > idx + 1
                                     ? "border-indigo-600"
@@ -238,7 +238,7 @@ const TrackOrder = () => {
                             <div className="h-8 flex items-center md:h-auto">
                               <h3
                                 className={`text-sm ${currentStep === idx + 1
-                                  ? "text-indigo-600"
+                                  ? "text-indigo-600 track-order"
                                   : ""
                                   }`}
                               >
