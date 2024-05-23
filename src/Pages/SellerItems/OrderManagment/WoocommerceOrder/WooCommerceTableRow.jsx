@@ -125,14 +125,41 @@ const WooCommerceTableRow = ({ data, refetch }) => {
                                 </>
                             )) ||
                                 (data?.status === "processing" && (
-                                    <button
-                                        onClick={() =>
-                                            update_order_status("on-hold", data?.id)
-                                        }
-                                        className="text-[16px] font-[400] text-blue-700"
-                                    >
-                                        Shipped
-                                    </button>
+                                    <div className="flex flex-col gap-2">
+                                        <button
+                                            onClick={() =>
+                                                update_order_status("on-hold", data?.id)
+                                            }
+                                            className="text-[16px] font-[400] text-blue-700"
+                                        >
+                                            On Hold
+                                        </button>
+                                        <button
+                                            onClick={() =>
+                                                update_order_status("completed", data?.id)
+                                            }
+                                            className="text-[16px] font-[400] text-blue-700"
+                                        >
+                                            Complete
+                                        </button>
+                                        <button
+                                            onClick={() =>
+                                                update_order_status("cancelled", data?.id)
+                                            }
+                                            className="text-[16px] font-[400] text-blue-700"
+                                        >
+                                            Cancel
+                                        </button>
+                                        <button
+                                            onClick={() =>
+                                                update_order_status("failed", data?.id)
+                                            }
+                                            className="text-[16px] font-[400] text-blue-700"
+                                        >
+                                            Failed
+                                        </button>
+                                    </div>
+
                                 )) ||
                                 (data?.status === "on-hold" && (
                                     <div className="flex flex-col gap-2">
@@ -142,7 +169,7 @@ const WooCommerceTableRow = ({ data, refetch }) => {
                                             }
                                             className="text-[16px] font-[400] text-blue-700"
                                         >
-                                            Delivered
+                                            Complete
                                         </button>
                                         <button
                                             onClick={() =>
@@ -150,22 +177,21 @@ const WooCommerceTableRow = ({ data, refetch }) => {
                                             }
                                             className="text-[16px] font-[400] text-blue-700"
                                         >
-                                            Failed Delivery
+                                            Failed
+                                        </button>
+                                        <button
+                                            onClick={() =>
+                                                update_order_status("cancelled", data?.id)
+                                            }
+                                            className="text-[16px] font-[400] text-blue-700"
+                                        >
+                                            Cancel
                                         </button>
                                     </div>
                                 ))
                                 ||
-                                (data?.status === "failed" && (
-                                    <button
-                                        onClick={() =>
-                                            update_order_status("cancelled", data?.id)
-                                        }
-                                        className="text-[16px] font-[400] text-blue-700"
-                                    >
-                                        Cancel
-                                    </button>
-                                )) ||
-                                (data?.status === "cancelled" && (
+
+                                (data?.status === "completed" && (
                                     <button
                                         onClick={() =>
                                             update_order_status("refunded", data?.id)
@@ -174,17 +200,8 @@ const WooCommerceTableRow = ({ data, refetch }) => {
                                     >
                                         Refund
                                     </button>
-                                )) ||
-                                (data?.status === "refunded" && (
-                                    <button
-                                        onClick={() =>
-                                            update_order_status("completed", data?.id)
-                                        }
-                                        className="text-[16px] font-[400] text-blue-700"
-                                    >
-                                        Delivered
-                                    </button>
                                 ))
+
                             }
 
 

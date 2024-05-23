@@ -42,7 +42,7 @@ const ManageOrder = () => {
     queryKey: ["sellerDaraz"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/seller/daraz-order?id=${shopInfo._id}&status=All`
+        `http://localhost:5001/api/v1/seller/daraz-order?id=${shopInfo._id}&status=All`
       );
       const data = await res.json();
       return data.data;
@@ -276,8 +276,8 @@ const ManageOrder = () => {
                         <tbody>
         `;
 
-      // Iterate over the order items and add rows to the table
-      invoiceData.order_items.forEach((item) => {
+    
+      invoiceData?.order_items?.forEach((item) => {
         html += `
                 <tr>
                     <td class="py-2"><img src="${item.product_main_image
@@ -500,7 +500,7 @@ const ManageOrder = () => {
           >
             <div
               onClick={(e_) => e_.stopPropagation()}
-              className={`text- absolute w-[95%] h-[96%] overflow-y-auto rounded-sm bg-gray-50 p-6 drop-shadow-lg     ${showInvoiceSm
+              className={`text- absolute w-[95%] h-[96%] overflow-y-auto rounded-sm bg-gray-50 p-6 drop-shadow-lg ${showInvoiceSm
                 ? "scale-1 opacity-1 duration-300"
                 : "scale-0 opacity-0 duration-150"
                 }`}
@@ -613,31 +613,12 @@ const ManageOrder = () => {
                                       </tr>
                                     ))}
 
-                                    {/* <tr>
-                                                <td colSpan={6} className='px-1 py-2 text-sm border  border-gray-800'></td>
-                                                <td colSpan={1} className='px-1 py-2 text-sm border-b  border-gray-800 text-end'>
-                                                    TOTAL:
-                                                </td>
-                                                <td colSpan={1} className='px-1 py-2 text-sm border  border-gray-800 text-start'>
-                                                    $5000
-                                                </td>
-                                            </tr> */}
-                                    {/* Add more rows here */}
+
                                   </tbody>
                                 </table>
                               </div>
                             </div>
-                            {/* <h1 className='text-end text-xl '>Total : {total}</h1> */}
 
-                            {/* <div id="thanks">Thank you!</div>
-                            <div id="notices">
-                                <div>NOTICE:</div>
-
-                            </div>
-                            <footer>
-                                Invoice was created on a computer and is valid without the signature and
-                                seal.
-                            </footer> */}
                           </section>
 
 
