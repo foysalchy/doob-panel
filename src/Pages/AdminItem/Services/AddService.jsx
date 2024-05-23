@@ -68,8 +68,9 @@ const AddService = () => {
     const MetaImage = form.MetaImage.files[0];
     const MetaTag = form.MetaTag.value;
     const MetaDescription = form.MetaDescription.value;
-    const pricingPriceSix = form.pricingPriceSix.value;
     const pricingPriceOne = form.pricingPriceOne.value;
+    const pricingPriceSix = form.pricingPriceSix.value;
+
     const pricingPriceTwelve = form.pricingPriceTwelve.value;
     const pricingPriceTwenty = form.pricingPriceTwelve.value;
 
@@ -95,10 +96,10 @@ const AddService = () => {
       MetaImage: metaImageUrl,
       timestamp: new Date().toString(),
       status: true,
-      pricingPriceSix,
-      pricingPriceOne,
-      pricingPriceTwelve,
-      pricingPriceTwenty,
+      pricingPriceOne: `${pricingPriceOne},1`,
+      pricingPriceSix: `${pricingPriceSix},6`,
+      pricingPriceTwelve: `${pricingPriceTwelve},12`,
+      pricingPriceTwenty: `${pricingPriceTwenty},24`,
     };
 
     console.log(service);
@@ -303,7 +304,7 @@ const AddService = () => {
               Six Month Discount
             </label>
             <input
-              placeholder="$50"
+              placeholder="$100"
               required
               type="number"
               name="pricingPriceSix"
@@ -318,7 +319,7 @@ const AddService = () => {
               One Year Discount
             </label>
             <input
-              placeholder="$50"
+              placeholder="$500"
               required
               type="number"
               name="pricingPriceTwelve"
@@ -333,7 +334,7 @@ const AddService = () => {
               Two Year Discount
             </label>
             <input
-              placeholder="$50"
+              placeholder="$150"
               required
               type="number"
               name="pricingPriceTwenty"

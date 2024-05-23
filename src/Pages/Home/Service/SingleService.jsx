@@ -1,15 +1,17 @@
 import { useQuery } from "@tanstack/react-query";
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useLoaderData } from "react-router";
 import { useNavigate, Link } from "react-router-dom";
 import MetaHelmet from "../../../Helmate/Helmate";
 import { AuthContext } from "../../../AuthProvider/UserProvider";
 import BrightAlert from "bright-alert";
+import Swal from "sweetalert2";
 
 const SingleService = () => {
   const { user, setOrderStage } = useContext(AuthContext);
 
   const service = useLoaderData();
+  console.log(service);
   const navigate = useNavigate();
   const {
     data: services = [],
@@ -26,27 +28,67 @@ const SingleService = () => {
     },
   });
 
+  console.log(service, "service");
+
+  const [selectedDiscount, setSelectedDiscount] = useState(`0,0`);
+
+  function calculateEndTime(time) {
+    console.log(time);
+    const monthsToAdd = parseInt(time?.split(",")[1], 10);
+    if (isNaN(monthsToAdd)) {
+      throw new Error("Invalid month value in time");
+    }
+
+    const currentDate = new Date();
+    const endDate = new Date(currentDate);
+    endDate.setMonth(endDate.getMonth() + monthsToAdd);
+
+    return endDate.getTime();
+  }
+
+  console.log({
+    endDate: selectedDiscount?.split(",")[1],
+    endTime: calculateEndTime(selectedDiscount),
+  });
+
   const handleOrder = () => {
     if (!user) {
       navigate("/sign-in");
     } else {
+      if (parseFloat(selectedDiscount?.split(",")[1]) < 1) {
+        BrightAlert("Select Any Subscription Model", "", "warning");
+        return;
+      }
       const order = {
         id: service._id,
         title: service.title,
-        price: service.price,
+        price: service?.price,
         img: service?.img,
         category: service.category,
         subscriptionPeriod: service.subscriptionPeriod,
+        endDate: selectedDiscount?.split(",")[1],
+        endTime: calculateEndTime(selectedDiscount),
+        normalPrice: service?.price,
+        buyingPrice: selectedDiscount
+          ? service.price - selectedDiscount?.split(",")[0]
+          : service.price,
       };
+      console.log(order);
       setOrderStage([order]);
       navigate(`/user-service-checkout/${service._id}`);
     }
   };
 
+  // console.log(parseFloat(selectedDiscount.split(",")[1]));
+  // console.log(parseFloat(selectedDiscount?.split(",")[1]) < 1);
   const handleWishlist = () => {
     if (!user) {
       navigate("/sign-in");
     } else {
+      if (parseFloat(selectedDiscount?.split(",")[1]) < 1) {
+        BrightAlert("Select Any Subscription Model", "", "info");
+        return;
+      }
       const order = {
         serviceId: service._id,
         userId: user._id,
@@ -57,6 +99,12 @@ const SingleService = () => {
         price: service.price,
         category: service.category,
         subscriptionPeriod: service.subscriptionPeriod,
+        endDate: selectedDiscount?.split(",")[1],
+        endTime: calculateEndTime(selectedDiscount),
+        normalPrice: service?.price,
+        buyingPrice: selectedDiscount
+          ? service.price - selectedDiscount?.split(",")[0]
+          : service.price,
       };
 
       console.log(order);
@@ -105,30 +153,41 @@ const SingleService = () => {
   }, [refetch]);
 
   function timeAgo(timestamp) {
-      const date = new Date(timestamp);
-      const now = Date.now();
-      const difference = now - date.getTime();
+    const date = new Date(timestamp);
+    const now = Date.now();
+    const difference = now - date.getTime();
 
-      const units = [
-        { value: 365 * 24 * 60 * 60 * 1000, label: "year" },
-        { value: 30 * 24 * 60 * 60 * 1000, label: "month" },
-        { value: 7 * 24 * 60 * 60 * 1000, label: "week" },
-        { value: 24 * 60 * 60 * 1000, label: "day" },
-        { value: 60 * 60 * 1000, label: "hour" },
-        { value: 60 * 1000, label: "minute" },
-      ];
+    const units = [
+      { value: 365 * 24 * 60 * 60 * 1000, label: "year" },
+      { value: 30 * 24 * 60 * 60 * 1000, label: "month" },
+      { value: 7 * 24 * 60 * 60 * 1000, label: "week" },
+      { value: 24 * 60 * 60 * 1000, label: "day" },
+      { value: 60 * 60 * 1000, label: "hour" },
+      { value: 60 * 1000, label: "minute" },
+    ];
 
-      for (const unit of units) {
-        const count = Math.floor(difference / unit.value);
-        if (count >= 1) {
-          return count === 1
-            ? `1 ${unit.label} ago`
-            : `${count} ${unit.label}s ago`;
-        }
+    for (const unit of units) {
+      const count = Math.floor(difference / unit.value);
+      if (count >= 1) {
+        return count === 1
+          ? `1 ${unit.label} ago`
+          : `${count} ${unit.label}s ago`;
       }
-
-      return "just now";
     }
+
+    return "just now";
+  }
+
+  const onChangeDiscount = (value) => {
+    console.log(service.price > value.split(",")[0]);
+    console.log(service.price, value.split(",")[0]);
+    if (service.price > parseInt(value.split(",")[0])) {
+      console.log(value);
+      setSelectedDiscount(value);
+    } else {
+      BrightAlert(" Subscription Model is not valid", "", "warning");
+    }
+  };
 
   return (
     <div className="px-4 pt-16 relative mx-auto sm:max-w-xl md:max-w-full  lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-20">
@@ -153,23 +212,69 @@ const SingleService = () => {
               </div>
 
               <div className="flex items-center pb-5 border-b-2 border-gray-100 mb-5">
-                <div className="flex">
-                  <span className="mr-3">Subscription Model</span> :{" "}
-                  {service.subscriptionPeriod}
+                <span className="mr-3">Subscription Model</span> :{" "}
+                <div className="flex"></div>
+                <div className="relative mt-1.5 p-2">
+                  {/* <div className="">{service.subscriptionPeriod}</div> */}
+                  <select
+                    type="text"
+                    list="pricingDiscount"
+                    id="pricingDiscount"
+                    name="pricingDiscount"
+                    className="w-full mt-1 rounded-lg border border-gray-600 px-1 py-3 text-sm mx-"
+                    placeholder="Select Subscription Period"
+                    onChange={(e) => onChangeDiscount(e.target.value)}
+                  >
+                    <option disabled selected className="" value="">
+                      Select Service Discount
+                    </option>
+
+                    {service?.pricingPriceOne && (
+                      <option value={service?.pricingPriceOne}>
+                        Monthly Time {service?.pricingPriceOne.split(",")[0]}{" "}
+                        BDT
+                      </option>
+                    )}
+                    {service?.pricingPriceSix && (
+                      <option value={service?.pricingPriceSix}>
+                        Six Month {service?.pricingPriceSix.split(",")[0]} BDT
+                      </option>
+                    )}
+                    {service?.pricingPriceTwelve && (
+                      <option value={service?.pricingPriceTwelve}>
+                        One Year {service?.pricingPriceTwelve.split(",")[0]} BDT
+                      </option>
+                    )}
+                    {service?.pricingPriceTwenty && (
+                      <option value={service?.pricingPriceTwenty}>
+                        Two Year {service?.pricingPriceTwenty.split(",")[0]} BDT
+                      </option>
+                    )}
+                  </select>
                 </div>
               </div>
               <div className="flex w-full justify-between items-center">
                 <span className="title-font font-medium text-2xl text-gray-900">
-                  {service.price} BDT
+                  {selectedDiscount
+                    ? service.price - selectedDiscount?.split(",")[0]
+                    : service.price}
+                  <span> BDT</span>
                 </span>
                 <div className="flex items-center">
                   {/* <Link to={`/user-service-checkout/${service?._id}`}> */}
-                  {user?.role === "supperadmin" ? <div className="flex ml-auto cursor-pointer text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none  rounded">OWN SERVICE</div> : <button button
-                    onClick={handleOrder}
-                    className="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded"
-                  >
-                    Buy Now
-                  </button>}
+                  {user?.role === "supperadmin" ? (
+                    <div className="flex ml-auto cursor-pointer text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none  rounded">
+                      OWN SERVICE
+                    </div>
+                  ) : (
+                    <button
+                      button
+                      onClick={handleOrder}
+                      className="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded"
+                    >
+                      Buy Now
+                    </button>
+                  )}
                   {/* </Link> */}
                   <button
                     onClick={handleWishlist}
@@ -255,52 +360,60 @@ const SingleService = () => {
             Relevant Service
           </h3>
           <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-6">
-            {services.slice(0, 4).map((service) => (
-              <Link
-                to={`/service/${service._id}`}
-                key={service?._id}
-                className={
-                  !service.status
-                    ? "hidden"
-                    : "w-full max-w-sm mx-auto rounded-md shadow-md overflow-hidden"
-                }
-              >
-                <MetaHelmet
-                  title={service?.MetaTag}
-                  description={service?.MetaDescription}
-                  image={service?.MetaImage}
-                />
-                <div
-                  className="flex items-end justify-end h-56 w-full bg-cover"
-                  style={{
-                    backgroundImage: `url(${service.img})`,
-                  }}
+            {services
+              ?.filter((item) => item?._id !== service?._id)
+              .slice(0, 4)
+              .map((service) => (
+                <Link
+                  to={`/service/${service._id}`}
+                  key={service?._id}
+                  className={
+                    !service.status
+                      ? "hidden"
+                      : "w-full max-w-sm mx-auto rounded-md shadow-md overflow-hidden"
+                  }
                 >
-                  <button className="p-2 rounded-full bg-blue-600 text-white mx-5 -mb-4 hover:bg-blue-500 focus:outline-none focus:bg-blue-500">
-                    <svg
-                      className="h-5 w-5"
-                      fill="none"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-                    </svg>
-                  </button>
-                </div>
+                  <MetaHelmet
+                    title={service?.MetaTag}
+                    description={service?.MetaDescription}
+                    image={service?.MetaImage}
+                  />
+                  <div
+                    className="flex items-end justify-end h-56 w-full bg-cover"
+                    style={{
+                      backgroundImage: `url(${service.img})`,
+                    }}
+                  >
+                    <button className="p-2 rounded-full bg-blue-600 text-white mx-5 -mb-4 hover:bg-blue-500 focus:outline-none focus:bg-blue-500">
+                      <svg
+                        className="h-5 w-5"
+                        fill="none"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                      </svg>
+                    </button>
+                  </div>
 
-                <div className="px-5 py-3">
-                  <h3 className="text-gray-700 uppercase">{service.title}</h3>
-                  <span className="text-gray-500 mt-2">৳{service.price}</span>
-                </div>
-              </Link>
-            ))}
+                  <div className="px-5 py-3">
+                    <h3 className="text-gray-700 uppercase">{service.title}</h3>
+                    <span className="text-gray-500 mt-2">
+                      ৳
+                      {selectedDiscount
+                        ? service.price - selectedDiscount?.split(",")[0]
+                        : service.price}
+                    </span>
+                  </div>
+                </Link>
+              ))}
           </div>
         </div>
-      </section >
-    </div >
+      </section>
+    </div>
   );
 };
 
