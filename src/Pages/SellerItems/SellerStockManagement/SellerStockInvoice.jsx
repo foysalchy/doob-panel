@@ -107,7 +107,7 @@ const SellerStockInvoice = ({ setOn, products }) => {
                                                 <th className="px-4 py-2">Photo</th>
                                                 <th className="px-4 py-2">Name</th>
                                                 <th className="px-4 py-2 whitespace-nowrap">Stock Quantity</th>
-                                                <th className="px-4 py-2">Price</th>
+                                                <th className="px-4 py-2">Request</th>
                                             </tr>
                                         </thead>
                                         <tbody className="bg-white">
@@ -123,7 +123,7 @@ const SellerStockInvoice = ({ setOn, products }) => {
                                                     {products?.productInfo?.quantity ? products?.productInfo?.quantity : 0}
                                                 </td>
                                                 <td className="px-2 py-2 text-sm text-center border border-gray-800">
-                                                    {products?.productInfo?.price ? products?.productInfo?.price : 0}
+                                                    {products?.quantity}
                                                 </td>
                                             </tr>
                                             {/* Add more rows here */}

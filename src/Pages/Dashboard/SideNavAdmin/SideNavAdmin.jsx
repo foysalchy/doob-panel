@@ -3055,13 +3055,13 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
             <div>
               <h2 className="text-lg font-semibold">{user?.name}</h2>
               <span className="flex items-center space-x-1">
-                <NavLink
+                <Link
                   rel="noopener noreferrer"
-                  href="#"
+                  to="/admin/dashboard/view-profile"
                   className="text-xs hover:underline text-gray-400"
                 >
                   View profile
-                </NavLink>
+                </Link>
               </span>
             </div>
           )}
