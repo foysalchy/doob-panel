@@ -60,7 +60,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
   });
 
   const managementPermission = (check) => {
-    console.log(prices.orderInfo, "orderInfo");
+    console.log(prices?.result, "orderInfo");
     const orderInfo = prices.orderInfo;
     const MILLISECONDS_IN_A_DAY = 24 * 60 * 60 * 1000; // Number of milliseconds in a day
     const SEVEN_DAYS_IN_MILLISECONDS = 7 * MILLISECONDS_IN_A_DAY;
@@ -70,7 +70,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
 
     // const freeTrial = !price.orderInfo && paymentDate.getTime() < currentDate.getTime();
     const isGreaterThanSevenDays = currentDate.getTime() - paymentDate.getTime() < SEVEN_DAYS_IN_MILLISECONDS;
-    return prices?.permissions?.some((itm) => itm?.name === check) && isGreaterThanSevenDays;
+    return prices?.result?.permissions?.some((itm) => itm?.name === check) && isGreaterThanSevenDays;
   };
 
 
@@ -115,7 +115,6 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
   };
 
 
-  console.log(check_expired());
 
   const [openDropdownIndex, setOpenDropdownIndex] = useState(false);
 

@@ -1,8 +1,9 @@
+import BrightAlert from "bright-alert";
 import JoditEditor from "jodit-react";
 import React, { useState } from "react";
 import { BsArrowRight } from "react-icons/bs";
 import ReactQuill from "react-quill";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
 const AddFaq = () => {
@@ -22,6 +23,8 @@ const AddFaq = () => {
       ["clean"],
     ],
   };
+
+  const navigate = useNavigate()
   const dataSubmit = (event) => {
     setLoading(true);
     event.preventDefault();
@@ -32,6 +35,7 @@ const AddFaq = () => {
     const faq = {
       title,
       description,
+      status: true,
       sortIndex, // Include sort index in the FAQ object
     };
 
@@ -45,8 +49,9 @@ const AddFaq = () => {
       .then((res) => res.json())
       .then((data) => {
         setLoading(false);
-        Swal.fire("success", "Your Blog Publish Successfully", "success");
         form.reset();
+        navigate('/admin/faq')
+        BrightAlert()
       });
   };
 
@@ -54,7 +59,7 @@ const AddFaq = () => {
     <div>
       <div className="mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8">
         <h1 className="text-2xl font-bold text-center">
-          Publish a blog for you and next
+          Publish a FAQ for you and next
         </h1>
         <div className="p-10 border-2 rounded m-10">
           <form onSubmit={dataSubmit} className="space-y-4">
@@ -73,7 +78,7 @@ const AddFaq = () => {
             </div>
             <div>
               <div>
-                <ReactQuill
+                {/* <ReactQuill
                   className="h-36"
                   name="description"
                   id="message"
@@ -81,8 +86,17 @@ const AddFaq = () => {
                   placeholder="Enter description here..."
                 />
                 <br />
-                <br />
-                {/* <JoditEditor></JoditEditor> */}
+                <br /> */}
+                <JoditEditor className="h-36"
+                  name="description"
+                  id="message"
+                  config={{
+                    readonly: false,
+                    uploader: {
+                      insertImageAsBase64URI: true,
+                    },
+                  }}
+                ></JoditEditor>
               </div>
             </div>
             <div>

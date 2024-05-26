@@ -19,18 +19,19 @@ const ProductGallery = () => {
     },
   });
 
+  console.log(featureImageData);
   // const blankImg = 'https://backend.doob.com.bd/api/v1/image/66036ed3df13bd9930ac229c.jpg';
   return (
     <div>
-      <div className="yy-6 mt-[-10px] grid grid-cols-2 gap-4 lg:grid-cols-4 ">
+      <div className=" mt-[20px] grid grid-cols-2 gap-4 lg:grid-cols-4 ">
         {featureImageData?.map((itm) => (
-          <div className="">
+          <a key={itm?._id} target="_blank" href={`//${itm?.link}`} >
             <img
               src={itm?.image}
               alt=""
               className="w-full border rounded-xl h-full object-cover"
             />
-          </div>
+          </a>
         ))}
       </div>
       {/* <Swiper
