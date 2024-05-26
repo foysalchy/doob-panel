@@ -2070,15 +2070,15 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                               )}
                             </li>
 
-                            <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
+                            {/* <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
                               <Link
                                 to={"/admin/content-management/slider"}
                                 className="hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
                               >
                                 {/* <BiSlider className="w-5 h-5 fill-current text-gray-400 " />{" "} */}
-                                Social Links
+                            {/* Social Links
                               </Link>
-                            </li>
+                            </li> */}
                           </ul>
                         )}
                       </div>
@@ -2231,15 +2231,15 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
 
                           {openDropdownIndex == 13 && (
                             <ul className="mt-2 space-y-1 px-4 border border-white border-opacity-40 py-2">
-                              <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
+                              {/* <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
                                 <Link
                                   to={"/admin/content-management/seller-notice"}
                                   className="hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
                                 >
                                   {/* <IoNotificationsCircle className="w-5 h-5 fill-current text-gray-400 " />{" "} */}
-                                  Notice
+                              {/* Notice
                                 </Link>
-                              </li>
+                              </li> */}
                               <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
                                 <Link
                                   to={"/admin/settings/payment-management"}
@@ -2304,15 +2304,15 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
 
                         {openDropdownIndex == 13 && (
                           <ul className="mt-2 space-y-1 px-4 border border-white border-opacity-40 py-2">
-                            <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
+                            {/* <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
                               <Link
                                 to={"/admin/content-management/seller-notice"}
                                 className="hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
                               >
                                 {/* <IoNotificationsCircle className="w-5 h-5 fill-current text-gray-400 " />{" "} */}
-                                Notice
+                            {/* Notice
                               </Link>
-                            </li>
+                            </li> */}
                             <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
                               <Link
                                 to={"/admin/settings/payment-management"}

@@ -5,6 +5,7 @@ import { BiEdit } from "react-icons/bi";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import UpdateFAQ from "./UpdateFAQ";
+import BrightAlert from "bright-alert";
 
 const AdminFaq = () => {
   const [loading, setLoading] = useState(false);
@@ -55,7 +56,7 @@ const AdminFaq = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        Swal.fire("success", "Your Price Delete Successfully", "success");
+        BrightAlert()
         refetch();
       });
   };
