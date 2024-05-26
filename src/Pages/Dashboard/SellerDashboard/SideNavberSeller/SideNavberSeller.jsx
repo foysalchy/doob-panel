@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useContext } from "react";
 import { AuthContext } from "../../../../AuthProvider/UserProvider";
 
@@ -51,27 +51,26 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
     queryKey: ["prices"],
     queryFn: async () => {
       const res = await fetch(
-        `http://localhost:5001/api/v1/seller/subscription-model?priceId=${shopInfo?.priceId}&shopId=${shopInfo?._id}`
+        `https://backend.doob.com.bd/api/v1/seller/subscription-model?priceId=${shopInfo?.priceId}&shopId=${shopInfo?._id}`
       );
       const data = await res.json();
       console.log(data?.data?.result);
       return data?.data;
     },
   });
-
   const managementPermission = (check) => {
     console.log(prices?.result, "orderInfo");
-    const orderInfo = prices.orderInfo;
+    const orderInfo = prices?.orderInfo;
     const MILLISECONDS_IN_A_DAY = 24 * 60 * 60 * 1000; // Number of milliseconds in a day
     const SEVEN_DAYS_IN_MILLISECONDS = 7 * MILLISECONDS_IN_A_DAY;
 
-    const paymentDate = new Date(shopInfo.paymentDate);
+    const paymentDate = new Date(shopInfo?.paymentDate);
     const currentDate = new Date();
 
-    // const freeTrial = !price.orderInfo && paymentDate.getTime() < currentDate.getTime();
     const isGreaterThanSevenDays = currentDate.getTime() - paymentDate.getTime() < SEVEN_DAYS_IN_MILLISECONDS;
     return prices?.result?.permissions?.some((itm) => itm?.name === check) && isGreaterThanSevenDays;
   };
+
 
 
   const calculatePassedDays = (startTime) => {
@@ -121,6 +120,10 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
   const handleToggle = (idx) => {
     setOpenDropdownIndex((prevIdx) => (prevIdx === idx ? false : idx));
   };
+
+
+
+  console.log('priceing.......................', prices, `https://backend.doob.com.bd/api/v1/seller/subscription-model?priceId=${shopInfo?.priceId}&shopId=${shopInfo._id}`);
 
   return (
     <div className=" sticky">
@@ -970,16 +973,13 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
 
                     {/* end */}
 
-                    {user?.staffRole
-                      ? user?.permissions.find(
-                        (itm) => itm?.name === "Pos"
-                      )
-                        ? managementPermission("POS") && (
+                    {user?.staffRole ? (
+                      user?.permissions?.find((itm) => itm?.name === "POS") ? (
+                        managementPermission("POS") && (
                           <li className="rounded-sm hover:bg-gray-800">
                             <Link
-                              to={"/seller/pos"}
+                              to="/seller/pos"
                               rel="noopener noreferrer"
-                              href="#"
                               className="flex items-center p-2 space-x-3 rounded-md"
                             >
                               <BsPrinter className="w-5 h-5 text-gray-400" />
@@ -987,20 +987,21 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                             </Link>
                           </li>
                         )
-                        : null
-                      : managementPermission("POS") && (
+                      ) : null
+                    ) : (
+                      managementPermission("POS") && (
                         <li className="rounded-sm hover:bg-gray-800">
                           <Link
-                            to={"/seller/pos"}
+                            to="/seller/pos"
                             rel="noopener noreferrer"
-                            href="#"
                             className="flex items-center p-2 space-x-3 rounded-md"
                           >
                             <BsPrinter className="w-5 h-5 text-gray-400" />
                             <span>POS</span>
                           </Link>
                         </li>
-                      )}
+                      )
+                    )}
 
                     {user?.staffRole ? (
                       user?.permissions.find(
@@ -1823,9 +1824,6 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                       </li>
                     )}
 
-                    {
-                      console.log(user?.permissions, 'permitioon')
-                    }
                     {/* end */}
 
                     {/* blog */}
@@ -2320,7 +2318,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                         </div>
                       </li>
                     )}
-                    {user?.staffRole
+                    {/* {user?.staffRole
                       ? user?.permissions.find(
                         (itm) => itm?.name === "Channel Integration"
                       )
@@ -2348,7 +2346,44 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                             <span>Channel Integration</span>
                           </Link>
                         </li>
-                      )}
+                      )} */}
+
+
+
+                    {user?.staffRole ? (
+                      user?.permissions?.find((itm) => itm?.name === "Channel Integration") ?
+                        (
+                          <li>
+                            <div className="group items-center rounded-sm">
+                              <Link
+                                to="/seller/channel-integration"
+                                rel="noopener noreferrer"
+                                className="flex items-center p-2 space-x-3 rounded-md"
+                              >
+                                <BsHddNetworkFill className="w-5 h-5 text-gray-400" />
+                                <span>Channel Integration</span>
+                              </Link>
+                            </div>
+                          </li>
+                        ) :
+                        null
+                    ) : (
+                      <li>
+                        <div className="group items-center rounded-sm">
+                          <Link
+                            to="/seller/channel-integration"
+                            rel="noopener noreferrer"
+                            className="flex items-center p-2 space-x-3 rounded-md"
+                          >
+                            <BsHddNetworkFill className="w-5 h-5 text-gray-400" />
+                            <span>Channel Integration</span>
+                          </Link>
+                        </div>
+                      </li>
+                    )}
+
+
+
 
                     {user?.staffRole ? (
                       user?.permissions.find(
