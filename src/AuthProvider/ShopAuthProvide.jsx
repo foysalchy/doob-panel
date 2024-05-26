@@ -160,6 +160,7 @@ const ShopAuth = ({ children }) => {
           const userJSON = JSON.stringify(user);
 
           localStorage.setItem(`${shopId}`, userJSON);
+          setLoading(false);
 
           setToken(user);
           setShopUser(user);
@@ -237,7 +238,7 @@ const ShopAuth = ({ children }) => {
         setToken(false);
         setLoading(false);
       })
-      .catch((error) => { });
+      .catch((error) => {});
   };
 
   const ForgetPass = (email) => {
@@ -272,7 +273,7 @@ const ShopAuth = ({ children }) => {
     let unsubscribe;
     setLoading(true);
     const tokenData = localStorage.getItem(`${shopId}`);
-    console.log(tokenData, 'tokenData');
+    console.log(tokenData, "tokenData");
     const user = JSON.parse(tokenData);
     console.log(user?.shopId === shopId);
 
@@ -291,7 +292,6 @@ const ShopAuth = ({ children }) => {
       }
     };
   }, []);
-
 
   const authInfo = {
     shopUser,

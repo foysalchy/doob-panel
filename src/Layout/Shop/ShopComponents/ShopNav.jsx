@@ -42,17 +42,19 @@ const ShopNav = () => {
     console.log(shop_id);
 
     try {
-      const response = await fetch(`https://backend.doob.com.bd/api/v1/shop/search`, {
-        method: "POST",
-        body: JSON.stringify({ shop_id: shop_id.shop_id, term }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
+      const response = await fetch(
+        `https://backend.doob.com.bd/api/v1/shop/search`,
+        {
+          method: "POST",
+          body: JSON.stringify({ shop_id: shop_id.shop_id, term }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
       const data = await response.json();
       console.log(data);
-
 
       setSearchResults(data.data);
       setSearchHistory([]);
@@ -72,17 +74,13 @@ const ShopNav = () => {
     setSearchTerm(input);
     setSearchResults();
     // setSearch(input);
-    fetch(
-      'https://backend.doob.com.bd/api/v1/shop/search-history',
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ shop_id: shop_id.shop_id, term: input }),
-      }
-
-    )
+    fetch("https://backend.doob.com.bd/api/v1/shop/search-history", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ shop_id: shop_id.shop_id, term: input }),
+    })
       .then((response) => response.json())
       .then((data) => setSearchHistory(data));
   };
@@ -235,24 +233,28 @@ const ShopNav = () => {
                   {
                     <div className="mt-4 max-h-[400px] overflow-y-auto ">
                       <ul>
-                        {searchResults?.length && searchResults?.map((product, index) => (
-                          <li key={index}>
-                            <Link
-                              onClick={() => {
-                                setSearchHistory(false), setSearchHistory();
-                              }}
-                              to={`/shop/${shopId}/product/${product._id}`}
-                              className="text-black  mb-2 flex items-center gap-2"
-                              key={index}
-                            >
-                              <img
-                                src={product?.featuredImage.src ?? product.images[0].src}
-                                className="w-[30px] h-[30px]"
-                              />
-                              {product?.name}
-                            </Link>
-                          </li>
-                        ))}
+                        {searchResults?.length &&
+                          searchResults?.map((product, index) => (
+                            <li key={index}>
+                              <Link
+                                onClick={() => {
+                                  setSearchHistory(false), setSearchHistory();
+                                }}
+                                to={`/shop/${shopId}/product/${product._id}`}
+                                className="text-black  mb-2 flex items-center gap-2"
+                                key={index}
+                              >
+                                <img
+                                  src={
+                                    product?.featuredImage.src ??
+                                    product.images[0].src
+                                  }
+                                  className="w-[30px] h-[30px]"
+                                />
+                                {product?.name}
+                              </Link>
+                            </li>
+                          ))}
                       </ul>
                     </div>
                   }
@@ -314,8 +316,9 @@ const ShopNav = () => {
 
                     {/* Dropdown menu */}
                     <div
-                      className={`absolute right-0 z-20 w-48 py-2 mt-2 origin-top-right bg-white rounded-md shadow-xl dark:bg-gray-800 ${isOpen ? "block" : "hidden"
-                        }`}
+                      className={`absolute right-0 z-20 w-48 py-2 mt-2 origin-top-right bg-white rounded-md shadow-xl dark:bg-gray-800 ${
+                        isOpen ? "block" : "hidden"
+                      }`}
                       onClick={() => setIsOpen(false)}
                     >
                       <Link

@@ -38,6 +38,7 @@ const Payment = () => {
   }, [selectProductData]);
 
   const handleRemoveFromCart = (productId) => {
+    console.log(productId, "productId");
     const cartData = JSON.parse(localStorage.getItem("addToCart")) || [];
     // console.log(productId, "and", cartData);
     const updatedCartData = cartData.filter(
@@ -63,7 +64,10 @@ const Payment = () => {
         });
     }
   };
+
+  console.log(orderStage)
   const orderSubmit = async () => {
+    
     const data = orderStage;
     data.method = payment;
     data.timestamp = new Date().getTime();
@@ -82,7 +86,7 @@ const Payment = () => {
       setPassData(data);
       setLoadingPayment(true);
       await fetch(
-        `https://backend.doob.com.bd/api/v1/shop/user/order?token=${shopUser._id}`,
+        `https://backend.doob.com.bd/api/v1/shop/user/order?token=${shopUser._id}&shopId=${shop_id.shop_id}`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -94,8 +98,9 @@ const Payment = () => {
           console.log("responseData payment", responseData);
           BrightAlert({ icon: "success" });
           setLoadingPayment(false);
+          console.log(data);
           data.productList?.forEach((order) => {
-            handleRemoveFromCart(order._id);
+            handleRemoveFromCart(order.productId);
           });
 
           navigate(`/shop/${shopId}/user/my-orders`);
@@ -111,7 +116,7 @@ const Payment = () => {
     }
   };
 
-  console.log(orderStage?.normalPrice);
+  // console.log(orderStage?.normalPrice);
   //   console.log(user);
   const payWithBkash = async () => {
     setLoadingPayment(true);

@@ -129,7 +129,7 @@ const UserMyOrder = () => {
     queryKey: ["my-order"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/shop/user/order?shopId=${shop_id.shop_id}&&token=${shopUser._id}`
+        `https://backend.doob.com.bd/api/v1/shop/user/order?shopId=${shop_id.shop_id}&token=${shopUser._id}`
       );
       const data = await res.json();
       return data;
