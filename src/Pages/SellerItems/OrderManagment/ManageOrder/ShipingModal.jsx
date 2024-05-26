@@ -89,7 +89,7 @@ const ShippingModal = ({
   };
 
   // console.log(JSON.parse(selectedDelivery)?.name);
-  const commentSubmit = async (event) => {
+  const orderSubmit = async (event) => {
     // setLoading(true)
     event.preventDefault();
     const data = event.target;
@@ -226,7 +226,7 @@ const ShippingModal = ({
                 </div>
               </div>
 
-              <form onSubmit={commentSubmit} className=" bg-white text-start ">
+              <form onSubmit={orderSubmit} className=" bg-white text-start ">
                 <div>
                   <label className=" text-black" htmlFor="title">
                     Select Your Delivery

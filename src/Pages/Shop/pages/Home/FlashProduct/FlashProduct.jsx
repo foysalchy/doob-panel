@@ -102,7 +102,7 @@ const FlashProduct = () => {
   const shopId = idMatch ? idMatch[1] : null;
 
   const addToCart = (data) => {
-    console.log(data, 'campain...');
+    console.log(data, "campain...");
     setLoader(true);
     const product = data.data;
     const addToCard = {
@@ -112,7 +112,9 @@ const FlashProduct = () => {
       productName: variations?.name
         ? `${product.name} - ${variations?.name}`
         : product.name,
-      price: variations?.campaignPrice ? variations?.campaignPrice : product.price,
+      price: variations?.campaignPrice
+        ? variations?.campaignPrice
+        : product.price,
       regular_price: product.regular_price,
       productId: product._id,
       shopId: shop_id.shop_id,

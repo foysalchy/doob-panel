@@ -11,8 +11,8 @@ const SellerStockManagement = () => {
   const [searchQuery, setSearchQuery] = useState(""); // State to store search query
 
   const { shopInfo } = useContext(AuthContext);
-  const { data: stockRequest = [], refetch } = useQuery({
-    queryKey: ["stockRequest"],
+  const { data: stockRequestData = [], refetch } = useQuery({
+    queryKey: ["stockRequestData"],
     queryFn: async () => {
       const res = await fetch(
         `https://backend.doob.com.bd/api/v1/admin/seller-stock-request?shopId=${shopInfo._id}`
@@ -23,10 +23,10 @@ const SellerStockManagement = () => {
     },
   });
   const filteredStockRequest = searchQuery
-    ? stockRequest.filter((item) =>
-      item._id.toLowerCase().includes(searchQuery.toLowerCase())
-    )
-    : stockRequest;
+    ? stockRequestData.filter((item) =>
+        item._id.toLowerCase().includes(searchQuery.toLowerCase())
+      )
+    : stockRequestData;
 
   // const filterData = stockRequest.filter(itm => itm?._id.toLowerCase().includes(searchValue.toLowerCase()));
 
@@ -135,7 +135,7 @@ const SellerStockManagement = () => {
             .then((res) => res.json())
             .then((data) => {
               console.log(data);
-              BrightAlert("Update Quantity", "", "success");
+              BrightAlert("Update Quantity Status", "", "success");
               refetch();
             });
         },
@@ -377,63 +377,75 @@ const SellerStockManagement = () => {
                     </button>
                   </td>
                   <td className="px-4 py-4 flex gap-2  text-lg text-gray-700  whitespace-nowrap">
-                    {itm?.status === "reject" ? (
-                      <h2 className="text-red-400 text-sm">rejected</h2>
-                    ) : itm?.status === "cancel" ? (
-                      <h2>Canceled</h2>
-                    ) : (
-                      <button
-                        // onClick={() => handleUpdate(itm, "reject")}
-                        onClick={() => cancelHandler(itm?.productId, itm?._id)}
-                        className="inline-flex rounded-full gap-x-2 text-sm items-center gap-2 bg-orange-500 px-2 py-1 text-white"
-                      >
-                        Cancel
-                      </button>
-                    )}
-
-                    {
-                      !itm.adminWare && <div>
+                    {itm?.status === "pending" ? (
+                      <div className="flex gap-2 whitespace-nowrap">
                         {itm?.status === "reject" ? (
-                          <button
-                            disabled
-                            // onClick={() => handleUpdate(itm, "")}
-                            className="inline-flex items-center rounded-full gap-x-2  text-sm  gap-2 bg-red-600 px-2 py-1  text-white "
-                          >
-                            Rejected
-                          </button>
+                          <h2 className="text-red-400 text-sm">rejected</h2>
+                        ) : itm?.status === "cancel" ? (
+                          <h2>Canceled</h2>
                         ) : (
-                          <div className="">
-                            {itm?.status === "pending" ? (
-                              <div className="flex gap-2">
-                                <button
-                                  disabled={
-                                    itm?.status === "cancel" ? true : false
-                                  }
-                                  onClick={() => handleUpdate(itm, "active")}
-                                  className="inline-flex  rounded-full gap-x-2    text-sm items-center gap-2 bg-[#23b123ea] px-2 py-1 text-white "
-                                >
-                                  Approve
-                                </button>
-                                <button
-                                  onClick={() => handleUpdate(itm, "reject")}
-                                  className="inline-flex  rounded-full gap-x-2    text-sm items-center gap-2 bg-orange-500 px-2 py-1 text-white "
-                                >
-                                  Reject
-                                </button>
-                              </div>
-                            ) : (
+                          <button
+                            // onClick={() => handleUpdate(itm, "reject")}
+                            onClick={() =>
+                              cancelHandler(itm?.productId, itm?._id)
+                            }
+                            className="inline-flex rounded-full gap-x-2 text-sm items-center gap-2 bg-orange-500 px-2 py-1 text-white"
+                          >
+                            Cancel
+                          </button>
+                        )}
+
+                        {!itm.adminWare && (
+                          <div>
+                            {itm?.status === "reject" ? (
                               <button
                                 disabled
                                 // onClick={() => handleUpdate(itm, "")}
-                                className="inline-flex  rounded-full gap-x-2    text-sm items-center gap-2 bg-[#23b123ea] px-2 py-1 text-white "
+                                className="inline-flex items-center rounded-full gap-x-2  text-sm  gap-2 bg-red-600 px-2 py-1  text-white "
                               >
-                                Active
+                                Rejected
                               </button>
+                            ) : (
+                              <div className="">
+                                {itm?.status === "pending" ? (
+                                  <div className="flex gap-2">
+                                    <button
+                                      disabled={
+                                        itm?.status === "cancel" ? true : false
+                                      }
+                                      onClick={() =>
+                                        handleUpdate(itm, "active")
+                                      }
+                                      className="inline-flex  rounded-full gap-x-2    text-sm items-center gap-2 bg-[#23b123ea] px-2 py-1 text-white "
+                                    >
+                                      Approve
+                                    </button>
+                                    <button
+                                      onClick={() =>
+                                        handleUpdate(itm, "reject")
+                                      }
+                                      className="inline-flex  rounded-full gap-x-2    text-sm items-center gap-2 bg-orange-500 px-2 py-1 text-white "
+                                    >
+                                      Reject
+                                    </button>
+                                  </div>
+                                ) : (
+                                  <button
+                                    disabled
+                                    // onClick={() => handleUpdate(itm, "")}
+                                    className="inline-flex  rounded-full gap-x-2    text-sm items-center gap-2 bg-[#23b123ea] px-2 py-1 text-white "
+                                  >
+                                    Active
+                                  </button>
+                                )}
+                              </div>
                             )}
                           </div>
                         )}
                       </div>
-                    }
+                    ) : (
+                      <h2 className="capitalize">{itm?.status}</h2>
+                    )}
                   </td>
                   {on?._id === itm?._id && (
                     <SellerStockInvoice setOn={setOn} products={itm} />

@@ -46,10 +46,6 @@
 //     },
 //   });
 
-
-
-
-
 //   // const showWarningIfNeeded = () => {
 //   //   if (daysPassed > 0 && daysPassed <= 5) {
 //   //     setShowWarning(true);
@@ -63,13 +59,10 @@
 //   //   showWarningIfNeeded();
 //   // }, [daysPassed]);
 
-
-
 //   const [invoice, setInvoice] = useState(false);
 
 //   // const buyTi
 //   const showBuyingPrice = parseInt(prices?.orderInfo?.buyingPrice);
-
 
 //   const amount = parseInt(prices?.orderInfo?.amount)
 
@@ -110,11 +103,6 @@
 //       return isWithinFreeTrial;
 //     }
 //   };
-
-
-
-
-
 
 //   if (remainingDays - passedDays <= 5) {
 //     return (
@@ -259,7 +247,6 @@
 // };
 // export default SubscriptionModel;
 
-
 import { useQuery } from "@tanstack/react-query";
 import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../../AuthProvider/UserProvider";
@@ -274,11 +261,15 @@ const SubscriptionModel = () => {
   const [services, setServices] = useState([]);
   const [showWarning, setShowWarning] = useState(false);
 
-  const { data: prices = {}, isLoading, refetch: reload } = useQuery({
+  const {
+    data: prices = {},
+    isLoading,
+    refetch: reload,
+  } = useQuery({
     queryKey: ["subscriptionModal"],
     queryFn: async () => {
       const res = await fetch(
-        `http://localhost:5001/api/v1/seller/subscription-model?priceId=${shopInfo?.priceId}&shopId=${shopInfo._id}`
+        `https://backend.doob.com.bd/api/v1/seller/subscription-model?priceId=${shopInfo?.priceId}&shopId=${shopInfo._id}`
       );
       const data = await res.json();
       return data?.data;
@@ -286,7 +277,6 @@ const SubscriptionModel = () => {
   });
 
   console.log(prices);
-
 
   const { data: CommissionHistory = [] } = useQuery({
     queryKey: ["commissionHistory"],
@@ -311,10 +301,7 @@ const SubscriptionModel = () => {
     },
   });
 
-
   console.log(prices.orderInfo, "orderInfo");
-
-
 
   // const showWarningIfNeeded = () => {
   //   if (daysPassed > 0 && daysPassed <= 5) {
@@ -329,8 +316,6 @@ const SubscriptionModel = () => {
   //   showWarningIfNeeded();
   // }, [daysPassed]);
 
-
-
   const [invoice, setInvoice] = useState(false);
 
   // const buyTi
@@ -338,7 +323,7 @@ const SubscriptionModel = () => {
 
   console.log(prices.orderInfo);
 
-  const amount = parseInt(prices?.orderInfo?.amount)
+  const amount = parseInt(prices?.orderInfo?.amount);
 
   const calculatePassedDays = (startTime) => {
     const currentTime = Date.now();
@@ -369,7 +354,13 @@ const SubscriptionModel = () => {
 
     // Calculate remaining and passed days if `prices.orderInfo` is available
     if (prices.orderInfo) {
-      const remainingDays = Math.max(0, (paymentDate.getTime() + SEVEN_DAYS_IN_MILLISECONDS - currentDate.getTime()) / MILLISECONDS_IN_A_DAY);
+      const remainingDays = Math.max(
+        0,
+        (paymentDate.getTime() +
+          SEVEN_DAYS_IN_MILLISECONDS -
+          currentDate.getTime()) /
+          MILLISECONDS_IN_A_DAY
+      );
       const passedDays = Math.floor(timeDifference / MILLISECONDS_IN_A_DAY);
 
       return remainingDays - passedDays > 0;
@@ -380,12 +371,13 @@ const SubscriptionModel = () => {
 
   return (
     <div className="">
-      {!isLoading ?
+      {!isLoading ? (
         <div className="bg-white text-black">
-          {(remainingDays - passedDays <= 5) && (
+          {remainingDays - passedDays <= 5 && (
             <div className="bg-orange-100 px-2 py-3 rounded- flex justify-between items-center">
               <p className="text-sm text-orange-800 capitalize ">
-                Hi dear, only {remainingDays - passedDays} days left for your service. Please renew{" "}
+                Hi dear, only {remainingDays - passedDays} days left for your
+                service. Please renew{" "}
                 <button
                   onClick={() => setInvoice(true)}
                   className="bg-orange-500 px-4 ml-2 py-1 text-xs rounded text-black"
@@ -407,7 +399,7 @@ const SubscriptionModel = () => {
             </div>
           )}
 
-          {(check_expired() && !prices?.orderInfo) && (
+          {check_expired() && !prices?.orderInfo && (
             <div className="bg-orange-100  px-2 py-3 rounded- flex justify-between items-center">
               <p className="text-sm text-orange-800 capitalize ">
                 Hi dear, You using free trail. Please update your package
@@ -459,35 +451,43 @@ const SubscriptionModel = () => {
           <div className="container px-6  py-8 mx-auto">
             {amount ? (
               <h1 className="text-2xl font-semibold text-center text-gray-800 capitalize lg:text-3xl">
-                {`The number of days that have passed since your package activation is ${passedDays} days. The remaining validity of your package is ${remainingDays} days. And Remaining Date is ${remainingDays - passedDays} Days`}
+                {`The number of days that have passed since your package activation is ${passedDays} days. The remaining validity of your package is ${remainingDays} days. And Remaining Date is ${
+                  remainingDays - passedDays
+                } Days`}
               </h1>
-            ) : ''}
+            ) : (
+              ""
+            )}
 
-            {amount ? <div className="flex justify-center mt-3">
-              <div className="w-[300px] bg-[#0000ff08] text-center border-2 border-blue-400 p-3 rounded">
-                <h2 className="font-semibold pb-2">Order Information:</h2>
-                <ul>
-                  <li className="text-sm text-gray-500">
-                    {/* parseInt(open?.price) * parseInt(time?.split(',')[1]) - parseInt(time?.split(',')[0]) */}
-                    <span className=" text-black">Amount :</span>{" "}
-                    {amount ? amount : 0} {" "}
-                    ৳
-                  </li>
-                  <li className="text-sm text-gray-500 ">
-                    <span className=" text-black">Buying Price :</span>{" "}
-                    {prices?.orderInfo?.buyingPrice ? prices?.orderInfo?.buyingPrice : 0} ৳
-                  </li>
-                  <li className="text-sm text-gray-500 ">
-                    <span className=" text-black">Discount Price :</span>{" "}
-                    {prices?.orderInfo?.time?.split(",")[0]} ৳
-                  </li>
-                </ul>
+            {amount ? (
+              <div className="flex justify-center mt-3">
+                <div className="w-[300px] bg-[#0000ff08] text-center border-2 border-blue-400 p-3 rounded">
+                  <h2 className="font-semibold pb-2">Order Information:</h2>
+                  <ul>
+                    <li className="text-sm text-gray-500">
+                      {/* parseInt(open?.price) * parseInt(time?.split(',')[1]) - parseInt(time?.split(',')[0]) */}
+                      <span className=" text-black">Amount :</span>{" "}
+                      {amount ? amount : 0} ৳
+                    </li>
+                    <li className="text-sm text-gray-500 ">
+                      <span className=" text-black">Buying Price :</span>{" "}
+                      {prices?.orderInfo?.buyingPrice
+                        ? prices?.orderInfo?.buyingPrice
+                        : 0}{" "}
+                      ৳
+                    </li>
+                    <li className="text-sm text-gray-500 ">
+                      <span className=" text-black">Discount Price :</span>{" "}
+                      {prices?.orderInfo?.time?.split(",")[0]} ৳
+                    </li>
+                  </ul>
+                </div>
               </div>
-            </div> : ''}
-
+            ) : (
+              ""
+            )}
 
             <div className="flex gap-3 justify-center mt-8">
-
               <PriceModal refetch={reload} open={open} setOpen={setOpen} />
 
               <Link to={`/price`}>
@@ -495,29 +495,33 @@ const SubscriptionModel = () => {
                   Update
                 </div>
               </Link>
-              {prices?.orderInfo && <button
-                onClick={() => setOpen(prices?.result)}
-                className="flex items-center mt-auto text-white bg-indigo-500 border-0 py-2 px-4  focus:outline-none hover:bg-indigo-600 rounded"
-              >
-                Renew
-                <svg
-                  fill="none"
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  className="w-4 h-4 ml-auto"
-                  viewBox="0 0 24 24"
+              {prices?.orderInfo && (
+                <button
+                  onClick={() => setOpen(prices?.result)}
+                  className="flex items-center mt-auto text-white bg-indigo-500 border-0 py-2 px-4  focus:outline-none hover:bg-indigo-600 rounded"
                 >
-                  <path d="M5 12h14M12 5l7 7-7 7" />
-                </svg>
-              </button>}
+                  Renew
+                  <svg
+                    fill="none"
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    className="w-4 h-4 ml-auto"
+                    viewBox="0 0 24 24"
+                  >
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
+                </button>
+              )}
             </div>
           </div>
-        </div> : <div className="flex justify-center items-center h-screen">
+        </div>
+      ) : (
+        <div className="flex justify-center items-center h-screen">
           Data is load on Database
         </div>
-      }
+      )}
     </div>
   );
 };

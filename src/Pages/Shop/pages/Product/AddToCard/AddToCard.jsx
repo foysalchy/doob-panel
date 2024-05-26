@@ -105,7 +105,10 @@ const ProductListCartSm = ({
             <button
               type="button"
               className="flex items-center px-2 py-0 space-x-1"
-              onClick={() => { handleRemove(!shopUser ? product.productId : product._id), selectOne(product) }}
+              onClick={() => {
+                handleRemove(!shopUser ? product.productId : product._id),
+                  selectOne(product);
+              }}
             >
               <MdDelete className="w-4 h-4 " />
               <span className="text-[12px]">Remove</span>
@@ -176,7 +179,7 @@ const ProductListCartLg = ({
           <div className="flex justify-between w-full pb-2 space-x-2">
             <div className="space-y-1">
               <h3 className="text-lg font-semibold leadi sm:pr-8">
-                {product.productName.split(' ').slice(0, 8).join(' ')}
+                {product.productName.split(" ").slice(0, 8).join(" ")}
               </h3>
               <div>
                 <label
@@ -219,7 +222,6 @@ const ProductListCartLg = ({
               <p className="text-sm line-through dark:text-gray-600">
                 <span className="kalpurush">৳</span>
                 {product?.regular_price}
-
               </p>
 
               <p className="text-lg font-semibold">
@@ -227,9 +229,7 @@ const ProductListCartLg = ({
                 {product?.campaignPrice
                   ? product?.campaignPrice
                   : product?.price}
-
               </p>
-
             </div>
           </div>
           <div className="flex text-sm divide-x">
@@ -237,7 +237,10 @@ const ProductListCartLg = ({
               type="button"
               className="flex items-center px-2 py-1 space-x-1"
               onClick={
-                () => { handleRemove(!shopUser ? product.productId : product._id), selectOne(product) }
+                () => {
+                  handleRemove(!shopUser ? product.productId : product._id),
+                    selectOne(product);
+                }
 
                 // console.log(product)
               }
@@ -315,7 +318,10 @@ const AddToCard = () => {
 
   const calculateTotal = () => {
     const subtotal = calculateSubtotal();
-    const shippingFee = allProducts.reduce((total, product) => total + product.delivery_charge, 0);
+    const shippingFee = allProducts.reduce(
+      (total, product) => total + product.delivery_charge,
+      0
+    );
     const shippingFeeDiscount = 0;
     return subtotal + shippingFee - shippingFeeDiscount;
   };
@@ -385,11 +391,9 @@ const AddToCard = () => {
     );
     localStorage.setItem("addToCart", JSON.stringify(updatedCartData));
 
-
     setAllProducts((prevProducts) =>
       prevProducts.filter((product) => product.productId !== productId)
     );
-
 
     if (shopUser) {
       fetch(
@@ -402,11 +406,8 @@ const AddToCard = () => {
         .then((res) => res.json())
         .then((data) => {
           console.log(data);
-        })
-
+        });
     }
-
-
   };
 
   const navigator = () => {
@@ -452,8 +453,6 @@ const AddToCard = () => {
         });
     }
   }, [shopUser]);
-
-
 
   console.log(cartProducts, "checked......");
   return (
@@ -505,7 +504,7 @@ const AddToCard = () => {
             </ul>
           </div>
         </div>
-        {console.log(allProducts[0], 'all-product')}
+        {console.log(allProducts[0], "all-product")}
         <div className="bg-gray-200 flex flex-col flex-grow lg:w-96 mt-8 lg:mt-0 h-[330px] rounded p-8">
           <div className="">
             <div className="space-y-1 my-4">
@@ -521,8 +520,13 @@ const AddToCard = () => {
               <div className="flex justify-between ">
                 <p className="text-gray-700">Shipping Fee </p>
                 <p className="kalpurush">
-
-                  ৳ <span className="font-sans">{allProducts.reduce((total, product) => total + product.delivery_charge, 0)}</span>
+                  ৳{" "}
+                  <span className="font-sans">
+                    {allProducts.reduce(
+                      (total, product) => total + product.delivery_charge,
+                      0
+                    )}
+                  </span>
                 </p>
               </div>
               <div className="flex justify-between ">

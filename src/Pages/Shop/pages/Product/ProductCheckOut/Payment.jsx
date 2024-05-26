@@ -38,6 +38,7 @@ const Payment = () => {
   }, [selectProductData]);
 
   const handleRemoveFromCart = (productId) => {
+    console.log(productId, "productId");
     const cartData = JSON.parse(localStorage.getItem("addToCart")) || [];
     // console.log(productId, "and", cartData);
     const updatedCartData = cartData.filter(
@@ -63,6 +64,8 @@ const Payment = () => {
         });
     }
   };
+
+  console.log(orderStage);
   const orderSubmit = async () => {
     const data = orderStage;
     data.method = payment;
@@ -82,7 +85,7 @@ const Payment = () => {
       setPassData(data);
       setLoadingPayment(true);
       await fetch(
-        `https://backend.doob.com.bd/api/v1/shop/user/order?token=${shopUser._id}`,
+        `https://backend.doob.com.bd/api/v1/shop/user/order?token=${shopUser._id}&shopId=${shop_id.shop_id}`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -94,8 +97,9 @@ const Payment = () => {
           console.log("responseData payment", responseData);
           BrightAlert({ icon: "success" });
           setLoadingPayment(false);
+          console.log(data);
           data.productList?.forEach((order) => {
-            handleRemoveFromCart(order._id);
+            handleRemoveFromCart(order.productId);
           });
 
           navigate(`/shop/${shopId}/user/my-orders`);
@@ -111,7 +115,7 @@ const Payment = () => {
     }
   };
 
-  console.log(orderStage?.normalPrice);
+  // console.log(orderStage?.normalPrice);
   //   console.log(user);
   const payWithBkash = async () => {
     setLoadingPayment(true);
@@ -210,7 +214,7 @@ const Payment = () => {
   console.log(previewUrl);
 
   return (
-    <div className="px-4 py-5 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8">
+    <div className="px-4 py-5 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 min-h-[60vh]">
       <div className="grid md:grid-cols-4 grid-cols-1 md:gap-3 gap-2">
         <div className="grid md:grid-cols-4 grid-cols-1 md:col-span-3 gap-4">
           {paymentGetWays.map((get, index) => (

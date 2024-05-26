@@ -29,11 +29,10 @@ const WarehouseModal = ({
     product?.warehouse[3]?.name ?? ""
   );
 
-
   const [selectedPackage, setSelectedPackage] = useState("");
 
   const handlePackageChange = (e) => {
-    console.log(e.target.value)
+    console.log(e.target.value);
     setSelectedPackage(e.target.value);
   };
 
@@ -51,8 +50,6 @@ const WarehouseModal = ({
       return data;
     },
   });
-
-
 
   //   console.log(packageData);
   console.log(selectedPackage);
@@ -86,8 +83,12 @@ const WarehouseModal = ({
 
   const getSlotByPrice = (pkg, price) => {
     console.log(pkg, price);
-    const slots = Object.values(pkg).filter(slot => typeof slot === 'object' && 'to' in slot && 'price' in slot);
-    let matchedSlot = slots.find(slot => parseInt(price) <= parseInt(slot.to));
+    const slots = Object.values(pkg).filter(
+      (slot) => typeof slot === "object" && "to" in slot && "price" in slot
+    );
+    let matchedSlot = slots.find(
+      (slot) => parseInt(price) <= parseInt(slot.to)
+    );
     if (!matchedSlot) {
       matchedSlot = slots[slots.length - 1];
     }
@@ -180,13 +181,16 @@ const WarehouseModal = ({
       { name: selectedCell },
     ];
 
+    console.log(adminCategory);
     const data = {
       handling: selectedPackage,
       commission: Commission,
-      warehouse: doobProduct ? adminCategory : product.warehouse,
+      warehouse: adminCategory ? adminCategory : product.warehouse,
+      // warehouse: doobProduct ? adminCategory : product.warehouse,
     };
     console.log(data);
 
+    // return;
     fetch(
       `https://backend.doob.com.bd/api/v1/admin/update-product-info?productId=${product._id}`,
       {
@@ -211,8 +215,9 @@ const WarehouseModal = ({
   return (
     <div>
       <div
-        className={`fixed left-0 top-0 flex z-50 h-full min-h-screen w-full items-center justify-center bg-black/90 px-4 py-5 ${modalOpen ? "block" : "hidden"
-          }`}
+        className={`fixed left-0 top-0 flex z-50 h-full min-h-screen w-full items-center justify-center bg-black/90 px-4 py-5 ${
+          modalOpen ? "block" : "hidden"
+        }`}
       >
         <form
           onSubmit={updateInfo}
@@ -239,7 +244,6 @@ const WarehouseModal = ({
                   />
                 </div>
                 <div>
-
                   <label htmlFor="package" className="text-xl font-bold mb-2">
                     Select Package
                   </label>
@@ -252,7 +256,7 @@ const WarehouseModal = ({
                     <option value="">Select Package</option>
                     {sortedPackageData.map((pkg) => {
                       const slot = getSlotByPrice(pkg, product?.price);
-                      console.log(slot)
+                      console.log(slot);
                       return (
                         <option key={pkg._id} value={slot?.price}>
                           {pkg.name}
@@ -312,11 +316,11 @@ const WarehouseModal = ({
                         isRefetching
                           ? [{ label: "Loading...", value: null }]
                           : warehouses
-                            .filter((warehouse) => warehouse.status) // Filter based on status
-                            .map((warehouse) => ({
-                              value: warehouse.name,
-                              label: warehouse.name,
-                            }))
+                              .filter((warehouse) => warehouse.status) // Filter based on status
+                              .map((warehouse) => ({
+                                value: warehouse.name,
+                                label: warehouse.name,
+                              }))
                       }
                       defaultValue={{
                         value: product?.warehouse[0]?.name,
@@ -491,8 +495,8 @@ const WarehouseModal = ({
             </div>
           </div>
         </form>
-      </div >
-    </div >
+      </div>
+    </div>
   );
 };
 
