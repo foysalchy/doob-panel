@@ -80,7 +80,7 @@ const StockManagement = () => {
 
       // Make the fetch call inside the preConfirm callback
       return fetch(
-        `http://localhost:5001/api/v1/admin/stock-request-update?productId=${data?.productId}&orderId=${data?._id}&quantity=${data?.quantity}&SKU=${data?.SKU}`,
+        `https://backend.doob.com.bd/api/v1/admin/stock-request-update?productId=${data?.productId}&orderId=${data?._id}&quantity=${data?.quantity}&SKU=${data?.SKU}`,
         {
           method: "PUT",
           headers: {

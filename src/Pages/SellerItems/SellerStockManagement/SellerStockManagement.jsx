@@ -15,7 +15,7 @@ const SellerStockManagement = () => {
     queryKey: ["stockRequestData"],
     queryFn: async () => {
       const res = await fetch(
-        `http://localhost:5001/api/v1/admin/seller-stock-request?shopId=${shopInfo._id}`
+        `https://backend.doob.com.bd/api/v1/admin/seller-stock-request?shopId=${shopInfo._id}`
       );
       const data = await res.json();
       console.log(data, "data");
@@ -33,7 +33,7 @@ const SellerStockManagement = () => {
   const cancelHandler = async (productId, orderId) => {
     console.log(productId, orderId);
     return fetch(
-      `http://localhost:5001/api/v1/admin/stock-request-update?productId=${productId}&orderId=${orderId}`,
+      `https://backend.doob.com.bd/api/v1/admin/stock-request-update?productId=${productId}&orderId=${orderId}`,
       {
         method: "PUT",
         headers: {
@@ -72,7 +72,7 @@ const SellerStockManagement = () => {
     }
     // return;
     return fetch(
-      `http://localhost:5001/api/v1/admin/stock-status-update?productId=${productId}&orderId=${order?._id}`,
+      `https://backend.doob.com.bd/api/v1/admin/stock-status-update?productId=${productId}&orderId=${order?._id}`,
       {
         method: "PUT",
         headers: {
@@ -123,7 +123,7 @@ const SellerStockManagement = () => {
 
           // Make the fetch call inside the preConfirm callback
           return fetch(
-            `http://localhost:5001/api/v1/admin/stock-request-update?productId=${data?.productId}&orderId=${data?._id}&quantity=${data?.quantity}&SKU=${data?.SKU}`,
+            `https://backend.doob.com.bd/api/v1/admin/stock-request-update?productId=${data?.productId}&orderId=${data?._id}&quantity=${data?.quantity}&SKU=${data?.SKU}`,
             {
               method: "PUT",
               headers: {
@@ -151,7 +151,7 @@ const SellerStockManagement = () => {
 
       // Make the fetch call inside the preConfirm callback
       return fetch(
-        `http://localhost:5001/api/v1/admin/stock-request-update?productId=${data?.productId}&orderId=${data?._id}&quantity=${data?.quantity}&SKU=${data?.SKU}`,
+        `https://backend.doob.com.bd/api/v1/admin/stock-request-update?productId=${data?.productId}&orderId=${data?._id}&quantity=${data?.quantity}&SKU=${data?.SKU}`,
         {
           method: "PUT",
           headers: {

@@ -65,9 +65,8 @@ const Payment = () => {
     }
   };
 
-  console.log(orderStage)
+  console.log(orderStage);
   const orderSubmit = async () => {
-    
     const data = orderStage;
     data.method = payment;
     data.timestamp = new Date().getTime();
@@ -86,7 +85,7 @@ const Payment = () => {
       setPassData(data);
       setLoadingPayment(true);
       await fetch(
-        `http://localhost:5001/api/v1/shop/user/order?token=${shopUser._id}&shopId=${shop_id.shop_id}`,
+        `https://backend.doob.com.bd/api/v1/shop/user/order?token=${shopUser._id}&shopId=${shop_id.shop_id}`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
