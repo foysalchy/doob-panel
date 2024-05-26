@@ -94,7 +94,7 @@ const DarazIntegration = () => {
   });
 
   console.log(
-    `https://backend.doob.com.bd/api/v1/seller/get-privious-account?shopId=${shopInfo._id}`
+    `log================   https://backend.doob.com.bd/api/v1/seller/get-privious-account?shopId=${shopInfo._id}`
   );
 
   const {
