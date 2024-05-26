@@ -1,12 +1,20 @@
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import { useEffect } from "react";
+import { useContext } from "react";
 import { useState } from "react";
 import { FaLongArrowAltRight } from "react-icons/fa";
 import Select from "react-select";
 import Swal from "sweetalert2";
-const AddCellModal = ({ recall, setOpenModal }) => {
-  console.log("come");
+import { AuthContext } from "../../../../AuthProvider/UserProvider";
+
+const AddCellModal = ({
+  recall,
+  setOpenModal,
+  next,
+  preSelectWarehouse,
+}) => {
+  const { shopInfo } = useContext(AuthContext);
 
   const [areas, setAreas] = useState([]);
   const [racks, setRacks] = useState([]);
@@ -18,9 +26,7 @@ const AddCellModal = ({ recall, setOpenModal }) => {
   const { data: warehouses = [], refetch } = useQuery({
     queryKey: ["warehouses"],
     queryFn: async () => {
-      const res = await fetch(
-        "https://backend.doob.com.bd/api/v1/admin/warehouse/"
-      );
+      const res = await fetch("https://backend.doob.com.bd/api/v1/admin/warehouse/");
       const data = await res.json();
       return data;
     },
@@ -30,9 +36,7 @@ const AddCellModal = ({ recall, setOpenModal }) => {
     const selectedWarehouse = selectedOption.value;
     setSelectedWarehouse(selectedWarehouse);
 
-    const areaRes = await fetch(
-      `https://backend.doob.com.bd/api/v1/admin/warehouse/area/${selectedWarehouse}`
-    );
+    const areaRes = await fetch(`https://backend.doob.com.bd/api/v1/admin/warehouse/area/${selectedWarehouse}`);
     const areaData = await areaRes.json();
     setAreas(areaData);
     setSelectedArea("");
@@ -44,9 +48,7 @@ const AddCellModal = ({ recall, setOpenModal }) => {
     const selectedArea = selectedOption.value;
     setSelectedArea(selectedArea);
 
-    const rackRes = await fetch(
-      `https://backend.doob.com.bd/api/v1/admin/warehouse/rack/${selectedWarehouse}/${selectedArea}`
-    );
+    const rackRes = await fetch(`https://backend.doob.com.bd/api/v1/admin/warehouse/rack/${selectedWarehouse}/${selectedArea}`);
     const rackData = await rackRes.json();
     setRacks(rackData);
     setSelfs([]);
@@ -57,21 +59,24 @@ const AddCellModal = ({ recall, setOpenModal }) => {
     const selectedRack = selectedOption.value;
     setSelectedRack(selectedRack);
 
-    const selfRes = await fetch(
-      `https://backend.doob.com.bd/api/v1/admin/warehouse/self/${selectedWarehouse}/${selectedArea}/${selectedRack}`
-    );
-    console.log(selfRes);
+    const selfRes = await fetch(`https://backend.doob.com.bd/api/v1/admin/warehouse/self/${selectedWarehouse}/${selectedArea}/${selectedRack}`);
+    console.log(selfRes, "self");
     const selfData = await selfRes.json();
     setSelfs(selfData);
     refetch();
   };
 
+  console.log(selfs);
+
   const UploadArea = (e) => {
     e.preventDefault();
-    const warehouse = e.target.warehouse.value;
-    const area = e.target.area.value;
-    const rack = e.target.rack.value;
-    const self = e.target.self.value;
+    const warehouse = next
+      ? preSelectWarehouse.warehouse
+      : e.target.warehouse.value;
+    const area = next ? preSelectWarehouse.area : e.target.area.value;
+    const rack = next ? preSelectWarehouse.rack : e.target.rack.value;
+    const self = next ? preSelectWarehouse.self : e.target.self.value;
+
     const cell = e.target.cell.value;
     const data = {
       warehouse,
@@ -79,6 +84,7 @@ const AddCellModal = ({ recall, setOpenModal }) => {
       rack,
       self,
       cell,
+      shopId: shopInfo._id,
       status: true,
     };
 
@@ -101,105 +107,112 @@ const AddCellModal = ({ recall, setOpenModal }) => {
   return (
     <div>
       <form onSubmit={UploadArea} action="">
-        <div className="mt-10">
-          <label className="text-sm">Select Warehouse</label>
-          <Select
-            styles={{
-              control: (provided) => ({
-                ...provided,
-                cursor: "pointer",
-              }),
-              option: (provided) => ({
-                ...provided,
-                cursor: "pointer",
-              }),
-            }}
-            onChange={handleWarehouseChange}
-            name="warehouse"
-            required
-            options={warehouses
-              .filter((warehouse) => warehouse.status) // Filter based on status
-              .map((warehouse) => ({
-                value: warehouse.name,
-                label: warehouse.name,
-              }))}
-            placeholder="Please select"
-          />
-        </div>
-        <div className="mt-4">
-          <label className="text-sm">Select Area</label>
-          <Select
-            styles={{
-              control: (provided) => ({
-                ...provided,
-                cursor: "pointer",
-              }),
-              option: (provided) => ({
-                ...provided,
-                cursor: "pointer",
-              }),
-            }}
-            onChange={handleAreaChange}
-            name="area"
-            required
-            options={areas
-              .filter((area) => area.status) // Filter based on status
-              .map((area) => ({
-                value: area.area,
-                label: area.area,
-              }))}
-            placeholder="Please select"
-          />
-        </div>
-        <div className="mt-4">
-          <label className="text-sm">Select Rack</label>
-          <Select
-            styles={{
-              control: (provided) => ({
-                ...provided,
-                cursor: "pointer",
-              }),
-              option: (provided) => ({
-                ...provided,
-                cursor: "pointer",
-              }),
-            }}
-            name="rack"
-            required
-            onChange={handleReckChange}
-            options={racks
-              ?.filter((rack) => rack.status)
-              .map((rack) => ({
-                value: rack.rack,
-                label: rack.rack,
-              }))}
-            placeholder="Please select"
-          />
-        </div>
-        <div className="mt-4">
-          <label className="text-sm">Select Self</label>
-          <Select
-            styles={{
-              control: (provided) => ({
-                ...provided,
-                cursor: "pointer",
-              }),
-              option: (provided) => ({
-                ...provided,
-                cursor: "pointer",
-              }),
-            }}
-            name="self"
-            required
-            options={selfs
-              ?.filter((selfs) => selfs.status)
-              .map((self) => ({
-                value: self.self,
-                label: self.self,
-              }))}
-            placeholder="Please select"
-          />
-        </div>
+        {!next && (
+          <div>
+            <div className="mt-10">
+              <label className="text-sm">Select Warehouse</label>
+              <Select
+                styles={{
+                  control: (provided) => ({
+                    ...provided,
+                    cursor: "pointer",
+                  }),
+                  option: (provided) => ({
+                    ...provided,
+                    cursor: "pointer",
+                  }),
+                }}
+                onChange={handleWarehouseChange}
+                name="warehouse"
+                required
+                options={
+                  warehouses.length &&
+                  warehouses
+                    .filter((warehouse) => warehouse.status) // Filter based on status
+                    .map((warehouse) => ({
+                      value: warehouse.name,
+                      label: warehouse.name,
+                    }))
+                }
+                placeholder="Please select"
+              />
+            </div>
+            <div className="mt-4">
+              <label className="text-sm">Select Area</label>
+              <Select
+                styles={{
+                  control: (provided) => ({
+                    ...provided,
+                    cursor: "pointer",
+                  }),
+                  option: (provided) => ({
+                    ...provided,
+                    cursor: "pointer",
+                  }),
+                }}
+                onChange={handleAreaChange}
+                name="area"
+                required
+                options={areas
+                  .filter((area) => area.status) // Filter based on status
+                  .map((area) => ({
+                    value: area.area,
+                    label: area.area,
+                  }))}
+                placeholder="Please select"
+              />
+            </div>
+            <div className="mt-4">
+              <label className="text-sm">Select Rack</label>
+              <Select
+                styles={{
+                  control: (provided) => ({
+                    ...provided,
+                    cursor: "pointer",
+                  }),
+                  option: (provided) => ({
+                    ...provided,
+                    cursor: "pointer",
+                  }),
+                }}
+                name="rack"
+                required
+                onChange={handleReckChange}
+                options={racks
+                  ?.filter((rack) => rack.status)
+                  .map((rack) => ({
+                    value: rack.rack,
+                    label: rack.rack,
+                  }))}
+                placeholder="Please select"
+              />
+            </div>
+            <div className="mt-4">
+              <label className="text-sm">Select Self</label>
+              <Select
+                styles={{
+                  control: (provided) => ({
+                    ...provided,
+                    cursor: "pointer",
+                  }),
+                  option: (provided) => ({
+                    ...provided,
+                    cursor: "pointer",
+                  }),
+                }}
+                name="self"
+                required
+                options={selfs
+                  ?.filter((selfs) => selfs.status)
+                  .map((self) => ({
+                    value: self.self,
+                    label: self.self,
+                  }))}
+                placeholder="Please select"
+              />
+            </div>
+          </div>
+        )}
 
         <div className=" mt-4">
           <label className="text-sm">Add Cell</label>

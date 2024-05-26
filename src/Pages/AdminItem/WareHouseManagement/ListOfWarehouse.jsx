@@ -22,7 +22,7 @@ const ListOfWarehouse = () => {
     },
   });
 
-  const { data: wareLength = [] } = useQuery({
+  const { data: wareLength = [], refetch: reload } = useQuery({
     queryKey: ["wareLengthAdmin"],
     queryFn: async () => {
       const res = await fetch(
@@ -33,20 +33,23 @@ const ListOfWarehouse = () => {
     },
   });
 
+
   const [searchQuery, setSearchQuery] = useState("");
 
   const handleSearch = (event) => {
     setSearchQuery(event.target.value);
   };
 
-  const filteredData = warehouses.filter((item) => {
-    const lowercaseSearchQuery = searchQuery?.toLowerCase();
+  const filteredData =
+    warehouses &&
+    warehouses.filter((item) => {
+      const lowercaseSearchQuery = searchQuery?.toLowerCase();
 
-    return (
-      item?.name?.toLowerCase()?.includes(lowercaseSearchQuery) ||
-      item?.slag?.toLowerCase()?.includes(lowercaseSearchQuery)
-    );
-  });
+      return (
+        item?.name?.toLowerCase()?.includes(lowercaseSearchQuery) ||
+        item?.slag?.toLowerCase()?.includes(lowercaseSearchQuery)
+      );
+    });
 
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -65,13 +68,14 @@ const ListOfWarehouse = () => {
     const startPage = Math.max(1, currentPage - Math.floor(pageSize / 2));
     const endPage = Math.min(totalPages, startPage + pageSize - 1);
 
+
     return (
       <React.Fragment>
         {/* First Page */}
         {startPage > 1 && (
           <li>
             <button
-              className={`block h-8 w-8 rounded border border-gray-900 bg-white text-center leading-8 text-gray-900`}
+              className={`block h-8  w-8 rounded border border-gray-900 bg-white text-center leading-8 text-gray-900`}
               onClick={() => handleChangePage(1)}
             >
               1
@@ -393,21 +397,11 @@ const ListOfWarehouse = () => {
 
           <li>
             <button
-              className="inline-flex h-8 w-8 items-center justify-center rounded border border-gray-900 disabled:cursor-not-allowed bg-white text-gray-900 rtl:rotate-180"
-              onClick={() =>
-                handleChangePage(Math.min(totalPages, currentPage + 1))
-              }
+              className="pagination-btn"
+              onClick={() => handleChangePage(currentPage + 1)}
               disabled={currentPage === totalPages}
             >
-              <span className="sr-only">Next Page</span>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-3 w-3"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-              >
-                <BiRightArrow className="text-xl" />
-              </svg>
+              Next
             </button>
           </li>
         </ol>

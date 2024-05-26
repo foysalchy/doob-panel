@@ -85,6 +85,36 @@ const SellerAddAreaForWarehouse = ({
       });
   };
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   // const defaultWarehouse = preSelectWarehouse.warehouse && sortedWarehouses.find(warehouse => preSelectWarehouse.warehouse.includes(warehouse.name));
 
   return (

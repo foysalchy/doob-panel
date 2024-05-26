@@ -4,10 +4,22 @@ import { useState } from "react";
 import { FaLongArrowAltRight } from "react-icons/fa";
 import Select from "react-select";
 import Swal from "sweetalert2";
-const AddRackModal = ({ setNewData, recall, setOpenModal }) => {
+import { AuthContext } from "../../../../AuthProvider/UserProvider";
+import { useContext } from "react";
+
+const AddRackModal = ({
+  setNewData,
+  recall,
+  setOpenModal,
+  preSelectWarehouse,
+  setWareHouses,
+  next,
+  setNext,
+}) => {
   const [nextStae, setNextState] = useState(false);
+  const { shopInfo } = useContext(AuthContext);
   const { data: warehouses = [], refetch } = useQuery({
-    queryKey: ["warehouses"],
+    queryKey: ["salerWarehouse"],
     queryFn: async () => {
       const res = await fetch(
         "https://backend.doob.com.bd/api/v1/admin/warehouse"
@@ -17,26 +29,29 @@ const AddRackModal = ({ setNewData, recall, setOpenModal }) => {
     },
   });
 
-  const filteredWarehouses = warehouses.filter(
-    (warehouse) => warehouse.status === true
-  );
-  const sortedWarehouses = filteredWarehouses.sort((a, b) =>
-    a?.name?.localeCompare(b.name)
-  );
-
-  const warehouseOptions = sortedWarehouses
-    .filter((rack) => rack.status)
-    .slice(0, 5)
-    .map((warehouse) => ({
-      value: warehouse.name,
-      label: warehouse.name,
-    }));
+  const filteredWarehouses =
+    warehouses.length &&
+    warehouses.filter((warehouse) => warehouse.status === true);
+  const sortedWarehouses =
+    filteredWarehouses &&
+    filteredWarehouses.sort((a, b) => a?.name?.localeCompare(b.name));
+  console.log(sortedWarehouses, "riks");
+  const warehouseOptions =
+    sortedWarehouses &&
+    sortedWarehouses
+      .filter((rack) => rack.status)
+      .map((warehouse) => ({
+        value: warehouse.name,
+        label: warehouse.name,
+      }));
 
   const [areas, setAreas] = useState([]);
+  console.log(next, "next");
 
   const handleWarehouseChange = async (selectedOption) => {
     const selectedWarehouse = selectedOption.value;
-    console.log(selectedWarehouse);
+    console.log(`https://backend.doob.com.bd/api/v1/admin/warehouse/area/${selectedWarehouse}`, selectedWarehouse, '***');
+
     const res = await fetch(
       `https://backend.doob.com.bd/api/v1/admin/warehouse/area/${selectedWarehouse}`
     );
@@ -46,15 +61,26 @@ const AddRackModal = ({ setNewData, recall, setOpenModal }) => {
 
   const UploadArea = (e) => {
     e.preventDefault();
-    const warehouse = e.target.warehouse.value;
-    const area = e.target.area.value;
+    const warehouse = next
+      ? preSelectWarehouse.warehouse
+      : e.target?.warehouse?.value;
+    const area = next ? preSelectWarehouse.area : e?.target?.area?.value;
     const rack = e.target.rack.value;
+    setWareHouses((prevState) => ({
+      ...prevState,
+      rack: rack,
+      area: area,
+      warehouse: warehouse,
+    }));
+
     const data = {
       warehouse,
       area,
       rack,
+      shopId: shopInfo._id,
       status: true,
     };
+    console.log(data);
     fetch("https://backend.doob.com.bd/api/v1/admin/warehouse/rack", {
       method: "post",
       headers: {
@@ -68,6 +94,7 @@ const AddRackModal = ({ setNewData, recall, setOpenModal }) => {
         recall();
         refetch();
         if (nextStae) {
+          setNext(true);
           setNewData("Add Shelf");
         } else {
           setOpenModal(false);
@@ -78,50 +105,54 @@ const AddRackModal = ({ setNewData, recall, setOpenModal }) => {
   return (
     <div>
       <form onSubmit={UploadArea} action="">
-        <div className="mt-10">
-          <label className="text-sm">Select WareHouse</label>
-          <Select
-            styles={{
-              control: (provided) => ({
-                ...provided,
-                cursor: "pointer",
-              }),
-              option: (provided) => ({
-                ...provided,
-                cursor: "pointer",
-              }),
-            }}
-            onChange={handleWarehouseChange}
-            name="warehouse"
-            required
-            options={warehouseOptions}
-            placeholder="Please select"
-          />
-        </div>
-        <div className="mt-4">
-          <label className="text-sm">Select Area</label>
-          <Select
-            styles={{
-              control: (provided) => ({
-                ...provided,
-                cursor: "pointer",
-              }),
-              option: (provided) => ({
-                ...provided,
-                cursor: "pointer",
-              }),
-            }}
-            name="area"
-            required
-            options={areas
-              .filter((rack) => rack.status)
-              .map((area) => ({
-                value: area.area,
-                label: area.area,
-              }))}
-            placeholder="Please select"
-          />
-        </div>
+        {!next && (
+          <div>
+            <div className="mt-10">
+              <label className="text-sm">Select WareHouse</label>
+              <Select
+                styles={{
+                  control: (provided) => ({
+                    ...provided,
+                    cursor: "pointer",
+                  }),
+                  option: (provided) => ({
+                    ...provided,
+                    cursor: "pointer",
+                  }),
+                }}
+                onChange={handleWarehouseChange}
+                name="warehouse"
+                required
+                options={warehouseOptions}
+                placeholder="Please select"
+              />
+            </div>
+            <div className="mt-4">
+              <label className="text-sm">Select Area</label>
+              <Select
+                styles={{
+                  control: (provided) => ({
+                    ...provided,
+                    cursor: "pointer",
+                  }),
+                  option: (provided) => ({
+                    ...provided,
+                    cursor: "pointer",
+                  }),
+                }}
+                name="area"
+                required
+                options={areas
+                  .filter((rack) => rack.status)
+                  .map((area) => ({
+                    value: area.area,
+                    label: area.area,
+                  }))}
+                placeholder="Please select"
+              />
+            </div>
+          </div>
+        )}
 
         <div className=" mt-4">
           <label className="text-sm">Add Rack</label>
@@ -133,22 +164,23 @@ const AddRackModal = ({ setNewData, recall, setOpenModal }) => {
             className="w-full p-2 border border-black rounded-md  text-gray-900"
           />
         </div>
-        <div className="flex items-center mt-10 justify-between">
+
+        <div className="flex items-center w-full justify-between mt-10">
           <button
             type="submit"
-            className="group  relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
+            className="group   relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
           >
             <span className="absolute -start-full transition-all group-hover:start-4">
               <FaLongArrowAltRight />
             </span>
             <span className="text-sm font-medium transition-all group-hover:ms-4">
-              Add Area
+              Upload Warehouse
             </span>
           </button>
           <button
             type="submit"
             onClick={() => setNextState(true)}
-            className="group relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
+            className="group text-sm relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
           >
             Next
           </button>

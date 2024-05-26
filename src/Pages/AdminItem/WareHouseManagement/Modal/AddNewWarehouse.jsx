@@ -1,6 +1,8 @@
 import React, { useState } from "react";
+import { useContext } from "react";
 import { FaLongArrowAltRight } from "react-icons/fa";
 import Swal from "sweetalert2";
+import { AuthContext } from "../../../../AuthProvider/UserProvider";
 
 const AddNewWarehouse = ({
   setNewData,
@@ -8,9 +10,10 @@ const AddNewWarehouse = ({
   setOpenModal,
   warehouses,
   setWareHouses,
-  setNew,
+  setNext,
 }) => {
   const [nextStae, setNextState] = useState(false);
+  const { shopInfo } = useContext(AuthContext);
   const UploadArea = (e) => {
     e.preventDefault();
     const name = e.target.name.value;
@@ -18,7 +21,10 @@ const AddNewWarehouse = ({
     const address = e.target.address.value;
     const description = e.target.description.value;
     const image = e.target.image.files[0];
-
+    setWareHouses((prevState) => ({
+      ...prevState,
+      warehouse: name,
+    }));
     const formData = new FormData();
     formData.append("image", image);
     const url = `https://backend.doob.com.bd/api/v1/image/upload-image`;
@@ -35,6 +41,7 @@ const AddNewWarehouse = ({
           slag,
           address,
           description,
+          shopId: shopInfo._id,
           status: true,
         };
         postWareHouse(data);
@@ -51,15 +58,14 @@ const AddNewWarehouse = ({
     })
       .then((res) => res.json())
       .then((data) => {
-        Swal.fire("Warehouse Upload Successfully", "", "success");
-        refetch();
-        // setOpenModal(false)
         if (nextStae) {
+          setNext(true);
           setNewData("Add Area");
-          setNew(true);
         } else {
           setOpenModal(false);
         }
+        Swal.fire("Warehouse Upload Successfully", "", "success");
+        refetch();
       });
   };
 
@@ -109,17 +115,17 @@ const AddNewWarehouse = ({
         <div className=" mt-4">
           <label className="text-sm">Upload Image</label>
           <input
+            accept="image/*"
             name="image"
             type="file"
             placeholder="Description"
             className="w-full p-2 border border-black rounded-md  text-gray-900"
           />
         </div>
-
-        <div className="flex items-center justify-between mt-10">
+        <div className="flex items-center w-full justify-between mt-10">
           <button
             type="submit"
-            className="group  relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
+            className="group   relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
           >
             <span className="absolute -start-full transition-all group-hover:start-4">
               <FaLongArrowAltRight />
