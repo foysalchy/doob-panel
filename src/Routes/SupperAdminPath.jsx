@@ -79,6 +79,8 @@ import SearchAdminReport from "../Pages/AdminItem/ReportManagement/searchReport/
 import SubscribeHistory from "../Pages/AdminItem/ReportManagement/SubscribeHistory";
 import PricingReport from "../Pages/AdminItem/ReportManagement/PricingReport/PricingReport";
 import Profile from "../Pages/AdminItem/Profile/Profile";
+import AdminSliderManager from "../Pages/AdminItem/ContentManagement/SellerSlider/AdminSliderManager";
+import AddSellerSlider from "../Pages/AdminItem/ContentManagement/SellerSlider/AddSellerSlider";
 
 const SupperAdminPath = [
   {
@@ -466,6 +468,22 @@ const SupperAdminPath = [
     ),
   },
   {
+    path: "content-management/seller-slider",
+    element: (
+      <CheckStaff>
+        <AdminSliderManager />
+      </CheckStaff>
+    ),
+  },
+  {
+    path: "content-management/seller-slider/add",
+    element: (
+      <CheckStaff>
+        <AddSellerSlider />
+      </CheckStaff>
+    ),
+  },
+  {
     path: "content-management/admin-anouncement",
     element: (
       <CheckStaff>
@@ -600,8 +618,8 @@ const SupperAdminPath = [
   },
   {
     path: "view-profile",
-    element: <Profile />
-  }
+    element: <Profile />,
+  },
 ];
 
 export { SupperAdminPath };

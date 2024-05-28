@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import React, { useState } from "react";
 import { TfiAnnouncement } from "react-icons/tfi";
 import { RxCross2 } from "react-icons/rx";
+import { Link } from "react-router-dom";
 
 const AnouncementModal = ({ setOpen, modalData, index }) => {
   const [currentIndex, setCurrentIndex] = useState(index);
@@ -29,7 +30,7 @@ const AnouncementModal = ({ setOpen, modalData, index }) => {
   console.log(modalData, "++>>>>>");
   return (
     <>
-      {currentData &&
+      {currentData && (
         <div className={style.overlay}>
           <div className={style.card}>
             <div className="">
@@ -45,7 +46,10 @@ const AnouncementModal = ({ setOpen, modalData, index }) => {
                 dangerouslySetInnerHTML={{ __html: currentData?.message }}
               ></div>
 
-              <img className={style.img} src={currentData?.image} alt="" />
+              <Link to={currentData?.link}>
+                {" "}
+                <img className={style.img} src={currentData?.image} alt="" />
+              </Link>
               <div className="flex items-center gap-2">
                 <button className={style.nextBtn} onClick={mHandlePrev}>
                   Prev
@@ -56,7 +60,8 @@ const AnouncementModal = ({ setOpen, modalData, index }) => {
               </div>
             </div>
           </div>
-        </div>}
+        </div>
+      )}
     </>
   );
 };

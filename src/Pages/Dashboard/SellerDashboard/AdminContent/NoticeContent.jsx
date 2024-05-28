@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { IoWarning } from "react-icons/io5";
 import { PiNoteLight } from "react-icons/pi";
 import { RxCross2 } from "react-icons/rx";
+import { Link } from "react-router-dom";
 
 const NoticeModal = ({ setOpen, open, modalData, index }) => {
   const [currentIndex, setCurrentIndex] = useState(index);
@@ -40,7 +41,10 @@ const NoticeModal = ({ setOpen, open, modalData, index }) => {
           <h3 className={style.title}>{currentData?.title}</h3>
           <div dangerouslySetInnerHTML={{ __html: currentData?.message }}></div>
 
-          <img className={style.img} src={currentData?.image} alt="" />
+          <Link to={currentData?.link}>
+            {" "}
+            <img className={style.img} src={currentData?.image} alt="" />
+          </Link>
           <div className="flex items-center gap-2">
             <button className={style.nextBtn} onClick={mHandlePrev}>
               Prev
