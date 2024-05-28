@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import React, { useContext, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import { BsArrowRight } from "react-icons/bs";
 import { MdDelete } from "react-icons/md";
 import { AuthContext } from "../../../../AuthProvider/UserProvider";
@@ -32,6 +32,7 @@ const SellerShipping = () => {
   const [shop, setShop] = useState([]);
   const [loadingUpdate, setloadingUpdate] = useState(false);
 
+    const formRef = useRef(null);
   const handleGetaway = (event) => {
     const selectedValue = event.target.value;
 
@@ -145,10 +146,14 @@ const SellerShipping = () => {
       .then((data) => {
         console.log(data);
         // setSelectedMedia("Choose your Api");
+
         refetch();
         setloadingUpdate(false);
         BrightAlert("Shipping interrogation Successful", "", "success");
         setOpenModal(false);
+           if (formRef.current) {
+             formRef.current.reset();
+           }
       });
   };
   const deleteHandel = (id) => {
@@ -177,7 +182,7 @@ const SellerShipping = () => {
             Publish your shipping information.
           </h1>
           <div className="md:p-10 p-3 bg-[#d3edc1] border-2  rounded md:m-10 mt-3">
-            <form onSubmit={dataSubmit} className="w-full ">
+            <form ref={formRef} onSubmit={dataSubmit} className="w-full ">
               <div className="my-4">
                 <label className="sr-only text-black" htmlFor="title">
                   Select an option
