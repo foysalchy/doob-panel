@@ -87,26 +87,28 @@ const AdminSingleBlog = () => {
             </span>
           </div>
           <h3 className=" pb-2 border-b border-[#d8d8d85e]">Another blogs</h3>
-          {filteredBlogs?.map((blg) => (
-            <Link
-              to={`/admin/blogs/${blg._id}`}
-              key={blg._id}
-              className="flex items-center gap-2 mt-3 duration-200 hover:bg-[#3c3c4681] p-2 "
-            >
-              <img
-                loading="lazy"
-                srcSet={blg.img}
-                src={blg.img}
-                alt=""
-                className="md:w-[110px] w-[110px]"
-              />
-              <div className="">
-                <h4 className=" text-sm font-bold ">{blg.title}</h4>
+          {filteredBlogs
+            ?.filter((item) => item?._id !== blogInfo?._id)
+            ?.map((blg) => (
+              <Link
+                to={`/admin/blogs/${blg._id}`}
+                key={blg._id}
+                className="flex items-center gap-2 mt-3 duration-200 hover:bg-[#3c3c4681] p-2 "
+              >
+                <img
+                  loading="lazy"
+                  srcSet={blg.img}
+                  src={blg.img}
+                  alt=""
+                  className="md:w-[110px] w-[110px]"
+                />
+                <div className="">
+                  <h4 className=" text-sm font-bold ">{blg.title}</h4>
 
-                <small>{extractInnerText(blg.message?.slice(0, 47))}</small>
-              </div>
-            </Link>
-          ))}
+                  <small>{extractInnerText(blg.message?.slice(0, 47))}</small>
+                </div>
+              </Link>
+            ))}
         </div>
       </div>
     </div>
