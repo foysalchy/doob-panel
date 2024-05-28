@@ -91,16 +91,17 @@ const SellerDashboard = () => {
   });
 
   const { data: noticeInfo = [] } = useQuery({
-    queryKey: "noticeInfo",
+    queryKey: "sliderInfo",
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/admin/seller-notice`
+        `https://backend.doob.com.bd/api/v1/admin/slider`
       );
       const data = await res.json();
       return data?.data;
     },
   });
 
+  console.log(noticeInfo);
   const [showModal, setShowModal] = useState(false);
 
   const [popup, setPopUp] = useState(true);
@@ -304,7 +305,6 @@ const SellerDashboard = () => {
     }
   };
 
-
   const filteredProducts =
     productData?.length &&
     productData?.filter((product) => {
@@ -344,16 +344,16 @@ const SellerDashboard = () => {
     <div className="h-screen mb-10   ">
       {sellerPopupData.length
         ? popup && (
-          <div className="fixed top-0 left-0 flex items-center justify-center w-full h-full bg-black bg-opacity-90 z-50">
-            <SellerPopUp
-              onClose={onClose}
-              showModal={popup}
-              setShowModal={setPopUp}
-              data={sellerPopupData}
-              handleClose={onClose}
-            />
-          </div>
-        )
+            <div className="fixed top-0 left-0 flex items-center justify-center w-full h-full bg-black bg-opacity-90 z-50">
+              <SellerPopUp
+                onClose={onClose}
+                showModal={popup}
+                setShowModal={setPopUp}
+                data={sellerPopupData}
+                handleClose={onClose}
+              />
+            </div>
+          )
         : ""}
       <div className=" bg-gradient-to-r from-[#1493f4] to-[#835177] absolute -z-10 -top-12 -right-14 blur-2xl opacity-10"></div>
       <h1 className="text-4xl font-semibold text-gray-800 capitalize">
@@ -506,16 +506,18 @@ const SellerDashboard = () => {
             <div className="flex items-end my-6 space-x-2">
               <p className="md:text-3xl  text-3xl font-bold text-black ">
                 ৳
-                {orders.filter((order) => order.status === "delivered").reduce(
-                  (total, order) =>
-                    total +
-                    parseInt(
-                      order.promoHistory.status
-                        ? order.promoHistory.promoPrice
-                        : order.promoHistory.normalPrice
-                    ),
-                  0
-                )}
+                {orders
+                  .filter((order) => order.status === "delivered")
+                  .reduce(
+                    (total, order) =>
+                      total +
+                      parseInt(
+                        order.promoHistory.status
+                          ? order.promoHistory.promoPrice
+                          : order.promoHistory.normalPrice
+                      ),
+                    0
+                  )}
               </p>
             </div>
           </div>
@@ -595,7 +597,6 @@ const SellerDashboard = () => {
             </tr>
           </thead>
           <tbody>
-
             {filteredProducts.length &&
               filteredProducts?.slice(0, 4)?.map((product) => {
                 const status = getStatus(

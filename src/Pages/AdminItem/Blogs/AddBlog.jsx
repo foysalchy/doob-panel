@@ -68,7 +68,7 @@ const AddBlog = () => {
       .then((imageData) => {
         if (imageData.imageUrl) {
           setUpload(imageData.imageUrl);
-          setFormData({ ...formData, MetaImage: imageData.imageUrl });
+          // setFormData({ ...formData, MetaImage: imageData.imageUrl });
           setUploadOk(true);
         } else {
           setUpload("");
@@ -90,7 +90,6 @@ const AddBlog = () => {
       setFileName(file.name);
     }
   };
-
 
   const dataSubmit = (event) => {
     setLoading(true);
@@ -121,13 +120,13 @@ const AddBlog = () => {
           date: new Date(),
           MetaImage,
           status: !draft,
-          trash: 'false',
+          trash: false,
           MetaDescription,
           MetaTag,
           draft_status: draft,
         };
 
-        console.log('Blogs:::::::', blog);
+        console.log("Blogs:::::::", blog);
         postBlog(blog, form);
       });
   };
@@ -150,12 +149,9 @@ const AddBlog = () => {
         form.reset();
         setPreviewUrl("");
         setFileName("");
-        window.location.href = '/admin/blog';
+        window.location.href = "/admin/blog";
       });
   };
-
-
-
 
   //! for drafts
   // const handleInputChange = (field, value) => {
@@ -254,12 +250,12 @@ const AddBlog = () => {
                 type="text"
                 id="title"
                 name="title"
-              // defaultValue={
-              //   restoreDrafts && draftsBlogData?.title
-              //     ? draftsBlogData?.title
-              //     : ""
-              // }
-              // onChange={(e) => handleInputChange("title", e.target.value)} // for drafts
+                // defaultValue={
+                //   restoreDrafts && draftsBlogData?.title
+                //     ? draftsBlogData?.title
+                //     : ""
+                // }
+                // onChange={(e) => handleInputChange("title", e.target.value)} // for drafts
               />
             </div>
             <div>
@@ -316,11 +312,11 @@ const AddBlog = () => {
                 // onChange={(e) => handleInputChange("category", e.target.value)}
                 className="w-full mt-1 rounded-lg border border-gray-900 px-3 py-2 text-sm"
                 placeholder="Select a category"
-              // defaultValue={
-              //   (restoreDrafts && draftsBlogData?.category)
-              //     ? draftsBlogData?.category
-              //     : ""
-              // }
+                // defaultValue={
+                //   (restoreDrafts && draftsBlogData?.category)
+                //     ? draftsBlogData?.category
+                //     : ""
+                // }
               >
                 <option disabled>Select Blog Category</option>
                 {blogCategories?.length &&
@@ -334,13 +330,16 @@ const AddBlog = () => {
 
             <div>
               <div>
-
-                <JoditEditor name='message' id="message" config={{
-                  readonly: false,
-                  uploader: {
-                    insertImageAsBase64URI: true,
-                  },
-                }} ></JoditEditor>
+                <JoditEditor
+                  name="message"
+                  id="message"
+                  config={{
+                    readonly: false,
+                    uploader: {
+                      insertImageAsBase64URI: true,
+                    },
+                  }}
+                ></JoditEditor>
               </div>
               <br />
               <br />
@@ -358,11 +357,11 @@ const AddBlog = () => {
                 type="text"
                 id="MetaTag"
                 name="MetaTag"
-              // defaultValue={
-              //   restoreDrafts && draftsBlogData?.MetaTag
-              //     ? draftsBlogData?.MetaTag
-              //     : ""
-              // }
+                // defaultValue={
+                //   restoreDrafts && draftsBlogData?.MetaTag
+                //     ? draftsBlogData?.MetaTag
+                //     : ""
+                // }
               />
             </div>
 
@@ -377,14 +376,14 @@ const AddBlog = () => {
                 type="text"
                 id="MetaDescription"
                 name="MetaDescription"
-              // onChange={(e) =>
-              // handleInputChange("MetaDescription", e.target.value)
-              // } // for drafts
-              // defaultValue={
-              //   restoreDrafts && draftsBlogData?.MetaDescription
-              //     ? draftsBlogData?.MetaDescription
-              //     : ""
-              // }
+                // onChange={(e) =>
+                // handleInputChange("MetaDescription", e.target.value)
+                // } // for drafts
+                // defaultValue={
+                //   restoreDrafts && draftsBlogData?.MetaDescription
+                //     ? draftsBlogData?.MetaDescription
+                //     : ""
+                // }
               />
             </div>
             <div>
@@ -399,11 +398,11 @@ const AddBlog = () => {
                 type="file"
                 id="MetaImage'"
                 name="MetaImage'"
-              // defaultValue={
-              //   restoreDrafts && draftsBlogData?.MetaImage
-              //     ? draftsBlogData?.MetaImage
-              //     : ""
-              // }
+                // defaultValue={
+                //   restoreDrafts && draftsBlogData?.MetaImage
+                //     ? draftsBlogData?.MetaImage
+                //     : ""
+                // }
               />
             </div>
 

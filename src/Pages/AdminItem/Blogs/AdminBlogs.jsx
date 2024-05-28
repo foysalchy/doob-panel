@@ -31,7 +31,7 @@ const AdminBlogs = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        BrightAlert()
+        BrightAlert();
         refetch();
       });
   };
@@ -41,16 +41,32 @@ const AdminBlogs = () => {
   const handleSearch = (event) => {
     setSearchQuery(event.target.value);
   };
-  const [type, setType] = useState(true);
-  const allBlogs = blogs.filter((item) => item.status || item.status === type);
-
-
-  const filteredData = allBlogs.filter(
-    (item) =>
-      item.title?.toLowerCase().includes(searchQuery?.toLowerCase()) ||
-      item._id.toString().includes(searchQuery)
+  const [StatusType, setStatusType] = useState(true);
+  const [blogType, setBlogType] = useState(false);
+  const [trashType, setTrashType] = useState(false);
+  const allBlogs = blogs.filter(
+    (item) => item.status || item.status === StatusType
   );
 
+  console.log(StatusType, "type", blogType, "and", trashType);
+  // const filteredData = allBlogs.filter(
+  //   (item) =>
+  //     item.title?.toLowerCase().includes(searchQuery?.toLowerCase()) ||
+  //     item._id.toString().includes(searchQuery)
+  // );
+  let filteredData = blogs.length
+    ? blogs.filter((item) => {
+        const matchesBlogType = item.draft_status === blogType || !blogType;
+        const matchesTrashType = item.status === trashType;
+        const matchesSearchQuery =
+          item.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          item._id.toString().includes(searchQuery);
+
+        return matchesBlogType && matchesTrashType && matchesSearchQuery;
+      })
+    : [];
+
+  console.log(filteredData, "filteredData");
   const statusUpdate = (id, status) => {
     fetch(`https://backend.doob.com.bd/api/v1/admin/blog`, {
       method: "PUT",
@@ -80,13 +96,14 @@ const AdminBlogs = () => {
         method: "PUT",
       }
     ).then(() => {
-      BrightAlert()
+      BrightAlert();
       refetch();
     });
   };
 
+  console.log(StatusType, "type");
 
-  console.log(allBlogs, '--------=========');
+  console.log(allBlogs, "--------=========");
   return (
     <div className=" w-full h-full">
       <Link
@@ -115,10 +132,19 @@ const AdminBlogs = () => {
         </span>
       </Link>
 
-      <button onClick={() => setType(!type)} className="group relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 ml-2 text-white focus:outline-none focus:ring active:bg-gray-500">
-        {
-          type ? <span className="text-sm font-medium transition-all group-hover:ms-4">Published</span> : <span className="text-sm font-medium transition-all group-hover:ms-4">Trash</span>
-        }
+      <button
+        onClick={() => setStatusType(!StatusType)}
+        className="group relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 ml-2 text-white focus:outline-none focus:ring active:bg-gray-500"
+      >
+        {StatusType ? (
+          <span className="text-sm font-medium transition-all group-hover:ms-4">
+            Published
+          </span>
+        ) : (
+          <span className="text-sm font-medium transition-all group-hover:ms-4">
+            Trash
+          </span>
+        )}
       </button>
 
       <div className="relative w-3/5 my-6">
@@ -154,12 +180,38 @@ const AdminBlogs = () => {
       </div>
 
       <section className=" px-4 mx-auto">
-        <div className="flex items-center gap-x-3">
-          <h2 className="text-lg font-medium text-gray-800 ">All Blog</h2>
-          <span className="px-3 py-1 text-xs  bg-blue-100 rounded-full d text-blue-400">
-            {blogs?.length}
-          </span>
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-x-3">
+            <h2 className="text-lg font-medium text-gray-800 ">All Blog</h2>
+            <span className="px-3 py-1 text-xs  bg-blue-100 rounded-full d text-blue-400">
+              {blogs?.length}
+            </span>
+          </div>
+          <div className="flex gap-3 items-start">
+            <button
+              onClick={() => setBlogType(!blogType)}
+              className={
+                blogType
+                  ? "bg-green-700 rounded cursor-pointer text-white px-4 py-2"
+                  : "bg-red-700 rounded cursor-pointer text-white px-4 py-2"
+              }
+            >
+              {!blogType ? "Draft" : "All Blogs"}
+            </button>
+
+            <button
+              onClick={() => setTrashType(!trashType)}
+              className={
+                trashType
+                  ? "bg-green-500 rounded cursor-pointer text-white px-4 py-2"
+                  : "bg-red-500 rounded cursor-pointer text-white px-4 py-2"
+              }
+            >
+              {!trashType ? "Trashed" : "All Blogs"}
+            </button>
+          </div>
         </div>
+
         <div className="mt-6">
           <div className="overflow-x-auto px-6 sm:-mx-6 lg:-mx-8">
             <div className="w-full py-2 ">
@@ -184,8 +236,6 @@ const AdminBlogs = () => {
                         </button>
                       </th>
 
-
-
                       <th
                         scope="col"
                         className="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500"
@@ -198,7 +248,7 @@ const AdminBlogs = () => {
                   </thead>
                   <tbody className="bg-white divide-y  divide-gray-200 ">
                     {filteredData
-                      ?.filter((blog) => blog.trash === type.toString())
+                      ?.filter((blog) => blog.status === StatusType)
                       .map((blog) => (
                         <tr key={blog?._id + 1}>
                           <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
@@ -212,11 +262,23 @@ const AdminBlogs = () => {
                                 />
                                 <div>
                                   <h2 className="font-medium text-gray-800  ">
-                                    {blog?.title?.split(" ")?.slice(0, 5).join(" ")}  <span className="text-yellow-600">{blog.draft_status && "Draft"}</span>
-
+                                    {blog?.title
+                                      ?.split(" ")
+                                      ?.slice(0, 5)
+                                      .join(" ")}{" "}
+                                    <span className="text-yellow-600">
+                                      {blog.draft_status && "Draft"}
+                                    </span>
                                   </h2>
                                   <p className="text-sm font-normal text-gray-600">
-                                    {new DOMParser()?.parseFromString(blog.message, "text/html")?.body.textContent?.split(" ")?.slice(0, 5)?.join(" ")}
+                                    {new DOMParser()
+                                      ?.parseFromString(
+                                        blog.message,
+                                        "text/html"
+                                      )
+                                      ?.body.textContent?.split(" ")
+                                      ?.slice(0, 5)
+                                      ?.join(" ")}
                                   </p>
                                 </div>
                               </div>
@@ -246,29 +308,29 @@ const AdminBlogs = () => {
                             )}
                           </td>
 
-
-
                           <td className="px-4 py-4 text-sm whitespace-nowrap">
                             <div className="flex px-8  items-center gap-2">
-                              {blog.trash === "true" && <button
-                                onClick={() => DeleteBlog(blog._id)}
-                                className=" transition-colors duration-200 text-red-500 hover:text-red-700 focus:outline-none"
-                              >
-                                <svg
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  fill="none"
-                                  viewBox="0 0 24 24"
-                                  strokeWidth="1.5"
-                                  stroke="currentColor"
-                                  className="w-5 h-5"
+                              {blog.trash === "true" && (
+                                <button
+                                  onClick={() => DeleteBlog(blog._id)}
+                                  className=" transition-colors duration-200 text-red-500 hover:text-red-700 focus:outline-none"
                                 >
-                                  <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
-                                  />
-                                </svg>
-                              </button>}
+                                  <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    strokeWidth="1.5"
+                                    stroke="currentColor"
+                                    className="w-5 h-5"
+                                  >
+                                    <path
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                      d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
+                                    />
+                                  </svg>
+                                </button>
+                              )}
                               {blog.trash === "true" ? (
                                 <button
                                   onClick={() => blogStash(blog._id, false)}
