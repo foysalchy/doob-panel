@@ -144,7 +144,8 @@ const ShippingModal = ({
         console.error("Error:", error.message);
         // Handle the error, e.g., show an error message to the user
       }
-    } else if (JSON.parse(selectedDelivery)?.name === "Pathao") {
+    } 
+    else if (JSON.parse(selectedDelivery)?.name === "Pathao") {
       console.log("yes");
       const recipient_city = data?.recipient_city.value;
       const recipient_zone = data?.recipient_zone.value;
