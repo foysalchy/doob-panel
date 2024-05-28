@@ -35,26 +35,26 @@ const HomeHero = () => {
         <div className="max-w-xl sm:mx-auto lg:max-w-2xl ">
           <div className="flex flex-col mb-16 sm:text-center sm:mb-0">
             <div className="max-w-xl mb-6 md:mx-auto sm:text-center lg:max-w-2xl md:mb-10">
-              <div
+              {/* <div
                 className="mb-2  text_editor"
                 dangerouslySetInnerHTML={{
                   __html: hero?.data,
                 }}
-              />
-              {/* <h1 className='font-inner text-xl font-semibold'>
-                                Start Business Right Now!!
-                            </h1>
+              /> */}
+              <h1 className='font-inner text-xl font-semibold'>
+                Start Business Right Now!!
+              </h1>
 
-                            <h1 className='text-4xl mt-2 '>
-                                <span className='font-extrabold'>Doob -</span> <span className='font-bold'> The Choice of</span>
-                                <br />
-                                <span className='text-3xl font-semibold '>
-                                    80,000+ Southeast Asia Sellers
-                                </span>
-                            </h1>
-                            <p className="text-base text-gray-700 md:text-lg mt-4">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.
-                            </p> */}
+              <h1 className='text-4xl mt-2 '>
+                <span className='font-extrabold'>Doob -</span> <span className='font-bold'> The Choice of</span>
+                <br />
+                <span className='text-3xl font-semibold '>
+                  80,000+ Southeast Asia Sellers
+                </span>
+              </h1>
+              <p className="text-base text-gray-700 md:text-lg mt-4">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.
+              </p>
             </div>
             <div className="flex gap-4 justify-center">
               <button

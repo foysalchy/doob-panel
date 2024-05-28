@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { useContext } from "react";
 import { useState } from "react";
 import { BsArrowRight } from "react-icons/bs";
@@ -107,12 +107,9 @@ const AddDomain = () => {
       setError(false);
     }
   };
+  const videoContainerRef = useRef(null);
 
-  const {
-    data: domainVideo,
-    refetch,
-    isLoading,
-  } = useQuery({
+  const { data: domainVideo, refetch, isLoading } = useQuery({
     queryKey: ["category"],
     queryFn: async () => {
       const res = await fetch(
@@ -123,21 +120,29 @@ const AddDomain = () => {
     },
   });
 
+  useEffect(() => {
+    if (domainVideo && domainVideo.DomainUrl && videoContainerRef.current) {
+      videoContainerRef.current.innerHTML = domainVideo.DomainUrl;
+    }
+  }, [domainVideo]);
+
   return (
     <div className=" font-poppins">
       <div className="md:my-10">
-        <div
+        {domainDoc?.data && <div
           className="text_editor"
           dangerouslySetInnerHTML={{
             __html: domainDoc?.data,
           }}
-        />
-        {!isLoading && domainVideo && (
-          <div
-            className="flex text_editor items-center justify-center "
-            dangerouslySetInnerHTML={{ __html: domainVideo.DomainUrl }}
-          />
-        )}
+        />}
+        <div>
+          {!isLoading && (
+            <div
+              className="flex text_editor  items-center justify-center"
+              ref={videoContainerRef}
+            />
+          )}
+        </div>
         <h1 className="text-2xl font-bold mt-10 text-center">
           Upload Your Domain
         </h1>
@@ -166,7 +171,7 @@ const AddDomain = () => {
             </p>
           )}
           <a
-            class="group mt-4 relative inline-flex items-center overflow-hidden rounded bg-indigo-600 px-8 py-3 text-white focus:outline-none focus:ring active:bg-indigo-500"
+            class="group mt-4 relative inline-flex items-center ml-8 overflow-hidden rounded bg-indigo-600 px-8 py-3 text-white focus:outline-none focus:ring active:bg-indigo-500"
             href={buyDomain?.url}
           >
             <span class="absolute -start-full text-white g transition-all group-hover:start-4">
@@ -186,7 +191,7 @@ const AddDomain = () => {
               </svg>
             </span>
 
-            <span class="text-sm font-medium transition-all group-hover:ms-4">
+            <span class="text-sm font-medium transition-all group-hover:ms-4 ">
               {" "}
               Buy Domain{" "}
             </span>
