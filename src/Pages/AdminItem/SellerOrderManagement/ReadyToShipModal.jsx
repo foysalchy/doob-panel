@@ -23,7 +23,7 @@ const ReadyToShipModal = ({
   const fetchAccessToken = async () => {
     // Fetch your access token here
     const response = await fetch(
-      `http://localhost:5001/api/v1/admin/pathao-accessToken`
+      `https://backend.doob.com.bd/api/v1/admin/pathao-accessToken`
     );
     if (!response.ok) {
       throw new Error("Failed to fetch access token");
@@ -112,7 +112,7 @@ const ReadyToShipModal = ({
       // return;
       try {
         await fetch(
-          `http://localhost:5001/api/v1/admin/order-submit-steadfast`,
+          `https://backend.doob.com.bd/api/v1/admin/order-submit-steadfast`,
           {
             method: "POST",
             headers: {
@@ -166,7 +166,7 @@ const ReadyToShipModal = ({
 
       // return
       await fetch(
-        `http://localhost:5001/api/v1/admin/login-in-credintial-pathao`,
+        `https://backend.doob.com.bd/api/v1/admin/login-in-credintial-pathao`,
         {
           method: "POST",
           headers: {

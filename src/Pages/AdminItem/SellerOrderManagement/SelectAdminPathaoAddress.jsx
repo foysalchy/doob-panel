@@ -19,7 +19,7 @@ const SelectPathaoAdminAddress = ({ accessToken }) => {
     queryKey: ["cityData"],
     queryFn: async () => {
       const res = await fetch(
-        `http://localhost:5001/api/v1/admin/address-city?access_token=${accessToken}`
+        `https://backend.doob.com.bd/api/v1/admin/address-city?access_token=${accessToken}`
       );
       const responseData = await res.json();
       // setDarazOption(responseData?.daraz);
@@ -42,7 +42,7 @@ const SelectPathaoAdminAddress = ({ accessToken }) => {
     enabled: !!selectedCity,
     queryFn: async () => {
       const res = await fetch(
-        `http://localhost:5001/api/v1/admin/address-zone?access_token=${accessToken}&city_id=${selectedCity}`
+        `https://backend.doob.com.bd/api/v1/admin/address-zone?access_token=${accessToken}&city_id=${selectedCity}`
       );
       const responseData = await res.json();
       // setDarazOption(responseData?.daraz);
@@ -61,7 +61,7 @@ const SelectPathaoAdminAddress = ({ accessToken }) => {
     enabled: !!selectedZone,
     queryFn: async () => {
       const res = await fetch(
-        `http://localhost:5001/api/v1/admin/address-area?access_token=${accessToken}&zone_id=${selectedZone}`
+        `https://backend.doob.com.bd/api/v1/admin/address-area?access_token=${accessToken}&zone_id=${selectedZone}`
       );
       const responseData = await res.json();
       // setDarazOption(responseData?.daraz);
@@ -145,7 +145,6 @@ const SelectPathaoAdminAddress = ({ accessToken }) => {
                 isLoading={loadingArea}
               />
             )}
-      
           </div>
 
           {/* <div className="mt-4">
