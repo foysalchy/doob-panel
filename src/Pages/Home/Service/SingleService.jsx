@@ -74,7 +74,8 @@ const SingleService = () => {
           : service.price,
       };
       console.log(order);
-      setOrderStage([order]);
+      // setOrderStage([order]);
+      setOrderStage(order);
       navigate(`/user-service-checkout/${service._id}`);
     }
   };

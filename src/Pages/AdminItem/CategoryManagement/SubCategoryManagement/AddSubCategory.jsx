@@ -50,13 +50,14 @@ const AddSubCategory = () => {
     e.preventDefault();
     const form = e.target;
     const subCategory = form.subCategory.value;
-    setLoading(true)
+    setLoading(true);
     const data = {
       megaCategoryId: megaCategory.id,
       megaCategoryName: megaCategory.name,
       subCategory: subCategory,
       img: upload,
       status: "true",
+      feature: false,
     };
 
     fetch("https://backend.doob.com.bd/api/v1/admin/category/subcategory", {
@@ -69,8 +70,10 @@ const AddSubCategory = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        BrightAlert()
-        setLoading(false)
+        BrightAlert();
+        setLoading(false);
+        form.reset();
+        s;
       });
   };
   return (
@@ -79,7 +82,7 @@ const AddSubCategory = () => {
         onSubmit={handleSubmit}
         className="lg:max-w-3xl ring-1 ring-gray-200 rounded-xl m-auto w-full md:p-4 p-2"
       >
-        <h1 className="text-2xl font-semibold mb-8">Add mega category</h1>
+        <h1 className="text-2xl font-semibold mb-8">Add Sub category</h1>
         <label className="" htmlFor="megaCategory">
           Select Mega Category
         </label>
@@ -143,7 +146,6 @@ const AddSubCategory = () => {
           />
         </div>
         <div className=" gap-2">
-
           <button
             type="submit"
             className="group mt-4 relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
@@ -152,7 +154,7 @@ const AddSubCategory = () => {
               <FaLongArrowAltRight />
             </span>
             <span className="text-sm font-medium transition-all group-hover:ms-4">
-              {loading ? 'Uploading' : 'Upload Sub Category'}
+              {loading ? "Uploading" : "Upload Sub Category"}
             </span>
           </button>
         </div>

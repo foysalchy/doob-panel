@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import React, { useState } from "react";
 import { BiEdit } from "react-icons/bi";
 import { FaLongArrowAltRight } from "react-icons/fa";
+import { MdDelete } from "react-icons/md";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 
@@ -89,6 +90,74 @@ const SubCategoryManagement = () => {
     setEditOn(false);
   };
 
+  const DeleteSubCateGories = (id) => {
+    let timerInterval;
+
+    Swal.fire({
+      title: "Deleting...",
+      html: "Please wait <br> <b></b> milliseconds remaining.",
+      timer: 500,
+      timerProgressBar: true,
+      showConfirmButton: false,
+      didOpen: () => {
+        Swal.showLoading();
+        const b = Swal.getHtmlContainer().querySelector("b");
+        timerInterval = setInterval(() => {
+          b.textContent = Swal.getTimerLeft();
+        }, 100);
+      },
+      willClose: () => {
+        clearInterval(timerInterval);
+      },
+    }).then((result) => {
+      if (result.dismiss === Swal.DismissReason.timer) {
+        // Timer completed, initiate the fetch for deletion
+        fetch(
+          `https://backend.doob.com.bd/api/v1/admin/category/subcategory/${id}`,
+          {
+            method: "DELETE",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        )
+          .then((res) => res.json())
+          .then((data) => {
+            // Show success message upon successful deletion
+            Swal.fire({
+              title: "Sub Category Deleted",
+              icon: "success",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+            refetch();
+          })
+          .catch((error) => {
+            Swal.fire("Error Deleting Seller", "An error occurred", "error");
+          });
+      }
+    });
+  };
+
+  const featureStatus = (id, status) => {
+    console.log(status);
+    fetch(
+      `https://backend.doob.com.bd/api/v1/admin/sub-category/feature?id=${id}&feature=${status}`,
+      {
+        method: "PUT",
+        headers: {
+          "content-type": "application/json",
+        },
+      }
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data, "status update");
+        Swal.fire(" Status Updated", "", "success");
+        refetch();
+      });
+  };
+
   return (
     <div>
       <Link to={"add"}>
@@ -146,42 +215,62 @@ const SubCategoryManagement = () => {
                       {item.megaCategoryName}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      {item.status == "true" ? (
+                      <div className="flex gap-1 items-center">
+                        {item.status == "true" ? (
+                          <button
+                            onClick={() => statusUpdate(item?._id, false)}
+                            className=""
+                          >
+                            Active
+                          </button>
+                        ) : (
+                          <button
+                            onClick={() => statusUpdate(item?._id, true)}
+                            className=""
+                          >
+                            Deactivate
+                          </button>
+                        )}
                         <button
-                          onClick={() => statusUpdate(item?._id, false)}
-                          className=""
+                          onClick={() =>
+                            featureStatus(
+                              item?._id,
+                              item?.feature ? false : true
+                            )
+                          }
+                          className={`${
+                            item?.feature ? "bg-green-500" : "bg-red-500"
+                          } text-white ml-2 rounded capitalize px-3 py-1`}
                         >
-                          Active
+                          futures
                         </button>
-                      ) : (
+                        <MdDelete
+                          className="text-red-500 text-xl cursor-pointer"
+                          onClick={() => DeleteSubCateGories(item?._id)}
+                        />
                         <button
-                          onClick={() => statusUpdate(item?._id, true)}
-                          className=""
+                          onClick={() => setEditOn(item)}
+                          className="text-xl p-1 ml-6"
                         >
-                          Deactivate
+                          <BiEdit />
                         </button>
-                      )}
-
-                      <button
-                        onClick={() => setEditOn(item)}
-                        className="text-xl p-1 ml-6"
-                      >
-                        <BiEdit />
-                      </button>
+                      </div>
                     </td>
 
                     <div className="absolute w-full top-0 left-0">
                       <div
-                        className={`fixed z-[100] flex items-center justify-center ${editOn?._id === item?._id
-                          ? "opacity-1 visible"
-                          : "invisible opacity-0"
-                          } inset-0 bg-black/20 backdrop-blur-sm duration-100`}
+                        className={`fixed z-[100] flex items-center justify-center ${
+                          editOn?._id === item?._id
+                            ? "opacity-1 visible"
+                            : "invisible opacity-0"
+                        } inset-0 bg-black/20 backdrop-blur-sm duration-100`}
                       >
                         <div
-                          className={`absolute md:w-[500px] w-full rounded-sm bg-white p-3 pb-5 text-center drop-shadow-2xl ${editOn?._id === item?._id
-                            ? "scale-1 opacity-1 duration-300"
-                            : "scale-0 opacity-0 duration-150"
-                            } `}
+                          className={`absolute md:w-[500px] w-full rounded-sm bg-white p-3 pb-5 text-center drop-shadow-2xl ${
+                            editOn?._id === item?._id
+                              ? "scale-1 opacity-1 duration-300"
+                              : "scale-0 opacity-0 duration-150"
+                          } `}
                         >
                           <svg
                             onClick={() => setEditOn(false)}
