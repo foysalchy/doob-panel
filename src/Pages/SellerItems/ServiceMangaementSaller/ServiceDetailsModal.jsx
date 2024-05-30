@@ -6,8 +6,9 @@ export default function ServiceDetailsModal({
   openModal,
   setIsModalOpen,
   shopInfo,
+  handleStateUpdate,
 }) {
-  console.log("🚀 ~ file: ServiceDetailsModal.jsx:10 ~ openModal:", openModal);
+  // console.log("🚀 ~ file: ServiceDetailsModal.jsx:10 ~ openModal:", openModal);
   // console.log(openModal);
   const {
     data: serviceSIngleData = [],
@@ -24,7 +25,7 @@ export default function ServiceDetailsModal({
     },
   });
 
-  console.log(serviceSIngleData);
+  // console.log(serviceSIngleData);
 
   return (
     <div
@@ -32,7 +33,7 @@ export default function ServiceDetailsModal({
         openModal ? "block" : "hidden"
       }`}
     >
-      <div className="w-full   rounded-[20px] bg-white pb-10 px-8 text-center md:px-[30px]">
+      <div className="w-full max-w-[90%] mx-auto  rounded-[20px] bg-white pb-10 px-4 text-center md:px-[20px]">
         <div className="flex justify-between z-50 pt-4 items-start w-full sticky top-0 bg-white border-b">
           <div className="pb-2 text-xl font-bold text-dark text-center sm:text-2xl">
             Service History
@@ -45,7 +46,7 @@ export default function ServiceDetailsModal({
           </div>
         </div>
 
-        <table className=" divide-y   divide-gray-200 dark:divide-gray-700">
+        <table className=" divide-y overflow-auto  divide-gray-200 dark:divide-gray-700 ">
           <thead className="bg-gray-50 dark:bg-gray-00">
             <tr>
               <th
@@ -123,12 +124,7 @@ export default function ServiceDetailsModal({
               >
                 Payment Getway
               </th>
-              <th
-                scope="col"
-                className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
-              >
-                See Preview
-              </th>
+
               <th
                 scope="col"
                 className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
@@ -186,14 +182,7 @@ export default function ServiceDetailsModal({
                 <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
                   {order?.method?.Getaway}
                 </td>
-                <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
-                  <button
-                    className="bg-slate-300 p-2 text-black rounded-lg"
-                    onClick={() => setIsModalOpen(order)}
-                  >
-                    See Service History
-                  </button>
-                </td>
+
                 <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
                   <button
                     onClick={() =>

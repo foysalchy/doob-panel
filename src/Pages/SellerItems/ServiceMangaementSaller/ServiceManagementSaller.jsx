@@ -413,6 +413,7 @@ const ServiceManagementSaller = () => {
                             openModal={openModal}
                             setIsModalOpen={setIsModalOpen}
                             shopInfo={shopInfo}
+                            handleStateUpdate={handleStateUpdate}
                           ></ServiceDetailsModal>
                         )}
                       </tr>
