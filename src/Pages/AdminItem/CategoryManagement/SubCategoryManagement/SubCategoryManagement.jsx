@@ -112,15 +112,12 @@ const SubCategoryManagement = () => {
     }).then((result) => {
       if (result.dismiss === Swal.DismissReason.timer) {
         // Timer completed, initiate the fetch for deletion
-        fetch(
-          `http://localhost:5001/api/v1/admin/category/subcategory/:${id}`,
-          {
-            method: "DELETE",
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        )
+        fetch(`http://localhost:5001/api/v1/admin/category/subcategory/${id}`, {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
           .then((res) => res.json())
           .then((data) => {
             // Show success message upon successful deletion
@@ -137,6 +134,25 @@ const SubCategoryManagement = () => {
           });
       }
     });
+  };
+
+  const featureStatus = (id, status) => {
+    console.log(status);
+    fetch(
+      `http://localhost:5001/api/v1/admin/sub-category/feature?id=${id}&feature=${status}`,
+      {
+        method: "PUT",
+        headers: {
+          "content-type": "application/json",
+        },
+      }
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data, "status update");
+        Swal.fire(" Status Updated", "", "success");
+        refetch();
+      });
   };
 
   return (
@@ -196,23 +212,35 @@ const SubCategoryManagement = () => {
                       {item.megaCategoryName}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      {item.status == "true" ? (
-                        <button
-                          onClick={() => statusUpdate(item?._id, false)}
-                          className=""
-                        >
-                          Active
-                        </button>
-                      ) : (
-                        <button
-                          onClick={() => statusUpdate(item?._id, true)}
-                          className=""
-                        >
-                          Deactivate
-                        </button>
-                      )}
-
                       <div className="flex gap-1 items-center">
+                        {item.status == "true" ? (
+                          <button
+                            onClick={() => statusUpdate(item?._id, false)}
+                            className=""
+                          >
+                            Active
+                          </button>
+                        ) : (
+                          <button
+                            onClick={() => statusUpdate(item?._id, true)}
+                            className=""
+                          >
+                            Deactivate
+                          </button>
+                        )}
+                        <button
+                          onClick={() =>
+                            featureStatus(
+                              item?._id,
+                              item?.feature ? false : true
+                            )
+                          }
+                          className={`${
+                            item?.feature ? "bg-green-500" : "bg-red-500"
+                          } text-white ml-2 rounded capitalize px-3 py-1`}
+                        >
+                          futures
+                        </button>
                         <MdDelete
                           className="text-red-500 text-xl cursor-pointer"
                           onClick={() => DeleteSubCateGories(item?._id)}

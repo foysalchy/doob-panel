@@ -30,6 +30,8 @@ const AddMegaCategory = () => {
           image,
           timeStamp: new Date().getTime(),
           status: "true",
+          feature: false,
+          menu: false,
         };
         postCategory(categoryData, form);
       });

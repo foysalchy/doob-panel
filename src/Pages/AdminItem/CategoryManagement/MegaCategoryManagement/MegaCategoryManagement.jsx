@@ -40,7 +40,7 @@ const MegaCategoryManagement = () => {
   const featureStatus = (id, status) => {
     console.log(status);
     fetch(
-      `https://backend.doob.com.bd/api/v1/admin/category/feature?id=${id}&feature=${status}`,
+      `http://localhost:5001/api/v1/admin/category/feature?id=${id}&feature=${status}`,
       {
         method: "PUT",
         headers: {
@@ -153,7 +153,7 @@ const MegaCategoryManagement = () => {
       if (result.dismiss === Swal.DismissReason.timer) {
         // Timer completed, initiate the fetch for deletion
         fetch(
-          `http://localhost:5001/api/v1/admin/category/mega_category/:${id}`,
+          `http://localhost:5001/api/v1/admin/category/mega_category/${id}`,
           {
             method: "DELETE",
             headers: {

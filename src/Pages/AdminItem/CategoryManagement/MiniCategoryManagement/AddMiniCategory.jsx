@@ -129,6 +129,8 @@ const AddMiniCategory = () => {
       });
   };
 
+
+
   return (
     <div className="lg:pr-10 w-full mx-auto overflow-auto border border-black rounded p-6">
       <button

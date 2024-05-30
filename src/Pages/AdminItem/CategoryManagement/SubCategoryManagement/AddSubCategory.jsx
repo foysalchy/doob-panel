@@ -57,6 +57,7 @@ const AddSubCategory = () => {
       subCategory: subCategory,
       img: upload,
       status: "true",
+      feature: false,
     };
 
     fetch("https://backend.doob.com.bd/api/v1/admin/category/subcategory", {
@@ -71,7 +72,8 @@ const AddSubCategory = () => {
       .then((data) => {
         BrightAlert();
         setLoading(false);
-        form.reset();s
+        form.reset();
+        s;
       });
   };
   return (

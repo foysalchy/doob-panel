@@ -102,15 +102,79 @@ const ExtraCategoryManagement = () => {
     setEditOn(false);
   };
 
+  const DeleteExtraCateGories = (id) => {
+    let timerInterval;
+
+    Swal.fire({
+      title: "Deleting...",
+      html: "Please wait <br> <b></b> milliseconds remaining.",
+      timer: 500,
+      timerProgressBar: true,
+      showConfirmButton: false,
+      didOpen: () => {
+        Swal.showLoading();
+        const b = Swal.getHtmlContainer().querySelector("b");
+        timerInterval = setInterval(() => {
+          b.textContent = Swal.getTimerLeft();
+        }, 100);
+      },
+      willClose: () => {
+        clearInterval(timerInterval);
+      },
+    }).then((result) => {
+      if (result.dismiss === Swal.DismissReason.timer) {
+        // Timer completed, initiate the fetch for deletion
+        fetch(
+          `http://localhost:5001/api/v1/admin/category/extraCategory/${id}`,
+          {
+            method: "DELETE",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        )
+          .then((res) => res.json())
+          .then((data) => {
+            // Show success message upon successful deletion
+            Swal.fire({
+              title: "Extra Category Deleted",
+              icon: "success",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+            refetch();
+          })
+          .catch((error) => {
+            Swal.fire("Error Deleting Seller", "An error occurred", "error");
+          });
+      }
+    });
+  };
+
+  const featureStatus = (id, status) => {
+    console.log(status);
+    fetch(
+      `http://localhost:5001/api/v1/admin/extra-category/feature?id=${id}&feature=${status}`,
+      {
+        method: "PUT",
+        headers: {
+          "content-type": "application/json",
+        },
+      }
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data, "status update");
+        Swal.fire(" Status Updated", "", "success");
+        refetch();
+      });
+  };
+
   return (
     <div>
       <Link to={"add"}>
         <div className=" gap-2">
-
-          <button
-
-            className="group mt-4 relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
-          >
+          <button className="group mt-4 relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500">
             <span className="absolute -start-full transition-all group-hover:start-4">
               <FaLongArrowAltRight />
             </span>
@@ -182,10 +246,20 @@ const ExtraCategoryManagement = () => {
                         </button>
                       )}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
+                    <td className="px-6 py-4 flex gap-1 items-center whitespace-nowrap">
+                      <button
+                        onClick={() =>
+                          featureStatus(item?._id, item?.feature ? false : true)
+                        }
+                        className={`${
+                          item?.feature ? "bg-green-500" : "bg-red-500"
+                        } text-white ml-2 rounded capitalize px-3 py-1`}
+                      >
+                        futures
+                      </button>
                       <button
                         className="px-3 py-2 bg-red-500 text-white rounded-lg text-xs"
-                        onClick={() => onDelete(item._id)}
+                        onClick={() => DeleteExtraCateGories(item._id)}
                       >
                         Delete{" "}
                       </button>
@@ -199,16 +273,18 @@ const ExtraCategoryManagement = () => {
 
                     <div className="absolute w-full top-0 left-0">
                       <div
-                        className={`fixed z-[100] flex items-center justify-center ${editOn?._id === item?._id
-                          ? "opacity-1 visible"
-                          : "invisible opacity-0"
-                          } inset-0 bg-black/20 backdrop-blur-sm duration-100`}
+                        className={`fixed z-[100] flex items-center justify-center ${
+                          editOn?._id === item?._id
+                            ? "opacity-1 visible"
+                            : "invisible opacity-0"
+                        } inset-0 bg-black/20 backdrop-blur-sm duration-100`}
                       >
                         <div
-                          className={`absolute md:w-[500px] w-full rounded-sm bg-white p-3 pb-5 text-center drop-shadow-2xl ${editOn?._id === item?._id
-                            ? "scale-1 opacity-1 duration-300"
-                            : "scale-0 opacity-0 duration-150"
-                            } `}
+                          className={`absolute md:w-[500px] w-full rounded-sm bg-white p-3 pb-5 text-center drop-shadow-2xl ${
+                            editOn?._id === item?._id
+                              ? "scale-1 opacity-1 duration-300"
+                              : "scale-0 opacity-0 duration-150"
+                          } `}
                         >
                           <svg
                             onClick={() => setEditOn(false)}
@@ -265,7 +341,7 @@ const ExtraCategoryManagement = () => {
                                 type="submit"
                                 className="me-2 rounded bg-green-700 px-6 py-1 text-white"
                               >
-                                Sibmit
+                                Submit
                               </button>
                             </div>
                           </form>
