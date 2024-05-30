@@ -112,12 +112,15 @@ const SubCategoryManagement = () => {
     }).then((result) => {
       if (result.dismiss === Swal.DismissReason.timer) {
         // Timer completed, initiate the fetch for deletion
-        fetch(`http://localhost:5001/api/v1/admin/category/subcategory/${id}`, {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        })
+        fetch(
+          `https://backend.doob.com.bd/api/v1/admin/category/subcategory/${id}`,
+          {
+            method: "DELETE",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        )
           .then((res) => res.json())
           .then((data) => {
             // Show success message upon successful deletion
@@ -139,7 +142,7 @@ const SubCategoryManagement = () => {
   const featureStatus = (id, status) => {
     console.log(status);
     fetch(
-      `http://localhost:5001/api/v1/admin/sub-category/feature?id=${id}&feature=${status}`,
+      `https://backend.doob.com.bd/api/v1/admin/sub-category/feature?id=${id}&feature=${status}`,
       {
         method: "PUT",
         headers: {

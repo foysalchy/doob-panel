@@ -18,7 +18,7 @@ export default function ServiceDetailsModal({
     queryKey: ["serviceSIngleDataSaller"],
     queryFn: async () => {
       const res = await fetch(
-        `http://localhost:5001/api/v1/seller/my-single-service?shopId=${shopInfo._id}&productId=${openModal?.productId}`
+        `https://backend.doob.com.bd/api/v1/seller/my-single-service?shopId=${shopInfo._id}&productId=${openModal?.productId}`
       );
       const data = await res.json();
       return data.data;

@@ -125,7 +125,7 @@ const ExtraCategoryManagement = () => {
       if (result.dismiss === Swal.DismissReason.timer) {
         // Timer completed, initiate the fetch for deletion
         fetch(
-          `http://localhost:5001/api/v1/admin/category/extraCategory/${id}`,
+          `https://backend.doob.com.bd/api/v1/admin/category/extraCategory/${id}`,
           {
             method: "DELETE",
             headers: {
@@ -154,7 +154,7 @@ const ExtraCategoryManagement = () => {
   const featureStatus = (id, status) => {
     console.log(status);
     fetch(
-      `http://localhost:5001/api/v1/admin/extra-category/feature?id=${id}&feature=${status}`,
+      `https://backend.doob.com.bd/api/v1/admin/extra-category/feature?id=${id}&feature=${status}`,
       {
         method: "PUT",
         headers: {

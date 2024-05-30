@@ -40,7 +40,7 @@ const MegaCategoryManagement = () => {
   const featureStatus = (id, status) => {
     console.log(status);
     fetch(
-      `http://localhost:5001/api/v1/admin/category/feature?id=${id}&feature=${status}`,
+      `https://backend.doob.com.bd/api/v1/admin/category/feature?id=${id}&feature=${status}`,
       {
         method: "PUT",
         headers: {
@@ -59,7 +59,7 @@ const MegaCategoryManagement = () => {
   const menuStatus = (id, status) => {
     console.log(status);
     fetch(
-      `http://localhost:5001/api/v1/admin/category/menu?id=${id}&menu=${status}`,
+      `https://backend.doob.com.bd/api/v1/admin/category/menu?id=${id}&menu=${status}`,
       {
         method: "PUT",
         headers: {
@@ -153,7 +153,7 @@ const MegaCategoryManagement = () => {
       if (result.dismiss === Swal.DismissReason.timer) {
         // Timer completed, initiate the fetch for deletion
         fetch(
-          `http://localhost:5001/api/v1/admin/category/mega_category/${id}`,
+          `https://backend.doob.com.bd/api/v1/admin/category/mega_category/${id}`,
           {
             method: "DELETE",
             headers: {

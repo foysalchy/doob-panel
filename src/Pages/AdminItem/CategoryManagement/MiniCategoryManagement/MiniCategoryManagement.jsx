@@ -108,7 +108,7 @@ const MiniCategoryManagement = () => {
       if (result.dismiss === Swal.DismissReason.timer) {
         // Timer completed, initiate the fetch for deletion
         fetch(
-          `http://localhost:5001/api/v1/admin/category/miniCategory/${id}`,
+          `https://backend.doob.com.bd/api/v1/admin/category/miniCategory/${id}`,
           {
             method: "DELETE",
             headers: {
@@ -137,7 +137,7 @@ const MiniCategoryManagement = () => {
   const featureStatus = (id, status) => {
     console.log(status);
     fetch(
-      `http://localhost:5001/api/v1/admin/mini-category/feature?id=${id}&feature=${status}`,
+      `https://backend.doob.com.bd/api/v1/admin/mini-category/feature?id=${id}&feature=${status}`,
       {
         method: "PUT",
         headers: {
