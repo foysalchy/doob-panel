@@ -36,6 +36,11 @@ const AddMegaCategory = () => {
   };
 
   const postCategory = (categoryData, form) => {
+    console.log(
+      "🚀 ~ file: AddMegaCategory.jsx:39 ~ postCategory ~ categoryData:",
+      categoryData
+    );
+
     fetch("https://backend.doob.com.bd/api/v1/admin/category/megacategory", {
       method: "post",
       headers: {
@@ -46,7 +51,9 @@ const AddMegaCategory = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        BrightAlert()
+        BrightAlert();
+        setLoading(false);
+        form.reset();
       });
   };
   return (
@@ -100,7 +107,7 @@ const AddMegaCategory = () => {
               <FaLongArrowAltRight />
             </span>
             <span className="text-sm font-medium transition-all group-hover:ms-4">
-              {loading ? 'Uploading' : 'Upload Mega Category'}
+              {loading ? "Uploading" : "Upload Mega Category"}
             </span>
           </button>
         </div>

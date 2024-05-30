@@ -33,8 +33,8 @@ export default function ServiceDetailsModal({
         openModal ? "block" : "hidden"
       }`}
     >
-      <div className="w-full max-w-[90%] mx-auto  rounded-[20px] bg-white pb-10 px-4 text-center md:px-[20px]">
-        <div className="flex justify-between z-50 pt-4 items-start w-full sticky top-0 bg-white border-b">
+      <div className="w-full overflow-x-scroll  max-w-[90%] mx-auto  rounded-[20px] bg-white pb-10 px-4 text-center md:px-[20px]">
+        <div className="flex justify-between z-50 pt-4 items-start w-full  sticky top-0 bg-white border-b">
           <div className="pb-2 text-xl font-bold text-dark text-center sm:text-2xl">
             Service History
           </div>
@@ -46,7 +46,7 @@ export default function ServiceDetailsModal({
           </div>
         </div>
 
-        <table className=" divide-y overflow-auto  divide-gray-200 dark:divide-gray-700 ">
+        <table className="divide-y   divide-gray-200 dark:divide-gray-700 ">
           <thead className="bg-gray-50 dark:bg-gray-00">
             <tr>
               <th

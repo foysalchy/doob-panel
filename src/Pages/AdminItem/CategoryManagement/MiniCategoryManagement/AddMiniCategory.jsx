@@ -94,6 +94,8 @@ const AddMiniCategory = () => {
     const miniCategoryName = e.target.miniCategoryName.value;
     const megaCategoryName =
       megaCategories.find((item) => item._id === megaCategory)?.name || "";
+    const megaCategoryId =
+      megaCategories.find((item) => item._id === megaCategory)?._id || "";
     const subCategoryName =
       subCategorys.find((item) => item._id === subCategoryId)?.subCategory ||
       "";
@@ -102,6 +104,7 @@ const AddMiniCategory = () => {
       megaCategoryName,
       megaCategory,
       subCategoryName,
+      megaCategoryId,
       subCategoryId,
       miniCategoryName,
       img: upload,

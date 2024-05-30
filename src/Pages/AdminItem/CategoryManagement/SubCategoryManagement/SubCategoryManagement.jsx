@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import React, { useState } from "react";
 import { BiEdit } from "react-icons/bi";
 import { FaLongArrowAltRight } from "react-icons/fa";
+import { MdDelete } from "react-icons/md";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 
@@ -89,6 +90,55 @@ const SubCategoryManagement = () => {
     setEditOn(false);
   };
 
+  const DeleteSubCateGories = (id) => {
+    let timerInterval;
+
+    Swal.fire({
+      title: "Deleting...",
+      html: "Please wait <br> <b></b> milliseconds remaining.",
+      timer: 500,
+      timerProgressBar: true,
+      showConfirmButton: false,
+      didOpen: () => {
+        Swal.showLoading();
+        const b = Swal.getHtmlContainer().querySelector("b");
+        timerInterval = setInterval(() => {
+          b.textContent = Swal.getTimerLeft();
+        }, 100);
+      },
+      willClose: () => {
+        clearInterval(timerInterval);
+      },
+    }).then((result) => {
+      if (result.dismiss === Swal.DismissReason.timer) {
+        // Timer completed, initiate the fetch for deletion
+        fetch(
+          `http://localhost:5001/api/v1/admin/category/subcategory/:${id}`,
+          {
+            method: "DELETE",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        )
+          .then((res) => res.json())
+          .then((data) => {
+            // Show success message upon successful deletion
+            Swal.fire({
+              title: "Sub Category Deleted",
+              icon: "success",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+            refetch();
+          })
+          .catch((error) => {
+            Swal.fire("Error Deleting Seller", "An error occurred", "error");
+          });
+      }
+    });
+  };
+
   return (
     <div>
       <Link to={"add"}>
@@ -162,26 +212,34 @@ const SubCategoryManagement = () => {
                         </button>
                       )}
 
-                      <button
-                        onClick={() => setEditOn(item)}
-                        className="text-xl p-1 ml-6"
-                      >
-                        <BiEdit />
-                      </button>
+                      <div className="flex gap-1 items-center">
+                        <MdDelete
+                          className="text-red-500 text-xl cursor-pointer"
+                          onClick={() => DeleteSubCateGories(item?._id)}
+                        />
+                        <button
+                          onClick={() => setEditOn(item)}
+                          className="text-xl p-1 ml-6"
+                        >
+                          <BiEdit />
+                        </button>
+                      </div>
                     </td>
 
                     <div className="absolute w-full top-0 left-0">
                       <div
-                        className={`fixed z-[100] flex items-center justify-center ${editOn?._id === item?._id
-                          ? "opacity-1 visible"
-                          : "invisible opacity-0"
-                          } inset-0 bg-black/20 backdrop-blur-sm duration-100`}
+                        className={`fixed z-[100] flex items-center justify-center ${
+                          editOn?._id === item?._id
+                            ? "opacity-1 visible"
+                            : "invisible opacity-0"
+                        } inset-0 bg-black/20 backdrop-blur-sm duration-100`}
                       >
                         <div
-                          className={`absolute md:w-[500px] w-full rounded-sm bg-white p-3 pb-5 text-center drop-shadow-2xl ${editOn?._id === item?._id
-                            ? "scale-1 opacity-1 duration-300"
-                            : "scale-0 opacity-0 duration-150"
-                            } `}
+                          className={`absolute md:w-[500px] w-full rounded-sm bg-white p-3 pb-5 text-center drop-shadow-2xl ${
+                            editOn?._id === item?._id
+                              ? "scale-1 opacity-1 duration-300"
+                              : "scale-0 opacity-0 duration-150"
+                          } `}
                         >
                           <svg
                             onClick={() => setEditOn(false)}
