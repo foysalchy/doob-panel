@@ -18,6 +18,7 @@ const UserServiceCheckout = () => {
   const discount =
     parseInt(findService?.price) - parseInt(orderStage?.buyingPrice); // You need to implement promo code functionality to calculate this
   console.log(discount);
+  console.log(orderStage?.buyingPrice);
   const total = subtotal + shippingFee - shippingFeeDiscount - discount;
   const [promoPice, setPomoPrice] = useState(false);
 

@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { BiLeftArrow, BiRightArrow } from "react-icons/bi";
 import { AuthContext } from "../../../AuthProvider/UserProvider";
+import ServiceDetailsModal from "./ServiceDetailsModal";
 
 const ServiceManagementSaller = () => {
   const { shopInfo } = useContext(AuthContext);
@@ -156,6 +157,10 @@ const ServiceManagementSaller = () => {
       });
   };
 
+  const [openModal, setIsModalOpen] = useState(false);
+
+  console.log(openModal);
+
   return (
     <section className="container  mx-auto">
       <div className="flex justify-between items-center">
@@ -296,93 +301,122 @@ const ServiceManagementSaller = () => {
                       scope="col"
                       className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
                     >
+                      See Preview
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                    >
                       Actions
                     </th>
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
-                  {currentData?.map((order, idx) => (
-                    <tr key={idx}>
-                      <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                        <img
-                          className="h-10 w-10 rounded-sm"
-                          src={order.productImg}
-                          alt=""
-                        />
-                      </td>
-                      <td className="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
-                        <div className="inline-flex items-center gap-x-3">
-                          <span># {order._id}</span>
-                        </div>
-                      </td>
-                      <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                        {order.productTitle}
-                      </td>
-                      <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                        {order.productPrice}
-                      </td>
-                      <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                        {order.normalPrice}
-                      </td>
-                      <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                        {order.discount}
-                      </td>
-                      <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                        {new Date(order.endTime).toDateString()}
-                      </td>
-                      <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                        {new Date(order.timestamp).toDateString()}
-                      </td>
-
-                      <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                        <div className="flex items-center gap-x-2">
-                          <div>
-                            <p className="text-xs font-normal text-gray-600 dark:text-gray-400">
-                              {order?.userEmail}
-                            </p>
+                  {currentData
+                    ?.filter(
+                      (value, index, self) =>
+                        index ===
+                        self.findIndex((t) => t.productId === value.productId)
+                    )
+                    ?.map((order, idx) => (
+                      <tr key={idx}>
+                        <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                          <img
+                            className="h-10 w-10 rounded-sm"
+                            src={order.productImg}
+                            alt=""
+                          />
+                        </td>
+                        <td className="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
+                          <div className="inline-flex items-center gap-x-3">
+                            <span># {order._id}</span>
                           </div>
-                        </div>
-                      </td>
-                      <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                        {order?.productCategory}
-                      </td>
-                      <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                        {order?.method?.Getaway}
-                      </td>
-                      <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                        <button
-                          onClick={() =>
-                            handleStateUpdate(
-                              order?._id,
-                              order?.status ? false : true
-                            )
-                          }
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center px-3 py-1 my-1 space-x-2 text-sm border rounded-full group hover:bg-gray-700 dark:border-gray-700"
-                        >
-                          <span
-                            aria-hidden="true"
-                            className="h-1.5 w-1.5 rounded-full dark:bg-violet-400"
-                          ></span>
-                          <span className=" dark:text-gray-100">
-                            {order?.status ? (
-                              <span>
-                                {order?.status === true ? (
-                                  <span className="text-yellow-500">
-                                    Pending
-                                  </span>
-                                ) : (
-                                  <span className="text-green-500">Active</span>
-                                )}
-                              </span>
-                            ) : (
-                              <span>InActive</span>
-                            )}
-                          </span>
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
+                        </td>
+                        <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                          {order.productTitle}
+                        </td>
+                        <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                          {order.productPrice}
+                        </td>
+                        <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                          {order.normalPrice}
+                        </td>
+                        <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                          {order.discount}
+                        </td>
+                        <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                          {new Date(order.endTime).toDateString()}
+                        </td>
+                        <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                          {new Date(order.timestamp).toDateString()}
+                        </td>
+
+                        <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                          <div className="flex items-center gap-x-2">
+                            <div>
+                              <p className="text-xs font-normal text-gray-600 dark:text-gray-400">
+                                {order?.userEmail}
+                              </p>
+                            </div>
+                          </div>
+                        </td>
+                        <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                          {order?.productCategory}
+                        </td>
+                        <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                          {order?.method?.Getaway}
+                        </td>
+                        <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
+                          <button
+                            className="bg-slate-300 p-2 text-black rounded-lg"
+                            onClick={() => setIsModalOpen(order)}
+                          >
+                            See Service History
+                          </button>
+                        </td>
+                        <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                          <button
+                            onClick={() =>
+                              handleStateUpdate(
+                                order?._id,
+                                order?.status ? false : true
+                              )
+                            }
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center px-3 py-1 my-1 space-x-2 text-sm border rounded-full group hover:bg-gray-700 dark:border-gray-700"
+                          >
+                            <span
+                              aria-hidden="true"
+                              className="h-1.5 w-1.5 rounded-full dark:bg-violet-400"
+                            ></span>
+                            <span className=" dark:text-gray-100">
+                              {order?.status ? (
+                                <span>
+                                  {order?.status === true ? (
+                                    <span className="text-yellow-500">
+                                      Pending
+                                    </span>
+                                  ) : (
+                                    <span className="text-green-500">
+                                      Active
+                                    </span>
+                                  )}
+                                </span>
+                              ) : (
+                                <span>InActive</span>
+                              )}
+                            </span>
+                          </button>
+                        </td>
+                        {openModal && (
+                          <ServiceDetailsModal
+                            openModal={openModal}
+                            setIsModalOpen={setIsModalOpen}
+                            shopInfo={shopInfo}
+                          ></ServiceDetailsModal>
+                        )}
+                      </tr>
+                    ))}
                 </tbody>
               </table>
             </div>
