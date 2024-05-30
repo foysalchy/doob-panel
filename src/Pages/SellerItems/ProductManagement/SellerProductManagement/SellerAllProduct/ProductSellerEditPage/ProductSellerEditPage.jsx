@@ -25,8 +25,6 @@ const ProductSellerEditPage = () => {
   const { state } = useLocation();
   const { shopInfo } = useContext(AuthContext);
 
-
-
   const {
     data: getProduct = [],
     isLoading,
@@ -47,11 +45,14 @@ const ProductSellerEditPage = () => {
     },
   });
 
-
   const product = state;
 
+  console.log(product?._id);
 
-  const [allImage, setAllImage] = useState([product?.featuredImage, ...product?.images]);
+  const [allImage, setAllImage] = useState([
+    product?.featuredImage,
+    ...product?.images,
+  ]);
   const [isChecked, setIsChecked] = useState(true);
   const [datazCategory, setDarazOption] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -64,14 +65,12 @@ const ProductSellerEditPage = () => {
   const [banglaDescription, setBanglaDescription] = useState("");
   const [youtube, setYoutube] = useState("");
 
-
   const [multiVendor, setMultiVendor] = useState(adminWare);
   // ! for admin category
   // const [adminMegaCategory, setAdminMegaCategory] = useState("");
   // const [adminSubCategory, setAdminSubCategory] = useState("");
   // const [adminMiniCategory, setAdminMiniCategory] = useState("");
   // const [adminExtraCategory, setAdminExtraCategory] = useState("");
-
 
   const [processedImages, setProcessedImages] = useState([]);
 
@@ -84,7 +83,7 @@ const ProductSellerEditPage = () => {
 
     return fetch(url, {
       method: "POST",
-      body: formData
+      body: formData,
     })
       .then((res) => res.json())
       .then((imageData) => {
@@ -98,13 +97,15 @@ const ProductSellerEditPage = () => {
 
   const handleImageProcessing = async () => {
     try {
-      const processed = await Promise.all(allImage.map((image, index) => {
-        if (!image.src) {
-          return imageUploadEdit(image, index);
-        } else {
-          return Promise.resolve({ name: `photo${index}`, src: image.src });
-        }
-      }));
+      const processed = await Promise.all(
+        allImage.map((image, index) => {
+          if (!image.src) {
+            return imageUploadEdit(image, index);
+          } else {
+            return Promise.resolve({ name: `photo${index}`, src: image.src });
+          }
+        })
+      );
       return processed;
     } catch (error) {
       console.error("Error during image processing:", error);
@@ -112,9 +113,6 @@ const ProductSellerEditPage = () => {
       return []; // Return an empty array in case of error
     }
   };
-
-
-
 
   const [inputFields, setInputFields] = useState([
     {
@@ -127,7 +125,6 @@ const ProductSellerEditPage = () => {
       ability: false,
     },
   ]);
-
 
   const [variantInput, setVariantInput] = useState({
     product1: {},
@@ -219,12 +216,9 @@ const ProductSellerEditPage = () => {
     datazCategory?.length &&
     datazCategory?.filter((item) => !ourData?.includes(item.label));
 
-
-
   const formSubmit = async (e) => {
     // setLoading(true);
     e.preventDefault();
-
 
     setLoading(true);
 
@@ -251,8 +245,6 @@ const ProductSellerEditPage = () => {
       extraCategory && { name: extraCategory },
     ];
 
-
-
     // return;
     const warehouse = form?.warehouse.value;
     const area = (form.area && form.area.value) || null;
@@ -267,8 +259,6 @@ const ProductSellerEditPage = () => {
       { name: self },
       { name: cell },
     ];
-
-
 
     const warrantyTypes = form?.warrantyTypes?.value;
 
@@ -303,12 +293,11 @@ const ProductSellerEditPage = () => {
       adminExtraCategory,
     ];
 
-
     // setLoading(false);
     // return;
 
     const formData = new FormData();
-    console.log(processedImages)
+    console.log(processedImages);
 
     const data = {
       videoUrl: youtube,
@@ -374,17 +363,12 @@ const ProductSellerEditPage = () => {
       darazOptionData,
       upcoming: isChecked,
       DeliveryCharge,
+      _id: product?._id,
     };
 
-    console.log(
+    console.log("edit --------------------------->", data);
 
-      "edit --------------------------->",
-      data
-    );
-
-    setLoading(false)
-
-
+    setLoading(false);
 
     fetch(
       // `https://backend.doob.com.bd/api/v1/seller/normal-product?id=${product?._id}`,
@@ -399,7 +383,6 @@ const ProductSellerEditPage = () => {
     )
       .then((res) => res.json())
       .then((data) => {
-
         if (data.error) {
           Swal.fire(`${data.message}`, "", "warning");
           setLoading(false);
@@ -410,8 +393,6 @@ const ProductSellerEditPage = () => {
         }
       });
   };
-
-
 
   return (
     <div>
@@ -557,7 +538,6 @@ const ProductSellerEditPage = () => {
               </span>
             </button>
           )}
-
         </div>
       </form>
     </div>
