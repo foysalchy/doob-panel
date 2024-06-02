@@ -181,7 +181,7 @@ const Variants = ({
           onChange={(e) => {
             setMultiVendor(
               (e.target.value === "true" && true) ||
-                (e.target.value === "false" && false)
+              (e.target.value === "false" && false)
             );
           }}
           className="flex-grow w-full h-10 px-4 mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-purple-400 focus:outline-none focus:shadow-outline"
@@ -192,7 +192,7 @@ const Variants = ({
           <option value={false}>No</option>
         </select>
       </div>
-      dsf
+
       <div className="flex gap-4 flex-col w-full">
         {inputFields &&
           inputFields.map((field, index) => (
@@ -216,11 +216,10 @@ const Variants = ({
                         // Check if a name is selected
                         if (newName) {
                           // Generate a unique SKU
-                          const newSKU = `${
-                            shopInfo.shopId
-                          }_${newName}_${Math.floor(
-                            Math.random() * 100000000
-                          )}`;
+                          const newSKU = `${shopInfo.shopId
+                            }_${newName}_${Math.floor(
+                              Math.random() * 100000000
+                            )}`;
 
                           // Update the name and SKU in the inputFields array
                           newInputFields[index].name = newName;

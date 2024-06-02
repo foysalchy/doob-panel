@@ -303,7 +303,7 @@ const SellerAddProduct = () => {
     };
     console.log(data, "product_ready");
 
-    fetch("https://backend.doob.com.bd/api/v1/seller/normal-product/", {
+    fetch("http://localhost:5001/api/v1/seller/normal-product/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -312,8 +312,9 @@ const SellerAddProduct = () => {
     })
       .then((res) => res.json())
       .then((data) => {
+        console.log(data);
         if (data.error) {
-          BrightAlert(`${data.error}`, "", "warning");
+          BrightAlert(`${data.message}`, "", "warning");
           setLoading(false);
         } else {
           BrightAlert("Product add successful");
