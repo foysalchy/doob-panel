@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import JoditEditor from "jodit-react";
 import { Link } from "react-router-dom";
 import { BsArrowRight } from "react-icons/bs";
+import BrightAlert from "bright-alert";
 
 const SendEmail = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -86,11 +87,26 @@ const SendEmail = () => {
       body: JSON.stringify(formData),
     })
       .then((response) => response.json())
-      .finally(() => {
-        setLoading(false);
-        alert(response.message);
-        form.reset();
-      });
+      .then((data) => {
+        console.log(data);
+        if (data?.status) {
+          setLoading(false);
+          form.reset();
+          // reLoading();
+          BrightAlert();
+
+        } else {
+          setLoading(false);
+          form.reset();
+          // reLoading();
+          BrightAlert(data?.message, '', 'error');
+        }
+      })
+    // .finally(() => {
+    //   setLoading(false);
+
+    //   form.reset();
+    // });
   };
 
   return (
