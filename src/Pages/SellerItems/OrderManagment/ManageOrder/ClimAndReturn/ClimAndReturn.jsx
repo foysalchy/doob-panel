@@ -53,14 +53,14 @@ const ClimAndReturn = () => {
     queryKey: ["totalWooOrderData"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/seller/daraz-order-claimed?id=${shopInfo._id}&status=All`
+        `https://backend.doob.com.bd/api/v1/seller/woo-commerce-order-claim?shopId=${shopInfo._id}`
       );
       const data = await res.json();
       console.log(data);
       return data.data;
     },
   });
-  console.log(loadingDaraz, "loadingDaraz");
+  console.log(totalWooOrderData, "totalWooOrderData");
   console.log(totalDarazOrderedData);
 
   const [cartProducts, setCartProducts] = useState([]);
@@ -147,6 +147,18 @@ const ClimAndReturn = () => {
 
         if (findDarazProduct) {
           foundProducts.push(findDarazProduct);
+        }
+        setLoadingSearchData(false);
+      } else {
+        setLoadingSearchData(true);
+      }
+    } else if (selectSearchCategory.value === "Woo Order") {
+      if (!loadingWoo && totalWooOrderData.length > 0) {
+        const findWooProduct = totalWooOrderData.find((itm) =>
+          itm.orderNumber.includes(searchValue)
+        );
+        if (findWooProduct) {
+          foundProducts.push(findWooProduct);
         }
         setLoadingSearchData(false);
       } else {
