@@ -63,7 +63,7 @@ const SellerAddProduct = () => {
   const imageUpload = (image) => {
     const formData = new FormData();
     formData.append("image", image);
-    console.log(image, 'filessssss');
+    console.log(image, "filessssss");
     const url = `https://backend.doob.com.bd/api/v1/image/upload-image?shopId=${shopInfo._id}`;
 
     return fetch(url, {
@@ -135,19 +135,16 @@ const SellerAddProduct = () => {
     datazCategory?.length &&
     datazCategory?.filter((item) => !ourData.includes(item.label));
 
-
-
   useEffect(() => {
     if (allImage.length < 2) {
-      console.log(allImage.length, 'test......');
+      console.log(allImage.length, "test......");
       setCheckAlert(true);
     } else {
-      setCheckAlert(false)
+      setCheckAlert(false);
     }
 
-    console.log('alert', checkAlert);
-  }, [allImage])
-
+    console.log("alert", checkAlert);
+  }, [allImage]);
 
   const formSubmit = async (e) => {
     setLoading(true);
@@ -299,11 +296,11 @@ const SellerAddProduct = () => {
       upcoming: isChecked,
       low_stock_warning,
       DeliveryCharge,
-      DeliveryChargeOutside
+      DeliveryChargeOutside,
     };
     console.log(data, "product_ready");
 
-    fetch("http://localhost:5001/api/v1/seller/normal-product/", {
+    fetch("https://backend.doob.com.bd/api/v1/seller/normal-product/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -436,8 +433,15 @@ const SellerAddProduct = () => {
             <button
               type="submit"
               disabled={allImage.length < 3}
-              className={`${loading || coverPhoto ? 'group relative cursor-pointer inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none mt-4' : 'group relative inline-flex items-center overflow-hidden rounded bg-gray-700 px-8 py-3 text-white focus:outline-none mt-4 cursor-not-allowed'} ${allImage.length < 3 ? 'bg-red-500 cursor-not-allowed' : 'bg-gray-700 cursor-pointer'
-                }`}
+              className={`${
+                loading || coverPhoto
+                  ? "group relative cursor-pointer inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none mt-4"
+                  : "group relative inline-flex items-center overflow-hidden rounded bg-gray-700 px-8 py-3 text-white focus:outline-none mt-4 cursor-not-allowed"
+              } ${
+                allImage.length < 3
+                  ? "bg-red-500 cursor-not-allowed"
+                  : "bg-gray-700 cursor-pointer"
+              }`}
             >
               <span className="absolute -end-full transition-all group-hover:end-4">
                 <BsArrowRight />
