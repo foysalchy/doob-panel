@@ -36,7 +36,7 @@ const ClimAndReturn = () => {
     queryKey: ["orderDarazOrderData"],
     queryFn: async () => {
       const res = await fetch(
-        `http://localhost:5001/api/v1/seller/daraz-order-claimed?id=${shopInfo._id}&status=All`
+        `https://backend.doob.com.bd/api/v1/seller/daraz-order-claimed?id=${shopInfo._id}&status=All`
       );
       const data = await res.json();
       console.log(data);
@@ -426,7 +426,7 @@ const ClimAndReturn = () => {
 
             if (status === "reject") {
               fetch(
-                `http://localhost:5001/api/v1/seller/order-quantity-update?isUpdateQuantity=${isUpdateQuantity}&note=${note}`,
+                `https://backend.doob.com.bd/api/v1/seller/order-quantity-update?isUpdateQuantity=${isUpdateQuantity}&note=${note}`,
                 {
                   method: "PUT",
                   headers: { "Content-Type": "application/json" },
