@@ -20,7 +20,7 @@ const ManageOrder = () => {
   const [searchValue, setSearchValue] = useState("");
   const [selectedDate, setSelectedDate] = useState(null);
   const [details, setDetails] = useState();
-  const [daraz, setDaraz] = useState(false);
+  const [isDaraz, setIsDaraz] = useState(false);
   const [showInvoiceSm, setShowInvoiceSm] = useState(false);
   const [woo, setWoo] = useState(false);
   const [passData, setPassData] = useState([]);
@@ -321,21 +321,21 @@ const ManageOrder = () => {
       <h3 className="font-bold text-xl">Orders Overview</h3>
       <div className="flex flex-wrap justify-start  items-center gap-4 ">
         <button
-          onClick={() => { setDaraz(false), setWoo(false) }}
-          className={`px-4 py-1 border text-white ${!daraz && !woo ? "bg-gray-900" : "bg-gray-500"
+          onClick={() => { setIsDaraz(false), setWoo(false) }}
+          className={`px-4 py-1 border text-white ${!isDaraz && !woo ? "bg-gray-900" : "bg-gray-500"
             }`}
         >
           Web Order
         </button>
         <button
-          onClick={() => { setDaraz(true), setWoo(false) }}
-          className={`px-4 py-1 border text-white ${daraz ? "bg-gray-900" : "bg-gray-500"
+          onClick={() => { setIsDaraz(true), setWoo(false) }}
+          className={`px-4 py-1 border text-white ${isDaraz ? "bg-gray-900" : "bg-gray-500"
             }`}
         >
           Daraz Order
         </button>
         <button
-          onClick={() => { setWoo(true), setDaraz(false) }}
+          onClick={() => { setWoo(true), setIsDaraz(false) }}
           className={`px-4 py-1 text-white  border ${woo ? "bg-gray-900" : "bg-gray-500"}`}
         >
           Woo Commerce Order
@@ -366,7 +366,7 @@ const ManageOrder = () => {
               onClick={() => setSelectedValue(itm.value)}
             >
               {itm.name}{" "}
-              {!daraz
+              {!isDaraz
                 ? `(${getOrderCount(tData, itm.value)})`
                 : getDarazOrderCount(darazOrder.orders, itm.daraz_value)}
             </button>
@@ -409,7 +409,7 @@ const ManageOrder = () => {
           >
             Print
           </button>
-          {isOpen && !daraz && (
+          {isOpen && !isDaraz && (
             <div
               className="origin-top-right absolute  mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
               role="menu"
@@ -449,7 +449,7 @@ const ManageOrder = () => {
               </div>
             </div>
           )}
-          {isOpen && daraz && (
+          {isOpen && isDaraz && (
             <div
               className="origin-top-right absolute  mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
               role="menu"
@@ -700,7 +700,7 @@ const ManageOrder = () => {
 
       <div className="mt-12 ">
 
-        {!daraz && !woo && (
+        {!isDaraz && !woo && (
           <OrderTable
             selectedItems={selectedItems}
             setSelectedItems={setSelectedItems}
@@ -714,7 +714,7 @@ const ManageOrder = () => {
           />
         )}
         {
-          daraz && <DarazOrderTable
+          isDaraz && <DarazOrderTable
             selected={selected}
             setSelected={setSelected}
             selectedValue={selectedValue}

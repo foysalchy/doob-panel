@@ -14,7 +14,7 @@ const ClimAndReturn = () => {
 
   const { shopInfo, setCheckUpData } = useContext(AuthContext);
 
-  const { data: tData = [], refetch } = useQuery({
+  const { data: orderAllData = [], refetch } = useQuery({
     queryKey: ["sellerOrder"],
     queryFn: async () => {
       const res = await fetch(
@@ -24,13 +24,24 @@ const ClimAndReturn = () => {
       return data.data;
     },
   });
+  const { data: totalOrderedData = [], refetchDarazData } = useQuery({
+    queryKey: ["orderDarazData"],
+    queryFn: async () => {
+      const res = await fetch(
+        `http://localhost:5001/api/v1/seller/daraz-order-claimed?id=${shopInfo._id}&status=All`
+      );
+      const data = await res.json();
+      return data.data;
+    },
+  });
+  console.log(totalOrderedData);
 
   const [cartProducts, setCartProducts] = useState([]);
 
   const handleSearch = (e) => {
     e.preventDefault();
     const searchValue = e.target.search.value;
-    const findProduct = tData.find((itm) =>
+    const findProduct = orderAllData.find((itm) =>
       itm.orderNumber.includes(searchValue)
     );
 
@@ -50,7 +61,7 @@ const ClimAndReturn = () => {
     }
   };
 
-  console.log(cartProducts, "my item", tData);
+  console.log(cartProducts, "my item", orderAllData);
 
   // Calculate the range of items to display based on pagination
   const itemsPerPage = 10;
