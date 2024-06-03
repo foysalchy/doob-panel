@@ -9,6 +9,8 @@ import { BiSearch } from "react-icons/bi";
 import Swal from "sweetalert2";
 import RejectModal from "./RejectModal";
 
+import Select from "react-select";
+
 const ClimAndReturn = () => {
   const [modalOn, setModalOn] = useState(false);
 
@@ -29,7 +31,7 @@ const ClimAndReturn = () => {
     },
   });
   const {
-    data: totalOrderedData = [],
+    data: totalDarazOrderedData = [],
     refetchDarazData,
     isLoading: loadingDaraz,
   } = useQuery({
@@ -44,10 +46,15 @@ const ClimAndReturn = () => {
     },
   });
   console.log(loadingDaraz, "loadingDaraz");
-  console.log(totalOrderedData);
+  console.log(totalDarazOrderedData);
 
   const [cartProducts, setCartProducts] = useState([]);
   const [loadingSearchData, setLoadingSearchData] = useState(false);
+
+  const [selectSearchCategory, setSelectSearchCategory] = useState({
+    label: "Site Order",
+    value: "Site Order",
+  });
 
   // const handleSearch = (e) => {
   //   e.preventDefault();
@@ -80,13 +87,13 @@ const ClimAndReturn = () => {
   //   }
   // };
 
-  useEffect(() => {
-    if (loadingAllNormalOrder || loadingDaraz) {
-      setLoadingSearchData(true);
-    } else {
-      setLoadingSearchData(false);
-    }
-  }, [loadingAllNormalOrder, loadingDaraz, loadingSearchData]);
+  // useEffect(() => {
+  //   if (loadingAllNormalOrder || loadingDaraz) {
+  //     setLoadingSearchData(true);
+  //   } else {
+  //     setLoadingSearchData(false);
+  //   }
+  // }, [loadingAllNormalOrder, loadingDaraz, loadingSearchData]);
 
   console.log(loadingSearchData);
   const [showAlert, setShowAlert] = useState(false);
@@ -94,34 +101,47 @@ const ClimAndReturn = () => {
 
   const [isUpdateQuantity, setIsUpdateQuantity] = useState(false);
   const [refundCheck, setRefundCheck] = useState(false);
-  const handleSearch = async (e) => {
+  const handleSearch = (e) => {
     e.preventDefault();
     const searchValue = e.target.search.value;
+    console.log("🚀 ~ handleSearch ~ searchValue:", searchValue);
 
     setLoadingSearchData(true);
-    if (searchValue) {
+    const foundProducts = [];
+
+    if (selectSearchCategory.value === "Site Order") {
       const findNormalProduct = normalOrderAllData.find((itm) =>
         itm.orderNumber.includes(searchValue)
       );
+      // console.log(findNormalProduct, "foundProducts");
 
-      const findDarazProduct = totalOrderedData.find((itm) =>
-        itm.orderNumber.includes(searchValue)
-      );
-
-      const foundProducts = [];
       if (findNormalProduct) {
         foundProducts.push(findNormalProduct);
       }
-      if (findDarazProduct) {
-        foundProducts.push(findDarazProduct);
+      setLoadingSearchData(false);
+    } else if (selectSearchCategory.value === "Daraz Order") {
+      console.log(totalDarazOrderedData.length > 0, "totalDarazOrderedData");
+      if (!loadingDaraz && totalDarazOrderedData.length > 0) {
+        const findDarazProduct = totalDarazOrderedData.find((itm) =>
+          itm.orderNumber.includes(parseInt(searchValue))
+        );
+        console.log(
+          "🚀 ~ file: ClimAndReturn.jsx:125 ~ handleSearch ~ findDarazProduct:",
+          findDarazProduct
+        );
+
+        if (findDarazProduct) {
+          foundProducts.push(findDarazProduct);
+        }
+        setLoadingSearchData(false);
+      } else {
+        setLoadingSearchData(true);
       }
-
-      console.log(foundProducts);
-      console.log(foundProducts?.length, "foundProducts?.length");
-
-      setCartProducts(foundProducts);
     }
-    setLoadingSearchData(false);
+
+    // console.log(foundProducts, "foundProducts");
+
+    setCartProducts(foundProducts);
 
     e.target.reset();
   };
@@ -160,7 +180,7 @@ const ClimAndReturn = () => {
 
   const productStatusUpdate = (status, orderId) => {
     fetch(
-      `http://localhost:5001/api/v1/seller/order-status-update?orderId=${orderId}&status=${status}`,
+      `https://backend.doob.com.bd/api/v1/seller/order-status-update?orderId=${orderId}&status=${status}`,
       {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
@@ -172,6 +192,7 @@ const ClimAndReturn = () => {
         refetch();
         setShowAlert(false);
         setNote("");
+        setSelectAll(!selectAll);
         setIsUpdateQuantity(false);
         setCartProducts([]);
       });
@@ -233,22 +254,23 @@ const ClimAndReturn = () => {
     setShowImage(true);
   };
 
-  const handleProductStatusUpdate = (orders) => {
+  const handleProductStatusUpdate = (order) => {
     fetch(
-      `http://localhost:5001/api/v1/seller/order-quantity-update?isUpdateQuantity=${isUpdateQuantity}&note=${note}`,
+      `https://backend.doob.com.bd/api/v1/seller/order-quantity-update?isUpdateQuantity=${isUpdateQuantity}&note=${note}`,
       {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(orders),
+        body: JSON.stringify(order),
       }
     )
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
         if (data.success) {
-          productStatusUpdate("claim", orders._id);
+          productStatusUpdate("claim", order._id);
         } else {
           setShowAlert(false);
+          setSelectAll(!selectAll);
           setNote("");
           setIsUpdateQuantity(false);
           alert("Failed to Update");
@@ -433,7 +455,7 @@ const ClimAndReturn = () => {
             // If confirmed to update stock, call handleProductStatusUpdate
             if (status === "reject") {
               fetch(
-                `http://localhost:5001/api/v1/seller/order-quantity-update?isUpdateQuantity=${isUpdateQuantity}&note=${note}`,
+                `https://backend.doob.com.bd/api/v1/seller/order-quantity-update?isUpdateQuantity=${isUpdateQuantity}&note=${note}`,
                 {
                   method: "PUT",
                   headers: { "Content-Type": "application/json" },
@@ -447,10 +469,12 @@ const ClimAndReturn = () => {
                     productStatusUpdate("reject", order._id);
                     refetch();
                   } else {
-                    setShowAlert(false);
+                    // setShowAlert(false);
+
                     setNote("");
                     setIsUpdateQuantity(false);
                     alert("Failed to Update");
+                    setSelectAll(!selectAll);
                   }
                 });
             } else {
@@ -508,7 +532,7 @@ const ClimAndReturn = () => {
         // console.log(rejectData);
         // return;
         fetch(
-          `http://localhost:5001/api/v1/seller/order-quantity-update?isUpdateQuantity=${isUpdateQuantity}&note=${note}`,
+          `https://backend.doob.com.bd/api/v1/seller/order-quantity-update?isUpdateQuantity=${isUpdateQuantity}&note=${note}`,
           {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
@@ -545,12 +569,39 @@ const ClimAndReturn = () => {
   };
 
   console.log(currentItems, "currentItems");
+  console.log(selectSearchCategory);
 
   return (
     <div className="flex flex-col overflow-hidden mt-4">
+      <div className="my-4 overflo">
+        <label className="text-sm">Select Order Category</label>
+        <Select
+          // menuPortalTarget={document.body}
+          styles={{
+            control: (provided) => ({
+              ...provided,
+              cursor: "pointer",
+            }),
+            option: (provided) => ({
+              ...provided,
+              cursor: "pointer",
+            }),
+          }}
+          onChange={setSelectSearchCategory}
+          name="searchCategory"
+          required
+          options={[
+            { label: "All", value: "All" },
+            { label: "Site Order", value: "Site Order" },
+            { label: "Daraz Order", value: "Daraz Order" },
+            { label: "Woo Order", value: "Woo Order" },
+          ]}
+          placeholder="Please select"
+        />
+      </div>
       <form
         onSubmit={handleSearch}
-        className="flex items-center border w-[70%] bg-gray-100 ring-1 border-gray-900 p-2 rounded-md "
+        className="flex items-center justify-between border w-[100%] bg-gray-100 ring-1 border-gray-900 p-2 rounded-md "
       >
         <BiSearch className="text-gray-600 text-lg" />
         <input
@@ -695,9 +746,9 @@ const ClimAndReturn = () => {
                 </tr>
               </thead>
               <tbody>
-                {loadingAllNormalOrder || loadingDaraz || loadingSearchData ? (
+                {loadingSearchData ? (
                   <tr>
-                    <h2>Loading All order.......</h2>
+                    <h2 className="text-center">Loading Orders .....</h2>
                   </tr>
                 ) : (
                   currentItems?.map((item, index) => (
