@@ -1,5 +1,4 @@
-import React, { useEffect } from "react";
-import { useContext } from "react";
+import React, { useContext } from "react";
 import { AuthContext } from "../../../../AuthProvider/UserProvider";
 
 import { Link } from "react-router-dom";
@@ -11,36 +10,33 @@ import { useState } from "react";
 
 
 import {
-  BsColumnsGap,
-  BsBox2,
-  BsPrinter,
-  BsBasket,
-  BsCalendar2Range,
-  BsPersonLinesFill,
-  BsLayoutTextSidebarReverse,
-  BsCalculator,
-  BsHeadset,
-  BsFillBootstrapFill,
   BsArrowsFullscreen,
-  BsFillJournalBookmarkFill,
-  BsShop,
-  BsFillImageFill,
-  BsGlobe,
-  BsGear,
-  BsHddNetworkFill,
-  BsWindowPlus,
-  BsLifePreserver,
+  BsBasket,
+  BsBox2,
+  BsBoxArrowLeft,
   BsBoxSeam,
+  BsCalculator,
+  BsCalendar2Range,
   BsChatSquareText,
-  BsBoxArrowLeft
-
+  BsColumnsGap,
+  BsFillBootstrapFill,
+  BsFillImageFill,
+  BsFillJournalBookmarkFill,
+  BsGear,
+  BsGlobe,
+  BsHddNetworkFill,
+  BsHeadset,
+  BsLayoutTextSidebarReverse,
+  BsLifePreserver,
+  BsPersonLinesFill,
+  BsPrinter,
+  BsShop,
+  BsWindowPlus
 } from "react-icons/bs";
 
-import Daraz from "./Daraz.png";
-import Logo from "../../../../assets/doobLightLogo.png";
-import { CgClose } from "react-icons/cg";
 import { useQuery } from "@tanstack/react-query";
-import { BiArchive } from "react-icons/bi";
+import { CgClose } from "react-icons/cg";
+import Logo from "../../../../assets/doobLightLogo.png";
 
 
 
@@ -2115,6 +2111,17 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                 <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
                                   <Link
                                     to={
+                                      "/seller/content-management/frame"
+                                    }
+                                    className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                  >
+                                    {/* <FaPage4 className='w-5 h-5 fill-current text-gray-400 ' /> */}
+                                    Frame Management
+                                  </Link>
+                                </li>
+                                <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                  <Link
+                                    to={
                                       "/seller/content-management/popup-management"
                                     }
                                     className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
@@ -2123,6 +2130,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                     Popup Management
                                   </Link>
                                 </li>
+                                
                                 <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
                                   <Link
                                     to={
@@ -2226,6 +2234,17 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
 
                           {openDropdownIndex === 9 && (
                             <ul className="mt-2 space-y-1   px-2 bg-[#1b202ea1] border border-gray-500 py-2 border-opacity-50">
+                             <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                  <Link
+                                    to={
+                                      "/seller/content-management/frame"
+                                    }
+                                    className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                  >
+                                    {/* <FaPage4 className='w-5 h-5 fill-current text-gray-400 ' /> */}
+                                    Frame Management
+                                  </Link>
+                                </li>
                               <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
                                 <Link
                                   to={

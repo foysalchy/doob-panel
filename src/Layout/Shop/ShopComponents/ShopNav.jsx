@@ -1,26 +1,21 @@
 import { useQuery } from "@tanstack/react-query";
-import React, { useContext } from "react";
-import { useState } from "react";
-import { FaJediOrder, FaMapLocationDot, FaUser } from "react-icons/fa6";
-import { PiShoppingCartSimpleBold } from "react-icons/pi";
-import { Link } from "react-router-dom";
+import React, { useContext, useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
-import { ShopAuthProvider } from "../../../AuthProvider/ShopAuthProvide";
-import { CgClose, CgLogOut, CgProfile } from "react-icons/cg";
+import { BiHomeAlt } from "react-icons/bi";
+import { BsFillPinMapFill } from "react-icons/bs";
+import { CgProfile } from "react-icons/cg";
+import { FaSignOutAlt } from "react-icons/fa";
+import { FaUser } from "react-icons/fa6";
+import { IoLogIn, IoSettings } from "react-icons/io5";
 import {
-  MdFavoriteBorder,
   MdMenu,
   MdOutlineFavoriteBorder,
-  MdOutlineShoppingCart,
+  MdOutlineShoppingCart
 } from "react-icons/md";
-import { IoLogIn, IoSettings } from "react-icons/io5";
-import { FaSignOutAlt } from "react-icons/fa";
-import { BsFillPinMapFill } from "react-icons/bs";
-import { useEffect } from "react";
-import { BiHomeAlt, BiSearch } from "react-icons/bi";
+import { PiShoppingCartSimpleBold } from "react-icons/pi";
+import { Link } from "react-router-dom";
+import { ShopAuthProvider } from "../../../AuthProvider/ShopAuthProvide";
 import CategorieItems from "./categorieItems";
-import { Footer } from "./shopFotterComponent";
-import { AuthContext } from "../../../AuthProvider/UserProvider";
 
 const ShopNav = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -285,7 +280,7 @@ const ShopNav = () => {
               >
                 <div className="inline-flex items-center bg-gray-900 w-[30px] h-[30px] p-2 rounded-full justify-center relative">
                   <PiShoppingCartSimpleBold className=" text-white" />
-                  <div className="text-white bg-[red] absolute text-[12px] px-1 rounded-full top-[-10px] left-[18px]">
+                  <div className="text-whitex bg-[red] absolute text-[12px] px-1 rounded-full top-[-10px] left-[18px]">
                     {cartProducts?.length}
                   </div>
                 </div>

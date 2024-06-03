@@ -1,10 +1,8 @@
-import { useQuery } from '@tanstack/react-query';
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link, useLoaderData, useLocation, useNavigate } from 'react-router-dom';
-import Facebook from './facebook-round-color-icon.svg';
 import { ShopAuthProvider } from '../../../../../AuthProvider/ShopAuthProvide';
-import { useState } from 'react';
 import ForgetPass from './ForgetPass';
+import Facebook from './facebook-round-color-icon.svg';
 
 const ShopSignIn = () => {
 
@@ -106,7 +104,7 @@ const ShopSignIn = () => {
                         <div className='w-[35%] pt-2 flex flex-col gap-4'>
                             <button
                                 type='submit'
-                                className="w-full px-4 text-white font-medium bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-600 duration-150 mt-[3px] py-[9px]"
+                                className="w-full px-4 text-white font-medium bg-blue-500 hover:bg-indigo-500 active:bg-indigo-600 duration-150 mt-[3px] py-[9px]"
                             >
                                 Sign in
                             </button>

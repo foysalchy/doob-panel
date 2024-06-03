@@ -1,30 +1,23 @@
 import React, { useContext, useEffect, useState } from "react";
+import { BsCart2 } from "react-icons/bs";
 import {
   FaBasketShopping,
   FaCircle,
   FaFacebook,
   FaInstagram,
-  FaMessage,
-  FaXTwitter,
+  FaXTwitter
 } from "react-icons/fa6";
-import { MdDone } from "react-icons/md";
-import ProductDescription from "../../../../Home/Product/ProductDetails/ProductDescription";
-import ProductReviews from "../../../../Home/Product/ProductDetails/ProductReviews";
-import TrendingProducts from "../../../../Home/Product/ProductDetails/TrendingProducts";
-import { BsCart2 } from "react-icons/bs";
 
+import { useQuery } from "@tanstack/react-query";
+import BrightAlert from "bright-alert";
 import {
   Link,
   useLoaderData,
   useLocation,
   useNavigate,
 } from "react-router-dom";
-import { Helmet } from "react-helmet";
-import MetaHelmet from "../../../../../Helmate/Helmate";
 import { ShopAuthProvider } from "../../../../../AuthProvider/ShopAuthProvide";
-import { useQuery } from "@tanstack/react-query";
-import BrightAlert from "bright-alert";
-import TrandingProductShop from "../TrandingProductShop/TrandingProductShop";
+import MetaHelmet from "../../../../../Helmate/Helmate";
 
 const ProductInformation = () => {
   const product = useLoaderData();
@@ -572,7 +565,7 @@ const ProductInformation = () => {
                       <button
                         onClick={() => buyNowHandler(product)}
                         type="button"
-                        className="h-10 md:block hidden px-2 py-2 w-[120px] font-semibold  rounded bg-indigo-600 hover:bg-indigo-500 text-white"
+                        className="h-10 md:block hidden px-2 py-2 w-[120px] font-semibold  rounded bg-blue-500 hover:bg-indigo-500 text-white"
                       >
                         Buy Now
                       </button>
