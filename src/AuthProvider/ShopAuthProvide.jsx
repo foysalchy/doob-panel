@@ -1,21 +1,19 @@
 import { useQuery } from "@tanstack/react-query";
-import {
-  getAuth,
-  createUserWithEmailAndPassword,
-  GoogleAuthProvider,
-  signInWithPopup,
-  updateProfile,
-  signInWithEmailAndPassword,
-  signOut,
-  onAuthStateChanged,
-  FacebookAuthProvider,
-  sendPasswordResetEmail,
-  updatePassword,
-} from "firebase/auth";
-import React, { useContext, useEffect, useRef, useState } from "react";
-import { createContext } from "react";
-import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
+import { initializeApp } from "firebase/app";
+import {
+  FacebookAuthProvider,
+  GoogleAuthProvider,
+  createUserWithEmailAndPassword,
+  getAuth,
+  sendPasswordResetEmail,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+  signOut,
+  updatePassword,
+  updateProfile
+} from "firebase/auth";
+import React, { createContext, useEffect, useState } from "react";
 
 export const ShopAuthProvider = createContext();
 
@@ -26,6 +24,7 @@ const ShopAuth = ({ children }) => {
   const [defaultAddress, setDefaultAddress] = useState();
   const shopId = idMatch ? idMatch[1] : null;
   const [selectProductData, setSelectProductData] = useState([]);
+  const [color, setColor] = useState([]);
 
   const {
     data: shopCredential = {},
@@ -65,6 +64,7 @@ const ShopAuth = ({ children }) => {
           `https://backend.doob.com.bd/api/v1/shop/shopId/${shopId}`
         );
         const data = await res.json();
+       
         return data;
       } catch (error) {
         throw error; // Rethrow the error to mark the query as failed
@@ -320,6 +320,8 @@ const ShopAuth = ({ children }) => {
     setDefaultAddress,
     reloadUser,
     setReloadUser,
+    color,
+    setColor
   };
 
   return (

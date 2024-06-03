@@ -1,22 +1,17 @@
-import React from "react";
-import ShopNav from "./ShopComponents/ShopNav";
-import { Outlet, useParams } from "react-router-dom";
-import ShopFooter from "./ShopComponents/ShopFootter";
-import ShopSmallNav from "./ShopComponents/ShopSmallNav";
 import { useQuery } from "@tanstack/react-query";
 import Lottie from "lottie-react";
-import groovyWalkAnimation from "./Loading.json";
-import { useState } from "react";
-import { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { Outlet } from "react-router-dom";
 import ShopAuth from "../../AuthProvider/ShopAuthProvide";
+import groovyWalkAnimation from "./Loading.json";
+import ShopNav from "./ShopComponents/ShopNav";
+import ShopSmallNav from "./ShopComponents/ShopSmallNav";
 import { Footer } from "./ShopComponents/shopFotterComponent";
 
-import { BiSearch, BiSupport } from "react-icons/bi";
 import { AiOutlineWhatsApp } from "react-icons/ai";
+import { BiSupport } from "react-icons/bi";
 import { BsMessenger } from "react-icons/bs";
 import { MdEmail } from "react-icons/md";
-import { CgClose } from "react-icons/cg";
-import CategorieItems from "./ShopComponents/categorieItems";
 
 const ShopLayout = () => {
   const [modalShop, setModalShop] = useState(false);
@@ -24,7 +19,6 @@ const ShopLayout = () => {
   const idMatch = pathname.match(/\/shop\/([^/]+)/);
 
   const shopId = idMatch ? idMatch[1] : null;
-
   const {
     data: shop = {},
     isLoading,
@@ -59,7 +53,10 @@ const ShopLayout = () => {
   };
 
   return (
+    
+
     <div>
+     
       {isLoading ? (
         <div className="grid h-screen px-4 bg-black place-content-center">
           <Lottie animationData={groovyWalkAnimation} loop={true} />

@@ -1,13 +1,8 @@
-import React, { useEffect } from "react";
-import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import BrightAlert from "bright-alert";
+import React, { useContext, useEffect, useState } from "react";
 import { FaBasketShopping, FaCircle, FaMessage } from "react-icons/fa6";
 import { MdDone } from "react-icons/md";
-import ProductDescription from "./ProductDescription";
-import ProductReviews from "./ProductReviews";
-import TrendingProducts from "./TrendingProducts";
-import { useContext } from "react";
-import { AuthContext } from "../../../../AuthProvider/UserProvider";
-import { useQuery } from "@tanstack/react-query";
 import { TbShoppingBagPlus } from "react-icons/tb";
 import {
   Link,
@@ -16,11 +11,12 @@ import {
   useNavigate,
   useParams,
 } from "react-router-dom";
-import Swal from "sweetalert2";
-import BrightAlert from "bright-alert";
+import { AuthContext } from "../../../../AuthProvider/UserProvider";
 import MetaHelmet from "../../../../Helmate/Helmate";
-import ReleventProduct from "./ReleventProduct";
 import ModalForPayment from "./ModalForPayment";
+import ProductDescription from "./ProductDescription";
+import ProductReviews from "./ProductReviews";
+import ReleventProduct from "./ReleventProduct";
 
 const StarRating = ({ rating, onRatingChange }) => {
   return (

@@ -1,15 +1,14 @@
 import Lottie from "lottie-react";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { RxCross2 } from "react-icons/rx";
-import uploadImage from "../SellerShopInfo/Upload.json";
 import Swal from "sweetalert2";
-import { useContext } from "react";
 import { AuthContext } from "../../../AuthProvider/UserProvider";
+import uploadImage from "../SellerShopInfo/Upload.json";
 
 const EditShopInfo = ({ Edit, setEdit }) => {
   const { setShopInfo, shopInfo } = useContext(AuthContext);
 
-  const { shopName, shopEmail, shopNumber, shopId, address } = shopInfo;
+  const { shopName, shopEmail, shopNumber, shopId, address,primary_color,secounder_color,text_color } = shopInfo;
 
   const [shopUnicName, setshopUnicName] = useState(shopId);
   const [errorName, setErrorName] = useState("");
@@ -58,12 +57,18 @@ const EditShopInfo = ({ Edit, setEdit }) => {
       shopNumber: event.target.shopNumber.value,
       shopEmail: event.target.shopEmail.value,
       address: event.target.address.value,
+      primary_color: event.target.primary_color.value,
+      secounder_color: event.target.secounder_color.value,
+      text_color: event.target.text_color.value,
     };
 
     shopInfo.shopName = updatedShopInfo.shopName;
     shopInfo.shopNumber = updatedShopInfo.shopNumber;
     shopInfo.shopEmail = updatedShopInfo.shopEmail;
     shopInfo.address = updatedShopInfo.address;
+    shopInfo.primary_color = updatedShopInfo.primary_color;
+    shopInfo.secounder_color = updatedShopInfo.secounder_color;
+    shopInfo.text_color = updatedShopInfo.text_color;
 
     try {
       if (shopID) {
@@ -185,6 +190,37 @@ const EditShopInfo = ({ Edit, setEdit }) => {
                         type="number"
                         name="shopNumber"
                         defaultValue={shopNumber}
+                        placeholder="Phone Number"
+                        className="w-full border rounded-md py-2 px-3"
+                      />
+                    </div>
+                    
+                    <div className="mb-4">
+                      <label htmlFor="">Primary colour</label>
+                      <input
+                        type="color"
+                        name="primary_color"
+                        defaultValue={primary_color}
+                        placeholder="Phone Number"
+                        className="w-full border rounded-md py-2 px-3"
+                      />
+                    </div>
+                    <div className="mb-4">
+                      <label htmlFor="">Secondary colour</label>
+                      <input
+                        type="color"
+                        name="secounder_color"
+                        defaultValue={secounder_color}
+                        placeholder="Phone Number"
+                        className="w-full border rounded-md py-2 px-3"
+                      />
+                    </div>
+                    <div className="mb-4">
+                      <label htmlFor="">Text colour</label>
+                      <input
+                        type="color"
+                        name="text_color"
+                        defaultValue={text_color}
                         placeholder="Phone Number"
                         className="w-full border rounded-md py-2 px-3"
                       />

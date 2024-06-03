@@ -1,8 +1,7 @@
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Link, useLoaderData, useNavigate } from 'react-router-dom';
-import FacebookLogo from './facebook-round-color-icon.svg';
-import { useContext } from 'react';
 import { ShopAuthProvider } from '../../../../../AuthProvider/ShopAuthProvide';
+import FacebookLogo from './facebook-round-color-icon.svg';
 
 const ShopSignUp = () => {
     const page = useLoaderData()
@@ -94,7 +93,7 @@ const ShopSignUp = () => {
                         <div className='w-[35%] pt-2 flex flex-col gap-4'>
                             <button
                                 type='submit'
-                                className="w-full px-4 text-white font-medium bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-600 duration-150 mt-[3px] py-[9px]"
+                                className="w-full px-4 text-white font-medium bg-blue-500 hover:bg-indigo-500 active:bg-indigo-600 duration-150 mt-[3px] py-[9px]"
                             >
                                 Sign Up
                             </button>
