@@ -45,6 +45,21 @@ const ClimAndReturn = () => {
       return data.data;
     },
   });
+  const {
+    data: totalWooOrderData = [],
+    refetchWooData,
+    isLoading: loadingWoo,
+  } = useQuery({
+    queryKey: ["totalWooOrderData"],
+    queryFn: async () => {
+      const res = await fetch(
+        `https://backend.doob.com.bd/api/v1/seller/daraz-order-claimed?id=${shopInfo._id}&status=All`
+      );
+      const data = await res.json();
+      console.log(data);
+      return data.data;
+    },
+  });
   console.log(loadingDaraz, "loadingDaraz");
   console.log(totalDarazOrderedData);
 
