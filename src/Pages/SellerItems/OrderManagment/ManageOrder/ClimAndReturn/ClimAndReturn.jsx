@@ -14,7 +14,11 @@ const ClimAndReturn = () => {
 
   const { shopInfo, setCheckUpData } = useContext(AuthContext);
 
-  const { data: normalOrderAllData = [], refetch } = useQuery({
+  const {
+    data: normalOrderAllData = [],
+    refetch,
+    isLoading: loadingAllNormalOrder,
+  } = useQuery({
     queryKey: ["sellerOrder"],
     queryFn: async () => {
       const res = await fetch(
@@ -42,27 +46,36 @@ const ClimAndReturn = () => {
   console.log(totalOrderedData);
 
   const [cartProducts, setCartProducts] = useState([]);
+  const [loadingSearchData, setLoadingSearchData] = useState(true);
 
   const handleSearch = (e) => {
     e.preventDefault();
     const searchValue = e.target.search.value;
-    const findProduct = normalOrderAllData.find((itm) =>
-      itm.orderNumber.includes(searchValue)
-    );
-
-    if (findProduct) {
-      const existingProductIndex = cartProducts.findIndex(
-        (item) => item.orderNumber === findProduct.orderNumber
+    if (loadingAllNormalOrder || loadingDaraz) {
+      setLoadingSearchData(true);
+    } else {
+      setLoadingSearchData(false);
+      const findNormalProduct = normalOrderAllData.find((itm) =>
+        itm.orderNumber.includes(searchValue)
+      );
+      const findDarazProduct = totalOrderedData.find((itm) =>
+        itm.orderNumber.includes(searchValue)
       );
 
-      if (existingProductIndex === -1) {
-        setCartProducts([...cartProducts, findProduct]);
-      } else {
-        console.log("Product with the same ID already exists in cart");
-      }
+      if (findNormalProduct) {
+        const existingProductIndex = cartProducts.findIndex(
+          (item) => item.orderNumber === findNormalProduct.orderNumber
+        );
 
-      // Reset the form input field
-      e.target.reset();
+        if (existingProductIndex === -1) {
+          setCartProducts([...cartProducts, findNormalProduct]);
+        } else {
+          console.log("Product with the same ID already exists in cart");
+        }
+
+        // Reset the form input field
+        e.target.reset();
+      }
     }
   };
 
@@ -188,7 +201,7 @@ const ClimAndReturn = () => {
   const [showAlert, setShowAlert] = useState(false);
   const [note, setNote] = useState("");
 
-  const [isChecked, setIsChecked] = useState(false);
+  const [isUpdateQuantity, setIsUpdateQuantity] = useState(false);
   const [refundCheck, setRefundCheck] = useState(false);
 
   const viewDetails = (order) => {
@@ -231,18 +244,18 @@ const ClimAndReturn = () => {
   const [file, setFile] = useState();
   const cancelNoteSubmit = () => {
     console.log({
-      isChecked,
+      isChecked: isUpdateQuantity,
       refundCheck,
       note,
       file,
       showAlert,
     });
 
-    if (isChecked && !refundCheck) {
+    if (isUpdateQuantity && !refundCheck) {
       handleProductStatusUpdate(showAlert);
       updateOrderInfo(note, file, showAlert._id);
       setShowAlert(false);
-    } else if (isChecked && refundCheck) {
+    } else if (isUpdateQuantity && refundCheck) {
       handleProductStatusUpdate(showAlert);
       updateOrderInfo(note, file, showAlert._id);
       setShowAlert(false);
@@ -335,6 +348,12 @@ const ClimAndReturn = () => {
   //     }
   // };
 
+  const handleApprove = () => {
+    update_all_status_claim("approved");
+  };
+
+  // console.log(isUpdateQuantity);
+  // console.log(note);
   const update_all_status_claim = (status) => {
     // Ask for confirmation to update status
     // const isConfirmedUpdate = confirm(
@@ -363,7 +382,7 @@ const ClimAndReturn = () => {
 
             if (status === "reject") {
               fetch(
-                `https://backend.doob.com.bd/api/v1/seller/order-quantity-update`,
+                `http://localhost:5001/api/v1/seller/order-quantity-update?isUpdateQuantity=${isUpdateQuantity}&note=${note}`,
                 {
                   method: "PUT",
                   headers: { "Content-Type": "application/json" },
@@ -373,6 +392,7 @@ const ClimAndReturn = () => {
                 .then((res) => res.json())
                 .then((data) => {
                   console.log(data);
+                  setShowAlert(false);
                   if (data.success) {
                     productStatusUpdate("reject", order._id);
                     refetch();
@@ -490,7 +510,7 @@ const ClimAndReturn = () => {
       {selectAll && (
         <div className="flex items-center gap-8">
           <button
-            onClick={() => update_all_status_claim("approved")}
+            onClick={() => setShowAlert(true)}
             className="bg-gray-800 w-[200px] mt-4 mb-6 text-white px-3 py-2 rounded"
           >
             Approve
@@ -503,6 +523,68 @@ const ClimAndReturn = () => {
           </button>
         </div>
       )}
+{/* modal for approved */}
+      {showAlert && (
+        <div className="fixed inset-0 z-10 bg-opacity-50 overflow-y-auto">
+          <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+            <div
+              className="fixed inset-0 transition-opacity"
+              aria-hidden="true"
+            >
+              <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
+            </div>
+
+            {/* This is the alert with text area for note */}
+            <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+              <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                <div className="sm:flex sm:items-start w-full">
+                  <div className="mt-3 text-center sm:mt-0 w-full sm:text-left">
+                    <h3
+                      onClick={() => setIsUpdateQuantity(!isUpdateQuantity)}
+                      className=" text-lg flex gap-2 items-center cursor-pointer font-medium text-gray-900"
+                    >
+                      <input
+                        className="h-4 w-4"
+                        type="checkbox"
+                        checked={isUpdateQuantity}
+                      />
+                      Do you update your product quantity?
+                    </h3>
+
+                    <div className="mt-2 w-full">
+                      <textarea
+                        value={note}
+                        onChange={(e) => setNote(e.target.value)}
+                        rows="4"
+                        cols="10"
+                        className="shadow-sm w-full p-2 focus:ring-blue-500 focus:border-blue-500 mt-1 block  sm:text-sm border-gray-300 rounded-md"
+                        placeholder="Enter your note here ..."
+                      ></textarea>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row justify-end">
+                <button
+                  onClick={() => setShowAlert(false)}
+                  type="button"
+                  className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-500 text-base font-medium text-white hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm"
+                >
+                  Close
+                </button>
+                <button
+                  onClick={() => handleApprove()}
+                  type="button"
+                  className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-500 text-base font-medium text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm"
+                >
+                  Submit
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
       {isReject && (
         <RejectModal
           ordersList={ordersList}
