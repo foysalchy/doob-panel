@@ -205,7 +205,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                               <ul className="mt-2 space-y-1  p-2 border border-[gray] bg-[#1b202ea1] w-full">
                                 {user?.staffRole ? (
                                   user?.permissions.find(
-                                    (itm) => itm?.name === "Product Management"
+                                    (itm) => itm?.name === "Manage Product"
                                   ) ? (
                                     <li className="">
                                       <ul className="flex flex-col ">
@@ -300,7 +300,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
 
                                 {user?.staffRole ? (
                                   user?.permissions.find(
-                                    (itm) => itm?.name === "Categories Management"
+                                    (itm) => itm?.name === "Category Management"
                                   ) ? (
                                     <li className="bg-[#1b202ea1]">
                                       <details className="group [&_summary::-webkit-details-marker]:hidden flex items-center rounded-sm  ">
@@ -426,7 +426,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
 
                                 {user?.staffRole
                                   ? user?.permissions.find(
-                                    (itm) => itm?.name === "Product Management"
+                                    (itm) => itm?.name === "Warehouse"
                                   )
                                     ? managementPermission("Warehouse") && (
                                       <li className="bg-[#1b202ea1]">
@@ -824,7 +824,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
 
                               {user?.staffRole
                                 ? user?.permissions.find(
-                                  (itm) => itm?.name === "Product Management"
+                                  (itm) => itm?.name === "Warehouse"
                                 )
                                   ? managementPermission("Warehouse") && (
                                     <li className="bg-[#1b202ea1]">
@@ -974,7 +974,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                     {/* end */}
 
                     {user?.staffRole ? (
-                      user?.permissions?.find((itm) => itm?.name === "POS") ? (
+                      user?.permissions?.find((itm) => itm?.name === "Pos") ? (
                         managementPermission("POS") && (
                           <li className="rounded-sm hover:bg-gray-800">
                             <Link
@@ -1005,7 +1005,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
 
                     {user?.staffRole ? (
                       user?.permissions.find(
-                        (itm) => itm?.name === "Orders"
+                        (itm) => itm?.name === "Faq"
                       ) ? (
                         <li className=" ">
 
@@ -1132,7 +1132,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                     {/* start */}
                     {user?.staffRole ? (
                       user?.permissions.find(
-                        (itm) => itm?.name === "Manage Pages"
+                        (itm) => itm?.name === "Page Management"
                       ) ? (
                         <li className="rounded-sm">
                           <div
@@ -1222,7 +1222,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
 
                     {user?.staffRole
                       ? user?.permissions.find(
-                        (itm) => itm?.name === "Staff Account"
+                        (itm) => itm?.name === "Staff Management"
                       )
                         ? managementPermission("Staff Account") && (
                           <li className="rounded-sm hover:bg-gray-800">
@@ -1254,7 +1254,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
 
                     {user?.staffRole ? (
                       user?.permissions.find(
-                        (itm) => itm?.name === "Order Management"
+                        (itm) => itm?.name === "Content Management"
                       ) ? (
                         <li className=" ">
                           <div
@@ -1453,7 +1453,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                     {/* start */}
                     {user?.staffRole ? (
                       user?.permissions.find(
-                        (itm) => itm?.name === "Finance"
+                        (itm) => itm?.name === "Faq"
                       ) ? (
                         <li className="rounded-sm">
                           <div
@@ -1648,7 +1648,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                     {/* start */}
                     {user?.staffRole ? (
                       user?.permissions.find(
-                        (itm) => itm?.name === "Support Tickets"
+                        (itm) => itm?.name === "Support Ticket"
                       ) ? (
                         <li className="rounded-sm">
                           <div
@@ -1828,7 +1828,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
 
                     {/* blog */}
                     {user?.staffRole ? (
-                      user?.permissions.find((itm) => itm?.name === "Manage Blogs") ? (
+                      user?.permissions.find((itm) => itm?.name === "Blogs") ? (
                         <li className="rounded-sm">
                           <div
                             onClick={() => handleToggle(7)}
@@ -1937,7 +1937,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
 
                     {user?.staffRole ? (
                       user?.permissions.find(
-                        (itm) => itm?.name === "Manage Contact"
+                        (itm) => itm?.name === "Contact"
                       ) ? (
                         <li className="rounded-sm">
                           <div
@@ -2027,7 +2027,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
 
                     {user?.staffRole ? (
                       user?.permissions.find(
-                        (itm) => itm?.name === "Shop Profile"
+                        (itm) => itm?.name === "Faq"
                       ) ? (
                         <li className="rounded-sm  hover:bg-gray-800">
                           <Link
@@ -2059,7 +2059,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
 
                     {user?.staffRole
                       ? user?.permissions.find(
-                        (itm) => itm?.name === "Domain Management"
+                        (itm) => itm?.name === "Faq"
                       )
                         ? managementPermission("Domain Management") && (
                           <li className="rounded-sm  hover:bg-gray-800">
@@ -2351,7 +2351,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
 
 
                     {user?.staffRole ? (
-                      user?.permissions?.find((itm) => itm?.name === "Channel Integration") ?
+                      user?.permissions?.find((itm) => itm?.name === "Faq") ?
                         (
                           <li>
                             <div className="group items-center rounded-sm">
@@ -2510,7 +2510,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                     {/* service management */}
                     {user?.staffRole ? (
                       user?.permissions.find(
-                        (itm) => itm?.name === "Service Management"
+                        (itm) => itm?.name === "Services"
                       ) ? (
                         <li className=" ">
                           {/* <Link to={'/seller/orders'} rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
@@ -2588,7 +2588,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
 
                     {user?.staffRole ? (
                       user?.permissions.find(
-                        (itm) => itm?.name === "Service Management"
+                        (itm) => itm?.name === "Services"
                       ) ? (
                         <li className=" ">
                           {/* <Link to={'/seller/orders'} rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
@@ -2740,7 +2740,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
 
                     {user?.staffRole ? (
                       user?.permissions.find(
-                        (itm) => itm?.name === "Media Manager"
+                        (itm) => itm?.name === "Content Management"
                       ) ? (
                         managementPermission("SubscriptionModel") && (
                           <li className="rounded-sm hover:bg-gray-800">
@@ -2842,7 +2842,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
               />
               <div className="relative">
                 <div className="">
-                  <h2 className="text-lg font-semibold">{user?.name}</h2>
+                  <h2 className="text-lg font-semibold">{user?.name}.....</h2>
                   <span className="flex items-center space-x-1">
                     <Link
                       to={`/shop/${shopInfo?.shopId}`}

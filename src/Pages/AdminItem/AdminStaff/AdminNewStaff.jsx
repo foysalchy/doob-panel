@@ -33,8 +33,12 @@ const AdminNewStaff = () => {
   };
 
   const options = [
-    { name: "Blogs", route: "blog" },
     { name: "Manage Product", route: "manage-product" },
+    { name: "Orders", route: "seller-order-management" },
+    { name: "Blogs", route: "blog" },
+    { name: "Notice", route: "seller-notice" },
+    { name: "Report", route: "admin-sales" },
+    { name: "Users", route: "seller-management" },
     { name: "Manage Category", route: "manage-category" },
     { name: "Faq", route: "faq" },
     { name: "Category Management", route: "category-management" },
