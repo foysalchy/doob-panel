@@ -5,6 +5,7 @@ import OrderCkeckupRow from "./OrderCkeckupRow";
 
 const OrderCheckup = () => {
     const { checkUpData, setCheckUpData } = useContext(AuthContext);
+    console.log("🚀 ~ file: OrderCheckup.jsx:8 ~ OrderCheckup ~ checkUpData:", checkUpData)
     const [originalValue] = useState(checkUpData?.timestamp);
     const [formattedDate, setFormattedDate] = useState('');
 

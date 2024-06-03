@@ -17,22 +17,24 @@ const DarazOrderTable = ({
   const { shopInfo } = useContext(AuthContext);
 
   const {
-    data: tData = [],
+    data: sellerDarazOrders = [],
     refetch,
     isLoading,
   } = useQuery({
     queryKey: ["sellerDarazOrder"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/seller/daraz-order?id=${shopInfo._id}&status=${selectedValue}`
+        `http://localhost:5001/api/v1/seller/daraz-order?id=${shopInfo._id}&status=${selectedValue}`
       );
 
       const data = await res.json();
+      console.log(data, "datadata");
       return data.data;
     },
   });
 
-  // console.log(tData, "tData");
+  // console.log(sellerDarazOrders??sellerDarazOrders?.orders[0], "sellerDarazOrder");
+  console.log(selectedValue, sellerDarazOrders, "sellerDarazOrder");
 
   useEffect(() => {
     refetch();
@@ -42,19 +44,19 @@ const DarazOrderTable = ({
   const [currentPage, setCurrentPage] = useState(1);
 
   const filteredData = searchValue
-    ? tData?.orders?.filter((itm) => {
-      console.log(itm);
-      const order_id = itm?.order_id;
-      const order_idString = order_id?.toString(); // Convert to string
-      const isMatch = order_idString?.includes(searchValue);
-      if (isMatch) {
-        console.log("Filtered Item:", itm);
-      }
-      return isMatch;
-    })
-    : tData?.orders;
+    ? sellerDarazOrders?.orders?.filter((itm) => {
+        console.log(itm);
+        const order_id = itm?.order_id;
+        const order_idString = order_id?.toString(); // Convert to string
+        const isMatch = order_idString?.includes(searchValue);
+        if (isMatch) {
+          console.log("Filtered Item:", itm);
+        }
+        return isMatch;
+      })
+    : sellerDarazOrders?.orders;
 
-  console.log(filteredData);
+  // console.log(filteredData);
 
   const pageSize = 6;
   const startIndex = (currentPage - 1) * pageSize;
@@ -91,10 +93,11 @@ const DarazOrderTable = ({
           return (
             <li key={pageNumber}>
               <button
-                className={`block h-8 w-8 rounded border ${pageNumber === currentPage
-                  ? "border-blue-600 bg-blue-600 text-white"
-                  : "border-gray-900 bg-white text-center leading-8 text-gray-900"
-                  }`}
+                className={`block h-8 w-8 rounded border ${
+                  pageNumber === currentPage
+                    ? "border-blue-600 bg-blue-600 text-white"
+                    : "border-gray-900 bg-white text-center leading-8 text-gray-900"
+                }`}
                 onClick={() => handleChangePage(pageNumber)}
               >
                 {pageNumber}
@@ -122,14 +125,17 @@ const DarazOrderTable = ({
     <div className="">
       {!isLoading ? (
         <div>
-          {currentData?.length ?
+          {currentData?.length ? (
             <div className=" sm:-mx-6 lg:-mx-8">
               <div className=" py-2 sm:px-6 lg:px-8">
                 <div className="">
                   <table className="">
                     <thead className="border-b  font-medium  ">
                       <tr>
-                        <th scope="col" className="border-r px-2 py-4 font-[500]">
+                        <th
+                          scope="col"
+                          className="border-r px-2 py-4 font-[500]"
+                        >
                           <input
                             checked={selected.length === currentData?.length}
                             onChange={() => {
@@ -153,10 +159,16 @@ const DarazOrderTable = ({
                           scope="col"
                           className="border-r px-2 py-4 font-[500]"
                         ></th>
-                        <th scope="col" className="border-r px-2 py-4 font-[500]">
+                        <th
+                          scope="col"
+                          className="border-r px-2 py-4 font-[500]"
+                        >
                           Document
                         </th>
-                        <th scope="col" className="border-r px-2 py-4 font-[500]">
+                        <th
+                          scope="col"
+                          className="border-r px-2 py-4 font-[500]"
+                        >
                           Order No.
                         </th>
                         <th
@@ -213,11 +225,9 @@ const DarazOrderTable = ({
                 </div>
               </div>
             </div>
-            :
-            <div>
-              Here is no order found
-            </div>
-          }
+          ) : (
+            <div>Here is no order found</div>
+          )}
         </div>
       ) : (
         <h1>Loading......</h1>
