@@ -89,7 +89,11 @@ const ClimAndReturn = () => {
   }, [loadingAllNormalOrder, loadingDaraz, loadingSearchData]);
 
   console.log(loadingSearchData);
+  const [showAlert, setShowAlert] = useState(false);
+  const [note, setNote] = useState("");
 
+  const [isUpdateQuantity, setIsUpdateQuantity] = useState(false);
+  const [refundCheck, setRefundCheck] = useState(false);
   const handleSearch = async (e) => {
     e.preventDefault();
     const searchValue = e.target.search.value;
@@ -156,7 +160,7 @@ const ClimAndReturn = () => {
 
   const productStatusUpdate = (status, orderId) => {
     fetch(
-      `https://backend.doob.com.bd/api/v1/seller/order-status-update?orderId=${orderId}&status=${status}`,
+      `http://localhost:5001/api/v1/seller/order-status-update?orderId=${orderId}&status=${status}`,
       {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
@@ -166,6 +170,10 @@ const ClimAndReturn = () => {
       .then((res) => res.json())
       .then((data) => {
         refetch();
+        setShowAlert(false);
+        setNote("");
+        setIsUpdateQuantity(false);
+        setCartProducts([]);
       });
   };
 
@@ -226,27 +234,27 @@ const ClimAndReturn = () => {
   };
 
   const handleProductStatusUpdate = (orders) => {
-    fetch(`https://backend.doob.com.bd/api/v1/seller/order-quantity-update`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(orders),
-    })
+    fetch(
+      `http://localhost:5001/api/v1/seller/order-quantity-update?isUpdateQuantity=${isUpdateQuantity}&note=${note}`,
+      {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(orders),
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
         if (data.success) {
           productStatusUpdate("claim", orders._id);
         } else {
+          setShowAlert(false);
+          setNote("");
+          setIsUpdateQuantity(false);
           alert("Failed to Update");
         }
       });
   };
-
-  const [showAlert, setShowAlert] = useState(false);
-  const [note, setNote] = useState("");
-
-  const [isUpdateQuantity, setIsUpdateQuantity] = useState(false);
-  const [refundCheck, setRefundCheck] = useState(false);
 
   const viewDetails = (order) => {
     console.log(order);
@@ -423,10 +431,9 @@ const ClimAndReturn = () => {
 
           if (isConfirmedStockUpdate) {
             // If confirmed to update stock, call handleProductStatusUpdate
-
             if (status === "reject") {
               fetch(
-                `https://backend.doob.com.bd/api/v1/seller/order-quantity-update?isUpdateQuantity=${isUpdateQuantity}&note=${note}`,
+                `http://localhost:5001/api/v1/seller/order-quantity-update?isUpdateQuantity=${isUpdateQuantity}&note=${note}`,
                 {
                   method: "PUT",
                   headers: { "Content-Type": "application/json" },
@@ -436,11 +443,13 @@ const ClimAndReturn = () => {
                 .then((res) => res.json())
                 .then((data) => {
                   console.log(data);
-                  setShowAlert(false);
                   if (data.success) {
                     productStatusUpdate("reject", order._id);
                     refetch();
                   } else {
+                    setShowAlert(false);
+                    setNote("");
+                    setIsUpdateQuantity(false);
                     alert("Failed to Update");
                   }
                 });
@@ -499,7 +508,7 @@ const ClimAndReturn = () => {
         // console.log(rejectData);
         // return;
         fetch(
-          `https://backend.doob.com.bd/api/v1/seller/order-quantity-update`,
+          `http://localhost:5001/api/v1/seller/order-quantity-update?isUpdateQuantity=${isUpdateQuantity}&note=${note}`,
           {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
