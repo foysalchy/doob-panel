@@ -58,6 +58,9 @@ const AdminStaffManagement = () => {
       });
   }
 
+
+
+  console.log("check info", staffInfo);
   return (
     <div>
       <div className="h-0 w-0">
