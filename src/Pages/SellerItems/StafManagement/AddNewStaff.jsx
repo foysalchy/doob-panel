@@ -185,10 +185,10 @@ const AddNewStaff = () => {
             else {
                 user = { name: value.name, email: value.email, oldEmail: value.email };
             }
-            console.log(user);
+
 
             const permissions = selectedValue;
-            const data = { user, shopEmail: shopInfo?.shopEmail, permissions, role: user_role, oldEmail: user.email, };
+            const data = { user, shopEmail: shopInfo?._id, permissions, role: user_role, oldEmail: user.email, };
             console.log(data); const staffRoleResponse = await fetch(`https://backend.doob.com.bd/api/v1/seller/staff-add`, {
                 method: 'PATCH',
                 headers: {
@@ -302,7 +302,7 @@ const AddNewStaff = () => {
                     onChange={handleChange}
                 />
 
-                <input className='px-12 py-2 rounded-md bg-blue-500 text-white mt-6' type="submit" value="Add" />
+                <input className='px-12 py-2 cursor-pointer rounded-md bg-blue-500 text-white mt-6' type="submit" value="Add" />
             </form>
         </div>
     );

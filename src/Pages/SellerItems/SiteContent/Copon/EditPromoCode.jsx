@@ -10,8 +10,9 @@ import { useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import Select from "react-select";
 import { RxCross2 } from "react-icons/rx";
+import BrightAlert from "bright-alert";
 
-const EditPromoCode = ({ data, setOpenModal }) => { // Component name changed to EditPromo
+const EditPromoCode = ({ data, setOpenModal, refetch }) => { // Component name changed to EditPromo
     const { shopInfo } = useContext(AuthContext);
     const [uniq, setUniq] = useState(false);
     const [loading, setLoading] = useState(false);
@@ -105,13 +106,8 @@ const EditPromoCode = ({ data, setOpenModal }) => { // Component name changed to
                 .then((res) => res.json())
                 .then((data) => {
                     if (data.acknowledged) {
-                        Swal.fire({
-                            position: "top-end",
-                            icon: "success",
-                            title: "Promo code updated successfully",
-                            showConfirmButton: false,
-                            timer: 1500,
-                        });
+                        BrightAlert()
+                        refetch()
                         setOpenModal(false);
                         setLoading(false);
                     }

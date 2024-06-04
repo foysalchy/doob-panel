@@ -30,7 +30,7 @@ const OrderTable = ({
     queryKey: ["sellerOrder"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/seller/order?shopId=${shopInfo._id}`
+        `http://localhost:5001/api/v1/seller/order?shopId=${shopInfo._id}`
       );
       const data = await res.json();
       return data.data;
@@ -41,31 +41,32 @@ const OrderTable = ({
   const [currentPage, setCurrentPage] = useState(1);
 
   const filteredData = tData?.filter((item) => {
-    if (
-      searchValue === "" &&
-      selectedValue === "All" &&
-      (!selectedDate || new Date(item?.timestamp) >= selectedDate)
-    ) {
-      return true; // Include all items when searchValue is empty and selectedValue is "All" and timestamp is greater than or equal to selectedDate
-    } else if (
-      selectedValue === "pending" &&
-      (!selectedDate || new Date(item?.timestamp) >= selectedDate)
-    ) {
+    const timestampValid = !selectedDate || new Date(item?.timestamp) >= new Date(selectedDate);
+
+    if (searchValue === "" && selectedValue === "All" && timestampValid) {
+      // Include all items when searchValue is empty, selectedValue is "All", and timestamp is valid
+      return true;
+    }
+
+    if (selectedValue === "pending" && timestampValid) {
+      // Include items with a pending status
       return !item?.status;
-    } else if (
-      searchValue &&
-      (!selectedDate || new Date(item?.timestamp) >= selectedDate)
-    ) {
-      return item?._id?.toLowerCase().includes(searchValue.toLowerCase()); // Filter by _id
-    } else if (
-      selectedValue &&
-      (!selectedDate || new Date(item?.timestamp) >= selectedDate)
-    ) {
+    }
+
+    if (searchValue && timestampValid) {
+      // Filter by _id, converting _id to a string before comparison
+      return item.orderNumber.includes(searchValue.toLowerCase());
+    }
+
+    if (selectedValue && timestampValid) {
+      // Filter by status
       return item?.status === selectedValue;
     }
 
-    return false; // Exclude items that don't meet any condition
+    // Exclude items that don't meet any condition
+    return false;
   });
+
 
   useState(() => {
     orderCounts = ordersNav.map((navItem) => {
@@ -391,16 +392,13 @@ const OrderTable = ({
   };
 
   console.log(currentItems, "currentItems");
+  const [rejectNote, setRejectNote] = useState(false)
 
   const showRejectNode = (item) => {
     // console.log("item", item);
+    setRejectNote(item)
 
-    Swal.fire({
-      title: "Rejected Note",
-      // showCancelButton: true,
-      confirmButtonText: "OK",
-      text: item?.rejectNote,
-    });
+
   };
 
   return (
@@ -449,6 +447,9 @@ const OrderTable = ({
                     </th>
                     <th scope="col" className="border-r px-2 py-4 font-[500]">
                       courier_status
+                    </th>
+                    <th scope="col" className="border-r px-2 py-4 font-[500]">
+                      courier_name
                     </th>
                     <th scope="col" className="border-r px-2 py-4 font-[500]">
                       courier_id
@@ -527,6 +528,9 @@ const OrderTable = ({
                         </td>
                         <td className="border-r px-6 py-4">
                           {item?.courier_status}
+                        </td>
+                        <td className="border-r px-6 py-4">
+                          {item?.courier_name}
                         </td>
                         <td className="border-r px-6 py-4">
                           {item?.courier_id}
@@ -878,6 +882,23 @@ const OrderTable = ({
           </ul>
         </nav>
       </div>
+      {console.log(rejectNote)}
+
+      {rejectNote && <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+        <div className="bg-white p-4 rounded shadow-lg w-1/3">
+          <div className="flex justify-between">
+            <h1>Reject Note</h1>
+            <button onClick={() => setRejectNote(false)} className="text-gray-500 hover:text-gray-700">
+              &times;
+            </button>
+          </div>
+          <div>
+            <h1>Status: {rejectNote.rejectStatus}</h1>
+            <h1>Message: {rejectNote.rejectNote}</h1>
+
+          </div>
+        </div>
+      </div>}
     </div>
   );
 };

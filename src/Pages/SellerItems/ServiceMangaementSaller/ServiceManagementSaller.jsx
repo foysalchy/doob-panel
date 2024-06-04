@@ -34,30 +34,37 @@ const ServiceManagementSaller = () => {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
 
-  console.log(filteredData);
+
 
   const searchItem = () => {
-    if (input === "" && startDate === "" && endDate === "") {
-      setFilteredData(serviceOrder);
-    } else {
-      const filteredServiceOrder = serviceOrder.filter((order) => {
-        const matchesSearch = Object.values(order).some(
-          (value) =>
-            typeof value === "string" &&
-            value.toLowerCase().includes(input.toLowerCase())
-        );
-
-        const matchesDateRange =
-          startDate && endDate
-            ? new Date(order.timestamp) >= new Date(startDate) &&
-              new Date(order.timestamp) <= new Date(endDate)
-            : true;
-
-        return matchesSearch && matchesDateRange;
-      });
-
-      setFilteredData(filteredServiceOrder);
+    // Check if all filter fields are empty
+    if (!input && !startDate && !endDate) {
+      setFilteredData(serviceOrder); // Set the initial state to show all service orders
+      return; // Exit the function early
     }
+
+    // Filter service orders based on input and date range
+    const filteredServiceOrder = serviceOrder.filter((order) => {
+      // Check if any value in the order matches the search input
+      const matchesSearch = Object.values(order).some(
+        (value) =>
+          typeof value === "string" &&
+          value.toLowerCase().includes(input.toLowerCase())
+      );
+
+      // Check if the order timestamp falls within the date range
+      const matchesDateRange =
+        startDate && endDate
+          ? new Date(order.timestamp) >= new Date(startDate) &&
+          new Date(order.timestamp) <= new Date(endDate)
+          : true;
+
+      // Return true if both conditions are met
+      return matchesSearch && matchesDateRange;
+    });
+
+    // Set the filtered data to the state
+    setFilteredData(filteredServiceOrder);
   };
 
   const handleDateRangeChange = (e) => {
@@ -110,11 +117,10 @@ const ServiceManagementSaller = () => {
           return (
             <li key={pageNumber}>
               <button
-                className={`block h-8 w-8 rounded border ${
-                  pageNumber === currentPage
-                    ? "border-blue-600 bg-blue-600 text-white"
-                    : "border-gray-900 bg-white text-center leading-8 text-gray-900"
-                }`}
+                className={`block h-8 w-8 rounded border ${pageNumber === currentPage
+                  ? "border-blue-600 bg-blue-600 text-white"
+                  : "border-gray-900 bg-white text-center leading-8 text-gray-900"
+                  }`}
                 onClick={() => handleChangePage(pageNumber)}
               >
                 {pageNumber}

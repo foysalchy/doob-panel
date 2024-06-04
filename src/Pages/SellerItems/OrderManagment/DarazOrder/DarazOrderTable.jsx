@@ -28,7 +28,7 @@ const DarazOrderTable = ({
       );
 
       const data = await res.json();
-      console.log(data, "datadata");
+  
       return data.data;
     },
   });

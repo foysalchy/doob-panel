@@ -67,7 +67,7 @@ const Pos = () => {
     const filteredData = searchValue == '' ? productList : productList?.filter((itm) => itm.name.toLowerCase().includes(searchValue.toLowerCase()) || itm._id.includes(searchValue));
 
 
-
+    
 
 
     const handleSearch = (e) => {

@@ -24,8 +24,8 @@ const SellerStockManagement = () => {
   });
   const filteredStockRequest = searchQuery
     ? stockRequestData.filter((item) =>
-        item._id.toLowerCase().includes(searchQuery.toLowerCase())
-      )
+      item._id.toLowerCase().includes(searchQuery.toLowerCase())
+    )
     : stockRequestData;
 
   // const filterData = stockRequest.filter(itm => itm?._id.toLowerCase().includes(searchValue.toLowerCase()));
@@ -123,7 +123,7 @@ const SellerStockManagement = () => {
 
           // Make the fetch call inside the preConfirm callback
           return fetch(
-            `https://backend.doob.com.bd/api/v1/admin/stock-request-update?productId=${data?.productId}&orderId=${data?._id}&quantity=${data?.quantity}&SKU=${data?.SKU}`,
+            `http://localhost:5001/api/v1/admin/stock-request-update?productId=${data?.productId}&orderId=${data?._id}&quantity=${data?.quantity}&SKU=${data?.SKU}`,
             {
               method: "PUT",
               headers: {
@@ -151,7 +151,7 @@ const SellerStockManagement = () => {
 
       // Make the fetch call inside the preConfirm callback
       return fetch(
-        `https://backend.doob.com.bd/api/v1/admin/stock-request-update?productId=${data?.productId}&orderId=${data?._id}&quantity=${data?.quantity}&SKU=${data?.SKU}`,
+        `http://localhost:5001/api/v1/admin/stock-request-update?productId=${data?.productId}&orderId=${data?._id}&quantity=${data?.quantity}&SKU=${data?.SKU}`,
         {
           method: "PUT",
           headers: {

@@ -5,6 +5,7 @@ import DemoNav from './DemoNav';
 const SellerShopInfo = () => {
     return (
         <div className=' '>
+
             <div className='flex w-full gap-6  '>
                 <div className='sticky w-[320px]   mb-4 top-0 h-full min-h-screen  bg-gray-900 text-white'>
                     <DemoNav />

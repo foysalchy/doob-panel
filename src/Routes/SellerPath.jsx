@@ -35,6 +35,7 @@ import PosHistory from "../Pages/SellerItems/ReportManagement/PosHistory/PosHist
 import ReportManagement from "../Pages/SellerItems/ReportManagement/ReportManagement";
 import SalesHistory from "../Pages/SellerItems/ReportManagement/SalesHistory/SalesHistory";
 import SubscriberHisroy from "../Pages/SellerItems/ReportManagement/SubscriberHistory/SubscriberHisroy";
+import SubscriptionReport from "../Pages/SellerItems/ReportManagement/SubscriptiuonReport/SubscriptionReport";
 import SystemLog from "../Pages/SellerItems/ReportManagement/SystemLog/SystemLog";
 import UserSearchHistory from "../Pages/SellerItems/ReportManagement/UserSearchHistory/UserSearchHistory";
 import WarehouseHistory from "../Pages/SellerItems/ReportManagement/WarehouseHistory/WarehouseHistory";
@@ -457,7 +458,7 @@ const SellerPath = [
     element: <WarehouseHistory />,
   }, {
     path: "report-management/subscription-report",
-    element: <WarehouseHistory />,
+    element: <SubscriptionReport />,
   },
   {
     path: "report-management/subscriber-report",

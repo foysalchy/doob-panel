@@ -388,6 +388,7 @@ const CoponManagement = () => {
 
       {OpenModal && (
         <EditPromoCode
+          refetch={refetch}
           data={OpenModal}
           setOpenModal={setOpenModal}
 

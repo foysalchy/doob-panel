@@ -35,9 +35,7 @@ const RevewModal = ({ oreder_review, setOrder_review }) => {
       stars.push(
         <button type="button" key={i} onClick={() => handleStarClick(i)}>
           <svg
-            className={`h-6 w-6 ${
-              isGold ? "text-yellow-400" : "text-gray-300 dark:text-gray-600"
-            }`}
+            className={`h-6 w-6  ${isGold ? "bg-yellow-500" : "bg-gray-500"}`}
             fill="currentColor"
             viewBox="0 0 20 20"
             xmlns="http://www.w3.org/2000/svg"
@@ -190,11 +188,10 @@ const RevewModal = ({ oreder_review, setOrder_review }) => {
                 Cancel
               </button>
               <button
-                className={`rounded-md bg-primary px-4 py-2 text-sm font-medium text-white ${
-                  loader
-                    ? "opacity-50 cursor-not-allowed"
-                    : "hover:bg-primary-600"
-                } focus:outline-none focus:ring-2 focus:ring-primary-500 dark:bg-primary-600 dark:hover:bg-primary-700`}
+                className={`rounded-md bg-primary px-4 py-2 text-sm font-medium text-white ${loader
+                  ? "opacity-50 cursor-not-allowed"
+                  : "hover:bg-primary-600"
+                  } focus:outline-none focus:ring-2 focus:ring-primary-500 dark:bg-primary-600 dark:hover:bg-primary-700`}
                 type="submit"
                 disabled={loader}
               >

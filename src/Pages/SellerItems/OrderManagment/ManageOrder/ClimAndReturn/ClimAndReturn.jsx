@@ -618,9 +618,9 @@ const ClimAndReturn = () => {
   //   });
   // };
 
-  console.log(currentItems, "currentItems");
-  console.log(selectSearchCategory);
-  console.log(emptyOrder);
+
+  const [rejectNote, setMessage] = useState(false)
+
   return (
     <div className="flex flex-col overflow-hidden mt-4">
       <div className="my-4 overflo">
@@ -877,12 +877,14 @@ const ClimAndReturn = () => {
                           {ratial_price(item?.productList)}
                         </td>
                         <td className="border-r px-6 py-4">
-                          {item?.status ? item?.status : "Pending"}
-                          {item?.daraz ? (
-                            <span className="text-yellow-600">Daraz</span>
-                          ) : (
-                            ""
-                          )}
+                          {item?.status === "return" ? <button onClick={() => setMessage(item)}> Show Message</button> : <div >
+                            {item?.status ? item?.status : "Pending"}
+                            {item?.daraz ? (
+                              <span className="text-yellow-600">Daraz</span>
+                            ) : (
+                              ""
+                            )}
+                          </div>}
                         </td>
                         <td className="border-r px-6 py-4 flex items-center gap-2">
                           <td className="whitespace-nowrap  px-6 py-4 text-[16px] font-[400] flex flex-col gap-2">
@@ -952,6 +954,25 @@ const ClimAndReturn = () => {
                             </div>
                           </div>
                         </td>
+
+                        {rejectNote && <div className="fixed inset-0 z-50 flex items-center justify-center text-start bg-black bg-opacity-50">
+                          <div className="bg-white p-4 rounded shadow-lg w-1/3">
+                            <div className="flex justify-between">
+                              <h1 className="text-xl">Reject Note</h1>
+                              <button onClick={() => setMessage(false)} className="text-gray-500 text-xl hover:text-gray-700">
+                                &times;
+                              </button>
+                            </div>
+                            <div>
+                              <h1>Status: {rejectNote.rejectStatus}</h1>
+                              <h1>Message: {rejectNote.rejectNote}</h1>
+
+                            </div>
+                          </div>
+                        </div>}
+
+
+
                       </tr>
                       {/* {item._id === readyToShip._id && (
                                             <tr>
@@ -960,18 +981,20 @@ const ClimAndReturn = () => {
                                                 </td>
                                             </tr>
                                         )} */}
-                      {item._id === modalOn && (
-                        <tr>
-                          <td colSpan="10">
-                            <OrderAllinfoModal
-                              status={item?.status ? item?.status : "Pending"}
-                              setModalOn={setModalOn}
-                              modalOn={modalOn}
-                              productList={item?.productList}
-                            />
-                          </td>
-                        </tr>
-                      )}
+                      {
+                        item._id === modalOn && (
+                          <tr>
+                            <td colSpan="10">
+                              <OrderAllinfoModal
+                                status={item?.status ? item?.status : "Pending"}
+                                setModalOn={setModalOn}
+                                modalOn={modalOn}
+                                productList={item?.productList}
+                              />
+                            </td>
+                          </tr>
+                        )
+                      }
                     </React.Fragment>
                   ))
                 )}
@@ -980,7 +1003,7 @@ const ClimAndReturn = () => {
           </div>
         </div>
       </div>
-    </div>
+    </div >
   );
 };
 
