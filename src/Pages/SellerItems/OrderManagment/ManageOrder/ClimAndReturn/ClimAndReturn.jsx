@@ -60,7 +60,7 @@ const ClimAndReturn = () => {
       return data.data;
     },
   });
-  console.log(totalWooOrderData, "totalWooOrderData");
+  console.log(loadingWoo, totalWooOrderData, "totalWooOrderData");
   console.log(totalDarazOrderedData);
 
   const [cartProducts, setCartProducts] = useState([]);
@@ -112,7 +112,7 @@ const ClimAndReturn = () => {
 
   console.log(loadingSearchData);
   const [showAlert, setShowAlert] = useState(false);
-  const [note, setNote] = useState("");
+  const [approveNote, setapproveNote] = useState("");
 
   const [isUpdateQuantity, setIsUpdateQuantity] = useState(false);
   const [refundCheck, setRefundCheck] = useState(false);
@@ -205,20 +205,21 @@ const ClimAndReturn = () => {
     return finalDate;
   };
 
-  const productStatusUpdate = (status, orderId) => {
+  console.log(approveNote);
+  const productStatusUpdate = (status, order) => {
     fetch(
-      `https://backend.doob.com.bd/api/v1/seller/order-status-update?orderId=${orderId}&status=${status}`,
+      `https://backend.doob.com.bd/api/v1/seller/order-status-update?orderId=${order?._id}&status=${status}`,
       {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ status, orderId }),
+        body: JSON.stringify({ status, orderId: order?._id, approveNote }),
       }
     )
       .then((res) => res.json())
       .then((data) => {
         refetch();
         setShowAlert(false);
-        setNote("");
+        setapproveNote("");
         setSelectAll(!selectAll);
         setIsUpdateQuantity(false);
         setCartProducts([]);
@@ -283,7 +284,7 @@ const ClimAndReturn = () => {
 
   const handleProductStatusUpdate = (order) => {
     fetch(
-      `https://backend.doob.com.bd/api/v1/seller/order-quantity-update?isUpdateQuantity=${isUpdateQuantity}&note=${note}`,
+      `https://backend.doob.com.bd/api/v1/seller/order-quantity-update?isUpdateQuantity=${isUpdateQuantity}&note=${approveNote}`,
       {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
@@ -294,11 +295,11 @@ const ClimAndReturn = () => {
       .then((data) => {
         console.log(data);
         if (data.success) {
-          productStatusUpdate("claim", order._id);
+          productStatusUpdate("claim", order);
         } else {
           setShowAlert(false);
           setSelectAll(!selectAll);
-          setNote("");
+          setapproveNote("");
           setIsUpdateQuantity(false);
           alert("Failed to Update");
         }
@@ -343,36 +344,36 @@ const ClimAndReturn = () => {
       .then((data) => alert(` Successfully Done!`));
   };
   const [file, setFile] = useState();
-  const cancelNoteSubmit = () => {
-    console.log({
-      isChecked: isUpdateQuantity,
-      refundCheck,
-      note,
-      file,
-      showAlert,
-    });
+  // const cancelNoteSubmit = () => {
+  //   console.log({
+  //     isChecked: isUpdateQuantity,
+  //     refundCheck,
+  //     note: approveNote,
+  //     file,
+  //     showAlert,
+  //   });
 
-    if (isUpdateQuantity && !refundCheck) {
-      handleProductStatusUpdate(showAlert);
-      updateOrderInfo(note, file, showAlert._id);
-      setShowAlert(false);
-    } else if (isUpdateQuantity && refundCheck) {
-      handleProductStatusUpdate(showAlert);
-      updateOrderInfo(note, file, showAlert._id);
-      setShowAlert(false);
-    } else {
-      updateOrderInfo(note, file, showAlert._id);
-      setShowAlert(false);
-    }
+  //   if (isUpdateQuantity && !refundCheck) {
+  //     handleProductStatusUpdate(showAlert);
+  //     updateOrderInfo(approveNote, file, showAlert._id);
+  //     setShowAlert(false);
+  //   } else if (isUpdateQuantity && refundCheck) {
+  //     handleProductStatusUpdate(showAlert);
+  //     updateOrderInfo(approveNote, file, showAlert._id);
+  //     setShowAlert(false);
+  //   } else {
+  //     updateOrderInfo(approveNote, file, showAlert._id);
+  //     setShowAlert(false);
+  //   }
 
-    // Perform your submit logic here, such as sending data to an API
+  //   // Perform your submit logic here, such as sending data to an API
 
-    // After submission, you might want to reset the state or close the modal
-    // setIsChecked(false);
-    // setRefundCheck(false);
-    // setNote('');
-    // setShowAlert(false);
-  };
+  //   // After submission, you might want to reset the state or close the modal
+  //   // setIsChecked(false);
+  //   // setRefundCheck(false);
+  //   // setNote('');
+  //   // setShowAlert(false);
+  // };
 
   const handleFileChange = async (event) => {
     const file = event.target.files[0];
@@ -482,7 +483,7 @@ const ClimAndReturn = () => {
             // If confirmed to update stock, call handleProductStatusUpdate
             if (status === "reject") {
               fetch(
-                `https://backend.doob.com.bd/api/v1/seller/order-quantity-update?isUpdateQuantity=${isUpdateQuantity}&note=${note}`,
+                `https://backend.doob.com.bd/api/v1/seller/order-quantity-update?isUpdateQuantity=${isUpdateQuantity}&note=${approveNote}`,
                 {
                   method: "PUT",
                   headers: { "Content-Type": "application/json" },
@@ -493,12 +494,36 @@ const ClimAndReturn = () => {
                 .then((data) => {
                   console.log(data);
                   if (data.success) {
-                    productStatusUpdate("reject", order._id);
+                    if (order.daraz || order.woo) {
+                      fetch(
+                        `https://backend.doob.com.bd/api/v1/seller/claim-order-add`,
+                        {
+                          method: "PUT",
+                          headers: { "Content-Type": "application/json" },
+                          body: JSON.stringify({
+                            ...order,
+                            status,
+                            approveNote,
+                          }),
+                        }
+                      )
+                        .then((res) => res.json())
+                        .then((data) => {
+                          refetch();
+                          setShowAlert(false);
+                          setapproveNote("");
+                          setSelectAll(!selectAll);
+                          setIsUpdateQuantity(false);
+                          setCartProducts([]);
+                        });
+                    } else {
+                      productStatusUpdate(status, order);
+                    }
                     refetch();
                   } else {
                     // setShowAlert(false);
 
-                    setNote("");
+                    setapproveNote("");
                     setIsUpdateQuantity(false);
                     alert("Failed to Update");
                     setSelectAll(!selectAll);
@@ -510,9 +535,9 @@ const ClimAndReturn = () => {
           } else {
             // If not confirmed to update stock, call productStatusUpdate for claim
             if (status === "reject") {
-              productStatusUpdate("reject", order?._id);
+              productStatusUpdate("reject", order);
             } else {
-              productStatusUpdate("claim", order?._id);
+              productStatusUpdate("claim", order);
             }
           }
         });
@@ -532,68 +557,68 @@ const ClimAndReturn = () => {
 
   const [isReject, setReject] = useState(false);
 
-  const update_all_status_reject = (item) => {
-    Swal.fire({
-      title: "Do you want to reject All Order?",
-      showCancelButton: true,
-      confirmButtonText: "Reject",
-      input: "textarea", // Add a textarea input
-      inputPlaceholder: "Enter your rejection reason here", // Placeholder for the textarea
-      inputAttributes: {
-        // Optional attributes for the textarea
-        maxLength: 100, // Set maximum length
-      },
-    }).then((result) => {
-      const rejectNote = result.value; // Get the value entered in the textarea
-      // Now you can use the rejection reason as needed
-      console.log(rejectNote, item?._id);
+  // const update_all_status_reject = (item) => {
+  //   Swal.fire({
+  //     title: "Do you want to reject All Order?",
+  //     showCancelButton: true,
+  //     confirmButtonText: "Reject",
+  //     input: "textarea", // Add a textarea input
+  //     inputPlaceholder: "Enter your rejection reason here", // Placeholder for the textarea
+  //     inputAttributes: {
+  //       // Optional attributes for the textarea
+  //       maxLength: 100, // Set maximum length
+  //     },
+  //   }).then((result) => {
+  //     const rejectNote = result.value; // Get the value entered in the textarea
+  //     // Now you can use the rejection reason as needed
+  //     console.log(rejectNote, item?._id);
 
-      ordersList.forEach((order) => {
-        console.log(order, "order");
+  //     ordersList.forEach((order) => {
+  //       console.log(order, "order");
 
-        const rejectData = {
-          status: "return",
-          orderId: order?._id,
-          rejectNote: rejectNote,
-        };
-        // console.log(rejectData);
-        // return;
-        fetch(
-          `https://backend.doob.com.bd/api/v1/seller/order-quantity-update?isUpdateQuantity=${isUpdateQuantity}&note=${note}`,
-          {
-            method: "PUT",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(order),
-          }
-        )
-          .then((res) => res.json())
-          .then((data) => {
-            console.log(data);
-            if (data.success) {
-              // productStatusUpdate("reject", order._id);
-              fetch(
-                `https://backend.doob.com.bd/api/v1/seller/order-status-update?orderId=${order?._id}&status=return`,
-                {
-                  method: "PUT",
-                  headers: { "Content-Type": "application/json" },
-                  body: JSON.stringify({
-                    ...rejectData,
-                  }),
-                }
-              )
-                .then((res) => res.json())
-                .then((data) => {
-                  refetch();
-                });
-              refetch();
-            } else {
-              alert("Failed to Update");
-            }
-          });
-      });
-      // return;
-    });
-  };
+  //       const rejectData = {
+  //         status: "return",
+  //         orderId: order?._id,
+  //         rejectNote: rejectNote,
+  //       };
+  //       // console.log(rejectData);
+  //       // return;
+  //       fetch(
+  //         `https://backend.doob.com.bd/api/v1/seller/order-quantity-update?isUpdateQuantity=${isUpdateQuantity}&note=${note}`,
+  //         {
+  //           method: "PUT",
+  //           headers: { "Content-Type": "application/json" },
+  //           body: JSON.stringify(order),
+  //         }
+  //       )
+  //         .then((res) => res.json())
+  //         .then((data) => {
+  //           console.log(data);
+  //           if (data.success) {
+  //             // productStatusUpdate("reject", order._id);
+  //             fetch(
+  //               `https://backend.doob.com.bd/api/v1/seller/order-status-update?orderId=${order?._id}&status=return`,
+  //               {
+  //                 method: "PUT",
+  //                 headers: { "Content-Type": "application/json" },
+  //                 body: JSON.stringify({
+  //                   ...rejectData,
+  //                 }),
+  //               }
+  //             )
+  //               .then((res) => res.json())
+  //               .then((data) => {
+  //                 refetch();
+  //               });
+  //             refetch();
+  //           } else {
+  //             alert("Failed to Update");
+  //           }
+  //         });
+  //     });
+  //     // return;
+  //   });
+  // };
 
   console.log(currentItems, "currentItems");
   console.log(selectSearchCategory);
@@ -684,8 +709,8 @@ const ClimAndReturn = () => {
 
                     <div className="mt-2 w-full">
                       <textarea
-                        value={note}
-                        onChange={(e) => setNote(e.target.value)}
+                        value={approveNote}
+                        onChange={(e) => setapproveNote(e.target.value)}
                         rows="4"
                         cols="10"
                         className="shadow-sm w-full p-2 focus:ring-blue-500 focus:border-blue-500 mt-1 block  sm:text-sm border-gray-300 rounded-md"
@@ -864,7 +889,7 @@ const ClimAndReturn = () => {
                                 </button>
                                 <button
                                   onClick={() =>
-                                    productStatusUpdate("failed", item?._id)
+                                    productStatusUpdate("failed", item)
                                   }
                                   className="text-[16px] font-[400] text-blue-700"
                                 >

@@ -97,28 +97,53 @@ export default function RejectModal({
         .then((data) => {
           console.log(data);
           if (data.success) {
-            // productStatusUpdate("reject", order._id);
-            fetch(
-              `https://backend.doob.com.bd/api/v1/seller/order-status-update?orderId=${order?._id}&status=return`,
-              {
-                method: "PUT",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                  ...rejectData,
-                }),
-              }
-            )
-              .then((res) => res.json())
-              .then((data) => {
-                console.log(
-                  "🚀 ~ file: RejectModal.jsx:113 ~ .then ~ data:",
-                  data
-                );
-                refetch();
-                setReject(false);
-                setIsLoading(false);
-              });
+            if (order.daraz || order.woo) {
+              fetch(
+                `https://backend.doob.com.bd/api/v1/seller/claim-order-add`,
+                {
+                  method: "PUT",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({
+                    ...order,
+                    status: "return",
+                    approveNote,
+                  }),
+                }
+              )
+                .then((res) => res.json())
+                .then((data) => {
+                  refetch();
+                  setShowAlert(false);
+                  setapproveNote("");
+                  setSelectAll(!selectAll);
+                  setIsUpdateQuantity(false);
+                  setCartProducts([]);
+                });
+            } else {
+              fetch(
+                `https://backend.doob.com.bd/api/v1/seller/order-status-update?orderId=${order?._id}&status=return`,
+                {
+                  method: "PUT",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({
+                    ...rejectData,
+                  }),
+                }
+              )
+                .then((res) => res.json())
+                .then((data) => {
+                  console.log(
+                    "🚀 ~ file: RejectModal.jsx:113 ~ .then ~ data:",
+                    data
+                  );
+                  refetch();
+                  setReject(false);
+                  setIsLoading(false);
+                });
+            }
             refetch();
+
+            // productStatusUpdate("reject", order._id);
           } else {
             alert("Failed to Update");
           }
