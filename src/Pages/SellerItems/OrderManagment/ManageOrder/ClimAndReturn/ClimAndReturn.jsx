@@ -30,7 +30,7 @@ const ClimAndReturn = () => {
       return data.data;
     },
   });
-  
+
   const {
     data: totalDarazOrderedData = [],
     refetchDarazData,
@@ -257,6 +257,7 @@ const ClimAndReturn = () => {
   };
 
   const handleProductStatusUpdate = (order) => {
+    console.log(order);
     fetch(
       `https://backend.doob.com.bd/api/v1/seller/order-quantity-update?isUpdateQuantity=${isUpdateQuantity}&note=${approveNote}`,
       {
@@ -269,7 +270,29 @@ const ClimAndReturn = () => {
       .then((data) => {
         console.log(data);
         if (data.success) {
-          productStatusUpdate("claim", order);
+          if (order.daraz || order.woo) {
+            fetch(`https://backend.doob.com.bd/api/v1/seller/claim-order-add`, {
+              method: "PUT",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                ...order,
+                status: "claim",
+                approveNote,
+              }),
+            })
+              .then((res) => res.json())
+              .then((data) => {
+                refetch();
+                setShowAlert(false);
+                setapproveNote("");
+                setSelectAll(!selectAll);
+                setIsUpdateQuantity(false);
+                setCartProducts([]);
+              });
+          } else {
+            productStatusUpdate("claim", order);
+          }
+          // productStatusUpdate("claim", order);
         } else {
           setShowAlert(false);
           setSelectAll(!selectAll);
@@ -468,6 +491,7 @@ const ClimAndReturn = () => {
                 .then((data) => {
                   console.log(data);
                   if (data.success) {
+                    console.log(order);
                     if (order.daraz || order.woo) {
                       fetch(
                         `https://backend.doob.com.bd/api/v1/seller/claim-order-add`,

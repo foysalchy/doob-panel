@@ -90,7 +90,7 @@ const NewProducts = () => {
                         <div className="relative h-[180px] sm:h-[250px]">
                           <img
                             src={
-                              product?.featuredImage.src
+                              product?.featuredImage?.src
                                 ? product?.featuredImage?.src
                                 : product?.images[0]?.src
                             }
