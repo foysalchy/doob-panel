@@ -24,15 +24,16 @@ const ProductGallery = () => {
   return (
     <div>
       <div className=" mt-[20px] grid grid-cols-2 gap-4 lg:grid-cols-4 ">
-        {featureImageData?.map((itm) => (
-          <a key={itm?._id} target="_blank" href={`//${itm?.link}`} >
-            <img
-              src={itm?.image}
-              alt=""
-              className="w-full border rounded-xl h-full object-cover"
-            />
-          </a>
-        ))}
+        {featureImageData?.length > 0 &&
+          featureImageData?.map((itm) => (
+            <a key={itm?._id} target="_blank" href={`//${itm?.link}`}>
+              <img
+                src={itm?.image}
+                alt=""
+                className="w-full border rounded-xl h-full object-cover"
+              />
+            </a>
+          ))}
       </div>
       {/* <Swiper
         pagination={true}

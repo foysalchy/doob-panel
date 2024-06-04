@@ -22,6 +22,7 @@ const AdminFeatureImage = () => {
     },
   });
 
+  console.log(featureImage);
   const [deleteId, setDeletId] = useState("");
   const [deletePopUp, setDeletePopUp] = useState(false);
   const [isDelete, setIsDelete] = useState(false);
@@ -299,16 +300,18 @@ const AdminFeatureImage = () => {
                   </td>
 
                   <div
-                    className={`fixed z-[100] flex items-center justify-center ${openModal?._id === itm?._id
-                      ? "opacity-1 visible"
-                      : "invisible opacity-0"
-                      } inset-0 bg-black/20 backdrop-blur-sm duration-100`}
+                    className={`fixed z-[100] flex items-center justify-center ${
+                      openModal?._id === itm?._id
+                        ? "opacity-1 visible"
+                        : "invisible opacity-0"
+                    } inset-0 bg-black/20 backdrop-blur-sm duration-100`}
                   >
                     <div
-                      className={`absolute md:w-[500px] w-full rounded-sm bg-white p-3 pb-5 text-center drop-shadow-2xl ${openModal?._id === itm?._id
-                        ? "scale-1 opacity-1 duration-300"
-                        : "scale-0 opacity-0 duration-150"
-                        } `}
+                      className={`absolute md:w-[500px] w-full rounded-sm bg-white p-3 pb-5 text-center drop-shadow-2xl ${
+                        openModal?._id === itm?._id
+                          ? "scale-1 opacity-1 duration-300"
+                          : "scale-0 opacity-0 duration-150"
+                      } `}
                     >
                       <svg
                         onClick={() => setOpenModal(false)}

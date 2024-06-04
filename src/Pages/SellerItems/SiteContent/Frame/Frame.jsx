@@ -24,8 +24,6 @@ const Frame = () => {
     }
   };
 
-
-
   const [loading, setLoading] = useState(false);
   const UploadFrame = async (e) => {
     e.preventDefault();
@@ -56,7 +54,7 @@ const Frame = () => {
   }
 
   const postSlider = (Slider) => {
-    fetch(`http://localhost:5001/api/v1/seller/watermark`, {
+    fetch(`https://backend.doob.com.bd/api/v1/seller/watermark`, {
       method: "PATCH",
       headers: {
         "content-type": "application/json",
@@ -65,7 +63,7 @@ const Frame = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        BrightAlert(data.message, '', data.status)
+        BrightAlert(data.message, "", data.status);
         setLoading(false);
         setPreviewUrl("");
         setFileName("");
@@ -75,7 +73,6 @@ const Frame = () => {
 
   return (
     <div>
-
       <div>
         <div className=" border-black p-10 rounded border-dashed border-2  my-4">
           <form onSubmit={UploadFrame} action="">
@@ -122,8 +119,6 @@ const Frame = () => {
                 onChange={handleFileChange}
               />
             </label>
-
-
 
             <button
               type="submit"

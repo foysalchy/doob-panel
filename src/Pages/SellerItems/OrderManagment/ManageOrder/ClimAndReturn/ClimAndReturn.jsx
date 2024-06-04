@@ -30,6 +30,7 @@ const ClimAndReturn = () => {
       return data.data;
     },
   });
+
   const {
     data: totalDarazOrderedData = [],
     refetchDarazData,
@@ -41,7 +42,7 @@ const ClimAndReturn = () => {
         `https://backend.doob.com.bd/api/v1/seller/daraz-order-claimed?id=${shopInfo._id}&status=All`
       );
       const data = await res.json();
-      console.log(data);
+      // console.log(data);
       return data.data;
     },
   });
@@ -65,12 +66,12 @@ const ClimAndReturn = () => {
 
   const [cartProducts, setCartProducts] = useState([]);
   const [loadingSearchData, setLoadingSearchData] = useState(false);
+  const [emptyOrder, setEmptyOrder] = useState(false);
 
   const [selectSearchCategory, setSelectSearchCategory] = useState({
     label: "Site Order",
     value: "Site Order",
   });
-
 
   console.log(loadingSearchData);
   const [showAlert, setShowAlert] = useState(false);
@@ -82,6 +83,7 @@ const ClimAndReturn = () => {
     e.preventDefault();
     const searchValue = e.target.search.value;
     console.log("🚀 ~ handleSearch ~ searchValue:", searchValue);
+    setEmptyOrder(false);
 
     setLoadingSearchData(true);
     const foundProducts = [];
@@ -94,6 +96,8 @@ const ClimAndReturn = () => {
 
       if (findNormalProduct) {
         foundProducts.push(findNormalProduct);
+      } else {
+        setEmptyOrder({ message: "Not Found Any Order" });
       }
       setLoadingSearchData(false);
     } else if (selectSearchCategory.value === "Daraz Order") {
@@ -109,10 +113,14 @@ const ClimAndReturn = () => {
 
         if (findDarazProduct) {
           foundProducts.push(findDarazProduct);
+        } else {
+          // setEmptyOrder("Not Found Daraz Order");
+          setEmptyOrder({ message: "Not Found Daraz Order" });
         }
         setLoadingSearchData(false);
       } else {
         setLoadingSearchData(true);
+        setEmptyOrder({ message: "Not Found Daraz Order" });
       }
     } else if (selectSearchCategory.value === "Woo Order") {
       if (!loadingWoo && totalWooOrderData.length > 0) {
@@ -121,10 +129,14 @@ const ClimAndReturn = () => {
         );
         if (findWooProduct) {
           foundProducts.push(findWooProduct);
+        } else {
+          // setEmptyOrder("Not Found Woo Order");
+          setEmptyOrder({ message: "Not Found Woo Order" });
         }
         setLoadingSearchData(false);
       } else {
         setLoadingSearchData(false);
+        setEmptyOrder({ message: "Not Found Any Order" });
       }
     }
 
@@ -245,6 +257,7 @@ const ClimAndReturn = () => {
   };
 
   const handleProductStatusUpdate = (order) => {
+    console.log(order);
     fetch(
       `https://backend.doob.com.bd/api/v1/seller/order-quantity-update?isUpdateQuantity=${isUpdateQuantity}&note=${approveNote}`,
       {
@@ -257,7 +270,29 @@ const ClimAndReturn = () => {
       .then((data) => {
         console.log(data);
         if (data.success) {
-          productStatusUpdate("claim", order);
+          if (order.daraz || order.woo) {
+            fetch(`https://backend.doob.com.bd/api/v1/seller/claim-order-add`, {
+              method: "PUT",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                ...order,
+                status: "claim",
+                approveNote,
+              }),
+            })
+              .then((res) => res.json())
+              .then((data) => {
+                refetch();
+                setShowAlert(false);
+                setapproveNote("");
+                setSelectAll(!selectAll);
+                setIsUpdateQuantity(false);
+                setCartProducts([]);
+              });
+          } else {
+            productStatusUpdate("claim", order);
+          }
+          // productStatusUpdate("claim", order);
         } else {
           setShowAlert(false);
           setSelectAll(!selectAll);
@@ -456,6 +491,7 @@ const ClimAndReturn = () => {
                 .then((data) => {
                   console.log(data);
                   if (data.success) {
+                    console.log(order);
                     if (order.daraz || order.woo) {
                       fetch(
                         `https://backend.doob.com.bd/api/v1/seller/claim-order-add`,
@@ -584,7 +620,7 @@ const ClimAndReturn = () => {
 
   console.log(currentItems, "currentItems");
   console.log(selectSearchCategory);
-
+  console.log(emptyOrder);
   return (
     <div className="flex flex-col overflow-hidden mt-4">
       <div className="my-4 overflo">
@@ -601,11 +637,12 @@ const ClimAndReturn = () => {
               cursor: "pointer",
             }),
           }}
+          defaultValue={{ label: "Site Order", value: "Site Order" }}
           onChange={setSelectSearchCategory}
           name="searchCategory"
           required
           options={[
-            { label: "All", value: "All" },
+            // { label: "All", value: "All" },
             { label: "Site Order", value: "Site Order" },
             { label: "Daraz Order", value: "Daraz Order" },
             { label: "Woo Order", value: "Woo Order" },
@@ -760,9 +797,19 @@ const ClimAndReturn = () => {
                 </tr>
               </thead>
               <tbody>
+                <h2 className="text-center ">
+                  {!loadingSearchData && emptyOrder?.message
+                    ? emptyOrder?.message
+                    : ""}
+                </h2>
                 {loadingSearchData ? (
                   <tr>
-                    <h2 className="text-center">Loading Orders </h2>
+                    <h2 className="text-center">
+                      {/* {emptyOrder?.message
+                        ? "Not Found Order"
+                        : "Loading Order...."} */}
+                      Loading Order....
+                    </h2>
                   </tr>
                 ) : (
                   currentItems?.map((item, index) => (
@@ -864,20 +911,22 @@ const ClimAndReturn = () => {
                           <div>
                             <div
                               onClick={() => setModalOn(false)}
-                              className={`fixed z-[100] flex items-center justify-center ${modalOn?._id === item?._id
-                                ? "visible opacity-100"
-                                : "invisible opacity-0"
-                                } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
+                              className={`fixed z-[100] flex items-center justify-center ${
+                                modalOn?._id === item?._id
+                                  ? "visible opacity-100"
+                                  : "invisible opacity-0"
+                              } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
                             >
                               <div
                                 onClick={(e_) => e_.stopPropagation()}
-                                className={`text- absolute w-[500px] rounded-sm bg-white p-6 drop-shadow-lg dark:bg-black dark:text-white ${modalOn?._id === item?._id
-                                  ? "scale-1 opacity-1 duration-300"
-                                  : "scale-0 opacity-0 duration-150"
-                                  }`}
+                                className={`text- absolute w-[500px] rounded-sm bg-white p-6 drop-shadow-lg dark:bg-black dark:text-white ${
+                                  modalOn?._id === item?._id
+                                    ? "scale-1 opacity-1 duration-300"
+                                    : "scale-0 opacity-0 duration-150"
+                                }`}
                               >
                                 <h1 className="mb-2 text-2xl font-semibold">
-                                  Edit Order { }
+                                  Edit Order {}
                                 </h1>
                                 <form>
                                   <div className="flex items-start w-full mb-6 flex-col gap-1">
