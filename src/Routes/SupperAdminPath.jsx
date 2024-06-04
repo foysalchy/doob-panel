@@ -81,6 +81,7 @@ import PricingReport from "../Pages/AdminItem/ReportManagement/PricingReport/Pri
 import Profile from "../Pages/AdminItem/Profile/Profile";
 import AdminSliderManager from "../Pages/AdminItem/ContentManagement/SellerSlider/AdminSliderManager";
 import AddSellerSlider from "../Pages/AdminItem/ContentManagement/SellerSlider/AddSellerSlider";
+import ClamList from "../Pages/AdminItem/Order/ClamList";
 
 const SupperAdminPath = [
   {
@@ -602,6 +603,10 @@ const SupperAdminPath = [
   {
     path: "claim-return",
     element: <ClaimAndRerunAdmin />,
+  },
+  {
+    path: "claim-list",
+    element: <ClamList />,
   },
 
   {

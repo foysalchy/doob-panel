@@ -1006,7 +1006,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                               <NavLink
                                 onMouseMove={() => setMenu(true)}
                                 rel="noopener noreferrer"
-                                to={"/admin/claim-return"}
+                                to={"/admin/claim-list"}
                                 className={({ isActive }) => {
                                   return isActive
                                     ? "flex items-center p-2 space-x-1 rounded-sm bg-gray-800 text-white "

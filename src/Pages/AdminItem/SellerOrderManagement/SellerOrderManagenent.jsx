@@ -397,7 +397,7 @@ const SellerOrderManagement = () => {
       <section className=" mx-auto">
         <div className="flex products-center justify-between gap-x-3">
           <div className="flex products-center gap-2">
-            <h2 className="text-lg font-medium text-gray-800 ">All Products</h2>
+            <h2 className="text-lg font-medium text-gray-800 ">All Orders</h2>
             <span className="px-2 flex items-center  py-1 text-xs h-[22px] bg-blue-100 rounded-full d text-blue-400">
               {products?.length}
             </span>

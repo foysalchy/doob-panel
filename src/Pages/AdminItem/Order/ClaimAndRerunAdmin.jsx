@@ -54,7 +54,6 @@ const ClaimAndRerunAdmin = () => {
     }
   };
 
-  console.log(cartProducts, "my item", tData);
 
   // Calculate the range of items to display based on pagination
   const itemsPerPage = 10;

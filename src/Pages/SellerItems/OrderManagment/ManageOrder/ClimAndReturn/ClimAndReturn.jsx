@@ -71,44 +71,6 @@ const ClimAndReturn = () => {
     value: "Site Order",
   });
 
-  // const handleSearch = (e) => {
-  //   e.preventDefault();
-  //   const searchValue = e.target.search.value;
-  //   if (loadingAllNormalOrder || loadingDaraz) {
-  //     setLoadingSearchData(true);
-  //   } else {
-  //     setLoadingSearchData(false);
-  //     const findNormalProduct = normalOrderAllData.find((itm) =>
-  //       itm.orderNumber.includes(searchValue)
-  //     );
-  //     const findDarazProduct = totalOrderedData.find((itm) =>
-  //       itm.orderNumber.includes(searchValue)
-  //     );
-
-  //     if (findNormalProduct) {
-  //       const existingProductIndex = cartProducts.findIndex(
-  //         (item) => item.orderNumber === findNormalProduct.orderNumber
-  //       );
-
-  //       if (existingProductIndex === -1) {
-  //         setCartProducts([...cartProducts, findNormalProduct]);
-  //       } else {
-  //         console.log("Product with the same ID already exists in cart");
-  //       }
-
-  //       // Reset the form input field
-  //       e.target.reset();
-  //     }
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   if (loadingAllNormalOrder || loadingDaraz) {
-  //     setLoadingSearchData(true);
-  //   } else {
-  //     setLoadingSearchData(false);
-  //   }
-  // }, [loadingAllNormalOrder, loadingDaraz, loadingSearchData]);
 
   console.log(loadingSearchData);
   const [showAlert, setShowAlert] = useState(false);
