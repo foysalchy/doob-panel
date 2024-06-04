@@ -30,6 +30,7 @@ const ClimAndReturn = () => {
       return data.data;
     },
   });
+
   const {
     data: totalDarazOrderedData = [],
     refetchDarazData,
@@ -41,7 +42,7 @@ const ClimAndReturn = () => {
         `https://backend.doob.com.bd/api/v1/seller/daraz-order-claimed?id=${shopInfo._id}&status=All`
       );
       const data = await res.json();
-      console.log(data);
+      // console.log(data);
       return data.data;
     },
   });
@@ -60,21 +61,21 @@ const ClimAndReturn = () => {
       return data.data;
     },
   });
-  console.log(totalWooOrderData, "totalWooOrderData");
+  console.log(loadingWoo, totalWooOrderData, "totalWooOrderData");
   console.log(totalDarazOrderedData);
 
   const [cartProducts, setCartProducts] = useState([]);
   const [loadingSearchData, setLoadingSearchData] = useState(false);
+  const [emptyOrder, setEmptyOrder] = useState(false);
 
   const [selectSearchCategory, setSelectSearchCategory] = useState({
     label: "Site Order",
     value: "Site Order",
   });
 
-
   console.log(loadingSearchData);
   const [showAlert, setShowAlert] = useState(false);
-  const [note, setNote] = useState("");
+  const [approveNote, setapproveNote] = useState("");
 
   const [isUpdateQuantity, setIsUpdateQuantity] = useState(false);
   const [refundCheck, setRefundCheck] = useState(false);
@@ -82,6 +83,7 @@ const ClimAndReturn = () => {
     e.preventDefault();
     const searchValue = e.target.search.value;
     console.log("🚀 ~ handleSearch ~ searchValue:", searchValue);
+    setEmptyOrder(false);
 
     setLoadingSearchData(true);
     const foundProducts = [];
@@ -94,6 +96,8 @@ const ClimAndReturn = () => {
 
       if (findNormalProduct) {
         foundProducts.push(findNormalProduct);
+      } else {
+        setEmptyOrder({ message: "Not Found Any Order" });
       }
       setLoadingSearchData(false);
     } else if (selectSearchCategory.value === "Daraz Order") {
@@ -109,10 +113,14 @@ const ClimAndReturn = () => {
 
         if (findDarazProduct) {
           foundProducts.push(findDarazProduct);
+        } else {
+          // setEmptyOrder("Not Found Daraz Order");
+          setEmptyOrder({ message: "Not Found Daraz Order" });
         }
         setLoadingSearchData(false);
       } else {
         setLoadingSearchData(true);
+        setEmptyOrder({ message: "Not Found Daraz Order" });
       }
     } else if (selectSearchCategory.value === "Woo Order") {
       if (!loadingWoo && totalWooOrderData.length > 0) {
@@ -121,10 +129,14 @@ const ClimAndReturn = () => {
         );
         if (findWooProduct) {
           foundProducts.push(findWooProduct);
+        } else {
+          // setEmptyOrder("Not Found Woo Order");
+          setEmptyOrder({ message: "Not Found Woo Order" });
         }
         setLoadingSearchData(false);
       } else {
         setLoadingSearchData(false);
+        setEmptyOrder({ message: "Not Found Any Order" });
       }
     }
 
@@ -167,20 +179,21 @@ const ClimAndReturn = () => {
     return finalDate;
   };
 
-  const productStatusUpdate = (status, orderId) => {
+  console.log(approveNote);
+  const productStatusUpdate = (status, order) => {
     fetch(
-      `https://backend.doob.com.bd/api/v1/seller/order-status-update?orderId=${orderId}&status=${status}`,
+      `https://backend.doob.com.bd/api/v1/seller/order-status-update?orderId=${order?._id}&status=${status}`,
       {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ status, orderId }),
+        body: JSON.stringify({ status, orderId: order?._id, approveNote }),
       }
     )
       .then((res) => res.json())
       .then((data) => {
         refetch();
         setShowAlert(false);
-        setNote("");
+        setapproveNote("");
         setSelectAll(!selectAll);
         setIsUpdateQuantity(false);
         setCartProducts([]);
@@ -244,8 +257,9 @@ const ClimAndReturn = () => {
   };
 
   const handleProductStatusUpdate = (order) => {
+    console.log(order);
     fetch(
-      `https://backend.doob.com.bd/api/v1/seller/order-quantity-update?isUpdateQuantity=${isUpdateQuantity}&note=${note}`,
+      `https://backend.doob.com.bd/api/v1/seller/order-quantity-update?isUpdateQuantity=${isUpdateQuantity}&note=${approveNote}`,
       {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
@@ -256,11 +270,33 @@ const ClimAndReturn = () => {
       .then((data) => {
         console.log(data);
         if (data.success) {
-          productStatusUpdate("claim", order._id);
+          if (order.daraz || order.woo) {
+            fetch(`https://backend.doob.com.bd/api/v1/seller/claim-order-add`, {
+              method: "PUT",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                ...order,
+                status: "claim",
+                approveNote,
+              }),
+            })
+              .then((res) => res.json())
+              .then((data) => {
+                refetch();
+                setShowAlert(false);
+                setapproveNote("");
+                setSelectAll(!selectAll);
+                setIsUpdateQuantity(false);
+                setCartProducts([]);
+              });
+          } else {
+            productStatusUpdate("claim", order);
+          }
+          // productStatusUpdate("claim", order);
         } else {
           setShowAlert(false);
           setSelectAll(!selectAll);
-          setNote("");
+          setapproveNote("");
           setIsUpdateQuantity(false);
           alert("Failed to Update");
         }
@@ -305,36 +341,36 @@ const ClimAndReturn = () => {
       .then((data) => alert(` Successfully Done!`));
   };
   const [file, setFile] = useState();
-  const cancelNoteSubmit = () => {
-    console.log({
-      isChecked: isUpdateQuantity,
-      refundCheck,
-      note,
-      file,
-      showAlert,
-    });
+  // const cancelNoteSubmit = () => {
+  //   console.log({
+  //     isChecked: isUpdateQuantity,
+  //     refundCheck,
+  //     note: approveNote,
+  //     file,
+  //     showAlert,
+  //   });
 
-    if (isUpdateQuantity && !refundCheck) {
-      handleProductStatusUpdate(showAlert);
-      updateOrderInfo(note, file, showAlert._id);
-      setShowAlert(false);
-    } else if (isUpdateQuantity && refundCheck) {
-      handleProductStatusUpdate(showAlert);
-      updateOrderInfo(note, file, showAlert._id);
-      setShowAlert(false);
-    } else {
-      updateOrderInfo(note, file, showAlert._id);
-      setShowAlert(false);
-    }
+  //   if (isUpdateQuantity && !refundCheck) {
+  //     handleProductStatusUpdate(showAlert);
+  //     updateOrderInfo(approveNote, file, showAlert._id);
+  //     setShowAlert(false);
+  //   } else if (isUpdateQuantity && refundCheck) {
+  //     handleProductStatusUpdate(showAlert);
+  //     updateOrderInfo(approveNote, file, showAlert._id);
+  //     setShowAlert(false);
+  //   } else {
+  //     updateOrderInfo(approveNote, file, showAlert._id);
+  //     setShowAlert(false);
+  //   }
 
-    // Perform your submit logic here, such as sending data to an API
+  //   // Perform your submit logic here, such as sending data to an API
 
-    // After submission, you might want to reset the state or close the modal
-    // setIsChecked(false);
-    // setRefundCheck(false);
-    // setNote('');
-    // setShowAlert(false);
-  };
+  //   // After submission, you might want to reset the state or close the modal
+  //   // setIsChecked(false);
+  //   // setRefundCheck(false);
+  //   // setNote('');
+  //   // setShowAlert(false);
+  // };
 
   const handleFileChange = async (event) => {
     const file = event.target.files[0];
@@ -444,7 +480,7 @@ const ClimAndReturn = () => {
             // If confirmed to update stock, call handleProductStatusUpdate
             if (status === "reject") {
               fetch(
-                `https://backend.doob.com.bd/api/v1/seller/order-quantity-update?isUpdateQuantity=${isUpdateQuantity}&note=${note}`,
+                `https://backend.doob.com.bd/api/v1/seller/order-quantity-update?isUpdateQuantity=${isUpdateQuantity}&note=${approveNote}`,
                 {
                   method: "PUT",
                   headers: { "Content-Type": "application/json" },
@@ -455,12 +491,37 @@ const ClimAndReturn = () => {
                 .then((data) => {
                   console.log(data);
                   if (data.success) {
-                    productStatusUpdate("reject", order._id);
+                    console.log(order);
+                    if (order.daraz || order.woo) {
+                      fetch(
+                        `https://backend.doob.com.bd/api/v1/seller/claim-order-add`,
+                        {
+                          method: "PUT",
+                          headers: { "Content-Type": "application/json" },
+                          body: JSON.stringify({
+                            ...order,
+                            status,
+                            approveNote,
+                          }),
+                        }
+                      )
+                        .then((res) => res.json())
+                        .then((data) => {
+                          refetch();
+                          setShowAlert(false);
+                          setapproveNote("");
+                          setSelectAll(!selectAll);
+                          setIsUpdateQuantity(false);
+                          setCartProducts([]);
+                        });
+                    } else {
+                      productStatusUpdate(status, order);
+                    }
                     refetch();
                   } else {
                     // setShowAlert(false);
 
-                    setNote("");
+                    setapproveNote("");
                     setIsUpdateQuantity(false);
                     alert("Failed to Update");
                     setSelectAll(!selectAll);
@@ -472,9 +533,9 @@ const ClimAndReturn = () => {
           } else {
             // If not confirmed to update stock, call productStatusUpdate for claim
             if (status === "reject") {
-              productStatusUpdate("reject", order?._id);
+              productStatusUpdate("reject", order);
             } else {
-              productStatusUpdate("claim", order?._id);
+              productStatusUpdate("claim", order);
             }
           }
         });
@@ -494,70 +555,72 @@ const ClimAndReturn = () => {
 
   const [isReject, setReject] = useState(false);
 
-  const update_all_status_reject = (item) => {
-    Swal.fire({
-      title: "Do you want to reject All Order?",
-      showCancelButton: true,
-      confirmButtonText: "Reject",
-      input: "textarea", // Add a textarea input
-      inputPlaceholder: "Enter your rejection reason here", // Placeholder for the textarea
-      inputAttributes: {
-        // Optional attributes for the textarea
-        maxLength: 100, // Set maximum length
-      },
-    }).then((result) => {
-      const rejectNote = result.value; // Get the value entered in the textarea
-      // Now you can use the rejection reason as needed
-      console.log(rejectNote, item?._id);
+  // const update_all_status_reject = (item) => {
+  //   Swal.fire({
+  //     title: "Do you want to reject All Order?",
+  //     showCancelButton: true,
+  //     confirmButtonText: "Reject",
+  //     input: "textarea", // Add a textarea input
+  //     inputPlaceholder: "Enter your rejection reason here", // Placeholder for the textarea
+  //     inputAttributes: {
+  //       // Optional attributes for the textarea
+  //       maxLength: 100, // Set maximum length
+  //     },
+  //   }).then((result) => {
+  //     const rejectNote = result.value; // Get the value entered in the textarea
+  //     // Now you can use the rejection reason as needed
+  //     console.log(rejectNote, item?._id);
 
-      ordersList.forEach((order) => {
-        console.log(order, "order");
+  //     ordersList.forEach((order) => {
+  //       console.log(order, "order");
 
-        const rejectData = {
-          status: "return",
-          orderId: order?._id,
-          rejectNote: rejectNote,
-        };
-        // console.log(rejectData);
-        // return;
-        fetch(
-          `https://backend.doob.com.bd/api/v1/seller/order-quantity-update?isUpdateQuantity=${isUpdateQuantity}&note=${note}`,
-          {
-            method: "PUT",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(order),
-          }
-        )
-          .then((res) => res.json())
-          .then((data) => {
-            console.log(data);
-            if (data.success) {
-              // productStatusUpdate("reject", order._id);
-              fetch(
-                `https://backend.doob.com.bd/api/v1/seller/order-status-update?orderId=${order?._id}&status=return`,
-                {
-                  method: "PUT",
-                  headers: { "Content-Type": "application/json" },
-                  body: JSON.stringify({
-                    ...rejectData,
-                  }),
-                }
-              )
-                .then((res) => res.json())
-                .then((data) => {
-                  refetch();
-                });
-              refetch();
-            } else {
-              alert("Failed to Update");
-            }
-          });
-      });
-      // return;
-    });
-  };
+  //       const rejectData = {
+  //         status: "return",
+  //         orderId: order?._id,
+  //         rejectNote: rejectNote,
+  //       };
+  //       // console.log(rejectData);
+  //       // return;
+  //       fetch(
+  //         `https://backend.doob.com.bd/api/v1/seller/order-quantity-update?isUpdateQuantity=${isUpdateQuantity}&note=${note}`,
+  //         {
+  //           method: "PUT",
+  //           headers: { "Content-Type": "application/json" },
+  //           body: JSON.stringify(order),
+  //         }
+  //       )
+  //         .then((res) => res.json())
+  //         .then((data) => {
+  //           console.log(data);
+  //           if (data.success) {
+  //             // productStatusUpdate("reject", order._id);
+  //             fetch(
+  //               `https://backend.doob.com.bd/api/v1/seller/order-status-update?orderId=${order?._id}&status=return`,
+  //               {
+  //                 method: "PUT",
+  //                 headers: { "Content-Type": "application/json" },
+  //                 body: JSON.stringify({
+  //                   ...rejectData,
+  //                 }),
+  //               }
+  //             )
+  //               .then((res) => res.json())
+  //               .then((data) => {
+  //                 refetch();
+  //               });
+  //             refetch();
+  //           } else {
+  //             alert("Failed to Update");
+  //           }
+  //         });
+  //     });
+  //     // return;
+  //   });
+  // };
+
 
   const [rejectNote, setMessage] = useState(false)
+
   return (
     <div className="flex flex-col overflow-hidden mt-4">
       <div className="my-4 overflo">
@@ -574,11 +637,12 @@ const ClimAndReturn = () => {
               cursor: "pointer",
             }),
           }}
+          defaultValue={{ label: "Site Order", value: "Site Order" }}
           onChange={setSelectSearchCategory}
           name="searchCategory"
           required
           options={[
-            { label: "All", value: "All" },
+            // { label: "All", value: "All" },
             { label: "Site Order", value: "Site Order" },
             { label: "Daraz Order", value: "Daraz Order" },
             { label: "Woo Order", value: "Woo Order" },
@@ -644,8 +708,8 @@ const ClimAndReturn = () => {
 
                     <div className="mt-2 w-full">
                       <textarea
-                        value={note}
-                        onChange={(e) => setNote(e.target.value)}
+                        value={approveNote}
+                        onChange={(e) => setapproveNote(e.target.value)}
                         rows="4"
                         cols="10"
                         className="shadow-sm w-full p-2 focus:ring-blue-500 focus:border-blue-500 mt-1 block  sm:text-sm border-gray-300 rounded-md"
@@ -733,9 +797,19 @@ const ClimAndReturn = () => {
                 </tr>
               </thead>
               <tbody>
+                <h2 className="text-center ">
+                  {!loadingSearchData && emptyOrder?.message
+                    ? emptyOrder?.message
+                    : ""}
+                </h2>
                 {loadingSearchData ? (
                   <tr>
-                    <h2 className="text-center">Loading Orders </h2>
+                    <h2 className="text-center">
+                      {/* {emptyOrder?.message
+                        ? "Not Found Order"
+                        : "Loading Order...."} */}
+                      Loading Order....
+                    </h2>
                   </tr>
                 ) : (
                   currentItems?.map((item, index) => (
@@ -826,7 +900,7 @@ const ClimAndReturn = () => {
                                 </button>
                                 <button
                                   onClick={() =>
-                                    productStatusUpdate("failed", item?._id)
+                                    productStatusUpdate("failed", item)
                                   }
                                   className="text-[16px] font-[400] text-blue-700"
                                 >
@@ -839,20 +913,22 @@ const ClimAndReturn = () => {
                           <div>
                             <div
                               onClick={() => setModalOn(false)}
-                              className={`fixed z-[100] flex items-center justify-center ${modalOn?._id === item?._id
-                                ? "visible opacity-100"
-                                : "invisible opacity-0"
-                                } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
+                              className={`fixed z-[100] flex items-center justify-center ${
+                                modalOn?._id === item?._id
+                                  ? "visible opacity-100"
+                                  : "invisible opacity-0"
+                              } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
                             >
                               <div
                                 onClick={(e_) => e_.stopPropagation()}
-                                className={`text- absolute w-[500px] rounded-sm bg-white p-6 drop-shadow-lg dark:bg-black dark:text-white ${modalOn?._id === item?._id
-                                  ? "scale-1 opacity-1 duration-300"
-                                  : "scale-0 opacity-0 duration-150"
-                                  }`}
+                                className={`text- absolute w-[500px] rounded-sm bg-white p-6 drop-shadow-lg dark:bg-black dark:text-white ${
+                                  modalOn?._id === item?._id
+                                    ? "scale-1 opacity-1 duration-300"
+                                    : "scale-0 opacity-0 duration-150"
+                                }`}
                               >
                                 <h1 className="mb-2 text-2xl font-semibold">
-                                  Edit Order { }
+                                  Edit Order {}
                                 </h1>
                                 <form>
                                   <div className="flex items-start w-full mb-6 flex-col gap-1">

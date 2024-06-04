@@ -12,6 +12,8 @@ const WooCommerceTableRow = ({ data, refetch }) => {
   // if (!data) {
   //     return null
   // }
+
+  console.log(data);
   // const { _id, method, ReadytoShip, price, ShipOnTimeSLA, Status, document, documentLink, orderDate, orderNumber, pendingSince, quantity, product, sellerSku, sendTo, timestamp, productList } = data;
 
   // const [formattedDate, setFormattedDate] = useState('');

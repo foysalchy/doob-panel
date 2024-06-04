@@ -46,7 +46,7 @@ const AddWooProduct = () => {
     },
   });
 
-  console.log(selectedOption);
+  console.log(selectedOption.sku);
 
   const handleSelectChange = (product) => {
     setSelectedOption(product);
