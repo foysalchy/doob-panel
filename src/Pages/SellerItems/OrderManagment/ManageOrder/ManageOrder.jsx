@@ -38,16 +38,11 @@ const ManageOrder = () => {
     },
   });
 
-
-
-
-  const {
-    data: darazOrder = [],
-  } = useQuery({
+  const { data: darazOrder = [] } = useQuery({
     queryKey: ["sellerDarazOrder"],
     queryFn: async () => {
       const res = await fetch(
-        `http://localhost:5001/api/v1/seller/daraz-order?id=${shopInfo._id}&status=${selectedValue}`
+        `https://backend.doob.com.bd/api/v1/seller/daraz-order?id=${shopInfo._id}&status=${selectedValue}`
       );
 
       const data = await res.json();
@@ -70,7 +65,8 @@ const ManageOrder = () => {
     return orders?.filter(
       (order) =>
         status === "All" ||
-        (status === "pending" && !order.statuses[0]) || (status === "canceled" && order.statuses[0] === "Cancel") ||
+        (status === "pending" && !order.statuses[0]) ||
+        (status === "canceled" && order.statuses[0] === "Cancel") ||
         order.statuses[0] === status
     ).length;
   };
@@ -182,8 +178,9 @@ const ManageOrder = () => {
     invoiceData.forEach((item) => {
       html += `
             <tr>
-                <td class="py-2"><img src="${item.product_main_image
-        }" alt="Product Image" class="w-16 h-16 object-cover"></td>
+                <td class="py-2"><img src="${
+                  item.product_main_image
+                }" alt="Product Image" class="w-16 h-16 object-cover"></td>
                 <td class="py-2">${item.name}</td>
                 <td class="py-2">${item.sku}</td>
                 <td class="py-2">${item.item_price}</td>
@@ -283,12 +280,12 @@ const ManageOrder = () => {
                         <tbody>
         `;
 
-
       invoiceData?.order_items?.forEach((item) => {
         html += `
                 <tr>
-                    <td class="py-2"><img src="${item.product_main_image
-          }" alt="Product Image" class="product-image"></td>
+                    <td class="py-2"><img src="${
+                      item.product_main_image
+                    }" alt="Product Image" class="product-image"></td>
                     <td class="py-2">${item.name}</td>
                     <td class="py-2">${item.sku}</td>
                     <td class="py-2">${item.item_price}</td>
@@ -328,22 +325,32 @@ const ManageOrder = () => {
       <h3 className="font-bold text-xl">Orders Overview</h3>
       <div className="flex flex-wrap justify-start  items-center gap-4 ">
         <button
-          onClick={() => { setIsDaraz(false), setWoo(false) }}
-          className={`px-4 py-1 border text-white ${!isDaraz && !woo ? "bg-gray-900" : "bg-gray-500"
-            }`}
+          onClick={() => {
+            setIsDaraz(false), setWoo(false);
+          }}
+          className={`px-4 py-1 border text-white ${
+            !isDaraz && !woo ? "bg-gray-900" : "bg-gray-500"
+          }`}
         >
           Web Order
         </button>
         <button
-          onClick={() => { setIsDaraz(true), setWoo(false) }}
-          className={`px-4 py-1 border text-white ${isDaraz ? "bg-gray-900" : "bg-gray-500"
-            }`}
+          onClick={() => {
+            setIsDaraz(true), setWoo(false);
+          }}
+          className={`px-4 py-1 border text-white ${
+            isDaraz ? "bg-gray-900" : "bg-gray-500"
+          }`}
         >
           Daraz Order
         </button>
         <button
-          onClick={() => { setWoo(true), setIsDaraz(false) }}
-          className={`px-4 py-1 text-white  border ${woo ? "bg-gray-900" : "bg-gray-500"}`}
+          onClick={() => {
+            setWoo(true), setIsDaraz(false);
+          }}
+          className={`px-4 py-1 text-white  border ${
+            woo ? "bg-gray-900" : "bg-gray-500"
+          }`}
         >
           Woo Commerce Order
         </button>
@@ -354,8 +361,9 @@ const ManageOrder = () => {
           itm?.status === "dropdown" ? (
             <select
               key={itm.name}
-              className={`px-4 border-r bg-transparent relative border-gray-300 flex items-center gap-2 justify-center ${selectedValue === "pending" ? "text-red-500" : ""
-                }`}
+              className={`px-4 border-r bg-transparent relative border-gray-300 flex items-center gap-2 justify-center ${
+                selectedValue === "pending" ? "text-red-500" : ""
+              }`}
               value={selectedValue}
               onChange={(e) => setSelectedValue(e.target.value)}
             >
@@ -367,15 +375,17 @@ const ManageOrder = () => {
           ) : (
             <button
               key={itm.name}
-              className={`px-4 border-r md:bg-transparent bg-gray-50 border-gray-300 flex  items-center ${selectedValue === itm.value ? "text-red-500" : ""
-                }`}
+              className={`px-4 border-r md:bg-transparent bg-gray-50 border-gray-300 flex  items-center ${
+                selectedValue === itm.value ? "text-red-500" : ""
+              }`}
               style={{ whiteSpace: "nowrap" }}
               onClick={() => setSelectedValue(itm.value)}
             >
-              {itm.name}{" "}
-              ({!isDaraz
+              {itm.name} (
+              {!isDaraz
                 ? `${getOrderCount(tData, itm.value)}`
-                : getDarazOrderCount(darazOrder.orders, itm.daraz_value)})
+                : getDarazOrderCount(darazOrder.orders, itm.daraz_value)}
+              )
             </button>
           )
         )}
@@ -384,15 +394,17 @@ const ManageOrder = () => {
       <div>
         <div
           onClick={() => setShowInvoice(false)}
-          className={`fixed z-[100] flex items-center justify-center ${showInvoice ? "visible opacity-100" : "invisible opacity-0"
-            } inset-0   backdrop-blur-sm duration-100 dark:bg-white/10`}
+          className={`fixed z-[100] flex items-center justify-center ${
+            showInvoice ? "visible opacity-100" : "invisible opacity-0"
+          } inset-0   backdrop-blur-sm duration-100 dark:bg-white/10`}
         >
           <div
             onClick={(e_) => e_.stopPropagation()}
-            className={`text- absolute w-[98%] rounded-sm bg-white p-6 drop-shadow-lg dark:bg-gray-50 h-full  overflow-y-auto dark:text-black ${showInvoice
-              ? "scale-1 opacity-1 duration-300"
-              : "scale-0 opacity-0 duration-150"
-              }`}
+            className={`text- absolute w-[98%] rounded-sm bg-white p-6 drop-shadow-lg dark:bg-gray-50 h-full  overflow-y-auto dark:text-black ${
+              showInvoice
+                ? "scale-1 opacity-1 duration-300"
+                : "scale-0 opacity-0 duration-150"
+            }`}
           >
             <button
               onClick={() => setShowInvoice(false)}
@@ -502,15 +514,17 @@ const ManageOrder = () => {
         <div>
           <div
             onClick={() => setShowInvoiceSm(false)}
-            className={`fixed z-[100] flex items-center justify-center ${showInvoiceSm ? "visible opacity-100" : "invisible opacity-0"
-              } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
+            className={`fixed z-[100] flex items-center justify-center ${
+              showInvoiceSm ? "visible opacity-100" : "invisible opacity-0"
+            } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
           >
             <div
               onClick={(e_) => e_.stopPropagation()}
-              className={`text- absolute w-[95%] h-[96%] overflow-y-auto rounded-sm bg-gray-50 p-6 drop-shadow-lg ${showInvoiceSm
-                ? "scale-1 opacity-1 duration-300"
-                : "scale-0 opacity-0 duration-150"
-                }`}
+              className={`text- absolute w-[95%] h-[96%] overflow-y-auto rounded-sm bg-gray-50 p-6 drop-shadow-lg ${
+                showInvoiceSm
+                  ? "scale-1 opacity-1 duration-300"
+                  : "scale-0 opacity-0 duration-150"
+              }`}
             >
               <div ref={componentRef}>
                 {selectedItems?.map((itm) => (
@@ -536,8 +550,7 @@ const ManageOrder = () => {
                     </header>
                     <br />
                     <main>
-                      <div
-                        className="lg:px-6 bg-white print-container  pb-12 print-data">
+                      <div className="lg:px-6 bg-white print-container  pb-12 print-data">
                         <main>
                           <div className="flex items-center justify-center py-1 font-bold text-gray-600 bg-gray-200 text-center ">
                             INVOICE
@@ -548,42 +561,41 @@ const ManageOrder = () => {
                           {/*.*/}
                           <div className=" items-start justify-between mt-4">
                             <div>
-                              <div className='flex items-center gap-2'>
-                                <h4 className='font-semibold text-gray-700 text-sm'>
+                              <div className="flex items-center gap-2">
+                                <h4 className="font-semibold text-gray-700 text-sm">
                                   Name :
                                 </h4>
                                 <p className="text-gray-600 text-sm">
                                   {itm?.addresses?.fullName}
                                 </p>
                               </div>
-                              <div className='flex items-center gap-2'>
-                                <h4 className='font-semibold text-gray-700 text-sm'>
+                              <div className="flex items-center gap-2">
+                                <h4 className="font-semibold text-gray-700 text-sm">
                                   Number :
                                 </h4>
                                 <p className="text-gray-600 text-sm">
                                   {itm?.addresses?.mobileNumber}
                                 </p>
                               </div>
-                              <div className='flex items-center gap-2'>
-                                <h4 className='font-semibold text-gray-700 text-sm'>
+                              <div className="flex items-center gap-2">
+                                <h4 className="font-semibold text-gray-700 text-sm">
                                   address :
                                 </h4>
                                 <p className="text-gray-600 text-sm">
-                                  {itm?.addresses?.address}, {itm?.addresses?.city}
+                                  {itm?.addresses?.address},{" "}
+                                  {itm?.addresses?.city}
                                 </p>
                               </div>
                             </div>
 
                             <div>
-                              <li className='flex justify-start items-center gap-2'>
-                                <h4 className='font-semibold text-gray-700 text-sm'>
+                              <li className="flex justify-start items-center gap-2">
+                                <h4 className="font-semibold text-gray-700 text-sm">
                                   {/* Invoice No : {user?._id} */}
                                 </h4>
                                 {/* <p className="text-gray-600 text-sm">{shopInfo?._id}</p> */}
                               </li>
-
                             </div>
-
                           </div>
 
                           {/*.*/}
@@ -598,15 +610,21 @@ const ManageOrder = () => {
                                     <tr className="text-md font-semibold tracking-wide text-left text-gray-100 bg-gray-900 uppercase border-b border-gray-900">
                                       <th className="px-4 py-2">Photo</th>
                                       <th className="px-4 py-2">Name</th>
-                                      <th className="px-4 py-2 whitespace-nowrap">Stock Quantity</th>
+                                      <th className="px-4 py-2 whitespace-nowrap">
+                                        Stock Quantity
+                                      </th>
                                       <th className="px-4 py-2">Price</th>
                                     </tr>
                                   </thead>
                                   <tbody className="bg-white">
-                                    {itm?.productList?.map(itm => (
-                                      <tr className='border-t' key={itm?._id}>
+                                    {itm?.productList?.map((itm) => (
+                                      <tr className="border-t" key={itm?._id}>
                                         <td className="p-4 w-[110px] border-b border-blue-gray-50">
-                                          <img src={itm?.img} alt="" className="w-[100px] object-cover h-[80px] rounded border" />
+                                          <img
+                                            src={itm?.img}
+                                            alt=""
+                                            className="w-[100px] object-cover h-[80px] rounded border"
+                                          />
                                         </td>
                                         <td className="p-4 border-b w-[300px] border-blue-gray-50">
                                           {itm?.title}
@@ -615,26 +633,17 @@ const ManageOrder = () => {
                                           {itm?.price}
                                         </td>
                                         <td className="p-4 border-b border-blue-gray-50">
-                                          1  {/* {itm?.quantity} */}
+                                          1 {/* {itm?.quantity} */}
                                         </td>
                                       </tr>
                                     ))}
-
-
                                   </tbody>
                                 </table>
                               </div>
                             </div>
-
                           </section>
-
-
-
-
                         </main>
-                        <footer>
-
-                        </footer>
+                        <footer></footer>
                       </div>
                     </main>
                   </div>
@@ -663,15 +672,17 @@ const ManageOrder = () => {
         <div>
           <div
             onClick={() => setShowPrintModal1(false)}
-            className={`fixed z-[100] flex items-center justify-center ${showPrintModal1 ? "visible opacity-100" : "invisible opacity-0"
-              } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
+            className={`fixed z-[100] flex items-center justify-center ${
+              showPrintModal1 ? "visible opacity-100" : "invisible opacity-0"
+            } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
           >
             <div
               onClick={(e_) => e_.stopPropagation()}
-              className={`text- absolute overflow-y-auto w-[96%] h-[98%] rounded-sm bg-gray-50 p-6 drop-shadow-lg text-black ${showPrintModal1
-                ? "scale-1 opacity-1 duration-300"
-                : "scale-0 opacity-0 duration-150"
-                }`}
+              className={`text- absolute overflow-y-auto w-[96%] h-[98%] rounded-sm bg-gray-50 p-6 drop-shadow-lg text-black ${
+                showPrintModal1
+                  ? "scale-1 opacity-1 duration-300"
+                  : "scale-0 opacity-0 duration-150"
+              }`}
             >
               <AllOrderInvoice
                 data={selectedItems}
@@ -706,7 +717,6 @@ const ManageOrder = () => {
       </div>
 
       <div className="mt-12 ">
-
         {!isDaraz && !woo && (
           <OrderTable
             selectedItems={selectedItems}
@@ -720,22 +730,22 @@ const ManageOrder = () => {
             searchValue={searchValue}
           />
         )}
-        {
-          isDaraz && <DarazOrderTable
+        {isDaraz && (
+          <DarazOrderTable
             selected={selected}
             setSelected={setSelected}
             selectedValue={selectedValue}
             searchValue={searchValue}
           />
-        }
-        {
-          woo && <WooCommerceOrderTable
+        )}
+        {woo && (
+          <WooCommerceOrderTable
             selected={selected}
             setSelected={setSelected}
             selectedValue={selectedValue}
             searchValue={searchValue}
           />
-        }
+        )}
       </div>
     </div>
   );
