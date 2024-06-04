@@ -449,3 +449,11 @@ font-google {
     100% { transform: rotate(360deg); }
   }
 
+
+    .star-gold {
+      color: yellow !important;
+    }
+  
+    .star-gray {
+      color: gray !important;
+    }

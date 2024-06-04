@@ -4,6 +4,7 @@ import ReviewTableRow from "./ReviewTableRow";
 import { AuthContext } from "../../../../AuthProvider/UserProvider";
 import { useQuery } from "@tanstack/react-query";
 import { BiLeftArrow, BiRightArrow } from "react-icons/bi";
+import BrightAlert from "bright-alert";
 
 const ReviewTable = ({ search }) => {
   const { shopInfo } = useContext(AuthContext);
@@ -87,6 +88,22 @@ const ReviewTable = ({ search }) => {
     );
   };
 
+
+  const updateReviewSatatus = (id, status) => {
+    fetch(`http://localhost:5001/api/v1/seller/review-status?id=${id}`, {
+      method: "PUT",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({ status }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        BrightAlert()
+        refetch()
+      })
+  }
+
   return (
     <div className="flex flex-col">
       <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -111,7 +128,7 @@ const ReviewTable = ({ search }) => {
                     scope="col"
                     className="border-r px-6 py-4 dark:border-neutral-500"
                   >
-                    Product
+                    Rating
                   </th>
                   <th
                     scope="col"
@@ -126,7 +143,7 @@ const ReviewTable = ({ search }) => {
               </thead>
               <tbody>
                 {reviewData?.slice(startIndex, endIndex)?.map((itm) => (
-                  <ReviewTableRow refetch={refetch} itm={itm} key={itm} />
+                  <ReviewTableRow updateReviewSatatus={updateReviewSatatus} refetch={refetch} itm={itm} key={itm} />
                 ))}
               </tbody>
             </table>

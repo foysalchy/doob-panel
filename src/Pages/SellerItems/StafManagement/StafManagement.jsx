@@ -13,13 +13,13 @@ const StafManagement = () => {
     const { data: staffInfo = [], refetch } = useQuery({
         queryKey: ["staffInfo"],
         queryFn: async () => {
-            const res = await fetch(`https://backend.doob.com.bd/api/v1/seller/all-staff?shopEmail=${user.shopEmail}`);
+            const res = await fetch(`http://localhost:5001/api/v1/seller/all-staff?shopEmail=${user.shopId}`);
             const data = await res.json();
             localStorage.setItem('price', JSON.stringify(data?.data));
             return data;
         },
     });
-
+    console.log(`http://localhost:5001/api/v1/seller/all-staff?shopEmail=${user.shopId}`);
 
     const [deleteId, setDeletId] = useState('')
     const [deletePopUp, setDeletePopUp] = useState(false)

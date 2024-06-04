@@ -72,7 +72,7 @@ const BlogCategorySeller = () => {
 
     const imageFormData = new FormData();
     imageFormData.append("image", image.files[0]);
-    const imageUrl = await uploadImage(imageFormData);
+    const imageUrl = image.files[0] ? await uploadImage(imageFormData) : openModal.img;
 
     const data = {
       id: openModal._id,

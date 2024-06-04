@@ -85,7 +85,7 @@ const Payment = () => {
       setPassData(data);
       setLoadingPayment(true);
       await fetch(
-        `http://localhost:5001/api/v1/shop/user/order?token=${shopUser._id}&shopId=${shop_id.shop_id}`,
+        `https://backend.doob.com.bd/api/v1/shop/user/order?token=${shopUser._id}&shopId=${shop_id.shop_id}`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -441,7 +441,7 @@ const Payment = () => {
                     </span>
 
                     <span className="text-lg font-medium transition-all group-hover:ms-4">
-                      Loading order 
+                      Loading order
                     </span>
                   </div>
                 ) : (

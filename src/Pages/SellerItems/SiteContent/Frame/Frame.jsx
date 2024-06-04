@@ -56,7 +56,7 @@ const Frame = () => {
   }
 
   const postSlider = (Slider) => {
-    fetch(`http://localhost:5001/api/v1/seller/watermark`, {
+    fetch(`https://backend.doob.com.bd/api/v1/seller/watermark`, {
       method: "PATCH",
       headers: {
         "content-type": "application/json",

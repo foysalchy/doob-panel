@@ -24,11 +24,11 @@ const DarazOrderTable = ({
     queryKey: ["sellerDarazOrder"],
     queryFn: async () => {
       const res = await fetch(
-        `http://localhost:5001/api/v1/seller/daraz-order?id=${shopInfo._id}&status=${selectedValue}`
+        `https://backend.doob.com.bd/api/v1/seller/daraz-order?id=${shopInfo._id}&status=${selectedValue}`
       );
 
       const data = await res.json();
-      console.log(data, "datadata");
+  
       return data.data;
     },
   });

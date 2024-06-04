@@ -55,7 +55,7 @@ const AllOrderManage = () => {
       searchValue &&
       (!selectedDate || new Date(item?.timestamp) >= selectedDate)
     ) {
-      return item?._id?.toLowerCase().includes(searchValue.toLowerCase()); // Filter by _id
+      return item?._id?.toLowerCase()?.includes(searchValue.toLowerCase()); // Filter by _id
     } else if (
       selectedValue &&
       (!selectedDate || new Date(item?.timestamp) >= selectedDate)

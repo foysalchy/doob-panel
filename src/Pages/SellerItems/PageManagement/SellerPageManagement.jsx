@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import React from "react";
+import React, { useEffect } from "react";
 import { useContext } from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
@@ -18,6 +18,7 @@ import BrightAlert from "bright-alert";
 const SellerPageManagement = () => {
   const [loading, setLoading] = useState(false);
   const [trash_status, setTrash_status] = useState(false);
+  const [daft, setDaft] = useState(false);
 
   console.log(trash_status);
 
@@ -101,6 +102,7 @@ const SellerPageManagement = () => {
   };
 
   // console.log(faqs.filter((faq) => faq?.trash !== trash_status));
+
   console.log(faqs);
 
   return (
@@ -128,6 +130,17 @@ const SellerPageManagement = () => {
 
           <span className="text-sm font-medium transition-all group-hover:ms-4">
             {trash_status ? "Manage Page" : "  Trash Page"}
+          </span>
+        </button>
+        <button
+          className="group relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
+          onClick={() => setDaft(!daft)}
+        >
+          <span className="absolute -start-full transition-all group-hover:start-4">
+            <FaArrowRightLong className="h-5 w-5 rtl:rotate-180" />
+          </span>
+          <span className="text-sm font-medium transition-all group-hover:ms-4">
+            Daft
           </span>
         </button>
       </div>
@@ -169,7 +182,7 @@ const SellerPageManagement = () => {
                   </thead>
                   <tbody className="bg-white divide-y divide-gray-200 ">
                     {faqs
-                      .filter((faq) => faq?.trash == trash_status)
+                      .filter((faq) => faq?.trash == trash_status).filter((faq) => faq?.draft == daft)
                       ?.map((faq, index) => (
                         <tr key={faq?.title}>
                           <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">

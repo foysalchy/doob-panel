@@ -35,39 +35,34 @@ const SellerOrderManagement = () => {
   });
   console.log(products, '---->>>>');
 
-  console.log(selectedValue);
   const filteredData = products?.filter((item) => {
-    if (
-      searchQuery === "" &&
-      selectedValue === "All" &&
-      (!selectedDate || new Date(item?.timestamp) >= selectedDate)
-    ) {
-      return true; // Include all items when searchValue is empty and selectedValue is "All" and timestamp is greater than or equal to selectedDate
-    } else if (
-      (selectedValue === "Pending" ||
-        selectedValue === "Return" ||
-        selectedValue === "returned") &&
-      (!selectedDate || new Date(item?.timestamp) >= selectedDate)
-    ) {
+    const timestampValid = !selectedDate || new Date(item?.timestamp) >= new Date(selectedDate);
+
+    if (searchQuery === "" && selectedValue === "All" && timestampValid) {
+      // Include all items when searchQuery is empty, selectedValue is "All", and timestamp is valid
+      return true;
+    }
+
+    if ((selectedValue === "Pending" || selectedValue === "Return" || selectedValue === "returned") && timestampValid) {
       if (selectedValue === "Pending") {
         return !item?.status || item?.status === "";
       } else if (selectedValue === "Return" || selectedValue === "returned") {
         return item?.status === "Return" || item?.status === "returned";
       }
-    } else if (
-      searchQuery &&
-      (!selectedDate || new Date(item?.timestamp) >= selectedDate)
-    ) {
-      return item?._id?.toLowerCase().includes(searchQuery.toLowerCase()); // Filter by _id
-    } else if (
-      selectedValue &&
-      (!selectedDate || new Date(item?.timestamp) >= selectedDate)
-    ) {
+    }
+
+    if (searchQuery && timestampValid) {
+      return String(item?._id)?.toLowerCase().includes(searchQuery.toLowerCase()); // Convert _id to string
+    }
+
+    if (selectedValue && timestampValid) {
       return item?.status === selectedValue;
     }
 
     return false; // Exclude items that don't meet any condition
   });
+
+
 
   if (selectedValue === "Return" || selectedValue === "returned") {
     filteredData?.reverse();
