@@ -42,7 +42,7 @@ const CategoryByProduct = () => {
 
 
 
-    console.log(products, 'select.........');
+
 
 
 
@@ -234,18 +234,6 @@ const CategoryByProduct = () => {
     }
 
 
-    {/*---------------------------------*/ }
-    {/*     Filter data          */ }
-    {/*---------------------------------*/ }
-    // const filterData = categroyValue == '' ? products : products.filter(product => {
-    //     return product?.categories.find(itm => itm?.name.toLowerCase() === categroyValue.toLowerCase());
-    // })
-
-    // console.log(selectedValues, "filter data : ", filterData)
-
-    /*---------------------------------*/
-    /*         Filter data            */
-    /*---------------------------------*/
     const [min, setMin] = useState(0);
     const [max, setMax] = useState(0);
 
@@ -287,7 +275,7 @@ const CategoryByProduct = () => {
     // const filterData = filterAllData(categroyValue, selectedBrandValues, products, selectedFeature, selectedRatings);
 
 
-    console.log(filterData, 'Seller>>>>>>', products?.data);
+
 
 
     return (
@@ -297,9 +285,7 @@ const CategoryByProduct = () => {
                 <div className="md:grid gap-3 grid-cols-4">
                     <div className="">
                         <div className=' md:flex hidden flex-col gap-2'>
-                            {/*----------------*/}
-                            {/*   Category     */}
-                            {/*----------------*/}
+
                             <div className="space-y-2">
                                 <details
                                     className="overflow-hidden  border-t [&_summary::-webkit-details-marker]:hidden"
@@ -347,9 +333,7 @@ const CategoryByProduct = () => {
                                 </details>
                             </div>
 
-                            {/*----------------*/}
-                            {/*     Brand       */}
-                            {/*----------------*/}
+
                             <div className="space-y-2">
                                 <details
                                     className="overflow-hidden rounded border-t border-gray-300 [&_summary::-webkit-details-marker]:hidden"

@@ -54,7 +54,7 @@ const ProductInformation = () => {
 
   const path = useLocation();
 
-  console.log(variations, "location........");
+  console.log(variations, "location...");
 
   const handleVariation = (variation) => {
     setVariations(variation);
@@ -108,8 +108,8 @@ const ProductInformation = () => {
         variations?.offerPrice !== undefined
           ? variations.offerPrice
           : variations?.price !== undefined
-          ? variations.price
-          : product.price,
+            ? variations.price
+            : product.price,
       regular_price: product.regular_price,
       productId: product._id,
       shopId: shop_id.shop_id,
@@ -184,8 +184,8 @@ const ProductInformation = () => {
             variations?.offerPrice !== undefined
               ? variations.offerPrice
               : variations?.price !== undefined
-              ? variations.price
-              : product.price,
+                ? variations.price
+                : product.price,
           regular_price: product.regular_price,
           productId: product._id,
           shopId: shop_id.shop_id,
@@ -218,7 +218,7 @@ const ProductInformation = () => {
   const totalStars =
     comments?.length &&
     comments?.reduce((total, comment) => total + comment.star, 0) /
-      comments?.length;
+    comments?.length;
 
   const convertedRating = (` ${totalStars}` / 10) * 5 || 0;
 

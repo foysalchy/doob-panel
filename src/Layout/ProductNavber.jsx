@@ -315,7 +315,7 @@ export default function Component() {
             value={searchTerm}
             onChange={handleInputChange}
             className="w-full pl-4  bg-gray-100 outline-none h-full"
-            placeholder="Search......"
+            placeholder="Search."
             type="search"
           />
           <button

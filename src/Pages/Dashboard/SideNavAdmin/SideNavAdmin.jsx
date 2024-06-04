@@ -990,18 +990,32 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                               </NavLink>
                             ) : null
                           ) : (
-                            <NavLink
-                              onMouseMove={() => setMenu(true)}
-                              rel="noopener noreferrer"
-                              to={"/admin/claim-return"}
-                              className={({ isActive }) => {
-                                return isActive
-                                  ? "flex items-center p-2 space-x-1 rounded-sm bg-gray-800 text-white "
-                                  : "flex items-center p-2 space-x-1 rounded-sm hover:bg-gray-800 hover:text-white";
-                              }}
-                            >
-                              {menu && <span> Claim Return</span>}
-                            </NavLink>
+                            <li>
+                              <NavLink
+                                onMouseMove={() => setMenu(true)}
+                                rel="noopener noreferrer"
+                                to={"/admin/claim-return"}
+                                className={({ isActive }) => {
+                                  return isActive
+                                    ? "flex items-center p-2 space-x-1 rounded-sm bg-gray-800 text-white "
+                                    : "flex items-center p-2 space-x-1 rounded-sm hover:bg-gray-800 hover:text-white";
+                                }}
+                              >
+                                {menu && <span> Claim Return</span>}
+                              </NavLink>
+                              <NavLink
+                                onMouseMove={() => setMenu(true)}
+                                rel="noopener noreferrer"
+                                to={"/admin/claim-return"}
+                                className={({ isActive }) => {
+                                  return isActive
+                                    ? "flex items-center p-2 space-x-1 rounded-sm bg-gray-800 text-white "
+                                    : "flex items-center p-2 space-x-1 rounded-sm hover:bg-gray-800 hover:text-white";
+                                }}
+                              >
+                                {menu && <span> Claim List</span>}
+                              </NavLink>
+                            </li>
                           )}
                         </ul>
 
@@ -1942,7 +1956,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                               </li>
                               <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
                                 <Link
-                                  to={"/admin/content-management/send-email"}
+                                  to={"/admin/settings/send-email"}
                                   className="hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
                                 >
                                   {/* <IoNotificationsCircle className="w-5 h-5 fill-current text-gray-400 " />{" "} */}
@@ -1998,7 +2012,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                             </li>
                             <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
                               <Link
-                                to={"/admin/content-management/send-email"}
+                                to={"/admin/settings/send-email"}
                                 className="hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
                               >
                                 {/* <IoNotificationsCircle className="w-5 h-5 fill-current text-gray-400 " />{" "} */}

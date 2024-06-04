@@ -21,7 +21,7 @@ const EditInventory = ({ refetch, open, setOpen, data }) => {
 
   const [note, setNote] = useState("");
 
-  console.log(shopInfo, ".........>>>");
+  console.log(shopInfo, "....>>>");
 
   const handleIncrease = () => {
     setCount(parseInt(count) + 1);

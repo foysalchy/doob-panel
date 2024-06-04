@@ -160,7 +160,7 @@ export default function CategoryListSm({ setOn }) {
   };
   const [activeMiniCategory, setActiveMiniCategory] = useState(null);
 
-  console.log(activeMiniCategory, "data......");
+  console.log(activeMiniCategory, "data.");
 
   return (
     <div className=" ">

@@ -455,6 +455,9 @@ const SellerPath = [
   {
     path: "report-management/warehouse-report",
     element: <WarehouseHistory />,
+  }, {
+    path: "report-management/subscription-report",
+    element: <WarehouseHistory />,
   },
   {
     path: "report-management/subscriber-report",

@@ -52,7 +52,7 @@ const ConfirmOrder = () => {
     // invoice
     // invoice
     const InvoicePage = ({ order }) => {
-        console.log(order, 'order.......');
+        console.log(order, 'order..');
         return (
             <>
                 <div
@@ -73,9 +73,9 @@ const ConfirmOrder = () => {
                             INVOICE
                         </div>
 
-                        {/*................*/}
+                        {/*.*/}
                         {/*.... Address ...*/}
-                        {/*................*/}
+                        {/*.*/}
                         <div className="flex items-center justify-between mt-4">
 
                             <div>
@@ -94,9 +94,9 @@ const ConfirmOrder = () => {
 
                         </div>
 
-                        {/*................*/}
+                        {/*.*/}
                         {/*.... Product ...*/}
-                        {/*................*/}
+                        {/*.*/}
 
                         <section className="container mx-auto mt-8">
                             <div className="w-full mb-8 overflow-hidden">

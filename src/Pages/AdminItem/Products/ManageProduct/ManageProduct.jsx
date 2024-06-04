@@ -285,7 +285,7 @@ const ManageProduct = () => {
   const [seller_warehouse, setSellerWarehouse] = useState(false);
   const [doob_warehouse, setDoob_warehouse] = useState(false);
 
-  console.log(currentItems, 'Hello js........');
+  console.log(currentItems, 'Hello js...');
   return (
     <div className="">
       <Link
@@ -509,21 +509,19 @@ const ManageProduct = () => {
                                 <div className="imgSm w-[20px] h-[20px] bg-red-50">
                                   <div
                                     style={{
-                                      backgroundImage: `url(${
-                                        product?.featuredImage?.src
+                                      backgroundImage: `url(${product?.featuredImage?.src
                                           ? product?.featuredImage?.src
                                           : product?.images[0]?.src
-                                      })`,
+                                        })`,
                                     }}
                                     className="w-12 h-12 object-cover bg-cover rounded-md border border-[#8080809d] overflow-hidden"
                                   ></div>
                                   <div
                                     style={{
-                                      backgroundImage: `url(${
-                                        product?.featuredImage?.src
+                                      backgroundImage: `url(${product?.featuredImage?.src
                                           ? product?.featuredImage?.src
                                           : product?.images[0]?.src
-                                      })`,
+                                        })`,
                                     }}
                                     className="absolute top-[-40px] z-50 duration-150 abs hidden bg-[url(${product?.featuredImage?.src})] left-[43px] object-cover bg-cover bg-white shadow-xl w-[150px] h-[150px] ring-1 ring-gray-500"
                                   ></div>
@@ -613,22 +611,22 @@ const ManageProduct = () => {
                                   (item) => item?.name
                                 )?.length
                                   ? product?.warehouse?.map((ware, index) => (
-                                      <span key={ware?.name}>
-                                        {ware?.name}
+                                    <span key={ware?.name}>
+                                      {ware?.name}
 
-                                        {index <
-                                          product.warehouse.length - 1 && (
+                                      {index <
+                                        product.warehouse.length - 1 && (
                                           <>{ware?.name ? "," : ""}</>
                                         )}
-                                      </span>
-                                    ))
+                                    </span>
+                                  ))
                                   : "Select Warehouse"}
                               </button>
                             </td>
                             <td className="px-4 py-4 text-sm whitespace-nowrap">
                               <div className="flex items-center gap-x-2">
                                 {editMode === product._id &&
-                                editedCommission ? (
+                                  editedCommission ? (
                                   <div className="flex gap-2 ">
                                     <input
                                       type="text"
@@ -794,19 +792,17 @@ const ManageProduct = () => {
                             <div>
                               <div
                                 onClick={() => setOpenModal(false)}
-                                className={`fixed z-[100] flex items-center justify-center ${
-                                  openModal._id == product?._id
+                                className={`fixed z-[100] flex items-center justify-center ${openModal._id == product?._id
                                     ? "visible opacity-100"
                                     : "invisible opacity-0"
-                                } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
+                                  } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
                               >
                                 <div
                                   onClick={(e_) => e_.stopPropagation()}
-                                  className={`text- absolute w-[400px] rounded-sm bg-white p-6 drop-shadow-lg dark:bg-white dark:text-black ${
-                                    openModal._id == product?._id
+                                  className={`text- absolute w-[400px] rounded-sm bg-white p-6 drop-shadow-lg dark:bg-white dark:text-black ${openModal._id == product?._id
                                       ? "scale-1 opacity-1 duration-300"
                                       : "scale-0 opacity-0 duration-150"
-                                  }`}
+                                    }`}
                                 >
                                   <form onSubmit={handleSubmit}>
                                     <h1 className="mb-2 text-2xl font-semibold">

@@ -68,7 +68,7 @@ export default function SearchAdminReport() {
                   </thead>
                   <tbody className="0">
                     {isLoading && (
-                      <h2 className="text-black">Loading Data............</h2>
+                      <h2 className="text-black">Loading Data..</h2>
                     )}
                     {!isLoading &&
                       searchData?.map((search) => {

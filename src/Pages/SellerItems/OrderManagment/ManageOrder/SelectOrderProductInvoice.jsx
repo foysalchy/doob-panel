@@ -100,9 +100,9 @@ const SelectOrderProductInvoice = ({ orderInfo, setPrint, selectedItems, print }
 
                         </div>
 
-                        {/*................*/}
+                        {/*.*/}
                         {/*.... Product ...*/}
-                        {/*................*/}
+                        {/*.*/}
 
                         <section className="container mx-auto mt-8">
                             <div className="w-full mb-8 overflow-hidden">

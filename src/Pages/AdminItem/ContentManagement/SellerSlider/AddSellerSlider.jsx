@@ -77,7 +77,7 @@ const AddSellerSlider = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data, "submitting........");
+        console.log(data, "submitting...");
         Swal.fire("success", "Your Popup Publish Successfully", "success");
         setLoading(false);
         setPreviewUrl("");
@@ -151,7 +151,7 @@ const AddSellerSlider = () => {
                 onChange={handleFileChange}
               />
             </label>
-{/* 
+            {/* 
             <div className="mt-4">
               <label className="block text-sm font-medium text-gray-700">
                 Provide Notice Title

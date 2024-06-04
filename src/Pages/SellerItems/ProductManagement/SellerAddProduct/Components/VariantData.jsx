@@ -10,7 +10,7 @@ const VariantData = ({ variantInput, setVariantInput }) => {
         cartContain: ''
     }
 
-   
+
 
     return (
         <div>
@@ -23,7 +23,7 @@ const VariantData = ({ variantInput, setVariantInput }) => {
                             <label className={style.label} htmlFor=""> Quantity</label>
                             <input onChange={(e) => {
                                 const newInputFields = [...variantInput];
-                                console.log(newInputFields, '>>>>>>');
+
                                 newInputFields[0].product1.quantity = e.target.value;
                                 setVariantInput(newInputFields);
                             }} type="text" defaultValue={1} className={style.input} />

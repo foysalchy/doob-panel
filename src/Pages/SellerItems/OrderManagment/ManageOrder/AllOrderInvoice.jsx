@@ -64,9 +64,9 @@ const AllOrderInvoice = ({ data, showPrintModal1, setShowPrintModal1 }) => {
                                             INVOICE
                                         </div>
 
-                                        {/*................*/}
+                                        {/*.*/}
                                         {/*.... Address ...*/}
-                                        {/*................*/}
+                                        {/*.*/}
                                         <div className=" items-start justify-between mt-4">
                                             <div>
                                                 <div className='flex items-center gap-2'>
@@ -107,9 +107,9 @@ const AllOrderInvoice = ({ data, showPrintModal1, setShowPrintModal1 }) => {
 
                                         </div>
 
-                                        {/*................*/}
+                                        {/*.*/}
                                         {/*.... Product ...*/}
-                                        {/*................*/}
+                                        {/*.*/}
 
                                         <section className="container mx-auto mt-8">
                                             <div className="w-full mb-8 overflow-hidden">

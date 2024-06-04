@@ -162,7 +162,7 @@ const ClimAndReturn = () => {
         }
         setLoadingSearchData(false);
       } else {
-        setLoadingSearchData(true);
+        setLoadingSearchData(false);
       }
     }
 
@@ -775,7 +775,7 @@ const ClimAndReturn = () => {
               <tbody>
                 {loadingSearchData ? (
                   <tr>
-                    <h2 className="text-center">Loading Orders .....</h2>
+                    <h2 className="text-center">Loading Orders </h2>
                   </tr>
                 ) : (
                   currentItems?.map((item, index) => (
@@ -877,22 +877,20 @@ const ClimAndReturn = () => {
                           <div>
                             <div
                               onClick={() => setModalOn(false)}
-                              className={`fixed z-[100] flex items-center justify-center ${
-                                modalOn?._id === item?._id
-                                  ? "visible opacity-100"
-                                  : "invisible opacity-0"
-                              } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
+                              className={`fixed z-[100] flex items-center justify-center ${modalOn?._id === item?._id
+                                ? "visible opacity-100"
+                                : "invisible opacity-0"
+                                } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
                             >
                               <div
                                 onClick={(e_) => e_.stopPropagation()}
-                                className={`text- absolute w-[500px] rounded-sm bg-white p-6 drop-shadow-lg dark:bg-black dark:text-white ${
-                                  modalOn?._id === item?._id
-                                    ? "scale-1 opacity-1 duration-300"
-                                    : "scale-0 opacity-0 duration-150"
-                                }`}
+                                className={`text- absolute w-[500px] rounded-sm bg-white p-6 drop-shadow-lg dark:bg-black dark:text-white ${modalOn?._id === item?._id
+                                  ? "scale-1 opacity-1 duration-300"
+                                  : "scale-0 opacity-0 duration-150"
+                                  }`}
                               >
                                 <h1 className="mb-2 text-2xl font-semibold">
-                                  Edit Order {}
+                                  Edit Order { }
                                 </h1>
                                 <form>
                                   <div className="flex items-start w-full mb-6 flex-col gap-1">

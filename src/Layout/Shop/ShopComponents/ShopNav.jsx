@@ -195,7 +195,7 @@ const ShopNav = () => {
                 value={searchTerm}
                 onChange={handleInputChange}
                 className="w-full pl-4  bg-gray-100 outline-none h-full"
-                placeholder="Search......"
+                placeholder="Search."
                 type="search"
               />
               <button
@@ -257,7 +257,7 @@ const ShopNav = () => {
               )}
             </div>
           </ul>
-          <ul className="flex items-center  space-x-8 lg:flex">
+          <ul className="flex items-center gap-3 lg:flex">
             <li>
               <Link
                 to={`/shop/${shopId}/track-order`}
@@ -311,9 +311,8 @@ const ShopNav = () => {
 
                     {/* Dropdown menu */}
                     <div
-                      className={`absolute right-0 z-20 w-48 py-2 mt-2 origin-top-right bg-white rounded-md shadow-xl dark:bg-gray-800 ${
-                        isOpen ? "block" : "hidden"
-                      }`}
+                      className={`absolute right-0 z-20 w-48 py-2 mt-2 origin-top-right bg-white rounded-md shadow-xl dark:bg-gray-800 ${isOpen ? "block" : "hidden"
+                        }`}
                       onClick={() => setIsOpen(false)}
                     >
                       <Link

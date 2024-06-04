@@ -195,18 +195,16 @@ export default function EditSUbCategoryModal({
   // console.log(defaultWooData?.id);
   return (
     <div
-      className={`fixed z-[100] flex items-center justify-center ${
-        editOn?._id === warehouse?._id
+      className={`fixed z-[100] flex items-center justify-center ${editOn?._id === warehouse?._id
           ? "opacity-1 visible"
           : "invisible opacity-0"
-      } inset-0 bg-black/20 backdrop-blur-sm duration-100`}
+        } inset-0 bg-black/20 backdrop-blur-sm duration-100`}
     >
       <div
-        className={`absolute md:w-[500px] w-full rounded-sm bg-white p-3 pb-5 text-center drop-shadow-2xl ${
-          editOn?._id === warehouse?._id
+        className={`absolute md:w-[500px] w-full rounded-sm bg-white p-3 pb-5 text-center drop-shadow-2xl ${editOn?._id === warehouse?._id
             ? "scale-1 opacity-1 duration-300"
             : "scale-0 opacity-0 duration-150"
-        } `}
+          } `}
       >
         <svg
           onClick={() => setEditOn(false)}
@@ -351,7 +349,7 @@ export default function EditSUbCategoryModal({
               type="submit"
               className="me-2 rounded bg-green-700 px-6 py-1 text-white"
             >
-              {loading ? "loading......" : " Submit"}
+              {loading ? "loading." : " Submit"}
             </button>
           </div>
         </form>

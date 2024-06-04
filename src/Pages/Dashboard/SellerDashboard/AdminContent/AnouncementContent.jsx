@@ -34,7 +34,7 @@ const AnouncementModal = ({ setOpen, modalData, index }) => {
         <div className={style.overlay}>
           <div className={style.card}>
             <div className="">
-              <h3 className={style.title}>Announcement.........</h3>
+              <h3 className={style.title}>Announcement....</h3>
               <button onClick={() => setOpen(false)} className={style.close}>
                 <RxCross2 />
               </button>
@@ -169,7 +169,7 @@ const AnouncementContent = () => {
   return (
     <div>
       {/* <h2 className="text-xl font-semibold">hello world</h2>
-            <p className="text-red-500">hello world...........</p> */}
+            <p className="text-red-500">hello world.</p> */}
 
       {data ? <Carousel data={data} /> : ""}
     </div>

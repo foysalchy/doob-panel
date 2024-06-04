@@ -59,7 +59,7 @@ const SeeShopUpcomingProduct = () => {
 
 
 
-    console.log(products, 'select.........');
+    console.log(products, 'select....');
 
 
 

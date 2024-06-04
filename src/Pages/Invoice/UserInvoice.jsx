@@ -119,7 +119,7 @@ const UserInvoice = () => {
             <div className="mx-auto max-w-3xl">
               <div className="mt-8">
                 <ul className="space-y-4">
-                  ....... list
+                  .. list
                   {/* {
                                         info?.productList?.map(itm => <li className="flex items-center gap-4">
                                             <img

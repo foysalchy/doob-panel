@@ -119,7 +119,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
 
 
 
-  console.log('priceing.......................', prices, `https://backend.doob.com.bd/api/v1/seller/subscription-model?priceId=${shopInfo?.priceId}&shopId=${shopInfo._id}`);
+  console.log('priceing...', prices, `https://backend.doob.com.bd/api/v1/seller/subscription-model?priceId=${shopInfo?.priceId}&shopId=${shopInfo._id}`);
 
   return (
     <div className=" sticky">
@@ -1440,6 +1440,17 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                   Warehouse Report
                                 </Link>
                               </li>
+                              <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                <Link
+                                  to={
+                                    "/seller/report-management/subscription-report"
+                                  }
+                                  className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                >
+                                  {/* <FaWarehouse className="w-5 h-5 fill-current text-gray-400 " />{" "} */}
+                                  Subscription Report
+                                </Link>
+                              </li>
                             </ul>
                           )}
                         </div>
@@ -2130,7 +2141,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                     Popup Management
                                   </Link>
                                 </li>
-                                
+
                                 <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
                                   <Link
                                     to={
@@ -2234,17 +2245,17 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
 
                           {openDropdownIndex === 9 && (
                             <ul className="mt-2 space-y-1   px-2 bg-[#1b202ea1] border border-gray-500 py-2 border-opacity-50">
-                             <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                  <Link
-                                    to={
-                                      "/seller/content-management/frame"
-                                    }
-                                    className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
-                                  >
-                                    {/* <FaPage4 className='w-5 h-5 fill-current text-gray-400 ' /> */}
-                                    Frame Management
-                                  </Link>
-                                </li>
+                              <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                <Link
+                                  to={
+                                    "/seller/content-management/frame"
+                                  }
+                                  className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                >
+                                  {/* <FaPage4 className='w-5 h-5 fill-current text-gray-400 ' /> */}
+                                  Frame Management
+                                </Link>
+                              </li>
                               <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
                                 <Link
                                   to={
@@ -2861,7 +2872,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
               />
               <div className="relative">
                 <div className="">
-                  <h2 className="text-lg font-semibold">{user?.name}.....</h2>
+                  <h2 className="text-lg font-semibold">{user?.name}</h2>
                   <span className="flex items-center space-x-1">
                     <Link
                       to={`/shop/${shopInfo?.shopId}`}

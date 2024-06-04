@@ -24,7 +24,7 @@ const DarazOrderTable = ({
     queryKey: ["sellerDarazOrder"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/seller/daraz-order?id=${shopInfo._id}&status=${selectedValue}`
+        `http://localhost:5001/api/v1/seller/daraz-order?id=${shopInfo._id}&status=${selectedValue}`
       );
 
       const data = await res.json();
@@ -34,7 +34,7 @@ const DarazOrderTable = ({
   });
 
   // console.log(sellerDarazOrders??sellerDarazOrders?.orders[0], "sellerDarazOrder");
-  console.log(selectedValue, sellerDarazOrders, "sellerDarazOrder");
+
 
   useEffect(() => {
     refetch();
@@ -45,15 +45,15 @@ const DarazOrderTable = ({
 
   const filteredData = searchValue
     ? sellerDarazOrders?.orders?.filter((itm) => {
-        console.log(itm);
-        const order_id = itm?.order_id;
-        const order_idString = order_id?.toString(); // Convert to string
-        const isMatch = order_idString?.includes(searchValue);
-        if (isMatch) {
-          console.log("Filtered Item:", itm);
-        }
-        return isMatch;
-      })
+      console.log(itm);
+      const order_id = itm?.order_id;
+      const order_idString = order_id?.toString(); // Convert to string
+      const isMatch = order_idString?.includes(searchValue);
+      if (isMatch) {
+        console.log("Filtered Item:", itm);
+      }
+      return isMatch;
+    })
     : sellerDarazOrders?.orders;
 
   // console.log(filteredData);
@@ -93,11 +93,10 @@ const DarazOrderTable = ({
           return (
             <li key={pageNumber}>
               <button
-                className={`block h-8 w-8 rounded border ${
-                  pageNumber === currentPage
-                    ? "border-blue-600 bg-blue-600 text-white"
-                    : "border-gray-900 bg-white text-center leading-8 text-gray-900"
-                }`}
+                className={`block h-8 w-8 rounded border ${pageNumber === currentPage
+                  ? "border-blue-600 bg-blue-600 text-white"
+                  : "border-gray-900 bg-white text-center leading-8 text-gray-900"
+                  }`}
                 onClick={() => handleChangePage(pageNumber)}
               >
                 {pageNumber}
@@ -230,7 +229,7 @@ const DarazOrderTable = ({
           )}
         </div>
       ) : (
-        <h1>Loading......</h1>
+        <h1>Loading.</h1>
       )}
 
       <div className="flex justify-center mt-4">

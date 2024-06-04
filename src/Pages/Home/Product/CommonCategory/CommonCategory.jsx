@@ -43,7 +43,7 @@ export default function CommonCategory() {
 
 
 
-    console.log(products, 'select.........');
+    console.log(products, 'select....');
 
 
 

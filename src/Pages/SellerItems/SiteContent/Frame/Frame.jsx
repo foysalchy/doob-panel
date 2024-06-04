@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import { FaLongArrowAltRight } from "react-icons/fa";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../../../AuthProvider/UserProvider";
+import BrightAlert from "bright-alert";
 
 const Frame = () => {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -29,7 +30,7 @@ const Frame = () => {
   const UploadFrame = async (e) => {
     e.preventDefault();
     setLoading(true);
-   
+
     const shop = shopInfo._id;
     const imageFormData = new FormData();
     imageFormData.append("image", selectedFile);
@@ -38,7 +39,6 @@ const Frame = () => {
       image: imageUrl,
       shopId: shop,
       time: new Date(),
-      status: true,
     };
 
     console.log(data);
@@ -56,8 +56,8 @@ const Frame = () => {
   }
 
   const postSlider = (Slider) => {
-    fetch(`https://backend.doob.com.bd/api/v1/seller/popup/add`, {
-      method: "PUT",
+    fetch(`http://localhost:5001/api/v1/seller/watermark`, {
+      method: "PATCH",
       headers: {
         "content-type": "application/json",
       },
@@ -65,7 +65,7 @@ const Frame = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        Swal.fire("success", "Successfully Updated", "success");
+        BrightAlert(data.message, '', data.status)
         setLoading(false);
         setPreviewUrl("");
         setFileName("");
@@ -75,7 +75,7 @@ const Frame = () => {
 
   return (
     <div>
-      
+
       <div>
         <div className=" border-black p-10 rounded border-dashed border-2  my-4">
           <form onSubmit={UploadFrame} action="">
@@ -123,7 +123,7 @@ const Frame = () => {
               />
             </label>
 
-           
+
 
             <button
               type="submit"

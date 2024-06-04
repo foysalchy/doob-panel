@@ -102,7 +102,7 @@ const ShopCampain = () => {
                                   className="object-cover object-center w-full md:h-[160px] h-[130px] block"
                                   src={product?.featuredImage.src ? product?.featuredImage?.src : product?.images[0]?.src}
                                 />
-                              </a>.....
+                              </a>
                               <div className="mt-2">
                                 <h2 className="text-gray-200 title-font md:text-lg text-sm font-medium">
                                   {product?.name.slice(0, 18)}..

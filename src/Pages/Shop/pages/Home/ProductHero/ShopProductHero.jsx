@@ -127,7 +127,7 @@ const ShopProductHero = () => {
                 try {
                     const response = await fetch(`https://backend.doob.com.bd/api/v1/category/seller/sub-category-by-id?shopId=${shop_id?.shop_id}&id=${item?._id}`);
                     const data = await response.json();
-                    console.log(data, 'data..............**');
+                    console.log(data, 'data....**');
                     return data;
                 } catch (error) {
                     console.error('Error:', error);
@@ -274,7 +274,7 @@ const ShopProductHero = () => {
                     <div className=" w-full relative lg:flex hidden flex-col  rounded-lg p-4">
                         {!megaSideCategoryData ? <>
 
-                            loading......
+                            loading.
                         </> :
                             megaSideCategoryData.filter(itm => itm?.menu === true).map((item, index) => (
                                 <div key={index} className="  inline-block">

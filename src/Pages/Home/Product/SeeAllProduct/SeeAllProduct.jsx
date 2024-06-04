@@ -345,7 +345,7 @@ const SeeAllProduct = () => {
     }, [selectedBrandValues, categroyValue, minPrice, maxPrice, selectedRatings, selectedFeature]);
 
 
-    console.log('select.........', fData);
+    console.log('select....', fData);
 
 
     return (

@@ -50,9 +50,18 @@ const SellerAddProduct = () => {
 
   const [variantInput, setVariantInput] = useState([
     {
-      product1: {},
-      product2: {},
-      product3: {},
+      product1: {
+        quantity: 1,
+        quantityPrice: 1,
+      },
+      product2: {
+        quantity: 10,
+        quantityPrice: 1,
+      },
+      product3: {
+        quantity: 50,
+        quantityPrice: 1,
+      },
       sellingPrice: "",
       ProductCost: "",
     },
@@ -137,7 +146,7 @@ const SellerAddProduct = () => {
 
   useEffect(() => {
     if (allImage.length < 2) {
-      console.log(allImage.length, "test......");
+      console.log(allImage.length, "test.");
       setCheckAlert(true);
     } else {
       setCheckAlert(false);
@@ -433,15 +442,13 @@ const SellerAddProduct = () => {
             <button
               type="submit"
               disabled={allImage.length < 3}
-              className={`${
-                loading || coverPhoto
-                  ? "group relative cursor-pointer inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none mt-4"
-                  : "group relative inline-flex items-center overflow-hidden rounded bg-gray-700 px-8 py-3 text-white focus:outline-none mt-4 cursor-not-allowed"
-              } ${
-                allImage.length < 3
+              className={`${loading || coverPhoto
+                ? "group relative cursor-pointer inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none mt-4"
+                : "group relative inline-flex items-center overflow-hidden rounded bg-gray-700 px-8 py-3 text-white focus:outline-none mt-4 cursor-not-allowed"
+                } ${allImage.length < 3
                   ? "bg-red-500 cursor-not-allowed"
                   : "bg-gray-700 cursor-pointer"
-              }`}
+                }`}
             >
               <span className="absolute -end-full transition-all group-hover:end-4">
                 <BsArrowRight />
@@ -452,7 +459,6 @@ const SellerAddProduct = () => {
             </button>
           )}
 
-          <button type="submit">submit</button>
         </div>
       </form>
     </div>

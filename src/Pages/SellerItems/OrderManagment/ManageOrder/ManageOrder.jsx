@@ -38,13 +38,20 @@ const ManageOrder = () => {
     },
   });
 
-  const { data: darazOrder = [] } = useQuery({
-    queryKey: ["sellerDaraz"],
+
+
+
+  const {
+    data: darazOrder = [],
+  } = useQuery({
+    queryKey: ["sellerDarazOrder"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/seller/daraz-order?id=${shopInfo._id}&status=All`
+        `http://localhost:5001/api/v1/seller/daraz-order?id=${shopInfo._id}&status=${selectedValue}`
       );
+
       const data = await res.json();
+      console.log(data, "datadata");
       return data.data;
     },
   });
@@ -366,9 +373,9 @@ const ManageOrder = () => {
               onClick={() => setSelectedValue(itm.value)}
             >
               {itm.name}{" "}
-              {!isDaraz
-                ? `(${getOrderCount(tData, itm.value)})`
-                : getDarazOrderCount(darazOrder.orders, itm.daraz_value)}
+              ({!isDaraz
+                ? `${getOrderCount(tData, itm.value)}`
+                : getDarazOrderCount(darazOrder.orders, itm.daraz_value)})
             </button>
           )
         )}
@@ -536,9 +543,9 @@ const ManageOrder = () => {
                             INVOICE
                           </div>
 
-                          {/*................*/}
+                          {/*.*/}
                           {/*.... Address ...*/}
-                          {/*................*/}
+                          {/*.*/}
                           <div className=" items-start justify-between mt-4">
                             <div>
                               <div className='flex items-center gap-2'>
@@ -579,9 +586,9 @@ const ManageOrder = () => {
 
                           </div>
 
-                          {/*................*/}
+                          {/*.*/}
                           {/*.... Product ...*/}
-                          {/*................*/}
+                          {/*.*/}
 
                           <section className="container  mx-auto mt-8">
                             <div className="w-full mb-8 overflow-hidden">

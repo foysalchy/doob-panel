@@ -101,7 +101,7 @@ const AddMiniCategory = () => {
       megaCategoryId: JSON.parse(megaCategory)._id,
     };
 
-    console.log(data, "net check......");
+    console.log(data, "net check.");
 
     // return;
 

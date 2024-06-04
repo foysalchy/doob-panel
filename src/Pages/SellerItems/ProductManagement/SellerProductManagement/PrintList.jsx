@@ -44,9 +44,9 @@ const PrintList = ({ setOn, products }) => {
                             Products
                         </div>
 
-                        {/*................*/}
+                        {/*.*/}
                         {/*.... Address ...*/}
-                        {/*................*/}
+                        {/*.*/}
                         {
                             // <div className="flex items-center justify-between mt-4">
                             //     <div>
@@ -102,9 +102,9 @@ const PrintList = ({ setOn, products }) => {
 
                         }
 
-                        {/*................*/}
+                        {/*.*/}
                         {/*.... Product ...*/}
-                        {/*................*/}
+                        {/*.*/}
 
                         <section className="container mx-auto mt-8">
                             <div className="w-full mb-8 overflow-hidden">

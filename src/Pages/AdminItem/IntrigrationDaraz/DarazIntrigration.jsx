@@ -112,6 +112,8 @@ const DarazIntegration = () => {
     },
   });
 
+  console.log(priviousAccount);
+
   const switchAccount = (_id, id) => {
     fetch(
       `https://backend.doob.com.bd/api/v1/daraz/switching-your-daraz?id=${id}&loginId=${_id}`,

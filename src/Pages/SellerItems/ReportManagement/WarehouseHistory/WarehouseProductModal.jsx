@@ -105,7 +105,7 @@ const WarehouseProductModal = ({ setOpenModal, products }) => {
 
                                         <tr>
                                             <td colSpan={8}>
-                                                Loader.......
+                                                Loader..
                                             </td>
                                         </tr>
 

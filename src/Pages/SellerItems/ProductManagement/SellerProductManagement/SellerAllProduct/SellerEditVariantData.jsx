@@ -186,7 +186,7 @@ const SellerEditVariantData = ({
           onChange={(e) => {
             setMultiVendor(
               (e.target.value === "true" && true) ||
-                (e.target.value === "false" && false)
+              (e.target.value === "false" && false)
             );
           }}
           className="flex-grow w-full h-10 px-4 mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-purple-400 focus:outline-none focus:shadow-outline"
@@ -232,11 +232,10 @@ const SellerEditVariantData = ({
                         // Check if a name is selected
                         if (newName) {
                           // Generate a unique SKU
-                          const newSKU = `${
-                            shopInfo.shopId
-                          }_${newName}_${Math.floor(
-                            Math.random() * 100000000
-                          )}`;
+                          const newSKU = `${shopInfo.shopId
+                            }_${newName}_${Math.floor(
+                              Math.random() * 100000000
+                            )}`;
 
                           // Update the name and SKU in the inputFields array
                           newInputFields[index].name = newName;
@@ -321,7 +320,7 @@ const SellerEditVariantData = ({
           <div className="grid grid-cols-3 gap-2">
             <div className={` border p-2 border-gray-300 bg-orange-100`}>
               <h4 className="text-center pb-2 border-b font-semibold text-black border-gray-500 mb-2">
-                Slot...... 1
+                Slot. 1
               </h4>
 
               <div className={`flex gap-3 `}>

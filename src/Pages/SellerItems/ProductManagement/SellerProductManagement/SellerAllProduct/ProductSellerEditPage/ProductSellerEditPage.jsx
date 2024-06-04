@@ -235,7 +235,7 @@ const ProductSellerEditPage = () => {
     const short_description_form = form?.short_description?.value;
     const description_form = form?.description?.value;
     const banglaDescription_form = form?.banglaDescription?.value;
-
+    const low_stock_warning = form?.low_stock_warning?.value;
     // return;
 
     const categories = [
@@ -266,7 +266,8 @@ const ProductSellerEditPage = () => {
     const productLength = form?.productLength?.value;
     const productWidth = form?.productWidth?.value;
     const productHight = form?.productHight?.value;
-    const DeliveryCharge = form?.DeliveryCharge?.value;
+    const DeliveryCharge = form?.DeliveryChargeDhaka?.value;
+    const DeliveryChargeOutside = form?.DeliveryChargeOutside?.value;
 
     const MetaTag = form?.MetaTag?.value;
     const MetaTagMetaDescription = form?.MetaDescription?.value;
@@ -317,7 +318,7 @@ const ProductSellerEditPage = () => {
       price: inputFields[0].offerPrice,
       purchasable: true,
       total_sales: 0,
-      // productType,
+      DeliveryChargeOutside,
       weight: packageWidth,
       length: productLength,
       width: productWidth,
@@ -325,6 +326,7 @@ const ProductSellerEditPage = () => {
       multiVendor: multiVendor,
       adminCategory,
       variantData: variantInput,
+
       // color,
       // size,
       // material,
@@ -362,7 +364,9 @@ const ProductSellerEditPage = () => {
       adminWare,
       darazOptionData,
       upcoming: isChecked,
+      low_stock_warning,
       DeliveryCharge,
+      DeliveryChargeOutside,
       _id: product?._id,
     };
 

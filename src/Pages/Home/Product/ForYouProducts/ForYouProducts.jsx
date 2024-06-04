@@ -29,7 +29,7 @@ const ForYouProducts = () => {
     refetch();
   };
 
-  console.log(newProducts, "products......");
+  console.log(newProducts, "products.");
   return (
     <div>
       <div className="py-4 bg-white rounded mt-6">

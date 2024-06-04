@@ -85,9 +85,9 @@ const PrintedWebInvoice = (data) => {
                             INVOICE
                         </div>
 
-                        {/*................*/}
+                        {/*.*/}
                         {/*.... Address ...*/}
-                        {/*................*/}
+                        {/*.*/}
                         <div className=" items-start justify-between mt-4">
                             <div>
                                 <div className='flex items-center gap-2'>
@@ -116,9 +116,9 @@ const PrintedWebInvoice = (data) => {
 
                         </div>
 
-                        {/*................*/}
+                        {/*.*/}
                         {/*.... Product ...*/}
-                        {/*................*/}
+                        {/*.*/}
 
                         <section className="container mx-auto mt-8">
                             <div className="w-full mb-8 overflow-hidden">
@@ -192,7 +192,7 @@ const PrintedWebInvoice = (data) => {
 
 
 
-    console.log(totalPrice, 'invoice......');
+    console.log(totalPrice, 'invoice.');
     return (
 
         <div>
@@ -232,9 +232,9 @@ const PrintedWebInvoice = (data) => {
                                                 INVOICE
                                             </div>
 
-                                            {/*................*/}
+                                            {/*.*/}
                                             {/*.... Address ...*/}
-                                            {/*................*/}
+                                            {/*.*/}
                                             <div className=" items-start justify-between mt-4">
                                                 <div>
                                                     <div className='flex items-center gap-2'>
@@ -269,9 +269,9 @@ const PrintedWebInvoice = (data) => {
 
                                             </div>
 
-                                            {/*................*/}
+                                            {/*.*/}
                                             {/*.... Product ...*/}
-                                            {/*................*/}
+                                            {/*.*/}
 
                                             <section className="container mx-auto mt-8">
                                                 <div className="w-full mb-8 overflow-hidden">

@@ -86,7 +86,7 @@ const EditProductForm = ({ product }) => {
     }));
   };
 
-  console.log(product, "data........");
+  console.log(product, "data...");
 
   const formSubmit = async (e) => {
     e.preventDefault();
@@ -145,6 +145,8 @@ const EditProductForm = ({ product }) => {
     const adminSubCategory = form?.adminSubCategory?.value;
     const adminMiniCategory = form?.adminMiniCategory?.value;
     const adminExtraCategory = form?.adminExtraCategory?.value;
+    const DeliveryCharge = form?.DeliveryChargeDhaka?.value;
+    const DeliveryChargeOutside = form?.DeliveryChargeOutside?.value;
 
     const adminCategory = [
       adminMegaCategory,

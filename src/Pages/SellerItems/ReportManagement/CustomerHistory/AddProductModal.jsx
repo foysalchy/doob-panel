@@ -86,7 +86,7 @@ const AddProductModal = ({ setOpenModal, title, products }) => {
 
                                         <tr>
                                             <td colSpan={6}>
-                                                Loader.......
+                                                Loader..
                                             </td>
                                         </tr>
 

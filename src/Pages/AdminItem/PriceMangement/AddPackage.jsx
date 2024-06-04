@@ -64,7 +64,7 @@ const AddPackage = () => {
         e.target.reset();
       });
 
-    console.log(formData, "update.......");
+    console.log(formData, "update..");
   };
 
   //   console.log(formData);

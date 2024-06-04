@@ -22,11 +22,11 @@ const AddWooProduct = () => {
         quantityPrice: 1,
       },
       product2: {
-        quantity: 1,
+        quantity: 10,
         quantityPrice: 1,
       },
       product3: {
-        quantity: 1,
+        quantity: 50,
         quantityPrice: 1,
       },
       sellingPrice: 1,

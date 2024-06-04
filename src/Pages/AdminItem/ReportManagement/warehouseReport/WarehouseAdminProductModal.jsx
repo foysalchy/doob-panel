@@ -122,7 +122,7 @@ const WarehouseAdminProductModal = ({ setOpenModal, products }) => {
                     ))}
 
                     <tr>
-                      <td colSpan={8}>Loader.......</td>
+                      <td colSpan={8}>Loader..</td>
                     </tr>
                   </tbody>
                 </table>

@@ -53,7 +53,7 @@ const FlashProduct = () => {
 
   const path = useLocation();
 
-  console.log(variations, "location........");
+  console.log(variations, "location...");
 
   const handleVariation = (variation) => {
     setVariations(variation);

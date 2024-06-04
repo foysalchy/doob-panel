@@ -153,7 +153,7 @@ const NoticeContent = () => {
   return (
     <div>
       {/* <h2 className="text-xl font-semibold">hello world</h2>
-            <p className="text-red-500">hello world...........</p> */}
+            <p className="text-red-500">hello world.</p> */}
 
       {noticeInfo.length ? <Carousel data={noticeInfo} /> : ""}
     </div>

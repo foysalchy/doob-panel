@@ -56,9 +56,9 @@ const OrderInvoice = ({ products, setModalOpen }) => {
                             SALES INVOICE
                         </div>
 
-                        {/*................*/}
+                        {/*.*/}
                         {/*.... Address ...*/}
-                        {/*................*/}
+                        {/*.*/}
                         <div className="flex items-center justify-between mt-4">
                             <div className="flex items-start justify-between mt-4">
                                 <div>
@@ -133,9 +133,9 @@ const OrderInvoice = ({ products, setModalOpen }) => {
 
                         </div>
 
-                        {/*................*/}
+                        {/*.*/}
                         {/*.... Product ...*/}
-                        {/*................*/}
+                        {/*.*/}
 
                         <section className="container mx-auto mt-8">
                             <div className="w-full mb-8 overflow-hidden">

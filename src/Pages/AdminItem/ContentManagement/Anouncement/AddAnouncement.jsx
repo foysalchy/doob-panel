@@ -77,7 +77,7 @@ const AddAnouncement = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data, "submitting........");
+        console.log(data, "submitting...");
         Swal.fire("success", "Your Popup Publish Successfully", "success");
         setLoading(false);
         setPreviewUrl("");

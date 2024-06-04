@@ -157,7 +157,7 @@
 //         reExtra();
 //     }, [selectedMinicategory]);
 
-//     console.log(selectedSubcategory, 'sub categories........');
+//     console.log(selectedSubcategory, 'sub categories...');
 
 //     return (
 //         <div>

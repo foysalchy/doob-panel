@@ -150,7 +150,7 @@ const ProductDetails = () => {
     // }
   }, [path.pathname]);
 
-  // console.log(imageList, "list.........", variationData);
+  // console.log(imageList, "list....", variationData);
 
   const handleDecrease = () => {
     if (quantity > 1) {

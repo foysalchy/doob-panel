@@ -134,7 +134,7 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
 
   let changeAmount = calculateChange();
 
-  console.log(changeAmount, "check amount.....");
+  console.log(changeAmount, "check amount");
 
   const handleSubmit = () => {
     const items = cartProducts;

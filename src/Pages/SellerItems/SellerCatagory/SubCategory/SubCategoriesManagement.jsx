@@ -198,7 +198,7 @@ const SubCategoriesManagement = () => {
 
   const handleViewDetails = (ticketId, warehouse) => {
     setOpenModal(ticketId);
-    // console.log(warehouse, '........');
+    // console.log(warehouse, '...');
     setEditOn(warehouse);
   };
 
@@ -384,7 +384,7 @@ const SubCategoriesManagement = () => {
             </thead>
             <tbody className=" ">
               {loadingSubData && (
-                <h2 className="text-center py-3">Loading Data......</h2>
+                <h2 className="text-center py-3">Loading Data.</h2>
               )}
               {!loadingSubData &&
                 currentData?.length &&

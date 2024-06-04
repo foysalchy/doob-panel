@@ -51,9 +51,9 @@ const StockInvoiceAdmin = ({ setOn, products }) => {
                             INVOICE
                         </div>
 
-                        {/*................*/}
+                        {/*.*/}
                         {/*.... Address ...*/}
-                        {/*................*/}
+                        {/*.*/}
                         <div className="flex items-center justify-between mt-4">
                             <div>
                                 <div className='flex items-center gap-2'>
@@ -104,9 +104,9 @@ const StockInvoiceAdmin = ({ setOn, products }) => {
 
                         </div>
 
-                        {/*................*/}
+                        {/*.*/}
                         {/*.... Product ...*/}
-                        {/*................*/}
+                        {/*.*/}
 
                         <section className="container mx-auto mt-8">
                             <div className="w-full mb-8 overflow-hidden">
