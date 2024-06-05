@@ -1,13 +1,10 @@
 import React, { useContext, useState } from "react";
-import { Link, NavLink } from "react-router-dom";
-import { AuthContext } from "../../../AuthProvider/UserProvider";
-import { MdDashboard } from "react-icons/md";
-import Logo from "../../../../Logo.png";
-import { CgArrowLeft, CgShoppingCart } from "react-icons/cg";
-import Category from "./CategoryListSm";
-import CategoryListSm from "./CategoryListSm";
-import { BiSearch } from "react-icons/bi";
 import { FaAngleDown } from "react-icons/fa6";
+import { MdDashboard } from "react-icons/md";
+import { Link, NavLink } from "react-router-dom";
+import Logo from "../../../../Logo.png";
+import { AuthContext } from "../../../AuthProvider/UserProvider";
+import CategoryListSm from "./CategoryListSm";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -253,17 +250,33 @@ const Header = () => {
             {/* <div >
               <BiSearch onClick={() => setSearch(!search)} className="tracking-wide text-gray-800 transition-colors duration-200 font-semibold hover:text-black underline underline-offset-8 text- " />
             </div> */}
+             <li>
+           
+
+           {!user ? (
+             <div
+               to="/sign-in"
+               aria-label="Sign up"
+               title="Sign up"
+             >
+               <Link to={"/sign-in"} className="tracking-wide text-gray-800 transition-colors duration-200 font-semibold hover:text-black  text- "> Sign In</Link>
+             </div>
+           ) : (
+             <>
+              
+             </>
+           )}
+         </li>
             <li>
+           
 
               {!user ? (
                 <div
                   to="/sign-in"
-                  className="inline-flex text-blue-400 items-center justify-center h-12 px-6  gap-2 text-xl   text-black  font-bold"
                   aria-label="Sign up"
                   title="Sign up"
                 >
-                  <Link to={"/sign-in"}> Sign In</Link>
-                  /<Link to={"/sign-up"}> Sign Up</Link>
+                  <Link to={"/sign-up"} className="inline-flex items-center justify-center w-full h-12 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md hover:bg-black bg-gray-800 focus:shadow-outline focus:outline-none"> Sign Up For Free</Link>
                 </div>
               ) : (
                 <>

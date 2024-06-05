@@ -1368,9 +1368,11 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                     }
                                     className="w-full"
                                   >
+
                                     <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-xs rounded-md">
-                                      Commission Report
+                                      Processing Fee Report
                                     </div>
+
                                   </Link>
                                 </li>
                                 <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
@@ -1473,9 +1475,11 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                   }
                                   className="w-full"
                                 >
+
                                   <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-xs rounded-md">
-                                    Commission Report
+                                    Processing Fee Report
                                   </div>
+
                                 </Link>
                               </li>
                               <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">

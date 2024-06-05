@@ -1,8 +1,7 @@
 import React, { useState } from "react";
+import { BsArrowRight } from "react-icons/bs";
 import { RxCross2 } from "react-icons/rx";
 import Swal from "sweetalert2";
-import Select from "react-select";
-import { BsArrowRight } from "react-icons/bs";
 
 const EditPackage = ({ OpenModal, setOpenModal, packageInfo, refetch }) => {
   console.log("packageInfo", packageInfo);
@@ -114,7 +113,7 @@ const EditPackage = ({ OpenModal, setOpenModal, packageInfo, refetch }) => {
               <div>
 
                 <input
-                  placeholder="Commotion Price"
+                  placeholder="Fee  "
                   type="number"
                   name="slot1_to_commotion"
                   defaultValue={packageInfo.slotOne.price}
@@ -142,7 +141,7 @@ const EditPackage = ({ OpenModal, setOpenModal, packageInfo, refetch }) => {
               <div>
 
                 <input
-                  placeholder="Commotion Price"
+                  placeholder="Fee"
                   type="number"
                   defaultValue={packageInfo.slotTwo.price}
                   name="slot2_to_commotion"
@@ -169,7 +168,7 @@ const EditPackage = ({ OpenModal, setOpenModal, packageInfo, refetch }) => {
               <div>
 
                 <input
-                  placeholder="Commotion Price"
+                  placeholder="Fee"
                   type="number"
                   name="slot3_to_commotion"
                   defaultValue={packageInfo.slotThree.price}

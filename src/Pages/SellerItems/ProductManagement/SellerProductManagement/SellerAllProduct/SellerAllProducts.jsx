@@ -1,22 +1,18 @@
-import React, { useContext, useState } from "react";
-import { AuthContext } from "../../../../../AuthProvider/UserProvider";
 import { useQuery } from "@tanstack/react-query";
-import { Link, useNavigate } from "react-router-dom";
-import { BsEye, BsViewList } from "react-icons/bs";
-import { MdDelete, MdOutlineViewInAr } from "react-icons/md";
-import EditProductForm from "./EditProduct";
-import DemoImage from "./woocommerce-placeholder-600x600.png";
-import Swal from "sweetalert2";
-import DeleteModal from "../../../../../Common/DeleteModal";
-import { BiEdit, BiLeftArrow, BiRightArrow } from "react-icons/bi";
-import WebStoreproduct from "./WebStoreProducts";
-import PrintPage from "./SellerPrintPage";
-import SellerPrintPage from "./SellerPrintPage";
-import { RxCross2 } from "react-icons/rx";
 import jsPDF from "jspdf";
-import Barcode from "react-barcode";
+import React, { useContext, useState } from "react";
+import { BiEdit } from "react-icons/bi";
+import { BsEye } from "react-icons/bs";
+import { IoIosArrowDown } from "react-icons/io";
+import { MdDelete } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+import { AuthContext } from "../../../../../AuthProvider/UserProvider";
+import DeleteModal from "../../../../../Common/DeleteModal";
 import PrintList from "../PrintList";
-
+import EditProductForm from "./EditProduct";
+import WebStoreproduct from "./WebStoreProducts";
+import DemoImage from "./woocommerce-placeholder-600x600.png";
 const SellerAllProducts = () => {
   const navigate = useNavigate();
   const { shopInfo } = useContext(AuthContext);
@@ -431,15 +427,48 @@ const SellerAllProducts = () => {
           {products?.length}
         </span>
       </div>
-      <div className="flex gap-5 mt-4 items-center">
+      <div className="flex gap-1 mt-4 items-center" 
+              style={{fontSize:'15px'}}
+>
+      <div className="relative w-3/3 ">
+          <input
+            type="text"
+            id="Search"
+            value={searchQuery}
+            onChange={handleSearch}
+            placeholder="Search for..."
+            className="w-full px-5 rounded-md border border-gray-900 py-2.5 pe-10 shadow-sm sm:text-sm"
+          />
+
+          <span className="absolute inset-y-0 end-0 grid w-10 place-content-center">
+            <button type="button" className="text-gray-600 hover:text-gray-700">
+              <span className="sr-only">Search</span>
+
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth="1.5"
+                stroke="currentColor"
+                className="h-4 w-4 text-black"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
+                />
+              </svg>
+            </button>
+          </span>
+        </div>
         <div className="relative inline-block text-left">
           <button
             onClick={toggleDropdown}
-            className="px-6 py-2 bg-black text-white rounded-md"
+            className="px-2 bg-white py-1 border"
             aria-haspopup="true"
             aria-expanded={dropdownOpenWeb}
           >
-            {webStoreProduct ? "My Store" : "Web Store"}
+            {webStoreProduct ? "My Store" : "Web Store"}   <IoIosArrowDown className="inline" />
           </button>
 
           {dropdownOpenWeb && (
@@ -470,15 +499,15 @@ const SellerAllProducts = () => {
         </div>
 
         {webStoreProduct && (
-          <div className="flex gap-5  items-center">
+          <div className="flex gap-1  items-center mr-0" style={{margin:"0px !important"}}>
             <div className="relative inline-block text-left">
               <button
                 onClick={toggleDropdownWare}
-                className="px-6 py-2 bg-black text-white rounded-md"
+                className="px-2 bg-white py-1 border"
                 aria-haspopup="true"
                 aria-expanded={dropdownOpenForWare}
               >
-                {selectwarehouse || "Select Warehouse"}
+                {selectwarehouse || " Warehouse"}   <IoIosArrowDown className="inline" />
               </button>
 
               {dropdownOpenForWare && (
@@ -517,11 +546,11 @@ const SellerAllProducts = () => {
             <div className="relative inline-block text-left">
               <button
                 onClick={toggleDropdownFor2nd}
-                className="px-6 py-2 bg-black text-white rounded-md"
+                className="px-2 bg-white py-1 border"
                 aria-haspopup="true"
                 aria-expanded={dropdownOpenFor2nd}
               >
-                {selectedOption || "Select an option"}
+                {selectedOption || "Source"}  <IoIosArrowDown className="inline" />
               </button>
 
               {dropdownOpenFor2nd && (
@@ -568,12 +597,12 @@ const SellerAllProducts = () => {
         )}
 
         <div>
-          <div className="flex gap-5  items-center">
+          <div className="flex gap-1  items-center">
 
             <button
               onClick={update_form_daraz}
               disabled={updateStart}
-              className="px-6 py-2 bg-orange-600 hover:bg-orange-800 text-white rounded-md"
+              className="px-2 bg-white py-1 border"
               aria-haspopup="true"
 
             >
@@ -582,7 +611,7 @@ const SellerAllProducts = () => {
 
 
             <button
-              className="px-6 py-2 bg-purple-600 hover:bg-purple-800 text-white rounded-md"
+              className="px-2 bg-white py-1 border"
               aria-haspopup="true"
             >
               Update Woo Product
@@ -592,39 +621,8 @@ const SellerAllProducts = () => {
 
           </div>
         </div>
-      </div>
-      <div className="md:flex items-center my-6 justify-between">
-        <div className="relative w-3/5 ">
-          <input
-            type="text"
-            id="Search"
-            value={searchQuery}
-            onChange={handleSearch}
-            placeholder="Search for..."
-            className="w-full px-5 rounded-md border border-gray-900 py-2.5 pe-10 shadow-sm sm:text-sm"
-          />
-
-          <span className="absolute inset-y-0 end-0 grid w-10 place-content-center">
-            <button type="button" className="text-gray-600 hover:text-gray-700">
-              <span className="sr-only">Search</span>
-
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth="1.5"
-                stroke="currentColor"
-                className="h-4 w-4 text-black"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
-                />
-              </svg>
-            </button>
-          </span>
-        </div>
+      
+       
         <div className="flex items-center mt-4 md:mt-0  gap-2">
           {selectProducts.length ? (
             <select
@@ -642,7 +640,7 @@ const SellerAllProducts = () => {
           )}
           <button
             onClick={barcode_generate}
-            className="bg-blue-500 px-8 py-2 rounded text-white"
+            className="px-2 bg-white py-1 border"
           >
             Barcode Generate
           </button>
@@ -650,7 +648,7 @@ const SellerAllProducts = () => {
           <button
             onClick={logSelectedProducts}
             disabled={!selectProducts.length}
-            className="bg-blue-500 px-8 py-2 rounded text-white"
+            className="px-2 bg-white py-1 border"
           >
             Print
           </button>

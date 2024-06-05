@@ -1,6 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 import { BiEdit } from "react-icons/bi";
 
 import { MdDelete } from "react-icons/md";
@@ -106,20 +105,20 @@ const AllPackage = () => {
                     <td className="px-4 py-3">
                       <div className="flex flex-col">
                         <div> To: {pack?.slotOne.to}</div>
-                        <div> Price:  {pack?.slotOne.price}</div>
+                        <div> Fee:  {pack?.slotOne.price}</div>
                       </div>
                     </td>
                     <td>
                       <div className="flex flex-col">
                         <div>  To:  {pack?.slotTwo.to}</div>
-                        <div>  Price:  {pack?.slotTwo.price}</div>
+                        <div>  Fee:  {pack?.slotTwo.price}</div>
                       </div>
                     </td>
 
                     <td>
                       <div className="flex flex-col">
                         <div>To: {pack?.slotThree.to}</div>
-                        <div> Price: {pack?.slotThree.price}</div>
+                        <div> Fee: {pack?.slotThree.price}</div>
                       </div>
                     </td>
 

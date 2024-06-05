@@ -343,7 +343,7 @@ const ProductDetails = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        BrightAlert();
+        BrightAlert('Product added on your store');
       });
     console.log(newData);
   };

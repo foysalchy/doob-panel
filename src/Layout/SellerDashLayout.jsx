@@ -1,9 +1,8 @@
-import React, { useContext, useEffect, useState } from "react";
-import SideNavberSeller from "../Pages/Dashboard/SellerDashboard/SideNavberSeller/SideNavberSeller";
-import { Link, Outlet, useLocation, useParams } from "react-router-dom";
-import { AuthContext } from "../AuthProvider/UserProvider";
 import { useQuery } from "@tanstack/react-query";
-import Swal from "sweetalert2";
+import React, { useContext, useEffect, useState } from "react";
+import { Link, Outlet, useLocation } from "react-router-dom";
+import { AuthContext } from "../AuthProvider/UserProvider";
+import SideNavberSeller from "../Pages/Dashboard/SellerDashboard/SideNavberSeller/SideNavberSeller";
 
 const SellerDashLayout = () => {
   const { user, shopInfo, setCookie, setShopInfo } = useContext(AuthContext);
