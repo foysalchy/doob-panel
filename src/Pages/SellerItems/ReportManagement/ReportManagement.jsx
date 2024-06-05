@@ -15,7 +15,7 @@ const ReportManagement = () => {
                         <FaLongArrowAltRight />
                     </span>
                     <span className="text-sm font-medium transition-all group-hover:ms-4">
-                        Commission Report
+                    Processing Fee Report
                     </span>
                 </Link>
 

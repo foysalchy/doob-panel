@@ -2221,7 +2221,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                   className="hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
                                 >
                                   {/* <IoNotificationsCircle className="w-5 h-5 fill-current text-gray-400 " />{" "} */}
-                                  Commission
+                                  Processing Fee 
                                 </Link>
                               </li>
                               <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
@@ -2229,7 +2229,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                   to={"/admin/package-management"}
                                   className="hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
                                 >
-                                  Package Handle
+                                  Packaging Fee
                                 </Link>
                               </li>
 
@@ -2278,7 +2278,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                 className="hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
                               >
                                 {/* <IoNotificationsCircle className="w-5 h-5 fill-current text-gray-400 " />{" "} */}
-                                Commission
+                                Processing Fee 
                               </Link>
                             </li>
                             <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
@@ -2286,7 +2286,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                 to={"/admin/package-management"}
                                 className="hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
                               >
-                                Package Handle
+                                Packaging Fee
                               </Link>
                             </li>
 
@@ -2341,7 +2341,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                   className="hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
                                 >
                                   {/* <IoNotificationsCircle className="w-5 h-5 fill-current text-gray-400 " />{" "} */}
-                                  Commission
+                                  Processing Fee 
                                 </Link>
                               </li>
                               <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
@@ -2349,7 +2349,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                   to={"/admin/package-management"}
                                   className="hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
                                 >
-                                  Package Handle
+                                  Packaging Fee
                                 </Link>
                               </li>
 
@@ -2398,7 +2398,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                 className="hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
                               >
                                 {/* <IoNotificationsCircle className="w-5 h-5 fill-current text-gray-400 " />{" "} */}
-                                Commission
+                                Processing Fee 
                               </Link>
                             </li>
                             <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
@@ -2406,7 +2406,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                 to={"/admin/package-management"}
                                 className="hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
                               >
-                                Package Handle
+                                Packaging Fee
                               </Link>
                             </li>
 
@@ -2715,12 +2715,12 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                               <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50">
                                 <Link
                                   to={
-                                    "/admin/report-management/commission-history-admin"
+                                    "/admin/report-management/fees-history-all"
                                   }
                                   className="hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
                                 >
                                   {/* <BiHistory className="w-5 h-5 fill-current text-gray-400 " /> */}
-                                  Commission History
+                                  Charges   History
                                 </Link>
                               </li>
                             </ul>
@@ -2808,12 +2808,12 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                             <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50">
                               <Link
                                 to={
-                                  "/admin/report-management/commission-history-admin"
+                                  "/admin/report-management/fees-history-all"
                                 }
                                 className="hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
                               >
                                 {/* <BiHistory className="w-5 h-5 fill-current text-gray-400 " /> */}
-                                Commission History
+                                Charges   History
                               </Link>
                             </li>
                           </ul>

@@ -1,11 +1,7 @@
-import JoditEditor from "jodit-react";
-import React, { useContext, useState } from "react";
-import { Link } from "react-router-dom";
-import { AuthContext } from "../../../AuthProvider/UserProvider";
-import Swal from "sweetalert2";
-import { useQuery, useMutation } from "@tanstack/react-query";
-import { BsArrowRight } from "react-icons/bs";
+import { useQuery } from "@tanstack/react-query";
 import BrightAlert from "bright-alert";
+import React, { useState } from "react";
+import { BsArrowRight } from "react-icons/bs";
 
 const AddProduct = () => {
   // Define the query for GET request
@@ -49,21 +45,19 @@ const AddProduct = () => {
   return (
     <div>
       <div className=" mx-auto overflow-hidden  sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8">
-        <h1 className="text-2xl font-bold mt-5">
-          Publish your product image and information
-        </h1>
+        
         <div className="p-10 border-2 rounded m-10">
           <form onSubmit={handleUpload} className="space-y-4  ">
             <div className="border border-collapse p-4">
-              <h1>ProductCommission : {Commission?.Commission}</h1>
+              <h1>Processing fee : {Commission?.Commission}</h1>
               <div className="mt-4">
                 <label className=" text-black text-sm " htmlFor="Commission">
-                  Commission
+                  Fee
                 </label>
                 <input
                   required
                   className="w-full mt-1 rounded-lg border border-gray-900 px-3 py-2 text-sm"
-                  placeholder="$80"
+                  placeholder="Tk.80"
                   type="number"
                   id="Commission"
                   name="Commission"

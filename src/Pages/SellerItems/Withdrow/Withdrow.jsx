@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { useContext, useEffect, useState } from "react";
-import { AuthContext } from "../../../AuthProvider/UserProvider";
 import Swal from "sweetalert2";
+import { AuthContext } from "../../../AuthProvider/UserProvider";
 
 const Withdraw = () => {
   const { shopInfo } = useContext(AuthContext);
@@ -154,8 +154,8 @@ const Withdraw = () => {
           <tr className="bg-gray-200">
             <th className="p-3 text-left">Order ID</th>
             <th className="p-3 text-left">Product Price</th>
-            <th className="p-3 text-left">Commission</th>
-            <th className="p-3 text-left">Handling</th>
+            <th className="p-3 text-left">Processing Fee</th>
+            <th className="p-3 text-left">Packaging Fee</th>
             <th className="p-3 text-left">Quantity</th>
             <th className="p-3 text-left">Total Amount</th>{" "}
             {/* Add new column for Total Amount */}

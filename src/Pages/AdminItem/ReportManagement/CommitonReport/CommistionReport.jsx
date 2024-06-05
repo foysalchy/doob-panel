@@ -1,6 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { orderBy } from 'firebase/firestore/lite';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { BiLeftArrow, BiRightArrow } from 'react-icons/bi';
 import TableLoader from '../../../../Common/TableLoader';
 
@@ -190,13 +189,13 @@ const CommissionReport = () => {
                                             scope="col"
                                             className="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 "
                                         >
-                                            Commission Amount
+                                            Processing Fee 
                                         </th>
                                         <th
                                             scope="col"
                                             className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 "
                                         >
-                                            Handling Fee
+                                            Packaging Fee
                                         </th>
                                         <th
                                             scope="col"
@@ -208,7 +207,7 @@ const CommissionReport = () => {
                                             scope="col"
                                             className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 "
                                         >
-                                            Without Commission and Handling
+                                            Without Fees
                                         </th>
                                         <th
                                             scope="col"

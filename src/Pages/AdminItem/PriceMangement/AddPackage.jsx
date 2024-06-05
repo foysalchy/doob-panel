@@ -1,8 +1,5 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 import { BsArrowRight } from "react-icons/bs";
-import { Link } from "react-router-dom";
-import Select from "react-select";
 import Swal from "sweetalert2";
 
 const AddPackage = () => {
@@ -97,7 +94,7 @@ const AddPackage = () => {
                 </label>
                 <div className="mb-2">
                   <input
-                    placeholder="To Price "
+                    placeholder="Fee "
                     required
                     type="number"
                     name="slot1_to_price"
@@ -106,7 +103,7 @@ const AddPackage = () => {
                 <div>
 
                   <input
-                    placeholder="Commotion Price"
+                    placeholder="Fee"
                     type="number"
                     name="slot1_to_commotion"
 
@@ -123,7 +120,7 @@ const AddPackage = () => {
                 </label>
                 <div className="mb-2">
                   <input
-                    placeholder="To Price "
+                    placeholder="Fee "
                     required
                     type="number"
                     name="slot2_to_price"
@@ -132,7 +129,7 @@ const AddPackage = () => {
                 <div>
 
                   <input
-                    placeholder="Commotion Price"
+                    placeholder="Fee"
                     type="number"
                     name="slot2_to_commotion"
                     className="flex-grow w-full h-12 px-4 mb-4 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-purple-400 focus:outline-none focus:shadow-outline"
@@ -157,7 +154,7 @@ const AddPackage = () => {
                 <div>
 
                   <input
-                    placeholder="Commotion Price"
+                    placeholder="Fee"
                     type="number"
                     name="slot3_to_commotion"
 

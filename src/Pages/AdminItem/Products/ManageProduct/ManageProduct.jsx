@@ -1,18 +1,13 @@
-import React from "react";
-import AddProduct from "../AddProduct";
-import { Link } from "react-router-dom";
-import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import BrightAlert from "bright-alert";
-import SellerPrintPage from "../../../SellerItems/ProductManagement/SellerProductManagement/SellerAllProduct/SellerPrintPage";
-import WarehouseModal from "./WarehouseModal";
-import { FaAngleRight } from "react-icons/fa6";
-import EditProduct from "./EditProduct";
 import jsPDF from "jspdf";
-import Barcode from "react-barcode";
+import React, { useState } from "react";
 import { BiEdit, BiSave } from "react-icons/bi";
 import { BsEye } from "react-icons/bs";
+import { FaAngleRight } from "react-icons/fa6";
+import { Link } from "react-router-dom";
 import PrintList from "./PrintList";
+import WarehouseModal from "./WarehouseModal";
 
 const ManageProduct = () => {
   const [openModal, setOpenModal] = useState(false);
@@ -288,31 +283,7 @@ const ManageProduct = () => {
   console.log(currentItems, 'Hello js...');
   return (
     <div className="">
-      <Link
-        className="group relative inline-flex mb-4 items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
-        to="/admin/manage-product/add-product"
-      >
-        <span className="absolute -start-full transition-all group-hover:start-4">
-          <svg
-            className="h-5 w-5 rtl:rotate-180"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M17 8l4 4m0 0l-4 4m4-4H3"
-            />
-          </svg>
-        </span>
-
-        <span className="text-sm font-medium transition-all group-hover:ms-4">
-          AddCommission
-        </span>
-      </Link>
+       
 
       <div className="relative w-3/5 my-2">
         <input
@@ -468,13 +439,13 @@ const ManageProduct = () => {
                         scope="col"
                         className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right "
                       >
-                        Commission
+                        Processing Fee
                       </th>
                       <th
                         scope="col"
                         className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right "
                       >
-                        Handling
+                        Packaging Fee
                       </th>
                       <th
                         scope="col"
