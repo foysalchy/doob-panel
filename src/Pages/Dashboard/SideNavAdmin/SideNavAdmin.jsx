@@ -131,13 +131,13 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                       <li onMouseMove={() => setMenu(true)} className="relative">
                         <div className="group w-full [&_summary::-webkit-details-marker]:hidden flex flex-col items-center rounded-sm  ">
                           <div
-                            onClick={() => handleToggle(1)}
+                            onClick={() => handleToggle(101)}
                             className="flex cursor-pointer w-full items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-white hover:text-gray-50"
                           >
                             <div className="flex cursor-pointer items-center gap-2">
                               <BsBox2 className="w-5 h-5 fill-current text-gray-400" />
 
-                              <span>Products</span>
+                              <span>Products...</span>
                             </div>
 
                             <span className="shrink-0 transition duration-300 group-open:-rotate-180">
@@ -145,7 +145,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                             </span>
                           </div>
 
-                          {openDropdownIndex == 1 && (
+                          {openDropdownIndex == 101 && (
                             <ul className="mt-2 space-y-1 px-4 border border-white border-opacity-40 py-2">
                               <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50">
                                 <Link
@@ -493,13 +493,13 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                     <li onMouseMove={() => setMenu(true)} className="relative">
                       <div className="group w-full [&_summary::-webkit-details-marker]:hidden flex flex-col items-center rounded-sm  ">
                         <div
-                          onClick={() => handleToggle(1)}
+                          onClick={() => handleToggle(101)}
                           className="flex cursor-pointer w-full items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-white hover:text-gray-50"
                         >
                           <div className="flex cursor-pointer items-center gap-2">
                             <BsBox2 className="w-5 h-5 fill-current text-gray-400" />
 
-                            <span>Products</span>
+                            <span>Products...</span>
                           </div>
 
                           <span className="shrink-0 transition duration-300 group-open:-rotate-180">
@@ -507,7 +507,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                           </span>
                         </div>
 
-                        {openDropdownIndex == 1 && (
+                        {openDropdownIndex == 101 && (
                           <ul className="mt-2 space-y-1 px-4 border border-white border-opacity-40 py-2">
                             <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50">
                               <Link
@@ -855,69 +855,114 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                 user?.permissions.find((itm) => itm?.name === "Orders") ? (
                   <>
                     {menu && (
-                      <li
-                        onMouseMove={() => setMenu(true)}
-                        className="relative"
-                      >
-                        <div className="group [&_summary::-webkit-details-marker]:hidden flex flex-col w-full items-center rounded-sm  ">
+                      <li onMouseMove={() => setMenu(true)} className="relative w-full">
+                        {/* start //! */}
+                        <div className="group [&_summary::-webkit-details-marker]:hidden block w-full items-center rounded-sm  ">
                           <div
-                            onClick={() => handleToggle(2)}
-                            className="flex cursor-pointer items-center w-full justify-between  p-2 rounded-sm hover:bg-gray-800 text-white hover:text-gray-50"
-                          >
+                            onClick={() => handleToggle(102)}
+                            className="flex cursor-pointer items-center w-full justify-between  p-2 rounded-sm hover:bg-gray-800 text-white hover:text-gray-50">
                             <div className="flex cursor-pointer items-center gap-2">
                               <BsBasket className="w-5 h-5 fill-current text-gray-400" />
-
                               <span>Orders</span>
                             </div>
-
                             <span className="shrink-0 transition duration-300 group-open:-rotate-180">
                               <IoIosArrowDown className="h-5 w-5" />
                             </span>
                           </div>
-                          {openDropdownIndex == 2 && (
-                            <ul className="mt-2 space-y-1 px-4 border border-white border-opacity-40 py-2">
-                              {user?.staffRole ? (
-                                user?.permissions.find(
-                                  (itm) =>
-                                    itm?.name === "Seller Order Management"
-                                ) ? (
-                                  <NavLink
-                                    onMouseMove={() => setMenu(true)}
-                                    rel="noopener noreferrer"
-                                    to={"/admin/seller-order-management"}
-                                    className={({ isActive }) => {
-                                      return isActive
-                                        ? "flex items-center p-2 space-x-3 rounded-sm bg-gray-800 text-white "
-                                        : "flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
-                                    }}
-                                  >
-                                    <BiCategory className="w-5 h-5 fill-current text-gray-400" />
-                                    {menu && (
-                                      <span>Seller Order Management</span>
-                                    )}
-                                  </NavLink>
-                                ) : null
-                              ) : (
+                          {openDropdownIndex == 102 && <ul className="mt-2 space-y-1 px-4 border border-white border-opacity-40 py-2">
+                            {user?.staffRole ? (
+                              user?.permissions.find(
+                                (itm) => itm?.name === "Seller Order Management"
+                              ) ? (
                                 <NavLink
                                   onMouseMove={() => setMenu(true)}
                                   rel="noopener noreferrer"
                                   to={"/admin/seller-order-management"}
                                   className={({ isActive }) => {
                                     return isActive
+                                      ? "flex items-center p-2 space-x-3 rounded-sm bg-gray-800 text-white "
+                                      : "flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
+                                  }}
+                                >
+                                  {/* <BiCategory className="w-5 h-5 fill-current text-gray-400" /> */}
+                                  {menu && <span>Seller Order Management</span>}
+                                </NavLink>
+                              ) : null
+                            ) : (
+                              <NavLink
+                                onMouseMove={() => setMenu(true)}
+                                rel="noopener noreferrer"
+                                to={"/admin/seller-order-management"}
+                                className={({ isActive }) => {
+                                  return isActive
+                                    ? "flex items-center p-2 space-x-1 rounded-sm bg-gray-800 text-white "
+                                    : "flex items-center p-2 space-x-1 rounded-sm hover:bg-gray-800 hover:text-white";
+                                }}
+                              >
+                                {menu && <span> Seller Order Management</span>}
+                              </NavLink>
+                            )}
+                            {user?.staffRole ? (
+                              user?.permissions.find(
+                                (itm) => itm?.name === "Claim Return"
+                              ) ? (
+                                <NavLink
+                                  onMouseMove={() => setMenu(true)}
+                                  rel="noopener noreferrer"
+                                  to={"/admin/claim-return"}
+                                  className={({ isActive }) => {
+                                    return isActive
+                                      ? "flex items-center p-2 space-x-3 rounded-sm bg-gray-800 text-white "
+                                      : "flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
+                                  }}
+                                >
+                                  {/* <BiCategory className="w-5 h-5 fill-current text-gray-400" /> */}
+                                  {menu && <span>Claim Return</span>}
+                                </NavLink>
+                              ) : null
+                            ) : (
+                              <li>
+                                <NavLink
+                                  onMouseMove={() => setMenu(true)}
+                                  rel="noopener noreferrer"
+                                  to={"/admin/claim-return"}
+                                  className={({ isActive }) => {
+                                    return isActive
                                       ? "flex items-center p-2 space-x-1 rounded-sm bg-gray-800 text-white "
                                       : "flex items-center p-2 space-x-1 rounded-sm hover:bg-gray-800 hover:text-white";
                                   }}
                                 >
-                                  <BiCategory className="w-5 h-5 fill-current text-gray-400" />
-                                  {menu && (
-                                    <span> Seller Order Management</span>
-                                  )}
+                                  {menu && <span> Claim Return</span>}
                                 </NavLink>
-                              )}
+                                <NavLink
+                                  onMouseMove={() => setMenu(true)}
+                                  rel="noopener noreferrer"
+                                  to={"/admin/claim-list"}
+                                  className={({ isActive }) => {
+                                    return isActive
+                                      ? "flex items-center p-2 space-x-1 rounded-sm bg-gray-800 text-white "
+                                      : "flex items-center p-2 space-x-1 rounded-sm hover:bg-gray-800 hover:text-white";
+                                  }}
+                                >
+                                  {menu && <span> Claim List</span>}
+                                </NavLink>
+                              </li>
+                            )}
+                          </ul>}
 
 
-                            </ul>
-                          )}
+
+                          {/* <ul className="mt-2 space-y-1  p-2 border border-[gray] bg-[#1b202ea1]">
+                          <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                            <Link
+                              to={"/admin/claim-return"}
+                              className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                            >
+                           
+                              Claim Return
+                            </Link>
+                          </li>
+                        </ul> */}
                         </div>
                       </li>
                     )}
@@ -926,10 +971,12 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
               ) : (
                 <>
                   {menu && (
-                    <li onMouseMove={() => setMenu(true)} className="relative">
+                    <li onMouseMove={() => setMenu(true)} className="relative w-full">
                       {/* start //! */}
-                      <details className="group [&_summary::-webkit-details-marker]:hidden flex items-center rounded-sm  ">
-                        <summary className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-white hover:text-gray-50">
+                      <div className="group [&_summary::-webkit-details-marker]:hidden block w-full items-center rounded-sm  ">
+                        <div
+                          onClick={() => handleToggle(102)}
+                          className="flex cursor-pointer items-center w-full justify-between  p-2 rounded-sm hover:bg-gray-800 text-white hover:text-gray-50">
                           <div className="flex cursor-pointer items-center gap-2">
                             <BsBasket className="w-5 h-5 fill-current text-gray-400" />
                             <span>Orders</span>
@@ -937,8 +984,8 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                           <span className="shrink-0 transition duration-300 group-open:-rotate-180">
                             <IoIosArrowDown className="h-5 w-5" />
                           </span>
-                        </summary>
-                        <ul className="mt-2 space-y-1 px-4 border border-white border-opacity-40 py-2">
+                        </div>
+                        {openDropdownIndex == 102 && <ul className="mt-2 space-y-1 px-4 border border-white border-opacity-40 py-2">
                           {user?.staffRole ? (
                             user?.permissions.find(
                               (itm) => itm?.name === "Seller Order Management"
@@ -1017,7 +1064,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                               </NavLink>
                             </li>
                           )}
-                        </ul>
+                        </ul>}
 
 
 
@@ -1032,7 +1079,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                             </Link>
                           </li>
                         </ul> */}
-                      </details>
+                      </div>
                     </li>
                   )}
                 </>
@@ -1307,13 +1354,10 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                 user?.permissions.find((itm) => itm?.name === "Page Management") ? (
                   <>
                     {menu && (
-                      <li
-                        onMouseMove={() => setMenu(true)}
-                        className="relative"
-                      >
+                      <li onMouseMove={() => setMenu(true)} className="relative">
                         <div className="group [&_summary::-webkit-details-marker]:hidden w-full flex flex-col items-center rounded-sm  ">
                           <div
-                            onClick={() => handleToggle(4)}
+                            onClick={() => handleToggle(40)}
                             className="flex cursor-pointer items-center w-full justify-between  p-2 rounded-sm hover:bg-gray-800 text-white hover:text-gray-50"
                           >
                             <div className="flex cursor-pointer items-center gap-2">
@@ -1327,43 +1371,43 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                             </span>
                           </div>
 
-                          {openDropdownIndex == 4 && (
+                          {openDropdownIndex == 40 && (
                             <ul className="mt-2 space-y-1 px-4 border border-white border-opacity-40 py-2">
-                              {user?.staffRole ? (
-                                user?.permissions.find(
-                                  (itm) => itm?.name === "Page Management"
-                                ) ? (
-                                  <NavLink
-                                    onMouseMove={() => setMenu(true)}
-                                    rel="noopener noreferrer"
-                                    to={"/admin/page-management"}
-                                    className={({ isActive }) => {
-                                      return isActive
-                                        ? "flex items-center p-2 space-x-3 rounded-sm bg-gray-800 text-white "
-                                        : "flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
-                                    }}
-                                  >
-                                    {/* <MdOutlineSubscriptions className="w-5 h-5 fill-current text-gray-400" /> */}
-                                    {menu && <span>Page Management</span>}
-                                  </NavLink>
-                                ) : null
-                              ) : (
+                              {/* {user?.staffRole ? (
+                              user?.permissions.find(
+                                (itm) => itm?.name === "Page Management"
+                              ) ? (
                                 <NavLink
                                   onMouseMove={() => setMenu(true)}
                                   rel="noopener noreferrer"
-                                  to={"/admin/page-management/add-page"}
-                                  // className={({ isActive }) => {
-                                  //   return isActive
-                                  //     ? "flex items-center p-2 space-x-3 rounded-sm bg-gray-800 text-white "
-                                  //     : "flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
-                                  // }}
-
-                                  className={`flex items-center p-2 space-x-3 rounded-sm  `}
+                                  to={"/admin/page-management"}
+                                  className={({ isActive }) => {
+                                    return isActive
+                                      ? "flex items-center p-2 space-x-3 rounded-sm bg-gray-800 text-white "
+                                      : "flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
+                                  }}
                                 >
-                                  {/* <MdOutlineSubscriptions className="w-5 h-5 fill-current text-gray-400" /> */}
-                                  {menu && <span>Add Page</span>}
+                                  <MdOutlineSubscriptions className="w-5 h-5 fill-current text-gray-400" />
+                                  {menu && <span>Page Management</span>}
                                 </NavLink>
-                              )}
+                              ) : null
+                            ) : (
+                              <NavLink
+                                onMouseMove={() => setMenu(true)}
+                                rel="noopener noreferrer"
+                                to={"/admin/page-management/add-page"}
+                                // className={({ isActive }) => {
+                                //   return isActive
+                                //     ? "flex items-center p-2 space-x-3 rounded-sm bg-gray-800 text-white "
+                                //     : "flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
+                                // }}
+
+                                className={`flex items-center p-2 space-x-3 rounded-sm  `}
+                              >
+                                <MdOutlineSubscriptions className="w-5 h-5 fill-current text-gray-400" />
+                                {menu && <span>Add Page</span>}
+                              </NavLink>
+                            )} */}
 
                               {user?.staffRole ? (
                                 user?.permissions.find(
@@ -1411,7 +1455,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                     <li onMouseMove={() => setMenu(true)} className="relative">
                       <div className="group [&_summary::-webkit-details-marker]:hidden w-full flex flex-col items-center rounded-sm  ">
                         <div
-                          onClick={() => handleToggle(4)}
+                          onClick={() => handleToggle(40)}
                           className="flex cursor-pointer items-center w-full justify-between  p-2 rounded-sm hover:bg-gray-800 text-white hover:text-gray-50"
                         >
                           <div className="flex cursor-pointer items-center gap-2">
@@ -1425,7 +1469,7 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                           </span>
                         </div>
 
-                        {openDropdownIndex == 4 && (
+                        {openDropdownIndex == 40 && (
                           <ul className="mt-2 space-y-1 px-4 border border-white border-opacity-40 py-2">
                             {/* {user?.staffRole ? (
                               user?.permissions.find(
@@ -1771,13 +1815,94 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                             <ul className="mt-2 space-y-1 px-4 border border-white border-opacity-40 py-2">
                               <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50">
                                 <Link
-                                  to={"/admin/content-management/home-control"}
-                                  className="  flex gap-2 items-center px-1 p-1   rounded-md"
+                                  to={"/admin/settings/site-content"}
+                                  className="w-full"
                                 >
-                                  {/* <VscFileMedia className="w-5 h-5 fill-current text-gray-400 " />{" "} */}
-                                  Home Control{" "}
+                                  <div className=" hover:text-gray-50 flex gap-2  w-full items-center px-4 p-2 space-x-3  rounded-md">
+                                    Site Content
+                                  </div>
+                                  {/* <MdSettings className="w-5 h-5 fill-current text-gray-400 " />{" "} */}
                                 </Link>
                               </li>
+                              <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50">
+                                <Link
+                                  to={"/admin/content-management/home-control"}
+                                  className="w-full"
+                                >
+                                  <div className="hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md">
+                                    Home Control
+                                  </div>
+                                </Link>
+                              </li>
+
+                              <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50">
+                                <Link
+                                  to={"/admin/content-management/admin-popup"}
+                                  className="w-full"
+                                >
+                                  <div className="hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md">
+                                    Pop UP
+
+                                  </div>
+                                </Link>
+                              </li>
+                              <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
+                                <Link
+                                  to={"/admin/content-management/slider"}
+                                  className="w-full"
+                                >
+
+                                  <div className="hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md">
+                                    Slider
+                                  </div>
+                                </Link>
+                              </li>
+                              <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
+                                <Link
+                                  to={"/admin/content-management/feature-image"}
+                                  className="w-full"
+                                >
+                                  <div className="hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md">
+                                    Feature Management
+                                  </div>
+                                </Link>
+                              </li>
+
+                              <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
+                                {user?.staffRole ? (
+                                  user?.permissions.find(
+                                    (itm) => itm?.name === "Faq"
+                                  ) ? (
+                                    <Link
+                                      to={"/admin/faq"}
+                                      className="w-full"
+                                    >
+                                      <div className="hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md">
+                                        FAQ
+                                      </div>
+                                    </Link>
+                                  ) : null
+                                ) : (
+                                  <Link
+                                    to={"/admin/faq"}
+                                    className="w-full"
+                                  >
+                                    <div className="hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md">
+                                      FAQ
+                                    </div>
+                                  </Link>
+                                )}
+                              </li>
+
+                              {/* <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
+                              <Link
+                                to={"/admin/content-management/slider"}
+                                className="hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                              >
+                                {/* <BiSlider className="w-5 h-5 fill-current text-gray-400 " />{" "} */}
+                              {/* Social Links
+                              </Link>
+                            </li> */}
                             </ul>
                           )}
                         </div>
@@ -1809,47 +1934,55 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                             <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50">
                               <Link
                                 to={"/admin/settings/site-content"}
-                                className=" hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                className="w-full"
                               >
+                                <div className=" hover:text-gray-50 flex gap-2  w-full items-center px-4 p-2 space-x-3  rounded-md">
+                                  Site Content
+                                </div>
                                 {/* <MdSettings className="w-5 h-5 fill-current text-gray-400 " />{" "} */}
-                                Site Content
                               </Link>
                             </li>
                             <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50">
                               <Link
                                 to={"/admin/content-management/home-control"}
-                                className="hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                className="w-full"
                               >
-                                {/* <VscFileMedia className="w-5 h-5 fill-current text-gray-400 " />{" "} */}
-                                Home Control{" "}
+                                <div className="hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md">
+                                  Home Control
+                                </div>
                               </Link>
                             </li>
 
                             <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50">
                               <Link
                                 to={"/admin/content-management/admin-popup"}
-                                className="hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                className="w-full"
                               >
-                                {/* <FaPeopleGroup className="w-5 h-5 fill-current text-gray-400 " />{" "} */}
-                                Pop UP
+                                <div className="hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md">
+                                  Pop UP
+
+                                </div>
                               </Link>
                             </li>
                             <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
                               <Link
                                 to={"/admin/content-management/slider"}
-                                className="hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                className="w-full"
                               >
-                                {/* <BiSlider className="w-5 h-5 fill-current text-gray-400 " />{" "} */}
-                                Slider
+
+                                <div className="hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md">
+                                  Slider
+                                </div>
                               </Link>
                             </li>
                             <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
                               <Link
                                 to={"/admin/content-management/feature-image"}
-                                className="hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                className="w-full"
                               >
-                                {/* <MdSelfImprovement className="w-5 h-5 fill-current text-gray-400 " /> */}
-                                Feature Management
+                                <div className="hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md">
+                                  Feature Management
+                                </div>
                               </Link>
                             </li>
 
@@ -1858,38 +1991,24 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                 user?.permissions.find(
                                   (itm) => itm?.name === "Faq"
                                 ) ? (
-                                  <NavLink
-                                    onMouseMove={() => setMenu(true)}
-                                    rel="noopener noreferrer"
+                                  <Link
                                     to={"/admin/faq"}
-                                    // className={({ isActive }) => {
-                                    //   return isActive
-                                    //     ? "flex items-center px-2 py-1 space-x-3 rounded-sm bg-gray-800 text-white "
-                                    //     : "flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
-                                    // }}
-                                    className="hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                    className="w-full"
                                   >
-                                    {/* <FaUsersGear className="w-5 h-5 fill-current text-gray-400" /> */}
-                                    {/* // */}
-                                    {menu && <span>FAQ</span>}
-                                  </NavLink>
+                                    <div className="hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md">
+                                      FAQ
+                                    </div>
+                                  </Link>
                                 ) : null
                               ) : (
-                                <NavLink
-                                  onMouseMove={() => setMenu(true)}
-                                  rel="noopener noreferrer"
+                                <Link
                                   to={"/admin/faq"}
-                                  // className={({ isActive }) => {
-                                  //   return isActive
-                                  //     ? "flex items-center p-2 space-x-3 rounded-sm bg-gray-800 text-white "
-                                  //     : "flex items-center p-2 space-x-3 rounded-sm hover:bg-gray-800 hover:text-white";
-                                  // }}
-                                  className="hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                  className="w-full"
                                 >
-                                  {/* <FaUsersGear className="w-5 h-5 fill-current text-gray-400" /> */}
-
-                                  {menu && <span>FAQ </span>}
-                                </NavLink>
+                                  <div className="hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md">
+                                    FAQ
+                                  </div>
+                                </Link>
                               )}
                             </li>
 
@@ -1920,10 +2039,12 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                     {menu && (
                       <li onMouseMove={() => setMenu(true)} className="">
                         <div
-                          onClick={() => handleToggle(12)}
+
                           className="group [&_summary::-webkit-details-marker]:hidden w-full flex flex-col items-center rounded-sm  "
                         >
-                          <div className="flex cursor-pointer w-full items-center justify-between text-white  p-2 rounded-sm hover:bg-gray-800  hover:text-gray-50">
+                          <div
+                            onClick={() => handleToggle(12)}
+                            className="flex cursor-pointer w-full items-center justify-between text-white  p-2 rounded-sm hover:bg-gray-800  hover:text-gray-50">
                             <div className="flex cursor-pointer items-center gap-2">
                               <BsHddNetworkFill className="w-5 h-5 fill-current text-gray-400" />
                               <span>Notice </span>
@@ -1939,10 +2060,11 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                               <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
                                 <Link
                                   to={"/admin/content-management/seller-notice"}
-                                  className="hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                  className="w-full"
                                 >
-                                  {/* <IoNotificationsCircle className="w-5 h-5 fill-current text-gray-400 " />{" "} */}
-                                  Notice
+                                  <div className="hover:text-gray-50   flex gap-2 items-center px-4 p-2 space-x-3  rounded-md">
+                                    Notice
+                                  </div>
                                 </Link>
                               </li>
                               <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
@@ -1957,10 +2079,11 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                               <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
                                 <Link
                                   to={"/admin/settings/send-email"}
-                                  className="hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                  className="w-full"
                                 >
-                                  {/* <IoNotificationsCircle className="w-5 h-5 fill-current text-gray-400 " />{" "} */}
-                                  Send Email
+                                  <div className="hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md">
+                                    Send Email
+                                  </div>
                                 </Link>
                               </li>
 
@@ -1976,10 +2099,12 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                   {menu && (
                     <li onMouseMove={() => setMenu(true)} className="">
                       <div
-                        onClick={() => handleToggle(12)}
+
                         className="group [&_summary::-webkit-details-marker]:hidden w-full flex flex-col items-center rounded-sm  "
                       >
-                        <div className="flex cursor-pointer w-full items-center justify-between text-white  p-2 rounded-sm hover:bg-gray-800  hover:text-gray-50">
+                        <div
+                          onClick={() => handleToggle(12)}
+                          className="flex cursor-pointer w-full items-center justify-between text-white  p-2 rounded-sm hover:bg-gray-800  hover:text-gray-50">
                           <div className="flex cursor-pointer items-center gap-2">
                             <BsHddNetworkFill className="w-5 h-5 fill-current text-gray-400" />
                             <span>Notice </span>
@@ -1995,10 +2120,11 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                             <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
                               <Link
                                 to={"/admin/content-management/seller-notice"}
-                                className="hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                className="w-full"
                               >
-                                {/* <IoNotificationsCircle className="w-5 h-5 fill-current text-gray-400 " />{" "} */}
-                                Notice
+                                <div className="hover:text-gray-50   flex gap-2 items-center px-4 p-2 space-x-3  rounded-md">
+                                  Notice
+                                </div>
                               </Link>
                             </li>
                             <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
@@ -2013,10 +2139,11 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                             <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
                               <Link
                                 to={"/admin/settings/send-email"}
-                                className="hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                className="w-full"
                               >
-                                {/* <IoNotificationsCircle className="w-5 h-5 fill-current text-gray-400 " />{" "} */}
-                                Send Email
+                                <div className="hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md">
+                                  Send Email
+                                </div>
                               </Link>
                             </li>
 
@@ -2038,10 +2165,10 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                     {menu && (
                       <li onMouseMove={() => setMenu(true)} className="">
                         <div
-                          onClick={() => handleToggle(13)}
+
                           className="group [&_summary::-webkit-details-marker]:hidden w-full flex flex-col items-center rounded-sm  "
                         >
-                          <div className="flex cursor-pointer w-full items-center justify-between text-white  p-2 rounded-sm hover:bg-gray-800  hover:text-gray-50">
+                          <div onClick={() => handleToggle(13)} className="flex cursor-pointer w-full items-center justify-between text-white  p-2 rounded-sm hover:bg-gray-800  hover:text-gray-50">
                             <div className="flex cursor-pointer items-center gap-2">
                               <BsGear className="w-5 h-5 fill-current text-gray-400" />
                               <span>Config Setting </span>
@@ -2055,47 +2182,55 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                           {openDropdownIndex == 13 && (
                             <ul className="mt-2 space-y-1 px-4 border border-white border-opacity-40 py-2">
                               {/* <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
-                                <Link
-                                  to={"/admin/content-management/seller-notice"}
-                                  className="hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
-                                >
-                                  {/* <IoNotificationsCircle className="w-5 h-5 fill-current text-gray-400 " />{" "} */}
+                              <Link
+                                to={"/admin/content-management/seller-notice"}
+                                className="hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                              >
+                                {/* <IoNotificationsCircle className="w-5 h-5 fill-current text-gray-400 " />{" "} */}
                               {/* Notice
-                                </Link>
-                              </li> */}
+                              </Link>
+                            </li> */}
                               <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
                                 <Link
                                   to={"/admin/settings/payment-management"}
-                                  className="hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                  className="w-full"
                                 >
                                   {/* <IoNotificationsCircle className="w-5 h-5 fill-current text-gray-400 " />{" "} */}
-                                  Payment Getway
+                                  <div className="hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md">
+                                    Payment Getway
+                                  </div>
                                 </Link>
                               </li>
                               <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
                                 <Link
                                   to={"/admin/settings/seller-domain"}
-                                  className="hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                  className="w-full"
                                 >
-                                  Seller Domain
+                                  <div className="hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md">
+                                    Seller Domain
+                                  </div>
                                 </Link>
                               </li>
 
                               <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
                                 <Link
                                   to={"/admin/settings/shipping"}
-                                  className="hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                  className="w-full"
                                 >
-                                  Shipping
+                                  <div className="hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md">
+                                    Shipping
+                                  </div>
                                 </Link>
                               </li>
 
                               <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
                                 <Link
                                   to={"/admin/settings/daraz-setup"}
-                                  className="hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                  className="w-full"
                                 >
-                                  Daraz Setup
+                                  <div className="hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md">
+                                    Daraz Setup
+                                  </div>
                                 </Link>
                               </li>
 
@@ -2111,10 +2246,10 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                   {menu && (
                     <li onMouseMove={() => setMenu(true)} className="">
                       <div
-                        onClick={() => handleToggle(13)}
+
                         className="group [&_summary::-webkit-details-marker]:hidden w-full flex flex-col items-center rounded-sm  "
                       >
-                        <div className="flex cursor-pointer w-full items-center justify-between text-white  p-2 rounded-sm hover:bg-gray-800  hover:text-gray-50">
+                        <div onClick={() => handleToggle(13)} className="flex cursor-pointer w-full items-center justify-between text-white  p-2 rounded-sm hover:bg-gray-800  hover:text-gray-50">
                           <div className="flex cursor-pointer items-center gap-2">
                             <BsGear className="w-5 h-5 fill-current text-gray-400" />
                             <span>Config Setting </span>
@@ -2139,36 +2274,44 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                             <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
                               <Link
                                 to={"/admin/settings/payment-management"}
-                                className="hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                className="w-full"
                               >
                                 {/* <IoNotificationsCircle className="w-5 h-5 fill-current text-gray-400 " />{" "} */}
-                                Payment Getway
+                                <div className="hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md">
+                                  Payment Getway
+                                </div>
                               </Link>
                             </li>
                             <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
                               <Link
                                 to={"/admin/settings/seller-domain"}
-                                className="hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                className="w-full"
                               >
-                                Seller Domain
+                                <div className="hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md">
+                                  Seller Domain
+                                </div>
                               </Link>
                             </li>
 
                             <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
                               <Link
                                 to={"/admin/settings/shipping"}
-                                className="hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                className="w-full"
                               >
-                                Shipping
+                                <div className="hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md">
+                                  Shipping
+                                </div>
                               </Link>
                             </li>
 
                             <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
                               <Link
                                 to={"/admin/settings/daraz-setup"}
-                                className="hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                className="w-full"
                               >
-                                Daraz Setup
+                                <div className="hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md">
+                                  Daraz Setup
+                                </div>
                               </Link>
                             </li>
 
@@ -2180,7 +2323,6 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                 </>
               )}
 
-
               {/* config setting */}
               {user?.staffRole ? (
                 user?.permissions.find(
@@ -2190,130 +2332,9 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                     {menu && (
                       <li onMouseMove={() => setMenu(true)} className="">
                         <div
-                          onClick={() => handleToggle(14)}
                           className="group [&_summary::-webkit-details-marker]:hidden w-full flex flex-col items-center rounded-sm  "
                         >
-                          <div className="flex cursor-pointer w-full items-center justify-between text-white  p-2 rounded-sm hover:bg-gray-800  hover:text-gray-50">
-                            <div className="flex cursor-pointer items-center gap-2">
-                              <BsCalculator className="w-5 h-5 fill-current text-gray-400" />
-                              <span>Pricing </span>
-                            </div>
-
-                            <span className="shrink-0 transition duration-300 group-open:-rotate-180">
-                              <IoIosArrowDown className="h-5 w-5" />
-                            </span>
-                          </div>
-
-                          {openDropdownIndex == 14 && (
-                            <ul className="mt-2 space-y-1 px-4 border border-white border-opacity-40 py-2">
-                              <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
-                                <Link
-                                  to={"/admin/price-management"}
-                                  className="hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
-                                >
-                                  {/* <IoNotificationsCircle className="w-5 h-5 fill-current text-gray-400 " />{" "} */}
-                                  Price Management
-                                </Link>
-                              </li>
-                              <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
-                                <Link
-                                  to={"/admin/manage-product/add-product"}
-                                  className="hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
-                                >
-                                  {/* <IoNotificationsCircle className="w-5 h-5 fill-current text-gray-400 " />{" "} */}
-                                  Processing Fee 
-                                </Link>
-                              </li>
-                              <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
-                                <Link
-                                  to={"/admin/package-management"}
-                                  className="hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
-                                >
-                                  Packaging Fee
-                                </Link>
-                              </li>
-
-
-
-                            </ul>
-                          )}
-                        </div>
-                      </li>
-                    )}
-                  </>
-                ) : null
-              ) : (
-                <>
-                  {menu && (
-                    <li onMouseMove={() => setMenu(true)} className="">
-                      <div
-                        onClick={() => handleToggle(14)}
-                        className="group [&_summary::-webkit-details-marker]:hidden w-full flex flex-col items-center rounded-sm  "
-                      >
-                        <div className="flex cursor-pointer w-full items-center justify-between text-white  p-2 rounded-sm hover:bg-gray-800  hover:text-gray-50">
-                          <div className="flex cursor-pointer items-center gap-2">
-                            <BsCalculator className="w-5 h-5 fill-current text-gray-400" />
-                            <span>Pricing </span>
-                          </div>
-
-                          <span className="shrink-0 transition duration-300 group-open:-rotate-180">
-                            <IoIosArrowDown className="h-5 w-5" />
-                          </span>
-                        </div>
-
-                        {openDropdownIndex == 14 && (
-                          <ul className="mt-2 space-y-1 px-4 border border-white border-opacity-40 py-2">
-                            <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
-                              <Link
-                                to={"/admin/price-management"}
-                                className="hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
-                              >
-                                {/* <IoNotificationsCircle className="w-5 h-5 fill-current text-gray-400 " />{" "} */}
-                                Price Management
-                              </Link>
-                            </li>
-                            <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
-                              <Link
-                                to={"/admin/manage-product/add-product"}
-                                className="hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
-                              >
-                                {/* <IoNotificationsCircle className="w-5 h-5 fill-current text-gray-400 " />{" "} */}
-                                Processing Fee 
-                              </Link>
-                            </li>
-                            <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
-                              <Link
-                                to={"/admin/package-management"}
-                                className="hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
-                              >
-                                Packaging Fee
-                              </Link>
-                            </li>
-
-
-
-                          </ul>
-                        )}
-                      </div>
-                    </li>
-                  )}
-                </>
-              )}
-
-
-              {/* config setting */}
-              {user?.staffRole ? (
-                user?.permissions.find(
-                  (itm) => itm?.name === "Price Management"
-                ) ? (
-                  <>
-                    {menu && (
-                      <li onMouseMove={() => setMenu(true)} className="">
-                        <div
-                          onClick={() => handleToggle(14)}
-                          className="group [&_summary::-webkit-details-marker]:hidden w-full flex flex-col items-center rounded-sm  "
-                        >
-                          <div className="flex cursor-pointer w-full items-center justify-between text-white  p-2 rounded-sm hover:bg-gray-800  hover:text-gray-50">
+                          <div onClick={() => handleToggle(14)} className="flex cursor-pointer w-full items-center justify-between text-white  p-2 rounded-sm hover:bg-gray-800  hover:text-gray-50">
                             <div className="flex cursor-pointer items-center gap-2">
                               <IoMdPhotos className="w-5 h-5 fill-current text-gray-400" />
                               <span>Pricing </span>
@@ -2329,27 +2350,28 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                               <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
                                 <Link
                                   to={"/admin/price-management"}
-                                  className="hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                  className="w-full"
                                 >
-                                  {/* <IoNotificationsCircle className="w-5 h-5 fill-current text-gray-400 " />{" "} */}
-                                  Price Management
+                                  <div className="hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md">
+                                    Price Management
+                                  </div>
                                 </Link>
                               </li>
                               <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
                                 <Link
                                   to={"/admin/manage-product/add-product"}
-                                  className="hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                  className="w-full"
                                 >
-                                  {/* <IoNotificationsCircle className="w-5 h-5 fill-current text-gray-400 " />{" "} */}
-                                  Processing Fee 
+                                  <div className="hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md">
+                                    Commission</div>
                                 </Link>
                               </li>
                               <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
                                 <Link
                                   to={"/admin/package-management"}
-                                  className="hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                  className="w-full"
                                 >
-                                  Packaging Fee
+                                  <div className="hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md">Package Handle</div>
                                 </Link>
                               </li>
 
@@ -2367,10 +2389,9 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                   {menu && (
                     <li onMouseMove={() => setMenu(true)} className="">
                       <div
-                        onClick={() => handleToggle(14)}
                         className="group [&_summary::-webkit-details-marker]:hidden w-full flex flex-col items-center rounded-sm  "
                       >
-                        <div className="flex cursor-pointer w-full items-center justify-between text-white  p-2 rounded-sm hover:bg-gray-800  hover:text-gray-50">
+                        <div onClick={() => handleToggle(14)} className="flex cursor-pointer w-full items-center justify-between text-white  p-2 rounded-sm hover:bg-gray-800  hover:text-gray-50">
                           <div className="flex cursor-pointer items-center gap-2">
                             <IoMdPhotos className="w-5 h-5 fill-current text-gray-400" />
                             <span>Pricing </span>
@@ -2386,27 +2407,28 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                             <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
                               <Link
                                 to={"/admin/price-management"}
-                                className="hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                className="w-full"
                               >
-                                {/* <IoNotificationsCircle className="w-5 h-5 fill-current text-gray-400 " />{" "} */}
-                                Price Management
+                                <div className="hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md">
+                                  Price Management
+                                </div>
                               </Link>
                             </li>
                             <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
                               <Link
                                 to={"/admin/manage-product/add-product"}
-                                className="hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                className="w-full"
                               >
-                                {/* <IoNotificationsCircle className="w-5 h-5 fill-current text-gray-400 " />{" "} */}
-                                Processing Fee 
+                                <div className="hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md">
+                                  Commission</div>
                               </Link>
                             </li>
                             <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
                               <Link
                                 to={"/admin/package-management"}
-                                className="hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                className="w-full"
                               >
-                                Packaging Fee
+                                <div className="hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md">Package Handle</div>
                               </Link>
                             </li>
 
@@ -2527,10 +2549,10 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                   {menu && (
                     <li onMouseMove={() => setMenu(true)} className="">
                       <div
-                        onClick={() => handleToggle(15)}
+
                         className="group [&_summary::-webkit-details-marker]:hidden w-full flex flex-col items-center rounded-sm  "
                       >
-                        <div className="flex cursor-pointer w-full items-center justify-between text-white  p-2 rounded-sm hover:bg-gray-800  hover:text-gray-50">
+                        <div onClick={() => handleToggle(15)} className="flex cursor-pointer w-full items-center justify-between text-white  p-2 rounded-sm hover:bg-gray-800  hover:text-gray-50">
                           <div className="flex cursor-pointer items-center gap-2">
                             <BsFillBootstrapFill className="w-5 h-5 fill-current text-gray-400" />
                             <span>Blog </span>
@@ -2546,10 +2568,11 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                             <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
                               <Link
                                 to={"/admin/blog/new-blog"}
-                                className="hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                className="w-full"
                               >
-                                {/* <IoNotificationsCircle className="w-5 h-5 fill-current text-gray-400 " />{" "} */}
-                                Add Blog
+                                <div className="hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md">
+                                  Add Blog
+                                </div>
                               </Link>
                             </li>
                             <li className="flex cursor-pointer w-full items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50 text-white">
@@ -2561,22 +2584,22 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                     rel="noopener noreferrer"
                                     onMouseMove={() => setMenu(true)}
                                     href="#"
-                                    className='hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md'
+                                    className='w-full'
                                   >
                                     {/* <FaBlogger className="w-5 h-5 fill-current text-gray-400" /> */}
-                                    {menu && <span>Blogs</span>}
+                                    {menu && <div className="hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md">Blogs</div>}
                                   </NavLink>
                                 ) : null
                               ) : (
                                 <NavLink
-                                  onMouseMove={() => setMenu(true)}
                                   to="/admin/blog"
                                   rel="noopener noreferrer"
+                                  onMouseMove={() => setMenu(true)}
                                   href="#"
-                                  className='hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md'
+                                  className='w-full'
                                 >
                                   {/* <FaBlogger className="w-5 h-5 fill-current text-gray-400" /> */}
-                                  {menu && <span>Blogs</span>}
+                                  {menu && <div className="hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md">Blogs</div>}
                                 </NavLink>
                               )}
                             </li>
@@ -2589,10 +2612,10 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                     onMouseMove={() => setMenu(true)}
                                     rel="noopener noreferrer"
                                     to="/admin/manage-blog-category"
-                                    className='hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md'
+                                    className='w-full'
                                   >
                                     {/* <FaUsersGear className="w-5 h-5 fill-current text-gray-400" /> */}
-                                    {menu && <span>Blog Category </span>}
+                                    {menu && <div className="hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md">Blog Category </div>}
                                   </NavLink>
                                 ) : null
                               ) : (
@@ -2600,10 +2623,10 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                                   onMouseMove={() => setMenu(true)}
                                   rel="noopener noreferrer"
                                   to="/admin/manage-blog-category"
-                                  className='hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md'
+                                  className='w-full'
                                 >
                                   {/* <FaUsersGear className="w-5 h-5 fill-current text-gray-400" /> */}
-                                  {menu && <span>Blog Category</span>}
+                                  {menu && <div className="hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md">Blog Category </div>}
                                 </NavLink>
                               )}
                             </li>
@@ -2627,10 +2650,9 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                     {menu && (
                       <li onMouseMove={() => setMenu(true)} className="">
                         <div
-                          onClick={() => handleToggle(9)}
                           className="group [&_summary::-webkit-details-marker]:hidden flex flex-col items-center w-full rounded-sm  "
                         >
-                          <div className="flex cursor-pointer items-center justify-between text-white  p-2 rounded-sm hover:bg-gray-800 w-full hover:text-gray-50">
+                          <div onClick={() => handleToggle(9)} className="flex cursor-pointer items-center justify-between w-full text-white  p-2 rounded-sm hover:bg-gray-800  hover:text-gray-50">
                             <div className="flex cursor-pointer items-center gap-2">
                               <BsLayoutTextSidebarReverse className="w-5 h-5 fill-current text-gray-400" />
                               <span>Report Management </span>
@@ -2646,81 +2668,65 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                               <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50">
                                 <Link
                                   to={"/admin/report-management/admin-sales"}
-                                  className="hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                  className="w-full"
                                 >
                                   {/* <FaSalesforce className="w-5 h-5 fill-current text-gray-400 " />{" "} */}
-                                  Sales
+                                  <div className="hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md">
+                                    Service Sales
+                                  </div>
                                 </Link>
                               </li>
                               <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50">
                                 <Link
                                   to={"/admin/report-management/seller-admin"}
-                                  className="hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                  className="w-full"
                                 >
-                                  {/* <FaSalesforce className="w-5 h-5 fill-current text-gray-400 " />{" "} */}
-                                  Seller
+                                  <div className="hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md">
+                                    Shop
+                                  </div>
+                                </Link>
+                              </li>
+
+                              <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50">
+                                <Link
+                                  to={"/admin/report-management/warehouse-admin"}
+                                  className="w-full"
+                                >
+                                  <div className="hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md">
+                                    Warehouse
+                                  </div>
                                 </Link>
                               </li>
                               <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50">
                                 <Link
-                                  to={"/admin/report-management/customer-admin"}
-                                  className="hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                  to={"/admin/report-management/subscriber-admin"}
+                                  className="w-full"
                                 >
-                                  {/* <AiFillCustomerService className="w-5 h-5 fill-current text-gray-400 " />{" "} */}
-                                  Cusotmer
-                                </Link>
-                              </li>
-                              <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50">
-                                <Link
-                                  to={
-                                    "/admin/report-management/warehouse-admin"
-                                  }
-                                  className="hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
-                                >
-                                  {/* <FaWarehouse className="w-5 h-5 fill-current text-gray-400 " />{" "} */}
-                                  Warehouse
-                                </Link>
-                              </li>
-                              <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50">
-                                <Link
-                                  to={
-                                    "/admin/report-management/search"
-                                  }
-                                  className="hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
-                                >
-                                  {/* <FaWarehouse className="w-5 h-5 fill-current text-gray-400 " />{" "} */}
-                                  Search
+                                  <div className="hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md">
+                                    Subscriber
+                                  </div>
                                 </Link>
                               </li>
                               <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50">
                                 <Link
                                   to={"/admin/report-management/pricing"}
-                                  className="hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                  className="w-full"
                                 >
-                                  {/* <FaWarehouse className="w-5 h-5 fill-current text-gray-400 " />{" "} */}
-                                  Pricing
+                                  <div className="hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md">
+                                    Pricing
+                                  </div>
                                 </Link>
                               </li>
                               <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50">
                                 <Link
                                   to={
-                                    "/admin/report-management/subscriber-admin"
+                                    "/admin/report-management/commission-history-admin"
                                   }
-                                  className="hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                  className="w-full"
                                 >
-                                  {/* <BsSubscript className="w-5 h-5 fill-current text-gray-400 " />{" "} */}
-                                  Subscriber
-                                </Link>
-                              </li>
-                              <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50">
-                                <Link
-                                  to={
-                                    "/admin/report-management/fees-history-all"
-                                  }
-                                  className="hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
-                                >
-                                  {/* <BiHistory className="w-5 h-5 fill-current text-gray-400 " /> */}
-                                  Charges   History
+                                  <div className="hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md">
+                                    Commission History
+                                  </div>
                                 </Link>
                               </li>
                             </ul>
@@ -2735,10 +2741,9 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                   {menu && (
                     <li onMouseMove={() => setMenu(true)} className="">
                       <div
-                        onClick={() => handleToggle(9)}
                         className="group [&_summary::-webkit-details-marker]:hidden flex flex-col items-center w-full rounded-sm  "
                       >
-                        <div className="flex cursor-pointer items-center justify-between w-full text-white  p-2 rounded-sm hover:bg-gray-800  hover:text-gray-50">
+                        <div onClick={() => handleToggle(9)} className="flex cursor-pointer items-center justify-between w-full text-white  p-2 rounded-sm hover:bg-gray-800  hover:text-gray-50">
                           <div className="flex cursor-pointer items-center gap-2">
                             <BsLayoutTextSidebarReverse className="w-5 h-5 fill-current text-gray-400" />
                             <span>Report Management </span>
@@ -2754,66 +2759,65 @@ const SideNavAdmin = ({ responsive, setResponsive }) => {
                             <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50">
                               <Link
                                 to={"/admin/report-management/admin-sales"}
-                                className="hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                className="w-full"
                               >
                                 {/* <FaSalesforce className="w-5 h-5 fill-current text-gray-400 " />{" "} */}
-                                Service Sales
+                                <div className="hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md">
+                                  Service Sales
+                                </div>
                               </Link>
                             </li>
                             <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50">
                               <Link
                                 to={"/admin/report-management/seller-admin"}
-                                className="hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                className="w-full"
                               >
-                                {/* <FaSalesforce className="w-5 h-5 fill-current text-gray-400 " />{" "} */}
-                                Shop
+                                <div className="hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md">
+                                  Shop
+                                </div>
                               </Link>
                             </li>
-                            {/* {<li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50">
-                              <Link
-                                to={"/admin/report-management/customer-admin"}
-                                className="hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
-                              >
-                                {/* <AiFillCustomerService className="w-5 h-5 fill-current text-gray-400 " />{" "} */}
-                            {/* Cusotmer */}
-                            {/* </Link>
-                            </li>} */}
+
                             <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50">
                               <Link
                                 to={"/admin/report-management/warehouse-admin"}
-                                className="hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                className="w-full"
                               >
-                                {/* <FaWarehouse className="w-5 h-5 fill-current text-gray-400 " />{" "} */}
-                                Warehouse
+                                <div className="hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md">
+                                  Warehouse
+                                </div>
                               </Link>
                             </li>
                             <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50">
                               <Link
                                 to={"/admin/report-management/subscriber-admin"}
-                                className="hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                className="w-full"
                               >
-                                {/* <BsSubscript className="w-5 h-5 fill-current text-gray-400 " />{" "} */}
-                                Subscriber
+                                <div className="hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md">
+                                  Subscriber
+                                </div>
                               </Link>
                             </li>
                             <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50">
                               <Link
                                 to={"/admin/report-management/pricing"}
-                                className="hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                className="w-full"
                               >
-                                {/* <FaWarehouse className="w-5 h-5 fill-current text-gray-400 " />{" "} */}
-                                Pricing
+                                <div className="hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md">
+                                  Pricing
+                                </div>
                               </Link>
                             </li>
                             <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 hover:text-gray-50">
                               <Link
                                 to={
-                                  "/admin/report-management/fees-history-all"
+                                  "/admin/report-management/commission-history-admin"
                                 }
-                                className="hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md"
+                                className="w-full"
                               >
-                                {/* <BiHistory className="w-5 h-5 fill-current text-gray-400 " /> */}
-                                Charges   History
+                                <div className="hover:text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3  rounded-md">
+                                  Commission History
+                                </div>
                               </Link>
                             </li>
                           </ul>
