@@ -58,7 +58,7 @@ const DarazIntegration = () => {
           };
 
           fetch(
-            `http://localhost:5001/api/v1/daraz/addCode/${shopInfo._id}`,
+            `https://backend.doob.com.bd/api/v1/daraz/addCode/${shopInfo._id}`,
             {
               method: "PUT",
               headers: {
@@ -116,7 +116,7 @@ const DarazIntegration = () => {
 
   const switchAccount = (_id, id) => {
     fetch(
-      `http://localhost:5001/api/v1/daraz/switching-your-daraz?id=${id}&loginId=${_id}`,
+      `https://backend.doob.com.bd/api/v1/daraz/switching-your-daraz?id=${id}&loginId=${_id}`,
       {
         method: "PATCH",
         headers: {

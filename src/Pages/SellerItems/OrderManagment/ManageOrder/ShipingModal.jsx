@@ -176,7 +176,7 @@ const ShippingModal = ({
 
       // return
       await fetch(
-        `http://localhost:5001/api/v1/seller/login-in-credintial-pathao?shop_id=${shopInfo?._id}`,
+        `https://backend.doob.com.bd/api/v1/seller/login-in-credintial-pathao?shop_id=${shopInfo?._id}`,
         {
           method: "POST",
           headers: {
