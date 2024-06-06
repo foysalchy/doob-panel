@@ -340,6 +340,54 @@ const SellerDashboard = () => {
 
   const firstAmount = parseInt(currentAvailableAmount);
 
+  // warning Subscription
+
+  const {
+    data: prices = [],
+    isLoading: loadingPrice,
+    refetch: refetchPrice,
+  } = useQuery({
+    queryKey: ["subscriptionModalData"],
+    queryFn: async () => {
+      const res = await fetch(
+        `https://backend.doob.com.bd/api/v1/seller/subscription-model?priceId=${shopInfo?.priceId}&shopId=${shopInfo._id}`
+      );
+      const data = await res.json();
+      return data?.data;
+    },
+  });
+  const check_expired = () => {
+    const paymentDate = new Date(shopInfo.paymentDate);
+    const currentDate = new Date();
+
+    const MILLISECONDS_IN_A_DAY = 24 * 60 * 60 * 1000;
+    const SEVEN_DAYS_IN_MILLISECONDS = 7 * MILLISECONDS_IN_A_DAY;
+
+    // Calculate the time difference in milliseconds
+    const timeDifference = currentDate.getTime() - paymentDate.getTime();
+
+    // Check if the current date is within 7 days of the payment date
+    const isWithinFreeTrial = timeDifference < SEVEN_DAYS_IN_MILLISECONDS;
+
+    // Calculate remaining and passed days if `prices.orderInfo` is available
+    if (prices.orderInfo) {
+      const remainingDays = Math.max(
+        0,
+        (paymentDate.getTime() +
+          SEVEN_DAYS_IN_MILLISECONDS -
+          currentDate.getTime()) /
+          MILLISECONDS_IN_A_DAY
+      );
+      const passedDays = Math.floor(timeDifference / MILLISECONDS_IN_A_DAY);
+
+      return remainingDays - passedDays > 0;
+    } else {
+      return isWithinFreeTrial;
+    }
+  };
+
+  console.log(check_expired());
+
   return (
     <div className="h-screen mb-10   ">
       {sellerPopupData.length
@@ -355,6 +403,22 @@ const SellerDashboard = () => {
             </div>
           )
         : ""}
+      {check_expired() && !prices?.orderInfo && (
+        <div className="bg-orange-100  px-2 py-3 rounded- flex justify-between items-center">
+          <Link
+            to="/seller/subscription-management"
+            className="text-sm text-orange-800 capitalize "
+          >
+            Hi dear, You using free trail. Please update your package
+            {/* <button
+                onClick={() => setInvoice(true)}
+                className="bg-orange-500 px-4 ml-2 py-1 text-xs rounded text-black"
+              >
+                Renew
+              </button> */}
+          </Link>
+        </div>
+      )}
       <div className=" bg-gradient-to-r from-[#1493f4] to-[#835177] absolute -z-10 -top-12 -right-14 blur-2xl opacity-10"></div>
       <h1 className="text-4xl font-semibold text-gray-800 capitalize">
         {greeting}, {user.name}

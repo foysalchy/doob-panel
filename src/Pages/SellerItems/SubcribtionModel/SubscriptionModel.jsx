@@ -92,7 +92,7 @@ const SubscriptionModel = () => {
 
   const passedDays = calculatePassedDays(prices?.orderInfo?.time_stamp);
   const remainingDays = calculateRemainingDays(prices?.orderInfo?.endTime);
-  const check_expired = () => {
+ const check_expired = () => {
     const paymentDate = new Date(shopInfo.paymentDate);
     const currentDate = new Date();
 
@@ -176,7 +176,7 @@ const SubscriptionModel = () => {
               </div>
             </div>
           )}
-          {console.log(prices?.orderInfo, "orderInfo")}
+          {/* {console.log(prices?.orderInfo, "orderInfo")} */}
           {!check_expired() && !prices?.orderInfo && (
             <div className="bg-orange-100  px-2 py-3 rounded- flex justify-between items-center">
               <p className="text-sm text-orange-800 capitalize ">
