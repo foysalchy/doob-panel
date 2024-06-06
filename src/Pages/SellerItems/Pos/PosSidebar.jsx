@@ -1,16 +1,17 @@
 import React, { useContext, useEffect, useState } from "react";
 import { CgClose, CgShoppingCart } from "react-icons/cg";
 import { MdDeleteOutline } from "react-icons/md";
+import { useLocation } from 'react-router-dom';
 import clickAudio from "../../../../src/assets/sound_beep-29.mp3";
 import deleteSound from "../../../../src/assets/sound_button-21.mp3";
 import { AuthContext } from "../../../AuthProvider/UserProvider";
 import PosProductsDetails from "./PosProductsDetails";
-
 const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
   const { shopInfo } = useContext(AuthContext);
   const [open, setOpen] = useState(false);
   const [invoice, setInvoice] = useState({});
   const [isChecked, setIsChecked] = useState(false);
+  const [userCheck, SetUserCheck] = useState(false);
   const [existing, setExisting] = useState(false);
   const [user, setUser] = useState(false);
   const [error, setError] = useState(false);
@@ -39,8 +40,16 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
     } else {
       setUser(false);
     }
+    SetUserCheck(false)
   };
+  const { pathname } = useLocation();
 
+
+  useEffect(() => {
+     if(pathname){
+      gust_update(true)
+     }
+  }, [pathname]);
   console.log(user, "update user");
 
   const toggleCheckbox = () => {
@@ -171,7 +180,7 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
   const handleFormSubmit = (e) => {
     e.preventDefault();
     const form = e.target;
-    const name = gest ? "Gest User" : form?.name.value;
+    const name = form?.name.value ? form?.name.value : "Gest User" ;
     const email = gest ? " " : form?.email.value;
     const number = gest ? " " : form?.phoneNumber.value;
     const address = gest ? " " : form?.phoneNumber.value;
@@ -182,9 +191,12 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
       number,
       address,
     };
+    
     console.log(data);
     setUser(data);
     setIsChecked(false);
+    SetUserCheck(true)
+    setGest(false)
   };
 
   return (
@@ -434,7 +446,7 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
                       type="checkbox"
                       name="user"
                       id="user"
-                      checked={isChecked}
+                      checked={userCheck}
                       onChange={toggleCheckbox}
                     />
                     <div>
@@ -567,6 +579,7 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
                           defaultValue={user && !existing ? user?.email : ""}
                           className="mt-1 p-2 w-full border rounded-md"
                           onChange={(e) => setEmail(e.target.value)}
+                          
                         />
                       </div>
 
@@ -578,7 +591,7 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
                           Phone Number:
                         </label>
                         <input
-                          type="tel"
+                          type="text"
                           id="phoneNumber"
                           name="phoneNumber"
                           defaultValue={
@@ -586,6 +599,8 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
                           }
                           className="mt-1 p-2 w-full border rounded-md"
                           onChange={(e) => setPhoneNumber(e.target.value)}
+                          required
+                          min="10000000000" pattern="[0-9+]{11,}" 
                         />
                       </div>
 

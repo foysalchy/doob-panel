@@ -492,7 +492,12 @@ const ProductSellerEditPage = () => {
             setInputFields={setInputFields}
           />
         </div>
-        <EditAdminCategoryforSeller product={product} />
+        {multiVendor === true && (
+        <div>
+          Wholsale Category
+          <EditAdminCategoryforSeller product={product} />
+        </div>
+        )}
 
         {daraz && datazCategory?.length ? (
           <EditDarazCategory product={product} datazCategory={datazCategory} />

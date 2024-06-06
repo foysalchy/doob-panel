@@ -1,13 +1,11 @@
-import React, { useContext, useEffect } from "react";
-import { useState } from "react";
+import React, { useContext, useState } from "react";
 import { MdDelete } from "react-icons/md";
-import { AuthContext } from "../../../../../AuthProvider/UserProvider";
+import CreatableSelect from "react-select/creatable";
 import Swal from "sweetalert2";
+import { AuthContext } from "../../../../../AuthProvider/UserProvider";
+import useImageUpload from "../../../../../Hooks/UploadImage";
 import Stock from "./Stock";
 import VariantData from "./VariantData";
-import VariantSelector from "./VariantSelector";
-import CreatableSelect from "react-select/creatable";
-import useImageUpload from "../../../../../Hooks/UploadImage";
 
 const Variants = ({
   adminWare,
@@ -173,25 +171,7 @@ const Variants = ({
           Having accurate product information raises discoverability.
         </small>
       </div>
-      <div className="min-w-fit mb-4">
-        <label className="text-sm " htmlFor="Video url ">
-          Sell On Doob
-        </label>
-        <select
-          onChange={(e) => {
-            setMultiVendor(
-              (e.target.value === "true" && true) ||
-              (e.target.value === "false" && false)
-            );
-          }}
-          className="flex-grow w-full h-10 px-4 mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-purple-400 focus:outline-none focus:shadow-outline"
-          name="ability"
-          id=""
-        >
-          <option value={true}>Yes</option>
-          <option value={false}>No</option>
-        </select>
-      </div>
+     
 
       <div className="flex gap-4 flex-col w-full">
         {inputFields &&
@@ -345,6 +325,25 @@ const Variants = ({
             Add Field
           </button>
         )}
+         <div className="min-w-fit mb-4">
+        <label className="text-sm " htmlFor="Video url ">
+          Sell On Doob
+        </label>
+        <select
+          onChange={(e) => {
+            setMultiVendor(
+              (e.target.value === "true" && true) ||
+              (e.target.value === "false" && false)
+            );
+          }}
+          className="flex-grow w-full h-10 px-4 mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-purple-400 focus:outline-none focus:shadow-outline"
+          name="ability"
+          id=""
+        >
+          <option value={true}>Yes</option>
+          <option value={false}>No</option>
+        </select>
+      </div>
         {multiVendor === true && (
           <VariantData
             variantInput={variantInput}

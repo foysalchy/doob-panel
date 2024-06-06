@@ -2,17 +2,16 @@
 import { useQuery } from '@tanstack/react-query';
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { Swiper, SwiperSlide } from "swiper/react";
 import 'swiper/css';
 import 'swiper/css/pagination';
+import { Swiper, SwiperSlide } from "swiper/react";
 
-import { Pagination } from 'swiper/modules';
-import { useEffect } from 'react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { FaAngleRight } from 'react-icons/fa6';
 import { RxCross2 } from 'react-icons/rx';
+import { Autoplay, Pagination } from 'swiper/modules';
 import { ShopAuthProvider } from '../../../../../AuthProvider/ShopAuthProvide';
 import { AuthContext } from '../../../../../AuthProvider/UserProvider';
-import { FaAngleRight } from 'react-icons/fa6';
 
 
 
@@ -418,7 +417,7 @@ const ShopProductHero = () => {
                         console.log(Banar)
                     }
 
-                    <Swiper pagination={true} modules={[Pagination]} className="mySwiper rounded-md">
+                    <Swiper   autoplay={{ delay: 3000 }}  pagination={true}  modules={[Autoplay, Pagination]} className="mySwiper rounded-md">
                         {Banar?.filter((item) => item.status).map((i, index) => (
                             <SwiperSlide key={index + 6}>
                                 {i.status && (
