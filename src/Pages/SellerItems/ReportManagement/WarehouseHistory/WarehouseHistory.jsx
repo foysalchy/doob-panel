@@ -6,6 +6,7 @@ import { BiCloset } from "react-icons/bi";
 import WarehouseProductModal from "./WarehouseProductModal";
 import SellerShowPrivew from "../../Warehouse/SellerShowPrivew";
 
+
 const WarehouseHistory = () => {
   const { shopInfo } = useContext(AuthContext);
   const [OpenModal, setOpenModal] = useState(false);
@@ -43,7 +44,6 @@ const WarehouseHistory = () => {
       (pageNumber - 1) * itemsPerPage,
       pageNumber * itemsPerPage
     );
-    console.log(paginatedData);
     return paginatedData;
   };
 
@@ -56,6 +56,7 @@ const WarehouseHistory = () => {
     paginate(currentPage);
   }, [currentPage, warehouseData]);
 
+  // console.log(paginatedData);
   return (
     <div>
       <section className="container px-4 mx-auto">
