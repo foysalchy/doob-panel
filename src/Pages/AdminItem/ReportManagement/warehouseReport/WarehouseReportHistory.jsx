@@ -32,7 +32,7 @@ const WarehouseReportHistory = () => {
     },
   });
 
-  //   console.log(wareLength);
+    console.log('----->>>', wareLength);
 
   // Calculate total number of pages
   const totalPages = Math.ceil(warehouseData.length / itemsPerPage);
@@ -132,7 +132,7 @@ const WarehouseReportHistory = () => {
                             {" "}
                             Area:{" "}
                             {
-                              wareLength?.find(
+                              wareLength && wareLength?.find(
                                 (item) =>
                                   item.warehouse === data?.warehouse?.name
                               )?.areas?.length
@@ -143,7 +143,7 @@ const WarehouseReportHistory = () => {
                             {" "}
                             Racks:{" "}
                             {
-                              wareLength?.find(
+                           wareLength &&  wareLength?.find(
                                 (item) =>
                                   item.warehouse === data?.warehouse?.name
                               )?.racks?.length
@@ -157,7 +157,7 @@ const WarehouseReportHistory = () => {
                             {" "}
                             Selfs:{" "}
                             {
-                              wareLength?.find(
+                             wareLength && wareLength?.find(
                                 (item) =>
                                   item.warehouse === data?.warehouse?.name
                               )?.selfs?.length
@@ -167,7 +167,7 @@ const WarehouseReportHistory = () => {
                             {" "}
                             Cells:{" "}
                             {
-                              wareLength?.find(
+                            wareLength &&  wareLength?.find(
                                 (item) =>
                                   item.warehouse === data?.warehouse?.name
                               )?.cells?.length
