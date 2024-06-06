@@ -172,7 +172,6 @@ const SellerEditVariantData = ({
           Having accurate product information raises discoverability.
         </small>
       </div>
-     
 
       <div className="flex gap-4 flex-col w-full">
         {inputFields &&
@@ -208,10 +207,11 @@ const SellerEditVariantData = ({
                         // Check if a name is selected
                         if (newName) {
                           // Generate a unique SKU
-                          const newSKU = `${shopInfo.shopId
-                            }_${newName}_${Math.floor(
-                              Math.random() * 100000000
-                            )}`;
+                          const newSKU = `${
+                            shopInfo.shopId
+                          }_${newName}_${Math.floor(
+                            Math.random() * 100000000
+                          )}`;
 
                           // Update the name and SKU in the inputFields array
                           newInputFields[index].name = newName;
@@ -292,29 +292,29 @@ const SellerEditVariantData = ({
             Add Field
           </button>
         )}
-         <div className="min-w-fit mb-4">
-        <label className="text-sm " htmlFor="Video url ">
-          Sale Multi Vendor
-        </label>
-        <select
-          defaultValue={{
-            label: product?.multiVendor,
-            value: product?.multiVendor,
-          }}
-          onChange={(e) => {
-            setMultiVendor(
-              (e.target.value === "true" && true) ||
-              (e.target.value === "false" && false)
-            );
-          }}
-          className="flex-grow w-full h-10 px-4 mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-purple-400 focus:outline-none focus:shadow-outline"
-          name="ability"
-          id=""
-        >
-          <option value={true}>Yes</option>
-          <option value={false}>No</option>
-        </select>
-      </div>
+        <div className="min-w-fit mb-4">
+          <label className="text-sm " htmlFor="Video url ">
+            Sale Multi Vendor
+          </label>
+          <select
+            defaultValue={{
+              label: product?.multiVendor,
+              value: product?.multiVendor,
+            }}
+            onChange={(e) => {
+              setMultiVendor(
+                (e.target.value === "true" && true) ||
+                  (e.target.value === "false" && false)
+              );
+            }}
+            className="flex-grow w-full h-10 px-4 mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-purple-400 focus:outline-none focus:shadow-outline"
+            name="ability"
+            id=""
+          >
+            <option value={true}>Yes</option>
+            <option value={false}>No</option>
+          </select>
+        </div>
         {multiVendor === true && (
           <div className="grid grid-cols-3 gap-2">
             <div className={` border p-2 border-gray-300 bg-orange-100`}>
@@ -494,31 +494,31 @@ const SellerEditVariantData = ({
                 />
               </div>
             </div>
-
-            <div className={style.cart}>
-              <div>
-                <label className={style.label} htmlFor="">
-                  Product cost{" "}
-                </label>
-                <input
-                  onChange={(e) => {
-                    const newInputFields = { ...variantInput };
-                    newInputFields.ProductCost = e.target.value;
-                    setVariantInput(newInputFields);
-                  }}
-                  type="text"
-                  // defaultValue={1}
-                  defaultValue={
-                    product?.variantData?.ProductCost
-                      ? product?.variantData?.ProductCost
-                      : 1
-                  }
-                  className={style.input}
-                />
-              </div>
-            </div>
           </div>
         )}
+
+        <div className={style.cart}>
+          <div>
+            <label className={style.label} htmlFor="">
+              Product costs{" "}
+            </label>
+            <input
+              onChange={(e) => {
+                const newInputFields = { ...variantInput };
+                newInputFields.ProductCost = e.target.value;
+                setVariantInput(newInputFields);
+              }}
+              type="text"
+              // defaultValue={1}
+              defaultValue={
+                product?.variantData?.ProductCost
+                  ? product?.variantData?.ProductCost
+                  : 1
+              }
+              className={style.input}
+            />
+          </div>
+        </div>
       </div>
     </div>
   );
