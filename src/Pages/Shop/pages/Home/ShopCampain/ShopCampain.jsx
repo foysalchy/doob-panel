@@ -31,7 +31,7 @@ const ShopCampain = () => {
         ?.map((data) => (
           <div key={data?._id}>
             {data.products.length ? (
-              <div className="py-4 bg-[black] rounded mt-6" >
+              <div className="py-4 bg-black rounded mt-6" >
                 <section className="body-font">
                   <div className="px-5">
                     <div className="flex items-center justify-between text-white">
@@ -60,7 +60,7 @@ const ShopCampain = () => {
                       <div className="">
                         <button
                           type="button"
-                          className="px-5 py-2 font-semibold border rounded bg-gray-500 text-white text-xs "
+                          className="px-5 py-2 sec_bg font-semibold border rounded bg-gray-500 text-white text-xs "
                         >
                           SHOP MORE
                         </button>

@@ -1,14 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
-import React, { useContext, useEffect, useState } from "react";
-import Select from "react-select";
+import React, { useContext, useState } from "react";
+import Swal from "sweetalert2";
 import { AuthContext } from "../../../../AuthProvider/UserProvider";
 import WareHouse from "../SellerAddProduct/Components/WareHouse";
-import Swal from "sweetalert2";
 
-import { FixedSizeList as List } from "react-window";
 import { BsArrowRight } from "react-icons/bs";
-import Variants from "../SellerAddProduct/Components/Variants";
 import OnlySyncCategory from "../SellerAddProduct/Components/OnlySyncCategory";
+import Variants from "../SellerAddProduct/Components/Variants";
 
 const AddDarazProduct = () => {
   const { shopInfo } = useContext(AuthContext);
@@ -252,6 +250,8 @@ const AddDarazProduct = () => {
 
   return (
     <div>
+        {!shopInfo.daraz? (
+      <div>
       <div className="flex justify-end items-center gap-12 mt-8 w-full">
         {/* <div className="w-full px-4 py-2 bg-gray-50 rounded text-blue-500 flex items-center gap-2">
           <MdEmail />
@@ -411,6 +411,14 @@ const AddDarazProduct = () => {
           </div>
         </form>
       </div>
+      </div>
+) : (
+  <div className="bg-red-100 border-l-4 border-red-500  py-6 text-center  rounded-md">
+  <h1 className="text-red-700 font-bold">
+  Please First Connect Your Daraz Account
+  </h1>
+</div>
+)}
     </div>
   );
 };
