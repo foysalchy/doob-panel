@@ -13,6 +13,7 @@ import PrintList from "../PrintList";
 import EditProductForm from "./EditProduct";
 import WebStoreproduct from "./WebStoreProducts";
 import DemoImage from "./woocommerce-placeholder-600x600.png";
+import BrightAlert from "bright-alert";
 const SellerAllProducts = () => {
   const navigate = useNavigate();
   const { shopInfo } = useContext(AuthContext);
@@ -148,7 +149,11 @@ const SellerAllProducts = () => {
   const endIndex = startIndex + pageSize;
 
   // Get the current page data
-  const currentData = filteredData && filteredData?.sort((a, b) => b.createdAt - a.createdAt).slice(startIndex, endIndex);
+  const currentData =
+    filteredData &&
+    filteredData
+      ?.sort((a, b) => b.createdAt - a.createdAt)
+      .slice(startIndex, endIndex);
 
   const updateProductStatus = (id, status) => {
     console.log(id);
@@ -197,8 +202,6 @@ const SellerAllProducts = () => {
 
     console.log(deleteId, isDelete);
   }
-
-
 
   const { data: priceRole = [] } = useQuery({
     queryKey: ["priceRole"],
@@ -260,27 +263,77 @@ const SellerAllProducts = () => {
     setStockOn(false);
   };
 
-  const update_product_multi_vendor = (id, status) => {
-    fetch(
-      `https://backend.doob.com.bd/api/v1/seller/update-product-multivendor`,
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          id,
-          status,
-        }),
-      }
-    )
-      .then((res) => res.json())
-      .then((data) => {
-        Swal.fire(`Success`, "", "success");
-        refetch();
-      });
+  const [isOpenWarehouse, setIsWarehouse] = useState(false);
+  const navigateWareHouseFunction = () => {
+    navigate(`/seller/product-management/edit/${isOpenWarehouse?._id}`, {
+      state: isOpenWarehouse,
+    });
+    // navigate(`/seller/product-management/edit/${isOpenWarehouse}`);
+    setIsWarehouse(false);
   };
+  // Function to update product
+  const update_product_multi_vendor = async (product, status, refetch) => {
+    // const navigate = useNavigate(); // For navigation
 
+    // Ensure the product is valid
+    if (!product) {
+      Swal.fire("Error", "Invalid product data", "error");
+      return;
+    }
+
+    // Check if the product belongs to the admin warehouse
+    if (!product?.adminWare) {
+      setIsWarehouse(product);
+      // Swal.fire({
+      //   title: "Product Management",
+      //   text: "This is not your warehouse product.",
+      //   icon: "info",
+      //   showCancelButton: true,
+      //   confirmButtonText: "Edit",
+      //   cancelButtonText: "Cancel",
+      //   customClass: {
+      //     confirmButton: "swal2-confirm swal2-styled",
+      //     cancelButton: "swal2-cancel swal2-styled",
+      //   },
+      //   focusConfirm: false,
+      // }).then((result) => {
+      //   if (result.isConfirmed) {
+      //     navigate(`/seller/product-management/edit/${product?._id}`);
+      //   }
+      // });
+    } else {
+      try {
+        const response = await fetch(
+          `https://backend.doob.com.bd/api/v1/seller/update-product-multivendor`,
+          {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              id: product?._id,
+              status,
+            }),
+          }
+        );
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.message || "Failed to update product");
+        }
+
+        const data = await response.json();
+
+        Swal.fire("Success", "Product updated successfully", "success");
+        if (typeof refetch === "function") {
+          refetch(); // Refresh data if refetch function is provided
+        }
+      } catch (error) {
+        console.error("Failed to update product", error);
+        Swal.fire("Error", "Failed to update product", "error");
+      }
+    }
+  };
   const barcode_generate = () => {
     const pdf = new jsPDF();
     const barcodesPerRow = 3;
@@ -298,7 +351,6 @@ const SellerAllProducts = () => {
       });
 
       const imgData = canvas.toDataURL("image/png");
-
 
       if (productsDisplayed >= maxProductsPerPage) {
         pdf.addPage();
@@ -349,13 +401,14 @@ const SellerAllProducts = () => {
   };
   const [rejectMessage, setRejectMessage] = useState(false);
 
-
   const [updateStart, setUpdating] = useState(false);
   const update_form_daraz = () => {
     // Set updating to true
     setUpdating(true);
 
-    const daraz_products = products.filter((product) => product.add_daraz === true);
+    const daraz_products = products.filter(
+      (product) => product.add_daraz === true
+    );
 
     daraz_products.forEach((product) => {
       const { _id, variations, item_id } = product;
@@ -371,8 +424,7 @@ const SellerAllProducts = () => {
 
     // Set updating to false
     setUpdating(false);
-  }
-
+  };
 
   const updateProduct = (id, sku, item_id, category) => {
     setLoadingStates((prevLoadingStates) => ({
@@ -398,16 +450,15 @@ const SellerAllProducts = () => {
           Swal.fire(`${data.message}`, "", "warning");
         } else {
           if (updateStart) {
-
-          } else { Swal.fire(`${data.message}`, "", "success"); }
+          } else {
+            Swal.fire(`${data.message}`, "", "success");
+          }
           refetch();
         }
       });
   };
 
-
-
-  console.log('manage product : ', products);
+  console.log("manage product : ", products);
 
   return (
     <div className="">
@@ -420,17 +471,17 @@ const SellerAllProducts = () => {
         />
       </div>
 
-
       <div className="flex items-center gap-4">
         <h2 className="text-lg font-medium text-gray-800 ">All Product</h2>
         <span className="px-3 py-1 text-xs  bg-blue-100 rounded-full d text-blue-400">
           {products?.length}
         </span>
       </div>
-      <div className="flex gap-1 mt-4 items-center" 
-              style={{fontSize:'15px'}}
->
-      <div className="relative w-3/3 ">
+      <div
+        className="flex gap-1 mt-4 items-center"
+        style={{ fontSize: "15px" }}
+      >
+        <div className="relative w-3/3 ">
           <input
             type="text"
             id="Search"
@@ -468,7 +519,8 @@ const SellerAllProducts = () => {
             aria-haspopup="true"
             aria-expanded={dropdownOpenWeb}
           >
-            {webStoreProduct ? "My Store" : "Web Store"}   <IoIosArrowDown className="inline" />
+            {webStoreProduct ? "My Store" : "Web Store"}{" "}
+            <IoIosArrowDown className="inline" />
           </button>
 
           {dropdownOpenWeb && (
@@ -497,9 +549,11 @@ const SellerAllProducts = () => {
             </div>
           )}
         </div>
-
         {webStoreProduct && (
-          <div className="flex gap-1  items-center mr-0" style={{margin:"0px !important"}}>
+          <div
+            className="flex gap-1  items-center mr-0"
+            style={{ margin: "0px !important" }}
+          >
             <div className="relative inline-block text-left">
               <button
                 onClick={toggleDropdownWare}
@@ -507,7 +561,8 @@ const SellerAllProducts = () => {
                 aria-haspopup="true"
                 aria-expanded={dropdownOpenForWare}
               >
-                {selectwarehouse || " Warehouse"}   <IoIosArrowDown className="inline" />
+                {selectwarehouse || " Warehouse"}{" "}
+                <IoIosArrowDown className="inline" />
               </button>
 
               {dropdownOpenForWare && (
@@ -550,7 +605,8 @@ const SellerAllProducts = () => {
                 aria-haspopup="true"
                 aria-expanded={dropdownOpenFor2nd}
               >
-                {selectedOption || "Source"}  <IoIosArrowDown className="inline" />
+                {selectedOption || "Source"}{" "}
+                <IoIosArrowDown className="inline" />
               </button>
 
               {dropdownOpenFor2nd && (
@@ -595,34 +651,22 @@ const SellerAllProducts = () => {
             </div>
           </div>
         )}
-
         <div>
           <div className="flex gap-1  items-center">
-
             <button
               onClick={update_form_daraz}
               disabled={updateStart}
               className="px-2 bg-white py-1 border"
               aria-haspopup="true"
-
             >
-              {updateStart ? "Updating..." : 'Update Daraz Product'}
+              {updateStart ? "Updating..." : "Update Daraz Product"}
             </button>
 
-
-            <button
-              className="px-2 bg-white py-1 border"
-              aria-haspopup="true"
-            >
+            <button className="px-2 bg-white py-1 border" aria-haspopup="true">
               Update Woo Product
             </button>
-
-
-
           </div>
         </div>
-      
-       
         <div className="flex items-center mt-4 md:mt-0  gap-2">
           {selectProducts.length ? (
             <select
@@ -750,9 +794,8 @@ const SellerAllProducts = () => {
                     {console.log(currentData[0])}
                     <tbody className="bg-white divide-y  divide-gray-200 ">
                       {currentData
-                        ? currentData
-                          ?.map((product) => (
-                            <tr>
+                        ? currentData?.map((product) => (
+                            <tr key={product._id}>
                               <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap   flex items-center justify-center">
                                 <label>
                                   <input
@@ -813,9 +856,7 @@ const SellerAllProducts = () => {
                                   <div>
                                     {" "}
                                     <div
-                                      onClick={() =>
-                                        setRejectMessage(product)
-                                      }
+                                      onClick={() => setRejectMessage(product)}
                                       className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 cursor-pointer bg-emerald-100/60 bg-gray-800"
                                     >
                                       <span className="h-1.5 w-1.5 rounded-full bg-danger-600" />
@@ -916,7 +957,7 @@ const SellerAllProducts = () => {
                                     <div
                                       onClick={() =>
                                         update_product_multi_vendor(
-                                          product._id,
+                                          product,
                                           false
                                         )
                                       }
@@ -931,7 +972,7 @@ const SellerAllProducts = () => {
                                     <div
                                       onClick={() =>
                                         update_product_multi_vendor(
-                                          product._id,
+                                          product,
                                           true
                                         )
                                       }
@@ -969,17 +1010,19 @@ const SellerAllProducts = () => {
                                   </button>
                                   <div
                                     onClick={() => setPriceOn(false)}
-                                    className={`fixed z-[100] flex items-center justify-center ${priceOn?._id == product?._id
-                                      ? "visible opacity-100"
-                                      : "invisible opacity-0"
-                                      } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
+                                    className={`fixed z-[100] flex items-center justify-center ${
+                                      priceOn?._id == product?._id
+                                        ? "visible opacity-100"
+                                        : "invisible opacity-0"
+                                    } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
                                   >
                                     <div
                                       onClick={(e_) => e_.stopPropagation()}
-                                      className={`text- absolute max-w-md rounded-sm bg-white p-6 drop-shadow-lg dark:bg-white dark:text-black ${priceOn?._id == product?._id
-                                        ? "scale-1 opacity-1 duration-300"
-                                        : "scale-0 opacity-0 duration-150"
-                                        }`}
+                                      className={`text- absolute max-w-md rounded-sm bg-white p-6 drop-shadow-lg dark:bg-white dark:text-black ${
+                                        priceOn?._id == product?._id
+                                          ? "scale-1 opacity-1 duration-300"
+                                          : "scale-0 opacity-0 duration-150"
+                                      }`}
                                     >
                                       <form onSubmit={handleEditPrice}>
                                         <h2 className="text-lg font-medium text-gray-800 mb-4">
@@ -1016,26 +1059,26 @@ const SellerAllProducts = () => {
                                 Qty:    <p className="px-3 py-1 text-xs text-indigo-500 rounded-full bg-gray-800 bg-indigo-100/60">
                                       {product?.stock_quantity}
                                     </p>
-                                    <button
-                                      onClick={() => setStockOn(product)}
-                                    >
+                                    <button onClick={() => setStockOn(product)}>
                                       {" "}
                                       <BiEdit className="text-lg" />
                                     </button>
 
                                     <div
                                       onClick={() => setStockOn(false)}
-                                      className={`fixed z-[100] flex items-center justify-center ${stockOn?._id == product?._id
-                                        ? "visible opacity-100"
-                                        : "invisible opacity-0"
-                                        } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
+                                      className={`fixed z-[100] flex items-center justify-center ${
+                                        stockOn?._id == product?._id
+                                          ? "visible opacity-100"
+                                          : "invisible opacity-0"
+                                      } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
                                     >
                                       <div
                                         onClick={(e_) => e_.stopPropagation()}
-                                        className={`text- absolute max-w-md rounded-sm bg-white p-6 drop-shadow-lg dark:bg-white dark:text-black ${stockOn?._id == product?._id
-                                          ? "scale-1 opacity-1 duration-300"
-                                          : "scale-0 opacity-0 duration-150"
-                                          }`}
+                                        className={`text- absolute max-w-md rounded-sm bg-white p-6 drop-shadow-lg dark:bg-white dark:text-black ${
+                                          stockOn?._id == product?._id
+                                            ? "scale-1 opacity-1 duration-300"
+                                            : "scale-0 opacity-0 duration-150"
+                                        }`}
                                       >
                                         <form onSubmit={handleEditStock}>
                                           <h2 className="text-lg font-medium text-gray-800 mb-4">
@@ -1059,9 +1102,7 @@ const SellerAllProducts = () => {
                                             </button>
 
                                             <button
-                                              onClick={() =>
-                                                setStockOn(false)
-                                              }
+                                              onClick={() => setStockOn(false)}
                                               className="rounded-sm border border-red-600 px-6 py-[6px] text-red-600 duration-150 hover:bg-red-600 hover:text-white"
                                             >
                                               Cancel
@@ -1167,6 +1208,51 @@ const SellerAllProducts = () => {
                             </tr>
                           ))
                         : ""}
+                      {isOpenWarehouse && (
+                        <div className="container mx-auto py-20">
+                          <div
+                            className={`fixed z-50 top-0 left-0 flex h-full min-h-screen w-full items-center justify-center bg-black bg-opacity-90  px-4 py-5 ${
+                              isOpenWarehouse ? "block" : "hidden"
+                            }`}
+                          >
+                            <div className="w-full max-w-[570px] rounded-[20px] bg-white py-12 px-8 text-center md:py-[60px] md:px-[70px]">
+                              <h3 className="pb-2 text-xl font-bold text-dark sm:text-2xl">
+                                It Is not your warehouse
+                              </h3>
+
+                              <span
+                                className={`mx-auto mb-6 inline-block h-1 w-[90px] rounded bg-primary`}
+                              ></span>
+                              <p className="mb-10 text-base leading-relaxed text-body-color">
+                                <span>
+                                You can  Edit your warehouse by Click on Edit button.
+                                For Cancel Click on OK button
+                                </span>
+                                <br />
+                              </p>
+                              <div className="flex flex-wrap -mx-3">
+                                <div className="w-1/2 px-3">
+                                  <button
+                                    // onClick={() => SubmitData(false)}
+                                    onClick={() => navigateWareHouseFunction()}
+                                    className="block w-full rounded-lg border  p-3 text-center text-base font-medium text-dark transition border-green-600 hover:bg-green-600 hover:text-white"
+                                  >
+                                    Edit
+                                  </button>
+                                </div>
+                                <div className="w-1/2 px-3">
+                                  <button
+                                    onClick={() => setIsWarehouse(false)}
+                                    className={`block w-full p-3 text-base font-medium text-center text-white transition border rounded-lg border-primary bg-red-600 hover:bg-red-700`}
+                                  >
+                                    OK
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      )}
                     </tbody>
                   </table>
                 </div>
@@ -1180,10 +1266,11 @@ const SellerAllProducts = () => {
                     className={`fixed z-[100] flex items-center justify-center visible opacity-100 inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
                   >
                     <div
-                      className={`text- absolute w-[400px] rounded-sm bg-white p-6 drop-shadow-lg dark:bg-white dark:text-black ${rejectMessage._id
-                        ? "scale-1 opacity-1 duration-300"
-                        : "scale-0 opacity-0 duration-150"
-                        }`}
+                      className={`text- absolute w-[400px] rounded-sm bg-white p-6 drop-shadow-lg dark:bg-white dark:text-black ${
+                        rejectMessage._id
+                          ? "scale-1 opacity-1 duration-300"
+                          : "scale-0 opacity-0 duration-150"
+                      }`}
                     >
                       <form>
                         <h1 className="mb-2 text-2xl font-semibold">
@@ -1242,10 +1329,11 @@ const SellerAllProducts = () => {
                   (_, index) => (
                     <div
                       key={index}
-                      className={`flex items-center px-3 py-2 cursor-pointer text-sm text-gray-700 capitalize transition-colors duration-200 border rounded-md gap-x-2   ${currentPage === index + 1
-                        ? "bg-blue-500 text-white"
-                        : "bg-blue-100/60 text-blue-500"
-                        }`}
+                      className={`flex items-center px-3 py-2 cursor-pointer text-sm text-gray-700 capitalize transition-colors duration-200 border rounded-md gap-x-2   ${
+                        currentPage === index + 1
+                          ? "bg-blue-500 text-white"
+                          : "bg-blue-100/60 text-blue-500"
+                      }`}
                       onClick={() => setCurrentPage((prevPage) => index + 1)}
                     >
                       <span>{index + 1}</span>
@@ -1288,7 +1376,7 @@ const SellerAllProducts = () => {
           </div>
         )}
       </section>
-    </div >
+    </div>
   );
 };
 export default SellerAllProducts;

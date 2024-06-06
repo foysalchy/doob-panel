@@ -181,7 +181,7 @@ const ListOfWarehouse = () => {
           </span>
 
           <span className="text-sm font-medium transition-all group-hover:ms-4">
-            Add New Warehouse
+            Add New Warehouses
           </span>
         </button>
 

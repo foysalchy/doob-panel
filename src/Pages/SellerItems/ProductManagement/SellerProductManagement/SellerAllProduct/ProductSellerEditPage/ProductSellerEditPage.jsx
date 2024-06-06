@@ -400,6 +400,7 @@ const ProductSellerEditPage = () => {
     <div>
       <form className="border md:p-10 p-2" onSubmit={formSubmit} action="">
         <h2 className="font-bold text-xl">Edit Product</h2>
+
         <div className="mt-10">
           <ImageUploadSeller
             allImage={allImage}
