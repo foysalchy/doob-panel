@@ -27,6 +27,7 @@ import {
   BsHddNetworkFill,
   BsHeadset,
   BsLayoutTextSidebarReverse,
+  BsLifePreserver,
   BsPersonLinesFill,
   BsPrinter,
   BsShop,
@@ -280,13 +281,13 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                           Add Daraz Product
                                         </Link>
                                       </li>
-                                      <li className="flex cursor-pointer items-center justify-between py-2 p-2 rounded-sm hover:bg-gray-800 text-gray-50">
+                                      <li className="flex cursor-pointer items-center justify-between p-2 rounded-sm hover:bg-gray-800 text-gray-50">
                                         <Link
                                           to={
                                             "/seller/product-management/add-woo-product"
                                           }
                                         >
-                                          Woo Product
+                                          Woo Product...
                                         </Link>
                                       </li>
                                     </ul>
@@ -312,7 +313,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                         </summary>
 
                                         <ul className="mt-2 space-y-1 px-4 text-control">
-                                          <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                          <li className="flex cursor-pointer items-center justify-between text-xs py-2 rounded-sm hover:bg-gray-800 text-gray-50">
                                             <Link
                                               to={
                                                 "/seller/categories-management/mega-categories-management"
@@ -322,7 +323,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                               Mega Category
                                             </Link>
                                           </li>
-                                          <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                          <li className="flex cursor-pointer items-center justify-between text-xs py-2 rounded-sm hover:bg-gray-800 text-gray-50">
                                             <Link
                                               to={
                                                 "/seller/categories-management/sub-categories-management"
@@ -332,7 +333,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                               Sub Category
                                             </Link>
                                           </li>
-                                          <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                          <li className="flex cursor-pointer items-center justify-between text-xs py-2 rounded-sm hover:bg-gray-800 text-gray-50">
                                             <Link
                                               to={
                                                 "/seller/categories-management/mini-categories-management"
@@ -343,7 +344,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                             </Link>
                                           </li>
 
-                                          <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                          <li className="flex cursor-pointer items-center justify-between text-xs py-2 rounded-sm hover:bg-gray-800 text-gray-50">
                                             <Link
                                               to={
                                                 "/seller/categories-management/extra-categories-management"
@@ -359,68 +360,64 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                   ) : null
                                 ) : (
                                   <li className="bg-[#1b202ea1]">
-                                    <details className="group [&_summary::-webkit-details-marker]:hidden flex items-center rounded-sm  ">
-                                      <summary className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
-                                        <div className="flex cursor-pointer items-center gap-2">
-                                          {/* <TbCategory className="w-5 h-5 fill-current text-gray-400" /> */}
+                                      <details className="group [&_summary::-webkit-details-marker]:hidden flex items-center rounded-sm  ">
+                                        <summary className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
+                                          <div className="flex cursor-pointer items-center gap-2">
+                                            {/* <TbCategory className="w-5 h-5 fill-current text-gray-400" /> */}
 
-                                          <span>Category</span>
-                                        </div>
+                                            <span>Category</span>
+                                          </div>
 
-                                        <span className="shrink-0 transition duration-300 ">
-                                          <IoIosArrowDown className="h-5 w-5" />
-                                        </span>
-                                      </summary>
+                                          <span className="shrink-0 transition duration-300 ">
+                                            <IoIosArrowDown className="h-5 w-5" />
+                                          </span>
+                                        </summary>
 
-                                      <ul className="mt-2 space-y-1 px-4 text-control">
-                                        <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                          <Link
-                                            to={
-                                              "/seller/categories-management/mega-categories-management"
-                                            }
+                                        <ul className="mt-2 space-y-1 px-4 text-control">
+                                          <li className="flex cursor-pointer items-center justify-between text-xs py-2 rounded-sm hover:bg-gray-800 text-gray-50">
+                                            <Link
+                                              to={
+                                                "/seller/categories-management/mega-categories-management"
+                                              }
+                                              className="w-full"
+                                            >
+                                              Mega Category ***
+                                            </Link>
+                                          </li>
+                                          <li className="flex cursor-pointer items-center justify-between text-xs py-2 rounded-sm hover:bg-gray-800 text-gray-50">
+                                            <Link
+                                              to={
+                                                "/seller/categories-management/sub-categories-management"
+                                              }
+                                              className="w-full"
+                                            >
+                                              Sub Category
+                                            </Link>
+                                          </li>
+                                          <li className="flex cursor-pointer items-center justify-between text-xs py-2 rounded-sm hover:bg-gray-800 text-gray-50">
+                                            <Link
+                                              to={
+                                                "/seller/categories-management/mini-categories-management"
+                                              }
+                                              className="w-full"
+                                            >
+                                              Mini Category
+                                            </Link>
+                                          </li>
 
-                                            className="w-full"
-                                          >
-                                            Mega Category
-                                          </Link>
-                                        </li>
-                                        <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                          <Link
-                                            to={
-                                              "/seller/categories-management/sub-categories-management"
-                                            }
-
-                                            className="w-full"
-                                          >
-                                            Sub Category
-                                          </Link>
-                                        </li>
-                                        <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                          <Link
-                                            to={
-                                              "/seller/categories-management/mini-categories-management"
-                                            }
-
-                                            className="w-full"
-                                          >
-                                            Mini Category
-                                          </Link>
-                                        </li>
-
-                                        <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                          <Link
-                                            to={
-                                              "/seller/categories-management/extra-categories-management"
-                                            }
-
-                                            className="w-full"
-                                          >
-                                            Extra Category
-                                          </Link>
-                                        </li>
-                                      </ul>
-                                    </details>
-                                  </li>
+                                          <li className="flex cursor-pointer items-center justify-between text-xs py-2 rounded-sm hover:bg-gray-800 text-gray-50">
+                                            <Link
+                                              to={
+                                                "/seller/categories-management/extra-categories-management"
+                                              }
+                                              className="w-full"
+                                            >
+                                              Extra Category
+                                            </Link>
+                                          </li>
+                                        </ul>
+                                      </details>
+                                    </li>
                                 )}
 
                                 {user?.staffRole
@@ -447,7 +444,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                 to={
                                                   "/seller/warehouse/warehouse-management"
                                                 }
-                                                className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-xs rounded-md"
+                                                className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md"
                                               >
                                                 Manage Warehouse
                                               </Link>
@@ -457,7 +454,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                 to={
                                                   "/seller/warehouse/area-management"
                                                 }
-                                                className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-xs rounded-md"
+                                                className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md"
                                               >
                                                 Area Management
                                               </Link>
@@ -467,7 +464,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                 to={
                                                   "/seller/warehouse/rack-management"
                                                 }
-                                                className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-xs rounded-md"
+                                                className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md"
                                               >
                                                 Rack Management
                                               </Link>
@@ -477,7 +474,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                 to={
                                                   "/seller/warehouse/self-management"
                                                 }
-                                                className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-xs rounded-md"
+                                                className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md"
                                               >
                                                 Self Management
                                               </Link>
@@ -487,7 +484,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                 to={
                                                   "/seller/warehouse/cell-management"
                                                 }
-                                                className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-xs rounded-md"
+                                                className=" text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md"
                                               >
                                                 Cell Management
                                               </Link>
@@ -517,7 +514,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                               to={
                                                 "/seller/warehouse/warehouse-management"
                                               }
-                                              className=" text-gray-50 flex gap-2 items-center px-4 p-1 space-x-3 text-xs rounded-md"
+                                              className=" text-gray-50 flex gap-2 items-center px-4 p-1 space-x-3 text-sm rounded-md"
                                             >
                                               Manage Warehouse
                                             </Link>
@@ -596,61 +593,61 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                   (itm) => itm?.name === "Product Management"
                                 ) ? (
                                   <li className="">
-                                    <ul className="flex flex-col ">
-                                      <li >
-                                        <Link
-                                          className="flex cursor-pointer items-center justify-between  py-2 p-2 rounded-sm hover:bg-gray-800 text-gray-50"
-                                          to={
-                                            "/seller/product-management/manage"
-                                          }
+                                  <ul className="flex flex-col ">
+                                    <li >
+                                      <Link
+                                        className="flex cursor-pointer items-center justify-between  py-2 p-2 rounded-sm hover:bg-gray-800 text-gray-50"
+                                        to={
+                                          "/seller/product-management/manage"
+                                        }
 
-                                        >
-                                          Products
-                                        </Link>
-                                      </li>
-                                      <li>
-                                        <Link
-                                          to={
-                                            "/seller/product-management/add-product"
-                                          }
-                                          className="flex cursor-pointer items-center justify-between py-2 p-2 rounded-sm hover:bg-gray-800 text-gray-50"
-                                        >
-                                          Add Product
-                                        </Link>
-                                      </li>
-                                      <li >
-                                        <Link className="w-full" to={"/products"}>
-                                          <div className="flex cursor-pointer items-center justify-between py-2 p-2 rounded-sm hover:bg-gray-800 text-gray-50">
-                                            Add Doob Product
-                                          </div>
-                                        </Link>
-                                      </li>
-                                      <li >
-                                        <Link
-                                          className="w-full"
-                                          to={
-                                            "/seller/product-management/add-daraz-product"
-                                          }
-                                        >
-                                          <div className="flex cursor-pointer items-center justify-between py-2 p-2 rounded-sm hover:bg-gray-800 text-gray-50">
-                                            Add Daraz Product
-                                          </div>
-                                        </Link>
-                                      </li>
-                                      <li className="flex cursor-pointer items-center justify-between py-2 p-2 rounded-sm hover:bg-gray-800 text-gray-50">
-                                        <Link
-                                          className="w-full"
-                                          to={
-                                            "/seller/product-management/add-woo-product"
-                                          }
-                                        >
-                                          <div className="flex cursor-pointer items-center justify-between py-2 p-2 rounded-sm hover:bg-gray-800 text-gray-50">
-                                            Woo Product
-                                          </div>
-                                        </Link>
-                                      </li>
-                                    </ul>
-                                  </li>
+                                      >
+                                        Products
+                                      </Link>
+                                    </li>
+                                    <li>
+                                      <Link
+                                        to={
+                                          "/seller/product-management/add-product"
+                                        }
+                                        className="flex cursor-pointer items-center justify-between py-2 p-2 rounded-sm hover:bg-gray-800 text-gray-50"
+                                      >
+                                        Add Product
+                                      </Link>
+                                    </li>
+                                    <li >
+                                      <Link className="w-full" to={"/products"}>
+                                        <div className="flex cursor-pointer items-center justify-between py-2 p-2 rounded-sm hover:bg-gray-800 text-gray-50">
+                                          Add Doob Product
+                                        </div>
+                                      </Link>
+                                    </li>
+                                    <li >
+                                      <Link
+                                        className="w-full"
+                                        to={
+                                          "/seller/product-management/add-daraz-product"
+                                        }
+                                      >
+                                        <div className="flex cursor-pointer items-center justify-between py-2 p-2 rounded-sm hover:bg-gray-800 text-gray-50">
+                                          Add Daraz Product
+                                        </div>
+                                      </Link>
+                                    </li>
+                                    <li className="flex cursor-pointer items-center justify-between rounded-sm hover:bg-gray-800 text-gray-50">
+                                      <Link
+                                        className="w-full"
+                                        to={
+                                          "/seller/product-management/add-woo-product"
+                                        }
+                                      >
+                                        <div className="flex cursor-pointer !h-[30px] items-center justify-between px-2 rounded-sm hover:bg-gray-800 text-gray-50">
+                                          Woo Product
+                                        </div>
+                                      </Link>
+                                    </li>
+                                  </ul>
+                                </li>
                                 ) : null
                               ) : (
                                 <li className="">
@@ -695,14 +692,14 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                         </div>
                                       </Link>
                                     </li>
-                                    <li className="flex cursor-pointer items-center justify-between py-2 p-2 rounded-sm hover:bg-gray-800 text-gray-50">
+                                    <li className="flex cursor-pointer items-center justify-between rounded-sm hover:bg-gray-800 text-gray-50">
                                       <Link
                                         className="w-full"
                                         to={
                                           "/seller/product-management/add-woo-product"
                                         }
                                       >
-                                        <div className="flex cursor-pointer items-center justify-between py-2 p-2 rounded-sm hover:bg-gray-800 text-gray-50">
+                                        <div className="flex cursor-pointer !h-[30px] items-center justify-between px-2 rounded-sm hover:bg-gray-800 text-gray-50">
                                           Woo Product
                                         </div>
                                       </Link>
@@ -739,7 +736,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                             className="w-full"
                                           >
 
-                                            <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-xs rounded-md">
+                                            <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md">
                                               Mega Category
                                             </div>
                                           </Link>
@@ -752,7 +749,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
 
                                             className="w-full"
                                           >
-                                            <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-xs rounded-md">
+                                            <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md">
                                               Sub Category
                                             </div>
                                           </Link>
@@ -765,7 +762,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
 
                                             className="w-full"
                                           >
-                                            <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-xs rounded-md">Mini Category</div>
+                                            <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md">Mini Category</div>
                                           </Link>
                                         </li>
 
@@ -777,7 +774,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
 
                                             className="w-full"
                                           >
-                                            <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-xs rounded-md">
+                                            <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md">
                                               Extra Category
                                             </div>
                                           </Link>
@@ -801,18 +798,17 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                       </span>
                                     </summary>
 
-                                    <ul className="mt-2 space-y-1 px-4 text-control">
-                                      <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                    <ul className="mt-2 space-y-2 px-4 text-control">
+                                      <li className="flex cursor-pointer items-center justify-between  px-2 py-2  rounded-sm hover:bg-gray-800 text-gray-50">
                                         <Link
                                           to={
                                             "/seller/categories-management/mega-categories-management"
                                           }
-
                                           className="w-full"
                                         >
 
-                                          <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-xs rounded-md">
-                                            Mega Category
+                                          <div className="py-3">
+                                            Mega Category 
                                           </div>
                                         </Link>
                                       </li>
@@ -824,7 +820,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
 
                                           className="w-full"
                                         >
-                                          <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-xs rounded-md">
+                                          <div className="text-gray-50 flex gap-2 items-center px-2 py-2 space-x-3 text-sm rounded-md">
                                             Sub Category
                                           </div>
                                         </Link>
@@ -837,7 +833,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
 
                                           className="w-full"
                                         >
-                                          <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-xs rounded-md">Mini Category</div>
+                                          <div className="text-gray-50 flex gap-2 items-center px-2 py-2 space-x-3 text-sm rounded-md">Mini Category</div>
                                         </Link>
                                       </li>
 
@@ -849,7 +845,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
 
                                           className="w-full"
                                         >
-                                          <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-xs rounded-md">
+                                          <div className="text-gray-50 flex gap-2 items-center px-2 py-2 space-x-3 text-sm rounded-md">
                                             Extra Category
                                           </div>
                                         </Link>
@@ -885,7 +881,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                               }
                                               className="w-full"
                                             >
-                                              <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-xs rounded-md">
+                                              <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md">
                                                 Manage Warehouse
                                               </div>
                                             </Link>
@@ -897,7 +893,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                               }
                                               className="w-full"
                                             >
-                                              <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-xs rounded-md">
+                                              <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md">
                                                 Area Management
                                               </div>
                                             </Link>
@@ -909,7 +905,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                               }
                                               className="w-full"
                                             >
-                                              <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-xs rounded-md">
+                                              <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md">
                                                 Rack Management
                                               </div>
                                             </Link>
@@ -921,7 +917,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                               }
                                               className="w-full"
                                             >
-                                              <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-xs rounded-md">
+                                              <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md">
                                                 Self Management
                                               </div>
                                             </Link>
@@ -933,7 +929,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                               }
                                               className="w-full"
                                             >
-                                              <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-xs rounded-md">
+                                              <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md">
                                                 Cell Management
                                               </div>
                                             </Link>
@@ -957,7 +953,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                         </span>
                                       </summary>
 
-                                      <ul className="mt-2 space-y-1 px-4 text-control">
+                                      <ul className="mt-2 space-y-2 px-4 text-control">
                                         <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
                                           <Link
                                             to={
@@ -965,7 +961,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                             }
                                             className="w-full"
                                           >
-                                            <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-xs rounded-md">
+                                            <div className="text-gray-50 flex text-nowrap whitespace-nowrap gap-2 items-center px-4 py-2 space-x-3 text-sm rounded-md">
                                               Manage Warehouse
                                             </div>
                                           </Link>
@@ -977,7 +973,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                             }
                                             className="w-full"
                                           >
-                                            <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-xs rounded-md">
+                                            <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md">
                                               Area Management
                                             </div>
                                           </Link>
@@ -989,7 +985,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                             }
                                             className="w-full"
                                           >
-                                            <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-xs rounded-md">
+                                            <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md">
                                               Rack Management
                                             </div>
                                           </Link>
@@ -1001,7 +997,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                             }
                                             className="w-full"
                                           >
-                                            <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-xs rounded-md">
+                                            <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md">
                                               Self Management
                                             </div>
                                           </Link>
@@ -1013,7 +1009,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                             }
                                             className="w-full"
                                           >
-                                            <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-xs rounded-md">
+                                            <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md">
                                               Cell Management
                                             </div>
                                           </Link>
@@ -1087,7 +1083,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                     to={"/seller/orders/manage-order"}
                                     className="w-full"
                                   >
-                                    <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-xs rounded-md">
+                                    <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md">
                                       Manage Orders
                                     </div>
                                   </Link>
@@ -1097,7 +1093,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                     to={"/seller/orders/claim-return"}
                                     className="w-full"
                                   >
-                                    <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-xs rounded-md">
+                                    <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md">
                                       Claim Return
                                     </div>
                                   </Link>
@@ -1107,7 +1103,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                     to={"/seller/orders/claim-order-list"}
                                     className="w-full"
                                   >
-                                    <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-xs rounded-md">
+                                    <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md">
                                       Claim List
                                     </div>
                                   </Link>
@@ -1117,7 +1113,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                     to={"/seller/orders/web-store-order"}
                                     className="w-full"
                                   >
-                                    <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-xs rounded-md">
+                                    <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md">
                                       Manage Web Orders
                                     </div>
                                   </Link>
@@ -1127,7 +1123,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                     to={"/seller/orders/manage-review"}
                                     className="w-full"
                                   >
-                                    <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-xs rounded-md">
+                                    <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md">
                                       Manage Review
                                     </div>
                                   </Link>
@@ -1161,7 +1157,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                   to={"/seller/orders/manage-order"}
                                   className="w-full"
                                 >
-                                  <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-xs rounded-md">
+                                  <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md">
                                     Manage Orders
                                   </div>
                                 </Link>
@@ -1171,7 +1167,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                   to={"/seller/orders/claim-return"}
                                   className="w-full"
                                 >
-                                  <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-xs rounded-md">
+                                  <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md">
                                     Claim Return
                                   </div>
                                 </Link>
@@ -1181,7 +1177,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                   to={"/seller/orders/claim-order-list"}
                                   className="w-full"
                                 >
-                                  <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-xs rounded-md">
+                                  <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md">
                                     Claim List
                                   </div>
                                 </Link>
@@ -1191,7 +1187,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                   to={"/seller/orders/web-store-order"}
                                   className="w-full"
                                 >
-                                  <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-xs rounded-md">
+                                  <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md">
                                     Manage Web Orders
                                   </div>
                                 </Link>
@@ -1201,7 +1197,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                   to={"/seller/orders/manage-review"}
                                   className="w-full"
                                 >
-                                  <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-xs rounded-md">
+                                  <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md">
                                     Manage Review
                                   </div>
                                 </Link>
@@ -1240,7 +1236,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                     to={"/seller/manage-pages"}
                                     className="w-full"
                                   >
-                                    <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-xs rounded-md">
+                                    <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md">
                                       Manage Pages
                                     </div>
                                   </Link>
@@ -1250,7 +1246,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                     to={"/seller/manage-pages/add-page"}
                                     className="w-full"
                                   >
-                                    <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-xs rounded-md">
+                                    <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md">
                                       Add Page
                                     </div>
                                   </Link>
@@ -1284,7 +1280,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                   to={"/seller/manage-pages"}
                                   className="w-full"
                                 >
-                                  <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-xs rounded-md">
+                                  <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md">
                                     Manage Pages
                                   </div>
                                 </Link>
@@ -1294,7 +1290,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                   to={"/seller/manage-pages/add-page"}
                                   className="w-full"
                                 >
-                                  <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-xs rounded-md">
+                                  <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md">
                                     Add Page
                                   </div>
                                 </Link>
@@ -1368,7 +1364,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                     className="w-full"
                                   >
 
-                                    <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-xs rounded-md">
+                                    <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md">
                                       Processing Fee Report
                                     </div>
 
@@ -1381,7 +1377,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                     }
                                     className="w-full"
                                   >
-                                    <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-xs rounded-md">
+                                    <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md">
                                       Customer Report
                                     </div>
                                   </Link>
@@ -1391,7 +1387,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                     to={"/seller/report-management/pos-report"}
                                     className="w-full"
                                   >
-                                    <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-xs rounded-md">
+                                    <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md">
                                       Pos Report
                                     </div>
                                   </Link>
@@ -1403,7 +1399,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                     }
                                     className="w-full"
                                   >
-                                    <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-xs rounded-md">
+                                    <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md">
                                       Sales Report
                                     </div>
                                   </Link>
@@ -1415,7 +1411,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                     }
                                     className="w-full"
                                   >
-                                    <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-xs rounded-md">
+                                    <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md">
                                       Subscriber Report
                                     </div>
                                   </Link>
@@ -1427,7 +1423,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                     }
                                     className="w-full"
                                   >
-                                    <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-xs rounded-md">
+                                    <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md">
                                       Search Report
                                     </div>
                                   </Link>
@@ -1439,7 +1435,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                     }
                                     className="w-full"
                                   >
-                                    <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-xs rounded-md">
+                                    <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md">
                                       Warehouse Report
                                     </div>
                                   </Link>
@@ -1475,7 +1471,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                   className="w-full"
                                 >
 
-                                  <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-xs rounded-md">
+                                  <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md">
                                     Processing Fee Report
                                   </div>
 
@@ -1488,7 +1484,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                   }
                                   className="w-full"
                                 >
-                                  <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-xs rounded-md">
+                                  <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md">
                                     Customer Report
                                   </div>
                                 </Link>
@@ -1498,7 +1494,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                   to={"/seller/report-management/pos-report"}
                                   className="w-full"
                                 >
-                                  <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-xs rounded-md">
+                                  <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md">
                                     Pos Report
                                   </div>
                                 </Link>
@@ -1510,7 +1506,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                   }
                                   className="w-full"
                                 >
-                                  <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-xs rounded-md">
+                                  <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md">
                                     Sales Report
                                   </div>
                                 </Link>
@@ -1522,7 +1518,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                   }
                                   className="w-full"
                                 >
-                                  <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-xs rounded-md">
+                                  <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md">
                                     Subscriber Report
                                   </div>
                                 </Link>
@@ -1534,7 +1530,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                   }
                                   className="w-full"
                                 >
-                                  <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-xs rounded-md">
+                                  <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md">
                                     Search Report
                                   </div>
                                 </Link>
@@ -1546,7 +1542,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                   }
                                   className="w-full"
                                 >
-                                  <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-xs rounded-md">
+                                  <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md">
                                     Warehouse Report
                                   </div>
                                 </Link>
@@ -1585,18 +1581,6 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                   ) ? (
                                     managementPermission("SubscriptionModel") && (
                                       <>
-                                    
-                            <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                              <Link
-                                to={"/seller/service/manage-service"}
-                                className="w-full"
-                              >
-                                <div className="w-full hover:bg-[#1b202ea1]">
-                                  My Service
-                                </div>
-                              </Link>
-                            </li>
-                        
                                         <li className="rounded-sm hover:bg-gray-800">
                                           <Link
                                             to={"/seller/subscription-management"}
@@ -1624,16 +1608,6 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                   ) : null
                                 ) : (
                                   <>
-                                   <li className="rounded-sm hover:bg-gray-800">
-                              <Link
-                                to={"/seller/service/manage-service"}
-                                className="flex items-center p-2 space-x-3 rounded-md"
-                              >
-                                <div className="w-full hover:bg-[#1b202ea1]">
-                                  My Service
-                                </div>
-                              </Link>
-                            </li>
                                     <li className="rounded-sm hover:bg-gray-800">
                                       <Link
                                         to={"/seller/subscription-management"}
@@ -1698,22 +1672,12 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                 ) ? (
                                   managementPermission("SubscriptionModel") && (
                                     <>
-                                     <li className="rounded-sm hover:bg-gray-800">
-                              <Link
-                                to={"/seller/service/manage-service"}
-                                className="flex items-center p-2 space-x-3 rounded-md"
-                              >
-                                <div className="w-full hover:bg-[#1b202ea1]">
-                                  My Service
-                                </div>
-                              </Link>
-                            </li>
                                       <li className="rounded-sm hover:bg-gray-800">
                                         <Link
                                           to={"/seller/subscription-management"}
                                           rel="noopener noreferrer"
                                           href="#"
-                                          className="flex items-center p-2 space-x-3 rounded-md"
+                                          className="flex items-center p-2 space-x-3 text-sm rounded-md"
                                         >
                                           {/* <BiArchive className="w-5 h-5 text-gray-400" /> */}
                                           <span>Subscription</span>
@@ -1724,7 +1688,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                           to={"/seller/finance"}
                                           rel="noopener noreferrer"
                                           href="#"
-                                          className="flex items-center p-2 space-x-3 rounded-md"
+                                          className="flex items-center p-2 space-x-3 text-sm rounded-md"
                                         >
                                           {/* <BiArchive className="w-5 h-5 text-gray-400" /> */}
                                           <span>Finance Report</span>
@@ -1736,24 +1700,14 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                               ) : (
                                 <>
                                   <li className="rounded-sm hover:bg-gray-800">
-                              <Link
-                                to={"/seller/service/manage-service"}
-                                className="flex items-center p-2 space-x-3 rounded-md"
-                              >
-                                <div className="w-full hover:bg-[#1b202ea1]">
-                                  My Service
-                                </div>
-                              </Link>
-                            </li>
-                                  <li className="rounded-sm hover:bg-gray-800">
                                     <Link
                                       to={"/seller/subscription-management"}
                                       rel="noopener noreferrer"
                                       href="#"
-                                      className="flex items-center p-2 space-x-3 rounded-md"
+                                      className="flex items-center p-2 space-x-3 text-sm rounded-md"
                                     >
                                       {/* <BiArchive className="w-5 h-5 text-gray-400" /> */}
-                                      <span>Subscription </span>
+                                      <span>Subscription</span>
                                     </Link>
                                   </li>
                                   <li className="rounded-sm hover:bg-gray-800">
@@ -1761,7 +1715,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                       to={"/seller/finance"}
                                       rel="noopener noreferrer"
                                       href="#"
-                                      className="flex items-center p-2 space-x-3 rounded-md"
+                                      className="flex items-center p-2 text-sm space-x-3 rounded-md"
                                     >
                                       {/* <BiArchive className="w-5 h-5 text-gray-400" /> */}
                                       <span>Finance Report </span>
@@ -1772,7 +1726,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                       to={"/seller/withdraw"}
                                       rel="noopener noreferrer"
                                       href="#"
-                                      className="flex items-center p-2 space-x-3 rounded-md"
+                                      className="flex items-center p-2 text-sm space-x-3 rounded-md"
                                     >
                                       {/* <BiArchive className="w-5 h-5 text-gray-400" /> */}
                                       <span>Withdraw </span>
@@ -1823,7 +1777,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                       >
                                         {/* <BsTicket className="w-5 h-5 fill-current text-gray-400" /> */}
 
-                                        <span>Support Ticket</span>
+                                        <span>Support Ticket***</span>
                                       </Link>
                                     </li>
                                   ) : null
@@ -1920,7 +1874,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                     to={"/seller/support-tickets"}
                                     rel="noopener noreferrer"
                                     href="#"
-                                    className="flex items-center p-2 space-x-3 rounded-md"
+                                    className="flex items-center p-2 space-x-3 text-sm rounded-md"
                                   >
                                     {/* <BsTicket className="w-5 h-5 fill-current text-gray-400" /> */}
 
@@ -1994,7 +1948,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                     to={"/seller/manage-blogs"}
                                     className="w-full"
                                   >
-                                    <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-xs rounded-md">
+                                    <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md">
                                       Manage Blogs
                                     </div>
                                   </Link>
@@ -2004,7 +1958,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                     to={"/seller/manage-blogs/add-blog"}
                                     className="w-full"
                                   >
-                                    <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-xs rounded-md">
+                                    <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md">
                                       Add Blog
                                     </div>
                                   </Link>
@@ -2014,7 +1968,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                     to={"/seller/manage-blogs/blog-category"}
                                     className="w-full"
                                   >
-                                    <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-xs rounded-md">
+                                    <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md">
                                       Blog Category
                                     </div>
                                   </Link>
@@ -2048,7 +2002,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                   to={"/seller/manage-blogs"}
                                   className="w-full"
                                 >
-                                  <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-xs rounded-md">
+                                  <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md">
                                     Manage Blogs
                                   </div>
                                 </Link>
@@ -2058,7 +2012,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                   to={"/seller/manage-blogs/add-blog"}
                                   className="w-full"
                                 >
-                                  <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-xs rounded-md">
+                                  <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md">
                                     Add Blog
                                   </div>
                                 </Link>
@@ -2068,7 +2022,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                   to={"/seller/manage-blogs/blog-category"}
                                   className="w-full"
                                 >
-                                  <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-xs rounded-md">
+                                  <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md">
                                     Blog Category
                                   </div>
                                 </Link>
@@ -2086,47 +2040,48 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                         (itm) => itm?.name === "Contact"
                       ) ? (
                         <li className="rounded-sm">
-                          <div
+                        <div
 
-                            className="group [&_summary::-webkit-details-marker]:hidden items-center rounded-sm  "
-                          >
-                            <div onClick={() => handleToggle(8)} className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
-                              <div className="flex cursor-pointer items-center gap-2">
-                                <BsFillJournalBookmarkFill className="w-5 h-5 fill-current text-gray-400" />
+                          className="group [&_summary::-webkit-details-marker]:hidden items-center rounded-sm  "
+                        >
+                          <div onClick={() => handleToggle(8)} className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
+                            <div className="flex cursor-pointer items-center gap-2">
+                              <BsFillJournalBookmarkFill className="w-5 h-5 fill-current text-gray-400" />
 
-                                <span>Contact</span>
-                              </div>
-
-                              <span className="shrink-0 transition duration-300 group-open:-rotate-180">
-                                <IoIosArrowDown className="h-5 w-5" />
-                              </span>
+                              <span>Contact</span>
                             </div>
 
-                            {openDropdownIndex === 8 && (
-                              <ul className="mt-2 space-y-1  px-2 bg-[#1b202ea1] border border-gray-500 py-2 border-opacity-50">
-                                <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                  <Link
-                                    to={"/seller/manage-contact"}
-                                    className="w-full"
-                                  >
-                                    <div className="w-full">
-                                      Contact
-                                    </div>
-                                  </Link>
-                                </li>
-                                <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                  <Link
-                                    to={"/seller/manage-contact/add-contact"}
-                                    className="w-full"
-                                  >
-                                    {/* <MdOutlineAddCircleOutline className='w-5 h-5 fill-current text-gray-400' /> */}
-                                    Add Contact
-                                  </Link>
-                                </li>
-                              </ul>
-                            )}
+                            <span className="shrink-0 transition duration-300 group-open:-rotate-180">
+                              <IoIosArrowDown className="h-5 w-5" />
+                            </span>
                           </div>
-                        </li>
+
+                          {openDropdownIndex === 8 && (
+                            <ul className="mt-2 space-y-1  px-2 bg-[#1b202ea1] border border-gray-500 py-2 border-opacity-50">
+                              <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                <Link
+                                  to={"/seller/manage-contact"}
+                                  className="w-full"
+                                >
+                                  <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md">
+                                    Contact
+                                  </div>
+                                </Link>
+                              </li>
+                              <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                <Link
+                                  to={"/seller/manage-contact/add-contact"}
+                                  className="w-full"
+                                >
+                               <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md">
+                                  Add Contact
+                               </div>
+                                </Link>
+                              </li>
+                            </ul>
+                          )}
+                        </div>
+                      </li>
                       ) : null
                     ) : (
                       <li className="rounded-sm">
@@ -2153,7 +2108,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                   to={"/seller/manage-contact"}
                                   className="w-full"
                                 >
-                                  <div className="w-full">
+                                  <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md">
                                     Contact
                                   </div>
                                 </Link>
@@ -2163,8 +2118,9 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                   to={"/seller/manage-contact/add-contact"}
                                   className="w-full"
                                 >
-                                  {/* <MdOutlineAddCircleOutline className='w-5 h-5 fill-current text-gray-400' /> */}
+                               <div className="text-gray-50 flex gap-2 items-center px-4 p-2 space-x-3 text-sm rounded-md">
                                   Add Contact
+                               </div>
                                 </Link>
                               </li>
                             </ul>
@@ -2241,138 +2197,138 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                         (itm) => itm?.name === "Settings"
                       ) ? (
                         <li className=" ">
-                          <div
-                            className="group [&_summary::-webkit-details-marker]:hidden items-center rounded-sm  "
-                          >
-                            <div onClick={() => handleToggle(9)} className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
-                              <div className="flex cursor-pointer items-center gap-2">
-                                <BsGear className="w-5 h-5 fill-current text-gray-400" />
+                        <div
+                          className="group [&_summary::-webkit-details-marker]:hidden items-center rounded-sm  "
+                        >
+                          <div onClick={() => handleToggle(9)} className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
+                            <div className="flex cursor-pointer items-center gap-2">
+                              <BsGear className="w-5 h-5 fill-current text-gray-400" />
 
-                                <span>Settings</span>
-                              </div>
-
-                              <span className="shrink-0 transition duration-300 group-open:-rotate-180">
-                                <IoIosArrowDown className="h-5 w-5" />
-                              </span>
+                              <span>Settings</span>
                             </div>
 
-                            {openDropdownIndex === 9 && (
-
-                              <ul className="mt-2 space-y-1   px-2 bg-[#1b202ea1] border border-gray-500 py-2 border-opacity-50">
-                                <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                  <Link
-                                    to={
-                                      "/seller/content-management/frame"
-                                    }
-                                    className="w-full"
-                                  >
-                                    <div className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                      Frame Management
-                                    </div>
-                                  </Link>
-                                </li>
-                                <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                  <Link
-                                    to={
-                                      "/seller/content-management/popup-management"
-                                    }
-                                    className="w-full"
-                                  >
-                                    <div className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                      Popup Management
-                                    </div>
-                                  </Link>
-                                </li>
-
-                                <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                  <Link
-                                    to={
-                                      "/seller/content-management/slider-management"
-                                    }
-                                    className="w-full"
-                                  >
-                                    <div className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                      Slider Management
-                                    </div>
-                                  </Link>
-                                </li>
-
-                                <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                  <Link
-                                    to={
-                                      "/seller/content-management/feature-management"
-                                    }
-                                    className="w-full"
-                                  >
-                                    {/* <MdPhotoSizeSelectActual className='w-5 h-5 fill-current text-gray-400 ' /> */}
-                                    <div className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">  Feature Image</div>
-                                  </Link>
-                                </li>
-                                <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                  <Link
-                                    to={"/seller/settings/payment-management"}
-                                    className="w-full"
-                                  >
-                                    <div className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                      Payment Getaway
-                                    </div>
-                                  </Link>
-                                </li>
-                                <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                  <Link
-                                    to={"/seller/settings/send-email"}
-                                    className="w-full"
-                                  >
-                                    <div className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                      Send Email
-                                    </div>
-                                  </Link>
-                                </li>
-                                <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                  <Link
-                                    to={"/seller/settings/shipping"}
-                                    className="w-full"
-                                  >
-                                    <div className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                      Shipping
-                                    </div>
-                                  </Link>
-                                </li>
-                                <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                  <Link
-                                    to={"/seller/settings/auth-credential"}
-                                    className="w-full"
-                                  >
-                                    <div className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                      Auth Credential
-                                    </div>
-                                  </Link>
-                                </li>
-                                <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                  <Link
-                                    to={"/seller/settings/email-setup"}
-                                    className="w-full"
-                                  >
-                                    <div className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                      Email Setup
-                                    </div>
-                                  </Link>
-                                </li>
-                                <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                  <Link
-                                    to={"/seller/settings/price-role"}
-                                    className="w-full"
-                                  >
-                                    <div className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                      Price Role
-                                    </div>
-                                  </Link>
-                                </li>
-                              </ul>
-
-                            )}
+                            <span className="shrink-0 transition duration-300 group-open:-rotate-180">
+                              <IoIosArrowDown className="h-5 w-5" />
+                            </span>
                           </div>
-                        </li>
+
+                          {openDropdownIndex === 9 && (
+
+                            <ul className="mt-2 space-y-1   px-2 bg-[#1b202ea1] border border-gray-500 py-2 border-opacity-50">
+                              <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                <Link
+                                  to={
+                                    "/seller/content-management/frame"
+                                  }
+                                  className="w-full"
+                                >
+                                  <div className="flex p-2 cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                    Frame Management
+                                  </div>
+                                </Link>
+                              </li>
+                              <li className="flex cursor-pointer p-2 items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                <Link
+                                  to={
+                                    "/seller/content-management/popup-management"
+                                  }
+                                  className="w-full"
+                                >
+                                  <div className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                    Popup Management
+                                  </div>
+                                </Link>
+                              </li>
+
+                              <li className="flex cursor-pointer items-center p-2 justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                <Link
+                                  to={
+                                    "/seller/content-management/slider-management"
+                                  }
+                                  className="w-full"
+                                >
+                                  <div className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                    Slider Management
+                                  </div>
+                                </Link>
+                              </li>
+
+                              <li className="flex cursor-pointer items-center p-2 justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                <Link
+                                  to={
+                                    "/seller/content-management/feature-management"
+                                  }
+                                  className="w-full"
+                                >
+                                  {/* <MdPhotoSizeSelectActual className='w-5 h-5 fill-current text-gray-400 ' /> */}
+                                  <div className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">  Feature Image</div>
+                                </Link>
+                              </li>
+                              <li className="flex cursor-pointer items-center p-2 justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                <Link
+                                  to={"/seller/settings/payment-management"}
+                                  className="w-full"
+                                >
+                                  <div className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                    Payment Getaway
+                                  </div>
+                                </Link>
+                              </li>
+                              <li className="flex cursor-pointer items-center p-2 justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                <Link
+                                  to={"/seller/settings/send-email"}
+                                  className="w-full"
+                                >
+                                  <div className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                    Send Email
+                                  </div>
+                                </Link>
+                              </li>
+                              <li className="flex cursor-pointer items-center p-2 justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                <Link
+                                  to={"/seller/settings/shipping"}
+                                  className="w-full"
+                                >
+                                  <div className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                    Shipping
+                                  </div>
+                                </Link>
+                              </li>
+                              <li className="flex cursor-pointer items-center p-2 justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                <Link
+                                  to={"/seller/settings/auth-credential"}
+                                  className="w-full"
+                                >
+                                  <div className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                    Auth Credential
+                                  </div>
+                                </Link>
+                              </li>
+                              <li className="flex cursor-pointer items-center p-2 justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                <Link
+                                  to={"/seller/settings/email-setup"}
+                                  className="w-full"
+                                >
+                                  <div className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                    Email Setup
+                                  </div>
+                                </Link>
+                              </li>
+                              <li className="flex cursor-pointer items-center p-2 justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                <Link
+                                  to={"/seller/settings/price-role"}
+                                  className="w-full"
+                                >
+                                  <div className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                    Price Role
+                                  </div>
+                                </Link>
+                              </li>
+                            </ul>
+
+                          )}
+                        </div>
+                      </li>
                       ) : null
                     ) : (
                       <li className=" ">
@@ -2401,12 +2357,12 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                   }
                                   className="w-full"
                                 >
-                                  <div className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                  <div className="flex p-2 cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
                                     Frame Management
                                   </div>
                                 </Link>
                               </li>
-                              <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                              <li className="flex cursor-pointer p-2 items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
                                 <Link
                                   to={
                                     "/seller/content-management/popup-management"
@@ -2419,7 +2375,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                 </Link>
                               </li>
 
-                              <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                              <li className="flex cursor-pointer items-center p-2 justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
                                 <Link
                                   to={
                                     "/seller/content-management/slider-management"
@@ -2432,7 +2388,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                 </Link>
                               </li>
 
-                              <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                              <li className="flex cursor-pointer items-center p-2 justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
                                 <Link
                                   to={
                                     "/seller/content-management/feature-management"
@@ -2443,7 +2399,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                   <div className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">  Feature Image</div>
                                 </Link>
                               </li>
-                              <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                              <li className="flex cursor-pointer items-center p-2 justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
                                 <Link
                                   to={"/seller/settings/payment-management"}
                                   className="w-full"
@@ -2453,7 +2409,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                   </div>
                                 </Link>
                               </li>
-                              <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                              <li className="flex cursor-pointer items-center p-2 justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
                                 <Link
                                   to={"/seller/settings/send-email"}
                                   className="w-full"
@@ -2463,7 +2419,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                   </div>
                                 </Link>
                               </li>
-                              <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                              <li className="flex cursor-pointer items-center p-2 justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
                                 <Link
                                   to={"/seller/settings/shipping"}
                                   className="w-full"
@@ -2473,7 +2429,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                   </div>
                                 </Link>
                               </li>
-                              <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                              <li className="flex cursor-pointer items-center p-2 justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
                                 <Link
                                   to={"/seller/settings/auth-credential"}
                                   className="w-full"
@@ -2483,7 +2439,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                   </div>
                                 </Link>
                               </li>
-                              <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                              <li className="flex cursor-pointer items-center p-2 justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
                                 <Link
                                   to={"/seller/settings/email-setup"}
                                   className="w-full"
@@ -2493,7 +2449,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                   </div>
                                 </Link>
                               </li>
-                              <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                              <li className="flex cursor-pointer items-center p-2 justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
                                 <Link
                                   to={"/seller/settings/price-role"}
                                   className="w-full"
@@ -2551,66 +2507,66 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                         (itm) => itm?.name === "Content Management"
                       ) ? (
                         <li className="">
-                          <div
+                        <div
 
-                            className="group [&_summary::-webkit-details-marker]:hidden items-center rounded-sm  "
-                          >
-                            <div onClick={() => handleToggle(10)} className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
-                              <div className="flex cursor-pointer items-center gap-2">
-                                <BsWindowPlus className="w-5 h-5 fill-current text-gray-400" />
+                          className="group [&_summary::-webkit-details-marker]:hidden items-center rounded-sm  "
+                        >
+                          <div onClick={() => handleToggle(10)} className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
+                            <div className="flex cursor-pointer items-center gap-2">
+                              <BsWindowPlus className="w-5 h-5 fill-current text-gray-400" />
 
-                                <span>Content Management</span>
-                              </div>
-
-                              <span className="shrink-0 transition duration-300 group-open:-rotate-180">
-                                <IoIosArrowDown className="h-5 w-5" />
-                              </span>
+                              <span>Content Management</span>
                             </div>
 
-                            {openDropdownIndex === 10 && (
-                              <ul className="mt-2 space-y-1   px-2 bg-[#1b202ea1] border border-gray-500 py-2 border-opacity-50">
-                                <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                  <Link
-                                    to={
-                                      "/seller/content-management/brand-management"
-                                    }
-                                    className="w-full"
-                                  >
-                                    <div className="w-full hover:bg-[#1b202ea1]">
-
-                                    </div>
-                                    Brand Name
-                                  </Link>
-                                </li>
-                                <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                  <Link
-                                    to={
-                                      "/seller/content-management/promo-code-management"
-                                    }
-                                    className="w-full"
-                                  >
-                                    <div className="w-full hover:bg-[#1b202ea1]">
-                                      Promo Code
-                                    </div>
-                                  </Link>
-                                </li>
-
-                                <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                  <Link
-                                    to={
-                                      "/seller/content-management/campaign-management"
-                                    }
-                                    className="w-full"
-                                  >
-                                    <div className="w-full hover:bg-[#1b202ea1]">
-                                      Campaign Management
-                                    </div>
-                                  </Link>
-                                </li>
-                              </ul>
-                            )}
+                            <span className="shrink-0 transition duration-300 group-open:-rotate-180">
+                              <IoIosArrowDown className="h-5 w-5" />
+                            </span>
                           </div>
-                        </li>
+
+                          {openDropdownIndex === 10 && (
+                            <ul className="mt-2 space-y-1   px-2 bg-[#1b202ea1] border border-gray-500 py-2 border-opacity-50">
+                              <li className="flex cursor-pointer p-2 items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                <Link
+                                  to={
+                                    "/seller/content-management/brand-management"
+                                  }
+                                  className="w-full"
+                                >
+                                  <div className=" ">
+
+                                  </div>
+                                  Brand Name
+                                </Link>
+                              </li>
+                              <li className="flex cursor-pointer p-2 items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                <Link
+                                  to={
+                                    "/seller/content-management/promo-code-management"
+                                  }
+                                  className="w-full"
+                                >
+                                  <div className="w-full  ">
+                                    Promo Code
+                                  </div>
+                                </Link>
+                              </li>
+
+                              <li className="flex cursor-pointer p-2 items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                <Link
+                                  to={
+                                    "/seller/content-management/campaign-management"
+                                  }
+                                  className="w-full"
+                                >
+                                  <div className="w-full  ">
+                                    Campaign Management
+                                  </div>
+                                </Link>
+                              </li>
+                            </ul>
+                          )}
+                        </div>
+                      </li>
                       ) : null
                     ) : (
                       <li className="">
@@ -2632,40 +2588,40 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
 
                           {openDropdownIndex === 10 && (
                             <ul className="mt-2 space-y-1   px-2 bg-[#1b202ea1] border border-gray-500 py-2 border-opacity-50">
-                              <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                              <li className="flex cursor-pointer p-2 items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
                                 <Link
                                   to={
                                     "/seller/content-management/brand-management"
                                   }
                                   className="w-full"
                                 >
-                                  <div className="w-full hover:bg-[#1b202ea1]">
+                                  <div className=" ">
 
                                   </div>
                                   Brand Name
                                 </Link>
                               </li>
-                              <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                              <li className="flex cursor-pointer p-2 items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
                                 <Link
                                   to={
                                     "/seller/content-management/promo-code-management"
                                   }
                                   className="w-full"
                                 >
-                                  <div className="w-full hover:bg-[#1b202ea1]">
+                                  <div className="w-full  ">
                                     Promo Code
                                   </div>
                                 </Link>
                               </li>
 
-                              <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                              <li className="flex cursor-pointer p-2 items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
                                 <Link
                                   to={
                                     "/seller/content-management/campaign-management"
                                   }
                                   className="w-full"
                                 >
-                                  <div className="w-full hover:bg-[#1b202ea1]">
+                                  <div className="w-full  ">
                                     Campaign Management
                                   </div>
                                 </Link>
@@ -2677,9 +2633,6 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                     )}
 
                     {/* service management */}
-                   
-                    {/* stock dropdown */}
-
                     {user?.staffRole ? (
                       user?.permissions.find(
                         (itm) => itm?.name === "Services"
@@ -2691,69 +2644,138 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                                 </Link> */}
                           <div
 
-                            className="group  items-center rounded-sm  "
+                            className="group [&_summary::-webkit-details-marker]:hidden items-center rounded-sm  "
                           >
-                            <div onClick={() => handleToggle(12)} className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
-                              <div className="flex cursor-pointer items-center gap-2">
-                                <BsBoxSeam className="w-5 h-5 fill-current text-gray-400" />
-                                <span>Stock Management</span>
+                            <div className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
+                              <div onClick={() => handleToggle(11)} className="flex cursor-pointer items-center gap-2">
+                                <BsLifePreserver className="w-5 h-5 fill-current text-gray-400" />
+                                <span>My Service</span>
                               </div>
 
                               <span className="shrink-0 transition duration-300 group-open:-rotate-180">
                                 <IoIosArrowDown className="h-5 w-5" />
                               </span>
                             </div>
-                            {openDropdownIndex === 12 && (
+                            {openDropdownIndex === 11 && (
                               <ul className="mt-2 space-y-1   px-2 bg-[#1b202ea1] border border-gray-500 py-2 border-opacity-50">
                                 <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
                                   <Link
-                                    to={`stock-management`}
+                                    to={"/seller/service/manage-service"}
                                     className="w-full"
                                   >
-                                    <div className="w-full px-3 hover:bg-[#1b202ea1]">
-                                      Stock
+                                    <div className="w-full hover:bg-[#1b202ea1]">
+                                      My Service
                                     </div>
                                   </Link>
                                 </li>
-
-                                {user?.staffRole ? (
-                                  user?.permissions.find(
-                                    (itm) =>
-                                      itm?.name === "Inventory Management"
-                                  ) ? (
-                                    managementPermission(
-                                      "SubscriptionModel"
-                                    ) && (
-                                      <li className="rounded-sm hover:bg-gray-800">
-                                        <Link
-                                          to={"/seller/inventory-management"}
-                                          rel="noopener noreferrer"
-                                          href="#"
-                                          className="w-full"
-                                        >
-                                          {/* <BiArchive className="w-5 h-5 text-gray-400" /> */}
-                                          <div className="w-full px-3 hover:bg-[#1b202ea1]">Inventory Management</div>
-                                        </Link>
-                                      </li>
-                                    )
-                                  ) : null
-                                ) : (
-                                  <li className="rounded-sm hover:bg-gray-800">
-                                    <Link
-                                      to={"/seller/inventory-management"}
-                                      rel="noopener noreferrer"
-                                      href="#"
-                                      className="w-full"
-                                    >
-                                      {/* <BiArchive className="w-5 h-5 text-gray-400" /> */}
-                                      <div className="w-full px-3 hover:bg-[#1b202ea1]">Inventory Management</div>
-                                    </Link>
-                                  </li>
-                                )}
                               </ul>
                             )}
                           </div>
                         </li>
+                      ) : null
+                    ) : (
+                      <div
+
+                        className="group [&_summary::-webkit-details-marker]:hidden items-center rounded-sm  "
+                      >
+                        <div className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
+                          <div onClick={() => handleToggle(11)} className="flex cursor-pointer items-center gap-2">
+                            <BsLifePreserver className="w-5 h-5 fill-current text-gray-400" />
+                            <span>My Service</span>
+                          </div>
+
+                          <span className="shrink-0 transition duration-300 group-open:-rotate-180">
+                            <IoIosArrowDown className="h-5 w-5" />
+                          </span>
+                        </div>
+                        {openDropdownIndex === 11 && (
+                          <ul className="mt-2 space-y-1   px-2 bg-[#1b202ea1] border border-gray-500 py-2 border-opacity-50">
+                            <li className="flex cursor-pointer p-2 items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                              <Link
+                                to={"/seller/service/manage-service"}
+                                className="w-full"
+                              >
+                                <div className=" ">
+                                  My Service
+                                </div>
+                              </Link>
+                            </li>
+                          </ul>
+                        )}
+                      </div>
+                    )}
+
+                    {/* stock dropdown */}
+
+                    {user?.staffRole ? (
+                      user?.permissions.find(
+                        (itm) => itm?.name === "Services"
+                      ) ? (
+                        <li className=" ">
+                        <div
+                          className="group  items-center rounded-sm  "
+                        >
+                          <div onClick={() => handleToggle(12)} className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
+                            <div className="flex cursor-pointer items-center gap-2">
+                              <BsBoxSeam className="w-5 h-5 fill-current text-gray-400" />
+                              <span>Stock Management</span>
+                            </div>
+
+                            <span className="shrink-0 transition duration-300 group-open:-rotate-180">
+                              <IoIosArrowDown className="h-5 w-5" />
+                            </span>
+                          </div>
+                          {openDropdownIndex === 12 && (
+                            <ul className="mt-2 space-y-1   px-2 bg-[#1b202ea1] border border-gray-500 py-2 border-opacity-50">
+                              <li className="flex cursor-pointer p-2 items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                                <Link
+                                  to={`stock-management`}
+                                  className="w-full"
+                                >
+                                  <div className="w-full px-3 ">
+                                    Stock
+                                  </div>
+                                </Link>
+                              </li>
+
+                              {user?.staffRole ? (
+                                user?.permissions.find(
+                                  (itm) =>
+                                    itm?.name === "Inventory Management"
+                                ) ? (
+                                  managementPermission(
+                                    "SubscriptionModel"
+                                  ) && (
+                                    <li className="rounded-sm p-2">
+                                      <Link
+                                        to={"/seller/inventory-management"}
+                                        rel="noopener noreferrer"
+                                        href="#"
+                                        className="w-full"
+                                      >
+                                        {/* <BiArchive className="w-5 h-5 text-gray-400" /> */}
+                                        <div className="w-full px-5 py-2 ">Inventory Management</div>
+                                      </Link>
+                                    </li>
+                                  )
+                                ) : null
+                              ) : (
+                                <li className="rounded-sm hover:bg-gray-800">
+                                  <Link
+                                    to={"/seller/inventory-management"}
+                                    rel="noopener noreferrer"
+                                    href="#"
+                                    className="w-full"
+                                  >
+                                    {/* <BiArchive className="w-5 h-5 text-gray-400" /> */}
+                                    <div className="w-full px-5 py-2 ">Inventory Management</div>
+                                  </Link>
+                                </li>
+                              )}
+                            </ul>
+                          )}
+                        </div>
+                      </li>
                       ) : null
                     ) : (
                       <li className=" ">
@@ -2772,12 +2794,12 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                           </div>
                           {openDropdownIndex === 12 && (
                             <ul className="mt-2 space-y-1   px-2 bg-[#1b202ea1] border border-gray-500 py-2 border-opacity-50">
-                              <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                              <li className="flex cursor-pointer p-2 items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
                                 <Link
                                   to={`stock-management`}
                                   className="w-full"
                                 >
-                                  <div className="w-full px-3 hover:bg-[#1b202ea1]">
+                                  <div className="w-full px-3 ">
                                     Stock
                                   </div>
                                 </Link>
@@ -2791,7 +2813,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                   managementPermission(
                                     "SubscriptionModel"
                                   ) && (
-                                    <li className="rounded-sm hover:bg-gray-800">
+                                    <li className="rounded-sm p-2">
                                       <Link
                                         to={"/seller/inventory-management"}
                                         rel="noopener noreferrer"
@@ -2799,7 +2821,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                         className="w-full"
                                       >
                                         {/* <BiArchive className="w-5 h-5 text-gray-400" /> */}
-                                        <div className="w-full px-3 hover:bg-[#1b202ea1]">Inventory Management</div>
+                                        <div className="w-full px-5 py-2 ">Inventory Management</div>
                                       </Link>
                                     </li>
                                   )
@@ -2813,7 +2835,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                     className="w-full"
                                   >
                                     {/* <BiArchive className="w-5 h-5 text-gray-400" /> */}
-                                    <div className="w-full px-3 hover:bg-[#1b202ea1]">Inventory Management</div>
+                                    <div className="w-full px-5 py-2 ">Inventory Management</div>
                                   </Link>
                                 </li>
                               )}
@@ -2942,7 +2964,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                   <span className="flex items-center space-x-1">
                     <Link
                       to={`/shop/${shopInfo?.shopId}`}
-                      className="text-xs hover:underline text-gray-400"
+                      className="text-sm hover:underline text-gray-400"
                     >
                       View Your Shop
                     </Link>
