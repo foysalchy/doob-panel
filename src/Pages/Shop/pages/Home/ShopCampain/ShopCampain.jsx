@@ -1,8 +1,8 @@
-import React, { useContext, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
+import React, { useContext, useEffect } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
 import { ShopAuthProvider } from "../../../../../AuthProvider/ShopAuthProvide";
 import TimeCountDown from "./TimeCountDown";
-import { SwiperSlide, Swiper } from "swiper/react";
 
 import { Link } from "react-router-dom";
 
@@ -60,7 +60,7 @@ const ShopCampain = () => {
                       <div className="">
                         <button
                           type="button"
-                          className="px-5 py-2 font-semibold rounded bg-gray-500 text-white text-xs "
+                          className="px-5 py-2 sec_bg font-semibold rounded bg-gray-500 text-white text-xs "
                         >
                           SHOP MORE
                         </button>
@@ -93,7 +93,7 @@ const ShopCampain = () => {
                         {data?.products?.map((product, idx) => (
                           <SwiperSlide
                             key={idx}
-                            className="border border-gray-500 border-opacity-90 p-3 rounded"
+                            className="border border-gray-500 border-opacity-90 p-3 rounded bg-white"
                           >
                             <Link to={`flash-product/${product?._id}`}>
                               <a className="block relative rounded overflow-hidden">
@@ -104,10 +104,10 @@ const ShopCampain = () => {
                                 />
                               </a>
                               <div className="mt-2">
-                                <h2 className="text-gray-200 title-font md:text-lg text-sm font-medium">
+                                <h2 className="text-black-200 title-font md:text-lg text-sm font-medium">
                                   {product?.name.slice(0, 18)}..
                                 </h2>
-                                <div className="flex items-center gap-10 text-gray-300">
+                                <div className="flex items-center gap-10 text-black-300">
                                   <del className="flex items-center ">
                                     <span className="kalpurush">৳ </span>
                                     {product?.regular_price}
@@ -122,7 +122,7 @@ const ShopCampain = () => {
 
                                 <button
                                   type="button"
-                                  className="px-5 py-2  font-semibold rounded bg-white text-black w-full mt-3 text-xs ">
+                                  className="px-5 py-2  font-semibold rounded bg-white sec_bg text-black w-full mt-3 text-xs ">
                                   Add to Cart
                                 </button>
                               </div>

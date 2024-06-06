@@ -71,7 +71,7 @@ const ShopSignIn = () => {
                                     name='email'
                                     placeholder='Enter your email address'
                                     required
-                                    className="w-full border-gray-500 mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm "
+                                    className="w-full border-gray-500 mt-2 px-3 py-2  bg-transparent outline-none border focus:border-indigo-600 shadow-sm "
                                 />
                             </div>
                             <div className='mt-4'>
@@ -83,7 +83,7 @@ const ShopSignIn = () => {
                                     name='password'
                                     placeholder='Enter your account password'
                                     required
-                                    className="w-full  border-gray-500 mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm "
+                                    className="w-full  border-gray-500 mt-2 px-3 py-2  bg-transparent outline-none border focus:border-indigo-600 shadow-sm "
                                 />
                             </div>
                             <div className="flex items-center mt-4 justify-between text-sm">

@@ -1,11 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
-import React, { useState, useContext } from "react";
 import BrightAlert from "bright-alert";
-import BarCode from "react-barcode";
+import React, { useContext, useState } from "react";
+import { Link } from "react-router-dom";
 import { AuthContext } from "../../../../AuthProvider/UserProvider";
 import ReadyToShipModal from "../../../AdminItem/SellerOrderManagement/ReadyToShipModal";
 import OrderInvoice from "./OrderInvoice";
-
 const ManageWebOrder = () => {
   const { shopInfo } = useContext(AuthContext);
   const { data: products = [], refetch } = useQuery({
@@ -113,11 +112,28 @@ const ManageWebOrder = () => {
       <section className=" mx-auto">
         <div className="flex products-center justify-between gap-x-3">
           <div className="flex products-center gap-2">
-            <h2 className="text-lg font-medium text-gray-800 ">All Product</h2>
+            <h2 className="text-lg font-medium text-gray-800 ">All Wholesale Order</h2>
             <span className="px-3 py-1 text-xs  bg-blue-100 rounded-full d text-blue-400">
               {products?.length}
             </span>
           </div>
+         
+      <div className="flex flex-wrap justify-start  items-center gap-4 ">
+      <Link
+            to={"/seller/orders/manage-order"}
+            className={`px-4 py-1 text-white border bg-gray-500
+            `}
+        >
+          Shop Other Order
+        </Link>
+           <Link
+            to={"/seller/orders/web-store-order"}
+            className={`px-4 py-1 text-white border bg-gray-900
+            `}
+        >
+          Doob Order
+        </Link>
+      </div>
           <input
             className="border"
             onChange={(e) => setSearchQuery(e.target.value)}
@@ -238,12 +254,12 @@ const ManageWebOrder = () => {
                                   <>
                                     <button
                                       //   onClick={() => setReadyToShip(product)}
-                                      onClick={() =>
-                                        productStatusUpdate(
-                                          "ready_to_ship",
-                                          product._id
-                                        )
-                                      }
+                                      // onClick={() =>
+                                      //   productStatusUpdate(
+                                      //     "ready_to_ship",
+                                      //     product._id
+                                      //   )
+                                      // }
                                       className="text-blue-700"
                                     >
                                       Ready to Ship
@@ -263,12 +279,12 @@ const ManageWebOrder = () => {
                                 )}
                                 {product.status === "ready_to_ship" && (
                                   <button
-                                    onClick={() =>
-                                      productStatusUpdate(
-                                        "shipped",
-                                        product._id
-                                      )
-                                    }
+                                    // onClick={() =>
+                                    //   productStatusUpdate(
+                                    //     "shipped",
+                                    //     product._id
+                                    //   )
+                                    // }
                                     className="text-blue-700"
                                   >
                                     Shipped
@@ -277,23 +293,23 @@ const ManageWebOrder = () => {
                                 {product.status === "shipped" && (
                                   <div className="flex flex-col gap-2">
                                     <button
-                                      onClick={() =>
-                                        productStatusUpdate(
-                                          "delivered",
-                                          product._id
-                                        )
-                                      }
+                                      // onClick={() =>
+                                      //   productStatusUpdate(
+                                      //     "delivered",
+                                      //     product._id
+                                      //   )
+                                      // }
                                       className="text-blue-700"
                                     >
                                       Delivered
                                     </button>
                                     <button
-                                      onClick={() =>
-                                        productStatusUpdate(
-                                          "failed",
-                                          product._id
-                                        )
-                                      }
+                                      // onClick={() =>
+                                      //   productStatusUpdate(
+                                      //     "failed",
+                                      //     product._id
+                                      //   )
+                                      // }
                                       className="text-blue-700"
                                     >
                                       Failed Delivery
@@ -302,12 +318,12 @@ const ManageWebOrder = () => {
                                 )}
                                 {product.status === "delivered" && (
                                   <button
-                                    onClick={() =>
-                                      productStatusUpdate(
-                                        "returned",
-                                        product._id
-                                      )
-                                    }
+                                    // onClick={() =>
+                                    //   productStatusUpdate(
+                                    //     "returned",
+                                    //     product._id
+                                    //   )
+                                    // }
                                     className="text-blue-700"
                                   >
                                     Returned
