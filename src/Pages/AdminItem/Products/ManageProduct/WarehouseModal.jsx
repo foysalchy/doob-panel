@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
+import BrightAlert from "bright-alert";
 import React, { useEffect, useState } from "react";
 import Select from "react-select";
-import BrightAlert from "bright-alert";
 
 const WarehouseModal = ({
   modalOpen,
@@ -233,11 +233,11 @@ const WarehouseModal = ({
             {product.multiVendor && (
               <div className="flex gap-4 justify-center">
                 <div className="mb-4">
-                  <h1 className="text-xl font-bold mb-2">Packaging Cost</h1>
+                  <h1 className="text-xl font-bold mb-2">Processing Fee</h1>
                   <input
                     type="number"
                     required
-                    name="commission"
+                    name="Processing Fee"
                     defaultValue={product?.commission}
                     className="border border-gray-300 px-3 py-2 rounded-md w-full focus:outline-none focus:border-blue-500"
                     placeholder="Enter Packaging Cost"
@@ -245,7 +245,7 @@ const WarehouseModal = ({
                 </div>
                 <div>
                   <label htmlFor="package" className="text-xl font-bold mb-2">
-                    Select Package
+                    Select Packaging fee
                   </label>
                   <select
                     id="package"

@@ -2,48 +2,40 @@
 @tailwind components;
 @tailwind utilities;
 
-
-
-
-
-html{
+html {
   scroll-behavior: smooth;
-  font-family: 'Helvetica Neue', sans-serif;
+  font-family: "Helvetica Neue", sans-serif;
 }
 
 /* Remove the default number input spinners */
-input[type=number]::-webkit-inner-spin-button,
-input[type=number]::-webkit-outer-spin-button {
-    -webkit-appearance: none!important;
-    margin: 0;
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none !important;
+  margin: 0;
 }
 
 /* Firefox */
-input[type=number] {
-    -moz-appearance: textfield!important;
+input[type="number"] {
+  -moz-appearance: textfield !important;
 }
 
 /* Remove arrows for IE10 and below */
 input[type="number"] {
-    -webkit-appearance: none!important;
-    margin: 0;
+  -webkit-appearance: none !important;
+  margin: 0;
 }
 
-.font-inner{
-    font-family: 'Inter', sans-serif;
+.font-inner {
+  font-family: "Inter", sans-serif;
 }
 
-.font-poppins{
-    font-family: 'Poppins', sans-serif;
+.font-poppins {
+  font-family: "Poppins", sans-serif;
 }
 
-
- 
 .kalpurush {
-  font-family: 'Kalpurush', sans-serif;
-
+  font-family: "Kalpurush", sans-serif;
 }
-
 
 /* Webkit Browsers (Chrome, Safari, Edge) */
 ::-webkit-scrollbar {
@@ -59,7 +51,6 @@ input[type="number"] {
   cursor: move !important;
 }
 
-
 ::-moz-scrollbar {
   width: 4px;
   /* Set to 2px */
@@ -74,7 +65,7 @@ input[type="number"] {
 }
 
 font-google {
-  font-family: 'Kumbh Sans', sans-serif;
+  font-family: "Kumbh Sans", sans-serif;
 }
 
 @font-face {
@@ -88,11 +79,10 @@ font-google {
   clear: both;
 }
 
-
 .header {
   padding: 10px 0;
   margin-bottom: 20px;
-  border-bottom: 1px solid #AAAAAA;
+  border-bottom: 1px solid #aaaaaa;
 }
 
 #logo {
@@ -109,14 +99,13 @@ font-google {
   text-align: right;
 }
 
-
 #details {
   margin-bottom: 50px;
 }
 
 #client {
   padding-left: 6px;
-  border-left: 6px solid #0087C3;
+  border-left: 6px solid #0087c3;
   float: left;
 }
 
@@ -136,11 +125,11 @@ font-google {
 }
 
 #invoice h1 {
-  color: #0087C3;
+  color: #0087c3;
   font-size: 2.4em;
   line-height: 1em;
   font-weight: normal;
-  margin: 0  0 10px 0;
+  margin: 0 0 10px 0;
 }
 
 #invoice .date {
@@ -158,14 +147,14 @@ font-google {
 .table th,
 .table td {
   padding: 20px;
-  background: #EEEEEE;
+  background: #eeeeee;
   text-align: center;
-  
-  border-bottom: 1px solid #FFFFFF;
+
+  border-bottom: 1px solid #ffffff;
 }
 
 .table th {
-  white-space: nowrap;        
+  white-space: nowrap;
   font-weight: normal;
 }
 
@@ -173,17 +162,17 @@ font-google {
   text-align: right;
 }
 
-.table td h3{
-  color: #57B223;
+.table td h3 {
+  color: #57b223;
   font-size: 1.2em;
   font-weight: normal;
   margin: 0 0 0.2em 0;
 }
 
 .table .no {
-  color: #FFFFFF;
+  color: #ffffff;
   font-size: 1.6em;
-  background: #57B223;
+  background: #57b223;
 }
 
 .table .desc {
@@ -191,15 +180,15 @@ font-google {
 }
 
 .table .unit {
-  background: #DDDDDD;
+  background: #dddddd;
 }
 
 .table .qty {
 }
 
 .table .total {
-  background: #57B223;
-  color: #FFFFFF;
+  background: #57b223;
+  color: #ffffff;
 }
 
 .table td.unit,
@@ -214,36 +203,35 @@ font-google {
 
 .table tfoot td {
   padding: 10px 20px;
-  background: #FFFFFF;
+  background: #ffffff;
   border-bottom: none;
   font-size: 1.2em;
-  white-space: nowrap; 
-  border-top: 1px solid #AAAAAA; 
+  white-space: nowrap;
+  border-top: 1px solid #aaaaaa;
 }
 
 .table tfoot tr:first-child td {
-  border-top: none; 
+  border-top: none;
 }
 
 .table tfoot tr:last-child td {
-  color: #57B223;
+  color: #57b223;
   font-size: 1.4em;
-  border-top: 1px solid #57B223; 
-
+  border-top: 1px solid #57b223;
 }
 
 .table tfoot tr td:first-child {
   border: none;
 }
 
-#thanks{
+#thanks {
   font-size: 2em;
   margin-bottom: 50px;
 }
 
-#notices{
+#notices {
   padding-left: 6px;
-  border-left: 6px solid #0087C3;  
+  border-left: 6px solid #0087c3;
 }
 
 #notices .notice {
@@ -252,7 +240,7 @@ font-google {
 
 .loader {
   display: flex;
-  background-color: #9CA3AF;
+  background-color: #9ca3af;
   height: 4px; /* Adjust as needed */
   width: 100%; /* Adjust as needed */
 }
@@ -260,12 +248,13 @@ font-google {
 .loader-inner {
   width: 50px;
   height: 4px;
-  background-color: #0087C3;
+  background-color: #0087c3;
   animation: lineAnimation 0.05s ease-in-out infinite; /* Adjusted duration to 0.05s */
 }
 
 @keyframes lineAnimation {
-  0%, 100% {
+  0%,
+  100% {
     width: 100%;
   }
   50% {
@@ -273,15 +262,14 @@ font-google {
   }
 }
 
- .bg-ree{
-  background-color: red!important;
- }
+.bg-ree {
+  background-color: red !important;
+}
 
- /* Add this CSS to your stylesheet */
+/* Add this CSS to your stylesheet */
 .imgSm:hover .abs {
   display: block;
 }
-
 
 .wrap svg {
   width: 150px;
@@ -291,74 +279,70 @@ font-google {
 
 .wrap-2 svg {
   width: 180px;
-  padding: 0!important; /* Set your preferred width */
-  margin: 0!important;
+  padding: 0 !important; /* Set your preferred width */
+  margin: 0 !important;
 }
 
-.react-datepicker__input-container > input{
-  color : black!important;
-  background : transparent!important; 
+.react-datepicker__input-container > input {
+  color: black !important;
+  background: transparent !important;
 }
 
-
-.text_editor ul, .text_editor ol{
-  list-style: inherit!important;
+.text_editor ul,
+.text_editor ol {
+  list-style: inherit !important;
 }
 
 .text-control > li {
-  height : 20px!important;
-  
+  height: 20px !important;
 }
 
 .multi-range-slider {
-    display: flex;
-    position: relative;
-    border: none!important;
-    border-radius: 10px;
-    padding: 20px 10px;
-    box-shadow: none!important;
-    flex-direction: column;
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    user-select: none;
+  display: flex;
+  position: relative;
+  border: none !important;
+  border-radius: 10px;
+  padding: 20px 10px;
+  box-shadow: none !important;
+  flex-direction: column;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
 }
 
 .multi-range-slider .bar-left {
-    width: 25%;
-    background-color: #b3d5f9!important;
-    border-radius: 0px -10px -10px 0px;
-    box-shadow: none!important;
-}.multi-range-slider .bar-right {
-    width: 25%;
-    background-color: #b3d5f9!important;
-    border-radius: 0px 10px 10px 0px;
-    box-shadow: none!important;
+  width: 25%;
+  background-color: #b3d5f9 !important;
+  border-radius: 0px -10px -10px 0px;
+  box-shadow: none !important;
 }
-
+.multi-range-slider .bar-right {
+  width: 25%;
+  background-color: #b3d5f9 !important;
+  border-radius: 0px 10px 10px 0px;
+  box-shadow: none !important;
+}
 
 .multi-range-slider .thumb::before {
-    content: '';
-    background-color: white!important;
-    position: absolute;
-    width: 20px;
-    height: 20px;
-    border: solid 1px #005dff!important;
-    box-shadow: none!important;
-    border-radius: 50%;
-    z-index: 1;
-    margin: -8px -12px;
-    cursor: pointer;
+  content: "";
+  background-color: white !important;
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border: solid 1px #005dff !important;
+  box-shadow: none !important;
+  border-radius: 50%;
+  z-index: 1;
+  margin: -8px -12px;
+  cursor: pointer;
 }
 
-
-
 @media print {
-
-  html,body{
-  
-    margin: 0!important;
-    padding: 0!important;
+  html,
+  body {
+    margin: 0 !important;
+    padding: 0 !important;
     box-sizing: border-box;
     box-sizing: border-box;
   }
@@ -368,10 +352,9 @@ font-google {
   .print-data {
     display: block !important;
   }
-.print-container{
-  padding : 0px 100px!important;
-}
-
+  .print-container {
+    padding: 0px 100px !important;
+  }
 }
 
 .jodit-editor ul,
@@ -395,8 +378,6 @@ font-google {
   list-style-type: decimal;
   /* Ordered list marker style */
 }
-
-
 
 /* Targeting unordered and ordered lists within JoditEditor */
 .jodit-wysiwyg ul,
@@ -443,21 +424,34 @@ font-google {
   /* Lowercase Greek marker style */
 }
 
-  .loader {
-    border-top-color: #3498db;
-    animation: spinner 1.5s linear infinite;
+.loader {
+  border-top-color: #3498db;
+  animation: spinner 1.5s linear infinite;
+}
+
+@keyframes spinner {
+  0% {
+    transform: rotate(0deg);
   }
-
-  @keyframes spinner {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+  100% {
+    transform: rotate(360deg);
   }
+}
 
+.star-gold {
+  color: yellow !important;
+}
 
-    .star-gold {
-      color: yellow !important;
-    }
-  
-    .star-gray {
-      color: gray !important;
-    }
+.star-gray {
+  color: gray !important;
+}
+
+.swal2-confirm.swal2-styled {
+  background-color: #3085d6;
+  color: white;
+}
+
+.swal2-cancel.swal2-styled {
+  background-color: #d33;
+  color: white;
+}

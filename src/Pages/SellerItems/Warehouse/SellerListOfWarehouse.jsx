@@ -185,7 +185,7 @@ const SellerListOfWarehouse = () => {
           </span>
 
           <span className="text-sm text-center md:w-auto w-full font-medium transition-all group-hover:ms-4">
-            Add New Warehouse
+            Add New Warehouse.
           </span>
         </button>
 

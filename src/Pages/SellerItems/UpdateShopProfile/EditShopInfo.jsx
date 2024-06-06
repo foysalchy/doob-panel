@@ -196,7 +196,8 @@ const EditShopInfo = ({ Edit, setEdit }) => {
                     </div>
                     
                     <div className="mb-4">
-                      <label htmlFor="">Primary colour</label>
+                      <div htmlFor="" >Primary colour</div>
+                      Change:(Navbar,All Button,Footer) Backgorund Colour
                       <input
                         type="color"
                         name="primary_color"
@@ -206,7 +207,8 @@ const EditShopInfo = ({ Edit, setEdit }) => {
                       />
                     </div>
                     <div className="mb-4">
-                      <label htmlFor="">Secondary colour</label>
+                      <div htmlFor="">Secondary colour</div>
+                      Change:(Buy Now Button,Flash Sale)Background
                       <input
                         type="color"
                         name="secounder_color"
@@ -216,7 +218,8 @@ const EditShopInfo = ({ Edit, setEdit }) => {
                       />
                     </div>
                     <div className="mb-4">
-                      <label htmlFor="">Text colour</label>
+                      <div htmlFor="">Text colour</div>
+                      Change:(Every Font Colour  For Primary Backgorund Font)
                       <input
                         type="color"
                         name="text_color"

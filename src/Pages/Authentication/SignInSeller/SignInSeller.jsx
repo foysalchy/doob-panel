@@ -1,9 +1,7 @@
 import React, { useContext, useState } from "react";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
-import { Link, unstable_HistoryRouter } from "react-router-dom";
-import Swal from "sweetalert2";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../AuthProvider/UserProvider";
-import { useNavigate } from "react-router-dom";
 
 const SignInSeller = () => {
   const [showPassword, setShowPassword] = useState(false);

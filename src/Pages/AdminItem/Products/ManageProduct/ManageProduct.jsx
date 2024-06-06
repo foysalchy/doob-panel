@@ -1,18 +1,12 @@
-import React from "react";
-import AddProduct from "../AddProduct";
-import { Link } from "react-router-dom";
-import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import BrightAlert from "bright-alert";
-import SellerPrintPage from "../../../SellerItems/ProductManagement/SellerProductManagement/SellerAllProduct/SellerPrintPage";
-import WarehouseModal from "./WarehouseModal";
-import { FaAngleRight } from "react-icons/fa6";
-import EditProduct from "./EditProduct";
 import jsPDF from "jspdf";
-import Barcode from "react-barcode";
+import React, { useState } from "react";
 import { BiEdit, BiSave } from "react-icons/bi";
 import { BsEye } from "react-icons/bs";
+import { Link } from "react-router-dom";
 import PrintList from "./PrintList";
+import WarehouseModal from "./WarehouseModal";
 
 const ManageProduct = () => {
   const [openModal, setOpenModal] = useState(false);
@@ -288,33 +282,23 @@ const ManageProduct = () => {
   console.log(currentItems, 'Hello js...');
   return (
     <div className="">
-      <Link
-        className="group relative inline-flex mb-4 items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500"
-        to="/admin/manage-product/add-product"
-      >
-        <span className="absolute -start-full transition-all group-hover:start-4">
-          <svg
-            className="h-5 w-5 rtl:rotate-180"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M17 8l4 4m0 0l-4 4m4-4H3"
-            />
-          </svg>
-        </span>
+       
 
-        <span className="text-sm font-medium transition-all group-hover:ms-4">
-          AddCommission
-        </span>
-      </Link>
+    
 
-      <div className="relative w-3/5 my-2">
+
+      <div className="flex justify-between items-">
+        <div className="flex items-center gap-6">
+          <h2 className="text-lg font-medium text-gray-800 ">All Product</h2>
+          <span className="px-3 h-[30px] text-xs flex items-center bg-blue-100 rounded-full d text-blue-400">
+            {filteredData?.length}
+          </span>
+        </div>
+
+       
+      </div>
+      <div className="flex">
+      <div className="relative  my-2 mr-10">
         <input
           type="text"
           id="Search"
@@ -345,19 +329,9 @@ const ManageProduct = () => {
           </button>
         </span>
       </div>
-
-
-      <div className="flex justify-between items-">
-        <div className="flex items-center gap-6">
-          <h2 className="text-lg font-medium text-gray-800 ">All Product</h2>
-          <span className="px-3 h-[30px] text-xs flex items-center bg-blue-100 rounded-full d text-blue-400">
-            {filteredData?.length}
-          </span>
-        </div>
-
-        <div className="flex items-center gap-2">
+      <div className="flex items-center gap-2">
           <button
-            className="bg-blue-500 px-8 py-2 rounded text-white"
+            className="bg-white px-3 border py-2 rounded text-black border"
             onClick={create_barcode}
           >
             {loading_start ? "Loading" : "Barcode Generate"}
@@ -366,14 +340,14 @@ const ManageProduct = () => {
           <button
             onClick={logSelectedProducts}
             disabled={!selectProducts.length}
-            className="bg-blue-500 rounded px-6 text-white h-full">
+            className="bg-white border rounded px-6">
             Print
           </button>
 
           <button
             onClick={() => { setAll(true), setSellerWarehouse(false), setDoobProduct(false), setDoob_warehouse(false) }}
-            className={`${all ? "bg-blue-900" : " bg-blue-500"
-              } px-8 py-2 rounded text-white`}
+            className={`${all ? "bg-green-200" : " bg-white"
+              } px-3  py-2 rounded text-black border`}
           >
             All Warehouse
           </button>
@@ -381,8 +355,8 @@ const ManageProduct = () => {
             onClick={() => {
               setDoobProduct(true), setAll(false), setSellerWarehouse(false), setDoob_warehouse(true)
             }}
-            className={`${doob_warehouse ? "bg-blue-900" : " bg-blue-500"
-              } px-8 py-2 rounded text-white`}
+            className={`${doob_warehouse ? "bg-green-200" : " bg-white"
+              } px-3  py-2 rounded text-black border`}
           >
             Doob Warehouse
           </button>
@@ -390,8 +364,8 @@ const ManageProduct = () => {
             onClick={() => {
               setDoobProduct(false), setAll(false); setDoob_warehouse(false), setSellerWarehouse(true)
             }}
-            className={`${seller_warehouse ? "bg-blue-900" : " bg-blue-500"
-              } px-8 py-2 rounded text-white`}
+            className={`${seller_warehouse ? "bg-green-200" : " bg-white"
+              } px-3  py-2 rounded text-black border`}
           >
             Seller Warehouse
           </button>
@@ -468,13 +442,7 @@ const ManageProduct = () => {
                         scope="col"
                         className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right "
                       >
-                        Commission
-                      </th>
-                      <th
-                        scope="col"
-                        className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right "
-                      >
-                        Handling
+                        Fees
                       </th>
                       <th
                         scope="col"
@@ -583,26 +551,23 @@ const ManageProduct = () => {
                               )}
                             </td>
 
-                            <td className="px-4 py-4 text-sm text-black whitespace-nowrap flex gap-1">
+                            <td className="px-4 py-4 text-sm text-black whitespace-nowrap  gap-1">
                               {product?.categories?.length &&
                                 product?.categories?.map((itm, index) => (
                                   <div
-                                    className="text-sm rounded-full flex items-center "
+                                    className="text-sm  items-left "
                                     key={index}
                                   >
+                                    
                                     {itm?.name}
-                                    {index !== product.categories.length - 1 ||
-                                      (!itm?.name === "" && <FaAngleRight />)}
-                                    {index < product.categories.length - 1 && (
-                                      <>{itm?.name ? "," : ""}</>
-                                    )}
+                                    
                                   </div>
                                 ))}
                             </td>
                             <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
                               {/* {product?.warehouse?.map((ware) => ware?.name)} */}
                               <button
-                                className="inline-flex items-center px-3 py-1 rounded-full cursor-pointer bg-emerald-100/60 bg-gray-800 text-white"
+                                className="inline- items-center px-2 py-1  cursor-pointer bg-emerald-100/60 bg-gray-800 text-white"
                                 onClick={() => setModalOpen(product?._id)}
                               >
                                 {" "}
@@ -611,21 +576,18 @@ const ManageProduct = () => {
                                   (item) => item?.name
                                 )?.length
                                   ? product?.warehouse?.map((ware, index) => (
-                                    <span key={ware?.name}>
+                                    <p key={ware?.name}>
                                       {ware?.name}
 
-                                      {index <
-                                        product.warehouse.length - 1 && (
-                                          <>{ware?.name ? "," : ""}</>
-                                        )}
-                                    </span>
+                                    
+                                    </p>
                                   ))
                                   : "Select Warehouse"}
                               </button>
                             </td>
                             <td className="px-4 py-4 text-sm whitespace-nowrap">
                               <div className="flex items-center gap-x-2">
-                                {editMode === product._id &&
+                               Processing {editMode === product._id &&
                                   editedCommission ? (
                                   <div className="flex gap-2 ">
                                     <input
@@ -663,10 +625,9 @@ const ManageProduct = () => {
                                   </button>
                                 )}
                               </div>
-                            </td>
-                            <td className="px-4 py-4 text-sm whitespace-nowrap">
-                              <div className="flex items-center gap-x-2">
-                                {editMode === product._id && editedHandling ? (
+                            
+                              <div className="flex items-center gap-x-2 py-3">
+                               Packaging: {editMode === product._id && editedHandling ? (
                                   <div className="flex gap-2 ">
                                     <input
                                       type="text"

@@ -85,7 +85,7 @@ const ReportManagement = () => {
                 </Link> */}
 
                 <Link
-                    to={'commission-history-admin'}
+                    to={'fees-history-all'}
                     className="group relative inline-flex items-center justify-center overflow-hidden rounded bg-gray-900 px-8 py-6 text-white focus:outline-none focus:ring active:bg-gray-500"
 
                 >
@@ -93,7 +93,7 @@ const ReportManagement = () => {
                         <FaLongArrowAltRight />
                     </span>
                     <span className="text-sm font-medium transition-all group-hover:ms-4">
-                        Commission History
+                    Processing Fee History
                     </span>
                 </Link>
             </div>

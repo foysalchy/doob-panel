@@ -44,12 +44,18 @@ const ShopSmallNav = () => {
         color:${color.text_color}
        } 
        
-        .bg-white svg{
+        .bg-white svg,.bg-gray-900  svg{
           fill:${color.text_color}
         }
-        
-        .bg-blue-500{
+        .secondry_color{
+          color: ${color.primary_color};
+        }
+        .bg-blue-500,.bg-indigo-600,.sec_bg{
           background: ${color.secounder_color};
+          color:white !important
+        }
+        .bg-blue-500:hover,.bg-indigo-600:hover{
+          background: ${color.primary_color};
           color:white !important
         }
         .text-whitex { 

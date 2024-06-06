@@ -1,11 +1,10 @@
+import { useContext, useEffect, useState } from "react";
+import { BiCart } from "react-icons/bi";
+import { FaAngleDown } from "react-icons/fa6";
+import { MdDashboard, MdLocationSearching } from "react-icons/md";
 import { Link, NavLink } from "react-router-dom";
 import Logo from "../../Logo.png";
-import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../AuthProvider/UserProvider";
-import { MdDashboard, MdLocationSearching } from "react-icons/md";
-import { BiCart } from "react-icons/bi";
-import { TbShoppingBagEdit } from "react-icons/tb";
-import { FaAngleDown } from "react-icons/fa6";
 import CategoryListSm from "../Pages/Components/Header/CategoryListSm";
 
 export default function Component() {
@@ -18,7 +17,11 @@ export default function Component() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [on, setOn] = useState(false);
   const [dropdowns, setDropdowns] = useState({});
-
+  const handleKeyPress = (event) => {
+    if (event.key === 'Enter') {
+      searchData();
+    }
+  };
   const searchData = async () => {
     const term = searchTerm;
     // console.log(`https://backend.doob.com.bd/api/v1/admin/search?term=${encodeURIComponent(term)}`);
@@ -314,8 +317,9 @@ export default function Component() {
           <input
             value={searchTerm}
             onChange={handleInputChange}
+            onKeyDown={handleKeyPress}
             className="w-full pl-4  bg-gray-100 outline-none h-full"
-            placeholder="Search."
+            placeholder="Search.."
             type="search"
           />
           <button

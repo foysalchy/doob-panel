@@ -25,6 +25,7 @@ const UpComingProducts = () => {
 
   const data = [1, 2, 3, 4];
   const blankImg = "";
+  console.log(AdminNewProducts);
 
   return (
     <div className="mt-3 py-6 bg-white">
@@ -88,7 +89,7 @@ const UpComingProducts = () => {
                         <div className="relative h-[180px] sm:h-[250px]">
                           <img
                             src={
-                              product?.featuredImage.src
+                              product?.featuredImage?.src
                                 ? product?.featuredImage?.src
                                 : product?.images[0]?.src
                             }
@@ -120,7 +121,10 @@ const UpComingProducts = () => {
                                   {user ? product?.price : 0}
                                 </div>
                               ) : (
-                                <Link className="text-[12px] text-blue-500" to={"/sign-up"}>
+                                <Link
+                                  className="text-[12px] text-blue-500"
+                                  to={"/sign-up"}
+                                >
                                   Login to view Price
                                 </Link>
                               )}

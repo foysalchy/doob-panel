@@ -1,21 +1,20 @@
 import { useQuery } from "@tanstack/react-query";
 import React, { useContext, useEffect, useState } from "react";
-import { AuthContext } from "../../../../../../AuthProvider/UserProvider";
+import { BsArrowRight } from "react-icons/bs";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import ImageUploadSeller from "../ImageUploadSeller";
+import Swal from "sweetalert2";
+import { AuthContext } from "../../../../../../AuthProvider/UserProvider";
 import SellerInputProductName from "../../../SellerAddProduct/Components/SellerInputProductName";
-import EditSincronusCategory from "../EditSincronusCategory";
-import EditWareHouse from "../EditWarehiuses";
-import SellerEditDiscription from "../SellerEditDiscription";
-import SellerEditVariantData from "../SellerEditVariantData";
+import EditAdminCategoryforSeller from "../EditAdminCategoryforSeller";
 import EditDarazCategory from "../EditDarazCategory";
-import ServiceWarranty from "../EditServiceWaranty";
 import EditDelivery from "../EditDelavery";
 import EditMeta from "../EditMeta";
-import { BsArrowRight } from "react-icons/bs";
-import Swal from "sweetalert2";
-import EditAdminCategoryforSeller from "../EditAdminCategoryforSeller";
-import SincronusCategory from "../../../SellerAddProduct/Components/SincronusCategory";
+import ServiceWarranty from "../EditServiceWaranty";
+import EditSincronusCategory from "../EditSincronusCategory";
+import EditWareHouse from "../EditWarehiuses";
+import ImageUploadSeller from "../ImageUploadSeller";
+import SellerEditDiscription from "../SellerEditDiscription";
+import SellerEditVariantData from "../SellerEditVariantData";
 
 const ProductSellerEditPage = () => {
   const id = useParams().id;
@@ -318,7 +317,6 @@ const ProductSellerEditPage = () => {
       price: inputFields[0].offerPrice,
       purchasable: true,
       total_sales: 0,
-      DeliveryChargeOutside,
       weight: packageWidth,
       length: productLength,
       width: productWidth,
@@ -402,6 +400,7 @@ const ProductSellerEditPage = () => {
     <div>
       <form className="border md:p-10 p-2" onSubmit={formSubmit} action="">
         <h2 className="font-bold text-xl">Edit Product</h2>
+
         <div className="mt-10">
           <ImageUploadSeller
             allImage={allImage}
@@ -494,7 +493,12 @@ const ProductSellerEditPage = () => {
             setInputFields={setInputFields}
           />
         </div>
-        <EditAdminCategoryforSeller product={product} />
+        {multiVendor === true && (
+        <div>
+          Wholsale Category
+          <EditAdminCategoryforSeller product={product} />
+        </div>
+        )}
 
         {daraz && datazCategory?.length ? (
           <EditDarazCategory product={product} datazCategory={datazCategory} />

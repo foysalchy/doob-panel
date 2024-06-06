@@ -22,7 +22,7 @@ const SubscriptionInvoice = ({ CommissionHistory, invoice, setInvoice, due, pric
             }`}>
             <div className="w-full max-w-[570px] rounded-[20px] bg-white opacity-100 px-8 py-12 text-center dark:bg-dark-2 md:px-[70px] md:py-[60px]">
                 <h3 className="pb-[18px] text-xl font-semibold text-dark dark:text-back sm:text-2xl">
-                    Your TotalCommission : {parseInt(allCommissions).toFixed()}
+                    Your Total Fees : {parseInt(allCommissions).toFixed()}
                     <br></br>
                     Your Due   {parseInt(allCommissions) + parseInt(selectedObject?.price ? selectedObject?.price : 0)}
                 </h3>

@@ -97,7 +97,7 @@ const EmailVerify = () => {
                   </span>{" "}
                   {success
                     ? "Email verification successful!"
-                    : "mail verification failed. Please try again later."}
+                    : "Please Wait...."}
                 </h2>
 
               </div>
