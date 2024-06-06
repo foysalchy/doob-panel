@@ -25,7 +25,7 @@ const CampaignManagement = () => {
     },
   });
 
-  console.log(faqs[0]);
+  console.log(`https://backend.doob.com.bd/api/v1/seller/get-campaign/${shopInfo._id}`);
 
   const updateStatus = (id, status) => {
     const data = {
@@ -286,7 +286,7 @@ const CampaignManagement = () => {
 
                             <button
                               onClick={() => handleViewDetails(faq)}
-                              // to={`edit/${faq?._id}`}
+                            // to={`edit/${faq?._id}`}
                             >
                               <BiEdit className=" transition-colors text-xl duration-200 text-yellow-500 hover:text-yellow-700 focus:outline-none" />
                             </button>

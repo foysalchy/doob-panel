@@ -27,6 +27,8 @@ const DarazIntegration = () => {
     refetch();
   }, []);
 
+
+
   useEffect(() => {
     if (code) {
       fetch("https://backend.doob.com.bd/api/v1/daraz/get-key")
@@ -34,6 +36,7 @@ const DarazIntegration = () => {
         .then((data) => {
           console.log(data, "daraz");
           const { appkey, secretkey } = data[0];
+          console.log(appKey, secretKey);
 
           const appKey = appkey;
           const secretKey = secretkey;
@@ -93,9 +96,7 @@ const DarazIntegration = () => {
     },
   });
 
-  console.log(
-    `log================   https://backend.doob.com.bd/api/v1/seller/get-privious-account?shopId=${shopInfo._id}`
-  );
+
 
   const {
     data: priviousAccount = [],
@@ -112,7 +113,6 @@ const DarazIntegration = () => {
     },
   });
 
-  console.log(priviousAccount);
 
   const switchAccount = (_id, id) => {
     fetch(
@@ -133,7 +133,16 @@ const DarazIntegration = () => {
       });
   };
 
-  console.log("prev:", priviousAccount, "daraz:", darazShop);
+  const [selectedAccount, setSelectedAccount] = useState("");
+
+
+
+  const handleChange = (event) => {
+    const [shopId, oldId] = event.target.value.split(",");
+    setSelectedAccount(event.target.value);
+    switchAccount(shopId, oldId);
+  };
+
 
   return (
     <div>
@@ -190,29 +199,27 @@ const DarazIntegration = () => {
       </div>
 
       <div className="flex items-center gap-12 mt-8 w-full">
-        <div className="w-full px-4 py-2 bg-gray-50 rounded text-blue-500 flex items-center gap-2">
+        {/* <div className="w-full px-4 py-2 bg-gray-50 rounded text-blue-500 flex items-center gap-2">
           <MdEmail />
           {<h1 className="w-full"> {darazShop?.result?.account}</h1>}
-        </div>
+        </div> */}
 
-        <div className="w-full">
-          <h1>Previous Login</h1>
+        <div className=" bg-gray-50 px-4 py-2 rounded text-blue-500 flex items-center gap-2">
+          <h1 className="whitespace-nowrap">Switch Account</h1>
           <hr />
-          {priviousAccount
-            .filter(
-              (shop) => shop.result.account !== darazShop?.result?.account
-            )
-            .map((shop) => (
-              <div className="  px-4 py-2 border flex items-center justify-between rounded bg-[#d2d2d2] text-sm">
-                {shop.result.account}{" "}
-                <button
-                  onClick={() => switchAccount(shop._id, shop.oldId)}
-                  className="cursor-pointer bg-blue-500 text-white  px-4 py-1 rounded flex items-center gap-2 "
-                >
-                  <LuSwitchCamera /> Switch
-                </button>
-              </div>
+          <select
+            className="w-full px-4 py-2 border rounded bg-[#d2d2d2] text-sm"
+            value={selectedAccount}
+            onChange={handleChange}
+          >
+            <option value="">{darazShop?.result?.account}</option>
+
+            {priviousAccount?.map((shop) => (
+              <option key={shop._id} value={`${shop._id},${shop.oldId}`}>
+                {shop.result.account}
+              </option>
             ))}
+          </select>
         </div>
       </div>
     </div>

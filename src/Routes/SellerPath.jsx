@@ -344,7 +344,6 @@ const SellerPath = [
     path: "stock-management",
     element: <SellerStockManagement />,
   },
-
   {
     path: "orders/manage-order",
     element: <ManageOrder />,

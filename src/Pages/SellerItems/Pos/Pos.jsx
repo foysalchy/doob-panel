@@ -19,9 +19,9 @@ const Pos = () => {
         },
     });
 
-    console.log(`https://backend.doob.com.bd/api/v1/seller/get_pos_product/${shopInfo._id}`);
 
-    const productList = products;
+
+    const productList = products.filter((product) => parseInt(product.stock_quantity) > 0);
 
     const [audio] = useState(new Audio(clickAudio));
 
@@ -67,7 +67,7 @@ const Pos = () => {
     const filteredData = searchValue == '' ? productList : productList?.filter((itm) => itm.name.toLowerCase().includes(searchValue.toLowerCase()) || itm._id.includes(searchValue));
 
 
-    
+
 
 
     const handleSearch = (e) => {

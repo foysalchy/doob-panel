@@ -1,7 +1,30 @@
-import React from 'react';
+import { useState } from 'react';
 
 const WarehouseProductModal = ({ setOpenModal, products }) => {
-    console.log(products);
+    const [currentPage, setCurrentPage] = useState(1);
+    const productsPerPage = 10;
+
+    const totalPages = Math.ceil(products.length / productsPerPage);
+    const indexOfLastProduct = currentPage * productsPerPage;
+    const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+    const currentProducts = products.slice(indexOfFirstProduct, indexOfLastProduct);
+
+    const handlePreviousPage = () => {
+        if (currentPage > 1) {
+            setCurrentPage(currentPage - 1);
+        }
+    };
+
+    const handleNextPage = () => {
+        if (currentPage < totalPages) {
+            setCurrentPage(currentPage + 1);
+        }
+    };
+
+    const handlePageClick = (pageNumber) => {
+        setCurrentPage(pageNumber);
+    };
+
     return (
         <div className='bg-[#ffffff]  h-screen  overflow-y-auto top-0 pt-10 fixed right-0 left-0 flex  flex-col items-center gap-4 justify-start z-[6000] '>
             <h1 className='text-xl text-black font-semibold'>WareHouse</h1>
@@ -14,69 +37,36 @@ const WarehouseProductModal = ({ setOpenModal, products }) => {
                                 <table className=" divide-y divide-gray-200 dark:divide-gray-700">
                                     <thead className="bg-gray-50 dark:bg-gray-800">
                                         <tr>
-                                            <th
-                                                scope="col"
-                                                className="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
-                                            >
+                                            <th scope="col" className="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                                                 <div className="flex items-center gap-x-3">
                                                     <div className="flex items-center gap-x-2">
                                                         <span>Photo</span>
                                                     </div>
                                                 </div>
                                             </th>
-                                            <th
-                                                scope="col"
-                                                className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
-                                            >
+                                            <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                                                 Name
                                             </th>
-                                            <th
-                                                scope="col"
-                                                className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
-                                            >
+                                            <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                                                 Category
                                             </th>
-                                            <th
-                                                scope="col"
-                                                className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
-                                            >
+                                            <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                                                 Regular Price
                                             </th>
-                                            <th
-                                                scope="col"
-                                                className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
-                                            >
+                                            <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                                                 Price
                                             </th>
-                                            <th
-                                                scope="col"
-                                                className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
-                                            >
+                                            <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                                                 Quantity
                                             </th>
-                                            <th
-                                                scope="col"
-                                                className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
-                                            >
+                                            <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                                                 Warehouse
                                             </th>
-
-
-
                                         </tr>
                                     </thead>
                                     <tbody className="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
-                                        {
-                                            products?.map((product, index) => <tr>
-                                                {/* <td className="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
-                                                <div className="inline-flex items-center gap-x-3">
-                                                    <input
-                                                        type="checkbox"
-                                                        className="text-blue-500 border-gray-300 rounded dark:bg-gray-900 dark:ring-offset-gray-900 dark:border-gray-700"
-                                                    />
-                                                    <span>#3066</span>
-                                                </div>
-                                            </td> */}
+                                        {currentProducts.map((product, index) => (
+                                            <tr key={index}>
                                                 <td className="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
                                                     <img src={product?.featuredImage?.src} alt="product" className="w-[60px] h-[60px] rounded-md object-cover" />
                                                 </td>
@@ -84,7 +74,9 @@ const WarehouseProductModal = ({ setOpenModal, products }) => {
                                                     <span className="w-[300px]">{product?.name}</span>
                                                 </td>
                                                 <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap w-[300px] flex items-center flex-wrap gap-2">
-                                                    {product?.categories.map(itm => <span className='bg-blue-500 text-white font-[400] px-2 rounded-full text-[10px]' key={itm?.name}>{itm?.name}</span>)}
+                                                    {product?.categories.map(itm => (
+                                                        <span className='bg-blue-500 text-white font-[400] px-2 rounded-full text-[10px]' key={itm?.name}>{itm?.name}</span>
+                                                    ))}
                                                 </td>
                                                 <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                                                     {product?.price}
@@ -96,28 +88,29 @@ const WarehouseProductModal = ({ setOpenModal, products }) => {
                                                     {product?.stock_quantity}
                                                 </td>
                                                 <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap w-[300px] flex items-center flex-wrap gap-2">
-                                                    {product?.warehouse.map(itm => <span className='bg-blue-500 text-white font-[400] px-2 rounded-full text-[10px]' key={itm?.name}>{itm?.name}</span>)}
+                                                    {product?.warehouse.map(itm => (
+                                                        <span className='bg-blue-500 text-white font-[400] px-2 rounded-full text-[10px]' key={itm?.name}>{itm?.name}</span>
+                                                    ))}
                                                 </td>
-
                                             </tr>
-                                            )
-                                        }
-
-                                        <tr>
-                                            <td colSpan={8}>
-                                                Loader..
-                                            </td>
-                                        </tr>
-
+                                        ))}
+                                        {currentProducts.length === 0 && (
+                                            <tr>
+                                                <td colSpan={8} className="px-4 py-4 text-sm font-medium text-gray-700 text-center">
+                                                    No products available.
+                                                </td>
+                                            </tr>
+                                        )}
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div className="flex items-center justify-between mt-6">
-                    <a
-                        href="#"
+                <div className="flex gap-3 items-center justify-between mt-6">
+                    <button
+                        onClick={handlePreviousPage}
+                        disabled={currentPage === 1}
                         className="flex items-center px-5 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 bg-white border rounded-md gap-x-2 hover:bg-gray-100 dark:bg-gray-900 dark:text-gray-200 dark:border-gray-700 dark:hover:bg-gray-800"
                     >
                         <svg
@@ -134,54 +127,22 @@ const WarehouseProductModal = ({ setOpenModal, products }) => {
                                 d="M6.75 15.75L3 12m0 0l3.75-3.75M3 12h18"
                             />
                         </svg>
-                        <span>previous</span>
-                    </a>
-                    <div className="items-center hidden md:flex gap-x-3">
-                        <a
-                            href="#"
-                            className="px-2 py-1 text-sm text-blue-500 rounded-md dark:bg-gray-800 bg-blue-100/60"
-                        >
-                            1
-                        </a>
-                        <a
-                            href="#"
-                            className="px-2 py-1 text-sm text-gray-500 rounded-md dark:hover:bg-gray-800 dark:text-gray-300 hover:bg-gray-100"
-                        >
-                            2
-                        </a>
-                        <a
-                            href="#"
-                            className="px-2 py-1 text-sm text-gray-500 rounded-md dark:hover:bg-gray-800 dark:text-gray-300 hover:bg-gray-100"
-                        >
-                            3
-                        </a>
-                        <a
-                            href="#"
-                            className="px-2 py-1 text-sm text-gray-500 rounded-md dark:hover:bg-gray-800 dark:text-gray-300 hover:bg-gray-100"
-                        >
-                            ...
-                        </a>
-                        <a
-                            href="#"
-                            className="px-2 py-1 text-sm text-gray-500 rounded-md dark:hover:bg-gray-800 dark:text-gray-300 hover:bg-gray-100"
-                        >
-                            12
-                        </a>
-                        <a
-                            href="#"
-                            className="px-2 py-1 text-sm text-gray-500 rounded-md dark:hover:bg-gray-800 dark:text-gray-300 hover:bg-gray-100"
-                        >
-                            13
-                        </a>
-                        <a
-                            href="#"
-                            className="px-2 py-1 text-sm text-gray-500 rounded-md dark:hover:bg-gray-800 dark:text-gray-300 hover:bg-gray-100"
-                        >
-                            14
-                        </a>
+                        <span>Previous</span>
+                    </button>
+                    <div className="items-center hidden md:flex gap-3">
+                        {Array.from({ length: totalPages }, (_, index) => (
+                            <button
+                                key={index + 1}
+                                onClick={() => handlePageClick(index + 1)}
+                                className={`px-5 py-2  text-sm rounded-md dark:bg-gray-800 ${currentPage === index + 1 ? 'text-blue-500 bg-blue-100/60' : 'text-gray-500 dark:text-gray-300 hover:bg-gray-100'}`}
+                            >
+                                {index + 1}
+                            </button>
+                        ))}
                     </div>
-                    <a
-                        href="#"
+                    <button
+                        onClick={handleNextPage}
+                        disabled={currentPage === totalPages}
                         className="flex items-center px-5 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 bg-white border rounded-md gap-x-2 hover:bg-gray-100 dark:bg-gray-900 dark:text-gray-200 dark:border-gray-700 dark:hover:bg-gray-800"
                     >
                         <span>Next</span>
@@ -199,7 +160,7 @@ const WarehouseProductModal = ({ setOpenModal, products }) => {
                                 d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"
                             />
                         </svg>
-                    </a>
+                    </button>
                 </div>
             </section>
         </div>

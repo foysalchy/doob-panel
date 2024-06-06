@@ -38,18 +38,20 @@ const ManageOrder = () => {
     },
   });
 
+
   const { data: darazOrder = [] } = useQuery({
     queryKey: ["sellerDarazOrder"],
+
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/seller/daraz-order?id=${shopInfo._id}&status=${selectedValue}`
+        `https://backend.doob.com.bd/api/v1/seller/daraz-order?id=${shopInfo._id}&status=All`
       );
 
       const data = await res.json();
-      console.log(data, "datadata");
       return data.data;
     },
   });
+
 
   const getOrderCount = (orders, status) => {
     return orders.filter(
@@ -315,6 +317,69 @@ const ManageOrder = () => {
     content: () => componentRef.current,
   });
 
+  const {
+    data: darazShop = [],
+    isLoading,
+    refetch: darazShopRefetch,
+  } = useQuery({
+    queryKey: ["darazShopBd"],
+    queryFn: async () => {
+      const res = await fetch(
+        `https://backend.doob.com.bd/api/v1/seller/seller-daraz-accounts?id=${shopInfo._id}`
+      );
+      const data = await res.json();
+      return data.data[0];
+    },
+  });
+
+
+
+  const {
+    data: priviousAccount = [],
+    isLoading: loading,
+    refetch: reload,
+  } = useQuery({
+    queryKey: ["priviousAccount"],
+    queryFn: async () => {
+      const res = await fetch(
+        `https://backend.doob.com.bd/api/v1/daraz/get-privious-account?shopId=${shopInfo._id}`
+      );
+      const data = await res.json();
+      return data.data;
+    },
+  });
+
+
+  const switchAccount = (_id, id) => {
+    fetch(
+      `https://backend.doob.com.bd/api/v1/daraz/switching-your-daraz?id=${id}&loginId=${_id}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data); // Log response data
+        Swal.fire("Success", "", "success"); // Show success message (assuming you're using SweetAlert)
+        refetch(); // Refetch data
+        darazShopRefetch(); // Reload data
+      });
+  };
+
+  const [selectedAccount, setSelectedAccount] = useState("");
+
+
+
+  const handleChange = (event) => {
+    const [shopId, oldId] = event.target.value.split(",");
+    setSelectedAccount(event.target.value);
+    switchAccount(shopId, oldId);
+  };
+
+
   return (
     <div>
       <ExportModal
@@ -322,6 +387,31 @@ const ManageOrder = () => {
         details={details}
         setOpenModal={setOpenModal}
       />
+      <div className="flex justify-end items-center gap-12 mt-8 w-full">
+        {/* <div className="w-full px-4 py-2 bg-gray-50 rounded text-blue-500 flex items-center gap-2">
+          <MdEmail />
+          {<h1 className="w-full"> {darazShop?.result?.account}</h1>}
+        </div> */}
+
+        {darazShop?.result?.account && <div className=" bg-gray-50 px-4 py-2 rounded text-blue-500 flex items-center gap-2">
+          <h1 className="whitespace-nowrap">Switch Account</h1>
+          <hr />
+          <select
+            className="w-full px-4 py-2 border rounded bg-[#d2d2d2] text-sm"
+            value={selectedAccount}
+            onChange={handleChange}
+          >
+            <option value="">{darazShop?.result?.account}</option>
+
+            {priviousAccount?.map((shop) => (
+              <option key={shop._id} value={`${shop._id},${shop.oldId}`}>
+                {shop.result.account}
+              </option>
+            ))}
+          </select>
+        </div>}
+      </div>
+
       <h3 className="font-bold text-xl">Orders Overview</h3>
       <div className="flex flex-wrap justify-start  items-center gap-4 ">
         <button

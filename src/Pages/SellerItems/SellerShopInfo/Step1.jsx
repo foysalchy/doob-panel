@@ -97,6 +97,9 @@ const Step1 = ({ nextStep, handleChange, values }) => {
     if (Number === "") {
       setNumberError("Input a Shop Phone Number");
     }
+    else if (Number.length > 15) {
+      setNumberError("Provide a valid Number");
+    }
     if (!validateEmail(Email)) {
       setEmailError("Provide a Valid Email");
     }
@@ -289,6 +292,7 @@ const Step1 = ({ nextStep, handleChange, values }) => {
             <input
               required
               type="number"
+
               placeholder="Input Your Shop Phone Number"
               onChange={handleChange("shopNumber")}
               value={values.shopNumber}

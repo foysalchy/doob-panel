@@ -127,7 +127,7 @@ const AddCampaign = () => {
     })
       .then((res) => res.json())
       .then((responseData) => {
-        Swal.fire("success", "Your Brand Publish Successfully", "success");
+        Swal.fire("success", "", "success");
         setLoading(false);
         form.reset();
         handleGoBack();
@@ -308,7 +308,7 @@ const AddCampaign = () => {
 
               <Select
                 name=""
-                placeholder="Select woo product"
+                placeholder="Select your product"
                 options={products?.length && products?.map((data, i) => ({
                   value: data,
                   label: (

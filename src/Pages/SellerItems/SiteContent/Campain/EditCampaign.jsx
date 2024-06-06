@@ -8,7 +8,7 @@ import Swal from "sweetalert2";
 
 export default function EditCampaign() {
   const id = useParams().id;
-  console.log(id);
+  const { shopInfo } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const handleGoBack = () => {
@@ -27,18 +27,75 @@ export default function EditCampaign() {
     },
   });
 
-  console.log(campaignDefaultData);
+
+
+
+  const { data: products = [], refetch } = useQuery({
+    queryKey: ["products"],
+    queryFn: async () => {
+      const res = await fetch(
+        `https://backend.doob.com.bd/api/v1/seller/all-products/${shopInfo._id}`
+      );
+      const data = await res.json();
+      return data;
+    },
+  });
+
 
   const [loading, setLoading] = useState(false);
-  const [isChecked, setIsChecked] = useState(false);
+  const [isChecked, setIsChecked] = useState(campaignDefaultData.isFlash);
+
+
+
+
+  useEffect(() => {
+
+    const selected = products.filter((product) => product.campaignId === campaignDefaultData._id);
+
+    const transformedData = selected.map((item, index) => ({
+      value: item,
+      label: (
+        <div className="flex cursor-pointer gap-4 items-center">
+          <div className="flex gap-2 items-center">
+            <span>{index + 1}</span>
+            <img
+              src={item?.images[0]?.src}
+              className="border border-black rounded-sm"
+              style={{
+                marginRight: "8px",
+                height: "24px",
+                width: "24px",
+              }}
+            />
+          </div>
+          {item.name.split(" ").slice(0, 10).join(" ") + "..."}
+        </div>
+      )
+    }));
+    setSelectedProducts(transformedData);
+  }, [id]);
+
 
   const [selectedProducts, setSelectedProducts] = useState([]);
   const [prices, setPrices] = useState({});
 
-  useEffect(() => {
-    setIsChecked(campaignDefaultData?.isFlash ?? false);
-  }, [campaignDefaultData]);
 
+
+  const handleProductChange = (selectedOptions) => {
+    setSelectedProducts(selectedOptions);
+
+
+    console.log(selectedOptions);
+    const newPrices = { ...prices };
+
+    selectedOptions.forEach((option) => {
+      console.log(option);
+      if (!newPrices) {
+        newPrices.campaignPrice = 0;
+      }
+    });
+    setPrices(newPrices);
+  };
 
   const handlePriceChange = (product, newPrice) => {
     console.log(product, newPrice);
@@ -47,10 +104,40 @@ export default function EditCampaign() {
     setPrices((prevPrices) => ({ ...prevPrices, product }));
   };
 
+  const handleRemoveProduct = (product) => {
+    setSelectedProducts((prevSelected) =>
+      prevSelected.filter((p) => p !== product)
+    );
+    setPrices((prevPrices) => {
+      const newPrices = { ...prevPrices };
+      delete newPrices[product.value];
+      return newPrices;
+    });
+  };
 
 
-  const { shopInfo } = useContext(AuthContext);
+  const updateCampaign = (data, form) => {
 
+    fetch(
+      `https://backend.doob.com.bd/api/v1/seller/update-single-campaign?id=${id}`,
+      {
+        method: "PUT",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(data), // Pass the data object to JSON.stringify
+      }
+    )
+      .then((res) => res.json())
+      .then((responseData) => {
+        console.log("responseData", responseData);
+        Swal.fire("success", "", "success");
+        setLoading(false);
+        reload();
+        // form.reset();
+        handleGoBack();
+      });
+  };
   const handleSubmit = async (e) => {
     setLoading(true);
     e.preventDefault();
@@ -95,18 +182,10 @@ export default function EditCampaign() {
       status: true,
     };
     updateCampaign(formData, form);
+    refetch()
   };
 
-  const { data: products = [], refetch } = useQuery({
-    queryKey: ["products"],
-    queryFn: async () => {
-      const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/seller/all-products/${shopInfo._id}`
-      );
-      const data = await res.json();
-      return data;
-    },
-  });
+
 
   async function uploadImage(formData) {
     const url = "https://backend.doob.com.bd/api/v1/image/upload-image";
@@ -118,81 +197,12 @@ export default function EditCampaign() {
     return imageData.imageUrl;
   }
 
-  const updateCampaign = (data, form) => {
-    console.log(data);
-
-    fetch(
-      `https://backend.doob.com.bd/api/v1/seller/update-single-campaign?id=${id}`,
-      {
-        method: "PUT",
-        headers: {
-          "content-type": "application/json",
-        },
-        body: JSON.stringify(data), // Pass the data object to JSON.stringify
-      }
-    )
-      .then((res) => res.json())
-      .then((responseData) => {
-        console.log("responseData", responseData);
-        Swal.fire("success", "Your Brand Publish Successfully", "success");
-        setLoading(false);
-        reload();
-        // form.reset();
-        handleGoBack();
-      });
-  };
-
-  const defultSelect = products.filter((product) => product?.campaignId === id);
-  const [dfd, setDfd] = useState(defultSelect)
-
-
-
-  const handleProductChange = (selectedOptions) => {
-    setSelectedProducts(selectedOptions);
-
-    defultSelect.forEach((option) => {
-      console.log(option);
-    });
-
-    const newPrices = { ...prices };
-
-    defultSelect.forEach((option) => {
-      console.log(option);
-      if (!newPrices) {
-        newPrices.campaignPrice = 0;
-      }
-    });
-    setPrices(newPrices);
-  };
-
-  const handleRemoveProduct = (product) => {
-
-    setSelectedProducts((prevSelected) =>
-      prevSelected.filter((p) => p !== product)
-    );
-
-    // setDfd((prevSelected) =>
-    //   prevSelected.filter((p) => p !== dfd)
-    // );
-    setPrices((prevPrices) => {
-      const newPrices = { ...prevPrices };
-      delete newPrices[product.value];
-      return newPrices;
-    });
-
-    setDfd((prevPrices) => {
-      const newPrices = { ...prevPrices };
-      delete newPrices[dfd.value];
-      return newPrices;
-    });
-  };
 
 
 
 
-  console.log('****', defultSelect);
 
-  // Use refetchCampaign instead of refetch if needed
+
 
 
   return (
@@ -375,30 +385,27 @@ export default function EditCampaign() {
 
               <Select
                 name=""
-                placeholder="Select woo product"
-                options={
-                  products.length &&
-                  products?.map((data, i) => ({
-                    value: data,
-                    label: (
-                      <div className="flex cursor-pointer gap-4 items-center">
-                        <div className="flex gap-2 items-center">
-                          <span>{i + 1}</span>
-                          <img
-                            src={data?.images[0]?.src}
-                            className="border border-black rounded-sm"
-                            style={{
-                              marginRight: "8px",
-                              height: "24px",
-                              width: "24px",
-                            }}
-                          />
-                        </div>
-                        {data.name.split(" ").slice(0, 10).join(" ") + "..."}
+                placeholder="Select your product"
+                options={products?.length && products?.map((data, i) => ({
+                  value: data,
+                  label: (
+                    <div className="flex cursor-pointer gap-4 items-center">
+                      <div className="flex gap-2 items-center">
+                        <span>{i + 1}</span>
+                        <img
+                          src={data?.images[0]?.src}
+                          className="border border-black rounded-sm"
+                          style={{
+                            marginRight: "8px",
+                            height: "24px",
+                            width: "24px",
+                          }}
+                        />
                       </div>
-                    ),
-                  }))
-                }
+                      {data.name.split(" ").slice(0, 10).join(" ") + "..."}
+                    </div>
+                  ),
+                }))}
                 isMulti
                 isSearchable
                 onChange={handleProductChange}
@@ -407,49 +414,47 @@ export default function EditCampaign() {
             </div>
 
             <div className="flex flex-col gap-2 mt-4">
-              {defultSelect?.length
-                ? defultSelect?.map((product, i) => (
-                  <div
-                    key={i + 200}
-                    className="flex p-2 px-4 rounded border border-black  gap-2 justify-between items-center"
-                  >
-                    <div className="flex items-start">
-                      <img
-                        className="border border-black rounded-sm"
-                        style={{
-                          marginRight: "8px",
-                          height: "24px",
-                          width: "24px",
-                        }}
-                        src={product?.images[0]?.src}
-                        alt=""
-                      />
-                      {product?.name.split(" ").slice(0, 10).join(" ") +
-                        "..."}
-                    </div>
-
-                    <div className="flex gap-4 items-center">
-                      <span>Regular Price: {product?.price}</span>
-                      <input
-                        type="number"
-                        placeholder="Camping Price"
-                        className="py-0.5 px-2 border border-black"
-                        defaultValue={product?.campaignPrice || ""}
-                        onChange={(e) =>
-                          handlePriceChange(product.value, e.target.value)
-                        }
-                      />
-                      <button
-                        type="button"
-                        className="bg-red-500 px-2 py-0.5 rounded ml-4"
-                        onClick={() => handleRemoveProduct(product)}
-                      >
-                        Remove
-                      </button>
-                    </div>
+              {selectedProducts?.length ? selectedProducts?.map((product, i) => (
+                <div
+                  key={i + 200}
+                  className="flex p-2 px-4 rounded border border-black  gap-2 justify-between items-center"
+                >
+                  <div className="flex items-start">
+                    <img
+                      className="border border-black rounded-sm"
+                      style={{
+                        marginRight: "8px",
+                        height: "24px",
+                        width: "24px",
+                      }}
+                      src={product?.value?.images[0]?.src}
+                      alt=""
+                    />
+                    {product?.value?.name.split(" ").slice(0, 10).join(" ") +
+                      "..."}
                   </div>
-                ))
-                : ""}
+
+                  <div className="flex gap-4 items-center">
+                    <span>Regular Price: {product.value.price}</span>
+                    <input
+                      type="number"
+                      placeholder="Camping Price"
+                      className="py-0.5 px-2 border border-black"
+                      value={product.value.campaignPrice || ""}
+                      onChange={(e) =>
+                        handlePriceChange(product.value, e.target.value)
+                      }
+                    />
+                    <button
+                      type="button"
+                      className="bg-red-500 px-2 py-0.5 rounded ml-4"
+                      onClick={() => handleRemoveProduct(product)}
+                    >
+                      Remove
+                    </button>
+                  </div>
+                </div>
+              )) : ''}
             </div>
 
             <button
