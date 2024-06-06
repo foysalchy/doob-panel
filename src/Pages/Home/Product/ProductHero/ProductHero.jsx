@@ -1,17 +1,14 @@
-import React, { useContext, useEffect, useState } from "react";
-import banar1 from "./Rectangle 40.png";
-import banar2 from "./wallpaperflare.com_wallpaper(2).jpg";
-import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
-import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import CategoryList from "./CategoryList";
-import { Dropdown, Ripple, initTE } from "tw-elements";
+import React, { useContext, useEffect, useState } from "react";
 import { FaAngleRight } from "react-icons/fa6";
-import { AuthContext } from "../../../../AuthProvider/UserProvider";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-
+import { Link } from "react-router-dom";
+import "swiper/css";
+import { Autoplay } from 'swiper/modules';
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Dropdown, Ripple, initTE } from "tw-elements";
+import { AuthContext } from "../../../../AuthProvider/UserProvider";
 initTE({ Dropdown, Ripple });
 
 const ProductHero = () => {
@@ -415,7 +412,7 @@ const ProductHero = () => {
 
       <div className="lg:w-[80%] w-[100%]">
         {bannerFind.length > 0 ? (
-          <Swiper className="mySwiper rounded-md">
+         <Swiper   autoplay={{ delay: 3000 }}    modules={[Autoplay]} className="mySwiper rounded-md">
             {bannerFind.map((i, index) => (
               <SwiperSlide key={index}>
                 <img

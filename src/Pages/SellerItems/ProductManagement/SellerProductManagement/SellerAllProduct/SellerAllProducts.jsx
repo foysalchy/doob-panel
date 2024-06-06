@@ -669,7 +669,7 @@ const SellerAllProducts = () => {
               }}
               className="overflow-x-scroll  "
             >
-              <div className=" w-[1700px]">
+              <div className=" w-[100%]">
                 {on && (
                   <div className="absolute top-0 left-0 right-0 bottom-0 m-auto z-[3000]">
                     {" "}
@@ -696,9 +696,9 @@ const SellerAllProducts = () => {
                             />
                           </label>
                         </th>
-                        <th
+                        <th 
                           scope="col"
-                          className="py-3.5 px-4 text-sm border font-normal text-left rtl:text-right "
+                          className="py-3.5 px-4 w-[100px] text-sm border font-normal text-left rtl:text-right "
                         >
                           <div className="flex items-center gap-x-3">
                             <span>Name</span>
@@ -707,15 +707,13 @@ const SellerAllProducts = () => {
 
                         <th
                           scope="col"
-                          className="px-12 py-3.5 border w-[40px] text-sm font-normal text-center rtl:text-right "
+                          className="px-2 py-3.5 border w-[40px] text-sm font-normal text-center rtl:text-right "
                         >
-                          <button className="flex">
                             <span>Status</span>
-                          </button>
                         </th>
                         <th
                           scope="col"
-                          className="px-12 py-3.5 border  text-sm font-normal text-center rtl:text-right "
+                          className="px-2 py-3.5 border  text-sm font-normal text-center rtl:text-right "
                         >
                           <button className="flex">
                             <span>Sync</span>
@@ -732,24 +730,15 @@ const SellerAllProducts = () => {
                             <span>Categories</span>
                           </button>
                         </th>
+                        
                         <th
-                          scope="col"
-                          className="px-4 py-3.5 text-sm border font-normal text-left rtl:text-right "
-                        >
-                          Regular Price
-                        </th>
-                        <th
+                        style={{width:"110px"}}
                           scope="col"
                           className="px-4 py-3.5 border text-sm font-normal text-left rtl:text-right "
                         >
-                          Price
+                          Price/Qty
                         </th>
-                        <th
-                          scope="col"
-                          className="px-4 py-3.5 border text-sm font-normal text-left rtl:text-right "
-                        >
-                          Stock Quantity
-                        </th>
+                        
                         <th
                           scope="col"
                           className="px-4 border py-3.5 text-sm font-normal text-center  "
@@ -819,7 +808,7 @@ const SellerAllProducts = () => {
                                 </div>
                               </td>
 
-                              <td className="px-12 py-4 text-sm font-medium text-gray-700 flex gap-4 items-start  whitespace-nowrap border-r">
+                              <td className="px-2 py-4 text-sm font-medium text-gray-700 flex gap-4 items-start  whitespace-nowrap border-r">
                                 {product.product_status === "reject" ? (
                                   <div>
                                     {" "}
@@ -965,16 +954,15 @@ const SellerAllProducts = () => {
                                   )
                                   .map((category) => (
                                     <span key={category?.id}>
-                                      {category?.name},{" "}
+                                      <div>{category?.name}</div>
                                     </span>
                                   ))}
                               </td>
                               <td className="px-4 py-4 text-sm border-2 text-gray-500  whitespace-nowrap">
-                                {product.regular_price}
-                              </td>
-                              <td className="px-4  py-4 text-sm border-2 text-gray-500  whitespace-nowrap">
-                                <div className="flex items-center gap-2">
-                                  {product.price}{" "}
+                             <div>   Regular:{product.regular_price}</div>
+                              
+                                 <div className="flex items-center gap-2 py-3">
+                                 Discount: {product.price}{" "}
                                   <button onClick={() => setPriceOn(product)}>
                                     {" "}
                                     <BiEdit className="text-lg" />
@@ -1022,11 +1010,10 @@ const SellerAllProducts = () => {
                                     </div>
                                   </div>
                                 </div>
-                              </td>
-                              <td className="px-4 py-4 text-sm border-2 whitespace-nowrap">
-                                <div className="flex items-center gap-x-2">
+                                <div>
+                                <div className="flex items-center gap-x-2 ">
                                   <div className="flex items-center gap-2">
-                                    <p className="px-3 py-1 text-xs text-indigo-500 rounded-full bg-gray-800 bg-indigo-100/60">
+                                Qty:    <p className="px-3 py-1 text-xs text-indigo-500 rounded-full bg-gray-800 bg-indigo-100/60">
                                       {product?.stock_quantity}
                                     </p>
                                     <button
@@ -1085,7 +1072,9 @@ const SellerAllProducts = () => {
                                     </div>
                                   </div>
                                 </div>
+                                </div>
                               </td>
+                             
                               <td className="px-4 py-4 text-sm border-2 whitespace-nowrap">
                                 <div className="flex items-center gap-x-6">
                                   <button

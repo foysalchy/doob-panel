@@ -182,7 +182,7 @@ const SellerDashLayout = () => {
           </nav>
         </div>
         <div
-          className={`bg-[#f0f2f5] flex-1  sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8   p-4 sm:p-0`}
+          className={`bg-[#f0f2f5] flex-1  w-full md:px-24 lg:px-8   p-4 sm:p-0`}
         >
           <Outlet />
         </div>

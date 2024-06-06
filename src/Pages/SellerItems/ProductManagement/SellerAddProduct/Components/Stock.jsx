@@ -1,5 +1,4 @@
 import React from 'react';
-import Select from 'react-select';
 
 const Stock = ({ field, index, inputFields, setInputFields, daraz }) => {
     return (

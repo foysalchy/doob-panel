@@ -1,10 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
 import { useContext, useState } from "react";
-import { AuthContext } from "../../../../../AuthProvider/UserProvider";
-import DemoImage from "./woocommerce-placeholder-600x600.png";
 import { MdDelete, MdOutlineViewInAr } from "react-icons/md";
-import DeleteModal from "../../../../../Common/DeleteModal";
 import Swal from "sweetalert2";
+import { AuthContext } from "../../../../../AuthProvider/UserProvider";
+import DeleteModal from "../../../../../Common/DeleteModal";
+import DemoImage from "./woocommerce-placeholder-600x600.png";
 
 export default function WebStoreproduct({ priceRole, searchQuery }) {
   const { shopInfo } = useContext(AuthContext);
@@ -142,7 +142,7 @@ export default function WebStoreproduct({ priceRole, searchQuery }) {
         }}
         className="overflow-x-scroll  "
       >
-        <div className=" w-[1700px]">
+        <div className=" w-[100%]">
           <div className="overflow-hidden border  border-gray-700 md:rounded-lg">
             <table className="w-full">
               <thead className="bg-gray-900 text-white ">
