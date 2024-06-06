@@ -1,11 +1,10 @@
 import React, { useContext, useEffect, useState } from "react";
 import { CgClose, CgShoppingCart } from "react-icons/cg";
 import { MdDeleteOutline } from "react-icons/md";
-import ProductList from "./ProductList";
-import deleteSound from "../../../../src/assets/sound_button-21.mp3";
 import clickAudio from "../../../../src/assets/sound_beep-29.mp3";
-import PosProductsDetails from "./PosProductsDetails";
+import deleteSound from "../../../../src/assets/sound_button-21.mp3";
 import { AuthContext } from "../../../AuthProvider/UserProvider";
+import PosProductsDetails from "./PosProductsDetails";
 
 const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
   const { shopInfo } = useContext(AuthContext);
@@ -223,7 +222,7 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
                     </button>
                   </div>
 
-                  <ul className="h-[280px] overflow-x-hidden overflow-y-auto">
+                  <ul className="h-[70vh] overflow-x-hidden overflow-y-auto">
                     {cartProducts?.map((itm, index) => (
                       <li key={index}>
                         <div className="flex justify-between items-center my-4 bg-white relative p-2 rounded-md">
@@ -299,16 +298,26 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
             </div>
           </div>
         </div>
-        <div class="">
+        <div class="bg-white px-2 py-2">
           <div className="">
-            <div className="grid grid-cols-3 gap-2">
-              <div className="bg-gray-500  mt-4 px-4 py-2  rounded ">
-                <h3 className="text-lg">Total</h3>
-                <hr />
-                <h2 className="text-lg">{totalPrice()}</h2>
-              </div>
-              <div className=" bg-gray-400 rounded px-4 py-2  mt-4 ">
-                <label className="flex gap-2" htmlFor="percents">
+          <div className="grid grid-cols-4 gap-2">
+            <div>
+              Total: <div>Tk.{totalPrice()}/=</div>
+            </div>
+            <div>
+            Due:  <div
+              className={`   ${changeAmount > 0
+                ? "text-green-500"
+                : changeAmount < 0
+                  ? "text-red-500"
+                  : ""
+                }`}
+            >
+              Tk.{parseInt(changeAmount)}/=
+            </div>
+            </div>
+              <div>
+              <label className="flex gap-1" htmlFor="percents">
                   <input
                     id="percents"
                     type="checkbox"
@@ -317,29 +326,27 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
                   />
                   Percentage
                 </label>
-
                 <input
                   onChange={(e) => setDiscount(e.target.value)}
                   className="bg-transparent text-right ring-1 px-2 w-[80px] ring-gray-300 rounded-md text-lg"
                   type="text px-2"
                 />
               </div>
-              <div className=" bg-green-400 rounded px-4 py-2  mt-4  items-start">
-                <div className="">
-                  <h3 className="text-lg">Paid</h3>
-                </div>
-                <input
+              <div>
+              Paid: <div> <input
+              defaultValue="0"
                   value={cash}
                   onChange={(e) => setCash(e.target.value)}
                   type="number"
                   className="bg-transparent px-2 text-right ring-1 w-[80px] ring-gray-300 rounded-md text-lg"
-                />
+                /></div>
               </div>
             </div>
+          
 
-            <div className="flex justify-between bg-green-400 px-4 py-2  mt-4  items-start">
+            <div className="flex justify-between bg-white-400  py-2  items-start">
               <div className="">
-                <h3 className="text-lg">Payment Gateway</h3>
+                <h3 className="text-lg">Payment Gateway:</h3>
               </div>
               <label>
                 <input
@@ -374,11 +381,11 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
               </label>
             </div>
 
-            <div className="bg-white p-2  rounded-md mt-2">
+            <div className=" ">
               <div className="flex justify-between flex-wrap mt-3 gap-2">
                 <button
                   onClick={() => {
-                    setCash(100), audio.play();
+                    setCash(parseInt(cash)+parseInt(100)), audio.play();
                   }}
                   className="w-[65px] px-3 py-0 rounded bg-gray-200"
                 >
@@ -386,7 +393,7 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
                 </button>
                 <button
                   onClick={() => {
-                    setCash(500), audio.play();
+                    setCash(parseInt(cash)+parseInt(500)), audio.play();
                   }}
                   className="w-[65px] px-3 py-0 rounded bg-gray-200"
                 >
@@ -394,7 +401,7 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
                 </button>
                 <button
                   onClick={() => {
-                    setCash(1000), audio.play();
+                    setCash(parseInt(cash)+parseInt(1000)), audio.play();
                   }}
                   className="w-[65px] px-3 py-0 rounded bg-gray-200"
                 >
@@ -402,7 +409,7 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
                 </button>
                 <button
                   onClick={() => {
-                    setCash(2000), audio.play();
+                    setCash(parseInt(cash)+parseInt(2000)), audio.play();
                   }}
                   className="w-[65px] px-3 py-0 rounded bg-gray-200"
                 >
@@ -411,17 +418,7 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
               </div>
             </div>
 
-            <div
-              className={` ring-1 font-bold flex items-center justify-between ring-gray-300 text-black rounded p-2 w-full mt-3  ${changeAmount > 0
-                ? "bg-green-500"
-                : changeAmount < 0
-                  ? "bg-red-500"
-                  : ""
-                }`}
-            >
-              <div>Due</div>
-              <div className={`text-end`}>{parseInt(changeAmount)}</div>
-            </div>
+            
 
             <br />
             {

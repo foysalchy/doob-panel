@@ -1,15 +1,15 @@
+import { useQuery } from "@tanstack/react-query";
 import React, { useContext, useRef, useState } from "react";
+import { Link } from "react-router-dom";
+import { useReactToPrint } from "react-to-print";
+import { AuthContext } from "../../../../AuthProvider/UserProvider";
+import DarazOrderTable from "../DarazOrder/DarazOrderTable";
+import WooCommerceOrderTable from "../WoocommerceOrder/WooCommerceOrderTable";
+import AllOrderInvoice from "./AllOrderInvoice";
+import ExportModal from "./ExportModal";
 import { ordersNav } from "./ManageOrderNavData";
 import OrderTable from "./OrderTable";
-import ExportModal from "./ExportModal";
-import DarazOrderTable from "../DarazOrder/DarazOrderTable";
-import { AuthContext } from "../../../../AuthProvider/UserProvider";
-import { useQuery } from "@tanstack/react-query";
-import WooCommerceOrderTable from "../WoocommerceOrder/WooCommerceOrderTable";
 import PrintedWebInvoice from "./PrintedWebInvoice";
-import { useReactToPrint } from "react-to-print";
-import AllOrderInvoice from "./AllOrderInvoice";
-
 const ManageOrder = () => {
   const { shopInfo } = useContext(AuthContext);
   const [openModal, setOpenModal] = useState(false);
@@ -332,7 +332,7 @@ const ManageOrder = () => {
             !isDaraz && !woo ? "bg-gray-900" : "bg-gray-500"
           }`}
         >
-          Web Order
+          Shop Order
         </button>
         <button
           onClick={() => {
@@ -354,6 +354,13 @@ const ManageOrder = () => {
         >
           Woo Commerce Order
         </button>
+           <Link
+            to={"/seller/orders/web-store-order"}
+            className={`px-4 py-1 text-white border bg-gray-500
+            `}
+        >
+          Doob Order
+        </Link>
       </div>
 
       <nav className="flex flex-wrap md:gap-4 gap-2  mt-6">

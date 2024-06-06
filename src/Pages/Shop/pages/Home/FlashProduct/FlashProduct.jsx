@@ -1,27 +1,23 @@
+import { useQuery } from "@tanstack/react-query";
+import BrightAlert from "bright-alert";
 import React, { useContext, useEffect, useState } from "react";
 import {
   FaBasketShopping,
   FaCircle,
   FaFacebook,
   FaInstagram,
-  FaMessage,
-  FaXTwitter,
+  FaXTwitter
 } from "react-icons/fa6";
-import { MdDone } from "react-icons/md";
-import ProductDescription from "../../../../Home/Product/ProductDetails/ProductDescription";
-import ProductReviews from "../../../../Home/Product/ProductDetails/ProductReviews";
-import TrendingProducts from "../../../../Home/Product/ProductDetails/TrendingProducts";
 import {
   Link,
   useLoaderData,
   useLocation,
   useNavigate,
 } from "react-router-dom";
-import { Helmet } from "react-helmet";
-import MetaHelmet from "../../../../../Helmate/Helmate";
 import { ShopAuthProvider } from "../../../../../AuthProvider/ShopAuthProvide";
-import { useQuery } from "@tanstack/react-query";
-import BrightAlert from "bright-alert";
+import MetaHelmet from "../../../../../Helmate/Helmate";
+import ProductDescription from "../../../../Home/Product/ProductDetails/ProductDescription";
+import ProductReviews from "../../../../Home/Product/ProductDetails/ProductReviews";
 import TrandingProductShop from "../../Product/TrandingProductShop/TrandingProductShop";
 
 const FlashProduct = () => {

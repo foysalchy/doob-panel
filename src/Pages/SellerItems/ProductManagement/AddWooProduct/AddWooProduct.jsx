@@ -1,13 +1,12 @@
-import React, { useContext, useState } from "react";
-import { AuthContext } from "../../../../AuthProvider/UserProvider";
 import { useQuery } from "@tanstack/react-query";
-import Select from "react-select";
-import Swal from "sweetalert2";
-import WareHouse from "../SellerAddProduct/Components/WareHouse";
-import Meta from "../SellerAddProduct/Components/Meta";
+import React, { useContext, useState } from "react";
 import { BsArrowRight } from "react-icons/bs";
-import Variants from "../SellerAddProduct/Components/Variants";
+import Swal from "sweetalert2";
+import { AuthContext } from "../../../../AuthProvider/UserProvider";
+import Meta from "../SellerAddProduct/Components/Meta";
 import OnlySyncCategory from "../SellerAddProduct/Components/OnlySyncCategory";
+import Variants from "../SellerAddProduct/Components/Variants";
+import WareHouse from "../SellerAddProduct/Components/WareHouse";
 
 const AddWooProduct = () => {
   const { shopInfo } = useContext(AuthContext);
@@ -46,7 +45,7 @@ const AddWooProduct = () => {
     },
   });
 
-  console.log(selectedOption.sku);
+ 
 
   const handleSelectChange = (product) => {
     setSelectedOption(product);
@@ -165,7 +164,10 @@ const AddWooProduct = () => {
 
   return (
     <div>
-      <h1 className="text-center">Add Woo Product</h1>
+        {!shopInfo.woo ? (
+        
+     <div>
+       <h1 className="text-center">Add Woo Product</h1>
       <form onSubmit={dataSubmit} className="mt-4" action="">
         <div className="relative inline-block w-full">
           <button
@@ -302,6 +304,15 @@ const AddWooProduct = () => {
           </button>
         </div>
       </form>
+     </div>
+        
+      ):(
+        <div className="bg-red-100 border-l-4 border-red-500  py-6 text-center  rounded-md">
+        <h1 className="text-red-700 font-bold">
+        Please First Connect Your Wocommerce Account
+        </h1>
+      </div>
+      )}
     </div>
   );
 };

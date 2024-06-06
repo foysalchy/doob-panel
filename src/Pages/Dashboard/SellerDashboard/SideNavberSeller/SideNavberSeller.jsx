@@ -27,7 +27,6 @@ import {
   BsHddNetworkFill,
   BsHeadset,
   BsLayoutTextSidebarReverse,
-  BsLifePreserver,
   BsPersonLinesFill,
   BsPrinter,
   BsShop,
@@ -1586,6 +1585,18 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                   ) ? (
                                     managementPermission("SubscriptionModel") && (
                                       <>
+                                    
+                            <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
+                              <Link
+                                to={"/seller/service/manage-service"}
+                                className="w-full"
+                              >
+                                <div className="w-full hover:bg-[#1b202ea1]">
+                                  My Service
+                                </div>
+                              </Link>
+                            </li>
+                        
                                         <li className="rounded-sm hover:bg-gray-800">
                                           <Link
                                             to={"/seller/subscription-management"}
@@ -1613,6 +1624,16 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                   ) : null
                                 ) : (
                                   <>
+                                   <li className="rounded-sm hover:bg-gray-800">
+                              <Link
+                                to={"/seller/service/manage-service"}
+                                className="flex items-center p-2 space-x-3 rounded-md"
+                              >
+                                <div className="w-full hover:bg-[#1b202ea1]">
+                                  My Service
+                                </div>
+                              </Link>
+                            </li>
                                     <li className="rounded-sm hover:bg-gray-800">
                                       <Link
                                         to={"/seller/subscription-management"}
@@ -1677,6 +1698,16 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                 ) ? (
                                   managementPermission("SubscriptionModel") && (
                                     <>
+                                     <li className="rounded-sm hover:bg-gray-800">
+                              <Link
+                                to={"/seller/service/manage-service"}
+                                className="flex items-center p-2 space-x-3 rounded-md"
+                              >
+                                <div className="w-full hover:bg-[#1b202ea1]">
+                                  My Service
+                                </div>
+                              </Link>
+                            </li>
                                       <li className="rounded-sm hover:bg-gray-800">
                                         <Link
                                           to={"/seller/subscription-management"}
@@ -1704,6 +1735,16 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                                 ) : null
                               ) : (
                                 <>
+                                  <li className="rounded-sm hover:bg-gray-800">
+                              <Link
+                                to={"/seller/service/manage-service"}
+                                className="flex items-center p-2 space-x-3 rounded-md"
+                              >
+                                <div className="w-full hover:bg-[#1b202ea1]">
+                                  My Service
+                                </div>
+                              </Link>
+                            </li>
                                   <li className="rounded-sm hover:bg-gray-800">
                                     <Link
                                       to={"/seller/subscription-management"}
@@ -2636,78 +2677,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
                     )}
 
                     {/* service management */}
-                    {user?.staffRole ? (
-                      user?.permissions.find(
-                        (itm) => itm?.name === "Services"
-                      ) ? (
-                        <li className=" ">
-                          {/* <Link to={'/seller/orders'} rel="noopener noreferrer" href="#" className="flex items-center p-2 space-x-3 rounded-md">
-                                                    <BiArchive className="w-5 h-5 text-gray-400" />
-                                                    <span>Order Management</span>
-                                                </Link> */}
-                          <div
-
-                            className="group [&_summary::-webkit-details-marker]:hidden items-center rounded-sm  "
-                          >
-                            <div className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
-                              <div onClick={() => handleToggle(11)} className="flex cursor-pointer items-center gap-2">
-                                <BsLifePreserver className="w-5 h-5 fill-current text-gray-400" />
-                                <span>My Service</span>
-                              </div>
-
-                              <span className="shrink-0 transition duration-300 group-open:-rotate-180">
-                                <IoIosArrowDown className="h-5 w-5" />
-                              </span>
-                            </div>
-                            {openDropdownIndex === 11 && (
-                              <ul className="mt-2 space-y-1   px-2 bg-[#1b202ea1] border border-gray-500 py-2 border-opacity-50">
-                                <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                                  <Link
-                                    to={"/seller/service/manage-service"}
-                                    className="w-full"
-                                  >
-                                    <div className="w-full hover:bg-[#1b202ea1]">
-                                      My Service
-                                    </div>
-                                  </Link>
-                                </li>
-                              </ul>
-                            )}
-                          </div>
-                        </li>
-                      ) : null
-                    ) : (
-                      <div
-
-                        className="group [&_summary::-webkit-details-marker]:hidden items-center rounded-sm  "
-                      >
-                        <div className="flex cursor-pointer items-center justify-between  p-2 rounded-sm hover:bg-gray-800 text-gray-50">
-                          <div onClick={() => handleToggle(11)} className="flex cursor-pointer items-center gap-2">
-                            <BsLifePreserver className="w-5 h-5 fill-current text-gray-400" />
-                            <span>My Service</span>
-                          </div>
-
-                          <span className="shrink-0 transition duration-300 group-open:-rotate-180">
-                            <IoIosArrowDown className="h-5 w-5" />
-                          </span>
-                        </div>
-                        {openDropdownIndex === 11 && (
-                          <ul className="mt-2 space-y-1   px-2 bg-[#1b202ea1] border border-gray-500 py-2 border-opacity-50">
-                            <li className="flex cursor-pointer items-center justify-between  rounded-sm hover:bg-gray-800 text-gray-50">
-                              <Link
-                                to={"/seller/service/manage-service"}
-                                className="w-full"
-                              >
-                                <div className="w-full hover:bg-[#1b202ea1]">
-                                  My Service
-                                </div>
-                              </Link>
-                            </li>
-                          </ul>
-                        )}
-                      </div>
-                    )}
-
+                   
                     {/* stock dropdown */}
 
                     {user?.staffRole ? (

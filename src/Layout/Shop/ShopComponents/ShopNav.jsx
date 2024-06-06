@@ -6,7 +6,7 @@ import { BsFillPinMapFill } from "react-icons/bs";
 import { CgProfile } from "react-icons/cg";
 import { FaSignOutAlt } from "react-icons/fa";
 import { FaUser } from "react-icons/fa6";
-import { IoLogIn, IoSettings } from "react-icons/io5";
+import { IoSettings } from "react-icons/io5";
 import {
   MdMenu,
   MdOutlineFavoriteBorder,
@@ -90,7 +90,11 @@ const ShopNav = () => {
       return data;
     },
   });
-
+  const handleKeyPress = (event) => {
+    if (event.key === 'Enter') {
+      searchData();
+    }
+  };
   const {
     data: shop = {},
     isLoading,
@@ -194,8 +198,9 @@ const ShopNav = () => {
               <input
                 value={searchTerm}
                 onChange={handleInputChange}
+                onKeyDown={handleKeyPress}
                 className="w-full pl-4  bg-gray-100 outline-none h-full"
-                placeholder="Search."
+                placeholder="Search.."
                 type="search"
               />
               <button
@@ -289,42 +294,58 @@ const ShopNav = () => {
             </li>
             <li>
               {!shopUser ? (
-                <Link
-                  to={`/shop/${shopId}/sign-in`}
-                  className="px-6 py-1 rounded duration-200 hover:bg-[black] flex items-center gap-2 hover:text-white text-black"
-                  aria-label="Sign up"
-                  title="Sign up"
-                >
-                  <IoLogIn className="text-xl" /> Login
-                </Link>
+                  <li>
+                  <Link
+                     to={`/shop/${shopId}/sign-in`}
+                    aria-label="Sign up"
+                    className="flex items-center gap-2"
+                    title="Sign up"
+                  >
+                    <div className="inline-flex items-center bg-gray-900 w-[30px] h-[30px] p-2 rounded-full justify-center relative">
+                      <FaUser className=" text-white" />
+                     
+                    </div>
+                    Login
+                  </Link>
+                </li>
+
+                
               ) : (
                 <div>
                   <div className="relative inline-block">
                     {/* Dropdown toggle button */}
+                   
+
                     <button
-                      onClick={() => setIsOpen(!isOpen)}
-                      className="relative z-10 text-gray-700 bg-white border border-transparent rounded-full dark:text-white focus:border-blue-500 focus:ring-opacity-40  h-[30px] w-[30px] dark:focus:ring-opacity-40 focus:ring-blue-300 dark:focus:ring-blue-400 focus:ring dark:bg-gray-800 focus:outline-none flex items-center justify-center"
-                    >
-                      <FaUser className="m-auto" />
-                      {/* {shopUser?.name.slice(0, 1)} */}
-                    </button>
+                    onClick={() => setIsOpen(!isOpen)}
+                    aria-label="Sign up"
+                    className="flex items-center gap-2"
+                    title="Sign up"
+                  >
+                    <div className="inline-flex items-center bg-gray-900 w-[30px] h-[30px] p-2 rounded-full justify-center relative">
+                      <FaUser className=" text-white" />
+                     
+                    </div>
+                    Account
+                  </button>
 
                     {/* Dropdown menu */}
                     <div
-                      className={`absolute right-0 z-20 w-48 py-2 mt-2 origin-top-right bg-white rounded-md shadow-xl dark:bg-gray-800 ${isOpen ? "block" : "hidden"
+                        styele={{background:"white"}}
+                      className={`absolute right-0 z-20 w-48 py-2 mt-2 origin-top-right  rounded-md shadow-xl dark:bg-gray-800 ${isOpen ? "block" : "hidden"
                         }`}
                       onClick={() => setIsOpen(false)}
                     >
                       <Link
                         to={`/shop/${shopId}/user/my-profile`}
-                        className="flex justify-center items-center px-3 py-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white"
+                        className="flex justify-center items-left px-3 py-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white"
                       >
                         <CgProfile className="w-5 h-5 mx-1" />
                         <span className="mx-1">View Profile</span>
                       </Link>
                       <Link
                         to={`/shop/${shopId}/user/my-orders`}
-                        className="flex mx-auto items-center px-10 py-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white"
+                        className="flex mx-auto items-left px-10 py-3 text-sm text-black-600 capitalize transition-colors duration-300 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white"
                       >
                         <MdOutlineFavoriteBorder className="w-5  h-5 mx-1" />
                         <span className="mx-1">My Orders</span>
@@ -332,17 +353,17 @@ const ShopNav = () => {
 
                       <a
                         href="#"
-                        className="flex mx-auto items-center px-10 py-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white"
+                        className="flex mx-auto items-left px-10 py-3 text-sm text-black-600 capitalize transition-colors duration-300 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white"
                       >
                         <IoSettings className="w-5 h-5 mx-1" />
                         <span className="mx-1">Settings</span>
                       </a>
 
-                      <hr className="border-gray-200 dark:border-gray-700" />
+                      <hr className="border-gray-200 dark:border-black-700" />
 
                       <a
                         href="#"
-                        className="flex items-center p-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white"
+                        className="flex items-center p-3 text-sm text-black-600 capitalize transition-colors duration-300 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white"
                       >
                         <svg
                           className="w-5 h-5 mx-1"
@@ -355,7 +376,7 @@ const ShopNav = () => {
 
                       <button
                         onClick={() => logOut()}
-                        className="flex justify-center w-full items-center p-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white"
+                        className="flex justify-center w-full items-center p-3 text-sm text-black-600 capitalize transition-colors duration-300 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white"
                       >
                         <FaSignOutAlt className="w-5 h-5 mx-1" />
                         <span className="mx-1">Sign Out</span>
