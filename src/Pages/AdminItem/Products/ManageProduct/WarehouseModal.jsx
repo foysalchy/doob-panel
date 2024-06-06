@@ -170,8 +170,8 @@ const WarehouseModal = ({
   const updateInfo = (e) => {
     e.preventDefault();
     // const handling = e.target.handling.value;
-    const Commission = e.target.commission.value ?? 0;
-    const Packaging_cost = e.target.commission.value ?? 0;
+    const Commission = e.target?.commission?.value ?? 0;
+    const Packaging_cost = e.target?.commission?.value ?? 0;
 
     const adminCategory = [
       { name: selectedWarehouse },
@@ -291,6 +291,9 @@ const WarehouseModal = ({
                   /> */}
                 </div>
               </div>
+            )}
+            {!product.multiVendor && (
+              <h2 className="my-3 text-red-500">This is Not multiVendor</h2>
             )}
             {product?.adminWare && (
               <div>
@@ -473,6 +476,11 @@ const WarehouseModal = ({
                   </span>
                 </div>
               </div>
+            )}
+            {!product?.adminWare && (
+              <h2 className="my-3 text-red-500">
+                This is not your warehouse Product
+              </h2>
             )}
           </div>
           <div className="-mx-3 flex flex-wrap">

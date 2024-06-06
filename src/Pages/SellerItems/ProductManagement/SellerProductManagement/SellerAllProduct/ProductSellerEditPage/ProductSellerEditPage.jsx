@@ -47,6 +47,7 @@ const ProductSellerEditPage = () => {
   const product = state;
 
   console.log(product?._id);
+  console.log(product);
 
   const [allImage, setAllImage] = useState([
     product?.featuredImage,

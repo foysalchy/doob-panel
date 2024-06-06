@@ -56,33 +56,42 @@ const ManageProduct = () => {
 
   const filteredData = all
     ? all_products.filter(
-      (item) =>
-        (item?.name &&
-          item.name.toLowerCase().includes(searchQuery.toLowerCase())) ||
-        (item?._id && item._id.toString().includes(searchQuery.toLowerCase()))
-    )
+        (item) =>
+          (item?.name &&
+            item.name.toLowerCase().includes(searchQuery.toLowerCase())) ||
+          (item?._id && item._id.toString().includes(searchQuery.toLowerCase()))
+      )
     : doobProduct
-      ? products.filter(
+    ? products.filter(
         (item) =>
           (item.name &&
             item.name.toLowerCase().includes(searchQuery.toLowerCase())) ||
           (item._id && item._id.toString().includes(searchQuery.toLowerCase()))
       )
-      : othersProduct.filter(
+    : othersProduct.filter(
         (item) =>
           (item.name &&
             item.name.toLowerCase().includes(searchQuery.toLowerCase())) ||
           (item._id && item._id.toString().includes(searchQuery.toLowerCase()))
       );
 
-  const updateProductStatus = (id, status) => {
+  const updateProductStatus = (product, status) => {
+    console.log(
+      parseInt(product.commission),
+      "and",
+      parseInt(product?.handling)
+    );
+    if (status === true && !product?.handling && !product?.commission) {
+      setModalOpen(product?._id);
+      return;
+    }
     fetch(`https://backend.doob.com.bd/api/v1/seller/update-product-status`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        id,
+        id: product?._id,
         status,
       }),
     })
@@ -90,7 +99,7 @@ const ManageProduct = () => {
       .then((data) => {
         BrightAlert();
         refetch();
-        reload()
+        reload();
       });
   };
 
@@ -132,7 +141,8 @@ const ManageProduct = () => {
 
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
-  const currentItems = filteredData?.length && filteredData?.slice(startIndex, endIndex);
+  const currentItems =
+    filteredData?.length && filteredData?.slice(startIndex, endIndex);
 
   const [loading, setLoading] = useState(false);
   const handleSubmit = (e) => {
@@ -161,7 +171,7 @@ const ManageProduct = () => {
         setLoading(false);
         BrightAlert();
         refetch();
-        reload()
+        reload();
       });
   };
 
@@ -279,14 +289,9 @@ const ManageProduct = () => {
   const [seller_warehouse, setSellerWarehouse] = useState(false);
   const [doob_warehouse, setDoob_warehouse] = useState(false);
 
-  console.log(currentItems, 'Hello js...');
+  console.log(currentItems, "Hello js...");
   return (
     <div className="">
-       
-
-    
-
-
       <div className="flex justify-between items-">
         <div className="flex items-center gap-6">
           <h2 className="text-lg font-medium text-gray-800 ">All Product</h2>
@@ -294,42 +299,40 @@ const ManageProduct = () => {
             {filteredData?.length}
           </span>
         </div>
-
-       
       </div>
       <div className="flex">
-      <div className="relative  my-2 mr-10">
-        <input
-          type="text"
-          id="Search"
-          value={searchQuery}
-          onChange={handleSearch}
-          placeholder="Search for..."
-          className="w-full px-5 rounded-md border border-gray-900 py-2.5 pe-10 shadow-sm sm:text-sm"
-        />
+        <div className="relative  my-2 mr-10">
+          <input
+            type="text"
+            id="Search"
+            value={searchQuery}
+            onChange={handleSearch}
+            placeholder="Search for..."
+            className="w-full px-5 rounded-md border border-gray-900 py-2.5 pe-10 shadow-sm sm:text-sm"
+          />
 
-        <span className="absolute inset-y-0 end-0 grid w-10 place-content-center">
-          <button type="button" className="text-gray-600 hover:text-gray-700">
-            <span className="sr-only">Search</span>
+          <span className="absolute inset-y-0 end-0 grid w-10 place-content-center">
+            <button type="button" className="text-gray-600 hover:text-gray-700">
+              <span className="sr-only">Search</span>
 
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth="1.5"
-              stroke="currentColor"
-              className="h-4 w-4 text-black"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
-              />
-            </svg>
-          </button>
-        </span>
-      </div>
-      <div className="flex items-center gap-2">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth="1.5"
+                stroke="currentColor"
+                className="h-4 w-4 text-black"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
+                />
+              </svg>
+            </button>
+          </span>
+        </div>
+        <div className="flex items-center gap-2">
           <button
             className="bg-white px-3 border py-2 rounded text-black border"
             onClick={create_barcode}
@@ -340,44 +343,52 @@ const ManageProduct = () => {
           <button
             onClick={logSelectedProducts}
             disabled={!selectProducts.length}
-            className="bg-white border rounded px-6">
+            className="bg-white border rounded px-6"
+          >
             Print
           </button>
 
           <button
-            onClick={() => { setAll(true), setSellerWarehouse(false), setDoobProduct(false), setDoob_warehouse(false) }}
-            className={`${all ? "bg-green-200" : " bg-white"
-              } px-3  py-2 rounded text-black border`}
+            onClick={() => {
+              setAll(true),
+                setSellerWarehouse(false),
+                setDoobProduct(false),
+                setDoob_warehouse(false);
+            }}
+            className={`${
+              all ? "bg-green-200" : " bg-white"
+            } px-3  py-2 rounded text-black border`}
           >
             All Warehouse
           </button>
           <button
             onClick={() => {
-              setDoobProduct(true), setAll(false), setSellerWarehouse(false), setDoob_warehouse(true)
+              setDoobProduct(true),
+                setAll(false),
+                setSellerWarehouse(false),
+                setDoob_warehouse(true);
             }}
-            className={`${doob_warehouse ? "bg-green-200" : " bg-white"
-              } px-3  py-2 rounded text-black border`}
+            className={`${
+              doob_warehouse ? "bg-green-200" : " bg-white"
+            } px-3  py-2 rounded text-black border`}
           >
             Doob Warehouse
           </button>
           <button
             onClick={() => {
-              setDoobProduct(false), setAll(false); setDoob_warehouse(false), setSellerWarehouse(true)
+              setDoobProduct(false), setAll(false);
+              setDoob_warehouse(false), setSellerWarehouse(true);
             }}
-            className={`${seller_warehouse ? "bg-green-200" : " bg-white"
-              } px-3  py-2 rounded text-black border`}
+            className={`${
+              seller_warehouse ? "bg-green-200" : " bg-white"
+            } px-3  py-2 rounded text-black border`}
           >
             Seller Warehouse
           </button>
         </div>
       </div>
 
-
-
       <section className=" mx-auto">
-
-
-
         <div className="flex flex-col mt-6">
           <div className="overflow-x-auto">
             <div className="  py-2">
@@ -405,7 +416,6 @@ const ManageProduct = () => {
                             }
                             onChange={handleSelectAll}
                           />
-
                         </label>
                       </th>
                       <th
@@ -455,258 +465,257 @@ const ManageProduct = () => {
                   <tbody className="bg-white divide-y  divide-gray-200 ">
                     {currentItems.length
                       ? currentItems?.map((product, i) => {
-                        return (
-                          <tr>
-                            <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                              <div className="inline-flex items-center gap-x-3">
-                                <label>
-                                  <input
-                                    type="checkbox"
-                                    checked={selectProducts.includes(
-                                      product._id
-                                    )}
-                                    onChange={() =>
-                                      handleUpdateCheck(product._id)
-                                    }
-                                  />
-                                </label>
-                              </div>
-                            </td>
-                            <td>
-                              <div className="flex  duration-150 items-start gap-9 relative">
-                                <div className="imgSm w-[20px] h-[20px] bg-red-50">
-                                  <div
-                                    style={{
-                                      backgroundImage: `url(${product?.featuredImage?.src
-                                          ? product?.featuredImage?.src
-                                          : product?.images[0]?.src
-                                        })`,
-                                    }}
-                                    className="w-12 h-12 object-cover bg-cover rounded-md border border-[#8080809d] overflow-hidden"
-                                  ></div>
-                                  <div
-                                    style={{
-                                      backgroundImage: `url(${product?.featuredImage?.src
-                                          ? product?.featuredImage?.src
-                                          : product?.images[0]?.src
-                                        })`,
-                                    }}
-                                    className="absolute top-[-40px] z-50 duration-150 abs hidden bg-[url(${product?.featuredImage?.src})] left-[43px] object-cover bg-cover bg-white shadow-xl w-[150px] h-[150px] ring-1 ring-gray-500"
-                                  ></div>
+                          return (
+                            <tr>
+                              <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
+                                <div className="inline-flex items-center gap-x-3">
+                                  <label>
+                                    <input
+                                      type="checkbox"
+                                      checked={selectProducts.includes(
+                                        product._id
+                                      )}
+                                      onChange={() =>
+                                        handleUpdateCheck(product._id)
+                                      }
+                                    />
+                                  </label>
                                 </div>
+                              </td>
+                              <td>
+                                <div className="flex  duration-150 items-start gap-9 relative">
+                                  <div className="imgSm w-[20px] h-[20px] bg-red-50">
+                                    <div
+                                      style={{
+                                        backgroundImage: `url(${
+                                          product?.featuredImage?.src
+                                            ? product?.featuredImage?.src
+                                            : product?.images[0]?.src
+                                        })`,
+                                      }}
+                                      className="w-12 h-12 object-cover bg-cover rounded-md border border-[#8080809d] overflow-hidden"
+                                    ></div>
+                                    <div
+                                      style={{
+                                        backgroundImage: `url(${
+                                          product?.featuredImage?.src
+                                            ? product?.featuredImage?.src
+                                            : product?.images[0]?.src
+                                        })`,
+                                      }}
+                                      className="absolute top-[-40px] z-50 duration-150 abs hidden bg-[url(${product?.featuredImage?.src})] left-[43px] object-cover bg-cover bg-white shadow-xl w-[150px] h-[150px] ring-1 ring-gray-500"
+                                    ></div>
+                                  </div>
 
-                                <div>
-                                  <h2 className="font-medium text-gray-800 ">
-                                    {product.name &&
-                                      product?.name
-                                        .split(" ")
-                                        .slice(0, 5)
-                                        .join(" ")}
-                                  </h2>
-                                  <p className="text-sm font-normal  text-gray-400">
-                                    {product && product?._id}
-                                  </p>
+                                  <div>
+                                    <h2 className="font-medium text-gray-800 ">
+                                      {product.name &&
+                                        product?.name
+                                          .split(" ")
+                                          .slice(0, 5)
+                                          .join(" ")}
+                                    </h2>
+                                    <p className="text-sm font-normal  text-gray-400">
+                                      {product && product?._id}
+                                    </p>
+                                  </div>
                                 </div>
-                              </div>
-                            </td>
-                            <td className="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                              {product.status === true ? (
-                                <button
-                                  onClick={() =>
-                                    updateProductStatus(product._id, false)
-                                  }
-                                  className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 cursor-pointer bg-emerald-100/60 bg-gray-800"
-                                >
-                                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-                                  <h2 className="text-sm font-normal text-emerald-500">
-                                    Active
-                                  </h2>
-                                </button>
-                              ) : (
-                                (() => {
-                                  {
-                                    /* const filteredWarehouses =
+                              </td>
+                              <td className="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
+                                {product.status === true ? (
+                                  <button
+                                    onClick={() =>
+                                      updateProductStatus(product, false)
+                                    }
+                                    className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 cursor-pointer bg-emerald-100/60 bg-gray-800"
+                                  >
+                                    <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                                    <h2 className="text-sm font-normal text-emerald-500">
+                                      Active
+                                    </h2>
+                                  </button>
+                                ) : (
+                                  (() => {
+                                    {
+                                      /* const filteredWarehouses =
                                     product?.warehouse?.filter(
                                       (ware) => ware.name !== ""
                                     ); */
-                                  }
-                                  // console.log(filteredWarehouses);
-                                  return (
-                                    <button
-                                      // disabled={
-                                      //   filteredWarehouses?.length < 2
-                                      // }
-                                      onClick={() =>
-                                        updateProductStatus(product._id, true)
-                                      }
-                                      className="inline-flex items-center px-3 py-1 rounded-full cursor-pointer gap-x-2 bg-emerald-100/60 bg-gray-800"
+                                    }
+                                    // console.log(filteredWarehouses);
+                                    return (
+                                      <button
+                                        // disabled={
+                                        //   filteredWarehouses?.length < 2
+                                        // }
+                                        onClick={() =>
+                                          updateProductStatus(product, true)
+                                        }
+                                        className="inline-flex items-center px-3 py-1 rounded-full cursor-pointer gap-x-2 bg-emerald-100/60 bg-gray-800"
+                                      >
+                                        <span className="h-1.5 w-1.5 rounded-full bg-red-500" />
+                                        <h2 className="text-sm font-normal text-red-500">
+                                          Pending
+                                        </h2>
+                                      </button>
+                                    );
+                                  })()
+                                )}
+                              </td>
+
+                              <td className="px-4 py-4 text-sm text-black whitespace-nowrap  gap-1">
+                                {product?.categories?.length &&
+                                  product?.categories?.map((itm, index) => (
+                                    <div
+                                      className="text-sm  items-left "
+                                      key={index}
                                     >
-                                      <span className="h-1.5 w-1.5 rounded-full bg-red-500" />
-                                      <h2 className="text-sm font-normal text-red-500">
-                                        Pending
-                                      </h2>
-                                    </button>
-                                  );
-                                })()
-                              )}
-                            </td>
-
-                            <td className="px-4 py-4 text-sm text-black whitespace-nowrap  gap-1">
-                              {product?.categories?.length &&
-                                product?.categories?.map((itm, index) => (
-                                  <div
-                                    className="text-sm  items-left "
-                                    key={index}
-                                  >
-                                    
-                                    {itm?.name}
-                                    
-                                  </div>
-                                ))}
-                            </td>
-                            <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
-                              {/* {product?.warehouse?.map((ware) => ware?.name)} */}
-                              <button
-                                className="inline- items-center px-2 py-1  cursor-pointer bg-emerald-100/60 bg-gray-800 text-white"
-                                onClick={() => setModalOpen(product?._id)}
-                              >
-                                {" "}
-                                {/* {"Select Warehouse"} */}
-                                {product?.warehouse?.filter(
-                                  (item) => item?.name
-                                )?.length
-                                  ? product?.warehouse?.map((ware, index) => (
-                                    <p key={ware?.name}>
-                                      {ware?.name}
-
-                                    
-                                    </p>
-                                  ))
-                                  : "Select Warehouse"}
-                              </button>
-                            </td>
-                            <td className="px-4 py-4 text-sm whitespace-nowrap">
-                              <div className="flex items-center gap-x-2">
-                               Processing {editMode === product._id &&
+                                      {itm?.name}
+                                    </div>
+                                  ))}
+                              </td>
+                              <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
+                                {/* {product?.warehouse?.map((ware) => ware?.name)} */}
+                                <button
+                                  className="inline- items-center px-2 py-1  cursor-pointer bg-emerald-100/60 bg-gray-800 text-white"
+                                  onClick={() => setModalOpen(product?._id)}
+                                >
+                                  {" "}
+                                  {/* {"Select Warehouse"} */}
+                                  {product?.warehouse?.filter(
+                                    (item) => item?.name
+                                  )?.length
+                                    ? product?.warehouse?.map((ware, index) => (
+                                        <p key={ware?.name}>{ware?.name}</p>
+                                      ))
+                                    : "Select Warehouse"}
+                                </button>
+                              </td>
+                              <td className="px-4 py-4 text-sm whitespace-nowrap">
+                                <div className="flex items-center gap-x-2">
+                                  Processing{" "}
+                                  {editMode === product._id &&
                                   editedCommission ? (
-                                  <div className="flex gap-2 ">
-                                    <input
-                                      type="text"
-                                      defaultValue={product?.commission}
-                                      onChange={(e) =>
-                                        setEditedValues({
-                                          commission: e.target.value,
-                                        })
-                                      }
-                                      className="px-3 w-12 py-1 text-sm border rounded bg-gray-100"
-                                    />
-                                    <button>
-                                      <BiSave onClick={save_input} />
-                                    </button>
-                                  </div>
-                                ) : (
-                                  <button
-                                    onClick={() =>
-                                      check_input(
-                                        product._id,
-                                        true,
-                                        false,
-                                        product.warehouse,
-                                        {
-                                          commission: product?.commission,
-                                          handling: product?.handling,
+                                    <div className="flex gap-2 ">
+                                      <input
+                                        type="text"
+                                        defaultValue={product?.commission}
+                                        onChange={(e) =>
+                                          setEditedValues({
+                                            commission: e.target.value,
+                                          })
                                         }
-                                      )
-                                    }
-                                    className="px-3 py-1 flex items-center gap-2 text-xs text-indigo-500 rounded-full bg-gray-800 bg-indigo-100/60"
-                                  >
-                                    {product?.commission}
-                                    <BiEdit />
-                                  </button>
-                                )}
-                              </div>
-                            
-                              <div className="flex items-center gap-x-2 py-3">
-                               Packaging: {editMode === product._id && editedHandling ? (
-                                  <div className="flex gap-2 ">
-                                    <input
-                                      type="text"
-                                      defaultValue={product.handling}
-                                      onChange={(e) =>
-                                        setEditedValues({
-                                          handling: e.target.value,
-                                        })
+                                        className="px-3 w-12 py-1 text-sm border rounded bg-gray-100"
+                                      />
+                                      <button>
+                                        <BiSave onClick={save_input} />
+                                      </button>
+                                    </div>
+                                  ) : (
+                                    <button
+                                      onClick={() =>
+                                        check_input(
+                                          product._id,
+                                          true,
+                                          false,
+                                          product.warehouse,
+                                          {
+                                            commission: product?.commission,
+                                            handling: product?.handling,
+                                          }
+                                        )
                                       }
-                                      className="px-3 py-1 w-12 text-sm border rounded bg-gray-100"
-                                    />
-                                    <button>
-                                      <BiSave onClick={save_input} />
+                                      className="px-3 py-1 flex items-center gap-2 text-xs text-indigo-500 rounded-full bg-gray-800 bg-indigo-100/60"
+                                    >
+                                      {product?.commission}
+                                      <BiEdit />
                                     </button>
-                                  </div>
-                                ) : (
-                                  <button
-                                    onClick={() =>
-                                      check_input(
-                                        product._id,
-                                        false,
-                                        true,
-                                        product.warehouse,
-                                        {
-                                          commission: product?.commission,
-                                          handling: product?.handling,
+                                  )}
+                                </div>
+
+                                <div className="flex items-center gap-x-2 py-3">
+                                  Packaging:{" "}
+                                  {editMode === product._id &&
+                                  editedHandling ? (
+                                    <div className="flex gap-2 ">
+                                      <input
+                                        type="text"
+                                        defaultValue={product.handling}
+                                        onChange={(e) =>
+                                          setEditedValues({
+                                            handling: e.target.value,
+                                          })
                                         }
-                                      )
-                                    }
-                                    className="px-3 py-1 text-xs text-indigo-500 flex items-center gap-2  rounded-full bg-gray-800 bg-indigo-100/60"
-                                  >
-                                    {product?.handling}
-                                    <BiEdit />
-                                  </button>
-                                )}
-                              </div>
-                            </td>
-                            <td className="px-4 py-4 text-sm flex gap-4 whitespace-nowrap">
-                              <div className="flex items-center gap-x-2">
-                                {/* <button
+                                        className="px-3 py-1 w-12 text-sm border rounded bg-gray-100"
+                                      />
+                                      <button>
+                                        <BiSave onClick={save_input} />
+                                      </button>
+                                    </div>
+                                  ) : (
+                                    <button
+                                      onClick={() =>
+                                        check_input(
+                                          product._id,
+                                          false,
+                                          true,
+                                          product.warehouse,
+                                          {
+                                            commission: product?.commission,
+                                            handling: product?.handling,
+                                          }
+                                        )
+                                      }
+                                      className="px-3 py-1 text-xs text-indigo-500 flex items-center gap-2  rounded-full bg-gray-800 bg-indigo-100/60"
+                                    >
+                                      {product?.handling}
+                                      <BiEdit />
+                                    </button>
+                                  )}
+                                </div>
+                              </td>
+                              <td className="px-4 py-4 text-sm flex gap-4 whitespace-nowrap">
+                                <div className="flex items-center gap-x-2">
+                                  {/* <button
                                     className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 cursor-pointer bg-emerald-100/60 bg-gray-800 text-white"
                                     onClick={() => setModalOpen(product?._id)}
                                   >
                                     {" "}
                                     {"Select Warehouse"}
                                   </button> */}
-                                <button className=" transition-colors duration-200 text-red-500 hover:text-red-700 focus:outline-none">
-                                  <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    strokeWidth="1.5"
-                                    stroke="currentColor"
-                                    className="w-5 h-5"
-                                  >
-                                    <path
-                                      strokeLinecap="round"
-                                      strokeLinejoin="round"
-                                      d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
-                                    />
-                                  </svg>
-                                </button>
-                                {product.product_status == "reject" ? (
-                                  <button
-                                    onClick={() => setRejectMessage(product)}
-                                    className="px-2 py-1 text-red-500 "
-                                  >
-                                    Reject Reason
+                                  <button className=" transition-colors duration-200 text-red-500 hover:text-red-700 focus:outline-none">
+                                    <svg
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      fill="none"
+                                      viewBox="0 0 24 24"
+                                      strokeWidth="1.5"
+                                      stroke="currentColor"
+                                      className="w-5 h-5"
+                                    >
+                                      <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
+                                      />
+                                    </svg>
                                   </button>
-                                ) : (
-                                  <button
-                                    onClick={() => setOpenModal(product)}
-                                    className=" transition-colors duration-200 text-white rounded px-3 py-1 bg-red-500 hover:text-red-700 focus:outline-none"
-                                  >
-                                    Reject
-                                  </button>
-                                )}
+                                  {product.product_status == "reject" ? (
+                                    <button
+                                      onClick={() => setRejectMessage(product)}
+                                      className="px-2 py-1 text-red-500 "
+                                    >
+                                      Reject Reason
+                                    </button>
+                                  ) : (
+                                    <button
+                                      onClick={() => setOpenModal(product)}
+                                      className=" transition-colors duration-200 text-white rounded px-3 py-1 bg-red-500 hover:text-red-700 focus:outline-none"
+                                    >
+                                      Reject
+                                    </button>
+                                  )}
 
-                                {/* <button
+                                  {/* <button
                               onClick={() => setOpenModal(product)}
                               className=" transition-colors duration-200 hover:text-yellow-500  text-yellow-700 focus:outline-none">
                               <svg
@@ -725,84 +734,89 @@ const ManageProduct = () => {
                               </svg>
                             </button> */}
 
-                                {/* modal */}
-                                {/* <EditProduct openModal={openModal} setOpenModal={setOpenModal} product={product} /> */}
-                                {/* modal end */}
+                                  {/* modal */}
+                                  {/* <EditProduct openModal={openModal} setOpenModal={setOpenModal} product={product} /> */}
+                                  {/* modal end */}
+                                </div>
+                                <div>
+                                  <Link
+                                    className="mx-4"
+                                    to={`/products/${product._id}`}
+                                  >
+                                    <BsEye />
+                                  </Link>
+                                </div>
+                              </td>
+                              <div className="h-0 w-0">
+                                {modalOpen == product?._id && (
+                                  <WarehouseModal
+                                    doobProduct={doobProduct}
+                                    modalOpen={modalOpen}
+                                    product={product}
+                                    setModalOpen={setModalOpen}
+                                    reload={reload}
+                                  />
+                                )}
                               </div>
+                              {/* reject modal */}
                               <div>
-                                <Link
-                                  className="mx-4"
-                                  to={`/products/${product._id}`}
-                                >
-                                  <BsEye />
-                                </Link>
-                              </div>
-                            </td>
-                            <div className="h-0 w-0">
-                              {modalOpen == product?._id && (
-                                <WarehouseModal
-                                  doobProduct={doobProduct}
-                                  modalOpen={modalOpen}
-                                  product={product}
-                                  setModalOpen={setModalOpen}
-                                  reload={reload}
-                                />
-                              )}
-                            </div>
-                            {/* reject modal */}
-                            <div>
-                              <div
-                                onClick={() => setOpenModal(false)}
-                                className={`fixed z-[100] flex items-center justify-center ${openModal._id == product?._id
-                                    ? "visible opacity-100"
-                                    : "invisible opacity-0"
-                                  } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
-                              >
                                 <div
-                                  onClick={(e_) => e_.stopPropagation()}
-                                  className={`text- absolute w-[400px] rounded-sm bg-white p-6 drop-shadow-lg dark:bg-white dark:text-black ${openModal._id == product?._id
-                                      ? "scale-1 opacity-1 duration-300"
-                                      : "scale-0 opacity-0 duration-150"
-                                    }`}
+                                  onClick={() => setOpenModal(false)}
+                                  className={`fixed z-[100] flex items-center justify-center ${
+                                    openModal._id == product?._id
+                                      ? "visible opacity-100"
+                                      : "invisible opacity-0"
+                                  } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
                                 >
-                                  <form onSubmit={handleSubmit}>
-                                    <h1 className="mb-2 text-2xl font-semibold">
-                                      Rejected Message!
-                                    </h1>
-                                    <textarea
-                                      name="message"
-                                      className="w-full border mb-6 p-2"
-                                      placeholder="typer rejected message"
-                                    />
-                                    <div className="flex justify-between">
-                                      <button
-                                        type="submit"
-                                        className="me-2 rounded-sm bg-green-700 px-6 py-[6px] text-white"
-                                      >
-                                        {loading ? "Loading..." : "Submit"}
-                                      </button>
-                                      <button
-                                        type="button"
-                                        onClick={() => setOpenModal(false)}
-                                        className="rounded-sm border border-red-600 px-6 py-[6px] text-red-600 duration-150 hover:bg-red-600 hover:text-white"
-                                      >
-                                        Cancel
-                                      </button>
-                                    </div>
-                                  </form>
+                                  <div
+                                    onClick={(e_) => e_.stopPropagation()}
+                                    className={`text- absolute w-[400px] rounded-sm bg-white p-6 drop-shadow-lg dark:bg-white dark:text-black ${
+                                      openModal._id == product?._id
+                                        ? "scale-1 opacity-1 duration-300"
+                                        : "scale-0 opacity-0 duration-150"
+                                    }`}
+                                  >
+                                    <form onSubmit={handleSubmit}>
+                                      <h1 className="mb-2 text-2xl font-semibold">
+                                        Rejected Message!
+                                      </h1>
+                                      <textarea
+                                        name="message"
+                                        className="w-full border mb-6 p-2"
+                                        placeholder="typer rejected message"
+                                      />
+                                      <div className="flex justify-between">
+                                        <button
+                                          type="submit"
+                                          className="me-2 rounded-sm bg-green-700 px-6 py-[6px] text-white"
+                                        >
+                                          {loading ? "Loading..." : "Submit"}
+                                        </button>
+                                        <button
+                                          type="button"
+                                          onClick={() => setOpenModal(false)}
+                                          className="rounded-sm border border-red-600 px-6 py-[6px] text-red-600 duration-150 hover:bg-red-600 hover:text-white"
+                                        >
+                                          Cancel
+                                        </button>
+                                      </div>
+                                    </form>
+                                  </div>
                                 </div>
                               </div>
-                            </div>
-                          </tr>
-                        );
-                      })
+                            </tr>
+                          );
+                        })
                       : ""}
                   </tbody>
 
                   <div>
-                    {
-                      reject_message && <Show_Reject_Modal openModal={reject_message} setOpenModal={setRejectMessage} />
-                    }
+                    {reject_message && (
+                      <Show_Reject_Modal
+                        openModal={reject_message}
+                        setOpenModal={setRejectMessage}
+                      />
+                    )}
                   </div>
                 </table>
               </div>
@@ -827,10 +841,11 @@ const ManageProduct = () => {
                   <li key={i}>
                     <button
                       onClick={() => setCurrentPage(i + 1)}
-                      className={`bg-white border ${currentPage === i + 1
-                        ? "text-blue-600"
-                        : "text-gray-500 hover:bg-gray-100 hover:text-gray-700"
-                        } border-gray-300 leading-tight py-2 px-3 rounded`}
+                      className={`bg-white border ${
+                        currentPage === i + 1
+                          ? "text-blue-600"
+                          : "text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+                      } border-gray-300 leading-tight py-2 px-3 rounded`}
                     >
                       {i + 1}
                     </button>
@@ -842,7 +857,10 @@ const ManageProduct = () => {
                   onClick={() => setCurrentPage(currentPage + 1)}
                   disabled={
                     currentPage ===
-                    Math.ceil(filteredData?.length && filteredData?.length / itemsPerPage)
+                    Math.ceil(
+                      filteredData?.length &&
+                        filteredData?.length / itemsPerPage
+                    )
                   }
                   className="bg-white border text-gray-500 hover:bg-gray-100 hover:text-gray-700 border-gray-300 leading-tight py-2 px-3 rounded-r-lg"
                 >
@@ -859,32 +877,26 @@ const ManageProduct = () => {
 
 export default ManageProduct;
 
-
 const Show_Reject_Modal = ({ openModal, setOpenModal }) => {
-
-
-
   return (
     <div>
       <div>
         <div
           onClick={() => setOpenModal(false)}
-          className={`fixed z-[100] flex items-center justify-center ${openModal._id
-            ? "visible opacity-100"
-            : "invisible opacity-0"
-            } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
+          className={`fixed z-[100] flex items-center justify-center ${
+            openModal._id ? "visible opacity-100" : "invisible opacity-0"
+          } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
         >
           <div
             onClick={(e_) => e_.stopPropagation()}
-            className={`text- absolute w-[400px] rounded-sm bg-white p-6 drop-shadow-lg dark:bg-white dark:text-black ${openModal._id
-              ? "scale-1 opacity-1 duration-300"
-              : "scale-0 opacity-0 duration-150"
-              }`}
+            className={`text- absolute w-[400px] rounded-sm bg-white p-6 drop-shadow-lg dark:bg-white dark:text-black ${
+              openModal._id
+                ? "scale-1 opacity-1 duration-300"
+                : "scale-0 opacity-0 duration-150"
+            }`}
           >
             <form>
-              <h1 className="mb-2 text-2xl font-semibold">
-                Rejected Message!
-              </h1>
+              <h1 className="mb-2 text-2xl font-semibold">Rejected Message!</h1>
               <textarea
                 name="message"
                 value={openModal?.message}
@@ -910,7 +922,6 @@ const Show_Reject_Modal = ({ openModal, setOpenModal }) => {
           </div>
         </div>
       </div>
-
     </div>
-  )
-}
+  );
+};
