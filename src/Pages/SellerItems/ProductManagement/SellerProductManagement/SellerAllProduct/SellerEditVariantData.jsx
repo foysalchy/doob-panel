@@ -25,8 +25,9 @@ const SellerEditVariantData = ({
   setVariantInput,
 }) => {
   const { shopInfo } = useContext(AuthContext);
-  console.log(product?.variantData);
-  console.log(variantInput);
+  // console.log(product?.variantData);
+  // console.log(variantInput);
+  console.log(product?.multiVendor);
 
   console.log(
     product?.variantData?.sellingPrice ? product?.variantData?.sellingPrice : 1
@@ -298,8 +299,8 @@ const SellerEditVariantData = ({
           </label>
           <select
             defaultValue={{
-              label: product?.multiVendor,
-              value: product?.multiVendor,
+              label: product?.multiVendor === ("true" || true) ? true : false,
+              value: product?.multiVendor === ("true" || true) ? true : false,
             }}
             onChange={(e) => {
               setMultiVendor(
