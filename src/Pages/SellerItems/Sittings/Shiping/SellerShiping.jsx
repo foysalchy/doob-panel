@@ -32,7 +32,7 @@ const SellerShipping = () => {
   const [shop, setShop] = useState([]);
   const [loadingUpdate, setloadingUpdate] = useState(false);
 
-    const formRef = useRef(null);
+  const formRef = useRef(null);
   const handleGetaway = (event) => {
     const selectedValue = event.target.value;
 
@@ -62,11 +62,15 @@ const SellerShipping = () => {
     setloadingUpdate(true);
     event.preventDefault();
     const name = selectedMedia;
-    const api = event.target.api.value;
+    let api = event.target.api.value;
     const client_id = event.target.client_id.value;
     const secretKey = event.target.secretKey.value;
     const user_name = name == "Pathao" ? event.target.user_name.value : "";
     const password = name == "Pathao" ? event.target.password.value : "";
+    if (api.slice(-1) === '/') {
+      api = api.slice(0, -1); // Remove the trailing slash
+    }
+
 
     const data = {
       name,
@@ -78,7 +82,8 @@ const SellerShipping = () => {
       shop_id: shopInfo._id,
       shopId: shopInfo.shopId,
     };
-
+    console.log(data);
+    return
     // if (storePathaoData) {
     //   data["pathao_store_id"] = storePathaoData;
     // }
@@ -151,9 +156,9 @@ const SellerShipping = () => {
         setloadingUpdate(false);
         BrightAlert("Shipping interrogation Successful", "", "success");
         setOpenModal(false);
-           if (formRef.current) {
-             formRef.current.reset();
-           }
+        if (formRef.current) {
+          formRef.current.reset();
+        }
       });
   };
   const deleteHandel = (id) => {
@@ -380,9 +385,8 @@ const SellerShipping = () => {
           {/* modal for shopid */}
           {openModal && (
             <div
-              className={`fixed z-50 top-0 left-0 flex h-full min-h-screen w-full items-center justify-center bg-black bg-opacity-90 px-4 py-5 ${
-                openModal ? "block" : "hidden"
-              }`}
+              className={`fixed z-50 top-0 left-0 flex h-full min-h-screen w-full items-center justify-center bg-black bg-opacity-90 px-4 py-5 ${openModal ? "block" : "hidden"
+                }`}
             >
               <div className="w-full max-w-[800px]  rounded-[20px] bg-white pb-10  text-center ">
                 <div className="flex justify-between z-50 pt-4 items-start w-full sticky top-0 bg-gray-800 border-b border-gray-300 rounded-t-[18px] px-10">

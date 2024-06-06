@@ -22,7 +22,7 @@ const ShopCampain = () => {
   useEffect(() => {
     refetch();
   }, [shop_id])
-  console.log(shopCampainData, "---------");
+
 
   return (
     <div>
@@ -31,16 +31,16 @@ const ShopCampain = () => {
         ?.map((data) => (
           <div key={data?._id}>
             {data.products.length ? (
-              <div className="py-4 bg-black rounded mt-6">
+              <div className="py-4 bg-[black] rounded mt-6" >
                 <section className="body-font">
                   <div className="px-5">
                     <div className="flex items-center justify-between text-white">
                       <div className="flex justify-between align-items-center">
                         <div className="flex items-center gap-3">
                           <img
-                            className="h-[40px]"
-                            src="https://i.ibb.co/zfBPGTy/new-product.png"
-                            srcSet="https://i.ibb.co/zfBPGTy/new-product.png"
+                            className="h-[40px] object-cover w-[40px] "
+                            src={data.image}
+                            srcSet={data.image}
                             alt="new-product-icon"
                           />
 
@@ -60,7 +60,7 @@ const ShopCampain = () => {
                       <div className="">
                         <button
                           type="button"
-                          className="px-5 py-2 font-semibold rounded bg-gray-500 text-white text-xs "
+                          className="px-5 py-2 font-semibold border rounded bg-gray-500 text-white text-xs "
                         >
                           SHOP MORE
                         </button>

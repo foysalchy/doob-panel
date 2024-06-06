@@ -90,7 +90,7 @@ const ReviewTable = ({ search }) => {
 
 
   const updateReviewSatatus = (id, status) => {
-    fetch(`http://localhost:5001/api/v1/seller/review-status?id=${id}`, {
+    fetch(`https://backend.doob.com.bd/api/v1/seller/review-status?id=${id}`, {
       method: "PUT",
       headers: {
         "content-type": "application/json",

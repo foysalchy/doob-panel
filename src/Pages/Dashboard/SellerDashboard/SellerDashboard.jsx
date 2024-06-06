@@ -147,8 +147,8 @@ const SellerDashboard = () => {
 
   const {
     data: darazShop = [],
-    isLoading: check,
-    refetch: check_reload,
+
+    refetch: darazShopRefetch,
   } = useQuery({
     queryKey: ["darazShopBd"],
     queryFn: async () => {
@@ -160,7 +160,7 @@ const SellerDashboard = () => {
     },
   });
 
-  console.log(darazShop);
+
 
   const {
     data: priviousAccount = [],
@@ -177,9 +177,10 @@ const SellerDashboard = () => {
     },
   });
 
+
   const switchAccount = (_id, id) => {
     fetch(
-      `https://backend.doob.com.bd/api/v1/daraz/switching-your-daraz?id=${id}&loginId=${_id}`,
+      `http://localhost:5001/api/v1/daraz/switching-your-daraz?id=${id}&loginId=${_id}`,
       {
         method: "PATCH",
         headers: {
@@ -192,9 +193,20 @@ const SellerDashboard = () => {
         console.log(data); // Log response data
         Swal.fire("Success", "", "success"); // Show success message (assuming you're using SweetAlert)
         refetch(); // Refetch data
-        reload(); // Reload data
+        darazShopRefetch(); // Reload data
       });
   };
+
+  const [selectedAccount, setSelectedAccount] = useState("");
+
+
+
+  const handleChange = (event) => {
+    const [shopId, oldId] = event.target.value.split(",");
+    setSelectedAccount(event.target.value);
+    switchAccount(shopId, oldId);
+  };
+
 
   const { data: products = [] } = useQuery({
     queryKey: ["products"],
@@ -340,20 +352,25 @@ const SellerDashboard = () => {
 
   const firstAmount = parseInt(currentAvailableAmount);
 
+
+
+
+
+
   return (
     <div className="h-screen mb-10   ">
       {sellerPopupData.length
         ? popup && (
-            <div className="fixed top-0 left-0 flex items-center justify-center w-full h-full bg-black bg-opacity-90 z-50">
-              <SellerPopUp
-                onClose={onClose}
-                showModal={popup}
-                setShowModal={setPopUp}
-                data={sellerPopupData}
-                handleClose={onClose}
-              />
-            </div>
-          )
+          <div className="fixed top-0 left-0 flex items-center justify-center w-full h-full bg-black bg-opacity-90 z-50">
+            <SellerPopUp
+              onClose={onClose}
+              showModal={popup}
+              setShowModal={setPopUp}
+              data={sellerPopupData}
+              handleClose={onClose}
+            />
+          </div>
+        )
         : ""}
       <div className=" bg-gradient-to-r from-[#1493f4] to-[#835177] absolute -z-10 -top-12 -right-14 blur-2xl opacity-10"></div>
       <h1 className="text-4xl font-semibold text-gray-800 capitalize">
@@ -541,7 +558,7 @@ const SellerDashboard = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 gap-4 my-10 md:grid-cols-2 lg:grid-cols-2">
+      {/* <div className="grid grid-cols-1 gap-4 my-10 md:grid-cols-2 lg:grid-cols-2">
         <div className="w-full px-4 py-2 bg-gray-50 rounded text-blue-500 flex items-center gap-2">
           <MdEmail />
           {<h1 className="w-full"> {darazShop?.result?.account}</h1>}
@@ -549,22 +566,43 @@ const SellerDashboard = () => {
         <div className="w-full bg-gray-50 px-4 py-2 rounded text-blue-500 flex items-center gap-2">
           <h1 className="whitespace-nowrap">Previous Login</h1>
           <hr />
-          {priviousAccount
-            ?.filter(
-              (shop) => shop.result.account !== darazShop?.result?.account
-            )
-            .map((shop) => (
-              <div className=" w-full px-4 py-2 border flex items-center justify-between rounded bg-[#d2d2d2] text-sm">
-                {shop.result.account}{" "}
-                <button
-                  onClick={() => switchAccount(shop._id, shop.oldId)}
-                  className="cursor-pointer bg-blue-500 text-white  px-4 py-1 rounded flex items-center gap-2 "
-                >
-                  <LuSwitchCamera /> Switch
-                </button>
-              </div>
+          <select
+            className="w-full px-4 py-2 border rounded bg-[#d2d2d2] text-sm"
+            value={selectedAccount}
+            onChange={handleChange}
+          >
+            <option value="">Select an account</option>
+            {filteredAccounts?.map((shop) => (
+              <option key={shop._id} value={`${shop._id},${shop.oldId}`}>
+                {shop.result.account}
+              </option>
             ))}
+          </select>
         </div>
+      </div> */}
+      <div className="flex justify-end items-center gap-12 mt-8 w-full">
+        {/* <div className="w-full px-4 py-2 bg-gray-50 rounded text-blue-500 flex items-center gap-2">
+          <MdEmail />
+          {<h1 className="w-full"> {darazShop?.result?.account}</h1>}
+        </div> */}
+
+        {darazShop?.result?.account && <div className=" bg-gray-50 px-4 py-2 rounded text-blue-500 flex items-center gap-2">
+          <h1 className="whitespace-nowrap">Switch Account</h1>
+          <hr />
+          <select
+            className="w-full px-4 py-2 border rounded bg-[#d2d2d2] text-sm"
+            value={selectedAccount}
+            onChange={handleChange}
+          >
+            <option value="">{darazShop?.result?.account}</option>
+
+            {priviousAccount?.map((shop) => (
+              <option key={shop._id} value={`${shop._id},${shop.oldId}`}>
+                {shop.result.account}
+              </option>
+            ))}
+          </select>
+        </div>}
       </div>
 
       <div className="overflow-hidden mt-3 bg-[white] p-4">

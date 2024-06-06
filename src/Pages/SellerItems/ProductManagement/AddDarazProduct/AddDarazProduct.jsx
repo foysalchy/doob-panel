@@ -186,9 +186,96 @@ const AddDarazProduct = () => {
       });
   };
 
-  console.log(loading);
+
+  const {
+    data: darazShop = [],
+    isLoading,
+    refetch: refetchShop,
+  } = useQuery({
+    queryKey: ["darazShopBd"],
+    queryFn: async () => {
+      const res = await fetch(
+        `https://backend.doob.com.bd/api/v1/seller/seller-daraz-accounts?id=${shopInfo._id}`
+      );
+      const data = await res.json();
+      return data.data[0];
+    },
+  });
+
+
+
+  const {
+    data: priviousAccount = [],
+    refetch: reload,
+  } = useQuery({
+    queryKey: ["priviousAccount"],
+    queryFn: async () => {
+      const res = await fetch(
+        `https://backend.doob.com.bd/api/v1/daraz/get-privious-account?shopId=${shopInfo._id}`
+      );
+      const data = await res.json();
+      return data.data;
+    },
+  });
+
+
+  const switchAccount = (_id, id) => {
+    fetch(
+      `http://localhost:5001/api/v1/daraz/switching-your-daraz?id=${id}&loginId=${_id}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data); // Log response data
+        Swal.fire("Success", "", "success"); // Show success message (assuming you're using SweetAlert)
+        refetch(); // Refetch data
+        reload(); // Reload data
+        refetchShop();
+      });
+  };
+
+  const [selectedAccount, setSelectedAccount] = useState("");
+
+
+
+  const handleChange = (event) => {
+    const [shopId, oldId] = event.target.value.split(",");
+    setSelectedAccount(event.target.value);
+    switchAccount(shopId, oldId);
+  };
+
+
   return (
     <div>
+      <div className="flex justify-end items-center gap-12 mt-8 w-full">
+        {/* <div className="w-full px-4 py-2 bg-gray-50 rounded text-blue-500 flex items-center gap-2">
+          <MdEmail />
+          {<h1 className="w-full"> {darazShop?.result?.account}</h1>}
+        </div> */}
+
+        <div className=" bg-gray-50 px-4 py-2 rounded text-blue-500 flex items-center gap-2">
+          <h1 className="whitespace-nowrap">Switch Account</h1>
+          <hr />
+          <select
+            className="w-full px-4 py-2 border rounded bg-[#d2d2d2] text-sm"
+            value={selectedAccount}
+            onChange={handleChange}
+          >
+            <option value="">{darazShop?.result?.account}</option>
+
+            {priviousAccount?.map((shop) => (
+              <option key={shop._id} value={`${shop._id},${shop.oldId}`}>
+                {shop.result.account}
+              </option>
+            ))}
+          </select>
+        </div>
+      </div>
       <div className="border mt-4 border-gray-400 px-10 py-5 w-full bg-gray-100 rounded">
         <div className="flex flex-col">
           <span className="font-bold">Add Daraz Product.</span>

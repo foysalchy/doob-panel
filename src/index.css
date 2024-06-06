@@ -47,26 +47,30 @@ input[type="number"] {
 
 /* Webkit Browsers (Chrome, Safari, Edge) */
 ::-webkit-scrollbar {
-  width: 2px;
+  width: 4px;
   /* Set to 2px */
-  height: 2px;
+  height: 4px;
   background-color: rgb(61, 62, 62) !important;
+  cursor: move !important;
 }
 
 ::-webkit-scrollbar-thumb {
   background-color: rgb(13, 153, 177) !important;
+  cursor: move !important;
 }
 
 
 ::-moz-scrollbar {
-  width: 2px;
+  width: 4px;
   /* Set to 2px */
-  height: 2px;
+  height: 4px;
   background-color: rgb(61, 62, 62) !important;
+  cursor: move !important; 
 }
 
 ::-moz-scrollbar-thumb {
   background-color: rgb(13, 153, 177) !important;
+    cursor: move !important;
 }
 
 font-google {
