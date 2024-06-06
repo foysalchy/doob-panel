@@ -386,7 +386,7 @@ const SellerDashboard = () => {
     }
   };
 
-  console.log(check_expired());
+  // console.log(check_expired());
 
   return (
     <div className="h-screen mb-10   ">
