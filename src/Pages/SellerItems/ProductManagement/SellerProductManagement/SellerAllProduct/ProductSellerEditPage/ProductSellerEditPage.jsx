@@ -374,7 +374,7 @@ const ProductSellerEditPage = () => {
 
     fetch(
       // `https://backend.doob.com.bd/api/v1/seller/normal-product?id=${product?._id}`,
-      `https://backend.doob.com.bd/api/v1/seller/normal-product?id=${product?._id}`,
+      `http://localhost:5001/api/v1/seller/normal-product?id=${product?._id}`,
       {
         method: "PUT",
         headers: {
@@ -494,10 +494,10 @@ const ProductSellerEditPage = () => {
           />
         </div>
         {multiVendor === true && (
-        <div>
-          Wholsale Category
-          <EditAdminCategoryforSeller product={product} />
-        </div>
+          <div>
+            Wholsale Category
+            <EditAdminCategoryforSeller product={product} />
+          </div>
         )}
 
         {daraz && datazCategory?.length ? (
