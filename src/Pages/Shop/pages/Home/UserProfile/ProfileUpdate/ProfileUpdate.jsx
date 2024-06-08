@@ -7,6 +7,7 @@ const ProfileUpdate = () => {
     useContext(ShopAuthProvider);
   const [editProfile, setEditProfile] = useState(false);
 
+  console.log(shopUser);
   const submit = (e) => {
     e.preventDefault();
     const name = e.target.name.value;

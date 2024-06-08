@@ -11,7 +11,7 @@ import {
   signInWithPopup,
   signOut,
   updatePassword,
-  updateProfile
+  updateProfile,
 } from "firebase/auth";
 import React, { createContext, useEffect, useState } from "react";
 
@@ -64,7 +64,7 @@ const ShopAuth = ({ children }) => {
           `https://backend.doob.com.bd/api/v1/shop/shopId/${shopId}`
         );
         const data = await res.json();
-       
+
         return data;
       } catch (error) {
         throw error; // Rethrow the error to mark the query as failed
@@ -168,6 +168,40 @@ const ShopAuth = ({ children }) => {
       });
   };
 
+  const saveUserDBOnly = (name, email, password) => {
+    setLoading(true);
+    const user = { name, email, provider: "custom", shopId: shopId, password };
+    try {
+      fetch("https://backend.doob.com.bd/api/v1/shop/auth", {
+        method: "post",
+        headers: {
+          "content-type": "application/json",
+          "ngrok-skip-browser-warning": "69420",
+        },
+        body: JSON.stringify(user),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data?.success) {
+            setLoading(false);
+            // const user = ;
+            if (data.user) {
+              const userJSON = JSON.stringify(data.user);
+              localStorage.setItem(`${shopId}`, userJSON);
+              setLoading(false);
+
+              setToken(data.user);
+              setShopUser(data.user);
+            } else {
+              alert("Registration Successful");
+            }
+          }
+        });
+    } catch (error) {
+      alert(`Error: ${error?.message}`);
+    }
+  };
+
   const loginWithEmail = (email, password) => {
     setLoading(true);
     signInWithEmailAndPassword(auth, email, password)
@@ -230,15 +264,24 @@ const ShopAuth = ({ children }) => {
   };
 
   const logOut = () => {
+    // console.log(shopUser);
+
     setLoading(true);
-    signOut(auth)
-      .then(() => {
-        localStorage.removeItem(`${shopId}`);
-        setShopUser("");
-        setToken(false);
-        setLoading(false);
-      })
-      .catch((error) => {});
+    if (shopUser?.provider === "custom") {
+      localStorage.removeItem(`${shopId}`);
+      setShopUser("");
+      setToken(false);
+      setLoading(false);
+    } else {
+      signOut(auth)
+        .then(() => {
+          localStorage.removeItem(`${shopId}`);
+          setShopUser("");
+          setToken(false);
+          setLoading(false);
+        })
+        .catch((error) => {});
+    }
   };
 
   const ForgetPass = (email) => {
@@ -258,6 +301,8 @@ const ShopAuth = ({ children }) => {
   const ChangePass = (newPassword) => {
     const auth = getAuth();
     const user = auth.currentUser;
+
+    
 
     updatePassword(user, newPassword)
       .then(() => {
@@ -321,7 +366,8 @@ const ShopAuth = ({ children }) => {
     reloadUser,
     setReloadUser,
     color,
-    setColor
+    setColor,
+    saveUserDBOnly,
   };
 
   return (
