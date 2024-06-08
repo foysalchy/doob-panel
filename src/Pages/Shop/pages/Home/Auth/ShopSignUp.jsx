@@ -40,14 +40,17 @@ const ShopSignUp = () => {
     // console.log("🚀 ~ file: ShopSignUp.jsx:40 ~ SubmitData ~ user:", user);
 
     try {
-      const response = await fetch("http://localhost:5001/api/v1/shop/auth", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "ngrok-skip-browser-warning": "69420",
-        },
-        body: JSON.stringify(user),
-      });
+      const response = await fetch(
+        "https://backend.doob.com.bd/api/v1/shop/auth",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "ngrok-skip-browser-warning": "69420",
+          },
+          body: JSON.stringify(user),
+        }
+      );
 
       const data = await response.json();
 

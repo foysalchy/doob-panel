@@ -31,7 +31,7 @@ const ChangePassword = ({ open, setOpen }) => {
           newPassword: newPass,
         };
         fetch(
-          `http://localhost:5001/api/v1/shop/update/change-password?token=${shopUser._id}`,
+          `https://backend.doob.com.bd/api/v1/shop/update/change-password?token=${shopUser._id}`,
           {
             method: "PATCH",
             headers: {
