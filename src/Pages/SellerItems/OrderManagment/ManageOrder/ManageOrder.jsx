@@ -38,7 +38,6 @@ const ManageOrder = () => {
     },
   });
 
-
   const { data: darazOrder = [] } = useQuery({
     queryKey: ["sellerDarazOrder"],
 
@@ -51,7 +50,6 @@ const ManageOrder = () => {
       return data.data;
     },
   });
-
 
   const getOrderCount = (orders, status) => {
     return orders.filter(
@@ -332,8 +330,6 @@ const ManageOrder = () => {
     },
   });
 
-
-
   const {
     data: priviousAccount = [],
     isLoading: loading,
@@ -348,7 +344,6 @@ const ManageOrder = () => {
       return data.data;
     },
   });
-
 
   const switchAccount = (_id, id) => {
     fetch(
@@ -371,14 +366,11 @@ const ManageOrder = () => {
 
   const [selectedAccount, setSelectedAccount] = useState("");
 
-
-
   const handleChange = (event) => {
     const [shopId, oldId] = event.target.value.split(",");
     setSelectedAccount(event.target.value);
     switchAccount(shopId, oldId);
   };
-
 
   return (
     <div>
@@ -393,23 +385,25 @@ const ManageOrder = () => {
           {<h1 className="w-full"> {darazShop?.result?.account}</h1>}
         </div> */}
 
-        {darazShop?.result?.account && <div className=" bg-gray-50 px-4 py-2 rounded text-blue-500 flex items-center gap-2">
-          <h1 className="whitespace-nowrap">Switch Account</h1>
-          <hr />
-          <select
-            className="w-full px-4 py-2 border rounded bg-[#d2d2d2] text-sm"
-            value={selectedAccount}
-            onChange={handleChange}
-          >
-            <option value="">{darazShop?.result?.account}</option>
+        {darazShop?.result?.account && (
+          <div className=" bg-gray-50 px-4 py-2 rounded text-blue-500 flex items-center gap-2">
+            <h1 className="whitespace-nowrap">Switch Account</h1>
+            <hr />
+            <select
+              className="w-full px-4 py-2 border rounded bg-[#d2d2d2] text-sm"
+              value={selectedAccount}
+              onChange={handleChange}
+            >
+              <option value="">{darazShop?.result?.account}</option>
 
-            {priviousAccount?.map((shop) => (
-              <option key={shop._id} value={`${shop._id},${shop.oldId}`}>
-                {shop.result.account}
-              </option>
-            ))}
-          </select>
-        </div>}
+              {priviousAccount?.map((shop) => (
+                <option key={shop._id} value={`${shop._id},${shop.oldId}`}>
+                  {shop.result.account}
+                </option>
+              ))}
+            </select>
+          </div>
+        )}
       </div>
 
       <h3 className="font-bold text-xl">Orders Overview</h3>
@@ -444,9 +438,9 @@ const ManageOrder = () => {
         >
           Woo Commerce Order
         </button>
-           <Link
-            to={"/seller/orders/web-store-order"}
-            className={`px-4 py-1 text-white border bg-gray-500
+        <Link
+          to={"/seller/orders/web-store-order"}
+          className={`px-4 py-1 text-white border bg-gray-500
             `}
         >
           Doob Order

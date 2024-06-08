@@ -27,8 +27,6 @@ const DarazIntegration = () => {
     refetch();
   }, []);
 
-
-
   useEffect(() => {
     if (code) {
       fetch("https://backend.doob.com.bd/api/v1/daraz/get-key")
@@ -36,22 +34,22 @@ const DarazIntegration = () => {
         .then((data) => {
           console.log(data, "daraz");
           const { appkey, secretkey } = data[0];
-          console.log(appKey, secretKey);
 
-          const appKey = appkey;
-          const secretKey = secretkey;
+          const newAppKey = appkey;
+          const newScretecretKey = secretkey;
+          console.log(newAppKey, newScretecretKey);
 
           const url = "https://api.daraz.com.bd/rest/auth/token/create";
           const timestamp = currentTimeInMilliseconds;
-          const patch = `/auth/token/createapp_key${appKey}code${code}sign_methodsha256timestamp${timestamp}`;
-          const sign = CryptoJS.HmacSHA256(patch, secretKey)
+          const patch = `/auth/token/createapp_key${newAppKey}code${code}sign_methodsha256timestamp${timestamp}`;
+          const sign = CryptoJS.HmacSHA256(patch, newScretecretKey)
             .toString(CryptoJS.enc.Hex)
             .toUpperCase();
 
           const body = {
             sign_method: "sha256",
             sign: sign,
-            app_key: appKey,
+            app_key: newAppKey,
             code: code,
             timestamp: timestamp,
             url,
@@ -96,8 +94,6 @@ const DarazIntegration = () => {
     },
   });
 
-
-
   const {
     data: priviousAccount = [],
     isLoading: loading,
@@ -112,7 +108,6 @@ const DarazIntegration = () => {
       return data.data;
     },
   });
-
 
   const switchAccount = (_id, id) => {
     fetch(
@@ -135,14 +130,11 @@ const DarazIntegration = () => {
 
   const [selectedAccount, setSelectedAccount] = useState("");
 
-
-
   const handleChange = (event) => {
     const [shopId, oldId] = event.target.value.split(",");
     setSelectedAccount(event.target.value);
     switchAccount(shopId, oldId);
   };
-
 
   return (
     <div>
