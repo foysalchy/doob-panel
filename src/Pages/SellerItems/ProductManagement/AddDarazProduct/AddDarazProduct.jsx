@@ -184,7 +184,6 @@ const AddDarazProduct = () => {
       });
   };
 
-
   const {
     data: darazShop = [],
     isLoading,
@@ -200,12 +199,7 @@ const AddDarazProduct = () => {
     },
   });
 
-
-
-  const {
-    data: priviousAccount = [],
-    refetch: reload,
-  } = useQuery({
+  const { data: priviousAccount = [], refetch: reload } = useQuery({
     queryKey: ["priviousAccount"],
     queryFn: async () => {
       const res = await fetch(
@@ -216,10 +210,9 @@ const AddDarazProduct = () => {
     },
   });
 
-
   const switchAccount = (_id, id) => {
     fetch(
-      `https://backend.doob.com.bd/api/v1/daraz/switching-your-daraz?id=${id}&loginId=${_id}`,
+      `http://localhost:5001/api/v1/daraz/switching-your-daraz?id=${id}&loginId=${_id}`,
       {
         method: "PATCH",
         headers: {
@@ -239,186 +232,185 @@ const AddDarazProduct = () => {
 
   const [selectedAccount, setSelectedAccount] = useState("");
 
-
-
   const handleChange = (event) => {
     const [shopId, oldId] = event.target.value.split(",");
     setSelectedAccount(event.target.value);
     switchAccount(shopId, oldId);
   };
 
-
   return (
     <div>
-        {!shopInfo.daraz? (
-      <div>
-      <div className="flex justify-end items-center gap-12 mt-8 w-full">
-        {/* <div className="w-full px-4 py-2 bg-gray-50 rounded text-blue-500 flex items-center gap-2">
+      {!shopInfo.daraz ? (
+        <div>
+          <div className="flex justify-end items-center gap-12 mt-8 w-full">
+            {/* <div className="w-full px-4 py-2 bg-gray-50 rounded text-blue-500 flex items-center gap-2">
           <MdEmail />
           {<h1 className="w-full"> {darazShop?.result?.account}</h1>}
         </div> */}
 
-        <div className=" bg-gray-50 px-4 py-2 rounded text-blue-500 flex items-center gap-2">
-          <h1 className="whitespace-nowrap">Switch Account</h1>
-          <hr />
-          <select
-            className="w-full px-4 py-2 border rounded bg-[#d2d2d2] text-sm"
-            value={selectedAccount}
-            onChange={handleChange}
-          >
-            <option value="">{darazShop?.result?.account}</option>
+            <div className=" bg-gray-50 px-4 py-2 rounded text-blue-500 flex items-center gap-2">
+              <h1 className="whitespace-nowrap">Switch Account</h1>
+              <hr />
+              <select
+                className="w-full px-4 py-2 border rounded bg-[#d2d2d2] text-sm"
+                value={selectedAccount}
+                onChange={handleChange}
+              >
+                <option value="">{darazShop?.result?.account}</option>
 
-            {priviousAccount?.map((shop) => (
-              <option key={shop._id} value={`${shop._id},${shop.oldId}`}>
-                {shop.result.account}
-              </option>
-            ))}
-          </select>
-        </div>
-      </div>
-      <div className="border mt-4 border-gray-400 px-10 py-5 w-full bg-gray-100 rounded">
-        <div className="flex flex-col">
-          <span className="font-bold">Add Daraz Product.</span>
-          <small>
-            Having accurate product information raises discoverability.
-          </small>
-        </div>
+                {priviousAccount?.map((shop) => (
+                  <option key={shop._id} value={`${shop._id},${shop.oldId}`}>
+                    {shop.result.account}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+          <div className="border mt-4 border-gray-400 px-10 py-5 w-full bg-gray-100 rounded">
+            <div className="flex flex-col">
+              <span className="font-bold">Add Daraz Product.</span>
+              <small>
+                Having accurate product information raises discoverability.
+              </small>
+            </div>
 
-        <form onSubmit={dataSubmit} className="mt-4" action="">
-          <div className="relative inline-block w-full">
-            <button
-              className="w-full"
-              type="button"
-              onClick={() => handleSelectChange(false)}
-            >
-              {selectedOption ? (
-                <span className="border w-full p-2 px-4 rounded-md bg-white flex items-center space-x-2">
-                  <img
-                    src={selectedOption.images[0]}
-                    alt={`Selected Product`}
-                    className="border border-black rounded-sm"
-                    style={{ height: "24px", width: "24px" }}
-                  />
-                  <span>{selectedOption.attributes.name}</span>
-                </span>
-              ) : (
-                <>
-                  {Products?.length ? (
-                    <>
-                      <input
-                        type="text"
-                        className="border w-full p-2 rounded-md bg-white flex items-center space-x-2"
-                        placeholder="Search products"
-                        value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)}
+            <form onSubmit={dataSubmit} className="mt-4" action="">
+              <div className="relative inline-block w-full">
+                <button
+                  className="w-full"
+                  type="button"
+                  onClick={() => handleSelectChange(false)}
+                >
+                  {selectedOption ? (
+                    <span className="border w-full p-2 px-4 rounded-md bg-white flex items-center space-x-2">
+                      <img
+                        src={selectedOption.images[0]}
+                        alt={`Selected Product`}
+                        className="border border-black rounded-sm"
+                        style={{ height: "24px", width: "24px" }}
                       />
-                    </>
-                  ) : (
-                    <span className="border w-full p-2 rounded-md bg-white flex items-center space-x-2">
-                      <span>Your Products are loading so Please wait ...</span>
-                      {/* Additional text goes here */}
+                      <span>{selectedOption.attributes.name}</span>
                     </span>
+                  ) : (
+                    <>
+                      {Products?.length ? (
+                        <>
+                          <input
+                            type="text"
+                            className="border w-full p-2 rounded-md bg-white flex items-center space-x-2"
+                            placeholder="Search products"
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
+                          />
+                        </>
+                      ) : (
+                        <span className="border w-full p-2 rounded-md bg-white flex items-center space-x-2">
+                          <span>
+                            Your Products are loading so Please wait ...
+                          </span>
+                          {/* Additional text goes here */}
+                        </span>
+                      )}
+                    </>
                   )}
-                </>
-              )}
-            </button>
+                </button>
 
-            {/* Dropdown with Search */}
-            {!selectedOption && Products.length ? (
-              <div className="mt-1 p-2 max-h-40 overflow-y-scroll bg-white border rounded-md">
-                {filteredProducts.length ? (
-                  <span>
-                    {filteredProducts?.map((product, i) => (
-                      <div
-                        key={i}
-                        onClick={() => handleSelectChange(product)}
-                        className="cursor-pointer hover:bg-gray-100 p-2 flex items-center space-x-2"
-                      >
-                        <span>{i + 1}</span>
-                        <img
-                          src={product.images[0]}
-                          alt={`Product ${i + 1}`}
-                          className="border border-black rounded-sm"
-                          style={{ height: "24px", width: "24px" }}
-                        />
-                        <span>{`     ${product.attributes.name}`}</span>
-                      </div>
-                    ))}
-                  </span>
+                {/* Dropdown with Search */}
+                {!selectedOption && Products.length ? (
+                  <div className="mt-1 p-2 max-h-40 overflow-y-scroll bg-white border rounded-md">
+                    {filteredProducts.length ? (
+                      <span>
+                        {filteredProducts?.map((product, i) => (
+                          <div
+                            key={i}
+                            onClick={() => handleSelectChange(product)}
+                            className="cursor-pointer hover:bg-gray-100 p-2 flex items-center space-x-2"
+                          >
+                            <span>{i + 1}</span>
+                            <img
+                              src={product.images[0]}
+                              alt={`Product ${i + 1}`}
+                              className="border border-black rounded-sm"
+                              style={{ height: "24px", width: "24px" }}
+                            />
+                            <span>{`     ${product.attributes.name}`}</span>
+                          </div>
+                        ))}
+                      </span>
+                    ) : (
+                      "No product found"
+                    )}
+                  </div>
                 ) : (
-                  "No product found"
+                  ""
                 )}
               </div>
-            ) : (
-              ""
-            )}
-          </div>
-          <WareHouse
-            shopInfo={shopInfo}
-            adminWare={adminWare}
-            setAdminWare={setAdminWare}
-          />
-          <OnlySyncCategory />
+              <WareHouse
+                shopInfo={shopInfo}
+                adminWare={adminWare}
+                setAdminWare={setAdminWare}
+              />
+              <OnlySyncCategory />
 
-          <Variants
-            adminWare={adminWare}
-            multiVendor={multiVendor}
-            setMultiVendor={setMultiVendor}
-            inputFields={inputFields}
-            daraz={true}
-            variantInput={variantInput}
-            setVariantInput={setVariantInput}
-          />
-          <div className="mt-4">
-            {loading ? (
-              <button
-                type="button"
-                className="group relative cursor-not-allowed inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none mt-4"
-              >
-                <span className="text-sm font-medium">Loading...</span>
-                <svg
-                  className="animate-spin h-4 w-4 ml-3 text-white"
-                  viewBox="0 0 24 24"
-                >
-                  <circle
-                    cx="12"
-                    cy="12"
-                    r="10"
-                    stroke="currentColor"
-                    strokeWidth="4"
-                  />
-                </svg>
-              </button>
-            ) : (
-              <button
-                type="submit"
-                disabled={!selectedOption}
-                className={
-                  !loading && selectedOption
-                    ? "group relative cursor-pointer inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none mt-4 "
-                    : "group relative inline-flex items-center overflow-hidden rounded bg-gray-700 px-8 py-3 text-white focus:outline-none mt-4 cursor-not-allowed"
-                }
-              >
-                <span className="absolute -end-full transition-all group-hover:end-4">
-                  <BsArrowRight />
-                </span>
+              <Variants
+                adminWare={adminWare}
+                multiVendor={multiVendor}
+                setMultiVendor={setMultiVendor}
+                inputFields={inputFields}
+                daraz={true}
+                variantInput={variantInput}
+                setVariantInput={setVariantInput}
+              />
+              <div className="mt-4">
+                {loading ? (
+                  <button
+                    type="button"
+                    className="group relative cursor-not-allowed inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none mt-4"
+                  >
+                    <span className="text-sm font-medium">Loading...</span>
+                    <svg
+                      className="animate-spin h-4 w-4 ml-3 text-white"
+                      viewBox="0 0 24 24"
+                    >
+                      <circle
+                        cx="12"
+                        cy="12"
+                        r="10"
+                        stroke="currentColor"
+                        strokeWidth="4"
+                      />
+                    </svg>
+                  </button>
+                ) : (
+                  <button
+                    type="submit"
+                    disabled={!selectedOption}
+                    className={
+                      !loading && selectedOption
+                        ? "group relative cursor-pointer inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none mt-4 "
+                        : "group relative inline-flex items-center overflow-hidden rounded bg-gray-700 px-8 py-3 text-white focus:outline-none mt-4 cursor-not-allowed"
+                    }
+                  >
+                    <span className="absolute -end-full transition-all group-hover:end-4">
+                      <BsArrowRight />
+                    </span>
 
-                <span className="text-sm font-medium transition-all group-hover:me-4">
-                  Upload Product
-                </span>
-              </button>
-            )}
+                    <span className="text-sm font-medium transition-all group-hover:me-4">
+                      Upload Product
+                    </span>
+                  </button>
+                )}
+              </div>
+            </form>
           </div>
-        </form>
-      </div>
-      </div>
-) : (
-  <div className="bg-red-100 border-l-4 border-red-500  py-6 text-center  rounded-md">
-  <h1 className="text-red-700 font-bold">
-  Please First Connect Your Daraz Account
-  </h1>
-</div>
-)}
+        </div>
+      ) : (
+        <div className="bg-red-100 border-l-4 border-red-500  py-6 text-center  rounded-md">
+          <h1 className="text-red-700 font-bold">
+            Please First Connect Your Daraz Account
+          </h1>
+        </div>
+      )}
     </div>
   );
 };
