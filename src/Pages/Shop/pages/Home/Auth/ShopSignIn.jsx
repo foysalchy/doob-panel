@@ -44,7 +44,7 @@ const ShopSignIn = () => {
       password,
     };
 
-    console.log("🚀 ~ file: ShopSignUp.jsx:40 ~ SubmitData ~ user:", user);
+    // console.log("🚀 ~ file: ShopSignUp.jsx:40 ~ SubmitData ~ user:", user);
 
     try {
       const response = await fetch("https://backend.doob.com.bd/api/v1/shop/login", {
