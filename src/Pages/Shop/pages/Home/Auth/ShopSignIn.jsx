@@ -9,6 +9,7 @@ import { ShopAuthProvider } from "../../../../../AuthProvider/ShopAuthProvide";
 import ForgetPass from "./ForgetPass";
 import Facebook from "./facebook-round-color-icon.svg";
 import BrightAlert from "bright-alert";
+import Swal from "sweetalert2";
 
 const ShopSignIn = () => {
   const {
@@ -57,7 +58,7 @@ const ShopSignIn = () => {
 
       const data = await response.json();
 
-      console.log("🚀 ~ file: ShopSignUp.jsx:44 ~ .then ~ data:", data);
+      //   console.log("🚀 ~ file: ShopSignUp.jsx:44 ~ .then ~ data:", data);
 
       if (response.ok) {
         if (data.success) {
@@ -73,16 +74,16 @@ const ShopSignIn = () => {
           }
         } else {
           //   alert(data.message || "Registration failed");
-          BrightAlert("error", data.message || "Login failed");
+          Swal.fire("error", data.message || "Login failed");
         }
       } else {
         // alert(data.message || "An error occurred");
-        BrightAlert("error", data.message || "An error occurred");
+        Swal.fire("error", data.message || "An error occurred");
       }
     } catch (error) {
       console.log("🚀 ~ file: ShopSignIn.jsx:77 ~ userData ~ error:", error);
       //  alert(`Error: ${error.message}`);
-      BrightAlert("error", error.message);
+      Swal.fire("error", error.message);
     }
   };
 

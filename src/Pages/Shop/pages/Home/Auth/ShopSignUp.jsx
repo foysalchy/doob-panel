@@ -3,6 +3,7 @@ import { Link, useLoaderData, useNavigate } from "react-router-dom";
 import { ShopAuthProvider } from "../../../../../AuthProvider/ShopAuthProvide";
 import FacebookLogo from "./facebook-round-color-icon.svg";
 import BrightAlert from "bright-alert";
+import Swal from "sweetalert2";
 
 const ShopSignUp = () => {
   const page = useLoaderData();
@@ -36,7 +37,7 @@ const ShopSignUp = () => {
       shopId: shopId,
       password,
     };
-    console.log("🚀 ~ file: ShopSignUp.jsx:40 ~ SubmitData ~ user:", user);
+    // console.log("🚀 ~ file: ShopSignUp.jsx:40 ~ SubmitData ~ user:", user);
 
     try {
       const response = await fetch("http://localhost:5001/api/v1/shop/auth", {
@@ -61,19 +62,19 @@ const ShopSignUp = () => {
             setLoading(false);
             setToken(data.user);
             setShopUser(data.user);
-            BrightAlert("success", "Registration Successful");
+            Swal.fire("success", "Registration Successful");
           } else {
-            BrightAlert("success", "Registration Successful");
+            Swal.fire("success", "Registration Successful");
           }
         } else {
-          BrightAlert("error", data.message || "Registration failed");
+          Swal.fire("error", data.message || "Registration failed");
         }
       } else {
-        BrightAlert("error", data.message || "An error occurred");
+        Swal.fire("error", data.message || "An error occurred");
       }
     } catch (error) {
       console.log("🚀 ~ file: ShopSignUp.jsx:77 ~ SubmitData ~ error:", error);
-      BrightAlert("error", `Error: ${error.message}`);
+      Swal.fire("error", `Error: ${error.message}`);
     }
   };
 

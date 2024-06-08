@@ -145,7 +145,7 @@ const ShopAuth = ({ children }) => {
 
   const saveUser = (name, email, provider) => {
     const user = { name, email, provider, shopId: shopId };
-    fetch("http://localhost:5001/api/v1/shop/auth", {
+    fetch("https://backend.doob.com.bd/api/v1/shop/auth", {
       method: "post",
       headers: {
         "content-type": "application/json",
@@ -172,7 +172,7 @@ const ShopAuth = ({ children }) => {
     setLoading(true);
     const user = { name, email, provider: "custom", shopId: shopId, password };
     try {
-      fetch("http://localhost:5001/api/v1/shop/auth", {
+      fetch("https://backend.doob.com.bd/api/v1/shop/auth", {
         method: "post",
         headers: {
           "content-type": "application/json",
@@ -264,7 +264,7 @@ const ShopAuth = ({ children }) => {
   };
 
   const logOut = () => {
-    console.log(shopUser);
+    // console.log(shopUser);
 
     setLoading(true);
     if (shopUser?.provider === "custom") {
@@ -301,6 +301,8 @@ const ShopAuth = ({ children }) => {
   const ChangePass = (newPassword) => {
     const auth = getAuth();
     const user = auth.currentUser;
+
+    
 
     updatePassword(user, newPassword)
       .then(() => {
