@@ -15,7 +15,7 @@ const PosHistory = () => {
     queryKey: ["posData"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/seller/pos-report?shopId=${shopInfo?._id}`
+        `https://doob.dev/api/v1/seller/pos-report?shopId=${shopInfo?._id}`
       );
       const data = await res.json();
       return data.data;

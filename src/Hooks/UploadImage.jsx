@@ -1,4 +1,5 @@
 // useImageUpload.js
+import BrightAlert from 'bright-alert';
 import { useState } from 'react';
 
 const useImageUpload = () => {
@@ -17,14 +18,16 @@ const useImageUpload = () => {
             formData.append('image', file);
             console.log(formData);
 
-            const url = `https://backend.doob.com.bd/api/v1/image/upload-image`;
+            const url = `https://doob.dev/api/v1/image/upload-image`;
             const response = await fetch(url, {
                 method: "POST",
                 body: formData,
             });
 
             if (!response.ok) {
+                BrightAlert('Failed to upload image', '', 'error');
                 throw new Error('Failed to upload image');
+
             }
 
             const imageData = await response.json();

@@ -17,7 +17,7 @@ const ResetPass = () => {
     const pass1 = form.password1.value;
     const pass2 = form.password2.value;
     if (pass1 === pass2) {
-      fetch(`https://backend.doob.com.bd/api/v1/auth/reset-pass/${id}`, {
+      fetch(`https://doob.dev/api/v1/auth/reset-pass/${id}`, {
         method: "put",
         headers: {
           "content-type": "application/json",

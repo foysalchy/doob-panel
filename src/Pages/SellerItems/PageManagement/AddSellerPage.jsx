@@ -42,7 +42,7 @@ const AddSellerPage = () => {
     };
 
 
-    fetch(`https://backend.doob.com.bd/api/v1/seller/page`, {
+    fetch(`https://doob.dev/api/v1/seller/page`, {
       method: "POST",
       headers: {
         "content-type": "application/json",

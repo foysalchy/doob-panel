@@ -17,7 +17,7 @@ const ReviewTable = ({ search }) => {
     queryKey: ["reviewData"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/seller/review?shopId=${shopInfo._id}`
+        `https://doob.dev/api/v1/seller/review?shopId=${shopInfo._id}`
       );
       const data = await res.json();
       return data;
@@ -90,7 +90,7 @@ const ReviewTable = ({ search }) => {
 
 
   const updateReviewSatatus = (id, status) => {
-    fetch(`https://backend.doob.com.bd/api/v1/seller/review-status?id=${id}`, {
+    fetch(`https://doob.dev/api/v1/seller/review-status?id=${id}`, {
       method: "PUT",
       headers: {
         "content-type": "application/json",

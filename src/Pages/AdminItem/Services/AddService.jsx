@@ -34,7 +34,7 @@ const AddService = () => {
     queryKey: ["category"],
     queryFn: async () => {
       const res = await fetch(
-        "https://backend.doob.com.bd/api/v1/admin/category"
+        "https://doob.dev/api/v1/admin/category"
       );
       const data = await res.json();
       return data;
@@ -113,7 +113,7 @@ const AddService = () => {
   };
 
   async function uploadImage(formData) {
-    const url = "https://backend.doob.com.bd/api/v1/image/upload-image";
+    const url = "https://doob.dev/api/v1/image/upload-image";
     const response = await fetch(url, {
       method: "POST",
       body: formData,
@@ -123,7 +123,7 @@ const AddService = () => {
   }
 
   const postService = (service, form) => {
-    fetch(`https://backend.doob.com.bd/api/v1/admin/addservice`, {
+    fetch(`https://doob.dev/api/v1/admin/addservice`, {
       method: "POST",
       headers: {
         "content-type": "application/json",

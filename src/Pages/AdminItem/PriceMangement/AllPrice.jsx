@@ -14,7 +14,7 @@ const AllPrice = () => {
     queryKey: ["prices"],
     queryFn: async () => {
       const res = await fetch(
-        "https://backend.doob.com.bd/api/v1/admin/pricing"
+        "https://doob.dev/api/v1/admin/pricing"
       );
       const price = await res.json();
       // need to data sort by Timestamp 
@@ -26,7 +26,7 @@ const AllPrice = () => {
   const publishHandle = (id) => {
     setLoading(true);
 
-    fetch(`https://backend.doob.com.bd/api/v1/admin/pricing/status/${id}`, {
+    fetch(`https://doob.dev/api/v1/admin/pricing/status/${id}`, {
       method: "PUT",
       headers: {
         "content-type": "application/json",
@@ -40,7 +40,7 @@ const AllPrice = () => {
   };
 
   const unpublishHandle = (id) => {
-    fetch(`https://backend.doob.com.bd/api/v1/admin/pricing/unstatus/${id}`, {
+    fetch(`https://doob.dev/api/v1/admin/pricing/unstatus/${id}`, {
       method: "PUT",
       headers: {
         "content-type": "application/json",
@@ -53,7 +53,7 @@ const AllPrice = () => {
       });
   };
   const DeletePrice = (id) => {
-    fetch(`https://backend.doob.com.bd/api/v1/admin/pricing/delete/${id}`, {
+    fetch(`https://doob.dev/api/v1/admin/pricing/delete/${id}`, {
       method: "Delete",
       headers: {
         "content-type": "application/json",

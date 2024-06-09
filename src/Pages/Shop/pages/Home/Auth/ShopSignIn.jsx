@@ -47,7 +47,7 @@ const ShopSignIn = () => {
     // console.log("🚀 ~ file: ShopSignUp.jsx:40 ~ SubmitData ~ user:", user);
 
     try {
-      const response = await fetch("https://backend.doob.com.bd/api/v1/shop/login", {
+      const response = await fetch("https://doob.dev/api/v1/shop/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -159,7 +159,7 @@ const ShopSignIn = () => {
                     <input
                       type="checkbox"
                       checked={isChecked}
-                      onChange={() => {}}
+                      onChange={() => { }}
                     />
                     Show Password
                   </button>

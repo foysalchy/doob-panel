@@ -34,7 +34,7 @@ const ProductSellerEditPage = () => {
     queryFn: async () => {
       try {
         const res = await fetch(
-          `https://backend.doob.com.bd/api/v1/seller/all-products/${shopInfo._id}`
+          `https://doob.dev/api/v1/seller/all-products/${shopInfo._id}`
         );
         const data = await res.json();
         return data;
@@ -79,7 +79,7 @@ const ProductSellerEditPage = () => {
   const imageUploadEdit = (image, index) => {
     const formData = new FormData();
     formData.append("image", image.file);
-    const url = `https://backend.doob.com.bd/api/v1/image/upload-image?shopId=${shopInfo._id}`;
+    const url = `https://doob.dev/api/v1/image/upload-image?shopId=${shopInfo._id}`;
 
     return fetch(url, {
       method: "POST",
@@ -147,7 +147,7 @@ const ProductSellerEditPage = () => {
     const formData = new FormData();
     formData.append("image", image);
 
-    const url = `https://backend.doob.com.bd/api/v1/image/upload-image`;
+    const url = `https://doob.dev/api/v1/image/upload-image`;
 
     const res = await fetch(url, {
       method: "POST",
@@ -164,7 +164,7 @@ const ProductSellerEditPage = () => {
     const formData = new FormData();
     formData.append("image", imageBlob);
 
-    const url = `https://backend.doob.com.bd/api/v1/daraz/daraz-image/${shopInfo._id}`;
+    const url = `https://doob.dev/api/v1/daraz/daraz-image/${shopInfo._id}`;
 
     try {
       const response = await fetch(url, {
@@ -374,8 +374,8 @@ const ProductSellerEditPage = () => {
     setLoading(false);
 
     fetch(
-      // `https://backend.doob.com.bd/api/v1/seller/normal-product?id=${product?._id}`,
-      `https://backend.doob.com.bd/api/v1/seller/normal-product?id=${product?._id}`,
+      // `https://doob.dev/api/v1/seller/normal-product?id=${product?._id}`,
+      `https://doob.dev/api/v1/seller/normal-product?id=${product?._id}`,
       {
         method: "PUT",
         headers: {

@@ -28,7 +28,7 @@ const SellerAddSelfModal = ({
     queryKey: ["warehouses"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/seller/warehouse/get/${shopInfo._id}`
+        `https://doob.dev/api/v1/seller/warehouse/get/${shopInfo._id}`
       );
       const data = await res.json();
       return data;
@@ -40,7 +40,7 @@ const SellerAddSelfModal = ({
     setSelectedWarehouse(selectedWarehouse);
 
     const areaRes = await fetch(
-      `https://backend.doob.com.bd/api/v1/seller/warehouse/area/${selectedWarehouse}/${shopInfo._id}`
+      `https://doob.dev/api/v1/seller/warehouse/area/${selectedWarehouse}/${shopInfo._id}`
     );
     const areaData = await areaRes.json();
     setAreas(areaData);
@@ -54,7 +54,7 @@ const SellerAddSelfModal = ({
     setSelectedArea(selectedArea);
 
     const rackRes = await fetch(
-      `https://backend.doob.com.bd/api/v1/seller/warehouse/rack/${selectedWarehouse}/${selectedArea}/${shopInfo._id}`
+      `https://doob.dev/api/v1/seller/warehouse/rack/${selectedWarehouse}/${selectedArea}/${shopInfo._id}`
     );
     const rackData = await rackRes.json();
     setRacks(rackData);
@@ -85,7 +85,7 @@ const SellerAddSelfModal = ({
       status: true,
     };
 
-    fetch("https://backend.doob.com.bd/api/v1/seller/warehouse/self", {
+    fetch("https://doob.dev/api/v1/seller/warehouse/self", {
       method: "post",
       headers: {
         "Content-Type": "application/json",

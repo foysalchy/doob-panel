@@ -24,10 +24,10 @@ export default function Component() {
   };
   const searchData = async () => {
     const term = searchTerm;
-    // console.log(`https://backend.doob.com.bd/api/v1/admin/search?term=${encodeURIComponent(term)}`);
+    // console.log(`https://doob.dev/api/v1/admin/search?term=${encodeURIComponent(term)}`);
     try {
       const response = await fetch(
-        `https://backend.doob.com.bd/api/v1/admin/search?term=${encodeURIComponent(
+        `https://doob.dev/api/v1/admin/search?term=${encodeURIComponent(
           term
         )}`
       );
@@ -52,7 +52,7 @@ export default function Component() {
     setSearchResults();
     setSearch(input);
     fetch(
-      `https://backend.doob.com.bd/api/v1/admin/search-history?term=${encodeURIComponent(
+      `https://doob.dev/api/v1/admin/search-history?term=${encodeURIComponent(
         input
       )}`
     )

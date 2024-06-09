@@ -24,7 +24,7 @@ const AddSellerBlog = () => {
     queryKey: ["blogs"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/seller/blog-category?shopId=${shopInfo.shopId}`
+        `https://doob.dev/api/v1/seller/blog-category?shopId=${shopInfo.shopId}`
       );
       const data = await res.json();
       return data;
@@ -35,7 +35,7 @@ const AddSellerBlog = () => {
     queryKey: ["blog-category"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/seller/blog-category?shopId=${shopInfo.shopId}`
+        `https://doob.dev/api/v1/seller/blog-category?shopId=${shopInfo.shopId}`
       );
       const data = await res.json();
       return data.data;
@@ -71,7 +71,7 @@ const AddSellerBlog = () => {
     const MetaDescription = form.MetaDescription.value;
     const formData = new FormData();
     formData.append("image", image);
-    const url = `https://backend.doob.com.bd/api/v1/image/upload-image`;
+    const url = `https://doob.dev/api/v1/image/upload-image`;
     fetch(url, {
       method: "POST",
       body: formData,
@@ -103,7 +103,7 @@ const AddSellerBlog = () => {
   const postBlog = (blog, form, type) => {
     console.log(blog);
     // return
-    fetch(`https://backend.doob.com.bd/api/v1/seller/blog`, {
+    fetch(`https://doob.dev/api/v1/seller/blog`, {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -146,7 +146,7 @@ const AddSellerBlog = () => {
               type="text"
               id="title"
               name="title"
-              // onChange={(e) => handleInputChange("title", e.target.value)} // for drafts
+            // onChange={(e) => handleInputChange("title", e.target.value)} // for drafts
             />
           </div>
           <div>
@@ -246,7 +246,7 @@ const AddSellerBlog = () => {
               type="text"
               id="MetaTag"
               name="MetaTag"
-              // onChange={(e) => handleInputChange("MetaTag", e.target.value)} // for drafts
+            // onChange={(e) => handleInputChange("MetaTag", e.target.value)} // for drafts
             />
           </div>
 

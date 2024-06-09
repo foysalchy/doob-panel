@@ -44,7 +44,7 @@ const PosProductsDetails = ({
 
     if (user.name || name) {
       setPostData(data);
-      fetch(`https://backend.doob.com.bd/api/v1/seller/pos-report`, {
+      fetch(`https://doob.dev/api/v1/seller/pos-report`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -41,7 +41,7 @@ const AddPackage = () => {
     setLoading(true);
 
     fetch(
-      `https://backend.doob.com.bd/api/v1/admin/package`,
+      `https://doob.dev/api/v1/admin/package`,
       {
         method: "POST",
         headers: {

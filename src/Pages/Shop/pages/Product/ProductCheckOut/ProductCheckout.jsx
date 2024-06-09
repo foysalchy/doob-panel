@@ -23,7 +23,7 @@ const ProductCheckout = () => {
     queryFn: async () => {
       try {
         const res = await fetch(
-          `https://backend.doob.com.bd/api/v1/shop/user-address?userId=${shopUser?._id}&shopId=${shop_id?.shop_id}`,
+          `https://doob.dev/api/v1/shop/user-address?userId=${shopUser?._id}&shopId=${shop_id?.shop_id}`,
           {
             headers: {
               "ngrok-skip-browser-warning": "69420",
@@ -72,7 +72,7 @@ const ProductCheckout = () => {
     const userEmail = shopUser.email;
 
     fetch(
-      `https://backend.doob.com.bd/api/v1/shop/user/promocode?shopId=${shopId}&code=${code}&email=${userEmail}&token=${shopUser._id}&price=${price}`,
+      `https://doob.dev/api/v1/shop/user/promocode?shopId=${shopId}&code=${code}&email=${userEmail}&token=${shopUser._id}&price=${price}`,
     )
       .then((res) => res.json())
       .then((data) => {

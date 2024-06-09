@@ -19,7 +19,7 @@ const FeatureManagement = () => {
     queryKey: ["faqs"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/seller/feature/${shopInfo._id}`
+        `https://doob.dev/api/v1/seller/feature/${shopInfo._id}`
       );
       const data = await res.json();
       return data;
@@ -27,7 +27,7 @@ const FeatureManagement = () => {
   });
 
   const updateStatus = (id, status) => {
-    fetch(`https://backend.doob.com.bd/api/v1/seller/feature/status/${id}`, {
+    fetch(`https://doob.dev/api/v1/seller/feature/status/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -52,7 +52,7 @@ const FeatureManagement = () => {
 
   if (isDelete) {
     fetch(
-      `https://backend.doob.com.bd/api/v1/seller/feature/delete/${deleteId}`,
+      `https://doob.dev/api/v1/seller/feature/delete/${deleteId}`,
       {
         method: "DELETE",
         headers: {
@@ -77,7 +77,7 @@ const FeatureManagement = () => {
   const [selectIndex, setSelectIndex] = useState("");
 
   const uploadImage = async (formData) => {
-    const url = `https://backend.doob.com.bd/api/v1/image/upload-image`;
+    const url = `https://doob.dev/api/v1/image/upload-image`;
     const response = await fetch(url, {
       method: "POST",
       body: formData,
@@ -106,7 +106,7 @@ const FeatureManagement = () => {
 
     console.log(data, id);
 
-    fetch(`https://backend.doob.com.bd/api/v1/seller/feature/update?id=${id}`, {
+    fetch(`https://doob.dev/api/v1/seller/feature/update?id=${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

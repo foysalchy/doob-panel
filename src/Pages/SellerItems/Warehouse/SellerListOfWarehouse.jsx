@@ -18,7 +18,7 @@ const SellerListOfWarehouse = () => {
     queryKey: ["warehouses"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/seller/warehouse/get/${shopInfo._id}`
+        `https://doob.dev/api/v1/seller/warehouse/get/${shopInfo._id}`
       );
       const data = await res.json();
       return data;
@@ -30,7 +30,7 @@ const SellerListOfWarehouse = () => {
     queryKey: ["wareLength"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/seller/warehouse/seller-all-warehouse-area-rack-cell-self?shopId=${shopInfo._id}`
+        `https://doob.dev/api/v1/seller/warehouse/seller-all-warehouse-area-rack-cell-self?shopId=${shopInfo._id}`
       );
       const data = await res.json();
       return data;
@@ -91,8 +91,8 @@ const SellerListOfWarehouse = () => {
             <li key={pageNumber}>
               <button
                 className={`block h-8 w-8 rounded border ${pageNumber === currentPage
-                    ? "border-blue-600 bg-blue-600 text-white"
-                    : "border-gray-900 bg-white text-center leading-8 text-gray-900"
+                  ? "border-blue-600 bg-blue-600 text-white"
+                  : "border-gray-900 bg-white text-center leading-8 text-gray-900"
                   }`}
                 onClick={() => handleChangePage(pageNumber)}
               >
@@ -120,7 +120,7 @@ const SellerListOfWarehouse = () => {
   const [isPreviewModal, setIsPreviewModal] = useState(false);
 
   const updateStatus = (id, status) => {
-    fetch(`https://backend.doob.com.bd/api/v1/seller/warehouse/status/${id}`, {
+    fetch(`https://doob.dev/api/v1/seller/warehouse/status/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -136,7 +136,7 @@ const SellerListOfWarehouse = () => {
 
   const DeleteWarehouse = async (id) => {
     const response = await fetch(
-      `https://backend.doob.com.bd/api/v1/seller/warehouse/delete/${id}`,
+      `https://doob.dev/api/v1/seller/warehouse/delete/${id}`,
       {
         method: "DELETE",
         headers: {

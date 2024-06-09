@@ -88,7 +88,7 @@ const DarazTableRow = ({ data, select, setSelect }) => {
       cancellation_reason: cancel,
     };
     console.log(cancel);
-    fetch("https://backend.doob.com.bd/api/v1/seller/darazOrderCancel", {
+    fetch("https://doob.dev/api/v1/seller/darazOrderCancel", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -103,7 +103,7 @@ const DarazTableRow = ({ data, select, setSelect }) => {
     queryKey: ["sellerDarazCancelIssue"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/seller/daraz-cancel-reason?id=${shopInfo._id}`
+        `https://doob.dev/api/v1/seller/daraz-cancel-reason?id=${shopInfo._id}`
       );
 
       const data = await res.json();
@@ -117,7 +117,7 @@ const DarazTableRow = ({ data, select, setSelect }) => {
       id,
       orderNumber: order,
     };
-    fetch("https://backend.doob.com.bd/api/v1/seller/daraz-ready-to-ship", {
+    fetch("https://doob.dev/api/v1/seller/daraz-ready-to-ship", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -22,7 +22,7 @@ const SellerDomainManagement = () => {
   } = useQuery({
     queryKey: ["shops"],
     queryFn: async () => {
-      const res = await fetch("https://backend.doob.com.bd/api/v1/shop");
+      const res = await fetch("https://doob.dev/api/v1/shop");
       const data = await res.json();
       return data;
     },
@@ -44,7 +44,7 @@ const SellerDomainManagement = () => {
 
   const UpdateStatus = (id, status) => {
     fetch(
-      `https://backend.doob.com.bd/api/v1/shop/domainstatus/${id}?status=${status}`,
+      `https://doob.dev/api/v1/shop/domainstatus/${id}?status=${status}`,
       {
         method: "Put",
         headers: {
@@ -63,7 +63,7 @@ const SellerDomainManagement = () => {
     const userId = email.replace(/[@.]/g, "");
     let password = "";
     await fetch(
-      `https://backend.doob.com.bd/api/v1/admin/seller/pass/${userId}`
+      `https://doob.dev/api/v1/admin/seller/pass/${userId}`
     )
       .then((res) => res.json())
       .then((data) => {
@@ -75,7 +75,7 @@ const SellerDomainManagement = () => {
     };
     console.log(data);
 
-    await fetch("https://backend.doob.com.bd/api/v1/auth/sign-in", {
+    await fetch("https://doob.dev/api/v1/auth/sign-in", {
       method: "post",
       headers: {
         "content-type": "application/json",
@@ -90,7 +90,7 @@ const SellerDomainManagement = () => {
         if (data.user) {
           if (data.user.role === "seller") {
             fetch(
-              `https://backend.doob.com.bd/api/v1/shop/checkshop?shopEmail=${data?.user?.shopId}`
+              `https://doob.dev/api/v1/shop/checkshop?shopEmail=${data?.user?.shopId}`
             )
               .then((response) => response.json())
               .then((result) => {
@@ -124,7 +124,7 @@ const SellerDomainManagement = () => {
   };
 
   if (isDelete) {
-    fetch(`https://backend.doob.com.bd/api/v1/shop/delete/${deleteId}`, {
+    fetch(`https://doob.dev/api/v1/shop/delete/${deleteId}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -145,7 +145,7 @@ const SellerDomainManagement = () => {
   const updateShopStatus = (id, status) => {
     console.log(id, status);
     fetch(
-      `https://backend.doob.com.bd/api/v1/seller/update-shopInfo-for-status?id=${id}&status=${status}`,
+      `https://doob.dev/api/v1/seller/update-shopInfo-for-status?id=${id}&status=${status}`,
       {
         method: "PUT",
         headers: {

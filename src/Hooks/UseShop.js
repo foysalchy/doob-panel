@@ -15,7 +15,7 @@ const UseShop = () => {
     } else {
       if (user?.email) {
         fetch(
-          `https://backend.doob.com.bd/api/v1/shop/checkshop?shopEmail=${user?.shopId}`
+          `https://doob.dev/api/v1/shop/checkshop?shopEmail=${user?.shopId}`
         )
           .then((res) => res.json())
           .then((data) => {

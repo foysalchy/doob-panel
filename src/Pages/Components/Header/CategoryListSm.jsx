@@ -29,7 +29,7 @@ export default function CategoryListSm({ setOn }) {
       queryKey: ["megaSideCategoryData"],
       queryFn: async () => {
         const res = await fetch(
-          "https://backend.doob.com.bd/api/v1/admin/category/megacategory"
+          "https://doob.dev/api/v1/admin/category/megacategory"
         );
         const data = await res.json();
 
@@ -41,14 +41,14 @@ export default function CategoryListSm({ setOn }) {
     queryKey: "heroBanner",
     queryFn: async () => {
       const res = await fetch(
-        "https://backend.doob.com.bd/api/v1/admin/slider"
+        "https://doob.dev/api/v1/admin/slider"
       );
       const data = await res.json();
       return data?.data;
     },
   });
 
-  // const blankImg = 'https://backend.doob.com.bd/api/v1/image/66036ed3df13bd9930ac229c.jpg';
+  // const blankImg = 'https://doob.dev/api/v1/image/66036ed3df13bd9930ac229c.jpg';
   const bannerFind = heroBanner?.filter((item) => item.status === "true");
 
   useEffect(() => {
@@ -56,7 +56,7 @@ export default function CategoryListSm({ setOn }) {
       const subCategoryPromises = megaSideCategoryData.map(async (item) => {
         try {
           const response = await fetch(
-            `https://backend.doob.com.bd/api/v1/admin/category/subcategory?id=${item?._id}`
+            `https://doob.dev/api/v1/admin/category/subcategory?id=${item?._id}`
           );
           const data = await response.json();
           return data.subCategory;
@@ -82,7 +82,7 @@ export default function CategoryListSm({ setOn }) {
       const miniCategoryPromises = allCategory.subCategorys.map(async (itm) => {
         try {
           const response = await fetch(
-            `https://backend.doob.com.bd/api/v1/admin/category/miniCategory?id=${itm?._id}`
+            `https://doob.dev/api/v1/admin/category/miniCategory?id=${itm?._id}`
           );
           const data = await response.json();
           return data.row;
@@ -109,7 +109,7 @@ export default function CategoryListSm({ setOn }) {
         async (itm) => {
           try {
             const response = await fetch(
-              `https://backend.doob.com.bd/api/v1/admin/category/extraCategory?id=${itm?._id}`
+              `https://doob.dev/api/v1/admin/category/extraCategory?id=${itm?._id}`
             );
             const data = await response.json();
             return data.rows;

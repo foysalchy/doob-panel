@@ -38,7 +38,7 @@ const UpdateFAQ = ({ OpenModal, setOpenModal, FAQInfo, refetch }) => {
 
     try {
       const response = await fetch(
-        `https://backend.doob.com.bd/api/v1/admin/faq/update-faq/${FAQInfo._id}`,
+        `https://doob.dev/api/v1/admin/faq/update-faq/${FAQInfo._id}`,
         {
           method: "PUT",
           headers: {

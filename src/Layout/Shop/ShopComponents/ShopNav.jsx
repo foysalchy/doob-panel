@@ -38,7 +38,7 @@ const ShopNav = () => {
 
     try {
       const response = await fetch(
-        `https://backend.doob.com.bd/api/v1/shop/search`,
+        `https://doob.dev/api/v1/shop/search`,
         {
           method: "POST",
           body: JSON.stringify({ shop_id: shop_id.shop_id, term }),
@@ -69,7 +69,7 @@ const ShopNav = () => {
     setSearchTerm(input);
     setSearchResults();
     // setSearch(input);
-    fetch("https://backend.doob.com.bd/api/v1/shop/search-history", {
+    fetch("https://doob.dev/api/v1/shop/search-history", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -84,7 +84,7 @@ const ShopNav = () => {
     queryKey: ["ShopCategories"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/shop/category/get/${shopId}`
+        `https://doob.dev/api/v1/shop/category/get/${shopId}`
       );
       const data = await res.json();
       return data;
@@ -103,7 +103,7 @@ const ShopNav = () => {
     queryKey: ["shop"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/shop/${shopId}`
+        `https://doob.dev/api/v1/shop/${shopId}`
       );
       const data = await res.json();
       return data;
@@ -121,7 +121,7 @@ const ShopNav = () => {
         setCartProducts(JSON.parse(productData));
       } else {
         fetch(
-          `https://backend.doob.com.bd/api/v1/shop/user/add-to-cart?userId=${shopUser?._id}&shopId=${shop_id?.shop_id}&token=${shopUser?._id}`
+          `https://doob.dev/api/v1/shop/user/add-to-cart?userId=${shopUser?._id}&shopId=${shop_id?.shop_id}&token=${shopUser?._id}`
         )
           .then((res) => res.json())
           .then((data) => {
@@ -294,44 +294,44 @@ const ShopNav = () => {
             </li>
             <li>
               {!shopUser ? (
-                  <li>
+                <li>
                   <Link
-                     to={`/shop/${shopId}/sign-in`}
+                    to={`/shop/${shopId}/sign-in`}
                     aria-label="Sign up"
                     className="flex items-center gap-2"
                     title="Sign up"
                   >
                     <div className="inline-flex items-center bg-gray-900 w-[30px] h-[30px] p-2 rounded-full justify-center relative">
                       <FaUser className=" text-white" />
-                     
+
                     </div>
                     Login
                   </Link>
                 </li>
 
-                
+
               ) : (
                 <div>
                   <div className="relative inline-block">
                     {/* Dropdown toggle button */}
-                   
+
 
                     <button
-                    onClick={() => setIsOpen(!isOpen)}
-                    aria-label="Sign up"
-                    className="flex items-center gap-2"
-                    title="Sign up"
-                  >
-                    <div className="inline-flex items-center bg-gray-900 w-[30px] h-[30px] p-2 rounded-full justify-center relative">
-                      <FaUser className=" text-white" />
-                     
-                    </div>
-                    Account
-                  </button>
+                      onClick={() => setIsOpen(!isOpen)}
+                      aria-label="Sign up"
+                      className="flex items-center gap-2"
+                      title="Sign up"
+                    >
+                      <div className="inline-flex items-center bg-gray-900 w-[30px] h-[30px] p-2 rounded-full justify-center relative">
+                        <FaUser className=" text-white" />
+
+                      </div>
+                      Account
+                    </button>
 
                     {/* Dropdown menu */}
                     <div
-                        styele={{background:"white"}}
+                      styele={{ background: "white" }}
                       className={`absolute right-0 z-20 w-48 py-2 mt-2 origin-top-right  rounded-md shadow-xl dark:bg-gray-800 ${isOpen ? "block" : "hidden"
                         }`}
                       onClick={() => setIsOpen(false)}

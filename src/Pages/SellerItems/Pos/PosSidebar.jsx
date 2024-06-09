@@ -46,9 +46,9 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
 
 
   useEffect(() => {
-     if(pathname){
+    if (pathname) {
       gust_update(true)
-     }
+    }
   }, [pathname]);
   console.log(user, "update user");
 
@@ -98,7 +98,7 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
 
   const fetchData = () => {
     fetch(
-      `https://backend.doob.com.bd/api/v1/seller/seller-user?shopId=${shopInfo.shopId}&${searchType}=${searchValue}`
+      `https://doob.dev/api/v1/seller/seller-user?shopId=${shopInfo.shopId}&${searchType}=${searchValue}`
     )
       .then((res) => res.json())
       .then((data) => {
@@ -180,7 +180,7 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
   const handleFormSubmit = (e) => {
     e.preventDefault();
     const form = e.target;
-    const name = form?.name.value ? form?.name.value : "Gest User" ;
+    const name = form?.name.value ? form?.name.value : "Gest User";
     const email = gest ? " " : form?.email.value;
     const number = gest ? " " : form?.phoneNumber.value;
     const address = gest ? " " : form?.phoneNumber.value;
@@ -191,7 +191,7 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
       number,
       address,
     };
-    
+
     console.log(data);
     setUser(data);
     setIsChecked(false);
@@ -312,24 +312,24 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
         </div>
         <div class="bg-white px-2 py-2">
           <div className="">
-          <div className="grid grid-cols-4 gap-2">
-            <div>
-              Total: <div>Tk.{totalPrice()}/=</div>
-            </div>
-            <div>
-            Due:  <div
-              className={`   ${changeAmount > 0
-                ? "text-green-500"
-                : changeAmount < 0
-                  ? "text-red-500"
-                  : ""
-                }`}
-            >
-              Tk.{parseInt(changeAmount)}/=
-            </div>
-            </div>
+            <div className="grid grid-cols-4 gap-2">
               <div>
-              <label className="flex gap-1" htmlFor="percents">
+                Total: <div>Tk.{totalPrice()}/=</div>
+              </div>
+              <div>
+                Due:  <div
+                  className={`   ${changeAmount > 0
+                    ? "text-green-500"
+                    : changeAmount < 0
+                      ? "text-red-500"
+                      : ""
+                    }`}
+                >
+                  Tk.{parseInt(changeAmount)}/=
+                </div>
+              </div>
+              <div>
+                <label className="flex gap-1" htmlFor="percents">
                   <input
                     id="percents"
                     type="checkbox"
@@ -345,8 +345,8 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
                 />
               </div>
               <div>
-              Paid: <div> <input
-              defaultValue="0"
+                Paid: <div> <input
+                  defaultValue="0"
                   value={cash}
                   onChange={(e) => setCash(e.target.value)}
                   type="number"
@@ -354,7 +354,7 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
                 /></div>
               </div>
             </div>
-          
+
 
             <div className="flex justify-between bg-white-400  py-2  items-start">
               <div className="">
@@ -397,7 +397,7 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
               <div className="flex justify-between flex-wrap mt-3 gap-2">
                 <button
                   onClick={() => {
-                    setCash(parseInt(cash)+parseInt(100)), audio.play();
+                    setCash(parseInt(cash) + parseInt(100)), audio.play();
                   }}
                   className="w-[65px] px-3 py-0 rounded bg-gray-200"
                 >
@@ -405,7 +405,7 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
                 </button>
                 <button
                   onClick={() => {
-                    setCash(parseInt(cash)+parseInt(500)), audio.play();
+                    setCash(parseInt(cash) + parseInt(500)), audio.play();
                   }}
                   className="w-[65px] px-3 py-0 rounded bg-gray-200"
                 >
@@ -413,7 +413,7 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
                 </button>
                 <button
                   onClick={() => {
-                    setCash(parseInt(cash)+parseInt(1000)), audio.play();
+                    setCash(parseInt(cash) + parseInt(1000)), audio.play();
                   }}
                   className="w-[65px] px-3 py-0 rounded bg-gray-200"
                 >
@@ -421,7 +421,7 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
                 </button>
                 <button
                   onClick={() => {
-                    setCash(parseInt(cash)+parseInt(2000)), audio.play();
+                    setCash(parseInt(cash) + parseInt(2000)), audio.play();
                   }}
                   className="w-[65px] px-3 py-0 rounded bg-gray-200"
                 >
@@ -430,7 +430,7 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
               </div>
             </div>
 
-            
+
 
             <br />
             {
@@ -579,7 +579,7 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
                           defaultValue={user && !existing ? user?.email : ""}
                           className="mt-1 p-2 w-full border rounded-md"
                           onChange={(e) => setEmail(e.target.value)}
-                          
+
                         />
                       </div>
 
@@ -600,7 +600,7 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
                           className="mt-1 p-2 w-full border rounded-md"
                           onChange={(e) => setPhoneNumber(e.target.value)}
                           required
-                          min="10000000000" pattern="[0-9+]{11,}" 
+                          min="10000000000" pattern="[0-9+]{11,}"
                         />
                       </div>
 

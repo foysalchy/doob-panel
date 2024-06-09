@@ -16,7 +16,7 @@ const SubscriberHisroy = () => {
     queryKey: ["subscriberSeller"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/seller/get-all-subscribe?shopId=${shopInfo?.shopId}`
+        `https://doob.dev/api/v1/seller/get-all-subscribe?shopId=${shopInfo?.shopId}`
       );
       const data = await res.json();
       console.log(data);
@@ -29,7 +29,7 @@ const SubscriberHisroy = () => {
   const DeleteCategory = (id) => {
     console.log(id);
     fetch(
-      `https://backend.doob.com.bd/api/v1/seller/delete-subscribe?id=${id}`,
+      `https://doob.dev/api/v1/seller/delete-subscribe?id=${id}`,
       {
         method: "DELETE",
         headers: {

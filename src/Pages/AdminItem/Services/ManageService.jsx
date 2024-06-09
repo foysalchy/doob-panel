@@ -14,7 +14,7 @@ const ManageService = () => {
     queryKey: ["services"],
     queryFn: async () => {
       const res = await fetch(
-        "https://backend.doob.com.bd/api/v1/admin/services"
+        "https://doob.dev/api/v1/admin/services"
       );
       const data = await res.json();
       return data;
@@ -34,7 +34,7 @@ const ManageService = () => {
   );
 
   const ActiveHandle = (id) => {
-    fetch(`https://backend.doob.com.bd/api/v1/admin/service/status/${id}`, {
+    fetch(`https://doob.dev/api/v1/admin/service/status/${id}`, {
       method: "PUT",
       headers: {
         "content-type": "application/json",
@@ -48,7 +48,7 @@ const ManageService = () => {
   };
 
   const DeactiveHandle = (id) => {
-    fetch(`https://backend.doob.com.bd/api/v1/admin/service/unstatus/${id}`, {
+    fetch(`https://doob.dev/api/v1/admin/service/unstatus/${id}`, {
       method: "PUT",
       headers: {
         "content-type": "application/json",
@@ -62,7 +62,7 @@ const ManageService = () => {
   };
 
   const DeleteHandle = (id) => {
-    fetch(`https://backend.doob.com.bd/api/v1/admin/service/delete/${id}`, {
+    fetch(`https://doob.dev/api/v1/admin/service/delete/${id}`, {
       method: "Delete",
       headers: {
         "content-type": "application/json",

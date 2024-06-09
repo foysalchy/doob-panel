@@ -17,7 +17,7 @@ const SeeShopAllProduct = () => {
         queryKey: ["shopProducts"],
         queryFn: async () => {
             const res = await fetch(
-                `https://backend.doob.com.bd/api/v1/shop/product/${shop_id?.shop_id}/new-product`
+                `https://doob.dev/api/v1/shop/product/${shop_id?.shop_id}/new-product`
             );
             const data = await res.json();
             return data?.data;

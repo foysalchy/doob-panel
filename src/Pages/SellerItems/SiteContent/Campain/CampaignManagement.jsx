@@ -18,21 +18,21 @@ const CampaignManagement = () => {
     queryKey: ["faqs"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/seller/get-campaign/${shopInfo._id}`
+        `https://doob.dev/api/v1/seller/get-campaign/${shopInfo._id}`
       );
       const data = await res.json();
       return data;
     },
   });
 
-  console.log(`https://backend.doob.com.bd/api/v1/seller/get-campaign/${shopInfo._id}`);
+  console.log(`https://doob.dev/api/v1/seller/get-campaign/${shopInfo._id}`);
 
   const updateStatus = (id, status) => {
     const data = {
       id,
       status,
     };
-    fetch(`https://backend.doob.com.bd/api/v1/seller/update-status-campaign`, {
+    fetch(`https://doob.dev/api/v1/seller/update-status-campaign`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -58,7 +58,7 @@ const CampaignManagement = () => {
 
   if (isDelete) {
     fetch(
-      `https://backend.doob.com.bd/api/v1/seller/delete-campaign/${deleteId}`,
+      `https://doob.dev/api/v1/seller/delete-campaign/${deleteId}`,
       {
         method: "DELETE",
         headers: {

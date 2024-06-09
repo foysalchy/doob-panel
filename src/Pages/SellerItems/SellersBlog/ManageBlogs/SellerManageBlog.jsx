@@ -19,7 +19,7 @@ const SellerManageBlog = () => {
     queryKey: ["blogs"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/seller/blog/${shopInfo?.shopId}`
+        `https://doob.dev/api/v1/seller/blog/${shopInfo?.shopId}`
       );
       const data = await res.json();
       return data;
@@ -27,7 +27,7 @@ const SellerManageBlog = () => {
   });
 
   const DeleteBlog = (id) => {
-    fetch(`https://backend.doob.com.bd/api/v1/seller/blog/${id}`, {
+    fetch(`https://doob.dev/api/v1/seller/blog/${id}`, {
       method: "DELETE",
       headers: {
         "content-type": "application/json",
@@ -48,7 +48,7 @@ const SellerManageBlog = () => {
   const blogStash = (id, status) => {
     console.log(status);
     fetch(
-      `https://backend.doob.com.bd/api/v1/seller/blog-trash?id=${id}&status=${status}`,
+      `https://doob.dev/api/v1/seller/blog-trash?id=${id}&status=${status}`,
       {
         method: "PUT",
       }
@@ -60,7 +60,7 @@ const SellerManageBlog = () => {
 
   const publishBlog = (id) => {
     fetch(
-      `https://backend.doob.com.bd/api/v1/seller/blog/publish-status/${id}`,
+      `https://doob.dev/api/v1/seller/blog/publish-status/${id}`,
       {
         method: "PUT",
       }
@@ -71,7 +71,7 @@ const SellerManageBlog = () => {
   };
   const UnpublishBlog = (id) => {
     fetch(
-      `https://backend.doob.com.bd/api/v1/seller/blog/unpublish-status/${id}`,
+      `https://doob.dev/api/v1/seller/blog/unpublish-status/${id}`,
       {
         method: "PUT",
       }

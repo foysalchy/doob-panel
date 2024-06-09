@@ -17,7 +17,7 @@ const AdminPopupManagement = () => {
     queryKey: "popupData",
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/admin/pop-up`
+        `https://doob.dev/api/v1/admin/pop-up`
       );
       const data = await res.json();
       return data?.data;
@@ -27,7 +27,7 @@ const AdminPopupManagement = () => {
   // const { data: popupData, reload } = useQuery({
   //     queryKey: "popupData",
   //     queryFn: async () => {
-  //         const res = await fetch(`https://backend.doob.com.bd/api/v1/admin/pop-up`);
+  //         const res = await fetch(`https://doob.dev/api/v1/admin/pop-up`);
   //         const data = await res.json();
   //         return data?.data;
   //     },
@@ -44,7 +44,7 @@ const AdminPopupManagement = () => {
 
   if (isDelete) {
     fetch(
-      `https://backend.doob.com.bd/api/v1/seller/popup/delete/${deleteId}`,
+      `https://doob.dev/api/v1/seller/popup/delete/${deleteId}`,
       {
         method: "DELETE",
         headers: {
@@ -75,7 +75,7 @@ const AdminPopupManagement = () => {
   const EditStatus = (id, status) => {
     console.log(id, status);
     setLoading(true);
-    fetch(`https://backend.doob.com.bd/api/v1/admin/pop-up?popUpId=${id}`, {
+    fetch(`https://doob.dev/api/v1/admin/pop-up?popUpId=${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -94,7 +94,7 @@ const AdminPopupManagement = () => {
     console.log(id, status);
     setLoading(true);
     fetch(
-      `https://backend.doob.com.bd/api/v1/admin/user-pop-up?popUpId=${id}`,
+      `https://doob.dev/api/v1/admin/user-pop-up?popUpId=${id}`,
       {
         method: "PUT",
         headers: {
@@ -113,7 +113,7 @@ const AdminPopupManagement = () => {
 
   const onDelete = (id) => {
     setLoading(true);
-    fetch(`https://backend.doob.com.bd/api/v1/admin/pop-up?popUpId=${id}`, {
+    fetch(`https://doob.dev/api/v1/admin/pop-up?popUpId=${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",

@@ -7,22 +7,22 @@ const Footer = () => {
   const { data: pages = [], refetch } = useQuery({
     queryKey: ["faqs"],
     queryFn: async () => {
-      const res = await fetch("https://backend.doob.com.bd/api/v1/admin/pages");
+      const res = await fetch("https://doob.dev/api/v1/admin/pages");
       const data = await res.json();
       return data;
     },
   });
 
-  const page1 = pages.length && pages?.filter((itm) => itm?.page == "footer1");
-  const page2 = pages.length && pages?.filter((itm) => itm?.page == "footer2");
-  console.log(page1, "pages///////");
+  const page1 = pages?.length && pages?.filter((itm) => itm?.page == "footer1");
+  const page2 = pages?.length && pages?.filter((itm) => itm?.page == "footer2");
 
-  console.log(page2);
+
+
 
   return (
     <>
       {/* <div className="bg-gray-900">
-        <div className="px-4 pt-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8">
+        <div className="px-4 pt-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl mdlength:px-24 lg:px-8">
           <div className="grid gap-10 row-gap-6 mb-8 sm:grid-cols-2 lg:grid-cols-4">
             <div className="sm:col-span-2">
               <Link to={'/'}
@@ -166,7 +166,7 @@ const Footer = () => {
                   Page 1
                 </p>
                 <ul className="mt-2 space-y-2">
-                  {page1.length
+                  {page1?.length
                     ? page1.map((page, i) => (
                       <li key={i}>
                         <Link
@@ -185,7 +185,7 @@ const Footer = () => {
                   page 2
                 </p>
                 <ul className="mt-2 space-y-2">
-                  {page2.length
+                  {page2?.length
                     ? page2
                       ?.filter((item) => !item?.trash)
                       .map((page, i) => (

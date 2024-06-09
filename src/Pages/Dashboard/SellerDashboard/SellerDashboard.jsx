@@ -62,7 +62,7 @@ const SellerDashboard = () => {
     queryKey: "sellerPopupData",
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/admin/pop-up`
+        `https://doob.dev/api/v1/admin/pop-up`
       );
       const data = await res.json();
       return data?.data;
@@ -80,7 +80,7 @@ const SellerDashboard = () => {
     queryFn: async () => {
       try {
         const res = await fetch(
-          `https://backend.doob.com.bd/api/v1/shop/firebase/${shopInfo.shopId}`
+          `https://doob.dev/api/v1/shop/firebase/${shopInfo.shopId}`
         );
         const data = await res.json();
         return data;
@@ -94,7 +94,7 @@ const SellerDashboard = () => {
     queryKey: "sliderInfo",
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/admin/slider`
+        `https://doob.dev/api/v1/admin/slider`
       );
       const data = await res.json();
       return data?.data;
@@ -138,7 +138,7 @@ const SellerDashboard = () => {
     queryKey: ["orderData"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/seller/order?shopId=${shopInfo._id}`
+        `https://doob.dev/api/v1/seller/order?shopId=${shopInfo._id}`
       );
       const data = await res.json();
       return data.data;
@@ -153,7 +153,7 @@ const SellerDashboard = () => {
     queryKey: ["darazShopBd"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/seller/seller-daraz-accounts?id=${shopInfo._id}`
+        `https://doob.dev/api/v1/seller/seller-daraz-accounts?id=${shopInfo._id}`
       );
       const data = await res.json();
       return data.data[0];
@@ -161,14 +161,14 @@ const SellerDashboard = () => {
   });
 
   const {
-    data: priviousAccount = [],
+    data: previousAccount = [],
     isLoading: loading,
     refetch: reload,
   } = useQuery({
-    queryKey: ["priviousAccount"],
+    queryKey: ["previousAccount"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/daraz/get-privious-account?shopId=${shopInfo._id}`
+        `https://doob.dev/api/v1/daraz/get-privious-account?shopId=${shopInfo._id}`
       );
       const data = await res.json();
       return data.data;
@@ -177,7 +177,7 @@ const SellerDashboard = () => {
 
   const switchAccount = (_id, id) => {
     fetch(
-      `https://backend.doob.com.bd/api/v1/daraz/switching-your-daraz?id=${id}&loginId=${_id}`,
+      `https://doob.dev/api/v1/daraz/switching-your-daraz?id=${id}&loginId=${_id}`,
       {
         method: "PATCH",
         headers: {
@@ -189,24 +189,28 @@ const SellerDashboard = () => {
       .then((data) => {
         console.log(data); // Log response data
         Swal.fire("Success", "", "success"); // Show success message (assuming you're using SweetAlert)
-        refetch(); // Refetch data
-        darazShopRefetch(); // Reload data
+        reload(); // Reload data
+        darazShopRefetch()
       });
   };
 
   const [selectedAccount, setSelectedAccount] = useState("");
-
   const handleChange = (event) => {
-    const [shopId, oldId] = event.target.value.split(",");
-    setSelectedAccount(event.target.value);
-    switchAccount(shopId, oldId);
+    const selectedOldId = event.target.value;
+    console.log(selectedOldId);
+    const selectedShop = previousAccount.find(shop => shop._id === selectedOldId);
+    console.log(selectedShop, selectedOldId);
+    setSelectedAccount(selectedOldId);
+    if (selectedShop) {
+      switchAccount(selectedShop._id, selectedShop.oldId);
+    }
   };
 
   const { data: products = [] } = useQuery({
     queryKey: ["products"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/seller/all-products/${shopInfo._id}`
+        `https://doob.dev/api/v1/seller/all-products/${shopInfo._id}`
       );
       const data = await res.json();
       return data;
@@ -217,7 +221,7 @@ const SellerDashboard = () => {
     queryKey: ["sellerOrder"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/seller/order?shopId=${shopInfo._id}`
+        `https://doob.dev/api/v1/seller/order?shopId=${shopInfo._id}`
       );
       const data = await res.json();
       return data.data;
@@ -228,7 +232,7 @@ const SellerDashboard = () => {
     queryKey: ["my-withdrawHistory"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/admin/withdraw-for-shop?shopId=${shopInfo?._id}`
+        `https://doob.dev/api/v1/admin/withdraw-for-shop?shopId=${shopInfo?._id}`
       );
       const data = await res.json();
       return data.data;
@@ -239,7 +243,7 @@ const SellerDashboard = () => {
     queryKey: ["orders_admin"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/seller/get-my-order?shopId=${shopInfo?._id}`
+        `https://doob.dev/api/v1/seller/get-my-order?shopId=${shopInfo?._id}`
       );
       const data = await res.json();
       return data.data;
@@ -270,15 +274,14 @@ const SellerDashboard = () => {
     queryKey: ["productData"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/seller/all-products/${shopInfo._id}`
+        `https://doob.dev/api/v1/seller/all-products/${shopInfo._id}`
       );
-      k;
       const data = await res.json();
       return data;
     },
   });
 
-  console.log(shopInfo._id, productData);
+
 
   const getStatus = (quantity, product_Low_alert) => {
     console.log(product_Low_alert, quantity);
@@ -354,7 +357,7 @@ const SellerDashboard = () => {
     queryKey: ["subscriptionModalData"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/seller/subscription-model?priceId=${shopInfo?.priceId}&shopId=${shopInfo._id}`
+        `https://doob.dev/api/v1/seller/subscription-model?priceId=${shopInfo?.priceId}&shopId=${shopInfo._id}`
       );
       const data = await res.json();
       return data?.data;
@@ -380,7 +383,7 @@ const SellerDashboard = () => {
         (paymentDate.getTime() +
           SEVEN_DAYS_IN_MILLISECONDS -
           currentDate.getTime()) /
-          MILLISECONDS_IN_A_DAY
+        MILLISECONDS_IN_A_DAY
       );
       const passedDays = Math.floor(timeDifference / MILLISECONDS_IN_A_DAY);
 
@@ -394,16 +397,16 @@ const SellerDashboard = () => {
     <div className="h-screen mb-10   ">
       {sellerPopupData.length
         ? popup && (
-            <div className="fixed top-0 left-0 flex items-center justify-center w-full h-full bg-black bg-opacity-90 z-50">
-              <SellerPopUp
-                onClose={onClose}
-                showModal={popup}
-                setShowModal={setPopUp}
-                data={sellerPopupData}
-                handleClose={onClose}
-              />
-            </div>
-          )
+          <div className="fixed top-0 left-0 flex items-center justify-center w-full h-full bg-black bg-opacity-90 z-50">
+            <SellerPopUp
+              onClose={onClose}
+              showModal={popup}
+              setShowModal={setPopUp}
+              data={sellerPopupData}
+              handleClose={onClose}
+            />
+          </div>
+        )
         : ""}
       {check_expired() && !prices?.orderInfo && (
         <div className="bg-orange-100  px-2 py-3 rounded- flex justify-between items-center">
@@ -635,25 +638,22 @@ const SellerDashboard = () => {
           {<h1 className="w-full"> {darazShop?.result?.account}</h1>}
         </div> */}
 
-        {darazShop?.result?.account && (
-          <div className=" bg-gray-50 px-4 py-2 rounded text-blue-500 flex items-center gap-2">
-            <h1 className="whitespace-nowrap">Switch Account</h1>
-            <hr />
-            <select
-              className="w-full px-4 py-2 border rounded bg-[#d2d2d2] text-sm"
-              value={selectedAccount}
-              onChange={handleChange}
-            >
-              <option value="">{darazShop?.result?.account}</option>
-
-              {priviousAccount?.map((shop) => (
-                <option key={shop._id} value={`${shop._id},${shop.oldId}`}>
-                  {shop.result.account}
-                </option>
-              ))}
-            </select>
-          </div>
-        )}
+        <div className="bg-gray-50 px-4 py-2 rounded text-blue-500 flex items-center gap-2">
+          <h1 className="whitespace-nowrap">Switch Account</h1>
+          <hr className="flex-grow mx-2 border-t border-blue-500" />
+          <select
+            className="w-full px-4 py-2 border rounded bg-[#d2d2d2] text-sm"
+            value={selectedAccount}
+            onChange={handleChange}
+          >
+            <option value="">{darazShop?.result?.account}</option>
+            {previousAccount?.map((shop) => (
+              <option key={shop._id} value={shop._id}>
+                {shop.result.account}
+              </option>
+            ))}
+          </select>
+        </div>
       </div>
 
       <div className="overflow-hidden mt-3 bg-[white] p-4">

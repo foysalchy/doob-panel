@@ -37,8 +37,8 @@ const EditWareHouse = ({ product, adminWare, setAdminWare }) => {
 
   const fetchData = async () => {
     const apiUrl = adminWare
-      ? "https://backend.doob.com.bd/api/v1/admin/warehouse"
-      : `https://backend.doob.com.bd/api/v1/seller/warehouse/get/${shopInfo._id}`;
+      ? "https://doob.dev/api/v1/admin/warehouse"
+      : `https://doob.dev/api/v1/seller/warehouse/get/${shopInfo._id}`;
 
     const res = await fetch(apiUrl);
     if (!res.ok) {
@@ -63,7 +63,7 @@ const EditWareHouse = ({ product, adminWare, setAdminWare }) => {
     setSelectedSelf("");
     setSelectedCell("");
 
-    const apiUrl = `https://backend.doob.com.bd/api/v1/seller/warehouse/area/${selectedWarehouse}/${shopInfo._id}`;
+    const apiUrl = `https://doob.dev/api/v1/seller/warehouse/area/${selectedWarehouse}/${shopInfo._id}`;
     const res = await fetch(apiUrl);
     const areaData = await res.json();
     setLoading(false);
@@ -84,7 +84,7 @@ const EditWareHouse = ({ product, adminWare, setAdminWare }) => {
     setSelectedSelf("");
     setSelectedCell("");
 
-    const apiUrl = `https://backend.doob.com.bd/api/v1/seller/warehouse/rack/${selectedWarehouse}/${selectedArea}/${shopInfo._id}`;
+    const apiUrl = `https://doob.dev/api/v1/seller/warehouse/rack/${selectedWarehouse}/${selectedArea}/${shopInfo._id}`;
     const res = await fetch(apiUrl);
     const rackData = await res.json();
     setOptions((prevOptions) => ({
@@ -101,7 +101,7 @@ const EditWareHouse = ({ product, adminWare, setAdminWare }) => {
     setSelectedSelf("");
     setSelectedCell("");
 
-    const apiUrl = `https://backend.doob.com.bd/api/v1/seller/warehouse/self/${selectedWarehouse}/${selectedArea}/${selectedRack}/${shopInfo._id}`;
+    const apiUrl = `https://doob.dev/api/v1/seller/warehouse/self/${selectedWarehouse}/${selectedArea}/${selectedRack}/${shopInfo._id}`;
     const res = await fetch(apiUrl);
     const selfData = await res.json();
     setOptions((prevOptions) => ({
@@ -115,7 +115,7 @@ const EditWareHouse = ({ product, adminWare, setAdminWare }) => {
     const selectedSelf = selectedOption.value;
     setSelectedSelf(selectedSelf);
 
-    const apiUrl = `https://backend.doob.com.bd/api/v1/seller/warehouse/cell/${selectedWarehouse}/${selectedArea}/${selectedRack}/${selectedSelf}/${shopInfo._id}`;
+    const apiUrl = `https://doob.dev/api/v1/seller/warehouse/cell/${selectedWarehouse}/${selectedArea}/${selectedRack}/${selectedSelf}/${shopInfo._id}`;
     const res = await fetch(apiUrl);
     const cellData = await res.json();
     setOptions((prevOptions) => ({
@@ -131,7 +131,7 @@ const EditWareHouse = ({ product, adminWare, setAdminWare }) => {
 
   console.log(
     options.cells,
-    `https://backend.doob.com.bd/api/v1/seller/warehouse/cell/${selectedWarehouse}/${selectedArea}/${selectedRack}/${selectedSelf}/${shopInfo._id}`
+    `https://doob.dev/api/v1/seller/warehouse/cell/${selectedWarehouse}/${selectedArea}/${selectedRack}/${selectedSelf}/${shopInfo._id}`
   );
 
   return (

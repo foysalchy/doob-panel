@@ -68,7 +68,7 @@ const EditPrice = ({ OpenModal, setOpenModal, FAQInfo, refetch }) => {
 
     try {
       fetch(
-        `https://backend.doob.com.bd/api/v1/admin/price/update-price/${FAQInfo._id}`,
+        `https://doob.dev/api/v1/admin/price/update-price/${FAQInfo._id}`,
         {
           method: "PUT",
           headers: {

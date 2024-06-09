@@ -28,7 +28,7 @@ const AdminHomePageControl = () => {
     };
     console.log(formData);
 
-    fetch("https://backend.doob.com.bd/api/v1/admin/upload-content", {
+    fetch("https://doob.dev/api/v1/admin/upload-content", {
       method: "post",
       headers: {
         "content-type": "application/json",

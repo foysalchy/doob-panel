@@ -36,7 +36,7 @@ const ShopAuth = ({ children }) => {
     queryFn: async () => {
       try {
         const res = await fetch(
-          `https://backend.doob.com.bd/api/v1/shop/firebase/${shopId}`,
+          `https://doob.dev/api/v1/shop/firebase/${shopId}`,
           {
             headers: {
               "ngrok-skip-browser-warning": "69420",
@@ -61,7 +61,7 @@ const ShopAuth = ({ children }) => {
     queryFn: async () => {
       try {
         const res = await fetch(
-          `https://backend.doob.com.bd/api/v1/shop/shopId/${shopId}`
+          `https://doob.dev/api/v1/shop/shopId/${shopId}`
         );
         const data = await res.json();
 
@@ -145,7 +145,7 @@ const ShopAuth = ({ children }) => {
 
   const saveUser = (name, email, provider) => {
     const user = { name, email, provider, shopId: shopId };
-    fetch("https://backend.doob.com.bd/api/v1/shop/auth", {
+    fetch("https://doob.dev/api/v1/shop/auth", {
       method: "post",
       headers: {
         "content-type": "application/json",
@@ -172,7 +172,7 @@ const ShopAuth = ({ children }) => {
     setLoading(true);
     const user = { name, email, provider: "custom", shopId: shopId, password };
     try {
-      fetch("https://backend.doob.com.bd/api/v1/shop/auth", {
+      fetch("https://doob.dev/api/v1/shop/auth", {
         method: "post",
         headers: {
           "content-type": "application/json",
@@ -280,7 +280,7 @@ const ShopAuth = ({ children }) => {
           setToken(false);
           setLoading(false);
         })
-        .catch((error) => {});
+        .catch((error) => { });
     }
   };
 
@@ -302,7 +302,7 @@ const ShopAuth = ({ children }) => {
     const auth = getAuth();
     const user = auth.currentUser;
 
-    
+
 
     updatePassword(user, newPassword)
       .then(() => {

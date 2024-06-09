@@ -19,14 +19,14 @@ const AddMiniCategory = () => {
   };
 
   console.log(
-    `https://backend.doob.com.bd/api/v1/category/seller/${shopInfo._id}`
+    `https://doob.dev/api/v1/category/seller/${shopInfo._id}`
   );
 
   const { data: darazData = [], refetch } = useQuery({
     queryKey: ["category"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/category/seller/${shopInfo._id}`
+        `https://doob.dev/api/v1/category/seller/${shopInfo._id}`
       );
       const data = await res.json();
       return data;
@@ -57,7 +57,7 @@ const AddMiniCategory = () => {
   };
 
   const uploadImage = async (formData) => {
-    const url = `https://backend.doob.com.bd/api/v1/image/upload-image`;
+    const url = `https://doob.dev/api/v1/image/upload-image`;
     const response = await fetch(url, {
       method: "POST",
       body: formData,
@@ -105,7 +105,7 @@ const AddMiniCategory = () => {
 
     // return;
 
-    const url = `https://backend.doob.com.bd/api/v1/category/seller/mini/add`;
+    const url = `https://doob.dev/api/v1/category/seller/mini/add`;
 
     fetch(url, {
       method: "POST",
@@ -135,7 +135,7 @@ const AddMiniCategory = () => {
       subCategoryName: darazCategoryString,
     };
 
-    fetch(`https://backend.doob.com.bd/api/v1/category/seller/sub`, {
+    fetch(`https://doob.dev/api/v1/category/seller/sub`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

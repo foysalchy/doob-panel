@@ -64,7 +64,7 @@ const AddPage = () => {
   //       };
   //       // postPage(draftsAddPageData, "");
   //       console.log(draftsAddPageData);
-  //       fetch(`https://backend.doob.com.bd/api/v1/admin/addpage`, {
+  //       fetch(`https://doob.dev/api/v1/admin/addpage`, {
   //         method: "POST",
   //         headers: {
   //           "content-type": "application/json",
@@ -117,7 +117,7 @@ const AddPage = () => {
     // navigate("/admin/page-management");
     // return;
 
-    fetch(`https://backend.doob.com.bd/api/v1/admin/addpage`, {
+    fetch(`https://doob.dev/api/v1/admin/addpage`, {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -136,7 +136,7 @@ const AddPage = () => {
   };
 
   async function uploadImage(formData) {
-    const url = "https://backend.doob.com.bd/api/v1/image/upload-image";
+    const url = "https://doob.dev/api/v1/image/upload-image";
     const response = await fetch(url, {
       method: "POST",
       body: formData,
@@ -162,13 +162,13 @@ const AddPage = () => {
                 Page Title
               </label>
               <input
-               
+
                 className="w-full rounded-lg border border-gray-900 p-3 text-sm"
                 placeholder="Title"
                 type="text"
                 id="title"
                 name="title"
-                // onChange={(e) => handleInputChange("title", e.target.value)} // for drafts
+              // onChange={(e) => handleInputChange("title", e.target.value)} // for drafts
               />
             </div>
             <div>
@@ -207,7 +207,7 @@ const AddPage = () => {
                 Meta Title
               </label>
               <input
-               
+
                 className="w-full rounded-lg border border-gray-900 p-3 text-sm"
                 placeholder="Meta tag"
                 // onChange={(e) => handleInputChange("MetaTag", e.target.value)} // for drafts
@@ -221,7 +221,7 @@ const AddPage = () => {
                 Meta Description
               </label>
               <textarea
-               
+
                 className="w-full rounded-lg border border-gray-900 p-3 text-sm"
                 placeholder="Meta description...."
                 // onChange={(e) =>
@@ -238,7 +238,7 @@ const AddPage = () => {
                 Meta Image
               </label>
               <input
-               
+
                 className="w-full rounded-lg border border-gray-900 p-3 text-sm"
                 placeholder="Meta image...."
                 // onChange={imageUploading}

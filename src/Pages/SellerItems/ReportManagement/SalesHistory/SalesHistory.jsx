@@ -15,7 +15,7 @@ const SalesHistory = () => {
     queryKey: ["myWebstoreOrder"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/seller/get-my-perches?shopId=${shopInfo?._id}`
+        `https://doob.dev/api/v1/seller/get-my-perches?shopId=${shopInfo?._id}`
       );
       const data = await res.json();
       return data;
@@ -45,7 +45,7 @@ const SalesHistory = () => {
   const userProductCancel = (orderId, status) => {
     console.log(orderId, status);
     fetch(
-      `https://backend.doob.com.bd/api/v1/seller/update-seller-order-status?orderId=${orderId}&status=${status}`,
+      `https://doob.dev/api/v1/seller/update-seller-order-status?orderId=${orderId}&status=${status}`,
       {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
@@ -71,7 +71,7 @@ const SalesHistory = () => {
   // ? update status
   const updateStatus = (status, orderId) => {
     fetch(
-      `https://backend.doob.com.bd/api/v1/seller/update-seller-order-status?orderId=${orderId}&status=${status}`,
+      `https://doob.dev/api/v1/seller/update-seller-order-status?orderId=${orderId}&status=${status}`,
       {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
@@ -126,7 +126,7 @@ const SalesHistory = () => {
 
     console.log(data);
     fetch(
-      `https://backend.doob.com.bd/api/v1/shop/refund-Order?token=${shopInfo._id}`,
+      `https://doob.dev/api/v1/shop/refund-Order?token=${shopInfo._id}`,
       {
         method: "POST",
         headers: {
@@ -210,8 +210,8 @@ const SalesHistory = () => {
             key={page}
             onClick={() => handlePageChange(page)}
             className={`px-3 py-1 rounded ${currentPage === page
-                ? "bg-blue-500 text-white"
-                : "bg-gray-200 text-gray-700"
+              ? "bg-blue-500 text-white"
+              : "bg-gray-200 text-gray-700"
               }`}
           >
             {page}
@@ -244,7 +244,7 @@ const SalesHistory = () => {
 
   const cancelNoteSubmit = () => {
     fetch(
-      `https://backend.doob.com.bd/api/v1/shop/user/order-cancel-reason?token=${shopInfo._id}`,
+      `https://doob.dev/api/v1/shop/user/order-cancel-reason?token=${shopInfo._id}`,
       {
         method: "PUT",
         headers: { "Content-Type": "application/json" },

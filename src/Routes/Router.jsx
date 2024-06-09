@@ -93,7 +93,7 @@ const Router = createBrowserRouter([
       </>
     ),
     children: SellerPath,
-  }, 
+  },
 
   {
     path: "/seller/pos",
@@ -172,7 +172,7 @@ const Router = createBrowserRouter([
         loader: async ({ params }) => {
           const categoryName = params.categoryId;
           const response = await fetch(
-            `https://backend.doob.com.bd/api/v1/seller/admin-category-item?id=${categoryName}`
+            `https://doob.dev/api/v1/seller/admin-category-item?id=${categoryName}`
           );
           const data = await response.json();
           return data?.data;
@@ -182,7 +182,7 @@ const Router = createBrowserRouter([
         path: ":id",
         loader: ({ params }) =>
           fetch(
-            `https://backend.doob.com.bd/api/v1/admin/single-product?id=${params?.id}`
+            `https://doob.dev/api/v1/admin/single-product?id=${params?.id}`
           ),
         element: (
           <>
@@ -210,7 +210,7 @@ const Router = createBrowserRouter([
         loader: async () => {
           try {
             const response = await fetch(
-              `https://backend.doob.com.bd/api/v1/admin/new-products`
+              `https://doob.dev/api/v1/admin/new-products`
             );
             const data = await response.json();
             return data;
@@ -226,7 +226,7 @@ const Router = createBrowserRouter([
         loader: async () => {
           try {
             const response = await fetch(
-              `https://backend.doob.com.bd/api/v1/admin/upcoming-products`
+              `https://doob.dev/api/v1/admin/upcoming-products`
             );
             const data = await response.json();
             return data;

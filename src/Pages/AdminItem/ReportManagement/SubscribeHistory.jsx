@@ -14,7 +14,7 @@ const SubscribeHistory = () => {
     queryKey: ["subscriber"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/admin/get-all-subscribe`
+        `https://doob.dev/api/v1/admin/get-all-subscribe`
       );
       const data = await res.json();
       return data?.data;
@@ -23,7 +23,7 @@ const SubscribeHistory = () => {
 
   const DeleteCategory = (id) => {
     fetch(
-      `https://backend.doob.com.bd/api/v1/admin/delete-subscribe?id=${id}`,
+      `https://doob.dev/api/v1/admin/delete-subscribe?id=${id}`,
       {
         method: "DELETE",
         headers: {

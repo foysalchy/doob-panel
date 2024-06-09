@@ -40,7 +40,7 @@ const UserSupportTicketForShop = () => {
     queryKey: ["userSuport"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/seller/user-support?shopId=${shopInfo._id}`
+        `https://doob.dev/api/v1/seller/user-support?shopId=${shopInfo._id}`
       );
       const data = await res.json();
       return data;
@@ -144,7 +144,7 @@ const UserSupportTicketForShop = () => {
   const closedLength = closedTicket.length;
 
   const statusUpdate = ({ id, status }) => {
-    fetch(`https://backend.doob.com.bd/api/v1/seller/user-support/${id}`, {
+    fetch(`https://doob.dev/api/v1/seller/user-support/${id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ status: status }),
@@ -408,7 +408,7 @@ const UserSupportTicketForShop = () => {
                         <button
                           onClick={() =>
                             fetch(
-                              `https://backend.doob.com.bd/api/v1/seller/user-support/${ticket._id}`,
+                              `https://doob.dev/api/v1/seller/user-support/${ticket._id}`,
                               {
                                 method: "delete",
                                 headers: { "Content-Type": "application/json" },

@@ -5,38 +5,20 @@ import Select from "react-select";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import useImageUpload from "../../../../Hooks/UploadImage";
 
 const AddMiniCategory = () => {
   const navigate = useNavigate();
   const [upload, setUpload] = useState("");
   const [uplodOk, setUploadOk] = useState(false);
+  const { uploadImage } = useImageUpload();
 
-  const imageUploading = (e) => {
-    e.preventDefault();
-    const selectedFile = e.target.files[0];
-    const formData = new FormData();
-    formData.append("image", selectedFile);
-    const url = `https://backend.doob.com.bd/api/v1/image/upload-image`;
-    fetch(url, {
-      method: "POST",
-      body: formData,
-    })
-      .then((res) => res.json())
-      .then((imageData) => {
-        if (imageData.imageUrl) {
-          setUpload(imageData.imageUrl);
-          setUploadOk(true);
-        } else {
-          setUpload("");
-        }
-      });
-  };
 
   const handleGoBack = () => {
     navigate(-1); // This will go back to the previous page
   };
 
-  let megaCategoryUrl = `https://backend.doob.com.bd/api/v1/admin/category/megacategory`;
+  let megaCategoryUrl = `https://doob.dev/api/v1/admin/category/megacategory`;
 
   const { data: megaCategories = [], refetch } = useQuery({
     queryKey: ["megaCategories"],
@@ -62,7 +44,7 @@ const AddMiniCategory = () => {
     setSubCategorys([]);
     const optionId = selectedOption.value;
     fetch(
-      `https://backend.doob.com.bd/api/v1/admin/category/subcategory?id=${optionId}`
+      `https://doob.dev/api/v1/admin/category/subcategory?id=${optionId}`
     )
       .then((res) => res.json())
       .then((data) => {
@@ -86,7 +68,7 @@ const AddMiniCategory = () => {
     setMiniCategorys([]);
     const optionId = selectedOption.value;
     fetch(
-      `https://backend.doob.com.bd/api/v1/admin/category/miniCategory?id=${optionId}`
+      `https://doob.dev/api/v1/admin/category/miniCategory?id=${optionId}`
     )
       .then((res) => res.json())
       .then((data) => {
@@ -104,7 +86,7 @@ const AddMiniCategory = () => {
       label: itm.miniCategoryName,
     }));
 
-  console.log(miniCategorys, "mini categoriessssss..");
+
   const UploadArea = async (e) => {
     e.preventDefault();
 
@@ -120,7 +102,9 @@ const AddMiniCategory = () => {
     const miniCategoryName =
       miniCategorys.find((item) => item._id === miniCategoryId)
         ?.miniCategoryName || "";
+    const file = e.target.image.files[0];
 
+    const upload = await uploadImage(file);
     const data = {
       extraCategoryName,
       megaCategoryName,
@@ -136,7 +120,7 @@ const AddMiniCategory = () => {
     };
     console.log(data, "------>");
 
-    const url = `https://backend.doob.com.bd/api/v1/admin/category/extraCategory`;
+    const url = `https://doob.dev/api/v1/admin/category/extraCategory`;
     fetch(url, {
       method: "POST",
       headers: {
@@ -251,7 +235,7 @@ const AddMiniCategory = () => {
         <div className="flex flex-col gap-2 mt-6">
           <label htmlFor="upload">Upload Image</label>
           <input
-            onChange={imageUploading}
+            name="image"
             required
             type="file"
             placeholder="enter sub category"

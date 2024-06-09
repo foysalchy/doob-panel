@@ -22,7 +22,7 @@ const AddDomain = () => {
     queryKey: ["domainDoc"],
     queryFn: async () => {
       const res = await fetch(
-        "https://backend.doob.com.bd/api/v1/admin/domain-document"
+        "https://doob.dev/api/v1/admin/domain-document"
       );
       const data = await res.json();
       return data.result;
@@ -33,7 +33,7 @@ const AddDomain = () => {
     queryKey: ["buyDomain"],
     queryFn: async () => {
       const res = await fetch(
-        "https://backend.doob.com.bd/api/v1/admin/buy-domain"
+        "https://doob.dev/api/v1/admin/buy-domain"
       );
       const data = await res.json();
       return data;
@@ -46,12 +46,12 @@ const AddDomain = () => {
     shopInfo.domain = domain;
 
     fetch(
-      `https://backend.doob.com.bd/api/v1/api/dns?domain=${domain}&txtValue=doob.com.bd/shop/${txtValue}`
+      `https://doob.dev/api/v1/api/dns?domain=${domain}&txtValue=doob.com.bd/shop/${txtValue}`
     )
       .then((res) => res.json())
       .then((data) => {
         if (data.isValuePresent === true) {
-          fetch("https://backend.doob.com.bd/api/v1/seller/addDomain", {
+          fetch("https://doob.dev/api/v1/seller/addDomain", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -113,7 +113,7 @@ const AddDomain = () => {
     queryKey: ["category"],
     queryFn: async () => {
       const res = await fetch(
-        "https://backend.doob.com.bd/api/v1/admin/domain-video"
+        "https://doob.dev/api/v1/admin/domain-video"
       );
       const data = await res.json();
       return data;

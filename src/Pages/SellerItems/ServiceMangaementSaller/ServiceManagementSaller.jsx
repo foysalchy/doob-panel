@@ -17,7 +17,7 @@ const ServiceManagementSaller = () => {
     queryKey: ["serviceOrderSaller"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/seller/my-service?shopId=${shopInfo._id}`
+        `https://doob.dev/api/v1/seller/my-service?shopId=${shopInfo._id}`
       );
       const data = await res.json();
       return data.data;
@@ -26,7 +26,7 @@ const ServiceManagementSaller = () => {
 
   console.log(serviceOrder);
   console.log(
-    `https://backend.doob.com.bd/api/v1/seller/my-service?shopId=${shopInfo._id}`
+    `https://doob.dev/api/v1/seller/my-service?shopId=${shopInfo._id}`
   );
 
   const [input, setInput] = useState("");
@@ -147,7 +147,7 @@ const ServiceManagementSaller = () => {
   const handleStateUpdate = (id, status) => {
     console.log(status, "state update");
     fetch(
-      `"https://backend.doob.com.bd/api/v1/admin/get-all-service-order?id=${id}`,
+      `"https://doob.dev/api/v1/admin/get-all-service-order?id=${id}`,
       {
         method: "PUT",
         headers: {

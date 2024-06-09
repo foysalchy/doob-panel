@@ -90,7 +90,7 @@ const CardProduct = () => {
           parseInt(
             product.sellingPrice ? product.sellingPrice : product.product_price
           ) *
-            parseInt(product.product_quantity),
+          parseInt(product.product_quantity),
         0
       );
   };
@@ -124,7 +124,7 @@ const CardProduct = () => {
         userInfo,
       };
       console.log(data);
-      fetch(`https://backend.doob.com.bd/api/v1/seller/web-store?id=${id}`, {
+      fetch(`https://doob.dev/api/v1/seller/web-store?id=${id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -132,7 +132,7 @@ const CardProduct = () => {
         body: JSON.stringify(data),
       })
         .then((res) => res.json())
-        .then((data) => {});
+        .then((data) => { });
     } else {
       navigate("/sign-in");
     }

@@ -20,7 +20,7 @@ const ShopProductCategory = () => {
     queryKey: ["feature_category"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/shop/feature-category?shopId=${shop_id.shop_id}`
+        `https://doob.dev/api/v1/shop/feature-category?shopId=${shop_id.shop_id}`
       );
       const data = await res.json();
       return data;

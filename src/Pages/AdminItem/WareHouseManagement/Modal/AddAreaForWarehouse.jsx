@@ -25,7 +25,7 @@ const AddAreaForWarehouse = ({
     queryKey: ["warehouses"],
     queryFn: async () => {
       const res = await fetch(
-        "https://backend.doob.com.bd/api/v1/admin/warehouse"
+        "https://doob.dev/api/v1/admin/warehouse"
       );
       const data = await res.json();
       return data;
@@ -64,7 +64,7 @@ const AddAreaForWarehouse = ({
     };
 
     console.log(data, "data is found");
-    fetch(`https://backend.doob.com.bd/api/v1/admin/warehouse/area`, {
+    fetch(`https://doob.dev/api/v1/admin/warehouse/area`, {
       method: "post",
       headers: {
         "Content-Type": "application/json",

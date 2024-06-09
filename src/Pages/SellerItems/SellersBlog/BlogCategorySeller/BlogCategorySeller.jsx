@@ -12,7 +12,7 @@ const BlogCategorySeller = () => {
     queryKey: ["blog-category"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/seller/blog-category?shopId=${shopInfo.shopId}`
+        `https://doob.dev/api/v1/seller/blog-category?shopId=${shopInfo.shopId}`
       );
       const data = await res.json();
       return data.data;
@@ -21,7 +21,7 @@ const BlogCategorySeller = () => {
 
   const DeleteCategory = (id) => {
     fetch(
-      `https://backend.doob.com.bd/api/v1/seller/DeleteBlogCategoryById?id=${id}`,
+      `https://doob.dev/api/v1/seller/DeleteBlogCategoryById?id=${id}`,
       {
         method: "DELETE",
         headers: {
@@ -52,7 +52,7 @@ const BlogCategorySeller = () => {
   const [openModal, setOpenModal] = useState(false);
 
   const uploadImage = async (formData) => {
-    const url = `https://backend.doob.com.bd/api/v1/image/upload-image`;
+    const url = `https://doob.dev/api/v1/image/upload-image`;
     const response = await fetch(url, {
       method: "POST",
       body: formData,
@@ -81,7 +81,7 @@ const BlogCategorySeller = () => {
       slag,
     };
 
-    fetch(`https://backend.doob.com.bd/api/v1/seller/update-blog-category`, {
+    fetch(`https://doob.dev/api/v1/seller/update-blog-category`, {
       method: "PUT",
       headers: {
         "content-type": "application/json",

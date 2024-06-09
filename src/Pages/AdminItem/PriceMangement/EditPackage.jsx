@@ -37,7 +37,7 @@ const EditPackage = ({ OpenModal, setOpenModal, packageInfo, refetch }) => {
     setIsLoading(true);
     try {
       fetch(
-        `https://backend.doob.com.bd/api/v1/admin/package/update-package/${packageInfo._id}`,
+        `https://doob.dev/api/v1/admin/package/update-package/${packageInfo._id}`,
         {
           method: "PUT",
           headers: {

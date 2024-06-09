@@ -27,7 +27,7 @@ const SignInSeller = () => {
       password,
     };
     setLoading(true);
-    fetch("https://backend.doob.com.bd/api/v1/auth/sign-in", {
+    fetch("https://doob.dev/api/v1/auth/sign-in", {
       method: "post",
       headers: {
         "content-type": "application/json",
@@ -43,7 +43,7 @@ const SignInSeller = () => {
           setPassError("");
           if (data.user.role === "seller") {
             fetch(
-              `https://backend.doob.com.bd/api/v1/shop/checkshop?shopEmail=${data?.user?.shopId}`
+              `https://doob.dev/api/v1/shop/checkshop?shopEmail=${data?.user?.shopId}`
             )
               .then((response) => response.json())
               .then((result) => {

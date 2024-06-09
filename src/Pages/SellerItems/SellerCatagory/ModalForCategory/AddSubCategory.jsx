@@ -23,7 +23,7 @@ const AddSubCategory = () => {
     queryKey: ["category"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/category/seller/${shopInfo._id}`
+        `https://doob.dev/api/v1/category/seller/${shopInfo._id}`
       );
       const data = await res.json();
       return data;
@@ -53,7 +53,7 @@ const AddSubCategory = () => {
   };
 
   const uploadImage = async (formData) => {
-    const url = `https://backend.doob.com.bd/api/v1/image/upload-image`;
+    const url = `https://doob.dev/api/v1/image/upload-image`;
     const response = await fetch(url, {
       method: "POST",
       body: formData,
@@ -91,7 +91,7 @@ const AddSubCategory = () => {
       megaCategoryId: megaCategoryId,
     };
 
-    const url = `https://backend.doob.com.bd/api/v1/category/seller/sub/add`;
+    const url = `https://doob.dev/api/v1/category/seller/sub/add`;
 
     const response = await fetch(url, {
       method: "POST",

@@ -12,7 +12,7 @@ const ForYouProducts = () => {
     queryKey: ["newProducts"],
     queryFn: async () => {
       const res = await fetch(
-        "https://backend.doob.com.bd/api/v1/admin/products"
+        "https://doob.dev/api/v1/admin/products"
       );
       const data = await res.json();
       return data;
@@ -29,7 +29,7 @@ const ForYouProducts = () => {
     refetch();
   };
 
-  console.log(newProducts, "products.");
+
   return (
     <div>
       <div className="py-4 bg-white rounded mt-6">
@@ -78,7 +78,7 @@ const ForYouProducts = () => {
                   filteredProducts?.map((product, idx) => {
                     let name = product?.name?.slice(0, 60);
                     {
-                      /* const blankImg = 'https://backend.doob.com.bd/api/v1/image/66036ed3df13bd9930ac229c.jpg'; */
+                      /* const blankImg = 'https://doob.dev/api/v1/image/66036ed3df13bd9930ac229c.jpg'; */
                     }
                     console.log(product);
                     return (

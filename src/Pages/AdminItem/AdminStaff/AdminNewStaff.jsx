@@ -18,7 +18,7 @@ const AdminNewStaff = () => {
 
   const handleSearch = () => {
     fetch(
-      `https://backend.doob.com.bd/api/v1/seller/seller-allUser?email=${searchValue}`
+      `https://doob.dev/api/v1/seller/seller-allUser?email=${searchValue}`
     )
       .then((res) => res.json())
       .then((data) => {
@@ -60,7 +60,7 @@ const AdminNewStaff = () => {
     setSelectedValue(selectedOption);
   };
 
-  const API_BASE_URL = "https://backend.doob.com.bd";
+  const API_BASE_URL = "https://doob.dev";
 
   const handleSubmit = async (e) => {
     e.preventDefault();

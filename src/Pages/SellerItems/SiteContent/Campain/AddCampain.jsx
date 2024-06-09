@@ -98,7 +98,7 @@ const AddCampaign = () => {
     queryKey: ["products"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/seller/all-products/${shopInfo._id}`
+        `https://doob.dev/api/v1/seller/all-products/${shopInfo._id}`
       );
       const data = await res.json();
       return data;
@@ -106,7 +106,7 @@ const AddCampaign = () => {
   });
 
   async function uploadImage(formData) {
-    const url = "https://backend.doob.com.bd/api/v1/image/upload-image";
+    const url = "https://doob.dev/api/v1/image/upload-image";
     const response = await fetch(url, {
       method: "POST",
       body: formData,
@@ -118,7 +118,7 @@ const AddCampaign = () => {
   const postSlider = (data, form) => {
     console.log(data);
 
-    fetch(`https://backend.doob.com.bd/api/v1/seller/add-campaign`, {
+    fetch(`https://doob.dev/api/v1/seller/add-campaign`, {
       method: "PATCH",
       headers: {
         "content-type": "application/json",

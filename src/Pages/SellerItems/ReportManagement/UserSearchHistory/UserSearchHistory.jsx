@@ -16,7 +16,7 @@ const UserSearchHistory = () => {
     queryKey: ["sellerSearch"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/seller/search-report`
+        `https://doob.dev/api/v1/seller/search-report`
       );
       const data = await res.json();
       console.log(data);
@@ -28,7 +28,7 @@ const UserSearchHistory = () => {
 
   const DeleteSearch = (id) => {
     console.log(id);
-    fetch(`https://backend.doob.com.bd/api/v1/seller/delete-search?id=${id}`, {
+    fetch(`https://doob.dev/api/v1/seller/delete-search?id=${id}`, {
       method: "DELETE",
       headers: {
         "content-type": "application/json",

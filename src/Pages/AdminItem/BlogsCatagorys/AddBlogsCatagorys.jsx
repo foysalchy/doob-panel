@@ -35,7 +35,7 @@ const AddBlogsCatagorys = () => {
 
     const formData = new FormData();
     formData.append("image", image);
-    const url = `https://backend.doob.com.bd/api/v1/image/upload-image`;
+    const url = `https://doob.dev/api/v1/image/upload-image`;
     fetch(url, {
       method: "POST",
       body: formData,
@@ -52,7 +52,7 @@ const AddBlogsCatagorys = () => {
   };
 
   const PostCategory = (category, form) => {
-    fetch(`https://backend.doob.com.bd/api/v1/admin/blog-category`, {
+    fetch(`https://doob.dev/api/v1/admin/blog-category`, {
       method: "POST",
       headers: {
         "content-type": "application/json",

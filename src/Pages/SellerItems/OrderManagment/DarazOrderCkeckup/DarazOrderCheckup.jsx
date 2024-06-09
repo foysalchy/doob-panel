@@ -14,7 +14,7 @@ const DarazOrderCheckup = () => {
     queryKey: ["darazData"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/seller/daraz-order?id=${shopInfo._id}&status=All`
+        `https://doob.dev/api/v1/seller/daraz-order?id=${shopInfo._id}&status=All`
       );
       const data = await res.json();
       return data.data;
@@ -34,7 +34,7 @@ const DarazOrderCheckup = () => {
     queryKey: ["darazSingleOrderProduct"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/seller/daraz-single-order?id=${shopInfo._id}&orderId=${findData?.order_number}`
+        `https://doob.dev/api/v1/seller/daraz-single-order?id=${shopInfo._id}&orderId=${findData?.order_number}`
       );
       const data = await res.json();
       return data.data;

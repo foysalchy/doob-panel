@@ -22,7 +22,7 @@ const DarazInvoice = () => {
     queryFn: async () => {
       if (shopInfo) {
         const res = await fetch(
-          `https://backend.doob.com.bd/api/v1/seller/daraz-single-order?id=${shopInfo?._id}&orderId=${id}`
+          `https://doob.dev/api/v1/seller/daraz-single-order?id=${shopInfo?._id}&orderId=${id}`
         );
         const data = await res.json();
         return data.data;

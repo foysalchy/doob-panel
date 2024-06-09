@@ -16,7 +16,7 @@ export default function ({ setOpen, itm, refetch }) {
       shopId: shopInfo?._id,
     }
     console.log(data);
-    fetch(`https://backend.doob.com.bd/api/v1/seller/edit-price-role?priceId=${itm?._id}`, {
+    fetch(`https://doob.dev/api/v1/seller/edit-price-role?priceId=${itm?._id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",

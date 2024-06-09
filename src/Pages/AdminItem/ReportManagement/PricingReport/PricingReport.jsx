@@ -12,7 +12,7 @@ const PricingReport = () => {
     queryKey: ["priceReportData"],
     queryFn: async () => {
       const res = await fetch(
-        "https://backend.doob.com.bd/api/v1/admin/pricing-report"
+        "https://doob.dev/api/v1/admin/pricing-report"
       );
       const data = await res.json();
       return data;
@@ -20,7 +20,7 @@ const PricingReport = () => {
   });
 
   const DeletePrice = (id) => {
-    fetch(`https://backend.doob.com.bd/api/v1/admin/pricing-report/${id}`, {
+    fetch(`https://doob.dev/api/v1/admin/pricing-report/${id}`, {
       method: "Delete",
       headers: {
         "content-type": "application/json",

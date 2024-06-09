@@ -18,7 +18,7 @@ const Invoice = () => {
     queryKey: ["sellerOrder"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/seller/order?shopId=${shopInfo._id}`
+        `https://doob.dev/api/v1/seller/order?shopId=${shopInfo._id}`
       );
       const data = await res.json();
       return data.data;
@@ -37,7 +37,7 @@ const Invoice = () => {
     queryKey: ["shop"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/shop/${shopInfo?.shopId}`
+        `https://doob.dev/api/v1/shop/${shopInfo?.shopId}`
       );
       const data = await res.json();
       return data;

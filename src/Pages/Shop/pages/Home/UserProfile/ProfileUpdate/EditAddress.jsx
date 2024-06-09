@@ -79,13 +79,13 @@ const EditAddress = ({
     };
     console.log(
       data == true
-        ? "https://backend.doob.com.bd/api/v1/shop/upload-Address"
-        : `https://backend.doob.com.bd/api/v1/shop/upload-Address?addressId=${data._id}`
+        ? "https://doob.dev/api/v1/shop/upload-Address"
+        : `https://doob.dev/api/v1/shop/upload-Address?addressId=${data._id}`
     );
     const url =
       data == true
-        ? "https://backend.doob.com.bd/api/v1/shop/upload-Address"
-        : `https://backend.doob.com.bd/api/v1/shop/upload-Address?addressId=${data._id}`;
+        ? "https://doob.dev/api/v1/shop/upload-Address"
+        : `https://doob.dev/api/v1/shop/upload-Address?addressId=${data._id}`;
 
     fetch(url, {
       method: "PATCH",

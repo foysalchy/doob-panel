@@ -19,7 +19,7 @@ const SliderManagement = () => {
     queryKey: ["faqs"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/seller/slider/${shopInfo._id}`
+        `https://doob.dev/api/v1/seller/slider/${shopInfo._id}`
       );
       const data = await res.json();
       return data;
@@ -28,7 +28,7 @@ const SliderManagement = () => {
 
   const updateStatus = (id, status) => {
     console.log(id, status);
-    fetch(`https://backend.doob.com.bd/api/v1/seller/slider/status/${id}`, {
+    fetch(`https://doob.dev/api/v1/seller/slider/status/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -53,7 +53,7 @@ const SliderManagement = () => {
 
   if (isDelete) {
     fetch(
-      `https://backend.doob.com.bd/api/v1/seller/slider/delete/${deleteId}`,
+      `https://doob.dev/api/v1/seller/slider/delete/${deleteId}`,
       {
         method: "DELETE",
         headers: {

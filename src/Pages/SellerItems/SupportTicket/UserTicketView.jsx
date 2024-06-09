@@ -17,7 +17,7 @@ const UserTicketView = ({
   const [loading, setLoading] = useState(false);
 
   const uploadImage = async (formData) => {
-    const url = `https://backend.doob.com.bd/api/v1/image/upload-image`;
+    const url = `https://doob.dev/api/v1/image/upload-image`;
     const response = await fetch(url, {
       method: "POST",
       body: formData,
@@ -57,7 +57,7 @@ const UserTicketView = ({
     console.log(data);
 
     fetch(
-      `https://backend.doob.com.bd/api/v1/seller/user-support-comment/${id}`,
+      `https://doob.dev/api/v1/seller/user-support-comment/${id}`,
       {
         method: "PUT",
         headers: {

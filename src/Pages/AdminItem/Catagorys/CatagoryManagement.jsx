@@ -12,7 +12,7 @@ const CatagoryManagement = () => {
     queryKey: ["category"],
     queryFn: async () => {
       const res = await fetch(
-        "https://backend.doob.com.bd/api/v1/admin/category"
+        "https://doob.dev/api/v1/admin/category"
       );
       const data = await res.json();
       return data;
@@ -20,7 +20,7 @@ const CatagoryManagement = () => {
   });
 
   const DeleteCategory = (id) => {
-    fetch(`https://backend.doob.com.bd/api/v1/admin/category`, {
+    fetch(`https://doob.dev/api/v1/admin/category`, {
       method: "DELETE",
       headers: {
         "content-type": "application/json",
@@ -46,7 +46,7 @@ const CatagoryManagement = () => {
     );
 
   const uploadImage = async (formData) => {
-    const url = `https://backend.doob.com.bd/api/v1/image/upload-image`;
+    const url = `https://doob.dev/api/v1/image/upload-image`;
     const response = await fetch(url, {
       method: "POST",
       body: formData,
@@ -71,7 +71,7 @@ const CatagoryManagement = () => {
       id: openModal._id,
     };
 
-    fetch(`https://backend.doob.com.bd/api/v1/admin/category-update`, {
+    fetch(`https://doob.dev/api/v1/admin/category-update`, {
       method: "PUT",
       headers: {
         "content-type": "application/json",

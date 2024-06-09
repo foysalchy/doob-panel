@@ -37,7 +37,7 @@ const ProductInformation = () => {
   const [variations, setVariations] = useState(null);
   const [showVariant, setShowVariant] = useState(product.data.images);
   const blankImg =
-    "https://backend.doob.com.bd/api/v1/image/66036ed3df13bd9930ac229c.jpg";
+    "https://doob.dev/api/v1/image/66036ed3df13bd9930ac229c.jpg";
 
   const handleImageClick = (imageUrl) => {
     setSelectedImage(imageUrl);
@@ -142,7 +142,7 @@ const ProductInformation = () => {
       setLoader(false);
     } else {
       fetch(
-        `https://backend.doob.com.bd/api/v1/shop/user/add-to-cart?token=${shopUser._id}`,
+        `https://doob.dev/api/v1/shop/user/add-to-cart?token=${shopUser._id}`,
         {
           method: "POST",
           headers: {
@@ -208,7 +208,7 @@ const ProductInformation = () => {
     queryKey: ["comments"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/seller/product-comment?id=${product?.data?._id}`
+        `https://doob.dev/api/v1/seller/product-comment?id=${product?.data?._id}`
       );
       const data = await res.json();
       return data?.comments;
@@ -232,7 +232,7 @@ const ProductInformation = () => {
   console.log(product?.data, "product");
 
   const queryURL = (() => {
-    let url = `https://backend.doob.com.bd/api/v1/seller/relavent-products?shopId=${shop_id?.shop_id}`;
+    let url = `https://doob.dev/api/v1/seller/relavent-products?shopId=${shop_id?.shop_id}`;
 
     const relaventBrand = product?.data?.brandName;
     const relaventCategories = product?.data?.categories

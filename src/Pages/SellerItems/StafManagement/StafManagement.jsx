@@ -13,13 +13,13 @@ const StafManagement = () => {
     const { data: staffInfo = [], refetch } = useQuery({
         queryKey: ["staffInfo"],
         queryFn: async () => {
-            const res = await fetch(`https://backend.doob.com.bd/api/v1/seller/all-staff?shopEmail=${user.shopId}`);
+            const res = await fetch(`https://doob.dev/api/v1/seller/all-staff?shopEmail=${user.shopId}`);
             const data = await res.json();
             localStorage.setItem('price', JSON.stringify(data?.data));
             return data;
         },
     });
-    console.log(`https://backend.doob.com.bd/api/v1/seller/all-staff?shopEmail=${user.shopId}`);
+    console.log(`https://doob.dev/api/v1/seller/all-staff?shopEmail=${user.shopId}`);
 
     const [deleteId, setDeletId] = useState('')
     const [deletePopUp, setDeletePopUp] = useState(false)
@@ -35,7 +35,7 @@ const StafManagement = () => {
 
     if (isDelete) {
 
-        fetch(`https://backend.doob.com.bd/api/v1/seller/staff-delete?email=${deleteId}`, {
+        fetch(`https://doob.dev/api/v1/seller/staff-delete?email=${deleteId}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",

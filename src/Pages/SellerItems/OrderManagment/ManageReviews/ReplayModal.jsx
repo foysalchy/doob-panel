@@ -18,7 +18,7 @@ const ReplayModal = ({ refetch, setOpen, itm }) => {
       time: new Date(),
     };
 
-    fetch(`https://backend.doob.com.bd/api/v1/seller/replay-on-review`, {
+    fetch(`https://doob.dev/api/v1/seller/replay-on-review`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -38,7 +38,7 @@ const ReplayModal = ({ refetch, setOpen, itm }) => {
     const selectedFile = e.target.files[0];
     const formData = new FormData();
     formData.append("image", selectedFile);
-    const url = `https://backend.doob.com.bd/api/v1/image/upload-image`;
+    const url = `https://doob.dev/api/v1/image/upload-image`;
     fetch(url, {
       method: "POST",
       body: formData,

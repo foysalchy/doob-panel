@@ -10,7 +10,7 @@ const UseSupperAdmin = () => {
     if (!loading) {
       if (user?.email) {
         fetch(
-          `https://backend.doob.com.bd/api/v1/users/supper-admin/${user?.email}`
+          `https://doob.dev/api/v1/users/supper-admin/${user?.email}`
         )
           .then((res) => res.json())
           .then(async (data) => {

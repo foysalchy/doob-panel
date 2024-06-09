@@ -24,7 +24,7 @@ const SellerDashLayout = () => {
     queryKey: ["subscriptionModal"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/seller/subscription-model?priceId=${shopInfo?.priceId}&shopId=${shopInfo?._id}`
+        `https://doob.dev/api/v1/seller/subscription-model?priceId=${shopInfo?.priceId}&shopId=${shopInfo?._id}`
       );
       const data = await res.json();
       return data?.data?.result;
@@ -84,7 +84,7 @@ const SellerDashLayout = () => {
 
   const updateStatus = (status) => {
     fetch(
-      `https://backend.doob.com.bd/api/v1/seller/update-shopInfo-for-status?id=${shopInfo._id}&status=${status}`,
+      `https://doob.dev/api/v1/seller/update-shopInfo-for-status?id=${shopInfo._id}&status=${status}`,
       {
         method: "PUT",
         headers: {

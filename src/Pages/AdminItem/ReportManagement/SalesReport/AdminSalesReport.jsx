@@ -11,7 +11,7 @@ const AdminSalesReport = () => {
     queryKey: ["serviceOrder"],
     queryFn: async () => {
       const res = await fetch(
-        "https://backend.doob.com.bd/api/v1/admin/get-all-service-order"
+        "https://doob.dev/api/v1/admin/get-all-service-order"
       );
       const data = await res.json();
       return data.data;
@@ -37,7 +37,7 @@ const AdminSalesReport = () => {
         const matchesDateRange =
           startDate && endDate
             ? new Date(order.timestamp) >= new Date(startDate) &&
-              new Date(order.timestamp) <= new Date(endDate)
+            new Date(order.timestamp) <= new Date(endDate)
             : true;
 
         return matchesSearch && matchesDateRange;
@@ -97,11 +97,10 @@ const AdminSalesReport = () => {
           return (
             <li key={pageNumber}>
               <button
-                className={`block h-8 w-8 rounded border ${
-                  pageNumber === currentPage
+                className={`block h-8 w-8 rounded border ${pageNumber === currentPage
                     ? "border-blue-600 bg-blue-600 text-white"
                     : "border-gray-900 bg-white text-center leading-8 text-gray-900"
-                }`}
+                  }`}
                 onClick={() => handleChangePage(pageNumber)}
               >
                 {pageNumber}

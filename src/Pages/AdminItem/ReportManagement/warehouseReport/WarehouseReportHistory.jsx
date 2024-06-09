@@ -13,7 +13,7 @@ const WarehouseReportHistory = () => {
     queryKey: ["adminWarehouseData"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/admin/warehouses-products`
+        `https://doob.dev/api/v1/admin/warehouses-products`
       );
       const data = await res.json();
       return data.warehouses;
@@ -25,14 +25,14 @@ const WarehouseReportHistory = () => {
     queryKey: ["wareAdminLengthData"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/admin/admin-all-warehouse-area-rack-cell-self`
+        `https://doob.dev/api/v1/admin/admin-all-warehouse-area-rack-cell-self`
       );
       const data = await res.json();
       return data;
     },
   });
 
-    console.log('----->>>', wareLength);
+  console.log('----->>>', wareLength);
 
   // Calculate total number of pages
   const totalPages = Math.ceil(warehouseData.length / itemsPerPage);
@@ -143,7 +143,7 @@ const WarehouseReportHistory = () => {
                             {" "}
                             Racks:{" "}
                             {
-                           wareLength &&  wareLength?.find(
+                              wareLength && wareLength?.find(
                                 (item) =>
                                   item.warehouse === data?.warehouse?.name
                               )?.racks?.length
@@ -157,7 +157,7 @@ const WarehouseReportHistory = () => {
                             {" "}
                             Selfs:{" "}
                             {
-                             wareLength && wareLength?.find(
+                              wareLength && wareLength?.find(
                                 (item) =>
                                   item.warehouse === data?.warehouse?.name
                               )?.selfs?.length
@@ -167,7 +167,7 @@ const WarehouseReportHistory = () => {
                             {" "}
                             Cells:{" "}
                             {
-                            wareLength &&  wareLength?.find(
+                              wareLength && wareLength?.find(
                                 (item) =>
                                   item.warehouse === data?.warehouse?.name
                               )?.cells?.length
@@ -277,11 +277,10 @@ const WarehouseReportHistory = () => {
                   key={i}
                   href="#"
                   onClick={() => setCurrentPage(i + 1)}
-                  className={`px-2 py-1 mr-2 text-sm rounded-md ${
-                    currentPage === i + 1
+                  className={`px-2 py-1 mr-2 text-sm rounded-md ${currentPage === i + 1
                       ? "text-blue-500 dark:bg-gray-800 bg-blue-100/60"
                       : "text-gray-200 dark:hover:bg-gray-800 dark:text-gray-300 hover:bg-gray-100"
-                  }`}
+                    }`}
                 >
                   {i + 1}
                 </a>

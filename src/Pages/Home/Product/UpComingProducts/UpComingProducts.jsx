@@ -16,7 +16,7 @@ const UpComingProducts = () => {
     queryKey: ["AdminNewProducts"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/admin/upcoming-products`
+        `https://doob.dev/api/v1/admin/upcoming-products`
       );
       const data = await res.json();
       return data;

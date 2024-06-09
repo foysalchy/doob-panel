@@ -27,7 +27,7 @@ const AddNewTicket = ({ OpenSupport, setOpenSupport, refetch }) => {
   };
 
   const uploadImage = async (formData) => {
-    const url = `https://backend.doob.com.bd/api/v1/image/upload-image`;
+    const url = `https://doob.dev/api/v1/image/upload-image`;
     const response = await fetch(url, {
       method: "POST",
       body: formData,
@@ -78,7 +78,7 @@ const AddNewTicket = ({ OpenSupport, setOpenSupport, refetch }) => {
     };
 
     fetch(
-      `https://backend.doob.com.bd/api/v1/shop/support?token=${shopUser._id}`,
+      `https://doob.dev/api/v1/shop/support?token=${shopUser._id}`,
       {
         method: "POST",
         headers: {

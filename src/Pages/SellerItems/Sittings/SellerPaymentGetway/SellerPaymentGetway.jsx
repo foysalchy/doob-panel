@@ -16,7 +16,7 @@ const SellerPaymentGetaway = () => {
     queryKey: ["getaway"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/seller/payment-getaway/${shopInfo._id}`
+        `https://doob.dev/api/v1/seller/payment-getaway/${shopInfo._id}`
       );
       const data = await res.json();
       return data;
@@ -60,7 +60,7 @@ const SellerPaymentGetaway = () => {
       shopId: shopInfo.shopId,
     };
 
-    fetch(`https://backend.doob.com.bd/api/v1/seller/payment-getaway`, {
+    fetch(`https://doob.dev/api/v1/seller/payment-getaway`, {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -102,7 +102,7 @@ const SellerPaymentGetaway = () => {
   };
 
   const deleteHandel = (id) => {
-    fetch(`https://backend.doob.com.bd/api/v1/seller/payment-getaway/${id}`, {
+    fetch(`https://doob.dev/api/v1/seller/payment-getaway/${id}`, {
       method: "Delete",
       headers: {
         "content-type": "application/json",

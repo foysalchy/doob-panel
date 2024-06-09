@@ -11,7 +11,7 @@ export default function SearchAdminReport() {
     queryKey: ["adminSearchData"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/admin/get-all-search`
+        `https://doob.dev/api/v1/admin/get-all-search`
       );
       const data = await res.json();
       return data.data;
@@ -21,7 +21,7 @@ export default function SearchAdminReport() {
   console.log(searchData);
 
   const DeleteSearch = (id) => {
-    fetch(`https://backend.doob.com.bd/api/v1/admin/delete-search?id=${id}`, {
+    fetch(`https://doob.dev/api/v1/admin/delete-search?id=${id}`, {
       method: "DELETE",
       headers: {
         "content-type": "application/json",
