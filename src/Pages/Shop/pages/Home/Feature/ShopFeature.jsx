@@ -26,7 +26,7 @@ const ShopFeature = () => {
     queryFn: async () => {
       try {
         const res = await fetch(
-          `https://backend.doob.com.bd/api/v1/shop/feature/get/${shopId}`
+          `https://doob.dev/api/v1/shop/feature/get/${shopId}`
         );
         const data = await res.json();
         return data;

@@ -15,7 +15,7 @@ const ViewSupportTicket = ({
   const [openModal, setOpenModal] = useState(false);
 
   const uploadImage = async (formData) => {
-    const url = `https://backend.doob.com.bd/api/v1/image/upload-image`;
+    const url = `https://doob.dev/api/v1/image/upload-image`;
     const response = await fetch(url, {
       method: "POST",
       body: formData,
@@ -54,7 +54,7 @@ const ViewSupportTicket = ({
       user: user?.name,
     };
     // / support - ticket /: id
-    fetch(`https://backend.doob.com.bd/api/v1/support/seller-comment/${id}`, {
+    fetch(`https://doob.dev/api/v1/support/seller-comment/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

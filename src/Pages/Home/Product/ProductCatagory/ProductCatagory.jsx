@@ -11,7 +11,7 @@ const ProductCatagory = () => {
     queryKey: ["megaCategoryData"],
     queryFn: async () => {
       const res = await fetch(
-        "https://backend.doob.com.bd/api/v1/admin/category/megacategory"
+        "https://doob.dev/api/v1/admin/category/megacategory"
       );
       const data = await res.json();
       return data.rows;

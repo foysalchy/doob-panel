@@ -49,7 +49,7 @@ const AdminFeatureImageAdd = () => {
   };
 
   async function uploadImage(formData) {
-    const url = "https://backend.doob.com.bd/api/v1/image/upload-image";
+    const url = "https://doob.dev/api/v1/image/upload-image";
     const response = await fetch(url, {
       method: "POST",
       body: formData,
@@ -59,7 +59,7 @@ const AdminFeatureImageAdd = () => {
   }
 
   const postSlider = (Slider) => {
-    fetch(`https://backend.doob.com.bd/api/v1/admin/feature-image`, {
+    fetch(`https://doob.dev/api/v1/admin/feature-image`, {
       method: "POST",
       headers: {
         "content-type": "application/json",

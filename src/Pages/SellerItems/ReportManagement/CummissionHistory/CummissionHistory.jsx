@@ -10,7 +10,7 @@ const CommissionHistory = () => {
     queryKey: ["commissionHistory"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/seller/get-commission?shopId=${shopInfo._id}`
+        `https://doob.dev/api/v1/seller/get-commission?shopId=${shopInfo._id}`
       );
       const data = await res.json();
       console.log(data);

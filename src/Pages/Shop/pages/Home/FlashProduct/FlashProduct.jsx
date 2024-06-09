@@ -45,7 +45,7 @@ const FlashProduct = () => {
     imageList.length > 0 ? imageList[0].src : ""
   );
 
-  // const blankImg = 'https://backend.doob.com.bd/api/v1/image/66036ed3df13bd9930ac229c.jpg';
+  // const blankImg = 'https://doob.dev/api/v1/image/66036ed3df13bd9930ac229c.jpg';
 
   const path = useLocation();
 
@@ -142,7 +142,7 @@ const FlashProduct = () => {
       setLoader(false);
     } else {
       fetch(
-        `https://backend.doob.com.bd/api/v1/shop/user/add-to-cart?token=${shopUser._id}`,
+        `https://doob.dev/api/v1/shop/user/add-to-cart?token=${shopUser._id}`,
         {
           method: "POST",
           headers: {
@@ -201,7 +201,7 @@ const FlashProduct = () => {
     queryKey: ["comments"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/seller/product-comment?id=${product?.data?._id}`
+        `https://doob.dev/api/v1/seller/product-comment?id=${product?.data?._id}`
       );
       const data = await res.json();
       return data?.comments;

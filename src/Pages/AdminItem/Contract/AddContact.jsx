@@ -21,7 +21,7 @@ const AddContact = () => {
     queryKey: ["contact"],
     queryFn: async () => {
       const res = await fetch(
-        "https://backend.doob.com.bd/api/v1/admin/contact"
+        "https://doob.dev/api/v1/admin/contact"
       );
       const data = await res.json();
       return data;
@@ -58,7 +58,7 @@ const AddContact = () => {
       };
     }
 
-    fetch(`https://backend.doob.com.bd/api/v1/admin/contact`, {
+    fetch(`https://doob.dev/api/v1/admin/contact`, {
       method: "POST",
       headers: {
         "content-type": "application/json",

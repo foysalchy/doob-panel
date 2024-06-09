@@ -22,7 +22,7 @@ const AddRackModal = ({
     queryKey: ["salerWarehouse"],
     queryFn: async () => {
       const res = await fetch(
-        "https://backend.doob.com.bd/api/v1/admin/warehouse"
+        "https://doob.dev/api/v1/admin/warehouse"
       );
       const data = await res.json();
       return data;
@@ -50,10 +50,10 @@ const AddRackModal = ({
 
   const handleWarehouseChange = async (selectedOption) => {
     const selectedWarehouse = selectedOption.value;
-    console.log(`https://backend.doob.com.bd/api/v1/admin/warehouse/area/${selectedWarehouse}`, selectedWarehouse, '***');
+    console.log(`https://doob.dev/api/v1/admin/warehouse/area/${selectedWarehouse}`, selectedWarehouse, '***');
 
     const res = await fetch(
-      `https://backend.doob.com.bd/api/v1/admin/warehouse/area/${selectedWarehouse}`
+      `https://doob.dev/api/v1/admin/warehouse/area/${selectedWarehouse}`
     );
     const data = await res.json();
     setAreas(data);
@@ -81,7 +81,7 @@ const AddRackModal = ({
       status: true,
     };
     console.log(data);
-    fetch("https://backend.doob.com.bd/api/v1/admin/warehouse/rack", {
+    fetch("https://doob.dev/api/v1/admin/warehouse/rack", {
       method: "post",
       headers: {
         "Content-Type": "application/json",

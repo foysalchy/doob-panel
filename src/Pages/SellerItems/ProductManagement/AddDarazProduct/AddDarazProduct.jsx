@@ -39,7 +39,7 @@ const AddDarazProduct = () => {
     queryKey: ["allProduct"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/seller/daraz-product/${shopInfo._id}`
+        `https://doob.dev/api/v1/seller/daraz-product/${shopInfo._id}`
       );
       const data = await res.json();
       return data;
@@ -169,7 +169,7 @@ const AddDarazProduct = () => {
 
     console.log(transformedData);
     console.log(transformedData.categories);
-    fetch("https://backend.doob.com.bd/api/v1/seller/daraz-product/", {
+    fetch("https://doob.dev/api/v1/seller/daraz-product/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -192,18 +192,18 @@ const AddDarazProduct = () => {
     queryKey: ["darazShopBd"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/seller/seller-daraz-accounts?id=${shopInfo._id}`
+        `https://doob.dev/api/v1/seller/seller-daraz-accounts?id=${shopInfo._id}`
       );
       const data = await res.json();
       return data.data[0];
     },
   });
 
-  const { data: priviousAccount = [], refetch: reload } = useQuery({
-    queryKey: ["priviousAccount"],
+  const { data: previousAccount = [], refetch: reload } = useQuery({
+    queryKey: ["previousAccount"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/daraz/get-privious-account?shopId=${shopInfo._id}`
+        `https://doob.dev/api/v1/daraz/get-privious-account?shopId=${shopInfo._id}`
       );
       const data = await res.json();
       return data.data;
@@ -212,7 +212,7 @@ const AddDarazProduct = () => {
 
   const switchAccount = (_id, id) => {
     fetch(
-      `https://backend.doob.com.bd/api/v1/daraz/switching-your-daraz?id=${id}&loginId=${_id}`,
+      `https://doob.dev/api/v1/daraz/switching-your-daraz?id=${id}&loginId=${_id}`,
       {
         method: "PATCH",
         headers: {
@@ -231,11 +231,15 @@ const AddDarazProduct = () => {
   };
 
   const [selectedAccount, setSelectedAccount] = useState("");
-
   const handleChange = (event) => {
-    const [shopId, oldId] = event.target.value.split(",");
-    setSelectedAccount(event.target.value);
-    switchAccount(shopId, oldId);
+    const selectedOldId = event.target.value;
+    console.log(selectedOldId);
+    const selectedShop = previousAccount.find(shop => shop._id === selectedOldId);
+    console.log(selectedShop, selectedOldId);
+    setSelectedAccount(selectedOldId);
+    if (selectedShop) {
+      switchAccount(selectedShop._id, selectedShop.oldId);
+    }
   };
 
   return (
@@ -243,23 +247,17 @@ const AddDarazProduct = () => {
       {!shopInfo.daraz ? (
         <div>
           <div className="flex justify-end items-center gap-12 mt-8 w-full">
-            {/* <div className="w-full px-4 py-2 bg-gray-50 rounded text-blue-500 flex items-center gap-2">
-          <MdEmail />
-          {<h1 className="w-full"> {darazShop?.result?.account}</h1>}
-        </div> */}
-
-            <div className=" bg-gray-50 px-4 py-2 rounded text-blue-500 flex items-center gap-2">
+            <div className="bg-gray-50 px-4 py-2 rounded text-blue-500 flex items-center gap-2">
               <h1 className="whitespace-nowrap">Switch Account</h1>
-              <hr />
+              <hr className="flex-grow mx-2 border-t border-blue-500" />
               <select
                 className="w-full px-4 py-2 border rounded bg-[#d2d2d2] text-sm"
                 value={selectedAccount}
                 onChange={handleChange}
               >
                 <option value="">{darazShop?.result?.account}</option>
-
-                {priviousAccount?.map((shop) => (
-                  <option key={shop._id} value={`${shop._id},${shop.oldId}`}>
+                {previousAccount?.map((shop) => (
+                  <option key={shop._id} value={shop._id}>
                     {shop.result.account}
                   </option>
                 ))}

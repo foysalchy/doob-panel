@@ -20,7 +20,7 @@ const SellerAddContactPage = () => {
     queryKey: ["contact_for_seller"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/shop/contact/${shopInfo?.shopId}`
+        `https://doob.dev/api/v1/shop/contact/${shopInfo?.shopId}`
       );
       const data = await res.json();
 
@@ -60,7 +60,7 @@ const SellerAddContactPage = () => {
       };
     }
 
-    fetch(`https://backend.doob.com.bd/api/v1/shop/contactInfo`, {
+    fetch(`https://doob.dev/api/v1/shop/contactInfo`, {
       method: "POST",
       headers: {
         "content-type": "application/json",

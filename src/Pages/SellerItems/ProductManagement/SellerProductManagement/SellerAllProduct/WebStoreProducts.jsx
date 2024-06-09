@@ -12,7 +12,7 @@ export default function WebStoreproduct({ priceRole, searchQuery }) {
   const pageSize = 10;
 
   console.log(
-    `https://backend.doob.com.bd/api/v1/seller/web-store?id=${shopInfo._id}`
+    `https://doob.dev/api/v1/seller/web-store?id=${shopInfo._id}`
   );
 
   const { data: productData = [], refetch } = useQuery({
@@ -20,7 +20,7 @@ export default function WebStoreproduct({ priceRole, searchQuery }) {
     queryFn: async () => {
       try {
         const res = await fetch(
-          `https://backend.doob.com.bd/api/v1/seller/web-store?id=${shopInfo._id}`
+          `https://doob.dev/api/v1/seller/web-store?id=${shopInfo._id}`
         );
         const data = await res.json();
         return data?.products;
@@ -52,7 +52,7 @@ export default function WebStoreproduct({ priceRole, searchQuery }) {
     setDeletePopUp(true);
   };
   if (isDelete) {
-    fetch(`https://backend.doob.com.bd/api/v1/seller/delete-product`, {
+    fetch(`https://doob.dev/api/v1/seller/delete-product`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -105,7 +105,7 @@ export default function WebStoreproduct({ priceRole, searchQuery }) {
   };
 
   const update_status = (product_id, status) => {
-    fetch(`https://backend.doob.com.bd/api/v1/seller/update-product-status`, {
+    fetch(`https://doob.dev/api/v1/seller/update-product-status`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -365,11 +365,10 @@ export default function WebStoreproduct({ priceRole, searchQuery }) {
             (_, index) => (
               <div
                 key={index}
-                className={`px-2 py-1 text-sm rounded-md ${
-                  currentPage === index + 1
+                className={`px-2 py-1 text-sm rounded-md ${currentPage === index + 1
                     ? "bg-blue-500 text-white"
                     : "text-blue-500 bg-blue-100/60"
-                }`}
+                  }`}
                 onClick={() => setCurrentPage(index + 1)}
 
               >

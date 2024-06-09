@@ -15,7 +15,7 @@
 //     queryKey: ["services"],
 //     queryFn: async () => {
 //       const res = await fetch(
-//         "https://backend.doob.com.bd/api/v1/admin/services"
+//         "https://doob.dev/api/v1/admin/services"
 //       );
 //       const data = await res.json();
 //       return data;
@@ -26,7 +26,7 @@
 //     queryKey: ["categories"],
 //     queryFn: async () => {
 //       const res = await fetch(
-//         "https://backend.doob.com.bd/api/v1/admin/category"
+//         "https://doob.dev/api/v1/admin/category"
 //       );
 //       const data = await res.json();
 //       return data;
@@ -181,7 +181,7 @@ const MainService = () => {
   const { data: services = [], refetch: refetchServices, isLoading: isServicesLoading } = useQuery({
     queryKey: ["services"],
     queryFn: async () => {
-      const res = await fetch("https://backend.doob.com.bd/api/v1/admin/services");
+      const res = await fetch("https://doob.dev/api/v1/admin/services");
       const data = await res.json();
       return data;
     },
@@ -190,7 +190,7 @@ const MainService = () => {
   const { data: categories = [], isLoading: isCategoriesLoading } = useQuery({
     queryKey: ["categories"],
     queryFn: async () => {
-      const res = await fetch("https://backend.doob.com.bd/api/v1/admin/category");
+      const res = await fetch("https://doob.dev/api/v1/admin/category");
       const data = await res.json();
       return data;
     },

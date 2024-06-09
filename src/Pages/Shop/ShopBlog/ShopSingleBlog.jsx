@@ -17,7 +17,7 @@ const ShopSingleBlog = () => {
 
   const [blogList, setBlogList] = useState([]);
   useEffect(() => {
-    fetch(`https://backend.doob.com.bd/api/v1/seller/blog/${shopId}`)
+    fetch(`https://doob.dev/api/v1/seller/blog/${shopId}`)
       .then((res) => res.json())
       .then((data) => setBlogList(data));
   }, []);

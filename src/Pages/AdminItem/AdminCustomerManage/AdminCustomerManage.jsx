@@ -15,7 +15,7 @@ const AdminCustomerManage = () => {
   const { data: users = [], refetch } = useQuery({
     queryKey: ["users"],
     queryFn: async () => {
-      const res = await fetch("https://backend.doob.com.bd/api/v1/admin/user");
+      const res = await fetch("https://doob.dev/api/v1/admin/user");
       const data = await res.json();
       return data;
     },
@@ -102,7 +102,7 @@ const AdminCustomerManage = () => {
   };
 
   const updateStatus = (id, status) => {
-    fetch(`https://backend.doob.com.bd/api/v1/admin/seller/status/${id}`, {
+    fetch(`https://doob.dev/api/v1/admin/seller/status/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -119,7 +119,7 @@ const AdminCustomerManage = () => {
   const directLogin = async (email, userId) => {
     let password = "";
     await fetch(
-      `https://backend.doob.com.bd/api/v1/admin/seller/pass/${userId}`
+      `https://doob.dev/api/v1/admin/seller/pass/${userId}`
     )
       .then((res) => res.json())
       .then((data) => {
@@ -131,7 +131,7 @@ const AdminCustomerManage = () => {
     };
     console.log(data);
 
-    await fetch("https://backend.doob.com.bd/api/v1/auth/sign-in", {
+    await fetch("https://doob.dev/api/v1/auth/sign-in", {
       method: "post",
       headers: {
         "content-type": "application/json",
@@ -146,7 +146,7 @@ const AdminCustomerManage = () => {
         if (data.user) {
           if (data.user.role === "seller") {
             fetch(
-              `https://backend.doob.com.bd/api/v1/shop/checkshop?shopEmail=${data?.user?.shopId}`
+              `https://doob.dev/api/v1/shop/checkshop?shopEmail=${data?.user?.shopId}`
             )
               .then((response) => response.json())
               .then((result) => {
@@ -188,7 +188,7 @@ const AdminCustomerManage = () => {
 
   if (isDelete) {
     fetch(
-      `https://backend.doob.com.bd/api/v1/admin/seller/delete/${deleteId}`,
+      `https://doob.dev/api/v1/admin/seller/delete/${deleteId}`,
       {
         method: "DELETE",
         headers: {

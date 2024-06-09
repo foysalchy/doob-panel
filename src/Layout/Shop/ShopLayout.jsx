@@ -27,7 +27,7 @@ const ShopLayout = () => {
     queryKey: ["shop"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/shop/${shopId}`
+        `https://doob.dev/api/v1/shop/${shopId}`
       );
       const data = await res.json();
       return data;
@@ -41,7 +41,7 @@ const ShopLayout = () => {
     queryKey: ["contact"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/shop/contact/${shopId}`
+        `https://doob.dev/api/v1/shop/contact/${shopId}`
       );
       const data = await res.json();
       return data;
@@ -53,10 +53,10 @@ const ShopLayout = () => {
   };
 
   return (
-    
+
 
     <div>
-     
+
       {isLoading ? (
         <div className="grid h-screen px-4 bg-black place-content-center">
           <Lottie animationData={groovyWalkAnimation} loop={true} />

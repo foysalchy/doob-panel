@@ -38,7 +38,7 @@ const EditSincronusCategory = ({
       queryKey: ["megaCategory"],
       queryFn: async () => {
         const res = await fetch(
-          `https://backend.doob.com.bd/api/v1/category/seller/mega-category/get/${shopInfo._id}`
+          `https://doob.dev/api/v1/category/seller/mega-category/get/${shopInfo._id}`
         );
         const data = await res.json();
         setDarazOption(data?.daraz);
@@ -54,7 +54,7 @@ const EditSincronusCategory = ({
     enabled: !!selectedCategory,
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/category/seller/sub-category/get/${shopInfo._id}/${selectedCategory}`
+        `https://doob.dev/api/v1/category/seller/sub-category/get/${shopInfo._id}/${selectedCategory}`
       );
       const data = await res.json();
       setDarazOption(data?.daraz);
@@ -71,7 +71,7 @@ const EditSincronusCategory = ({
       enabled: !!selectedSubcategory,
       queryFn: async () => {
         const res = await fetch(
-          `https://backend.doob.com.bd/api/v1/category/seller/mini-category/get/${shopInfo._id}/${selectedSubcategory}`
+          `https://doob.dev/api/v1/category/seller/mini-category/get/${shopInfo._id}/${selectedSubcategory}`
         );
         const data = await res.json();
         return data?.data || [];
@@ -85,7 +85,7 @@ const EditSincronusCategory = ({
       enabled: !!selectedMinicategory,
       queryFn: async () => {
         const res = await fetch(
-          `https://backend.doob.com.bd/api/v1/category/seller/extra-category/get/${shopInfo._id}/${selectedMinicategory}`
+          `https://doob.dev/api/v1/category/seller/extra-category/get/${shopInfo._id}/${selectedMinicategory}`
         );
         const data = await res.json();
         return data?.data || [];

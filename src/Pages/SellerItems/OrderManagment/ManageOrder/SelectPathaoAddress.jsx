@@ -16,7 +16,7 @@ const SelectPathaoAddress = ({ accessToken }) => {
     queryKey: ["cityData"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/seller/address-city?shop_id=${shopInfo?._id}&access_token=${accessToken}`
+        `https://doob.dev/api/v1/seller/address-city?shop_id=${shopInfo?._id}&access_token=${accessToken}`
       );
       const responseData = await res.json();
       // setDarazOption(responseData?.daraz);
@@ -35,7 +35,7 @@ const SelectPathaoAddress = ({ accessToken }) => {
     enabled: !!selectedCity,
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/seller/address-zone?shop_id=${shopInfo?._id}&access_token=${accessToken}&city_id=${selectedCity}`
+        `https://doob.dev/api/v1/seller/address-zone?shop_id=${shopInfo?._id}&access_token=${accessToken}&city_id=${selectedCity}`
       );
       const responseData = await res.json();
       // setDarazOption(responseData?.daraz);
@@ -50,7 +50,7 @@ const SelectPathaoAddress = ({ accessToken }) => {
     enabled: !!selectedZone,
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/seller/address-area?shop_id=${shopInfo?._id}&access_token=${accessToken}&zone_id=${selectedZone}`
+        `https://doob.dev/api/v1/seller/address-area?shop_id=${shopInfo?._id}&access_token=${accessToken}&zone_id=${selectedZone}`
       );
       const responseData = await res.json();
       // setDarazOption(responseData?.daraz);

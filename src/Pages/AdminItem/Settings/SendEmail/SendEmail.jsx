@@ -12,7 +12,7 @@ const SendEmail = () => {
   const { data: options = [], refetch } = useQuery({
     queryKey: ["options"],
     queryFn: async () => {
-      const res = await fetch("https://backend.doob.com.bd/api/v1/users");
+      const res = await fetch("https://doob.dev/api/v1/users");
       const data = await res.json();
       return data;
     },
@@ -79,7 +79,7 @@ const SendEmail = () => {
         select,
       };
     }
-    fetch("https://backend.doob.com.bd/api/v1/admin/send-email", {
+    fetch("https://doob.dev/api/v1/admin/send-email", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -3,8 +3,10 @@ import React, { useState } from "react";
 import { FaLongArrowAltRight } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
+import useImageUpload from "../../../../Hooks/UploadImage";
 
 const ExtraCategoryManagement = () => {
+  const { uploadImage } = useImageUpload();
   const style = {
     addBtn: "bg-black text-white px-4 py-2 flex items-center rounded-lg",
   };
@@ -13,7 +15,7 @@ const ExtraCategoryManagement = () => {
     queryKey: ["extraCategory"],
     queryFn: async () => {
       const res = await fetch(
-        "https://backend.doob.com.bd/api/v1/admin/category/extraCategories"
+        "https://doob.dev/api/v1/admin/category/extraCategories"
       );
       const data = await res.json();
       return data.rows;
@@ -23,7 +25,7 @@ const ExtraCategoryManagement = () => {
   // status update
   const statusUpdate = (id, status) => {
     fetch(
-      `https://backend.doob.com.bd/api/v1/admin/category/extraCategory?id=${id}&status=${status}`,
+      `https://doob.dev/api/v1/admin/category/extraCategory?id=${id}&status=${status}`,
       {
         method: "PUT",
         headers: {
@@ -42,7 +44,7 @@ const ExtraCategoryManagement = () => {
   // status update
   const onDelete = (id) => {
     fetch(
-      `https://backend.doob.com.bd/api/v1/admin/category/extraCategory?id=${id}`,
+      `https://doob.dev/api/v1/admin/category/extraCategory?id=${id}`,
       {
         method: "DELETE",
         headers: {
@@ -60,16 +62,7 @@ const ExtraCategoryManagement = () => {
 
   const [editOn, setEditOn] = useState(false);
 
-  const uploadImage = async (formData) => {
-    const url = `https://backend.doob.com.bd/api/v1/image/upload-image`;
-    const response = await fetch(url, {
-      method: "POST",
-      body: formData,
-    });
 
-    const imageData = await response.json();
-    return imageData.imageUrl;
-  };
 
   const handleEdit = async (e, id) => {
     e.preventDefault();
@@ -77,27 +70,27 @@ const ExtraCategoryManagement = () => {
     const image = form.image;
     const name = form.name.value;
 
-    const imageFormData = new FormData();
-    imageFormData.append("image", image.files[0]);
-    const imageUrl = await uploadImage(imageFormData);
+    const imageFormData = image.files[0];
+
 
     const data = {
-      img: imageUrl ? imageUrl : editOn?.img,
-      subCategory: name,
+      img: imageFormData ? await uploadImage(imageFormData) : editOn?.img,
+      extraCategoryName: name,
     };
 
     console.log(data, id);
 
-    // fetch(`https://backend.doob.com.bd/api/v1/admin/feature-image-update?id=${id}`, {
-    //     method: "PUT",
-    //     headers: {
-    //         "Content-Type": "application/json",
-    //     },
-    //     body: JSON.stringify(data),
-    // }).then((res) => res.json()).then((data) => {
-    //     Swal.fire(`Category update `, '', 'success');
-    //     refetch()
-    // })
+    fetch(`https://doob.dev/api/v1/admin/edit-category/extra_category?id=${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    }).then((res) => res.json()).then((data) => {
+      console.log(data);
+      Swal.fire(`Category update `, '', 'success');
+      refetch()
+    })
 
     setEditOn(false);
   };
@@ -125,7 +118,7 @@ const ExtraCategoryManagement = () => {
       if (result.dismiss === Swal.DismissReason.timer) {
         // Timer completed, initiate the fetch for deletion
         fetch(
-          `https://backend.doob.com.bd/api/v1/admin/category/extraCategory/${id}`,
+          `https://doob.dev/api/v1/admin/category/extraCategory/${id}`,
           {
             method: "DELETE",
             headers: {
@@ -154,7 +147,7 @@ const ExtraCategoryManagement = () => {
   const featureStatus = (id, status) => {
     console.log(status);
     fetch(
-      `https://backend.doob.com.bd/api/v1/admin/extra-category/feature?id=${id}&feature=${status}`,
+      `https://doob.dev/api/v1/admin/extra-category/feature?id=${id}&feature=${status}`,
       {
         method: "PUT",
         headers: {
@@ -251,9 +244,8 @@ const ExtraCategoryManagement = () => {
                         onClick={() =>
                           featureStatus(item?._id, item?.feature ? false : true)
                         }
-                        className={`${
-                          item?.feature ? "bg-green-500" : "bg-red-500"
-                        } text-white ml-2 rounded capitalize px-3 py-1`}
+                        className={`${item?.feature ? "bg-green-500" : "bg-red-500"
+                          } text-white ml-2 rounded capitalize px-3 py-1`}
                       >
                         futures
                       </button>
@@ -273,18 +265,16 @@ const ExtraCategoryManagement = () => {
 
                     <div className="absolute w-full top-0 left-0">
                       <div
-                        className={`fixed z-[100] flex items-center justify-center ${
-                          editOn?._id === item?._id
-                            ? "opacity-1 visible"
-                            : "invisible opacity-0"
-                        } inset-0 bg-black/20 backdrop-blur-sm duration-100`}
+                        className={`fixed z-[100] flex items-center justify-center ${editOn?._id === item?._id
+                          ? "opacity-1 visible"
+                          : "invisible opacity-0"
+                          } inset-0 bg-black/20 backdrop-blur-sm duration-100`}
                       >
                         <div
-                          className={`absolute md:w-[500px] w-full rounded-sm bg-white p-3 pb-5 text-center drop-shadow-2xl ${
-                            editOn?._id === item?._id
-                              ? "scale-1 opacity-1 duration-300"
-                              : "scale-0 opacity-0 duration-150"
-                          } `}
+                          className={`absolute md:w-[500px] w-full rounded-sm bg-white p-3 pb-5 text-center drop-shadow-2xl ${editOn?._id === item?._id
+                            ? "scale-1 opacity-1 duration-300"
+                            : "scale-0 opacity-0 duration-150"
+                            } `}
                         >
                           <svg
                             onClick={() => setEditOn(false)}

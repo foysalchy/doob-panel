@@ -287,7 +287,7 @@ const SeeAllProduct = () => {
         queryKey: ["megaCategoryData"],
         queryFn: async () => {
             const res = await fetch(
-                "https://backend.doob.com.bd/api/v1/seller/category/megacategory"
+                "https://doob.dev/api/v1/seller/category/megacategory"
             );
             const data = await res.json();
             return data.rows;
@@ -298,7 +298,7 @@ const SeeAllProduct = () => {
         queryKey: ["miniCategoryData"],
         queryFn: async () => {
             const res = await fetch(
-                "https://backend.doob.com.bd/api/v1/seller/category/miniCategories"
+                "https://doob.dev/api/v1/seller/category/miniCategories"
             );
             const data = await res.json();
             return data.rows;
@@ -309,7 +309,7 @@ const SeeAllProduct = () => {
         queryKey: ["subCategoryData"],
         queryFn: async () => {
             const res = await fetch(
-                "https://backend.doob.com.bd/api/v1/seller/category/subcategories"
+                "https://doob.dev/api/v1/seller/category/subcategories"
             );
             const data = await res.json();
             return data.rows;
@@ -320,7 +320,7 @@ const SeeAllProduct = () => {
         queryKey: ["extraCategoryData"],
         queryFn: async () => {
             const res = await fetch(
-                "https://backend.doob.com.bd/api/v1/seller/category/extraCategories"
+                "https://doob.dev/api/v1/seller/category/extraCategories"
             );
             const data = await res.json();
             return data.rows;
@@ -333,7 +333,7 @@ const SeeAllProduct = () => {
         queryKey: "fData",
         queryFn: async () => {
             const res = await fetch(
-                `https://backend.doob.com.bd/api/v1/seller/filter-products?categories=${categroyValue}&minPrice=${minPrice}&maxPrice=${maxPrice}&brandName=${selectedBrandValues}`
+                `https://doob.dev/api/v1/seller/filter-products?categories=${categroyValue}&minPrice=${minPrice}&maxPrice=${maxPrice}&brandName=${selectedBrandValues}`
             );
             const data = await res.json();
             return data;

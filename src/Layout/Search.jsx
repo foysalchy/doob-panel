@@ -11,13 +11,13 @@ const Search = () => {
   const searchData = async () => {
     const term = searchTerm;
     console.log(
-      `https://backend.doob.com.bd/api/v1/admin/search?term=${encodeURIComponent(
+      `https://doob.dev/api/v1/admin/search?term=${encodeURIComponent(
         term
       )}`
     );
     try {
       const response = await fetch(
-        `https://backend.doob.com.bd/api/v1/admin/search?term=${encodeURIComponent(
+        `https://doob.dev/api/v1/admin/search?term=${encodeURIComponent(
           term
         )}`
       );
@@ -39,7 +39,7 @@ const Search = () => {
     setSearchResults();
 
     fetch(
-      `https://backend.doob.com.bd/api/v1/admin/search-history?term=${encodeURIComponent(
+      `https://doob.dev/api/v1/admin/search-history?term=${encodeURIComponent(
         input
       )}`
     )

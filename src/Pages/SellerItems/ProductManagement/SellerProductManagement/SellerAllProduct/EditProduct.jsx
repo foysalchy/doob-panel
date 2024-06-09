@@ -33,7 +33,7 @@ const EditProductForm = ({ product }) => {
     const formData = new FormData();
     formData.append("image", image);
 
-    const url = `https://backend.doob.com.bd/api/v1/image/upload-image`;
+    const url = `https://doob.dev/api/v1/image/upload-image`;
 
     return fetch(url, {
       method: "POST",
@@ -51,7 +51,7 @@ const EditProductForm = ({ product }) => {
   //     const { data: products = [], refetch } = useQuery({
   //         queryKey: ["products"],
   //         queryFn: async () => {
-  //             const res = await fetch(`https://backend.doob.com.bd/api/v1/seller/all-products/${shopInfo._id}`);
+  //             const res = await fetch(`https://doob.dev/api/v1/seller/all-products/${shopInfo._id}`);
   //             const data = await res.json();
   //             return data;
   //         },

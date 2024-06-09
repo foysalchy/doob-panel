@@ -14,7 +14,7 @@ const EditSellerBlog = ({ OpenModal, setOpenModal, BlogInfo, refetch }) => {
 
     try {
       const response = await fetch(
-        `https://backend.doob.com.bd/api/v1/image/upload-image?shopId=${shopInfo._id}`,
+        `https://doob.dev/api/v1/image/upload-image?shopId=${shopInfo._id}`,
         {
           method: "POST",
           body: formData,
@@ -41,7 +41,7 @@ const EditSellerBlog = ({ OpenModal, setOpenModal, BlogInfo, refetch }) => {
 
     try {
       const response = await fetch(
-        `https://backend.doob.com.bd/api/v1/seller/blog/update-blog/${BlogInfo._id}`,
+        `https://doob.dev/api/v1/seller/blog/update-blog/${BlogInfo._id}`,
         {
           method: "PUT",
           headers: {

@@ -39,7 +39,7 @@ const UserSupportTicket = () => {
     queryKey: ["supportTickets"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/shop/support?shopId=${shop_id.shop_id}&token=${shopUser._id}`
+        `https://doob.dev/api/v1/shop/support?shopId=${shop_id.shop_id}&token=${shopUser._id}`
       );
       const data = await res.json();
       return data;

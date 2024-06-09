@@ -13,7 +13,7 @@ const Pos = () => {
     const { data: products = [], reload } = useQuery({
         queryKey: ["pos-product"],
         queryFn: async () => {
-            const res = await fetch(`https://backend.doob.com.bd/api/v1/seller/get-pos-product/${shopInfo._id}`);
+            const res = await fetch(`https://doob.dev/api/v1/seller/get-pos-product/${shopInfo._id}`);
             const data = await res.json();
             return data;
         },

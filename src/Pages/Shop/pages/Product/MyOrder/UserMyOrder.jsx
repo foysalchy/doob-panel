@@ -79,8 +79,8 @@ const ProductCartLg = ({ order }) => {
               {order.status
                 ? order.status
                 : list.status
-                ? list.status
-                : "Progress"}
+                  ? list.status
+                  : "Progress"}
             </p>
             {order?.status === "delivered" && (
               <div>
@@ -129,7 +129,7 @@ const UserMyOrder = () => {
     queryKey: ["my-order"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/shop/user/order?shopId=${shop_id.shop_id}&token=${shopUser._id}`
+        `https://doob.dev/api/v1/shop/user/order?shopId=${shop_id.shop_id}&token=${shopUser._id}`
       );
       const data = await res.json();
       return data;
@@ -148,7 +148,7 @@ const UserMyOrder = () => {
   const userProductCancel = (orderId, productId, status) => {
     console.log(orderId, productId, status);
     fetch(
-      `https://backend.doob.com.bd/api/v1/shop/user/order-product-status-update?orderId=${orderId}&productId=${productId}&status=${status}&token=${shopUser._id}`,
+      `https://doob.dev/api/v1/shop/user/order-product-status-update?orderId=${orderId}&productId=${productId}&status=${status}&token=${shopUser._id}`,
       {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
@@ -176,7 +176,7 @@ const UserMyOrder = () => {
   // ? update status
   const updateStatus = (status, orderId) => {
     fetch(
-      `https://backend.doob.com.bd/api/v1/seller/order-status-update?orderId=${orderId}&status=${status}`,
+      `https://doob.dev/api/v1/seller/order-status-update?orderId=${orderId}&status=${status}`,
       {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
@@ -213,16 +213,16 @@ const UserMyOrder = () => {
       data: {
         ...(selectedPaymentMethod === "mobile-bank"
           ? {
-              getway: getway,
-              name: name,
-              account_number: account_number,
-            }
+            getway: getway,
+            name: name,
+            account_number: account_number,
+          }
           : {
-              bank_name: bank_name,
-              ac: ac,
-              holder: holder,
-              paymentMethod: selectedPaymentMethod,
-            }),
+            bank_name: bank_name,
+            ac: ac,
+            holder: holder,
+            paymentMethod: selectedPaymentMethod,
+          }),
       },
       shopId: shop_id.shop_id,
       userId: shopUser._id,
@@ -231,7 +231,7 @@ const UserMyOrder = () => {
 
     console.log(data);
     fetch(
-      `https://backend.doob.com.bd/api/v1/shop/refund-Order?token=${shopUser._id}`,
+      `https://doob.dev/api/v1/shop/refund-Order?token=${shopUser._id}`,
       {
         method: "POST",
         headers: {
@@ -292,9 +292,8 @@ const UserMyOrder = () => {
       <div className="flex items-center justify-center gap-2 mt-4">
         <button
           onClick={() => handlePageChange(currentPage - 1)}
-          className={`flex items-center justify-center px-4 py-2 mx-1 text-gray-500 capitalize  bg-white rounded-md  rtl:-scale-x-100 dark:bg-gray-800 dark:text-gray-600 ${
-            currentPage === 1 ? "cursor-not-allowed opacity-50" : ""
-          }`}
+          className={`flex items-center justify-center px-4 py-2 mx-1 text-gray-500 capitalize  bg-white rounded-md  rtl:-scale-x-100 dark:bg-gray-800 dark:text-gray-600 ${currentPage === 1 ? "cursor-not-allowed opacity-50" : ""
+            }`}
           disabled={currentPage === 1}
         >
           <svg
@@ -315,11 +314,10 @@ const UserMyOrder = () => {
           <button
             key={page}
             onClick={() => handlePageChange(page)}
-            className={`px-3 py-1 rounded ${
-              currentPage === page
+            className={`px-3 py-1 rounded ${currentPage === page
                 ? "bg-blue-500 text-white"
                 : "bg-gray-200 text-gray-700"
-            }`}
+              }`}
           >
             {page}
           </button>
@@ -351,7 +349,7 @@ const UserMyOrder = () => {
 
   const cancelNoteSubmit = () => {
     fetch(
-      `https://backend.doob.com.bd/api/v1/shop/user/order-cancel-reason?token=${shopUser._id}`,
+      `https://doob.dev/api/v1/shop/user/order-cancel-reason?token=${shopUser._id}`,
       {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
@@ -520,176 +518,176 @@ const UserMyOrder = () => {
                       )}
                       {(order?.status === "delivered" ||
                         order?.status === "returned") && (
-                        <>
-                          <div className="flex items-center gap-2 ">
-                            {order?.status !== "returned" && (
-                              <button
-                                onClick={() => {
-                                  setOpen(!open);
-                                  setOrderId(order?._id);
-                                }}
-                                className="text-red-500 px-4 py-1 bg-red-100 rounded"
-                              >
-                                Return
-                              </button>
-                            )}
-                            {open && (
-                              <div className="modal h-screen w-screen fixed bg-[#0000008e] flex items-center justify-center top-0 left-0 z-[1000]">
-                                <div className="bg-white  md:w-[500px] text-black p-6 rounded-lg relative">
-                                  <h1 className="font-bold">
-                                    Please Select Your Payment Method for Refund
-                                  </h1>{" "}
-                                  <button
-                                    onClick={() => setOpen(!open)}
-                                    className="p-2 float-right text-xl absolute top-2 right-2 "
-                                  >
-                                    x
-                                  </button>{" "}
-                                  <br />
-                                  <form onSubmit={handleSubmit} className="">
-                                    {}
-                                    <div className="">
-                                      <label
-                                        className="block text-sm font-medium text-gray-700"
-                                        htmlFor="paymentMethod"
-                                      >
-                                        Payment Method
-                                      </label>
-                                      <select
-                                        id="paymentMethod"
-                                        name="paymentMethod"
-                                        value={selectedPaymentMethod}
-                                        onChange={handlePaymentMethodChange}
-                                        className="mt-1 block w-full md:w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                                      >
-                                        <option value="mobile-bank">
-                                          Mobile Banking
-                                        </option>
-                                        <option value="bank">Bank</option>
-                                      </select>
+                          <>
+                            <div className="flex items-center gap-2 ">
+                              {order?.status !== "returned" && (
+                                <button
+                                  onClick={() => {
+                                    setOpen(!open);
+                                    setOrderId(order?._id);
+                                  }}
+                                  className="text-red-500 px-4 py-1 bg-red-100 rounded"
+                                >
+                                  Return
+                                </button>
+                              )}
+                              {open && (
+                                <div className="modal h-screen w-screen fixed bg-[#0000008e] flex items-center justify-center top-0 left-0 z-[1000]">
+                                  <div className="bg-white  md:w-[500px] text-black p-6 rounded-lg relative">
+                                    <h1 className="font-bold">
+                                      Please Select Your Payment Method for Refund
+                                    </h1>{" "}
+                                    <button
+                                      onClick={() => setOpen(!open)}
+                                      className="p-2 float-right text-xl absolute top-2 right-2 "
+                                    >
+                                      x
+                                    </button>{" "}
+                                    <br />
+                                    <form onSubmit={handleSubmit} className="">
+                                      { }
                                       <div className="">
                                         <label
-                                          className="block text-sm font-medium text-gray-700 mt-2"
-                                          htmlFor="name"
+                                          className="block text-sm font-medium text-gray-700"
+                                          htmlFor="paymentMethod"
                                         >
-                                          Name
+                                          Payment Method
                                         </label>
-                                        <input
-                                          name="name"
-                                          id="name"
+                                        <select
+                                          id="paymentMethod"
+                                          name="paymentMethod"
+                                          value={selectedPaymentMethod}
+                                          onChange={handlePaymentMethodChange}
                                           className="mt-1 block w-full md:w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                                          placeholder="type your name"
-                                          type="text"
-                                        />
+                                        >
+                                          <option value="mobile-bank">
+                                            Mobile Banking
+                                          </option>
+                                          <option value="bank">Bank</option>
+                                        </select>
+                                        <div className="">
+                                          <label
+                                            className="block text-sm font-medium text-gray-700 mt-2"
+                                            htmlFor="name"
+                                          >
+                                            Name
+                                          </label>
+                                          <input
+                                            name="name"
+                                            id="name"
+                                            className="mt-1 block w-full md:w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                            placeholder="type your name"
+                                            type="text"
+                                          />
+                                        </div>
+                                        {selectedPaymentMethod === ""}
+                                        {showPaymentGetwaySelect && (
+                                          <div className="">
+                                            <div className="">
+                                              <label
+                                                className="block text-sm font-medium text-gray-700 pb-1 mt-2"
+                                                htmlFor="paymentGetway"
+                                              >
+                                                Payment Getway
+                                              </label>
+                                              <select
+                                                id="paymentGetway"
+                                                name="paymentGetway"
+                                                onChange={(e) =>
+                                                  setGetway(e?.target?.value)
+                                                }
+                                                className="mt-1 block w-full md:w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                              >
+                                                {PaymentGetWay?.map((itm) => (
+                                                  <option key={itm} value={itm}>
+                                                    {itm}
+                                                  </option>
+                                                ))}
+                                              </select>
+                                            </div>
+                                            <div className="">
+                                              <label
+                                                className="block text-sm font-medium text-gray-700 pb-1 mt-2"
+                                                htmlFor="account"
+                                              >
+                                                Personal Account Number
+                                              </label>
+                                              <input
+                                                id="account"
+                                                name="account_number"
+                                                type="tel"
+                                                placeholder="type your personal account number"
+                                                className="mt-1 block w-full md:w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                              />
+                                            </div>
+                                          </div>
+                                        )}
+
+                                        {/* bank inputs */}
+                                        {!showPaymentGetwaySelect && (
+                                          <div className="">
+                                            <div className="">
+                                              <label
+                                                className="block text-sm font-medium text-gray-700 mt-2"
+                                                htmlFor="bank_name"
+                                              >
+                                                Bank Name
+                                              </label>
+                                              <input
+                                                name="bank_name"
+                                                id="bank_name"
+                                                className="mt-1 block w-full md:w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                                placeholder="type your name"
+                                                type="text"
+                                              />
+                                            </div>
+                                            <div className="">
+                                              <label
+                                                className="block text-sm font-medium text-gray-700 mt-2"
+                                                htmlFor="ac"
+                                              >
+                                                AC
+                                              </label>
+                                              <input
+                                                name="ac"
+                                                id="ac"
+                                                className="mt-1 block w-full md:w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                                placeholder="type your AC number"
+                                                type="text"
+                                              />
+                                            </div>
+                                            <div className="">
+                                              <label
+                                                className="block text-sm font-medium text-gray-700 mt-2"
+                                                htmlFor="holder"
+                                              >
+                                                Holder
+                                              </label>
+                                              <input
+                                                name="holder"
+                                                id="holder"
+                                                className="mt-1 block w-full md:w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                                placeholder="type Holder"
+                                                type="text"
+                                              />
+                                            </div>
+                                          </div>
+                                        )}
+
+                                        <button
+                                          className="bg-blue-500 text-white px-8 py-2 mt-3 ml-auto rounded"
+                                          type="submit"
+                                        >
+                                          Return
+                                        </button>
                                       </div>
-                                      {selectedPaymentMethod === ""}
-                                      {showPaymentGetwaySelect && (
-                                        <div className="">
-                                          <div className="">
-                                            <label
-                                              className="block text-sm font-medium text-gray-700 pb-1 mt-2"
-                                              htmlFor="paymentGetway"
-                                            >
-                                              Payment Getway
-                                            </label>
-                                            <select
-                                              id="paymentGetway"
-                                              name="paymentGetway"
-                                              onChange={(e) =>
-                                                setGetway(e?.target?.value)
-                                              }
-                                              className="mt-1 block w-full md:w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                                            >
-                                              {PaymentGetWay?.map((itm) => (
-                                                <option key={itm} value={itm}>
-                                                  {itm}
-                                                </option>
-                                              ))}
-                                            </select>
-                                          </div>
-                                          <div className="">
-                                            <label
-                                              className="block text-sm font-medium text-gray-700 pb-1 mt-2"
-                                              htmlFor="account"
-                                            >
-                                              Personal Account Number
-                                            </label>
-                                            <input
-                                              id="account"
-                                              name="account_number"
-                                              type="tel"
-                                              placeholder="type your personal account number"
-                                              className="mt-1 block w-full md:w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                                            />
-                                          </div>
-                                        </div>
-                                      )}
-
-                                      {/* bank inputs */}
-                                      {!showPaymentGetwaySelect && (
-                                        <div className="">
-                                          <div className="">
-                                            <label
-                                              className="block text-sm font-medium text-gray-700 mt-2"
-                                              htmlFor="bank_name"
-                                            >
-                                              Bank Name
-                                            </label>
-                                            <input
-                                              name="bank_name"
-                                              id="bank_name"
-                                              className="mt-1 block w-full md:w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                                              placeholder="type your name"
-                                              type="text"
-                                            />
-                                          </div>
-                                          <div className="">
-                                            <label
-                                              className="block text-sm font-medium text-gray-700 mt-2"
-                                              htmlFor="ac"
-                                            >
-                                              AC
-                                            </label>
-                                            <input
-                                              name="ac"
-                                              id="ac"
-                                              className="mt-1 block w-full md:w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                                              placeholder="type your AC number"
-                                              type="text"
-                                            />
-                                          </div>
-                                          <div className="">
-                                            <label
-                                              className="block text-sm font-medium text-gray-700 mt-2"
-                                              htmlFor="holder"
-                                            >
-                                              Holder
-                                            </label>
-                                            <input
-                                              name="holder"
-                                              id="holder"
-                                              className="mt-1 block w-full md:w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                                              placeholder="type Holder"
-                                              type="text"
-                                            />
-                                          </div>
-                                        </div>
-                                      )}
-
-                                      <button
-                                        className="bg-blue-500 text-white px-8 py-2 mt-3 ml-auto rounded"
-                                        type="submit"
-                                      >
-                                        Return
-                                      </button>
-                                    </div>
-                                  </form>
+                                    </form>
+                                  </div>
                                 </div>
-                              </div>
-                            )}
-                          </div>
-                        </>
-                      )}
+                              )}
+                            </div>
+                          </>
+                        )}
                     </div>
                   </div>
                 </div>

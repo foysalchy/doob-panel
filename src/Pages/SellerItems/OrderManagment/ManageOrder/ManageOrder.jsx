@@ -10,6 +10,7 @@ import ExportModal from "./ExportModal";
 import { ordersNav } from "./ManageOrderNavData";
 import OrderTable from "./OrderTable";
 import PrintedWebInvoice from "./PrintedWebInvoice";
+import Swal from "sweetalert2";
 const ManageOrder = () => {
   const { shopInfo } = useContext(AuthContext);
   const [openModal, setOpenModal] = useState(false);
@@ -31,19 +32,19 @@ const ManageOrder = () => {
     queryKey: ["sellerOrder"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/seller/order?shopId=${shopInfo._id}`
+        `https://doob.dev/api/v1/seller/order?shopId=${shopInfo._id}`
       );
       const data = await res.json();
       return data.data;
     },
   });
 
-  const { data: darazOrder = [] } = useQuery({
+  const { data: darazOrder = [], refetch: refetchDaraz } = useQuery({
     queryKey: ["sellerDarazOrder"],
 
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/seller/daraz-order?id=${shopInfo._id}&status=All`
+        `https://doob.dev/api/v1/seller/daraz-order?id=${shopInfo._id}&status=All`
       );
 
       const data = await res.json();
@@ -79,7 +80,7 @@ const ManageOrder = () => {
 
   const get_print_for_selected_items = () => {
     fetch(
-      `https://backend.doob.com.bd/api/v1/seller/daraz-get-order-invoice?id=${shopInfo._id}&orderId=[${selected}]`
+      `https://doob.dev/api/v1/seller/daraz-get-order-invoice?id=${shopInfo._id}&orderId=[${selected}]`
     )
       .then((res) => res.text())
       .then((html) => {
@@ -105,7 +106,7 @@ const ManageOrder = () => {
 
   const get_daraz_sleeted_order_invoice = () => {
     fetch(
-      `https://backend.doob.com.bd/api/v1/seller/daraz-get-order-items?id=${shopInfo._id}&orderId=[${selected}]`
+      `https://doob.dev/api/v1/seller/daraz-get-order-items?id=${shopInfo._id}&orderId=[${selected}]`
     )
       .then((res) => res.json())
       .then((data) => {
@@ -178,9 +179,8 @@ const ManageOrder = () => {
     invoiceData.forEach((item) => {
       html += `
             <tr>
-                <td class="py-2"><img src="${
-                  item.product_main_image
-                }" alt="Product Image" class="w-16 h-16 object-cover"></td>
+                <td class="py-2"><img src="${item.product_main_image
+        }" alt="Product Image" class="w-16 h-16 object-cover"></td>
                 <td class="py-2">${item.name}</td>
                 <td class="py-2">${item.sku}</td>
                 <td class="py-2">${item.item_price}</td>
@@ -213,7 +213,7 @@ const ManageOrder = () => {
       for (const orderId of selected) {
         // Fetch the order details (including invoice data) for the current order ID
         const response = await fetch(
-          `https://backend.doob.com.bd/api/v1/seller/daraz-get-order-items?id=${shopInfo._id}&orderId=[${orderId}]`
+          `https://doob.dev/api/v1/seller/daraz-get-order-items?id=${shopInfo._id}&orderId=[${orderId}]`
         );
         const data = await response.json();
 
@@ -283,9 +283,8 @@ const ManageOrder = () => {
       invoiceData?.order_items?.forEach((item) => {
         html += `
                 <tr>
-                    <td class="py-2"><img src="${
-                      item.product_main_image
-                    }" alt="Product Image" class="product-image"></td>
+                    <td class="py-2"><img src="${item.product_main_image
+          }" alt="Product Image" class="product-image"></td>
                     <td class="py-2">${item.name}</td>
                     <td class="py-2">${item.sku}</td>
                     <td class="py-2">${item.item_price}</td>
@@ -323,7 +322,7 @@ const ManageOrder = () => {
     queryKey: ["darazShopBd"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/seller/seller-daraz-accounts?id=${shopInfo._id}`
+        `https://doob.dev/api/v1/seller/seller-daraz-accounts?id=${shopInfo._id}`
       );
       const data = await res.json();
       return data.data[0];
@@ -331,14 +330,14 @@ const ManageOrder = () => {
   });
 
   const {
-    data: priviousAccount = [],
+    data: previousAccount = [],
     isLoading: loading,
     refetch: reload,
   } = useQuery({
-    queryKey: ["priviousAccount"],
+    queryKey: ["previousAccount"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/daraz/get-privious-account?shopId=${shopInfo._id}`
+        `https://doob.dev/api/v1/daraz/get-privious-account?shopId=${shopInfo._id}`
       );
       const data = await res.json();
       return data.data;
@@ -346,8 +345,9 @@ const ManageOrder = () => {
   });
 
   const switchAccount = (_id, id) => {
+    console.log(`https://doob.dev/api/v1/daraz/switching-your-daraz?id=${id}&loginId=${_id}`,);
     fetch(
-      `https://backend.doob.com.bd/api/v1/daraz/switching-your-daraz?id=${id}&loginId=${_id}`,
+      `https://doob.dev/api/v1/daraz/switching-your-daraz?id=${id}&loginId=${_id}`,
       {
         method: "PATCH",
         headers: {
@@ -360,18 +360,24 @@ const ManageOrder = () => {
         console.log(data); // Log response data
         Swal.fire("Success", "", "success"); // Show success message (assuming you're using SweetAlert)
         refetch(); // Refetch data
-        darazShopRefetch(); // Reload data
+        reload(); // Reload data
+        darazShopRefetch()
+        refetchDaraz()
       });
   };
 
   const [selectedAccount, setSelectedAccount] = useState("");
 
   const handleChange = (event) => {
-    const [shopId, oldId] = event.target.value.split(",");
-    setSelectedAccount(event.target.value);
-    switchAccount(shopId, oldId);
+    const selectedOldId = event.target.value;
+    console.log(selectedOldId);
+    const selectedShop = previousAccount.find(shop => shop._id === selectedOldId);
+    console.log(selectedShop, selectedOldId);
+    setSelectedAccount(selectedOldId);
+    if (selectedShop) {
+      switchAccount(selectedShop._id, selectedShop.oldId);
+    }
   };
-
   return (
     <div>
       <ExportModal
@@ -384,26 +390,22 @@ const ManageOrder = () => {
           <MdEmail />
           {<h1 className="w-full"> {darazShop?.result?.account}</h1>}
         </div> */}
-
-        {darazShop?.result?.account && (
-          <div className=" bg-gray-50 px-4 py-2 rounded text-blue-500 flex items-center gap-2">
-            <h1 className="whitespace-nowrap">Switch Account</h1>
-            <hr />
-            <select
-              className="w-full px-4 py-2 border rounded bg-[#d2d2d2] text-sm"
-              value={selectedAccount}
-              onChange={handleChange}
-            >
-              <option value="">{darazShop?.result?.account}</option>
-
-              {priviousAccount?.map((shop) => (
-                <option key={shop._id} value={`${shop._id},${shop.oldId}`}>
-                  {shop.result.account}
-                </option>
-              ))}
-            </select>
-          </div>
-        )}
+        <div className="bg-gray-50 px-4 py-2 rounded text-blue-500 flex items-center gap-2">
+          <h1 className="whitespace-nowrap">Switch Account</h1>
+          <hr className="flex-grow mx-2 border-t border-blue-500" />
+          <select
+            className="w-full px-4 py-2 border rounded bg-[#d2d2d2] text-sm"
+            value={selectedAccount}
+            onChange={handleChange}
+          >
+            <option value="">{darazShop?.result?.account}</option>
+            {previousAccount?.map((shop) => (
+              <option key={shop._id} value={shop._id}>
+                {shop.result.account}
+              </option>
+            ))}
+          </select>
+        </div>
       </div>
 
       <h3 className="font-bold text-xl">Orders Overview</h3>
@@ -412,9 +414,8 @@ const ManageOrder = () => {
           onClick={() => {
             setIsDaraz(false), setWoo(false);
           }}
-          className={`px-4 py-1 border text-white ${
-            !isDaraz && !woo ? "bg-gray-900" : "bg-gray-500"
-          }`}
+          className={`px-4 py-1 border text-white ${!isDaraz && !woo ? "bg-gray-900" : "bg-gray-500"
+            }`}
         >
           Shop Order
         </button>
@@ -422,9 +423,8 @@ const ManageOrder = () => {
           onClick={() => {
             setIsDaraz(true), setWoo(false);
           }}
-          className={`px-4 py-1 border text-white ${
-            isDaraz ? "bg-gray-900" : "bg-gray-500"
-          }`}
+          className={`px-4 py-1 border text-white ${isDaraz ? "bg-gray-900" : "bg-gray-500"
+            }`}
         >
           Daraz Order
         </button>
@@ -432,9 +432,8 @@ const ManageOrder = () => {
           onClick={() => {
             setWoo(true), setIsDaraz(false);
           }}
-          className={`px-4 py-1 text-white  border ${
-            woo ? "bg-gray-900" : "bg-gray-500"
-          }`}
+          className={`px-4 py-1 text-white  border ${woo ? "bg-gray-900" : "bg-gray-500"
+            }`}
         >
           Woo Commerce Order
         </button>
@@ -452,9 +451,8 @@ const ManageOrder = () => {
           itm?.status === "dropdown" ? (
             <select
               key={itm.name}
-              className={`px-4 border-r bg-transparent relative border-gray-300 flex items-center gap-2 justify-center ${
-                selectedValue === "pending" ? "text-red-500" : ""
-              }`}
+              className={`px-4 border-r bg-transparent relative border-gray-300 flex items-center gap-2 justify-center ${selectedValue === "pending" ? "text-red-500" : ""
+                }`}
               value={selectedValue}
               onChange={(e) => setSelectedValue(e.target.value)}
             >
@@ -466,9 +464,8 @@ const ManageOrder = () => {
           ) : (
             <button
               key={itm.name}
-              className={`px-4 border-r md:bg-transparent bg-gray-50 border-gray-300 flex  items-center ${
-                selectedValue === itm.value ? "text-red-500" : ""
-              }`}
+              className={`px-4 border-r md:bg-transparent bg-gray-50 border-gray-300 flex  items-center ${selectedValue === itm.value ? "text-red-500" : ""
+                }`}
               style={{ whiteSpace: "nowrap" }}
               onClick={() => setSelectedValue(itm.value)}
             >
@@ -485,17 +482,15 @@ const ManageOrder = () => {
       <div>
         <div
           onClick={() => setShowInvoice(false)}
-          className={`fixed z-[100] flex items-center justify-center ${
-            showInvoice ? "visible opacity-100" : "invisible opacity-0"
-          } inset-0   backdrop-blur-sm duration-100 dark:bg-white/10`}
+          className={`fixed z-[100] flex items-center justify-center ${showInvoice ? "visible opacity-100" : "invisible opacity-0"
+            } inset-0   backdrop-blur-sm duration-100 dark:bg-white/10`}
         >
           <div
             onClick={(e_) => e_.stopPropagation()}
-            className={`text- absolute w-[98%] rounded-sm bg-white p-6 drop-shadow-lg dark:bg-gray-50 h-full  overflow-y-auto dark:text-black ${
-              showInvoice
-                ? "scale-1 opacity-1 duration-300"
-                : "scale-0 opacity-0 duration-150"
-            }`}
+            className={`text- absolute w-[98%] rounded-sm bg-white p-6 drop-shadow-lg dark:bg-gray-50 h-full  overflow-y-auto dark:text-black ${showInvoice
+              ? "scale-1 opacity-1 duration-300"
+              : "scale-0 opacity-0 duration-150"
+              }`}
           >
             <button
               onClick={() => setShowInvoice(false)}
@@ -605,17 +600,15 @@ const ManageOrder = () => {
         <div>
           <div
             onClick={() => setShowInvoiceSm(false)}
-            className={`fixed z-[100] flex items-center justify-center ${
-              showInvoiceSm ? "visible opacity-100" : "invisible opacity-0"
-            } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
+            className={`fixed z-[100] flex items-center justify-center ${showInvoiceSm ? "visible opacity-100" : "invisible opacity-0"
+              } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
           >
             <div
               onClick={(e_) => e_.stopPropagation()}
-              className={`text- absolute w-[95%] h-[96%] overflow-y-auto rounded-sm bg-gray-50 p-6 drop-shadow-lg ${
-                showInvoiceSm
-                  ? "scale-1 opacity-1 duration-300"
-                  : "scale-0 opacity-0 duration-150"
-              }`}
+              className={`text- absolute w-[95%] h-[96%] overflow-y-auto rounded-sm bg-gray-50 p-6 drop-shadow-lg ${showInvoiceSm
+                ? "scale-1 opacity-1 duration-300"
+                : "scale-0 opacity-0 duration-150"
+                }`}
             >
               <div ref={componentRef}>
                 {selectedItems?.map((itm) => (
@@ -763,17 +756,15 @@ const ManageOrder = () => {
         <div>
           <div
             onClick={() => setShowPrintModal1(false)}
-            className={`fixed z-[100] flex items-center justify-center ${
-              showPrintModal1 ? "visible opacity-100" : "invisible opacity-0"
-            } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
+            className={`fixed z-[100] flex items-center justify-center ${showPrintModal1 ? "visible opacity-100" : "invisible opacity-0"
+              } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
           >
             <div
               onClick={(e_) => e_.stopPropagation()}
-              className={`text- absolute overflow-y-auto w-[96%] h-[98%] rounded-sm bg-gray-50 p-6 drop-shadow-lg text-black ${
-                showPrintModal1
-                  ? "scale-1 opacity-1 duration-300"
-                  : "scale-0 opacity-0 duration-150"
-              }`}
+              className={`text- absolute overflow-y-auto w-[96%] h-[98%] rounded-sm bg-gray-50 p-6 drop-shadow-lg text-black ${showPrintModal1
+                ? "scale-1 opacity-1 duration-300"
+                : "scale-0 opacity-0 duration-150"
+                }`}
             >
               <AllOrderInvoice
                 data={selectedItems}

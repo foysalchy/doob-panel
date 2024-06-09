@@ -52,7 +52,7 @@ const AdminEditStaffModal = ({
 
     const data = { user, permissions, role };
 
-    fetch(`https://backend.doob.com.bd/api/v1/admin/staff-role`, {
+    fetch(`https://doob.dev/api/v1/admin/staff-role`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",

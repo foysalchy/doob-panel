@@ -52,7 +52,7 @@ const Payment = () => {
 
     if (shopUser) {
       fetch(
-        `https://backend.doob.com.bd/api/v1/shop/user/add-to-cart?productId=${productId}&token=${shopUser._id}`,
+        `https://doob.dev/api/v1/shop/user/add-to-cart?productId=${productId}&token=${shopUser._id}`,
         {
           method: "DELETE",
           headers: { "Content-Type": "application/json" },
@@ -85,7 +85,7 @@ const Payment = () => {
       setPassData(data);
       setLoadingPayment(true);
       await fetch(
-        `https://backend.doob.com.bd/api/v1/shop/user/order?token=${shopUser._id}&shopId=${shop_id.shop_id}`,
+        `https://doob.dev/api/v1/shop/user/order?token=${shopUser._id}&shopId=${shop_id.shop_id}`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -124,12 +124,12 @@ const Payment = () => {
     order.timestamp = new Date().getTime();
     order.userId = shop_id.shop_id;
     order.normalPrice = orderStage?.promoHistory?.normalPrice;
-    order.callback = `https://backend.doob.com.bd/shop/${params?.id}/user/success`;
+    order.callback = `https://doob.dev/shop/${params?.id}/user/success`;
     console.log(order, "order");
     // setLoadingPayment(true);
     try {
       const response = await fetch(
-        "https://backend.doob.com.bd/api/v1/seller/bkash/payment/create",
+        "https://doob.dev/api/v1/seller/bkash/payment/create",
         {
           method: "POST",
           headers: {
@@ -164,7 +164,7 @@ const Payment = () => {
     // setLoadingPayment(true);
     try {
       const response = await fetch(
-        "https://backend.doob.com.bd/api/v1/seller/amarpay/payment/create",
+        "https://doob.dev/api/v1/seller/amarpay/payment/create",
         {
           method: "POST",
           headers: {
@@ -202,7 +202,7 @@ const Payment = () => {
   };
 
   async function uploadImage(formData) {
-    const url = "https://backend.doob.com.bd/api/v1/image/upload-image";
+    const url = "https://doob.dev/api/v1/image/upload-image";
     const response = await fetch(url, {
       method: "POST",
       body: formData,
@@ -223,10 +223,9 @@ const Payment = () => {
                 <a href="#scrollDestination">
                   <div
                     onClick={() => setPayment(get)}
-                    className={`${
-                      payment?.Getaway === "Bkash" &&
+                    className={`${payment?.Getaway === "Bkash" &&
                       "shadow-lg shadow-gray-700"
-                    }   border border-gray-600 flex md:flex-col flex-row items-center justify-center gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] overflow-hidden`}
+                      }   border border-gray-600 flex md:flex-col flex-row items-center justify-center gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] overflow-hidden`}
                   >
                     <img
                       alt="Developer"
@@ -244,10 +243,9 @@ const Payment = () => {
                 <a href="#scrollDestination">
                   <div
                     onClick={() => setPayment(get)}
-                    className={`${
-                      payment?.Getaway === "Nogod" &&
+                    className={`${payment?.Getaway === "Nogod" &&
                       "shadow-lg shadow-gray-700"
-                    }  border border-gray-600 flex md:flex-col flex-row items-center justify-center gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] overflow-hidden`}
+                      }  border border-gray-600 flex md:flex-col flex-row items-center justify-center gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] overflow-hidden`}
                   >
                     <img
                       alt="Developer"
@@ -265,10 +263,9 @@ const Payment = () => {
                 <a href="#scrollDestination">
                   <div
                     onClick={() => setPayment(get)}
-                    className={`${
-                      payment?.Getaway === "AmarPay" &&
+                    className={`${payment?.Getaway === "AmarPay" &&
                       "shadow-lg shadow-gray-700"
-                    }  border border-gray-600 flex md:flex-col flex-row items-center justify-center gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] overflow-hidden`}
+                      }  border border-gray-600 flex md:flex-col flex-row items-center justify-center gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] overflow-hidden`}
                   >
                     <img
                       alt="Developer"
@@ -286,10 +283,9 @@ const Payment = () => {
                 <a href="#scrollDestination">
                   <div
                     onClick={() => setPayment(get)}
-                    className={`${
-                      payment?.Getaway === "AmarPay" &&
+                    className={`${payment?.Getaway === "AmarPay" &&
                       "shadow-lg shadow-gray-700"
-                    }  border border-gray-600 flex md:flex-col flex-row items-center justify-center gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] overflow-hidden`}
+                      }  border border-gray-600 flex md:flex-col flex-row items-center justify-center gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] overflow-hidden`}
                   >
                     <h4 className="mt-2  md:font-bold md:text-lg">
                       {get?.Getaway}
@@ -303,15 +299,14 @@ const Payment = () => {
           <a href="#scrollDestination">
             <div
               onClick={() => setPayment({ Getaway: "CashOnDelivery" })}
-              className={`${
-                payment?.Getaway === "CashOnDelivery" &&
+              className={`${payment?.Getaway === "CashOnDelivery" &&
                 "shadow-lg shadow-gray-700"
-              }  border border-gray-600 flex md:flex-col flex-row items-center justify-center  gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] overflow-hidden`}
+                }  border border-gray-600 flex md:flex-col flex-row items-center justify-center  gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] overflow-hidden`}
             >
               <img
                 alt="Developer"
-                src="https://backend.doob.com.bd/api/v1/image/658ec416b689ffabf15d9fb6.jpg"
-                srcSet="https://backend.doob.com.bd/api/v1/image/658ec416b689ffabf15d9fb6.jpg"
+                src="https://doob.dev/api/v1/image/658ec416b689ffabf15d9fb6.jpg"
+                srcSet="https://doob.dev/api/v1/image/658ec416b689ffabf15d9fb6.jpg"
                 className="md:h-[120px] md:w-[120px] w-[30px] h-[40px] object-cover"
               />
               <h4 className="mt-2  md:font-bold md:text-lg">

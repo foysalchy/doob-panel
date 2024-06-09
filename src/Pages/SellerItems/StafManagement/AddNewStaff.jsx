@@ -16,7 +16,7 @@ const AddNewStaff = () => {
     const [isNewUser, setIsNewUser] = useState(false)
 
     const handleSearch = () => {
-        fetch(`https://backend.doob.com.bd/api/v1/seller/seller-allUser?email=${searchValue}`)
+        fetch(`https://doob.dev/api/v1/seller/seller-allUser?email=${searchValue}`)
             .then(res => res.json())
             .then(data => {
                 if (data?.status) {
@@ -60,7 +60,7 @@ const AddNewStaff = () => {
     //     const permissions = selectedValue
 
     //     const data = { user, shopEmail, permissions, role }
-    //     fetch(`https://backend.doob.com.bd/api/v1/seller/staff-add`, {
+    //     fetch(`https://doob.dev/api/v1/seller/staff-add`, {
     //         method: 'PATCH',
     //         headers: {
     //             'Content-Type': 'application/json'
@@ -95,7 +95,7 @@ const AddNewStaff = () => {
     //             const userId = email.replace(/[@.]/g, '');
     //             const createdAt = new Date();
 
-    //             const signUpResponse = await fetch(`https://backend.doob.com.bd/api/v1/auth/sign-up`, {
+    //             const signUpResponse = await fetch(`https://doob.dev/api/v1/auth/sign-up`, {
     //                 method: "post",
     //                 headers: {
     //                     "content-type": "application/json",
@@ -118,7 +118,7 @@ const AddNewStaff = () => {
     //         const permissions = selectedValue;
     //         const data = { userData, permissions, role };
 
-    //         const staffRoleResponse = await fetch(`https://backend.doob.com.bd/api/v1/seller/staff-add`, {
+    //         const staffRoleResponse = await fetch(`https://doob.dev/api/v1/seller/staff-add`, {
     //             method: 'PATCH',
     //             headers: {
     //                 'Content-Type': 'application/json'
@@ -162,7 +162,7 @@ const AddNewStaff = () => {
                     const userId = email.value.replace(/[@.]/g, '');
                     const createdAt = new Date();
 
-                    const signUpResponse = await fetch(`https://backend.doob.com.bd/api/v1/auth/sign-up`, {
+                    const signUpResponse = await fetch(`https://doob.dev/api/v1/auth/sign-up`, {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json",
@@ -189,7 +189,7 @@ const AddNewStaff = () => {
 
             const permissions = selectedValue;
             const data = { user, shopEmail: shopInfo?._id, permissions, role: user_role, oldEmail: user.email, };
-            console.log(data); const staffRoleResponse = await fetch(`https://backend.doob.com.bd/api/v1/seller/staff-add`, {
+            console.log(data); const staffRoleResponse = await fetch(`https://doob.dev/api/v1/seller/staff-add`, {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json'

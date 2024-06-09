@@ -18,7 +18,7 @@ export default function ServiceDetailsModal({
     queryKey: ["serviceSIngleDataSaller"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/seller/my-single-service?shopId=${shopInfo._id}&productId=${openModal?.productId}`
+        `https://doob.dev/api/v1/seller/my-single-service?shopId=${shopInfo._id}&productId=${openModal?.productId}`
       );
       const data = await res.json();
       return data.data;
@@ -29,9 +29,8 @@ export default function ServiceDetailsModal({
 
   return (
     <div
-      className={`fixed z-50 top-0 left-0 flex h-full min-h-screen w-full items-center justify-center bg-black bg-opacity-90 px-4 py-5 ${
-        openModal ? "block" : "hidden"
-      }`}
+      className={`fixed z-50 top-0 left-0 flex h-full min-h-screen w-full items-center justify-center bg-black bg-opacity-90 px-4 py-5 ${openModal ? "block" : "hidden"
+        }`}
     >
       <div className="w-full overflow-x-scroll  max-w-[90%] mx-auto  rounded-[20px] bg-white pb-10 px-4 text-center md:px-[20px]">
         <div className="flex justify-between z-50 pt-4 items-start w-full  sticky top-0 bg-white border-b">

@@ -21,7 +21,7 @@ const ConfirmOrder = () => {
         queryKey: ["shop"],
         queryFn: async () => {
             const res = await fetch(
-                `https://backend.doob.com.bd/api/v1/shop/${shopId}`
+                `https://doob.dev/api/v1/shop/${shopId}`
             );
             const data = await res.json();
             return data;

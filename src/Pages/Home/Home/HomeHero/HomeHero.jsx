@@ -10,7 +10,7 @@ const HomeHero = () => {
 
   useEffect(() => {
     fetch(
-      "https://backend.doob.com.bd/api/v1/admin/get-content?name=hero_section"
+      "https://doob.dev/api/v1/admin/get-content?name=hero_section"
     )
       .then((response) => response.json())
       .then((data) => {

@@ -21,7 +21,7 @@ const CoponManagement = () => {
     queryKey: ["faqs"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/seller/promo-code/${shopInfo._id}`
+        `https://doob.dev/api/v1/seller/promo-code/${shopInfo._id}`
       );
       const data = await res.json();
       return data;
@@ -31,7 +31,7 @@ const CoponManagement = () => {
   console.log(faqs);
 
   const updateStatus = (id, status) => {
-    fetch(`https://backend.doob.com.bd/api/v1/seller/promo-code/status/${id}`, {
+    fetch(`https://doob.dev/api/v1/seller/promo-code/status/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -56,7 +56,7 @@ const CoponManagement = () => {
 
   if (isDelete) {
     fetch(
-      `https://backend.doob.com.bd/api/v1/seller/promo-code/delete/${deleteId}`,
+      `https://doob.dev/api/v1/seller/promo-code/delete/${deleteId}`,
       {
         method: "DELETE",
         headers: {

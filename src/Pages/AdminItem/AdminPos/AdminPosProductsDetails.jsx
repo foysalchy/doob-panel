@@ -21,7 +21,7 @@ const AdminPosProductsDetails = ({ invoice, open, setOpen }) => {
 
   const fetchData = () => {
     fetch(
-      `https://backend.doob.com.bd/api/v1/seller/seller-user?shopId=${shopInfo.shopId}&${searchType}=${searchValue}`
+      `https://doob.dev/api/v1/seller/seller-user?shopId=${shopInfo.shopId}&${searchType}=${searchValue}`
     )
       .then((res) => res.json())
       .then((data) => {

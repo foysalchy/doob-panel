@@ -8,7 +8,7 @@ const useAdmin = () => {
   useEffect(() => {
     if (user?.email) {
       fetch(
-        `https://backend.doob.com.bd/api/v1/users/supperadmin/${user?.email}`
+        `https://doob.dev/api/v1/users/supperadmin/${user?.email}`
       )
         .then((res) => res.json())
         .then((data) => {

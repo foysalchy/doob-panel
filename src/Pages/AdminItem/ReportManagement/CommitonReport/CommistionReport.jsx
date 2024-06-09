@@ -8,7 +8,7 @@ const CommissionReport = () => {
         queryKey: ["sellerAllOrder"],
         queryFn: async () => {
             const res = await fetch(
-                `https://backend.doob.com.bd/api/v1/admin/get-shop-all-order`
+                `https://doob.dev/api/v1/admin/get-shop-all-order`
             );
             const data = await res.json();
             return data.data;
@@ -189,7 +189,7 @@ const CommissionReport = () => {
                                             scope="col"
                                             className="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 "
                                         >
-                                            Processing Fee 
+                                            Processing Fee
                                         </th>
                                         <th
                                             scope="col"

@@ -62,7 +62,7 @@ const SellerLoginCredintiial = () => {
       },
     };
 
-    fetch("https://backend.doob.com.bd/api/v1/shop/firebase/add", {
+    fetch("https://doob.dev/api/v1/shop/firebase/add", {
       method: "PATCH",
       body: JSON.stringify(data),
       headers: {
@@ -89,7 +89,7 @@ const SellerLoginCredintiial = () => {
     queryFn: async () => {
       try {
         const res = await fetch(
-          `https://backend.doob.com.bd/api/v1/shop/firebase/${shopInfo?.shopId}`,
+          `https://doob.dev/api/v1/shop/firebase/${shopInfo?.shopId}`,
         );
         const data = await res.json();
         return data;

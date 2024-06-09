@@ -13,7 +13,7 @@ const AddPriceRole = () => {
     const { data: priceRole = {}, refetch, isLoading } = useQuery({
         queryKey: ["getaway"],
         queryFn: async () => {
-            const res = await fetch(`https://backend.doob.com.bd/api/v1/seller/get-price-role/${shopInfo._id}`);
+            const res = await fetch(`https://doob.dev/api/v1/seller/get-price-role/${shopInfo._id}`);
             const data = await res.json();
             return data;
         },
@@ -30,7 +30,7 @@ const AddPriceRole = () => {
         const shopId = shopInfo._id;
         const data = { to, from, priceRange, shopId, percentage }
 
-        fetch('https://backend.doob.com.bd/api/v1/seller/add-price-role', {
+        fetch('https://doob.dev/api/v1/seller/add-price-role', {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(data)

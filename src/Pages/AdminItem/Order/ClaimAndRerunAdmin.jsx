@@ -18,7 +18,7 @@ const ClaimAndRerunAdmin = () => {
     queryKey: ["adminOrder"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/admin/get-shop-all-order`
+        `https://doob.dev/api/v1/admin/get-shop-all-order`
       );
       const data = await res.json();
       return data.data;
@@ -86,7 +86,7 @@ const ClaimAndRerunAdmin = () => {
 
   const productStatusUpdate = (status, orderId) => {
     fetch(
-      `https://backend.doob.com.bd/api/v1/admin/order-status-update?orderId=${orderId}&status=${status}`,
+      `https://doob.dev/api/v1/admin/order-status-update?orderId=${orderId}&status=${status}`,
       {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
@@ -103,7 +103,7 @@ const ClaimAndRerunAdmin = () => {
     queryKey: ["getaway"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/admin/shipping-interrogation/${shopInfo._id}`
+        `https://doob.dev/api/v1/admin/shipping-interrogation/${shopInfo._id}`
       );
       const data = await res.json();
       return data;
@@ -156,7 +156,7 @@ const ClaimAndRerunAdmin = () => {
   };
 
   const handleProductStatusUpdate = (orders) => {
-    fetch(`https://backend.doob.com.bd/api/v1/admin/order-quantity-update`, {
+    fetch(`https://doob.dev/api/v1/admin/order-quantity-update`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(orders),
@@ -183,7 +183,7 @@ const ClaimAndRerunAdmin = () => {
     setOpenModal(true);
 
     fetch(
-      `https://backend.doob.com.bd/api/v1/admin/refound-order-info?shopId=${shopInfo._id}&orderId=${order._id}`
+      `https://doob.dev/api/v1/admin/refound-order-info?shopId=${shopInfo._id}&orderId=${order._id}`
     )
       .then((res) => res.json())
       .then((data) => {
@@ -196,7 +196,7 @@ const ClaimAndRerunAdmin = () => {
   const [refundData, setRefundData] = useState(true);
   const checkBox = (orderId) => {
     fetch(
-      `https://backend.doob.com.bd/api/v1/admin/refound-order-info?shopId=${shopInfo._id}&orderId=${orderId}`
+      `https://doob.dev/api/v1/admin/refound-order-info?shopId=${shopInfo._id}&orderId=${orderId}`
     )
       .then((res) => res.json())
       .then((data) => {
@@ -207,7 +207,7 @@ const ClaimAndRerunAdmin = () => {
 
   const updateOrderInfo = (note, file, id) => {
     const noteData = { note, file, orderId: id };
-    fetch("https://backend.doob.com.bd/api/v1/admin/refound-order-info", {
+    fetch("https://doob.dev/api/v1/admin/refound-order-info", {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(noteData),
@@ -256,7 +256,7 @@ const ClaimAndRerunAdmin = () => {
   };
 
   async function uploadImage(formData) {
-    const url = "https://backend.doob.com.bd/api/v1/image/upload-image";
+    const url = "https://doob.dev/api/v1/image/upload-image";
     const response = await fetch(url, {
       method: "POST",
       body: formData,
@@ -267,7 +267,7 @@ const ClaimAndRerunAdmin = () => {
 
   const updateCourier_status = (id, courier_id) => {
     fetch(
-      `https://backend.doob.com.bd/api/v1/admin/courier_status?orderId=${id}&id=${courier_id}`,
+      `https://doob.dev/api/v1/admin/courier_status?orderId=${id}&id=${courier_id}`,
       {
         method: "PUT",
         headers: { "Content-Type": "application/json" },

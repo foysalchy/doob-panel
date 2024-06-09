@@ -29,7 +29,7 @@ const DarazIntegration = () => {
 
   useEffect(() => {
     if (code) {
-      fetch("https://backend.doob.com.bd/api/v1/daraz/get-key")
+      fetch("https://doob.dev/api/v1/daraz/get-key")
         .then((res) => res.json())
         .then((data) => {
           console.log(data, "daraz");
@@ -56,7 +56,7 @@ const DarazIntegration = () => {
           };
 
           fetch(
-            `https://backend.doob.com.bd/api/v1/daraz/addCode/${shopInfo._id}`,
+            `https://doob.dev/api/v1/daraz/addCode/${shopInfo._id}`,
             {
               method: "PUT",
               headers: {
@@ -87,7 +87,7 @@ const DarazIntegration = () => {
     queryKey: ["darazShopBd"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/seller/seller-daraz-accounts?id=${shopInfo._id}`
+        `https://doob.dev/api/v1/seller/seller-daraz-accounts?id=${shopInfo._id}`
       );
       const data = await res.json();
       return data.data[0];
@@ -95,14 +95,14 @@ const DarazIntegration = () => {
   });
 
   const {
-    data: priviousAccount = [],
+    data: previousAccount = [],
     isLoading: loading,
     refetch: reload,
   } = useQuery({
-    queryKey: ["priviousAccount"],
+    queryKey: ["previousAccount"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/daraz/get-privious-account?shopId=${shopInfo._id}`
+        `https://doob.dev/api/v1/daraz/get-privious-account?shopId=${shopInfo._id}`
       );
       const data = await res.json();
       return data.data;
@@ -110,8 +110,9 @@ const DarazIntegration = () => {
   });
 
   const switchAccount = (_id, id) => {
+    console.log(`https://doob.dev/api/v1/daraz/switching-your-daraz?id=${id}&loginId=${_id}`,);
     fetch(
-      `https://backend.doob.com.bd/api/v1/daraz/switching-your-daraz?id=${id}&loginId=${_id}`,
+      `https://doob.dev/api/v1/daraz/switching-your-daraz?id=${id}&loginId=${_id}`,
       {
         method: "PATCH",
         headers: {
@@ -129,12 +130,17 @@ const DarazIntegration = () => {
   };
 
   const [selectedAccount, setSelectedAccount] = useState("");
-
   const handleChange = (event) => {
-    const [shopId, oldId] = event.target.value.split(",");
-    setSelectedAccount(event.target.value);
-    switchAccount(shopId, oldId);
+    const selectedOldId = event.target.value;
+    console.log(selectedOldId);
+    const selectedShop = previousAccount.find(shop => shop._id === selectedOldId);
+    console.log(selectedShop, selectedOldId);
+    setSelectedAccount(selectedOldId);
+    if (selectedShop) {
+      switchAccount(selectedShop._id, selectedShop.oldId);
+    }
   };
+
 
   return (
     <div>
@@ -196,18 +202,17 @@ const DarazIntegration = () => {
           {<h1 className="w-full"> {darazShop?.result?.account}</h1>}
         </div> */}
 
-        <div className=" bg-gray-50 px-4 py-2 rounded text-blue-500 flex items-center gap-2">
+        <div className="bg-gray-50 px-4 py-2 rounded text-blue-500 flex items-center gap-2">
           <h1 className="whitespace-nowrap">Switch Account</h1>
-          <hr />
+          <hr className="flex-grow mx-2 border-t border-blue-500" />
           <select
             className="w-full px-4 py-2 border rounded bg-[#d2d2d2] text-sm"
             value={selectedAccount}
             onChange={handleChange}
           >
             <option value="">{darazShop?.result?.account}</option>
-
-            {priviousAccount?.map((shop) => (
-              <option key={shop._id} value={`${shop._id},${shop.oldId}`}>
+            {previousAccount?.map((shop) => (
+              <option key={shop._id} value={shop._id}>
                 {shop.result.account}
               </option>
             ))}

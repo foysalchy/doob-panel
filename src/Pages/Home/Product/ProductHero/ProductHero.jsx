@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { FaAngleRight } from "react-icons/fa6";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "swiper/css";
 import { Autoplay } from 'swiper/modules';
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -26,13 +26,14 @@ const ProductHero = () => {
     step2: null,
   });
   const { user, shopInfo } = useContext(AuthContext);
+  const navigate = useNavigate()
 
   const { data: megaSideCategoryData = [], refetch: refetchMegaCategory } =
     useQuery({
       queryKey: ["megaSideCategoryData"],
       queryFn: async () => {
         const res = await fetch(
-          "https://backend.doob.com.bd/api/v1/admin/category/megacategory"
+          "https://doob.dev/api/v1/admin/category/megacategory"
         );
         const data = await res.json();
         return data.rows.slice(0, 6);
@@ -43,7 +44,7 @@ const ProductHero = () => {
     queryKey: "heroBanner",
     queryFn: async () => {
       const res = await fetch(
-        "https://backend.doob.com.bd/api/v1/admin/slider"
+        "https://doob.dev/api/v1/admin/slider"
       );
       const data = await res.json();
       return data?.data;
@@ -51,7 +52,7 @@ const ProductHero = () => {
   });
 
   const blankImg =
-    "https://backend.doob.com.bd/api/v1/image/66036ed3df13bd9930ac229c.jpg";
+    "https://doob.dev/api/v1/image/66036ed3df13bd9930ac229c.jpg";
   const bannerFind = heroBanner?.filter((item) => item.status === "true");
 
   useEffect(() => {
@@ -59,7 +60,7 @@ const ProductHero = () => {
       const subCategoryPromises = megaSideCategoryData.map(async (item) => {
         try {
           const response = await fetch(
-            `https://backend.doob.com.bd/api/v1/admin/category/subcategory?id=${item?._id}`
+            `https://doob.dev/api/v1/admin/category/subcategory?id=${item?._id}`
           );
           const data = await response.json();
           return data.subCategory;
@@ -86,7 +87,7 @@ const ProductHero = () => {
       const miniCategoryPromises = allCategory.subCategorys.map(async (itm) => {
         try {
           const response = await fetch(
-            `https://backend.doob.com.bd/api/v1/admin/category/miniCategory?id=${itm?._id}`
+            `https://doob.dev/api/v1/admin/category/miniCategory?id=${itm?._id}`
           );
           const data = await response.json();
           return data.row;
@@ -114,7 +115,7 @@ const ProductHero = () => {
         async (itm) => {
           try {
             const response = await fetch(
-              `https://backend.doob.com.bd/api/v1/admin/category/extraCategory?id=${itm?._id}`
+              `https://doob.dev/api/v1/admin/category/extraCategory?id=${itm?._id}`
             );
             const data = await response.json();
             return data.rows;
@@ -138,10 +139,13 @@ const ProductHero = () => {
   }, [allCategory.miniCategorys]);
 
   const subCategoryHandler = async (category, index) => {
+
     const filteredSubCategory = allCategory?.subCategorys.filter(
       (subCategory) => subCategory.megaCategoryId === category?._id
     );
-
+    if (filteredSubCategory.length === 0) {
+      navigate(`/products/catagory/${category?._id}`)
+    }
     setSubCategoryData(filteredSubCategory);
     setminiCategoryData([]);
     setExtraCategoryData([]);
@@ -152,7 +156,9 @@ const ProductHero = () => {
     const filteredSubCategory = allCategory?.miniCategorys.filter(
       (miniCategory) => miniCategory.subCategoryId === category?._id
     );
-
+    if (filteredSubCategory.length === 0) {
+      navigate(`/products/catagory/${category?._id}`)
+    }
     setminiCategoryData(filteredSubCategory);
     setActive({ ...active, step1: category?._id });
   };
@@ -162,14 +168,16 @@ const ProductHero = () => {
     const filteredSubCategory = allCategory?.extraCategorys.filter(
       (extraCategory) => extraCategory?.miniCategoryId === category?._id
     );
-
+    if (filteredSubCategory.length === 1) {
+      navigate(`/products/catagory/${category?._id}`)
+    }
     setExtraCategoryData(filteredSubCategory);
     setActive({ ...active, step2: category?._id });
 
     console.log(filteredSubCategory, "filteredSubCategory");
   };
 
-  console.log(allCategory, "megaSideCategoryData");
+
 
 
 
@@ -197,13 +205,9 @@ const ProductHero = () => {
             <div key={index} className="  inline-block">
               {/* Dropdown toggle button */}
               <button
-                disabled={
-                  !allCategory?.subCategorys.filter(
-                    (subCategory) => subCategory.megaCategoryId === item?._id
-                  ).length >= 1
-                }
+
                 onClick={() => subCategoryHandler(item, index)}
-                className={`flex  items-center  w-full justify-between px-2 py-1 capitalize text-sm font-normal  hover:bg-black hover:text-white  relative  ${openDropdownIndex === index
+                className={`flex  items-center  w-full justify-between px-2 py-1 capitalize text-sm font-normal  hover:bg-gray-100 hover:text-black  relative  ${openDropdownIndex === index
                   ? "bg-gray-100 text-black"
                   : "text-black"
                   } rounded`}
@@ -240,6 +244,7 @@ const ProductHero = () => {
                                   onMouseMove={() =>
                                     miniCategoryHandler(subCategory, index)
                                   }
+
                                   className={`flex  items-center hover:bg-gray-100 w-full justify-between px-2 py-1 capitalize text-sm font-normal cursor-pointer mb-1 rounded relative  ${active?.step1 === subCategory?._id
                                     ? "text-black bg-gray-100"
                                     : "text-black"
@@ -290,7 +295,7 @@ const ProductHero = () => {
                             ""
                           ) : (
                             <div className="bg-white    border-gray-400 absolute top-0 h-full right-[-180px] px-2 w-[190px]">
-                              tfutyfuy
+
                               {miniCategoryData.map((miniCategory, index) => (
                                 <div key={index}>
                                   {!megaSideCategoryData.length == 0 ? (
@@ -374,32 +379,33 @@ const ProductHero = () => {
                           )}
                         </div>
                       ) : (
-                        <button>
-                          <div
-                            onMouseMove={() =>
-                              miniCategoryHandler(subCategory, index)
-                            }
-                            className={`flex items-center  w-full justify-between hover:bg-gray-100 px-2 py-1 capitalize text-sm font-normal  mb-1 rounded relative  ${active?.step2 === subCategory?._id
-                              ? "black-black "
-                              : "text-black"
-                              }`}
-                            type="button"
-                            id={item?._id}
-                            data-te-dropdown-toggle-ref
-                            aria-expanded="false"
-                            data-te-ripple-init
-                            data-te-ripple-color="light"
-                          >
-                            <span className="flex items-center ">
-                              <img
-                                src={subCategory?.img}
-                                alt=""
-                                className="w-8 h-8 rounded-full ring-1 ring-gray-200"
-                              />{" "}
-                              {subCategory?.subCategory}
-                            </span>
-                          </div>
-                        </button>
+
+                        <div
+                          onMouseMove={() =>
+                            miniCategoryHandler(subCategory, index)
+                          }
+                          onClick={() => navigate(`/products/catagory/${subCategory?._id}`)}
+                          className={`flex items-center  w-full justify-between cursor-pointer hover:bg-gray-100 px-2 py-1 capitalize text-sm font-normal  mb-1 rounded relative  ${active?.step2 === subCategory?._id
+                            ? "black-black "
+                            : "text-black"
+                            }`}
+                          type="button"
+                          id={item?._id}
+                          data-te-dropdown-toggle-ref
+                          aria-expanded="false"
+                          data-te-ripple-init
+                          data-te-ripple-color="light"
+                        >
+                          <span className="flex items-center gap-2 w-full ">
+                            <img
+                              src={subCategory?.img}
+                              alt=""
+                              className="w-8 h-8 rounded-full ring-1 ring-gray-200"
+                            />{" "}
+                            {subCategory?.subCategory}
+                          </span>
+                        </div>
+
                       )}
                     </div>
                   ))}
@@ -412,7 +418,7 @@ const ProductHero = () => {
 
       <div className="lg:w-[80%] w-[100%]">
         {bannerFind.length > 0 ? (
-         <Swiper   autoplay={{ delay: 3000 }}    modules={[Autoplay]} className="mySwiper rounded-md">
+          <Swiper autoplay={{ delay: 3000 }} modules={[Autoplay]} className="mySwiper rounded-md">
             {bannerFind.map((i, index) => (
               <SwiperSlide key={index}>
                 <img

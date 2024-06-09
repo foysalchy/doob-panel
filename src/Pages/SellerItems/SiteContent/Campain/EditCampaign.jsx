@@ -19,7 +19,7 @@ export default function EditCampaign() {
     queryKey: ["campaignData"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/seller/get-single-campaign?id=${id}`,
+        `https://doob.dev/api/v1/seller/get-single-campaign?id=${id}`,
       );
       const data = await res.json();
       console.log("data", data);
@@ -34,7 +34,7 @@ export default function EditCampaign() {
     queryKey: ["products"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/seller/all-products/${shopInfo._id}`
+        `https://doob.dev/api/v1/seller/all-products/${shopInfo._id}`
       );
       const data = await res.json();
       return data;
@@ -119,7 +119,7 @@ export default function EditCampaign() {
   const updateCampaign = (data, form) => {
 
     fetch(
-      `https://backend.doob.com.bd/api/v1/seller/update-single-campaign?id=${id}`,
+      `https://doob.dev/api/v1/seller/update-single-campaign?id=${id}`,
       {
         method: "PUT",
         headers: {
@@ -188,7 +188,7 @@ export default function EditCampaign() {
 
 
   async function uploadImage(formData) {
-    const url = "https://backend.doob.com.bd/api/v1/image/upload-image";
+    const url = "https://doob.dev/api/v1/image/upload-image";
     const response = await fetch(url, {
       method: "POST",
       body: formData,

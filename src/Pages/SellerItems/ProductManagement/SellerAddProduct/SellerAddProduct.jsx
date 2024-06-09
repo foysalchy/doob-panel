@@ -73,7 +73,7 @@ const SellerAddProduct = () => {
     const formData = new FormData();
     formData.append("image", image);
     console.log(image, "filessssss");
-    const url = `https://backend.doob.com.bd/api/v1/image/upload-image?shopId=${shopInfo._id}`;
+    const url = `https://doob.dev/api/v1/image/upload-image?shopId=${shopInfo._id}`;
 
     return fetch(url, {
       method: "POST",
@@ -92,7 +92,7 @@ const SellerAddProduct = () => {
     const formData = new FormData();
     formData.append("image", imageBlob);
 
-    const url = `https://backend.doob.com.bd/api/v1/daraz/daraz-image/${shopInfo._id}`;
+    const url = `https://doob.dev/api/v1/daraz/daraz-image/${shopInfo._id}`;
 
     try {
       const response = await fetch(url, {
@@ -309,7 +309,7 @@ const SellerAddProduct = () => {
     };
     console.log(data, "product_ready");
 
-    fetch("https://backend.doob.com.bd/api/v1/seller/normal-product/", {
+    fetch("https://doob.dev/api/v1/seller/normal-product/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

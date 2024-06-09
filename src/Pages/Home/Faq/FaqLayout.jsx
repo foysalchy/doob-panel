@@ -6,7 +6,7 @@ const FaqLayout = () => {
   const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
-    fetch("https://backend.doob.com.bd/api/v1/admin/faq")
+    fetch("https://doob.dev/api/v1/admin/faq")
       .then((response) => response.json())
       .then((data) => {
         setFaqs(data);

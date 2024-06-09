@@ -11,7 +11,7 @@ const ManageWebOrder = () => {
     queryKey: ["sellerAllOrder"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/seller/get-my-order?shopId=${shopInfo?._id}`
+        `https://doob.dev/api/v1/seller/get-my-order?shopId=${shopInfo?._id}`
       );
       const data = await res.json();
       return data.data;
@@ -19,7 +19,7 @@ const ManageWebOrder = () => {
   });
 
   console.log(
-    `https://backend.doob.com.bd/api/v1/seller/get-my-order?shopId=${shopInfo?._id}`
+    `https://doob.dev/api/v1/seller/get-my-order?shopId=${shopInfo?._id}`
   );
 
   const [searchQuery, setSearchQuery] = useState("");
@@ -79,7 +79,7 @@ const ManageWebOrder = () => {
   const productStatusUpdate = (status, orderId) => {
     console.log(status, orderId);
     fetch(
-      `https://backend.doob.com.bd/api/v1/seller/update-seller-order-status?orderId=${orderId}&status=${status}`,
+      `https://doob.dev/api/v1/seller/update-seller-order-status?orderId=${orderId}&status=${status}`,
       {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
@@ -94,7 +94,7 @@ const ManageWebOrder = () => {
 
   const deleteMethod = (orderId) => {
     fetch(
-      `https://backend.doob.com.bd/api/v1/seller/delete-seller-order?orderId=${orderId}`,
+      `https://doob.dev/api/v1/seller/delete-seller-order?orderId=${orderId}`,
       {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
@@ -117,23 +117,23 @@ const ManageWebOrder = () => {
               {products?.length}
             </span>
           </div>
-         
-      <div className="flex flex-wrap justify-start  items-center gap-4 ">
-      <Link
-            to={"/seller/orders/manage-order"}
-            className={`px-4 py-1 text-white border bg-gray-500
+
+          <div className="flex flex-wrap justify-start  items-center gap-4 ">
+            <Link
+              to={"/seller/orders/manage-order"}
+              className={`px-4 py-1 text-white border bg-gray-500
             `}
-        >
-          Shop Other Order
-        </Link>
-           <Link
-            to={"/seller/orders/web-store-order"}
-            className={`px-4 py-1 text-white border bg-gray-900
+            >
+              Shop Other Order
+            </Link>
+            <Link
+              to={"/seller/orders/web-store-order"}
+              className={`px-4 py-1 text-white border bg-gray-900
             `}
-        >
-          Doob Order
-        </Link>
-      </div>
+            >
+              Doob Order
+            </Link>
+          </div>
           <input
             className="border"
             onChange={(e) => setSearchQuery(e.target.value)}

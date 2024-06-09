@@ -26,7 +26,7 @@ const SellerAllProducts = () => {
     queryKey: ["products"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/seller/all-products/${shopInfo._id}`
+        `https://doob.dev/api/v1/seller/all-products/${shopInfo._id}`
       );
       const data = await res.json();
       return data;
@@ -157,7 +157,7 @@ const SellerAllProducts = () => {
 
   const updateProductStatus = (id, status) => {
     console.log(id);
-    fetch(`https://backend.doob.com.bd/api/v1/seller/update-product-status`, {
+    fetch(`https://doob.dev/api/v1/seller/update-product-status`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -184,7 +184,7 @@ const SellerAllProducts = () => {
     setDeletePopUp(true);
   };
   if (isDelete) {
-    fetch(`https://backend.doob.com.bd/api/v1/seller/delete-product`, {
+    fetch(`https://doob.dev/api/v1/seller/delete-product`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -207,7 +207,7 @@ const SellerAllProducts = () => {
     queryKey: ["priceRole"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/seller/get-price-role/${shopInfo?._id}`
+        `https://doob.dev/api/v1/seller/get-price-role/${shopInfo?._id}`
       );
       const data = await res.json();
       return data?.data;
@@ -304,7 +304,7 @@ const SellerAllProducts = () => {
     } else {
       try {
         const response = await fetch(
-          `https://backend.doob.com.bd/api/v1/seller/update-product-multivendor`,
+          `https://doob.dev/api/v1/seller/update-product-multivendor`,
           {
             method: "PUT",
             headers: {
@@ -381,7 +381,7 @@ const SellerAllProducts = () => {
 
   const update_product_sorting = (e) => {
     console.log(e.target.value);
-    fetch(`https://backend.doob.com.bd/api/v1/seller/update-product-upcoming`, {
+    fetch(`https://doob.dev/api/v1/seller/update-product-upcoming`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -432,7 +432,7 @@ const SellerAllProducts = () => {
       [id]: true,
     }));
     const data = { category, item_id, sku, id, shopId: shopInfo._id };
-    fetch("https://backend.doob.com.bd/api/v1/seller/update-product", {
+    fetch("https://doob.dev/api/v1/seller/update-product", {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",

@@ -12,7 +12,7 @@ const ProductGallery = () => {
     queryKey: ["featureImageData"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/admin/feature-images`
+        `https://doob.dev/api/v1/admin/feature-images`
       );
       const data = await res.json();
       return data?.data ? data?.data : [];
@@ -20,7 +20,7 @@ const ProductGallery = () => {
   });
 
   console.log(featureImageData);
-  // const blankImg = 'https://backend.doob.com.bd/api/v1/image/66036ed3df13bd9930ac229c.jpg';
+  // const blankImg = 'https://doob.dev/api/v1/image/66036ed3df13bd9930ac229c.jpg';
   return (
     <div>
       <div className=" mt-[20px] grid grid-cols-2 gap-4 lg:grid-cols-4 ">

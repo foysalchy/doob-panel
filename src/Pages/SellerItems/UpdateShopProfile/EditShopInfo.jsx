@@ -8,7 +8,7 @@ import uploadImage from "../SellerShopInfo/Upload.json";
 const EditShopInfo = ({ Edit, setEdit }) => {
   const { setShopInfo, shopInfo } = useContext(AuthContext);
 
-  const { shopName, shopEmail, shopNumber, shopId, address,primary_color,secounder_color,text_color } = shopInfo;
+  const { shopName, shopEmail, shopNumber, shopId, address, primary_color, secounder_color, text_color } = shopInfo;
 
   const [shopUnicName, setshopUnicName] = useState(shopId);
   const [errorName, setErrorName] = useState("");
@@ -25,7 +25,7 @@ const EditShopInfo = ({ Edit, setEdit }) => {
     if (name.length > 2) {
       try {
         const response = await fetch(
-          `https://backend.doob.com.bd/api/v1/shop/info/${name}`
+          `https://doob.dev/api/v1/shop/info/${name}`
         );
         const data = await response.json();
 
@@ -73,7 +73,7 @@ const EditShopInfo = ({ Edit, setEdit }) => {
     try {
       if (shopID) {
         shopInfo.shopId = shopUnicName;
-        fetch(`https://backend.doob.com.bd/api/v1/shop/updateInfo`, {
+        fetch(`https://doob.dev/api/v1/shop/updateInfo`, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(shopInfo),
@@ -89,7 +89,7 @@ const EditShopInfo = ({ Edit, setEdit }) => {
             Swal.fire("Updated!", "", "success");
           });
       } else {
-        fetch(`https://backend.doob.com.bd/api/v1/shop/updateInfo`, {
+        fetch(`https://doob.dev/api/v1/shop/updateInfo`, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(shopInfo),
@@ -123,7 +123,7 @@ const EditShopInfo = ({ Edit, setEdit }) => {
   // const createNewShopInfo = async (updatedShopInfo) => {
   //     // Make a POST request to create new shopInfo on the server
   //     try {
-  //         fetch(`https://backend.doob.com.bd/api/v1/shop/updateInfo`, {
+  //         fetch(`https://doob.dev/api/v1/shop/updateInfo`, {
   //             method: 'PUT',
   //             headers: { 'Content-Type': 'application/json' },
   //             body: JSON.stringify(updatedShopInfo)
@@ -194,7 +194,7 @@ const EditShopInfo = ({ Edit, setEdit }) => {
                         className="w-full border rounded-md py-2 px-3"
                       />
                     </div>
-                    
+
                     <div className="mb-4">
                       <div htmlFor="" >Primary colour</div>
                       Change:(Navbar,All Button,Footer) Backgorund Colour

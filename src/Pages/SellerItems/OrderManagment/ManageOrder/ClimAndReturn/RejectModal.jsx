@@ -88,7 +88,7 @@ export default function RejectModal({
       }
       console.log(rejectData);
       //   return;
-      fetch(`https://backend.doob.com.bd/api/v1/seller/order-quantity-update`, {
+      fetch(`https://doob.dev/api/v1/seller/order-quantity-update`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(order),
@@ -99,7 +99,7 @@ export default function RejectModal({
           if (data.success) {
             if (order.daraz || order.woo) {
               fetch(
-                `https://backend.doob.com.bd/api/v1/seller/claim-order-add`,
+                `https://doob.dev/api/v1/seller/claim-order-add`,
                 {
                   method: "PUT",
                   headers: { "Content-Type": "application/json" },
@@ -121,7 +121,7 @@ export default function RejectModal({
                 });
             } else {
               fetch(
-                `https://backend.doob.com.bd/api/v1/seller/order-status-update?orderId=${order?._id}&status=return`,
+                `https://doob.dev/api/v1/seller/order-status-update?orderId=${order?._id}&status=return`,
                 {
                   method: "PUT",
                   headers: { "Content-Type": "application/json" },

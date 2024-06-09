@@ -13,7 +13,7 @@ const AddProduct = () => {
     queryKey: ["Commission"],
     queryFn: async () => {
       const res = await fetch(
-        "https://backend.doob.com.bd/api/v1/admin/get-commission-percent"
+        "https://doob.dev/api/v1/admin/get-commission-percent"
       );
       const data = await res.json();
       console.log(data);
@@ -28,7 +28,7 @@ const AddProduct = () => {
     setLoading(true);
     const newProduct = e.target.Commission.value;
     const body = { Commission: newProduct };
-    fetch("https://backend.doob.com.bd/api/v1/admin/add-commission-percent", {
+    fetch("https://doob.dev/api/v1/admin/add-commission-percent", {
       method: "PATCH",
       body: JSON.stringify(body),
       headers: {
@@ -45,7 +45,7 @@ const AddProduct = () => {
   return (
     <div>
       <div className=" mx-auto overflow-hidden  sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8">
-        
+
         <div className="p-10 border-2 rounded m-10">
           <form onSubmit={handleUpload} className="space-y-4  ">
             <div className="border border-collapse p-4">

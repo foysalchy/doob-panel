@@ -3,37 +3,39 @@ import BrightAlert from "bright-alert";
 import { useState } from "react";
 import { FaLongArrowAltRight } from "react-icons/fa";
 import Swal from "sweetalert2";
+import useImageUpload from "../../../../Hooks/UploadImage";
 
 const AddSubCategory = () => {
   const [upload, setUpload] = useState("");
   const [uplodOk, setUploadOk] = useState(false);
+  const { uploadImage } = useImageUpload();
 
-  const imageUploading = (e) => {
-    e.preventDefault();
-    const selectedFile = e.target.files[0];
-    const formData = new FormData();
-    formData.append("image", selectedFile);
-    const url = `https://backend.doob.com.bd/api/v1/image/upload-image`;
-    fetch(url, {
-      method: "POST",
-      body: formData,
-    })
-      .then((res) => res.json())
-      .then((imageData) => {
-        if (imageData.imageUrl) {
-          setUpload(imageData.imageUrl);
-          setUploadOk(true);
-        } else {
-          setUpload("");
-        }
-      });
-  };
+  // const imageUploading = (e) => {
+  //   e.preventDefault();
+  //   const selectedFile = e.target.files[0];
+  //   const formData = new FormData();
+  //   formData.append("image", selectedFile);
+  //   const url = `https://doob.dev/api/v1/image/upload-image`;
+  //   fetch(url, {
+  //     method: "POST",
+  //     body: formData,
+  //   })
+  //     .then((res) => res.json())
+  //     .then((imageData) => {
+  //       if (imageData.imageUrl) {
+  //         setUpload(imageData.imageUrl);
+  //         setUploadOk(true);
+  //       } else {
+  //         setUpload("");
+  //       }
+  //     });
+  // };
 
   const { data: subCategory = [], refetch } = useQuery({
     queryKey: ["subCategory"],
     queryFn: async () => {
       const res = await fetch(
-        "https://backend.doob.com.bd/api/v1/admin/category/megacategory"
+        "https://doob.dev/api/v1/admin/category/megacategory"
       );
       const data = await res.json();
       return data.rows;
@@ -46,11 +48,14 @@ const AddSubCategory = () => {
 
   console.log();
   const [loading, setLoading] = useState(false);
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const form = e.target;
     const subCategory = form.subCategory.value;
+    const file = form.image.files[0];
     setLoading(true);
+    const upload = await uploadImage(file);
+
     const data = {
       megaCategoryId: megaCategory.id,
       megaCategoryName: megaCategory.name,
@@ -60,7 +65,7 @@ const AddSubCategory = () => {
       feature: false,
     };
 
-    fetch("https://backend.doob.com.bd/api/v1/admin/category/subcategory", {
+    fetch("https://doob.dev/api/v1/admin/category/subcategory", {
       method: "post",
       headers: {
         "content-type": "application/json",
@@ -137,9 +142,10 @@ const AddSubCategory = () => {
         <div className="flex flex-col gap-2 mt-6">
           <label htmlFor="upload">Upload Image</label>
           <input
-            onChange={imageUploading}
+            // onChange={imageUploading}
             required
             type="file"
+            name="image"
             placeholder="enter sub category"
             id="upload"
             className="w-full px-3 py-2 border-2 text-sm text-gray-600 bg-white  shadow-sm outline-none appearance-none  "

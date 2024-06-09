@@ -13,7 +13,7 @@ const EditWareHouse = ({ setOpenModal, OpenModal, data, refetch }) => {
     const selectedImage = e.target.files[0];
     const formData = new FormData();
     formData.append("image", selectedImage);
-    const url = `https://backend.doob.com.bd/api/v1/image/upload-image`;
+    const url = `https://doob.dev/api/v1/image/upload-image`;
     fetch(url, {
       method: "POST",
       body: formData,
@@ -40,7 +40,7 @@ const EditWareHouse = ({ setOpenModal, OpenModal, data, refetch }) => {
       img,
     };
 
-    fetch(`https://backend.doob.com.bd/api/v1/admin/warehouse/${data._id}`, {
+    fetch(`https://doob.dev/api/v1/admin/warehouse/${data._id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

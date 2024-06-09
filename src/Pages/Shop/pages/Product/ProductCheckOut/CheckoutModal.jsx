@@ -80,7 +80,7 @@ const CheckoutModal = ({ modalOpen, setModalOpen, defaultAddress }) => {
     };
     console.log(data);
 
-    fetch("https://backend.doob.com.bd/api/v1/shop/upload-Address", {
+    fetch("https://doob.dev/api/v1/shop/upload-Address", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

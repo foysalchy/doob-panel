@@ -8,7 +8,7 @@ const ClamList = () => {
         queryKey: ["sellerAllOrder"],
         queryFn: async () => {
             const res = await fetch(
-                `https://backend.doob.com.bd/api/v1/admin/get-shop-all-order`
+                `https://doob.dev/api/v1/admin/get-shop-all-order`
             );
             const data = await res.json();
             console.log(data.data);

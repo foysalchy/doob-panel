@@ -14,7 +14,7 @@ const AdminBlogs = () => {
     queryKey: ["blogs"],
     queryFn: async () => {
       const res = await fetch(
-        "https://backend.doob.com.bd/api/v1/admin/all-blogs"
+        "https://doob.dev/api/v1/admin/all-blogs"
       );
       const data = await res.json();
       return data;
@@ -22,7 +22,7 @@ const AdminBlogs = () => {
   });
 
   const DeleteBlog = (id) => {
-    fetch(`https://backend.doob.com.bd/api/v1/admin/blog`, {
+    fetch(`https://doob.dev/api/v1/admin/blog`, {
       method: "DELETE",
       headers: {
         "content-type": "application/json",
@@ -56,19 +56,19 @@ const AdminBlogs = () => {
   // );
   let filteredData = blogs.length
     ? blogs.filter((item) => {
-        const matchesBlogType = item.draft_status === blogType || !blogType;
-        const matchesTrashType = item.status === trashType;
-        const matchesSearchQuery =
-          item.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          item._id.toString().includes(searchQuery);
+      const matchesBlogType = item.draft_status === blogType || !blogType;
+      const matchesTrashType = item.status === trashType;
+      const matchesSearchQuery =
+        item.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        item._id.toString().includes(searchQuery);
 
-        return matchesBlogType && matchesTrashType && matchesSearchQuery;
-      })
+      return matchesBlogType && matchesTrashType && matchesSearchQuery;
+    })
     : [];
 
   console.log(filteredData, "filteredData");
   const statusUpdate = (id, status) => {
-    fetch(`https://backend.doob.com.bd/api/v1/admin/blog`, {
+    fetch(`https://doob.dev/api/v1/admin/blog`, {
       method: "PUT",
       headers: {
         "content-type": "application/json",
@@ -91,7 +91,7 @@ const AdminBlogs = () => {
   const blogStash = (id, status) => {
     console.log(status);
     fetch(
-      `https://backend.doob.com.bd/api/v1/admin/blog-trash?id=${id}&status=${status}`,
+      `https://doob.dev/api/v1/admin/blog-trash?id=${id}&status=${status}`,
       {
         method: "PUT",
       }

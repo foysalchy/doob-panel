@@ -45,7 +45,7 @@ const PriceModal = ({ refetch, open, setOpen, }) => {
     queryKey: ["getawayData"],
     queryFn: async () => {
       const res = await fetch(
-        "https://backend.doob.com.bd/api/v1/admin/getaway"
+        "https://doob.dev/api/v1/admin/getaway"
       );
       const data = await res.json();
       return data;
@@ -56,7 +56,7 @@ const PriceModal = ({ refetch, open, setOpen, }) => {
     queryKey: ["possibility"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/seller/check-free-trail?shopId=${shopInfo._id}`
+        `https://doob.dev/api/v1/seller/check-free-trail?shopId=${shopInfo._id}`
       );
       const data = await res.json();
       return data.possible;
@@ -99,7 +99,7 @@ const PriceModal = ({ refetch, open, setOpen, }) => {
 
     if (shopInfo) {
       fetch(
-        `https://backend.doob.com.bd/api/v1/seller/update-payment?shopId=${shopInfo._id}&paymentId=${open?._id}`,
+        `https://doob.dev/api/v1/seller/update-payment?shopId=${shopInfo._id}&paymentId=${open?._id}`,
         {
           method: "PATCH",
           headers: {
@@ -153,7 +153,7 @@ const PriceModal = ({ refetch, open, setOpen, }) => {
       data.callback = "https://doob.com.bd/services-payment-successful";
       try {
         const response = await fetch(
-          "https://backend.doob.com.bd/api/v1/seller/amarpay/payment/create",
+          "https://doob.dev/api/v1/seller/amarpay/payment/create",
           {
             method: "POST",
             headers: {

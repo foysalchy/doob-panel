@@ -39,7 +39,7 @@ const AddFaq = () => {
       sortIndex, // Include sort index in the FAQ object
     };
 
-    fetch(`https://backend.doob.com.bd/api/v1/admin/newfaq`, {
+    fetch(`https://doob.dev/api/v1/admin/newfaq`, {
       method: "POST",
       headers: {
         "content-type": "application/json",

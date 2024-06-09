@@ -16,7 +16,7 @@ export default function EditDarazWoo({ selectedData }) {
     queryKey: ["DarazCategoryData"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/category/seller/${shopInfo._id}`
+        `https://doob.dev/api/v1/category/seller/${shopInfo._id}`
       );
       const data = await res.json();
       return data;

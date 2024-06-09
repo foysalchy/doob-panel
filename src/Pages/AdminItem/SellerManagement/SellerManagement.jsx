@@ -18,7 +18,7 @@ const SellerManagement = () => {
     queryKey: ["sellers"],
     queryFn: async () => {
       const res = await fetch(
-        "https://backend.doob.com.bd/api/v1/admin/seller"
+        "https://doob.dev/api/v1/admin/seller"
       );
       const data = await res.json();
       return data;
@@ -80,8 +80,8 @@ const SellerManagement = () => {
             <li key={pageNumber}>
               <button
                 className={`block h-8 w-8 rounded border ${pageNumber === currentPage
-                    ? "border-blue-600 bg-blue-600 text-white"
-                    : "border-gray-900 bg-white text-center leading-8 text-gray-900"
+                  ? "border-blue-600 bg-blue-600 text-white"
+                  : "border-gray-900 bg-white text-center leading-8 text-gray-900"
                   }`}
                 onClick={() => handleChangePage(pageNumber)}
               >
@@ -107,7 +107,7 @@ const SellerManagement = () => {
   };
 
   const updateStatus = (id, status) => {
-    fetch(`https://backend.doob.com.bd/api/v1/admin/seller/status/${id}`, {
+    fetch(`https://doob.dev/api/v1/admin/seller/status/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -124,10 +124,10 @@ const SellerManagement = () => {
   const directLogin = async (email, userId) => {
     let password = "";
     console.log(
-      `https://backend.doob.com.bd/api/v1/admin/seller/pass/${userId}`
+      `https://doob.dev/api/v1/admin/seller/pass/${userId}`
     );
     await fetch(
-      `https://backend.doob.com.bd/api/v1/admin/seller/pass/${userId}`
+      `https://doob.dev/api/v1/admin/seller/pass/${userId}`
     )
       .then((res) => res.json())
       .then((data) => {
@@ -140,7 +140,7 @@ const SellerManagement = () => {
     };
     console.log(data);
 
-    await fetch("https://backend.doob.com.bd/api/v1/auth/sign-in", {
+    await fetch("https://doob.dev/api/v1/auth/sign-in", {
       method: "post",
       headers: {
         "content-type": "application/json",
@@ -155,7 +155,7 @@ const SellerManagement = () => {
         if (data.user) {
           if (data.user.role === "seller") {
             fetch(
-              `https://backend.doob.com.bd/api/v1/shop/checkshop?shopEmail=${data?.user?.shopId}`
+              `https://doob.dev/api/v1/shop/checkshop?shopEmail=${data?.user?.shopId}`
             )
               .then((response) => response.json())
               .then((result) => {
@@ -197,7 +197,7 @@ const SellerManagement = () => {
 
   if (isDelete) {
     fetch(
-      `https://backend.doob.com.bd/api/v1/admin/seller/delete/${deleteId}`,
+      `https://doob.dev/api/v1/admin/seller/delete/${deleteId}`,
       {
         method: "DELETE",
         headers: {

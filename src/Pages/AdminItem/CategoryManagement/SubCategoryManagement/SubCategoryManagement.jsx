@@ -5,13 +5,15 @@ import { FaLongArrowAltRight } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
+import useImageUpload from "../../../../Hooks/UploadImage";
 
 const SubCategoryManagement = () => {
+  const { uploadImage } = useImageUpload();
   const { data: subCategory = [], refetch } = useQuery({
     queryKey: ["subCategory"],
     queryFn: async () => {
       const res = await fetch(
-        "https://backend.doob.com.bd/api/v1/admin/category/subcategories"
+        "https://doob.dev/api/v1/admin/category/subcategories"
       );
       const data = await res.json();
       return data.rows;
@@ -21,7 +23,7 @@ const SubCategoryManagement = () => {
   // status update
   const statusUpdate = (id, status) => {
     fetch(
-      `https://backend.doob.com.bd/api/v1/admin/category/subcategory?id=${id}&status=${status}`,
+      `https://doob.dev/api/v1/admin/category/subcategory?id=${id}&status=${status}`,
       {
         method: "PUT",
         headers: {
@@ -43,36 +45,24 @@ const SubCategoryManagement = () => {
 
   const [editOn, setEditOn] = useState(false);
 
-  const uploadImage = async (formData) => {
-    const url = `https://backend.doob.com.bd/api/v1/image/upload-image`;
-    const response = await fetch(url, {
-      method: "POST",
-      body: formData,
-    });
 
-    const imageData = await response.json();
-    return imageData.imageUrl;
-  };
 
   const handleEdit = async (e, id) => {
     e.preventDefault();
     const form = e.target;
     const image = form.image;
     const name = form.name.value;
-
-    const imageFormData = new FormData();
-    imageFormData.append("image", image.files[0]);
-    const imageUrl = await uploadImage(imageFormData);
+    const imageFormData = image.files[0];
 
     const data = {
-      img: imageUrl ? imageUrl : editOn?.img,
+      img: imageFormData ? await uploadImage(imageFormData) : editOn?.img,
       subCategory: name,
     };
 
     console.log(data, id);
 
     fetch(
-      `https://backend.doob.com.bd/api/v1/admin/feature-image-update?id=${id}`,
+      `https://doob.dev/api/v1/admin/edit-category/sub_category?id=${id}`,
       {
         method: "PUT",
         headers: {
@@ -113,7 +103,7 @@ const SubCategoryManagement = () => {
       if (result.dismiss === Swal.DismissReason.timer) {
         // Timer completed, initiate the fetch for deletion
         fetch(
-          `https://backend.doob.com.bd/api/v1/admin/category/subcategory/${id}`,
+          `https://doob.dev/api/v1/admin/category/subcategory/${id}`,
           {
             method: "DELETE",
             headers: {
@@ -142,7 +132,7 @@ const SubCategoryManagement = () => {
   const featureStatus = (id, status) => {
     console.log(status);
     fetch(
-      `https://backend.doob.com.bd/api/v1/admin/sub-category/feature?id=${id}&feature=${status}`,
+      `https://doob.dev/api/v1/admin/sub-category/feature?id=${id}&feature=${status}`,
       {
         method: "PUT",
         headers: {
@@ -198,6 +188,7 @@ const SubCategoryManagement = () => {
                 // const formattedTimeStamp = new Date(item.timeStamp * 1000).toLocaleString();
                 return (
                   <tr key={idx}>
+                    {console.log(item)}
                     <td className="px-6 py-4 whitespace-nowrap">
                       <img
                         src={item?.img}
@@ -238,9 +229,8 @@ const SubCategoryManagement = () => {
                               item?.feature ? false : true
                             )
                           }
-                          className={`${
-                            item?.feature ? "bg-green-500" : "bg-red-500"
-                          } text-white ml-2 rounded capitalize px-3 py-1`}
+                          className={`${item?.feature ? "bg-green-500" : "bg-red-500"
+                            } text-white ml-2 rounded capitalize px-3 py-1`}
                         >
                           futures
                         </button>
@@ -259,18 +249,16 @@ const SubCategoryManagement = () => {
 
                     <div className="absolute w-full top-0 left-0">
                       <div
-                        className={`fixed z-[100] flex items-center justify-center ${
-                          editOn?._id === item?._id
-                            ? "opacity-1 visible"
-                            : "invisible opacity-0"
-                        } inset-0 bg-black/20 backdrop-blur-sm duration-100`}
+                        className={`fixed z-[100] flex items-center justify-center ${editOn?._id === item?._id
+                          ? "opacity-1 visible"
+                          : "invisible opacity-0"
+                          } inset-0 bg-black/20 backdrop-blur-sm duration-100`}
                       >
                         <div
-                          className={`absolute md:w-[500px] w-full rounded-sm bg-white p-3 pb-5 text-center drop-shadow-2xl ${
-                            editOn?._id === item?._id
-                              ? "scale-1 opacity-1 duration-300"
-                              : "scale-0 opacity-0 duration-150"
-                          } `}
+                          className={`absolute md:w-[500px] w-full rounded-sm bg-white p-3 pb-5 text-center drop-shadow-2xl ${editOn?._id === item?._id
+                            ? "scale-1 opacity-1 duration-300"
+                            : "scale-0 opacity-0 duration-150"
+                            } `}
                         >
                           <svg
                             onClick={() => setEditOn(false)}

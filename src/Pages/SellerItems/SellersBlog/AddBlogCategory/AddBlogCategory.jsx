@@ -23,7 +23,7 @@ const AddBlogCategory = () => {
     const selectedFile = e.target.files[0];
     const formData = new FormData();
     formData.append("image", selectedFile);
-    const url = `https://backend.doob.com.bd/api/v1/image/upload-image`;
+    const url = `https://doob.dev/api/v1/image/upload-image`;
     fetch(url, {
       method: "POST",
       body: formData,
@@ -67,7 +67,7 @@ const AddBlogCategory = () => {
     const formData = new FormData();
 
     formData.append("image", image);
-    const url = `https://backend.doob.com.bd/api/v1/image/upload-image`;
+    const url = `https://doob.dev/api/v1/image/upload-image`;
     fetch(url, {
       method: "POST",
       body: formData,
@@ -92,7 +92,7 @@ const AddBlogCategory = () => {
 
   const postBlogCategory = (blog, form) => {
     console.log(blog, "blog....");
-    fetch(`https://backend.doob.com.bd/api/v1/seller/blog-category`, {
+    fetch(`https://doob.dev/api/v1/seller/blog-category`, {
       method: "POST",
       headers: {
         "content-type": "application/json",

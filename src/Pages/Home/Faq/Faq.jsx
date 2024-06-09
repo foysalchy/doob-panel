@@ -7,7 +7,7 @@ const Faq = () => {
   const [faqs, setFaq] = useState([]);
 
   useEffect(() => {
-    fetch("https://backend.doob.com.bd/api/v1/admin/faq")
+    fetch("https://doob.dev/api/v1/admin/faq")
       .then((response) => response.json())
       .then((data) => {
         setFaq(data);

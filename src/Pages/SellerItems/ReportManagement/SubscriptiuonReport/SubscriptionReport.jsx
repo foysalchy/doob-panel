@@ -9,14 +9,14 @@ const SubscriptionReport = () => {
         queryKey: ["subcription-report-seller"],
         queryFn: async () => {
             const res = await fetch(
-                `https://backend.doob.com.bd/api/v1/seller/sales-report?shopId=${shopInfo._id}`
+                `https://doob.dev/api/v1/seller/sales-report?shopId=${shopInfo._id}`
             );
             const data = await res.json();
             console.log(data);
             return data?.data;
         },
     });
-    console.log(`https://backend.doob.com.bd/api/v1/seller/sales-report?shopId=${shopInfo._id}`);
+    console.log(`https://doob.dev/api/v1/seller/sales-report?shopId=${shopInfo._id}`);
     const [currentPage, setCurrentPage] = useState(1);
 
     const pageSize = 10;

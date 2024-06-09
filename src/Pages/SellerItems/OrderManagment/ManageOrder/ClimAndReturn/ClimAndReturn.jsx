@@ -24,7 +24,7 @@ const ClimAndReturn = () => {
     queryKey: ["sellerOrder"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/seller/order?shopId=${shopInfo._id}`
+        `https://doob.dev/api/v1/seller/order?shopId=${shopInfo._id}`
       );
       const data = await res.json();
       return data.data;
@@ -39,7 +39,7 @@ const ClimAndReturn = () => {
     queryKey: ["orderDarazOrderData"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/seller/daraz-order-claimed?id=${shopInfo._id}&status=All`
+        `https://doob.dev/api/v1/seller/daraz-order-claimed?id=${shopInfo._id}&status=All`
       );
       const data = await res.json();
       // console.log(data);
@@ -54,7 +54,7 @@ const ClimAndReturn = () => {
     queryKey: ["totalWooOrderData"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/seller/woo-commerce-order-claim?shopId=${shopInfo._id}`
+        `https://doob.dev/api/v1/seller/woo-commerce-order-claim?shopId=${shopInfo._id}`
       );
       const data = await res.json();
       console.log(data);
@@ -182,7 +182,7 @@ const ClimAndReturn = () => {
   console.log(approveNote);
   const productStatusUpdate = (status, order) => {
     fetch(
-      `https://backend.doob.com.bd/api/v1/seller/order-status-update?orderId=${order?._id}&status=${status}`,
+      `https://doob.dev/api/v1/seller/order-status-update?orderId=${order?._id}&status=${status}`,
       {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
@@ -204,7 +204,7 @@ const ClimAndReturn = () => {
     queryKey: ["getaway"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/seller/shipping-interrogation/${shopInfo._id}`
+        `https://doob.dev/api/v1/seller/shipping-interrogation/${shopInfo._id}`
       );
       const data = await res.json();
       return data;
@@ -259,7 +259,7 @@ const ClimAndReturn = () => {
   const handleProductStatusUpdate = (order) => {
     console.log(order);
     fetch(
-      `https://backend.doob.com.bd/api/v1/seller/order-quantity-update?isUpdateQuantity=${isUpdateQuantity}&note=${approveNote}`,
+      `https://doob.dev/api/v1/seller/order-quantity-update?isUpdateQuantity=${isUpdateQuantity}&note=${approveNote}`,
       {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
@@ -271,7 +271,7 @@ const ClimAndReturn = () => {
         console.log(data);
         if (data.success) {
           if (order.daraz || order.woo) {
-            fetch(`https://backend.doob.com.bd/api/v1/seller/claim-order-add`, {
+            fetch(`https://doob.dev/api/v1/seller/claim-order-add`, {
               method: "PUT",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({
@@ -308,7 +308,7 @@ const ClimAndReturn = () => {
     setOpenModal(true);
 
     fetch(
-      `https://backend.doob.com.bd/api/v1/seller/refound-order-info?shopId=${shopInfo._id}&orderId=${order._id}`
+      `https://doob.dev/api/v1/seller/refound-order-info?shopId=${shopInfo._id}&orderId=${order._id}`
     )
       .then((res) => res.json())
       .then((data) => {
@@ -321,7 +321,7 @@ const ClimAndReturn = () => {
   const [refundData, setRefundData] = useState(true);
   const checkBox = (orderId) => {
     fetch(
-      `https://backend.doob.com.bd/api/v1/seller/refound-order-info?shopId=${shopInfo._id}&orderId=${orderId}`
+      `https://doob.dev/api/v1/seller/refound-order-info?shopId=${shopInfo._id}&orderId=${orderId}`
     )
       .then((res) => res.json())
       .then((data) => {
@@ -332,7 +332,7 @@ const ClimAndReturn = () => {
 
   const updateOrderInfo = (note, file, id) => {
     const noteData = { note, file, orderId: id };
-    fetch("https://backend.doob.com.bd/api/v1/seller/refound-order-info", {
+    fetch("https://doob.dev/api/v1/seller/refound-order-info", {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(noteData),
@@ -381,7 +381,7 @@ const ClimAndReturn = () => {
   };
 
   async function uploadImage(formData) {
-    const url = "https://backend.doob.com.bd/api/v1/image/upload-image";
+    const url = "https://doob.dev/api/v1/image/upload-image";
     const response = await fetch(url, {
       method: "POST",
       body: formData,
@@ -392,7 +392,7 @@ const ClimAndReturn = () => {
 
   const updateCourier_status = (id, courier_id) => {
     fetch(
-      `https://backend.doob.com.bd/api/v1/admin/courier_status?orderId=${id}&id=${courier_id}`,
+      `https://doob.dev/api/v1/admin/courier_status?orderId=${id}&id=${courier_id}`,
       {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
@@ -480,7 +480,7 @@ const ClimAndReturn = () => {
             // If confirmed to update stock, call handleProductStatusUpdate
             if (status === "reject") {
               fetch(
-                `https://backend.doob.com.bd/api/v1/seller/order-quantity-update?isUpdateQuantity=${isUpdateQuantity}&note=${approveNote}`,
+                `https://doob.dev/api/v1/seller/order-quantity-update?isUpdateQuantity=${isUpdateQuantity}&note=${approveNote}`,
                 {
                   method: "PUT",
                   headers: { "Content-Type": "application/json" },
@@ -494,7 +494,7 @@ const ClimAndReturn = () => {
                     console.log(order);
                     if (order.daraz || order.woo) {
                       fetch(
-                        `https://backend.doob.com.bd/api/v1/seller/claim-order-add`,
+                        `https://doob.dev/api/v1/seller/claim-order-add`,
                         {
                           method: "PUT",
                           headers: { "Content-Type": "application/json" },
@@ -582,7 +582,7 @@ const ClimAndReturn = () => {
   //       // console.log(rejectData);
   //       // return;
   //       fetch(
-  //         `https://backend.doob.com.bd/api/v1/seller/order-quantity-update?isUpdateQuantity=${isUpdateQuantity}&note=${note}`,
+  //         `https://doob.dev/api/v1/seller/order-quantity-update?isUpdateQuantity=${isUpdateQuantity}&note=${note}`,
   //         {
   //           method: "PUT",
   //           headers: { "Content-Type": "application/json" },
@@ -595,7 +595,7 @@ const ClimAndReturn = () => {
   //           if (data.success) {
   //             // productStatusUpdate("reject", order._id);
   //             fetch(
-  //               `https://backend.doob.com.bd/api/v1/seller/order-status-update?orderId=${order?._id}&status=return`,
+  //               `https://doob.dev/api/v1/seller/order-status-update?orderId=${order?._id}&status=return`,
   //               {
   //                 method: "PUT",
   //                 headers: { "Content-Type": "application/json" },
@@ -913,22 +913,20 @@ const ClimAndReturn = () => {
                           <div>
                             <div
                               onClick={() => setModalOn(false)}
-                              className={`fixed z-[100] flex items-center justify-center ${
-                                modalOn?._id === item?._id
+                              className={`fixed z-[100] flex items-center justify-center ${modalOn?._id === item?._id
                                   ? "visible opacity-100"
                                   : "invisible opacity-0"
-                              } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
+                                } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
                             >
                               <div
                                 onClick={(e_) => e_.stopPropagation()}
-                                className={`text- absolute w-[500px] rounded-sm bg-white p-6 drop-shadow-lg dark:bg-black dark:text-white ${
-                                  modalOn?._id === item?._id
+                                className={`text- absolute w-[500px] rounded-sm bg-white p-6 drop-shadow-lg dark:bg-black dark:text-white ${modalOn?._id === item?._id
                                     ? "scale-1 opacity-1 duration-300"
                                     : "scale-0 opacity-0 duration-150"
-                                }`}
+                                  }`}
                               >
                                 <h1 className="mb-2 text-2xl font-semibold">
-                                  Edit Order {}
+                                  Edit Order { }
                                 </h1>
                                 <form>
                                   <div className="flex items-start w-full mb-6 flex-col gap-1">

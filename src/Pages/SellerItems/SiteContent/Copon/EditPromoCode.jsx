@@ -24,7 +24,7 @@ const EditPromoCode = ({ data, setOpenModal, refetch }) => { // Component name c
         queryKey: ["your_shop_users"],
         queryFn: async () => {
             const res = await fetch(
-                `https://backend.doob.com.bd/api/v1/seller/get-all-shop-user?shopId=${shopInfo.shopId}`
+                `https://doob.dev/api/v1/seller/get-all-shop-user?shopId=${shopInfo.shopId}`
             );
             const data = await res.json();
             return data.users;
@@ -71,7 +71,7 @@ const EditPromoCode = ({ data, setOpenModal, refetch }) => { // Component name c
 
         if (updatedValue.length > 3) {
             fetch(
-                `https://backend.doob.com.bd/api/v1/seller/uniq-promo/${updatedValue}`
+                `https://doob.dev/api/v1/seller/uniq-promo/${updatedValue}`
             )
                 .then((res) => res.json())
                 .then((data) => setUniq(data));
@@ -96,7 +96,7 @@ const EditPromoCode = ({ data, setOpenModal, refetch }) => { // Component name c
 
         if (isEditing) {
             setLoading(true);
-            fetch(`https://backend.doob.com.bd/api/v1/seller/promo-code/update?id=${formData._id}`, {
+            fetch(`https://doob.dev/api/v1/seller/promo-code/update?id=${formData._id}`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",

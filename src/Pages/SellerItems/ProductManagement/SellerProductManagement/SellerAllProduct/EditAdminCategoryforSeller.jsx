@@ -17,7 +17,7 @@ const EditAdminCategoryforSeller = ({ product }) => {
 
   // console.log(miniCategories);
 
-  let megaCategoryUrl = `https://backend.doob.com.bd/api/v1/admin/category/megacategory`;
+  let megaCategoryUrl = `https://doob.dev/api/v1/admin/category/megacategory`;
 
   const {
     data: megaCategories = [],
@@ -43,7 +43,7 @@ const EditAdminCategoryforSeller = ({ product }) => {
     queryKey: ["allSubCategoriesData"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/admin/category/subcategories`
+        `https://doob.dev/api/v1/admin/category/subcategories`
       );
       const data = await res.json();
       // console.log(data);
@@ -69,7 +69,7 @@ const EditAdminCategoryforSeller = ({ product }) => {
     setSubCategorys([]);
     const optionId = selectedOption.value;
     fetch(
-      `https://backend.doob.com.bd/api/v1/admin/category/subcategory?id=${optionId}`
+      `https://doob.dev/api/v1/admin/category/subcategory?id=${optionId}`
     )
       .then((res) => res.json())
       .then((data) => {
@@ -101,7 +101,7 @@ const EditAdminCategoryforSeller = ({ product }) => {
     queryKey: ["allMiniCategoriesData"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/admin/category/miniCategories`
+        `https://doob.dev/api/v1/admin/category/miniCategories`
       );
       const data = await res.json();
       // console.log(data);
@@ -119,7 +119,7 @@ const EditAdminCategoryforSeller = ({ product }) => {
     setMiniCategories([]);
     const optionId = selectedOption.value;
     fetch(
-      `https://backend.doob.com.bd/api/v1/admin/category/miniCategory?id=${optionId}`
+      `https://doob.dev/api/v1/admin/category/miniCategory?id=${optionId}`
     )
       .then((res) => res.json())
       .then((data) => {
@@ -150,7 +150,7 @@ const EditAdminCategoryforSeller = ({ product }) => {
     queryKey: ["allExtraCategoriesData"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/admin/category/extraCategories`
+        `https://doob.dev/api/v1/admin/category/extraCategories`
       );
       const data = await res.json();
       // console.log(data);
@@ -166,9 +166,9 @@ const EditAdminCategoryforSeller = ({ product }) => {
   const onHandleExtraCategorys = (selectedOption) => {
     setExtraCategorys([]);
     const optionId = selectedOption.value;
-    // console.log(`https://backend.doob.com.bd/api/v1/admin/category/extraCategory?id=${optionId}`);
+    // console.log(`https://doob.dev/api/v1/admin/category/extraCategory?id=${optionId}`);
     fetch(
-      `https://backend.doob.com.bd/api/v1/admin/category/extraCategory?id=${optionId}`
+      `https://doob.dev/api/v1/admin/category/extraCategory?id=${optionId}`
     )
       .then((res) => res.json())
       .then((data) => {

@@ -10,12 +10,12 @@ const TrandingProductShop = () => {
   const shopId = idMatch ? idMatch[1] : null;
 
   const { shop_id } = useContext(ShopAuthProvider);
-  // console.log(`https://backend.doob.com.bd/api/v1/shop/product/${shop_id.shop_id}/all-product?limit=20`);
+  // console.log(`https://doob.dev/api/v1/shop/product/${shop_id.shop_id}/all-product?limit=20`);
   const { data: newProducts = [], refetch } = useQuery({
     queryKey: ["allProduct"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/shop/product/${shop_id.shop_id}/all-product?limit=20`
+        `https://doob.dev/api/v1/shop/product/${shop_id.shop_id}/all-product?limit=20`
       );
       const data = await res.json();
       return data;

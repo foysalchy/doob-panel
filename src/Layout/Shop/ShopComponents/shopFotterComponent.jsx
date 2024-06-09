@@ -41,7 +41,7 @@ export const Footer = () => {
     queryKey: ["sellerPages"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/seller/pages/${shopId}`
+        `https://doob.dev/api/v1/seller/pages/${shopId}`
       );
       const data = await res.json();
       return data;
@@ -52,7 +52,7 @@ export const Footer = () => {
     queryKey: ["buyer"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/shop/${shopId}`
+        `https://doob.dev/api/v1/shop/${shopId}`
       );
       const data = await res.json();
       return data;
@@ -63,14 +63,14 @@ export const Footer = () => {
     queryKey: ["contact"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/shop/contact/${shopId}`
+        `https://doob.dev/api/v1/shop/contact/${shopId}`
       );
       const data = await res.json();
       return data;
     },
   });
   console.log(
-    `https://backend.doob.com.bd/api/v1/shop/contact/${shopId}`,
+    `https://doob.dev/api/v1/shop/contact/${shopId}`,
     "footer"
   );
 
@@ -86,7 +86,7 @@ export const Footer = () => {
 
     if (email && email.match(emailRegex)) {
       setError(false);
-      fetch("https://backend.doob.com.bd/api/v1/seller/subscriber-report", {
+      fetch("https://doob.dev/api/v1/seller/subscriber-report", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

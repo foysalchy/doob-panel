@@ -75,7 +75,7 @@ const AddPrice = () => {
     e.preventDefault();
     formData.timestamp = new Date().getTime()
     formData.limitValue = limitValue
-    fetch(`https://backend.doob.com.bd/api/v1/admin/pricing`, {
+    fetch(`https://doob.dev/api/v1/admin/pricing`, {
       method: "POST",
       headers: {
         "content-type": "application/json",

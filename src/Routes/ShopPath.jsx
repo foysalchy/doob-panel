@@ -32,7 +32,7 @@ const ShopPath = [
     element: <Home />,
     loader: async ({ params }) => {
       const id = params.id;
-      return fetch(`https://backend.doob.com.bd/api/v1/shop/${id}`);
+      return fetch(`https://doob.dev/api/v1/shop/${id}`);
     },
   },
   {
@@ -40,7 +40,7 @@ const ShopPath = [
     element: <ShopSignIn />,
     loader: async ({ params }) => {
       const id = params.id;
-      return fetch(`https://backend.doob.com.bd/api/v1/shop/${id}`);
+      return fetch(`https://doob.dev/api/v1/shop/${id}`);
     },
   },
   {
@@ -48,7 +48,7 @@ const ShopPath = [
     element: <ShopSignUp />,
     loader: async ({ params }) => {
       const id = params.id;
-      return fetch(`https://backend.doob.com.bd/api/v1/shop/${id}`);
+      return fetch(`https://doob.dev/api/v1/shop/${id}`);
     },
   },
   {
@@ -106,7 +106,7 @@ const ShopPath = [
       const id = params.id;
       const productID = params.productID;
       return fetch(
-        `https://backend.doob.com.bd/api/v1/shop/product/${id}/product/${productID}`
+        `https://doob.dev/api/v1/shop/product/${id}/product/${productID}`
       );
     },
   },
@@ -117,7 +117,7 @@ const ShopPath = [
       const id = params.id;
       const productID = params.productID;
       return fetch(
-        `https://backend.doob.com.bd/api/v1/shop/product/${id}/product/${productID}`
+        `https://doob.dev/api/v1/shop/product/${id}/product/${productID}`
       );
     },
   },
@@ -134,7 +134,7 @@ const ShopPath = [
         console.log("Fetching data for categoryName:", categoryName);
 
         const response = await fetch(
-          `https://backend.doob.com.bd/api/v1/shop/product/${shopId}/categories?category=${encodeURIComponent(
+          `https://doob.dev/api/v1/shop/product/${shopId}/categories?category=${encodeURIComponent(
             categoryName
           )}`
         );
@@ -163,7 +163,7 @@ const ShopPath = [
     element: <ShopAllBlog />,
     loader: async ({ params }) => {
       const id = params.id;
-      return fetch(`https://backend.doob.com.bd/api/v1/seller/blog/${id}`);
+      return fetch(`https://doob.dev/api/v1/seller/blog/${id}`);
     },
   },
   {
@@ -173,7 +173,7 @@ const ShopPath = [
       const id = params.id;
       const blogId = params.blogId;
       const response = await fetch(
-        `https://backend.doob.com.bd/api/v1/seller/blog/${id}/${blogId}`
+        `https://doob.dev/api/v1/seller/blog/${id}/${blogId}`
       );
       const data = await response.json();
       return data;
@@ -186,7 +186,7 @@ const ShopPath = [
       const pageId = params.pageId;
       const shopId = params.id;
       const response = await fetch(
-        `https://backend.doob.com.bd/api/v1/seller/page/${shopId}/${pageId}`
+        `https://doob.dev/api/v1/seller/page/${shopId}/${pageId}`
       );
       const data = await response.json();
       return data;
@@ -215,7 +215,7 @@ const ShopPath = [
 
         try {
           const response = await fetch(
-            `https://backend.doob.com.bd/api/v1/seller/payment-getaway/${shopId}`
+            `https://doob.dev/api/v1/seller/payment-getaway/${shopId}`
           );
           const data = await response.json();
           console.log(data, "dtata");
@@ -252,7 +252,7 @@ const ShopPath = [
         const userId = userIdMatch[1];
         try {
           const response = await fetch(
-            `https://backend.doob.com.bd/api/v1/shop/user-address?userId=${userId}&shopId=${shopId}&token=${userId}`,
+            `https://doob.dev/api/v1/shop/user-address?userId=${userId}&shopId=${shopId}&token=${userId}`,
             {
               headers: {
                 "ngrok-skip-browser-warning": "69420",

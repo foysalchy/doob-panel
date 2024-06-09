@@ -26,7 +26,7 @@ const ShopProductHero = () => {
     const { data: categories = [], isLoading, refetch } = useQuery({
         queryKey: ["categories"],
         queryFn: async () => {
-            const res = await fetch(`https://backend.doob.com.bd/api/v1/shop/category/get/${shopId}`);
+            const res = await fetch(`https://doob.dev/api/v1/shop/category/get/${shopId}`);
             const data = await res.json();
             return data;
         },
@@ -39,7 +39,7 @@ const ShopProductHero = () => {
     const { data: Banar = [] } = useQuery({
         queryKey: ["banar"],
         queryFn: async () => {
-            const res = await fetch(`https://backend.doob.com.bd/api/v1/shop/slider/get/${shopId}`);
+            const res = await fetch(`https://doob.dev/api/v1/shop/slider/get/${shopId}`);
             const data = await res.json();
             return data;
         },
@@ -49,7 +49,7 @@ const ShopProductHero = () => {
     const { data: adds } = useQuery({
         queryKey: ["adds"],
         queryFn: async () => {
-            const res = await fetch(`https://backend.doob.com.bd/api/v1/shop/popup/get/${shopId}`);
+            const res = await fetch(`https://doob.dev/api/v1/shop/popup/get/${shopId}`);
             const data = await res.json();
             return data;
         },
@@ -102,7 +102,7 @@ const ShopProductHero = () => {
     const { data: megaSideCategoryData = [], refetch: refetchMegaCategory } = useQuery({
         queryKey: ['megaSideCategoryDataSaller'],
         queryFn: async () => {
-            const res = await fetch(`https://backend.doob.com.bd/api/v1/shop/category/get/${shopId}`);
+            const res = await fetch(`https://doob.dev/api/v1/shop/category/get/${shopId}`);
             const data = await res.json();
             return data.slice(0, 7);
         },
@@ -111,20 +111,20 @@ const ShopProductHero = () => {
     const { data: heroBanner = [] } = useQuery({
         queryKey: 'heroBanner',
         queryFn: async () => {
-            const res = await fetch('https://backend.doob.com.bd/api/v1/admin/slider');
+            const res = await fetch('https://doob.dev/api/v1/admin/slider');
             const data = await res.json();
             return data?.data;
         },
     });
 
-    // const blankImg = 'https://backend.doob.com.bd/api/v1/image/66036ed3df13bd9930ac229c.jpg';
+    // const blankImg = 'https://doob.dev/api/v1/image/66036ed3df13bd9930ac229c.jpg';
     const bannerFind = heroBanner?.filter((item) => item.status === 'true');
-    // https://backend.doob.com.bd/api65e8a0a2e04a44a47ce186c3
+    // https://doob.dev/api65e8a0a2e04a44a47ce186c3
     useEffect(() => {
         const fetchData = async () => {
             const subCategoryPromises = megaSideCategoryData?.filter(itm => itm?.menu === true).map(async (item) => {
                 try {
-                    const response = await fetch(`https://backend.doob.com.bd/api/v1/category/seller/sub-category-by-id?shopId=${shop_id?.shop_id}&id=${item?._id}`);
+                    const response = await fetch(`https://doob.dev/api/v1/category/seller/sub-category-by-id?shopId=${shop_id?.shop_id}&id=${item?._id}`);
                     const data = await response.json();
                     console.log(data, 'data....**');
                     return data;
@@ -146,9 +146,9 @@ const ShopProductHero = () => {
     useEffect(() => {
         const fetchData = async () => {
             const miniCategoryPromises = allCategory.subCategorys.map(async (itm) => {
-                // console.log(`https://backend.doob.com.bd/api/v1/category/seller/mini-category-by-id?shopId=${shop_id?.shop_id}&id=${itm?._id}`, '**********')
+                // console.log(`https://doob.dev/api/v1/category/seller/mini-category-by-id?shopId=${shop_id?.shop_id}&id=${itm?._id}`, '**********')
                 try {
-                    const response = await fetch(`https://backend.doob.com.bd/api/v1/category/seller/mini-category-by-id?shopId=${shop_id?.shop_id}&id=${itm?._id}`);
+                    const response = await fetch(`https://doob.dev/api/v1/category/seller/mini-category-by-id?shopId=${shop_id?.shop_id}&id=${itm?._id}`);
                     const data = await response.json();
                     return data;
                 } catch (error) {
@@ -170,9 +170,9 @@ const ShopProductHero = () => {
 
         const fetchData = async () => {
             const extraCategoryPromises = allCategory.miniCategorys.map(async (itm) => {
-                // console.log(`https://backend.doob.com.bd/api/v1/category/seller/extra-category-by-id?shopId=${shop_id?.shop_id}&id=${itm?._id}`, '************---->')
+                // console.log(`https://doob.dev/api/v1/category/seller/extra-category-by-id?shopId=${shop_id?.shop_id}&id=${itm?._id}`, '************---->')
                 try {
-                    const response = await fetch(`https://backend.doob.com.bd/api/v1/category/seller/extra-category-by-id?shopId=${shop_id?.shop_id}&id=${itm?._id}`);
+                    const response = await fetch(`https://doob.dev/api/v1/category/seller/extra-category-by-id?shopId=${shop_id?.shop_id}&id=${itm?._id}`);
                     const data = await response.json();
                     return data;
                 } catch (error) {
@@ -285,7 +285,7 @@ const ShopProductHero = () => {
                                                 className={`flex  items-center  w-full justify-between px-2 py-1 capitalize text-sm font-normal  hover:bg-gray-100   relative  ${openDropdownIndex === index ? 'bg-gray-100 text-black' : 'text-black'} rounded`}
                                             >
                                                 <span className="flex gap-2 items-center ">
-                                                    <img src={item?.image} alt="" className="w-8 h-8 rounded-full ring-1 ring-gray-200" />
+                                                    <img src={item?.img} alt="" className="w-8 h-8 rounded-full ring-1 ring-gray-200" />
                                                     {item?.name}
                                                 </span>
 
@@ -395,8 +395,8 @@ const ShopProductHero = () => {
                                                                     data-te-ripple-init
                                                                     data-te-ripple-color="light"
                                                                 >
-                                                                    <span className="flex items-center ">
-                                                                        <img src={subCategory?.img} alt="" className="w-8 h-8 rounded-full ring-1 ring-gray-200" /> {subCategory?.subCategoryName}
+                                                                    <span className="flex items-center gap-2 ">
+                                                                        <img src={subCategory?.img} alt="" className="w-8 h-8 rounded-full ring-1 ring-gray-200" />  {subCategory?.subCategoryName}
                                                                     </span>
                                                                 </div>
                                                             </Link>
@@ -417,7 +417,7 @@ const ShopProductHero = () => {
                         console.log(Banar)
                     }
 
-                    <Swiper   autoplay={{ delay: 3000 }}  pagination={true}  modules={[Autoplay, Pagination]} className="mySwiper rounded-md">
+                    <Swiper autoplay={{ delay: 3000 }} pagination={true} modules={[Autoplay, Pagination]} className="mySwiper rounded-md">
                         {Banar?.filter((item) => item.status).map((i, index) => (
                             <SwiperSlide key={index + 6}>
                                 {i.status && (

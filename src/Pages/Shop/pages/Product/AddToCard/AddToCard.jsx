@@ -18,7 +18,7 @@ const ProductListCartSm = ({
   const addToFavorite = (favorite) => {
     delete favorite._id;
     console.log(favorite);
-    fetch("https://backend.doob.com.bd/api/v1/shop/user/wishlist", {
+    fetch("https://doob.dev/api/v1/shop/user/wishlist", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(favorite), // Corrected the case of JSON
@@ -147,7 +147,7 @@ const ProductListCartLg = ({
   const addToFavorite = (favorite) => {
     delete favorite._id;
     console.log(favorite);
-    fetch("https://backend.doob.com.bd/api/v1/shop/user/wishlist", {
+    fetch("https://doob.dev/api/v1/shop/user/wishlist", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(favorite), // Corrected the case of JSON
@@ -397,7 +397,7 @@ const AddToCard = () => {
 
     if (shopUser) {
       fetch(
-        `https://backend.doob.com.bd/api/v1/shop/user/add-to-cart?productId=${productId}&token=${shopUser._id}`,
+        `https://doob.dev/api/v1/shop/user/add-to-cart?productId=${productId}&token=${shopUser._id}`,
         {
           method: "DELETE",
           headers: { "Content-Type": "application/json" },
@@ -424,7 +424,7 @@ const AddToCard = () => {
       setCartProducts(JSON.parse(productData));
     } else {
       fetch(
-        `https://backend.doob.com.bd/api/v1/shop/user/add-to-cart?userId=${shopUser?._id}&shopId=${shop_id?.shop_id}&token=${shopUser?._id}`
+        `https://doob.dev/api/v1/shop/user/add-to-cart?userId=${shopUser?._id}&shopId=${shop_id?.shop_id}&token=${shopUser?._id}`
       )
         .then((res) => res.json())
         .then((data) => {
@@ -435,7 +435,7 @@ const AddToCard = () => {
             const element = datas[i];
             element.userId = shopUser?._id;
             fetch(
-              `https://backend.doob.com.bd/api/v1/shop/user/add-to-cart?token=${shopUser._id}`,
+              `https://doob.dev/api/v1/shop/user/add-to-cart?token=${shopUser._id}`,
               {
                 method: "POST",
                 headers: {

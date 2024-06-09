@@ -15,7 +15,7 @@ const AddressBook = () => {
     queryFn: async () => {
       try {
         const res = await fetch(
-          `https://backend.doob.com.bd/api/v1/shop/user-address?userId=${shopUser?._id}&shopId=${shop_id?.shop_id}`,
+          `https://doob.dev/api/v1/shop/user-address?userId=${shopUser?._id}&shopId=${shop_id?.shop_id}`,
           {
             headers: {
               "ngrok-skip-browser-warning": "69420",

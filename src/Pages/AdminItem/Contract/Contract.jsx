@@ -40,7 +40,7 @@ const Contract = () => {
     queryKey: ["contact"],
     queryFn: async () => {
       const res = await fetch(
-        "https://backend.doob.com.bd/api/v1/admin/contact"
+        "https://doob.dev/api/v1/admin/contact"
       );
       const data = await res.json();
       return data;

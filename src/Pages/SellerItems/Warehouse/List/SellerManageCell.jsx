@@ -15,7 +15,7 @@ const SellerManageCell = () => {
     queryKey: ["cells"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/seller/warehouse/cell/${shopInfo._id}`
+        `https://doob.dev/api/v1/seller/warehouse/cell/${shopInfo._id}`
       );
       const data = await res.json();
       return data;
@@ -109,7 +109,7 @@ const SellerManageCell = () => {
 
   const updateStatus = (id, status) => {
     fetch(
-      `https://backend.doob.com.bd/api/v1/seller/warehouse/cell/status/${id}`,
+      `https://doob.dev/api/v1/seller/warehouse/cell/status/${id}`,
       {
         method: "PUT",
         headers: {
@@ -148,7 +148,7 @@ const SellerManageCell = () => {
       if (result.dismiss === Swal.DismissReason.timer) {
         // Timer completed, initiate the fetch for deletion
         fetch(
-          `https://backend.doob.com.bd/api/v1/seller/warehouse/cell/delete/${id}`,
+          `https://doob.dev/api/v1/seller/warehouse/cell/delete/${id}`,
           {
             method: "DELETE",
             headers: {

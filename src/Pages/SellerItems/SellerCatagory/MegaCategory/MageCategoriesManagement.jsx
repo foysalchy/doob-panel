@@ -26,7 +26,7 @@ const MageCategoriesManagement = () => {
     queryKey: ["categories"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/category/seller/${shopInfo._id}`
+        `https://doob.dev/api/v1/category/seller/${shopInfo._id}`
       );
       const data = await res.json();
       return data;
@@ -130,7 +130,7 @@ const MageCategoriesManagement = () => {
   };
 
   const updateStatus = (id, status) => {
-    fetch(`https://backend.doob.com.bd/api/v1/category/seller/status/${id}`, {
+    fetch(`https://doob.dev/api/v1/category/seller/status/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -167,7 +167,7 @@ const MageCategoriesManagement = () => {
       if (result.dismiss === Swal.DismissReason.timer) {
         // Timer completed, initiate the fetch for deletion
         fetch(
-          `https://backend.doob.com.bd/api/v1/category/seller/delete/${id}`,
+          `https://doob.dev/api/v1/category/seller/delete/${id}`,
           {
             method: "DELETE",
             headers: {
@@ -201,7 +201,7 @@ const MageCategoriesManagement = () => {
 
   const futuresUpdate = (id, status) => {
     fetch(
-      `https://backend.doob.com.bd/api/v1/category/seller/category/updateStatus?id=${id}`,
+      `https://doob.dev/api/v1/category/seller/category/updateStatus?id=${id}`,
       {
         method: "PUT",
 
@@ -221,7 +221,7 @@ const MageCategoriesManagement = () => {
   const menuUpdate = (id, status) => {
     console.log(id, status, "dsfa");
     fetch(
-      `https://backend.doob.com.bd/api/v1/category/seller/category/updateStatus?id=${id}`,
+      `https://doob.dev/api/v1/category/seller/category/updateStatus?id=${id}`,
       {
         method: "PUT",
 

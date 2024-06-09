@@ -23,7 +23,7 @@ const AddMagaCategory = () => {
     queryFn: async () => {
       if (shopInfo.darazLogin) {
         const res = await fetch(
-          `https://backend.doob.com.bd/api/v1/daraz/category/${shopInfo._id}`
+          `https://doob.dev/api/v1/daraz/category/${shopInfo._id}`
         );
         const data = await res.json();
         return data;
@@ -38,7 +38,7 @@ const AddMagaCategory = () => {
     queryFn: async () => {
       if (shopInfo.wooLogin) {
         const res = await fetch(
-          `https://backend.doob.com.bd/api/v1/woo/category?shopId=${shopInfo._id}`
+          `https://doob.dev/api/v1/woo/category?shopId=${shopInfo._id}`
         );
         const data = await res.json();
         return data;
@@ -108,7 +108,7 @@ const AddMagaCategory = () => {
   };
 
   const uploadImage = async (formData) => {
-    const url = `https://backend.doob.com.bd/api/v1/image/upload-image`;
+    const url = `https://doob.dev/api/v1/image/upload-image`;
     const response = await fetch(url, {
       method: "POST",
       body: formData,
@@ -119,7 +119,7 @@ const AddMagaCategory = () => {
   };
 
   const postCategory = async (data) => {
-    const url = `https://backend.doob.com.bd/api/v1/category/seller/add`;
+    const url = `https://doob.dev/api/v1/category/seller/add`;
 
     const response = await fetch(url, {
       method: "POST",

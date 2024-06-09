@@ -13,7 +13,7 @@ const ContactManagement = () => {
     queryKey: ["contact"],
     queryFn: async () => {
       const res = await fetch(
-        "https://backend.doob.com.bd/api/v1/admin/contact"
+        "https://doob.dev/api/v1/admin/contact"
       );
       const data = await res.json();
       return data;
@@ -21,7 +21,7 @@ const ContactManagement = () => {
   });
 
   const DeleteCategory = (id) => {
-    fetch(`https://backend.doob.com.bd/api/v1/admin/contact/${id}`, {
+    fetch(`https://doob.dev/api/v1/admin/contact/${id}`, {
       method: "DELETE",
       headers: {
         "content-type": "application/json",

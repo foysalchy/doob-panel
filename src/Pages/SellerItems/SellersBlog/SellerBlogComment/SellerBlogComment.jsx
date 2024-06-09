@@ -11,7 +11,7 @@ const SellerBlogComment = () => {
     queryKey: ["adminblogsComments"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/seller/blog-comments?shopId=${shopInfo._id}`
+        `https://doob.dev/api/v1/seller/blog-comments?shopId=${shopInfo._id}`
       );
       const data = await res.json();
       return data.data;
@@ -19,7 +19,7 @@ const SellerBlogComment = () => {
   });
 
   const DeleteBlog = (id) => {
-    fetch(`https://backend.doob.com.bd/api/v1/seller/blog/${id}`, {
+    fetch(`https://doob.dev/api/v1/seller/blog/${id}`, {
       method: "DELETE",
       headers: {
         "content-type": "application/json",
@@ -39,7 +39,7 @@ const SellerBlogComment = () => {
 
   const publishBlogComment = (id, timestamp, status) => {
     fetch(
-      `https://backend.doob.com.bd/api/v1/admin/blog-comments-update-status?blogId=${id}&commentId=${timestamp}&status=${status}`,
+      `https://doob.dev/api/v1/admin/blog-comments-update-status?blogId=${id}&commentId=${timestamp}&status=${status}`,
       {
         method: "PUT",
         headers: {

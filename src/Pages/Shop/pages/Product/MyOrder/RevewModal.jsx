@@ -83,7 +83,7 @@ const RevewModal = ({ oreder_review, setOrder_review }) => {
         timestamp: new Date().toString(),
       };
 
-      fetch(`https://backend.doob.com.bd/api/v1/shop/user/add-review`, {
+      fetch(`https://doob.dev/api/v1/shop/user/add-review`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

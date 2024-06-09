@@ -17,7 +17,7 @@ const ShippingManagement = () => {
     queryKey: ["getaway"],
     queryFn: async () => {
       const res = await fetch(
-        "https://backend.doob.com.bd/api/v1/admin/allShippings"
+        "https://doob.dev/api/v1/admin/allShippings"
       );
       const data = await res.json();
       return data;
@@ -84,7 +84,7 @@ const ShippingManagement = () => {
     //   secretKey,
     // };
 
-    fetch("https://backend.doob.com.bd/api/v1/admin/shipping-interrogation", {
+    fetch("https://doob.dev/api/v1/admin/shipping-interrogation", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -106,7 +106,7 @@ const ShippingManagement = () => {
             // setDisable(true);
             // handleGetaway()
             console.log("yes");
-            fetch(`https://backend.doob.com.bd/api/v1/admin/pathao-shopId`)
+            fetch(`https://doob.dev/api/v1/admin/pathao-shopId`)
               .then((response) => response.json())
               .then((data) => {
                 console.log(data);
@@ -129,7 +129,7 @@ const ShippingManagement = () => {
   };
   const updateShopId = async () => {
     console.log(storePathaoData);
-    fetch(`https://backend.doob.com.bd/api/v1/admin/update-shopId`, {
+    fetch(`https://doob.dev/api/v1/admin/update-shopId`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -150,7 +150,7 @@ const ShippingManagement = () => {
       });
   };
   const deleteHandel = (id) => {
-    fetch(`https://backend.doob.com.bd/api/v1/admin/removeShipping/${id}`, {
+    fetch(`https://doob.dev/api/v1/admin/removeShipping/${id}`, {
       method: "Delete",
       headers: {
         "content-type": "application/json",

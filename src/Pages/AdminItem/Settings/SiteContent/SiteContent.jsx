@@ -14,7 +14,7 @@ const SiteContent = () => {
     queryKey: ["category"],
     queryFn: async () => {
       const res = await fetch(
-        "https://backend.doob.com.bd/api/v1/admin/domain-video"
+        "https://doob.dev/api/v1/admin/domain-video"
       );
       const data = await res.json();
       return data;
@@ -29,7 +29,7 @@ const SiteContent = () => {
     queryKey: ["domainDoc"],
     queryFn: async () => {
       const res = await fetch(
-        "https://backend.doob.com.bd/api/v1/admin/domain-document"
+        "https://doob.dev/api/v1/admin/domain-document"
       );
       const data = await res.json();
       return data.result;
@@ -44,7 +44,7 @@ const SiteContent = () => {
     queryKey: ["buyDomain"],
     queryFn: async () => {
       const res = await fetch(
-        "https://backend.doob.com.bd/api/v1/admin/buy-domain"
+        "https://doob.dev/api/v1/admin/buy-domain"
       );
       const data = await res.json();
       return data;
@@ -57,7 +57,7 @@ const SiteContent = () => {
     e.preventDefault();
     const url = e.target.url.value;
 
-    fetch("https://backend.doob.com.bd/api/v1/admin/add-domain-url", {
+    fetch("https://doob.dev/api/v1/admin/add-domain-url", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -74,7 +74,7 @@ const SiteContent = () => {
   const [isHovered, setIsHovered] = useState(false);
 
   const deleteVideo = (id) => {
-    fetch("https://backend.doob.com.bd/api/v1/admin/delete-domain-url", {
+    fetch("https://doob.dev/api/v1/admin/delete-domain-url", {
       method: "delete",
       headers: {
         "Content-Type": "application/json",
@@ -99,7 +99,7 @@ const SiteContent = () => {
 
     try {
       const response = await fetch(
-        "https://backend.doob.com.bd/api/v1/admin/domain-document",
+        "https://doob.dev/api/v1/admin/domain-document",
         {
           method: "PUT",
           headers: {
@@ -128,7 +128,7 @@ const SiteContent = () => {
     const url = e.target.url.value;
     try {
       const response = await fetch(
-        "https://backend.doob.com.bd/api/v1/admin/buy-domain",
+        "https://doob.dev/api/v1/admin/buy-domain",
         {
           method: "PUT",
           headers: {

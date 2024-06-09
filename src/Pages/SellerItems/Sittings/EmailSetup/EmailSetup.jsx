@@ -38,7 +38,7 @@ const SellerEmailSetup = () => {
     queryFn: async () => {
       try {
         const res = await fetch(
-          ` https://backend.doob.com.bd/api/v1/seller/setup-email/${shopInfo?._id}`
+          ` https://doob.dev/api/v1/seller/setup-email/${shopInfo?._id}`
         );
         const data = await res.json();
         return data;
@@ -77,7 +77,7 @@ const SellerEmailSetup = () => {
     // return;
     setLoading(true);
 
-    fetch("https://backend.doob.com.bd/api/v1/seller/setup-email", {
+    fetch("https://doob.dev/api/v1/seller/setup-email", {
       method: "PATCH",
       body: JSON.stringify(data),
       headers: {
@@ -157,14 +157,12 @@ const SellerEmailSetup = () => {
             </label>
             <div
               onClick={() => setSecure((prev) => !prev)}
-              className={`flex h-fit w-12 items-center rounded-sm border border-sky-400 ${
-                secure ? "bg-sky-400/50 duration-500" : "duration-300"
-              }`}
+              className={`flex h-fit w-12 items-center rounded-sm border border-sky-400 ${secure ? "bg-sky-400/50 duration-500" : "duration-300"
+                }`}
             >
               <div
-                className={`size-6 rounded-sm bg-sky-400 duration-300 ${
-                  secure ? "translate-x-4" : "translate-x-0"
-                }`}
+                className={`size-6 rounded-sm bg-sky-400 duration-300 ${secure ? "translate-x-4" : "translate-x-0"
+                  }`}
               ></div>
             </div>
           </div>

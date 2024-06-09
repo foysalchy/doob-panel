@@ -41,7 +41,7 @@ const SupportTicketManagement = () => {
     queryKey: ["contact"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/admin/supportTicketRequest`
+        `https://doob.dev/api/v1/admin/supportTicketRequest`
       );
       const data = await res.json();
       return data;
@@ -389,7 +389,7 @@ const SupportTicketManagement = () => {
                             <button
                               onClick={() =>
                                 fetch(
-                                  `https://backend.doob.com.bd/api/v1/support/support-ticket/status/${ticket.ticketId}`,
+                                  `https://doob.dev/api/v1/support/support-ticket/status/${ticket.ticketId}`,
                                   {
                                     method: "PUT",
                                     headers: {
@@ -417,7 +417,7 @@ const SupportTicketManagement = () => {
                             <button
                               onClick={() =>
                                 fetch(
-                                  `https://backend.doob.com.bd/api/v1/support/support-ticket/status/${ticket.ticketId}`,
+                                  `https://doob.dev/api/v1/support/support-ticket/status/${ticket.ticketId}`,
                                   {
                                     method: "PUT",
                                     headers: {
@@ -471,7 +471,7 @@ const SupportTicketManagement = () => {
                         <button
                           onClick={() =>
                             fetch(
-                              `https://backend.doob.com.bd/api/v1/admin/support-ticket/${ticket._id}`,
+                              `https://doob.dev/api/v1/admin/support-ticket/${ticket._id}`,
                               {
                                 method: "delete",
                                 headers: { "Content-Type": "application/json" },

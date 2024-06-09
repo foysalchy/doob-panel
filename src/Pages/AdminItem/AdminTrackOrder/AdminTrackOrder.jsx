@@ -17,7 +17,7 @@ const AdminTrackOrder = () => {
     setLoading(true);
     const orderId = e.target.orderId.value;
     fetch(
-      `https://backend.doob.com.bd/api/v1/shop/order-track?orderId=${orderId}`
+      `https://doob.dev/api/v1/shop/order-track?orderId=${orderId}`
     )
       .then((res) => res.json())
       .then((data) => {

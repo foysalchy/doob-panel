@@ -41,7 +41,7 @@ const ShopSignUp = () => {
 
     try {
       const response = await fetch(
-        "https://backend.doob.com.bd/api/v1/shop/auth",
+        "https://doob.dev/api/v1/shop/auth",
         {
           method: "POST",
           headers: {

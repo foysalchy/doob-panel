@@ -17,7 +17,7 @@ const ExtraCategoriesManagement = () => {
     queryKey: ["categoriesData"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/category/seller/extra/${shopInfo._id}`
+        `https://doob.dev/api/v1/category/seller/extra/${shopInfo._id}`
       );
       const data = await res.json();
       return data;
@@ -120,7 +120,7 @@ const ExtraCategoriesManagement = () => {
 
   const updateStatus = (id, status) => {
     fetch(
-      `https://backend.doob.com.bd/api/v1/category/seller/extra/status/${id}`,
+      `https://doob.dev/api/v1/category/seller/extra/status/${id}`,
       {
         method: "PUT",
         headers: {
@@ -159,7 +159,7 @@ const ExtraCategoriesManagement = () => {
       if (result.dismiss === Swal.DismissReason.timer) {
         // Timer completed, initiate the fetch for deletion
         fetch(
-          `https://backend.doob.com.bd/api/v1/category/seller/extra/delete/${id}`,
+          `https://doob.dev/api/v1/category/seller/extra/delete/${id}`,
           {
             method: "DELETE",
             headers: {
@@ -189,7 +189,7 @@ const ExtraCategoriesManagement = () => {
   };
 
   const uploadImage = async (formData) => {
-    const url = `https://backend.doob.com.bd/api/v1/image/upload-image`;
+    const url = `https://doob.dev/api/v1/image/upload-image`;
     const response = await fetch(url, {
       method: "POST",
       body: formData,
@@ -216,7 +216,7 @@ const ExtraCategoriesManagement = () => {
     console.log(data, id, "update");
 
     fetch(
-      `https://backend.doob.com.bd/api/v1/category/seller-update-extraCategory?id=${id}`,
+      `https://doob.dev/api/v1/category/seller-update-extraCategory?id=${id}`,
       {
         method: "PUT",
         headers: {
@@ -237,7 +237,7 @@ const ExtraCategoriesManagement = () => {
 
   const futuresUpdate = (id, status) => {
     fetch(
-      `https://backend.doob.com.bd/api/v1/category/seller-update-extraCategory-feature?id=${id}&status=${status}`,
+      `https://doob.dev/api/v1/category/seller-update-extraCategory-feature?id=${id}&status=${status}`,
       {
         method: "PUT",
 

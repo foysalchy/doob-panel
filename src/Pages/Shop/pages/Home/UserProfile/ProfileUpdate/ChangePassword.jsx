@@ -31,7 +31,7 @@ const ChangePassword = ({ open, setOpen }) => {
           newPassword: newPass,
         };
         fetch(
-          `https://backend.doob.com.bd/api/v1/shop/update/change-password?token=${shopUser._id}`,
+          `https://doob.dev/api/v1/shop/update/change-password?token=${shopUser._id}`,
           {
             method: "PATCH",
             headers: {
@@ -79,9 +79,8 @@ const ChangePassword = ({ open, setOpen }) => {
     <div className={open ? "flex" : "hidden"}>
       <div className="container mx-auto py-20">
         <div
-          className={`fixed z-50 top-0 left-0 flex h-full min-h-screen w-full items-center justify-center bg-black bg-opacity-90 px-4 py-5 ${
-            open ? "block" : "hidden"
-          }`}
+          className={`fixed z-50 top-0 left-0 flex h-full min-h-screen w-full items-center justify-center bg-black bg-opacity-90 px-4 py-5 ${open ? "block" : "hidden"
+            }`}
         >
           <div className="w-full max-w-[570px] rounded-[20px] bg-white py-12 px-8 text-center md:py-[60px] md:px-[70px]">
             <h3 className="pb-2 text-xl font-bold text-dark sm:text-2xl">
@@ -126,7 +125,7 @@ const ChangePassword = ({ open, setOpen }) => {
                 <input
                   type="checkbox"
                   checked={isChecked}
-                  onChange={() => {}}
+                  onChange={() => { }}
                 />
                 Show Password
               </button>

@@ -22,7 +22,7 @@ const SubscriptionModel = () => {
     queryKey: ["subscriptionModal"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/seller/subscription-model?priceId=${shopInfo?.priceId}&shopId=${shopInfo._id}`
+        `https://doob.dev/api/v1/seller/subscription-model?priceId=${shopInfo?.priceId}&shopId=${shopInfo._id}`
       );
       const data = await res.json();
       return data?.data;
@@ -35,7 +35,7 @@ const SubscriptionModel = () => {
     queryKey: ["commissionHistory"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/seller/get-commission?shopId=${shopInfo._id}`
+        `https://doob.dev/api/v1/seller/get-commission?shopId=${shopInfo._id}`
       );
       const data = await res.json();
       console.log(data);
@@ -47,7 +47,7 @@ const SubscriptionModel = () => {
     queryKey: ["pricesData"],
     queryFn: async () => {
       const res = await fetch(
-        "https://backend.doob.com.bd/api/v1/admin/pricing"
+        "https://doob.dev/api/v1/admin/pricing"
       );
       const data = await res.json();
       return data;
@@ -92,7 +92,7 @@ const SubscriptionModel = () => {
 
   const passedDays = calculatePassedDays(prices?.orderInfo?.time_stamp);
   const remainingDays = calculateRemainingDays(prices?.orderInfo?.endTime);
- const check_expired = () => {
+  const check_expired = () => {
     const paymentDate = new Date(shopInfo.paymentDate);
     const currentDate = new Date();
 

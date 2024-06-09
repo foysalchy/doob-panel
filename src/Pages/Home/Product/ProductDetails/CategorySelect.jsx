@@ -4,7 +4,7 @@ import React, { useContext, useState, useEffect } from "react";
 import Select from "react-select";
 import { AuthContext } from "../../../../AuthProvider/UserProvider";
 
-const CategorySelect = ({}) => {
+const CategorySelect = ({ }) => {
   const { shopInfo } = useContext(AuthContext);
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedSubcategory, setSelectedSubcategory] = useState(null);
@@ -17,7 +17,7 @@ const CategorySelect = ({}) => {
       queryKey: ["megaCategory"],
       queryFn: async () => {
         const res = await fetch(
-          `https://backend.doob.com.bd/api/v1/category/seller/mega-category/get/${shopInfo._id}`
+          `https://doob.dev/api/v1/category/seller/mega-category/get/${shopInfo._id}`
         );
         const data = await res.json();
         // setDarazOption(data?.daraz);
@@ -31,7 +31,7 @@ const CategorySelect = ({}) => {
     enabled: !!selectedCategory,
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/category/seller/sub-category/get/${shopInfo._id}/${selectedCategory}`
+        `https://doob.dev/api/v1/category/seller/sub-category/get/${shopInfo._id}/${selectedCategory}`
       );
       const data = await res.json();
       //   setDarazOption(data?.daraz);
@@ -46,7 +46,7 @@ const CategorySelect = ({}) => {
       enabled: !!selectedSubcategory,
       queryFn: async () => {
         const res = await fetch(
-          `https://backend.doob.com.bd/api/v1/category/seller/mini-category/get/${shopInfo._id}/${selectedSubcategory}`
+          `https://doob.dev/api/v1/category/seller/mini-category/get/${shopInfo._id}/${selectedSubcategory}`
         );
         const data = await res.json();
         return data?.data || [];
@@ -60,7 +60,7 @@ const CategorySelect = ({}) => {
       enabled: !!selectedMinicategory,
       queryFn: async () => {
         const res = await fetch(
-          `https://backend.doob.com.bd/api/v1/category/seller/extra-category/get/${shopInfo._id}/${selectedMinicategory}`
+          `https://doob.dev/api/v1/category/seller/extra-category/get/${shopInfo._id}/${selectedMinicategory}`
         );
         const data = await res.json();
         return data?.data || [];

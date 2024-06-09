@@ -28,19 +28,19 @@ const SellerPageManagement = () => {
     queryKey: ["faqs"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/seller/pages/${shopInfo.shopId}`
+        `https://doob.dev/api/v1/seller/pages/${shopInfo.shopId}`
       );
       const data = await res.json();
       return data;
     },
   });
   console.log(
-    `https://backend.doob.com.bd/api/v1/seller/pages/${shopInfo.shopId}`
+    `https://doob.dev/api/v1/seller/pages/${shopInfo.shopId}`
   );
   const ActiveHandle = (id) => {
     setLoading(true);
 
-    fetch(`https://backend.doob.com.bd/api/v1/seller/page/status/${id}`, {
+    fetch(`https://doob.dev/api/v1/seller/page/status/${id}`, {
       method: "PUT",
       headers: {
         "content-type": "application/json",
@@ -54,7 +54,7 @@ const SellerPageManagement = () => {
   };
 
   const DeactiveHandle = (id) => {
-    fetch(`https://backend.doob.com.bd/api/v1/seller/page/falseStatus/${id}`, {
+    fetch(`https://doob.dev/api/v1/seller/page/falseStatus/${id}`, {
       method: "PUT",
       headers: {
         "content-type": "application/json",
@@ -67,7 +67,7 @@ const SellerPageManagement = () => {
       });
   };
   const DeleteHandle = (id) => {
-    fetch(`https://backend.doob.com.bd/api/v1/seller/page/delete/${id}`, {
+    fetch(`https://doob.dev/api/v1/seller/page/delete/${id}`, {
       method: "Delete",
       headers: {
         "content-type": "application/json",
@@ -81,7 +81,7 @@ const SellerPageManagement = () => {
   };
 
   const trash = (id, status) => {
-    fetch(`https://backend.doob.com.bd/api/v1/seller/page/trash-status`, {
+    fetch(`https://doob.dev/api/v1/seller/page/trash-status`, {
       method: "PUT",
       headers: {
         "content-type": "application/json",

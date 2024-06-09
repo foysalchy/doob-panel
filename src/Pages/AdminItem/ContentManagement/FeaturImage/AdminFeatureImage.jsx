@@ -15,7 +15,7 @@ const AdminFeatureImage = () => {
     queryKey: ["featureImage"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/admin/feature-images`
+        `https://doob.dev/api/v1/admin/feature-images`
       );
       const data = await res.json();
       return data?.data ? data?.data : [];
@@ -35,7 +35,7 @@ const AdminFeatureImage = () => {
 
   // if (isDelete) {
 
-  //     fetch(`https://backend.doob.com.bd/api/v1/seller/popup/delete/${deleteId}`, {
+  //     fetch(`https://doob.dev/api/v1/seller/popup/delete/${deleteId}`, {
   //         method: "DELETE",
   //         headers: {
   //             "Content-Type": "application/json",
@@ -65,7 +65,7 @@ const AdminFeatureImage = () => {
     console.log(id, status);
     setLoading(true);
     fetch(
-      `https://backend.doob.com.bd/api/v1/admin/feature-image?id=${id}&status=${status}`,
+      `https://doob.dev/api/v1/admin/feature-image?id=${id}&status=${status}`,
       {
         method: "PUT",
         headers: {
@@ -84,7 +84,7 @@ const AdminFeatureImage = () => {
 
   const onDelete = (id) => {
     setLoading(true);
-    fetch(`https://backend.doob.com.bd/api/v1/admin/feature-image?id=${id}`, {
+    fetch(`https://doob.dev/api/v1/admin/feature-image?id=${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -101,7 +101,7 @@ const AdminFeatureImage = () => {
   const [selectIndex, setSelectIndex] = useState("");
 
   const uploadImage = async (formData) => {
-    const url = `https://backend.doob.com.bd/api/v1/image/upload-image`;
+    const url = `https://doob.dev/api/v1/image/upload-image`;
     const response = await fetch(url, {
       method: "POST",
       body: formData,
@@ -131,7 +131,7 @@ const AdminFeatureImage = () => {
     console.log(data, id);
 
     fetch(
-      `https://backend.doob.com.bd/api/v1/admin/feature-image-update?id=${id}`,
+      `https://doob.dev/api/v1/admin/feature-image-update?id=${id}`,
       {
         method: "PUT",
         headers: {
@@ -300,18 +300,16 @@ const AdminFeatureImage = () => {
                   </td>
 
                   <div
-                    className={`fixed z-[100] flex items-center justify-center ${
-                      openModal?._id === itm?._id
+                    className={`fixed z-[100] flex items-center justify-center ${openModal?._id === itm?._id
                         ? "opacity-1 visible"
                         : "invisible opacity-0"
-                    } inset-0 bg-black/20 backdrop-blur-sm duration-100`}
+                      } inset-0 bg-black/20 backdrop-blur-sm duration-100`}
                   >
                     <div
-                      className={`absolute md:w-[500px] w-full rounded-sm bg-white p-3 pb-5 text-center drop-shadow-2xl ${
-                        openModal?._id === itm?._id
+                      className={`absolute md:w-[500px] w-full rounded-sm bg-white p-3 pb-5 text-center drop-shadow-2xl ${openModal?._id === itm?._id
                           ? "scale-1 opacity-1 duration-300"
                           : "scale-0 opacity-0 duration-150"
-                      } `}
+                        } `}
                     >
                       <svg
                         onClick={() => setOpenModal(false)}

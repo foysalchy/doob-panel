@@ -23,7 +23,7 @@ const FinanceReport = () => {
 
   const fetchFinancialReport = async () => {
     const apiUrl =
-      "https://backend.doob.com.bd/api/v1/seller/my-financial-report";
+      "https://doob.dev/api/v1/seller/my-financial-report";
     try {
       const response = await fetch(apiUrl, {
         method: "POST",

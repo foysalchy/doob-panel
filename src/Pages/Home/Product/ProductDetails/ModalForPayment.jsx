@@ -32,7 +32,7 @@ const ModalForPayment = ({
     queryKey: ["getawayData"],
     queryFn: async () => {
       const res = await fetch(
-        "https://backend.doob.com.bd/api/v1/admin/getaway"
+        "https://doob.dev/api/v1/admin/getaway"
       );
       const data = await res.json();
       return data;
@@ -67,7 +67,7 @@ const ModalForPayment = ({
   const payWithBkash = async () => {
     try {
       const response = await fetch(
-        "https://backend.doob.com.bd/api/v1/seller/bkash/payment/create",
+        "https://doob.dev/api/v1/seller/bkash/payment/create",
         {
           method: "POST",
           headers: {
@@ -87,7 +87,7 @@ const ModalForPayment = ({
   const payWithAmarPay = async () => {
     try {
       const response = await fetch(
-        "https://backend.doob.com.bd/api/v1/seller/amarpay/payment/create",
+        "https://doob.dev/api/v1/seller/amarpay/payment/create",
         {
           method: "POST",
           headers: {
@@ -110,7 +110,7 @@ const ModalForPayment = ({
     console.log("hit");
     if (shopInfo) {
       fetch(
-        `https://backend.doob.com.bd/api/v1/seller/get-shop-balance?shopId=${shopInfo._id}`
+        `https://doob.dev/api/v1/seller/get-shop-balance?shopId=${shopInfo._id}`
       )
         .then((res) => res.json())
         .then((data) => {

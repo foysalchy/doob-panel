@@ -16,7 +16,7 @@ const WarehouseHistory = () => {
     queryKey: ["warehouseData"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/seller/warehouses-products?shopId=${shopInfo?._id}`
+        `https://doob.dev/api/v1/seller/warehouses-products?shopId=${shopInfo?._id}`
       );
       const data = await res.json();
       return data.warehouses;
@@ -27,7 +27,7 @@ const WarehouseHistory = () => {
     queryKey: ["wareLengthData"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/seller/warehouse/seller-all-warehouse-area-rack-cell-self?shopId=${shopInfo._id}`
+        `https://doob.dev/api/v1/seller/warehouse/seller-all-warehouse-area-rack-cell-self?shopId=${shopInfo._id}`
       );
       const data = await res.json();
       return data;

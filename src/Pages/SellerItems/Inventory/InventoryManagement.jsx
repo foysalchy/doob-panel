@@ -21,7 +21,7 @@ const InventoryManagement = () => {
     queryKey: ["productData"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/seller/all-products/${shopInfo._id}`
+        `https://doob.dev/api/v1/seller/all-products/${shopInfo._id}`
       );
       const data = await res.json();
       return data;

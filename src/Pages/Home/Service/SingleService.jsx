@@ -21,7 +21,7 @@ const SingleService = () => {
     queryKey: ["services"],
     queryFn: async () => {
       const res = await fetch(
-        "https://backend.doob.com.bd/api/v1/admin/services"
+        "https://doob.dev/api/v1/admin/services"
       );
       const data = await res.json();
       return data;
@@ -110,7 +110,7 @@ const SingleService = () => {
 
       console.log(order);
 
-      fetch(`https://backend.doob.com.bd/api/v1/site-user/wishlist`, {
+      fetch(`https://doob.dev/api/v1/site-user/wishlist`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -133,7 +133,7 @@ const SingleService = () => {
     const timestamp = new Date().getTime();
     let data = { text: reviews, user: userData, timeStamp: timestamp };
     fetch(
-      `https://backend.doob.com.bd/api/v1/admin/service/reviews?id=${service._id}`,
+      `https://doob.dev/api/v1/admin/service/reviews?id=${service._id}`,
       {
         method: "PATCH",
         headers: {

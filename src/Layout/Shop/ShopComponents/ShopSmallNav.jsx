@@ -13,7 +13,7 @@ const ShopSmallNav = () => {
   const shopId = idMatch ? idMatch[1] : null;
 
   const shopInfo = useContext(AuthContext);
-  const {color,setColor} = useContext(ShopAuthProvider);
+  const { color, setColor } = useContext(ShopAuthProvider);
 
   const {
     data: shop = {},
@@ -23,10 +23,10 @@ const ShopSmallNav = () => {
     queryKey: ["buyer"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/shop/${shopId}`
+        `https://doob.dev/api/v1/shop/${shopId}`
       );
       const data = await res.json();
-      setColor({'primary_color':data.primary_color,'secounder_color':data.secounder_color,'text_color':data.text_color});
+      setColor({ 'primary_color': data.primary_color, 'secounder_color': data.secounder_color, 'text_color': data.text_color });
       return data;
     },
   });
@@ -69,7 +69,7 @@ const ShopSmallNav = () => {
         .bg-gray-600{ opacity:0.6 }
         .bg-gray-400{ opacity:0.4 }
       `}</style>
-      
+
       <div className="bg-black">
         <div className=" mx-auto py-3 px-4 sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8">
           <div className="flex justify-between">

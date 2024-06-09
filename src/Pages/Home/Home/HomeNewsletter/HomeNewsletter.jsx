@@ -9,7 +9,7 @@ const HomeNewsletter = () => {
 
   const fromNewsLetter = (event) => {
     event.preventDefault();
-    fetch(`https://backend.doob.com.bd/api/v1/admin/subscriber/${email}`, {
+    fetch(`https://doob.dev/api/v1/admin/subscriber/${email}`, {
       method: "POST",
       headers: {
         "content-type": "application/json",

@@ -18,7 +18,7 @@ export default function EditMegaCategoryModal({
   const [daraz, setDaraz] = useState(editOn?.darazCategory_id ? true : false);
 
   const uploadImage = async (formData) => {
-    const url = `https://backend.doob.com.bd/api/v1/image/upload-image`;
+    const url = `https://doob.dev/api/v1/image/upload-image`;
     const response = await fetch(url, {
       method: "POST",
       body: formData,
@@ -41,7 +41,7 @@ export default function EditMegaCategoryModal({
     queryFn: async () => {
       if (shopInfo.darazLogin) {
         const res = await fetch(
-          `https://backend.doob.com.bd/api/v1/daraz/category/${shopInfo._id}`
+          `https://doob.dev/api/v1/daraz/category/${shopInfo._id}`
         );
         const data = await res.json();
         return data;
@@ -56,7 +56,7 @@ export default function EditMegaCategoryModal({
     queryFn: async () => {
       if (shopInfo.wooLogin) {
         const res = await fetch(
-          `https://backend.doob.com.bd/api/v1/woo/category?shopId=${shopInfo._id}`
+          `https://doob.dev/api/v1/woo/category?shopId=${shopInfo._id}`
         );
         const data = await res.json();
         return data;
@@ -151,7 +151,7 @@ export default function EditMegaCategoryModal({
     // return;
 
     fetch(
-      `https://backend.doob.com.bd/api/v1/category/seller-update-megaCategory?id=${id}`,
+      `https://doob.dev/api/v1/category/seller-update-megaCategory?id=${id}`,
       {
         method: "PUT",
         headers: {
@@ -171,18 +171,16 @@ export default function EditMegaCategoryModal({
   };
   return (
     <div
-      className={`fixed z-[100] flex items-center justify-center ${
-        editOn?._id === warehouse?._id
+      className={`fixed z-[100] flex items-center justify-center ${editOn?._id === warehouse?._id
           ? "opacity-1 visible"
           : "invisible opacity-0"
-      } inset-0 bg-black/20 backdrop-blur-sm duration-100`}
+        } inset-0 bg-black/20 backdrop-blur-sm duration-100`}
     >
       <div
-        className={`absolute md:w-[500px] w-full rounded-sm bg-white p-3 pb-5 text-center drop-shadow-2xl ${
-          editOn?._id === warehouse?._id
+        className={`absolute md:w-[500px] w-full rounded-sm bg-white p-3 pb-5 text-center drop-shadow-2xl ${editOn?._id === warehouse?._id
             ? "scale-1 opacity-1 duration-300"
             : "scale-0 opacity-0 duration-150"
-        } `}
+          } `}
       >
         <svg
           onClick={() => setEditOn(false)}

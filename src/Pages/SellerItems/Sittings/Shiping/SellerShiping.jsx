@@ -19,7 +19,7 @@ const SellerShipping = () => {
     queryKey: ["getaway"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/seller/shipping-interrogation/${shopInfo._id}`
+        `https://doob.dev/api/v1/seller/shipping-interrogation/${shopInfo._id}`
       );
       const data = await res.json();
       return data;
@@ -90,7 +90,7 @@ const SellerShipping = () => {
     // console.log(data, "data");
 
     // return;
-    fetch("https://backend.doob.com.bd/api/v1/seller/shipping-interrogation", {
+    fetch("https://doob.dev/api/v1/seller/shipping-interrogation", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -113,7 +113,7 @@ const SellerShipping = () => {
             // handleGetaway()
             console.log("yes");
             fetch(
-              `https://backend.doob.com.bd/api/v1/seller/pathao-shopId?shop_id=${shopInfo?._id}`
+              `https://doob.dev/api/v1/seller/pathao-shopId?shop_id=${shopInfo?._id}`
             )
               .then((response) => response.json())
               .then((data) => {
@@ -138,7 +138,7 @@ const SellerShipping = () => {
   const updateShopId = async () => {
     console.log(storePathaoData);
     fetch(
-      `https://backend.doob.com.bd/api/v1/seller/update-shopId?shopId=${shopInfo.shopId}`,
+      `https://doob.dev/api/v1/seller/update-shopId?shopId=${shopInfo.shopId}`,
       {
         method: "PUT",
         headers: {
@@ -163,7 +163,7 @@ const SellerShipping = () => {
   };
   const deleteHandel = (id) => {
     fetch(
-      `https://backend.doob.com.bd/api/v1/seller/shipping-interrogation/${id}`,
+      `https://doob.dev/api/v1/seller/shipping-interrogation/${id}`,
       {
         method: "Delete",
         headers: {

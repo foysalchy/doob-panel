@@ -15,7 +15,7 @@ const AdminSliderManagement = () => {
     queryKey: ["slider"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/admin/slider`
+        `https://doob.dev/api/v1/admin/slider`
       );
       const data = await res.json();
       return data?.data ? data?.data : [];
@@ -34,7 +34,7 @@ const AdminSliderManagement = () => {
 
   // if (isDelete) {
 
-  //     fetch(`https://backend.doob.com.bd/api/v1/seller/popup/delete/${deleteId}`, {
+  //     fetch(`https://doob.dev/api/v1/seller/popup/delete/${deleteId}`, {
   //         method: "DELETE",
   //         headers: {
   //             "Content-Type": "application/json",
@@ -64,7 +64,7 @@ const AdminSliderManagement = () => {
     console.log(id, status);
     setLoading(true);
     fetch(
-      `https://backend.doob.com.bd/api/v1/admin/slider?id=${id}&status=${status}`,
+      `https://doob.dev/api/v1/admin/slider?id=${id}&status=${status}`,
       {
         method: "PUT",
         headers: {
@@ -84,7 +84,7 @@ const AdminSliderManagement = () => {
 
   const onDelete = (id) => {
     setLoading(true);
-    fetch(`https://backend.doob.com.bd/api/v1/admin/slider?id=${id}`, {
+    fetch(`https://doob.dev/api/v1/admin/slider?id=${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",

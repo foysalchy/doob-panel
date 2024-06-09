@@ -143,7 +143,7 @@ const NoticeContent = () => {
     queryKey: "noticeInfo",
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/admin/seller-notice`
+        `https://doob.dev/api/v1/admin/seller-notice`
       );
       const data = await res.json();
       return data?.data;

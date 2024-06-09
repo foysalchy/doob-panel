@@ -12,7 +12,7 @@ const Price = () => {
     queryKey: ["prices"],
     queryFn: async () => {
       const res = await fetch(
-        "https://backend.doob.com.bd/api/v1/admin/pricing"
+        "https://doob.dev/api/v1/admin/pricing"
       );
       const data = await res.json();
       return data;
@@ -23,7 +23,7 @@ const Price = () => {
     queryKey: ["prices"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/seller/subscription-model?priceId=${shopInfo?.priceId}&shopId=${shopInfo?._id}`
+        `https://doob.dev/api/v1/seller/subscription-model?priceId=${shopInfo?.priceId}&shopId=${shopInfo?._id}`
       );
       const data = await res.json();
 

@@ -188,7 +188,7 @@ const ProductDetails = () => {
         userInfo,
       };
       console.log(data);
-      fetch(`https://backend.doob.com.bd/api/v1/seller/web-store?id=${id}`, {
+      fetch(`https://doob.dev/api/v1/seller/web-store?id=${id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -251,7 +251,7 @@ const ProductDetails = () => {
 
       // Post the comment data to the backend
       const response = await fetch(
-        "https://backend.doob.com.bd/api/v1/seller/add-new-comment",
+        "https://doob.dev/api/v1/seller/add-new-comment",
         {
           method: "post",
           headers: {
@@ -273,7 +273,7 @@ const ProductDetails = () => {
   };
 
   async function uploadImage(formData) {
-    const url = "https://backend.doob.com.bd/api/v1/image/upload-image";
+    const url = "https://doob.dev/api/v1/image/upload-image";
     const response = await fetch(url, {
       method: "POST",
       body: formData,
@@ -286,7 +286,7 @@ const ProductDetails = () => {
     queryKey: ["comments"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/seller/product-comment?id=${productFind?._id}`
+        `https://doob.dev/api/v1/seller/product-comment?id=${productFind?._id}`
       );
       const data = await res.json();
       return data?.comments;
@@ -334,7 +334,7 @@ const ProductDetails = () => {
       quantity: 0,
       sellingPrice: banifit.sellingPrice,
     };
-    fetch(`https://backend.doob.com.bd/api/v1/seller/balk-order-update`, {
+    fetch(`https://doob.dev/api/v1/seller/balk-order-update`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -352,7 +352,7 @@ const ProductDetails = () => {
     queryKey: ["releventProduct"],
     queryFn: async () => {
       const res = await fetch(
-        "https://backend.doob.com.bd/api/v1/admin/products"
+        "https://doob.dev/api/v1/admin/products"
       );
       const data = await res.json();
       return data;

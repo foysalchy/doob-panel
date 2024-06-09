@@ -14,7 +14,7 @@ const SellerEmail = () => {
     queryKey: ["options"],
     queryFn: async () => {
       const res = await fetch(
-        `https://backend.doob.com.bd/api/v1/seller/get-seller-user?id=${shopInfo?.shopId}`
+        `https://doob.dev/api/v1/seller/get-seller-user?id=${shopInfo?.shopId}`
       );
       const data = await res.json();
       console.log(data.data);
@@ -23,7 +23,7 @@ const SellerEmail = () => {
   });
 
   // console.log(
-  //   `https://backend.doob.com.bd/api/v1/seller/get-seller-user?id=${shopInfo?.shopId}`,
+  //   `https://doob.dev/api/v1/seller/get-seller-user?id=${shopInfo?.shopId}`,
   //   options.data
   // );
 
@@ -94,7 +94,7 @@ const SellerEmail = () => {
       };
     }
 
-    fetch("https://backend.doob.com.bd/api/v1/seller/send-email", {
+    fetch("https://doob.dev/api/v1/seller/send-email", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
