@@ -37,7 +37,7 @@ const DarazIntegration = () => {
 
           const newAppKey = appkey;
           const newScretecretKey = secretkey;
-          console.log(newAppKey, newScretecretKey);
+        
 
           const url = "https://api.daraz.com.bd/rest/auth/token/create";
           const timestamp = currentTimeInMilliseconds;
@@ -73,7 +73,12 @@ const DarazIntegration = () => {
                 jsonData
               )}; expires=Thu, 01 Jan 2030 00:00:00 UTC; path=/seller`;
               Swal.fire("Daraz Login Successful", "", "success");
+
+              const currentUrl = new URL(window.location.href);
+              currentUrl.searchParams.delete('code');
+              window.history.replaceState({}, document.title, currentUrl.toString());
               refetch();
+              setCode(null);
             });
         });
     }
