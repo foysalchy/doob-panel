@@ -17,11 +17,11 @@ const ClamList = () => {
         },
     });
 
-
+    console.log(`https://doob.dev/api/v1/admin/get-shop-all-order`);
 
     const [currentPage, setCurrentPage] = useState(1);
 
-    const pageSize = 10;
+    const [pageSize, setPageSize] = useState(15);
     const startIndex = (currentPage - 1) * pageSize;
     const endIndex = startIndex + pageSize;
     const totalPages = Math.ceil(products?.length / pageSize);
@@ -91,6 +91,25 @@ const ClamList = () => {
                             <span className="px-2 flex items-center  py-1 text-xs h-[22px] bg-blue-100 rounded-full d text-blue-400">
                                 {products?.length}
                             </span>
+                        </div>
+
+
+
+                        <div className="flex items-center justify-between">
+
+                            <div className="flex items-center whitespace-nowrap gap-2">
+                                <span className="text-sm">Entire per page</span>
+                                <select
+
+                                    className="border w-[50px] px-1 py-2 text-sm rounded"
+                                    onChange={(e) => setPageSize(e.target.value)}>
+                                    <option value={15}>15</option>
+                                    <option value={30}>30</option>
+                                    <option value={70}>70</option>
+                                    <option value={100}>100</option>
+
+                                </select>
+                            </div>
                         </div>
                     </div>
 
@@ -434,7 +453,7 @@ const ClamList = () => {
                                                 ))
                                             ) : (
                                                 <tr className="text-[gray] py-4 font-seminold  text-center w-full">
-                                                    <td colSpan={7}>No items metch</td>
+                                                    <td colSpan={9}>No items metch</td>
                                                 </tr>
                                             )}
                                         </tbody>

@@ -87,7 +87,7 @@ const NewProducts = () => {
                         to={`${product._id}`}
                         className="group block overflow-hidden"
                       >
-                        <div className="relative h-[180px] sm:h-[250px]">
+                        <div className="relative h-[180px] bg-transparent sm:h-[250px]">
                           <img
                             src={
                               product?.featuredImage?.src
@@ -95,7 +95,8 @@ const NewProducts = () => {
                                 : product?.images[0]?.src
                             }
                             alt=""
-                            className="absolute inset-0 h-full w-full object-cover opacity-100 group-hover:opacity-0"
+                            style={{ background: 'transparent' }}
+                            className="absolute bg-transparent inset-0 h-full w-full object-cover opacity-100 group-hover:opacity-0"
                           />
 
                           <img
@@ -105,13 +106,14 @@ const NewProducts = () => {
                                 : blankImg
                             }
                             alt=""
-                            className="absolute inset-0 h-full w-full object-cover opacity-0 group-hover:opacity-100"
+                            style={{ background: 'transparent' }}
+                            className="absolute bg-transparent inset-0 h-full w-full object-cover opacity-0 group-hover:opacity-100"
                           />
                         </div>
 
                         <div className="relative bg-white pt-3">
                           <h3 className="capitalize h-6 whitespace-nowrap overflow-hidden text-gray-700 group-hover:underline group-hover:underline-offset-4">
-                            {product.name}
+                            ....  {product.name}
                           </h3>
 
                           <div className="mt-1.5 flex items-center justify-between text-gray-900">

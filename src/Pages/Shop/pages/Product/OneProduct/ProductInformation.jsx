@@ -18,6 +18,7 @@ import {
 } from "react-router-dom";
 import { ShopAuthProvider } from "../../../../../AuthProvider/ShopAuthProvide";
 import MetaHelmet from "../../../../../Helmate/Helmate";
+import { PiPlay } from "react-icons/pi";
 
 const ProductInformation = () => {
   const product = useLoaderData();
@@ -35,6 +36,7 @@ const ProductInformation = () => {
   console.log(product?.data?.shopId, "<<<=====>>>", shop_id?.shop_id);
 
   const [variations, setVariations] = useState(null);
+  const [disOn, setDisOn] = useState(false);
   const [showVariant, setShowVariant] = useState(product.data.images);
   const blankImg =
     "https://doob.dev/api/v1/image/66036ed3df13bd9930ac229c.jpg";
@@ -53,9 +55,6 @@ const ProductInformation = () => {
   );
 
   const path = useLocation();
-
-  console.log(variations, "location...");
-
   const handleVariation = (variation) => {
     setVariations(variation);
     setShowVariant(
@@ -272,7 +271,7 @@ const ProductInformation = () => {
       return data;
     },
   });
-  console.log(releventProduct);
+
   return (
     <section className="px-2 py-4  sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 mx-auto">
       <MetaHelmet
@@ -327,15 +326,35 @@ const ProductInformation = () => {
                 <div>
                   <div className="h-64  md:h-[22rem] rounded-lg bg-gray-100 mb-4">
                     <div className="h-64 md:h-full rounded-lg bg-gray-100 mb-4 flex items-center justify-center">
-                      <img
-                        className="md:w-94 w-full object-cover border rounded h-full"
-                        src={selectedImage}
-                        srcSet={selectedImage}
-                        alt="Selected Image"
-                      />
+
+                      {
+                        selectedImage ? (<img
+                          className="md:w-94 w-full object-cover border rounded h-full"
+                          src={selectedImage}
+                          srcSet={selectedImage}
+                          alt="Selected Image"
+                        />)
+                          :
+                          (<div className="w-full">
+                            {
+                              product?.data?.videos ? <div className="w-full h-full relative">
+                                <VideoPlayer thum={''} url={product?.data?.videos} />
+                              </div> : <img
+                                className="md:w-94 w-full object-cover h-full rounded-lg"
+                                src={product?.data?.images[0].src}
+                                srcSet={product?.data?.images[0].src}
+                                alt="product image"
+                              />
+                            }
+                          </div>)
+                      }
+
                     </div>
                   </div>
-                  <div className="grid grid-cols-6 md:grid-cols-4 lg:grid-cols-6 gap-2 -m-4 text-white">
+                  <div className="grid grid-cols-6 md:grid-cols-4 lg:grid-cols- gap-2 -m-4 text-white">
+                    {product?.data?.videos && <button className="bg-[#00000081] text-white flex items-center justify-center rounded text-xl  relative md:h-16 h-14 mt-4 overflow-hidden border border-[black]" onClick={() => setSelectedImage(null)}>
+                      <PiPlay />
+                    </button>}
                     {showVariant?.map((imageUrl, index) => (
                       <div
                         onClick={() => setVariations(null)}
@@ -482,12 +501,12 @@ const ProductInformation = () => {
 
                 <hr />
                 <div className=" h-[120px] overflow-y-hidden flex items-center ">
-                  <div
+                  {/* <div
                     className="mb-2 text_editor  text-start  "
                     dangerouslySetInnerHTML={{
                       __html: product.data.shortDescription,
                     }}
-                  />
+                  /> */}
                 </div>
                 <br />
 
@@ -623,6 +642,24 @@ const ProductInformation = () => {
               </div>
             </div>
           </div>
+        </div>
+      </div>
+      <div>
+        <div onClick={() => setDisOn(!disOn)} className={`${disOn ? 'h-full' : 'h-[600px]'} overflow-hidden`}>
+          <h2 className="border-b">
+            <span className="font-medium text-xl text-blue-500 border-b-2 border-blue-500">
+              Description
+            </span>
+          </h2>
+          <div
+            className="mt-4  text_editor"
+            dangerouslySetInnerHTML={{
+              __html: product?.data?.description,
+            }}
+          />
+          {/* <p className="text-gray-500">
+        {metaTitle}
+      </p> */}
         </div>
       </div>
     </section>

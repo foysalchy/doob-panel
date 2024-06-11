@@ -6,7 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 import { BiLeftArrow, BiRightArrow } from "react-icons/bi";
 import BrightAlert from "bright-alert";
 
-const ReviewTable = ({ search }) => {
+const ReviewTable = ({ search, pageSize, setPageSize }) => {
   const { shopInfo } = useContext(AuthContext);
 
   const handlePageChange = (newPage) => {
@@ -26,7 +26,6 @@ const ReviewTable = ({ search }) => {
 
   const [currentPage, setCurrentPage] = useState(1);
 
-  const pageSize = 6;
   const startIndex = (currentPage - 1) * pageSize;
   const endIndex = startIndex + pageSize;
   const totalPages = Math.ceil(reviewData?.length / pageSize);

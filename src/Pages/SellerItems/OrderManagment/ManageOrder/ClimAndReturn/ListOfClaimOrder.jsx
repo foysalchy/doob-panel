@@ -30,7 +30,7 @@ const ListOfClaimOrder = () => {
   // console.log(cartProducts, 'my item', tData);handleSearch
 
   // Calculate the range of items to display based on pagination
-  const itemsPerPage = 10;
+  const [itemsPerPage, setItemsPerPage] = useState(15);
   const [currentPage, setCurrentPage] = useState(1);
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
@@ -273,37 +273,8 @@ const ListOfClaimOrder = () => {
       });
   };
   const [cartProducts, setCartProducts] = useState([]);
+  const [searchQuery, setSearchQuery] = useState('');
 
-  console.log(cartProducts);
-  const handleSearch = (e) => {
-    e.preventDefault();
-    const searchValue = e.target.search.value;
-    const findProduct = tData.find((itm) =>
-      itm.orderNumber.includes(searchValue)
-    );
-
-    if (findProduct) {
-      const existingProductIndex = cartProducts.findIndex(
-        (item) => item.orderNumber === findProduct.orderNumber
-      );
-
-      if (existingProductIndex === -1) {
-        setCartProducts([...cartProducts, findProduct]);
-      } else {
-        console.log("Product with the same ID already exists in cart");
-      }
-
-      // Reset the form input field
-      e.target.reset();
-    }
-  };
-
-  // Calculate the range of items to display based on pagination
-  // const itemsPerPage = 10;
-  // const [currentPage, setCurrentPage] = useState(1);
-  // const startIndex = (currentPage - 1) * itemsPerPage;
-  // const endIndex = startIndex + itemsPerPage;
-  // const currentItems = cartProducts?.slice(startIndex, endIndex);
 
   const [selectAll, setSelectAll] = useState(false);
 
@@ -347,22 +318,34 @@ const ListOfClaimOrder = () => {
   return (
     <div>
       <div className="flex flex-col overflow-hidden mt-4">
-        <form
-          onSubmit={handleSearch}
-          className="flex items-center border w-[70%] bg-gray-100 ring-1 border-gray-900 p-2 rounded-md "
-        >
-          <BiSearch className="text-gray-600 text-lg" />
-          <input
-            name="search"
-            type="text"
-            className="outline-none  bg-transparent w-full px-2"
-            placeholder="Searching..."
-          />
-        </form>
+        {/* <input
+          onChange={(e) => setSearchQuery(e.target.vlue)}
+          name="search"
+          type="text"
+          className="outline-none  bg-transparent w-full px-2"
+          placeholder="Searching..."
+        /> */}
+
         {/* {selectAll && <div className='flex items-center gap-8'>
                     <button onClick={update_all_status_claim} className='bg-gray-800 w-[200px] mt-4 mb-6 text-white px-3 py-2 rounded'>Approve</button>
                     <button className='bg-gray-800 w-[200px] mt-4 mb-6 text-white px-3 py-2 rounded'>Reject</button>
                 </div>} */}
+        <div className="flex items-center justify-between">
+          <h2 className="text-lg font-semibold">Clam List</h2>
+
+          <div className="flex items-center whitespace-nowrap gap-2">
+            <span className="text-sm">Entire per page</span>
+            <select
+              className="border w-[50px] px-1 py-2 text-sm rounded"
+              onChange={(e) => setItemsPerPage(e.target.value)}>
+              <option value={15}>15</option>
+              <option value={30}>30</option>
+              <option value={70}>70</option>
+              <option value={100}>100</option>
+
+            </select>
+          </div>
+        </div>
         <div className="overflow-x-auto transparent-scroll sm:-mx-6 lg:-mx-8">
           <div className="inline-block  min-w-full py-2 sm:px-6 lg:px-8">
             <div className="overflow-hidden">
@@ -637,9 +620,7 @@ const ListOfClaimOrder = () => {
 
 
                                   </main>
-                                  <footer>
 
-                                  </footer>
                                 </div>
                               </div>
 
@@ -672,6 +653,53 @@ const ListOfClaimOrder = () => {
                     ))}
                 </tbody>
               </table>
+            </div>
+            <br />
+            <div className="mx-auto flex justify-center">
+              <nav aria-label="Page navigation example">
+                <ul className="inline-flex -space-x-px">
+                  <li>
+                    <button
+                      onClick={() => setCurrentPage(currentPage - 1)}
+                      disabled={currentPage === 1}
+                      className="bg-white border text-gray-500 hover:bg-gray-100 hover:text-gray-700 border-gray-300 leading-tight py-2 px-3 rounded-l-lg"
+                    >
+                      Prev
+                    </button>
+                  </li>
+                  {Array.from(
+                    { length: Math.ceil(currentItems?.length / itemsPerPage) },
+                    (_, i) => (
+                      <li key={i}>
+                        <button
+                          onClick={() => setCurrentPage(i + 1)}
+                          className={`bg-white border ${currentPage === i + 1
+                            ? "text-blue-600"
+                            : "text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+                            } border-gray-300 leading-tight py-2 px-3 rounded`}
+                        >
+                          {i + 1}
+                        </button>
+                      </li>
+                    )
+                  )}
+                  <li>
+                    <button
+                      onClick={() => setCurrentPage(currentPage + 1)}
+                      disabled={
+                        currentPage ===
+                        Math.ceil(
+                          currentItems?.length &&
+                          currentItems?.length / itemsPerPage
+                        )
+                      }
+                      className="bg-white border text-gray-500 hover:bg-gray-100 hover:text-gray-700 border-gray-300 leading-tight py-2 px-3 rounded-r-lg"
+                    >
+                      Next
+                    </button>
+                  </li>
+                </ul>
+              </nav>
             </div>
           </div>
         </div>

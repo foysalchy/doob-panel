@@ -12,7 +12,8 @@ const ManageProduct = () => {
   const [openModal, setOpenModal] = useState(false);
 
   const [doobProduct, setDoobProduct] = useState(false);
-  const [itemsPerPage, setItemsPerPage] = useState(20);
+  const [itemsPerPage, setItemsPerPage] = useState(parseInt(15));
+
   const { data: products = [], refetch } = useQuery({
     queryKey: ["products_for_admin"],
     queryFn: async () => {
@@ -299,6 +300,18 @@ const ManageProduct = () => {
             {filteredData?.length}
           </span>
         </div>
+        <div className="flex items-center gap-2">
+          <select
+            className="border w-[50px] px-1 py-2 text-sm rounded"
+            onChange={(e) => setItemsPerPage(e.target.value)}>
+            <option value={15}>15</option>
+            <option value={30}>30</option>
+            <option value={70}>70</option>
+            <option value={100}>100</option>
+
+
+          </select> <span className="text-sm">Entire per page</span>
+        </div>
       </div>
       <div className="flex">
         <div className="relative  my-2 mr-10">
@@ -485,8 +498,8 @@ const ManageProduct = () => {
                                   <div
                                     style={{
                                       backgroundImage: `url(${product?.featuredImage?.src
-                                          ? product?.featuredImage?.src
-                                          : product?.images[0]?.src
+                                        ? product?.featuredImage?.src
+                                        : product?.images[0]?.src
                                         })`,
                                     }}
                                     className="w-12 h-12 object-cover bg-cover rounded-md border border-[#8080809d] overflow-hidden"
@@ -494,8 +507,8 @@ const ManageProduct = () => {
                                   <div
                                     style={{
                                       backgroundImage: `url(${product?.featuredImage?.src
-                                          ? product?.featuredImage?.src
-                                          : product?.images[0]?.src
+                                        ? product?.featuredImage?.src
+                                        : product?.images[0]?.src
                                         })`,
                                     }}
                                     className="absolute top-[-40px] z-50 duration-150 abs hidden bg-[url(${product?.featuredImage?.src})] left-[43px] object-cover bg-cover bg-white shadow-xl w-[150px] h-[150px] ring-1 ring-gray-500"
@@ -758,15 +771,15 @@ const ManageProduct = () => {
                               <div
                                 onClick={() => setOpenModal(false)}
                                 className={`fixed z-[100] flex items-center justify-center ${openModal._id == product?._id
-                                    ? "visible opacity-100"
-                                    : "invisible opacity-0"
+                                  ? "visible opacity-100"
+                                  : "invisible opacity-0"
                                   } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
                               >
                                 <div
                                   onClick={(e_) => e_.stopPropagation()}
                                   className={`text- absolute w-[400px] rounded-sm bg-white p-6 drop-shadow-lg dark:bg-white dark:text-black ${openModal._id == product?._id
-                                      ? "scale-1 opacity-1 duration-300"
-                                      : "scale-0 opacity-0 duration-150"
+                                    ? "scale-1 opacity-1 duration-300"
+                                    : "scale-0 opacity-0 duration-150"
                                     }`}
                                 >
                                   <form onSubmit={handleSubmit}>
@@ -835,8 +848,8 @@ const ManageProduct = () => {
                     <button
                       onClick={() => setCurrentPage(i + 1)}
                       className={`bg-white border ${currentPage === i + 1
-                          ? "text-blue-600"
-                          : "text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+                        ? "text-blue-600"
+                        : "text-gray-500 hover:bg-gray-100 hover:text-gray-700"
                         } border-gray-300 leading-tight py-2 px-3 rounded`}
                     >
                       {i + 1}
@@ -881,8 +894,8 @@ const Show_Reject_Modal = ({ openModal, setOpenModal }) => {
           <div
             onClick={(e_) => e_.stopPropagation()}
             className={`text- absolute w-[400px] rounded-sm bg-white p-6 drop-shadow-lg dark:bg-white dark:text-black ${openModal._id
-                ? "scale-1 opacity-1 duration-300"
-                : "scale-0 opacity-0 duration-150"
+              ? "scale-1 opacity-1 duration-300"
+              : "scale-0 opacity-0 duration-150"
               }`}
           >
             <form>
