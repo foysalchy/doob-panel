@@ -104,7 +104,7 @@ const SellerAllProducts = () => {
   };
 
   const maxLength = 30;
-  const pageSize = 15;
+  const [pageSize, setPageSize] = useState(15);
 
   const handleSearch = (event) => {
     setSearchQuery(event.target.value);
@@ -471,11 +471,27 @@ const SellerAllProducts = () => {
         />
       </div>
 
-      <div className="flex items-center gap-4">
-        <h2 className="text-lg font-medium text-gray-800 ">All Product</h2>
-        <span className="px-3 py-1 text-xs  bg-blue-100 rounded-full d text-blue-400">
-          {products?.length}
-        </span>
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-4">
+          <h2 className="text-lg font-medium text-gray-800 ">All Product</h2>
+          <span className="px-3 py-1 text-xs  bg-blue-100 rounded-full d text-blue-400">
+            {products?.length}
+          </span>
+        </div>
+
+        <div className="flex items-center gap-2">
+          <span className="text-sm">Entire per page</span>
+          <select
+
+            className="border w-[50px] px-1 py-2 text-sm rounded"
+            onChange={(e) => setPageSize(e.target.value)}>
+            <option value={15}>15</option>
+            <option value={30}>30</option>
+            <option value={70}>70</option>
+            <option value={100}>100</option>
+
+          </select>
+        </div>
       </div>
       <div
         className="flex gap-1 mt-4 items-center"

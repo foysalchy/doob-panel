@@ -37,7 +37,7 @@ const OrderTable = ({
     },
   });
 
-  const itemsPerPage = 10;
+  const [itemsPerPage, setItemsPerPage] = useState(15);
   const [currentPage, setCurrentPage] = useState(1);
 
   const filteredData = tData?.filter((item) => {
@@ -403,6 +403,23 @@ const OrderTable = ({
 
   return (
     <div className="flex flex-col overflow-hidden mt-4">
+
+      <div className="flex items-center justify-between">
+
+        <div className="flex items-center whitespace-nowrap gap-2">
+          <span className="text-sm">Entire per page</span>
+          <select
+
+            className="border w-[50px] px-1 py-2 text-sm rounded"
+            onChange={(e) => setItemsPerPage(e.target.value)}>
+            <option value={15}>15</option>
+            <option value={30}>30</option>
+            <option value={70}>70</option>
+            <option value={100}>100</option>
+
+          </select>
+        </div>
+      </div>
       {currentItems.length ? (
         <div className="overflow-x-auto transparent-scroll sm:-mx-6 lg:-mx-8">
           <div className="inline-block  min-w-full py-2 sm:px-6 lg:px-8">

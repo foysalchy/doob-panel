@@ -71,7 +71,6 @@ const EditService = ({ OpenModal, setOpenModal, BlogInfo, refetch }) => {
 
     const metaImageFormData = new FormData();
     metaImageFormData.append("image", MetaImage);
-    console.log(metaImageFormData);
 
     const metaImageUrl = await uploadImage(metaImageFormData);
 
@@ -84,34 +83,34 @@ const EditService = ({ OpenModal, setOpenModal, BlogInfo, refetch }) => {
       MetaDescription,
       category,
       subscriptionPeriod,
-      MetaImage: metaImageUrl,
+      MetaImage: metaImageUrl ?? BlogInfo?.MetaImage,
       pricingPriceOne: `${pricingPriceOne},1`,
       pricingPriceSix: `${pricingPriceSix},6`,
       pricingPriceTwelve: `${pricingPriceTwelve},12`,
       pricingPriceTwenty: `${pricingPriceTwenty},24`,
     };
 
-    console.log(data)
-    try {
-      const response = await fetch(
-        `https://doob.dev/api/v1/admin/service/update-service/${BlogInfo._id}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
-        }
-      )
-        .then((res) => res.json())
-        .then((data) => {
-          Swal.fire("Update Service Successful", "", "success");
-          refetch();
-          setOpenModal(false);
-        });
-    } catch (error) {
-      console.error("Error updating Service:", error);
-    }
+    console.log('edit:::', data)
+    // try {
+    //   const response = await fetch(
+    //     `https://doob.dev/api/v1/admin/service/update-service/${BlogInfo._id}`,
+    //     {
+    //       method: "PUT",
+    //       headers: {
+    //         "Content-Type": "application/json",
+    //       },
+    //       body: JSON.stringify(data),
+    //     }
+    //   )
+    //     .then((res) => res.json())
+    //     .then((data) => {
+    //       Swal.fire("Update Service Successful", "", "success");
+    //       refetch();
+    //       setOpenModal(false);
+    //     });
+    // } catch (error) {
+    //   console.error("Error updating Service:", error);
+    // }
   };
 
   console.log("BlogInfo?.category", BlogInfo?.category);
@@ -242,7 +241,7 @@ const EditService = ({ OpenModal, setOpenModal, BlogInfo, refetch }) => {
               Meta Image'
             </label>
             <input
-              required
+              // required
               className="w-full rounded-lg border border-gray-900 p-3 text-sm"
               placeholder="Meta Description"
               type="file"
@@ -258,7 +257,7 @@ const EditService = ({ OpenModal, setOpenModal, BlogInfo, refetch }) => {
           </label>
           <input
             placeholder="$50"
-            required
+            // required
             type="number"
             name="pricingPriceOne"
             defaultValue={BlogInfo?.pricingPriceOne?.split(",")[0]}
@@ -354,6 +353,8 @@ const EditService = ({ OpenModal, setOpenModal, BlogInfo, refetch }) => {
                 Update Service
               </span>
             </button>
+
+            <button>update....</button>
           </div>
         </form>
       </div>

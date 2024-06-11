@@ -21,6 +21,17 @@ const MegaCategoryManagement = () => {
     },
   });
 
+
+  const [itemsPerPage, setItemsPerPage] = useState(parseInt(1));
+
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const currentItems = megaCategory?.length && megaCategory?.slice(startIndex, endIndex);
+
+
+
   // status update
   const statusUpdate = (id, status) => {
     fetch(
@@ -169,18 +180,32 @@ const MegaCategoryManagement = () => {
   };
   return (
     <div>
-      <Link to={"add"}>
-        <button className="group mt-4 relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500">
-          <span className="absolute -start-full transition-all group-hover:start-4">
-            <FaLongArrowAltRight />
-          </span>
-          <span className="text-sm font-medium transition-all group-hover:ms-4">
-            Add Mega Category
-          </span>
-        </button>
-        {/* <button className={style.addBtn}> +Add mega Manage category</button> */}
-      </Link>{" "}
-      <br />
+      <div className="flex items-center justify-between">
+        <Link to={"add"}>
+          <button className="group mt-4 relative inline-flex items-center overflow-hidden rounded bg-gray-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-gray-500">
+            <span className="absolute -start-full transition-all group-hover:start-4">
+              <FaLongArrowAltRight />
+            </span>
+            <span className="text-sm font-medium transition-all group-hover:ms-4">
+              Add Mega Category
+            </span>
+          </button>
+          {/* <button className={style.addBtn}> +Add mega Manage category</button> */}
+        </Link>{" "}
+
+        <div className="flex items-center gap-2">
+          <span className="text-sm">Entire per page</span>
+          <select
+            className="border w-[50px] px-1 py-2 text-sm rounded"
+            onChange={(e) => setItemsPerPage(e.target.value)}>
+            <option value={15}>15</option>
+            <option value={30}>30</option>
+            <option value={70}>70</option>
+            <option value={100}>100</option>
+          </select>
+        </div>
+      </div>
+
       <div className="max-w-screen-xl mx-auto ">
         <div className="mt-12 shadow-sm border rounded-lg overflow-x-auto">
           <table className="w-full table-auto text-sm text-left">
@@ -195,7 +220,7 @@ const MegaCategoryManagement = () => {
               </tr>
             </thead>
             <tbody className="text-gray-600 divide-y">
-              {megaCategory.map((item, idx) => {
+              {currentItems?.map((item, idx) => {
                 const formattedTimeStamp = new Date(
                   item.timeStamp
                 ).toLocaleString();
@@ -374,6 +399,53 @@ const MegaCategoryManagement = () => {
               })}
             </tbody>
           </table>
+        </div>
+        <br />
+        <div className="mx-auto flex justify-center">
+          <nav aria-label="Page navigation example">
+            <ul className="inline-flex -space-x-px">
+              <li>
+                <button
+                  onClick={() => setCurrentPage(currentPage - 1)}
+                  disabled={currentPage === 1}
+                  className="bg-white border text-gray-500 hover:bg-gray-100 hover:text-gray-700 border-gray-300 leading-tight py-2 px-3 rounded-l-lg"
+                >
+                  Prev
+                </button>
+              </li>
+              {Array.from(
+                { length: Math.ceil(megaCategory?.length / itemsPerPage) },
+                (_, i) => (
+                  <li key={i}>
+                    <button
+                      onClick={() => setCurrentPage(i + 1)}
+                      className={`bg-white border ${currentPage === i + 1
+                        ? "text-blue-600"
+                        : "text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+                        } border-gray-300 leading-tight py-2 px-3 rounded`}
+                    >
+                      {i + 1}
+                    </button>
+                  </li>
+                )
+              )}
+              <li>
+                <button
+                  onClick={() => setCurrentPage(currentPage + 1)}
+                  disabled={
+                    currentPage ===
+                    Math.ceil(
+                      megaCategory?.length &&
+                      megaCategory?.length / itemsPerPage
+                    )
+                  }
+                  className="bg-white border text-gray-500 hover:bg-gray-100 hover:text-gray-700 border-gray-300 leading-tight py-2 px-3 rounded-r-lg"
+                >
+                  Next
+                </button>
+              </li>
+            </ul>
+          </nav>
         </div>
       </div>
     </div>

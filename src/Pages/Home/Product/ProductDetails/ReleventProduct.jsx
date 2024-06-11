@@ -34,6 +34,10 @@ const ReleventProduct = ({ productFind }) => {
     )
   );
 
+  const handleClick = () => {
+    window.scrollTo(0, 0); // Scrolls to the top of the page
+  };
+
   return (
     <div className=" bg-white rounded ">
       <section className="body-font">
@@ -44,12 +48,6 @@ const ReleventProduct = ({ productFind }) => {
                 Top Selling Products
               </h3>
             </div>
-            {/* <button
-                            type="button"
-                            className="px-5 py-2 font-semibold rounded bg-black text-gray-100 text-xs "
-                        >
-                            SHOP MORE
-                        </button> */}
           </div>
         </div>
         <div className="border-b border-gray-200 mx-5 mt-2"></div>
@@ -57,7 +55,7 @@ const ReleventProduct = ({ productFind }) => {
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 -m-4 text-black">
             {relevantProducts.slice(0, 7).map((product, idx) => {
               return (
-                <Link to={`/products/${product._id}`} className="mt-2">
+                <Link to={`/products/${product._id}`} className="mt-2" onClick={handleClick}>
                   <div
                     key={idx}
                     className="p-4 flex flex-col justify-center border items-center w-full md:w-11/12 lg:mx-2 text-black rounded"
@@ -82,16 +80,8 @@ const ReleventProduct = ({ productFind }) => {
                       <h3 className="text-md w-full mb-1 h-[52px] overflow-hidden font-medium">
                         {product?.name.slice(0, 60)}
                       </h3>
-                      {/* <div
-                        className="text-sm text_editor text-gray-600"
-                        dangerouslySetInnerHTML={{
-                          __html:
-                            product?.shortDescription?.slice(0, 150) + "...",
-                        }}
-                      ></div> */}
 
                       <div className="flex justify-start gap-4 mt-3">
-                        {/* <p className="py-0 font-medium">৳ {product?.price}</p> */}
                         <p className="tracking-wide ">
                           {user ? (
                             <div className="flex gap-3">
