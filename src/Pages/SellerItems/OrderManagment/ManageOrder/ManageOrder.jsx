@@ -40,7 +40,7 @@ const ManageOrder = () => {
   });
 
   const { data: darazOrder = [], refetch: refetchDaraz } = useQuery({
-    queryKey: ["sellerDarazOrder"],
+    queryKey: ["sellerAllDarazOrder"],
 
     queryFn: async () => {
       const res = await fetch(

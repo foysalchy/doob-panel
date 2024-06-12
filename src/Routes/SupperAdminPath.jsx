@@ -622,6 +622,10 @@ const SupperAdminPath = [
     path: "view-profile",
     element: <Profile />,
   },
+  {
+    path: "daraz-account-management",
+    
+  }
 ];
 
 export { SupperAdminPath };
