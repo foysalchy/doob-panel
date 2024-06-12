@@ -9,14 +9,19 @@ import { useState } from "react";
 import { MdPadding } from "react-icons/md";
 import Swal from "sweetalert2";
 import DeleteModal from "../../../Common/DeleteModal";
+import { DataLoader } from "../../../Common/DataLoader";
 
 const DarazUserManagement = () => {
   const [loading, setLoading] = useState(false);
 
-  const { data: darazUserData = [], refetch } = useQuery({
-    queryKey: "noticeData",
+  const {
+    data: darazUserData = [],
+    refetch,
+    isLoading: loadingdarazUser,
+  } = useQuery({
+    queryKey: ["darazUsersData"],
     queryFn: async () => {
-      const res = await fetch(`https://doob.dev/api/v1/admin//old-all-daraz`);
+      const res = await fetch(`https://doob.dev/api/v1/admin/old-all-daraz`);
       const data = await res.json();
       return data?.data;
     },
@@ -152,6 +157,12 @@ const DarazUserManagement = () => {
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
+            <tr>
+              <td colSpan={6}>
+                {" "}
+                <DataLoader isLoading={loadingdarazUser} />
+              </td>
+            </tr>
             {darazUserData.map((itm) => (
               <tr key={itm?._id}>
                 <td className="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
