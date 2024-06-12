@@ -9,10 +9,10 @@ export const DataLoader = ({ isLoading }) => {
         prevNumber === ProgressNumberPercent
           ? 0
           : isLoading
-          ? prevNumber + 1
-          : prevNumber < 80
-          ? prevNumber + 1
-          : prevNumber
+          ? prevNumber < 80
+            ? prevNumber + 1
+            : prevNumber
+          : prevNumber + 1
       );
     }, 150); // Adjust the interval as per your requirement
     return () => clearInterval(interval); // Cleanup function to clear the interval
