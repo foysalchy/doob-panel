@@ -37,7 +37,6 @@ const DarazIntegration = () => {
 
           const newAppKey = appkey;
           const newScretecretKey = secretkey;
-        
 
           const url = "https://api.daraz.com.bd/rest/auth/token/create";
           const timestamp = currentTimeInMilliseconds;
@@ -55,16 +54,13 @@ const DarazIntegration = () => {
             url,
           };
 
-          fetch(
-            `https://doob.dev/api/v1/daraz/addCode/${shopInfo._id}`,
-            {
-              method: "PUT",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify(body),
-            }
-          )
+          fetch(`https://doob.dev/api/v1/daraz/addCode/${shopInfo._id}`, {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(body),
+          })
             .then((res) => res.json())
             .then((data) => {
               setShopInfo(data);
@@ -75,8 +71,12 @@ const DarazIntegration = () => {
               Swal.fire("Daraz Login Successful", "", "success");
 
               const currentUrl = new URL(window.location.href);
-              currentUrl.searchParams.delete('code');
-              window.history.replaceState({}, document.title, currentUrl.toString());
+              currentUrl.searchParams.delete("code");
+              window.history.replaceState(
+                {},
+                document.title,
+                currentUrl.toString()
+              );
               refetch();
               setCode(null);
             });
@@ -114,8 +114,27 @@ const DarazIntegration = () => {
     },
   });
 
+  const {
+    data: prices = [],
+    isLoading: loadingPrice,
+    refetch: refetchPrice,
+  } = useQuery({
+    queryKey: ["subscriptionModal"],
+    queryFn: async () => {
+      const res = await fetch(
+        `https://doob.dev/api/v1/seller/subscription-model?priceId=${shopInfo?.priceId}&shopId=${shopInfo._id}`
+      );
+      const data = await res.json();
+      return data?.data;
+    },
+  });
+
+  console.log(prices?.result?.limitValue);
+  console.log(previousAccount.length);
   const switchAccount = (_id, id) => {
-    console.log(`https://doob.dev/api/v1/daraz/switching-your-daraz?id=${id}&loginId=${_id}`,);
+    console.log(
+      `https://doob.dev/api/v1/daraz/switching-your-daraz?id=${id}&loginId=${_id}`
+    );
     fetch(
       `https://doob.dev/api/v1/daraz/switching-your-daraz?id=${id}&loginId=${_id}`,
       {
@@ -138,7 +157,9 @@ const DarazIntegration = () => {
   const handleChange = (event) => {
     const selectedOldId = event.target.value;
     console.log(selectedOldId);
-    const selectedShop = previousAccount.find(shop => shop._id === selectedOldId);
+    const selectedShop = previousAccount.find(
+      (shop) => shop._id === selectedOldId
+    );
     console.log(selectedShop, selectedOldId);
     setSelectedAccount(selectedOldId);
     if (selectedShop) {
@@ -146,19 +167,26 @@ const DarazIntegration = () => {
     }
   };
 
-
   return (
     <div>
       <div className="grid md:grid-cols-2 justify-between md:gap-10 gap-3 md:mt-10">
-        <div className={"bg-gray-300  py-6 text-center  rounded-md "}>
-          {
+        <div
+          // aria-disabled={true}
+          className={"bg-gray-300  py-6 text-center  rounded-md "}
+        >
+          {prices?.result?.limitValue > previousAccount?.length ? (
             <a
               href="https://api.daraz.com.bd/oauth/authorize?response_type=code&force_auth=true&redirect_uri=https://doob.com.bd/seller/channel-integration/&client_id=501436"
               className="text-blue-500 hover:underline mb-4 inline-block"
             >
               Login Daraz
             </a>
-          }
+          ) : (
+            <button className="bg-disabled ">
+              Login Daraz
+              <span className="text-red-500 mx-1"> (limit finished)</span>
+            </button>
+          )}
           {/* 
                 {shopInfo.darazLogin && (
                     <div className="bg-green-100 border-l-4 border-green-500  py-6 text-center  rounded-md">

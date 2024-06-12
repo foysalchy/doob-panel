@@ -39,6 +39,7 @@ import ContactManagement from "../Pages/AdminItem/Contract/ContactManagement";
 import AddFaq from "../Pages/AdminItem/Faq/AddFaq";
 import AdminFaq from "../Pages/AdminItem/Faq/AdminFaq";
 import DarazIntrigration from "../Pages/AdminItem/IntrigrationDaraz/DarazIntrigration";
+import DarazUserManagement from "../Pages/AdminItem/IntrigrationDaraz/DarazUserManagement";
 import AllOrderManage from "../Pages/AdminItem/Order/AllOrderManage";
 import ClaimAndRerunAdmin from "../Pages/AdminItem/Order/ClaimAndRerunAdmin";
 import ClamList from "../Pages/AdminItem/Order/ClamList";
@@ -624,7 +625,9 @@ const SupperAdminPath = [
   },
   {
     path: "daraz-account-management",
-    
+    element: (
+      <DarazUserManagement/>
+    )
   }
 ];
 
