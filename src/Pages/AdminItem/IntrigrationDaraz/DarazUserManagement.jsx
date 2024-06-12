@@ -16,9 +16,7 @@ const DarazUserManagement = () => {
   const { data: darazUserData = [], refetch } = useQuery({
     queryKey: "noticeData",
     queryFn: async () => {
-      const res = await fetch(
-        `http://localhost:5001/api/v1/admin//old-all-daraz`
-      );
+      const res = await fetch(`https://doob.dev/api/v1/admin//old-all-daraz`);
       const data = await res.json();
       return data?.data;
     },
@@ -30,7 +28,7 @@ const DarazUserManagement = () => {
   const [isDelete, setIsDelete] = useState(false);
 
   if (isDelete) {
-    fetch(`http://localhost:5001/api/v1/seller/popup/delete/${deleteId}`, {
+    fetch(`https://doob.dev/api/v1/seller/popup/delete/${deleteId}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -59,7 +57,7 @@ const DarazUserManagement = () => {
   const EditStatus = (id, status) => {
     console.log(id, status);
     setLoading(true);
-    fetch(`http://localhost:5001/api/v1/admin/seller-notice?NoticeId=${id}`, {
+    fetch(`https://doob.dev/api/v1/admin/seller-notice?NoticeId=${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -75,14 +73,14 @@ const DarazUserManagement = () => {
   };
 
   const onDelete = (id) => {
-    console.log(
-      "🚀 ~ id:",
-      `http://localhost:5001/api/v1/admin/delete-daraz-account/id=${id}`
-    );
+    // console.log(
+    //   "🚀 ~ id:",
+    //   `https://doob.dev/api/v1/admin/delete-daraz-account/id=${id}`
+    // );
 
     // return;
     setLoading(true);
-    fetch(`http://localhost:5001/api/v1/admin/delete-daraz-account/${id}`, {
+    fetch(`https://doob.dev/api/v1/admin/delete-daraz-account/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
