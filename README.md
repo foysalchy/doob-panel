@@ -10,18 +10,14 @@
 Briefly describe your project. What does it do? What problem does it solve?
 
 ## Folder Stracture
+
 ![image](https://github.com/brightfuturesoft/SaleNow-Frontend/assets/73072248/00844195-96f8-449f-a519-ad8fafa17aa3)
 
-
-
-
 ## Screenshots
+
 ![image](https://github.com/brightfuturesoft/SaleNow-Frontend/assets/73072248/80b89825-bf9c-4ed9-9c2c-2210e72c0606)
 
-
 ![image](https://github.com/brightfuturesoft/SaleNow-Frontend/assets/73072248/ab3af3ea-0d93-41fb-8a97-b57369cf50dd)
-
-
 
 Include screenshots or gifs showing the application's main functionality.
 
@@ -56,19 +52,19 @@ A big thank you to the following individuals who have contributed to this projec
 - [Md Nahid](https://github.com/MdNahid360)
 - [Nazmul Hoque](https://github.com/nazmulsujon)
 
-
 If you've contributed to this project and your name is missing, please let us know, and we'll add you to the list!
 
-## Deploy on vps 
-````
+## Deploy on vps
+
+```
 scp -r dist  root@152.42.184.243:/var/www/SaleNow-Frontend
-````
+```
 
-````
+```
 mAhadi624234a
-````
-need also pass: contact with project manager
+```
 
+need also pass: contact with project manager
 
 ## License
 
