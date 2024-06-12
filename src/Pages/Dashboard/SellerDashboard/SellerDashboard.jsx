@@ -61,9 +61,7 @@ const SellerDashboard = () => {
   } = useQuery({
     queryKey: "sellerPopupData",
     queryFn: async () => {
-      const res = await fetch(
-        `https://doob.dev/api/v1/admin/pop-up`
-      );
+      const res = await fetch(`https://doob.dev/api/v1/admin/pop-up`);
       const data = await res.json();
       return data?.data;
     },
@@ -90,12 +88,12 @@ const SellerDashboard = () => {
     },
   });
 
+  console.log(shopCredential, "shopCredential");
+
   const { data: noticeInfo = [] } = useQuery({
     queryKey: "sliderInfo",
     queryFn: async () => {
-      const res = await fetch(
-        `https://doob.dev/api/v1/admin/slider`
-      );
+      const res = await fetch(`https://doob.dev/api/v1/admin/slider`);
       const data = await res.json();
       return data?.data;
     },
@@ -190,7 +188,7 @@ const SellerDashboard = () => {
         console.log(data); // Log response data
         Swal.fire("Success", "", "success"); // Show success message (assuming you're using SweetAlert)
         reload(); // Reload data
-        darazShopRefetch()
+        darazShopRefetch();
       });
   };
 
@@ -198,7 +196,9 @@ const SellerDashboard = () => {
   const handleChange = (event) => {
     const selectedOldId = event.target.value;
     console.log(selectedOldId);
-    const selectedShop = previousAccount.find(shop => shop._id === selectedOldId);
+    const selectedShop = previousAccount.find(
+      (shop) => shop._id === selectedOldId
+    );
     console.log(selectedShop, selectedOldId);
     setSelectedAccount(selectedOldId);
     if (selectedShop) {
@@ -281,8 +281,6 @@ const SellerDashboard = () => {
     },
   });
 
-
-
   const getStatus = (quantity, product_Low_alert) => {
     console.log(product_Low_alert, quantity);
     const lowAlert = product_Low_alert ? parseInt(product_Low_alert) : null;
@@ -364,7 +362,7 @@ const SellerDashboard = () => {
     },
   });
   const check_expired = () => {
-    const paymentDate = new Date(shopInfo.paymentDate);
+    const paymentDate = new Date(shopInfo?.paymentDate);
     const currentDate = new Date();
 
     const MILLISECONDS_IN_A_DAY = 24 * 60 * 60 * 1000;
@@ -383,7 +381,7 @@ const SellerDashboard = () => {
         (paymentDate.getTime() +
           SEVEN_DAYS_IN_MILLISECONDS -
           currentDate.getTime()) /
-        MILLISECONDS_IN_A_DAY
+          MILLISECONDS_IN_A_DAY
       );
       const passedDays = Math.floor(timeDifference / MILLISECONDS_IN_A_DAY);
 
@@ -397,18 +395,18 @@ const SellerDashboard = () => {
     <div className="h-screen mb-10   ">
       {sellerPopupData.length
         ? popup && (
-          <div className="fixed top-0 left-0 flex items-center justify-center w-full h-full bg-black bg-opacity-90 z-50">
-            <SellerPopUp
-              onClose={onClose}
-              showModal={popup}
-              setShowModal={setPopUp}
-              data={sellerPopupData}
-              handleClose={onClose}
-            />
-          </div>
-        )
+            <div className="fixed top-0 left-0 flex items-center justify-center w-full h-full bg-black bg-opacity-90 z-50">
+              <SellerPopUp
+                onClose={onClose}
+                showModal={popup}
+                setShowModal={setPopUp}
+                data={sellerPopupData}
+                handleClose={onClose}
+              />
+            </div>
+          )
         : ""}
-      {check_expired() && !prices?.orderInfo && (
+      {!loadingPrice && check_expired() && !prices?.orderInfo && (
         <div className="bg-orange-100  px-2 py-3 rounded- flex justify-between items-center">
           <Link
             to="/seller/subscription-management"
@@ -432,22 +430,26 @@ const SellerDashboard = () => {
       <h2 className="text-gray-400 text-md">
         Here&#x27;s what&#x27;s happening with your ambassador account today.
       </h2>
-      {!shopCredential?._id && (
+      {shopCredential?._id ? (
+        <div className=""></div>
+      ) : (
         <div className="">
-          <div
-            class="bg-red-100 border border-orange-400 text-orange-700 px-4 py-3 rounded relative"
-            role="alert"
-          >
-            <strong class="font-bold">Warning: </strong>
-            <Link to={`/seller/settings/auth-credential`}>
-              <span class="block sm:inline">
-                {" "}
-                You have no auth credential yet now. so your website have no
-                user login please setup your auth credential.{" "}
-              </span>
-            </Link>
-            <span class="absolute top-0 bottom-0 right-0 px-4 py-3"></span>
-          </div>
+          {!itemLoad && (
+            <div
+              class="bg-red-100 border border-orange-400 text-orange-700 px-4 py-3 rounded relative"
+              role="alert"
+            >
+              <strong class="font-bold">Warning: </strong>
+              <Link to={`/seller/settings/auth-credential`}>
+                <span class="block sm:inline">
+                  {" "}
+                  You have no auth credential yet now. so your website have no
+                  user login please setup your auth credential.{" "}
+                </span>
+              </Link>
+              <span class="absolute top-0 bottom-0 right-0 px-4 py-3"></span>
+            </div>
+          )}
         </div>
       )}
 
