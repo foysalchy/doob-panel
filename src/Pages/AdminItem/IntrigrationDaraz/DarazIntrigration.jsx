@@ -29,7 +29,7 @@ const DarazIntegration = () => {
 
   useEffect(() => {
     if (code) {
-      fetch("http://localhost:5001/api/v1/daraz/get-key")
+      fetch("https://doob.dev/api/v1/daraz/get-key")
         .then((res) => res.json())
         .then((data) => {
           console.log(data, "daraz");
@@ -54,7 +54,7 @@ const DarazIntegration = () => {
             url,
           };
 
-          fetch(`http://localhost:5001/api/v1/daraz/addCode/${shopInfo._id}`, {
+          fetch(`https://doob.dev/api/v1/daraz/addCode/${shopInfo._id}`, {
             method: "PUT",
             headers: {
               "Content-Type": "application/json",
@@ -133,10 +133,10 @@ const DarazIntegration = () => {
   console.log(previousAccount.length);
   const switchAccount = (_id, id) => {
     console.log(
-      `http://localhost:5001/api/v1/daraz/switching-your-daraz?id=${id}&loginId=${_id}`
+      `https://doob.dev/api/v1/daraz/switching-your-daraz?id=${id}&loginId=${_id}`
     );
     fetch(
-      `http://localhost:5001/api/v1/daraz/switching-your-daraz?id=${id}&loginId=${_id}`,
+      `https://doob.dev/api/v1/daraz/switching-your-daraz?id=${id}&loginId=${_id}`,
       {
         method: "PATCH",
         headers: {

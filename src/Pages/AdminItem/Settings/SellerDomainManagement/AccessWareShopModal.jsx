@@ -36,7 +36,7 @@ const AccessWareShopModal = ({ isPreviewModal, setIsPreviewModal }) => {
       };
       // console.log(newSelectedWarehouses, "newSelectedWarehouses");
       try {
-        fetch(`http://localhost:5001/api/v1/admin/warehouse/access-warehouse`, {
+        fetch(`https://doob.dev/api/v1/admin/warehouse/access-warehouse`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
