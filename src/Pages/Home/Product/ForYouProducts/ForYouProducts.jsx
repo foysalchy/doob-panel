@@ -29,12 +29,13 @@ const ForYouProducts = () => {
     refetch();
   };
 
+  const blankImg = 'https://doob.dev/api/v1/image/66036ed3df13bd9930ac229c.jpg';
 
   return (
     <div>
       <div className="py-4 bg-white rounded mt-6">
         <section className="body-font">
-          <div className="px-5">
+          <div className="md:px-5 px-2">
             <div className="flex justify-between text-black">
               <div className="flex justify-between align-items-center">
                 <img
@@ -48,8 +49,8 @@ const ForYouProducts = () => {
               </div>
             </div>
           </div>
-          <div className="border-b border-gray-200 mx-5 mt-2"></div>
-          <div className="container px-5 py-8 mx-auto">
+          <div className="border-b border-gray-200 md:mx-5 mx-2 mt-2"></div>
+          <div className="container px-2 md:px-5 py-8 mx-auto">
             {!newProducts ? (
               <>
                 <div className="p-4 grid md:grid-cols-4 grid-cols-1 gap-4">
@@ -78,15 +79,15 @@ const ForYouProducts = () => {
                   filteredProducts?.map((product, idx) => {
                     let name = product?.name?.slice(0, 60);
                     {
-                      /* const blankImg = 'https://doob.dev/api/v1/image/66036ed3df13bd9930ac229c.jpg'; */
+                      // const blankImg = 'https://doob.dev/api/v1/image/66036ed3df13bd9930ac229c.jpg';
                     }
                     console.log(product);
                     return (
                       <Link
                         to={`${product._id}`}
-                        className="group block overflow-hidden border my-2 border-gray-500 border-opacity-90 p-3 rounded "
+                        className="group block overflow-hidden border my-2 border-gray-500 border-opacity-90 md:p-3 p-1 rounded "
                       >
-                        <div className="relative h-[140px] sm:h-[250px]">
+                        {/* <div className="relative h-[140px] sm:h-[250px]">
                           <img
                             src={
                               product?.featuredImage?.src
@@ -101,6 +102,29 @@ const ForYouProducts = () => {
                             src={product?.images[1]?.src}
                             alt=""
                             className="absolute inset-0 h-full w-full object-cover opacity-0 group-hover:opacity-100"
+                          />
+                        </div> */}
+
+                        <div className="relative  rounded-md overflow-hidden h-[180px] bg-transparent sm:h-[250px]">
+                          <img
+                            src={
+                              product?.featuredImage?.src
+                                ? product?.featuredImage?.src
+                                : product?.images[0]?.src
+                            }
+                            alt=""
+                            style={{ background: 'transparent' }}
+                            className="absolute duration-300 left-0 group-hover:-left-[110%] bg-transparent inset-0 h-full w-full object-cover opacity-100 group-hover:opacity-0"
+                          />
+                          <img
+                            src={
+                              product?.images[1]?.src
+                                ? product?.images[1]?.src
+                                : blankImg
+                            }
+                            alt=""
+                            style={{ background: 'transparent' }}
+                            className="absolute duration-300 left-[110%] group-hover:-left-[0%] bg-transparent inset-0 h-full w-full object-cover opacity-0 group-hover:opacity-100"
                           />
                         </div>
 

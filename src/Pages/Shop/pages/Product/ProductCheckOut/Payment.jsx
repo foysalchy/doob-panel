@@ -14,7 +14,6 @@ const Payment = () => {
   const [loadingPayment, setLoadingPayment] = useState(false);
 
   const params = useParams();
-  console.log(params);
   const [payment, setPayment] = useState(false);
   const [passData, setPassData] = useState([]);
   const pathname = window.location.pathname;
@@ -105,7 +104,47 @@ const Payment = () => {
           navigate(`/shop/${shopId}/user/my-orders`);
         });
     }
+
+
+    for (let i = 0; i < orderStage?.productList.length; i++) {
+      const product = orderStage?.productList[i];
+      handleRemove(!shopUser ? product?.productId : product?._id)
+    }
+
   };
+
+
+
+  const handleRemove = (productId) => {
+    setCartProducts((prevProducts) =>
+      prevProducts.filter((product) => product._id !== productId)
+    );
+    const cartData = JSON.parse(localStorage.getItem("addToCart")) || [];
+    const updatedCartData = cartData.filter(
+      (product) => product._id !== productId
+    );
+    localStorage.setItem("addToCart", JSON.stringify(updatedCartData));
+
+    setAllProducts((prevProducts) =>
+      prevProducts.filter((product) => product.productId !== productId)
+    );
+
+    if (shopUser) {
+      fetch(
+        `https://doob.dev/api/v1/shop/user/add-to-cart?productId=${productId}&token=${shopUser._id}`,
+        {
+          method: "DELETE",
+          headers: { "Content-Type": "application/json" },
+        }
+      )
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+        });
+    }
+  };
+
+
 
   const paymentHandler = async (payment) => {
     if (payment.Getaway === "Bkash") {

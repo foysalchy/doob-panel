@@ -21,7 +21,7 @@ const ProductCatagory = () => {
   const slidesPerViewDesktop = 9;
   const slidesPerViewTablet = 6;
   const slidesPerViewMobile = 4;
-
+  const blankImg = 'https://doob.dev/api/v1/image/66036ed3df13bd9930ac229c.jpg';
   return (
     <div className="py-4 bg-white rounded mt-6">
       <Swiper

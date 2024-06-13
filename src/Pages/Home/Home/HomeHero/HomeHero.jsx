@@ -29,8 +29,8 @@ const HomeHero = () => {
     setIsModalOpen(false);
   };
   return (
-    <section className="relative overflow-hidden py-32 px-4 bg-gray-100 md:px-8">
-      <div className="w-full h-full rounded-full bg-gradient-to-r from-[#58AEF1] to-pink-500 absolute -top-12 -right-14 blur-2xl opacity-10"></div>
+    <section className="relative overflow-hidden md:py-32 py-20 px-4 bg-gray-100 md:px-8">
+      <div className="w-full h-full rounded-full bg-gradient-to-r from-[#58AEF1] to-pink-500 absolute -top-1 -right-14 blur-2xl opacity-10"></div>
       <div className="max-w-xl mx-auto text-center relative">
         <div className="max-w-xl sm:mx-auto lg:max-w-2xl ">
           <div className="flex flex-col mb-16 sm:text-center sm:mb-0">
@@ -41,7 +41,7 @@ const HomeHero = () => {
                   __html: hero?.data,
                 }}
               /> */}
-              <h1 className='font-inner text-xl font-semibold'>
+              <h1 className='font-inner md:text-xl text-lg font-semibold'>
                 Start Business Right Now!!
               </h1>
 

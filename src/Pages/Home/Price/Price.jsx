@@ -324,8 +324,8 @@ export default Price;
 
 const Component = () => {
   return (
-    <div className="flex justify-center py-12">
-      <div className="mx-4 bg-white rounded-lg shadow-lg p-6 w-full max-w-md">
+    <div className="md:flex  justify-center py-12">
+      <div className="md:mx-4 bg-white rounded-lg shadow-lg p-6 w-full border border-gray-200 md:max-w-md">
         <div className="flex items-center space-x-4 mb-6">
           <div className="bg-blue-200 p-2 rounded-full">
             <PersonStandingIcon className="text-blue-800 h-8 w-8" />
@@ -348,7 +348,8 @@ const Component = () => {
           Get All-Access - For your shop
         </Link>
       </div>
-      <div className="mx-4 bg-white rounded-lg shadow-lg p-6 w-full max-w-md">
+
+      <div className="md:mx-4 md:mt-0 mt-4 border border-gray-200 bg-white rounded-lg shadow-lg p-6 w-full md:max-w-md">
         <div className="flex items-center space-x-4 mb-6">
           <div className="bg-blue-200 p-2 rounded-full">
             <SearchIcon className="text-blue-800 h-8 w-8" />
