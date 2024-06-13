@@ -16,14 +16,14 @@ const CustomerHistory = () => {
     queryKey: ["customerdata"],
     queryFn: async () => {
       const res = await fetch(
-        `https://doob.dev/api/v1/seller/customer-report?shopId=${shopInfo?.shopId}`
+        `http://localhost:5001/api/v1/seller/customer-report?shopId=${shopInfo?.shopId}`
       );
       const data = await res.json();
       return data;
     },
   });
 
-  console.log(customerData);
+  // console.log(customerData);
 
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -62,10 +62,11 @@ const CustomerHistory = () => {
           return (
             <li key={pageNumber}>
               <button
-                className={`block h-8 w-8 rounded border ${pageNumber === currentPage
-                  ? "border-blue-600 bg-blue-600 text-white"
-                  : "border-gray-900 bg-white text-center leading-8 text-gray-900"
-                  }`}
+                className={`block h-8 w-8 rounded border ${
+                  pageNumber === currentPage
+                    ? "border-blue-600 bg-blue-600 text-white"
+                    : "border-gray-900 bg-white text-center leading-8 text-gray-900"
+                }`}
                 onClick={() => handleChangePage(pageNumber)}
               >
                 {pageNumber}
@@ -187,6 +188,12 @@ const CustomerHistory = () => {
                         scope="col"
                         className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
                       >
+                        Due Balance
+                      </th>
+                      <th
+                        scope="col"
+                        className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                      >
                         Provider
                       </th>
                       <th
@@ -229,6 +236,9 @@ const CustomerHistory = () => {
                         </td>
                         <td className="px-4 py-4 text-sm text-gray-300 dark:text-gray-300 whitespace-nowrap">
                           {customer?.phoneNumber}
+                        </td>
+                        <td className="px-4 py-4 text-sm text-gray-300 dark:text-gray-300 whitespace-nowrap">
+                          {customer?.dueAmount ?? 0}
                         </td>
                         <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                           {customer?.provider}
