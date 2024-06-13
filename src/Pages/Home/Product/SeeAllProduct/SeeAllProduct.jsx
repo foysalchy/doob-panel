@@ -1,4 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
+import BrightAlert from 'bright-alert';
 import React, { useEffect, useState } from 'react';
 import { CgClose } from 'react-icons/cg';
 import { FaFilter, FaStar } from 'react-icons/fa6';
@@ -344,9 +345,37 @@ const SeeAllProduct = () => {
         refetch();
     }, [selectedBrandValues, categroyValue, minPrice, maxPrice, selectedRatings, selectedFeature]);
 
+    const add_to_cart = (product) => {
+        const productData = {
+            product_name: product?.name,
+            product_id: product?._id,
+            product_price: product?.price,
+            product_quantity: quantity,
+            product_image: product?.images[0]?.src,
+            product_seller: product?.shopId,
+            sellingPrice: banifit.sellingPrice,
+            delivery: product.DeliveryCharge,
+        };
 
-    console.log('select....', fData);
+        // need to save on localStorage
 
+        const getCart =
+            JSON.parse(localStorage.getItem(`cart-product-${user._id}`)) || [];
+        const productFind = getCart.find(
+            (item) => item.product_id === productData.product_id
+        );
+
+        if (productFind) {
+            productFind.product_quantity =
+                productFind.product_quantity + productData.product_quantity;
+            localStorage.setItem(`cart-product-${user._id}`, JSON.stringify(getCart));
+        } else {
+            getCart.push(productData);
+            localStorage.setItem(`cart-product-${user._id}`, JSON.stringify(getCart));
+        }
+
+        BrightAlert();
+    };
 
     return (
         <div>
@@ -738,8 +767,7 @@ const SeeAllProduct = () => {
                                 {/* modal */}
                                 <div
                                     onClick={() => setOpenModal(false)}
-                                    className={`fixed z-[100] flex items-center justify-center ${openModal ? 'visible opacity-100' : 'invisible opacity-0'} inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-transparent`}
-                                >
+                                    className={`fixed z-[100] flex items-center justify-center ${openModal ? 'visible opacity-100' : 'invisible opacity-0'} inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-transparent`}>
                                     <div onClick={(e_) => e_.stopPropagation()} className={`text- absolute overflow-y-auto bg-white p-6 drop-shadow-lg dark:bg-gray-50 dark:text-black h-screen w-full ${openModal ? 'scale-1 opacity-1 duration-300' : 'scale-0 opacity-0 duration-150'}`}>
                                         <div className="flex mb-2 items-center justify-between  border-b pb-2">
                                             <h1 className="mb-2 text-2xl font-semibold">Filter</h1>
@@ -1065,15 +1093,15 @@ const SeeAllProduct = () => {
                             <br />
                             <div>
                                 {/* lg */}
-                                <div className={`${isGrid === 'grid' ? 'md:grid lg:grid-cols-3 md:grid-cols-2 gap-3' : ''}`}>
+                                <div className={`${isGrid === 'grid' ? 'grid lg:grid-cols-3  grid-cols-2 gap-3' : ''}`}>
                                     {
                                         filterData && filterData?.map((itm) => (
                                             <div key={itm?._id}>
                                                 {
                                                     isGrid === 'list' ?
-                                                        <div className="md:grid md:grid-cols-3 flex items-start gap-2 mb-3 w-full md:p-4 p-2 border rounded-lg">
+                                                        <Link to={`/products/${itm?._id}`} className="md:grid md:grid-cols-3 flex items-start gap-2 mb-3 w-full md:p-4 p-2 border  rounded-lg">
                                                             <a
-                                                                className="relative md:w-full w-[160px]  flex lg:h-[200px] h-40 overflow-hidden rounded-xl"
+                                                                className="relative md:w-full w-[140px] flex lg:h-[200px] h-40 overflow-hidden rounded-xl"
                                                                 href="#"
                                                             >
                                                                 <img
@@ -1134,11 +1162,11 @@ const SeeAllProduct = () => {
                                                                 </div>
 
                                                                 <div className="flex items-center gap-3 md:mt-4 mt-1">
-                                                                    <Link>
+                                                                    <button onClick={() => add_to_cart(itm)}>
                                                                         <div className="bg-black px-4 py-2 rounded-md md:text-lg text-xs text-white">
                                                                             Add to Cart
                                                                         </div>
-                                                                    </Link>
+                                                                    </button>
                                                                     <Link to={`/products/${itm?._id}`}>
                                                                         <div className="bg-blue-500 px-4 py-2 rounded-md text-white md:text-lg text-xs">
                                                                             Buy Now
@@ -1146,13 +1174,13 @@ const SeeAllProduct = () => {
                                                                     </Link>
                                                                 </div>
                                                             </div>
-                                                        </div>
+                                                        </Link>
 
                                                         :
 
-                                                        <div className="group grid  mb-3 gap-3 w-full p-3 border rounded-lg">
+                                                        <Link to={`/products/${itm?._id}`} className="group grid  mb-3 gap-3 w-full md:p-3 p-1 border rounded-lg">
                                                             <a
-                                                                className="relative  border flex lg:h-60 md:h-40 h-60 overflow-hidden rounded-xl"
+                                                                className="relative  border flex lg:h-60 md:h-40 h-[150px] overflow-hidden rounded-xl"
                                                                 href="#"
                                                             >
                                                                 <img
@@ -1185,7 +1213,7 @@ const SeeAllProduct = () => {
 
                                                             <div className="">
                                                                 <h5 className="text-lg lg:block hidden tracking-tight text-slate-900">
-                                                                    {itm?.name}
+                                                                    {itm?.name.slice(0, 30)}
                                                                 </h5>
 
                                                                 <h5 className="text-lg lg:hidden block tracking-tight text-slate-900 ">
@@ -1210,26 +1238,25 @@ const SeeAllProduct = () => {
                                                                 <div className=" ">
                                                                     {/* <p dangerouslySetInnerHTML={{ __html: itm?.shortDescription }} /> */}
                                                                     <p className="text-gray-400 mt-2">
-                                                                        {itm?.metaDescription.slice(0, 200)}
+                                                                        {/* {itm?.metaDescription.slice(0, 200)} */}
                                                                     </p>
                                                                 </div>
 
-                                                                <div className="flex items-center lg:gap-3 gap-1 mt-3">
-                                                                    <Link>
-                                                                        <div className="bg-black lg:text-md md:text-sm  px-4 py-2 rounded-md text-white whitespace-nowrap">
+                                                                {/* <div className="flex items-center text-center lg:gap-3 gap-1 mt-3">
+                                                                    <button onClick={() => add_to_cart(itm)}>
+                                                                        <div className="bg-black lg:text-md md:text-sm text-xs  px-4 py-2 rounded-md text-white whitespace-nowrap">
                                                                             Add to Cart
                                                                         </div>
-                                                                    </Link>
+                                                                    </button>
                                                                     <Link to={`/products/${itm?._id}`} >
-                                                                        <div className="bg-blue-500 px-4 py-2 rounded-md lg:text-md md:text-sm  text-white whitespace-nowrap">
-                                                                            Buy Now..
+                                                                        <div className="bg-blue-500 px-4 py-2 md:mt-0 rounded-md lg:text-md md:text-sm text-xs text-white whitespace-nowrap">
+                                                                            Buy Now
                                                                         </div>
                                                                     </Link>
-                                                                </div>
+                                                                </div> */}
                                                             </div>
-                                                        </div>
+                                                        </Link>
                                                 }
-
                                             </div>
                                         ))
                                     }
@@ -1252,7 +1279,7 @@ const SeeAllProduct = () => {
                                                             alt="product image"
                                                         />
                                                         {itm?.images[1] && <img
-                                                            className="peer absolute top-0 -right-96 h-full w-full object-cover transition-all delay-100 duration-1000 hover:right-0 peer-hover:right-0"
+                                                            className="peer absolute top-0 -right-96 h-full w-full object-cover transition-all delay-100 duration-300 hover:right-0 peer-hover:right-0"
                                                             src={itm?.images.length && itm?.images[1].src}
                                                             alt="product image"
                                                         />}

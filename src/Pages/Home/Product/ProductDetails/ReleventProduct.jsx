@@ -41,7 +41,7 @@ const ReleventProduct = ({ productFind }) => {
   return (
     <div className=" bg-white rounded ">
       <section className="body-font">
-        <div className="px-5">
+        <div className="md:px-5 px-2">
           <div className="flex justify-between text-black">
             <div className="flex justify-between align-items-center">
               <h3 className="whitespace-nowrap ml-2 font-medium">
@@ -55,12 +55,12 @@ const ReleventProduct = ({ productFind }) => {
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 -m-4 text-black">
             {relevantProducts.slice(0, 7).map((product, idx) => {
               return (
-                <Link to={`/products/${product._id}`} className="mt-2" onClick={handleClick}>
+                <Link to={`/products/${product._id}`} className="mt-2 group" onClick={handleClick}>
                   <div
                     key={idx}
-                    className="p-4 flex flex-col justify-center border items-center w-full md:w-11/12 lg:mx-2 text-black rounded"
+                    className="md:p-4 p-1 flex flex-col justify-center border items-center w-full md:w-11/12 lg:mx-2 text-black rounded"
                   >
-                    <a className="block w-full relative h-[220px] rounded overflow-hidden">
+                    <a className="block w-full relative md:h-[220px] h-[150px] rounded overflow-hidden">
                       <img
                         alt="ecommerce"
                         className="object-cover w-full h-full block border rounded"
@@ -76,20 +76,20 @@ const ReleventProduct = ({ productFind }) => {
                         }
                       />
                     </a>
-                    <div className="mt-4 w-full text-start ">
-                      <h3 className="text-md w-full mb-1 h-[52px] overflow-hidden font-medium">
+                    <div className="md:mt-4 mt-2 px-1 w-full text-start ">
+                      <h3 className="text-md w-full mb-1 group-hover:text-indigo-500 h-[52px] overflow-hidden font-medium">
                         {product?.name.slice(0, 60)}
                       </h3>
 
                       <div className="flex justify-start gap-4 mt-3">
                         <p className="tracking-wide ">
                           {user ? (
-                            <div className="flex gap-3">
-                              <div className="">
-                                <span className="kalpurush">৳</span>{" "}
+                            <div className="flex items-center gap-3">
+                              <div className="text-indigo-500 text-xl">
+                                <span className="kalpurush text-2xl">৳</span>
                                 <span>{user ? product?.price : 0}</span>
                               </div>
-                              <del>
+                              <del className="text-gray-500">
                                 {" "}
                                 ৳
                                 {product.discountPrice

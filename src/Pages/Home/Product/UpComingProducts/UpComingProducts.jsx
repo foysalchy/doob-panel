@@ -24,12 +24,12 @@ const UpComingProducts = () => {
   });
 
   const data = [1, 2, 3, 4];
-  const blankImg = "";
+  const blankImg = 'https://doob.dev/api/v1/image/66036ed3df13bd9930ac229c.jpg';
   console.log(AdminNewProducts);
 
   return (
-    <div className="mt-3 py-6 bg-white">
-      <div className="px-5">
+    <div className="mt-3 md:py-6 pt-6 rounded bg-white">
+      <div className="md:px-5 px-2">
         <div className="flex justify-between text-black">
           <div className="flex justify-between align-items-center">
             <img
@@ -53,11 +53,11 @@ const UpComingProducts = () => {
         </div>
       </div>
       {AdminNewProducts?.length ? (
-        <div className="py-4 bg-white rounded mt-6">
+        <div className="py-4 bg-white rounded md:mt-6">
           <section className="body-font">
-            <div className="border-b border-gray-500 border-opacity-50 mx-5 mt-2"></div>
+            <div className="border-b border-gray-500 border-opacity-50 md:mx-5 mx-2 md:mt-2"></div>
             {!isLoading ? (
-              <div className=" px-5 my-4 mx-auto">
+              <div className="px-2 md:px-5 my-4 mx-auto">
                 <Swiper
                   spaceBetween={10}
                   slidesPerView={3}
@@ -80,24 +80,25 @@ const UpComingProducts = () => {
                   {AdminNewProducts?.map((product, idx) => (
                     <SwiperSlide
                       key={idx}
-                      className="border my-2 border-gray-500 border-opacity-90 p-3 rounded"
+                      className="border my-2 border-gray-500 border-opacity-90 md:p-3 p-1 rounded"
                     >
                       <Link
                         to={`${product._id}`}
                         className="group block overflow-hidden"
                       >
-                        <div className="relative h-[180px] sm:h-[250px]">
+
+
+                        <div className="relative  rounded-md overflow-hidden h-[180px] bg-transparent sm:h-[250px]">
                           <img
                             src={
                               product?.featuredImage?.src
                                 ? product?.featuredImage?.src
                                 : product?.images[0]?.src
                             }
-                            // src={product?.featuredImage?.src}
                             alt=""
-                            className="absolute inset-0 h-full w-full object-cover opacity-100 group-hover:opacity-0"
+                            style={{ background: 'transparent' }}
+                            className="absolute duration-300 left-0 group-hover:-left-[110%] bg-transparent inset-0 h-full w-full object-cover opacity-100 group-hover:opacity-0"
                           />
-
                           <img
                             src={
                               product?.images[1]?.src
@@ -105,11 +106,13 @@ const UpComingProducts = () => {
                                 : blankImg
                             }
                             alt=""
-                            className="absolute inset-0 h-full w-full object-cover opacity-0 group-hover:opacity-100"
+                            style={{ background: 'transparent' }}
+                            className="absolute duration-300 left-[110%] group-hover:-left-[0%] bg-transparent inset-0 h-full w-full object-cover opacity-0 group-hover:opacity-100"
                           />
                         </div>
+
                         <div className="relative bg-white pt-3">
-                          <h3 className="text-sm h-5 whitespace-nowrap overflow-hidden text-gray-700 group-hover:underline group-hover:underline-offset-4">
+                          <h3 className="text-sm h-5 whitespace-nowrap overflow-hidden text-gray-700 group-hover:text-orange-500">
                             {product?.name}
                           </h3>
 

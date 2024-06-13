@@ -23,10 +23,9 @@ const NewProducts = () => {
     },
   });
 
-  const blankImg = "";
 
   const data = [1, 2, 3, 4];
-
+  const blankImg = 'https://doob.dev/api/v1/image/66036ed3df13bd9930ac229c.jpg';
   console.log(AdminNewProducts, "+");
   return (
     <div>
@@ -58,7 +57,7 @@ const NewProducts = () => {
             </div>
             <div className="border-b border-gray-500 border-opacity-50 mx-5 mt-2"></div>
             {!isLoading ? (
-              <div className=" px-5 my-4 mx-auto">
+              <div className="px-2 md:px-5 my-4 mx-auto">
                 <Swiper
                   spaceBetween={10}
                   slidesPerView={3}
@@ -81,13 +80,13 @@ const NewProducts = () => {
                   {AdminNewProducts?.map((product, idx) => (
                     <SwiperSlide
                       key={idx}
-                      className="border my-2 border-gray-500 border-opacity-90 p-3 rounded"
+                      className="border my-2 border-gray-500 border-opacity-90 md:p-3 p-1 rounded"
                     >
                       <Link
                         to={`${product._id}`}
                         className="group block overflow-hidden"
                       >
-                        <div className="relative h-[180px] bg-transparent sm:h-[250px]">
+                        <div className="relative  rounded-md overflow-hidden h-[180px] bg-transparent sm:h-[250px]">
                           <img
                             src={
                               product?.featuredImage?.src
@@ -96,9 +95,8 @@ const NewProducts = () => {
                             }
                             alt=""
                             style={{ background: 'transparent' }}
-                            className="absolute bg-transparent inset-0 h-full w-full object-cover opacity-100 group-hover:opacity-0"
+                            className="absolute duration-300 left-0 group-hover:-left-[110%] bg-transparent inset-0 h-full w-full object-cover opacity-100 group-hover:opacity-0"
                           />
-
                           <img
                             src={
                               product?.images[1]?.src
@@ -107,12 +105,23 @@ const NewProducts = () => {
                             }
                             alt=""
                             style={{ background: 'transparent' }}
-                            className="absolute bg-transparent inset-0 h-full w-full object-cover opacity-0 group-hover:opacity-100"
+                            className="absolute duration-300 left-[110%] group-hover:-left-[0%] bg-transparent inset-0 h-full w-full object-cover opacity-0 group-hover:opacity-100"
                           />
+
+                          {/* <img
+                            src={
+                              product?.images[1]?.src
+                                ? product?.images[1]?.src
+                                : blankImg
+                            }
+                            alt=""
+                            style={{ background: 'transparent' }}
+                            className="absolute   light-[52%] duration-200 bg-transparent  inset-0 h-full w-full object-cover opacity-0 group-hover:opacity-100"
+                          /> */}
                         </div>
 
                         <div className="relative bg-white pt-3">
-                          <h3 className="capitalize h-6 whitespace-nowrap overflow-hidden text-gray-700 group-hover:underline group-hover:underline-offset-4">
+                          <h3 className="capitalize h-6 whitespace-nowrap overflow-hidden text-gray-700 group-hover:text-orange-500 group-hover:underline-offset-4">
                             ....  {product.name}
                           </h3>
 

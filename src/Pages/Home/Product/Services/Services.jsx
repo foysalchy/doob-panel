@@ -3,8 +3,8 @@ import React from "react";
 const Services = () => {
   return (
     <section className="body-font ">
-      <div className="container md:px-5 md:py-20 pt-8 pb-16 mx-auto">
-        <div className="flex flex-wrap justify-center sm:-m-4 -mx-4 -mb-10 -mt-4 md:space-y-0 space-y-6 bg-white py-4">
+      <div className="px-4 md:px-5 md:py-20 pt-8 pb-16 mx-auto">
+        <div className="flex rounded flex-wrap justify-center sm:-m-4 -mx-4 -mb-10 -mt-4 md:space-y-0 space-y-6 bg-white py-4">
           <div className="p-4 md:w-1/3 flex flex-col justify-center text-center items-center">
             <div className="w-20 h-20 inline-flex items-center justify-center rounded-full bg-indigo-100 text-indigo-500 mb-5 flex-shrink-0">
               <img src="https://i.ibb.co/KwnHzQp/Services.png" srcSet="https://i.ibb.co/KwnHzQp/Services.png" alt="" />
@@ -18,7 +18,8 @@ const Services = () => {
               </p>
             </div>
           </div>
-          <div className="p-4 md:w-1/3 flex flex-col text-center items-center">
+
+          <div className="md:p-4 md:w-1/3 flex flex-col text-center items-center">
             <div className="w-20 h-20 inline-flex items-center justify-center rounded-full bg-indigo-100 text-indigo-500 mb-5 flex-shrink-0">
               <img src="https://i.ibb.co/HpsDTmS/Services.png" srcSet="https://i.ibb.co/HpsDTmS/Services.png" alt="" />
             </div>

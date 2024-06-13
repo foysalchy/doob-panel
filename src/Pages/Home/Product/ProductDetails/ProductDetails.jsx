@@ -365,14 +365,14 @@ const ProductDetails = () => {
   console.log(productFind, "productFind");
 
   return (
-    <section>
+    <section className="relative">
       <div className="py-4">
         <MetaHelmet
           title={productFind.metaTitle}
           description={productFind.metaDescription}
           image={productFind.MetaImage}
         />
-        <div id="top" className="max-w-7xl mx-auto px-4 md:px-4 lg:px-12 ">
+        <div id="top" className="max-w-7xl mx-auto px-2 md:px-4 lg:px-12 ">
           <div className="flex flex-wrap gap-2 items-center justify-start space-x-2 text-gray-400 text-sm">
             <Link
               to={"/products"}
@@ -428,7 +428,7 @@ const ProductDetails = () => {
 
         <div className="max-w-7xl  grid md:grid-cols-4 mx-auto mt-6 ">
           <div className="flex flex-col md:flex-row md:col-span-3 border md:border-r-transparent border-gray-300 py-4">
-            <div className="md:flex-1 px-4">
+            <div className="md:flex-1 md:px-4 px-2">
               <div>
                 <div className="h-64  md:h-[22rem] rounded-lg bg-gray-100 mb-4">
                   <div className="h-64 border md:h-full rounded-lg bg-gray-100 mb-4 flex items-center justify-center overflow-hidden">
@@ -480,7 +480,7 @@ const ProductDetails = () => {
               </div>
             </div>
             <br />
-            <div className="md:flex-1 px-4 ">
+            <div className="md:flex-1 md:px-4 px-2">
               <div className="flex items-center">
                 {productFind?.stock_quantity > quantity ? (
                   <p className="text-sm font-medium text-green-400 ml-1 flex items-center">
@@ -545,7 +545,7 @@ const ProductDetails = () => {
 
                 {user ? (
                   <div className="my-3">
-                    <div className="grid grid-cols-2 md:grid-cols-4 bg-red-100 py-3 px-2 px-2">
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 bg-red-100 py-3 md:text-md px-2">
                       <div className=" text-start sm:text-center md:border-r-2 border-gray-400">
                         <h6 className="font-bold text-xl">
                           ৳
@@ -569,13 +569,19 @@ const ProductDetails = () => {
                       </div>
                       <div className="text-start sm:text-center  md:border-r-2 border-gray-400">
                         <h6 className="font-bold text-xl">
-                          ৳{parseInt(banifit.profit)}
+                          ৳
+                          {isNaN(banifit.profit)
+                            ? "0"
+                            : parseInt(banifit.profit)}
+
                         </h6>
                         <p className="text-sm text-[#606060]">Your Profit</p>
                       </div>
                       <div className="text-start sm:text-center ">
                         <h6 className="font-bold text-xl">
-                          {banifit.profitPercent}%
+                          {isNaN(banifit.profitPercent)
+                            ? "0"
+                            : parseInt(banifit.profitPercent)}%
                         </h6>
                         <p className="text-sm text-[#606060]">Your Profit</p>
                       </div>
@@ -607,13 +613,13 @@ const ProductDetails = () => {
                 )}
                 {user ? (
                   <div className="my-3">
-                    <div className="grid grid-cols-2 md:grid-cols-3 bg-red-100 py-3 px-2">
-                      <div className="text-start sm:text-center  md:border-r-2 border-gray-400">
+                    <div className="grid gap-3 grid-cols-2 md:grid-cols-3 bg-red-100 py-3 px-2">
+                      <div className="text-start   md:border-r-2 border-gray-400">
                         <h6 className="font-bold text-xl text-red-400">
-                          {productFind?.variantData?.product1?.quantityPrice}
+                          {productFind?.variantData?.product1?.quantityPrice}..
                         </h6>
                         <p className="text-sm text-[#606060]">
-                          <div className="flex justify-center text-gray-500 text-lg space-x-1">
+                          <div className="flex justify-start text-gray-500 text-lg space-x-1">
                             <h2>
                               {productFind?.variantData?.product1?.quantity}
                             </h2>
@@ -626,13 +632,14 @@ const ProductDetails = () => {
                           {/* {productFind?.variantData?.product1?.quantity} Qty */}
                         </p>
                       </div>
-                      <div className="text-start sm:text-center  md:border-r-2 border-gray-400">
+
+                      <div className="text-start   md:border-r-2 border-gray-400">
                         <h6 className="font-bold text-xl text-red-400">
                           {productFind?.variantData?.product2?.quantityPrice}
                         </h6>
 
-                        <div className="flex justify-center text-gray-500 text-lg space-x-1">
-                          <div className="flex justify-center text-lg text-gray-500 space-x-1">
+                        <div className="flex justify-start text-gray-500 text-lg space-x-1">
+                          <div className="flex justify-start text-lg text-gray-500 space-x-1">
                             <h2>
                               {productFind?.variantData?.product2?.quantity}
                             </h2>
@@ -647,11 +654,12 @@ const ProductDetails = () => {
                           {productFind?.variantData?.product2?.quantity} Qty
                         </p> */}
                       </div>
-                      <div className="text-start sm:text-center ">
+
+                      <div className="text-start  ">
                         <h6 className="font-bold text-xl text-red-400">
                           {productFind?.variantData?.product3?.quantityPrice}
                         </h6>
-                        <h2 className="text-gray-500">
+                        <h2 className="flex justify-start text-lg text-gray-500 space-x-1">
                           {productFind?.variantData?.product3?.quantity} -
                           Unlimited
                         </h2>
@@ -689,18 +697,20 @@ const ProductDetails = () => {
                   your own Product
                 </div>
               ) : (
-                <div className="flex py-4 space-x-4">
+                <div className="md:flex hidden py-4 space-x-4">
                   <div>
                     <label htmlFor="Quantity" className="sr-only">
                       {" "}
                       Quantity{" "}
                     </label>
 
+
+
                     <div className="flex items-center gap-1">
                       <button
                         type="button"
                         onClick={handleDecrease}
-                        className="w-6 h-10 leading-10 text-gray-600 transition hover:opacity-75"
+                        className="md:w-6 h-10 leading-10 text-gray-600 transition hover:opacity-75"
                       >
                         -
                       </button>
@@ -722,24 +732,33 @@ const ProductDetails = () => {
                       </button>
                     </div>
                   </div>
-                  {shopInfo ? (
-                    <button
-                      onClick={balk_buy}
-                      className="h-10 md:px-4 px-2 whitespace-nowrap py-2 text-sm rounded bg-orange-600 hover:bg-orange-500 text-white"
-                      type="button"
-                    >
-                      Add Store
-                    </button>
-                  ) : (
-                    <Link
-                      to={"/sign-in"}
-                      className="h-10 md:px-4 px-2 whitespace-nowrap py-2 text-sm rounded bg-orange-600 hover:bg-orange-500 text-white"
-                      type="button"
-                    >
-                      Add Store
-                    </Link>
-                  )}
 
+
+
+                  {/* fixed tab */}
+
+
+                  {/* md tab */}
+                  <div className="md:block hidden">
+                    {shopInfo ? (
+                      <button
+                        onClick={balk_buy}
+                        className="h-10 md:px-4 flex items-center px-2 whitespace-nowrap py-2 text-sm rounded bg-orange-600 hover:bg-orange-500 text-white"
+                        type="button"
+                      >
+                        Add Store
+                      </button>
+                    ) : (
+                      <Link
+                        to={"/sign-in"}
+                        className="h-10 md:px-4 flex items-center px-2 whitespace-nowrap py-2 text-sm rounded bg-orange-600 hover:bg-orange-500 text-white"
+                        type="button"
+                      >
+                        Add Store
+                      </Link>
+                    )}
+
+                  </div>
                   {/* 
                 <button
                   onClick={() => handleStore(productFind?._id)}
@@ -749,12 +768,12 @@ const ProductDetails = () => {
                   Buy Now
                 </button> */}
 
-                  <div className="flex flex-wrap gap-2">
+                  <div className=" md:flex hidden flex-wrap gap-2">
                     {shopInfo ? (
                       <button
                         onClick={() => setInvoice(productFind?._id)}
                         type="button"
-                        className="h-10 md:px-6 px-4 py-2 text-sm rounded bg-indigo-600 hover:bg-indigo-500 text-white text-nowrap"
+                        className="h-10 flex  items-center md:px-6 px-4 py-2 text-sm rounded bg-indigo-600 hover:bg-indigo-500 text-white text-nowrap"
                       >
                         Buy Now
                       </button>
@@ -762,7 +781,7 @@ const ProductDetails = () => {
                       <Link
                         to={"/sign-in"}
                         type="button"
-                        className="h-10 md:px-6 px-4 py-2 text-sm rounded bg-indigo-600 hover:bg-indigo-500 text-white text-nowrap"
+                        className="h-10 flex  items-center md:px-6 px-4 py-2 text-sm rounded bg-indigo-600 hover:bg-indigo-500 text-white text-nowrap"
                       >
                         Buy Now
                       </Link>
@@ -775,6 +794,8 @@ const ProductDetails = () => {
                       <TbShoppingBagPlus className="text-2xl" />
                     </button>
                   </div>
+
+
 
                   {invoice && (
                     <ModalForPayment
@@ -790,6 +811,67 @@ const ProductDetails = () => {
                 </div>
               )}
 
+              <div className="bg-[#fdfdfd] fixed-shadow md:hidden shadow-xl flex  gap-2 items-center fixed bottom-0 h-[65px] right-0 w-screen px-2 z-[700]">
+                {shopInfo ? (
+                  <button
+                    onClick={balk_buy}
+                    className="h-10 w-full md:px-4 flex justify-center items-center px-2 whitespace-nowrap py-2 text-sm rounded bg-orange-600 hover:bg-orange-500 text-white"
+                    type="button"
+                  >
+                    Add Store
+                  </button>
+                ) : (
+                  <Link
+                    to={"/sign-in"}
+                    className="h-10 w-full justify-center md:px-4 flex items-center px-2 whitespace-nowrap py-2 text-sm rounded bg-orange-600 hover:bg-orange-500 text-white"
+                    type="button"
+                  >
+                    Add Store
+                  </Link>
+                )}
+
+                <div className="flex text-center flex-wrap gap-2">
+                  {shopInfo ? (
+                    <button
+                      onClick={() => setInvoice(productFind?._id)}
+                      type="button"
+                      className="h-10 w-full flex items-center text-center justify-center  py-2 text-sm rounded bg-indigo-600 hover:bg-indigo-500 text-white text-nowrap"
+                    >
+                      Buy Now
+                    </button>
+                  ) : (
+                    <Link
+                      to={"/sign-in"}
+                      type="button"
+                      className="h-10 w-[110px] flex items-center text-center justify-center py-2 text-sm rounded bg-indigo-600 hover:bg-indigo-500 text-white text-nowrap"
+                    >
+                      Buy Now
+                    </Link>
+                  )}
+                </div>
+                <button
+                  onClick={() => add_to_cart(productFind)}
+                  type="button"
+                  className="h-10 md:px-8 w-full px-2 flex justify-center py-2 text-sm rounded bg-gray-600 hover:bg-gray-500 text-white text-nowrap"
+                >
+                  <TbShoppingBagPlus className="text-2xl" />
+                </button>
+              </div>
+
+              <div className="md:hidden flex items-center w-full border border-indigo-500 rounded text-lg overflow-hidden h-[40px]">
+                <button
+                  onClick={handleDecrease}
+                  className="bg-indigo-500 text-white px-2 h-full w-full">-</button>
+                <input
+                  value={quantity}
+                  onChange={handleManualInput}
+                  type="number"
+                  className="bg-transparent h-full text-black text-center w-[150px] " />
+                <button
+                  onClick={handleIncrease}
+                  className="bg-indigo-500 text-white px-2 h-full w-full">+</button>
+              </div>
+              <br />
               {/* variation data */}
               <div className="flex flex-col gap-2">
                 <p className="">Variations : {variationData?.name}</p>
@@ -815,7 +897,7 @@ const ProductDetails = () => {
           </div>
 
           <div className="border  w-full">
-            <div className="p-4">
+            <div className="px-2 md:px-4 py-4">
               <h2 className="text-lg font-semibold mb-4">New Exclusive</h2>
               <div className="space-y-4">
                 {releventProduct?.slice(0, 3)?.map((product, index) => (
@@ -878,7 +960,7 @@ const ProductDetails = () => {
         </div>
       </div>
 
-      <div className="max-w-7xl m-auto px-4  md:px-4 lg:px-8 my-6">
+      <div className="max-w-7xl m-auto px-2  md:px-4 lg:px-8 my-6">
         {/* comment form */}
         {user && (
           <div className="bg-gray-100 hidden py-2 px-3">
@@ -971,14 +1053,15 @@ const ProductDetails = () => {
         )}
       </div>
       {comments && (
-        <div className="max-w-7xl mx-auto px-4 md:px-4 lg:px-8 my-6">
-          <div className="border p-6 rounded">
+        <div className="max-w-7xl mx-auto px-2 md:px-4 lg:px-8 my-6">
+          <div className="border md:p-6 p-3 rounded">
             <ProductReviews comments={comments} />
           </div>
         </div>
       )}
-      <div className="max-w-7xl mx-auto px-4 md:px-4 lg:px-8 my-6">
-        <div className="border p-6 rounded">
+
+      <div className="max-w-7xl mx-auto px-2 md:px-4 lg:px-8 my-6">
+        <div className="border md:p-6 px-2 py-3 rounded">
           <ReleventProduct productFind={productFind} />
         </div>
       </div>

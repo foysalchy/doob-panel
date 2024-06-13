@@ -911,7 +911,7 @@ const SeeShopAllProduct = () => {
                             <br />
                             <div>
                                 {/* lg */}
-                                <div className={`${isGrid === 'grid' ? 'md:grid grid-cols-3 gap-3' : ''}  `}>
+                                <div className={`${isGrid === 'grid' ? 'grid lg:grid-cols-3  grid-cols-2 md:gap-6 gap-3' : ''}  `}>
                                     {
                                         filterData && filterData?.map((itm) => (
                                             <div key={itm?._id}>
@@ -985,7 +985,7 @@ const SeeShopAllProduct = () => {
                                                                     </Link>
                                                                     <Link to={`/products/${itm?._id}`}>
                                                                         <div className="bg-blue-500 px-4 py-2 rounded-md text-white whitespace-nowrap">
-                                                                            Buy Now
+                                                                            Buy Now**
                                                                         </div>
                                                                     </Link>
                                                                 </div>
@@ -994,67 +994,68 @@ const SeeShopAllProduct = () => {
 
                                                         :
 
-                                                        <Link to={`/shop/${shopId}/product/${itm?._id}`} className="group grid  mb-3 gap-3 w-full p-3 border rounded-lg">
-                                                            <a
-                                                                className="relative  md:border flex h-60 overflow-hidden rounded-xl"
-                                                                href="#"
-                                                            >
-                                                                <img
-                                                                    className="peer absolute top-0 right-0 h-full w-full object-cover"
-                                                                    src={itm?.featuredImage?.src ?? itm?.images[0]?.src}
-                                                                    alt="product image"
-                                                                />
-                                                                {itm?.images[1] && <img
-                                                                    className="peer absolute top-0 -right-96 h-full w-full object-cover transition-all delay-100 duration-1000 hover:right-0 peer-hover:right-0"
-                                                                    src={itm?.images[1].src}
-                                                                    alt="product image"
-                                                                />}
-                                                                <svg
-                                                                    className="pointer-events-none absolute inset-x-0 bottom-5 mx-auto text-3xl text-white  transition-opacity group-hover:animate-ping group-hover:opacity-30 peer-hover:opacity-0"
-                                                                    xmlns="http://www.w3.org/2000/svg"
-                                                                    aria-hidden="true"
-                                                                    role="img"
-                                                                    width="1em"
-                                                                    height="1em"
-                                                                    preserveAspectRatio="xMidYMid meet"
-                                                                    viewBox="0 0 32 32"
+                                                        <div className="md:border-none border border-gray-200 rounded overflow-hidden p-1">
+                                                            <Link to={`/shop/${shopId}/product/${itm?._id}`} className="group  gap-3 w-full  rounded-lg">
+                                                                <a
+                                                                    className="relative  md:border flex md:h-60 h-40 overflow-hidden rounded-xl"
+                                                                    href="#"
                                                                 >
-                                                                    <path
-                                                                        fill="currentColor"
-                                                                        d="M2 10a4 4 0 0 1 4-4h20a4 4 0 0 1 4 4v10a4 4 0 0 1-2.328 3.635a2.996 2.996 0 0 0-.55-.756l-8-8A3 3 0 0 0 14 17v7H6a4 4 0 0 1-4-4V10Zm14 19a1 1 0 0 0 1.8.6l2.7-3.6H25a1 1 0 0 0 .707-1.707l-8-8A1 1 0 0 0 16 17v12Z"
+                                                                    <img
+                                                                        className="peer absolute top-0 right-0 h-full w-full object-cover"
+                                                                        src={itm?.featuredImage?.src ?? itm?.images[0]?.src}
+                                                                        alt="product image"
                                                                     />
-                                                                </svg>
-                                                                {/* <span className="absolute top-0 left-0 m-2 rounded-full bg-black px-2 text-center text-sm font-medium text-white">39% OFF</span> */}
-                                                            </a>
+                                                                    {itm?.images[1] && <img
+                                                                        className="peer absolute top-0 -right-96 h-full w-full object-cover transition-all delay-100 duration-1000 hover:right-0 peer-hover:right-0"
+                                                                        src={itm?.images[1].src}
+                                                                        alt="product image"
+                                                                    />}
+                                                                    <svg
+                                                                        className="pointer-events-none absolute inset-x-0 bottom-5 mx-auto text-3xl text-white  transition-opacity group-hover:animate-ping group-hover:opacity-30 peer-hover:opacity-0"
+                                                                        xmlns="http://www.w3.org/2000/svg"
+                                                                        aria-hidden="true"
+                                                                        role="img"
+                                                                        width="1em"
+                                                                        height="1em"
+                                                                        preserveAspectRatio="xMidYMid meet"
+                                                                        viewBox="0 0 32 32"
+                                                                    >
+                                                                        <path
+                                                                            fill="currentColor"
+                                                                            d="M2 10a4 4 0 0 1 4-4h20a4 4 0 0 1 4 4v10a4 4 0 0 1-2.328 3.635a2.996 2.996 0 0 0-.55-.756l-8-8A3 3 0 0 0 14 17v7H6a4 4 0 0 1-4-4V10Zm14 19a1 1 0 0 0 1.8.6l2.7-3.6H25a1 1 0 0 0 .707-1.707l-8-8A1 1 0 0 0 16 17v12Z"
+                                                                        />
+                                                                    </svg>
+                                                                    {/* <span className="absolute top-0 left-0 m-2 rounded-full bg-black px-2 text-center text-sm font-medium text-white">39% OFF</span> */}
+                                                                </a>
 
-                                                            <div className="">
-                                                                <h5 className="text-lg tracking-tight white text-slate-900 h-[60px] overflow-hidden">
-                                                                    {itm?.name.slice(0, 48)}
-                                                                </h5>
+                                                                <div className="">
+                                                                    <h5 className="text-lg tracking-tight white text-slate-900 h-[60px] overflow-hidden">
+                                                                        {itm?.name.slice(0, 48)}
+                                                                    </h5>
 
-                                                                <div className="flex text-2xl mt-3 items-center gap-6">
-                                                                    <h1 className="font-bold  ">৳{itm?.regular_price}</h1>
-                                                                    <del className="font-bold   text-gray-400">৳{itm?.price}</del>
-                                                                </div>
-
-                                                                <div className="flex items-center gap-4">
-                                                                    <div className="flex items-center gap-1 text-orange-500">
-                                                                        {myRating(itm.rating_count).map(itm => <FaStar className="text-orange-500" />)} {itm.rating_count}
-                                                                        <div className="w-[5px] h-[5px] bg-gray-400  text-transparent rounded-full">.</div>
+                                                                    <div className="flex md:text-2xl text-sm mt-3 items-center gap-6">
+                                                                        <h1 className="font-bold  ">৳{itm?.regular_price}</h1>
+                                                                        <del className="font-bold   text-gray-400">৳{itm?.price}</del>
                                                                     </div>
-                                                                    <div className='flex items-center gap-2'>
-                                                                        {itm?.total_sales} orders <div className="w-[5px] h-[5px] bg-gray-400  text-transparent rounded-full">.</div>
-                                                                    </div>
-                                                                </div>
 
-                                                                <div className=" ">
-                                                                    {/* <p dangerouslySetInnerHTML={{ __html: itm?.shortDescription }} /> */}
-                                                                    <p className="text-gray-400 mt-2">
+                                                                    <div className="flex items-center gap-4">
+                                                                        <div className="flex items-center gap-1 text-orange-500">
+                                                                            {myRating(itm.rating_count).map(itm => <FaStar className="text-orange-500" />)} {itm.rating_count}
+                                                                            <div className="w-[5px] h-[5px] bg-gray-400  text-transparent rounded-full">.</div>
+                                                                        </div>
+                                                                        <div className='flex items-center gap-2'>
+                                                                            {itm?.total_sales} orders <div className="w-[5px] h-[5px] bg-gray-400  text-transparent rounded-full">.</div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div className=" ">
+                                                                        {/* <p dangerouslySetInnerHTML={{ __html: itm?.shortDescription }} /> */}
+                                                                        {/* <p className="text-gray-400 mt-2">
                                                                         {itm?.metaDescription.slice(0, 100)}
-                                                                    </p>
-                                                                </div>
+                                                                    </p> */}
+                                                                    </div>
 
-                                                                <div className="flex items-center gap-3 mt-3">
+                                                                    {/* <div className="md:flex items-center gap-3 mt-3">
                                                                     <Link>
                                                                         <div className="bg-black px-4 py-2 rounded-md text-white">
                                                                             Add to Cart
@@ -1062,12 +1063,13 @@ const SeeShopAllProduct = () => {
                                                                     </Link>
                                                                     <Link to={`/products/${itm?._id}`} >
                                                                         <div className="bg-blue-500 px-4 py-2 rounded-md text-white">
-                                                                            Buy Now
+                                                                            Buy Now+++++
                                                                         </div>
                                                                     </Link>
+                                                                </div> */}
                                                                 </div>
-                                                            </div>
-                                                        </Link>
+                                                            </Link>
+                                                        </div>
                                                 }
 
                                             </div>
