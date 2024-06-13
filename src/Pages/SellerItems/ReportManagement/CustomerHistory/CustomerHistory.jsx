@@ -16,7 +16,7 @@ const CustomerHistory = () => {
     queryKey: ["customerdata"],
     queryFn: async () => {
       const res = await fetch(
-        `http://localhost:5001/api/v1/seller/customer-report?shopId=${shopInfo?.shopId}`
+        `https://doob.dev/api/v1/seller/customer-report?shopId=${shopInfo?.shopId}`
       );
       const data = await res.json();
       return data;

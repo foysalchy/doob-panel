@@ -170,7 +170,7 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
       };
       console.log("🚀 ~ file: bodyData:", bodyData);
       try {
-        fetch(`http://localhost:5001/api/v1/seller/update-pos-user`, {
+        fetch(`https://doob.dev/api/v1/seller/update-pos-user`, {
           method: "PUT",
           headers: {
             "content-type": "application/json",
@@ -243,7 +243,7 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
     // }
     console.log("🚀 ~ file: PosSidebar.jsx:203 ~ newUserData:", newUserData);
     try {
-      fetch(`http://localhost:5001/api/v1/seller/new-pos-user`, {
+      fetch(`https://doob.dev/api/v1/seller/new-pos-user`, {
         method: "POST",
         headers: {
           "content-type": "application/json",
@@ -404,7 +404,13 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
               <div>
                 Total: <div>Tk.{totalPrice()}/=</div>
               </div>
-              {user?.dueAmount ? <div className="text-red-500 font-semibold">Prev Due: {user?.dueAmount}</div> : ""}
+              {user?.dueAmount ? (
+                <div className="text-red-500 font-semibold">
+                  Prev Due: {user?.dueAmount}
+                </div>
+              ) : (
+                ""
+              )}
               <div>
                 Due:{" "}
                 <div
