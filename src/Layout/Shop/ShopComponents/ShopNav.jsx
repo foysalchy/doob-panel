@@ -10,7 +10,7 @@ import { IoSettings } from "react-icons/io5";
 import {
   MdMenu,
   MdOutlineFavoriteBorder,
-  MdOutlineShoppingCart
+  MdOutlineShoppingCart,
 } from "react-icons/md";
 import { PiShoppingCartSimpleBold } from "react-icons/pi";
 import { Link } from "react-router-dom";
@@ -37,16 +37,13 @@ const ShopNav = () => {
     console.log(shop_id);
 
     try {
-      const response = await fetch(
-        `https://doob.dev/api/v1/shop/search`,
-        {
-          method: "POST",
-          body: JSON.stringify({ shop_id: shop_id.shop_id, term }),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const response = await fetch(`http://localhost:5001/api/v1/shop/search`, {
+        method: "POST",
+        body: JSON.stringify({ shop_id: shop_id.shop_id, term }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
       const data = await response.json();
       console.log(data);
@@ -91,7 +88,7 @@ const ShopNav = () => {
     },
   });
   const handleKeyPress = (event) => {
-    if (event.key === 'Enter') {
+    if (event.key === "Enter") {
       searchData();
     }
   };
@@ -102,9 +99,7 @@ const ShopNav = () => {
   } = useQuery({
     queryKey: ["shop"],
     queryFn: async () => {
-      const res = await fetch(
-        `https://doob.dev/api/v1/shop/${shopId}`
-      );
+      const res = await fetch(`https://doob.dev/api/v1/shop/${shopId}`);
       const data = await res.json();
       return data;
     },
@@ -132,7 +127,9 @@ const ShopNav = () => {
           });
       }
     };
-    console.log(`****=========>   https://doob.dev/api/v1/shop/user/add-to-cart?userId=${shopUser?._id}&shopId=${shop_id?.shop_id}&token=${shopUser?._id}`);
+    console.log(
+      `****=========>   https://doob.dev/api/v1/shop/user/add-to-cart?userId=${shopUser?._id}&shopId=${shop_id?.shop_id}&token=${shopUser?._id}`
+    );
     const timeoutId = setTimeout(fetchData, 1000);
 
     return () => clearTimeout(timeoutId); // Cleanup the timeout on component unmount
@@ -303,18 +300,14 @@ const ShopNav = () => {
                   >
                     <div className="inline-flex items-center bg-gray-900 w-[30px] h-[30px] p-2 rounded-full justify-center relative">
                       <FaUser className=" text-white" />
-
                     </div>
                     Login
                   </Link>
                 </li>
-
-
               ) : (
                 <div>
                   <div className="relative inline-block">
                     {/* Dropdown toggle button */}
-
 
                     <button
                       onClick={() => setIsOpen(!isOpen)}
@@ -324,7 +317,6 @@ const ShopNav = () => {
                     >
                       <div className="inline-flex items-center bg-gray-900 w-[30px] h-[30px] p-2 rounded-full justify-center relative">
                         <FaUser className=" text-white" />
-
                       </div>
                       Account
                     </button>
@@ -332,8 +324,9 @@ const ShopNav = () => {
                     {/* Dropdown menu */}
                     <div
                       styele={{ background: "white" }}
-                      className={`absolute right-0 z-20 w-48 py-2 mt-2 origin-top-right  rounded-md shadow-xl dark:bg-gray-800 ${isOpen ? "block" : "hidden"
-                        }`}
+                      className={`absolute right-0 z-20 w-48 py-2 mt-2 origin-top-right  rounded-md shadow-xl dark:bg-gray-800 ${
+                        isOpen ? "block" : "hidden"
+                      }`}
                       onClick={() => setIsOpen(false)}
                     >
                       <Link
