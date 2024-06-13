@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import React, { useState } from "react";
 import { RxCross2 } from "react-icons/rx";
 import Select from "react-select";
+import Swal from "sweetalert2";
 
 const AccessWareShopModal = ({ isPreviewModal, setIsPreviewModal }) => {
   console.log(isPreviewModal, "warehouse_data");
@@ -29,11 +30,31 @@ const AccessWareShopModal = ({ isPreviewModal, setIsPreviewModal }) => {
       const newSelectedWarehouses = selectedWarehouses.map(
         (warehouse) => warehouse.value
       );
-      const data = {
+      const bodyData = {
         warehouseIds: newSelectedWarehouses,
         shopId: isPreviewModal.shopId,
       };
-      console.log(newSelectedWarehouses, "newSelectedWarehouses");
+      // console.log(newSelectedWarehouses, "newSelectedWarehouses");
+      try {
+        fetch(`http://localhost:5001/api/v1/admin/warehouse/access-warehouse`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(bodyData),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            console.log("🚀 data:", data);
+            if (data?.status) {
+              Swal.fire(data?.message ?? "Added", "", "success");
+              refetch();
+              setIsPreviewModal(false);
+            }
+          });
+      } catch (error) {
+        console.error("Error add accessShop:", error);
+      }
     }
   };
 
