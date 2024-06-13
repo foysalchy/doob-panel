@@ -236,7 +236,7 @@ const Variants = ({
                       id={`coverPhoto-${index}`}
                       name={`coverPhoto-${index}`}
                       multiple
-                      accept="image/*"
+                      // accept="image/*"
                       style={{ display: "none" }}
                       onChange={(event) => handleImageChange(index, event)}
                     />
@@ -266,6 +266,7 @@ const Variants = ({
                         name="images"
                         className="w-full "
                         id="images"
+                        // accept="image/*"
                         multiple
                         type="file"
                         onChange={(e) => handleMultipleImg(e, index)}

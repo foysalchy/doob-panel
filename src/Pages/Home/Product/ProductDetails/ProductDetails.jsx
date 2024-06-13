@@ -17,6 +17,8 @@ import ModalForPayment from "./ModalForPayment";
 import ProductDescription from "./ProductDescription";
 import ProductReviews from "./ProductReviews";
 import ReleventProduct from "./ReleventProduct";
+import VideoPlayer from "../../../../Hooks/VideoPlayer";
+import { PiPlay } from "react-icons/pi";
 
 const StarRating = ({ rating, onRatingChange }) => {
   return (
@@ -311,6 +313,7 @@ const ProductDetails = () => {
     const productFind = getCart.find(
       (item) => item.product_id === productData.product_id
     );
+
     if (productFind) {
       productFind.product_quantity =
         productFind.product_quantity + productData.product_quantity;
@@ -359,8 +362,7 @@ const ProductDetails = () => {
     },
   });
 
-  console.log(shopInfo.shopId, "shopInfo");
-  console.log(productFind.shopId, "productFind");
+  console.log(productFind, "productFind");
 
   return (
     <section>
@@ -370,7 +372,7 @@ const ProductDetails = () => {
           description={productFind.metaDescription}
           image={productFind.MetaImage}
         />
-        <div className="max-w-7xl mx-auto px-4 md:px-4 lg:px-12 ">
+        <div id="top" className="max-w-7xl mx-auto px-4 md:px-4 lg:px-12 ">
           <div className="flex flex-wrap gap-2 items-center justify-start space-x-2 text-gray-400 text-sm">
             <Link
               to={"/products"}
@@ -429,7 +431,8 @@ const ProductDetails = () => {
             <div className="md:flex-1 px-4">
               <div>
                 <div className="h-64  md:h-[22rem] rounded-lg bg-gray-100 mb-4">
-                  <div className="h-64 border md:h-full rounded-lg bg-gray-100 mb-4 flex items-center justify-center">
+                  <div className="h-64 border md:h-full rounded-lg bg-gray-100 mb-4 flex items-center justify-center overflow-hidden">
+
                     {selected_image ? (
                       <img
                         className="md:w-94 w-full object-cover h-full rounded-lg"
@@ -438,16 +441,26 @@ const ProductDetails = () => {
                         alt="product image"
                       />
                     ) : (
-                      <img
-                        className="md:w-94 w-full object-cover h-full rounded-lg"
-                        src={productFind?.images[0].src}
-                        srcSet={productFind?.images[0].src}
-                        alt="product image"
-                      />
+                      <div className="w-full">
+                        {
+                          productFind?.videos ? <div className="w-full h-full relative">
+                            <VideoPlayer thum={''} url={productFind?.videos} />
+                          </div> : <img
+                            className="md:w-94 w-full object-cover h-full rounded-lg"
+                            src={productFind?.images[0].src}
+                            srcSet={productFind?.images[0].src}
+                            alt="product image"
+                          />
+                        }
+                      </div>
+
                     )}
                   </div>
                 </div>
                 <div className="mt-3 grid md:grid-cols-8 grid-cols-5 gap-2">
+                  {productFind?.videos && <button className="bg-[#00000081] text-white flex items-center justify-center rounded text-xl" onClick={() => setSelected_image(null)}>
+                    <PiPlay />
+                  </button>}
                   {image_list?.map((imageUrl, index) => (
                     <div key={index} className="">
                       <button

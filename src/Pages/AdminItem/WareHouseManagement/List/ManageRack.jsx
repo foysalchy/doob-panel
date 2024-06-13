@@ -34,69 +34,16 @@ const ManageRack = () => {
     );
   });
 
+
+  const [itemsPerPage, setItemsPerPage] = useState(parseInt(15));
+
   const [currentPage, setCurrentPage] = useState(1);
 
-  const pageSize = 10;
-  const startIndex = (currentPage - 1) * pageSize;
-  const endIndex = startIndex + pageSize;
-  const totalPages = Math.ceil(filteredData?.length / pageSize);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const currentItems = filteredData?.length && filteredData?.slice(startIndex, endIndex);
 
-  const currentData = filteredData?.slice(startIndex, endIndex);
-
-  const handleChangePage = (newPage) => {
-    setCurrentPage(newPage);
-  };
-
-  const renderPageNumbers = () => {
-    const startPage = Math.max(1, currentPage - Math.floor(pageSize / 2));
-    const endPage = Math.min(totalPages, startPage + pageSize - 1);
-
-    return (
-      <React.Fragment>
-        {/* First Page */}
-        {startPage > 1 && (
-          <li>
-            <button
-              className={`block h-8 w-8 rounded border border-gray-900 bg-white text-center leading-8 text-gray-900`}
-              onClick={() => handleChangePage(1)}
-            >
-              1
-            </button>
-          </li>
-        )}
-
-        {/* Current Page */}
-        {Array.from({ length: endPage - startPage + 1 }).map((_, index) => {
-          const pageNumber = startPage + index;
-          return (
-            <li key={pageNumber}>
-              <button
-                className={`block h-8 w-8 rounded border ${pageNumber === currentPage
-                  ? "border-blue-600 bg-blue-600 text-white"
-                  : "border-gray-900 bg-white text-center leading-8 text-gray-900"
-                  }`}
-                onClick={() => handleChangePage(pageNumber)}
-              >
-                {pageNumber}
-              </button>
-            </li>
-          );
-        })}
-
-        {/* Last Page */}
-        {endPage < totalPages && (
-          <li>
-            <button
-              className={`block h-8 w-8 rounded border border-gray-100 bg-white text-center leading-8 text-gray-100`}
-              onClick={() => handleChangePage(totalPages)}
-            >
-              {totalPages}
-            </button>
-          </li>
-        )}
-      </React.Fragment>
-    );
-  };
+  console.log('rck', currentItems);
 
   const updateStatus = (id, status) => {
     fetch(
@@ -204,36 +151,51 @@ const ManageRack = () => {
           />
         )}
 
-        <div className="relative w-3/5 my-6">
-          <input
-            type="text"
-            id="Search"
-            value={searchQuery}
-            onChange={handleSearch}
-            placeholder="Search for..."
-            className="w-full px-5 rounded-md border border-gray-900 py-2.5 pe-10 shadow-sm sm:text-sm"
-          />
+        <div className="flex items-center justify-between">
+          <div className="relative w-3/5 my-6">
+            <input
+              type="text"
+              id="Search"
+              value={searchQuery}
+              onChange={handleSearch}
+              placeholder="Search for..."
+              className="w-full px-5 rounded-md border border-gray-900 py-2.5 pe-10 shadow-sm sm:text-sm"
+            />
 
-          <span className="absolute inset-y-0 end-0 grid w-10 place-content-center">
-            <button type="button" className="text-gray-600 hover:text-gray-700">
-              <span className="sr-only">Search</span>
+            <span className="absolute inset-y-0 end-0 grid w-10 place-content-center">
+              <button type="button" className="text-gray-600 hover:text-gray-700">
+                <span className="sr-only">Search</span>
 
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth="1.5"
-                stroke="currentColor"
-                className="h-4 w-4 text-black"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
-                />
-              </svg>
-            </button>
-          </span>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth="1.5"
+                  stroke="currentColor"
+                  className="h-4 w-4 text-black"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
+                  />
+                </svg>
+              </button>
+            </span>
+          </div>
+
+          <div className="flex items-center gap-2">
+            <select
+              className="border w-[50px] px-1 py-2 text-sm rounded"
+              onChange={(e) => setItemsPerPage(e.target.value)}>
+              <option value={15}>15</option>
+              <option value={30}>30</option>
+              <option value={70}>70</option>
+              <option value={100}>100</option>
+
+
+            </select> <span className="text-sm">Entire per page</span>
+          </div>
         </div>
 
         <table className="table-auto w-full text-left whitespace-no-wrap">
@@ -257,7 +219,7 @@ const ManageRack = () => {
             </tr>
           </thead>
           <tbody>
-            {currentData.map((warehouse, index) => (
+            {currentItems?.map((warehouse, index) => (
               <tr key={index + warehouse._id} className="">
                 <td className="px-4 py-3">
                   <div className="flex gap-2 items-center">
@@ -303,49 +265,53 @@ const ManageRack = () => {
         </table>
       </div>
 
-      <div className="flex justify-center mt-4">
-        <ol className="flex justify-center gap-1 text-xs font-medium">
-          <li>
-            <button
-              className="inline-flex h-8 w-8 items-center justify-center rounded border border-gray-900 bg-white text-gray-900 rtl:rotate-180"
-              onClick={() => handleChangePage(Math.max(1, currentPage - 1))}
-              disabled={currentPage === 1}
-            >
-              <span className="sr-only">Prev Page</span>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-3 w-3"
-                viewBox="0 0 20 20"
-                fill="currentColor"
+      <div className="mx-auto flex justify-center">
+        <nav aria-label="Page navigation example">
+          <ul className="inline-flex -space-x-px">
+            <li>
+              <button
+                onClick={() => setCurrentPage(currentPage - 1)}
+                disabled={currentPage === 1}
+                className="bg-white border text-gray-500 hover:bg-gray-100 hover:text-gray-700 border-gray-300 leading-tight py-2 px-3 rounded-l-lg"
               >
-                <BiLeftArrow className="text-xl" />
-              </svg>
-            </button>
-          </li>
-
-          {renderPageNumbers()}
-
-          <li>
-            <button
-              className="inline-flex h-8 w-8 items-center justify-center rounded border border-gray-900 disabled:cursor-not-allowed bg-white text-gray-900 rtl:rotate-180"
-              onClick={() =>
-                handleChangePage(Math.min(totalPages, currentPage + 1))
-              }
-              disabled={currentPage === totalPages}
-            >
-              <span className="sr-only">Next Page</span>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-3 w-3"
-                viewBox="0 0 20 20"
-                fill="currentColor"
+                Prev
+              </button>
+            </li>
+            {Array.from(
+              { length: Math.ceil(filteredData?.length / itemsPerPage) },
+              (_, i) => (
+                <li key={i}>
+                  <button
+                    onClick={() => setCurrentPage(i + 1)}
+                    className={`bg-white border ${currentPage === i + 1
+                      ? "text-blue-600"
+                      : "text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+                      } border-gray-300 leading-tight py-2 px-3 rounded`}
+                  >
+                    {i + 1}
+                  </button>
+                </li>
+              )
+            )}
+            <li>
+              <button
+                onClick={() => setCurrentPage(currentPage + 1)}
+                disabled={
+                  currentPage ===
+                  Math.ceil(
+                    filteredData?.length &&
+                    filteredData?.length / itemsPerPage
+                  )
+                }
+                className="bg-white border text-gray-500 hover:bg-gray-100 hover:text-gray-700 border-gray-300 leading-tight py-2 px-3 rounded-r-lg"
               >
-                <BiRightArrow className="text-xl" />
-              </svg>
-            </button>
-          </li>
-        </ol>
+                Next
+              </button>
+            </li>
+          </ul>
+        </nav>
       </div>
+
     </div>
   );
 };
