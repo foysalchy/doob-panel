@@ -17,7 +17,7 @@ const ProductListCartSm = ({
 }) => {
   const addToFavorite = (favorite) => {
     delete favorite._id;
-    console.log(favorite);
+    console.log('fv:::', favorite);
     fetch("https://doob.dev/api/v1/shop/user/wishlist", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -144,9 +144,10 @@ const ProductListCartLg = ({
   handleIncrease,
   handleDecrease,
 }) => {
+
   const addToFavorite = (favorite) => {
     delete favorite._id;
-    console.log(favorite);
+    console.log('fv:::', favorite);
     fetch("https://doob.dev/api/v1/shop/user/wishlist", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
