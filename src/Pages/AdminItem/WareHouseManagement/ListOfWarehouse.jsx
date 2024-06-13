@@ -14,14 +14,13 @@ const ListOfWarehouse = () => {
   const { data: warehouses = [], refetch } = useQuery({
     queryKey: ["warehouses"],
     queryFn: async () => {
-      const res = await fetch(
-        "https://doob.dev/api/v1/admin/warehouse"
-      );
+      const res = await fetch("https://doob.dev/api/v1/admin/warehouse");
       const data = await res.json();
       return data;
     },
   });
 
+  console.log(warehouses);
   const { data: wareLength = [], refetch: reload } = useQuery({
     queryKey: ["wareLengthAdmin"],
     queryFn: async () => {
@@ -32,7 +31,6 @@ const ListOfWarehouse = () => {
       return data;
     },
   });
-
 
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -51,18 +49,15 @@ const ListOfWarehouse = () => {
       );
     });
 
-  console.log('flt', filteredData);
+  console.log("flt", filteredData);
   const [itemsPerPage, setItemsPerPage] = useState(parseInt(1));
 
   const [currentPage, setCurrentPage] = useState(1);
 
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
-  const currentItems = filteredData?.length && filteredData?.slice(startIndex, endIndex);
-
-
-
-
+  const currentItems =
+    filteredData?.length && filteredData?.slice(startIndex, endIndex);
 
   const updateStatus = (id, status) => {
     fetch(`https://doob.dev/api/v1/admin/warehouse/status/${id}`, {
@@ -104,6 +99,8 @@ const ListOfWarehouse = () => {
   const handleViewDetails = (ticketId) => {
     setOpenModal(ticketId);
   };
+
+  
 
   return (
     <div>
@@ -155,7 +152,10 @@ const ListOfWarehouse = () => {
             />
 
             <span className="absolute inset-y-0 end-0 grid w-10 place-content-center">
-              <button type="button" className="text-gray-600 hover:text-gray-700">
+              <button
+                type="button"
+                className="text-gray-600 hover:text-gray-700"
+              >
                 <span className="sr-only">Search</span>
 
                 <svg
@@ -179,14 +179,14 @@ const ListOfWarehouse = () => {
           <div className="flex items-center gap-2">
             <select
               className="border w-[50px] px-1 py-2 text-sm rounded"
-              onChange={(e) => setItemsPerPage(e.target.value)}>
+              onChange={(e) => setItemsPerPage(e.target.value)}
+            >
               <option value={15}>15</option>
               <option value={30}>30</option>
               <option value={70}>70</option>
               <option value={100}>100</option>
-
-
-            </select> <span className="text-sm">Entire per page</span>
+            </select>{" "}
+            <span className="text-sm">Entire per page</span>
           </div>
         </div>
 
@@ -212,127 +212,128 @@ const ListOfWarehouse = () => {
             </tr>
           </thead>
           <tbody>
-            {currentItems && currentItems.map((warehouse, index) => (
-              <tr key={index + warehouse._id} className="">
-                <td className="px-4 py-3">
-                  <div className="flex gap-2 items-center">
-                    <img
-                      className="h-10 w-10 object-fill"
-                      src={warehouse.img}
-                      srcSet={warehouse.img}
-                      alt=""
-                    />
-                    <div>
-                      <h2 className="font-medium text-gray-800  ">
-                        {warehouse.name}
-                      </h2>
-                      <p className="text-sm font-normal text-gray-600 text-gray-400">
-                        {warehouse.slag}
-                      </p>
+            {currentItems &&
+              currentItems.map((warehouse, index) => (
+                <tr key={index + warehouse._id} className="">
+                  <td className="px-4 py-3">
+                    <div className="flex gap-2 items-center">
+                      <img
+                        className="h-10 w-10 object-fill"
+                        src={warehouse.img}
+                        srcSet={warehouse.img}
+                        alt=""
+                      />
+                      <div>
+                        <h2 className="font-medium text-gray-800  ">
+                          {warehouse.name}
+                        </h2>
+                        <p className="text-sm font-normal text-gray-600 text-gray-400">
+                          {warehouse.slag}
+                        </p>
+                      </div>
                     </div>
-                  </div>
-                </td>
-                <td className="grid grid-cols-2 gap-1">
-                  <span>
-                    {" "}
-                    Area:{" "}
-                    {
-                      wareLength?.find(
-                        (item) => item.warehouse === warehouse.name
-                      )?.areas?.length
-                    }
-                  </span>
-
-                  <span>
-                    {" "}
-                    Racks:{" "}
-                    {
-                      wareLength?.find(
-                        (item) => item.warehouse === warehouse.name
-                      )?.racks?.length
-                    }
-                  </span>
-
-                  <span>
-                    {" "}
-                    Selfs:{" "}
-                    {
-                      wareLength?.find(
-                        (item) => item.warehouse === warehouse.name
-                      )?.selfs?.length
-                    }
-                  </span>
-
-                  <span>
-                    {" "}
-                    Cells:{" "}
-                    {
-                      wareLength?.find(
-                        (item) => item.warehouse === warehouse.name
-                      )?.cells?.length
-                    }
-                  </span>
-                </td>
-                <td className="px-4 py-3">{warehouse.address}</td>
-                <td className="px-4 py-3">
-                  {!warehouse.status ? (
-                    <button
-                      onClick={() => updateStatus(warehouse._id, true)}
-                      className="inline-flex items-center justify-center py-1 px-4 bg-red-500 rounded shadow-md hover:bg-red-700 focus:shadow-outline focus:outline-none"
-                    >
-                      Disable
-                    </button>
-                  ) : (
-                    <button
-                      onClick={() => updateStatus(warehouse._id, false)}
-                      className="inline-flex items-center justify-center py-1 px-4 bg-green-500 rounded shadow-md hover:bg-green-700 focus:shadow-outline focus:outline-none"
-                    >
-                      Enable
-                    </button>
-                  )}{" "}
-                </td>
-                <td className="px-4  text-2xl flex gap-2 py-6 items-center text-gray-100">
-                  <MdDelete
-                    className="text-red-500 cursor-pointer"
-                    onClick={() => DeleteWarehouse(warehouse._id)}
-                  />
-                  <BiEdit
-                    className="text-yellow-500 cursor-pointer"
-                    onClick={() => handleViewDetails(warehouse?._id)}
-                  />
-                </td>
-
-                <td className="">
-                  <button
-                    onClick={() =>
-                      setStatus({
-                        data: wareLength?.find(
+                  </td>
+                  <td className="grid grid-cols-2 gap-1">
+                    <span>
+                      {" "}
+                      Area:{" "}
+                      {
+                        wareLength?.find(
                           (item) => item.warehouse === warehouse.name
-                        ),
-                        id: warehouse._id,
-                      })
-                    }
-                    className="bg-yellow-600 p-2 rounded"
-                  >
-                    Show Preview
-                  </button>
-                </td>
+                        )?.areas?.length
+                      }
+                    </span>
 
-                {OpenModal === warehouse._id && (
-                  <div className="h-0 w-0">
-                    <EditWareHouse
-                      OpenModal={OpenModal}
-                      refetch={refetch}
-                      setOpenModal={setOpenModal}
-                      data={warehouse}
+                    <span>
+                      {" "}
+                      Racks:{" "}
+                      {
+                        wareLength?.find(
+                          (item) => item.warehouse === warehouse.name
+                        )?.racks?.length
+                      }
+                    </span>
+
+                    <span>
+                      {" "}
+                      Selfs:{" "}
+                      {
+                        wareLength?.find(
+                          (item) => item.warehouse === warehouse.name
+                        )?.selfs?.length
+                      }
+                    </span>
+
+                    <span>
+                      {" "}
+                      Cells:{" "}
+                      {
+                        wareLength?.find(
+                          (item) => item.warehouse === warehouse.name
+                        )?.cells?.length
+                      }
+                    </span>
+                  </td>
+                  <td className="px-4 py-3">{warehouse.address}</td>
+                  <td className="px-4 py-3">
+                    {!warehouse.status ? (
+                      <button
+                        onClick={() => updateStatus(warehouse._id, true)}
+                        className="inline-flex items-center justify-center py-1 px-4 bg-red-500 rounded shadow-md hover:bg-red-700 focus:shadow-outline focus:outline-none"
+                      >
+                        Disable
+                      </button>
+                    ) : (
+                      <button
+                        onClick={() => updateStatus(warehouse._id, false)}
+                        className="inline-flex items-center justify-center py-1 px-4 bg-green-500 rounded shadow-md hover:bg-green-700 focus:shadow-outline focus:outline-none"
+                      >
+                        Enable
+                      </button>
+                    )}{" "}
+                  </td>
+                  <td className="px-4  text-2xl flex gap-2 py-6 items-center text-gray-100">
+                    <MdDelete
+                      className="text-red-500 cursor-pointer"
+                      onClick={() => DeleteWarehouse(warehouse._id)}
                     />
-                  </div>
-                )}
-                {status.id === warehouse._id && (
-                  <ShowPreview status={status} setStatus={setStatus} />
-                )}
-              </tr>
-            ))}
+                    <BiEdit
+                      className="text-yellow-500 cursor-pointer"
+                      onClick={() => handleViewDetails(warehouse?._id)}
+                    />
+                  </td>
+
+                  <td className="">
+                    <button
+                      onClick={() =>
+                        setStatus({
+                          data: wareLength?.find(
+                            (item) => item.warehouse === warehouse.name
+                          ),
+                          id: warehouse._id,
+                        })
+                      }
+                      className="bg-yellow-600 p-2 rounded"
+                    >
+                      Show Preview
+                    </button>
+                  </td>
+
+                  {OpenModal === warehouse._id && (
+                    <div className="h-0 w-0">
+                      <EditWareHouse
+                        OpenModal={OpenModal}
+                        refetch={refetch}
+                        setOpenModal={setOpenModal}
+                        data={warehouse}
+                      />
+                    </div>
+                  )}
+                  {status.id === warehouse._id && (
+                    <ShowPreview status={status} setStatus={setStatus} />
+                  )}
+                </tr>
+              ))}
           </tbody>
         </table>
       </div>
@@ -355,10 +356,11 @@ const ListOfWarehouse = () => {
                 <li key={i}>
                   <button
                     onClick={() => setCurrentPage(i + 1)}
-                    className={`bg-white border ${currentPage === i + 1
-                      ? "text-blue-600"
-                      : "text-gray-500 hover:bg-gray-100 hover:text-gray-700"
-                      } border-gray-300 leading-tight py-2 px-3 rounded`}
+                    className={`bg-white border ${
+                      currentPage === i + 1
+                        ? "text-blue-600"
+                        : "text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+                    } border-gray-300 leading-tight py-2 px-3 rounded`}
                   >
                     {i + 1}
                   </button>
@@ -371,8 +373,7 @@ const ListOfWarehouse = () => {
                 disabled={
                   currentPage ===
                   Math.ceil(
-                    filteredData?.length &&
-                    filteredData?.length / itemsPerPage
+                    filteredData?.length && filteredData?.length / itemsPerPage
                   )
                 }
                 className="bg-white border text-gray-500 hover:bg-gray-100 hover:text-gray-700 border-gray-300 leading-tight py-2 px-3 rounded-r-lg"
@@ -383,8 +384,6 @@ const ListOfWarehouse = () => {
           </ul>
         </nav>
       </div>
-
-
     </div>
   );
 };
