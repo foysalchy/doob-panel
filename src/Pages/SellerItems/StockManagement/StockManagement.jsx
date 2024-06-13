@@ -12,9 +12,7 @@ const StockManagement = () => {
   const { data: stockRequest = [], refetch } = useQuery({
     queryKey: ["stockRequest"],
     queryFn: async () => {
-      const res = await fetch(
-        `https://doob.dev/api/v1/admin/stock-request`
-      );
+      const res = await fetch(`https://doob.dev/api/v1/admin/stock-request`);
       const data = await res.json();
       console.log(data, "data");
       return data?.data;
@@ -102,8 +100,8 @@ const StockManagement = () => {
 
   const filteredStockRequestData = searchQuery
     ? stockRequest.filter((item) =>
-      item._id.toLowerCase().includes(searchQuery.toLowerCase())
-    )
+        item._id.toLowerCase().includes(searchQuery.toLowerCase())
+      )
     : stockRequest;
 
   console.log(filteredStockRequestData, "filteredStockRequestData");
@@ -190,7 +188,7 @@ const StockManagement = () => {
                   className="py-3.5 px-4 text-sm font-normal border-r text-left rtl:text-right text-gray-500 text-gray-400"
                 >
                   <div className="flex items-center gap-x-3">
-                    <span>Ordered Id</span>
+                    <span>Stock Id</span>
                   </div>
                 </th>
                 <th
@@ -345,8 +343,8 @@ const StockManagement = () => {
                   <td className="px-4 py-4 text-lg text-gray-700 border-r  whitespace-nowrap">
                     <div className="flex items-center gap-x-2">
                       {itm?.status !== "reject" &&
-                        itm?.status !== "cancel" &&
-                        editMode === itm._id ? (
+                      itm?.status !== "cancel" &&
+                      editMode === itm._id ? (
                         <div className="flex gap-2 ">
                           <input
                             type="text"

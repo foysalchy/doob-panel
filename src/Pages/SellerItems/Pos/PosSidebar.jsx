@@ -1,13 +1,15 @@
 import React, { useContext, useEffect, useState } from "react";
 import { CgClose, CgShoppingCart } from "react-icons/cg";
 import { MdDeleteOutline } from "react-icons/md";
-import { useLocation } from 'react-router-dom';
+import { useLocation } from "react-router-dom";
 import clickAudio from "../../../../src/assets/sound_beep-29.mp3";
 import deleteSound from "../../../../src/assets/sound_button-21.mp3";
 import { AuthContext } from "../../../AuthProvider/UserProvider";
 import PosProductsDetails from "./PosProductsDetails";
+import Swal from "sweetalert2";
 const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
   const { shopInfo } = useContext(AuthContext);
+  console.log("🚀 ~ file: shopInfo:", shopInfo);
   const [open, setOpen] = useState(false);
   const [invoice, setInvoice] = useState({});
   const [isChecked, setIsChecked] = useState(false);
@@ -40,14 +42,13 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
     } else {
       setUser(false);
     }
-    SetUserCheck(false)
+    SetUserCheck(false);
   };
   const { pathname } = useLocation();
 
-
   useEffect(() => {
     if (pathname) {
-      gust_update(true)
+      gust_update(true);
     }
   }, [pathname]);
   console.log(user, "update user");
@@ -113,6 +114,7 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
       });
   };
 
+  console.log(user);
   const totalPrice = () => {
     return cartProducts.reduce((total, item) => {
       const discountedPrice = item.price - (item.discount || 0); // Subtract discount from item price
@@ -143,6 +145,7 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
   let changeAmount = calculateChange();
 
   console.log(changeAmount, "check amount");
+  console.log(user);
 
   const handleSubmit = () => {
     const items = cartProducts;
@@ -159,8 +162,39 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
       present,
       getaway,
     };
-    setInvoice(data);
-    setOpen(true);
+    if (changeAmount < 1 && user.email && user.email.trim() !== "") {
+      const bodyData = {
+        shopId: shopInfo?.shopId,
+        email: user?.email,
+        dueAmount: changeAmount,
+      };
+      console.log("🚀 ~ file: bodyData:", bodyData);
+      try {
+        fetch(`https://doob.dev/api/v1/seller/update-pos-user`, {
+          method: "PUT",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify(bodyData),
+        })
+          .then((res) => res.json())
+          .then((responseData) => {
+            // setLoading(false);
+            console.log(responseData);
+            if (responseData.status) {
+              Swal.fire("Success", "Submitted", "success");
+
+              setInvoice(data);
+              setOpen(true);
+            } else {
+              Swal.fire("error", responseData?.error, "error");
+            }
+          });
+      } catch (error) {
+        console.log(error);
+        Swal.fire("Success", error?.message ?? "failed to SUbmit", "error");
+      }
+    }
   };
 
   const handleDelete = (id) => {
@@ -181,9 +215,12 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
     e.preventDefault();
     const form = e.target;
     const name = form?.name.value ? form?.name.value : "Gest User";
-    const email = gest ? " " : form?.email.value;
-    const number = gest ? " " : form?.phoneNumber.value;
-    const address = gest ? " " : form?.phoneNumber.value;
+    const email = form?.email.value;
+    const number = form?.phoneNumber.value;
+    const address = form?.phoneNumber.value;
+    // const email = gest ? " " : form?.email.value;
+    // const number = gest ? " " : form?.phoneNumber.value;
+    // const address = gest ? " " : form?.phoneNumber.value;
 
     const data = {
       name,
@@ -191,12 +228,63 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
       number,
       address,
     };
+    console.log("🚀 ~ file:  data:", data);
+
+    const newUserData = {
+      name,
+      email,
+      shopId: shopInfo?.shopId,
+      phoneNumber: number,
+    };
+    // if (!email || email.trim() === "") {
+    //   console.log("email is empty");
+    //   Swal.fire("error",  "Your email is empty", "error");
+    //   return;
+    // }
+    console.log("🚀 ~ file: PosSidebar.jsx:203 ~ newUserData:", newUserData);
+    try {
+      fetch(`https://doob.dev/api/v1/seller/new-pos-user`, {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(newUserData),
+      })
+        .then((res) => res.json())
+        .then((responseData) => {
+          // setLoading(false);
+          console.log(responseData);
+          if (responseData.status) {
+            Swal.fire("Success", "Added New User", "success");
+
+            setUser(data);
+            setIsChecked(false);
+            SetUserCheck(true);
+            setGest(false);
+          } else {
+            Swal.fire(
+              "error",
+              responseData?.error ?? "Your email is empty",
+              "error"
+            );
+          }
+        });
+    } catch (error) {
+      console.log(error);
+      Swal.fire("Success", error?.message ?? "failed add the user", "error");
+    }
 
     console.log(data);
-    setUser(data);
-    setIsChecked(false);
-    SetUserCheck(true)
-    setGest(false)
+  };
+
+  console.log(user);
+  const isDisabled = () => {
+    if (user?.email && user.email.trim() !== "") {
+      console.log("yes");
+      return false; // Enable the button if user email exists
+    }
+    // Disable the button if changeAmount < -1 or cartProducts.length is 0
+    return changeAmount < -1 || !cartProducts.length;
   };
 
   return (
@@ -316,14 +404,23 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
               <div>
                 Total: <div>Tk.{totalPrice()}/=</div>
               </div>
+              {user?.dueAmount ? (
+                <div className="text-red-500 font-semibold">
+                  Prev Due: {user?.dueAmount}
+                </div>
+              ) : (
+                ""
+              )}
               <div>
-                Due:  <div
-                  className={`   ${changeAmount > 0
-                    ? "text-green-500"
-                    : changeAmount < 0
+                Due:{" "}
+                <div
+                  className={`   ${
+                    changeAmount > 0
+                      ? "text-green-500"
+                      : changeAmount < 0
                       ? "text-red-500"
                       : ""
-                    }`}
+                  }`}
                 >
                   Tk.{parseInt(changeAmount)}/=
                 </div>
@@ -345,16 +442,19 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
                 />
               </div>
               <div>
-                Paid: <div> <input
-                  defaultValue="0"
-                  value={cash}
-                  onChange={(e) => setCash(e.target.value)}
-                  type="number"
-                  className="bg-transparent px-2 text-right ring-1 w-[80px] ring-gray-300 rounded-md text-lg"
-                /></div>
+                Paid:{" "}
+                <div>
+                  {" "}
+                  <input
+                    defaultValue="0"
+                    value={cash}
+                    onChange={(e) => setCash(e.target.value)}
+                    type="number"
+                    className="bg-transparent px-2 text-right ring-1 w-[80px] ring-gray-300 rounded-md text-lg"
+                  />
+                </div>
               </div>
             </div>
-
 
             <div className="flex justify-between bg-white-400  py-2  items-start">
               <div className="">
@@ -430,8 +530,6 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
               </div>
             </div>
 
-
-
             <br />
             {
               <div>
@@ -498,15 +596,17 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
             <div>
               <div
                 onClick={() => setIsChecked(false)}
-                className={`fixed z-[100] flex items-center justify-center ${isChecked ? "visible opacity-100" : "invisible opacity-0"
-                  } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
+                className={`fixed z-[100] flex items-center justify-center ${
+                  isChecked ? "visible opacity-100" : "invisible opacity-0"
+                } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
               >
                 <div
                   onClick={(e_) => e_.stopPropagation()}
-                  className={`text- absolute w-[500px] rounded-sm bg-white p-6 drop-shadow-lg  ${isChecked
-                    ? "scale-1 opacity-1 duration-300"
-                    : "scale-0 opacity-0 duration-150"
-                    }`}
+                  className={`text- absolute w-[500px] rounded-sm bg-white p-6 drop-shadow-lg  ${
+                    isChecked
+                      ? "scale-1 opacity-1 duration-300"
+                      : "scale-0 opacity-0 duration-150"
+                  }`}
                 >
                   {/* <h1 className='flex gap-2'> <input onClick={() => { setExisting(!existing), setUser(false) }} type="checkbox" />Existing User ?</h1> */}
 
@@ -561,7 +661,7 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
                           name="name"
                           className="mt-1 p-2 w-full border rounded-md"
                           required
-                          onChange={(e) => setName(e.target.value)}
+                          // onChange={(e) => setName(e.target.value)}
                         />
                       </div>
 
@@ -574,12 +674,12 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
                         </label>
                         <input
                           type="email"
+                          required
                           id="email"
                           name="email"
                           defaultValue={user && !existing ? user?.email : ""}
                           className="mt-1 p-2 w-full border rounded-md"
-                          onChange={(e) => setEmail(e.target.value)}
-
+                          // onChange={(e) => setEmail(e.target.value)}
                         />
                       </div>
 
@@ -593,14 +693,16 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
                         <input
                           type="text"
                           id="phoneNumber"
+                          required
                           name="phoneNumber"
                           defaultValue={
                             user && !existing ? user?.phoneNumber : ""
                           }
                           className="mt-1 p-2 w-full border rounded-md"
-                          onChange={(e) => setPhoneNumber(e.target.value)}
-                          required
-                          min="10000000000" pattern="[0-9+]{11,}"
+                          // onChange={(e) => setPhoneNumber(e.target.value)}
+
+                          min="10000000000"
+                          pattern="[0-9+]{11,}"
                         />
                       </div>
 
@@ -643,13 +745,10 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
             </div>
             <button
               onClick={handleSubmit}
-              disabled={
-                changeAmount < -1 || !cartProducts.length ? true : false
-              }
-              className={`${changeAmount < -1 || !cartProducts.length
-                ? "bg-gray-500 cursor-not-allowed"
-                : "bg-gray-900"
-                } b text-white rounded-md p-2 w-full mt-3`}
+              disabled={isDisabled()}
+              className={`${
+                isDisabled() ? "bg-gray-500 cursor-not-allowed" : "bg-gray-900"
+              } b text-white rounded-md p-2 w-full mt-3`}
             >
               Submit
             </button>

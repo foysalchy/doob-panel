@@ -10,6 +10,8 @@ import Swal from "sweetalert2";
 import { AuthContext } from "../../../../AuthProvider/UserProvider";
 import DeleteModal from "../../../../Common/DeleteModal";
 import BrightAlert from "bright-alert";
+import AccessWareShopModal from "./AccessWareShopModal";
+import Select from "react-select";
 
 const SellerDomainManagement = () => {
   const { logOut, setUser, setShopInfo, setCookie } = useContext(AuthContext);
@@ -43,15 +45,12 @@ const SellerDomainManagement = () => {
   );
 
   const UpdateStatus = (id, status) => {
-    fetch(
-      `https://doob.dev/api/v1/shop/domainstatus/${id}?status=${status}`,
-      {
-        method: "Put",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    )
+    fetch(`https://doob.dev/api/v1/shop/domainstatus/${id}?status=${status}`, {
+      method: "Put",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
       .then((res) => res.json())
       .then((data) => {
         Swal.fire("status update", "", "success");
@@ -62,9 +61,7 @@ const SellerDomainManagement = () => {
   const directLogin = async (email) => {
     const userId = email.replace(/[@.]/g, "");
     let password = "";
-    await fetch(
-      `https://doob.dev/api/v1/admin/seller/pass/${userId}`
-    )
+    await fetch(`https://doob.dev/api/v1/admin/seller/pass/${userId}`)
       .then((res) => res.json())
       .then((data) => {
         password = data.password;
@@ -165,6 +162,8 @@ const SellerDomainManagement = () => {
       });
   };
 
+  const [isPreviewModal, setIsPreviewModal] = useState(false);
+
   return (
     <div className="">
       <div className="h-0 w-0">
@@ -255,8 +254,17 @@ const SellerDomainManagement = () => {
                           Email address
                         </th>
 
-                        <th scope="col" className="relative py-3.5 px-4">
-                          <span className="sr-only">Edit</span>
+                        <th
+                          scope="col"
+                          className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right  text-gray-400"
+                        >
+                          Edit
+                        </th>
+                        <th
+                          scope="col"
+                          className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right  text-gray-400"
+                        >
+                          Access SHop
                         </th>
                       </tr>
                     </thead>
@@ -368,6 +376,32 @@ const SellerDomainManagement = () => {
                               </button>
                             )}
                           </td>
+                          <td className="">
+                            {/* <Select
+                              options={[
+                                { value: "Merul Badda", label: "Merul Badda" },
+                                { value: "SarTest", label: "SarTest" },
+                                { value: "SarwarHouse", label: "SarwarHouse" },
+                              ]}
+                              isMulti={true}
+                              // defaultValue={FAQInfo?.permissions}
+                              getOptionLabel={(option) => option.name}
+                              getOptionValue={(option) => option.name}
+                              // onChange={handleWarehouseChange}
+                            /> */}
+                            <button
+                              onClick={() => setIsPreviewModal(shop)}
+                              className="text-black bg-slate-200 p-2 rounded "
+                            >
+                              Access
+                            </button>
+                          </td>
+                          {isPreviewModal.shopId === shop?.shopId && (
+                            <AccessWareShopModal
+                              isPreviewModal={isPreviewModal}
+                              setIsPreviewModal={setIsPreviewModal}
+                            />
+                          )}
                         </tr>
                       ))}
                     </tbody>

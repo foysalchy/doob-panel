@@ -31,6 +31,8 @@ const EditInventory = ({ refetch, open, setOpen, data }) => {
     setCount(parseInt(count) - 1);
   };
 
+  // console.log(count);
+  // console.log(count);
   const handleSubmit = () => {
     const stock = {
       productId: data._id,

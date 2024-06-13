@@ -15,9 +15,7 @@ const UserSearchHistory = () => {
   const { data: sellerSearch = [], refetch } = useQuery({
     queryKey: ["sellerSearch"],
     queryFn: async () => {
-      const res = await fetch(
-        `https://doob.dev/api/v1/seller/search-report`
-      );
+      const res = await fetch(`https://doob.dev/api/v1/seller/search-report`);
       const data = await res.json();
       console.log(data);
       return data?.data;
@@ -101,6 +99,9 @@ const UserSearchHistory = () => {
                   Time
                 </th>
                 <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-100">
+                  Searched Number
+                </th>
+                <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-100">
                   Action
                 </th>
                 {/* <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-100">
@@ -115,6 +116,9 @@ const UserSearchHistory = () => {
                   <tr key={searchSingle?._id}>
                     <td className="whitespace-nowrap  px-4 py-2 font-medium text-gray-900">
                       {searchSingle.term}
+                    </td>
+                    <td className="whitespace-nowrap  px-4 py-2 font-medium text-gray-900">
+                      {searchSingle?.quantity ?? 1}
                     </td>
 
                     <td className="whitespace-nowrap px-4 py-2 text-gray-700">

@@ -22,9 +22,10 @@ const WareHouse = ({ adminWare, setAdminWare, shopInfo }) => {
     setOptions((prev) => prev);
   }, [adminWare, selectedWarehouse]);
 
+  console.log(shopInfo, "shopInfo");
   const fetchData = async () => {
     const apiUrl = adminWare
-      ? "https://doob.dev/api/v1/admin/warehouse"
+      ? `https://doob.dev/api/v1/admin/warehouse/access-warehouse?shopId=${shopInfo?.shopId}`
       : `https://doob.dev/api/v1/seller/warehouse/get/${shopInfo._id}`;
 
     const res = await fetch(apiUrl);
