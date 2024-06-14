@@ -7,6 +7,7 @@ import deleteSound from "../../../../src/assets/sound_button-21.mp3";
 import { AuthContext } from "../../../AuthProvider/UserProvider";
 import PosProductsDetails from "./PosProductsDetails";
 import Swal from "sweetalert2";
+import PosPaymentModal from "./PosPaymentModal";
 const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
   const { shopInfo } = useContext(AuthContext);
   console.log("🚀 ~ file: shopInfo:", shopInfo);
@@ -17,6 +18,7 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
   const [existing, setExisting] = useState(false);
   const [user, setUser] = useState(false);
   const [error, setError] = useState(false);
+  const [isPreviewModal, setIsPreviewModal] = useState(false);
 
   // const [name, setName] = useState(user.name);
   // const [email, setEmail] = useState(user.email);
@@ -475,24 +477,23 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
                 <input
                   name="paymentMethod"
                   value="mobile_bank"
-                  onChange={(e) => setGetaway(e.target.value)}
+                  onChange={(e) => {
+                    setGetaway(e.target.value);
+                    setIsPreviewModal("mobile_bank");
+                  }}
                   type="radio"
                   className=""
                 />{" "}
                 Mobile Bank
               </label>
-              <label>
-                <input
-                  name="paymentMethod"
-                  value="card"
-                  onChange={(e) => setGetaway(e.target.value)}
-                  type="radio"
-                  className=""
-                />{" "}
-                Card
-              </label>
             </div>
-
+            {isPreviewModal === "mobile_bank" && (
+              <PosPaymentModal
+                isPreviewModal={isPreviewModal}
+                setIsPreviewModal={setIsPreviewModal}
+                setGetaway={setGetaway}
+              />
+            )}
             <div className=" ">
               <div className="flex justify-between flex-wrap mt-3 gap-2">
                 <button
