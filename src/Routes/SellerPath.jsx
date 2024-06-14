@@ -75,6 +75,7 @@ import FacebookPixel from "../Pages/SellerItems/Sittings/FacebookPixel/FacebookP
 import SellerEmail from "../Pages/SellerItems/Sittings/SellerEmail/SellerEmail";
 import SellerLoginCredintiial from "../Pages/SellerItems/Sittings/SellerLoaginCredintial/SellerLoginCredintiial";
 import SellerPaymentGetaway from "../Pages/SellerItems/Sittings/SellerPaymentGetway/SellerPaymentGetway";
+import SellerPosPayment from "../Pages/SellerItems/Sittings/SellerPaymentGetway/SellerPosPayment";
 import SellerShipping from "../Pages/SellerItems/Sittings/Shiping/SellerShiping";
 import AddNewStaff from "../Pages/SellerItems/StafManagement/AddNewStaff";
 import StafManagement from "../Pages/SellerItems/StafManagement/StafManagement";
@@ -162,6 +163,10 @@ const SellerPath = [
   {
     path: "settings/payment-management",
     element: <SellerPaymentGetaway />,
+  },
+  {
+    path: "settings/pos-payment-management",
+    element: <SellerPosPayment />,
   },
   {
     path: "settings/send-email",
@@ -455,7 +460,8 @@ const SellerPath = [
   {
     path: "report-management/warehouse-report",
     element: <WarehouseHistory />,
-  }, {
+  },
+  {
     path: "report-management/subscription-report",
     element: <SubscriptionReport />,
   },
