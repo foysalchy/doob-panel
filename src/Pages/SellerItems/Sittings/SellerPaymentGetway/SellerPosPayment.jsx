@@ -2,8 +2,9 @@ import { useQuery } from "@tanstack/react-query";
 import React, { useContext, useState } from "react";
 import { BsArrowRight } from "react-icons/bs";
 import { MdDelete } from "react-icons/md";
-import { AuthContext } from "../../../../AuthProvider/UserProvider";
+// import { AuthContext } from "../../../../AuthProvider/UserProvider";
 import Swal from "sweetalert2";
+import { AuthContext } from "../../../../AuthProvider/UserProvider";
 
 const SellerPosPayment = () => {
   const { shopInfo } = useContext(AuthContext);
@@ -16,13 +17,13 @@ const SellerPosPayment = () => {
     queryKey: ["getaway"],
     queryFn: async () => {
       const res = await fetch(
-        `https://doob.dev/api/v1/seller/payment-getaway/${shopInfo._id}`
+        `http://localhost:5001/api/v1/seller/pos-payment?shopId=${shopInfo.shopId}`
       );
       const data = await res.json();
       return data;
     },
   });
-
+  console.log(getawayData);
   const dataSubmit = (event) => {
     isLoading;
     event.preventDefault();
@@ -32,35 +33,21 @@ const SellerPosPayment = () => {
       Getaway: selectedMedia,
       // Add other fields based on the selected media
       ...(selectedMedia === "Bank" && {
-        BaseURL: event.target.BaseURL.value,
-        key: event.target.key.value,
-        Username: event.target.Username.value,
-        Password: event.target.Password.value,
-        Secret: event.target.Secret.value,
-      }),
-      ...(selectedMedia === "Nogod" && {
-        apiVersion: event.target.apiVersion.value,
-        BaseURL: event.target.BaseURL.value,
-        CallbackURL: event.target.CallbackURL.value,
-        MerchantID: event.target.MerchantID.value,
-        MerchantNumber: event.target.MerchantNumber.value,
-        PrivateKey: event.target.PrivateKey.value,
-        PublicKey: event.target.PublicKey.value,
-      }),
-      ...(selectedMedia === "AmarPay" && {
-        BaseURL: event.target.BaseURL.value,
-        StoreID: event.target.StoreID.value,
-        SignatureKey: event.target.SignatureKey.value,
-      }),
-      ...(selectedMedia === "Bank" && {
         bankName: event.target.bankName.value,
+        holderName: event.target.holderName.value,
         accountNumber: event.target.accountNumber.value,
+      }),
+      ...(selectedMedia === "Mobile" && {
+        mobileNumber: event.target.mobileNumber.value,
+        mobileType: event.target.mobileType.value,
+        name: event.target.name.value,
       }),
       shop_id: shopInfo._id,
       shopId: shopInfo.shopId,
     };
 
-    fetch(`https://doob.dev/api/v1/seller/payment-getaway`, {
+    console.log(formData);
+    fetch(`http://localhost:5001/api/v1/seller/pos-payment`, {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -69,8 +56,8 @@ const SellerPosPayment = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        if (data.message === false) {
-          Swal.fire(`Already exist ${selectedMedia}`, "", "info");
+        if (!data.status) {
+          Swal.fire(`${data?.message} ${selectedMedia}`, "", "info");
           refetch();
         } else {
           Swal.fire({
@@ -78,13 +65,14 @@ const SellerPosPayment = () => {
             title: "Getaway Added Successfully",
             text: "",
           });
+          event.target.reset();
+          setSelectedMedia("Choose your getaway");
         }
-        setSelectedMedia("Choose your getaway");
+
         refetch();
-        form.reset();
       });
 
-    event.target.reset();
+    // event.target.reset();
   };
 
   const [selectedMedia, setSelectedMedia] = useState("Choose your getaway");
@@ -93,7 +81,7 @@ const SellerPosPayment = () => {
   const handleGetaway = (event) => {
     const selectedValue = event.target.value;
 
-    if (selectedValue == "Choose your getaway") {
+    if (selectedValue === "Choose your getaway") {
       setDisable(true);
     } else {
       setDisable(false);
@@ -102,8 +90,8 @@ const SellerPosPayment = () => {
   };
 
   const deleteHandel = (id) => {
-    fetch(`https://doob.dev/api/v1/seller/payment-getaway/${id}`, {
-      method: "Delete",
+    fetch(`http://localhost:5001/api/v1/seller/pos-payment/${id}`, {
+      method: "DELETE",
       headers: {
         "content-type": "application/json",
       },
@@ -122,7 +110,7 @@ const SellerPosPayment = () => {
           <h1 className="text-2xl font-bold text-center">
             Publish your Pos Payment
           </h1>
-          <div className="md:p-10 p-4 border-2  rounded md:m-10 mt-6">
+          <div className="md:p-10 p-4 border-2 rounded md:m-10 mt-6">
             <form onSubmit={dataSubmit} className="w-full ">
               <div className="my-4">
                 <label className="sr-only text-black" htmlFor="title">
@@ -207,8 +195,6 @@ const SellerPosPayment = () => {
                     </label>
                     <select
                       name="mobileType"
-                      //   onChange={handleGetaway}
-                      //   value={selectedMedia}
                       id="mobileType"
                       className="flex-grow w-full re h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
                     >
@@ -223,7 +209,6 @@ const SellerPosPayment = () => {
                       {selectedMedia} Name
                     </label>
                     <input
-                      //   required
                       className="flex-grow w-full re h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
                       placeholder={selectedMedia + " Name*"}
                       type="text"
@@ -276,94 +261,58 @@ const SellerPosPayment = () => {
 
         <div className="border md:my-10 my-4 md:p-10 p-2">
           <p className="text-xl font-bold text-center">
-            You are upload {getawayData.length} Account Added{" "}
+            You have uploaded {getawayData?.data.length} Accounts
           </p>
-          <div className="flex flex-wrap items-center justify-center gap-4 mx-2 my-4 ">
-            {getawayData.map((get) => (
-              <div>
-                {get.Getaway === "Bank" && (
-                  <div className="group border relative block bg-white">
-                    <img
-                      alt="Developer"
-                      src="https://logos-download.com/wp-content/uploads/2022/01/Bank_Logo_icon-1536x1452.png"
-                      srcSet="https://logos-download.com/wp-content/uploads/2022/01/Bank_Logo_icon-1536x1452.png"
-                      className="absolute inset-0 p-4 object-cover opacity-75 transition-opacity group-hover:opacity-20"
-                    />
-
-                    <div className="relative p-4 sm:p-6 lg:p-8">
-                      <div className="">
-                        <button
-                          onClick={() => deleteHandel(get._id)}
-                          className="translate-y-8 transform opacity-0 transition-all bg-red-500 p-2 text-white group-hover:translate-y-0 group-hover:opacity-100"
-                        >
-                          <MdDelete />
-                        </button>
+          <div className="flex flex-wrap items-center justify-center gap-4 mx-2 my-4">
+            {getawayData?.data?.length &&
+              getawayData?.data?.map((get) => (
+                <div key={get._id}>
+                  {get.Getaway === "Bank" && (
+                    <div className="group border relative block bg-white">
+                      <img
+                        alt="Bank"
+                        src="https://shorturl.at/F1iAB"
+                        className="absolute inset-0 p-4 object-cover opacity-75 transition-opacity group-hover:opacity-20"
+                      />
+                      <div className="relative p-4 sm:p-6 lg:p-8">
+                        <div>
+                          <button
+                            onClick={() => deleteHandel(get._id)}
+                            className="translate-y-8 transform opacity-0 transition-all bg-red-500 p-2 text-white group-hover:translate-y-0 group-hover:opacity-100"
+                          >
+                            <MdDelete />
+                          </button>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                )}
-                {get.Getaway === "Nogod" && (
-                  <div className="group relative block border  bg-white">
-                    <img
-                      alt="Developer"
-                      src="https://download.logo.wine/logo/Nagad/Nagad-Vertical-Logo.wine.png"
-                      srcSet="https://download.logo.wine/logo/Nagad/Nagad-Vertical-Logo.wine.png"
-                      className="absolute inset-0 w-full mt-4 opacity-75 transition-opacity group-hover:opacity-20"
-                    />
-
-                    <div className="relative p-4 sm:p-6 lg:p-8">
-                      <div className="">
-                        <button
-                          onClick={() => deleteHandel(get._id)}
-                          className="translate-y-8 transform opacity-0 transition-all bg-red-500 p-2 text-white group-hover:translate-y-0 group-hover:opacity-100"
-                        >
-                          <MdDelete />
-                        </button>
+                  )}
+                  {get.Getaway === "Mobile" && (
+                    <div className="group relative block border bg-white">
+                      <img
+                        alt="Mobile"
+                        src={
+                          get?.mobileType === "Bkash"
+                            ? "https://shorturl.at/0Cbei"
+                            : get?.mobileType === "Nagad"
+                            ? "https://shorturl.at/Jhskq"
+                            : "https://shorturl.at/KfFHp"
+                        }
+                        className="absolute inset-0 p-4 w-full opacity-75 transition-opacity group-hover:opacity-20"
+                      />
+                      <div className="relative p-4 sm:p-6 lg:p-8">
+                        <div>
+                          <button
+                            onClick={() => deleteHandel(get._id)}
+                            className="translate-y-8 transform opacity-0 transition-all bg-red-500 p-2 text-white group-hover:translate-y-0 group-hover:opacity-100"
+                          >
+                            <MdDelete />
+                          </button>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                )}
-                {get.Getaway === "AmarPay" && (
-                  <div className="group relative block border  bg-white">
-                    <img
-                      alt="Developer"
-                      src="https://play-lh.googleusercontent.com/xA5zXoyQrqDjgz8bef64gAvnBpofTELWWWXYkuF3t5WnPADHv5Y91A8x51Z0RHJnLzM"
-                      srcSet="https://play-lh.googleusercontent.com/xA5zXoyQrqDjgz8bef64gAvnBpofTELWWWXYkuF3t5WnPADHv5Y91A8x51Z0RHJnLzM"
-                      className="absolute inset-0 p-4 w-full  opacity-75 transition-opacity group-hover:opacity-20"
-                    />
-
-                    <div className="relative p-4 sm:p-6 lg:p-8">
-                      <div className="">
-                        <button
-                          onClick={() => deleteHandel(get._id)}
-                          className="translate-y-8 transform opacity-0 transition-all bg-red-500 p-2 text-white group-hover:translate-y-0 group-hover:opacity-100"
-                        >
-                          <MdDelete />
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                )}
-                {get.Getaway === "Bank" && (
-                  <div className="group relative block border  bg-white">
-                    <div className="absolute inset-0 flex justify-center items-center p-4 w-full  opacity-75 transition-opacity group-hover:opacity-20">
-                      Bank
-                    </div>
-
-                    <div className="relative p-4 sm:p-6 lg:p-8">
-                      <div className="">
-                        <button
-                          onClick={() => deleteHandel(get._id)}
-                          className="translate-y-8 transform opacity-0 transition-all bg-red-500 p-2 text-white group-hover:translate-y-0 group-hover:opacity-100"
-                        >
-                          <MdDelete />
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                )}
-              </div>
-            ))}
+                  )}
+                </div>
+              ))}
           </div>
         </div>
       </div>
