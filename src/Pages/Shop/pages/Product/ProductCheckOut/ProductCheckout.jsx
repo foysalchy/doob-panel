@@ -133,6 +133,8 @@ const ProductCheckout = () => {
             <div className="rounded max-w-4xl p-6 bg-gray-200 text-gray-900 w-full">
               <div className="">
                 <div className=" ">
+
+                  
                   {defaultAddress ? (
                     <div className="grid md:grid-cols-2 grid-cols-1">
                       <div className="bg-gray-100 capitalize p-4 rounded hover:shadow-xl border">

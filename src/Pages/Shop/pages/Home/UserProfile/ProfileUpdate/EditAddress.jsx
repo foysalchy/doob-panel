@@ -12,7 +12,8 @@ const EditAddress = ({
   setNewAddress,
   setOpen,
 }) => {
-  const { shopUser, shopId, shop_id } = useContext(ShopAuthProvider);
+  const { shopUser, shopId, shop_id, setDefaultAddress } =
+    useContext(ShopAuthProvider);
 
   const [district, setDistrict] = useState("");
 
@@ -102,6 +103,7 @@ const EditAddress = ({
         setEditAddress(false);
         setNewAddress(false);
         setOpen(false);
+        setDefaultAddress(uploadData);
       })
       .catch((error) => {
         console.error("Error:", error);
