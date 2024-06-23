@@ -23,6 +23,7 @@ import ServicePaymentFailed from "../Pages/Home/Service/ServicePaymentFailed"
 import ServicePaymentSuccess from "../Pages/Home/Service/ServicePaymentSuccess"
 import SingleService from "../Pages/Home/Service/SingleService"
 import Profile from "../Pages/Profile/Profile"
+import PublicPosInvoice from "../Pages/SellerItems/PublicPosInvoice/PublicPosInvoice"
 import SellerShopInfo from "../Pages/SellerItems/SellerShopInfo/SellerShopInfo"
 import ServiceConfirmOrder from "../Pages/Shop/pages/ConfirmOrder/ServiceConfirmOrder"
 import UserPayment from "../Pages/UserItems/UserServiceCheckout/UserPayment"
@@ -46,11 +47,20 @@ const homePath = [
   },
   {
     path: "/sign-up",
-    element: <AuthError><SignUpSeller /></AuthError>,
+    element: (
+      <AuthError>
+        <SignUpSeller />
+      </AuthError>
+    ),
   },
   {
     path: "/sign-in",
-    element: <AuthError> <SignInSeller /></AuthError>,
+    element: (
+      <AuthError>
+        {" "}
+        <SignInSeller />
+      </AuthError>
+    ),
   },
   {
     path: "/forget-pass",
@@ -67,47 +77,48 @@ const homePath = [
     element: <Price />,
   },
   {
+    path: "/pos-invoice/:id",
+    element: (
+      <>
+        <ScrollToTop />
+        <PublicPosInvoice />
+      </>
+    ),
+  },
+  {
     path: "/services",
     element: <MainService />,
   },
   {
     path: "/services-payment-successful",
-    loader: () =>
-      fetch(`https://doob.dev/api/v1/admin/getaway`),
+    loader: () => fetch(`https://doob.dev/api/v1/admin/getaway`),
     element: <ServicePaymentSuccess />,
-
-
-  }
-  , {
+  },
+  {
     path: "/services-payment-failed",
     element: <ServicePaymentFailed />,
-
   },
   {
     path: "/service/:id",
     element: <SingleService />,
     loader: ({ params }) =>
-      fetch(`https://doob.dev/api/v1/admin/service/${params.id}`)
+      fetch(`https://doob.dev/api/v1/admin/service/${params.id}`),
   },
   {
     path: "user-service-checkout/:id",
     loader: ({ params }) =>
       fetch(`https://doob.dev/api/v1/admin/service/${params.id}`),
-    element: (
-      <UserServiceCheckout />
-    )
+    element: <UserServiceCheckout />,
   },
   {
-    path: 'service-confirm-order',
-    element: <ServiceConfirmOrder />
+    path: "service-confirm-order",
+    element: <ServiceConfirmOrder />,
   },
-  , {
+  ,
+  {
     path: "user-service-payment",
-    loader: () =>
-      fetch(`https://doob.dev/api/v1/admin/getaway`),
-    element: (
-      <UserPayment />
-    )
+    loader: () => fetch(`https://doob.dev/api/v1/admin/getaway`),
+    element: <UserPayment />,
   },
   {
     path: "/contact",
@@ -154,11 +165,9 @@ const homePath = [
   //     element: <CardProduct />,
   // },
   {
-    path: '/admin-track-order',
-    element: <AdminTrackOrder />
-
+    path: "/admin-track-order",
+    element: <AdminTrackOrder />,
   },
-
-]
+];
 
 export { homePath }

@@ -50,7 +50,7 @@ const PosPaymentModal = ({ isPreviewModal, setIsPreviewModal, setGetaway }) => {
   };
 
   console.log(getwayData);
-  console.log(getwayData[0].accountNumber);
+  // console.log(getwayData[0].accountNumber);
   const warehouseOptions = getwayData?.map((warehouse) => ({
     value: `${warehouse?.mobileType ?? warehouse?.bankName}  ${
       warehouse?.mobileNumber ?? warehouse?.accountNumber

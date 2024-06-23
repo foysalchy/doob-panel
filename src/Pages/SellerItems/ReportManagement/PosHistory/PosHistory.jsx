@@ -22,6 +22,7 @@ const PosHistory = () => {
     },
   });
 
+  console.log(posData);
   // Calculate total number of pages
   const totalPages = Math.ceil(posData.length / ITEMS_PER_PAGE);
 
@@ -61,6 +62,7 @@ const PosHistory = () => {
   }, [input, posData]);
 
 
+  
   return (
     <div>
       <section className="container px-4 mx-auto">
@@ -200,6 +202,7 @@ const PosHistory = () => {
                             setOpenInvoice={setOpenInvoice}
                             openInvoice={openInvoice}
                             invoice={itm.invoice}
+                            invoiceData={itm}
                           />
                         )}
                         <td className="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
