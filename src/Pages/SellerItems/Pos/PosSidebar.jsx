@@ -148,8 +148,10 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
 
   console.log(changeAmount, "check amount");
   console.log(user);
-
+  const [loading, setLoadingInvoice] = useState(false);
   const handleSubmit = () => {
+    console.log("yes");
+    setLoadingInvoice(true);
     const items = cartProducts;
     const total = totalPrice();
     const change = changeAmount;
@@ -164,7 +166,11 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
       present,
       getaway,
     };
-    if (changeAmount < 1 && user.email && user.email.trim() !== "") {
+    console.log("🚀  data:", data);
+    console.log(changeAmount);
+    console.log(user?.email);
+    // changeAmount < 1 && user.email && user.email.trim() !== ""
+    if (user.name=='Gust User' ||( changeAmount < 1 && user.email && user.email.trim() !== "")) {
       const bodyData = {
         shopId: shopInfo?.shopId,
         email: user?.email,
@@ -185,7 +191,7 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
             console.log(responseData);
             if (responseData.status) {
               Swal.fire("Success", "Submitted", "success");
-
+              setLoadingInvoice(false);
               setInvoice(data);
               setOpen(true);
             } else {
@@ -215,11 +221,12 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
+    console.log("yes");
     const form = e.target;
     const name = form?.name.value ? form?.name.value : "Gest User";
     const email = form?.email.value;
-    const number = form?.phoneNumber.value;
-    const address = form?.phoneNumber.value;
+    const number = form?.phoneNumber?.value;
+    const address = form?.phoneNumber?.value;
     // const email = gest ? " " : form?.email.value;
     // const number = gest ? " " : form?.phoneNumber.value;
     // const address = gest ? " " : form?.phoneNumber.value;
@@ -284,13 +291,17 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
     if (user?.email && user.email.trim() !== "") {
       console.log("yes");
       return false; // Enable the button if user email exists
+    } else if (user?.name === "Gust User") {
+      return false;
     }
     // Disable the button if changeAmount < -1 or cartProducts.length is 0
     return changeAmount < -1 || !cartProducts.length;
   };
 
-  console.log(getaway);
+  // console.log(isDisabled());
 
+  const disabledSUbmit = isDisabled();
+  console.log(disabledSUbmit);
   return (
     <div className=" h-full ">
       <div class="h-full flex flex-col">
@@ -751,12 +762,14 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
             </div>
             <button
               onClick={handleSubmit}
-              disabled={isDisabled()}
+              disabled={disabledSUbmit}
               className={`${
-                isDisabled() ? "bg-gray-500 cursor-not-allowed" : "bg-gray-900"
+                disabledSUbmit
+                  ? "bg-gray-500 cursor-not-allowed"
+                  : "bg-gray-900"
               } b text-white rounded-md p-2 w-full mt-3`}
             >
-              Submit
+              {loading ? "Loading......" : "    Submit"}
             </button>
           </div>
         </div>

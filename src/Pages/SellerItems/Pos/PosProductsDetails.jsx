@@ -27,7 +27,7 @@ const PosProductsDetails = ({
   const [existing, setExisting] = useState(false);
 
   const handleInvoiceSubmit = () => {
-    const data = {
+    const bodyData = {
       invoice,
       userInfo: {
         name,
@@ -40,27 +40,30 @@ const PosProductsDetails = ({
       date: new Date().getTime(),
     };
 
-    console.log(data, "data....");
+    console.log(bodyData, "data....");
 
     if (user.name || name) {
-      setPostData(data);
+      setPostData(bodyData);
       fetch(`https://doob.dev/api/v1/seller/pos-report`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify(bodyData),
       })
         .then((res) => res.json())
-        .then((data) => {
-          if (data.status) {
+        .then((resultData) => {
+          if (resultData.status) {
             // BrightAlert()
             setInvoiceOpen(true);
             setUser(false);
             setExisting(false);
             // setOpen(false)
+
             setError(false);
             setCartProducts([]);
+            bodyData["_id"] = resultData?.data?.insertedId;
+            setPostData(bodyData);
           } else {
             setError("User not found");
             setUser(false);

@@ -36,6 +36,7 @@ import ConfirmOrder from "../Pages/Shop/pages/ConfirmOrder/ConfirmOrder";
 import SellerConfirmOrder from "../Pages/Shop/pages/ConfirmOrder/SellerConfirmOrder";
 import SeeAllProduct from "../Pages/Home/Product/SeeAllProduct/SeeAllProduct";
 import SeeShopAllProduct from "../Pages/Shop/pages/Home/SeeShopAllProduct/SeeShopAllProduct";
+import PublicPosInvoice from "../Pages/SellerItems/PublicPosInvoice/PublicPosInvoice";
 
 const Router = createBrowserRouter([
   // Main Layout
@@ -238,6 +239,15 @@ const Router = createBrowserRouter([
         element: <SeeAllProduct />,
       },
     ],
+  },
+  {
+    path: "/pos-invoice/:id",
+    element: (
+      <>
+        <ScrollToTop />
+        <PublicPosInvoice />
+      </>
+    ),
   },
 ]);
 export default Router;
