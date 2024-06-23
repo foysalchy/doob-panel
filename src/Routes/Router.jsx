@@ -240,14 +240,6 @@ const Router = createBrowserRouter([
       },
     ],
   },
-  {
-    path: "/pos-invoice/:id",
-    element: (
-      <>
-        <ScrollToTop />
-        <PublicPosInvoice />
-      </>
-    ),
-  },
+ 
 ]);
 export default Router;
