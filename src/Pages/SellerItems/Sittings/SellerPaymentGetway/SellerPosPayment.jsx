@@ -261,7 +261,7 @@ const SellerPosPayment = () => {
 
         <div className="border md:my-10 my-4 md:p-10 p-2">
           <p className="text-xl font-bold text-center">
-            You have uploaded {getawayData?.data.length} Accounts
+            You have uploaded {getawayData?.data?.length} Accounts
           </p>
           <div className="flex flex-wrap items-center justify-center gap-4 mx-2 my-4">
             {getawayData?.data?.length &&

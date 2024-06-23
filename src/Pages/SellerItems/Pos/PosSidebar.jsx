@@ -289,6 +289,8 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
     return changeAmount < -1 || !cartProducts.length;
   };
 
+  console.log(getaway);
+
   return (
     <div className=" h-full ">
       <div class="h-full flex flex-col">
@@ -460,7 +462,10 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
 
             <div className="flex justify-between bg-white-400  py-2  items-start">
               <div className="">
-                <h3 className="text-lg">Payment Gateway:</h3>
+                <h3 className="text-lg">
+                  Payment Gateway{" "}
+                  <span className="text-green-700">({getaway})</span> :
+                </h3>
               </div>
               <label>
                 <input

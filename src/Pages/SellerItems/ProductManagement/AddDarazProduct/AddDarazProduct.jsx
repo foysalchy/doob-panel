@@ -10,6 +10,7 @@ import Variants from "../SellerAddProduct/Components/Variants";
 
 const AddDarazProduct = () => {
   const { shopInfo } = useContext(AuthContext);
+  // console.log("🚀 ~ file ~ shopInfo:", shopInfo.daraz);
   const [adminWare, setAdminWare] = useState(true);
   const [loading, setLoading] = useState(false);
 
@@ -234,7 +235,9 @@ const AddDarazProduct = () => {
   const handleChange = (event) => {
     const selectedOldId = event.target.value;
     console.log(selectedOldId);
-    const selectedShop = previousAccount.find(shop => shop._id === selectedOldId);
+    const selectedShop = previousAccount.find(
+      (shop) => shop._id === selectedOldId
+    );
     console.log(selectedShop, selectedOldId);
     setSelectedAccount(selectedOldId);
     if (selectedShop) {
@@ -242,9 +245,11 @@ const AddDarazProduct = () => {
     }
   };
 
+  console.log(shopInfo.daraz);
+
   return (
     <div>
-      {!shopInfo.daraz ? (
+      {shopInfo.daraz ? (
         <div>
           <div className="flex justify-end items-center gap-12 mt-8 w-full">
             <div className="bg-gray-50 px-4 py-2 rounded text-blue-500 flex items-center gap-2">
