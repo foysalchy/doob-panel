@@ -278,8 +278,9 @@ const SellerPosPayment = () => {
                         <div>
                           <button
                             onClick={() => deleteHandel(get._id)}
-                            className="translate-y-8 transform opacity-0 transition-all bg-red-500 p-2 text-white group-hover:translate-y-0 group-hover:opacity-100"
+                            className="translate-y-8 transform opacity-0 transition-all bg-red-500 p-2 text-white group-hover:translate-y-0 group-hover:opacity-100 flex flex-col items-center justify-between"
                           >
+                            <span>{get?.accountNumber}</span>
                             <MdDelete />
                           </button>
                         </div>
@@ -299,13 +300,18 @@ const SellerPosPayment = () => {
                         }
                         className="absolute inset-0 p-4 w-full opacity-75 transition-opacity group-hover:opacity-20"
                       />
-                      <div className="relative p-4 sm:p-6 lg:p-8">
+
+                      <div className="relative p-4 sm:p-3 lg:p-6">
                         <div>
+                          <div className="translate-y-8 transform opacity-0 transition-al group-hover:translate-y-0 group-hover:opacity-100">
+                            {get?.mobileNumber}
+                          </div>
                           <button
                             onClick={() => deleteHandel(get._id)}
                             className="translate-y-8 transform opacity-0 transition-all bg-red-500 p-2 text-white group-hover:translate-y-0 group-hover:opacity-100"
                           >
                             <MdDelete />
+                            {/* {get?.mobileNumber} */}
                           </button>
                         </div>
                       </div>
