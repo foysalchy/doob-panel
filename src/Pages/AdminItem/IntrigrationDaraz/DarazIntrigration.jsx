@@ -29,7 +29,7 @@ const DarazIntegration = () => {
 
   useEffect(() => {
     if (code) {
-      fetch("https://doob.dev/api/v1/daraz/get-key")
+      fetch("http://localhost:5001/api/v1/daraz/get-key")
         .then((res) => res.json())
         .then((data) => {
           console.log(data, "daraz");
@@ -54,7 +54,7 @@ const DarazIntegration = () => {
             url,
           };
 
-          fetch(`https://doob.dev/api/v1/daraz/addCode/${shopInfo._id}`, {
+          fetch(`http://localhost:5001/api/v1/daraz/addCode/${shopInfo._id}`, {
             method: "PUT",
             headers: {
               "Content-Type": "application/json",
@@ -92,7 +92,7 @@ const DarazIntegration = () => {
     queryKey: ["darazShopBd"],
     queryFn: async () => {
       const res = await fetch(
-        `https://doob.dev/api/v1/seller/seller-daraz-accounts?id=${shopInfo._id}`
+        `http://localhost:5001/api/v1/seller/seller-daraz-accounts?id=${shopInfo._id}`
       );
       const data = await res.json();
       return data.data[0];
@@ -107,13 +107,14 @@ const DarazIntegration = () => {
     queryKey: ["previousAccount"],
     queryFn: async () => {
       const res = await fetch(
-        `https://doob.dev/api/v1/daraz/get-privious-account?shopId=${shopInfo._id}`
+        `http://localhost:5001/api/v1/daraz/get-privious-account?shopId=${shopInfo._id}`
       );
       const data = await res.json();
       return data.data;
     },
   });
 
+  console.log(previousAccount);
   const {
     data: prices = [],
     isLoading: loadingPrice,
@@ -122,7 +123,7 @@ const DarazIntegration = () => {
     queryKey: ["subscriptionModal"],
     queryFn: async () => {
       const res = await fetch(
-        `https://doob.dev/api/v1/seller/subscription-model?priceId=${shopInfo?.priceId}&shopId=${shopInfo._id}`
+        `http://localhost:5001/api/v1/seller/subscription-model?priceId=${shopInfo?.priceId}&shopId=${shopInfo._id}`
       );
       const data = await res.json();
       return data?.data;
@@ -133,10 +134,10 @@ const DarazIntegration = () => {
   console.log(previousAccount.length);
   const switchAccount = (_id, id) => {
     console.log(
-      `https://doob.dev/api/v1/daraz/switching-your-daraz?id=${id}&loginId=${_id}`
+      `http://localhost:5001/api/v1/daraz/switching-your-daraz?id=${id}&loginId=${_id}`
     );
     fetch(
-      `https://doob.dev/api/v1/daraz/switching-your-daraz?id=${id}&loginId=${_id}`,
+      `http://localhost:5001/api/v1/daraz/switching-your-daraz?id=${id}&loginId=${_id}`,
       {
         method: "PATCH",
         headers: {
@@ -174,7 +175,7 @@ const DarazIntegration = () => {
           // aria-disabled={true}
           className={"bg-gray-300  py-6 text-center  rounded-md "}
         >
-          {prices?.result?.limitValue > previousAccount?.length ? (
+          {prices?.result?.limitValue < previousAccount?.length ? (
             <a
               href="https://api.daraz.com.bd/oauth/authorize?response_type=code&force_auth=true&redirect_uri=https://doob.com.bd/seller/channel-integration/&client_id=501436"
               className="text-blue-500 hover:underline mb-4 inline-block"
@@ -246,7 +247,7 @@ const DarazIntegration = () => {
             <option value="">{darazShop?.result?.account}</option>
             {previousAccount?.map((shop) => (
               <option key={shop._id} value={shop._id}>
-                {shop.result.account}
+                {shop?.shopInfo?.name ?? shop?.result?.account}
               </option>
             ))}
           </select>
