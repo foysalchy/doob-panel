@@ -114,6 +114,7 @@ const DarazIntegration = () => {
     },
   });
 
+  console.log(previousAccount);
   const {
     data: prices = [],
     isLoading: loadingPrice,
@@ -174,7 +175,7 @@ const DarazIntegration = () => {
           // aria-disabled={true}
           className={"bg-gray-300  py-6 text-center  rounded-md "}
         >
-          {prices?.result?.limitValue > previousAccount?.length ? (
+          {prices?.result?.limitValue < previousAccount?.length ? (
             <a
               href="https://api.daraz.com.bd/oauth/authorize?response_type=code&force_auth=true&redirect_uri=https://doob.com.bd/seller/channel-integration/&client_id=501436"
               className="text-blue-500 hover:underline mb-4 inline-block"
@@ -246,7 +247,7 @@ const DarazIntegration = () => {
             <option value="">{darazShop?.result?.account}</option>
             {previousAccount?.map((shop) => (
               <option key={shop._id} value={shop._id}>
-                {shop.result.account}
+                {shop?.shopInfo?.name ?? shop?.result?.account}
               </option>
             ))}
           </select>
