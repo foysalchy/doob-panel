@@ -29,7 +29,7 @@ const DarazIntegration = () => {
 
   useEffect(() => {
     if (code) {
-      fetch("http://localhost:5001/api/v1/daraz/get-key")
+      fetch("https://doob.dev/api/v1/daraz/get-key")
         .then((res) => res.json())
         .then((data) => {
           console.log(data, "daraz");
@@ -54,7 +54,7 @@ const DarazIntegration = () => {
             url,
           };
 
-          fetch(`http://localhost:5001/api/v1/daraz/addCode/${shopInfo._id}`, {
+          fetch(`https://doob.dev/api/v1/daraz/addCode/${shopInfo._id}`, {
             method: "PUT",
             headers: {
               "Content-Type": "application/json",
@@ -92,7 +92,7 @@ const DarazIntegration = () => {
     queryKey: ["darazShopBd"],
     queryFn: async () => {
       const res = await fetch(
-        `http://localhost:5001/api/v1/seller/seller-daraz-accounts?id=${shopInfo._id}`
+        `https://doob.dev/api/v1/seller/seller-daraz-accounts?id=${shopInfo._id}`
       );
       const data = await res.json();
       return data.data[0];
@@ -107,7 +107,7 @@ const DarazIntegration = () => {
     queryKey: ["previousAccount"],
     queryFn: async () => {
       const res = await fetch(
-        `http://localhost:5001/api/v1/daraz/get-privious-account?shopId=${shopInfo._id}`
+        `https://doob.dev/api/v1/daraz/get-privious-account?shopId=${shopInfo._id}`
       );
       const data = await res.json();
       return data.data;
@@ -123,7 +123,7 @@ const DarazIntegration = () => {
     queryKey: ["subscriptionModal"],
     queryFn: async () => {
       const res = await fetch(
-        `http://localhost:5001/api/v1/seller/subscription-model?priceId=${shopInfo?.priceId}&shopId=${shopInfo._id}`
+        `https://doob.dev/api/v1/seller/subscription-model?priceId=${shopInfo?.priceId}&shopId=${shopInfo._id}`
       );
       const data = await res.json();
       return data?.data;
@@ -134,10 +134,10 @@ const DarazIntegration = () => {
   console.log(previousAccount.length);
   const switchAccount = (_id, id) => {
     console.log(
-      `http://localhost:5001/api/v1/daraz/switching-your-daraz?id=${id}&loginId=${_id}`
+      `https://doob.dev/api/v1/daraz/switching-your-daraz?id=${id}&loginId=${_id}`
     );
     fetch(
-      `http://localhost:5001/api/v1/daraz/switching-your-daraz?id=${id}&loginId=${_id}`,
+      `https://doob.dev/api/v1/daraz/switching-your-daraz?id=${id}&loginId=${_id}`,
       {
         method: "PATCH",
         headers: {
