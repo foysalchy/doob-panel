@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import { useParams } from "react-router-dom";
+import LoaderData from "../../../Common/LoaderData";
 
 export default function PublicPosInvoice() {
   const { id } = useParams();
@@ -20,9 +21,12 @@ export default function PublicPosInvoice() {
   console.log(invoiceItemData);
   if (loadingInvoice) {
     return (
-      <h1 className="text-3xl min-h-[40vh]  text-center mt-9 ">
-        Loading Invoice Data ...
-      </h1>
+      <div>
+        <LoaderData />
+        <h1 className="text-3xl min-h-[40vh]  text-center mt-9 ">
+          Loading Invoice Data ...
+        </h1>
+      </div>
     );
   }
   return (
