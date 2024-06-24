@@ -39,8 +39,8 @@ import Logo from "../../../../assets/doobLightLogo.png";
 const SideNavberSeller = ({ responsive, setResponsive }) => {
   const { user, logOut, shopInfo } = useContext(AuthContext);
 
-  const { data: prices = {}, loader } = useQuery({
-    queryKey: ["prices"],
+  const { data: prices = {}, loader: loaderPrice } = useQuery({
+    queryKey: ["ShopPrices"],
     queryFn: async () => {
       const res = await fetch(
         `https://doob.dev/api/v1/seller/subscription-model?priceId=${shopInfo?.priceId}&shopId=${shopInfo?._id}`
@@ -50,8 +50,10 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
       return data?.data;
     },
   });
+
+  console.log(prices, "orderInfo");
   const managementPermission = (check) => {
-    console.log(prices?.result, "orderInfo");
+    console.log(prices, "orderInfo");
     const orderInfo = prices?.orderInfo;
     const MILLISECONDS_IN_A_DAY = 24 * 60 * 60 * 1000; // Number of milliseconds in a day
     const SEVEN_DAYS_IN_MILLISECONDS = 7 * MILLISECONDS_IN_A_DAY;
@@ -97,7 +99,8 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
     const isWithinFreeTrial = timeDifference < SEVEN_DAYS_IN_MILLISECONDS;
 
     // Calculate remaining and passed days if `prices.orderInfo` is available
-    if (prices.orderInfo) {
+    if (!loaderPrice && prices?.orderInfo) {
+      // console.log('yes')
       const remainingDays = Math.max(
         0,
         (paymentDate.getTime() +
@@ -107,6 +110,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
       );
       const passedDays = Math.floor(timeDifference / MILLISECONDS_IN_A_DAY);
 
+      // console.log(remainingDays, "remainingDays", passedDays, "remainingDays, passedDays",remainingDays - passedDays > 0);
       return remainingDays - passedDays > 0;
     } else {
       return isWithinFreeTrial;
@@ -124,7 +128,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
     prices,
     `https://doob.dev/api/v1/seller/subscription-model?priceId=${shopInfo?.priceId}&shopId=${shopInfo._id}`
   );
-
+  console.log(check_expired(), "check_expired");
   return (
     <div className=" sticky">
       <div
