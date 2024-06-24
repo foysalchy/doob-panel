@@ -6,12 +6,15 @@ import {
   FaLinkedin,
   FaRegClipboard,
   FaClipboardCheck,
+  FaShare,
 } from "react-icons/fa";
 
 const ShareButton = ({ text, url }) => {
   const [shareNow, setShareNow] = useState(false);
   const message = encodeURIComponent(text + " " + url);
 
+  console.log(text + " " + url);
+  console.log(message);
   const handleWhatsAppShare = () => {
     window.open(`https://wa.me/?text=${message}`, "_blank");
   };
@@ -42,21 +45,22 @@ const ShareButton = ({ text, url }) => {
   const handleCopy = () => {
     navigator.clipboard.writeText(url).then(() => {
       setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
+      setTimeout(() => setCopied(false), 1500);
     });
   };
 
   return (
     <div>
       <button
-        className="px-4 py-2 text-white rounded-md bg-blue-400 font-semibold mx-auto"
+        className="px-3 py-1 text-white rounded-md flex gap-1 bg-blue-400 font-semibold mx-auto"
         onClick={() => setShareNow(!shareNow)}
       >
-        Share{" "}
+        <span> Share {!shareNow && <span> Now </span>} </span>
+        <FaShare size={24} />
       </button>
       {shareNow && (
-        <section>
-          <div className="flex flex-col items-center justify-center bg-gray-100 py-2">
+        <section className="my-2">
+          <div className="flex flex-col items-center justify-center bg-gray-100 py-2 ">
             <h1 className="text-2xl font-bold mb-4">Share this content</h1>
             <div className="flex space-x-4 py-3">
               <button
@@ -86,18 +90,18 @@ const ShareButton = ({ text, url }) => {
             </div>
           </div>
           <div className="flex flex-col items-center justify-center bg-gray-100 mb-2 py-2">
-            <h1 className="text-2xl font-bold mb-4">Copy this URL</h1>
+            <h1 className="text-xl font-bold mb-4">Copy this URL</h1>
             <div className="flex items-center justify-center">
               <button
                 onClick={handleCopy}
-                className={`flex items-center justify-center p-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition duration-200 ${
-                  copied ? "bg-green-500 hover:bg-green-600" : ""
+                className={`flex items-center justify-center p-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition duration-200 ${
+                  copied ? "bg-green-600 hover:bg-green-700" : ""
                 }`}
               >
                 {copied ? (
                   <FaClipboardCheck size={24} />
                 ) : (
-                  <FaRegClipboard size={24} />
+                  <FaRegClipboard size={16} />
                 )}
                 <span className="ml-2">{copied ? "Copied!" : "Copy URL"}</span>
               </button>
