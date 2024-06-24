@@ -6,7 +6,7 @@ export default function PublicPosInvoice() {
   const { id } = useParams();
   console.log("🚀 ~ file: PublicPosInvoice ~ id:", id);
 
-  const { data: invoiceItemData = {} } = useQuery({
+  const { data: invoiceItemData = {}, isLoading: loadingInvoice } = useQuery({
     queryKey: ["invoiceItemData"],
     queryFn: async () => {
       const res = await fetch(
@@ -17,9 +17,16 @@ export default function PublicPosInvoice() {
     },
   });
 
-  //   console.log(invoiceItemData);
+  console.log(invoiceItemData);
+  if (loadingInvoice) {
+    return (
+      <h1 className="text-3xl min-h-[40vh]  text-center mt-9 ">
+        Loading Invoice Data ...
+      </h1>
+    );
+  }
   return (
-    <div className="min-h-[70vh] text-center max-w-[60%] mx-auto my-auto">
+    <div className="min-h-[70vh] text-center max-w-[60%] mx-auto my-auto pt-5 lg:pt-9">
       {" "}
       <ul className="">
         <li className="py-2 border-b border-gray-700">
@@ -28,11 +35,19 @@ export default function PublicPosInvoice() {
             <h2 className="text-sm font-semibold">Price</h2>
           </div>
         </li>
-        {invoiceItemData?.items?.map((itm, index) => (
+        {invoiceItemData?.invoice?.items?.map((itm, index) => (
           <li key={index} className="py-2 border-b border-gray-700">
             <div className="flex justify-between items-start">
-              <span>{`(${index + 1})`}</span>
-              <h2 className="w-[150px] text-sm">{itm?.name}</h2>
+              <div className="flex gap-2 ">
+                {" "}
+                <span>{`(${index + 1})`}</span>
+                <h2 className="w-[150px] text-sm">{itm?.name?.slice(0, 64)}</h2>
+                <img
+                  src={itm?.img}
+                  className="h-[64px] w-[70px] rounded"
+                  alt=""
+                />
+              </div>
               <div className="">
                 <h2 className="text-sm">৳ {itm?.price}</h2>
               </div>
@@ -45,6 +60,12 @@ export default function PublicPosInvoice() {
           <div className="flex justify-between">
             <h2 className="text-sm font-semibold">Total:</h2>
             <h2 className="text-sm">৳ {invoiceItemData?.invoice?.total}</h2>
+          </div>
+        </li>
+        <li className="py-2 border-b border-gray-700">
+          <div className="flex justify-between">
+            <h2 className="text-sm font-semibold">Discount:</h2>
+            <h2 className="text-sm">৳ {invoiceItemData?.invoice?.discount}</h2>
           </div>
         </li>
         <li className="py-2 border-b border-gray-700">

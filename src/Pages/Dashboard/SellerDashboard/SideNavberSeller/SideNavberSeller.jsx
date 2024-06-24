@@ -128,7 +128,7 @@ const SideNavberSeller = ({ responsive, setResponsive }) => {
     prices,
     `https://doob.dev/api/v1/seller/subscription-model?priceId=${shopInfo?.priceId}&shopId=${shopInfo._id}`
   );
-console.log(check_expired(), "check_expired");
+  console.log(check_expired(), "check_expired");
   return (
     <div className=" sticky">
       <div

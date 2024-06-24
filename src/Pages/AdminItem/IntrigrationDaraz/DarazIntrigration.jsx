@@ -3,11 +3,11 @@ import { useContext } from "react";
 import { AuthContext } from "../../../AuthProvider/UserProvider";
 import CryptoJS from "crypto-js";
 import { useQuery } from "@tanstack/react-query";
-import { data } from "autoprefixer";
+// import { data } from "autoprefixer";
 import Swal from "sweetalert2";
 import ModalForWoo from "./ModalForWoo";
-import { LuSwitchCamera } from "react-icons/lu";
-import { MdEmail } from "react-icons/md";
+// import { LuSwitchCamera } from "react-icons/lu";
+// import { MdEmail } from "react-icons/md";
 
 const DarazIntegration = () => {
   const { shopInfo, setShopInfo } = useContext(AuthContext);
@@ -114,7 +114,7 @@ const DarazIntegration = () => {
     },
   });
 
-  console.log(previousAccount);
+  // console.log(previousAccount);
   const {
     data: prices = [],
     isLoading: loadingPrice,
@@ -130,7 +130,7 @@ const DarazIntegration = () => {
     },
   });
 
-  console.log(parseInt(prices?.result?.limitValue));
+  // console.log(parseInt(prices?.result?.limitValue));
   // console.log(previousAccount.length);
   const switchAccount = (_id, id) => {
     console.log(
@@ -168,7 +168,7 @@ const DarazIntegration = () => {
     }
   };
 
-  console.log(prices?.result);
+  // console.log(prices?.result);
   return (
     <div>
       <div className="grid md:grid-cols-2 justify-between md:gap-10 gap-3 md:mt-10">
