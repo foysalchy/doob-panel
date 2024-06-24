@@ -18,7 +18,7 @@ const UserPayment = () => {
   const navigate = useNavigate();
   const [previewUrl, setPreviewUrl] = useState(false);
   const [fileName, setFileName] = useState(false);
-
+  const [paymentLoading, setPaymentLoading] = useState(false);
   const message = [
     "Exercise caution when making payments, ensuring that you only transact with reputable and secure platforms to safeguard your financial information.",
     "Always verify the legitimacy of the payment process, double-checking the recipient details and website security features before proceeding with any transactions.",
@@ -33,6 +33,7 @@ const UserPayment = () => {
   }, [orderStage]);
 
   const orderSubmit = () => {
+       setPaymentLoading(true);
     const data = orderStage;
     data.method = payment;
     data.timestamp = new Date().getTime();
@@ -59,6 +60,7 @@ const UserPayment = () => {
       .then((res) => res.json())
       .then((data) => {
         console.log("data payment", data);
+           setPaymentLoading(false);
         BrightAlert({ icon: "success" });
         navigate(`/service-confirm-order`);
       });
@@ -77,11 +79,13 @@ const UserPayment = () => {
 
   // ! bkash  payment
   const payWithBkash = async () => {
+       setPaymentLoading(true);
     const order = orderStage;
     order.method = payment;
     order.timestamp = new Date().getTime();
     order.userId = shopInfo._id ? shopInfo._id : user?._id;
-    order.callback = "https://doob.com.bd/services-payment-successful";
+    order.callback =
+      "https://doob.com.bd/services-payment-successful?collection=service";
     try {
       const response = await fetch(
         "https://doob.dev/api/v1/seller/bkash/payment/create",
@@ -94,9 +98,9 @@ const UserPayment = () => {
         }
       );
       const data = await response.json();
-      console.log(data.bkashURL);
-
-      window.location.href = data.bkashURL;
+      console.log(data?.bkashURL);
+   setPaymentLoading(false);
+      window.location.href = data?.bkashURL;
       console.log(data);
     } catch (error) {
       console.log(error);
@@ -104,11 +108,12 @@ const UserPayment = () => {
   };
   // ! amarpay  payment
   const payWithAmarPay = async () => {
+       setPaymentLoading(true);
     const order = orderStage;
     order.method = payment;
     order.timestamp = new Date().getTime();
     order.userId = shopInfo._id ? shopInfo._id : user?._id;
-    order.callback = "https://doob.com.bd/services-payment-successful";
+    order.callback = "https://doob.com.bd/services-payment-successful?collection=service";
     try {
       const response = await fetch(
         "https://doob.dev/api/v1/seller/amarpay/payment/create",
@@ -122,6 +127,7 @@ const UserPayment = () => {
       );
       const data = await response.json();
       console.log(data);
+         setPaymentLoading(false);
       if (data.payment_url) {
         window.location.href = data.payment_url;
       }
@@ -187,9 +193,10 @@ const UserPayment = () => {
                 <a href="#scrollDestination">
                   <div
                     onClick={() => setPayment(get)}
-                    className={`${payment?.Getaway === "Bkash" &&
+                    className={`${
+                      payment?.Getaway === "Bkash" &&
                       "shadow-lg shadow-gray-700"
-                      }   border border-gray-600 flex md:flex-col flex-row items-center justify-center gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] overflow-hidden`}
+                    }   border border-gray-600 flex md:flex-col flex-row items-center justify-center gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] overflow-hidden`}
                   >
                     <img
                       alt="Developer"
@@ -207,9 +214,10 @@ const UserPayment = () => {
                 <a href="#scrollDestination">
                   <div
                     onClick={() => setPayment(get)}
-                    className={`${payment?.Getaway === "Nogod" &&
+                    className={`${
+                      payment?.Getaway === "Nogod" &&
                       "shadow-lg shadow-gray-700"
-                      }  border border-gray-600 flex md:flex-col flex-row items-center justify-center gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] overflow-hidden`}
+                    }  border border-gray-600 flex md:flex-col flex-row items-center justify-center gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] overflow-hidden`}
                   >
                     <img
                       alt="Developer"
@@ -227,9 +235,10 @@ const UserPayment = () => {
                 <a href="#scrollDestination">
                   <div
                     onClick={() => setPayment(get)}
-                    className={`${payment?.Getaway === "AmarPay" &&
+                    className={`${
+                      payment?.Getaway === "AmarPay" &&
                       "shadow-lg shadow-gray-700"
-                      }  border border-gray-600 flex md:flex-col flex-row items-center justify-center gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] overflow-hidden`}
+                    }  border border-gray-600 flex md:flex-col flex-row items-center justify-center gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] overflow-hidden`}
                   >
                     <img
                       alt="Developer"
@@ -247,9 +256,10 @@ const UserPayment = () => {
                 <a href="#scrollDestination">
                   <div
                     onClick={() => setPayment(get)}
-                    className={`${payment?.Getaway === "AmarPay" &&
+                    className={`${
+                      payment?.Getaway === "AmarPay" &&
                       "shadow-lg shadow-gray-700"
-                      }  border border-gray-600 flex md:flex-col flex-row items-center justify-center gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] overflow-hidden`}
+                    }  border border-gray-600 flex md:flex-col flex-row items-center justify-center gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] overflow-hidden`}
                   >
                     <h4 className="mt-2  md:font-bold md:text-lg">
                       {get?.Getaway}
@@ -263,9 +273,10 @@ const UserPayment = () => {
           <a href="#scrollDestination">
             <div
               onClick={() => setPayment({ Getaway: "CashOnDelivery" })}
-              className={`${payment?.Getaway === "CashOnDelivery" &&
+              className={`${
+                payment?.Getaway === "CashOnDelivery" &&
                 "shadow-lg shadow-gray-700"
-                }  border border-gray-600 flex md:flex-col flex-row items-center justify-center  gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] overflow-hidden`}
+              }  border border-gray-600 flex md:flex-col flex-row items-center justify-center  gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] overflow-hidden`}
             >
               <img
                 alt="Developer"
@@ -281,9 +292,10 @@ const UserPayment = () => {
           <a href="#scrollDestination">
             <div
               onClick={() => setPayment({ Getaway: "Doob_Payment" })}
-              className={`${payment?.Getaway === "Doob_Payment" &&
+              className={`${
+                payment?.Getaway === "Doob_Payment" &&
                 "shadow-lg shadow-gray-700"
-                }  border border-gray-600 flex md:flex-col flex-row items-center justify-center  gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] overflow-hidden`}
+              }  border border-gray-600 flex md:flex-col flex-row items-center justify-center  gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] overflow-hidden`}
             >
               <h4 className="mt-2  md:font-bold md:text-lg">Doob Payment</h4>
             </div>
@@ -470,7 +482,8 @@ const UserPayment = () => {
 
                   <span className="text-lg font-medium transition-all group-hover:ms-4">
                     {" "}
-                    Pay Now {payment.Getaway}
+                    {paymentLoading ? `Loading...` : `Pay Now `}
+                    {payment.Getaway}
                   </span>
                 </button>
               </div>

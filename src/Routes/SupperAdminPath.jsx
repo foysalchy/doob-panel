@@ -625,10 +625,8 @@ const SupperAdminPath = [
   },
   {
     path: "daraz-account-management",
-    element: (
-      <DarazUserManagement/>
-    )
-  }
+    element: <DarazUserManagement />,
+  },
 ];
 
 export { SupperAdminPath };
