@@ -67,6 +67,12 @@ const ModalForPayment = ({
   const payWithBkash = async () => {
     setPaymentLoading(true);
     try {
+      const bkashBodyData = { amount: sellingPrice, userId: shopInfo._id };
+      bkashBodyData.method = "Bkash"
+      bkashBodyData.timestamp = new Date().getTime();
+      bkashBodyData.callback =
+        "https://doob.com.bd/services-payment-successful?collection=product";
+
       const response = await fetch(
         "https://doob.dev/api/v1/seller/bkash/payment/create",
         {
@@ -74,7 +80,7 @@ const ModalForPayment = ({
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ amount: sellingPrice, userId: shopInfo._id }),
+          body: JSON.stringify(bkashBodyData),
         }
       );
       const data = await response.json();

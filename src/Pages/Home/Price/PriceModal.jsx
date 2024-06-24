@@ -4,8 +4,9 @@ import { MdDelete } from "react-icons/md";
 import { AuthContext } from "../../../AuthProvider/UserProvider";
 import BrightAlert from "bright-alert";
 import { Link, useNavigate } from "react-router-dom";
+import LoaderData from "../../../Common/LoaderData";
 
-const PriceModal = ({ refetch, open, setOpen, }) => {
+const PriceModal = ({ refetch, open, setOpen }) => {
   console.log(open);
   const { shopInfo, setShopInfo, setCookie } = useContext(AuthContext);
   const [paymentMode, setPaymentMode] = useState(false);
@@ -23,8 +24,8 @@ const PriceModal = ({ refetch, open, setOpen, }) => {
     setTime(`${open?.six},6`);
   }, [open]);
 
-
   const [buyingPrice, setBuyingPrice] = useState(0);
+  const [paymentLoading, setPaymentLoading] = useState(false);
 
   const resetForm = () => {
     // setPaymentMode(false);
@@ -38,15 +39,10 @@ const PriceModal = ({ refetch, open, setOpen, }) => {
     // resetForm();
   };
 
-  const {
-    data: getawayData = [],
-    isLoading,
-  } = useQuery({
+  const { data: getawayData = [], isLoading } = useQuery({
     queryKey: ["getawayData"],
     queryFn: async () => {
-      const res = await fetch(
-        "https://doob.dev/api/v1/admin/getaway"
-      );
+      const res = await fetch("https://doob.dev/api/v1/admin/getaway");
       const data = await res.json();
       return data;
     },
@@ -77,7 +73,8 @@ const PriceModal = ({ refetch, open, setOpen, }) => {
   }
 
   const handleSubmit = () => {
-    const body = {
+    setPaymentLoading(true);
+    const bodyData = {
       paymentId: open?._id,
       shopId: shopInfo._id,
       getway: "Cash",
@@ -87,15 +84,15 @@ const PriceModal = ({ refetch, open, setOpen, }) => {
       endTime: calculateEndTime(time),
 
       time,
-      buyingPrice: parseInt(open?.price) * parseInt(time?.split(",")[1]) -
-        parseInt(time?.split(",")[0]) >
+      buyingPrice:
+        parseInt(open?.price) * parseInt(time?.split(",")[1]) -
+          parseInt(time?.split(",")[0]) >
         0
-        ? parseInt(open?.price) * parseInt(time?.split(",")[1]) -
-        parseInt(time?.split(",")[0])
-
-        : 0
+          ? parseInt(open?.price) * parseInt(time?.split(",")[1]) -
+            parseInt(time?.split(",")[0])
+          : 0,
     };
-    console.log(body, 'update');
+    console.log(bodyData, "update");
 
     if (shopInfo) {
       fetch(
@@ -105,7 +102,7 @@ const PriceModal = ({ refetch, open, setOpen, }) => {
           headers: {
             "content-type": "application/json",
           },
-          body: JSON.stringify(body),
+          body: JSON.stringify(bodyData),
         }
       )
         .then((res) => res.json())
@@ -113,22 +110,58 @@ const PriceModal = ({ refetch, open, setOpen, }) => {
           console.log(data);
           setOpen(false);
           if (data.success) {
+            setPaymentLoading(false);
             // data.shopInfo
             BrightAlert("Payment Successful", "", "success");
             setShopInfo(data.shopInfo);
             setCookie("SellerShop", JSON.stringify(data.shopInfo));
             setSelectGetWay(false);
             setTime("one,1");
-            resetForm()
-            refetch()
+            resetForm();
+            refetch();
           }
         });
     } else {
       navigate("/sign-up");
     }
   };
+  const payWithBkash = async () => {
+    setPaymentLoading(true);
+    try {
+      const bkashBodyData = {
+        amount: parseInt(open?.price),
+        userId: shopInfo._id,
+      };
+      bkashBodyData.method = "Bkash";
+      bkashBodyData.timestamp = new Date().getTime();
+      bkashBodyData.callback =
+        "https://doob.com.bd/services-payment-successful?collection=price";
 
+      console.log(bkashBodyData);
+      const response = await fetch(
+        "https://doob.dev/api/v1/seller/bkash/payment/create",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(bkashBodyData),
+        }
+      );
+      const data = await response.json();
+      console.log(data?.bkashURL);
+      setPaymentLoading(false);
+      if (data?.bkashURL) {
+        window.location.href = data.bkashURL;
+      }
+      // window.location.href = data.bkashURL;
+    } catch (error) {
+      setPaymentLoading(false);
+      console.log(error?.message);
+    }
+  };
   const pay_on_amar_pay = async (getway) => {
+    setPaymentLoading(true);
     let data = {
       paymentId: open?._id,
       shopId: shopInfo._id,
@@ -139,18 +172,20 @@ const PriceModal = ({ refetch, open, setOpen, }) => {
       collection: "price",
       time,
       endDate: time?.split(",")[1],
-      buyingPrice: parseInt(open?.price) * parseInt(time?.split(",")[1]) -
-        parseInt(time?.split(",")[0]) >
+      buyingPrice:
+        parseInt(open?.price) * parseInt(time?.split(",")[1]) -
+          parseInt(time?.split(",")[0]) >
         0
-        ? ` ৳${parseInt(open?.price) * parseInt(time?.split(",")[1]) -
-        parseInt(time?.split(",")[0])
-        }`
-        : "Contact With Doob"
-
+          ? ` ৳${
+              parseInt(open?.price) * parseInt(time?.split(",")[1]) -
+              parseInt(time?.split(",")[0])
+            }`
+          : "Contact With Doob",
     };
 
     if (shopInfo) {
-      data.callback = "https://doob.com.bd/services-payment-successful";
+      data.callback =
+        "https://doob.com.bd/services-payment-successful?collection=price";
       try {
         const response = await fetch(
           "https://doob.dev/api/v1/seller/amarpay/payment/create",
@@ -165,6 +200,7 @@ const PriceModal = ({ refetch, open, setOpen, }) => {
         const responseData = await response.json();
         console.log(responseData);
         if (responseData.payment_url) {
+          setPaymentLoading(false);
           window.location.href = responseData.payment_url;
         }
       } catch (error) {
@@ -179,8 +215,9 @@ const PriceModal = ({ refetch, open, setOpen, }) => {
 
   return (
     <div
-      className={`fixed left-0 top-0 right-0 bottom-0 flex h-full min-h-screen w-full z-[1000] bg-[#0000005b] items-center justify-center bg-dark/90 px-4 py-5 ${open ? "block" : "hidden"
-        }`}
+      className={`fixed left-0 top-0 right-0 bottom-0 flex h-full min-h-screen w-full z-[1000] bg-[#0000005b] items-center justify-center bg-dark/90 px-4 py-5 ${
+        open ? "block" : "hidden"
+      }`}
     >
       <div className="w-full max-w-[570px] rounded-[20px] bg-white px-8 py-12 text-center dark:bg-dark-2 md:px-[70px] md:py-[60px]">
         <h3 className="pb-[18px] text-xl font-semibold text-dark text-black sm:text-2xl">
@@ -192,52 +229,56 @@ const PriceModal = ({ refetch, open, setOpen, }) => {
 
         {paymentMode ? (
           <div className="grid grid-cols-3 gap-3">
-
-
             {getawayData.map((get) => (
               <div key={get._id}>
                 {get.Getaway === "Bkash" && (
                   <button
-                    className={`group relative block border  ${selectGetWay._id === get._id
-                      ? "border-blue-500"
-                      : "border-gray-100"
-                      }`}
+                    onClick={() => payWithBkash()}
+                    className={`group relative block border  ${
+                      selectGetWay._id === get._id
+                        ? "border-blue-500"
+                        : "border-gray-100"
+                    }`}
                   >
                     <img
                       alt="Developer"
                       src="https://logos-download.com/wp-content/uploads/2022/01/BKash_Logo_icon-1536x1452.png"
                       srcSet="https://logos-download.com/wp-content/uploads/2022/01/BKash_Logo_icon-1536x1452.png"
-                      className={`p-4 object-cover  transition-opacity ${selectGetWay._id === get._id ? "opacity-20" : ""
-                        }`}
+                      className={`p-4 object-cover  transition-opacity ${
+                        selectGetWay._id === get._id ? "opacity-20" : ""
+                      }`}
                     />
                   </button>
                 )}
                 {get.Getaway === "Nogod" && (
                   <button
                     onClick={() => setSelectGetWay(get)}
-                    className={`group relative block border  ${selectGetWay._id === get._id
-                      ? "border-blue-500"
-                      : "border-gray-100"
-                      }`}
+                    className={`group relative block border  ${
+                      selectGetWay._id === get._id
+                        ? "border-blue-500"
+                        : "border-gray-100"
+                    }`}
                   >
                     <img
                       alt="Developer"
                       src="https://download.logo.wine/logo/Nagad/Nagad-Vertical-Logo.wine.png"
                       srcSet="https://download.logo.wine/logo/Nagad/Nagad-Vertical-Logo.wine.png"
-                      className={`p-4 object-cover  transition-opacity ${selectGetWay._id === get._id
-                        ? "opacity-20"
-                        : "bg-gray-700"
-                        }`}
+                      className={`p-4 object-cover  transition-opacity ${
+                        selectGetWay._id === get._id
+                          ? "opacity-20"
+                          : "bg-gray-700"
+                      }`}
                     />
                   </button>
                 )}
                 {get.Getaway === "AmarPay" && (
                   <button
                     onClick={() => pay_on_amar_pay(get)}
-                    className={`group relative block border  ${selectGetWay._id === get._id
-                      ? "border-blue-500"
-                      : "border-gray-100"
-                      }`}
+                    className={`group relative block border  ${
+                      selectGetWay._id === get._id
+                        ? "border-blue-500"
+                        : "border-gray-100"
+                    }`}
                   >
                     <img
                       alt="Developer"
@@ -251,14 +292,16 @@ const PriceModal = ({ refetch, open, setOpen, }) => {
             {
               <button
                 onClick={() => handleSubmit()}
-                className={`group relative block border  ${selectGetWay === "Cash"
-                  ? "border-blue-500"
-                  : "border-gray-100"
-                  }`}
+                className={`group relative block border  ${
+                  selectGetWay === "Cash"
+                    ? "border-blue-500"
+                    : "border-gray-100"
+                }`}
               >
                 Cash
               </button>
             }
+            {paymentLoading && <LoaderData />}
           </div>
         ) : (
           <div className="flex items-center justify-between px-8 py-4 border border-blue-500 cursor-pointer rounded-xl">
@@ -278,16 +321,17 @@ const PriceModal = ({ refetch, open, setOpen, }) => {
               <h2 className=" font-medium text-gray-700 sm:text-xl ">
                 {open?.name}
               </h2>
-              Discount Price =   {time?.split(",")[0]}
+              Discount Price = {time?.split(",")[0]}
             </div>
             <div className="flex items-center justify-center">
               <h2 className="text-2xl font-semibold text-blue-600 flex sm:text-3xl">
                 {parseInt(open?.price) * parseInt(time?.split(",")[1]) -
                   parseInt(time?.split(",")[0]) >
-                  0
-                  ? ` ৳${parseInt(open?.price) * parseInt(time?.split(",")[1]) -
-                  parseInt(time?.split(",")[0])
-                  }`
+                0
+                  ? ` ৳${
+                      parseInt(open?.price) * parseInt(time?.split(",")[1]) -
+                      parseInt(time?.split(",")[0])
+                    }`
                   : "Contact With Doob"}
                 <span className="text-base flex-nowrap font-medium ml-1">
                   {parseInt(open?.price) * parseInt(time?.split(",")[1]) -
@@ -314,7 +358,7 @@ const PriceModal = ({ refetch, open, setOpen, }) => {
               id="HeadlineAct"
               defaultValue={`${open?.six},6`} // Set the value attribute to match the option for six months
               onChange={(e) => {
-                setTime(e.target.value)
+                setTime(e.target.value);
               }}
               className="mt-1.5 w-full py-2 my-4 border rounded-lg border-gray-300 text-gray-700 sm:text-sm"
             >
@@ -358,7 +402,7 @@ const PriceModal = ({ refetch, open, setOpen, }) => {
           </div>
           <div className="w-1/2 px-3">
             {!paymentMode &&
-              parseInt(open?.price) * parseInt(time?.split(",")[1]) -
+            parseInt(open?.price) * parseInt(time?.split(",")[1]) -
               parseInt(time?.split(",")[0]) >
               0 ? (
               <button
@@ -379,7 +423,7 @@ const PriceModal = ({ refetch, open, setOpen, }) => {
           </div>
         </div>
       </div>
-    </div >
+    </div>
   );
 };
 
