@@ -101,7 +101,7 @@ const DarazIntegration = () => {
 
   const {
     data: previousAccount = [],
-    isLoading: loading,
+    isLoading: loadingPreviousAccount,
     refetch: reload,
   } = useQuery({
     queryKey: ["previousAccount"],
@@ -120,7 +120,7 @@ const DarazIntegration = () => {
     isLoading: loadingPrice,
     refetch: refetchPrice,
   } = useQuery({
-    queryKey: ["subscriptionModal"],
+    queryKey: ["pricingPreviousAccount"],
     queryFn: async () => {
       const res = await fetch(
         `https://doob.dev/api/v1/seller/subscription-model?priceId=${shopInfo?.priceId}&shopId=${shopInfo._id}`
@@ -130,8 +130,8 @@ const DarazIntegration = () => {
     },
   });
 
-  console.log(prices?.result?.limitValue);
-  console.log(previousAccount.length);
+  console.log(parseInt(prices?.result?.limitValue));
+  // console.log(previousAccount.length);
   const switchAccount = (_id, id) => {
     console.log(
       `https://doob.dev/api/v1/daraz/switching-your-daraz?id=${id}&loginId=${_id}`
@@ -168,6 +168,7 @@ const DarazIntegration = () => {
     }
   };
 
+  console.log(prices?.result);
   return (
     <div>
       <div className="grid md:grid-cols-2 justify-between md:gap-10 gap-3 md:mt-10">
@@ -175,19 +176,24 @@ const DarazIntegration = () => {
           // aria-disabled={true}
           className={"bg-gray-300  py-6 text-center  rounded-md "}
         >
-          {prices?.result?.limitValue < previousAccount?.length ? (
-            <a
-              href="https://api.daraz.com.bd/oauth/authorize?response_type=code&force_auth=true&redirect_uri=https://doob.com.bd/seller/channel-integration/&client_id=501436"
-              className="text-blue-500 hover:underline mb-4 inline-block"
-            >
-              Login Daraz
-            </a>
+          {!loadingPrice && !loadingPreviousAccount ? (
+            parseInt(prices?.result?.limitValue) > previousAccount?.length ? (
+              <a
+                href="https://api.daraz.com.bd/oauth/authorize?response_type=code&force_auth=true&redirect_uri=https://doob.com.bd/seller/channel-integration/&client_id=501436"
+                className="text-blue-500 hover:underline mb-4 inline-block"
+              >
+                Login Daraz
+              </a>
+            ) : (
+              <button className="bg-disabled ">
+                Login Daraz
+                <span className="text-red-500 mx-1"> (limit finished)</span>
+              </button>
+            )
           ) : (
-            <button className="bg-disabled ">
-              Login Daraz
-              <span className="text-red-500 mx-1"> (limit finished)</span>
-            </button>
+            "Loading..."
           )}
+
           {/* 
                 {shopInfo.darazLogin && (
                     <div className="bg-green-100 border-l-4 border-green-500  py-6 text-center  rounded-md">
