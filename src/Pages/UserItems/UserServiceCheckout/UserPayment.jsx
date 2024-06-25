@@ -85,7 +85,7 @@ const UserPayment = () => {
     order.timestamp = new Date().getTime();
     order.userId = shopInfo._id ? shopInfo._id : user?._id;
     order.callback =
-      "http://localhost:5173/services-payment-successful?collection=service";
+      "https://doob.com.bd/services-payment-successful?collection=service";
     try {
       const response = await fetch(
         "http://localhost:5001/api/v1/seller/bkash/payment/create",
@@ -114,7 +114,7 @@ const UserPayment = () => {
     order.timestamp = new Date().getTime();
     order.userId = shopInfo._id ? shopInfo._id : user?._id;
     order.callback =
-      "http://localhost:5173/services-payment-successful?collection=service";
+      "https://doob.com.bd/services-payment-successful?collection=service";
     try {
       const response = await fetch(
         "https://doob.dev/api/v1/seller/amarpay/payment/create",

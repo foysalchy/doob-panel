@@ -163,7 +163,7 @@ const Payment = () => {
     bkashBodyData.normalPrice = orderStage?.promoHistory?.normalPrice;
     // bkashBodyData.callback = `https://doob.dev/shop/${params?.id}/user/success`;
     bkashBodyData.callback =
-      "http://localhost:5173/services-payment-successful?collection=shopProduct";
+      "https://doob.com.bd/services-payment-successful?collection=shopProduct";
     console.log(bkashBodyData, "order");
     // setLoadingPayment(true);
     try {

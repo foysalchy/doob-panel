@@ -64,7 +64,7 @@ const ModalForPayment = ({
     } else if (payment.Getaway === "Doob_Payment") {
       pay_with_doob();
     }
-  }
+  };
 
   console.log(sellingPrice);
   // console.log(banifit);
@@ -91,7 +91,7 @@ const ModalForPayment = ({
       bkashBodyData.method = payment;
       bkashBodyData.timestamp = new Date().getTime();
       bkashBodyData.callback =
-        "http://localhost:5173/services-payment-successful?collection=product";
+        "https://doob.com.bd/services-payment-successful?collection=product";
 
       console.log(bkashBodyData);
       const response = await fetch(
@@ -113,9 +113,8 @@ const ModalForPayment = ({
       // window.location.href = data.bkashURL;
     } catch (error) {
       console.log(error);
-      BrightAlert(`${ error.message }`);
-       setPaymentLoading(false);
-
+      BrightAlert(`${error.message}`);
+      setPaymentLoading(false);
     }
   };
 
