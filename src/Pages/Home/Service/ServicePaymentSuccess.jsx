@@ -138,7 +138,7 @@ const ServicePaymentSuccess = () => {
   const paymentGetWays = useLoaderData();
   const bkashInfo = paymentGetWays.find((get) => get.Getaway === "Bkash");
   const location = useLocation();
-  console.log("🚀 ~ location:", location)
+  console.log("🚀 ~ location:", location);
   const navigate = useNavigate();
   const [error, setError] = useState(null);
   console.log(
@@ -152,9 +152,12 @@ const ServicePaymentSuccess = () => {
   console.log("🚀 ~ collection:", collection);
 
   useEffect(() => {
-    const callbackURL = `https://doob.dev/api/v1/seller/bkash/payment/callback${location.search}?collection=${collection??"service"}`;
+    const callbackURL = `https://doob.dev/api/v1/seller/bkash/payment/callback${
+      location.search
+    }?collection=${collection ?? "service"}`;
 
     const fetchData = async () => {
+      console.log(bkashInfo);
       try {
         const response = await fetch(callbackURL, {
           method: "POST",

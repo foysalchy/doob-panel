@@ -6,7 +6,7 @@ import {
   FaCircle,
   FaFacebook,
   FaInstagram,
-  FaXTwitter
+  FaXTwitter,
 } from "react-icons/fa6";
 import {
   Link,
@@ -141,6 +141,7 @@ const FlashProduct = () => {
       }
       setLoader(false);
     } else {
+      console.log(addToCard);
       fetch(
         `https://doob.dev/api/v1/shop/user/add-to-cart?token=${shopUser._id}`,
         {
@@ -154,6 +155,7 @@ const FlashProduct = () => {
       )
         .then((res) => res.json())
         .then((data) => {
+          console.log("🚀 ~ file: FlashProduct.jsx:157 ~ .then ~ data:", data);
           setLoader(false);
           BrightAlert(data.message);
           console.log(data);

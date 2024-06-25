@@ -4,8 +4,10 @@ import { ShopAuthProvider } from "../../../../../AuthProvider/ShopAuthProvide";
 import BrightAlert from "bright-alert";
 import { data } from "autoprefixer";
 import PaymentAlert from "./PaymentAlert";
+import LoaderData from "../../../../../Common/LoaderData";
 
 const Payment = () => {
+  const [cartProducts, setCartProducts] = useState([]);
   const paymentGetWays = useLoaderData();
   const [open, setOpen] = useState(false);
   const { selectProductData, orderStage, shopUser, shop_id, shopInfo, user } =
@@ -105,15 +107,11 @@ const Payment = () => {
         });
     }
 
-
     for (let i = 0; i < orderStage?.productList.length; i++) {
       const product = orderStage?.productList[i];
-      handleRemove(!shopUser ? product?.productId : product?._id)
+      handleRemove(!shopUser ? product?.productId : product?._id);
     }
-
   };
-
-
 
   const handleRemove = (productId) => {
     setCartProducts((prevProducts) =>
@@ -144,8 +142,6 @@ const Payment = () => {
     }
   };
 
-
-
   const paymentHandler = async (payment) => {
     if (payment.Getaway === "Bkash") {
       await payWithBkash();
@@ -158,13 +154,17 @@ const Payment = () => {
   //   console.log(user);
   const payWithBkash = async () => {
     setLoadingPayment(true);
-    const order = orderStage;
-    order.method = payment;
-    order.timestamp = new Date().getTime();
-    order.userId = shop_id.shop_id;
-    order.normalPrice = orderStage?.promoHistory?.normalPrice;
-    order.callback = `https://doob.dev/shop/${params?.id}/user/success`;
-    console.log(order, "order");
+    const bkashBodyData = orderStage;
+    bkashBodyData.method = payment;
+    bkashBodyData.timestamp = new Date().getTime();
+    bkashBodyData.userId = shop_id.shop_id;
+    data.shopId = shop_id.shop_id;
+    data.shopUid = shopId;
+    bkashBodyData.normalPrice = orderStage?.promoHistory?.normalPrice;
+    // bkashBodyData.callback = `https://doob.dev/shop/${params?.id}/user/success`;
+    bkashBodyData.callback =
+      "https://doob.com.bd/services-payment-successful?collection=shopProduct";
+    console.log(bkashBodyData, "order");
     // setLoadingPayment(true);
     try {
       const response = await fetch(
@@ -174,7 +174,7 @@ const Payment = () => {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(order),
+          body: JSON.stringify(bkashBodyData),
         }
       );
       const data = await response.json();
@@ -262,9 +262,10 @@ const Payment = () => {
                 <a href="#scrollDestination">
                   <div
                     onClick={() => setPayment(get)}
-                    className={`${payment?.Getaway === "Bkash" &&
+                    className={`${
+                      payment?.Getaway === "Bkash" &&
                       "shadow-lg shadow-gray-700"
-                      }   border border-gray-600 flex md:flex-col flex-row items-center justify-center gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] overflow-hidden`}
+                    }   border border-gray-600 flex md:flex-col flex-row items-center justify-center gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] overflow-hidden`}
                   >
                     <img
                       alt="Developer"
@@ -282,9 +283,10 @@ const Payment = () => {
                 <a href="#scrollDestination">
                   <div
                     onClick={() => setPayment(get)}
-                    className={`${payment?.Getaway === "Nogod" &&
+                    className={`${
+                      payment?.Getaway === "Nogod" &&
                       "shadow-lg shadow-gray-700"
-                      }  border border-gray-600 flex md:flex-col flex-row items-center justify-center gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] overflow-hidden`}
+                    }  border border-gray-600 flex md:flex-col flex-row items-center justify-center gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] overflow-hidden`}
                   >
                     <img
                       alt="Developer"
@@ -302,9 +304,10 @@ const Payment = () => {
                 <a href="#scrollDestination">
                   <div
                     onClick={() => setPayment(get)}
-                    className={`${payment?.Getaway === "AmarPay" &&
+                    className={`${
+                      payment?.Getaway === "AmarPay" &&
                       "shadow-lg shadow-gray-700"
-                      }  border border-gray-600 flex md:flex-col flex-row items-center justify-center gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] overflow-hidden`}
+                    }  border border-gray-600 flex md:flex-col flex-row items-center justify-center gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] overflow-hidden`}
                   >
                     <img
                       alt="Developer"
@@ -322,9 +325,10 @@ const Payment = () => {
                 <a href="#scrollDestination">
                   <div
                     onClick={() => setPayment(get)}
-                    className={`${payment?.Getaway === "AmarPay" &&
+                    className={`${
+                      payment?.Getaway === "AmarPay" &&
                       "shadow-lg shadow-gray-700"
-                      }  border border-gray-600 flex md:flex-col flex-row items-center justify-center gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] overflow-hidden`}
+                    }  border border-gray-600 flex md:flex-col flex-row items-center justify-center gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] overflow-hidden`}
                   >
                     <h4 className="mt-2  md:font-bold md:text-lg">
                       {get?.Getaway}
@@ -338,9 +342,10 @@ const Payment = () => {
           <a href="#scrollDestination">
             <div
               onClick={() => setPayment({ Getaway: "CashOnDelivery" })}
-              className={`${payment?.Getaway === "CashOnDelivery" &&
+              className={`${
+                payment?.Getaway === "CashOnDelivery" &&
                 "shadow-lg shadow-gray-700"
-                }  border border-gray-600 flex md:flex-col flex-row items-center justify-center  gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] overflow-hidden`}
+              }  border border-gray-600 flex md:flex-col flex-row items-center justify-center  gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] overflow-hidden`}
             >
               <img
                 alt="Developer"
@@ -458,32 +463,39 @@ const Payment = () => {
             {payment.Getaway === "CashOnDelivery" ? (
               <div>
                 {loadingPayment ? (
-                  <div
-                    // onClick={() => orderSubmit()}
-                    className="group relative inline-flex m-auto items-center overflow-hidden rounded bg-gray-900 px-10 py-2 text-white focus:outline-none focus:ring active:bg-gray-900"
-                  >
-                    <span className="absolute -start-full transition-all group-hover:start-4">
-                      <svg
-                        className="h-5 w-5 rtl:rotate-180"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth="2"
-                          d="M17 8l4 4m0 0l-4 4m4-4H3"
-                        />
-                      </svg>
-                    </span>
-
+                  <div>
+                    {" "}
+                    <LoaderData />
                     <span className="text-lg font-medium transition-all group-hover:ms-4">
-                      Loading order
+                      Loading order ...
                     </span>
                   </div>
                 ) : (
+                  // <div
+                  //   // onClick={() => orderSubmit()}
+                  //   className="group relative inline-flex m-auto items-center overflow-hidden rounded bg-gray-900 px-10 py-2 text-white focus:outline-none focus:ring active:bg-gray-900"
+                  // >
+                  //   <span className="absolute -start-full transition-all group-hover:start-4">
+                  //     <svg
+                  //       className="h-5 w-5 rtl:rotate-180"
+                  //       xmlns="http://www.w3.org/2000/svg"
+                  //       fill="none"
+                  //       viewBox="0 0 24 24"
+                  //       stroke="currentColor"
+                  //     >
+                  //       <path
+                  //         strokeLinecap="round"
+                  //         strokeLinejoin="round"
+                  //         strokeWidth="2"
+                  //         d="M17 8l4 4m0 0l-4 4m4-4H3"
+                  //       />
+                  //     </svg>
+                  //   </span>
+
+                  //   <span className="text-lg font-medium transition-all group-hover:ms-4">
+                  //     Loading order ...
+                  //   </span>
+                  // </div>
                   <button
                     onClick={() => orderSubmit()}
                     className="group relative inline-flex m-auto items-center overflow-hidden rounded bg-gray-900 px-10 py-2 text-white focus:outline-none focus:ring active:bg-gray-900"
@@ -514,30 +526,11 @@ const Payment = () => {
             ) : payment.Getaway === "Bank" ? (
               <p>
                 {loadingPayment ? (
-                  <div
-                    // onClick={() => orderSubmit()}
-                    className="group relative inline-flex m-auto items-center overflow-hidden rounded bg-gray-900 px-10 py-2 text-white focus:outline-none focus:ring active:bg-gray-900"
-                  >
-                    <span className="absolute -start-full transition-all group-hover:start-4">
-                      <svg
-                        className="h-5 w-5 rtl:rotate-180"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth="2"
-                          d="M17 8l4 4m0 0l-4 4m4-4H3"
-                        />
-                      </svg>
-                    </span>
-
+                  <div>
+                    {" "}
+                    <LoaderData />
                     <span className="text-lg font-medium transition-all group-hover:ms-4">
-                      {" "}
-                      Loading ....{payment.Getaway}
+                      Loading order ...
                     </span>
                   </div>
                 ) : (

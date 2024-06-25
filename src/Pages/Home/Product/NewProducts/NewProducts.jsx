@@ -15,17 +15,14 @@ const NewProducts = () => {
   } = useQuery({
     queryKey: ["AdminNewProducts"],
     queryFn: async () => {
-      const res = await fetch(
-        `https://doob.dev/api/v1/admin/new-products`
-      );
+      const res = await fetch(`https://doob.dev/api/v1/admin/new-products`);
       const data = await res.json();
       return data;
     },
   });
 
-
   const data = [1, 2, 3, 4];
-  const blankImg = 'https://doob.dev/api/v1/image/66036ed3df13bd9930ac229c.jpg';
+  const blankImg = "https://doob.dev/api/v1/image/66036ed3df13bd9930ac229c.jpg";
   console.log(AdminNewProducts, "+");
   return (
     <div>
@@ -94,7 +91,7 @@ const NewProducts = () => {
                                 : product?.images[0]?.src
                             }
                             alt=""
-                            style={{ background: 'transparent' }}
+                            style={{ background: "transparent" }}
                             className="absolute duration-300 left-0 group-hover:-left-[110%] bg-transparent inset-0 h-full w-full object-cover opacity-100 group-hover:opacity-0"
                           />
                           <img
@@ -104,7 +101,7 @@ const NewProducts = () => {
                                 : blankImg
                             }
                             alt=""
-                            style={{ background: 'transparent' }}
+                            style={{ background: "transparent" }}
                             className="absolute duration-300 left-[110%] group-hover:-left-[0%] bg-transparent inset-0 h-full w-full object-cover opacity-0 group-hover:opacity-100"
                           />
 
@@ -122,7 +119,7 @@ const NewProducts = () => {
 
                         <div className="relative bg-white pt-3">
                           <h3 className="capitalize h-6 whitespace-nowrap overflow-hidden text-gray-700 group-hover:text-orange-500 group-hover:underline-offset-4">
-                            ....  {product.name}
+                            {product.name}
                           </h3>
 
                           <div className="mt-1.5 flex items-center justify-between text-gray-900">
@@ -133,7 +130,10 @@ const NewProducts = () => {
                                   {user ? product?.price : 0}
                                 </div>
                               ) : (
-                                <Link className="text-[12px] text-blue-500" to={"/sign-up"}>
+                                <Link
+                                  className="text-[12px] text-blue-500"
+                                  to={"/sign-up"}
+                                >
                                   Login to view Price
                                 </Link>
                               )}
