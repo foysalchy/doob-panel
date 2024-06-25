@@ -5,7 +5,7 @@ import {
   FaCircle,
   FaFacebook,
   FaInstagram,
-  FaXTwitter
+  FaXTwitter,
 } from "react-icons/fa6";
 
 import { useQuery } from "@tanstack/react-query";
@@ -38,8 +38,7 @@ const ProductInformation = () => {
   const [variations, setVariations] = useState(null);
   const [disOn, setDisOn] = useState(false);
   const [showVariant, setShowVariant] = useState(product.data.images);
-  const blankImg =
-    "https://doob.dev/api/v1/image/66036ed3df13bd9930ac229c.jpg";
+  const blankImg = "https://doob.dev/api/v1/image/66036ed3df13bd9930ac229c.jpg";
 
   const handleImageClick = (imageUrl) => {
     setSelectedImage(imageUrl);
@@ -107,8 +106,8 @@ const ProductInformation = () => {
         variations?.offerPrice !== undefined
           ? variations.offerPrice
           : variations?.price !== undefined
-            ? variations.price
-            : product.price,
+          ? variations.price
+          : product.price,
       regular_price: product.regular_price,
       productId: product._id,
       shopId: shop_id.shop_id,
@@ -140,23 +139,28 @@ const ProductInformation = () => {
       }
       setLoader(false);
     } else {
-      fetch(
-        `https://doob.dev/api/v1/shop/user/add-to-cart?token=${shopUser._id}`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "ngrok-skip-browser-warning": "69420",
-          },
-          body: JSON.stringify(addToCard),
-        }
-      )
-        .then((res) => res.json())
-        .then((data) => {
-          setLoader(false);
-          BrightAlert(data.message);
-          console.log(data);
-        });
+      try {
+        fetch(
+          `https://doob.dev/api/v1/shop/user/add-to-cart?token=${shopUser._id}`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "ngrok-skip-browser-warning": "69420",
+            },
+            body: JSON.stringify(addToCard),
+          }
+        )
+          .then((res) => res.json())
+          .then((data) => {
+            // console.log("🚀 ~ .then ~ data:", data);
+            setLoader(false);
+            BrightAlert(data.message);
+            console.log(data);
+          });
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
 
@@ -183,8 +187,8 @@ const ProductInformation = () => {
             variations?.offerPrice !== undefined
               ? variations.offerPrice
               : variations?.price !== undefined
-                ? variations.price
-                : product.price,
+              ? variations.price
+              : product.price,
           regular_price: product.regular_price,
           productId: product._id,
           shopId: shop_id.shop_id,
@@ -217,7 +221,7 @@ const ProductInformation = () => {
   const totalStars =
     comments?.length &&
     comments?.reduce((total, comment) => total + comment.star, 0) /
-    comments?.length;
+      comments?.length;
 
   const convertedRating = (` ${totalStars}` / 10) * 5 || 0;
 
@@ -326,35 +330,43 @@ const ProductInformation = () => {
                 <div>
                   <div className="h-64  md:h-[22rem] rounded-lg bg-gray-100 mb-4">
                     <div className="h-64 md:h-full rounded-lg bg-gray-100 mb-4 flex items-center justify-center">
-
-                      {
-                        selectedImage ? (<img
+                      {selectedImage ? (
+                        <img
                           className="md:w-94 w-full object-cover border rounded h-full"
                           src={selectedImage}
                           srcSet={selectedImage}
                           alt="Selected Image"
-                        />)
-                          :
-                          (<div className="w-full">
-                            {
-                              product?.data?.videos ? <div className="w-full h-full relative">
-                                <VideoPlayer thum={''} url={product?.data?.videos} />
-                              </div> : <img
-                                className="md:w-94 w-full object-cover h-full rounded-lg"
-                                src={product?.data?.images[0].src}
-                                srcSet={product?.data?.images[0].src}
-                                alt="product image"
+                        />
+                      ) : (
+                        <div className="w-full">
+                          {product?.data?.videos ? (
+                            <div className="w-full h-full relative">
+                              <VideoPlayer
+                                thum={""}
+                                url={product?.data?.videos}
                               />
-                            }
-                          </div>)
-                      }
-
+                            </div>
+                          ) : (
+                            <img
+                              className="md:w-94 w-full object-cover h-full rounded-lg"
+                              src={product?.data?.images[0].src}
+                              srcSet={product?.data?.images[0].src}
+                              alt="product image"
+                            />
+                          )}
+                        </div>
+                      )}
                     </div>
                   </div>
                   <div className="grid grid-cols-6 md:grid-cols-4 lg:grid-cols- gap-2 -m-4 text-white">
-                    {product?.data?.videos && <button className="bg-[#00000081] text-white flex items-center justify-center rounded text-xl  relative md:h-16 h-14 mt-4 overflow-hidden border border-[black]" onClick={() => setSelectedImage(null)}>
-                      <PiPlay />
-                    </button>}
+                    {product?.data?.videos && (
+                      <button
+                        className="bg-[#00000081] text-white flex items-center justify-center rounded text-xl  relative md:h-16 h-14 mt-4 overflow-hidden border border-[black]"
+                        onClick={() => setSelectedImage(null)}
+                      >
+                        <PiPlay />
+                      </button>
+                    )}
                     {showVariant?.map((imageUrl, index) => (
                       <div
                         onClick={() => setVariations(null)}
@@ -645,7 +657,10 @@ const ProductInformation = () => {
         </div>
       </div>
       <div>
-        <div onClick={() => setDisOn(!disOn)} className={`${disOn ? 'h-full' : 'h-[600px]'} overflow-hidden`}>
+        <div
+          onClick={() => setDisOn(!disOn)}
+          className={`${disOn ? "h-full" : "h-[600px]"} overflow-hidden`}
+        >
           <h2 className="border-b">
             <span className="font-medium text-xl text-blue-500 border-b-2 border-blue-500">
               Description
