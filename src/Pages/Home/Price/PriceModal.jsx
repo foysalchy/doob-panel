@@ -125,14 +125,15 @@ const PriceModal = ({ refetch, open, setOpen }) => {
       navigate("/sign-up");
     }
   };
-  const payWithBkash = async () => {
+  const payWithBkash = async (method) => {
+    console.log(method);
     setPaymentLoading(true);
     try {
       const bkashBodyData = {
         amount: parseInt(open?.price),
         userId: shopInfo._id,
       };
-      bkashBodyData.method = "Bkash";
+      bkashBodyData.method = method;
       bkashBodyData.getway = "Bkash";
       bkashBodyData.paymentId = open?._id;
       bkashBodyData.priceName = open?.name;
@@ -152,6 +153,7 @@ const PriceModal = ({ refetch, open, setOpen }) => {
         "http://localhost:5173/services-payment-successful?collection=price";
 
       console.log(bkashBodyData);
+      // return;
       const response = await fetch(
         "http://localhost:5001/api/v1/seller/bkash/payment/create",
         {
@@ -170,6 +172,7 @@ const PriceModal = ({ refetch, open, setOpen }) => {
       }
       // window.location.href = data.bkashURL;
     } catch (error) {
+      BrightAlert(error?.message, "", "error");
       setPaymentLoading(false);
       console.log(error?.message);
     }
@@ -247,7 +250,7 @@ const PriceModal = ({ refetch, open, setOpen }) => {
               <div key={get._id}>
                 {get.Getaway === "Bkash" && (
                   <button
-                    onClick={() => payWithBkash()}
+                    onClick={() => payWithBkash(get)}
                     className={`group relative block border  ${
                       selectGetWay._id === get._id
                         ? "border-blue-500"
