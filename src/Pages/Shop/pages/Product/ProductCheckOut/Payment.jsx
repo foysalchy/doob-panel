@@ -105,15 +105,11 @@ const Payment = () => {
         });
     }
 
-
     for (let i = 0; i < orderStage?.productList.length; i++) {
       const product = orderStage?.productList[i];
-      handleRemove(!shopUser ? product?.productId : product?._id)
+      handleRemove(!shopUser ? product?.productId : product?._id);
     }
-
   };
-
-
 
   const handleRemove = (productId) => {
     setCartProducts((prevProducts) =>
@@ -144,8 +140,6 @@ const Payment = () => {
     }
   };
 
-
-
   const paymentHandler = async (payment) => {
     if (payment.Getaway === "Bkash") {
       await payWithBkash();
@@ -158,13 +152,17 @@ const Payment = () => {
   //   console.log(user);
   const payWithBkash = async () => {
     setLoadingPayment(true);
-    const order = orderStage;
-    order.method = payment;
-    order.timestamp = new Date().getTime();
-    order.userId = shop_id.shop_id;
-    order.normalPrice = orderStage?.promoHistory?.normalPrice;
-    order.callback = `https://doob.dev/shop/${params?.id}/user/success`;
-    console.log(order, "order");
+    const bkashBodyData = orderStage;
+    bkashBodyData.method = payment;
+    bkashBodyData.timestamp = new Date().getTime();
+    bkashBodyData.userId = shop_id.shop_id;
+    data.shopId = shop_id.shop_id;
+    data.shopUid = shopId;
+    bkashBodyData.normalPrice = orderStage?.promoHistory?.normalPrice;
+    // bkashBodyData.callback = `https://doob.dev/shop/${params?.id}/user/success`;
+    bkashBodyData.callback =
+      "https://doob.com.bd/services-payment-successful?collection=shopProduct";
+    console.log(bkashBodyData, "order");
     // setLoadingPayment(true);
     try {
       const response = await fetch(
@@ -174,7 +172,7 @@ const Payment = () => {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(order),
+          body: JSON.stringify(bkashBodyData),
         }
       );
       const data = await response.json();
@@ -262,9 +260,10 @@ const Payment = () => {
                 <a href="#scrollDestination">
                   <div
                     onClick={() => setPayment(get)}
-                    className={`${payment?.Getaway === "Bkash" &&
+                    className={`${
+                      payment?.Getaway === "Bkash" &&
                       "shadow-lg shadow-gray-700"
-                      }   border border-gray-600 flex md:flex-col flex-row items-center justify-center gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] overflow-hidden`}
+                    }   border border-gray-600 flex md:flex-col flex-row items-center justify-center gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] overflow-hidden`}
                   >
                     <img
                       alt="Developer"
@@ -282,9 +281,10 @@ const Payment = () => {
                 <a href="#scrollDestination">
                   <div
                     onClick={() => setPayment(get)}
-                    className={`${payment?.Getaway === "Nogod" &&
+                    className={`${
+                      payment?.Getaway === "Nogod" &&
                       "shadow-lg shadow-gray-700"
-                      }  border border-gray-600 flex md:flex-col flex-row items-center justify-center gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] overflow-hidden`}
+                    }  border border-gray-600 flex md:flex-col flex-row items-center justify-center gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] overflow-hidden`}
                   >
                     <img
                       alt="Developer"
@@ -302,9 +302,10 @@ const Payment = () => {
                 <a href="#scrollDestination">
                   <div
                     onClick={() => setPayment(get)}
-                    className={`${payment?.Getaway === "AmarPay" &&
+                    className={`${
+                      payment?.Getaway === "AmarPay" &&
                       "shadow-lg shadow-gray-700"
-                      }  border border-gray-600 flex md:flex-col flex-row items-center justify-center gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] overflow-hidden`}
+                    }  border border-gray-600 flex md:flex-col flex-row items-center justify-center gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] overflow-hidden`}
                   >
                     <img
                       alt="Developer"
@@ -322,9 +323,10 @@ const Payment = () => {
                 <a href="#scrollDestination">
                   <div
                     onClick={() => setPayment(get)}
-                    className={`${payment?.Getaway === "AmarPay" &&
+                    className={`${
+                      payment?.Getaway === "AmarPay" &&
                       "shadow-lg shadow-gray-700"
-                      }  border border-gray-600 flex md:flex-col flex-row items-center justify-center gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] overflow-hidden`}
+                    }  border border-gray-600 flex md:flex-col flex-row items-center justify-center gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] overflow-hidden`}
                   >
                     <h4 className="mt-2  md:font-bold md:text-lg">
                       {get?.Getaway}
@@ -338,9 +340,10 @@ const Payment = () => {
           <a href="#scrollDestination">
             <div
               onClick={() => setPayment({ Getaway: "CashOnDelivery" })}
-              className={`${payment?.Getaway === "CashOnDelivery" &&
+              className={`${
+                payment?.Getaway === "CashOnDelivery" &&
                 "shadow-lg shadow-gray-700"
-                }  border border-gray-600 flex md:flex-col flex-row items-center justify-center  gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] overflow-hidden`}
+              }  border border-gray-600 flex md:flex-col flex-row items-center justify-center  gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] overflow-hidden`}
             >
               <img
                 alt="Developer"

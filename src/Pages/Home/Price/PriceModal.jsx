@@ -133,6 +133,20 @@ const PriceModal = ({ refetch, open, setOpen }) => {
         userId: shopInfo._id,
       };
       bkashBodyData.method = "Bkash";
+      bkashBodyData.getway = "Bkash";
+      bkashBodyData.paymentId = open?._id;
+      bkashBodyData.priceName = open?.name;
+      bkashBodyData.endDate = time?.split(",")[1];
+      bkashBodyData.endTime = calculateEndTime(time);
+      bkashBodyData.time = time;
+      bkashBodyData.buyingPrice =
+        parseInt(open?.price) * parseInt(time?.split(",")[1]) -
+          parseInt(time?.split(",")[0]) >
+        0
+          ? parseInt(open?.price) * parseInt(time?.split(",")[1]) -
+            parseInt(time?.split(",")[0])
+          : 0;
+
       bkashBodyData.timestamp = new Date().getTime();
       bkashBodyData.callback =
         "https://doob.com.bd/services-payment-successful?collection=price";
