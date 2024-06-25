@@ -7,10 +7,10 @@
 //     // const bkashInfo = paymentGetWays.filter((get) => get.Getaway === "Bkash")[0]
 //     // console.log(bkashInfo);
 //     // const location = useLocation()
-//     // console.log(`http://localhost:5001/api/v1/seller/bkash/payment/callback${location.search}`);
+//     // console.log(`https://doob.dev/api/v1/seller/bkash/payment/callback${location.search}`);
 
 //     // useEffect(() => {
-//     //     fetch(`http://localhost:5001/api/v1/seller/bkash/payment/callback${location.search}`, {
+//     //     fetch(`https://doob.dev/api/v1/seller/bkash/payment/callback${location.search}`, {
 //     //         method: "GET",
 //     //         body: JSON.stringify({ method: bkashInfo })
 //     //     })
@@ -28,7 +28,7 @@
 //     // console.log(bkashInfo);
 
 //     // const location = useLocation();
-//     // const callbackURL = `http://localhost:5001/api/v1/seller/bkash/payment/callback${location.search}?collection=service`;
+//     // const callbackURL = `https://doob.dev/api/v1/seller/bkash/payment/callback${location.search}?collection=service`;
 //     // console.log(callbackURL);
 
 //     // useEffect(() => {
@@ -63,7 +63,7 @@
 //     const [error, setError] = useState(null);
 
 //     useEffect(() => {
-//         const callbackURL = `http://localhost:5001/api/v1/seller/bkash/payment/callback${location.search}?collection=service`;
+//         const callbackURL = `https://doob.dev/api/v1/seller/bkash/payment/callback${location.search}?collection=service`;
 
 //         const fetchData = async () => {
 //             try {
@@ -138,11 +138,11 @@ const ServicePaymentSuccess = () => {
   const paymentGetWays = useLoaderData();
   const bkashInfo = paymentGetWays.find((get) => get.Getaway === "Bkash");
   const location = useLocation();
-  console.log("🚀 ~ location:", location)
+  console.log("🚀 ~ location:", location);
   const navigate = useNavigate();
   const [error, setError] = useState(null);
   console.log(
-    `http://localhost:5001/api/v1/seller/bkash/payment/callback${location.search}?collection=service`
+    `https://doob.dev/api/v1/seller/bkash/payment/callback${location.search}?collection=service`
   );
 
   // console.log(location.search)
@@ -152,7 +152,9 @@ const ServicePaymentSuccess = () => {
   console.log("🚀 ~ collection:", collection);
 
   useEffect(() => {
-    const callbackURL = `http://localhost:5001/api/v1/seller/bkash/payment/callback${location.search}?collection=${collection??"service"}`;
+    const callbackURL = `https://doob.dev/api/v1/seller/bkash/payment/callback${
+      location.search
+    }?collection=${collection ?? "service"}`;
 
     const fetchData = async () => {
       console.log(bkashInfo);

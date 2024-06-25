@@ -155,7 +155,7 @@ const PriceModal = ({ refetch, open, setOpen }) => {
       console.log(bkashBodyData);
       // return;
       const response = await fetch(
-        "http://localhost:5001/api/v1/seller/bkash/payment/create",
+        "https://doob.dev/api/v1/seller/bkash/payment/create",
         {
           method: "POST",
           headers: {

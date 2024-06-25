@@ -88,7 +88,7 @@ const UserPayment = () => {
       "https://doob.com.bd/services-payment-successful?collection=service";
     try {
       const response = await fetch(
-        "http://localhost:5001/api/v1/seller/bkash/payment/create",
+        "https://doob.dev/api/v1/seller/bkash/payment/create",
         {
           method: "POST",
           headers: {

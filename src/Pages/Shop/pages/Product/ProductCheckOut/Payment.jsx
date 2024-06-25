@@ -168,7 +168,7 @@ const Payment = () => {
     // setLoadingPayment(true);
     try {
       const response = await fetch(
-        "http://localhost:5001/api/v1/seller/bkash/payment/create",
+        "https://doob.dev/api/v1/seller/bkash/payment/create",
         {
           method: "POST",
           headers: {
