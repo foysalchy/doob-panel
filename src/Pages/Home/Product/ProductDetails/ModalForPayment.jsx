@@ -14,6 +14,7 @@ const ModalForPayment = ({
   seller,
   product,
   quantity,
+  banifit,
 }) => {
   const [selectedPayment, setSelectedPayment] = useState("");
   const [selectedInvoice, setSelectedInvoice] = useState("");
@@ -39,21 +40,22 @@ const ModalForPayment = ({
     },
   });
 
+  console.log(payment, "payment");
   const handleSubmit = (event) => {
     event.preventDefault();
     const getway = {
       getway: payment,
       sellingPrice,
     };
-    handleStore(invoice, getway, userInfo);
-    paymentHandler(payment);
+    // handleStore(invoice, getway, userInfo);
+    paymentHandler();
 
     // navigate(`/admin/confirm-order`);
   };
 
   const [next, setNext] = useState(false);
-
-  const paymentHandler = async (payment) => {
+  console.log(payment, "payment");
+  const paymentHandler = async () => {
     console.log(payment.Getaway, "*******");
     if (payment.Getaway === "Bkash") {
       payWithBkash();
@@ -62,19 +64,38 @@ const ModalForPayment = ({
     } else if (payment.Getaway === "Doob_Payment") {
       pay_with_doob();
     }
-  };
+  }
+
+  console.log(sellingPrice);
+  // console.log(banifit);
 
   const payWithBkash = async () => {
     setPaymentLoading(true);
     try {
-      const bkashBodyData = { amount: sellingPrice, userId: shopInfo._id };
-      bkashBodyData.method = "Bkash"
+      const getway = {
+        getway: payment,
+        sellingPrice,
+      };
+      const bkashBodyData = {
+        amount: sellingPrice,
+        userId: shopInfo._id,
+        shopId: shopInfo?.shopId,
+        shopName: shopInfo?.shopName,
+        shopUid: shopInfo?._id,
+        quantity: quantity,
+        sellingPrice: sellingPrice,
+        getway: getway,
+        userInfo,
+        invoiceId: invoice,
+      };
+      bkashBodyData.method = payment;
       bkashBodyData.timestamp = new Date().getTime();
       bkashBodyData.callback =
-        "https://doob.com.bd/services-payment-successful?collection=product";
+        "http://localhost:5173/services-payment-successful?collection=product";
 
+      console.log(bkashBodyData);
       const response = await fetch(
-        "https://doob.dev/api/v1/seller/bkash/payment/create",
+        "http://localhost:5001/api/v1/seller/bkash/payment/create",
         {
           method: "POST",
           headers: {
@@ -92,6 +113,9 @@ const ModalForPayment = ({
       // window.location.href = data.bkashURL;
     } catch (error) {
       console.log(error);
+      BrightAlert(`${ error.message }`);
+       setPaymentLoading(false);
+
     }
   };
 
@@ -192,7 +216,8 @@ const ModalForPayment = ({
                           <button>
                             <div
                               onClick={() => {
-                                payWithBkash();
+                                setPayment(get);
+                                // payWithBkash();
                               }}
                               className={`${
                                 payment?.Getaway === "Bkash" &&
@@ -206,7 +231,7 @@ const ModalForPayment = ({
                                 className="md:h-[120px] md:w-[120px] w-[30px] h-[auto]"
                               />
                               <h4 className="mt-2  md:font-bold md:text-lg">
-                                {get?.Getaway}...
+                                {get?.Getaway}
                               </h4>
                             </div>
                           </button>
@@ -235,7 +260,7 @@ const ModalForPayment = ({
                         {get.Getaway === "AmarPay" && (
                           <a href="#scrollDestination">
                             <div
-                              onClick={() => payWithAmarPay()}
+                              onClick={() => setPayment(get)}
                               className={`${
                                 payment?.Getaway === "AmarPay" &&
                                 "shadow-lg shadow-gray-700"

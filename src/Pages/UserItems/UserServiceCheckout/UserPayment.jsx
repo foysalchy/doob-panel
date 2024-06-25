@@ -33,7 +33,7 @@ const UserPayment = () => {
   }, [orderStage]);
 
   const orderSubmit = () => {
-       setPaymentLoading(true);
+    setPaymentLoading(true);
     const data = orderStage;
     data.method = payment;
     data.timestamp = new Date().getTime();
@@ -60,7 +60,7 @@ const UserPayment = () => {
       .then((res) => res.json())
       .then((data) => {
         console.log("data payment", data);
-           setPaymentLoading(false);
+        setPaymentLoading(false);
         BrightAlert({ icon: "success" });
         navigate(`/service-confirm-order`);
       });
@@ -79,16 +79,16 @@ const UserPayment = () => {
 
   // ! bkash  payment
   const payWithBkash = async () => {
-       setPaymentLoading(true);
+    setPaymentLoading(true);
     const order = orderStage;
     order.method = payment;
     order.timestamp = new Date().getTime();
     order.userId = shopInfo._id ? shopInfo._id : user?._id;
     order.callback =
-      "https://doob.com.bd/services-payment-successful?collection=service";
+      "http://localhost:5173/services-payment-successful?collection=service";
     try {
       const response = await fetch(
-        "https://doob.dev/api/v1/seller/bkash/payment/create",
+        "http://localhost:5001/api/v1/seller/bkash/payment/create",
         {
           method: "POST",
           headers: {
@@ -99,7 +99,7 @@ const UserPayment = () => {
       );
       const data = await response.json();
       console.log(data?.bkashURL);
-   setPaymentLoading(false);
+      setPaymentLoading(false);
       window.location.href = data?.bkashURL;
       console.log(data);
     } catch (error) {
@@ -108,12 +108,13 @@ const UserPayment = () => {
   };
   // ! amarpay  payment
   const payWithAmarPay = async () => {
-       setPaymentLoading(true);
+    setPaymentLoading(true);
     const order = orderStage;
     order.method = payment;
     order.timestamp = new Date().getTime();
     order.userId = shopInfo._id ? shopInfo._id : user?._id;
-    order.callback = "https://doob.com.bd/services-payment-successful?collection=service";
+    order.callback =
+      "http://localhost:5173/services-payment-successful?collection=service";
     try {
       const response = await fetch(
         "https://doob.dev/api/v1/seller/amarpay/payment/create",
@@ -127,7 +128,7 @@ const UserPayment = () => {
       );
       const data = await response.json();
       console.log(data);
-         setPaymentLoading(false);
+      setPaymentLoading(false);
       if (data.payment_url) {
         window.location.href = data.payment_url;
       }

@@ -27,8 +27,9 @@ const StarRating = ({ rating, onRatingChange }) => {
         <span
           key={star}
           onClick={() => onRatingChange(star)}
-          className={`cursor-pointer text-2xl ${star <= rating ? "text-yellow-500" : "text-gray-300"
-            }`}
+          className={`cursor-pointer text-2xl ${
+            star <= rating ? "text-yellow-500" : "text-gray-300"
+          }`}
         >
           ★
         </span>
@@ -346,7 +347,7 @@ const ProductDetails = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        BrightAlert('Product added on your store');
+        BrightAlert("Product added on your store");
       });
     console.log(newData);
   };
@@ -354,9 +355,7 @@ const ProductDetails = () => {
   const { data: releventProduct = [], refetch } = useQuery({
     queryKey: ["releventProduct"],
     queryFn: async () => {
-      const res = await fetch(
-        "https://doob.dev/api/v1/admin/products"
-      );
+      const res = await fetch("https://doob.dev/api/v1/admin/products");
       const data = await res.json();
       return data;
     },
@@ -432,7 +431,6 @@ const ProductDetails = () => {
               <div>
                 <div className="h-64  md:h-[22rem] rounded-lg bg-gray-100 mb-4">
                   <div className="h-64 border md:h-full rounded-lg bg-gray-100 mb-4 flex items-center justify-center overflow-hidden">
-
                     {selected_image ? (
                       <img
                         className="md:w-94 w-full object-cover h-full rounded-lg"
@@ -442,25 +440,31 @@ const ProductDetails = () => {
                       />
                     ) : (
                       <div className="w-full">
-                        {
-                          productFind?.videos ? <div className="w-full h-full relative">
-                            <VideoPlayer thum={''} url={productFind?.videos} />
-                          </div> : <img
+                        {productFind?.videos ? (
+                          <div className="w-full h-full relative">
+                            <VideoPlayer thum={""} url={productFind?.videos} />
+                          </div>
+                        ) : (
+                          <img
                             className="md:w-94 w-full object-cover h-full rounded-lg"
                             src={productFind?.images[0].src}
                             srcSet={productFind?.images[0].src}
                             alt="product image"
                           />
-                        }
+                        )}
                       </div>
-
                     )}
                   </div>
                 </div>
                 <div className="mt-3 grid md:grid-cols-8 grid-cols-5 gap-2">
-                  {productFind?.videos && <button className="bg-[#00000081] text-white flex items-center justify-center rounded text-xl" onClick={() => setSelected_image(null)}>
-                    <PiPlay />
-                  </button>}
+                  {productFind?.videos && (
+                    <button
+                      className="bg-[#00000081] text-white flex items-center justify-center rounded text-xl"
+                      onClick={() => setSelected_image(null)}
+                    >
+                      <PiPlay />
+                    </button>
+                  )}
                   {image_list?.map((imageUrl, index) => (
                     <div key={index} className="">
                       <button
@@ -573,7 +577,6 @@ const ProductDetails = () => {
                           {isNaN(banifit.profit)
                             ? "0"
                             : parseInt(banifit.profit)}
-
                         </h6>
                         <p className="text-sm text-[#606060]">Your Profit</p>
                       </div>
@@ -581,7 +584,8 @@ const ProductDetails = () => {
                         <h6 className="font-bold text-xl">
                           {isNaN(banifit.profitPercent)
                             ? "0"
-                            : parseInt(banifit.profitPercent)}%
+                            : parseInt(banifit.profitPercent)}
+                          %
                         </h6>
                         <p className="text-sm text-[#606060]">Your Profit</p>
                       </div>
@@ -690,7 +694,7 @@ const ProductDetails = () => {
                 )}
               </div>
 
-              {console.log(shopInfo?._id === productFind?.shopId, 'update_ui')}
+              {console.log(shopInfo?._id === productFind?.shopId, "update_ui")}
 
               {shopInfo?._id === productFind?.shopId ? (
                 <div className="p-4 py-3 rounded bg-red-400 text-white font-bold  text-center uppercase">
@@ -703,8 +707,6 @@ const ProductDetails = () => {
                       {" "}
                       Quantity{" "}
                     </label>
-
-
 
                     <div className="flex items-center gap-1">
                       <button
@@ -733,10 +735,7 @@ const ProductDetails = () => {
                     </div>
                   </div>
 
-
-
                   {/* fixed tab */}
-
 
                   {/* md tab */}
                   <div className="md:block hidden">
@@ -757,7 +756,6 @@ const ProductDetails = () => {
                         Add Store
                       </Link>
                     )}
-
                   </div>
                   {/* 
                 <button
@@ -795,8 +793,6 @@ const ProductDetails = () => {
                     </button>
                   </div>
 
-
-
                   {invoice && (
                     <ModalForPayment
                       quantity={quantity}
@@ -806,6 +802,7 @@ const ProductDetails = () => {
                       invoice={invoice}
                       setInvoice={setInvoice}
                       sellingPrice={banifit.sellingPrice}
+                      banifit={banifit}
                     />
                   )}
                 </div>
@@ -861,15 +858,22 @@ const ProductDetails = () => {
               <div className="md:hidden flex items-center w-full border border-indigo-500 rounded text-lg overflow-hidden h-[40px]">
                 <button
                   onClick={handleDecrease}
-                  className="bg-indigo-500 text-white px-2 h-full w-full">-</button>
+                  className="bg-indigo-500 text-white px-2 h-full w-full"
+                >
+                  -
+                </button>
                 <input
                   value={quantity}
                   onChange={handleManualInput}
                   type="number"
-                  className="bg-transparent h-full text-black text-center w-[150px] " />
+                  className="bg-transparent h-full text-black text-center w-[150px] "
+                />
                 <button
                   onClick={handleIncrease}
-                  className="bg-indigo-500 text-white px-2 h-full w-full">+</button>
+                  className="bg-indigo-500 text-white px-2 h-full w-full"
+                >
+                  +
+                </button>
               </div>
               <br />
               {/* variation data */}

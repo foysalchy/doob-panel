@@ -149,11 +149,11 @@ const PriceModal = ({ refetch, open, setOpen }) => {
 
       bkashBodyData.timestamp = new Date().getTime();
       bkashBodyData.callback =
-        "https://doob.com.bd/services-payment-successful?collection=price";
+        "http://localhost:5173/services-payment-successful?collection=price";
 
       console.log(bkashBodyData);
       const response = await fetch(
-        "https://doob.dev/api/v1/seller/bkash/payment/create",
+        "http://localhost:5001/api/v1/seller/bkash/payment/create",
         {
           method: "POST",
           headers: {
@@ -199,7 +199,7 @@ const PriceModal = ({ refetch, open, setOpen }) => {
 
     if (shopInfo) {
       data.callback =
-        "https://doob.com.bd/services-payment-successful?collection=price";
+        "http://localhost:5173/services-payment-successful?collection=price";
       try {
         const response = await fetch(
           "https://doob.dev/api/v1/seller/amarpay/payment/create",
