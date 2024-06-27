@@ -5,10 +5,15 @@ import { useState } from "react";
 import { BsEye } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../../../AuthProvider/UserProvider";
+import LoaderData from "../../../../Common/LoaderData";
 
 const BlogCategorySeller = () => {
   const { shopInfo } = useContext(AuthContext);
-  const { data: category = [], refetch } = useQuery({
+  const {
+    data: category = [],
+    refetch,
+    isLoading: loaderBlog,
+  } = useQuery({
     queryKey: ["blog-category"],
     queryFn: async () => {
       const res = await fetch(
@@ -156,6 +161,8 @@ const BlogCategorySeller = () => {
           </button>
         </span>
       </div>
+
+      {loaderBlog && <LoaderData />}
 
       <div className="overflow-x-auto mt-4">
         {filteredData.length ? (
