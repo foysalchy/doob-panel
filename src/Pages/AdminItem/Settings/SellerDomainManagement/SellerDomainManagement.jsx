@@ -400,6 +400,7 @@ const SellerDomainManagement = () => {
                             <AccessWareShopModal
                               isPreviewModal={isPreviewModal}
                               setIsPreviewModal={setIsPreviewModal}
+                              refetchWare={refetch}
                             />
                           )}
                         </tr>
