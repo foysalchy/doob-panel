@@ -81,7 +81,9 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
   const [getaway, setGetaway] = useState("Cash");
   const [discount, setDiscount] = useState(0);
   const [presents, setPresents] = useState(false);
+    const [transactionId, setTransactionId] = useState("");
 
+    console.log(transactionId);
   const singleDiscount = (index, value) => {
     const updatedCart = [...cartProducts];
     updatedCart[index].discount = value;
@@ -174,6 +176,7 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
       discount,
       present,
       getaway,
+      transactionId,
     };
     console.log("🚀  data:", data);
     console.log(changeAmount);
@@ -520,6 +523,8 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
                 isPreviewModal={isPreviewModal}
                 setIsPreviewModal={setIsPreviewModal}
                 setGetaway={setGetaway}
+                setTransactionId={setTransactionId}
+                transactionId={transactionId}
               />
             )}
             <div className=" ">
