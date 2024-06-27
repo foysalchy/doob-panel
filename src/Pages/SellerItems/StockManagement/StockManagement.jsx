@@ -125,7 +125,7 @@ const StockManagement = () => {
       .then((data) => {
         refetch();
 
-        BrightAlert();
+        BrightAlert({ timeDuration: 1000 });
         setEditMode(false);
 
         setEditedQuantity("");

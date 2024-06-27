@@ -35,7 +35,7 @@ const UserWishList = () => {
     )
       .then((res) => res.json())
       .then((data) => {
-        BrightAlert();
+        BrightAlert({ timeDuration: 1000 });
         refetch();
       });
   };

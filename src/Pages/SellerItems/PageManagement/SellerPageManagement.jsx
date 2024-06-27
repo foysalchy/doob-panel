@@ -34,9 +34,7 @@ const SellerPageManagement = () => {
       return data;
     },
   });
-  console.log(
-    `https://doob.dev/api/v1/seller/pages/${shopInfo.shopId}`
-  );
+  console.log(`https://doob.dev/api/v1/seller/pages/${shopInfo.shopId}`);
   const ActiveHandle = (id) => {
     setLoading(true);
 
@@ -48,7 +46,7 @@ const SellerPageManagement = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        BrightAlert();
+        BrightAlert({ timeDuration: 1000 });
         refetch();
       });
   };
@@ -62,7 +60,7 @@ const SellerPageManagement = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        BrightAlert();
+        BrightAlert({ timeDuration: 1000 });
         refetch();
       });
   };
@@ -75,7 +73,7 @@ const SellerPageManagement = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        BrightAlert();
+        BrightAlert({ timeDuration: 1000 });
         refetch();
       });
   };
@@ -90,7 +88,7 @@ const SellerPageManagement = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        BrightAlert();
+        BrightAlert({ timeDuration: 1000 });
         refetch();
       });
   };
@@ -182,7 +180,8 @@ const SellerPageManagement = () => {
                   </thead>
                   <tbody className="bg-white divide-y divide-gray-200 ">
                     {faqs
-                      .filter((faq) => faq?.trash == trash_status).filter((faq) => faq?.draft == daft)
+                      .filter((faq) => faq?.trash == trash_status)
+                      .filter((faq) => faq?.draft == daft)
                       ?.map((faq, index) => (
                         <tr key={faq?.title}>
                           <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">

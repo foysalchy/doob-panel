@@ -24,7 +24,7 @@ const AddFaq = () => {
     ],
   };
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const dataSubmit = (event) => {
     setLoading(true);
     event.preventDefault();
@@ -50,8 +50,8 @@ const AddFaq = () => {
       .then((data) => {
         setLoading(false);
         form.reset();
-        navigate('/admin/faq')
-        BrightAlert()
+        navigate("/admin/faq");
+        BrightAlert({ timeDuration: 1000 });
       });
   };
 
@@ -87,7 +87,8 @@ const AddFaq = () => {
                 />
                 <br />
                 <br /> */}
-                <JoditEditor className="h-36"
+                <JoditEditor
+                  className="h-36"
                   name="description"
                   id="message"
                   config={{

@@ -33,17 +33,23 @@ const SellerOrderManagement = () => {
       return data.data;
     },
   });
-  console.log(products, '---->>>>');
+  console.log(products, "---->>>>");
 
   const filteredData = products?.filter((item) => {
-    const timestampValid = !selectedDate || new Date(item?.timestamp) >= new Date(selectedDate);
+    const timestampValid =
+      !selectedDate || new Date(item?.timestamp) >= new Date(selectedDate);
 
     if (searchQuery === "" && selectedValue === "All" && timestampValid) {
       // Include all items when searchQuery is empty, selectedValue is "All", and timestamp is valid
       return true;
     }
 
-    if ((selectedValue === "Pending" || selectedValue === "Return" || selectedValue === "returned") && timestampValid) {
+    if (
+      (selectedValue === "Pending" ||
+        selectedValue === "Return" ||
+        selectedValue === "returned") &&
+      timestampValid
+    ) {
       if (selectedValue === "Pending") {
         return !item?.status || item?.status === "";
       } else if (selectedValue === "Return" || selectedValue === "returned") {
@@ -52,7 +58,9 @@ const SellerOrderManagement = () => {
     }
 
     if (searchQuery && timestampValid) {
-      return String(item?._id)?.toLowerCase().includes(searchQuery.toLowerCase()); // Convert _id to string
+      return String(item?._id)
+        ?.toLowerCase()
+        .includes(searchQuery.toLowerCase()); // Convert _id to string
     }
 
     if (selectedValue && timestampValid) {
@@ -61,8 +69,6 @@ const SellerOrderManagement = () => {
 
     return false; // Exclude items that don't meet any condition
   });
-
-
 
   if (selectedValue === "Return" || selectedValue === "returned") {
     filteredData?.reverse();
@@ -263,9 +269,7 @@ const SellerOrderManagement = () => {
   const { data: ships = [] } = useQuery({
     queryKey: ["adminSHipping"],
     queryFn: async () => {
-      const res = await fetch(
-        `https://doob.dev/api/v1/admin/allShippings`
-      );
+      const res = await fetch(`https://doob.dev/api/v1/admin/allShippings`);
       const data = await res.json();
       return data;
     },
@@ -298,7 +302,7 @@ const SellerOrderManagement = () => {
     )
       .then((res) => res.json())
       .then((data) => {
-        BrightAlert();
+        BrightAlert({ timeDuration: 1000 });
         refetch();
       });
   };
@@ -354,10 +358,11 @@ const SellerOrderManagement = () => {
           return (
             <li key={pageNumber}>
               <button
-                className={`block h-8 w-8 rounded border ${pageNumber === currentPage
-                  ? "border-blue-600 bg-blue-600 text-white"
-                  : "border-gray-900 bg-white text-center leading-8 text-gray-900"
-                  }`}
+                className={`block h-8 w-8 rounded border ${
+                  pageNumber === currentPage
+                    ? "border-blue-600 bg-blue-600 text-white"
+                    : "border-gray-900 bg-white text-center leading-8 text-gray-900"
+                }`}
                 onClick={() => handleChangePage(pageNumber)}
               >
                 {pageNumber}
@@ -404,15 +409,17 @@ const SellerOrderManagement = () => {
           <div>
             <div
               onClick={() => setShowPrintModal1(false)}
-              className={`fixed z-[100] flex items-center justify-center ${showPrintModal1 ? "visible opacity-100" : "invisible opacity-0"
-                } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
+              className={`fixed z-[100] flex items-center justify-center ${
+                showPrintModal1 ? "visible opacity-100" : "invisible opacity-0"
+              } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
             >
               <div
                 onClick={(e_) => e_.stopPropagation()}
-                className={`text- absolute overflow-y-auto w-[96%] h-[98%] rounded-sm bg-gray-50 p-6 drop-shadow-lg text-black ${showPrintModal1
-                  ? "scale-1 opacity-1 duration-300"
-                  : "scale-0 opacity-0 duration-150"
-                  }`}
+                className={`text- absolute overflow-y-auto w-[96%] h-[98%] rounded-sm bg-gray-50 p-6 drop-shadow-lg text-black ${
+                  showPrintModal1
+                    ? "scale-1 opacity-1 duration-300"
+                    : "scale-0 opacity-0 duration-150"
+                }`}
               >
                 <AllAdminOrderInvoice
                   data={selectProducts}
@@ -432,7 +439,7 @@ const SellerOrderManagement = () => {
             id="dropdown-button"
             aria-haspopup="true"
             onClick={() => setShowPrintModal1(true)}
-          //   aria-expanded={isOpen ? "true" : "false"}
+            //   aria-expanded={isOpen ? "true" : "false"}
           >
             Print
           </button>
@@ -506,17 +513,17 @@ const SellerOrderManagement = () => {
             type="text"
           />
 
-
           <div className="flex items-center gap-2">
             <select
               className="border w-[50px] px-1 py-2 text-sm rounded"
-              onChange={(e) => setPageSize(e.target.value)}>
+              onChange={(e) => setPageSize(e.target.value)}
+            >
               <option value={15}>15</option>
               <option value={30}>30</option>
               <option value={70}>70</option>
               <option value={100}>100</option>
-
-            </select> <span className="text-sm">Entire per page</span>
+            </select>{" "}
+            <span className="text-sm">Entire per page</span>
           </div>
           {/* <button
                             disabled={printProduct.length < 1 ? false : true}
@@ -537,8 +544,9 @@ const SellerOrderManagement = () => {
             return itm?.status === "dropdown" ? (
               <select
                 key={itm.name}
-                className={`px-4 border-r bg-transparent relative border-gray-300 flex items-center gap-2 justify-center ${selectedValue === "pending" ? "" : ""
-                  }`}
+                className={`px-4 border-r bg-transparent relative border-gray-300 flex items-center gap-2 justify-center ${
+                  selectedValue === "pending" ? "" : ""
+                }`}
                 value={selectedValue}
                 onChange={handleSelectChange}
               >
@@ -551,8 +559,9 @@ const SellerOrderManagement = () => {
               </select>
             ) : (
               <button
-                className={`px-4 border-r md:bg-transparent bg-gray-50 border-gray-300 flex  items-center ${selectedValue === itm.value ? "text-red-500" : ""
-                  }`}
+                className={`px-4 border-r md:bg-transparent bg-gray-50 border-gray-300 flex  items-center ${
+                  selectedValue === itm.value ? "text-red-500" : ""
+                }`}
                 key={itm.name}
                 onClick={() => setSelectedValue(itm.value)}
               >
@@ -855,7 +864,6 @@ const SellerOrderManagement = () => {
                                   </tr>
                                 )}
                               </div>
-
                             </td>
 
                             <td className="px-4 py-4 text-sm whitespace-nowrap">

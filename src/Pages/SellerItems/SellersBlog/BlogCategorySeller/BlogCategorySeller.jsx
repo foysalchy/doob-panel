@@ -20,16 +20,13 @@ const BlogCategorySeller = () => {
   });
 
   const DeleteCategory = (id) => {
-    fetch(
-      `https://doob.dev/api/v1/seller/DeleteBlogCategoryById?id=${id}`,
-      {
-        method: "DELETE",
-        headers: {
-          "content-type": "application/json",
-        },
-        body: JSON.stringify({ id }),
-      }
-    )
+    fetch(`https://doob.dev/api/v1/seller/DeleteBlogCategoryById?id=${id}`, {
+      method: "DELETE",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({ id }),
+    })
       .then((res) => res.json())
       .then((data) => {
         alert("delete successful");
@@ -72,7 +69,9 @@ const BlogCategorySeller = () => {
 
     const imageFormData = new FormData();
     imageFormData.append("image", image.files[0]);
-    const imageUrl = image.files[0] ? await uploadImage(imageFormData) : openModal.img;
+    const imageUrl = image.files[0]
+      ? await uploadImage(imageFormData)
+      : openModal.img;
 
     const data = {
       id: openModal._id,
@@ -90,7 +89,7 @@ const BlogCategorySeller = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        BrightAlert();
+        BrightAlert({ timeDuration: 1000 });
         refetch();
       });
 
@@ -213,15 +212,17 @@ const BlogCategorySeller = () => {
 
                   <div>
                     <div
-                      className={`fixed z-[100] flex items-center justify-center ${openModal ? "opacity-1 visible" : "invisible opacity-0"
-                        } inset-0 bg-black/20 backdrop-blur-sm duration-100`}
+                      className={`fixed z-[100] flex items-center justify-center ${
+                        openModal ? "opacity-1 visible" : "invisible opacity-0"
+                      } inset-0 bg-black/20 backdrop-blur-sm duration-100`}
                     >
                       <form
                         onSubmit={handleUpdate}
-                        className={`absolute w-[500px] rounded-sm bg-white p-3 pb-5 text-center drop-shadow-2xl ${openModal
-                          ? "scale-1 opacity-1 duration-300"
-                          : "scale-0 opacity-0 duration-150"
-                          } `}
+                        className={`absolute w-[500px] rounded-sm bg-white p-3 pb-5 text-center drop-shadow-2xl ${
+                          openModal
+                            ? "scale-1 opacity-1 duration-300"
+                            : "scale-0 opacity-0 duration-150"
+                        } `}
                       >
                         <svg
                           onClick={() => setOpenModal(false)}

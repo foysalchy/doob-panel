@@ -9,9 +9,7 @@ const BlogsCatagoryManagement = () => {
   const { data: category = [], refetch } = useQuery({
     queryKey: ["category"],
     queryFn: async () => {
-      const res = await fetch(
-        "https://doob.dev/api/v1/admin/blog-category"
-      );
+      const res = await fetch("https://doob.dev/api/v1/admin/blog-category");
       const data = await res.json();
       return data;
     },
@@ -74,7 +72,6 @@ const BlogsCatagoryManagement = () => {
       img: image.files[0] ? imageUrl : openModal.img,
     };
 
-
     fetch(`https://doob.dev/api/v1/admin/blog-category-details`, {
       method: "PUT",
       headers: {
@@ -84,7 +81,7 @@ const BlogsCatagoryManagement = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        BrightAlert();
+        BrightAlert({ timeDuration: 1000 });
         refetch();
       });
 
@@ -209,15 +206,17 @@ const BlogsCatagoryManagement = () => {
 
                   <div>
                     <div
-                      className={`fixed z-[100] flex items-center justify-center ${openModal ? "opacity-1 visible" : "invisible opacity-0"
-                        } inset-0 bg-black/20 backdrop-blur-sm duration-100`}
+                      className={`fixed z-[100] flex items-center justify-center ${
+                        openModal ? "opacity-1 visible" : "invisible opacity-0"
+                      } inset-0 bg-black/20 backdrop-blur-sm duration-100`}
                     >
                       <form
                         onSubmit={handleUpdate}
-                        className={`absolute w-[500px] rounded-sm bg-white p-3 pb-5 text-center drop-shadow-2xl ${openModal
-                          ? "scale-1 opacity-1 duration-300"
-                          : "scale-0 opacity-0 duration-150"
-                          } `}
+                        className={`absolute w-[500px] rounded-sm bg-white p-3 pb-5 text-center drop-shadow-2xl ${
+                          openModal
+                            ? "scale-1 opacity-1 duration-300"
+                            : "scale-0 opacity-0 duration-150"
+                        } `}
                       >
                         <svg
                           onClick={() => setOpenModal(false)}

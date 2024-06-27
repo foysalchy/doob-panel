@@ -13,9 +13,7 @@ const AdminBlogs = () => {
   const { data: blogs = [], refetch } = useQuery({
     queryKey: ["blogs"],
     queryFn: async () => {
-      const res = await fetch(
-        "https://doob.dev/api/v1/admin/all-blogs"
-      );
+      const res = await fetch("https://doob.dev/api/v1/admin/all-blogs");
       const data = await res.json();
       return data;
     },
@@ -31,7 +29,7 @@ const AdminBlogs = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        BrightAlert();
+        BrightAlert({ timeDuration: 1000 });
         refetch();
       });
   };
@@ -56,14 +54,14 @@ const AdminBlogs = () => {
   // );
   let filteredData = blogs.length
     ? blogs.filter((item) => {
-      const matchesBlogType = item.draft_status === blogType || !blogType;
-      const matchesTrashType = item.status === trashType;
-      const matchesSearchQuery =
-        item.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        item._id.toString().includes(searchQuery);
+        const matchesBlogType = item.draft_status === blogType || !blogType;
+        const matchesTrashType = item.status === trashType;
+        const matchesSearchQuery =
+          item.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          item._id.toString().includes(searchQuery);
 
-      return matchesBlogType && matchesTrashType && matchesSearchQuery;
-    })
+        return matchesBlogType && matchesTrashType && matchesSearchQuery;
+      })
     : [];
 
   console.log(filteredData, "filteredData");
@@ -96,7 +94,7 @@ const AdminBlogs = () => {
         method: "PUT",
       }
     ).then(() => {
-      BrightAlert();
+      BrightAlert({ timeDuration: 1000 });
       refetch();
     });
   };

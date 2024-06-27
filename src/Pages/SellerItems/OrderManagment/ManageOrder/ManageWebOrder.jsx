@@ -102,7 +102,7 @@ const ManageWebOrder = () => {
     )
       .then((res) => res.json())
       .then((data) => {
-        BrightAlert();
+        BrightAlert({ timeDuration: 1000 });
         refetch();
       });
   };
@@ -112,7 +112,9 @@ const ManageWebOrder = () => {
       <section className=" mx-auto">
         <div className="flex products-center justify-between gap-x-3">
           <div className="flex products-center gap-2">
-            <h2 className="text-lg font-medium text-gray-800 ">All Wholesale Order</h2>
+            <h2 className="text-lg font-medium text-gray-800 ">
+              All Wholesale Order
+            </h2>
             <span className="px-3 py-1 text-xs  bg-blue-100 rounded-full d text-blue-400">
               {products?.length}
             </span>
@@ -383,10 +385,10 @@ const ManageWebOrder = () => {
                                   "returned",
                                   "Refund",
                                 ].includes(product.status) && (
-                                    <button className="text-blue-700">
-                                      {product.status}
-                                    </button>
-                                  )}
+                                  <button className="text-blue-700">
+                                    {product.status}
+                                  </button>
+                                )}
                                 {product._id === readyToShip._id && (
                                   <tr>
                                     <td colSpan="10">

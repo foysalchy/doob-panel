@@ -9,13 +9,11 @@ const EditInventory = ({ refetch, open, setOpen, data }) => {
   const { shopInfo } = useContext(AuthContext);
 
   const [selectedValue, setSelectedValue] = useState([]);
-  const [variationQuantity, setVariationQuantity] = useState(null)
+  const [variationQuantity, setVariationQuantity] = useState(null);
   const handleChange = (selectedOption) => {
     setSelectedValue(selectedOption);
     setVariationQuantity(selectedOption?.quantity);
-
   };
-
 
   const [selectStatusValue, setSelectStatusValue] = useState([]);
 
@@ -62,9 +60,6 @@ const EditInventory = ({ refetch, open, setOpen, data }) => {
       note,
     };
 
-
-
-
     fetch(`https://doob.dev/api/v1/admin/stock-request-create`, {
       method: "POST",
       headers: {
@@ -76,15 +71,11 @@ const EditInventory = ({ refetch, open, setOpen, data }) => {
       .then((data) => {
         refetch();
         setOpen(!open);
-        BrightAlert();
-      })
-
-
+        BrightAlert({ timeDuration: 1000 });
+      });
   };
 
   const options = data?.variations?.map((item) => {
-
-
     return {
       label: item?.SKU,
       value: item?.SKU,
@@ -99,7 +90,6 @@ const EditInventory = ({ refetch, open, setOpen, data }) => {
     return {
       label: item,
       value: item,
-
     };
   });
 
@@ -131,29 +121,33 @@ const EditInventory = ({ refetch, open, setOpen, data }) => {
             />
           </div>
 
-          {<div className="">
-            <label className="mb-2 text-lg" htmlFor="note">
-              Add Note
-            </label>
-            <textarea
-              onChange={(e) => setNote(e.target.value)}
-              name="note"
-              type="text"
-              className="w-full p-2 rounded-md ring-1 mt-2 ring-gray-200"
-              placeholder="Write your Note"
-            />
-          </div>}
+          {
+            <div className="">
+              <label className="mb-2 text-lg" htmlFor="note">
+                Add Note
+              </label>
+              <textarea
+                onChange={(e) => setNote(e.target.value)}
+                name="note"
+                type="text"
+                className="w-full p-2 rounded-md ring-1 mt-2 ring-gray-200"
+                placeholder="Write your Note"
+              />
+            </div>
+          }
 
-          {<div className="my-3">
-            <label className="mb-1 text-lg" htmlFor="status">
-              Select Status
-            </label>
-            <Select
-              required
-              options={statusOptions}
-              onChange={(value) => setSelectStatusValue(value)}
-            />
-          </div>}
+          {
+            <div className="my-3">
+              <label className="mb-1 text-lg" htmlFor="status">
+                Select Status
+              </label>
+              <Select
+                required
+                options={statusOptions}
+                onChange={(value) => setSelectStatusValue(value)}
+              />
+            </div>
+          }
           <div>
             <br />
             <div className="flex items-center ring-1 ring-gray-400 rounded-md">

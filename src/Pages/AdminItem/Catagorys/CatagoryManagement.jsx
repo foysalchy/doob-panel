@@ -84,7 +84,7 @@ const CatagoryManagement = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        BrightAlert();
+        BrightAlert({ timeDuration: 1000 });
         setOpenModal(false);
         refetch();
       });

@@ -20,9 +20,7 @@ const AddContact = () => {
   } = useQuery({
     queryKey: ["contact"],
     queryFn: async () => {
-      const res = await fetch(
-        "https://doob.dev/api/v1/admin/contact"
-      );
+      const res = await fetch("https://doob.dev/api/v1/admin/contact");
       const data = await res.json();
       return data;
     },
@@ -68,7 +66,7 @@ const AddContact = () => {
       .then((res) => res.json())
       .then((data) => {
         setLoading(false);
-        BrightAlert()
+        BrightAlert({ timeDuration: 1000 });
         refetch();
       });
 

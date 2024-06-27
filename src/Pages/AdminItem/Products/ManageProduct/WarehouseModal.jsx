@@ -67,8 +67,7 @@ const WarehouseModal = ({
   } = useQuery({
     queryKey: ["warehouses"],
     queryFn: async () => {
-      const getWarehouseApiUrl =
-        "https://doob.dev/api/v1/admin/warehouse";
+      const getWarehouseApiUrl = "https://doob.dev/api/v1/admin/warehouse";
 
       const res = await fetch(getWarehouseApiUrl);
       if (!res.ok) {
@@ -204,7 +203,7 @@ const WarehouseModal = ({
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
-        BrightAlert();
+        BrightAlert({ timeDuration: 1000 });
         setModalOpen(false);
         reload();
       });
@@ -215,8 +214,9 @@ const WarehouseModal = ({
   return (
     <div>
       <div
-        className={`fixed left-0 top-0 flex z-50 h-full min-h-screen w-full items-center justify-center bg-black/90 px-4 py-5 ${modalOpen ? "block" : "hidden"
-          }`}
+        className={`fixed left-0 top-0 flex z-50 h-full min-h-screen w-full items-center justify-center bg-black/90 px-4 py-5 ${
+          modalOpen ? "block" : "hidden"
+        }`}
       >
         <form
           onSubmit={updateInfo}
@@ -318,11 +318,11 @@ const WarehouseModal = ({
                         isRefetching
                           ? [{ label: "Loading...", value: null }]
                           : warehouses
-                            .filter((warehouse) => warehouse.status) // Filter based on status
-                            .map((warehouse) => ({
-                              value: warehouse.name,
-                              label: warehouse.name,
-                            }))
+                              .filter((warehouse) => warehouse.status) // Filter based on status
+                              .map((warehouse) => ({
+                                value: warehouse.name,
+                                label: warehouse.name,
+                              }))
                       }
                       defaultValue={{
                         value: product?.warehouse[0]?.name,

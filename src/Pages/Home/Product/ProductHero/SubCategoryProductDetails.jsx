@@ -165,7 +165,7 @@ const SubCategoryProductDetails = () => {
       })
         .then((res) => res.json())
         .then((data) => {
-          BrightAlert();
+          BrightAlert({ timeDuration: 1000 });
           refetch();
         });
     } else {
@@ -415,7 +415,7 @@ const SubCategoryProductDetails = () => {
                   Add My Store
                 </button>
                 <button
-                  onClick={() => { }}
+                  onClick={() => {}}
                   type="button"
                   className="h-10 px-6 py-2 font-semibold rounded bg-indigo-600 hover:bg-indigo-500 text-white"
                 >

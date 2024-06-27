@@ -14,10 +14,7 @@ const AddSellerPage = () => {
   const { shopInfo, user } = useContext(AuthContext);
   const [draft, setDraft] = useState(false);
 
-
-  const navigate = useNavigate()
-
-
+  const navigate = useNavigate();
 
   const dataSubmit = (event) => {
     setLoading(true);
@@ -41,7 +38,6 @@ const AddSellerPage = () => {
       draft, // Add draft flag
     };
 
-
     fetch(`https://doob.dev/api/v1/seller/page`, {
       method: "POST",
       headers: {
@@ -52,9 +48,9 @@ const AddSellerPage = () => {
       .then((res) => res.json())
       .then((data) => {
         setLoading(false);
-        BrightAlert()
+        BrightAlert({ timeDuration: 1000 });
         form.reset();
-        navigate('/seller/manage-pages/')
+        navigate("/seller/manage-pages/");
       });
   };
 
@@ -68,13 +64,12 @@ const AddSellerPage = () => {
               Page Title
             </label>
             <input
-
               className="w-full rounded-lg border border-gray-900 p-3 text-sm"
               placeholder="Title"
               type="text"
               id="title"
               name="title"
-            // onChange={(e) => handleInputChange("title", e.target.value)} // for drafts
+              // onChange={(e) => handleInputChange("title", e.target.value)} // for drafts
             />
           </div>
           <div>
@@ -101,7 +96,9 @@ const AddSellerPage = () => {
                     insertImageAsBase64URI: true,
                   },
                 }}
-                name="description" id="message"></JoditEditor>
+                name="description"
+                id="message"
+              ></JoditEditor>
               {/* <ReactQuill
                 name="message"
                 id="message"

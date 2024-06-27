@@ -37,7 +37,7 @@ const AdminSeviceOrder = () => {
         const matchesDateRange =
           startDate && endDate
             ? new Date(order.timestamp) >= new Date(startDate) &&
-            new Date(order.timestamp) <= new Date(endDate)
+              new Date(order.timestamp) <= new Date(endDate)
             : true;
 
         return matchesSearch && matchesDateRange;
@@ -97,10 +97,11 @@ const AdminSeviceOrder = () => {
           return (
             <li key={pageNumber}>
               <button
-                className={`block h-8 w-8 rounded border ${pageNumber === currentPage
-                  ? "border-blue-600 bg-blue-600 text-white"
-                  : "border-gray-900 bg-white text-center leading-8 text-gray-900"
-                  }`}
+                className={`block h-8 w-8 rounded border ${
+                  pageNumber === currentPage
+                    ? "border-blue-600 bg-blue-600 text-white"
+                    : "border-gray-900 bg-white text-center leading-8 text-gray-900"
+                }`}
                 onClick={() => handleChangePage(pageNumber)}
               >
                 {pageNumber}
@@ -126,19 +127,16 @@ const AdminSeviceOrder = () => {
 
   const handleStateUpdate = (id, status) => {
     console.log(status, "state update");
-    fetch(
-      `https://doob.dev/api/v1/admin/get-all-service-order?id=${id}`,
-      {
-        method: "PUT",
-        headers: {
-          "content-type": "application/json",
-        },
-        body: JSON.stringify({ status: status }),
-      }
-    )
+    fetch(`https://doob.dev/api/v1/admin/get-all-service-order?id=${id}`, {
+      method: "PUT",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({ status: status }),
+    })
       .then((res) => res.json())
       .then((data) => {
-        BrightAlert();
+        BrightAlert({ timeDuration: 1000 });
         refetch();
       });
   };

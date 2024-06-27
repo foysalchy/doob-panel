@@ -17,9 +17,7 @@ const AdminNewStaff = () => {
   const navigate = useNavigate();
 
   const handleSearch = () => {
-    fetch(
-      `https://doob.dev/api/v1/seller/seller-allUser?email=${searchValue}`
-    )
+    fetch(`https://doob.dev/api/v1/seller/seller-allUser?email=${searchValue}`)
       .then((res) => res.json())
       .then((data) => {
         console.log(data, "+++++++");
@@ -121,7 +119,7 @@ const AdminNewStaff = () => {
 
       const staffRoleData = await staffRoleResponse.json();
       console.log(staffRoleData);
-      BrightAlert();
+      BrightAlert({ timeDuration: 1000 });
       navigate("/admin/staff-management");
     } catch (error) {
       console.error("An error occurred:", error);

@@ -54,7 +54,7 @@ const PosProductsDetails = ({
         .then((res) => res.json())
         .then((resultData) => {
           if (resultData.status) {
-            // BrightAlert()
+            // BrightAlert({ timeDuration: 1000 })
             setInvoiceOpen(true);
             setUser(false);
             setExisting(false);
