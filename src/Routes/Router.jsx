@@ -82,6 +82,15 @@ const Router = createBrowserRouter([
       </>
     ),
   },
+  {
+    path: "/pos-invoice/:id",
+    element: (
+      <>
+        {/* <ScrollToTop /> */}
+        <PublicPosInvoice />
+      </>
+    ),
+  },
   // Seller Route
   {
     path: "/seller",
@@ -240,6 +249,5 @@ const Router = createBrowserRouter([
       },
     ],
   },
- 
 ]);
 export default Router;
