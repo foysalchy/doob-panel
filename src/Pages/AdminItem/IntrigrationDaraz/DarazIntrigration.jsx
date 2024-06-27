@@ -22,11 +22,16 @@ const DarazIntegration = () => {
 
     // Parse the URL and get the value of the 'code' parameter
     const urlParams = new URLSearchParams(new URL(currentUrl).search);
+    console.log("🚀 ~.jsx:25 ~ useEffect ~ urlParams:", urlParams);
     const code = urlParams.get("code");
-    setCode(code);
-    refetch();
+    if (code) {
+      setCode(code);
+      refetch();
+    }
+    // setCode(code);
   }, []);
 
+  console.log(code);
   useEffect(() => {
     if (code) {
       fetch("https://doob.dev/api/v1/daraz/get-key")

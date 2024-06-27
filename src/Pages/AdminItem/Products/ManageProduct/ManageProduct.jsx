@@ -22,7 +22,11 @@ const ManageProduct = () => {
       return data;
     },
   });
-  const { data: all_products = [], refetch: reload } = useQuery({
+  const {
+    data: all_products = [],
+    refetch: reload,
+    isLoading: loadingProduct,
+  } = useQuery({
     queryKey: ["all_products"],
     queryFn: async () => {
       const res = await fetch("https://doob.dev/api/v1/admin/get-all-products");
@@ -137,8 +141,9 @@ const ManageProduct = () => {
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const currentItems =
-    filteredData?.length && filteredData?.slice(startIndex, endIndex);
+    (filteredData?.length && filteredData?.slice(startIndex, endIndex)) || [];
 
+  console.log(currentItems);
   const [loading, setLoading] = useState(false);
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -470,7 +475,7 @@ const ManageProduct = () => {
                     </tr>
                   </thead>
                   <tbody className="bg-white divide-y  divide-gray-200 ">
-                    {currentItems.length
+                    {currentItems?.length > 0
                       ? currentItems?.map((product, i) => {
                           return (
                             <tr>
