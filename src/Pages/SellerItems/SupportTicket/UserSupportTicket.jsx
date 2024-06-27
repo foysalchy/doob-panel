@@ -6,6 +6,7 @@ import { BiLeftArrow, BiRightArrow } from "react-icons/bi";
 import Swal from "sweetalert2";
 import UserTicketView from "./UserTicketView";
 import { AuthContext } from "../../../AuthProvider/UserProvider";
+import LoaderData from "../../../Common/LoaderData";
 
 const UserSupportTicketForShop = () => {
   const [ModalOpen, setModalOpen] = useState(false);
@@ -35,7 +36,7 @@ const UserSupportTicketForShop = () => {
   const {
     data: tickets = [],
     refetch,
-    isLoading,
+    isLoading: loadingData,
   } = useQuery({
     queryKey: ["userSuport"],
     queryFn: async () => {
@@ -102,10 +103,11 @@ const UserSupportTicketForShop = () => {
           return (
             <li key={pageNumber}>
               <button
-                className={`block h-8 w-8 rounded border ${pageNumber === currentPage
-                  ? "border-blue-600 bg-blue-600 text-white"
-                  : "border-gray-100 bg-white text-center leading-8 text-gray-900"
-                  }`}
+                className={`block h-8 w-8 rounded border ${
+                  pageNumber === currentPage
+                    ? "border-blue-600 bg-blue-600 text-white"
+                    : "border-gray-100 bg-white text-center leading-8 text-gray-900"
+                }`}
                 onClick={() => handleChangePage(pageNumber)}
               >
                 {pageNumber}
@@ -316,6 +318,7 @@ const UserSupportTicketForShop = () => {
                     <th className="px-6 py-3 border-b-2 border-gray-300" />
                   </tr>
                 </thead>
+                {loadingData && <LoaderData />}
                 <tbody className="bg-white">
                   {currentData.map((ticket) => (
                     <tr key={ticket?._id}>

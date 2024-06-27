@@ -93,6 +93,7 @@ const DarazIntegration = () => {
     data: darazShop = [],
     isLoading,
     refetch,
+    isLoading:loadingShopData
   } = useQuery({
     queryKey: ["darazShopBd"],
     queryFn: async () => {

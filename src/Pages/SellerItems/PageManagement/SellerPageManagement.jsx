@@ -14,6 +14,7 @@ import { TbRestore } from "react-icons/tb";
 import { LiaTrashRestoreAltSolid } from "react-icons/lia";
 import { TbTrashOff } from "react-icons/tb";
 import BrightAlert from "bright-alert";
+import LoaderData from "../../../Common/LoaderData";
 
 const SellerPageManagement = () => {
   const [loading, setLoading] = useState(false);
@@ -24,7 +25,11 @@ const SellerPageManagement = () => {
 
   const { shopInfo } = useContext(AuthContext);
 
-  const { data: faqs = [], refetch } = useQuery({
+  const {
+    data: faqs = [],
+    refetch,
+    isLoading: loadingData,
+  } = useQuery({
     queryKey: ["faqs"],
     queryFn: async () => {
       const res = await fetch(
@@ -178,6 +183,7 @@ const SellerPageManagement = () => {
                       </th>
                     </tr>
                   </thead>
+                  {loadingData && <LoaderData />}
                   <tbody className="bg-white divide-y divide-gray-200 ">
                     {faqs
                       .filter((faq) => faq?.trash == trash_status)
