@@ -18,7 +18,7 @@ export default function PublicPosInvoice() {
     },
   });
 
-  console.log(invoiceItemData);
+  // console.log(invoiceItemData);
   if (loadingInvoice) {
     return (
       <div>
