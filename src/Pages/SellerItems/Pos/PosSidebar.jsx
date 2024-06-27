@@ -8,6 +8,7 @@ import { AuthContext } from "../../../AuthProvider/UserProvider";
 import PosProductsDetails from "./PosProductsDetails";
 import Swal from "sweetalert2";
 import PosPaymentModal from "./PosPaymentModal";
+import BrightAlert from "bright-alert";
 const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
   const { shopInfo } = useContext(AuthContext);
   console.log("🚀 ~ file: shopInfo:", shopInfo);
@@ -80,7 +81,9 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
   const [getaway, setGetaway] = useState("Cash");
   const [discount, setDiscount] = useState(0);
   const [presents, setPresents] = useState(false);
+    const [transactionId, setTransactionId] = useState("");
 
+    console.log(transactionId);
   const singleDiscount = (index, value) => {
     const updatedCart = [...cartProducts];
     updatedCart[index].discount = value;
@@ -93,6 +96,14 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
     setCartProducts(updatedCart);
   };
 
+  const setCashValue = (value) => {
+    if (value >= 0) {
+      setCash(value);
+    } else {
+      BrightAlert("error", `Cash Should at least 0`, "Increase please");
+      setCash(0);
+    }
+  };
   const decreaseQuantity = (index) => {
     const updatedCart = [...cartProducts];
     updatedCart[index].quantity = Math.max(0, updatedCart[index].quantity - 1);
@@ -165,12 +176,16 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
       discount,
       present,
       getaway,
+      transactionId,
     };
     console.log("🚀  data:", data);
     console.log(changeAmount);
     console.log(user?.email);
     // changeAmount < 1 && user.email && user.email.trim() !== ""
-    if (user.name=='Gust User' ||( changeAmount < 1 && user.email && user.email.trim() !== "")) {
+    if (
+      user.name == "Gust User" ||
+      (changeAmount < 1 && user.email && user.email.trim() !== "")
+    ) {
       const bodyData = {
         shopId: shopInfo?.shopId,
         email: user?.email,
@@ -463,7 +478,7 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
                   <input
                     defaultValue="0"
                     value={cash}
-                    onChange={(e) => setCash(e.target.value)}
+                    onChange={(e) => setCashValue(e.target.value)}
                     type="number"
                     className="bg-transparent px-2 text-right ring-1 w-[80px] ring-gray-300 rounded-md text-lg"
                   />
@@ -508,13 +523,15 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
                 isPreviewModal={isPreviewModal}
                 setIsPreviewModal={setIsPreviewModal}
                 setGetaway={setGetaway}
+                setTransactionId={setTransactionId}
+                transactionId={transactionId}
               />
             )}
             <div className=" ">
               <div className="flex justify-between flex-wrap mt-3 gap-2">
                 <button
                   onClick={() => {
-                    setCash(parseInt(cash) + parseInt(100)), audio.play();
+                    setCashValue(parseInt(cash) + parseInt(100)), audio.play();
                   }}
                   className="w-[65px] px-3 py-0 rounded bg-gray-200"
                 >
@@ -522,7 +539,7 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
                 </button>
                 <button
                   onClick={() => {
-                    setCash(parseInt(cash) + parseInt(500)), audio.play();
+                    setCashValue(parseInt(cash) + parseInt(500)), audio.play();
                   }}
                   className="w-[65px] px-3 py-0 rounded bg-gray-200"
                 >
@@ -530,7 +547,7 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
                 </button>
                 <button
                   onClick={() => {
-                    setCash(parseInt(cash) + parseInt(1000)), audio.play();
+                    setCashValue(parseInt(cash) + parseInt(1000)), audio.play();
                   }}
                   className="w-[65px] px-3 py-0 rounded bg-gray-200"
                 >
@@ -538,7 +555,7 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
                 </button>
                 <button
                   onClick={() => {
-                    setCash(parseInt(cash) + parseInt(2000)), audio.play();
+                    setCashValue(parseInt(cash) + parseInt(2000)), audio.play();
                   }}
                   className="w-[65px] px-3 py-0 rounded bg-gray-200"
                 >
@@ -785,7 +802,7 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
         }}
         invoice={invoice}
         setGest={setGest}
-        setCash={setCash}
+        setCash={setCashValue}
         setDiscount={setDiscount}
         setUser={setUser}
         open={open}

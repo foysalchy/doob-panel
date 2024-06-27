@@ -24,6 +24,7 @@ const EditWareHouse = ({ setOpenModal, OpenModal, data, refetch }) => {
         setImage(imageData.imageUrl);
       });
   };
+  // console.log(image ?? data?.img);
 
   const UploadNewWarehouse = (e) => {
     e.preventDefault();
@@ -31,7 +32,7 @@ const EditWareHouse = ({ setOpenModal, OpenModal, data, refetch }) => {
     const slag = e.target.slag.value;
     const address = e.target.address.value;
     const description = e.target.description.value;
-    const img = image;
+    const img = image ?? data?.img;
     const uploadData = {
       name,
       slag,
@@ -57,8 +58,9 @@ const EditWareHouse = ({ setOpenModal, OpenModal, data, refetch }) => {
 
   return (
     <div
-      className={`fixed z-50 top-0 left-0 flex h-full min-h-screen w-full items-center justify-center bg-black bg-opacity-90 px-4 py-5 ${OpenModal ? "block" : "hidden"
-        }`}
+      className={`fixed z-50 top-0 left-0 flex h-full min-h-screen w-full items-center justify-center bg-black bg-opacity-90 px-4 py-5 ${
+        OpenModal ? "block" : "hidden"
+      }`}
     >
       <div className="w-full max-w-[800px]  rounded-[20px] bg-white pb-10 px-8 text-center md:px-[30px]">
         <div className="flex justify-between z-50 pt-4 items-start w-full sticky top-0 bg-white border-b">
@@ -79,7 +81,7 @@ const EditWareHouse = ({ setOpenModal, OpenModal, data, refetch }) => {
               <label className="text-sm">Name</label>
               <input
                 name="name"
-                defaultValue={data.name}
+                defaultValue={data?.name}
                 type="text"
                 placeholder="Name Of Warehouse"
                 className="w-full p-2 border border-black rounded-md  text-gray-900"
@@ -89,7 +91,7 @@ const EditWareHouse = ({ setOpenModal, OpenModal, data, refetch }) => {
               <label className="text-sm">Slag</label>
               <input
                 name="slag"
-                defaultValue={data.slag}
+                defaultValue={data?.slag}
                 type="text"
                 placeholder="Slag"
                 className="w-full p-2 border border-black rounded-md  text-gray-900"
@@ -99,7 +101,7 @@ const EditWareHouse = ({ setOpenModal, OpenModal, data, refetch }) => {
               <label className="text-sm">Address</label>
               <input
                 name="address"
-                defaultValue={data.address}
+                defaultValue={data?.address}
                 type="text"
                 placeholder="Address"
                 className="w-full p-2 border border-black rounded-md  text-gray-900"
@@ -109,7 +111,7 @@ const EditWareHouse = ({ setOpenModal, OpenModal, data, refetch }) => {
               <label className="text-sm">Description</label>
               <textarea
                 name="description"
-                defaultValue={data.description}
+                defaultValue={data?.description}
                 type="text"
                 placeholder="Description"
                 className="w-full p-2 border border-black rounded-md  text-gray-900"

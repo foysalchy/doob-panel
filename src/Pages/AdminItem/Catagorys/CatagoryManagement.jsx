@@ -11,9 +11,7 @@ const CatagoryManagement = () => {
   const { data: category = [], refetch } = useQuery({
     queryKey: ["category"],
     queryFn: async () => {
-      const res = await fetch(
-        "https://doob.dev/api/v1/admin/category"
-      );
+      const res = await fetch("https://doob.dev/api/v1/admin/category");
       const data = await res.json();
       return data;
     },
@@ -55,7 +53,7 @@ const CatagoryManagement = () => {
     const imageData = await response.json();
     return imageData.imageUrl;
   };
-
+  console.log(openModal);
   const handleEdit = async (e) => {
     e.preventDefault();
     const image = e.target.image;
@@ -65,12 +63,18 @@ const CatagoryManagement = () => {
     imageFormData.append("image", image.files[0]);
     const imageUrl = await uploadImage(imageFormData);
 
+    // console.log(imageUrl);
+    // if (imageUrl) {
+    // }
     const data = {
       title,
-      image: imageUrl,
+      image: imageUrl ?? openModal?.img,
+      img: imageUrl ?? openModal?.img,
       id: openModal._id,
     };
+    console.log(data);
 
+    // return
     fetch(`https://doob.dev/api/v1/admin/category-update`, {
       method: "PUT",
       headers: {
@@ -81,6 +85,7 @@ const CatagoryManagement = () => {
       .then((res) => res.json())
       .then((data) => {
         BrightAlert();
+        setOpenModal(false);
         refetch();
       });
   };
@@ -167,7 +172,7 @@ const CatagoryManagement = () => {
 
             <tbody className="divide-y divide-gray-200">
               {filteredData.map((cate, index) => (
-                <tr>
+                <tr key={index}>
                   <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
                     <img
                       name="image"
@@ -205,17 +210,19 @@ const CatagoryManagement = () => {
                   <div>
                     <div
                       onClick={() => setOpenModal(false)}
-                      className={`fixed z-[100] flex items-center justify-center ${openModal?._id === cate?._id
-                        ? "visible opacity-100"
-                        : "invisible opacity-0"
-                        } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
+                      className={`fixed z-[100] flex items-center justify-center ${
+                        openModal?._id === cate?._id
+                          ? "visible opacity-100"
+                          : "invisible opacity-0"
+                      } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
                     >
                       <div
                         onClick={(e_) => e_.stopPropagation()}
-                        className={`text- w-[500px] absolute max-w-md rounded-sm bg-white p-6 drop-shadow-lg dark:bg-black dark:text-white ${openModal?._id === cate?._id
-                          ? "scale-1 opacity-1 duration-300"
-                          : "scale-0 opacity-0 duration-150"
-                          }`}
+                        className={`text- w-[500px] absolute max-w-md rounded-sm bg-white p-6 drop-shadow-lg dark:bg-black dark:text-white ${
+                          openModal?._id === cate?._id
+                            ? "scale-1 opacity-1 duration-300"
+                            : "scale-0 opacity-0 duration-150"
+                        }`}
                       >
                         <form onSubmit={handleEdit} action="">
                           <h1 className="mb-2 text-2xl font-semibold">
