@@ -90,7 +90,7 @@ const CheckoutModal = ({ modalOpen, setModalOpen, defaultAddress }) => {
     })
       .then((response) => response.json())
       .then((result) => {
-        BrightAlert({ timeDuration: 1000 });
+        BrightAlert({ timeDuration: 3000 });
       })
       .catch((error) => {
         console.error("Error:", error);

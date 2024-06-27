@@ -156,7 +156,7 @@ const SellerDomainManagement = () => {
         console.log(data);
 
         if (data.success) {
-          BrightAlert({ timeDuration: 1000 });
+          BrightAlert({ timeDuration: 3000 });
           refetch();
         }
       });

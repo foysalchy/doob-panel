@@ -200,7 +200,7 @@ const ProductDetails = () => {
       })
         .then((res) => res.json())
         .then((data) => {
-          BrightAlert({ timeDuration: 1000 });
+          BrightAlert({ timeDuration: 3000 });
         });
     } else {
       navigate("/sign-in");
@@ -268,7 +268,7 @@ const ProductDetails = () => {
       // Handle the response
       const responseData = await response.json();
       const user = responseData.user;
-      BrightAlert({ timeDuration: 1000 });
+      BrightAlert({ timeDuration: 3000 });
       console.log(responseData, "uploaded");
     } catch (error) {
       console.error("Error posting comment:", error);
@@ -324,7 +324,7 @@ const ProductDetails = () => {
       localStorage.setItem(`cart-product-${user._id}`, JSON.stringify(getCart));
     }
 
-    BrightAlert({ timeDuration: 1000 });
+    BrightAlert({ timeDuration: 3000 });
   };
 
   const balk_buy = () => {

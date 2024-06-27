@@ -29,7 +29,7 @@ const AdminBlogs = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        BrightAlert({ timeDuration: 1000 });
+        BrightAlert({ timeDuration: 3000 });
         refetch();
       });
   };
@@ -94,7 +94,7 @@ const AdminBlogs = () => {
         method: "PUT",
       }
     ).then(() => {
-      BrightAlert({ timeDuration: 1000 });
+      BrightAlert({ timeDuration: 3000 });
       refetch();
     });
   };

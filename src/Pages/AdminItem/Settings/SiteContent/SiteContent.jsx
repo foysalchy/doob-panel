@@ -105,7 +105,7 @@ const SiteContent = () => {
 
       if (response.ok) {
         reload();
-        BrightAlert({ timeDuration: 1000 });
+        BrightAlert({ timeDuration: 3000 });
       } else {
         // Handle non-successful response
         console.error("Failed to submit domain data:", response.statusText);
@@ -131,7 +131,7 @@ const SiteContent = () => {
 
       if (response.ok) {
         reLoading();
-        BrightAlert({ timeDuration: 1000 });
+        BrightAlert({ timeDuration: 3000 });
       } else {
         // Handle non-successful response
         console.error("Failed to submit domain data:", response.statusText);

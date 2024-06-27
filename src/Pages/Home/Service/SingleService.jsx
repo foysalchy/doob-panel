@@ -118,7 +118,7 @@ const SingleService = () => {
         .then((res) => res.json())
         .then((data) => {
           refetch();
-          BrightAlert({ timeDuration: 1000 });
+          BrightAlert({ timeDuration: 3000 });
           setOpen(!open);
         });
     }

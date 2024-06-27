@@ -71,7 +71,7 @@ const EditInventory = ({ refetch, open, setOpen, data }) => {
       .then((data) => {
         refetch();
         setOpen(!open);
-        BrightAlert({ timeDuration: 1000 });
+        BrightAlert({ timeDuration: 3000 });
       });
   };
 

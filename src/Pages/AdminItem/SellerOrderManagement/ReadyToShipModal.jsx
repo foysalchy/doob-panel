@@ -125,7 +125,7 @@ const ReadyToShipModal = ({
             setLoading(false);
             // readyToShip(false);
             setReadyToShip(false);
-            BrightAlert({ timeDuration: 1000 });
+            BrightAlert({ timeDuration: 3000 });
             refetch();
           });
       } catch (error) {
@@ -177,7 +177,7 @@ const ReadyToShipModal = ({
             setLoading(false);
             // readyToShip(false);
             setReadyToShip(false);
-            BrightAlert({ timeDuration: 1000 });
+            BrightAlert({ timeDuration: 3000 });
             refetch();
           }
         });

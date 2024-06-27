@@ -435,7 +435,7 @@ const SeeAllProduct = () => {
       localStorage.setItem(`cart-product-${user._id}`, JSON.stringify(getCart));
     }
 
-    BrightAlert({ timeDuration: 1000 });
+    BrightAlert({ timeDuration: 3000 });
   };
 
   return (

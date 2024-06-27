@@ -125,7 +125,7 @@ const AddNewStaff = () => {
 
   //         const staffRoleData = await staffRoleResponse.json();
   //         console.log(staffRoleData);
-  //         BrightAlert({ timeDuration: 1000 })
+  //         BrightAlert({ timeDuration: 3000 })
   //         navigate('/seller/staff-management')
 
   //     } catch (error) {

@@ -53,7 +53,7 @@ const SellerManageBlog = () => {
         method: "PUT",
       }
     ).then(() => {
-      BrightAlert({ timeDuration: 1000 });
+      BrightAlert({ timeDuration: 3000 });
       refetch();
     });
   };

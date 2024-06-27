@@ -106,7 +106,7 @@ const EditPromoCode = ({ data, setOpenModal, refetch }) => {
         .then((res) => res.json())
         .then((data) => {
           if (data.acknowledged) {
-            BrightAlert({ timeDuration: 1000 });
+            BrightAlert({ timeDuration: 3000 });
             refetch();
             setOpenModal(false);
             setLoading(false);

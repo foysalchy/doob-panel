@@ -119,7 +119,7 @@ const AdminNewStaff = () => {
 
       const staffRoleData = await staffRoleResponse.json();
       console.log(staffRoleData);
-      BrightAlert({ timeDuration: 1000 });
+      BrightAlert({ timeDuration: 3000 });
       navigate("/admin/staff-management");
     } catch (error) {
       console.error("An error occurred:", error);

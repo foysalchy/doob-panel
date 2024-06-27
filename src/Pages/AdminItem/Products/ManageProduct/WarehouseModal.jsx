@@ -203,7 +203,7 @@ const WarehouseModal = ({
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
-        BrightAlert({ timeDuration: 1000 });
+        BrightAlert({ timeDuration: 3000 });
         setModalOpen(false);
         reload();
       });

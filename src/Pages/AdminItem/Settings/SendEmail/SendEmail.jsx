@@ -93,7 +93,7 @@ const SendEmail = () => {
           setLoading(false);
           form.reset();
           // reLoading();
-          BrightAlert({ timeDuration: 1000 });
+          BrightAlert({ timeDuration: 3000 });
         } else {
           setLoading(false);
           form.reset();

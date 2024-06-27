@@ -92,7 +92,7 @@ const ManageProduct = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        BrightAlert({ timeDuration: 1000 });
+        BrightAlert({ timeDuration: 3000 });
         refetch();
         reload();
       });
@@ -164,7 +164,7 @@ const ManageProduct = () => {
       .then((data) => {
         setModalOpen(false);
         setLoading(false);
-        BrightAlert({ timeDuration: 1000 });
+        BrightAlert({ timeDuration: 3000 });
         refetch();
         reload();
       });
@@ -268,7 +268,7 @@ const ManageProduct = () => {
       .then((data) => {
         refetch();
         reload();
-        BrightAlert({ timeDuration: 1000 });
+        BrightAlert({ timeDuration: 3000 });
         setEditMode(false);
         setEditedCommission("");
         setEditedHandling("");

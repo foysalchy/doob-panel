@@ -68,7 +68,7 @@ const CardPayment = ({ openPayment, setOpenPayment, handleStore }) => {
       handleStore(item.product_id, payment, userInfo, item);
     });
     setLoading(false);
-    BrightAlert({ timeDuration: 1000 });
+    BrightAlert({ timeDuration: 3000 });
 
     navigate(`/products/confirm-order`);
   };

@@ -66,7 +66,7 @@ const AddContact = () => {
       .then((res) => res.json())
       .then((data) => {
         setLoading(false);
-        BrightAlert({ timeDuration: 1000 });
+        BrightAlert({ timeDuration: 3000 });
         refetch();
       });
 

@@ -51,7 +51,7 @@ const AddFaq = () => {
         setLoading(false);
         form.reset();
         navigate("/admin/faq");
-        BrightAlert({ timeDuration: 1000 });
+        BrightAlert({ timeDuration: 3000 });
       });
   };
 

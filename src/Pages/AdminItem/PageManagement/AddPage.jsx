@@ -127,7 +127,7 @@ const AddPage = () => {
       .then((res) => res.json())
       .then((data) => {
         setLoading(false);
-        BrightAlert({ timeDuration: 1000 });
+        BrightAlert({ timeDuration: 3000 });
         // Swal.fire("success", "Your Blog Publish Successfully", "success");
         navigate("/admin/page-management");
         // form.reset();
