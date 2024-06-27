@@ -11,11 +11,16 @@ import { BiEdit } from "react-icons/bi";
 import { BsEye } from "react-icons/bs";
 import BrightAlert from "bright-alert";
 import { TbRestore } from "react-icons/tb";
+import LoaderData from "../../../../Common/LoaderData";
 
 const SellerManageBlog = () => {
   const { shopInfo } = useContext(AuthContext);
 
-  const { data: blogs = [], refetch } = useQuery({
+  const {
+    data: blogs = [],
+    refetch,
+    isLoading: loadingBlogs,
+  } = useQuery({
     queryKey: ["blogs"],
     queryFn: async () => {
       const res = await fetch(
@@ -216,6 +221,12 @@ const SellerManageBlog = () => {
                     </th>
                   </tr>
                 </thead>
+                {!loadingBlogs && (
+                  <div className="text-center mx-auto">
+                    {" "}
+                    <LoaderData />{" "}
+                  </div>
+                )}
                 <tbody className="bg-white divide-y  divide-gray-200 ">
                   {filteredData.map((blog) => (
                     <tr>
