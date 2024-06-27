@@ -12,11 +12,8 @@ const ShippingModal = ({
   ships,
   productStatusUpdate,
 }) => {
-
-
   // const { shopInfo } = useContext(AuthContext)
   let shipInfo = ships[0];
-
 
   const { shopInfo } = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
@@ -120,16 +117,13 @@ const ShippingModal = ({
 
       // return;
       try {
-        await fetch(
-          `https://doob.dev/api/v1/seller/order-submit-steadfast`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(uploadData),
-          }
-        )
+        await fetch(`https://doob.dev/api/v1/seller/order-submit-steadfast`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(uploadData),
+        })
           .then((res) => res.json())
           .then((data) => {
             console.log(data);
@@ -137,15 +131,14 @@ const ShippingModal = ({
             setLoading(false);
             // readyToShip(false);
             setReadyToShip(false);
-            BrightAlert();
+            BrightAlert({ timeDuration: 3000 });
             refetch();
           });
       } catch (error) {
         console.error("Error:", error.message);
         // Handle the error, e.g., show an error message to the user
       }
-    }
-    else if (JSON.parse(selectedDelivery)?.name === "Pathao") {
+    } else if (JSON.parse(selectedDelivery)?.name === "Pathao") {
       console.log("yes");
       const recipient_city = data?.recipient_city.value;
       const recipient_zone = data?.recipient_zone.value;
@@ -193,7 +186,7 @@ const ShippingModal = ({
             setLoading(false);
             // readyToShip(false);
             setReadyToShip(false);
-            BrightAlert();
+            BrightAlert({ timeDuration: 3000 });
             refetch();
           }
         });
@@ -207,8 +200,9 @@ const ShippingModal = ({
       <div className={readyToShip ? "flex" : "hidden"}>
         <div className=" mx-auto py-20">
           <div
-            className={`fixed  z-50 top-0 left-0 flex h-full min-h-screen w-full items-center justify-center bg-black bg-opacity-90 px-4 py-5  ${readyToShip ? "block" : "hidden"
-              }`}
+            className={`fixed  z-50 top-0 left-0 flex h-full min-h-screen w-full items-center justify-center bg-black bg-opacity-90 px-4 py-5  ${
+              readyToShip ? "block" : "hidden"
+            }`}
           >
             <div className="w-full max-w-[800px] h-[90%]  rounded-[20px]  bg-white  pb-10 px-8 text-center md:px-[30px] overflow-scroll">
               <div className="flex justify-between z-50 pt-4 items-start w-full sticky top-0 bg-white border-b">
@@ -611,8 +605,8 @@ const ShippingModal = ({
                       loading
                         ? "Uploading.."
                         : selectedDelivery === "Other"
-                          ? "Ready to ship"
-                          : `Ready for Ship`
+                        ? "Ready to ship"
+                        : `Ready for Ship`
                     }
                   />
                 </div>

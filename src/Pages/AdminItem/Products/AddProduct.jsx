@@ -37,7 +37,7 @@ const AddProduct = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        BrightAlert();
+        BrightAlert({ timeDuration: 3000 });
         setLoading(false), refetch();
       });
   };
@@ -45,7 +45,6 @@ const AddProduct = () => {
   return (
     <div>
       <div className=" mx-auto overflow-hidden  sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8">
-
         <div className="p-10 border-2 rounded m-10">
           <form onSubmit={handleUpload} className="space-y-4  ">
             <div className="border border-collapse p-4">

@@ -11,13 +11,14 @@ import Swal from "sweetalert2";
 import DeleteModal from "../../../../Common/DeleteModal";
 import { FaRegCopy } from "react-icons/fa";
 import EditPromoCode from "./EditPromoCode";
+import LoaderData from "../../../../Common/LoaderData";
 
 const CoponManagement = () => {
   const [loading, setLoading] = useState(false);
 
   const { shopInfo } = useContext(AuthContext);
 
-  const { data: faqs = [], refetch } = useQuery({
+  const { data: faqs = [], refetch,isLoading:loadingData } = useQuery({
     queryKey: ["faqs"],
     queryFn: async () => {
       const res = await fetch(
@@ -250,6 +251,7 @@ const CoponManagement = () => {
                       </th>
                     </tr>
                   </thead>
+                  {loadingData && <LoaderData/>}
                   <tbody className="bg-white divide-y divide-gray-200 ">
                     {faqs?.map((faq, index) => (
                       <tr>
@@ -269,10 +271,11 @@ const CoponManagement = () => {
                                 {faq?.code}
 
                                 <button
-                                  className={` ml-4 ${copiedIndex === index
-                                    ? " cursor-not-allowed"
-                                    : ""
-                                    }`}
+                                  className={` ml-4 ${
+                                    copiedIndex === index
+                                      ? " cursor-not-allowed"
+                                      : ""
+                                  }`}
                                   onClick={() =>
                                     handleCopyClick(faq?.code, index)
                                   }
@@ -391,7 +394,6 @@ const CoponManagement = () => {
           refetch={refetch}
           data={OpenModal}
           setOpenModal={setOpenModal}
-
         />
       )}
     </div>

@@ -9,11 +9,12 @@ import ModalForCategory from "../ModalForCategory/ModalForCategory";
 import { useContext } from "react";
 import { AuthContext } from "../../../../AuthProvider/UserProvider";
 import { Link } from "react-router-dom";
+import LoaderData from "../../../../Common/LoaderData";
 
 const MiniCategoriesManagement = () => {
   const { shopInfo } = useContext(AuthContext);
 
-  const { data: categories = [], refetch } = useQuery({
+  const { data: categories = [], refetch,isLoading:loadingData } = useQuery({
     queryKey: ["categories"],
     queryFn: async () => {
       const res = await fetch(
@@ -288,7 +289,6 @@ const MiniCategoriesManagement = () => {
           />
         )}
 
-
         <div className="flex items-center justify-between">
           <div className="relative my-6">
             <input
@@ -302,7 +302,10 @@ const MiniCategoriesManagement = () => {
             />
 
             <span className="absolute inset-y-0 end-0 grid w-10 place-content-center">
-              <button type="button" className="text-gray-600 hover:text-gray-700">
+              <button
+                type="button"
+                className="text-gray-600 hover:text-gray-700"
+              >
                 <span className="sr-only">Search</span>
 
                 <svg
@@ -323,18 +326,16 @@ const MiniCategoriesManagement = () => {
             </span>
           </div>
 
-
           <div className="flex items-center whitespace-nowrap gap-2">
             <span className="text-sm">Entire per page</span>
             <select
-
               className="border w-[50px] px-1 py-2 text-sm rounded"
-              onChange={(e) => setItemsPerPage(e.target.value)}>
+              onChange={(e) => setItemsPerPage(e.target.value)}
+            >
               <option value={15}>15</option>
               <option value={30}>30</option>
               <option value={70}>70</option>
               <option value={100}>100</option>
-
             </select>
           </div>
         </div>
@@ -373,6 +374,7 @@ const MiniCategoriesManagement = () => {
                 </tr>
               </thead>
               <tbody>
+                {loadingData && <LoaderData />}
                 {currentItems?.length &&
                   currentItems?.map((warehouse, index) => {
                     return (
@@ -406,10 +408,10 @@ const MiniCategoriesManagement = () => {
                                       );
                                       const darazCategoryName =
                                         parsedMegaCategory &&
-                                          parsedMegaCategory.darazCategory
+                                        parsedMegaCategory.darazCategory
                                           ? JSON.parse(
-                                            parsedMegaCategory.darazCategory
-                                          ).name
+                                              parsedMegaCategory.darazCategory
+                                            ).name
                                           : "Invalidate";
 
                                       return darazCategoryName;
@@ -460,10 +462,10 @@ const MiniCategoriesManagement = () => {
                                   );
                                   const darazCategoryName =
                                     parsedMegaCategory &&
-                                      parsedMegaCategory.wocomarceCategory
+                                    parsedMegaCategory.wocomarceCategory
                                       ? JSON.parse(
-                                        parsedMegaCategory.wocomarceCategory
-                                      ).name
+                                          parsedMegaCategory.wocomarceCategory
+                                        ).name
                                       : "Invalidate";
 
                                   return darazCategoryName;
@@ -514,26 +516,29 @@ const MiniCategoriesManagement = () => {
                                   : true
                               )
                             }
-                            className={`${warehouse && warehouse.feature === "true"
-                              ? "bg-green-500"
-                              : "bg-red-500"
-                              } text-white ml-2 rounded capitalize px-3 py-1`}
+                            className={`${
+                              warehouse && warehouse.feature === "true"
+                                ? "bg-green-500"
+                                : "bg-red-500"
+                            } text-white ml-2 rounded capitalize px-3 py-1`}
                           >
                             futures
                           </button>
                         </td>
 
                         <div
-                          className={`fixed z-[100] flex items-center justify-center ${editOn?._id === warehouse?._id
-                            ? "opacity-1 visible"
-                            : "invisible opacity-0"
-                            } inset-0 bg-black/20 backdrop-blur-sm duration-100`}
+                          className={`fixed z-[100] flex items-center justify-center ${
+                            editOn?._id === warehouse?._id
+                              ? "opacity-1 visible"
+                              : "invisible opacity-0"
+                          } inset-0 bg-black/20 backdrop-blur-sm duration-100`}
                         >
                           <div
-                            className={`absolute md:w-[500px] w-full rounded-sm bg-white p-3 pb-5 text-center drop-shadow-2xl ${editOn?._id === warehouse?._id
-                              ? "scale-1 opacity-1 duration-300"
-                              : "scale-0 opacity-0 duration-150"
-                              } `}
+                            className={`absolute md:w-[500px] w-full rounded-sm bg-white p-3 pb-5 text-center drop-shadow-2xl ${
+                              editOn?._id === warehouse?._id
+                                ? "scale-1 opacity-1 duration-300"
+                                : "scale-0 opacity-0 duration-150"
+                            } `}
                           >
                             <svg
                               onClick={() => setEditOn(false)}
@@ -630,10 +635,11 @@ const MiniCategoriesManagement = () => {
                     <li key={i}>
                       <button
                         onClick={() => setCurrentPage(i + 1)}
-                        className={`bg-white border ${currentPage === i + 1
-                          ? "text-blue-600"
-                          : "text-gray-500 hover:bg-gray-100 hover:text-gray-700"
-                          } border-gray-300 leading-tight py-2 px-3 rounded`}
+                        className={`bg-white border ${
+                          currentPage === i + 1
+                            ? "text-blue-600"
+                            : "text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+                        } border-gray-300 leading-tight py-2 px-3 rounded`}
                       >
                         {i + 1}
                       </button>
@@ -647,7 +653,7 @@ const MiniCategoriesManagement = () => {
                       currentPage ===
                       Math.ceil(
                         filteredData?.length &&
-                        filteredData?.length / itemsPerPage
+                          filteredData?.length / itemsPerPage
                       )
                     }
                     className="bg-white border text-gray-500 hover:bg-gray-100 hover:text-gray-700 border-gray-300 leading-tight py-2 px-3 rounded-r-lg"

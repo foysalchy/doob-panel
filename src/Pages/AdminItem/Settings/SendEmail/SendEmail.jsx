@@ -93,15 +93,14 @@ const SendEmail = () => {
           setLoading(false);
           form.reset();
           // reLoading();
-          BrightAlert();
-
+          BrightAlert({ timeDuration: 3000 });
         } else {
           setLoading(false);
           form.reset();
           // reLoading();
-          BrightAlert(data?.message, '', 'error');
+          BrightAlert(data?.message, "", "error");
         }
-      })
+      });
     // .finally(() => {
     //   setLoading(false);
 

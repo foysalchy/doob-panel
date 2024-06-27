@@ -111,7 +111,7 @@ const AddPage = () => {
       metaImg: imageUrl,
       draft,
       status: !draft,
-      trash: false
+      trash: false,
     };
 
     // navigate("/admin/page-management");
@@ -127,7 +127,7 @@ const AddPage = () => {
       .then((res) => res.json())
       .then((data) => {
         setLoading(false);
-        BrightAlert()
+        BrightAlert({ timeDuration: 3000 });
         // Swal.fire("success", "Your Blog Publish Successfully", "success");
         navigate("/admin/page-management");
         // form.reset();
@@ -162,13 +162,12 @@ const AddPage = () => {
                 Page Title
               </label>
               <input
-
                 className="w-full rounded-lg border border-gray-900 p-3 text-sm"
                 placeholder="Title"
                 type="text"
                 id="title"
                 name="title"
-              // onChange={(e) => handleInputChange("title", e.target.value)} // for drafts
+                // onChange={(e) => handleInputChange("title", e.target.value)} // for drafts
               />
             </div>
             <div>
@@ -197,7 +196,7 @@ const AddPage = () => {
                       insertImageAsBase64URI: true,
                     },
                   }}
-                // value={formData.message}
+                  // value={formData.message}
                 ></JoditEditor>
               </div>
             </div>
@@ -207,7 +206,6 @@ const AddPage = () => {
                 Meta Title
               </label>
               <input
-
                 className="w-full rounded-lg border border-gray-900 p-3 text-sm"
                 placeholder="Meta tag"
                 // onChange={(e) => handleInputChange("MetaTag", e.target.value)} // for drafts
@@ -221,7 +219,6 @@ const AddPage = () => {
                 Meta Description
               </label>
               <textarea
-
                 className="w-full rounded-lg border border-gray-900 p-3 text-sm"
                 placeholder="Meta description...."
                 // onChange={(e) =>
@@ -238,7 +235,6 @@ const AddPage = () => {
                 Meta Image
               </label>
               <input
-
                 className="w-full rounded-lg border border-gray-900 p-3 text-sm"
                 placeholder="Meta image...."
                 // onChange={imageUploading}

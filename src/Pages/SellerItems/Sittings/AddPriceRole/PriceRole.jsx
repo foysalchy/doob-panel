@@ -5,6 +5,7 @@ import EditPriceRoleModal from "./EditPriceRoleModal";
 import { useQuery } from "@tanstack/react-query";
 import { AuthContext } from "../../../../AuthProvider/UserProvider";
 import BrightAlert from "bright-alert";
+import LoaderData from "../../../../Common/LoaderData";
 
 export default function PriceRole() {
   const [open, setOpen] = useState(false);
@@ -18,7 +19,11 @@ export default function PriceRole() {
 
   // const currentData = filteredData?.slice(startIndex, endIndex);
 
-  const { data: priceRole = [], refetch } = useQuery({
+  const {
+    data: priceRole = [],
+    refetch,
+    isLoading: loadingData,
+  } = useQuery({
     queryKey: ["priceRole"],
     queryFn: async () => {
       const res = await fetch(
@@ -31,15 +36,12 @@ export default function PriceRole() {
   });
 
   const handleDelete = (id) => {
-    fetch(
-      `https://doob.dev/api/v1/seller/delete-price-role?id=${id}`,
-      {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    )
+    fetch(`https://doob.dev/api/v1/seller/delete-price-role?id=${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
       .then((res) => res.json())
       .then((data) => {
         refetch();
@@ -85,6 +87,7 @@ export default function PriceRole() {
             </th>
           </tr>
         </thead>
+        {loadingData && <LoaderData />}
         <tbody>
           {priceRole?.map((itm) => (
             <tr key={itm?._id} className="border bg-gray-50">
@@ -113,7 +116,11 @@ export default function PriceRole() {
               </td>
               <div className="m-0 p-0">
                 {open?._id === itm?._id && (
-                  <EditPriceRoleModal refetch={refetch} itm={itm} setOpen={setOpen} />
+                  <EditPriceRoleModal
+                    refetch={refetch}
+                    itm={itm}
+                    setOpen={setOpen}
+                  />
                 )}
               </div>
             </tr>

@@ -10,11 +10,12 @@ import SellerEditWareHouse from "./SellerEditWareHouse";
 import { useContext } from "react";
 import { AuthContext } from "../../../AuthProvider/UserProvider";
 import SellerShowPrivew from "./SellerShowPrivew";
+import LoaderData from "../../../Common/LoaderData";
 
 const SellerListOfWarehouse = () => {
   const { shopInfo } = useContext(AuthContext);
 
-  const { data: warehouses = [], refetch } = useQuery({
+  const { data: warehouses = [], refetch ,isLoading:loadingData} = useQuery({
     queryKey: ["warehouses"],
     queryFn: async () => {
       const res = await fetch(
@@ -198,7 +199,6 @@ const SellerListOfWarehouse = () => {
           />
         )}
 
-
         <div className="flex items-center justify-between">
           <div className="relative  my-6">
             <input
@@ -211,7 +211,10 @@ const SellerListOfWarehouse = () => {
             />
 
             <span className="absolute inset-y-0 end-0 grid w-10 place-content-center">
-              <button type="button" className="text-gray-600 hover:text-gray-700">
+              <button
+                type="button"
+                className="text-gray-600 hover:text-gray-700"
+              >
                 <span className="sr-only">Search</span>
 
                 <svg
@@ -235,14 +238,13 @@ const SellerListOfWarehouse = () => {
           <div className="flex items-center whitespace-nowrap gap-2">
             <span className="text-sm">Entire per page</span>
             <select
-
               className="border w-[50px] px-1 py-2 text-sm rounded"
-              onChange={(e) => setPageSize(e.target.value)}>
+              onChange={(e) => setPageSize(e.target.value)}
+            >
               <option value={15}>15</option>
               <option value={30}>30</option>
               <option value={70}>70</option>
               <option value={100}>100</option>
-
             </select>
           </div>
         </div>
@@ -268,6 +270,7 @@ const SellerListOfWarehouse = () => {
                 <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-800  rounded-tr "></th>
               </tr>
             </thead>
+            {loadingData && <LoaderData/>}
             <tbody>
               {currentData.map((warehouse, index) => (
                 <tr key={index + warehouse._id} className="">

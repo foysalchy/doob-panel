@@ -156,7 +156,7 @@ const SellerDomainManagement = () => {
         console.log(data);
 
         if (data.success) {
-          BrightAlert();
+          BrightAlert({ timeDuration: 3000 });
           refetch();
         }
       });
@@ -400,6 +400,7 @@ const SellerDomainManagement = () => {
                             <AccessWareShopModal
                               isPreviewModal={isPreviewModal}
                               setIsPreviewModal={setIsPreviewModal}
+                              refetchWare={refetch}
                             />
                           )}
                         </tr>

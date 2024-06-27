@@ -11,6 +11,7 @@ import { AuthContext } from "../../../../AuthProvider/UserProvider";
 import { Link } from "react-router-dom";
 import Select from "react-select";
 import EditMegaCategoryModal from "./EditMegaCategoryModal";
+import LoaderData from "../../../../Common/LoaderData";
 // import EditWareHouse from './EditWareHouse';
 
 const MageCategoriesManagement = () => {
@@ -296,7 +297,10 @@ const MageCategoriesManagement = () => {
             />
 
             <span className="absolute inset-y-0 end-0 grid w-10 place-content-center">
-              <button type="button" className="text-gray-600 hover:text-gray-700">
+              <button
+                type="button"
+                className="text-gray-600 hover:text-gray-700"
+              >
                 <span className="sr-only">Search</span>
 
                 <svg
@@ -320,14 +324,13 @@ const MageCategoriesManagement = () => {
           <div className="flex items-center whitespace-nowrap gap-2">
             <span className="text-sm">Entire per page</span>
             <select
-
               className="border w-[50px] px-1 py-2 text-sm rounded"
-              onChange={(e) => setItemsPerPage(e.target.value)}>
+              onChange={(e) => setItemsPerPage(e.target.value)}
+            >
               <option value={15}>15</option>
               <option value={30}>30</option>
               <option value={70}>70</option>
               <option value={100}>100</option>
-
             </select>
           </div>
         </div>
@@ -358,9 +361,7 @@ const MageCategoriesManagement = () => {
               </tr>
             </thead>
             <tbody>
-              {megaLoading && (
-                <h2 className="text-center py-3">Loading data ...</h2>
-              )}
+              {megaLoading && <LoaderData />}
               {!megaLoading &&
                 currentItems?.length &&
                 currentItems?.map((warehouse, index) => (
@@ -420,8 +421,9 @@ const MageCategoriesManagement = () => {
                             warehouse?.feature ? false : true
                           )
                         }
-                        className={`${warehouse?.feature ? "bg-green-500" : "bg-red-500"
-                          } text-white ml-2 rounded capitalize px-3 py-1`}
+                        className={`${
+                          warehouse?.feature ? "bg-green-500" : "bg-red-500"
+                        } text-white ml-2 rounded capitalize px-3 py-1`}
                       >
                         futures
                       </button>
@@ -432,8 +434,9 @@ const MageCategoriesManagement = () => {
                             warehouse?.menu ? false : true
                           )
                         }
-                        className={`${warehouse?.menu ? "bg-green-500" : "bg-red-500"
-                          } text-white ml-2 rounded capitalize px-3 py-1`}
+                        className={`${
+                          warehouse?.menu ? "bg-green-500" : "bg-red-500"
+                        } text-white ml-2 rounded capitalize px-3 py-1`}
                       >
                         menu
                       </button>
@@ -490,10 +493,11 @@ const MageCategoriesManagement = () => {
                   <li key={i}>
                     <button
                       onClick={() => setCurrentPage(i + 1)}
-                      className={`bg-white border ${currentPage === i + 1
-                        ? "text-blue-600"
-                        : "text-gray-500 hover:bg-gray-100 hover:text-gray-700"
-                        } border-gray-300 leading-tight py-2 px-3 rounded`}
+                      className={`bg-white border ${
+                        currentPage === i + 1
+                          ? "text-blue-600"
+                          : "text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+                      } border-gray-300 leading-tight py-2 px-3 rounded`}
                     >
                       {i + 1}
                     </button>
@@ -507,7 +511,7 @@ const MageCategoriesManagement = () => {
                     currentPage ===
                     Math.ceil(
                       filteredData?.length &&
-                      filteredData?.length / itemsPerPage
+                        filteredData?.length / itemsPerPage
                     )
                   }
                   className="bg-white border text-gray-500 hover:bg-gray-100 hover:text-gray-700 border-gray-300 leading-tight py-2 px-3 rounded-r-lg"

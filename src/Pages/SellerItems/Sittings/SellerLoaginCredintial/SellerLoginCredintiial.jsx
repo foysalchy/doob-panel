@@ -5,6 +5,7 @@ import { FaFacebook } from "react-icons/fa6";
 import { BsGoogle } from "react-icons/bs";
 import BrightAlert from "bright-alert";
 import { useQuery } from "@tanstack/react-query";
+import LoaderData from "../../../../Common/LoaderData";
 
 const SellerLoginCredintiial = () => {
   const { shopInfo } = useContext(AuthContext);
@@ -30,7 +31,7 @@ const SellerLoginCredintiial = () => {
     }
   };
 
-  console.log(emailActive, googleActive, facebookActive, 'actice');
+  console.log(emailActive, googleActive, facebookActive, "actice");
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -84,12 +85,12 @@ const SellerLoginCredintiial = () => {
       });
   };
 
-  const { data: shopCredential = {} } = useQuery({
+  const { data: shopCredential = {}, isLoading: loadingData } = useQuery({
     queryKey: ["sellerCredential"],
     queryFn: async () => {
       try {
         const res = await fetch(
-          `https://doob.dev/api/v1/shop/firebase/${shopInfo?.shopId}`,
+          `https://doob.dev/api/v1/shop/firebase/${shopInfo?.shopId}`
         );
         const data = await res.json();
         return data;
@@ -101,20 +102,20 @@ const SellerLoginCredintiial = () => {
 
   useEffect(() => {
     if (shopCredential?.service) {
-      setEmailActive(shopCredential?.service?.email)
-      setGoogleActive(shopCredential?.service?.google)
-      setFacebookActive(shopCredential?.service?.facebook)
+      setEmailActive(shopCredential?.service?.email);
+      setGoogleActive(shopCredential?.service?.google);
+      setFacebookActive(shopCredential?.service?.facebook);
     }
-  }, [shopCredential])
+  }, [shopCredential]);
 
-
-  console.log(shopCredential, 'shopCredential');
+  console.log(shopCredential, "shopCredential");
 
   return (
     <div>
       <div>Follow the message</div>
       <div className="border md:p-10 p-4 mt-3 bg-gray-100">
         <h1 className="text-2xl ">Firebase SDK</h1>
+        {loadingData && <LoaderData />}
         <form onSubmit={handleSubmit} className=" mx-auto mt-5 rounded-md ">
           <div className="mb-4">
             <label
@@ -124,7 +125,6 @@ const SellerLoginCredintiial = () => {
               Email
             </label>
             <input
-
               defaultValue={shopCredential?.email ? shopCredential?.email : ""}
               type="email"
               name="email"
@@ -140,7 +140,6 @@ const SellerLoginCredintiial = () => {
               Api Key
             </label>
             <input
-
               defaultValue={shopCredential.apiKey ? shopCredential.apiKey : ""}
               type="text"
               name="apiKey"
@@ -156,7 +155,6 @@ const SellerLoginCredintiial = () => {
               Auth Domain
             </label>
             <input
-
               defaultValue={
                 shopCredential.authDomain ? shopCredential.authDomain : ""
               }
@@ -174,7 +172,6 @@ const SellerLoginCredintiial = () => {
               Project Id
             </label>
             <input
-
               defaultValue={
                 shopCredential.email ? shopCredential.projectId : ""
               }
@@ -192,7 +189,6 @@ const SellerLoginCredintiial = () => {
               Storage Bucket
             </label>
             <input
-
               defaultValue={
                 shopCredential.storageBucket ? shopCredential.storageBucket : ""
               }
@@ -210,7 +206,6 @@ const SellerLoginCredintiial = () => {
               Messaging Sender ID
             </label>
             <input
-
               defaultValue={
                 shopCredential.messagingSenderId
                   ? shopCredential.messagingSenderId
@@ -230,7 +225,6 @@ const SellerLoginCredintiial = () => {
               App ID
             </label>
             <input
-
               defaultValue={shopCredential.appId ? shopCredential.appId : ""}
               type="text"
               name="appId"
@@ -246,7 +240,6 @@ const SellerLoginCredintiial = () => {
               Measurement ID
             </label>
             <input
-
               defaultValue={
                 shopCredential.measurementId ? shopCredential.measurementId : ""
               }
@@ -261,8 +254,9 @@ const SellerLoginCredintiial = () => {
             {/* Email Logo */}
             <button
               type="button"
-              className={`p-2 rounded-full ${emailActive ? "bg-blue-500" : "bg-gray-300"
-                }`}
+              className={`p-2 rounded-full ${
+                emailActive ? "bg-blue-500" : "bg-gray-300"
+              }`}
               onClick={() => setEmailActive(!emailActive)}
             >
               <div>
@@ -273,8 +267,9 @@ const SellerLoginCredintiial = () => {
             {/* Google Logo */}
             <button
               type="button"
-              className={`p-2 rounded-full ${googleActive ? "bg-red-500" : "bg-gray-300"
-                }`}
+              className={`p-2 rounded-full ${
+                googleActive ? "bg-red-500" : "bg-gray-300"
+              }`}
               onClick={() => setGoogleActive(!googleActive)}
             >
               <BsGoogle />
@@ -283,8 +278,9 @@ const SellerLoginCredintiial = () => {
             {/* Facebook Logo */}
             <button
               type="button"
-              className={`p-2 rounded-full ${facebookActive ? "bg-blue-800" : "bg-gray-300"
-                }`}
+              className={`p-2 rounded-full ${
+                facebookActive ? "bg-blue-800" : "bg-gray-300"
+              }`}
               onClick={() => setFacebookActive(!facebookActive)}
             >
               <FaFacebook />

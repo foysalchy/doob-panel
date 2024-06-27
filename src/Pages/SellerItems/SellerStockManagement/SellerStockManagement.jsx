@@ -5,13 +5,14 @@ import SellerStockInvoice from "./SellerStockInvoice";
 import { BiEdit, BiSave, BiSearch } from "react-icons/bi";
 import BrightAlert from "bright-alert";
 import Swal from "sweetalert2";
+import LoaderData from "../../../Common/LoaderData";
 
 const SellerStockManagement = () => {
   const [on, setOn] = useState(false);
   const [searchQuery, setSearchQuery] = useState(""); // State to store search query
 
   const { shopInfo } = useContext(AuthContext);
-  const { data: stockRequestData = [], refetch } = useQuery({
+  const { data: stockRequestData = [], refetch,isLoading:loadingData } = useQuery({
     queryKey: ["stockRequestData"],
     queryFn: async () => {
       const res = await fetch(
@@ -272,6 +273,7 @@ const SellerStockManagement = () => {
                 </th>
               </tr>
             </thead>
+            {loadingData && <LoaderData />}
             <tbody className="bg-white divide-y divide-gray-200 ">
               {filteredStockRequest?.map((itm, index) => (
                 <tr key={index + 1}>

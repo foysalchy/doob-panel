@@ -13,9 +13,7 @@ const SiteContent = () => {
   } = useQuery({
     queryKey: ["category"],
     queryFn: async () => {
-      const res = await fetch(
-        "https://doob.dev/api/v1/admin/domain-video"
-      );
+      const res = await fetch("https://doob.dev/api/v1/admin/domain-video");
       const data = await res.json();
       return data;
     },
@@ -28,9 +26,7 @@ const SiteContent = () => {
   } = useQuery({
     queryKey: ["domainDoc"],
     queryFn: async () => {
-      const res = await fetch(
-        "https://doob.dev/api/v1/admin/domain-document"
-      );
+      const res = await fetch("https://doob.dev/api/v1/admin/domain-document");
       const data = await res.json();
       return data.result;
     },
@@ -43,9 +39,7 @@ const SiteContent = () => {
   } = useQuery({
     queryKey: ["buyDomain"],
     queryFn: async () => {
-      const res = await fetch(
-        "https://doob.dev/api/v1/admin/buy-domain"
-      );
+      const res = await fetch("https://doob.dev/api/v1/admin/buy-domain");
       const data = await res.json();
       return data;
     },
@@ -111,7 +105,7 @@ const SiteContent = () => {
 
       if (response.ok) {
         reload();
-        BrightAlert();
+        BrightAlert({ timeDuration: 3000 });
       } else {
         // Handle non-successful response
         console.error("Failed to submit domain data:", response.statusText);
@@ -127,20 +121,17 @@ const SiteContent = () => {
     e.preventDefault();
     const url = e.target.url.value;
     try {
-      const response = await fetch(
-        "https://doob.dev/api/v1/admin/buy-domain",
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ url }), // Convert body object to JSON string
-        }
-      );
+      const response = await fetch("https://doob.dev/api/v1/admin/buy-domain", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ url }), // Convert body object to JSON string
+      });
 
       if (response.ok) {
         reLoading();
-        BrightAlert();
+        BrightAlert({ timeDuration: 3000 });
       } else {
         // Handle non-successful response
         console.error("Failed to submit domain data:", response.statusText);

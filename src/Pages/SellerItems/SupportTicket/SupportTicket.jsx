@@ -11,6 +11,7 @@ import ViewSupportTicket from "./ViewSupportTicket";
 import { MdEmail } from "react-icons/md";
 import { BsMessenger } from "react-icons/bs";
 import { AiOutlineWhatsApp } from "react-icons/ai";
+import LoaderData from "../../../Common/LoaderData";
 
 const SellerSupportTicket = () => {
   const date = new Date();
@@ -41,7 +42,11 @@ const SellerSupportTicket = () => {
 
   const { user } = useContext(AuthContext);
 
-  const { data: contact = [], refetch } = useQuery({
+  const {
+    data: contact = [],
+    refetch,
+    isLoading: loadingData,
+  } = useQuery({
     queryKey: ["contact"],
     queryFn: async () => {
       const res = await fetch(
@@ -159,7 +164,7 @@ const SellerSupportTicket = () => {
                   </th>
                 </tr>
               </thead>
-
+              {loadingData && <LoaderData/>}
               <tbody>
                 {currentData?.map((department) => (
                   <tr className="overflow-x-auto overflow-y-hidden border-b border-l border-[#E8E8E8] bg-[#F3F6FF] py-5 px-2 text-center text-base font-medium text-dark whitespace-nowrap">

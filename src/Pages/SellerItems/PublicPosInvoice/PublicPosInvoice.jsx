@@ -32,7 +32,7 @@ export default function PublicPosInvoice() {
   return (
     <div className="min-h-[70vh] text-center max-w-[60%] mx-auto my-auto pt-5 lg:pt-9">
       {" "}
-      <h2 className="text-3xl mt-7 ">Your Invoice of POS</h2>
+      <h2 className="text-3xl mt-7 ">Your POS Invoice </h2>
       <ul className="">
         <li className="py-2 border-b border-gray-700">
           <div className="flex justify-between">

@@ -8,7 +8,6 @@ import { MdDelete } from "react-icons/md";
 import useImageUpload from "../../../../Hooks/UploadImage";
 
 const MegaCategoryManagement = () => {
-
   const { uploadImage } = useImageUpload();
   const { data: megaCategory = [], refetch } = useQuery({
     queryKey: ["megaCategory"],
@@ -21,16 +20,14 @@ const MegaCategoryManagement = () => {
     },
   });
 
-
   const [itemsPerPage, setItemsPerPage] = useState(parseInt(1));
 
   const [currentPage, setCurrentPage] = useState(1);
 
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
-  const currentItems = megaCategory?.length && megaCategory?.slice(startIndex, endIndex);
-
-
+  const currentItems =
+    (megaCategory?.length && megaCategory?.slice(startIndex, endIndex)) || [];
 
   // status update
   const statusUpdate = (id, status) => {
@@ -152,15 +149,12 @@ const MegaCategoryManagement = () => {
     }).then((result) => {
       if (result.dismiss === Swal.DismissReason.timer) {
         // Timer completed, initiate the fetch for deletion
-        fetch(
-          `https://doob.dev/api/v1/admin/category/mega_category/${id}`,
-          {
-            method: "DELETE",
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        )
+        fetch(`https://doob.dev/api/v1/admin/category/mega_category/${id}`, {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
           .then((res) => res.json())
           .then((data) => {
             // Show success message upon successful deletion
@@ -192,12 +186,12 @@ const MegaCategoryManagement = () => {
           </button>
           {/* <button className={style.addBtn}> +Add mega Manage category</button> */}
         </Link>{" "}
-
         <div className="flex items-center gap-2">
           <span className="text-sm">Entire per page</span>
           <select
             className="border w-[50px] px-1 py-2 text-sm rounded"
-            onChange={(e) => setItemsPerPage(e.target.value)}>
+            onChange={(e) => setItemsPerPage(e.target.value)}
+          >
             <option value={15}>15</option>
             <option value={30}>30</option>
             <option value={70}>70</option>
@@ -257,8 +251,9 @@ const MegaCategoryManagement = () => {
                         onClick={() =>
                           featureStatus(item?._id, item?.feature ? false : true)
                         }
-                        className={`${item?.feature ? "bg-green-500" : "bg-red-500"
-                          } text-white ml-2 rounded capitalize px-3 py-1`}
+                        className={`${
+                          item?.feature ? "bg-green-500" : "bg-red-500"
+                        } text-white ml-2 rounded capitalize px-3 py-1`}
                       >
                         futures
                       </button>
@@ -266,8 +261,9 @@ const MegaCategoryManagement = () => {
                         onClick={() =>
                           menuStatus(item?._id, item?.menu ? false : true)
                         }
-                        className={`${item?.menu ? "bg-green-500" : "bg-red-500"
-                          } text-white ml-2 rounded capitalize px-3 py-1`}
+                        className={`${
+                          item?.menu ? "bg-green-500" : "bg-red-500"
+                        } text-white ml-2 rounded capitalize px-3 py-1`}
                       >
                         menu
                       </button>
@@ -306,16 +302,18 @@ const MegaCategoryManagement = () => {
                       </div>
                       <div className="absolute w-full top-0 left-0">
                         <div
-                          className={`fixed z-[100] flex items-center justify-center ${editOn?._id === item?._id
-                            ? "opacity-1 visible"
-                            : "invisible opacity-0"
-                            } inset-0 bg-black/20 backdrop-blur-sm duration-100`}
+                          className={`fixed z-[100] flex items-center justify-center ${
+                            editOn?._id === item?._id
+                              ? "opacity-1 visible"
+                              : "invisible opacity-0"
+                          } inset-0 bg-black/20 backdrop-blur-sm duration-100`}
                         >
                           <div
-                            className={`absolute md:w-[500px] w-full rounded-sm bg-white p-3 pb-5 text-center drop-shadow-2xl ${editOn?._id === item?._id
-                              ? "scale-1 opacity-1 duration-300"
-                              : "scale-0 opacity-0 duration-150"
-                              } `}
+                            className={`absolute md:w-[500px] w-full rounded-sm bg-white p-3 pb-5 text-center drop-shadow-2xl ${
+                              editOn?._id === item?._id
+                                ? "scale-1 opacity-1 duration-300"
+                                : "scale-0 opacity-0 duration-150"
+                            } `}
                           >
                             <svg
                               onClick={() => setEditOn(false)}
@@ -419,10 +417,11 @@ const MegaCategoryManagement = () => {
                   <li key={i}>
                     <button
                       onClick={() => setCurrentPage(i + 1)}
-                      className={`bg-white border ${currentPage === i + 1
-                        ? "text-blue-600"
-                        : "text-gray-500 hover:bg-gray-100 hover:text-gray-700"
-                        } border-gray-300 leading-tight py-2 px-3 rounded`}
+                      className={`bg-white border ${
+                        currentPage === i + 1
+                          ? "text-blue-600"
+                          : "text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+                      } border-gray-300 leading-tight py-2 px-3 rounded`}
                     >
                       {i + 1}
                     </button>
@@ -436,7 +435,7 @@ const MegaCategoryManagement = () => {
                     currentPage ===
                     Math.ceil(
                       megaCategory?.length &&
-                      megaCategory?.length / itemsPerPage
+                        megaCategory?.length / itemsPerPage
                     )
                   }
                   className="bg-white border text-gray-500 hover:bg-gray-100 hover:text-gray-700 border-gray-300 leading-tight py-2 px-3 rounded-r-lg"

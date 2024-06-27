@@ -25,8 +25,9 @@ const PageManagement = () => {
     },
   });
 
-  const allPage = faqs.filter((item) => item.draft || item.draft === trash_status);
-
+  const allPage = faqs.filter(
+    (item) => item.draft || item.draft === trash_status
+  );
 
   const ActiveHandle = (id) => {
     fetch(`https://doob.dev/api/v1/admin/page/status/${id}`, {
@@ -37,7 +38,7 @@ const PageManagement = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        BrightAlert()
+        BrightAlert({ timeDuration: 3000 });
         refetch();
       });
   };
@@ -51,7 +52,7 @@ const PageManagement = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        BrightAlert()
+        BrightAlert({ timeDuration: 3000 });
         refetch();
       });
   };
@@ -66,7 +67,7 @@ const PageManagement = () => {
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
-        BrightAlert()
+        BrightAlert({ timeDuration: 3000 });
         refetch();
       });
   };
@@ -82,7 +83,7 @@ const PageManagement = () => {
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
-        BrightAlert()
+        BrightAlert({ timeDuration: 3000 });
         refetch();
       });
   };
@@ -132,7 +133,7 @@ const PageManagement = () => {
           </span>
 
           <span className="text-sm font-medium transition-all group-hover:ms-4">
-            {trash_status ? 'Active Page' : 'Trash Page'}
+            {trash_status ? "Active Page" : "Trash Page"}
           </span>
         </button>
       </div>
@@ -173,7 +174,8 @@ const PageManagement = () => {
                     </tr>
                   </thead>
                   <tbody className="bg-white divide-y divide-gray-200 ">
-                    {faqs?.filter((faq) => faq?.trash == trash_status)
+                    {faqs
+                      ?.filter((faq) => faq?.trash == trash_status)
                       ?.map((faq, index) => (
                         <tr>
                           <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
@@ -228,9 +230,11 @@ const PageManagement = () => {
                                 }
                                 className=" transition-colors duration-200  text-xl text-red-500 hover:text-red-700 focus:outline-none"
                               >
-
-                                {trash_status ? <TbRestore className="text-green-500 hover:text-green-700" /> : <TbTrashOff className="text-red-500 hover:text-red-700" />
-                                }
+                                {trash_status ? (
+                                  <TbRestore className="text-green-500 hover:text-green-700" />
+                                ) : (
+                                  <TbTrashOff className="text-red-500 hover:text-red-700" />
+                                )}
                                 {/* <MdOutlineFolderDelete /> */}
                               </button>
                               <button
@@ -241,7 +245,7 @@ const PageManagement = () => {
 
                               <Link
                                 to={`/pages/${faq?._id}`}
-                              // onClick={() => handleViewDetails(faq?._id)}
+                                // onClick={() => handleViewDetails(faq?._id)}
                               >
                                 <BsEye className=" transition-colors text-xl duration-200 text-green-500 hover:text-green-700 focus:outline-none" />
                               </Link>

@@ -9,13 +9,18 @@ import { BiEdit } from "react-icons/bi";
 import { RxCross2 } from "react-icons/rx";
 import Swal from "sweetalert2";
 import DeleteModal from "../../../../Common/DeleteModal";
+import LoaderData from "../../../../Common/LoaderData";
 
 const BrandMangement = () => {
   const [loading, setLoading] = useState(false);
 
   const { shopInfo } = useContext(AuthContext);
 
-  const { data: faqs = [], refetch } = useQuery({
+  const {
+    data: faqs = [],
+    refetch,
+    isLoading: loadingData,
+  } = useQuery({
     queryKey: ["faqs"],
     queryFn: async () => {
       const res = await fetch(
@@ -51,15 +56,12 @@ const BrandMangement = () => {
   };
 
   if (isDelete) {
-    fetch(
-      `https://doob.dev/api/v1/seller/brand/delete/${deleteId}`,
-      {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    )
+    fetch(`https://doob.dev/api/v1/seller/brand/delete/${deleteId}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
       .then((res) => res.json())
       .then((data) => {
         setIsDelete(false);
@@ -208,6 +210,7 @@ const BrandMangement = () => {
                             </button>
                           )}
                         </td>
+                        {loadingData && <LoaderData />}
 
                         <td className="px-4 py-4 text-sm whitespace-nowrap">
                           <div className="flex items-center gap-x-6">

@@ -11,11 +11,16 @@ import { BiEdit } from "react-icons/bi";
 import { BsEye } from "react-icons/bs";
 import BrightAlert from "bright-alert";
 import { TbRestore } from "react-icons/tb";
+import LoaderData from "../../../../Common/LoaderData";
 
 const SellerManageBlog = () => {
   const { shopInfo } = useContext(AuthContext);
 
-  const { data: blogs = [], refetch } = useQuery({
+  const {
+    data: blogs = [],
+    refetch,
+    isLoading: loadingBlogs,
+  } = useQuery({
     queryKey: ["blogs"],
     queryFn: async () => {
       const res = await fetch(
@@ -53,29 +58,23 @@ const SellerManageBlog = () => {
         method: "PUT",
       }
     ).then(() => {
-      BrightAlert()
+      BrightAlert({ timeDuration: 3000 });
       refetch();
     });
   };
 
   const publishBlog = (id) => {
-    fetch(
-      `https://doob.dev/api/v1/seller/blog/publish-status/${id}`,
-      {
-        method: "PUT",
-      }
-    ).then(() => {
+    fetch(`https://doob.dev/api/v1/seller/blog/publish-status/${id}`, {
+      method: "PUT",
+    }).then(() => {
       Swal.fire("Your Blog Publish Successfully", "", "success");
       refetch();
     });
   };
   const UnpublishBlog = (id) => {
-    fetch(
-      `https://doob.dev/api/v1/seller/blog/unpublish-status/${id}`,
-      {
-        method: "PUT",
-      }
-    ).then(() => {
+    fetch(`https://doob.dev/api/v1/seller/blog/unpublish-status/${id}`, {
+      method: "PUT",
+    }).then(() => {
       Swal.fire("Your Blog Unpublish Successfully", "", "success");
 
       refetch();
@@ -90,14 +89,17 @@ const SellerManageBlog = () => {
     setSearchQuery(event.target.value);
   };
 
-  let filteredData = blogs.length ? blogs.filter((item) => {
-    const matchesBlogType = (item.draft === blogType) || !blogType;
-    const matchesTrashType = (item.trash === `${trashType}`)
-    const matchesSearchQuery = item.title?.toLowerCase().includes(searchQuery.toLowerCase()) || item._id.toString().includes(searchQuery);
+  let filteredData = blogs.length
+    ? blogs.filter((item) => {
+        const matchesBlogType = item.draft === blogType || !blogType;
+        const matchesTrashType = item.trash === `${trashType}`;
+        const matchesSearchQuery =
+          item.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          item._id.toString().includes(searchQuery);
 
-    return matchesBlogType && matchesTrashType && matchesSearchQuery;
-  }) : [];
-
+        return matchesBlogType && matchesTrashType && matchesSearchQuery;
+      })
+    : [];
 
   console.log(filteredData);
 
@@ -106,8 +108,6 @@ const SellerManageBlog = () => {
   const handleViewDetails = (ticketId) => {
     setOpenModal(ticketId);
   };
-
-
 
   return (
     <div>
@@ -123,7 +123,6 @@ const SellerManageBlog = () => {
           Add New Blog
         </span>
       </Link>
-
 
       <div className="relative  my-6">
         <input
@@ -169,22 +168,25 @@ const SellerManageBlog = () => {
           <button
             onClick={() => setBlogType(!blogType)}
             className={
-              blogType ? "bg-green-700 rounded cursor-pointer text-white px-4 py-2" :
-                "bg-red-700 rounded cursor-pointer text-white px-4 py-2"
+              blogType
+                ? "bg-green-700 rounded cursor-pointer text-white px-4 py-2"
+                : "bg-red-700 rounded cursor-pointer text-white px-4 py-2"
             }
           >
-            {!blogType ? 'Draft' : 'All Blogs'}
+            {!blogType ? "Draft" : "All Blogs"}
           </button>
 
-          <button onClick={() => setTrashType(!trashType)} className={
-            trashType ? "bg-green-500 rounded cursor-pointer text-white px-4 py-2" :
-              "bg-red-500 rounded cursor-pointer text-white px-4 py-2"
-          }>
-            {!trashType ? 'Trashed' : 'All Blogs'}
+          <button
+            onClick={() => setTrashType(!trashType)}
+            className={
+              trashType
+                ? "bg-green-500 rounded cursor-pointer text-white px-4 py-2"
+                : "bg-red-500 rounded cursor-pointer text-white px-4 py-2"
+            }
+          >
+            {!trashType ? "Trashed" : "All Blogs"}
           </button>
         </div>
-
-
       </div>
       <div>
         <div>
@@ -219,6 +221,12 @@ const SellerManageBlog = () => {
                     </th>
                   </tr>
                 </thead>
+                {!loadingBlogs && (
+                  <div className="text-center mx-auto">
+                    {" "}
+                    <LoaderData />{" "}
+                  </div>
+                )}
                 <tbody className="bg-white divide-y  divide-gray-200 ">
                   {filteredData.map((blog) => (
                     <tr>
@@ -294,46 +302,55 @@ const SellerManageBlog = () => {
 
                       <td className="px-4 py-4 text-sm whitespace-nowrap">
                         <div className="flex gap-4 justify-center">
-                          {trashType && <button
-                            onClick={() => DeleteBlog(blog._id)}
-                            className=" transition-colors duration-200 text-red-500 hover:text-red-700 focus:outline-none"
-                          >
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              strokeWidth="1.5"
-                              stroke="currentColor"
-                              className="w-5 h-5"
+                          {trashType && (
+                            <button
+                              onClick={() => DeleteBlog(blog._id)}
+                              className=" transition-colors duration-200 text-red-500 hover:text-red-700 focus:outline-none"
                             >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
-                              />
-                            </svg>
-                          </button>}
-                          {!trashType && <button
-                            onClick={() => blogStash(blog._id, true)}
-                            className=" transition-colors duration-200 text-red-500 hover:text-red-700 focus:outline-none"
-                          >
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              strokeWidth="1.5"
-                              stroke="currentColor"
-                              className="w-5 h-5"
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                strokeWidth="1.5"
+                                stroke="currentColor"
+                                className="w-5 h-5"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
+                                />
+                              </svg>
+                            </button>
+                          )}
+                          {!trashType && (
+                            <button
+                              onClick={() => blogStash(blog._id, true)}
+                              className=" transition-colors duration-200 text-red-500 hover:text-red-700 focus:outline-none"
                             >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
-                              />
-                            </svg>
-                          </button>}
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                strokeWidth="1.5"
+                                stroke="currentColor"
+                                className="w-5 h-5"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
+                                />
+                              </svg>
+                            </button>
+                          )}
 
-                          {trashType && <TbRestore onClick={() => blogStash(blog._id, false)} className="transition-colors text-xl duration-200 cursor-pointer text-green-500 hover:text-green-700 focus:outline-none" />}
+                          {trashType && (
+                            <TbRestore
+                              onClick={() => blogStash(blog._id, false)}
+                              className="transition-colors text-xl duration-200 cursor-pointer text-green-500 hover:text-green-700 focus:outline-none"
+                            />
+                          )}
                           <BiEdit
                             onClick={() => handleViewDetails(blog._id)}
                             className="transition-colors text-xl duration-200 cursor-pointer text-yellow-500 hover:text-yellow-700 focus:outline-none"
@@ -363,7 +380,7 @@ const SellerManageBlog = () => {
           </div>
         </div>
       </div>
-    </div >
+    </div>
   );
 };
 export default SellerManageBlog;

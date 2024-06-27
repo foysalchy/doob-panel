@@ -75,7 +75,7 @@ const AddSubCategory = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        BrightAlert();
+        BrightAlert({ timeDuration: 3000 });
         setLoading(false);
         form.reset();
         s;

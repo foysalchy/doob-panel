@@ -6,11 +6,16 @@ import { useState } from "react";
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
 import { FaArrowRightLong } from "react-icons/fa6";
+import LoaderData from "../../../Common/LoaderData";
 
 const SellerManageContact = () => {
   const { shopInfo } = useContext(AuthContext);
 
-  const { data: contact = [], refetch } = useQuery({
+  const {
+    data: contact = [],
+    refetch,
+    isLoading: loadingContact,
+  } = useQuery({
     queryKey: ["contact"],
     queryFn: async () => {
       const res = await fetch(
@@ -22,15 +27,12 @@ const SellerManageContact = () => {
   });
 
   const DeleteCategory = (id) => {
-    fetch(
-      `https://doob.dev/api/v1/shop/contact/${shopInfo.shopId}?id=${id}`,
-      {
-        method: "DELETE",
-        headers: {
-          "content-type": "application/json",
-        },
-      }
-    )
+    fetch(`https://doob.dev/api/v1/shop/contact/${shopInfo.shopId}?id=${id}`, {
+      method: "DELETE",
+      headers: {
+        "content-type": "application/json",
+      },
+    })
       .then((res) => res.json())
       .then((data) => {
         Swal.fire("Contact Information Deleted Successfully", "", "success");
@@ -93,6 +95,7 @@ const SellerManageContact = () => {
           </button>
         </span>
       </div>
+      {loadingContact && <LoaderData />}
       <div className="overflow-x-auto mt-4 pr-10">
         {filteredData.length ? (
           <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">

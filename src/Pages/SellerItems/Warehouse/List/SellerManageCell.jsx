@@ -7,11 +7,12 @@ import { MdDelete } from "react-icons/md";
 import SellerModalForWarehouse from "../Modal/SellerModalForWarehouse";
 import { useContext } from "react";
 import { AuthContext } from "../../../../AuthProvider/UserProvider";
+import LoaderData from "../../../../Common/LoaderData";
 
 const SellerManageCell = () => {
   const { shopInfo } = useContext(AuthContext);
 
-  const { data: cells = [], refetch } = useQuery({
+  const { data: cells = [], refetch,isLoading:loadingData } = useQuery({
     queryKey: ["cells"],
     queryFn: async () => {
       const res = await fetch(
@@ -213,8 +214,6 @@ const SellerManageCell = () => {
           />
         )}
 
-
-
         <div className="flex items-center justify-between">
           <div className="relative my-6">
             <input
@@ -227,7 +226,10 @@ const SellerManageCell = () => {
             />
 
             <span className="absolute inset-y-0 end-0 grid w-10 place-content-center">
-              <button type="button" className="text-gray-600 hover:text-gray-700">
+              <button
+                type="button"
+                className="text-gray-600 hover:text-gray-700"
+              >
                 <span className="sr-only">Search</span>
 
                 <svg
@@ -251,14 +253,13 @@ const SellerManageCell = () => {
           <div className="flex items-center whitespace-nowrap gap-2">
             <span className="text-sm">Entire per page</span>
             <select
-
               className="border w-[50px] px-1 py-2 text-sm rounded"
-              onChange={(e) => setPageSize(e.target.value)}>
+              onChange={(e) => setPageSize(e.target.value)}
+            >
               <option value={15}>15</option>
               <option value={30}>30</option>
               <option value={70}>70</option>
               <option value={100}>100</option>
-
             </select>
           </div>
         </div>
@@ -291,6 +292,7 @@ const SellerManageCell = () => {
                   </th>
                 </tr>
               </thead>
+              {loadingData && <LoaderData />}
               <tbody>
                 {currentData.map((warehouse, index) => (
                   <tr key={index + warehouse._id} className="">

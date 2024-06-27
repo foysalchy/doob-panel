@@ -59,7 +59,7 @@ const WooCommerceTableRow = ({ data, refetch }) => {
     )
       .then((res) => res.json())
       .then((data) => {
-        BrightAlert();
+        BrightAlert({ timeDuration: 3000 });
         refetch();
       });
   };
