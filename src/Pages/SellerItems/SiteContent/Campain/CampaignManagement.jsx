@@ -7,6 +7,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { RxCross2 } from "react-icons/rx";
 import { BiEdit } from "react-icons/bi";
+import LoaderData from "../../../../Common/LoaderData";
 
 const CampaignManagement = () => {
   const [loading, setLoading] = useState(false);
@@ -14,7 +15,11 @@ const CampaignManagement = () => {
 
   const { shopInfo } = useContext(AuthContext);
 
-  const { data: faqs = [], refetch } = useQuery({
+  const {
+    data: faqs = [],
+    refetch,
+    isLoading: loadingData,
+  } = useQuery({
     queryKey: ["faqs"],
     queryFn: async () => {
       const res = await fetch(
@@ -57,15 +62,12 @@ const CampaignManagement = () => {
   };
 
   if (isDelete) {
-    fetch(
-      `https://doob.dev/api/v1/seller/delete-campaign/${deleteId}`,
-      {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    )
+    fetch(`https://doob.dev/api/v1/seller/delete-campaign/${deleteId}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
       .then((res) => res.json())
       .then((data) => {
         setIsDelete(false);
@@ -261,7 +263,7 @@ const CampaignManagement = () => {
                             </button>
                           )}
                         </td>
-
+                        {loadingData && <LoaderData />}
                         <td className="px-4 py-4 text-sm whitespace-nowrap">
                           <div className="flex items-center gap-x-6">
                             <button
@@ -286,7 +288,7 @@ const CampaignManagement = () => {
 
                             <button
                               onClick={() => handleViewDetails(faq)}
-                            // to={`edit/${faq?._id}`}
+                              // to={`edit/${faq?._id}`}
                             >
                               <BiEdit className=" transition-colors text-xl duration-200 text-yellow-500 hover:text-yellow-700 focus:outline-none" />
                             </button>

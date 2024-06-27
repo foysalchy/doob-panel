@@ -9,11 +9,12 @@ import { FaArrowRightLong } from "react-icons/fa6";
 import { useState } from "react";
 import { MdPadding } from "react-icons/md";
 import Swal from "sweetalert2";
+import LoaderData from "../../../../Common/LoaderData";
 
 const PopupManagement = () => {
   const [loading, setLoading] = useState(false);
   const { shopInfo } = useContext(AuthContext);
-  const { data: faqs, refetch } = useQuery({
+  const { data: faqs, refetch,isLoading:loadingData } = useQuery({
     queryKey: "faqs",
     queryFn: async () => {
       const res = await fetch(
@@ -196,6 +197,7 @@ const PopupManagement = () => {
         ) : (
           <h1> sorry you have no ads right now</h1>
         )}
+        {loadingData && <LoaderData />}
       </section>
     </div>
   );
