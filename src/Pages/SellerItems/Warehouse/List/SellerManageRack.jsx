@@ -6,10 +6,15 @@ import { BiEdit, BiLeftArrow, BiRightArrow } from "react-icons/bi";
 import { MdDelete } from "react-icons/md";
 import SellerModalForWarehouse from "../Modal/SellerModalForWarehouse";
 import { AuthContext } from "../../../../AuthProvider/UserProvider";
+import LoaderData from "../../../../Common/LoaderData";
 
 const SellerManageRack = () => {
   const { shopInfo } = useContext(AuthContext);
-  const { data: racks = [], refetch } = useQuery({
+  const {
+    data: racks = [],
+    refetch,
+    isLoading: loadingData,
+  } = useQuery({
     queryKey: ["racks"],
     queryFn: async () => {
       const res = await fetch(
@@ -20,9 +25,7 @@ const SellerManageRack = () => {
     },
   });
 
-  console.log(
-    `https://doob.dev/api/v1/seller/warehouse/rack/${shopInfo._id}`
-  );
+  console.log(`https://doob.dev/api/v1/seller/warehouse/rack/${shopInfo._id}`);
 
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -79,10 +82,11 @@ const SellerManageRack = () => {
           return (
             <li key={pageNumber}>
               <button
-                className={`block h-8 w-8 rounded border ${pageNumber === currentPage
-                  ? "border-blue-600 bg-blue-600 text-white"
-                  : "border-gray-900 bg-white text-center leading-8 text-gray-900"
-                  }`}
+                className={`block h-8 w-8 rounded border ${
+                  pageNumber === currentPage
+                    ? "border-blue-600 bg-blue-600 text-white"
+                    : "border-gray-900 bg-white text-center leading-8 text-gray-900"
+                }`}
                 onClick={() => handleChangePage(pageNumber)}
               >
                 {pageNumber}
@@ -107,16 +111,13 @@ const SellerManageRack = () => {
   };
 
   const updateStatus = (id, status) => {
-    fetch(
-      `https://doob.dev/api/v1/seller/warehouse/rack/status/${id}`,
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ status }),
-      }
-    )
+    fetch(`https://doob.dev/api/v1/seller/warehouse/rack/status/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ status }),
+    })
       .then((res) => res.json())
       .then((data) => {
         Swal.fire(`Seller disable ${status} `, "", "success");
@@ -146,15 +147,12 @@ const SellerManageRack = () => {
     }).then((result) => {
       if (result.dismiss === Swal.DismissReason.timer) {
         // Timer completed, initiate the fetch for deletion
-        fetch(
-          `https://doob.dev/api/v1/seller/warehouse/rack/delete/${id}`,
-          {
-            method: "DELETE",
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        )
+        fetch(`https://doob.dev/api/v1/seller/warehouse/rack/delete/${id}`, {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
           .then((res) => res.json())
           .then((data) => {
             Swal.fire("Seller Deleted", "", "success");
@@ -212,7 +210,6 @@ const SellerManageRack = () => {
           />
         )}
 
-
         <div className="flex items-center justify-between">
           <div className="relative my-6">
             <input
@@ -225,7 +222,10 @@ const SellerManageRack = () => {
             />
 
             <span className="absolute inset-y-0 end-0 grid w-10 place-content-center">
-              <button type="button" className="text-gray-600 hover:text-gray-700">
+              <button
+                type="button"
+                className="text-gray-600 hover:text-gray-700"
+              >
                 <span className="sr-only">Search</span>
 
                 <svg
@@ -249,14 +249,13 @@ const SellerManageRack = () => {
           <div className="flex items-center whitespace-nowrap gap-2">
             <span className="text-sm">Entire per page</span>
             <select
-
               className="border w-[50px] px-1 py-2 text-sm rounded"
-              onChange={(e) => setPageSize(e.target.value)}>
+              onChange={(e) => setPageSize(e.target.value)}
+            >
               <option value={15}>15</option>
               <option value={30}>30</option>
               <option value={70}>70</option>
               <option value={100}>100</option>
-
             </select>
           </div>
         </div>
@@ -282,6 +281,7 @@ const SellerManageRack = () => {
                 </th>
               </tr>
             </thead>
+            {loadingData && <LoaderData />}
             <tbody>
               {currentData.map((warehouse, index) => (
                 <tr key={index + warehouse._id} className="">

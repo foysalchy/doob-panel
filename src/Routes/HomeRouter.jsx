@@ -76,15 +76,15 @@ const homePath = [
     path: "/price",
     element: <Price />,
   },
-  {
-    path: "/pos-invoice/:id",
-    element: (
-      <>
-        <ScrollToTop />
-        <PublicPosInvoice />
-      </>
-    ),
-  },
+  // {
+  //   path: "/pos-invoice/:id",
+  //   element: (
+  //     <>
+  //       <ScrollToTop />
+  //       <PublicPosInvoice />
+  //     </>
+  //   ),
+  // },
   {
     path: "/services",
     element: <MainService />,

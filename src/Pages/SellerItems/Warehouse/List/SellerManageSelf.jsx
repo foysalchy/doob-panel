@@ -7,11 +7,16 @@ import { MdDelete } from "react-icons/md";
 import SellerModalForWarehouse from "../Modal/SellerModalForWarehouse";
 import { useContext } from "react";
 import { AuthContext } from "../../../../AuthProvider/UserProvider";
+import LoaderData from "../../../../Common/LoaderData";
 
 const SellerManageSelf = () => {
   const { shopInfo } = useContext(AuthContext);
 
-  const { data: selfs = [], refetch } = useQuery({
+  const {
+    data: selfs = [],
+    refetch,
+    isLoading: loadingData,
+  } = useQuery({
     queryKey: ["selfs"],
     queryFn: async () => {
       const res = await fetch(
@@ -22,9 +27,7 @@ const SellerManageSelf = () => {
     },
   });
 
-  console.log(
-    `https://doob.dev/api/v1/seller/warehouse/self/${shopInfo._id}`
-  );
+  console.log(`https://doob.dev/api/v1/seller/warehouse/self/${shopInfo._id}`);
 
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -47,7 +50,7 @@ const SellerManageSelf = () => {
 
   const [currentPage, setCurrentPage] = useState(1);
 
-  const [pageSize, setPageSize] = useState(15)
+  const [pageSize, setPageSize] = useState(15);
   const startIndex = (currentPage - 1) * pageSize;
   const endIndex = startIndex + pageSize;
   const totalPages =
@@ -83,10 +86,11 @@ const SellerManageSelf = () => {
           return (
             <li key={pageNumber}>
               <button
-                className={`block h-8 w-8 rounded border ${pageNumber === currentPage
-                  ? "border-blue-600 bg-blue-600 text-white"
-                  : "border-gray-900 bg-white text-center leading-8 text-gray-900"
-                  }`}
+                className={`block h-8 w-8 rounded border ${
+                  pageNumber === currentPage
+                    ? "border-blue-600 bg-blue-600 text-white"
+                    : "border-gray-900 bg-white text-center leading-8 text-gray-900"
+                }`}
                 onClick={() => handleChangePage(pageNumber)}
               >
                 {pageNumber}
@@ -111,16 +115,13 @@ const SellerManageSelf = () => {
   };
 
   const updateStatus = (id, status) => {
-    fetch(
-      `https://doob.dev/api/v1/seller/warehouse/self/status/${id}`,
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ status }),
-      }
-    )
+    fetch(`https://doob.dev/api/v1/seller/warehouse/self/status/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ status }),
+    })
       .then((res) => res.json())
       .then((data) => {
         Swal.fire(`Seller disable ${status} `, "", "success");
@@ -150,15 +151,12 @@ const SellerManageSelf = () => {
     }).then((result) => {
       if (result.dismiss === Swal.DismissReason.timer) {
         // Timer completed, initiate the fetch for deletion
-        fetch(
-          `https://doob.dev/api/v1/seller/warehouse/self/delete/${id}`,
-          {
-            method: "DELETE",
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        )
+        fetch(`https://doob.dev/api/v1/seller/warehouse/self/delete/${id}`, {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
           .then((res) => res.json())
           .then((data) => {
             Swal.fire("Seller Deleted", "", "success");
@@ -216,8 +214,6 @@ const SellerManageSelf = () => {
           />
         )}
 
-
-
         <div className="flex items-center justify-between">
           <div className="relative my-6">
             <input
@@ -230,7 +226,10 @@ const SellerManageSelf = () => {
             />
 
             <span className="absolute inset-y-0 end-0 grid w-10 place-content-center">
-              <button type="button" className="text-gray-600 hover:text-gray-700">
+              <button
+                type="button"
+                className="text-gray-600 hover:text-gray-700"
+              >
                 <span className="sr-only">Search</span>
 
                 <svg
@@ -255,12 +254,12 @@ const SellerManageSelf = () => {
             <span className="text-sm">Entire per page</span>
             <select
               className="border w-[50px] px-1 py-2 text-sm rounded"
-              onChange={(e) => setPageSize(e.target.value)}>
+              onChange={(e) => setPageSize(e.target.value)}
+            >
               <option value={15}>15</option>
               <option value={30}>30</option>
               <option value={70}>70</option>
               <option value={100}>100</option>
-
             </select>
           </div>
         </div>
@@ -290,6 +289,7 @@ const SellerManageSelf = () => {
                   </th>
                 </tr>
               </thead>
+              {loadingData && <LoaderData />}
               <tbody>
                 {currentData.map((warehouse, index) => (
                   <tr key={index + warehouse._id} className="">

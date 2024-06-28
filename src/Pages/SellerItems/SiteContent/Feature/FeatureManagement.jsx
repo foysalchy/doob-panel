@@ -9,13 +9,14 @@ import { BiEdit } from "react-icons/bi";
 import { RxCross2 } from "react-icons/rx";
 import Swal from "sweetalert2";
 import DeleteModal from "../../../../Common/DeleteModal";
+import LoaderData from "../../../../Common/LoaderData";
 
 const FeatureManagement = () => {
   const [loading, setLoading] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const { shopInfo } = useContext(AuthContext);
 
-  const { data: faqs = [], refetch } = useQuery({
+  const { data: faqs = [], refetch,isLoading:loadingData } = useQuery({
     queryKey: ["faqs"],
     queryFn: async () => {
       const res = await fetch(
@@ -216,6 +217,7 @@ const FeatureManagement = () => {
                       </th>
                     </tr>
                   </thead>
+                  {loadingData && <LoaderData />}
                   <tbody className="bg-white divide-y divide-gray-200 ">
                     {faqs
                       ?.sort((a, b) => parseInt(a.index) - parseInt(b.index))
@@ -296,16 +298,18 @@ const FeatureManagement = () => {
                           </td>
 
                           <div
-                            className={`fixed z-[100] flex items-center justify-center ${openModal?._id === faq?._id
-                              ? "opacity-1 visible"
-                              : "invisible opacity-0"
-                              } inset-0 bg-black/20 backdrop-blur-sm duration-100`}
+                            className={`fixed z-[100] flex items-center justify-center ${
+                              openModal?._id === faq?._id
+                                ? "opacity-1 visible"
+                                : "invisible opacity-0"
+                            } inset-0 bg-black/20 backdrop-blur-sm duration-100`}
                           >
                             <div
-                              className={`absolute md:w-[500px] w-full rounded-sm bg-white p-3 pb-5 text-center drop-shadow-2xl ${openModal?._id === faq?._id
-                                ? "scale-1 opacity-1 duration-300"
-                                : "scale-0 opacity-0 duration-150"
-                                } `}
+                              className={`absolute md:w-[500px] w-full rounded-sm bg-white p-3 pb-5 text-center drop-shadow-2xl ${
+                                openModal?._id === faq?._id
+                                  ? "scale-1 opacity-1 duration-300"
+                                  : "scale-0 opacity-0 duration-150"
+                              } `}
                             >
                               <svg
                                 onClick={() => setOpenModal(false)}

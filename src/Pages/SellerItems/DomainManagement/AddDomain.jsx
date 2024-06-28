@@ -17,24 +17,21 @@ const AddDomain = () => {
   const {
     data: domainDoc,
     refetch: reload,
-    isLoading: loading,
+    isLoading: loadingDomain,
   } = useQuery({
     queryKey: ["domainDoc"],
     queryFn: async () => {
-      const res = await fetch(
-        "https://doob.dev/api/v1/admin/domain-document"
-      );
+      const res = await fetch("https://doob.dev/api/v1/admin/domain-document");
       const data = await res.json();
       return data.result;
     },
   });
 
-  const { data: buyDomain } = useQuery({
+  const { data: buyDomain, isLoading: loadingBuyDomain } = useQuery({
     queryKey: ["buyDomain"],
+
     queryFn: async () => {
-      const res = await fetch(
-        "https://doob.dev/api/v1/admin/buy-domain"
-      );
+      const res = await fetch("https://doob.dev/api/v1/admin/buy-domain");
       const data = await res.json();
       return data;
     },
@@ -109,12 +106,14 @@ const AddDomain = () => {
   };
   const videoContainerRef = useRef(null);
 
-  const { data: domainVideo, refetch, isLoading } = useQuery({
+  const {
+    data: domainVideo,
+    refetch,
+    isLoading: loadingDomainVideo,
+  } = useQuery({
     queryKey: ["category"],
     queryFn: async () => {
-      const res = await fetch(
-        "https://doob.dev/api/v1/admin/domain-video"
-      );
+      const res = await fetch("https://doob.dev/api/v1/admin/domain-video");
       const data = await res.json();
       return data;
     },
@@ -129,14 +128,16 @@ const AddDomain = () => {
   return (
     <div className=" font-poppins">
       <div className="md:my-10">
-        {domainDoc?.data && <div
-          className="text_editor"
-          dangerouslySetInnerHTML={{
-            __html: domainDoc?.data,
-          }}
-        />}
+        {domainDoc?.data && (
+          <div
+            className="text_editor"
+            dangerouslySetInnerHTML={{
+              __html: domainDoc?.data,
+            }}
+          />
+        )}
         <div>
-          {!isLoading && (
+          {!loadingDomainVideo && (
             <div
               className="flex text_editor  items-center justify-center"
               ref={videoContainerRef}
@@ -249,8 +250,9 @@ const AddDomain = () => {
         <div className={edit ? "flex" : "hidden"}>
           <div className=" mx-auto py-20">
             <div
-              className={`fixed  z-50 top-0 left-0 flex  min-h-screen w-full items-center justify-center bg-black bg-opacity-90 px-4 py-5  ${edit ? "block" : "hidden"
-                }`}
+              className={`fixed  z-50 top-0 left-0 flex  min-h-screen w-full items-center justify-center bg-black bg-opacity-90 px-4 py-5  ${
+                edit ? "block" : "hidden"
+              }`}
             >
               <div className="w-full max-w-[800px] h-[90%]  rounded-[20px]  bg-white  pb-10 px-8 text-center md:px-[30px]">
                 <div className="flex justify-between  pt-4 items-start w-full sticky top-0 bg-white border-b">

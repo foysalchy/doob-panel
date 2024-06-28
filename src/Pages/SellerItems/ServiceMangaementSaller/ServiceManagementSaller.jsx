@@ -5,6 +5,7 @@ import { useState } from "react";
 import { BiLeftArrow, BiRightArrow } from "react-icons/bi";
 import { AuthContext } from "../../../AuthProvider/UserProvider";
 import ServiceDetailsModal from "./ServiceDetailsModal";
+import LoaderData from "../../../Common/LoaderData";
 
 const ServiceManagementSaller = () => {
   const { shopInfo } = useContext(AuthContext);
@@ -317,6 +318,7 @@ const ServiceManagementSaller = () => {
                     </th>
                   </tr>
                 </thead>
+                {isLoading && <LoaderData />}
                 <tbody className="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
                   {currentData
                     ?.filter(

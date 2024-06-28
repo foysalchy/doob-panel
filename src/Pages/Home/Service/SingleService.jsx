@@ -20,9 +20,7 @@ const SingleService = () => {
   } = useQuery({
     queryKey: ["services"],
     queryFn: async () => {
-      const res = await fetch(
-        "https://doob.dev/api/v1/admin/services"
-      );
+      const res = await fetch("https://doob.dev/api/v1/admin/services");
       const data = await res.json();
       return data;
     },
@@ -120,7 +118,7 @@ const SingleService = () => {
         .then((res) => res.json())
         .then((data) => {
           refetch();
-          BrightAlert();
+          BrightAlert({ timeDuration: 3000 });
           setOpen(!open);
         });
     }
@@ -132,16 +130,13 @@ const SingleService = () => {
     const userData = { name: user.name, userId: user._id };
     const timestamp = new Date().getTime();
     let data = { text: reviews, user: userData, timeStamp: timestamp };
-    fetch(
-      `https://doob.dev/api/v1/admin/service/reviews?id=${service._id}`,
-      {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      }
-    )
+    fetch(`https://doob.dev/api/v1/admin/service/reviews?id=${service._id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
       .then((response) => response.json())
       .catch((error) => console.log(error))
       .finally(() => {

@@ -4,8 +4,15 @@ import { RxCross2 } from "react-icons/rx";
 import Select from "react-select";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../../AuthProvider/UserProvider";
+import BrightAlert from "bright-alert";
 
-const PosPaymentModal = ({ isPreviewModal, setIsPreviewModal, setGetaway }) => {
+const PosPaymentModal = ({
+  isPreviewModal,
+  setIsPreviewModal,
+  setGetaway,
+  setTransactionId,
+  transactionId,
+}) => {
   console.log(isPreviewModal, "warehouse_data");
   const { shopInfo } = useContext(AuthContext);
   const {
@@ -25,8 +32,10 @@ const PosPaymentModal = ({ isPreviewModal, setIsPreviewModal, setGetaway }) => {
 
   console.log(getwayData, "warehouse_data");
   const [selectedWarehouses, setSelectedWarehouses] = useState([]);
+  // const [transactionId, setTransactionId] = useState("");
 
   console.log(selectedWarehouses);
+  console.log(transactionId.length);
 
   const handleSave = () => {
     // if (selectedWarehouses.length > 0) {
@@ -42,10 +51,16 @@ const PosPaymentModal = ({ isPreviewModal, setIsPreviewModal, setGetaway }) => {
     // }
 
     setGetaway(selectedWarehouses?.value);
-    setIsPreviewModal(false);
+    // setIsPreviewModal(false);
+
+    if (selectedWarehouses?.value && transactionId?.length > 2) {
+      setIsPreviewModal(false);
+    } else {
+      BrightAlert("error", "Please Select or Add All Data");
+    }
   };
 
-  const handleWarehouseChange = (selectedOptions) => {
+  const handlePaymentGatewayChange = (selectedOptions) => {
     setSelectedWarehouses(selectedOptions);
   };
 
@@ -59,7 +74,7 @@ const PosPaymentModal = ({ isPreviewModal, setIsPreviewModal, setGetaway }) => {
       warehouse?.mobileNumber ?? warehouse?.accountNumber
     }`,
   }));
-  console.log(warehouseOptions, "warehouseOptions");
+  // console.log(warehouseOptions, "warehouseOptions");
   return (
     <div
       className={`fixed z-50 top-0 left-0 flex h-full min-h-screen w-full items-center justify-center bg-black bg-opacity-90 px-4 py-5 ${
@@ -69,7 +84,7 @@ const PosPaymentModal = ({ isPreviewModal, setIsPreviewModal, setGetaway }) => {
       <div className="w-full max-w-[90%] rounded-[20px] bg-white pb-10 text-center ">
         <div className="flex justify-between z-50 pt-4 items-start w-full sticky top-0 bg-gray-800 border-b border-gray-300 rounded-t-[18px] px-10">
           <div className="pb-2 text-xl font-bold text-white text-center sm:text-2xl">
-            {isPreviewModal}
+            Mobile & Bank Accounr
           </div>
           <div
             onClick={() => setIsPreviewModal(false)}
@@ -80,21 +95,37 @@ const PosPaymentModal = ({ isPreviewModal, setIsPreviewModal, setGetaway }) => {
         </div>
 
         <div className="max-h-[100vh] px-10 text-start pt-10">
-          {isPreviewModal}
+          {/* {isPreviewModal} */}
 
           <div className="">
             <div className="">
-              <label className="text-sm">Select Warehouse</label>
+              <label className="text-sm">Select Method</label>
               <Select
                 options={warehouseOptions}
                 // isMulti
-                onChange={handleWarehouseChange}
+                onChange={handlePaymentGatewayChange}
                 value={selectedWarehouses}
                 placeholder="Please select"
                 className="basic-multi-select"
                 classNamePrefix="select"
               />
             </div>
+          </div>
+          <div className="">
+            {selectedWarehouses?.value && (
+              <div className="mt-5">
+                <label htmlFor="transactionId">Enter transaction Id</label>
+                <input
+                  placeholder="Enter the Payment Transaction ID"
+                  required
+                  type="text"
+                  onChange={(event) => setTransactionId(event.target.value)}
+                  className="flex-grow w-full re h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-400 focus:outline-none focus:shadow-outline"
+                  id="transactionId"
+                  name="transactionId"
+                />
+              </div>
+            )}
           </div>
           <button
             className="bg-blue-500 text-white font-bold py-2 px-4 rounded mt-9"

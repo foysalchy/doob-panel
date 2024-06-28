@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState ,useEffect} from "react";
 import { FaAngleDown } from "react-icons/fa6";
 import { MdDashboard } from "react-icons/md";
 import { Link, NavLink } from "react-router-dom";
@@ -12,6 +12,25 @@ const Header = () => {
   const { user, logOut, search, setSearch } = useContext(AuthContext);
   const [on, setOn] = useState(false);
   const [dropdowns, setDropdowns] = useState({});
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+      const handleScroll = () => {
+          const offset = window.scrollY;
+          if (offset > 80) {
+              setScrolled(true);
+          } else {
+              setScrolled(false);
+          }
+      };
+
+      window.addEventListener('scroll', handleScroll);
+
+      // Clean up the event listener
+      return () => {
+          window.removeEventListener('scroll', handleScroll);
+      };
+  }, []);
   const toggleDropdown = (dropdownId) => {
     setDropdowns(prevState => {
       const newState = {};
@@ -233,7 +252,7 @@ const Header = () => {
   );
 
   return (
-    <div className="fixed top-0 border-b right-0 left-0 z-50 bg-white">
+    <div className={scrolled ? 'navbar scrolled fixed top-0 border-b right-0 left-0 z-50 bg-white' : 'fixed top-0 border-b right-0 left-0 z-50 bg-white'}>
       <div className=" sm:max-w-xl mx-auto md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8">
         <div className="px-4 py-4 relative flex mx-auto  items-center justify-between">
           <NavLink

@@ -11,15 +11,12 @@ const ReviewTableRow = ({ refetch, itm, updateReviewSatatus }) => {
   const [openModal, setOpenModal] = useState(false);
 
   const handleDelete = () => {
-    fetch(
-      `https://doob.dev/api/v1/seller/review?id=${itm?._id}`,
-      {
-        method: "DELETE",
-      }
-    )
+    fetch(`https://doob.dev/api/v1/seller/review?id=${itm?._id}`, {
+      method: "DELETE",
+    })
       .then((res) => res.json())
       .then((data) => {
-        BrightAlert();
+        BrightAlert({ timeDuration: 3000 });
         refetch();
       });
   };
@@ -43,7 +40,16 @@ const ReviewTableRow = ({ refetch, itm, updateReviewSatatus }) => {
       </td>
       <td className="whitespace-nowrap border-r px-6 py-4 dark:border-neutral-500">
         <div className="flex gap-2">
-          {itm.status ? <button onClick={() => updateReviewSatatus(itm?._id, false)}> Disable</button> : <button onClick={() => updateReviewSatatus(itm?._id, true)}>Enable</button>}
+          {itm.status ? (
+            <button onClick={() => updateReviewSatatus(itm?._id, false)}>
+              {" "}
+              Disable
+            </button>
+          ) : (
+            <button onClick={() => updateReviewSatatus(itm?._id, true)}>
+              Enable
+            </button>
+          )}
           <button onClick={handleDelete} className="text-red-500">
             Delete
           </button>
@@ -53,11 +59,9 @@ const ReviewTableRow = ({ refetch, itm, updateReviewSatatus }) => {
           </button>
         </div>
       </td>
-      {
-        open?._id === itm?._id && (
-          <ReplayModal refetch={refetch} itm={itm} setOpen={setOpen} />
-        )
-      }
+      {open?._id === itm?._id && (
+        <ReplayModal refetch={refetch} itm={itm} setOpen={setOpen} />
+      )}
     </tr>
   );
 };

@@ -1,10 +1,14 @@
 import { useQuery } from "@tanstack/react-query";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { RxCross2 } from "react-icons/rx";
 import Select from "react-select";
 import Swal from "sweetalert2";
 
-const AccessWareShopModal = ({ isPreviewModal, setIsPreviewModal }) => {
+const AccessWareShopModal = ({
+  isPreviewModal,
+  setIsPreviewModal,
+  refetchWare,
+}) => {
   console.log(isPreviewModal, "warehouse_data");
 
   const {
@@ -20,10 +24,38 @@ const AccessWareShopModal = ({ isPreviewModal, setIsPreviewModal }) => {
     },
   });
 
-  console.log(adminWareHouse, "warehouse_data");
-  const [selectedWarehouses, setSelectedWarehouses] = useState([]);
+  console.log(adminWareHouse.length, adminWareHouse, "warehouse_data");
+  // const [selectedWarehouses, setSelectedWarehouses] = useState([]);
 
+  
+  const [selectedWarehouses, setSelectedWarehouses] = useState([]);
   console.log(selectedWarehouses);
+
+    useEffect(() => {
+      const filteredDefaultData = adminWareHouse
+        ?.filter((admin) =>
+          admin?.accessShop?.some((shop) => shop.shopId === "doob")
+        )
+        ?.filter((warehouse) => warehouse.status)
+        ?.map((warehouse) => ({
+          value: warehouse._id,
+          label: warehouse.name,
+        }));
+
+      setSelectedWarehouses(filteredDefaultData);
+    }, [adminWareHouse]);
+
+  const filteredDefaultData = adminWareHouse
+    ?.filter((admin) =>
+      admin?.accessShop?.some((shop) => shop.shopId === "doob")
+    )
+    ?.filter((warehouse) => warehouse.status) // Filter based on status
+    ?.map((warehouse) => ({
+      value: warehouse._id,
+      label: warehouse.name,
+    }));
+
+  // console.log(filteredDefaultData?.length, filteredDefaultData);
 
   const handleSave = () => {
     if (selectedWarehouses.length > 0) {
@@ -34,6 +66,8 @@ const AccessWareShopModal = ({ isPreviewModal, setIsPreviewModal }) => {
         warehouseIds: newSelectedWarehouses,
         shopId: isPreviewModal.shopId,
       };
+
+      // console.log(bodyData, "bodyData");
       // console.log(newSelectedWarehouses, "newSelectedWarehouses");
       try {
         fetch(`https://doob.dev/api/v1/admin/warehouse/access-warehouse`, {
@@ -50,6 +84,7 @@ const AccessWareShopModal = ({ isPreviewModal, setIsPreviewModal }) => {
               Swal.fire(data?.message ?? "Added", "", "success");
               refetch();
               setIsPreviewModal(false);
+              refetchWare();
             }
           });
       } catch (error) {
@@ -92,11 +127,12 @@ const AccessWareShopModal = ({ isPreviewModal, setIsPreviewModal }) => {
 
           <div className="">
             <div className="">
-              <label className="text-sm">Select Warehouse</label>
+              <label className="text-sm">Select Warehoues</label>
               <Select
                 options={warehouseOptions}
                 isMulti
                 onChange={handleWarehouseChange}
+                defaultValue={filteredDefaultData}
                 value={selectedWarehouses}
                 placeholder="Please select"
                 className="basic-multi-select"

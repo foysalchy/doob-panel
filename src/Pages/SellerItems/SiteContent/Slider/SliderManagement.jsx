@@ -9,13 +9,14 @@ import { BiEdit } from "react-icons/bi";
 import { RxCross2 } from "react-icons/rx";
 import Swal from "sweetalert2";
 import DeleteModal from "../../../../Common/DeleteModal";
+import LoaderData from "../../../../Common/LoaderData";
 
 const SliderManagement = () => {
   const [loading, setLoading] = useState(false);
 
   const { shopInfo } = useContext(AuthContext);
 
-  const { data: faqs = [], refetch } = useQuery({
+  const { data: faqs = [], refetch,isLoading:loadingData } = useQuery({
     queryKey: ["faqs"],
     queryFn: async () => {
       const res = await fetch(
@@ -165,6 +166,7 @@ const SliderManagement = () => {
                       </th>
                     </tr>
                   </thead>
+                  {loadingData && <LoaderData />}
                   <tbody className="bg-white divide-y divide-gray-200 ">
                     {faqs?.map((faq, index) => (
                       <tr>

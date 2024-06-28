@@ -9,9 +9,7 @@ const HomeHero = () => {
   const [hero, setHero] = useState([]);
 
   useEffect(() => {
-    fetch(
-      "https://doob.dev/api/v1/admin/get-content?name=hero_section"
-    )
+    fetch("https://doob.dev/api/v1/admin/get-content?name=hero_section")
       .then((response) => response.json())
       .then((data) => {
         setHero(data.data);
@@ -29,7 +27,20 @@ const HomeHero = () => {
     setIsModalOpen(false);
   };
   return (
-    <section className="relative overflow-hidden md:py-32 py-20 px-4 bg-gray-100 md:px-8">
+    <section className="relative overflow-hidden md:py-32 py-20 px-4 bg-gray-100 md:px-8 ct" >
+        <style>
+                {`
+                .ct {
+                   margin-top:-80px
+                }
+                  .fixed{
+                  background: transparent;
+border: none;}
+.scrolled{
+background:white}
+                
+                `}
+            </style>
       <div className="w-full h-full rounded-full bg-gradient-to-r from-[#58AEF1] to-pink-500 absolute -top-1 -right-14 blur-2xl opacity-10"></div>
       <div className="max-w-xl mx-auto text-center relative">
         <div className="max-w-xl sm:mx-auto lg:max-w-2xl ">
@@ -41,24 +52,27 @@ const HomeHero = () => {
                   __html: hero?.data,
                 }}
               /> */}
-              <h1 className='font-inner md:text-xl text-lg font-semibold'>
+              <h1 className="font-inner md:text-xl text-lg font-semibold">
                 Start Business Right Now!!
               </h1>
 
-              <h1 className='text-4xl mt-2 '>
-                <span className='font-extrabold'>Doob -</span> <span className='font-bold'> The Choice of</span>
+              <h1 className="text-4xl mt-2 ">
+                <span className="font-extrabold">Doob -</span>{" "}
+                <span className="font-bold"> The Choice of</span>
                 <br />
-                <span className='text-3xl font-semibold '>
+                <span className="text-3xl font-semibold ">
                   80,000+ Southeast Asia Sellers
                 </span>
               </h1>
               <p className="text-base text-gray-700 md:text-lg mt-4">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+                enim ad minim veniam, quis nostrud exercitation.
               </p>
             </div>
             <div className="flex gap-4 justify-center">
               <button
-                onClick={() => BrightAlert()}
+                onClick={() => BrightAlert({ timeDuration: 3000 })}
                 className="inline-flex items-center justify-center h-12 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-gray-900 hover:bg-black focus:shadow-outline focus:outline-none"
               >
                 Get started

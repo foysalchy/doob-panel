@@ -26,6 +26,7 @@ const SignInSeller = () => {
       email,
       password,
     };
+    console.log(data, "data of login");
     setLoading(true);
     fetch("https://doob.dev/api/v1/auth/sign-in", {
       method: "post",
