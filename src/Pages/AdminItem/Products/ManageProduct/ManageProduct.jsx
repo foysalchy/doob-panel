@@ -464,6 +464,12 @@ const ManageProduct = () => {
                         scope="col"
                         className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right "
                       >
+                        Price
+                      </th>
+                      <th
+                        scope="col"
+                        className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right "
+                      >
                         Fees
                       </th>
                       <th
@@ -500,9 +506,9 @@ const ManageProduct = () => {
                                     <div
                                       style={{
                                         backgroundImage: `url(${
-                                          product?.featuredImage?.src
-                                            ? product?.featuredImage?.src
-                                            : product?.images[0]?.src
+                                          product && (
+                                            product.featuredImage?.src || (product.images && product.images[0]?.src)
+                                        )
                                         })`,
                                       }}
                                       className="w-12 h-12 object-cover bg-cover rounded-md border border-[#8080809d] overflow-hidden"
@@ -510,9 +516,9 @@ const ManageProduct = () => {
                                     <div
                                       style={{
                                         backgroundImage: `url(${
-                                          product?.featuredImage?.src
-                                            ? product?.featuredImage?.src
-                                            : product?.images[0]?.src
+                                          product && (
+                                            product.featuredImage?.src || (product.images && product.images[0]?.src)
+                                        )
                                         })`,
                                       }}
                                       className="absolute top-[-40px] z-50 duration-150 abs hidden bg-[url(${product?.featuredImage?.src})] left-[43px] object-cover bg-cover bg-white shadow-xl w-[150px] h-[150px] ring-1 ring-gray-500"
@@ -603,6 +609,15 @@ const ManageProduct = () => {
                                     : "Select Warehouse"}
                                 </button>
                               </td>
+                              <td className="px-4 py-4 text-sm whitespace-nowrap">
+                              <div> <b>Regular:</b>{product.regular_price}</div>
+                              <div> <b>Discount:</b>{product.price}</div>
+                              <div><b> Cost:</b>{
+                                
+                                product?.variantData?.ProductCost
+                                ? product?.variantData?.ProductCost
+                                : 1}</div>
+                                </td>
                               <td className="px-4 py-4 text-sm whitespace-nowrap">
                                 <div className="flex items-center gap-x-2">
                                   Processing{" "}

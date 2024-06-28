@@ -100,7 +100,7 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
     if (value >= 0) {
       setCash(value);
     } else {
-      BrightAlert("error", `Cash Should at least 0`, "Increase please");
+      
       setCash(0);
     }
   };
@@ -352,7 +352,7 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
                     </button>
                   </div>
 
-                  <ul className="h-[70vh] overflow-x-hidden overflow-y-auto">
+                  <ul className="h-[55vh] overflow-x-hidden overflow-y-auto">
                     {cartProducts?.map((itm, index) => (
                       <li key={index}>
                         <div className="flex justify-between items-center my-4 bg-white relative p-2 rounded-md">
@@ -429,150 +429,12 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
           </div>
         </div>
         <div class="bg-white px-2 py-2">
-          <div className="">
-            <div className="grid grid-cols-4 gap-2">
-              <div>
-                Total: <div>Tk.{totalPrice()}/=</div>
-              </div>
-              {user?.dueAmount ? (
-                <div className="text-red-500 font-semibold">
-                  Prev Due: {user?.dueAmount}
-                </div>
-              ) : (
-                ""
-              )}
-              <div>
-                Due:{" "}
-                <div
-                  className={`   ${
-                    changeAmount > 0
-                      ? "text-green-500"
-                      : changeAmount < 0
-                      ? "text-red-500"
-                      : ""
-                  }`}
-                >
-                  Tk.{parseInt(changeAmount)}/=
-                </div>
-              </div>
-              <div>
-                <label className="flex gap-1" htmlFor="percents">
-                  <input
-                    id="percents"
-                    type="checkbox"
-                    checked={presents}
-                    onChange={() => setPresents(!presents)}
-                  />
-                  Percentage
-                </label>
-                <input
-                  onChange={(e) => setDiscount(e.target.value)}
-                  className="bg-transparent text-right ring-1 px-2 w-[80px] ring-gray-300 rounded-md text-lg"
-                  type="text px-2"
-                />
-              </div>
-              <div>
-                Paid:{" "}
-                <div>
-                  {" "}
-                  <input
-                    defaultValue="0"
-                    value={cash}
-                    onChange={(e) => setCashValue(e.target.value)}
-                    type="number"
-                    className="bg-transparent px-2 text-right ring-1 w-[80px] ring-gray-300 rounded-md text-lg"
-                  />
-                </div>
-              </div>
-            </div>
-
-            <div className="flex justify-between bg-white-400  py-2  items-start">
-              <div className="">
-                <h3 className="text-lg">
-                  Payment Gateway{" "}
-                  <span className="text-green-700">({getaway})</span> :
-                </h3>
-              </div>
-              <label>
-                <input
-                  name="paymentMethod"
-                  value="Cash"
-                  defaultChecked
-                  onChange={(e) => setGetaway(e.target.value)}
-                  type="radio"
-                  className=""
-                />{" "}
-                Cash
-              </label>
-              <label>
-                <input
-                  name="paymentMethod"
-                  value="mobile_bank"
-                  onChange={(e) => {
-                    setGetaway(e.target.value);
-                    setIsPreviewModal("mobile_bank");
-                  }}
-                  type="radio"
-                  className=""
-                />{" "}
-                Mobile Bank
-              </label>
-            </div>
-            {isPreviewModal === "mobile_bank" && (
-              <PosPaymentModal
-                isPreviewModal={isPreviewModal}
-                setIsPreviewModal={setIsPreviewModal}
-                setGetaway={setGetaway}
-                setTransactionId={setTransactionId}
-                transactionId={transactionId}
-              />
-            )}
-            <div className=" ">
-              <div className="flex justify-between flex-wrap mt-3 gap-2">
-                <button
-                  onClick={() => {
-                    setCashValue(parseInt(cash) + parseInt(100)), audio.play();
-                  }}
-                  className="w-[65px] px-3 py-0 rounded bg-gray-200"
-                >
-                  100
-                </button>
-                <button
-                  onClick={() => {
-                    setCashValue(parseInt(cash) + parseInt(500)), audio.play();
-                  }}
-                  className="w-[65px] px-3 py-0 rounded bg-gray-200"
-                >
-                  500
-                </button>
-                <button
-                  onClick={() => {
-                    setCashValue(parseInt(cash) + parseInt(1000)), audio.play();
-                  }}
-                  className="w-[65px] px-3 py-0 rounded bg-gray-200"
-                >
-                  1000
-                </button>
-                <button
-                  onClick={() => {
-                    setCashValue(parseInt(cash) + parseInt(2000)), audio.play();
-                  }}
-                  className="w-[65px] px-3 py-0 rounded bg-gray-200"
-                >
-                  2000
-                </button>
-              </div>
-            </div>
-
-            <br />
-            {
+        {
               <div>
                 <div className="flex justify-between">
-                  <label> Search User</label>
+                   
                   <div className="flex items-center gap-2">
-                    <label htmlFor="user" className="">
-                      New User
-                    </label>
+                   
                     <input
                       className="ml-2"
                       type="checkbox"
@@ -581,10 +443,11 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
                       checked={userCheck}
                       onChange={toggleCheckbox}
                     />
+                     <label htmlFor="user" className="">
+                      New User
+                    </label>
                     <div>
-                      <label htmlFor="gest" className="">
-                        Gest User
-                      </label>
+                      
                       <input
                         className="ml-2"
                         type="checkbox"
@@ -593,7 +456,14 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
                         checked={gest}
                         onChange={() => gust_update(!gest)}
                       />
+                      <label htmlFor="gest" className="">
+                        Gest User
+                      </label>
                     </div>
+                    {(error && (
+              <p className="text-sm text-red-500">Error: {error}</p>
+            )) ||
+              (user && <p className="text-sm text-green-500">{user?.name}</p>)}
                   </div>
                 </div>
 
@@ -623,10 +493,7 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
                 </div>
               </div>
             }
-            {(error && (
-              <p className="text-sm text-red-500">Error: {error}</p>
-            )) ||
-              (user && <p className="text-sm text-green-500">{user?.name}</p>)}
+            
             <div>
               <div
                 onClick={() => setIsChecked(false)}
@@ -777,6 +644,146 @@ const PosSidebar = ({ cartProducts, setCartProducts, close, setClose }) => {
                 </div>
               </div>
             </div>
+          <div className="">
+            <div className="grid grid-cols-4 gap-2">
+              <div>
+                Total: <div>Tk.{totalPrice()}/=</div>
+              </div>
+              {user?.dueAmount ? (
+                <div className="text-red-500 font-semibold">
+                  Prev Due: {user?.dueAmount}
+                </div>
+              ) : (
+                ""
+              )}
+              <div>
+                Due:{" "}
+                <div
+                  className={`   ${
+                    changeAmount > 0
+                      ? "text-green-500"
+                      : changeAmount < 0
+                      ? "text-red-500"
+                      : ""
+                  }`}
+                >
+                  Tk.{parseInt(changeAmount)}/=
+                </div>
+              </div>
+              <div>
+                <label className="flex gap-1" htmlFor="percents">
+                  <input
+                    id="percents"
+                    type="checkbox"
+                    checked={presents}
+                    onChange={() => setPresents(!presents)}
+                  />
+                  Discount(%)
+                </label>
+                <input
+                  onChange={(e) => setDiscount(e.target.value)}
+                  className="bg-transparent text-right ring-1 px-2 w-[80px] ring-gray-300 rounded-md text-lg"
+                  type="text px-2"
+                />
+              </div>
+              <div>
+                Paid:{" "}
+                <div>
+                  {" "}
+                  <input
+                    defaultValue="0"
+                    value={cash}
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      setCashValue(value === "" ? "0" : value);
+                    }}
+                    type="number"
+                    className="bg-transparent px-2 text-right ring-1 w-[80px] ring-gray-300 rounded-md text-lg"
+                  />
+                </div>
+              </div>
+            </div>
+            <div className=" ">
+              <div className="flex justify-between flex-wrap mt-3 gap-2">
+                <button
+                  onClick={() => {
+                    setCashValue(parseInt(cash) + parseInt(100)), audio.play();
+                  }}
+                  className="w-[65px] px-3 py-0 rounded bg-gray-200"
+                >
+                  100
+                </button>
+                <button
+                  onClick={() => {
+                    setCashValue(parseInt(cash) + parseInt(500)), audio.play();
+                  }}
+                  className="w-[65px] px-3 py-0 rounded bg-gray-200"
+                >
+                  500
+                </button>
+                <button
+                  onClick={() => {
+                    setCashValue(parseInt(cash) + parseInt(1000)), audio.play();
+                  }}
+                  className="w-[65px] px-3 py-0 rounded bg-gray-200"
+                >
+                  1000
+                </button>
+                <button
+                  onClick={() => {
+                    setCashValue(parseInt(cash) + parseInt(2000)), audio.play();
+                  }}
+                  className="w-[65px] px-3 py-0 rounded bg-gray-200"
+                >
+                  2000
+                </button>
+              </div>
+            </div>
+            <div className="flex justify-between bg-white-400  py-  items-start">
+              <div className="">
+                <h3 className="text-md">
+                  Payment Method{" "}
+                  :
+                </h3>
+              </div>
+              <label>
+                <input
+                  name="paymentMethod"
+                  value="Cash"
+                  defaultChecked
+                  onChange={(e) => setGetaway(e.target.value)}
+                  type="radio"
+                  className=""
+                />{" "}
+                Cash
+              </label>
+              <label>
+                <input
+                  name="paymentMethod"
+                  value="mobile_bank"
+                  onChange={(e) => {
+                    setGetaway(e.target.value);
+                    setIsPreviewModal("mobile_bank");
+                  }}
+                  type="radio"
+                  className=""
+                />{" "}
+                Mobile Bank
+              </label>
+            </div>
+            <span className="text-green-700 text-sm" >({getaway})</span>
+            {isPreviewModal === "mobile_bank" && (
+              <PosPaymentModal
+                isPreviewModal={isPreviewModal}
+                setIsPreviewModal={setIsPreviewModal}
+                setGetaway={setGetaway}
+                setTransactionId={setTransactionId}
+                transactionId={transactionId}
+              />
+            )}
+           
+ 
+           
             <button
               onClick={handleSubmit}
               disabled={disabledSUbmit}
