@@ -50,7 +50,7 @@ const ListOfWarehouse = () => {
     });
 
   console.log("flt", filteredData);
-  const [itemsPerPage, setItemsPerPage] = useState(parseInt(1));
+  const [itemsPerPage, setItemsPerPage] = useState(parseInt(15));
 
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -100,7 +100,7 @@ const ListOfWarehouse = () => {
     setOpenModal(ticketId);
   };
 
-  
+
 
   return (
     <div>
@@ -356,11 +356,10 @@ const ListOfWarehouse = () => {
                 <li key={i}>
                   <button
                     onClick={() => setCurrentPage(i + 1)}
-                    className={`bg-white border ${
-                      currentPage === i + 1
+                    className={`bg-white border ${currentPage === i + 1
                         ? "text-blue-600"
                         : "text-gray-500 hover:bg-gray-100 hover:text-gray-700"
-                    } border-gray-300 leading-tight py-2 px-3 rounded`}
+                      } border-gray-300 leading-tight py-2 px-3 rounded`}
                   >
                     {i + 1}
                   </button>

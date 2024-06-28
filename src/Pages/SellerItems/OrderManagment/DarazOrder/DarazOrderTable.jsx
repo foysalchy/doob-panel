@@ -39,7 +39,7 @@ const DarazOrderTable = ({
     refetch();
   }, [selectedValue]);
 
-  const itemsPerPage = 4; // Number of items to display per page
+  // const itemsPerPage = 4; // Number of items to display per page
   const [currentPage, setCurrentPage] = useState(1);
 
   const filteredData = searchValue
@@ -57,7 +57,8 @@ const DarazOrderTable = ({
 
   // console.log(filteredData);
 
-  const pageSize = 6;
+  // Calculate the total number of pages
+  const [pageSize, setItemsPerPage] = useState(15);
   const startIndex = (currentPage - 1) * pageSize;
   const endIndex = startIndex + pageSize;
   const totalPages = Math.ceil(filteredData?.length / pageSize);
@@ -93,8 +94,8 @@ const DarazOrderTable = ({
             <li key={pageNumber}>
               <button
                 className={`block h-8 w-8 rounded border ${pageNumber === currentPage
-                    ? "border-blue-600 bg-blue-600 text-white"
-                    : "border-gray-900 bg-white text-center leading-8 text-gray-900"
+                  ? "border-blue-600 bg-blue-600 text-white"
+                  : "border-gray-900 bg-white text-center leading-8 text-gray-900"
                   }`}
                 onClick={() => handleChangePage(pageNumber)}
               >
@@ -230,7 +231,22 @@ const DarazOrderTable = ({
       ) : (
         <h1>Loading.</h1>
       )}
+      <div className="flex items-center justify-between">
 
+        <div className="flex items-center whitespace-nowrap gap-2">
+          <span className="text-sm">Entire per page</span>
+          <select
+
+            className="border w-[50px] px-1 py-2 text-sm rounded"
+            onChange={(e) => setItemsPerPage(e.target.value)}>
+            <option value={15}>15</option>
+            <option value={30}>30</option>
+            <option value={70}>70</option>
+            <option value={100}>100</option>
+
+          </select>
+        </div>
+      </div>
       <div className="flex justify-center mt-4">
         <ol className="flex justify-center gap-1 text-xs font-medium">
           <li>
