@@ -22,7 +22,7 @@ const MegaCategoryManagement = () => {
   });
 
 
-  const [itemsPerPage, setItemsPerPage] = useState(parseInt(1));
+  const [itemsPerPage, setItemsPerPage] = useState(parseInt(15));
 
   const [currentPage, setCurrentPage] = useState(1);
 
