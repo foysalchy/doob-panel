@@ -178,18 +178,8 @@ const InventoryManagement = () => {
                   <th scope="col" className="border-r px-2 py-4 font-[500]">
                     Price
                   </th>
-                  <th
-                    scope="col"
-                    className="border-r px-2 py-4 text-sm font-[500]"
-                  >
-                    Regular Price
-                  </th>
-                  <th
-                    scope="col"
-                    className="border-r px-2 py-4 text-sm font-[500]"
-                  >
-                    Sale Price
-                  </th>
+                  
+                  
 
                   <th
                     scope="col"
@@ -242,15 +232,12 @@ const InventoryManagement = () => {
                           {product?.sku}
                         </span>
                       </td>
-                      <td className="whitespace-nowrap border-r px-6 py-4 font-medium ">
-                        {product?.price}
+                      <td className="whitespace-nowrap border-r px-6 py-4 font-medium text-left ">
+                          <div>  <b>Price: </b>{product?.price}</div>
+                          <div> <b>Regular:</b> {product?.regular_price}</div>
+                          <div> <b>Sale:</b>   {product?.sale_price}</div>
                       </td>
-                      <td className="whitespace-nowrap border-r px-6 py-4 font-medium ">
-                        {product?.regular_price}
-                      </td>
-                      <td className="whitespace-nowrap border-r px-6 py-4 font-medium ">
-                        {product?.sale_price}
-                      </td>
+                      
 
                       <td className="whitespace-nowrap border-r px-6 py-4 font-medium ">
                         {product?.stock_quantity}

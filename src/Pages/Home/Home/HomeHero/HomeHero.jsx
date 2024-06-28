@@ -27,7 +27,20 @@ const HomeHero = () => {
     setIsModalOpen(false);
   };
   return (
-    <section className="relative overflow-hidden md:py-32 py-20 px-4 bg-gray-100 md:px-8">
+    <section className="relative overflow-hidden md:py-32 py-20 px-4 bg-gray-100 md:px-8 ct" >
+        <style>
+                {`
+                .ct {
+                   margin-top:-80px
+                }
+                  .fixed{
+                  background: transparent;
+border: none;}
+.scrolled{
+background:white}
+                
+                `}
+            </style>
       <div className="w-full h-full rounded-full bg-gradient-to-r from-[#58AEF1] to-pink-500 absolute -top-1 -right-14 blur-2xl opacity-10"></div>
       <div className="max-w-xl mx-auto text-center relative">
         <div className="max-w-xl sm:mx-auto lg:max-w-2xl ">
