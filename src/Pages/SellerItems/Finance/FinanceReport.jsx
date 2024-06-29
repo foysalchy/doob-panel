@@ -81,7 +81,7 @@ const FinanceReport = () => {
   const printButtonRef = useRef(null);
 
 
-
+  console.log('---->', Object.entries(financialReport));
 
   return (
     <div className="container mx-auto py-8">
@@ -146,6 +146,7 @@ const FinanceReport = () => {
               </div>
             </div>
           </div>
+
           {Object.entries(financialReport).map(([key, value]) => (
             <div className="flex justify-between items-center bg-gray-100 p-4">
               <div className="text-lg font-semibold">{key}</div>

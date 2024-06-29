@@ -165,6 +165,7 @@ const ShopSignIn = () => {
                   </button>
                 </div>
                 <button
+                  type="button"
                   onClick={() => setOpen(true)}
                   className="text-center text-indigo-600 hover:text-indigo-500"
                 >
