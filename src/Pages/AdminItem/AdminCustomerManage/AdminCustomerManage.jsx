@@ -7,12 +7,13 @@ import { useNavigate } from "react-router-dom";
 import DeleteModal from "../../../Common/DeleteModal";
 import { useContext } from "react";
 import React, { useState } from "react";
+import LoaderData from "../../../Common/LoaderData";
 
 const AdminCustomerManage = () => {
   const { logOut, setUser, setShopInfo, setCookie } = useContext(AuthContext);
   const navigate = useNavigate();
 
-  const { data: users = [], refetch } = useQuery({
+  const { data: users = [], refetch, isLoading } = useQuery({
     queryKey: ["users"],
     queryFn: async () => {
       const res = await fetch("https://doob.dev/api/v1/admin/user");
@@ -208,6 +209,8 @@ const AdminCustomerManage = () => {
     console.log(deleteId, isDelete);
   }
 
+
+  console.log(currentData, '++++++++');
   return (
     <div>
       <div className="mt-4 lg:pr-10 w-full mx-auto overflow-auto">
@@ -251,7 +254,7 @@ const AdminCustomerManage = () => {
           </span>
         </div>
 
-        <table className="table-auto w-full text-left whitespace-no-wrap">
+        <table className="table-auto w-full border border-gray-600 text-left whitespace-no-wrap">
           <thead>
             <tr>
               <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-800  rounded-tl ">
@@ -269,52 +272,69 @@ const AdminCustomerManage = () => {
             </tr>
           </thead>
           <tbody>
-            {currentData.map((seller, index) => (
-              <tr key={index + seller._id} className="">
-                <td className="px-4 py-3">
-                  <h2 className="font-medium text-gray-800  ">{seller.name}</h2>
-                  <p className="text-sm font-normal text-gray-600 ">
-                    {seller.shopName}
-                  </p>
-                </td>
-                <td className="px-4 py-3">{seller.email}</td>
-                <td className="px-4 py-3">
-                  {!seller.disable ? (
-                    <button
-                      onClick={() => updateStatus(seller._id, true)}
-                      className="inline-flex items-center justify-center py-1 px-4 bg-green-500 rounded shadow-md hover:bg-green-700 focus:shadow-outline focus:outline-none"
-                    >
-                      Disable
-                    </button>
-                  ) : (
-                    <button
-                      onClick={() => updateStatus(seller._id, false)}
-                      className="inline-flex items-center justify-center py-1 px-4 bg-red-500 rounded shadow-md hover:bg-red-700 focus:shadow-outline focus:outline-none"
-                    >
-                      Enable
-                    </button>
-                  )}{" "}
-                </td>
-                <td className="px-4  text-2xl flex gap-2 py-6 items-center text-gray-100">
-                  <MdDelete
-                    className="text-red-500 cursor-pointer"
-                    onClick={() => DeleteSeller(seller._id)}
-                  />
-                  <BiEdit
-                    className="text-yellow-500 cursor-pointer"
-                    onClick={() => handleViewDetails(seller?._id)}
-                  />
-                  <BiLogIn
-                    onClick={() => directLogin(seller.email, seller.userId)}
-                    className="text-green-500 cursor-pointer ml-4"
-                  />
-                </td>
+            {
+              isLoading ? (
+                <tr>
+                  <td colSpan="7" className="text-center py-8">
+                    <LoaderData />
+                  </td>
+                </tr>
+              )
+                :
+                (currentData.length < 0 ? currentData.map((seller, index) => (
+                  <tr key={index + seller._id} className="">
+                    <td className="px-4 py-3">
+                      <h2 className="font-medium text-gray-800  ">{seller.name}</h2>
+                      <p className="text-sm font-normal text-gray-600 ">
+                        {seller.shopName}
+                      </p>
+                    </td>
+                    <td className="px-4 py-3">{seller.email}</td>
+                    <td className="px-4 py-3">
+                      {!seller.disable ? (
+                        <button
+                          onClick={() => updateStatus(seller._id, true)}
+                          className="inline-flex items-center justify-center py-1 px-4 bg-green-500 rounded shadow-md hover:bg-green-700 focus:shadow-outline focus:outline-none"
+                        >
+                          Disable
+                        </button>
+                      ) : (
+                        <button
+                          onClick={() => updateStatus(seller._id, false)}
+                          className="inline-flex items-center justify-center py-1 px-4 bg-red-500 rounded shadow-md hover:bg-red-700 focus:shadow-outline focus:outline-none"
+                        >
+                          Enable
+                        </button>
+                      )}{" "}
+                    </td>
+                    <td className="px-4  text-2xl flex gap-2 py-6 items-center text-gray-100">
+                      <MdDelete
+                        className="text-red-500 cursor-pointer"
+                        onClick={() => DeleteSeller(seller._id)}
+                      />
+                      <BiEdit
+                        className="text-yellow-500 cursor-pointer"
+                        onClick={() => handleViewDetails(seller?._id)}
+                      />
+                      <BiLogIn
+                        onClick={() => directLogin(seller.email, seller.userId)}
+                        className="text-green-500 cursor-pointer ml-4"
+                      />
+                    </td>
 
-                {/* {OpenModal === seller._id && <div className="h-0 w-0">
+                    {/* {OpenModal === seller._id && <div className="h-0 w-0">
                                         <EditSellerInfo OpenModal={OpenModal} refetch={refetch} setOpenModal={setOpenModal} SellerInfo={seller} />
                                     </div>} */}
-              </tr>
-            ))}
+                  </tr>
+                ))
+                  :
+                  (<tr className="capitalize">
+                    <td className="text-center" colSpan="4">
+                      Data not found!
+                    </td>
+                  </tr>)
+                )
+            }
           </tbody>
         </table>
       </div>

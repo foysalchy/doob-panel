@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { BiCloset } from "react-icons/bi";
 import WarehouseAdminProductModal from "./WarehouseAdminProductModal";
 import SellerShowPrivew from "../../../SellerItems/Warehouse/SellerShowPrivew";
+import LoaderData from "../../../../Common/LoaderData";
 
 const WarehouseReportHistory = () => {
   const [OpenModal, setOpenModal] = useState(false);
@@ -115,134 +116,151 @@ const WarehouseReportHistory = () => {
                     </tr>
                   </thead>
                   <tbody className="">
-                    {warehouseData.map((data) => (
-                      <tr key={data?.warehouse?._id}>
-                        <td className="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray- whitespace-nowrap">
-                          <img
-                            src={data?.warehouse?.img}
-                            alt=""
-                            className="w-[50px] h-[50px] object-cover rounded-lg"
-                          />
+                    {isLoading ? (
+                      <tr>
+                        <td colSpan="9" className="text-center py-8">
+                          <LoaderData />
                         </td>
-                        <td className="px-4 py-4 text-sm text-gray-800  whitespace-nowrap">
-                          <span>{data?.warehouse?.name}</span>
-                        </td>
-                        <td className=" text- ">
-                          <span>
-                            {" "}
-                            Area:{" "}
-                            {
-                              wareLength && wareLength?.find(
-                                (item) =>
-                                  item.warehouse === data?.warehouse?.name
-                              )?.areas?.length
-                            }
-                          </span>
-
-                          <span>
-                            {" "}
-                            Racks:{" "}
-                            {
-                              wareLength && wareLength?.find(
-                                (item) =>
-                                  item.warehouse === data?.warehouse?.name
-                              )?.racks?.length
-                            }
-                          </span>
-                        </td>
-
-                        <td className="text-">
-                          {" "}
-                          <span>
-                            {" "}
-                            Selfs:{" "}
-                            {
-                              wareLength && wareLength?.find(
-                                (item) =>
-                                  item.warehouse === data?.warehouse?.name
-                              )?.selfs?.length
-                            }
-                          </span>
-                          <span>
-                            {" "}
-                            Cells:{" "}
-                            {
-                              wareLength && wareLength?.find(
-                                (item) =>
-                                  item.warehouse === data?.warehouse?.name
-                              )?.cells?.length
-                            }
-                          </span>
-                        </td>
-                        <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                          <div className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 text-emerald-500 bg-emerald-100/60 dark:bg-gray-800">
-                            {data.warehouse.status ? (
-                              <svg
-                                width={12}
-                                height={12}
-                                viewBox="0 0 12 12"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path
-                                  d="M10 3L4.5 8.5L2 6"
-                                  stroke="currentColor"
-                                  strokeWidth="1.5"
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                />
-                              </svg>
-                            ) : (
-                              <BiCloset className="text-lg text-red-500" />
-                            )}
-                          </div>
-                        </td>
-                        <td className="px-4 py-4 text-sm whitespace-nowrap">
-                          <span>{data?.warehouse?.slag}</span>
-                        </td>
-                        <td className="px-4 py-4 text-sm whitespace-nowrap">
-                          {data?.warehouse?.address}
-                        </td>
-                        <td className="px-4 py-4 text-sm whitespace-nowrap">
-                          <div className="flex items-center gap-x-6">
-                            <button
-                              onClick={() => setOpenModal(data?.warehouse?._id)}
-                              className="text-blue-500 transition-colors duration-200 hover:text-indigo-500 focus:outline-none"
-                            >
-                              Product ({data?.products.length})
-                            </button>
-                          </div>
-                        </td>
-                        <td className="">
-                          <button
-                            onClick={() =>
-                              setIsPreviewModal({
-                                data: wareLength?.find(
-                                  (item) =>
-                                    item.warehouse === data?.warehouse.name
-                                ),
-                                id: data?.warehouse._id,
-                              })
-                            }
-                            className="text-black bg-slate-200 p-2 rounded "
-                          >
-                            Show Previews
-                          </button>
-                        </td>
-                        {OpenModal === data.warehouse._id && (
-                          <WarehouseProductModal
-                            setOpenModal={setOpenModal}
-                            products={data.products}
-                          />
-                        )}
-                        {isPreviewModal.id === data?.warehouse._id && (
-                          <SellerShowPrivew
-                            status={isPreviewModal}
-                            setStatus={setIsPreviewModal}
-                          />
-                        )}
                       </tr>
-                    ))}
+                    )
+                      :
+                      warehouseData.length > 0 ?
+                        warehouseData.map((data) => (
+                          <tr key={data?.warehouse?._id}>
+                            <td className="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray- whitespace-nowrap">
+                              <img
+                                src={data?.warehouse?.img}
+                                alt=""
+                                className="w-[50px] h-[50px] object-cover rounded-lg"
+                              />
+                            </td>
+                            <td className="px-4 py-4 text-sm text-gray-800  whitespace-nowrap">
+                              <span>{data?.warehouse?.name}</span>
+                            </td>
+                            <td className=" text- ">
+                              <span>
+                                {" "}
+                                Area:{" "}
+                                {
+                                  wareLength && wareLength?.find(
+                                    (item) =>
+                                      item.warehouse === data?.warehouse?.name
+                                  )?.areas?.length
+                                }
+                              </span>
+
+                              <span>
+                                {" "}
+                                Racks:{" "}
+                                {
+                                  wareLength && wareLength?.find(
+                                    (item) =>
+                                      item.warehouse === data?.warehouse?.name
+                                  )?.racks?.length
+                                }
+                              </span>
+                            </td>
+
+                            <td className="text-">
+                              {" "}
+                              <span>
+                                {" "}
+                                Selfs:{" "}
+                                {
+                                  wareLength && wareLength?.find(
+                                    (item) =>
+                                      item.warehouse === data?.warehouse?.name
+                                  )?.selfs?.length
+                                }
+                              </span>
+                              <span>
+                                {" "}
+                                Cells:{" "}
+                                {
+                                  wareLength && wareLength?.find(
+                                    (item) =>
+                                      item.warehouse === data?.warehouse?.name
+                                  )?.cells?.length
+                                }
+                              </span>
+                            </td>
+                            <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
+                              <div className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 text-emerald-500 bg-emerald-100/60 dark:bg-gray-800">
+                                {data.warehouse.status ? (
+                                  <svg
+                                    width={12}
+                                    height={12}
+                                    viewBox="0 0 12 12"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                  >
+                                    <path
+                                      d="M10 3L4.5 8.5L2 6"
+                                      stroke="currentColor"
+                                      strokeWidth="1.5"
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                    />
+                                  </svg>
+                                ) : (
+                                  <BiCloset className="text-lg text-red-500" />
+                                )}
+                              </div>
+                            </td>
+                            <td className="px-4 py-4 text-sm whitespace-nowrap">
+                              <span>{data?.warehouse?.slag}</span>
+                            </td>
+                            <td className="px-4 py-4 text-sm whitespace-nowrap">
+                              {data?.warehouse?.address}
+                            </td>
+                            <td className="px-4 py-4 text-sm whitespace-nowrap">
+                              <div className="flex items-center gap-x-6">
+                                <button
+                                  onClick={() => setOpenModal(data?.warehouse?._id)}
+                                  className="text-blue-500 transition-colors duration-200 hover:text-indigo-500 focus:outline-none"
+                                >
+                                  Product ({data?.products.length})
+                                </button>
+                              </div>
+                            </td>
+                            <td className="">
+                              <button
+                                onClick={() =>
+                                  setIsPreviewModal({
+                                    data: wareLength?.find(
+                                      (item) =>
+                                        item.warehouse === data?.warehouse.name
+                                    ),
+                                    id: data?.warehouse._id,
+                                  })
+                                }
+                                className="text-black bg-slate-200 p-2 rounded "
+                              >
+                                Show Previews
+                              </button>
+                            </td>
+                            {OpenModal === data.warehouse._id && (
+                              <WarehouseProductModal
+                                setOpenModal={setOpenModal}
+                                products={data.products}
+                              />
+                            )}
+                            {isPreviewModal.id === data?.warehouse._id && (
+                              <SellerShowPrivew
+                                status={isPreviewModal}
+                                setStatus={setIsPreviewModal}
+                              />
+                            )}
+                          </tr>
+                        ))
+                        :
+
+                        <tr>
+                          <td colSpan="9" className="text-center py-2">
+                            Data Not Found
+                          </td>
+                        </tr>
+                    }
                   </tbody>
                 </table>
               </div>
@@ -278,8 +296,8 @@ const WarehouseReportHistory = () => {
                   href="#"
                   onClick={() => setCurrentPage(i + 1)}
                   className={`px-2 py-1 mr-2 text-sm rounded-md ${currentPage === i + 1
-                      ? "text-blue-500 dark:bg-gray-800 bg-blue-100/60"
-                      : "text-gray-200 dark:hover:bg-gray-800 dark:text-gray-300 hover:bg-gray-100"
+                    ? "text-blue-500 dark:bg-gray-800 bg-blue-100/60"
+                    : "text-gray-200 dark:hover:bg-gray-800 dark:text-gray-300 hover:bg-gray-100"
                     }`}
                 >
                   {i + 1}

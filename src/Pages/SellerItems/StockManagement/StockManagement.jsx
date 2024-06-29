@@ -5,11 +5,12 @@ import StockEdit from "./StockEdit";
 import BrightAlert from "bright-alert";
 import StockInvoiceAdmin from "./StockInvoiceAdmin";
 import Swal from "sweetalert2";
+import LoaderData from "../../../Common/LoaderData";
 
 const StockManagement = () => {
   const [on, setOn] = useState(false);
   const [invoiceOn, setInvoiceOn] = useState(false);
-  const { data: stockRequest = [], refetch } = useQuery({
+  const { data: stockRequest = [], refetch, isLoading } = useQuery({
     queryKey: ["stockRequest"],
     queryFn: async () => {
       const res = await fetch(`https://doob.dev/api/v1/admin/stock-request`);
@@ -100,8 +101,8 @@ const StockManagement = () => {
 
   const filteredStockRequestData = searchQuery
     ? stockRequest.filter((item) =>
-        item._id.toLowerCase().includes(searchQuery.toLowerCase())
-      )
+      item._id.toLowerCase().includes(searchQuery.toLowerCase())
+    )
     : stockRequest;
 
   console.log(filteredStockRequestData, "filteredStockRequestData");
@@ -255,144 +256,161 @@ const StockManagement = () => {
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200 ">
-              {filteredStockRequestData?.map((itm, index) => (
-                <tr key={index + 1}>
-                  <td className="whitespace-nowrap border-r px-2 py-2 font-medium ">
-                    <img
-                      src={
-                        itm?.productInfo?.image?.src ?? itm?.productInfo?.image
-                      }
-                      alt=""
-                      className="w-[80px] h-[80px] rounded-lg object-cover m-auto"
-                    />
-                  </td>
-                  <td className="px-4 py-4 text-sm font-medium border-r text-gray-700 whitespace-nowrap">
-                    <div className="inline-flex items-center gap-x-3">
-                      <div className="w-5/12">
-                        <h2
-                          onClick={() => setInvoiceOn(itm)}
-                          className="font-medium text-blue-500  "
-                        >
-                          {itm?._id}
-                        </h2>
-                      </div>
-                    </div>
-                  </td>
-                  <td className="whitespace-wrap text-sm text-start w-[300px] border-r px-6 py-4 font-medium ">
-                    {itm?.productInfo?.name}
-                    <br />
-                    <span className="text-xs text-gray-500"> {itm?.SKU}</span>
-                  </td>
-                  <td className="px-12 py-4 text-sm font-medium border-r text-gray-700 whitespace-nowrap">
-                    {itm?.status === "cancel" ? (
-                      <span className="text-red-500">Canceled</span>
-                    ) : (
-                      <div>
-                        {itm?.status === "reject" ? (
-                          <button
-                            disabled
-                            // onClick={() => handleUpdate(itm, "")}
-                            className="inline-flex items-center rounded-full gap-x-2  text-sm  gap-2 bg-red-600 px-2 py-1  text-white "
-                          >
-                            Rejected
-                          </button>
-                        ) : (
-                          <div className="">
-                            {itm?.status === "pending" ? (
-                              <div className="flex gap-2">
+              {
+                isLoading ? (
+                  <tr>
+                    <td colSpan="9" className="text-center py-8">
+                      <LoaderData />
+                    </td>
+                  </tr>
+                )
+                  :
+
+                  filteredStockRequestData.length > 0 ?
+                    filteredStockRequestData?.map((itm, index) => (
+                      <tr key={index + 1}>
+                        <td className="whitespace-nowrap border-r px-2 py-2 font-medium ">
+                          <img
+                            src={
+                              itm?.productInfo?.image?.src ?? itm?.productInfo?.image
+                            }
+                            alt=""
+                            className="w-[80px] h-[80px] rounded-lg object-cover m-auto"
+                          />
+                        </td>
+                        <td className="px-4 py-4 text-sm font-medium border-r text-gray-700 whitespace-nowrap">
+                          <div className="inline-flex items-center gap-x-3">
+                            <div className="w-5/12">
+                              <h2
+                                onClick={() => setInvoiceOn(itm)}
+                                className="font-medium text-blue-500  "
+                              >
+                                {itm?._id}
+                              </h2>
+                            </div>
+                          </div>
+                        </td>
+                        <td className="whitespace-wrap text-sm text-start w-[300px] border-r px-6 py-4 font-medium ">
+                          {itm?.productInfo?.name}
+                          <br />
+                          <span className="text-xs text-gray-500"> {itm?.SKU}</span>
+                        </td>
+                        <td className="px-12 py-4 text-sm font-medium border-r text-gray-700 whitespace-nowrap">
+                          {itm?.status === "cancel" ? (
+                            <span className="text-red-500">Canceled</span>
+                          ) : (
+                            <div>
+                              {itm?.status === "reject" ? (
                                 <button
-                                  disabled={
-                                    itm?.status === "cancel" ? true : false
-                                  }
-                                  onClick={() => handleUpdate(itm, "active")}
-                                  className="inline-flex  rounded-full gap-x-2    text-sm items-center gap-2 bg-[#23b123ea] px-2 py-1 text-white "
+                                  disabled
+                                  // onClick={() => handleUpdate(itm, "")}
+                                  className="inline-flex items-center rounded-full gap-x-2  text-sm  gap-2 bg-red-600 px-2 py-1  text-white "
                                 >
-                                  Approve
+                                  Rejected
                                 </button>
-                                <button
-                                  onClick={() => handleUpdate(itm, "reject")}
-                                  className="inline-flex  rounded-full gap-x-2    text-sm items-center gap-2 bg-orange-500 px-2 py-1 text-white "
-                                >
-                                  Reject
+                              ) : (
+                                <div className="">
+                                  {itm?.status === "pending" ? (
+                                    <div className="flex gap-2">
+                                      <button
+                                        disabled={
+                                          itm?.status === "cancel" ? true : false
+                                        }
+                                        onClick={() => handleUpdate(itm, "active")}
+                                        className="inline-flex  rounded-full gap-x-2    text-sm items-center gap-2 bg-[#23b123ea] px-2 py-1 text-white "
+                                      >
+                                        Approve
+                                      </button>
+                                      <button
+                                        onClick={() => handleUpdate(itm, "reject")}
+                                        className="inline-flex  rounded-full gap-x-2    text-sm items-center gap-2 bg-orange-500 px-2 py-1 text-white "
+                                      >
+                                        Reject
+                                      </button>
+                                    </div>
+                                  ) : (
+                                    <button
+                                      disabled
+                                      // onClick={() => handleUpdate(itm, "")}
+                                      className="inline-flex  rounded-full gap-x-2    text-sm items-center gap-2 bg-[#23b123ea] px-2 py-1 text-white "
+                                    >
+                                      Active
+                                    </button>
+                                  )}
+                                </div>
+                              )}
+                            </div>
+                          )}
+                        </td>
+                        <td className="px-4 py-4 text-lg text-gray-700 border-r  whitespace-nowrap">
+                          <button className="text-sm flex items-center gap-2  px-2 py-1 rounded ">
+                            {itm?.delivery_status}
+                          </button>
+                        </td>
+                        <td className="px-4 py-4 text-lg text-gray-700 border-r  whitespace-nowrap">
+                          <button className="text-sm flex items-center gap-2  px-2 py-1 rounded ">
+                            {itm?.note?.slice(0, 25)}..
+                          </button>
+                        </td>
+                        <td className="px-4 py-4 text-lg text-gray-700 border-r  whitespace-nowrap">
+                          <div className="flex items-center gap-x-2">
+                            {itm?.status !== "reject" &&
+                              itm?.status !== "cancel" &&
+                              editMode === itm._id ? (
+                              <div className="flex gap-2 ">
+                                <input
+                                  type="text"
+                                  defaultValue={itm?.quantity}
+                                  onChange={(e) => setEditedQuantity(e.target.value)}
+                                  className="px-3 w-12 py-1 text-sm border rounded bg-gray-100"
+                                />
+                                <button>
+                                  <BiSave
+                                    onClick={() => save_quantity_input(itm?._id)}
+                                  />
                                 </button>
                               </div>
                             ) : (
                               <button
-                                disabled
-                                // onClick={() => handleUpdate(itm, "")}
-                                className="inline-flex  rounded-full gap-x-2    text-sm items-center gap-2 bg-[#23b123ea] px-2 py-1 text-white "
+                                onClick={() => setEditMode(itm?._id)}
+                                className="px-3 py-1 flex items-center gap-2 text-xs text-indigo-500 rounded-full bg-gray-800 bg-indigo-100/60"
                               >
-                                Active
+                                {itm?.quantity}
+                                <BiEdit />
                               </button>
                             )}
                           </div>
-                        )}
-                      </div>
-                    )}
-                  </td>
-                  <td className="px-4 py-4 text-lg text-gray-700 border-r  whitespace-nowrap">
-                    <button className="text-sm flex items-center gap-2  px-2 py-1 rounded ">
-                      {itm?.delivery_status}
-                    </button>
-                  </td>
-                  <td className="px-4 py-4 text-lg text-gray-700 border-r  whitespace-nowrap">
-                    <button className="text-sm flex items-center gap-2  px-2 py-1 rounded ">
-                      {itm?.note?.slice(0, 25)}..
-                    </button>
-                  </td>
-                  <td className="px-4 py-4 text-lg text-gray-700 border-r  whitespace-nowrap">
-                    <div className="flex items-center gap-x-2">
-                      {itm?.status !== "reject" &&
-                      itm?.status !== "cancel" &&
-                      editMode === itm._id ? (
-                        <div className="flex gap-2 ">
-                          <input
-                            type="text"
-                            defaultValue={itm?.quantity}
-                            onChange={(e) => setEditedQuantity(e.target.value)}
-                            className="px-3 w-12 py-1 text-sm border rounded bg-gray-100"
-                          />
-                          <button>
-                            <BiSave
-                              onClick={() => save_quantity_input(itm?._id)}
-                            />
+                        </td>
+
+                        <td className="px-4 py-4 text-lg text-gray-700 border-r  whitespace-nowrap">
+                          <button className="text-sm flex items-center gap-2  px-2 py-1 rounded ">
+                            {itm?.shopName}
                           </button>
-                        </div>
-                      ) : (
-                        <button
-                          onClick={() => setEditMode(itm?._id)}
-                          className="px-3 py-1 flex items-center gap-2 text-xs text-indigo-500 rounded-full bg-gray-800 bg-indigo-100/60"
-                        >
-                          {itm?.quantity}
-                          <BiEdit />
-                        </button>
-                      )}
-                    </div>
-                  </td>
+                        </td>
+                        <td className="px-4 py-4 text-lg text-gray-700 border-r  whitespace-nowrap">
+                          <button className="text-sm flex items-center gap-2  px-2 py-1 rounded ">
+                            {itm?.warehouse?.map((war) => {
+                              if (war?.name) {
+                                return <span key={war?.name}>{war?.name}</span>;
+                              }
+                            })}
+                          </button>
+                        </td>
+                        {/* {on._id=== itm?._id && <StockEdit setOn={setOn} itm={itm} />} */}
 
-                  <td className="px-4 py-4 text-lg text-gray-700 border-r  whitespace-nowrap">
-                    <button className="text-sm flex items-center gap-2  px-2 py-1 rounded ">
-                      {itm?.shopName}
-                    </button>
-                  </td>
-                  <td className="px-4 py-4 text-lg text-gray-700 border-r  whitespace-nowrap">
-                    <button className="text-sm flex items-center gap-2  px-2 py-1 rounded ">
-                      {itm?.warehouse?.map((war) => {
-                        if (war?.name) {
-                          return <span key={war?.name}>{war?.name}</span>;
-                        }
-                      })}
-                    </button>
-                  </td>
-                  {/* {on._id=== itm?._id && <StockEdit setOn={setOn} itm={itm} />} */}
-
-                  <td>
-                    {invoiceOn?._id === itm?._id && (
-                      <StockInvoiceAdmin setOn={setInvoiceOn} products={itm} />
-                    )}
-                  </td>
-                </tr>
-              ))}
+                        <td>
+                          {invoiceOn?._id === itm?._id && (
+                            <StockInvoiceAdmin setOn={setInvoiceOn} products={itm} />
+                          )}
+                        </td>
+                      </tr>
+                    ))
+                    : < tr >
+                      <td colSpan="9" className="text-center text-gray-400 py-2">
+                        Data Not Found
+                      </td>
+                    </tr>
+              }
             </tbody>
           </table>
         </div>

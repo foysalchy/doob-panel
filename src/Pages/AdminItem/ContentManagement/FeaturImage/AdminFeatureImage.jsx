@@ -7,11 +7,12 @@ import { FaArrowRightLong } from "react-icons/fa6";
 import { useState } from "react";
 import { MdEdit, MdPadding } from "react-icons/md";
 import Swal from "sweetalert2";
+import LoaderData from "../../../../Common/LoaderData";
 
 const AdminFeatureImage = () => {
   const [loading, setLoading] = useState(false);
   const [openModal, setOpenModal] = useState(false);
-  const { data: featureImage = [], refetch } = useQuery({
+  const { data: featureImage = [], refetch, isLoading } = useQuery({
     queryKey: ["featureImage"],
     queryFn: async () => {
       const res = await fetch(
@@ -232,162 +233,171 @@ const AdminFeatureImage = () => {
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
-            {featureImage
-              ?.sort((a, b) => parseInt(a.index) - parseInt(b.index))
-              ?.map((itm) => (
-                <tr key={itm?._id}>
-                  <td className="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
-                    <div
-                      onClick={() => setOpenInvoice(itm?._id)}
-                      className="inline-flex items-center gap-x-3 cursor-pointer text-blue-500"
-                    >
-                      <img
-                        src={itm?.image}
-                        alt=""
-                        className="w-20 h-20 rounded-lg"
-                      />
-                    </div>
+            {
+              isLoading ? (
+                <tr>
+                  <td colSpan="5" className="text-center py-8">
+                    <LoaderData />
                   </td>
-                  <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 ">
-                    {itm?.link}
-                  </td>
-
-                  <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 ">
-                    {new Date(itm?.time).toLocaleString("en-US", {
-                      year: "numeric",
-                      month: "long",
-                      day: "numeric",
-                      hour: "numeric",
-                      minute: "numeric",
-                      second: "numeric",
-                    })}
-                  </td>
-                  <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 ">
-                    {itm?.index && itm.index}
-                  </td>
-                  <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 ">
-                    <div className="flex items-center justify-around">
-                      <button
-                        onClick={() => onDelete(itm?._id)}
-                        className={style.deactive}
-                      >
-                        Delete
-                      </button>
-                      {itm.status ? (
-                        <button
-                          onClick={() => EditStatus(itm?._id, "false")}
-                          className={style.active}
+                </tr>
+              )
+                :
+                featureImage
+                  ?.sort((a, b) => parseInt(a.index) - parseInt(b.index))
+                  ?.map((itm) => (
+                    <tr key={itm?._id}>
+                      <td className="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
+                        <div
+                          onClick={() => setOpenInvoice(itm?._id)}
+                          className="inline-flex items-center gap-x-3 cursor-pointer text-blue-500"
                         >
-                          Activate
-                        </button>
-                      ) : (
-                        <button
-                          onClick={() => EditStatus(itm?._id, "true")}
-                          className={style.deactive}
-                          type="button"
-                        >
-                          Deactivate
-                        </button>
-                      )}
-
-                      <button
-                        onClick={() => setOpenModal(itm)}
-                        className="bg-blue-500 text-white p-1 rounded text-lg"
-                      >
-                        <MdEdit />
-                      </button>
-                    </div>
-                  </td>
-
-                  <div
-                    className={`fixed z-[100] flex items-center justify-center ${openModal?._id === itm?._id
-                        ? "opacity-1 visible"
-                        : "invisible opacity-0"
-                      } inset-0 bg-black/20 backdrop-blur-sm duration-100`}
-                  >
-                    <div
-                      className={`absolute md:w-[500px] w-full rounded-sm bg-white p-3 pb-5 text-center drop-shadow-2xl ${openModal?._id === itm?._id
-                          ? "scale-1 opacity-1 duration-300"
-                          : "scale-0 opacity-0 duration-150"
-                        } `}
-                    >
-                      <svg
-                        onClick={() => setOpenModal(false)}
-                        className="mx-auto mr-0 w-8 cursor-pointer"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <g strokeWidth="0"></g>
-                        <g strokeLinecap="round" strokeLinejoin="round"></g>
-                        <g>
-                          <path
-                            d="M6.99486 7.00636C6.60433 7.39689 6.60433 8.03005 6.99486 8.42058L10.58 12.0057L6.99486 15.5909C6.60433 15.9814 6.60433 16.6146 6.99486 17.0051C7.38538 17.3956 8.01855 17.3956 8.40907 17.0051L11.9942 13.4199L15.5794 17.0051C15.9699 17.3956 16.6031 17.3956 16.9936 17.0051C17.3841 16.6146 17.3841 15.9814 16.9936 15.5909L13.4084 12.0057L16.9936 8.42059C17.3841 8.03007 17.3841 7.3969 16.9936 7.00638C16.603 6.61585 15.9699 6.61585 15.5794 7.00638L11.9942 10.5915L8.40907 7.00636C8.01855 6.61584 7.38538 6.61584 6.99486 7.00636Z"
-                            fill="#000"
-                          ></path>
-                        </g>
-                      </svg>
-
-                      <form onSubmit={(e) => handleEdit(e, itm?._id)}>
-                        <h1 className="text-lg font-semibold text-center mb-4">
-                          Edit Feature Image
-                        </h1>
-                        <img
-                          src={itm?.image}
-                          alt=""
-                          className="w-[100px] h-[100px] rounded"
-                        />
-                        <div className="flex flex-col items-start gap-1">
-                          <label className="text-start" htmlFor="photo">
-                            Photo
-                          </label>
-                          <input
-                            type="file"
-                            name="image"
-                            className="border border-gray-500 p-1 rounded mb-3 w-full"
+                          <img
+                            src={itm?.image}
+                            alt=""
+                            className="w-20 h-20 rounded-lg"
                           />
                         </div>
-                        <div className="flex flex-col items-start gap-1">
-                          <label className="text-start" htmlFor="url">
-                            URL
-                          </label>
-                          <input
-                            defaultValue={openModal?.link}
-                            type="url"
-                            name="url"
-                            className="border border-gray-500 p-1 rounded mb-3 w-full"
-                          />
-                        </div>
-                        <div className="flex flex-col items-start gap-1">
-                          <label className="text-start" htmlFor="index">
-                            Index
-                          </label>
-                          <select
-                            onChange={(e) => setSelectIndex(e.target.value)}
-                            name="index"
-                            id="index"
-                            className="border border-gray-500 p-1 rounded mb-3 w-full"
-                          >
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                          </select>
-                        </div>
-                        <br />
-                        <div className="flex justify-start">
+                      </td>
+                      <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 ">
+                        {itm?.link}
+                      </td>
+
+                      <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 ">
+                        {new Date(itm?.time).toLocaleString("en-US", {
+                          year: "numeric",
+                          month: "long",
+                          day: "numeric",
+                          hour: "numeric",
+                          minute: "numeric",
+                          second: "numeric",
+                        })}
+                      </td>
+                      <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 ">
+                        {itm?.index && itm.index}
+                      </td>
+                      <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 ">
+                        <div className="flex items-center justify-around">
                           <button
-                            type="submit"
-                            className="me-2 rounded bg-green-700 px-6 py-1 text-white"
+                            onClick={() => onDelete(itm?._id)}
+                            className={style.deactive}
                           >
-                            Sibmit
+                            Delete
+                          </button>
+                          {itm.status ? (
+                            <button
+                              onClick={() => EditStatus(itm?._id, "false")}
+                              className={style.active}
+                            >
+                              Activate
+                            </button>
+                          ) : (
+                            <button
+                              onClick={() => EditStatus(itm?._id, "true")}
+                              className={style.deactive}
+                              type="button"
+                            >
+                              Deactivate
+                            </button>
+                          )}
+
+                          <button
+                            onClick={() => setOpenModal(itm)}
+                            className="bg-blue-500 text-white p-1 rounded text-lg"
+                          >
+                            <MdEdit />
                           </button>
                         </div>
-                      </form>
-                    </div>
-                  </div>
-                </tr>
-              ))}
+                      </td>
+
+                      <div
+                        className={`fixed z-[100] flex items-center justify-center ${openModal?._id === itm?._id
+                          ? "opacity-1 visible"
+                          : "invisible opacity-0"
+                          } inset-0 bg-black/20 backdrop-blur-sm duration-100`}
+                      >
+                        <div
+                          className={`absolute md:w-[500px] w-full rounded-sm bg-white p-3 pb-5 text-center drop-shadow-2xl ${openModal?._id === itm?._id
+                            ? "scale-1 opacity-1 duration-300"
+                            : "scale-0 opacity-0 duration-150"
+                            } `}
+                        >
+                          <svg
+                            onClick={() => setOpenModal(false)}
+                            className="mx-auto mr-0 w-8 cursor-pointer"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <g strokeWidth="0"></g>
+                            <g strokeLinecap="round" strokeLinejoin="round"></g>
+                            <g>
+                              <path
+                                d="M6.99486 7.00636C6.60433 7.39689 6.60433 8.03005 6.99486 8.42058L10.58 12.0057L6.99486 15.5909C6.60433 15.9814 6.60433 16.6146 6.99486 17.0051C7.38538 17.3956 8.01855 17.3956 8.40907 17.0051L11.9942 13.4199L15.5794 17.0051C15.9699 17.3956 16.6031 17.3956 16.9936 17.0051C17.3841 16.6146 17.3841 15.9814 16.9936 15.5909L13.4084 12.0057L16.9936 8.42059C17.3841 8.03007 17.3841 7.3969 16.9936 7.00638C16.603 6.61585 15.9699 6.61585 15.5794 7.00638L11.9942 10.5915L8.40907 7.00636C8.01855 6.61584 7.38538 6.61584 6.99486 7.00636Z"
+                                fill="#000"
+                              ></path>
+                            </g>
+                          </svg>
+
+                          <form onSubmit={(e) => handleEdit(e, itm?._id)}>
+                            <h1 className="text-lg font-semibold text-center mb-4">
+                              Edit Feature Image
+                            </h1>
+                            <img
+                              src={itm?.image}
+                              alt=""
+                              className="w-[100px] h-[100px] rounded"
+                            />
+                            <div className="flex flex-col items-start gap-1">
+                              <label className="text-start" htmlFor="photo">
+                                Photo
+                              </label>
+                              <input
+                                type="file"
+                                name="image"
+                                className="border border-gray-500 p-1 rounded mb-3 w-full"
+                              />
+                            </div>
+                            <div className="flex flex-col items-start gap-1">
+                              <label className="text-start" htmlFor="url">
+                                URL
+                              </label>
+                              <input
+                                defaultValue={openModal?.link}
+                                type="url"
+                                name="url"
+                                className="border border-gray-500 p-1 rounded mb-3 w-full"
+                              />
+                            </div>
+                            <div className="flex flex-col items-start gap-1">
+                              <label className="text-start" htmlFor="index">
+                                Index
+                              </label>
+                              <select
+                                onChange={(e) => setSelectIndex(e.target.value)}
+                                name="index"
+                                id="index"
+                                className="border border-gray-500 p-1 rounded mb-3 w-full"
+                              >
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                              </select>
+                            </div>
+                            <br />
+                            <div className="flex justify-start">
+                              <button
+                                type="submit"
+                                className="me-2 rounded bg-green-700 px-6 py-1 text-white"
+                              >
+                                Sibmit
+                              </button>
+                            </div>
+                          </form>
+                        </div>
+                      </div>
+                    </tr>
+                  ))}
           </tbody>
         </table>
         {/* modal */}

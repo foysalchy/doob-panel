@@ -4,11 +4,12 @@ import React from "react";
 import { useState } from "react";
 import { BsEye } from "react-icons/bs";
 import { Link } from "react-router-dom";
+import LoaderData from "../../../Common/LoaderData";
 
 const CatagoryManagement = () => {
   const [openModal, setOpenModal] = useState(false);
 
-  const { data: category = [], refetch } = useQuery({
+  const { data: category = [], refetch, isLoading } = useQuery({
     queryKey: ["category"],
     queryFn: async () => {
       const res = await fetch("https://doob.dev/api/v1/admin/category");
@@ -151,7 +152,7 @@ const CatagoryManagement = () => {
       </div>
 
       <div className="overflow-x-auto mt-4">
-        {filteredData.length ? (
+        {
           <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
             <thead className="text-left">
               <tr>
@@ -171,112 +172,117 @@ const CatagoryManagement = () => {
             </thead>
 
             <tbody className="divide-y divide-gray-200">
-              {filteredData.map((cate, index) => (
-                <tr key={index}>
-                  <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
-                    <img
-                      name="image"
-                      className="w-10 h-10 rounded object-fill"
-                      srcSet={cate.img}
-                      src={cate.img}
-                      alt=""
-                    />
-                  </td>
+              {
+                isLoading ? (
+                  <tr>
+                    <td colSpan="7" className="text-center py-8">
+                      <LoaderData />
+                    </td>
+                  </tr>
+                )
+                  :
+                  filteredData.map((cate, index) => (
+                    <tr key={index}>
+                      <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
+                        <img
+                          name="image"
+                          className="w-10 h-10 rounded object-fill"
+                          srcSet={cate.img}
+                          src={cate.img}
+                          alt=""
+                        />
+                      </td>
 
-                  <td className="whitespace-nowrap px-4 py-2 text-gray-700">
-                    {cate.title}
-                  </td>
-                  <td className="whitespace-nowrap px-4 py-2">
-                    <button
-                      onClick={() => DeleteCategory(cate._id)}
-                      className="inline-block rounded  bg-red-600 px-4 py-2 text-xs font-medium text-white hover:bg-red-700"
-                    >
-                      Delete
-                    </button>
-                    <button
-                      onClick={() => setOpenModal(cate)}
-                      className="inline-block rounded ml-3 bg-blue-600 px-4 py-2 text-xs font-medium text-white hover:bg-red-700"
-                    >
-                      Edit
-                    </button>
-                    <Link
-                      to={`/services`}
-                      className="inline-block rounded ml-3 text-blue-600 px-3 text-lg font-medium  "
-                    >
-                      <BsEye />
-                    </Link>
-                  </td>
+                      <td className="whitespace-nowrap px-4 py-2 text-gray-700">
+                        {cate.title}
+                      </td>
+                      <td className="whitespace-nowrap px-4 py-2">
+                        <button
+                          onClick={() => DeleteCategory(cate._id)}
+                          className="inline-block rounded  bg-red-600 px-4 py-2 text-xs font-medium text-white hover:bg-red-700"
+                        >
+                          Delete
+                        </button>
+                        <button
+                          onClick={() => setOpenModal(cate)}
+                          className="inline-block rounded ml-3 bg-blue-600 px-4 py-2 text-xs font-medium text-white hover:bg-red-700"
+                        >
+                          Edit
+                        </button>
+                        <Link
+                          to={`/services`}
+                          className="inline-block rounded ml-3 text-blue-600 px-3 text-lg font-medium  "
+                        >
+                          <BsEye />
+                        </Link>
+                      </td>
 
-                  <div>
-                    <div
-                      onClick={() => setOpenModal(false)}
-                      className={`fixed z-[100] flex items-center justify-center ${
-                        openModal?._id === cate?._id
-                          ? "visible opacity-100"
-                          : "invisible opacity-0"
-                      } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
-                    >
-                      <div
-                        onClick={(e_) => e_.stopPropagation()}
-                        className={`text- w-[500px] absolute max-w-md rounded-sm bg-white p-6 drop-shadow-lg dark:bg-black dark:text-white ${
-                          openModal?._id === cate?._id
-                            ? "scale-1 opacity-1 duration-300"
-                            : "scale-0 opacity-0 duration-150"
-                        }`}
-                      >
-                        <form onSubmit={handleEdit} action="">
-                          <h1 className="mb-2 text-2xl font-semibold">
-                            Edit Category!
-                          </h1>
-                          <div className="flex flex-col gap-2 bb-3">
-                            <label
-                              htmlFor="title"
-                              className="text-sm font-medium"
-                            >
-                              Category Name
-                            </label>
-                            <input
-                              name="title"
-                              type="text"
-                              id="title"
-                              className="w-full text-black placeholder:hover:text=black px-4 py-2 rounded-sm border border-gray-300"
-                              defaultValue={openModal?.title}
-                            />
-                          </div>{" "}
-                          <br />
-                          <div className="flex flex-col gap-2 bb-3">
-                            <label
-                              htmlFor="img"
-                              className="text-sm font-medium"
-                            >
-                              Photo
-                            </label>
-                            <input
-                              type="file"
-                              className="w-full bg-white text-black placeholder:hover:text=black px-4 py-2 rounded-sm border border-gray-300"
-                              name="image"
-                            />
+                      <div>
+                        <div
+                          onClick={() => setOpenModal(false)}
+                          className={`fixed z-[100] flex items-center justify-center ${openModal?._id === cate?._id
+                            ? "visible opacity-100"
+                            : "invisible opacity-0"
+                            } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
+                        >
+                          <div
+                            onClick={(e_) => e_.stopPropagation()}
+                            className={`text- w-[500px] absolute max-w-md rounded-sm bg-white p-6 drop-shadow-lg dark:bg-black dark:text-white ${openModal?._id === cate?._id
+                              ? "scale-1 opacity-1 duration-300"
+                              : "scale-0 opacity-0 duration-150"
+                              }`}
+                          >
+                            <form onSubmit={handleEdit} action="">
+                              <h1 className="mb-2 text-2xl font-semibold">
+                                Edit Category!
+                              </h1>
+                              <div className="flex flex-col gap-2 bb-3">
+                                <label
+                                  htmlFor="title"
+                                  className="text-sm font-medium"
+                                >
+                                  Category Name
+                                </label>
+                                <input
+                                  name="title"
+                                  type="text"
+                                  id="title"
+                                  className="w-full text-black placeholder:hover:text=black px-4 py-2 rounded-sm border border-gray-300"
+                                  defaultValue={openModal?.title}
+                                />
+                              </div>{" "}
+                              <br />
+                              <div className="flex flex-col gap-2 bb-3">
+                                <label
+                                  htmlFor="img"
+                                  className="text-sm font-medium"
+                                >
+                                  Photo
+                                </label>
+                                <input
+                                  type="file"
+                                  className="w-full bg-white text-black placeholder:hover:text=black px-4 py-2 rounded-sm border border-gray-300"
+                                  name="image"
+                                />
+                              </div>
+                              <br />
+                              <div className="flex justify-between">
+                                <button
+                                  type="submit"
+                                  className="me-2 rounded-sm bg-green-700 px-6 py-[6px] text-white"
+                                >
+                                  Save
+                                </button>
+                              </div>
+                            </form>
                           </div>
-                          <br />
-                          <div className="flex justify-between">
-                            <button
-                              type="submit"
-                              className="me-2 rounded-sm bg-green-700 px-6 py-[6px] text-white"
-                            >
-                              Save
-                            </button>
-                          </div>
-                        </form>
+                        </div>
                       </div>
-                    </div>
-                  </div>
-                </tr>
-              ))}
+                    </tr>
+                  ))}
             </tbody>
           </table>
-        ) : (
-          <h1>No Data Found</h1>
-        )}
+        }
       </div>
     </div>
   );

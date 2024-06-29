@@ -4,9 +4,10 @@ import React from "react";
 import { useState } from "react";
 import { RxEyeOpen } from "react-icons/rx";
 import { Link } from "react-router-dom";
+import LoaderData from "../../../Common/LoaderData";
 
 const BlogsCatagoryManagement = () => {
-  const { data: category = [], refetch } = useQuery({
+  const { data: category = [], refetch, isLoading } = useQuery({
     queryKey: ["category"],
     queryFn: async () => {
       const res = await fetch("https://doob.dev/api/v1/admin/blog-category");
@@ -150,134 +151,149 @@ const BlogsCatagoryManagement = () => {
       </div>
 
       <div className="overflow-x-auto mt-4">
-        {filteredData.length ? (
-          <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
-            <thead className="text-left">
-              <tr>
-                <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
-                  Category Image
-                </th>
+        {
 
-                <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
-                  Category Name
-                </th>
-                <th className="px-4 py-2">Action</th>
-              </tr>
-            </thead>
-
-            <tbody className="divide-y divide-gray-200">
-              {filteredData.map((cate, index) => (
+          filteredData.length ? (
+            <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
+              <thead className="text-left">
                 <tr>
-                  <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
-                    <img
-                      className="w-10 h-10 rounded object-fill"
-                      srcSet={cate.img}
-                      src={cate.img}
-                      alt=""
-                    />
-                  </td>
+                  <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
+                    Category Image
+                  </th>
 
-                  <td className="whitespace-nowrap px-4 py-2 text-gray-700">
-                    {cate.title}
-                  </td>
-                  <td className="whitespace-nowrap px-4 py-2">
-                    <div className="flex items-center gap-4">
-                      <button
-                        onClick={() => DeleteCategory(cate._id)}
-                        className="inline-block rounded  bg-red-600 px-4 py-2 text-xs font-medium text-white hover:bg-red-700"
-                      >
-                        Delete
-                      </button>
-
-                      <button
-                        onClick={() => setOpenModal(cate)}
-                        className="inline-block rounded ml-4 bg-blue-600 px-4 py-2 text-xs font-medium text-white hover:bg-blue-700"
-                      >
-                        Edit
-                      </button>
-                      <Link
-                        to={`/blogs#${cate?.title}`}
-                        className="inline-block rounded px-4 text-xs font-medium text-green-600  "
-                      >
-                        <RxEyeOpen className="text-xl" />
-                      </Link>
-                    </div>
-                  </td>
-
-                  <div>
-                    <div
-                      className={`fixed z-[100] flex items-center justify-center ${
-                        openModal ? "opacity-1 visible" : "invisible opacity-0"
-                      } inset-0 bg-black/20 backdrop-blur-sm duration-100`}
-                    >
-                      <form
-                        onSubmit={handleUpdate}
-                        className={`absolute w-[500px] rounded-sm bg-white p-3 pb-5 text-center drop-shadow-2xl ${
-                          openModal
-                            ? "scale-1 opacity-1 duration-300"
-                            : "scale-0 opacity-0 duration-150"
-                        } `}
-                      >
-                        <svg
-                          onClick={() => setOpenModal(false)}
-                          className="mx-auto mr-0 w-8 cursor-pointer"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <g strokeWidth="0"></g>
-                          <g strokeLinecap="round" strokeLinejoin="round"></g>
-                          <g>
-                            <path
-                              d="M6.99486 7.00636C6.60433 7.39689 6.60433 8.03005 6.99486 8.42058L10.58 12.0057L6.99486 15.5909C6.60433 15.9814 6.60433 16.6146 6.99486 17.0051C7.38538 17.3956 8.01855 17.3956 8.40907 17.0051L11.9942 13.4199L15.5794 17.0051C15.9699 17.3956 16.6031 17.3956 16.9936 17.0051C17.3841 16.6146 17.3841 15.9814 16.9936 15.5909L13.4084 12.0057L16.9936 8.42059C17.3841 8.03007 17.3841 7.3969 16.9936 7.00638C16.603 6.61585 15.9699 6.61585 15.5794 7.00638L11.9942 10.5915L8.40907 7.00636C8.01855 6.61584 7.38538 6.61584 6.99486 7.00636Z"
-                              fill="#000"
-                            ></path>
-                          </g>
-                        </svg>
-                        <h1 className="mb-2 text-xl font-semibold">
-                          Edit Blog Category
-                        </h1>
-                        <br />
-                        <div className="flex flex-col">
-                          <label className="text-start" htmlFor="name">
-                            Name
-                          </label>
-                          <input
-                            className="w-full px-2 py-2 border border-gray-200 rounded-sm"
-                            type="text"
-                            name="name"
-                            defaultValue={openModal?.title}
-                          />
-                        </div>
-                        <div className="flex flex-col mt-2">
-                          <labe className="text-start" htmlFor="image">
-                            Photo
-                          </labe>
-                          <input
-                            className="w-full px-2 py-2 mt-2 mb-4 border border-gray-200 rounded-sm"
-                            type="file"
-                            name="image"
-                          />
-                        </div>
-
-                        <div className="flex justify-start">
-                          <button
-                            type="submit"
-                            className="me-2 rounded-sm bg-blue-700 px-8 py-2 text-white"
-                          >
-                            Save
-                          </button>
-                        </div>
-                      </form>
-                    </div>
-                  </div>
+                  <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
+                    Category Name
+                  </th>
+                  <th className="px-4 py-2">Action</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        ) : (
-          <h1>No Data Found</h1>
-        )}
+              </thead>
+
+              <tbody className="divide-y divide-gray-200">
+                {isLoading ? (
+                  <tr>
+                    <td colSpan="3" className="text-center py-8">
+                      <LoaderData />
+                    </td>
+                  </tr>
+                )
+
+                  :
+                  filteredData.length > 0 ?
+                    filteredData.map((cate, index) => (
+                      <tr>
+                        <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
+                          <img
+                            className="w-10 h-10 rounded object-fill"
+                            srcSet={cate.img}
+                            src={cate.img}
+                            alt=""
+                          />
+                        </td>
+
+                        <td className="whitespace-nowrap px-4 py-2 text-gray-700">
+                          {cate.title}
+                        </td>
+                        <td className="whitespace-nowrap px-4 py-2">
+                          <div className="flex items-center gap-4">
+                            <button
+                              onClick={() => DeleteCategory(cate._id)}
+                              className="inline-block rounded  bg-red-600 px-4 py-2 text-xs font-medium text-white hover:bg-red-700"
+                            >
+                              Delete
+                            </button>
+
+                            <button
+                              onClick={() => setOpenModal(cate)}
+                              className="inline-block rounded ml-4 bg-blue-600 px-4 py-2 text-xs font-medium text-white hover:bg-blue-700"
+                            >
+                              Edit
+                            </button>
+                            <Link
+                              to={`/blogs#${cate?.title}`}
+                              className="inline-block rounded px-4 text-xs font-medium text-green-600  "
+                            >
+                              <RxEyeOpen className="text-xl" />
+                            </Link>
+                          </div>
+                        </td>
+
+                        <div>
+                          <div
+                            className={`fixed z-[100] flex items-center justify-center ${openModal ? "opacity-1 visible" : "invisible opacity-0"
+                              } inset-0 bg-black/20 backdrop-blur-sm duration-100`}
+                          >
+                            <form
+                              onSubmit={handleUpdate}
+                              className={`absolute w-[500px] rounded-sm bg-white p-3 pb-5 text-center drop-shadow-2xl ${openModal
+                                ? "scale-1 opacity-1 duration-300"
+                                : "scale-0 opacity-0 duration-150"
+                                } `}
+                            >
+                              <svg
+                                onClick={() => setOpenModal(false)}
+                                className="mx-auto mr-0 w-8 cursor-pointer"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <g strokeWidth="0"></g>
+                                <g strokeLinecap="round" strokeLinejoin="round"></g>
+                                <g>
+                                  <path
+                                    d="M6.99486 7.00636C6.60433 7.39689 6.60433 8.03005 6.99486 8.42058L10.58 12.0057L6.99486 15.5909C6.60433 15.9814 6.60433 16.6146 6.99486 17.0051C7.38538 17.3956 8.01855 17.3956 8.40907 17.0051L11.9942 13.4199L15.5794 17.0051C15.9699 17.3956 16.6031 17.3956 16.9936 17.0051C17.3841 16.6146 17.3841 15.9814 16.9936 15.5909L13.4084 12.0057L16.9936 8.42059C17.3841 8.03007 17.3841 7.3969 16.9936 7.00638C16.603 6.61585 15.9699 6.61585 15.5794 7.00638L11.9942 10.5915L8.40907 7.00636C8.01855 6.61584 7.38538 6.61584 6.99486 7.00636Z"
+                                    fill="#000"
+                                  ></path>
+                                </g>
+                              </svg>
+                              <h1 className="mb-2 text-xl font-semibold">
+                                Edit Blog Category
+                              </h1>
+                              <br />
+                              <div className="flex flex-col">
+                                <label className="text-start" htmlFor="name">
+                                  Name
+                                </label>
+                                <input
+                                  className="w-full px-2 py-2 border border-gray-200 rounded-sm"
+                                  type="text"
+                                  name="name"
+                                  defaultValue={openModal?.title}
+                                />
+                              </div>
+                              <div className="flex flex-col mt-2">
+                                <labe className="text-start" htmlFor="image">
+                                  Photo
+                                </labe>
+                                <input
+                                  className="w-full px-2 py-2 mt-2 mb-4 border border-gray-200 rounded-sm"
+                                  type="file"
+                                  name="image"
+                                />
+                              </div>
+
+                              <div className="flex justify-start">
+                                <button
+                                  type="submit"
+                                  className="me-2 rounded-sm bg-blue-700 px-8 py-2 text-white"
+                                >
+                                  Save
+                                </button>
+                              </div>
+                            </form>
+                          </div>
+                        </div>
+                      </tr>
+                    ))
+                    :
+                    <tr>
+                      <td colspan="3" className="text-center py-2 text-gray-500">Data Not Found</td>
+                    </tr>
+                }
+              </tbody>
+            </table>
+          ) : (
+            <h1>No Data Found</h1>
+          )}
       </div>
     </div>
   );
