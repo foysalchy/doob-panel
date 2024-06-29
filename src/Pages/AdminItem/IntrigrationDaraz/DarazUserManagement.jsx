@@ -10,6 +10,7 @@ import { MdPadding } from "react-icons/md";
 import Swal from "sweetalert2";
 import DeleteModal from "../../../Common/DeleteModal";
 import { DataLoader } from "../../../Common/DataLoader";
+import LoaderData from "../../../Common/LoaderData";
 
 const DarazUserManagement = () => {
   const [loading, setLoading] = useState(false);
@@ -17,7 +18,7 @@ const DarazUserManagement = () => {
   const {
     data: darazUserData = [],
     refetch,
-    isLoading: loadingdarazUser,
+    isLoading,
   } = useQuery({
     queryKey: ["darazUsersData"],
     queryFn: async () => {
@@ -157,49 +158,60 @@ const DarazUserManagement = () => {
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
-            <tr>
+            {/* <tr>
               <td colSpan={6}>
                 {" "}
                 <DataLoader isLoading={loadingdarazUser} />
               </td>
-            </tr>
-            {darazUserData.map((itm) => (
-              <tr key={itm?._id}>
-                <td className="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
-                  <h2>{itm?.shopInfo ? itm.shopInfo?.name : "Empty"}</h2>
-                </td>
-                <td className="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
-                  <h2>{itm?.result?.user_info?.country}</h2>
-                </td>
+            </tr> */}
 
-                <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 ">
-                  {itm?.result?.account}
-                </td>
-                <td className="px-4 py-4 text_editor text-sm text-gray-500 dark:text-gray-300 ">
-                  <h2>{itm?.data?.sign_method}</h2>
-                </td>
-                <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 ">
-                  {new Date(itm?.data?.timestamp).toLocaleString("en-US", {
-                    year: "numeric",
-                    month: "long",
-                    day: "numeric",
-                    hour: "numeric",
-                    minute: "numeric",
-                    second: "numeric",
-                  })}
-                </td>
-                <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 ">
-                  <div className="flex items-center justify-around">
-                    <button
-                      onClick={() => onDelete(itm?._id)}
-                      className={style.deactive}
-                    >
-                      Delete
-                    </button>
-                  </div>
+            {isLoading ? (
+              <tr>
+                <td colSpan="6" className="text-center py-8">
+                  <LoaderData />
                 </td>
               </tr>
-            ))}
+            )
+              :
+              darazUserData.map((itm) => (
+                <tr key={itm?._id}>
+                  <td className="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
+                    <h2>{itm?.shopInfo ? itm.shopInfo?.name : "Empty"}</h2>
+                  </td>
+                  <td className="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
+                    <h2>{itm?.result?.user_info?.country}</h2>
+                  </td>
+
+                  <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 ">
+                    {itm?.result?.account}
+                  </td>
+                  <td className="px-4 py-4 text_editor text-sm text-gray-500 dark:text-gray-300 ">
+                    <h2>{itm?.data?.sign_method}</h2>
+                  </td>
+                  <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 ">
+                    {new Date(itm?.data?.timestamp).toLocaleString("en-US", {
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
+                      hour: "numeric",
+                      minute: "numeric",
+                      second: "numeric",
+                    })}
+                  </td>
+                  <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 ">
+                    <div className="flex items-center justify-around">
+                      <button
+                        onClick={() => onDelete(itm?._id)}
+                        className={style.deactive}
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))
+
+            }
           </tbody>
         </table>
       </section>

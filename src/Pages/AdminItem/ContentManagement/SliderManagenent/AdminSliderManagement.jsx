@@ -7,11 +7,12 @@ import { FaArrowRightLong } from "react-icons/fa6";
 import { useState } from "react";
 import { MdPadding } from "react-icons/md";
 import Swal from "sweetalert2";
+import LoaderData from "../../../../Common/LoaderData";
 
 const AdminSliderManagement = () => {
   const [loading, setLoading] = useState(false);
 
-  const { data: featureImage = [], refetch } = useQuery({
+  const { data: featureImage = [], refetch, isLoading } = useQuery({
     queryKey: ["slider"],
     queryFn: async () => {
       const res = await fetch(
@@ -173,62 +174,71 @@ const AdminSliderManagement = () => {
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
-            {featureImage.map((itm) => (
-              <tr key={itm?._id}>
-                <td className="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
-                  <div
-                    onClick={() => setOpenInvoice(itm?._id)}
-                    className="inline-flex items-center gap-x-3 cursor-pointer text-blue-500"
-                  >
-                    <img
-                      src={itm?.image}
-                      alt=""
-                      className="w-20 h-20 rounded-lg"
-                    />
-                  </div>
-                </td>
-                <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 ">
-                  {itm?.link}
-                </td>
+            {
+              isLoading ? (
+                <tr>
+                  <td colSpan="6" className="text-center py-8">
+                    <LoaderData />
+                  </td>
+                </tr>
+              )
+                :
+                featureImage.map((itm) => (
+                  <tr key={itm?._id}>
+                    <td className="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
+                      <div
+                        onClick={() => setOpenInvoice(itm?._id)}
+                        className="inline-flex items-center gap-x-3 cursor-pointer text-blue-500"
+                      >
+                        <img
+                          src={itm?.image}
+                          alt=""
+                          className="w-20 h-20 rounded-lg"
+                        />
+                      </div>
+                    </td>
+                    <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 ">
+                      {itm?.link}
+                    </td>
 
-                <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 ">
-                  {new Date(itm?.time).toLocaleString("en-US", {
-                    year: "numeric",
-                    month: "long",
-                    day: "numeric",
-                    hour: "numeric",
-                    minute: "numeric",
-                    second: "numeric",
-                  })}
-                </td>
-                <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 ">
-                  <div className="flex items-center justify-around">
-                    <button
-                      onClick={() => onDelete(itm?._id)}
-                      className={style.deactive}
-                    >
-                      Delete
-                    </button>
-                    {itm.status == "true" ? (
-                      <button
-                        onClick={() => EditStatus(itm?._id, "false")}
-                        className={style.active}
-                      >
-                        Activate
-                      </button>
-                    ) : (
-                      <button
-                        onClick={() => EditStatus(itm?._id, "true")}
-                        className={style.deactive}
-                        type="button"
-                      >
-                        Deactivate
-                      </button>
-                    )}
-                  </div>
-                </td>
-              </tr>
-            ))}
+                    <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 ">
+                      {new Date(itm?.time).toLocaleString("en-US", {
+                        year: "numeric",
+                        month: "long",
+                        day: "numeric",
+                        hour: "numeric",
+                        minute: "numeric",
+                        second: "numeric",
+                      })}
+                    </td>
+                    <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 ">
+                      <div className="flex items-center justify-around">
+                        <button
+                          onClick={() => onDelete(itm?._id)}
+                          className={style.deactive}
+                        >
+                          Delete
+                        </button>
+                        {itm.status == "true" ? (
+                          <button
+                            onClick={() => EditStatus(itm?._id, "false")}
+                            className={style.active}
+                          >
+                            Activate
+                          </button>
+                        ) : (
+                          <button
+                            onClick={() => EditStatus(itm?._id, "true")}
+                            className={style.deactive}
+                            type="button"
+                          >
+                            Deactivate
+                          </button>
+                        )}
+                      </div>
+                    </td>
+                  </tr>
+                ))}
           </tbody>
         </table>
       </section>

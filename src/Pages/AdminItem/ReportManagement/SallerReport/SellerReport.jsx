@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import TableLoader from "../../../../Common/TableLoader";
 import { BiLeftArrow, BiRightArrow } from "react-icons/bi";
+import LoaderData from "../../../../Common/LoaderData";
 
 const SellerReport = () => {
   const {
@@ -282,77 +283,88 @@ const SellerReport = () => {
                 </thead>
 
                 <tbody className="bg-white divide-y divide-gray-200  ">
-                  {isLoading && (
-                    <tr>
-                      <TableLoader colSpan={5} />
-                    </tr>
-                  )}
-                  {filteredData.length
-                    ? filteredData?.map((shopInfo) => (
-                      <tr>
-                        {console.log(shopInfo)}
-                        <td className="px-4 py-4 text-sm font-medium whitespace-nowrap">
-                          <div>
-                            <h2 className="font-medium text-gray-800  ">
-                              Shop Name: {shopInfo.shop.shopName}
-                            </h2>
-                            <p className="text-sm font-normal text-gray-600 ">
-                              Shop Email: {shopInfo.shop.shopEmail}
-                            </p>
-                          </div>
-                        </td>
-                        <td className="px-12 py-4 text-sm font-medium whitespace-nowrap">
-                          <div className="inline px-3 py-1 text-sm font-normal rounded-full text-emerald-500 gap-x-2 bg-emerald-100/60 ">
-                            Shop
-                          </div>
-                        </td>
-                        <td className="px-4 py-4 text-sm whitespace-nowrap">
-                          <div>
-                            <h4 className="text-gray-700 ">
-                              Content curating app
-                            </h4>
-                            <p className="text-gray-500 ">
-                              Brings all your news into one place
-                            </p>
-                          </div>
-                        </td>
-                        <td className="px-4 py-4 text-sm whitespace-nowrap">
-                          <div className="flex items-center">
-                            {shopInfo.shopUsers.slice(0, 3).map((user) => (
-                              <div className="object-cover  w-6 h-6 -mx-1 border-2  flex items-center  justify-center rounded-full  shrink-0">
-                                <p className="capitalize">
-                                  {user.name.slice(0, 1)}
-                                </p>
-                              </div>
-                            ))}
 
-                            {shopInfo.shopUsers.length > 4 && (
-                              <p className="flex items-center justify-center w-6 h-6 -mx-1 text-xs text-blue-600 bg-blue-100 border-2 border-white rounded-full">
-                                +{shopInfo.shopUsers.length - 4}
+                  {isLoading ? (
+                    <tr>
+                      <td colSpan="5" className="text-center py-8">
+                        <LoaderData />
+                      </td>
+                    </tr>
+                  )
+                    :
+                    filteredData.length
+                      ?
+                      filteredData?.map((shopInfo) => (
+                        <tr>
+                          {console.log(shopInfo)}
+                          <td className="px-4 py-4 text-sm font-medium whitespace-nowrap">
+                            <div>
+                              <h2 className="font-medium text-gray-800  ">
+                                Shop Name: {shopInfo.shop.shopName}
+                              </h2>
+                              <p className="text-sm font-normal text-gray-600 ">
+                                Shop Email: {shopInfo.shop.shopEmail}
                               </p>
-                            )}
-                          </div>
-                        </td>
-                        <td className="px-4 py-4 text-sm whitespace-nowrap">
-                          {console.log(calculateRemainingDays(
-                            shopInfo?.shop?.paymentDate,
-                            new Date().getTime()
-                          ))}
-                          <div className="w-48 h-1.5 bg-blue-200 overflow-hidden rounded-full">
-                            <div
-                              className="bg-blue-500"
-                              style={{
-                                width: `${calculateRemainingDays(
-                                  shopInfo?.shop?.paymentDate,
-                                  new Date().toDateString()
-                                )}%`,
-                              }}
-                            />
-                          </div>
+                            </div>
+                          </td>
+                          <td className="px-12 py-4 text-sm font-medium whitespace-nowrap">
+                            <div className="inline px-3 py-1 text-sm font-normal rounded-full text-emerald-500 gap-x-2 bg-emerald-100/60 ">
+                              Shop
+                            </div>
+                          </td>
+                          <td className="px-4 py-4 text-sm whitespace-nowrap">
+                            <div>
+                              <h4 className="text-gray-700 ">
+                                Content curating app
+                              </h4>
+                              <p className="text-gray-500 ">
+                                Brings all your news into one place
+                              </p>
+                            </div>
+                          </td>
+                          <td className="px-4 py-4 text-sm whitespace-nowrap">
+                            <div className="flex items-center">
+                              {shopInfo.shopUsers.slice(0, 3).map((user) => (
+                                <div className="object-cover  w-6 h-6 -mx-1 border-2  flex items-center  justify-center rounded-full  shrink-0">
+                                  <p className="capitalize">
+                                    {user.name.slice(0, 1)}
+                                  </p>
+                                </div>
+                              ))}
+
+                              {shopInfo.shopUsers.length > 4 && (
+                                <p className="flex items-center justify-center w-6 h-6 -mx-1 text-xs text-blue-600 bg-blue-100 border-2 border-white rounded-full">
+                                  +{shopInfo.shopUsers.length - 4}
+                                </p>
+                              )}
+                            </div>
+                          </td>
+                          <td className="px-4 py-4 text-sm whitespace-nowrap">
+                            {console.log(calculateRemainingDays(
+                              shopInfo?.shop?.paymentDate,
+                              new Date().getTime()
+                            ))}
+                            <div className="w-48 h-1.5 bg-blue-200 overflow-hidden rounded-full">
+                              <div
+                                className="bg-blue-500"
+                                style={{
+                                  width: `${calculateRemainingDays(
+                                    shopInfo?.shop?.paymentDate,
+                                    new Date().toDateString()
+                                  )}%`,
+                                }}
+                              />
+                            </div>
+                          </td>
+                        </tr>
+                      ))
+                      :
+                      <tr>
+                        <td colSpan="5" className="text-center py-2">
+                          No Data Found
                         </td>
                       </tr>
-                    ))
-                    : ""}
+                  }
                 </tbody>
               </table>
             </div>

@@ -4,10 +4,11 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { BiLeftArrow, BiRightArrow } from "react-icons/bi";
 import AdminSalesInvoice from "./AdminSalesInvoice";
+import LoaderData from "../../../../Common/LoaderData";
 
 const AdminSalesReport = () => {
   const [modalOpen, setModalOpen] = useState(false);
-  const { data: serviceOrder = [], refetch } = useQuery({
+  const { data: serviceOrder = [], refetch, isLoading } = useQuery({
     queryKey: ["serviceOrder"],
     queryFn: async () => {
       const res = await fetch(
@@ -98,8 +99,8 @@ const AdminSalesReport = () => {
             <li key={pageNumber}>
               <button
                 className={`block h-8 w-8 rounded border ${pageNumber === currentPage
-                    ? "border-blue-600 bg-blue-600 text-white"
-                    : "border-gray-900 bg-white text-center leading-8 text-gray-900"
+                  ? "border-blue-600 bg-blue-600 text-white"
+                  : "border-gray-900 bg-white text-center leading-8 text-gray-900"
                   }`}
                 onClick={() => handleChangePage(pageNumber)}
               >
@@ -256,62 +257,71 @@ const AdminSalesReport = () => {
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
-                  {currentData?.map((order, idx) => (
-                    <>
+                  {
+                    isLoading ? (
                       <tr>
-                        <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                          <img
-                            className="h-10 w-10 rounded-sm"
-                            src={order.productImg}
-                            alt=""
-                          />
-                        </td>
-                        <td className="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
-                          <div
-                            onClick={() => setModalOpen(order)}
-                            className="inline-flex items-center text-blue-500 gap-x-3"
-                          >
-                            <span># {order._id}</span>
-                          </div>
-                        </td>
-                        <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                          {order.productTitle}
-                        </td>
-                        <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                          {order.productPrice}
-                        </td>
-                        <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                          {order.normalPrice}
-                        </td>
-                        <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                          {new Date(order.timestamp).toDateString()}
-                        </td>
-
-                        <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                          <div className="flex items-center gap-x-2">
-                            <div>
-                              <p className="text-xs font-normal text-gray-600 dark:text-gray-400">
-                                {order?.userEmail}
-                              </p>
-                            </div>
-                          </div>
-                        </td>
-                        <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                          {order?.productCategory}
-                        </td>
-                        <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                          {order?.method?.Getaway}
+                        <td colSpan="9" className="text-center py-8">
+                          <LoaderData />
                         </td>
                       </tr>
+                    )
+                      :
+                      currentData?.map((order, idx) => (
+                        <>
+                          <tr>
+                            <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                              <img
+                                className="h-10 w-10 rounded-sm"
+                                src={order.productImg}
+                                alt=""
+                              />
+                            </td>
+                            <td className="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
+                              <div
+                                onClick={() => setModalOpen(order)}
+                                className="inline-flex items-center text-blue-500 gap-x-3"
+                              >
+                                <span># {order._id}</span>
+                              </div>
+                            </td>
+                            <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                              {order.productTitle}
+                            </td>
+                            <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                              {order.productPrice}
+                            </td>
+                            <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                              {order.normalPrice}
+                            </td>
+                            <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                              {new Date(order.timestamp).toDateString()}
+                            </td>
 
-                      {modalOpen._id === order._id && (
-                        <AdminSalesInvoice
-                          products={modalOpen}
-                          setModalOpen={setModalOpen}
-                        />
-                      )}
-                    </>
-                  ))}
+                            <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                              <div className="flex items-center gap-x-2">
+                                <div>
+                                  <p className="text-xs font-normal text-gray-600 dark:text-gray-400">
+                                    {order?.userEmail}
+                                  </p>
+                                </div>
+                              </div>
+                            </td>
+                            <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                              {order?.productCategory}
+                            </td>
+                            <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                              {order?.method?.Getaway}
+                            </td>
+                          </tr>
+
+                          {modalOpen._id === order._id && (
+                            <AdminSalesInvoice
+                              products={modalOpen}
+                              setModalOpen={setModalOpen}
+                            />
+                          )}
+                        </>
+                      ))}
                 </tbody>
               </table>
             </div>

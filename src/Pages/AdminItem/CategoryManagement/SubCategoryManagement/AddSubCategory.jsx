@@ -31,7 +31,7 @@ const AddSubCategory = () => {
   //     });
   // };
 
-  const { data: subCategory = [], refetch } = useQuery({
+  const { data: subCategory = [], refetch, isLoading } = useQuery({
     queryKey: ["subCategory"],
     queryFn: async () => {
       const res = await fetch(

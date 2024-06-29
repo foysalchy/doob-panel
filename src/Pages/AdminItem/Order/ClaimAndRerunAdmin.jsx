@@ -8,13 +8,14 @@ import { Link } from "react-router-dom";
 import { BiSearch } from "react-icons/bi";
 import { AuthContext } from "../../../AuthProvider/UserProvider";
 import OrderAllinfoModal from "../../SellerItems/OrderManagment/ManageOrder/OrderAllinfoModal";
+import LoaderData from "../../../Common/LoaderData";
 
 const ClaimAndRerunAdmin = () => {
   const [modalOn, setModalOn] = useState(false);
 
   const { shopInfo, setCheckUpData } = useContext(AuthContext);
 
-  const { data: tData = [], refetch } = useQuery({
+  const { data: tData = [], refetch, isLoading } = useQuery({
     queryKey: ["adminOrder"],
     queryFn: async () => {
       const res = await fetch(
@@ -429,152 +430,170 @@ const ClaimAndRerunAdmin = () => {
                 </tr>
               </thead>
               <tbody>
-                {currentItems?.map((item, index) => (
-                  <React.Fragment key={item._id}>
-                    <tr className={index % 2 === 0 ? "bg-gray-100" : ""}>
-                      <td scope="col" className="border-r px-2 py-4 font-[500]">
-                        <input
-                          type="checkbox"
-                          name=""
-                          id=""
-                          checked={selectAll}
-                        />
-                      </td>
-                      <td className="border-r px-6 py-4 font-medium">
-                        {index + 1}
-                      </td>
-                      <td className="border-r px-6 py-4">
-                        {!modalOn ? (
-                          <button
-                            onClick={() => setModalOn(item._id)}
-                            className="px-4 py-2"
-                          >
-                            Details
-                          </button>
-                        ) : (
-                          <button
-                            onClick={() => setModalOn(false)}
-                            className="px-4 py-2"
-                          >
-                            Close
-                          </button>
-                        )}
-                      </td>
-                      <td className="border-r px-6 py-4">
-                        <Link
-                          to={`/invoice/${item?._id}`}
-                          onClick={handlePrint}
-                          className="text-blue-600 font-[500]"
-                        >
-                          Invoice
-                        </Link>
-                      </td>
-                      <td className="border-r px-6 py-4">
-                        <Link
-                          to="/admin/orders/manage-order/order-checkup"
-                          onClick={() => setCheckUpData(item)}
-                          className="text-blue-500 font-[400]"
-                        >
-                          {item?._id}
-                        </Link>
-                      </td>
-                      <td className="border-r px-6 py-4">
-                        {formattedDate(item?.timestamp)}
-                      </td>
-                      <td className="border-r w-[200px] px-6 py-4">
-                        {getTimeAgo(item?.timestamp)}
-                      </td>
-                      <td className="border-r px-6 py-4">
-                        {item?.method?.Getaway}
-                      </td>
-                      <td className="border-r px-6 py-4">
-                        {ratial_price(item?.productList)}
-                      </td>
-                      <td className="border-r px-6 py-4">
-                        {item?.status ? item?.status : "Pending"}
-                      </td>
-                      <td className="border-r px-6 py-4 flex items-center gap-2">
-                        <td className="whitespace-nowrap  px-6 py-4 text-[16px] font-[400] flex flex-col gap-2">
-                          {item?.status === "return" && (
-                            <div className="flex flex-col justify-center">
-                              <button
-                                onClick={() => {
-                                  setShowAlert(item), checkBox(item._id);
-                                }}
-                                className="text-[16px] font-[400] text-blue-700"
-                              >
-                                Claim
-                              </button>
-                              <button
-                                onClick={() =>
-                                  productStatusUpdate("failed", item?._id)
-                                }
-                                className="text-[16px] font-[400] text-blue-700"
-                              >
-                                Reject
-                              </button>
-                            </div>
-                          )}
-                        </td>
-
-                        <div>
-                          <div
-                            onClick={() => setModalOn(false)}
-                            className={`fixed z-[100] flex items-center justify-center ${modalOn?._id === item?._id
-                              ? "visible opacity-100"
-                              : "invisible opacity-0"
-                              } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
-                          >
-                            <div
-                              onClick={(e_) => e_.stopPropagation()}
-                              className={`text- absolute w-[500px] rounded-sm bg-white p-6 drop-shadow-lg dark:bg-black dark:text-white ${modalOn?._id === item?._id
-                                ? "scale-1 opacity-1 duration-300"
-                                : "scale-0 opacity-0 duration-150"
-                                }`}
-                            >
-                              <h1 className="mb-2 text-2xl font-semibold">
-                                Edit Order { }
-                              </h1>
-                              <form>
-                                <div className="flex items-start w-full mb-6 flex-col gap-1">
-                                  <label htmlFor="name">Name</label>
-                                  <input
-                                    type="text"
-                                    className="border border-white w-full bg-transparent text-white py-2"
-                                    defaultValue={item?.addresses?.fullName}
-                                  />
-                                </div>
-
-                                <div className="flex justify-between">
-                                  <button
-                                    type="submit"
-                                    onClick={() => setModalOn(false)}
-                                    className="me-2 rounded-sm bg-green-700 px-6 py-[6px] text-white"
-                                  >
-                                    Ok
-                                  </button>
-                                </div>
-                              </form>
-                            </div>
-                          </div>
-                        </div>
+                {
+                  isLoading ? (
+                    <tr>
+                      <td colSpan="11" className="text-center py-8">
+                        <LoaderData />
                       </td>
                     </tr>
+                  )
+                    :
+                    currentItems.length < 0 ?
+                      currentItems?.map((item, index) => (
+                        <React.Fragment key={item._id}>
+                          <tr className={index % 2 === 0 ? "bg-gray-100" : ""}>
+                            <td scope="col" className="border-r px-2 py-4 font-[500]">
+                              <input
+                                type="checkbox"
+                                name=""
+                                id=""
+                                checked={selectAll}
+                              />
+                            </td>
+                            <td className="border-r px-6 py-4 font-medium">
+                              {index + 1}
+                            </td>
+                            <td className="border-r px-6 py-4">
+                              {!modalOn ? (
+                                <button
+                                  onClick={() => setModalOn(item._id)}
+                                  className="px-4 py-2"
+                                >
+                                  Details
+                                </button>
+                              ) : (
+                                <button
+                                  onClick={() => setModalOn(false)}
+                                  className="px-4 py-2"
+                                >
+                                  Close
+                                </button>
+                              )}
+                            </td>
+                            <td className="border-r px-6 py-4">
+                              <Link
+                                to={`/invoice/${item?._id}`}
+                                onClick={handlePrint}
+                                className="text-blue-600 font-[500]"
+                              >
+                                Invoice
+                              </Link>
+                            </td>
+                            <td className="border-r px-6 py-4">
+                              <Link
+                                to="/admin/orders/manage-order/order-checkup"
+                                onClick={() => setCheckUpData(item)}
+                                className="text-blue-500 font-[400]"
+                              >
+                                {item?._id}
+                              </Link>
+                            </td>
+                            <td className="border-r px-6 py-4">
+                              {formattedDate(item?.timestamp)}
+                            </td>
+                            <td className="border-r w-[200px] px-6 py-4">
+                              {getTimeAgo(item?.timestamp)}
+                            </td>
+                            <td className="border-r px-6 py-4">
+                              {item?.method?.Getaway}
+                            </td>
+                            <td className="border-r px-6 py-4">
+                              {ratial_price(item?.productList)}
+                            </td>
+                            <td className="border-r px-6 py-4">
+                              {item?.status ? item?.status : "Pending"}
+                            </td>
+                            <td className="border-r px-6 py-4 flex items-center gap-2">
+                              <td className="whitespace-nowrap  px-6 py-4 text-[16px] font-[400] flex flex-col gap-2">
+                                {item?.status === "return" && (
+                                  <div className="flex flex-col justify-center">
+                                    <button
+                                      onClick={() => {
+                                        setShowAlert(item), checkBox(item._id);
+                                      }}
+                                      className="text-[16px] font-[400] text-blue-700"
+                                    >
+                                      Claim
+                                    </button>
+                                    <button
+                                      onClick={() =>
+                                        productStatusUpdate("failed", item?._id)
+                                      }
+                                      className="text-[16px] font-[400] text-blue-700"
+                                    >
+                                      Reject
+                                    </button>
+                                  </div>
+                                )}
+                              </td>
 
-                    {item._id === modalOn && (
+                              <div>
+                                <div
+                                  onClick={() => setModalOn(false)}
+                                  className={`fixed z-[100] flex items-center justify-center ${modalOn?._id === item?._id
+                                    ? "visible opacity-100"
+                                    : "invisible opacity-0"
+                                    } inset-0 bg-black/20 backdrop-blur-sm duration-100 dark:bg-white/10`}
+                                >
+                                  <div
+                                    onClick={(e_) => e_.stopPropagation()}
+                                    className={`text- absolute w-[500px] rounded-sm bg-white p-6 drop-shadow-lg dark:bg-black dark:text-white ${modalOn?._id === item?._id
+                                      ? "scale-1 opacity-1 duration-300"
+                                      : "scale-0 opacity-0 duration-150"
+                                      }`}
+                                  >
+                                    <h1 className="mb-2 text-2xl font-semibold">
+                                      Edit Order { }
+                                    </h1>
+                                    <form>
+                                      <div className="flex items-start w-full mb-6 flex-col gap-1">
+                                        <label htmlFor="name">Name</label>
+                                        <input
+                                          type="text"
+                                          className="border border-white w-full bg-transparent text-white py-2"
+                                          defaultValue={item?.addresses?.fullName}
+                                        />
+                                      </div>
+
+                                      <div className="flex justify-between">
+                                        <button
+                                          type="submit"
+                                          onClick={() => setModalOn(false)}
+                                          className="me-2 rounded-sm bg-green-700 px-6 py-[6px] text-white"
+                                        >
+                                          Ok
+                                        </button>
+                                      </div>
+                                    </form>
+                                  </div>
+                                </div>
+                              </div>
+                            </td>
+                          </tr>
+
+                          {item._id === modalOn && (
+                            <tr>
+                              <td colSpan="10">
+                                <OrderAllinfoModal
+                                  status={item?.status ? item?.status : "Pending"}
+                                  setModalOn={setModalOn}
+                                  modalOn={modalOn}
+                                  productList={item?.productList}
+                                />
+                              </td>
+                            </tr>
+                          )}
+                        </React.Fragment>
+                      ))
+                      :
+
                       <tr>
-                        <td colSpan="10">
-                          <OrderAllinfoModal
-                            status={item?.status ? item?.status : "Pending"}
-                            setModalOn={setModalOn}
-                            modalOn={modalOn}
-                            productList={item?.productList}
-                          />
+                        <td className=" text-sm text-gray-400 py-4" colSpan="11">
+                          No Data Found!
                         </td>
                       </tr>
-                    )}
-                  </React.Fragment>
-                ))}
+                }
               </tbody>
             </table>
           </div>
