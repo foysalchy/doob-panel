@@ -41,6 +41,8 @@ const ProductCheckout = () => {
     },
   });
 
+  console.log(addresses);
+
   const [open, setOpen] = useState(false);
   const [handleReload, setHandleReload] = useState(false);
   const [edit, setEdit] = useState(false);
@@ -53,7 +55,10 @@ const ProductCheckout = () => {
 
   const calculateTotal = () => {
     const subtotal = calculateSubtotal();
-    const shippingFee = selectProductData.reduce((total, product) => total + product.delivery_charge || 0, 0);
+    const shippingFee = selectProductData.reduce(
+      (total, product) => total + product.delivery_charge || 0,
+      0
+    );
     const shippingFeeDiscount = 0;
     return subtotal + shippingFee - shippingFeeDiscount;
   };
@@ -72,7 +77,7 @@ const ProductCheckout = () => {
     const userEmail = shopUser.email;
 
     fetch(
-      `https://doob.dev/api/v1/shop/user/promocode?shopId=${shopId}&code=${code}&email=${userEmail}&token=${shopUser._id}&price=${price}`,
+      `https://doob.dev/api/v1/shop/user/promocode?shopId=${shopId}&code=${code}&email=${userEmail}&token=${shopUser._id}&price=${price}`
     )
       .then((res) => res.json())
       .then((data) => {
@@ -83,8 +88,7 @@ const ProductCheckout = () => {
           setPromoValue(code);
           setPromoPrice(data.promoPrice);
           setPromoDiscount(data.promoDiscount);
-        }
-        else {
+        } else {
           BrightAlert(data.msg, "", "error");
         }
       });
@@ -133,8 +137,6 @@ const ProductCheckout = () => {
             <div className="rounded max-w-4xl p-6 bg-gray-200 text-gray-900 w-full">
               <div className="">
                 <div className=" ">
-
-
                   {defaultAddress ? (
                     <div className="grid md:grid-cols-2 grid-cols-1">
                       <div className="bg-gray-100 capitalize p-4 rounded hover:shadow-xl border">
@@ -330,7 +332,7 @@ const ProductCheckout = () => {
               </div>
             </div>
           </div>
-          {console.log(selectProductData, 'selelcted-product')}
+          {console.log(selectProductData, "selelcted-product")}
           <div className="bg-gray-200 lg:w-96 mt-8 lg:mt-0 min-h-[350px] max-h-[380px] rounded p-8">
             <div className="space-y-1 my-4">
               <h2 className="text-xl font-semibold ">Order Summary</h2>
@@ -345,7 +347,13 @@ const ProductCheckout = () => {
               <div className="flex justify-between ">
                 <p className="text-gray-700">Shipping Fee </p>
                 <p className="kalpurush">
-                  ৳ <span className="font-sans">{selectProductData.reduce((total, product) => total + product.delivery_charge || 0, 0)}</span>
+                  ৳{" "}
+                  <span className="font-sans">
+                    {selectProductData.reduce(
+                      (total, product) => total + product.delivery_charge || 0,
+                      0
+                    )}
+                  </span>
                 </p>
               </div>
               <div className="flex justify-between ">

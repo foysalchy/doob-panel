@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 const EditAdminCategoryforSeller = ({ product }) => {
-  // console.log("🚀 ~:", product?.adminCategory);
+  console.log("🚀 ~:", product);
 
   const navigate = useNavigate();
   const handleGoBack = () => {
@@ -55,12 +55,13 @@ const EditAdminCategoryforSeller = ({ product }) => {
 
   // console.log(allSubCategories);
 
-  const option = megaCategories
-    ?.filter((itm) => itm.status === "true")
-    .map((itm) => ({
-      value: itm._id,
-      label: itm.name,
-    }));
+  const option =
+    megaCategories
+      ?.filter((itm) => itm.status === "true")
+      .map((itm) => ({
+        value: itm._id,
+        label: itm.name,
+      })) || [];
 
   const [subCategorys, setSubCategorys] = useState(allSubCategories || []);
 
@@ -68,9 +69,7 @@ const EditAdminCategoryforSeller = ({ product }) => {
   const handleSelectChange = (selectedOption) => {
     setSubCategorys([]);
     const optionId = selectedOption.value;
-    fetch(
-      `https://doob.dev/api/v1/admin/category/subcategory?id=${optionId}`
-    )
+    fetch(`https://doob.dev/api/v1/admin/category/subcategory?id=${optionId}`)
       .then((res) => res.json())
       .then((data) => {
         setSubCategorys(data.subCategory);
@@ -118,9 +117,7 @@ const EditAdminCategoryforSeller = ({ product }) => {
   const onHandleMiniCategorys = (selectedOption) => {
     setMiniCategories([]);
     const optionId = selectedOption.value;
-    fetch(
-      `https://doob.dev/api/v1/admin/category/miniCategory?id=${optionId}`
-    )
+    fetch(`https://doob.dev/api/v1/admin/category/miniCategory?id=${optionId}`)
       .then((res) => res.json())
       .then((data) => {
         console.log(data, ">>>>>");
@@ -167,9 +164,7 @@ const EditAdminCategoryforSeller = ({ product }) => {
     setExtraCategorys([]);
     const optionId = selectedOption.value;
     // console.log(`https://doob.dev/api/v1/admin/category/extraCategory?id=${optionId}`);
-    fetch(
-      `https://doob.dev/api/v1/admin/category/extraCategory?id=${optionId}`
-    )
+    fetch(`https://doob.dev/api/v1/admin/category/extraCategory?id=${optionId}`)
       .then((res) => res.json())
       .then((data) => {
         console.log(data, ">>>>>");
@@ -186,9 +181,12 @@ const EditAdminCategoryforSeller = ({ product }) => {
       label: itm.extraCategoryName,
     }));
 
-  const defaultMegaCategory = option.filter(
-    (item) => item.value === product?.adminCategory[0]
-  )[0];
+  const defaultMegaCategory =
+    option?.length > 0 &&
+    option?.filter(
+      (item) =>
+        item.value === product?.adminCategory && product?.adminCategory[0]
+    )[0];
   console.log(defaultMegaCategory);
 
   const defaultSubCategory = subcategoryOption.filter(
