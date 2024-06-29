@@ -20,6 +20,7 @@ import CategorieItems from "./categorieItems";
 const ShopNav = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const pathname = window.location.pathname;
+
   const idMatch = pathname.match(/\/shop\/([^/]+)/);
   const shopId = idMatch ? idMatch[1] : null;
 
@@ -34,7 +35,7 @@ const ShopNav = () => {
   const [searchOpen, setSearchOpen] = useState(false);
   const searchData = async () => {
     const term = searchTerm;
-    console.log(shop_id);
+   
 
     try {
       const response = await fetch(`https://doob.dev/api/v1/shop/search`, {
@@ -46,7 +47,7 @@ const ShopNav = () => {
       });
 
       const data = await response.json();
-      console.log(data);
+      // console.log(data);
 
       setSearchResults(data.data);
       setSearchHistory([]);
@@ -127,9 +128,9 @@ const ShopNav = () => {
           });
       }
     };
-    console.log(
-      `****=========>   https://doob.dev/api/v1/shop/user/add-to-cart?userId=${shopUser?._id}&shopId=${shop_id?.shop_id}&token=${shopUser?._id}`
-    );
+    // console.log(
+    //   `****=========>   https://doob.dev/api/v1/shop/user/add-to-cart?userId=${shopUser?._id}&shopId=${shop_id?.shop_id}&token=${shopUser?._id}`
+    // );
     const timeoutId = setTimeout(fetchData, 1000);
 
     return () => clearTimeout(timeoutId); // Cleanup the timeout on component unmount
@@ -324,9 +325,8 @@ const ShopNav = () => {
                     {/* Dropdown menu */}
                     <div
                       styele={{ background: "white" }}
-                      className={`absolute right-0 z-20 w-48 py-2 mt-2 origin-top-right  rounded-md shadow-xl dark:bg-gray-800 ${
-                        isOpen ? "block" : "hidden"
-                      }`}
+                      className={`absolute right-0 z-20 w-48 py-2 mt-2 origin-top-right  rounded-md shadow-xl dark:bg-gray-800 ${isOpen ? "block" : "hidden"
+                        }`}
                       onClick={() => setIsOpen(false)}
                     >
                       <Link

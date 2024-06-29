@@ -13,7 +13,7 @@ const SellerPaymentGetaway = () => {
     refetch,
     isLoading,
   } = useQuery({
-    queryKey: ["getaway"],
+    queryKey: ["payment_getaway"],
     queryFn: async () => {
       const res = await fetch(
         `https://doob.dev/api/v1/seller/payment-getaway/${shopInfo._id}`
@@ -426,7 +426,7 @@ const SellerPaymentGetaway = () => {
             You are upload {getaway.length} Account Added{" "}
           </p>
           <div className="flex flex-wrap items-center justify-center gap-4 mx-2 my-4 ">
-            {getaway.map((get) => (
+            {getaway?.map((get) => (
               <div>
                 {get.Getaway === "Bkash" && (
                   <div className="group border relative block bg-white">

@@ -99,10 +99,9 @@ const Payment = () => {
           BrightAlert({ icon: "success" });
           setLoadingPayment(false);
           console.log(data);
-          data.productList?.forEach((order) => {
-            handleRemoveFromCart(order.productId);
+          orderStage.productList?.forEach((order) => {
+            handleRemove(!shopUser ? order?.productId : order?._id);
           });
-
           navigate(`/shop/${shopId}/user/my-orders`);
         });
     }
@@ -123,9 +122,6 @@ const Payment = () => {
     );
     localStorage.setItem("addToCart", JSON.stringify(updatedCartData));
 
-    setAllProducts((prevProducts) =>
-      prevProducts.filter((product) => product.productId !== productId)
-    );
 
     if (shopUser) {
       fetch(
@@ -137,7 +133,7 @@ const Payment = () => {
       )
         .then((res) => res.json())
         .then((data) => {
-          console.log(data);
+          //  console.log(data);
         });
     }
   };
@@ -150,8 +146,7 @@ const Payment = () => {
     }
   };
 
-  // console.log(orderStage?.normalPrice);
-  //   console.log(user);
+
   const payWithBkash = async () => {
     setLoadingPayment(true);
     const bkashBodyData = orderStage;
@@ -181,6 +176,9 @@ const Payment = () => {
       console.log(data.bkashURL);
       if (data?.bkashURL) {
         // setLoadingPayment(false);
+        orderStage.productList?.forEach((order) => {
+          handleRemove(!shopUser ? order?.productId : order?._id);
+        });
         setLoadingPayment(false);
         window.location.href = data.bkashURL;
       }
@@ -215,6 +213,9 @@ const Payment = () => {
       const data = await response.json();
       console.log(data);
       if (data.payment_url) {
+        orderStage.productList?.forEach((order) => {
+          handleRemove(!shopUser ? order?.productId : order?._id);
+        });
         setLoadingPayment(false);
         window.location.href = data.payment_url;
         // setLoadingPayment(false);
@@ -250,7 +251,7 @@ const Payment = () => {
     return imageData.imageUrl;
   }
 
-  console.log(previewUrl);
+
 
   return (
     <div className="px-4 py-5 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 min-h-[60vh]">
@@ -262,10 +263,9 @@ const Payment = () => {
                 <a href="#scrollDestination">
                   <div
                     onClick={() => setPayment(get)}
-                    className={`${
-                      payment?.Getaway === "Bkash" &&
+                    className={`${payment?.Getaway === "Bkash" &&
                       "shadow-lg shadow-gray-700"
-                    }   border border-gray-600 flex md:flex-col flex-row items-center justify-center gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] overflow-hidden`}
+                      }   border border-gray-600 flex md:flex-col flex-row items-center justify-center gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] overflow-hidden`}
                   >
                     <img
                       alt="Developer"
@@ -283,10 +283,9 @@ const Payment = () => {
                 <a href="#scrollDestination">
                   <div
                     onClick={() => setPayment(get)}
-                    className={`${
-                      payment?.Getaway === "Nogod" &&
+                    className={`${payment?.Getaway === "Nogod" &&
                       "shadow-lg shadow-gray-700"
-                    }  border border-gray-600 flex md:flex-col flex-row items-center justify-center gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] overflow-hidden`}
+                      }  border border-gray-600 flex md:flex-col flex-row items-center justify-center gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] overflow-hidden`}
                   >
                     <img
                       alt="Developer"
@@ -304,10 +303,9 @@ const Payment = () => {
                 <a href="#scrollDestination">
                   <div
                     onClick={() => setPayment(get)}
-                    className={`${
-                      payment?.Getaway === "AmarPay" &&
+                    className={`${payment?.Getaway === "AmarPay" &&
                       "shadow-lg shadow-gray-700"
-                    }  border border-gray-600 flex md:flex-col flex-row items-center justify-center gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] overflow-hidden`}
+                      }  border border-gray-600 flex md:flex-col flex-row items-center justify-center gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] overflow-hidden`}
                   >
                     <img
                       alt="Developer"
@@ -325,10 +323,9 @@ const Payment = () => {
                 <a href="#scrollDestination">
                   <div
                     onClick={() => setPayment(get)}
-                    className={`${
-                      payment?.Getaway === "AmarPay" &&
+                    className={`${payment?.Getaway === "AmarPay" &&
                       "shadow-lg shadow-gray-700"
-                    }  border border-gray-600 flex md:flex-col flex-row items-center justify-center gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] overflow-hidden`}
+                      }  border border-gray-600 flex md:flex-col flex-row items-center justify-center gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] overflow-hidden`}
                   >
                     <h4 className="mt-2  md:font-bold md:text-lg">
                       {get?.Getaway}
@@ -342,10 +339,9 @@ const Payment = () => {
           <a href="#scrollDestination">
             <div
               onClick={() => setPayment({ Getaway: "CashOnDelivery" })}
-              className={`${
-                payment?.Getaway === "CashOnDelivery" &&
+              className={`${payment?.Getaway === "CashOnDelivery" &&
                 "shadow-lg shadow-gray-700"
-              }  border border-gray-600 flex md:flex-col flex-row items-center justify-center  gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] overflow-hidden`}
+                }  border border-gray-600 flex md:flex-col flex-row items-center justify-center  gap-2 rounded p-4 md:w-[200px] md:h-[220px] w-full h-[50px] overflow-hidden`}
             >
               <img
                 alt="Developer"
@@ -362,7 +358,7 @@ const Payment = () => {
 
         <div className="">
           <div className="bg-gray-200 font-sans w-full p-3">
-            <h1 className="md:text-2xl text-md font-semibold">Order Summary</h1>
+            <h1 className="md:text-2xl text-md font-semibold">Order Summary </h1>
             <p className="md:text-md text-sm text-gray-400 mt-2">
               Subtotal( {orderStage?.productList?.length} Items and shipping fee
               included)
