@@ -94,6 +94,7 @@ const DarazIntegration = () => {
     isLoading,
     refetch,
     isLoading: loadingShopData
+
   } = useQuery({
     queryKey: ["darazShopBd"],
     queryFn: async () => {
@@ -200,6 +201,13 @@ const DarazIntegration = () => {
                 className="text-blue-500 hover:underline mb-4 inline-block"
               >
                 Login Daraz
+                <p className="text-yellow-700 mx-1">
+                  {" "}
+                  your remain account space{" "}
+                  {parseInt(prices?.result?.limitValue) -
+                    previousAccount?.length}
+                  ,
+                </p>
               </a>
             ) : (
               <button className="bg-disabled ">

@@ -16,6 +16,7 @@ const UserProvider = ({ children }) => {
     const [userAddProduct, setUserAddProduct] = useState(null)
     const [selectProductData, setSelectProductData] = useState([]);
     const [orderStage, setOrderStage] = useState([]);
+    const [addLocalProduct, setAddLocalProduct] = useState([]);
     const logOut = () => {
         setLoading(true);
         const cookies = Cookies.get();
@@ -68,7 +69,7 @@ const UserProvider = ({ children }) => {
     useEffect(() => {
         const unsubscribe = () => {
             checkUserCookie();
-            checkShopCookie(); 
+            checkShopCookie();
         };
 
         unsubscribe();
@@ -102,7 +103,9 @@ const UserProvider = ({ children }) => {
         selectProductData,
         setSelectProductData,
         orderStage,
-        setOrderStage
+        setOrderStage,
+        addLocalProduct,
+        setAddLocalProduct
     };
 
     return <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>;

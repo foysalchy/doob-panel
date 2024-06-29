@@ -8,6 +8,7 @@ import { BiEdit } from "react-icons/bi";
 import EditAddress from "./EditAddress";
 
 const AddAddress = ({ open, setOpen, address, refetch }) => {
+  console.log(address);
   const [newAddress, setNewAddress] = useState(false);
   const [editAddress, setEditAddress] = useState(false);
 
@@ -28,14 +29,13 @@ const AddAddress = ({ open, setOpen, address, refetch }) => {
   return (
     <div>
       <div
-        className={`fixed z-50 top-0 left-0 flex  h-full min-h-screen w-full items-center justify-center bg-black bg-opacity-90 px-4 py-5 ${
-          setOpen ? "block" : "hidden"
-        }`}
+        className={`fixed z-50 top-0 left-0 flex  h-full min-h-screen w-full items-center justify-center bg-black bg-opacity-90 px-4 py-5 ${setOpen ? "block" : "hidden"
+          }`}
       >
         <div className="w-full max-w-[800px]  rounded-[20px] bg-white pb-10 text-center ">
           <div className="flex justify-between z-50 pt-4 items-start w-full sticky top-0 bg-gray-800 border-b border-gray-300 rounded-t-[18px] px-10">
             <div className="pb-2 text-xl font-bold text-white text-center sm:text-2xl">
-              My Billings{" "}
+              My Billing{" "}
             </div>
             <div
               onClick={() => {

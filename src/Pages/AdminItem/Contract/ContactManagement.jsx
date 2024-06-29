@@ -3,6 +3,7 @@ import React from "react";
 import { useState } from "react";
 import { BiArrowFromLeft } from "react-icons/bi";
 import { Link } from "react-router-dom";
+import LoaderData from "../../../Common/LoaderData";
 
 const ContactManagement = () => {
   const {
@@ -92,25 +93,32 @@ const ContactManagement = () => {
         </span>
       </div>
 
-      {!isLoading && (
+      {(
         <div className="overflow-x-auto mt-4">
-          {filteredData.length ? (
-            <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
-              <thead className="text-left">
+          <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
+            <thead className="text-left">
+              <tr>
+                <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
+                  Media Name
+                </th>
+
+                <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
+                  Media URL
+                </th>
+                <th className="px-4 py-2"></th>
+              </tr>
+            </thead>
+
+            <tbody className="divide-y divide-gray-200">
+              {isLoading ? (
                 <tr>
-                  <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
-                    Media Name
-                  </th>
-
-                  <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
-                    Media URL
-                  </th>
-                  <th className="px-4 py-2"></th>
+                  <td colSpan="3" className="text-center py-8">
+                    <LoaderData />
+                  </td>
                 </tr>
-              </thead>
-
-              <tbody className="divide-y divide-gray-200">
-                {filteredData.map((media, index) => (
+              )
+                :
+                filteredData.length > 0 ? filteredData.map((media, index) => (
                   <tr>
                     <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
                       {media.media}
@@ -128,12 +136,17 @@ const ContactManagement = () => {
                       </button>
                     </td>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          ) : (
-            <h1>No Data Found</h1>
-          )}
+                ))
+                  :
+
+                  <tr>
+                    <td colSpan="3" className="text-center py-2 text-gray-500">
+                      No Data Found
+                    </td>
+                  </tr>
+              }
+            </tbody>
+          </table>
         </div>
       )}
     </div>

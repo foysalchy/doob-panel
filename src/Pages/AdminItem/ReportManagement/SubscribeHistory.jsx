@@ -6,11 +6,12 @@ import { useState } from "react";
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
 import { FaArrowRightLong } from "react-icons/fa6";
+import LoaderData from "../../../Common/LoaderData";
 
 const SubscribeHistory = () => {
   //   const { shopInfo } = useContext(AuthContext);
 
-  const { data: subscriber = [], refetch } = useQuery({
+  const { data: subscriber = [], refetch, isLoading } = useQuery({
     queryKey: ["subscriber"],
     queryFn: async () => {
       const res = await fetch(
@@ -107,33 +108,41 @@ const SubscribeHistory = () => {
             </thead>
 
             <tbody className="divide-y  divide-gray-200">
-              {filteredData?.map((subscrib, index) => {
-                const timestamp = 1715791630755;
-                const date = new Date(subscrib?.dateTime);
+              {isLoading ? (
+                <tr>
+                  <td colSpan="3" className="text-center py-8">
+                    <LoaderData />
+                  </td>
+                </tr>
+              )
+                :
+                filteredData?.map((subscrib, index) => {
+                  const timestamp = 1715791630755;
+                  const date = new Date(subscrib?.dateTime);
 
-                const year = date.getFullYear();
-                const month = date.getMonth() + 1; // Months are zero-based
-                const day = date.getDate();
-                return (
-                  <tr key={subscrib?._id}>
-                    <td className="whitespace-nowrap  px-4 py-2 font-medium text-gray-900">
-                      {subscrib.email}
-                    </td>
+                  const year = date.getFullYear();
+                  const month = date.getMonth() + 1; // Months are zero-based
+                  const day = date.getDate();
+                  return (
+                    <tr key={subscrib?._id}>
+                      <td className="whitespace-nowrap  px-4 py-2 font-medium text-gray-900">
+                        {subscrib.email}
+                      </td>
 
-                    <td className="whitespace-nowrap px-4 py-2 text-gray-700">
-                      {`Year: ${year}, Month: ${month}, Day: ${day}`}
-                    </td>
-                    <td className="whitespace-nowrap px-4 py-2">
-                      <button
-                        onClick={() => DeleteCategory(subscrib._id)}
-                        className="inline-block rounded  bg-red-600 px-4 py-2 text-xs font-medium text-white hover:bg-red-700"
-                      >
-                        Delete
-                      </button>
-                    </td>
-                  </tr>
-                );
-              })}
+                      <td className="whitespace-nowrap px-4 py-2 text-gray-700">
+                        {`Year: ${year}, Month: ${month}, Day: ${day}`}
+                      </td>
+                      <td className="whitespace-nowrap px-4 py-2">
+                        <button
+                          onClick={() => DeleteCategory(subscrib._id)}
+                          className="inline-block rounded  bg-red-600 px-4 py-2 text-xs font-medium text-white hover:bg-red-700"
+                        >
+                          Delete
+                        </button>
+                      </td>
+                    </tr>
+                  );
+                })}
             </tbody>
           </table>
         ) : (

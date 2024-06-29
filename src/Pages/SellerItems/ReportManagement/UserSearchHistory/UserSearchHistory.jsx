@@ -9,13 +9,15 @@ import { FaArrowRightLong } from "react-icons/fa6";
 import { AuthContext } from "../../../../AuthProvider/UserProvider";
 
 const UserSearchHistory = () => {
-  // const { shopInfo } = useContext(AuthContext);
+  const { shopInfo } = useContext(AuthContext);
 
   // console.log(shopInfo);
   const { data: sellerSearch = [], refetch } = useQuery({
     queryKey: ["sellerSearch"],
     queryFn: async () => {
-      const res = await fetch(`https://doob.dev/api/v1/seller/search-report`);
+      const res = await fetch(
+        `https://doob.dev/api/v1/seller/search-report?shop_id=${shopInfo?._id}`
+      );
       const data = await res.json();
       console.log(data);
       return data?.data;

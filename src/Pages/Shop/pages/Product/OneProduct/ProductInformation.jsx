@@ -21,6 +21,11 @@ import MetaHelmet from "../../../../../Helmate/Helmate";
 import { PiPlay } from "react-icons/pi";
 import VideoPlayer from "../../../../../Hooks/VideoPlayer";
 
+
+import SellerTopSellingProduct from "../SellerTopSellingProduct/SellerTopSellingProduct";
+import ProductReviews from "../../../../Home/Product/ProductDetails/ProductReviews";
+
+
 const ProductInformation = () => {
   const product = useLoaderData();
   // const [selectedImage, setSelectedImage] = useState(product.data.featuredImage.src);
@@ -188,7 +193,7 @@ const ProductInformation = () => {
     const product = data.data;
     if (!shopUser) {
       console.log(location?.pathname, "shop");
-      addToCart(data);
+      // addToCart(data);
       navigate(`/shop/${shopId}/sign-in`, {
         replace: true,
         state: { from: location?.pathname },
@@ -295,6 +300,8 @@ const ProductInformation = () => {
     },
   });
 
+
+  console.log("data::::::::::::::::", product?.data);
   return (
     <section className="px-2 py-4  sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 mx-auto">
       <MetaHelmet
@@ -341,6 +348,7 @@ const ProductInformation = () => {
               ])}
           </div>
         </div>
+
 
         <div className="md:grid md:grid-cols-4">
           <div className="col-span-3 mx-auto border border-gray-300 px-4 md:px-4 lg:px-12 mt-6 ">
@@ -735,6 +743,18 @@ const ProductInformation = () => {
           {/* <p className="text-gray-500">
         {metaTitle}
       </p> */}
+
+
+        </div>
+        <div className="max-w-7xl mx-auto px-2 md:px-4 lg:px-8 my-6">
+          <div className="border md:p-6 p-3 rounded">
+            <ProductReviews comments={comments} />
+          </div>
+        </div>
+        <div className="max-w-7xl mx-auto px-2 md:px-4 lg:px-8 my-6">
+          <div className="border md:p-6 px-2 py-3 rounded">
+            <SellerTopSellingProduct productFind={product?.data} />
+          </div>
         </div>
       </div>
     </section >

@@ -1,9 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
 import React, { useState } from "react";
 import { BiLeftArrow, BiRightArrow } from "react-icons/bi";
+import LoaderData from "../../../Common/LoaderData";
 
 const AdminReeferProgram = () => {
-  const { data: referUsers = [], refetch } = useQuery({
+  const { data: referUsers = [], refetch, isLoading } = useQuery({
     queryKey: ["referUsers"],
     queryFn: async () => {
       const res = await fetch(
@@ -156,37 +157,54 @@ const AdminReeferProgram = () => {
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
-                  {currentData
-                    .filter((user) => user.code !== "")
-                    .map((users, idx) => (
+                  {
+                    isLoading ? (
                       <tr>
-                        <td className="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
-                          <div className="inline-flex items-center gap-x-3">
-                            <span># {idx + 1}</span>
-                          </div>
-                        </td>
-                        <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                          {new Date(users.time).toDateString()}
-                        </td>
-
-                        <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                          <div className="flex items-center gap-x-2">
-                            <div>
-                              <p className="text-xs font-normal text-gray-400">
-                                {users?.email}
-                              </p>
-                            </div>
-                          </div>
-                        </td>
-                        <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                          {users?.code}
-                        </td>
-                        <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                          {" "}
-                          ৳ {users.due ? users.due : 2500}
+                        <td colSpan="5" className="text-center py-8">
+                          <LoaderData />
                         </td>
                       </tr>
-                    ))}
+                    )
+                      :
+                      currentData.length < 0 ? currentData
+                        .filter((user) => user.code !== "")
+                        .map((users, idx) => (
+                          <tr>
+                            <td className="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
+                              <div className="inline-flex items-center gap-x-3">
+                                <span># {idx + 1}</span>
+                              </div>
+                            </td>
+                            <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                              {new Date(users.time).toDateString()}
+                            </td>
+
+                            <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                              <div className="flex items-center gap-x-2">
+                                <div>
+                                  <p className="text-xs font-normal text-gray-400">
+                                    {users?.email}
+                                  </p>
+                                </div>
+                              </div>
+                            </td>
+                            <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                              {users?.code}
+                            </td>
+                            <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                              {" "}
+                              ৳ {users.due ? users.due : 2500}
+                            </td>
+                          </tr>
+                        ))
+                        :
+                        <tr>
+                          <td colSpan="5" className="text-center text-gray-500 py-2">
+                            No Data Found
+                          </td>
+                        </tr>
+
+                  }
                 </tbody>
               </table>
             </div>

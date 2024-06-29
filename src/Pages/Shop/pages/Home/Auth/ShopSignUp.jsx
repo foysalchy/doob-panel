@@ -143,7 +143,7 @@ const ShopSignUp = () => {
               </div>
               <div className="flex items-center mt-4 justify-between text-sm">
                 <div className="flex items-center gap-x-3">
-                  By clicking “SIGN UP”, I agree to Daraz's{" "}
+                  By clicking “SIGN UP”, I agree to shop's{" "}
                   <span className=" text-indigo-600 hover:text-indigo-500">
                     Terms of Use
                   </span>{" "}

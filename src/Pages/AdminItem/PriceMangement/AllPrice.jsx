@@ -7,10 +7,11 @@ import { MdDelete } from "react-icons/md";
 import Swal from "sweetalert2";
 import EditPrice from "./EditPrice";
 import { Timestamp } from "firebase/firestore";
+import LoaderData from "../../../Common/LoaderData";
 
 const AllPrice = () => {
   const [loading, setLoading] = useState(false);
-  const { data: prices = [], refetch } = useQuery({
+  const { data: prices = [], refetch, isLoading } = useQuery({
     queryKey: ["prices"],
     queryFn: async () => {
       const res = await fetch(
@@ -94,51 +95,60 @@ const AllPrice = () => {
               </tr>
             </thead>
             <tbody>
-              {prices.length &&
-                prices?.map((price) => (
-                  <tr key={price?.name}>
-                    <td className="px-4 py-3">{price?.name}</td>
-                    <td className="px-4 py-3">{price?.price}</td>
-                    <td className="px-4 py-3">
-                      {!price?.status ? (
-                        <button
-                          onClick={() => publishHandle(price?._id)}
-                          className="inline-flex items-center justify-center py-1 px-4 bg-red-500 rounded shadow-md hover:bg-red-700 focus:shadow-outline focus:outline-none"
-                        >
-                          Publish
-                        </button>
-                      ) : (
-                        <button
-                          onClick={() => unpublishHandle(price?._id)}
-                          className="inline-flex items-center justify-center py-1 px-4 bg-green-500 rounded shadow-md hover:bg-green-700 focus:shadow-outline focus:outline-none"
-                        >
-                          Un Publish
-                        </button>
-                      )}{" "}
+              {
+                isLoading ? (
+                  <tr>
+                    <td colSpan="4" className="text-center py-8">
+                      <LoaderData />
                     </td>
-                    <td className="px-4 py-3 text-xl flex gap-2 items-center text-gray-900">
-                      <MdDelete
-                        onClick={() => DeletePrice(price?._id)}
-                        className="text-red-500 cursor-pointer"
-                      />
-                      <BiEdit
-                        className="text-yellow-500 cursor-pointer"
-                        onClick={() => handleViewDetails(price?._id)}
-                      />
-                    </td>
-
-                    {OpenModal === price?._id && (
-                      <div className="h-0 w-0">
-                        <EditPrice
-                          OpenModal={OpenModal}
-                          refetch={refetch}
-                          setOpenModal={setOpenModal}
-                          FAQInfo={price}
-                        />
-                      </div>
-                    )}
                   </tr>
-                ))}
+                )
+                  :
+                  prices.length &&
+                  prices?.map((price) => (
+                    <tr key={price?.name}>
+                      <td className="px-4 py-3">{price?.name}</td>
+                      <td className="px-4 py-3">{price?.price}</td>
+                      <td className="px-4 py-3">
+                        {!price?.status ? (
+                          <button
+                            onClick={() => publishHandle(price?._id)}
+                            className="inline-flex items-center justify-center py-1 px-4 bg-red-500 rounded shadow-md hover:bg-red-700 focus:shadow-outline focus:outline-none"
+                          >
+                            Publish
+                          </button>
+                        ) : (
+                          <button
+                            onClick={() => unpublishHandle(price?._id)}
+                            className="inline-flex items-center justify-center py-1 px-4 bg-green-500 rounded shadow-md hover:bg-green-700 focus:shadow-outline focus:outline-none"
+                          >
+                            Un Publish
+                          </button>
+                        )}{" "}
+                      </td>
+                      <td className="px-4 py-3 text-xl flex gap-2 items-center text-gray-900">
+                        <MdDelete
+                          onClick={() => DeletePrice(price?._id)}
+                          className="text-red-500 cursor-pointer"
+                        />
+                        <BiEdit
+                          className="text-yellow-500 cursor-pointer"
+                          onClick={() => handleViewDetails(price?._id)}
+                        />
+                      </td>
+
+                      {OpenModal === price?._id && (
+                        <div className="h-0 w-0">
+                          <EditPrice
+                            OpenModal={OpenModal}
+                            refetch={refetch}
+                            setOpenModal={setOpenModal}
+                            FAQInfo={price}
+                          />
+                        </div>
+                      )}
+                    </tr>
+                  ))}
             </tbody>
           </table>
         </div>

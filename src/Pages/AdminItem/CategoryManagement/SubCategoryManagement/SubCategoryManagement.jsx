@@ -6,10 +6,11 @@ import { MdDelete } from "react-icons/md";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import useImageUpload from "../../../../Hooks/UploadImage";
+import LoaderData from "../../../../Common/LoaderData";
 
 const SubCategoryManagement = () => {
   const { uploadImage } = useImageUpload();
-  const { data: subCategory = [], refetch } = useQuery({
+  const { data: subCategory = [], refetch, isLoading } = useQuery({
     queryKey: ["subCategory"],
     queryFn: async () => {
       const res = await fetch(
@@ -212,147 +213,156 @@ const SubCategoryManagement = () => {
               </tr>
             </thead>
             <tbody className="text-gray-600 divide-y">
-              {subCategory.map((item, idx) => {
-                // const formattedTimeStamp = new Date(item.timeStamp * 1000).toLocaleString();
-                return (
-                  <tr key={idx}>
-                    {console.log(item)}
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <img
-                        src={item?.img}
-                        alt=""
-                        className="ring-1 ring-gray-400 w-[60px] object-cover h-[60px] rounded"
-                      />
+              {
+                isLoading ? (
+                  <tr>
+                    <td colSpan="5" className="text-center py-8">
+                      <LoaderData />
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      {item.subCategory}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      {item.megaCategoryId}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      {item.megaCategoryName}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="flex gap-1 items-center">
-                        {item.status == "true" ? (
-                          <button
-                            onClick={() => statusUpdate(item?._id, false)}
-                            className=""
-                          >
-                            Active
-                          </button>
-                        ) : (
-                          <button
-                            onClick={() => statusUpdate(item?._id, true)}
-                            className=""
-                          >
-                            Deactivate
-                          </button>
-                        )}
-                        <button
-                          onClick={() =>
-                            featureStatus(
-                              item?._id,
-                              item?.feature ? false : true
-                            )
-                          }
-                          className={`${item?.feature ? "bg-green-500" : "bg-red-500"
-                            } text-white ml-2 rounded capitalize px-3 py-1`}
-                        >
-                          futures
-                        </button>
-                        <MdDelete
-                          className="text-red-500 text-xl cursor-pointer"
-                          onClick={() => DeleteSubCateGories(item?._id)}
-                        />
-                        <button
-                          onClick={() => setEditOn(item)}
-                          className="text-xl p-1 ml-6"
-                        >
-                          <BiEdit />
-                        </button>
-                      </div>
-                    </td>
-
-                    <div className="absolute w-full top-0 left-0">
-                      <div
-                        className={`fixed z-[100] flex items-center justify-center ${editOn?._id === item?._id
-                          ? "opacity-1 visible"
-                          : "invisible opacity-0"
-                          } inset-0 bg-black/20 backdrop-blur-sm duration-100`}
-                      >
-                        <div
-                          className={`absolute md:w-[500px] w-full rounded-sm bg-white p-3 pb-5 text-center drop-shadow-2xl ${editOn?._id === item?._id
-                            ? "scale-1 opacity-1 duration-300"
-                            : "scale-0 opacity-0 duration-150"
-                            } `}
-                        >
-                          <svg
-                            onClick={() => setEditOn(false)}
-                            className="mx-auto mr-0 w-8 cursor-pointer"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <g strokeWidth="0"></g>
-                            <g strokeLinecap="round" strokeLinejoin="round"></g>
-                            <g>
-                              <path
-                                d="M6.99486 7.00636C6.60433 7.39689 6.60433 8.03005 6.99486 8.42058L10.58 12.0057L6.99486 15.5909C6.60433 15.9814 6.60433 16.6146 6.99486 17.0051C7.38538 17.3956 8.01855 17.3956 8.40907 17.0051L11.9942 13.4199L15.5794 17.0051C15.9699 17.3956 16.6031 17.3956 16.9936 17.0051C17.3841 16.6146 17.3841 15.9814 16.9936 15.5909L13.4084 12.0057L16.9936 8.42059C17.3841 8.03007 17.3841 7.3969 16.9936 7.00638C16.603 6.61585 15.9699 6.61585 15.5794 7.00638L11.9942 10.5915L8.40907 7.00636C8.01855 6.61584 7.38538 6.61584 6.99486 7.00636Z"
-                                fill="#000"
-                              ></path>
-                            </g>
-                          </svg>
-
-                          <form onSubmit={(e) => handleEdit(e, item?._id)}>
-                            <h1 className="text-lg font-semibold text-center mb-4">
-                              Edit Sub Category
-                            </h1>
-                            <img
-                              src={item?.img}
-                              alt=""
-                              className="w-[100px] h-[100px] rounded"
-                            />
-                            <div className="flex flex-col items-start gap-1">
-                              <label className="text-start" htmlFor="photo">
-                                Photo
-                              </label>
-                              <input
-                                type="file"
-                                name="image"
-                                className="border border-gray-500 p-1 rounded mb-3 w-full"
-                              />
-                            </div>
-
-                            <div className="flex flex-col items-start gap-1">
-                              <label className="text-start" htmlFor="photo">
-                                Name
-                              </label>
-                              <input
-                                defaultValue={item?.subCategory}
-                                type="text"
-                                name="name"
-                                className="border border-gray-500 p-1 rounded mb-3 w-full"
-                              />
-                            </div>
-
-                            <br />
-                            <div className="flex justify-start">
-                              <button
-                                type="submit"
-                                className="me-2 rounded bg-green-700 px-6 py-1 text-white"
-                              >
-                                Sibmit
-                              </button>
-                            </div>
-                          </form>
-                        </div>
-                      </div>
-                    </div>
                   </tr>
-                );
-              })}
+                )
+                  :
+                  subCategory.map((item, idx) => {
+                    // const formattedTimeStamp = new Date(item.timeStamp * 1000).toLocaleString();
+                    return (
+                      <tr key={idx}>
+                        {console.log(item)}
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <img
+                            src={item?.img}
+                            alt=""
+                            className="ring-1 ring-gray-400 w-[60px] object-cover h-[60px] rounded"
+                          />
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          {item.subCategory}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          {item.megaCategoryId}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          {item.megaCategoryName}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="flex gap-1 items-center">
+                            {item.status == "true" ? (
+                              <button
+                                onClick={() => statusUpdate(item?._id, false)}
+                                className=""
+                              >
+                                Active
+                              </button>
+                            ) : (
+                              <button
+                                onClick={() => statusUpdate(item?._id, true)}
+                                className=""
+                              >
+                                Deactivate
+                              </button>
+                            )}
+                            <button
+                              onClick={() =>
+                                featureStatus(
+                                  item?._id,
+                                  item?.feature ? false : true
+                                )
+                              }
+                              className={`${item?.feature ? "bg-green-500" : "bg-red-500"
+                                } text-white ml-2 rounded capitalize px-3 py-1`}
+                            >
+                              futures
+                            </button>
+                            <MdDelete
+                              className="text-red-500 text-xl cursor-pointer"
+                              onClick={() => DeleteSubCateGories(item?._id)}
+                            />
+                            <button
+                              onClick={() => setEditOn(item)}
+                              className="text-xl p-1 ml-6"
+                            >
+                              <BiEdit />
+                            </button>
+                          </div>
+                        </td>
+
+                        <div className="absolute w-full top-0 left-0">
+                          <div
+                            className={`fixed z-[100] flex items-center justify-center ${editOn?._id === item?._id
+                              ? "opacity-1 visible"
+                              : "invisible opacity-0"
+                              } inset-0 bg-black/20 backdrop-blur-sm duration-100`}
+                          >
+                            <div
+                              className={`absolute md:w-[500px] w-full rounded-sm bg-white p-3 pb-5 text-center drop-shadow-2xl ${editOn?._id === item?._id
+                                ? "scale-1 opacity-1 duration-300"
+                                : "scale-0 opacity-0 duration-150"
+                                } `}
+                            >
+                              <svg
+                                onClick={() => setEditOn(false)}
+                                className="mx-auto mr-0 w-8 cursor-pointer"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <g strokeWidth="0"></g>
+                                <g strokeLinecap="round" strokeLinejoin="round"></g>
+                                <g>
+                                  <path
+                                    d="M6.99486 7.00636C6.60433 7.39689 6.60433 8.03005 6.99486 8.42058L10.58 12.0057L6.99486 15.5909C6.60433 15.9814 6.60433 16.6146 6.99486 17.0051C7.38538 17.3956 8.01855 17.3956 8.40907 17.0051L11.9942 13.4199L15.5794 17.0051C15.9699 17.3956 16.6031 17.3956 16.9936 17.0051C17.3841 16.6146 17.3841 15.9814 16.9936 15.5909L13.4084 12.0057L16.9936 8.42059C17.3841 8.03007 17.3841 7.3969 16.9936 7.00638C16.603 6.61585 15.9699 6.61585 15.5794 7.00638L11.9942 10.5915L8.40907 7.00636C8.01855 6.61584 7.38538 6.61584 6.99486 7.00636Z"
+                                    fill="#000"
+                                  ></path>
+                                </g>
+                              </svg>
+
+                              <form onSubmit={(e) => handleEdit(e, item?._id)}>
+                                <h1 className="text-lg font-semibold text-center mb-4">
+                                  Edit Sub Category
+                                </h1>
+                                <img
+                                  src={item?.img}
+                                  alt=""
+                                  className="w-[100px] h-[100px] rounded"
+                                />
+                                <div className="flex flex-col items-start gap-1">
+                                  <label className="text-start" htmlFor="photo">
+                                    Photo
+                                  </label>
+                                  <input
+                                    type="file"
+                                    name="image"
+                                    className="border border-gray-500 p-1 rounded mb-3 w-full"
+                                  />
+                                </div>
+
+                                <div className="flex flex-col items-start gap-1">
+                                  <label className="text-start" htmlFor="photo">
+                                    Name
+                                  </label>
+                                  <input
+                                    defaultValue={item?.subCategory}
+                                    type="text"
+                                    name="name"
+                                    className="border border-gray-500 p-1 rounded mb-3 w-full"
+                                  />
+                                </div>
+
+                                <br />
+                                <div className="flex justify-start">
+                                  <button
+                                    type="submit"
+                                    className="me-2 rounded bg-green-700 px-6 py-1 text-white"
+                                  >
+                                    Sibmit
+                                  </button>
+                                </div>
+                              </form>
+                            </div>
+                          </div>
+                        </div>
+                      </tr>
+                    );
+                  })}
             </tbody>
           </table>
         </div>

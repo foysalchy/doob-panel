@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import { AuthContext } from "../../../AuthProvider/UserProvider";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import ReactToPrint from "react-to-print";
+import LoaderData from "../../../Common/LoaderData";
 
 const FinanceReport = () => {
   const { shopInfo } = useContext(AuthContext);
@@ -21,9 +22,11 @@ const FinanceReport = () => {
   const [error, setError] = useState(null);
   const [financialReport, setFinancialReport] = useState([]);
 
+  const [loadingReport, setLoadingReport] = useState(false);
+  console.log(financialReport);
   const fetchFinancialReport = async () => {
-    const apiUrl =
-      "https://doob.dev/api/v1/seller/my-financial-report";
+    setLoadingReport(true);
+    const apiUrl = "https://doob.dev/api/v1/seller/my-financial-report";
     try {
       const response = await fetch(apiUrl, {
         method: "POST",
@@ -44,8 +47,10 @@ const FinanceReport = () => {
       const data = await response.json();
       console.log("Fetched financial report data:", data);
       setFinancialReport(data);
+      setLoadingReport(false);
     } catch (error) {
       console.error("Error fetching financial report:", error);
+      setLoadingReport(false);
       throw error;
     }
   };
@@ -79,9 +84,6 @@ const FinanceReport = () => {
     setEndDate(selectedEndDate);
   };
   const printButtonRef = useRef(null);
-
-
-
 
   return (
     <div className="container mx-auto py-8">
@@ -124,7 +126,8 @@ const FinanceReport = () => {
               <button
                 ref={printButtonRef}
                 // disabled={loader}
-                className='bg-blue-500 px-4 py-2.5 text-white rounded hover:bg-blue-600 focus:outline-noneya'>
+                className="bg-blue-500 px-4 py-2.5 text-white rounded hover:bg-blue-600 focus:outline-noneya"
+              >
                 Print
               </button>
             )}
@@ -136,7 +139,10 @@ const FinanceReport = () => {
       {error && <div className="text-red-500 mt-4">{error}</div>}
 
       {financialReport && (
-        <div ref={componentRef} className="border mt-4 mx-auto bg-white shadow-lg rounded-lg overflow-hidden">
+        <div
+          ref={componentRef}
+          className="border mt-4 mx-auto bg-white shadow-lg rounded-lg overflow-hidden"
+        >
           <div className="p-4">
             <div className="flex justify-between items-center mb-4">
               <div className="text-gray-600">Expected Payout Date:</div>
@@ -146,6 +152,8 @@ const FinanceReport = () => {
               </div>
             </div>
           </div>
+          <div className="py-2">{loadingReport && <LoaderData />}</div>
+
           {Object.entries(financialReport).map(([key, value]) => (
             <div className="flex justify-between items-center bg-gray-100 p-4">
               <div className="text-lg font-semibold">{key}</div>

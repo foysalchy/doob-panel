@@ -1,41 +1,27 @@
-import React from "react";
-import { useContext } from "react";
-import { AuthContext } from "../../../../AuthProvider/UserProvider";
+import React, { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import DeleteModal from "../../../../Common/DeleteModal";
 import { RxCross2 } from "react-icons/rx";
 import { Link } from "react-router-dom";
 import { FaArrowRightLong } from "react-icons/fa6";
-import { useState } from "react";
-import { MdPadding } from "react-icons/md";
 import Swal from "sweetalert2";
+import LoaderData from "../../../../Common/LoaderData";
 
 const AdminNoticeManager = () => {
   const [loading, setLoading] = useState(false);
+  const [deleteId, setDeletId] = useState("");
+  const [deletePopUp, setDeletePopUp] = useState(false);
+  const [isDelete, setIsDelete] = useState(false);
+  const [selectedImage, setSelectedImage] = useState(null);
 
-  const { data: popupData = [], refetch } = useQuery({
+  const { data: popupData = [], refetch, isLoading } = useQuery({
     queryKey: "noticeData",
     queryFn: async () => {
-      const res = await fetch(
-        `https://doob.dev/api/v1/admin/seller-notice`
-      );
+      const res = await fetch(`https://doob.dev/api/v1/admin/seller-notice`);
       const data = await res.json();
       return data?.data;
     },
   });
-  // pop up data
-  // const { data: popupData, reload } = useQuery({
-  //     queryKey: "popupData",
-  //     queryFn: async () => {
-  //         const res = await fetch(`https://doob.dev/api/v1/admin/seller-notice`);
-  //         const data = await res.json();
-  //         return data?.data;
-  //     },
-  // });
-
-  const [deleteId, setDeletId] = useState("");
-  const [deletePopUp, setDeletePopUp] = useState(false);
-  const [isDelete, setIsDelete] = useState(false);
 
   const DeleteSeller = (id) => {
     setDeletePopUp(true);
@@ -43,15 +29,12 @@ const AdminNoticeManager = () => {
   };
 
   if (isDelete) {
-    fetch(
-      `https://doob.dev/api/v1/seller/popup/delete/${deleteId}`,
-      {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    )
+    fetch(`https://doob.dev/api/v1/seller/popup/delete/${deleteId}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
       .then((res) => res.json())
       .then((data) => {
         setIsDelete(false);
@@ -60,8 +43,6 @@ const AdminNoticeManager = () => {
         refetch("");
       });
   }
-
-  const [selectedImage, setSelectedImage] = useState(null);
 
   const handleImageClick = (imageSrc) => {
     setSelectedImage(imageSrc);
@@ -75,16 +56,13 @@ const AdminNoticeManager = () => {
   const EditStatus = (id, status) => {
     console.log(id, status);
     setLoading(true);
-    fetch(
-      `https://doob.dev/api/v1/admin/seller-notice?NoticeId=${id}`,
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ status }),
-      }
-    )
+    fetch(`https://doob.dev/api/v1/admin/seller-notice?NoticeId=${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ status }),
+    })
       .then((res) => res.json())
       .then((data) => {
         setLoading(false);
@@ -95,35 +73,25 @@ const AdminNoticeManager = () => {
 
   const onDelete = (id) => {
     setLoading(true);
-    fetch(
-      `https://doob.dev/api/v1/admin/seller-notice?NoticeId=${id}`,
-      {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    )
+    fetch(`https://doob.dev/api/v1/admin/seller-notice?NoticeId=${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
       .then((res) => res.json())
       .then((data) => {
-        console.log(
-          data,
-          `https://doob.dev/api/v1/admin/seller-notice?NoticeId=${id}`
-        );
+        console.log(data, `https://doob.dev/api/v1/admin/seller-notice?NoticeId=${id}`);
         setLoading(false);
         Swal.fire(`Seller disable ${status} `, "", "success");
         refetch();
       });
   };
+
   return (
     <div>
       <div className="h-0 w-0">
-        {" "}
-        <DeleteModal
-          setOpenModal={setDeletePopUp}
-          OpenModal={deletePopUp}
-          setIsDelete={setIsDelete}
-        />
+        <DeleteModal setOpenModal={setDeletePopUp} OpenModal={deletePopUp} setIsDelete={setIsDelete} />
       </div>
       <div className="">
         {selectedImage && (
@@ -131,17 +99,11 @@ const AdminNoticeManager = () => {
             <div className="relative max-w-screen-md mx-auto">
               <div
                 onClick={() => handleImageClick(false)}
-                className="cursor-pointer bg-gray-300 rounded-full absolute top-4 right-4  mb-2 p-2 text-2xl hover:bg-gray-400"
+                className="cursor-pointer bg-gray-300 rounded-full absolute top-4 right-4 mb-2 p-2 text-2xl hover:bg-gray-400"
               >
                 <RxCross2 className="text-xl" />
               </div>
-
-              <img
-                className="max-w-full rounded max-h-full"
-                src={selectedImage}
-                srcSet={selectedImage}
-                alt="Preview"
-              />
+              <img className="max-w-full rounded max-h-full" src={selectedImage} srcSet={selectedImage} alt="Preview" />
             </div>
           </div>
         )}
@@ -153,13 +115,10 @@ const AdminNoticeManager = () => {
         <span className="absolute -start-full transition-all group-hover:start-4">
           <FaArrowRightLong className="h-5 w-5 rtl:rotate-180" />
         </span>
-
-        <span className="text-sm font-medium transition-all group-hover:ms-4">
-          Add Notice
-        </span>
+        <span className="text-sm font-medium transition-all group-hover:ms-4">Add Notice</span>
       </Link>
 
-      <section className=" mt-4 mx-auto">
+      <section className="mt-4 mx-auto">
         <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
           <thead className="bg-gray-50 dark:bg-gray-800">
             <tr>
@@ -201,72 +160,69 @@ const AdminNoticeManager = () => {
               </th>
             </tr>
           </thead>
+
           <tbody className="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
-            {popupData.map((itm) => (
-              <tr key={itm?._id}>
-                <td className="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
-                  <div
-                    onClick={() => setOpenInvoice(itm?._id)}
-                    className="inline-flex items-center gap-x-3 cursor-pointer text-blue-500"
-                  >
-                    <img
-                      src={itm?.image}
-                      alt=""
-                      className="w-20 h-20 rounded-lg"
-                    />
-                  </div>
-                </td>
-                <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 ">
-                  {itm?.link}
-                </td>
-                <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 ">
-                  {itm?.title}
-                </td>
-                <td className="px-4 py-4 text_editor text-sm text-gray-500 dark:text-gray-300 ">
-                  <div
-                    dangerouslySetInnerHTML={{
-                      __html: itm?.message,
-                    }}
-                  ></div>
-                </td>
-                <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 ">
-                  {new Date(itm?.time).toLocaleString("en-US", {
-                    year: "numeric",
-                    month: "long",
-                    day: "numeric",
-                    hour: "numeric",
-                    minute: "numeric",
-                    second: "numeric",
-                  })}
-                </td>
-                <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 ">
-                  <div className="flex items-center justify-around">
-                    <button
-                      onClick={() => onDelete(itm?._id)}
-                      className={style.deactive}
-                    >
-                      Delete
-                    </button>
-                    {itm.status ? (
-                      <button
-                        onClick={() => EditStatus(itm?._id, false)}
-                        className={style.active}
-                      >
-                        Activate
-                      </button>
-                    ) : (
-                      <button
-                        onClick={() => EditStatus(itm?._id, true)}
-                        className={style.deactive}
-                        type="button"
-                      >
-                        Deactivate
-                      </button>
-                    )}
-                  </div>
+            {isLoading ? (
+              <tr>
+                <td colSpan="6" className="text-center py-8">
+                  <LoaderData />
                 </td>
               </tr>
-            ))}
+            ) : popupData.length === 0 ? (
+              <tr>
+                <td colSpan="6" className="py-2 text-center text-gray-500">
+                  Data Not Found!
+                </td>
+              </tr>
+            ) : (
+              popupData.map((itm) => (
+                <tr key={itm?._id}>
+                  <td className="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
+                    <div
+                      onClick={() => setOpenInvoice(itm?._id)}
+                      className="inline-flex items-center gap-x-3 cursor-pointer text-blue-500"
+                    >
+                      <img src={itm?.image} alt="" className="w-20 h-20 rounded-lg" />
+                    </div>
+                  </td>
+                  <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 ">{itm?.link}</td>
+                  <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 ">{itm?.title}</td>
+                  <td className="px-4 py-4 text_editor text-sm text-gray-500 dark:text-gray-300 ">
+                    <div
+                      dangerouslySetInnerHTML={{
+                        __html: itm?.message,
+                      }}
+                    ></div>
+                  </td>
+                  <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 ">
+                    {new Date(itm?.time).toLocaleString("en-US", {
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
+                      hour: "numeric",
+                      minute: "numeric",
+                      second: "numeric",
+                    })}
+                  </td>
+                  <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 ">
+                    <div className="flex items-center justify-around">
+                      <button onClick={() => onDelete(itm?._id)} className={style.deactive}>
+                        Delete
+                      </button>
+                      {itm.status ? (
+                        <button onClick={() => EditStatus(itm?._id, false)} className={style.active}>
+                          Activate
+                        </button>
+                      ) : (
+                        <button onClick={() => EditStatus(itm?._id, true)} className={style.deactive} type="button">
+                          Deactivate
+                        </button>
+                      )}
+                    </div>
+                  </td>
+                </tr>
+              ))
+            )}
           </tbody>
         </table>
       </section>

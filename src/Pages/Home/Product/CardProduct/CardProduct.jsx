@@ -4,28 +4,30 @@ import CardPayment from "./CardPayment";
 import { useNavigate } from "react-router-dom";
 
 const CardProduct = () => {
-  const { user, shopInfo } = useContext(AuthContext);
+  const { user, shopInfo, setAddLocalProduct } = useContext(AuthContext);
   const get_cart_product = localStorage.getItem(`cart-product-${user._id}`);
-  const initialCartProduct = JSON.parse(get_cart_product) || []; // Ensure cart_product is initialized as an array
+  const initialCartProduct = JSON.parse(get_cart_product) || [];
   const [cartProduct, setCartProduct] = useState(initialCartProduct);
   const [selectAll, setSelectAll] = useState(false);
 
   useEffect(() => {
-    // Update localStorage whenever cartProduct changes
     localStorage.setItem(
       `cart-product-${user._id}`,
       JSON.stringify(cartProduct)
     );
   }, [cartProduct]);
 
-  // Function to handle quantity update
+  useEffect(() => {
+    const selectedData = cartProduct.filter((product) => product.selected);
+    setAddLocalProduct(selectedData);
+  }, [cartProduct, setAddLocalProduct]);
+
   const handleQuantityUpdate = (index, newQuantity) => {
     const updatedCart = [...cartProduct];
     updatedCart[index].product_quantity = newQuantity;
     setCartProduct(updatedCart);
   };
 
-  // Function to handle quantity decrease
   const handleQuantityDecrease = (index) => {
     const updatedCart = [...cartProduct];
     if (updatedCart[index].product_quantity > 1) {
@@ -34,22 +36,18 @@ const CardProduct = () => {
     }
   };
 
-  // Function to handle deletion of an item
   const handleDelete = (index) => {
     const updatedCart = [...cartProduct];
     updatedCart.splice(index, 1);
-    console.log(updatedCart, "updated");
     setCartProduct(updatedCart);
   };
 
-  // Function to handle individual selection of an item
   const handleSelectProduct = (index) => {
     const updatedCart = [...cartProduct];
     updatedCart[index].selected = !updatedCart[index].selected;
     setCartProduct(updatedCart);
   };
 
-  // Function to toggle select all
   const toggleSelectAll = () => {
     setSelectAll(!selectAll);
     const updatedCart = cartProduct.map((product) => ({
@@ -59,28 +57,21 @@ const CardProduct = () => {
     setCartProduct(updatedCart);
   };
 
-  // Function to calculate total
-
   const deliveryFees = {};
-
-  // Calculate total delivery fee
   cartProduct
     .filter((product) => product.selected)
     .forEach((item) => {
       const productId = item.product_id;
       const deliveryFee = parseFloat(item.delivery ? item.delivery : 0);
-
-      // If the product ID is not in the deliveryFees object, add it with its delivery fee
       if (!(productId in deliveryFees)) {
         deliveryFees[productId] = deliveryFee;
       }
     });
-
-  // Sum the delivery fees
   const totalDeliveryFee = Object.values(deliveryFees).reduce(
     (acc, curr) => acc + curr,
     0
   );
+
   const calculateTotal = () => {
     return cartProduct
       .filter((product) => product.selected)
@@ -97,18 +88,15 @@ const CardProduct = () => {
 
   const [openPayment, setOpenPayment] = useState(false);
 
-  console.log(shopInfo, "shopInfo");
-
   const navigate = useNavigate();
 
-  ///! submit checkout ///
   const handleSetData = () => {
+    const selectedProducts = cartProduct.filter((product) => product.selected);
     if (!shopInfo?._id) {
       navigate("/sign-in");
-
       return;
     }
-    setOpenPayment(cartProduct.filter((product) => product.selected));
+    setOpenPayment(selectedProducts);
     localStorage.setItem("orderData", JSON.stringify(cartProduct));
   };
 
@@ -123,7 +111,6 @@ const CardProduct = () => {
         getway: getway,
         userInfo,
       };
-      console.log(data);
       fetch(`https://doob.dev/api/v1/seller/web-store?id=${id}`, {
         method: "PUT",
         headers: {
@@ -138,7 +125,6 @@ const CardProduct = () => {
     }
   };
 
-  // Calculate Subtotal
   const subtotal = cartProduct.reduce(
     (acc, item) =>
       acc +
@@ -148,10 +134,7 @@ const CardProduct = () => {
     0
   );
 
-  // Discount (assuming it's a fixed value or based on some condition)
   const discount = 0;
-
-  // Total Price
   const total = subtotal - discount;
 
   return (
@@ -239,8 +222,6 @@ const CardProduct = () => {
                         </div>
                       </div>
                     </td>
-                    {/* <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{product.sellingPrice ? product.sellingPrice : product.product_price}</td>
-                     */}
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                       {product.sellingPrice
                         ? product.sellingPrice
@@ -284,17 +265,6 @@ const CardProduct = () => {
           </div>
         </div>
         <div className="w-full lg:w-96">
-          {/* <div className="mb-4 p-4 bg-white rounded-lg shadow">
-                        <h2 className="text-lg font-medium mb-4">Apply Coupon</h2>
-                        <div className="flex gap-2">
-                            <input
-                                className="flex-1 p-2 border border-gray-300 rounded shadow-sm"
-                                placeholder="Coupon code"
-                                type="text"
-                            />
-                            <button className="bg-blue-600 text-white px-4 py-2 rounded shadow">Apply</button>
-                        </div>
-                    </div> */}
           <div className="p-4 bg-white rounded-lg shadow">
             <div className="flex justify-between mb-2">
               <span>Subtotal</span>
@@ -369,28 +339,6 @@ function TrashIcon(props) {
       <path d="M3 6h18" />
       <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
       <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
-    </svg>
-  );
-}
-
-function ViewIcon(props) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M5 12s2.545-5 7-5c4.454 0 7 5 7 5s-2.546 5-7 5c-4.455 0-7-5-7-5z" />
-      <path d="M12 13a1 1 0 1 0 0-2 1 1 0 0 0 0 2z" />
-      <path d="M21 17v2a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-2" />
-      <path d="M21 7V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v2" />
     </svg>
   );
 }

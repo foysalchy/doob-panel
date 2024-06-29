@@ -27,9 +27,8 @@ const StarRating = ({ rating, onRatingChange }) => {
         <span
           key={star}
           onClick={() => onRatingChange(star)}
-          className={`cursor-pointer text-2xl ${
-            star <= rating ? "text-yellow-500" : "text-gray-300"
-          }`}
+          className={`cursor-pointer text-2xl ${star <= rating ? "text-yellow-500" : "text-gray-300"
+            }`}
         >
           ★
         </span>
@@ -314,6 +313,8 @@ const ProductDetails = () => {
     const productFind = getCart.find(
       (item) => item.product_id === productData.product_id
     );
+
+    console.log('product add in cart', getCart);
 
     if (productFind) {
       productFind.product_quantity =

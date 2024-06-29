@@ -100,6 +100,24 @@ const Variants = ({
     }
   };
 
+  // const handleAddField = () => {
+  //   setInputFields([
+  //     ...inputFields,
+  //     {
+  //       name: "",
+  //       image: null,
+  //       quantity: "",
+  //       SKU: "hello js",
+  //       price: "",
+  //       offerPrice: "",
+  //       ability: false,
+  //       vendor: false,
+  //       variantImag: [],
+  //     },
+  //   ]);
+  // };
+
+
   const handleAddField = () => {
     setInputFields([
       ...inputFields,
@@ -112,10 +130,11 @@ const Variants = ({
         offerPrice: "",
         ability: false,
         vendor: false,
-        variantImag: [],
+        variantImag: [], // Initialize variantImag as an empty array
       },
     ]);
   };
+
 
   const handleMultipleImg = async (e, index) => {
     const fileList = Array.from(e.target.files);
