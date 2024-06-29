@@ -153,6 +153,7 @@ const FinanceReport = () => {
             </div>
           </div>
           <div className="py-2">{loadingReport && <LoaderData />}</div>
+
           {Object.entries(financialReport).map(([key, value]) => (
             <div className="flex justify-between items-center bg-gray-100 p-4">
               <div className="text-lg font-semibold">{key}</div>
