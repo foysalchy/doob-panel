@@ -314,6 +314,8 @@ const ProductDetails = () => {
       (item) => item.product_id === productData.product_id
     );
 
+    console.log('product add in cart', getCart);
+
     if (productFind) {
       productFind.product_quantity =
         productFind.product_quantity + productData.product_quantity;
