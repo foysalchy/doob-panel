@@ -10,11 +10,8 @@ const AdminEditStaffModal = ({
   staffInfo,
   refetch,
 }) => {
-  // const { shopInfo } = useContext(AuthContext);
-  const [selectedValue, setSelectedValue] = useState([]);
-  const [roles, setRole] = useState("");
-  // const [error, setError] = useState('')
-  // const [value, setValue] = useState("");
+  const [selectedValue, setSelectedValue] = useState(staffInfo?.permissions || []);
+  const [roles, setRole] = useState(staffInfo?.staffRole || "");
 
   const options = [
     { name: "Blogs", route: "blog" },
@@ -41,16 +38,29 @@ const AdminEditStaffModal = ({
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    let user = staffInfo;
+    const user = staffInfo;
 
-    delete user?.permissions;
-    delete user?.shopEmail;
-    const role = roles === "" ? user?.staffRole : roles;
-    delete user?.staffRole;
+    // Ensure permissions and role are updated correctly
+    const role = roles || user.staffRole;
+    const permissions = selectedValue.length > 0 ? selectedValue : user.permissions;
 
-    const permissions = selectedValue;
+    const data = {
+      userData: user,
+      createdAt: staffInfo?.createdAt,
+      email: staffInfo?.email,
+      name: staffInfo?.name,
+      password: staffInfo?.password,
+      staffRole: staffInfo?.staffRole,
+      role,
+      permissions,
+      userId: staffInfo?.userId,
+      verify: staffInfo?.verify,
+      _id: staffInfo?._id
+    };
 
-    const data = { user, permissions, role };
+    console.log('staff ifo......>>>', staffInfo);
+    console.log('data......>>>', data);
+
 
     fetch(`https://doob.dev/api/v1/admin/staff-role`, {
       method: "PATCH",
@@ -63,6 +73,7 @@ const AdminEditStaffModal = ({
       .then((data) => {
         if (data.status) {
           BrightAlert(`${data.message}`, "", "success");
+          setOpenModal(false)
           refetch();
         } else {
           BrightAlert(`Something went wrong`, "", "error");
@@ -72,10 +83,10 @@ const AdminEditStaffModal = ({
 
   return (
     <div
-      className={`fixed z-50 top-0 left-0 flex h-full min-h-screen w-full items-center justify-center bg-black bg-opacity-90  px-4 text-start py-5 ${OpenModal ? "block" : "hidden"
+      className={`fixed z-50 top-0 left-0 flex h-full min-h-screen w-full items-center justify-center bg-black bg-opacity-90 px-4 text-start py-5 ${OpenModal ? "block" : "hidden"
         }`}
     >
-      <div className="w-full max-w-[800px]  rounded-[20px] bg-white pb-10 px-8 text-center md:px-[30px] ">
+      <div className="w-full max-w-[800px] rounded-[20px] bg-white pb-10 px-8 text-center md:px-[30px]">
         <div className="flex justify-between z-50 pt-4 items-start w-full sticky top-0 bg-white border border-black-b">
           <div className="pb-2 text-xl font-bold text-dark text-center sm:text-2xl">
             Update Staff
@@ -105,7 +116,7 @@ const AdminEditStaffModal = ({
             Input Role
           </label>
           <input
-            defaultValue={staffInfo?.staffRole}
+            defaultValue={roles}
             onChange={(e) => setRole(e.target.value)}
             type="text"
             className="w-full p-2 rounded-md ring-1 mt-2 ring-gray-200"
@@ -117,10 +128,9 @@ const AdminEditStaffModal = ({
             Select Permissions{" "}
           </label>
           <Select
-            // lassName="w-full p-2 rounded-md ring-1 mt-2 ring-gray-200" placeholder='input user role'
             options={options}
             isMulti={true}
-            defaultValue={staffInfo?.permissions}
+            defaultValue={selectedValue}
             getOptionLabel={(option) => option.name}
             getOptionValue={(option) => option.route}
             onChange={handleChange}

@@ -19,6 +19,10 @@ import {
 import { ShopAuthProvider } from "../../../../../AuthProvider/ShopAuthProvide";
 import MetaHelmet from "../../../../../Helmate/Helmate";
 import { PiPlay } from "react-icons/pi";
+import VideoPlayer from "../../../../../Hooks/VideoPlayer";
+import SellerTopSellingProduct from "../SellerTopSellingProduct/SellerTopSellingProduct";
+import ProductReviews from "../../../../Home/Product/ProductDetails/ProductReviews";
+
 
 const ProductInformation = () => {
   const product = useLoaderData();
@@ -106,8 +110,8 @@ const ProductInformation = () => {
         variations?.offerPrice !== undefined
           ? variations.offerPrice
           : variations?.price !== undefined
-          ? variations.price
-          : product.price,
+            ? variations.price
+            : product.price,
       regular_price: product.regular_price,
       productId: product._id,
       shopId: shop_id.shop_id,
@@ -187,8 +191,8 @@ const ProductInformation = () => {
             variations?.offerPrice !== undefined
               ? variations.offerPrice
               : variations?.price !== undefined
-              ? variations.price
-              : product.price,
+                ? variations.price
+                : product.price,
           regular_price: product.regular_price,
           productId: product._id,
           shopId: shop_id.shop_id,
@@ -221,7 +225,7 @@ const ProductInformation = () => {
   const totalStars =
     comments?.length &&
     comments?.reduce((total, comment) => total + comment.star, 0) /
-      comments?.length;
+    comments?.length;
 
   const convertedRating = (` ${totalStars}` / 10) * 5 || 0;
 
@@ -276,6 +280,8 @@ const ProductInformation = () => {
     },
   });
 
+
+  console.log("data::::::::::::::::", product?.data);
   return (
     <section className="px-2 py-4  sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 mx-auto">
       <MetaHelmet
@@ -323,6 +329,7 @@ const ProductInformation = () => {
           </div>
         </div>
 
+
         <div className="md:grid md:grid-cols-4">
           <div className="col-span-3 mx-auto border border-gray-300 px-4 md:px-4 lg:px-12 mt-6 ">
             <div className="flex flex-col md:flex-row -mx-4  border-gray-300 py-4">
@@ -342,7 +349,7 @@ const ProductInformation = () => {
                           {product?.data?.videos ? (
                             <div className="w-full h-full relative">
                               <VideoPlayer
-                                thum={""}
+                                // thum={""}
                                 url={product?.data?.videos}
                               />
                             </div>
@@ -675,6 +682,18 @@ const ProductInformation = () => {
           {/* <p className="text-gray-500">
         {metaTitle}
       </p> */}
+
+
+        </div>
+        <div className="max-w-7xl mx-auto px-2 md:px-4 lg:px-8 my-6">
+          <div className="border md:p-6 p-3 rounded">
+            <ProductReviews comments={comments} />
+          </div>
+        </div>
+        <div className="max-w-7xl mx-auto px-2 md:px-4 lg:px-8 my-6">
+          <div className="border md:p-6 px-2 py-3 rounded">
+            <SellerTopSellingProduct productFind={product?.data} />
+          </div>
         </div>
       </div>
     </section>
